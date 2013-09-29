@@ -34,11 +34,11 @@
       <listitem>
         <para>python-suds: This software is needed by the <systemitem class="service"
             >nova-compute</systemitem> service to communicate with vSphere APIs. If not installed,
-          the "<systemitem class="service">nova-compute</systemitem>" service shuts down with the
+          the <systemitem class="service">nova-compute</systemitem> service shuts down with the
           message: "Unable to import suds".</para>
       </listitem>
     </itemizedlist>
-    <para>On Ubuntu, these packages can be installed by running:</para>
+    <para>On Ubuntu, this package can be installed by running:</para>
     <screen><prompt>$</prompt> <userinput>sudo apt-get install python-suds</userinput></screen>
   </section>
   <section xml:id="VMWareVCDriver_details">
@@ -46,7 +46,7 @@
     <para>This section covers details of using the VMwareVCDriver.</para>
     <section xml:id="VMWareVCDriver_configuration_options">
       <title>VMWareVCDriver configuration options</title>
-      <para>When using the VMwareVCDriver (i.e., vCenter) with OpenStack Compute, nova.conf must
+      <para>When using the VMwareVCDriver (i.e., vCenter) with OpenStack Compute, <filename>nova.conf</filename> must
         include the following VMWare-specific config options:</para>
 
       <programlisting language="ini">[DEFAULT]
@@ -54,15 +54,16 @@ compute_driver=vmwareapi.VMwareVCDriver
 
 [vmware]
 host_ip=&lt;vCenter host IP&gt;
-host_username=&lt; vCenter username&gt;
-host_password=&lt; vCenter password&gt;
-cluster_name=&lt; vCenter cluster name&gt;
+host_username=&lt;vCenter username&gt;
+host_password=&lt;vCenter password&gt;
+cluster_name=&lt;vCenter cluster name&gt;
 wsdl_location=http://127.0.0.1:8080/vmware/SDK/wsdl/vim25/vimService.wsdl</programlisting>
       <para>Remember that you will have only one <systemitem class="service"
           >nova-compute</systemitem> service per cluster. It is recommended that this host run as a
         VM with high-availability enabled as part of that same cluster.</para>
-      <para>Also note that many of the nova.conf options mentioned elsewhere in this document that
-        are relevant to libvirt do not apply to using this driver.</para>
+      <para>Also note that many of the <filename>nova.conf</filename>
+         options mentioned elsewhere in this document that are relevant
+         to libvirt do not apply to using this driver.</para>
     </section>
     <section xml:id="vmware-wsdl-workaround">
       <title>vSphere 5.0 (and below) additional setup</title>
@@ -71,64 +72,92 @@ wsdl_location=http://127.0.0.1:8080/vmware/SDK/wsdl/vim25/vimService.wsdl</progr
         accomplish this by either mirroring the WSDL from the vCenter or ESXi
         server you intend on using, or you may download the SDK directly from VMware.
         These are both workaround steps used to fix a <link
-         xlink:href="http://kb.vmware.com/selfservice/microsites/search.do?cmd=displayKC&amp;externalId=2010507">known issue</link> with the WSDL that was resolved in later versions.</para>
-      <para>To mirror the WSDL from vCenter (or ESXi), create a local file system directory
-        to hold the WSDL files in. You'll need to set the IP address for your vCenter or
-        ESXi host that you'll be mirroring the files from. Setting the following shell
-        variable will let you cut and paste commands from these instructions.
-        <screen><prompt>$</prompt> <userinput>export VMWAREAPI_IP=&lt;your_vsphere_host_ip&gt;</userinput></screen>
+         xlink:href="http://kb.vmware.com/selfservice/microsites/search.do?cmd=displayKC&amp;externalId=2010507"
+         >known issue</link> with the WSDL that was resolved in later versions.
+      </para>
+      <procedure>
+        <title>Mirror WSDL from vCenter (or ESXi)</title>
+        <step>
+          <para>You'll need the IP address for your vCenter or
+          ESXi host that you'll be mirroring the files from. Set the
+          shell variable <code>VMWAREAPI_IP</code> to the IP address
+          to allow you to cut and paste commands from these instructions:
+          <screen><prompt>$</prompt> <userinput>export VMWAREAPI_IP=&lt;your_vsphere_host_ip&gt;</userinput></screen>
+          </para>
+        </step>
+        <step>
+          <para>
+            Create a local file system directory to hold the WSDL files in.
         <screen><prompt>$</prompt> <userinput>mkdir -p /opt/stack/vmware/wsdl/5.0</userinput></screen>
-        Change into the new directory.
+          </para>
+        </step>
+        <step>
+          <para>Change into the new directory.
         <screen><prompt>$</prompt> <userinput>cd /opt/stack/vmware/wsdl/5.0</userinput></screen>
-        Next, we'll mirror all the WSDL files. For that we need a tool that can download the files.
-        <screen><prompt>$</prompt> <userinput>sudo apt-get install wget</userinput></screen>
-        Now that we have a tool to fetch the files for us, we can download them to the local
-        file cache.
+          </para>
+        </step>
+        <step>
+          <para>Install a command line tool that can download the the files like
+          <command>wget</command>. Install it with your OS specific tools.
+          </para>
+        </step>
+        <step>
+          <para>
+            Download the files to the local file cache.
         <programlisting language="bash">wget  --no-check-certificate https://$VMWAREAPI_IP/sdk/vimService.wsdl
-        wget  --no-check-certificate https://$VMWAREAPI_IP/sdk/vim.wsdl
-        wget  --no-check-certificate https://$VMWAREAPI_IP/sdk/core-types.xsd
-        wget  --no-check-certificate https://$VMWAREAPI_IP/sdk/query-messagetypes.xsd
-        wget  --no-check-certificate https://$VMWAREAPI_IP/sdk/query-types.xsd
-        wget  --no-check-certificate https://$VMWAREAPI_IP/sdk/vim-messagetypes.xsd
-        wget  --no-check-certificate https://$VMWAREAPI_IP/sdk/reflect-messagetypes.xsd
-        wget  --no-check-certificate https://$VMWAREAPI_IP/sdk/reflect-types.xsd</programlisting>
-        There will be two files that did not fetch properly reflect-types.xsd and
-        reflect-messagetypes.xsd these two files will need to be stubbed out. The
-        following XML listing can be used to replace the missing file content. The
-        XML parser underneath Python can be very particular and if you put a space
-        in the wrong place it can break the parser. Copy the contents below carefully
-        and watch the formatting carefully.
+wget  --no-check-certificate https://$VMWAREAPI_IP/sdk/vim.wsdl
+wget  --no-check-certificate https://$VMWAREAPI_IP/sdk/core-types.xsd
+wget  --no-check-certificate https://$VMWAREAPI_IP/sdk/query-messagetypes.xsd
+wget  --no-check-certificate https://$VMWAREAPI_IP/sdk/query-types.xsd
+wget  --no-check-certificate https://$VMWAREAPI_IP/sdk/vim-messagetypes.xsd
+wget  --no-check-certificate https://$VMWAREAPI_IP/sdk/reflect-messagetypes.xsd
+wget  --no-check-certificate https://$VMWAREAPI_IP/sdk/reflect-types.xsd</programlisting>
+        There will be two files that did not fetch properly
+        <filename>reflect-types.xsd</filename> and
+        <filename>reflect-messagetypes.xsd</filename>. These two files
+        will need to be stubbed out. The following XML listing can be
+        used to replace the missing file content. The XML parser
+        underneath Python can be very particular and if you put a
+        space in the wrong place it can break the parser. Copy the
+        contents below carefully and watch the formatting carefully.
         <programlisting language="xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-            &lt;schema
-               targetNamespace="urn:reflect"
-               xmlns="http://www.w3.org/2001/XMLSchema"
-               xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-               elementFormDefault="qualified"&gt;
-            &lt;/schema&gt;
+  &lt;schema
+     targetNamespace="urn:reflect"
+     xmlns="http://www.w3.org/2001/XMLSchema"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+     elementFormDefault="qualified"&gt;
+  &lt;/schema&gt;
         </programlisting>
-        Now that the files are locally present, you will need to tell the driver
-        to look for the SOAP service WSDLs in the local file system and not on the
-        remote vSphere server. The following setting should be added to the nova.conf
-        for your nova-compute node.
+          </para>
+        </step>
+        <step>
+          <para>
+            Now that the files are locally present, tell
+            the driver to look for the SOAP service WSDLs in the local
+            file system and not on the remote vSphere server. The
+            following setting should be added to the
+            <filename>nova.conf</filename> for your nova-compute node:
         <programlisting language="ini">[vmware]
-        wsdl_location=file:///opt/stack/vmware/wsdl/5.0/vimService.wsdl
-        </programlisting>
-        </para>
-      <para>Alternatively, download the version appropriate SDK from <link
-        xlink:href="http://www.vmware.com/support/developer/vc-sdk/"
-        >http://www.vmware.com/support/developer/vc-sdk/</link> and copy it into
-        <filename>/opt/stack/vmware</filename>. You should ensure that the WSDL is available,
-        in eg <filename> /opt/stack/vmware/SDK/wsdl/vim25/vimService.wsdl</filename>.
-        Below we will point nova.conf to fetch this WSDL file from the local file system
-        using a URL.</para>
-        <para>When using the VMwareVCDriver (i.e., vCenter) with OpenStack Compute with vSphere
-        version 5.0 or below, nova.conf must include the following extra config option:</para>
+wsdl_location=file:///opt/stack/vmware/wsdl/5.0/vimService.wsdl</programlisting>
+          </para>
+        </step>
+      </procedure>
+      <para>Alternatively, download the version appropriate SDK from
+      <link
+      xlink:href="http://www.vmware.com/support/developer/vc-sdk/"
+      >http://www.vmware.com/support/developer/vc-sdk/</link> and copy
+      it into <filename>/opt/stack/vmware</filename>. You should
+      ensure that the WSDL is available, in for example
+      <filename>/opt/stack/vmware/SDK/wsdl/vim25/vimService.wsdl</filename>.
+      Below we will point <filename>nova.conf</filename> to fetch this
+      WSDL file from the local file system using a URL.</para>
+        <para>When using the VMwareVCDriver (i.e vCenter) with OpenStack Compute with vSphere
+        version 5.0 or below, <filename>nova.conf</filename> must include the following extra config option:</para>
       <programlisting language="ini">[vmware]
-      wsdl_location=file:///opt/stack/vmware/SDK/wsdl/vim25/vimService.wsdl
-      </programlisting>
+wsdl_location=file:///opt/stack/vmware/SDK/wsdl/vim25/vimService.wsdl</programlisting>
     </section>
     <section xml:id="VMwareVCDriver_limitations">
-      <title>Requirements + Limitations</title>
+      <title>Requirements and limitations</title>
       <para>The VMwareVCDriver is new in Grizzly, and as a result there are some important
         deployment requirements and limitations to be aware of. In many cases, these items will be
         addressed in future releases.</para>
@@ -138,15 +167,21 @@ wsdl_location=http://127.0.0.1:8080/vmware/SDK/wsdl/vim25/vimService.wsdl</progr
             are configured, the first one returned via the vSphere API will be used.</para>
         </listitem>
         <listitem>
-          <para>Because a single <systemitem class="service">nova-compute</systemitem> is used per
-            cluster, the nova-scheduler views this as a single host with resources amounting to the
-            aggregate resources of all ESX hosts managed by the cluster. This may result in
-            unexpected behavior depending on your choice of scheduler.</para>
+          <para>Because a single <systemitem
+          class="service">nova-compute</systemitem> is used per
+          cluster, the <systemitem
+          class="service">nova-scheduler</systemitem> views this as a
+          single host with resources amounting to the aggregate
+          resources of all ESX hosts managed by the cluster. This may
+          result in unexpected behavior depending on your choice of
+          scheduler.</para>
         </listitem>
         <listitem>
-          <para>Security Groups are not supported if Nova-Network is used. Security Groups are only
-            supported if the VMware driver is used in conjunction with the OpenStack Networking
-            Service running the Nicira NVP plugin.</para>
+          <para>Security Groups are not supported if <systemitem
+          class="service">nova-network</systemitem> is used. Security
+          Groups are only supported if the VMware driver is used in
+          conjunction with the OpenStack Networking Service running
+          the Nicira NVP plugin.</para>
         </listitem>
       </itemizedlist>
     </section>
@@ -158,24 +193,24 @@ wsdl_location=http://127.0.0.1:8080/vmware/SDK/wsdl/vim25/vimService.wsdl</progr
     <section xml:id="VMWareESXDriver_configuration_options">
       <title>VMWareESXDriver configuration options</title>
       <para>When using the VMwareESXDriver (i.e., no vCenter) with OpenStack Compute, configure
-        nova.conf with the following VMWare-specific config options:</para>
+        <filename>nova.conf</filename> with the following VMWare-specific config options:</para>
 
       <programlisting language="ini">[DEFAULT]
 compute_driver=vmwareapi.VMwareESXDriver
 
 [vmware]
 host_ip=&lt;ESXi host IP&gt;
-host_username=&lt; ESXi host username&gt;
-host_password=&lt; ESXi host password&gt;
+host_username=&lt;ESXi host username&gt;
+host_password=&lt;ESXi host password&gt;
 wsdl_location=http://127.0.0.1:8080/vmware/SDK/wsdl/vim25/vimService.wsdl</programlisting>
       <para>Remember that you will have one <systemitem class="service">nova-compute</systemitem>
         service per ESXi host. It is recommended that this host run as a VM on the same ESXi host it
         is managing.</para>
-      <para>Also note that many of the nova.conf options mentioned elsewhere in this document that
+      <para>Also note that many of the <filename>nova.conf</filename> options mentioned elsewhere in this document that
         are relevant to libvirt do not apply to using this driver.</para>
     </section>
     <section xml:id="VMwareESXDriver_limitations">
-      <title>Requirements + Limitations</title>
+      <title>Requirements and limitations</title>
       <para>The ESXDriver is unable to take advantage of many of the advanced capabilities
         associated with the vSphere platform, namely vMotion, High Availability, and Dynamic
         Resource Scheduler (DRS).</para>
@@ -186,7 +221,7 @@ wsdl_location=http://127.0.0.1:8080/vmware/SDK/wsdl/vim25/vimService.wsdl</progr
     <title>Images with VMware vSphere</title>
     <para>When using either VMware driver, images should be uploaded to the OpenStack Image Service
       in the VMDK format. Both thick and thin images are currently supported and all images must be
-      flat (i.e. contained within 1 file). For example</para>
+      flat (i.e. contained within 1 file). For example:</para>
     <para>To load a thick image with a SCSI adaptor:</para>
     <screen><prompt>$</prompt> <userinput>glance image-create name="ubuntu-thick-scsi" disk_format=vmdk container_format=bare \
 is_public=true --property vmware_adaptertype="lsiLogic" \
@@ -199,7 +234,7 @@ is_public=true --property vmware_adaptertype="ide" \
 --property vmware_ostype="ubuntu64Guest" &lt; unbuntuLTS-thin-flat.vmdk</userinput></screen>
     <para>The complete list of supported vmware disk properties is documented in the Image
       Management section. It's critical that the adaptertype is correct; In fact, the image will not
-      boot with the incorrect adaptertype. If you have the meta-data VMDK file the
+      boot with the incorrect adaptertype. If you have the meta-data VMDK file, the
       ddb.adapterType property specifies the adaptertype. The default adaptertype is "lsilogic"
       which is SCSI.</para>
   </section>
@@ -211,20 +246,24 @@ is_public=true --property vmware_adaptertype="ide" \
     <itemizedlist>
       <listitem>
         <para>If using nova-network with the FlatManager or FlatDHCPManager, before provisioning
-          VMs, create a port group with the same name as the 'flat_network_bridge' value in
-          nova.conf (default is 'br100'). All VM NICs will be attached to this port group.</para>
+          VMs, create a port group with the same name as the <literal>flat_network_bridge</literal> value in
+          <filename>nova.conf</filename> (default is <literal>br100</literal>).
+          All VM NICs will be attached to this port group.</para>
       </listitem>
       <listitem>
         <para>If using nova-network with the VlanManager, before provisioning VMs, make sure the
-          'vlan_interface' configuration option is set to match the ESX host interface
+          <literal>vlan_interface</literal> configuration option is set to match the ESX host interface
           that will handle VLAN-tagged VM traffic. OpenStack Compute will automatically create the
           corresponding port groups.</para>
       </listitem>
       <listitem>
         <para>If using the OpenStack Networking Service, before provisioning VMs, create a port group
-          with the same name as the 'vmware.integration_bridge' value in nova.conf (default is
-          'br-int'). All VM NICs will be attached to this port group for management by the OpenStack
-          Networking Plugin.</para>
+          with the same name as the
+          <literal>vmware.integration_bridge</literal> value in
+          <filename>nova.conf</filename> (default is
+          <literal>br-int</literal>). All VM NICs will be attached to
+          this port group for management by the OpenStack Networking
+          Plugin.</para>
       </listitem>
     </itemizedlist>
   </section>
@@ -240,4 +279,3 @@ is_public=true --property vmware_adaptertype="ide" \
     <xi:include href="tables/nova-vmware.xml"/>
   </section>
 </section>
-
