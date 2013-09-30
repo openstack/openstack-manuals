@@ -5,48 +5,34 @@
     xmlns:xlink="http://www.w3.org/1999/xlink"
     version="5.0"
     xml:id="managing-openstack-object-storage-with-swift-cli">
-    <title>Managing OpenStack Object Storage with CLI
-        Swift</title>
-    <para>In the Object Store (swift) project there is a tool that
-        can perform a variety of tasks on your storage cluster
-        named swift. This client utility can be used for adhoc
-        processing, to gather statistics, list items, update
-        metadata, upload, download and delete files. It is based
-        on the native swift client library client.py.
-        Incorporating client.py into swift provides many benefits
-        such as seamlessly re-authorizing if the current token
-        expires in the middle of processing, retrying operations
-        up to five times and a processing concurrency of 10. All
-        of these things help make the swift tool robust and great
-        for operational use.</para>
-    <section xml:id="swift-acls">
-        <title>Swift ACLs</title>
-        <para>Swift ACLs work with users and accounts. Users have
-            roles on accounts - such as '.admin', which allows
-            full access to all containers and objects under the
-            account. ACLs are set at the container level and
-            support lists for read and write access, which are set
-            with the X-Container-Read and X-Container-Write header
-            respectively.</para>
-        <para>The swift client can be used to set the acls, using
-            the post subcommand with the option '-r' for the read
-            ACL, and '-w' for the write ACL. This example allows
-            the user 'testuser' to read objects in the container:
-            <programlisting>
-        $ swift post -r 'testuser'
-        </programlisting>
-            This could instead be a list of users.</para>
-        <para>If you are using the StaticWeb middleware to allow
+    <title>Manage object storage</title>
+    <para>The OpenStack Object Storage service provides the swift
+        command-line interface (CLI) that enables you to gather
+        statistics, list items, update metadata, upload, download, and
+        delete files. This client is based on the native swift client
+        library, <literal>client.py</literal>, which seamlessly
+        re-authenticates if the current token expires during
+        processing, retries operations multiple times, and provides a
+        processing concurrency of 10. </para>
+        <para>Users have roles on accounts. For example, the admin
+        role enables full access to all containers and objects in an
+        account. </para>
+    <para>You can set access control lists (ACLs) are set at the container level
+        and support lists for read and write access, which are set
+        with the <literal>X-Container-Read</literal> and
+            <literal>X-Container-Write</literal> header
+        respectively.</para>
+        <para>You can use the swift client to set the ACLs by using the
+            <command>post</command> subcommand with the <parameter>-r</parameter> parameter for the read access and
+            <parameter>-w</parameter> option for the write access. The following example enables the testuser user
+            to read objects in the container:</para>
+            <screen><prompt>$</prompt> <userinput>swift post -r 'testuser'</userinput></screen>
+<para>You can also use this command with a list of users.</para>
+        <para>If you use the StaticWeb middleware to enable
             OpenStack Object Storage to serve public web content,
-            you should also be aware of the ACL syntax for
-            managing allowed referrers. The syntax is '.r:'
+            be aware of the ACL syntax for
+            managing allowed referrers. The syntax is <literal>.r:</literal>
             followed by a list of allowed referrers. For example,
-            this command allows all referring domains access to
-            the object:
-            <programlisting>
-        $ swift post -r '.r:*'
-        </programlisting>
-        </para>
-    </section>
-
+            the following command gives object access to all referring domains access:</para>
+            <screen><prompt>$</prompt> <userinput>swift post -r '.r:*'</userinput></screen>
 </section>

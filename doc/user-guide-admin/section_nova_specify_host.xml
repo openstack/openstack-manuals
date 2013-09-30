@@ -3,32 +3,53 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="specify-host-to-boot-instances-on">
-    <title>Select a specific host to boot instances on</title>
-    <para>If you have the appropriate permissions, you can select the specific host where the
-        instance will be launched. This is done using the <literal>--availability_zone
-            <replaceable>zone</replaceable>:<replaceable>host</replaceable></literal>
-        arguments to the <command>nova boot</command> command. For example:</para>
-    <para>
+    <title>Select on which host instances are launched</title>
+    <para>With the appropriate permissions, you can select on which
+        host instances are launched and which roles can boot instances
+        on this host. </para>
+   <procedure><step><para>To select the host where instances are launched, use the
+                    <literal>--availability_zone
+                        <replaceable>zone</replaceable>:<replaceable>host</replaceable></literal>
+                parameter on n the <command>nova boot</command>
+                command, </para>
+            <para>For example:</para>  
         <screen><prompt>$</prompt> <userinput>nova boot --image &lt;uuid&gt; --flavor m1.tiny --key_name test --availability-zone nova:server2</userinput></screen>
-    </para>
-    <para>Starting with the Grizzly release, you can specify which roles are permitted to boot
-        an instance to a specific host with the <literal>create:forced_host</literal> setting
-        within <filename>policy.json</filename> on the desired roles. By default, only the admin
-        role has this setting enabled.</para>
-    <para>You can view the list of valid compute hosts by using the <command>nova
-        hypervisor-list</command> command, for
-        example:<screen><prompt>$</prompt> <userinput>nova hypervisor-list</userinput>
+    </step><step><para>To specify which roles can launch an instance on a specified
+                host, enable the <literal>create:forced_host</literal>
+                option in the <filename>policy.json</filename> file.
+                By default, this option is enabled for only the admin
+                role.</para></step>
+<step>
+    <para>To view the list of valid compute hosts, use the
+                    <command>nova hypervisor-list</command> command,
+                as follows:</para><screen><prompt>$</prompt> <userinput>nova hypervisor-list</userinput>
 <computeroutput>+----+---------------------+
 | ID | Hypervisor hostname |
 +----+---------------------+
 | 1  | server2             |
 | 2  | server3             |
 | 3  | server4             |
-+----+---------------------+</computeroutput></screen></para>
++----+---------------------+</computeroutput></screen></step></procedure>
     <note>
-        <para>The <literal>--availability_zone
-            <replaceable>zone</replaceable>:<replaceable>host</replaceable></literal>
-            flag replaced the <literal>--force_hosts</literal> scheduler hint for specifying a
-            specific host, starting with the Folsom release.</para>
+        <para>
+            <itemizedlist>
+                <listitem>
+                    <para>Beginning in the Folsom release, the
+                            <literal>--availability_zone
+                                <replaceable>zone</replaceable>:<replaceable>host</replaceable></literal>
+                        parameter replaces the
+                            <literal>--force_hosts</literal> scheduler
+                        hint parameter.</para>
+                </listitem>
+                <listitem>
+                    <para>Beginning in the Grizzly release, you can
+                        enable the
+                            <literal>create:forced_host</literal>
+                        option in the <filename>policy.json</filename>
+                        file to specify which roles can launch an
+                        instance on a specified host.</para>
+                </listitem>
+            </itemizedlist>
+        </para>
     </note>
 </section>
