@@ -988,42 +988,29 @@ header: Date: Thu, 13 Sep 2012 20:27:36 GMT
                     role="italic">not</emphasis> assigned to any of
                 the host's network interfaces, only to the VM's
                 guest-side interface.</para>
-
-            <para>In any setup with flat networking, the host(-s) with
-                nova-network on it is (are) responsible for forwarding
-                traffic from the private network. Compute can
-                determine the NAT entries for each network when you
-                have <literal>fixed_range=''</literal> in your
-                    <filename>nova.conf</filename>. Sometimes NAT is
-                not used, such as when fixed_range is configured with
-                all public IPs and a hardware router is used (one of
-                the HA options). Such host(-s) needs to have
-                    <literal>br100</literal> configured and physically
-                connected to any other nodes that are hosting VMs. You
-                must set the <literal>flat_network_bridge</literal>
-                option or create networks with the bridge parameter in
-                order to avoid raising an error. Compute nodes have
-                iptables/ebtables entries created for each project and
-                instance to protect against IP/MAC address spoofing
-                and ARP poisoning. <note>
-                    <para>To use the new dynamic
-                            <literal>fixed_range</literal> setup in
-                        Grizzly, set <literal>fixed_range=''</literal>
-                        in your <filename>nova.conf</filename>. For
-                        backwards compatibility, Grizzly supports the
-                            <literal>fixed_range</literal> option,
-                        which performs the default logic from Folsom
-                        and earlier releases.</para>
-                </note></para>
-            <note>
-                <para>In single-host Flat DHCP mode you <emphasis
-                        role="italic">will</emphasis> be able to ping
-                    VMs through their fixed IP from the nova-network
-                    node, but you <emphasis role="italic"
-                        >cannot</emphasis> ping them from the compute
-                    nodes. This is expected behavior.</para>
-            </note>
-
+        <para>In any setup with flat networking, the host(-s) with
+            nova-network on it is (are) responsible for forwarding
+            traffic from the private network. Compute can determine
+            the NAT entries for each network, though sometimes NAT is not
+            used, such as when configured with all
+            public IPs or a hardware router is used (one of the HA
+            options). Such host(-s) needs to have
+                <literal>br100</literal> configured and physically
+            connected to any other nodes that are hosting VMs. You
+            must set the <literal>flat_network_bridge</literal> option
+            or create networks with the bridge parameter in order to
+            avoid raising an error. Compute nodes have
+            iptables/ebtables entries created for each project and instance
+            to protect against IP/MAC address spoofing and ARP
+            poisoning. </para>
+        <note>
+            <para>In single-host Flat DHCP mode you <emphasis
+                    role="italic">will</emphasis> be able to ping VMs
+                through their fixed IP from the nova-network node, but
+                you <emphasis role="italic">cannot</emphasis> ping them
+                from the compute nodes. This is
+                expected behavior.</para>
+        </note>
             <para><emphasis role="bold">VLAN Network Mode is the
                     default mode</emphasis> for OpenStack Compute. In
                 this mode, Compute creates a VLAN and bridge for each
