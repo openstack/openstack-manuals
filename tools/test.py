@@ -540,11 +540,15 @@ if __name__ == '__main__':
     parser.add_argument("--check-niceness", help="Check the niceness of "
                         "files, for example whitespace.",
                         action="store_true")
-    parser.add_argument("--check-all", help="Run all checks",
+    parser.add_argument("--check-all", help="Run all checks "
+                        "(default if no arguments are given)",
                         action="store_true")
     parser.add_argument("--non-voting", help="Do not exit on failures",
                         action="store_false")
     parser.add_argument("--verbose", help="Verbose execution",
                         action="store_true")
     args = parser.parse_args()
+    if (len(sys.argv) == 1):
+        # No arguments given, use check-all
+        args.check_all = True
     main(args)
