@@ -363,24 +363,66 @@ def logging_build_book(result):
 
 
 def build_book(book):
-    """Build a single book"""
+    """Build book(s) in directory book"""
 
     os.chdir(book)
     result = True
     returncode = 0
+    base_book = os.path.basename(book)
     try:
         shutil.rmtree(os.path.expanduser("~/.fop"),
                       ignore_errors=True)
+        # Clean first and then build so that the output of all guides
+        # is available
         output = subprocess.check_output(
-            ["mvn", "clean", "generate-sources"],
+            ["mvn", "clean"],
             stderr=subprocess.STDOUT
         )
+        if base_book == "install-guide":
+            # Build Fedora
+            base_book = "install-guide (for Fedora)"
+            output = subprocess.check_output(
+                ["mvn", "generate-sources", "-B",
+                 "-Doperating.system=yum",
+                 "-Dprofile.os='centos;fedora;rhel'"],
+                stderr=subprocess.STDOUT
+            )
+            # Build openSUSE
+            base_book = "install-guide (for openSUSE)"
+            output = subprocess.check_output(
+                ["mvn", "generate-sources", "-B",
+                 "-Doperating.system=zypper", "-Dprofile.os=opensuse"],
+                stderr=subprocess.STDOUT
+            )
+            # Build Ubuntu
+            base_book = "install-guide (for Ubuntu)"
+            output = subprocess.check_output(
+                ["mvn", "generate-sources", "-B",
+                 "-Doperating.system=apt", "-Dprofile.os=ubuntu"],
+                stderr=subprocess.STDOUT
+            )
+            # Success
+            base_book = "install-guide (for Fedora, openSUSE, Ubuntu)"
+        elif base_book == "high-availability-guide":
+            output = subprocess.check_output(
+                ["../../tools/build-ha-guide.sh", ],
+                stderr=subprocess.STDOUT
+            )
+            output = subprocess.check_output(
+                ["mvn", "generate-sources", "-B"],
+                stderr=subprocess.STDOUT
+            )
+        else:
+            output = subprocess.check_output(
+                ["mvn", "generate-sources", "-B"],
+                stderr=subprocess.STDOUT
+            )
     except subprocess.CalledProcessError as e:
         output = e.output
         returncode = e.returncode
         result = False
 
-    return (os.path.basename(book), result, output, returncode)
+    return (base_book, result, output, returncode)
 
 
 def build_affected_books(rootdir, book_exceptions, file_exceptions,
@@ -435,7 +477,7 @@ def build_affected_books(rootdir, book_exceptions, file_exceptions,
                     # pom.xml and pom.xml is not checked for
                     # modification of included files.
                     doc = etree.parse(path)
-    
+
                     # Check for inclusion of files as part of imagedata
                     for node in doc.findall(
                             '//{http://docbook.org/ns/docbook}imagedata'):
@@ -444,10 +486,10 @@ def build_affected_books(rootdir, book_exceptions, file_exceptions,
                                 os.path.abspath(href) in modified_files):
                             affected_books.append(book_root)
                             break
-    
+
                     if book_root in affected_books:
                         break
-    
+
                     # Check for inclusion of files as part of xi:include
                     ns = {"xi": "http://www.w3.org/2001/XInclude"}
                     for node in doc.xpath('//xi:include', namespaces=ns):
@@ -458,7 +500,7 @@ def build_affected_books(rootdir, book_exceptions, file_exceptions,
                             break
                 if book_root in affected_books:
                     break
-    
+
     if not force and affected_books:
         books = affected_books
     else:
@@ -493,6 +535,7 @@ def build_affected_books(rootdir, book_exceptions, file_exceptions,
     if voting and any_failures:
         sys.exit(1)
     print("Building finished.")
+
 
 def main(args):
 
