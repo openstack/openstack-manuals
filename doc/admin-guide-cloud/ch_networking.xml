@@ -3,6 +3,7 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="ch_networking">
+    <?dbhtml stop-chunking?>
     <title>Networking</title>
     <para>Learn Networking concepts, architecture, and basic and
         advanced neutron and nova command-line interface (CLI)
@@ -14,8 +15,7 @@
             API for defining network connectivity and addressing in
             the cloud. The Networking service enables operators to
             leverage different networking technologies to power their
-            cloud networking.</para>
-        <para>The Networking service also provides an API to configure
+            cloud networking. The Networking service also provides an API to configure
             and manage a variety of network services ranging from L3
             forwarding and NAT to load balancing, edge firewalls, and
             IPSEC VPN.</para>
@@ -59,8 +59,7 @@
             <para>You can configure rich network topologies by
                 creating and configuring networks and subnets, and
                 then instructing other OpenStack services like Compute
-                to attach virtual devices to ports on these networks.
-                In particular, Networking supports each tenant having
+                to attach virtual devices to ports on these networks.</para><para>In particular, Networking supports each tenant having
                 multiple private networks, and allows tenants to
                 choose their own IP addressing scheme (even if those
                 IP addresses overlap with those used by other
@@ -195,7 +194,6 @@
                 number of plug-ins, the cloud administrator is able to
                 weigh different options and decide which networking
                 technology is right for the deployment.</para>
-            <?hard-pagebreak?>
             <para>Not all Networking plug-ins are compatible with all
                 possible Compute drivers:</para>
             <table rules="all">
@@ -333,7 +331,6 @@
             with each other and with other OpenStack services.</para>
         <section xml:id="arch_overview">
             <title>Overview</title>
-
             <para>Networking is a standalone service, just like other
                 OpenStack services such as Compute, Image service,
                 Identity service, or the Dashboard. Like those
@@ -433,7 +430,7 @@
             <title>Network connectivity for physical hosts</title>
             <mediaobject>
                 <imageobject>
-                    <imagedata scale="60"
+                    <imagedata scale="50"
                         fileref="../common/figures/Neutron-PhysNet-Diagram.png"
                     />
                 </imageobject>
@@ -552,6 +549,7 @@
                             first available IP address.</para>
                     </listitem>
                 </itemizedlist>
+                <?hard-pagebreak?>
                 <para>The following table summarizes the attributes
                     available for each networking abstraction. For
                     information about API abstraction and operations,
@@ -734,6 +732,7 @@
                         </tr>
                     </tbody>
                 </table>
+                <?hard-pagebreak?>
                 <table rules="all">
                     <caption>Port attributes</caption>
                     <col width="20%"/>
@@ -913,6 +912,7 @@
                     <screen><prompt>$</prompt> <userinput>keystone tenant-list</userinput></screen>
                 </note>
             </section>
+            <?hard-pagebreak?>
             <section xml:id="advanced_networking">
                 <title>Advanced Networking operations</title>
                 <para>The following table shows example neutron
@@ -968,6 +968,7 @@
                 </table>
             </section>
         </section>
+        <?hard-pagebreak?>
         <section xml:id="using_nova_with_neutron">
             <title>Use Compute with Networking</title>
             <section xml:id="basic_workflow_with_nova">
@@ -1110,8 +1111,10 @@
                                 <command>ping</command> and
                                 <command>ssh</command> access to your
                             VMs.</para>
-                        <screen><prompt>$</prompt> <userinput>neutron security-group-rule-create --protocol icmp --direction ingress default</userinput>
-<prompt>$</prompt> <userinput>neutron security-group-rule-create --protocol tcp --port-range-min 22 --port-range-max 22 --direction ingress default</userinput></screen>
+                        <screen><prompt>$</prompt> <userinput>neutron security-group-rule-create --protocol icmp \
+    --direction ingress default</userinput></screen>
+                        <screen><prompt>$</prompt> <userinput>neutron security-group-rule-create --protocol tcp --port-range-min 22 \
+    --port-range-max 22 --direction ingress default</userinput></screen>
                     </listitem>
                     <listitem>
                         <para>Does not implement Networking security

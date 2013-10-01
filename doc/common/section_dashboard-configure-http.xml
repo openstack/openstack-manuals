@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="configure-dashboard-http"
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+    <title>Configure the dashboard for HTTP</title>
+    <?dbhtml stop-chunking?>
+    <para>You can configure the dashboard for a simple HTTP deployment. The standard installation
+        uses a non-encrypted HTTP channel.</para>
+    <procedure xml:id="dashboard-config-http">
+            <step>
+                <para>Specify the host for your OpenStack Identity
+                    Service endpoint in the
+                        <filename>/etc/openstack-dashboard/local_settings.py</filename>
+                    file with the <literal>OPENSTACK_HOST</literal>
+                    setting.</para>
+                <para>The following example shows this setting:</para>
+                <programlisting language="python"><?db-font-size 65%?><xi:include parse="text" href="samples/local_settings.py"/></programlisting>
+                <para>The service catalog configuration in the
+                Identity Service determines whether a service appears
+                in the dashboard. For the full listing, see
+                        <link
+                        xlink:href="http://docs.openstack.org/developer/horizon/topics/settings.html"
+                        >Horizon Settings and
+                    Configuration</link>.</para>
+            </step>
+            <step>
+                <para>Restart Apache and memcached:</para>
+                <screen><prompt>#</prompt> <userinput>service apache2 restart</userinput>
+<prompt>#</prompt> <userinput>service memcached restart</userinput></screen>
+            </step>
+        </procedure>
+</section>
+
