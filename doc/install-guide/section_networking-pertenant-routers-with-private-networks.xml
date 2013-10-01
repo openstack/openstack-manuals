@@ -547,8 +547,9 @@ neutron --os-tenant-name TenantA --os-username UserA --os-password password\
   --os-auth-url=http://localhost:5000/v2.0 router-interface-add \
   TenantA-R1 51e2c223-0492-4385-b6e9-83d4e6d10657</userinput></screen>
   <para>Added interface to router TenantA-R1</para>
-                        <screen><prompt>$</prompt> <userinput>neutron router-gateway-set TenantA-R1 Ext-Net</userinput></screen>
-                        <para><emphasis role="bold"> We are using admin user to run last command since our external network is owned by admin tenant.</emphasis></para>
+                        <screen><prompt>$</prompt> <userinput>neutron --os-tenant-name TenantA --os-username UserA --os-password password \
+  --os-auth-url=http://localhost:5000/v2.0 \
+  router-gateway-set TenantA-R1 Ext-Net</userinput></screen>
                       </listitem>
                             <listitem>
                                 <para>Associate a floating IP for
@@ -726,8 +727,9 @@ rtt min/avg/max/mdev = 0.898/15.621/45.027/20.793 ms
 <prompt>$</prompt> <userinput>neutron --os-tenant-name TenantC --os-username UserC --os-password password \
   --os-auth-url=http://localhost:5000/v2.0 router-interface-add \
   TenantC-R1 38f0b2f0-9f98-4bf6-9520-f4abede03300</userinput></screen>
-                        <screen><prompt>$</prompt> <userinput>neutron router-gateway-set TenantC-R1 Ext-Net</userinput></screen>
-                       <para><emphasis role="bold"> We are using admin user to run last command since our external network is owned by admin tenant.</emphasis></para>
+                        <screen><prompt>$</prompt> <userinput>neutron --os-tenant-name TenantC --os-username UserC --os-password password \
+  --os-auth-url=http://localhost:5000/v2.0 \
+  router-gateway-set TenantC-R1 Ext-Net</userinput></screen>
                       </listitem>
                             <listitem>
                                 <para>Checkpoint: ping from within TenantC's servers</para>
