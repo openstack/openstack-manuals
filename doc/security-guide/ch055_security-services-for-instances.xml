@@ -27,7 +27,22 @@
     <section xml:id="ch055_security-services-for-instances-idp128240">
       <title>Scheduling Instances to Nodes</title>
       <para>Before an instance is created, a host for the image instantiation must be selected. This selection is performed by the <systemitem class="service">nova-scheduler</systemitem> which determines how to dispatch compute and volume requests.</para>
-      <para>The default nova scheduler in Grizzly is the Filter Scheduler, although other schedulers exist (see the section <link xlink:href="http://docs.openstack.org/trunk/openstack-compute/admin/content/other-schedulers.html">Other Schedulers</link> in the <citetitle>OpenStack Compute Administration Guide</citetitle>). The filter scheduler works in collaboration with 'filters' to decide where an instance should be started. This process of host selection allows administrators to fulfil many different security requirements. Depending on the cloud deployment type for example, one could choose to have tenant instances reside on the same hosts whenever possible if data isolation was a primary concern, conversely one could attempt to have instances for a tenant reside on as many different hosts as possible for availability or fault tolerance reasons. The following diagram demonstrates how the filter scheduler works:</para>
+      <para>The default nova scheduler in Grizzly is the Filter
+      Scheduler, although other schedulers exist (see the section
+      <link
+      xlink:href="http://docs.openstack.org/trunk/config-reference/content/section_compute-scheduler.html">Scheduling</link>
+      in the <citetitle>OpenStack Configuration
+      Reference</citetitle>). The filter scheduler works in
+      collaboration with 'filters' to decide where an instance should
+      be started. This process of host selection allows administrators
+      to fulfil many different security requirements. Depending on the
+      cloud deployment type for example, one could choose to have
+      tenant instances reside on the same hosts whenever possible if
+      data isolation was a primary concern, conversely one could
+      attempt to have instances for a tenant reside on as many
+      different hosts as possible for availability or fault tolerance
+      reasons. The following diagram demonstrates how the filter
+      scheduler works:</para>
       <para><inlinemediaobject><imageobject role="html">
             <imagedata contentdepth="400" contentwidth="550" fileref="static/filteringWorkflow1.png" format="PNG" scalefit="1"/>
           </imageobject>
@@ -36,12 +51,20 @@
           </imageobject>
 </inlinemediaobject></para>
       <para>The use of scheduler filters may be used to segregate customers, data, or even discard machines of the cloud that cannot be attested as secure. This generally applies to all OpenStack projects offering a scheduler. When building a cloud, you may choose to implement scheduling filters for a variety of security-related purposes.</para>
-      <para>Below we highlight a few of the filters that may be useful in a security context, depending on your requirements, the full set of filter documentation is documented in the <link xlink:href="http://docs.openstack.org/trunk/openstack-compute/admin/content/scheduler-filters.html">Scheduler Filters</link> section of the <citetitle>OpenStack Compute Administration Guide</citetitle></para>
+      <para>Below we highlight a few of the filters that may be useful in a security context, depending on your requirements, the full set of filter documentation is documented in the <link xlink:href="http://docs.openstack.org/trunk/config-reference/content/filter-scheduler.html">Filter Scheduler</link> section of the <citetitle>OpenStack Configuration Reference</citetitle>.</para>
       <para><emphasis role="bold">Tenant Driven Whole Host Reservation</emphasis></para>
       <para>There currently exists a <link xlink:href="https://blueprints.launchpad.net/nova/+spec/whole-host-allocation">blueprint for whole host reservation</link> -  This would allow a tenant to exclusively reserve hosts for only it's instances, incurring extra costs.</para>
       <section xml:id="ch055_security-services-for-instances-idp140080">
         <title>Host Aggregates</title>
-        <para>While not a filter in themselves, host aggregates allow administrators to assign key-value pairs to groups of machines. This allows cloud administrators, not users, to partition up their compute host resources. Each node can have multiple aggregates (see the <link xlink:href="http://docs.openstack.org/trunk/openstack-compute/admin/content/host-aggregates.html">Host Aggregates</link> section of the <citetitle>OpenStack Compute Administration Guide</citetitle> for more information on creating and managing aggregates).</para>
+        <para>While not a filter in themselves, host aggregates allow
+        administrators to assign key-value pairs to groups of
+        machines. This allows cloud administrators, not users, to
+        partition up their compute host resources. Each node can have
+        multiple aggregates (see the <link
+        xlink:href="http://docs.openstack.org/trunk/config-reference/content/host-aggregates.html">Host
+        Aggregates</link> section of the <citetitle>OpenStack
+        Configuration Reference</citetitle> for more information on
+        creating and managing aggregates).</para>
       </section>
       <section xml:id="ch055_security-services-for-instances-idp142048">
         <title>AggregateMultiTenancyIsolation</title>
@@ -77,10 +100,10 @@ wget http://mirror.anl.gov/pub/ubuntu-iso/CDs/precise/SHA256SUMS.gpg
 gpg --keyserver hkp://keyserver.ubuntu.com --recv-keys 0xFBB75451
 gpg --verify SHA256SUMS.gpg SHA256SUMSsha256sum -c SHA256SUMS 2&gt;&amp;1 | grep OK
         </screen>
-        <para>The second option is to use the <link xlink:href="http://docs.openstack.org/trunk/openstack-compute/admin/content/creating-custom-images.html">OpenStack guide for building images</link>. In this case, you will want to follow your organizations OS hardening guidelines or those provided by a trusted third-party such as the <link xlink:href="http://iase.disa.mil/stigs/os/unix/red_hat.html">RHEL6 STIG</link>.</para>
+        <para>The second option is to use the <link xlink:href="http://docs.openstack.org/trunk/image-guide/content/"><citetitle>OpenStack Virtual Maschine Image Guide</citetitle></link>. In this case, you will want to follow your organizations OS hardening guidelines or those provided by a trusted third-party such as the <link xlink:href="http://iase.disa.mil/stigs/os/unix/red_hat.html">RHEL6 STIG</link>.</para>
         <para>The final option is to use an automated image builder. The following example uses the Oz image builder. The OpenStack community has recently created a newer tool worth investigating: disk-image-builder. We have not evaluated this tool from a security perspective.</para>
         <para>Example of RHEL 6 CCE-26976-1 which will help implement NIST 800-53 Section <emphasis>AC-19(d) in</emphasis> Oz.</para>
-        <screen> 
+        <screen>
 &lt;template&gt;
 &lt;name&gt;centos64&lt;/name&gt;
 &lt;os&gt;
