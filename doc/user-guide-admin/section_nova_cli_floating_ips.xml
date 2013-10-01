@@ -4,8 +4,9 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
     <title>Manage IP addresses</title>
-    <para>Each instance can have a private, or fixed, IP address and a
-        public, or floating, one.</para>
+    <para>Each instance can have a private, or fixed, IP address and an IP
+        address that is movable from instance-to-instance, (often public),
+        called a floating IP address.</para>
     <para>Private IP addresses are used for communication between
         instances, and public ones are used for communication with the
         outside world.</para>
@@ -57,7 +58,7 @@
             project</title>
         <step>
             <para>If an IP is already associated with an instance, the
-                output also shows the IP for the instance, thefixed IP
+                output also shows the IP for the instance, the fixed IP
                 address for the instance, and the name of the pool
                 that provides the floating IP address.</para>
             <screen><prompt>$</prompt> <userinput>nova floating-ip-list</userinput></screen>
@@ -101,6 +102,15 @@
                 you must specify the same arguments that you used to
                 assign the IP.</para>
             <screen><prompt>$</prompt> <userinput>nova remove-floating-ip INSTANCE_NAME_OR_ID FLOATING_IP</userinput></screen>
+        </step>
+    </procedure>
+    <procedure>
+        <title>To assign a fixed IP address to a floating address from an
+            instance</title>
+        <step>
+            <para>To allow the floating
+                IP to be associated with a specific fixed IP, add the fixed IP address as an optional parameter.</para>
+            <screen><prompt>$</prompt> <userinput>nova add-floating-ip --fixed-address=<replaceable>FIXED_IP_ADDRESS</replaceable> INSTANCE_NAME_OR_ID FLOATING_IP</userinput></screen>
         </step>
     </procedure>
 </section>
