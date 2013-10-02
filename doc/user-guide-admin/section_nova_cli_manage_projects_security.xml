@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="nova_cli_manage_projects_security">
+    <?dbhtml stop-chunking?>
+    <title>Manage project security</title>
+    <para>Security groups are sets of IP filter rules that are applied to all project instances, and
+        which define networking access to the instance. Group rules are project specific; project
+        members can edit the default rules for their group and add new rule sets.</para>
+    <para>All projects have a "default" security group which is applied to any instance that has no
+        other defined security group. Unless you change the default, this security group denies all
+        incoming traffic and allows only outgoing traffic to your instance.</para>
+    <para>
+        <note>
+            <para>For information about updating rules using the dashboard, see <xref
+                    linkend="dashboard_manage_projects_security"/>.</para>
+        </note>
+    </para>
+    <para>You can use the <code>allow_same_net_traffic</code> option in the
+            <filename>/etc/nova/nova.conf</filename> file to globally control whether the rules
+        applies to hosts which share a network.</para>
+    <para>If set to:</para>
+    <para>
+        <itemizedlist>
+            <listitem>
+                <para><code>True</code> (default), hosts on the same subnet are not filtered and are allowed to
+                    pass all types of traffic between them. On a flat network, this allows all
+                    instances from all projects unfiltered communication. With VLAN networking, this
+                    allows access between instances within the same project. You can also simulate
+                    this setting by configuring the default security group to allow all traffic from
+                    the subnet.</para>
+            </listitem>
+            <listitem>
+                <para><code>False</code>, security groups are enforced for all connections.</para>
+            </listitem>
+        </itemizedlist>
+    </para>
+    <para>Additionally, the number of maximum rules per security group is controlled by the
+            <code>security_group_rules</code> and the number of allowed security groups
+        per project is controlled by the <code>security_groups</code> quota (see <xref
+            linkend="cli_set_quotas"/>).</para>
+    <procedure>
+        <title>List and view current security groups</title>
+        <para>From the command line you can get a list of security groups for the project you're
+            acting in using the nova command:</para>
+        <step>
+            <para>Ensure your system variables are set for the user and tenant for which you are
+                checking security group rules. For example:
+                <programlisting>export OS_USERNAME=demo00
+export OS_TENANT_NAME=tenant01</programlisting></para>
+        </step>
+        <step>
+            <para>Output security groups, as follows:</para>
+            <screen><prompt>$</prompt> <userinput>nova secgroup-list</userinput>
+<computeroutput>+---------+-------------+
+| Name    | Description |
++---------+-------------+
+| default | default     |
+| open    | all ports   |
++---------+-------------+</computeroutput></screen>
+        </step>
+        <step>
+            <para>View the details of a group, as follows:</para>
+            <para>
+                <screen><prompt>$</prompt> <userinput>nova secgroup-list-rules <replaceable>groupName</replaceable></userinput></screen>
+            </para>
+            <para>For example:</para>
+            <screen><prompt>$</prompt> <userinput>nova secgroup-list-rules open</userinput>
+<computeroutput>+-------------+-----------+---------+-----------+--------------+
+ | IP Protocol | From Port | To Port | IP Range  | Source Group |
+ +-------------+-----------+---------+-----------+--------------+
+ | icmp        | -1        | 255     | 0.0.0.0/0 |              |
+ | tcp         | 1         | 65535   | 0.0.0.0/0 |              |
+ | udp         | 1         | 65535   | 0.0.0.0/0 |              |
+ +-------------+-----------+---------+-----------+--------------+ </computeroutput></screen>
+            <para>These rules are all "allow" type rules as the default is deny. The first column is
+                the IP protocol (one of icmp, tcp, or udp) the second and third columns specify the
+                affected port range. The third column specifies the IP range in CIDR format. This
+                example shows the full port range for all protocols allowed from all IPs.</para>
+        </step>
+    </procedure>
+    <procedure>
+        <title>Create a security group</title>
+        <para>When adding a new security group, you should pick a descriptive but brief name. This
+            name shows up in brief descriptions of the instances that use it where the longer
+            description field often does not. For example, seeing that an instance is using security
+            group "http" is much easier to understand than "bobs_group" or "secgrp1".</para>
+        <step>
+            <para>Ensure your system variables are set for the user and tenant for which you are
+                checking security group rules.</para>
+        </step>
+        <step>
+            <para>Add the new security group, as follows:</para>
+            <para>
+                <screen><prompt>$</prompt> <userinput>nova secgroup-create <replaceable>GroupName Description</replaceable></userinput></screen>
+            </para>
+            <para>For example:</para>
+            <para>
+                <screen><prompt>$</prompt> <userinput>nova secgroup-create global_http "Allows Web traffic anywhere on the Internet."</userinput>
+<computeroutput>+--------------------------------------+-------------+----------------------------------------------+
+| Id                                   | Name        | Description                                  |
++--------------------------------------+-------------+----------------------------------------------+
+| 1578a08c-5139-4f3e-9012-86bd9dd9f23b | global_http | Allows Web traffic anywhere on the Internet. |
++--------------------------------------+-------------+----------------------------------------------+</computeroutput></screen>
+            </para>
+        </step>
+        <step>
+            <para>Add a new group rule, as follows:</para>
+            <para>
+                <screen><prompt>$</prompt> <userinput>nova secgroup-add-rule <replaceable>secGroupName ip-protocol from-port to-port CIDR</replaceable></userinput></screen>
+            </para>
+            <para>The arguments are positional, and the "from-port" and "to-port" arguments specify
+                the local port range connections are allowed to access, not the source and
+                destination ports of the connection. For example:</para>
+            <para>
+                <screen><prompt>$</prompt> <userinput>nova secgroup-add-rule global_http tcp 80 80 0.0.0.0/0</userinput>
+<computeroutput>+-------------+-----------+---------+-----------+--------------+
+| IP Protocol | From Port | To Port | IP Range  | Source Group |
++-------------+-----------+---------+-----------+--------------+
+| tcp         | 80        | 80      | 0.0.0.0/0 |              |
++-------------+-----------+---------+-----------+--------------+</computeroutput></screen>
+            </para>
+            <para>You can create complex rule sets by creating additional rules. For example, if you
+                want to pass both http and https traffic, run:</para>
+            <screen><prompt>$</prompt> <userinput>nova secgroup-add-rule global_http tcp 443 443 0.0.0.0/0</userinput>
+<computeroutput>+-------------+-----------+---------+-----------+--------------+
+| IP Protocol | From Port | To Port | IP Range  | Source Group |
++-------------+-----------+---------+-----------+--------------+
+| tcp         | 443       | 443     | 0.0.0.0/0 |              |
++-------------+-----------+---------+-----------+--------------+</computeroutput></screen>
+            <para>Despite only outputting the newly added rule, this operation is additive (both
+                rules are created and enforced).</para>
+        </step>
+        <step>
+            <para>View all rules for the new security group, as follows:</para>
+            <screen><prompt>$</prompt> <userinput>nova secgroup-list-rules global_http</userinput>
+<computeroutput>+-------------+-----------+---------+-----------+--------------+
+| IP Protocol | From Port | To Port | IP Range  | Source Group |
++-------------+-----------+---------+-----------+--------------+
+| tcp         | 80        | 80      | 0.0.0.0/0 |              |
+| tcp         | 443       | 443     | 0.0.0.0/0 |              |
++-------------+-----------+---------+-----------+--------------+</computeroutput></screen>
+        </step>
+    </procedure>
+    <procedure>
+        <title>Delete a Security Group</title>
+        <step>
+            <para>Ensure your system variables are set for the user and tenant for which you are
+                deleting a security group.</para>
+        </step>
+        <step>
+            <para>Delete the new security group, as follows:</para>
+            <para>
+                <screen><prompt>$</prompt> <userinput>nova secgroup-delete <replaceable>GroupName</replaceable></userinput></screen>
+            </para>
+            <para>For example:</para>
+            <para>
+                <screen><prompt>$</prompt> <userinput>nova secgroup-create global_http</userinput></screen>
+            </para>
+        </step>
+    </procedure>
+    <procedure>
+        <title>Create security group rules for a cluster of instances</title>
+        <para>SourceGroups are a special, dynamic way of defining the CIDR of allowed sources. The user
+            specifies a SourceGroup (Security Group name), and all the users' other Instances using the
+            specified SourceGroup are selected dynamically. This alleviates the need for individual
+            rules to allow each new member of the cluster.</para>
+        <step><para>Ensure your system variables are set for the user and tenant for which you are
+            deleting a security group.</para></step>
+        <step><para>Add a source group, as follows:</para>
+            <para>
+                <screen><prompt>$</prompt> <userinput>nova secgroup-add-group-rule <replaceable>secGroupName source-group ip-protocol from-port to-port</replaceable></userinput></screen>
+            </para>
+            <para>For example:</para>
+            <programlisting><prompt>$</prompt> nova secgroup-add-group-rule cluster global-http tcp 22 22</programlisting>
+            <para>The <code>cluster</code> rule allows ssh access from any other
+                instance that uses the <code>global-http</code> group.</para>
+        </step>
+    </procedure>
+</section>
