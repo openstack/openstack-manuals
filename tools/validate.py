@@ -169,6 +169,24 @@ def only_www_touched():
     return www_changed and not other_changed
 
 
+def ha_guide_touched():
+    """Check whether files in high-availability-guide directory are touched"""
+
+    try:
+        args = ["git", "diff", "--name-only", "HEAD~1", "HEAD"]
+        modified_files = check_output(args).strip().split()
+    except (subprocess.CalledProcessError, OSError) as e:
+        print("git failed: %s" % e)
+        sys.exit(1)
+
+    ha_changed = False
+    for f in modified_files:
+        if f.startswith("doc/high-availability-guide/"):
+            ha_changed = True
+
+    return ha_changed
+
+
 def get_modified_files(rootdir, filtering=None):
     """Get modified files below doc directory"""
 
@@ -448,6 +466,12 @@ def build_affected_books(rootdir, book_exceptions, file_exceptions, force):
             book_root = root
 
         os.chdir(root)
+
+        # ha-guide uses asciidoc which we do not track.
+        # Just check whether any file is touched in that directory
+        if root.endswith('doc/high-availability-guide'):
+            if ha_guide_touched():
+                affected_books.append(book_root)
 
         # We can scan only for depth of one of inclusion
         # therefore skip the common directory since there's no
