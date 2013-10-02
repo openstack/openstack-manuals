@@ -27,8 +27,8 @@
             additional provider attributes on all virtual networks,
             and are able to specify these attributes in order to
             create provider networks.</para>
-        <para>The provider extension is supported by the openvswitch
-            and linuxbridge plug-ins. Configuration of these plug-ins
+        <para>The provider extension is supported by the Open vSwitch
+            and Linux Bridge plug-ins. Configuration of these plug-ins
             requires familiarity with this extension.</para>
         <section xml:id="provider_terminology">
             <title>Terminology</title>
@@ -42,7 +42,7 @@
                         network (identified by a UUID and optional
                         name) whose ports can be attached as vNICs to
                         Compute instances and to various Networking
-                        agents. The openvswitch and linuxbridge
+                        agents. The Open vSwitch and Linux Bridge
                         plug-ins each support several different
                         mechanisms to realize virtual networks.</para>
                 </listitem>
@@ -114,13 +114,23 @@
                         are not associated by Networking with specific
                         physical networks.</para>
                 </listitem>
+                <listitem>
+                    <para><emphasis role="bold">Virtual Extensible LAN
+                        (VXLAN) network</emphasis>. VXLAN is a proposed
+                        encapsulation protocol for running an overlay
+                        network on existing Layer 3 infrastructure. An
+                        overlay network is a virtual network that is
+                        built on top of existing network Layer 2 and
+                        Layer 3 technologies to support elastic compute
+                        architectures.</para>
+                </listitem>
             </itemizedlist>
-            <para>Both the openvswitch and linuxbridge plug-ins
-                support VLAN networks, flat networks, and local
-                networks. Only the openvswitch plug-in currently
-                supports GRE networks, provided that the host's Linux
-                kernel supports the required Open vSwitch
-                features.</para>
+            <para>The ML2, Open vSwitch and Linux Bridge plug-ins support
+                VLAN networks, flat networks, and local networks. Only
+                the ML2 and Open vSwitch plug-ins currently support GRE
+                and VXLAN networks, provided that the required features
+                exist in the hosts Linux kernel, Open vSwitch and iproute2
+                packages.</para>
         </section>
         <section xml:id="provider_attributes">
             <title>Provider attributes</title>
@@ -688,11 +698,9 @@
         <note>
             <itemizedlist>
                 <listitem>
-                    <para>To use the Compute security group API with
-                        Networking, the Networking plug-in must
-                        implement the security group API. The
-                        following plug-ins currently implement this:
-                        Nicira NVP, Open vSwitch, Linux Bridge, NEC,
+                    <para>To use the Compute security group API with Networking, the Networking
+                        plug-in must implement the security group API. The following plug-ins
+                        currently implement this: ML2, Nicira NVP, Open vSwitch, Linux Bridge, NEC,
                         and Ryu.</para>
                 </listitem>
                 <listitem>
@@ -1402,8 +1410,8 @@
             two instances to enable fast data plane failover.</para>
         <note>
             <para>The allowed-address-pairs extension is currently
-                only supported by the following plug-ins: Nicira NVP,
-                OpenvSwitch, and ML2.</para>
+                only supported by the following plug-ins: ML2, Nicira
+                NVP, and OpenvSwitch.</para>
         </note>
         <section xml:id="section_allowed_address_pairs_workflow">
             <title>Basic allowed address pairs operations</title>
