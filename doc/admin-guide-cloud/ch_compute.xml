@@ -2010,9 +2010,8 @@ local0.error    @@172.20.1.43:1024</programlisting></para>
 
         <section xml:id="section_live-migration-usage">
             <title>Migration</title>
-        <para>Before starting migrations, review the <link xlink:href="http://docs.openstack.org/trunk/config-reference/content/configuring-openstack-compute-basics.html#section_configuring-compute-migrations"
-                >Configuring Migrations</link> section in the
-                <citetitle>Configuration Reference Guide</citetitle>.</para>
+            <para>Before starting migrations, review the <link xlink:href="http://docs.openstack.org/trunk/config-reference/content/configuring-openstack-compute-basics.html#section_configuring-compute-migrations">Configure migrations</link> section in <citetitle>OpenStack Configuration
+                    Reference</citetitle>.</para>
             <para>Migration provides a scheme to migrate running
                 instances from one OpenStack Compute server to another
                 OpenStack Compute server.</para>
@@ -2082,10 +2081,8 @@ HostC            p2            5     10240     150
                                 memory (MB)</para>
                         </listitem>
                         <listitem>
-                            <para><emphasis role="bold"
-                                   >hdd:</emphasis>total amount of
-                                space for
-                                NOVA-INST-DIR/instances(GB)</para>
+                            <para><emphasis role="bold">hdd:</emphasis>total amount of space for
+                                NOVA-INST-DIR/instances (GB)</para>
                         </listitem>
                         <listitem>
                             <para><emphasis role="bold">1st line shows
@@ -2127,23 +2124,25 @@ HostC            p2            5     10240     150
                                    <command>live-migration</command>,
                                 under the default Compute
                                 configuration options the instances
-                                are suspended before migration.</para>
-                        </note><!--<para>See
-                            the <link linkend="configuring-migrations">Configuring Migrations</link>
-                            section for more details.</para>--></para>
+                                are suspended before migration.</para> 
+                            <para>See <link xlink:href="http://docs.openstack.org/trunk/config-reference/content/configuring-openstack-compute-basics.html#section_configuring-compute-migrations">Configure migrations</link> in <citetitle>OpenStack Configuration Reference</citetitle> for more details.</para>
+                        </note>
+                </para>
                 </step>
             </procedure>
         </section>
         <section xml:id="section_nova-compute-node-down">
             <title>Recover from a failed compute node</title>
-            <para>If you have deployed OpenStack Compute with a shared
-                file system, you can quickly recover from a failed
-                compute node.</para>
+            <para>If you have deployed Compute with a shared file system, you can quickly recover
+                from a failed compute node. Of the two methods covered in the following sections,
+                the evacuate API is the preferred method even in the absence of shared storage. The
+                evacuate API provides many benefits over manual recovery, such as re-attachment of
+                volumes and floating IPs. </para>
+            <xi:include href="../common/section_nova_cli_evacuate.xml"/>
             <section xml:id="nova-compute-node-down-manual-recovery">
                 <title>Manual recovery</title>
-                <para>For KVM/libvirt compute node recovery refer to
-                    section above, while the guide below may be
-                    applicable for other hypervisors.</para>
+                <para>For KVM/libvirt compute node recovery, see the previous section. Use the
+                    following procedure for other hypervisors.</para>
                 <procedure>
                     <title>To work with host information</title>
                     <step>
