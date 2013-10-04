@@ -152,8 +152,12 @@ server {
   WSGIDaemonProcess horizon user=&lt;user&gt; group=&lt;group&gt; processes=3 threads=10
   Alias /static &lt;static files location&gt;
   &lt;Directory &lt;WSGI dir&gt;&gt;
+    # For http server 2.2 and earlier:
     Order allow,deny
     Allow from all
+
+    # Or, in Apache http server 2.4 and later:
+    # Require all granted
   &lt;/Directory&gt;
 &lt;/VirtualHost&gt;</screen>
         <para>Compute API SSL endpoint in Apache2, which needs to be paired with
@@ -170,8 +174,12 @@ server {
   WSGIScriptAlias / &lt;WSGI script location&gt;
   WSGIDaemonProcess osapi user=&lt;user&gt; group=&lt;group&gt; processes=3 threads=10
   &lt;Directory &lt;WSGI dir&gt;&gt;
+    # For http server 2.2 and earlier:
     Order allow,deny
     Allow from all
+
+    # Or, in Apache http server 2.4 and later:
+    # Require all granted
   &lt;/Directory&gt;
 &lt;/VirtualHost&gt;</screen>
       </section>
