@@ -187,6 +187,36 @@ def ha_guide_touched():
     return ha_changed
 
 
+def check_modified_affects_all(rootdir, verbose):
+    """Check whether special files were modified.
+
+    There are some special files where we should rebuild all books
+    if either of these is touched.
+    """
+
+    os.chdir(rootdir)
+
+    try:
+        args = ["git", "diff", "--name-only", "HEAD~1", "HEAD"]
+        modified_files = check_output(args).strip().split()
+    except (subprocess.CalledProcessError, OSError) as e:
+        print("git failed: %s" % e)
+        sys.exit(1)
+
+    special_files = [
+        "tools/validate.py",
+        "tools/test.py",
+        "doc/pom.xml"
+    ]
+    for f in modified_files:
+        if f in special_files:
+            if verbose:
+                print("File %s modified, this affects all books." % f)
+            return True
+
+    return False
+
+
 def get_modified_files(rootdir, filtering=None):
     """Get modified files below doc directory"""
 
@@ -323,7 +353,9 @@ def validate_individual_files(rootdir, exceptions, verbose):
     modified_files = map(lambda x: os.path.abspath(x), modified_files)
 
     for f in modified_files:
-        if os.path.basename(f) in exceptions:
+        base_f = os.path.basename(f)
+        if (base_f == "pom.xml" or
+                f in exceptions):
             continue
         any_failures, extra_whitespace = validate_one_file(
             schema, rootdir, f, verbose, any_failures, extra_whitespace)
@@ -436,7 +468,8 @@ def build_book(book):
     return (base_book, result, output, returncode)
 
 
-def build_affected_books(rootdir, book_exceptions, file_exceptions, force):
+def build_affected_books(rootdir, book_exceptions, file_exceptions, verbose,
+                         force):
     """Build all the books which are affected by modified files.
 
     Looks for all directories with "pom.xml" and checks if a
@@ -448,6 +481,7 @@ def build_affected_books(rootdir, book_exceptions, file_exceptions, force):
     """
     modified_files = get_modified_files(rootdir)
     modified_files = map(lambda x: os.path.abspath(x), modified_files)
+    build_all_books = force or check_modified_affects_all(rootdir, verbose)
     affected_books = []
     books = []
     book_root = rootdir
@@ -461,25 +495,31 @@ def build_affected_books(rootdir, book_exceptions, file_exceptions, force):
 
         if os.path.basename(root) in book_exceptions:
             break
+        # Do not process files in doc itself
+        elif root.endswith('doc'):
+            continue
         elif "pom.xml" in files:
             books.append(root)
             book_root = root
 
         os.chdir(root)
 
+        # No need to check single books if we build all, we just
+        # collect list of books
+        if build_all_books:
+            continue
+
         # ha-guide uses asciidoc which we do not track.
         # Just check whether any file is touched in that directory
         if root.endswith('doc/high-availability-guide'):
             if ha_guide_touched():
                 affected_books.append(book_root)
-
         # We can scan only for depth of one of inclusion
         # therefore skip the common directory since there's no
         # book build in it.
-        if not root.endswith('doc/common'):
+        elif not root.endswith('doc/common'):
             for f in files:
                 if (f.endswith('.xml') and
-                        f != 'pom.xml' and
                         f not in file_exceptions):
                     path = os.path.abspath(os.path.join(root, f))
 
@@ -520,7 +560,9 @@ def build_affected_books(rootdir, book_exceptions, file_exceptions, force):
                 if book_root in affected_books:
                     break
 
-    if not force and affected_books:
+    if build_all_books:
+        print("Building all books.")
+    elif affected_books:
         books = affected_books
     else:
         print("No books are affected by modified files. Building all books.")
@@ -569,7 +611,8 @@ def main(rootdir, force, verbose):
     else:
         validate_individual_files(rootdir, FILE_EXCEPTIONS, verbose)
 
-    build_affected_books(rootdir, BOOK_EXCEPTIONS, FILE_EXCEPTIONS, force)
+    build_affected_books(rootdir, BOOK_EXCEPTIONS, FILE_EXCEPTIONS, verbose,
+                         force)
 
 
 def default_root():
