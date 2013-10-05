@@ -1,15 +1,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-
+    <parent>
+        <groupId>org.openstack.docs</groupId>
+        <artifactId>parent-pom</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
     <modelVersion>4.0.0</modelVersion>
-
-    <groupId>org.openstack.docs</groupId>
-    <artifactId>openstack-guide</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <artifactId>openstack-install-guide</artifactId>
     <packaging>jar</packaging>
-    <name>OpenStack Guides</name>
-
+    <name>OpenStack Installation Guide</name>
     <properties>
         <!-- This is set by Jenkins according to the branch. -->
         <release.path.name>local</release.path.name>
@@ -21,14 +22,12 @@
     <!-- ################################################ -->
     <!-- USE "mvn clean generate-sources" to run this POM -->
     <!-- ################################################ -->
-
     <build>
         <plugins>
             <plugin>
                 <groupId>com.rackspace.cloud.api</groupId>
                 <artifactId>clouddocs-maven-plugin</artifactId>
-                <version>1.10.0</version>
-
+                <!-- version is set in ../pom.xml file -->
                 <executions>
                     <execution>
                         <id>generate-webhelp</id>
@@ -47,10 +46,9 @@
                                 article/appendix  nop
                                 article   toc,title
                                 book      toc,title,figure,table,example,equation
-                                chapter   toc
-                                section toc
-                                part      toc
-                                preface   toc
+                                chapter   toc,title
+                                section   toc
+                                part      toc,title
                                 qandadiv  toc
                                 qandaset  toc
                                 reference toc,title
@@ -66,7 +64,6 @@
                             <targetDirectory>${basedir}/target/docbkx/webhelp/${release.path.name}/install-guide/install</targetDirectory>
                             <includeDateInPdfFilename>0</includeDateInPdfFilename>
                             <pdfFilenameBase>openstack-install-guide-${operating.system}-${release.path.name}</pdfFilenameBase>
-
                         </configuration>
                     </execution>
                     <execution>
@@ -102,26 +99,4 @@
             </plugin>
         </plugins>
     </build>
-    <profiles>
-        <profile>
-            <id>Rackspace Research Repositories</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <repositories>
-                <repository>
-                    <id>rackspace-research</id>
-                    <name>Rackspace Research Repository</name>
-                    <url>http://maven.research.rackspacecloud.com/content/groups/public/</url>
-                </repository>
-            </repositories>
-            <pluginRepositories>
-                <pluginRepository>
-                    <id>rackspace-research</id>
-                    <name>Rackspace Research Repository</name>
-                    <url>http://maven.research.rackspacecloud.com/content/groups/public/</url>
-                </pluginRepository>
-            </pluginRepositories>
-        </profile>
-    </profiles>
 </project>

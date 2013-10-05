@@ -1,13 +1,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">   
+    <parent>
+        <groupId>org.openstack.docs</groupId>
+        <artifactId>parent-pom</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.openstack.docs</groupId>
-    <artifactId>openstack-guide</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <artifactId>openstack-high-availability-guide</artifactId>
     <packaging>jar</packaging>
-    <name>OpenStack Guides</name>
-
+    <name>OpenStack High Availability Guide</name>
     <properties>
         <!-- This is set by Jenkins according to the branch. -->
         <release.path.name>trunk</release.path.name>
@@ -16,14 +19,27 @@
     <!-- ################################################ -->
     <!-- USE "mvn clean generate-sources" to run this POM -->
     <!-- ################################################ -->
-
     <build>
         <plugins>
             <plugin>
                 <groupId>com.rackspace.cloud.api</groupId>
                 <artifactId>clouddocs-maven-plugin</artifactId>
-                <version>1.10.0</version>
+                <!-- version is set in ../pom.xml file -->
                 <executions>
+                    <execution>
+                        <id>generate-pdf</id>
+                        <goals>
+                            <goal>generate-pdf</goal>
+                        </goals>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <highlightSource>false</highlightSource>
+                            <!-- The following elements sets the autonumbering of sections in output for chapter numbers but no numbered sections-->
+                            <sectionAutolabel>0</sectionAutolabel>
+                            <tocSectionDepth>1</tocSectionDepth>
+                            <sectionLabelIncludesComponentLabel>0</sectionLabelIncludesComponentLabel>
+                        </configuration>
+                    </execution>
                     <execution>
                         <id>generate-webhelp</id>
                         <goals>
@@ -40,10 +56,10 @@
                                 appendix  toc,title
                                 article/appendix  nop
                                 article   toc,title
-                                book      title,figure,table,example,equation
+                                book      toc,title,figure,table,example,equation
                                 chapter   toc,title
+                                section   toc
                                 part      toc,title
-                                preface   toc,title
                                 qandadiv  toc
                                 qandaset  toc
                                 reference toc,title
@@ -52,30 +68,10 @@
                             <!-- The following elements sets the autonumbering of sections in output for chapter numbers but no numbered sections-->
                             <sectionAutolabel>0</sectionAutolabel>
                             <sectionLabelIncludesComponentLabel>0</sectionLabelIncludesComponentLabel>
-
                             <webhelpDirname>high-availability-guide</webhelpDirname>
                             <targetDirectory>${basedir}/target/docbkx/webhelp</targetDirectory>
                             <includeDateInPdfFilename>0</includeDateInPdfFilename>
                             <pdfFilenameBase>high-availability-guide</pdfFilenameBase>
-
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>cleanup</id>
-                        <goals>
-                            <goal>generate-webhelp</goal>
-                        </goals>
-                        <phase>generate-sources</phase>
-                        <configuration>
-                          <includes>dummy.xml</includes>
-                          <postProcess>
-                            <delete includeemptydirs="true" verbose="true">
-                              <fileset dir="${basedir}/target/docbkx/webhelp" >
-                                <include name="**/*"/>
-                                <exclude name="high-availability-guide/**"/>
-                              </fileset>
-                            </delete>
-                          </postProcess>
                         </configuration>
                     </execution>
                 </executions>
@@ -93,28 +89,4 @@
             </plugin>
         </plugins>
     </build>
-
-    <profiles>
-        <profile>
-            <id>Rackspace Research Repositories</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <repositories>
-                <repository>
-                    <id>rackspace-research</id>
-                    <name>Rackspace Research Repository</name>
-                    <url>http://maven.research.rackspacecloud.com/content/groups/public/</url>
-                </repository>
-            </repositories>
-            <pluginRepositories>
-                <pluginRepository>
-                    <id>rackspace-research</id>
-                    <name>Rackspace Research Repository</name>
-                    <url>http://maven.research.rackspacecloud.com/content/groups/public/</url>
-                </pluginRepository>
-            </pluginRepositories>
-        </profile>
-    </profiles>
-
 </project>

@@ -1,12 +1,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <parent>
+        <groupId>org.openstack.docs</groupId>
+        <artifactId>parent-pom</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.openstack.docs</groupId>
-    <artifactId>openstack-guide</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <artifactId>openstack-admin-guide-cloud</artifactId>
     <packaging>jar</packaging>
-    <name>OpenStack Administrator Guide</name>
+    <name>OpenStack Cloud Administrator Guide</name>
     <properties>
         <!-- This is set by Jenkins according to the branch. -->
         <release.path.name></release.path.name>
@@ -15,34 +19,12 @@
     <!-- ################################################ -->
     <!-- USE "mvn clean generate-sources" to run this POM -->
     <!-- ################################################ -->
-    <profiles>
-        <profile>
-            <id>Rackspace Research Repositories</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <repositories>
-                <repository>
-                    <id>rackspace-research</id>
-                    <name>Rackspace Research Repository</name>
-                    <url>http://maven.research.rackspacecloud.com/content/groups/public/</url>
-                </repository>
-            </repositories>
-            <pluginRepositories>
-                <pluginRepository>
-                    <id>rackspace-research</id>
-                    <name>Rackspace Research Repository</name>
-                    <url>http://maven.research.rackspacecloud.com/content/groups/public/</url>
-                </pluginRepository>
-            </pluginRepositories>
-        </profile>
-    </profiles>
     <build>
         <plugins>
             <plugin>
                 <groupId>com.rackspace.cloud.api</groupId>
                 <artifactId>clouddocs-maven-plugin</artifactId>
-                <version>1.10.0</version>
+                <!-- version set in ../pom.xml -->
                 <executions>
                     <execution>
                         <id>goal1</id>
@@ -90,10 +72,6 @@
                             <targetDirectory>${basedir}/target/docbkx/webhelp/admin-guide-cloud</targetDirectory>
                             <webhelpDirname>/</webhelpDirname>
                             <pdfFilenameBase>bk-admin-guide-cloud-latest</pdfFilenameBase>
-                            <postProcess>
-                                <!--Deletes leftover uneeded directories -->
-                                <!--<delete dir="${basedir}/target/docbkx/webhelp/bk-admin-guide-cloud"/>-->
-                            </postProcess>
                         </configuration>
                     </execution>
                 </executions>
