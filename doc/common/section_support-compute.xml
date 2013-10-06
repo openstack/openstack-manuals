@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0" xml:id="section-troubleshooting-openstack-compute">
-<title>Troubleshooting OpenStack Compute</title>
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0" xml:id="section_compute-troubleshooting">
+<title>Troubleshooting Compute</title>
         <para>Common problems for Compute typically involve misconfigured networking or credentials that are not sourced properly in the environment. Also, most flat networking configurations do not enable ping or ssh from a compute node to the instances running on that node. Another common problem is trying to run 32-bit images on a 64-bit compute node. This section offers more information about how to troubleshoot Compute.</para>
-        <section xml:id="log-files-for-openstack-compute"><title>Log files for OpenStack Compute</title>
+        <section xml:id="log-files-for-openstack-compute"><title>Log files for Compute</title>
 
         <para>Compute stores a log file for each service in
         <filename>/var/log/nova</filename>. For example,
@@ -34,8 +34,8 @@
             daemon logs to syslog.</para>
     </section>
 
-    <section xml:id="common-errors-and-fixes-for-openstack-compute">
-        <title>Common Errors and Fixes for OpenStack Compute</title>
+    <section xml:id="section_compute-common-errors-and-fixes">
+        <title>Common errors and fixes for Compute</title>
         <para>The ask.openstack.org site offers a place to ask and
             answer questions, and you can also mark questions as
             frequently asked questions. This section describes some
@@ -43,7 +43,8 @@
             are constantly fixing bugs, so online resources are a
             great way to get the most up-to-date errors and
             fixes.</para>
-        <para>Credential errors, 401, 403 forbidden errors</para>
+        <section xml:id="section_credential-errors">
+        <title>Credential errors, 401, 403 forbidden errors</title>
         <para>A 403 forbidden error is caused by missing credentials.
             Through current installation methods, there are basically
             two ways to get the <filename>novarc</filename> file. The manual method
@@ -63,7 +64,9 @@
         <para>You may also need to check your http proxy settings to see if
             they are causing problems with the <filename>novarc</filename>
             creation.</para>
-        <para>Instance errors</para>
+        </section>
+        <section xml:id="section_instance-errors">
+            <title>Instance errors</title>
         <para>Sometimes a particular instance shows "pending" or you
             cannot SSH to it. Sometimes the image itself is the
             problem. For example, when using flat manager networking,
@@ -109,11 +112,11 @@
             <filename>/var/log/libvirt/qemu</filename>
             to see if it exists and has any useful error messages
             in it.</para>
-
         <para>Finally, from the directory for the instance under
                  <filename>/var/lib/nova/instances</filename>, try
                 <screen><prompt>#</prompt> <userinput>virsh create libvirt.xml</userinput></screen> and see if you
             get an error when running this.</para>
+        </section>
     </section>
         <section xml:id="reset-state">
             <title>Manually reset the state of an instance</title>
@@ -129,7 +132,7 @@
             example:<screen><prompt>$</prompt> <userinput>nova reset-state --active c6bbbf26-b40a-47e7-8d5c-eb17bf65c485</userinput> </screen></para>
         </section>
        <section xml:id="problems-with-injection">
-       <title>Problems with Injection</title>
+       <title>Problems with injection</title>
        <para>If you are diagnosing problems with instances not booting,
        or booting slowly, consider investigating file injection as a
        cause. Setting <literal>libvirt_injection_partition</literal>
