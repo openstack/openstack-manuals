@@ -1,0 +1,104 @@
+<section xmlns="http://docbook.org/ns/docbook"
+         xmlns:xi="http://www.w3.org/2001/XInclude"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         version="5.0"
+         xml:id="nova-compute">
+  <title>Installing a Compute Node</title>
+
+  <para>After configuring the Compute Services on the controller node,
+  configure a second system to be a compute node. The compute node receives
+  requests from the controller node and hosts virtual machine instances.
+  You can run all services on a single node, but this guide uses separate
+  systems. This makes it easy to scale horizontally by adding additional
+  compute nodes following the instructions in this section.</para>
+
+  <para>The Compute Service relies on a hypervisor to run virtual machine
+  instances. OpenStack can use various hypervisors, but this guide uses
+  KVM.</para>
+
+  <para>Begin by configuring the system using the instructions in
+  <xref linkend="ch_basics"/>. Note the following differences from the
+  controller node:</para>
+
+  <itemizedlist>
+    <listitem>
+      <para>Use different IP addresses when editing the files
+      <filename>ifcfg-eth0</filename> and <filename>ifcfg-eht1</filename>.
+      This guide uses <literal>192.168.0.11</literal> for the internal network
+      and <literal>10.0.0.11</literal> for the external network.</para>
+    </listitem>
+    <listitem>
+      <para>Set the hostname to <literal>compute1</literal>. Ensure that the
+      IP addresses and hostnames for both nodes are listed in the
+      <filename>/etc/hosts</filename> file on each system.</para>
+    </listitem>
+    <listitem>
+      <para>Do not run the NTP server. Follow the instructions in
+        <xref linkend="basics-ntp"/> to synchronize from the controller node.</para>
+    </listitem>
+    <listitem>
+      <para>You do not need to install the MySQL database server or start
+      the MySQL service. Just install the client libraries.</para>
+    </listitem>
+    <listitem>
+      <para>You do not need to install a messaging queue server.</para>
+    </listitem>
+  </itemizedlist>
+
+  <para>After configuring the operating system, install the appropriate
+  packages for the compute service.</para>
+
+  <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install nova-compute-kvm</userinput></screen>
+  <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>yum install openstack-nova-compute</userinput></screen>
+  <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install openstack-nova-compute kvm</userinput></screen>
+
+  <para>Either copy the file <filename>/etc/nova/nova.conf</filename> from the
+  controller node, or run the same configuration commands.</para>
+
+  <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf \
+  database connection mysql://nova:<replaceable>NOVA_DBPASS</replaceable>@controller/nova</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT auth_strategy keystone</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT auth_host controller</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT admin_user nova</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT admin_tenant_name service</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT admin_password <replaceable>NOVA_PASS</replaceable></userinput></screen>
+
+  <!-- FIXME: opensuse ubuntu -->
+  <screen os="fedora;rhel;centos"><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf \
+  DEFAULT rpc_backend nova.openstack.common.rpc.impl_qpid</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT qpid_hostname controller</userinput></screen>
+
+  <para>Set the configuration keys <literal>my_ip</literal>,
+  <literal>vncserver_listen</literal>, and
+  <literal>vncserver_proxyclient_address</literal> to the IP address of the
+  compute node on the internal network.</para>
+
+  <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT my_ip 192.168.0.11</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT vncserver_listen 192.168.0.11</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT vncserver_proxyclient_address 192.168.0.11</userinput></screen>
+
+  <para>Copy the file <filename>/etc/nova/api-paste.ini</filename> from the
+  controller node, or edit the file to add the credentials in the
+  <literal>[filter:authtoken]</literal> section.</para>
+
+  <programlisting language="ini">[filter:authtoken]
+paste.filter_factory=keystoneclient.middleware.auth_token:filter_factory
+auth_host=controller
+admin_user=nova
+admin_tenant_name=service
+admin_password=<replaceable>NOVA_PASS</replaceable>
+</programlisting>
+
+  <!-- FIXME: kvm stuff -->
+
+  <para>Finally, start the compute service and configure it to start when
+  the system boots.</para>
+
+  <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service nova-compute start</userinput>
+<prompt>#</prompt> <userinput>chkconfig nova-compute on</userinput></screen>
+  <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>service openstack-nova-compute start</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-nova-compute on</userinput></screen>
+  <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl start openstack-nova-compute</userinput>
+<prompt>#</prompt> <userinput>systemctl enable openstack-nova-compute</userinput></screen>
+
+</section>

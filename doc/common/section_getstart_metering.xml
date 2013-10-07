@@ -1,0 +1,71 @@
+    <section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="metering-service">
+      <title>Metering/Monitoring Service</title>
+      <para>The Metering Service is designed to:</para>
+      <para>
+        <itemizedlist>
+          <listitem>
+            <para>Efficiently collect the metering data about the CPU
+              and network costs.</para>
+          </listitem>
+          <listitem>
+            <para>Collect data by monitoring notifications sent from
+              services or by polling the infrastructure.</para>
+          </listitem>
+          <listitem>
+            <para>Configure the type of collected data to meet various
+              operating requirements. Accessing and inserting the
+              metering data through the REST API.</para>
+          </listitem>
+          <listitem>
+            <para>Expand the framework to collect custom usage data by
+              additional plug-ins.</para>
+          </listitem>
+          <listitem>
+            <para>Produce signed metering messages that cannot be
+              repudiated.</para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>The system consists of the following basic
+        components:</para>
+      <itemizedlist>
+        <listitem>
+          <para>A compute agent. Runs on each compute node and polls
+            for resource utilization statistics. There may be other
+            types of agents in the future, but for now we will focus
+            on creating the compute agent.</para>
+        </listitem>
+        <listitem>
+          <para>A central agent. Runs on a central management server
+            to poll for resource utilization statistics for resources
+            not tied to instances or compute nodes.</para>
+        </listitem>
+        <listitem>
+          <para>A collector. Runs on one or more central management
+            servers to monitor the message queues (for notifications
+            and for metering data coming from the agent). Notification
+            messages are processed and turned into metering messages
+            and sent back out onto the message bus using the
+            appropriate topic. Metering messages are written to the
+            data store without modification.</para>
+        </listitem>
+        <listitem>
+          <para>A data store. A database capable of handling
+            concurrent writes (from one or more collector instances)
+            and reads (from the API server).</para>
+        </listitem>
+        <listitem>
+          <para>An API server. Runs on one or more central management
+            servers to provide access to the data from the data store.
+            These services communicate using the standard OpenStack
+            messaging bus. Only the collector and API server have
+            access to the data store.</para>
+        </listitem>
+      </itemizedlist>
+      <para>These services communicate by using the standard OpenStack
+        messaging bus. Only the collector and API server have access
+        to the data store.</para>
+    </section>

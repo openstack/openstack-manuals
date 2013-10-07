@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="keystone-verify"
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+
+  <title>Verifying the Identity Service Installation</title>
+
+  <para>To verify the Identity Service is installed and configured
+  correctly, first unset the <envar>OS_SERVICE_TOKEN</envar> and
+  <envar>OS_SERVICE_ENDPOINT</envar> environment variables. These
+  were only used to bootstrap the administrative user and register
+  the Identity Service.</para>
+
+  <screen><prompt>#</prompt> <userinput>unset OS_SERVICE_TOKEN OS_SERVICE_ENDPOINT</userinput></screen>
+
+  <para>You can now use regular username-based authentication.
+  Request a authentication token using the <literal>admin</literal>
+  user and the password you chose for that user.</para>
+
+  <screen><prompt>#</prompt> <userinput>keystone --os-username=admin --os-password=<replaceable>ADMIN_PASS</replaceable>
+  --os-auth-url=http://controller:35357/v2.0 token-get</userinput></screen>
+
+  <para>You should receive a token in response, paired with your user ID.
+  This verifies that keystone is running on the expected endpoint, and
+  that your user account is established with the expected credentials.</para>
+
+  <para>Next, verify that authorization is behaving as expected by requesting
+  authorization on a tenant.</para>
+
+  <screen><prompt>#</prompt> <userinput>keystone --os-username=admin --os-password=<replaceable>ADMIN_PASS</replaceable>
+  --os-tenant-name=admin --os-auth-url=http://controller:35357/v2.0 token-get</userinput></screen>
+
+  <para>You should receive a new token in response, this time including the
+  ID of the tenant you specified. This verifies that your user account has
+  an explicitly defined role on the specified tenant, and that the tenant
+  exists as expected.</para>
+
+  <para>You can also set your <literal>--os-*</literal> variables in your
+  environment to simplify command-line usage. Set up a
+  <filename>keystonerc</filename> file with the admin credentials and
+  admin endpoint.</para>
+
+  <programlisting language="bash">export OS_USERNAME=admin
+export OS_PASSWORD=<replaceable>ADMIN_PASS</replaceable>
+export OS_TENANT_NAME=admin
+export OS_AUTH_URL=http://controller:35357/v2.0</programlisting>
+
+  <para>You can source this file to read in the environment variables.</para>
+
+  <screen><prompt>#</prompt> <userinput>source keystonerc</userinput></screen>
+
+  <para>Verify that your <filename>keystonerc</filename> is configured
+  correctly by performing the same command as above, but without the
+  <literal>--os-*</literal> arguments.</para>
+
+  <screen><prompt>$</prompt> <userinput>keystone token-get</userinput></screen>
+
+  <para>The command returns a token and the ID of the specified tenant.
+  This verifies that you have configured your environment variables
+  correctly.</para>
+
+  <para>Finally, verify that your admin account has authorization to
+  perform administrative commands.</para>
+
+  <screen><prompt>#</prompt> <userinput>keystone user-list</userinput>
+<computeroutput>
++----------------------------------+---------+--------------------+--------+
+|                id                | enabled | email              |  name  |
++----------------------------------+---------+--------------------+--------+
+| a4c2d43f80a549a19864c89d759bb3fe | True    | admin@example.com  | admin  |
+</computeroutput></screen>
+
+  <para>This verifies that your user account has the
+  <literal>admin</literal> role, which matches the role used in
+  the Identity Service's <filename>policy.json</filename> file.</para>
+</section>

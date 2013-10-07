@@ -1,0 +1,44 @@
+    <section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="image-service">
+      <title>Image Service</title>
+      <para>The Image Service includes the following
+        components:</para>
+      <itemizedlist>
+        <listitem>
+          <para><systemitem class="service">glance-api</systemitem>.
+            Accepts Image API calls for image discovery, retrieval,
+            and storage.</para>
+        </listitem>
+        <listitem>
+          <para><systemitem class="service"
+              >glance-registry</systemitem>. Stores, processes, and
+            retrieves metadata about images. Metadata includes size,
+            type, and so on.</para>
+        </listitem>
+        <listitem>
+          <para>Database. Stores image metadata. You can choose your
+            database depending on your preference. Most deployments
+            use MySQL or SQlite.</para>
+        </listitem>
+        <listitem>
+          <para>Storage repository for image files. In <xref
+              linkend="os-logical-arch"/>, the Object Storage Service
+            is the image repository. However, you can configure a
+            different repository. The Image Service supports normal
+            file systems, RADOS block devices, Amazon S3, and HTTP.
+            Some of these choices are limited to read-only
+            usage.</para>
+        </listitem>
+      </itemizedlist>
+      <para>A number of periodic processes run on the Image Service to
+        support caching. Replication services ensures consistency and
+        availability through the cluster. Other periodic processes
+        include auditors, updaters, and reapers.</para>
+      <para>As shown in <xref linkend="concept_arch"/>, the Image
+        Service is central to the overall IaaS picture. It accepts API
+        requests for images or image metadata from end users or
+        Compute components and can store its disk files in the Object
+        Storage Service.</para>
+    </section>

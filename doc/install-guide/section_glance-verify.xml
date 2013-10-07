@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<section xml:id="images-verifying-install"
+<section xml:id="glance-verify"
     xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
@@ -21,34 +21,24 @@
     <para>The download is done in a dedicated directory:</para>
     <screen><prompt>$</prompt> <userinput>mkdir images</userinput>
 <prompt>$</prompt> <userinput>cd images/</userinput>
-<prompt>$</prompt> <userinput>wget http://download.cirros-cloud.net/0.3.1/cirros-0.3.1-x86_64-disk.img</userinput></screen>
+<prompt>$</prompt> <userinput>curl -O http://cdn.download.cirros-cloud.net/0.3.1/cirros-0.3.1-x86_64-disk.img</userinput></screen>
     <para>You can now use the <command>glance image-create</command> command to
     upload the image to the Image Service, passing the image file through
     standard input:</para>
-    <note><para>The following commands show <literal>--os-username</literal>,
-                <literal>--os-password</literal>,
-                <literal>--os-tenant-name</literal>,
-                <literal>--os-auth-url</literal> parameters. You could also use
-            the <literal>OS_*</literal> environment variables by setting them in
-            an example <filename>openrc</filename> file:</para>
-        <programlisting><xi:include parse="text" href="samples/openrc.txt"/></programlisting>
-        <para>Then you would source these environment variables by running <userinput>source openrc</userinput>.</para></note>
-    <screen><prompt>$</prompt> <userinput>glance --os-username=admin --os-password=secrete --os-tenant-name=demo --os-auth-url=http://192.168.206.130:5000/v2.0 \
-    image-create \
-    --name="CirrOS 0.3.1" \
-    --disk-format=qcow2 \
-    --container-format bare &lt; cirros-0.3.1-x86_64-disk.img</userinput>
+
+    <screen><prompt>#</prompt> <userinput>glance image-create --name="CirrOS 0.3.1" --disk-format=qcow2 \
+  --container-format=bare --is-public=true &lt; cirros-0.3.1-x86_64-disk.img</userinput>
 <computeroutput>+------------------+--------------------------------------+
 | Property         | Value                                |
 +------------------+--------------------------------------+
 | checksum         | d972013792949d0d3ba628fbe8685bce     |
 | container_format | bare                                 |
-| created_at       | 2013-05-08T18:59:18                  |
+| created_at       | 2013-10-08T18:59:18                  |
 | deleted          | False                                |
 | deleted_at       | None                                 |
 | disk_format      | qcow2                                |
 | id               | acafc7c0-40aa-4026-9673-b879898e1fc2 |
-| is_public        | False                                |
+| is_public        | True                                 |
 | min_disk         | 0                                    |
 | min_ram          | 0                                    |
 | name             | CirrOS 0.3.1                         |
@@ -109,12 +99,11 @@
     </para>
 
     <para>Now a <userinput>glance image-list</userinput> should show the image attributes:</para>
-    <screen><prompt>$</prompt> <userinput>glance --os-username=admin --os-password=secrete --os-tenant-name=demo --os-auth-url=http://192.168.206.130:5000/v2.0 \
-    image-list</userinput>
-<computeroutput>+--------------------------------------+---------------------------------+-------------+------------------+----------+--------+
-| ID                                   | Name                            | Disk Format | Container Format | Size     | Status |
-+--------------------------------------+---------------------------------+-------------+------------------+----------+--------+
-| acafc7c0-40aa-4026-9673-b879898e1fc2 | CirrOS 0.3.1                    | qcow2       | bare             | 13147648 | active |
-+--------------------------------------+---------------------------------+-------------+------------------+----------+--------+</computeroutput></screen>
+    <screen><prompt>#</prompt> <userinput>glance image-list</userinput>
+<computeroutput>+--------------------------------------+-----------------+-------------+------------------+----------+--------+
+| ID                                   | Name            | Disk Format | Container Format | Size     | Status |
++--------------------------------------+-----------------+-------------+------------------+----------+--------+
+| acafc7c0-40aa-4026-9673-b879898e1fc2 | CirrOS 0.3.1    | qcow2       | bare             | 13147648 | active |
++--------------------------------------+-----------------+-------------+------------------+----------+--------+</computeroutput></screen>
 
     </section>
