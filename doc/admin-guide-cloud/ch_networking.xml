@@ -140,16 +140,20 @@
                     <para><emphasis role="bold">Mellanox
                             Plug-in</emphasis>. <link
                             xlink:href="https://wiki.openstack.org/wiki/Mellanox-Neutron/"
-                            >
-                            https://wiki.openstack.org/wiki/Mellanox-Neutron/</link>
+                            >https://wiki.openstack.org/wiki/Mellanox-Neutron/</link>
                     </para>
                 </listitem>
                 <listitem>
                     <para><emphasis role="bold">Midonet
-                            Plug-in</emphasis>. <link
-                            xlink:href="http://www.midokura.com/">
-                            http://www.midokura.com/</link>
-                    </para>
+                        Plug-in</emphasis>. <link
+                        xlink:href="http://www.midokura.com/">
+                        http://www.midokura.com/</link></para>
+                </listitem>
+                <listitem>
+                    <para><emphasis role="bold">ML2 (Modular Layer 2)
+                        Plug-in</emphasis>. <link
+                        xlink:href="https://wiki.openstack.org/wiki/Neutron/ML2">
+                        https://wiki.openstack.org/wiki/Neutron/ML2</link></para>
                 </listitem>
                 <listitem>
                     <para><emphasis role="bold">NEC OpenFlow
@@ -188,12 +192,24 @@
                     </para>
                 </listitem>
             </itemizedlist>
-            <para>Plug-ins can have different properties for hardware
-                requirements, features, performance, scale, or
-                operator tools. Because Networking supports a large
-                number of plug-ins, the cloud administrator is able to
-                weigh different options and decide which networking
-                technology is right for the deployment.</para>
+            <para>Plug-ins can have different properties for hardware requirements, features,
+                performance, scale, or operator tools. Because Networking supports a large number of
+                plug-ins, the cloud administrator can weigh options to decide on the right
+                networking technology for the deployment.</para>
+            <para>In the Havana release, OpenStack Networking provides the <emphasis role="bold">Modular
+                    Layer 2 (ML2)</emphasis> plug-in that can concurrently use multiple layer 2
+                networking technologies that are found in real-world data centers. It currently
+                works with the existing Open vSwitch, Linux Bridge, and Hyper-v L2 agents. The ML2
+                framework simplifies the addition of support for new L2 technologies and reduces the
+                effort that is required to add and maintain them compared to monolithic
+                plug-ins.</para>
+            <note>
+                <title>Plugins Deprecation Notice:</title>
+                <para>The Open vSwitch and Linux Bridge plug-ins are deprecated in the Havana
+                    release and will be removed in the Icehouse release. All features have been
+                    ported to the ML2 plug-in in the form of mechanism drivers. ML2 currently
+                    provides Linux Bridge, Open vSwitch and Hyper-v mechanism drivers.</para>
+            </note>
             <para>Not all Networking plug-ins are compatible with all
                 possible Compute drivers:</para>
             <table rules="all">
@@ -276,6 +292,15 @@
                         <td/>
                     </tr>
                     <tr>
+                        <td>ML2</td>
+                        <td>Yes</td>
+                        <td/>
+                        <td/>
+                        <td>Yes</td>
+                        <td/>
+                        <td/>
+                    </tr>
+                    <tr>
                         <td>NEC OpenFlow</td>
                         <td>Yes</td>
                         <td/>
@@ -338,7 +363,7 @@
                 deploying several processes on a variety of
                 hosts.</para>
             <para>The Networking server uses the <systemitem
-                    class="service">neutron-server</systemitem> daemon
+                class="service">neutron-server</systemitem> daemon
                 to expose the Networking API and to pass user requests
                 to the configured Networking plug-in for additional
                 processing. Typically, the plug-in requires access to
@@ -364,15 +389,15 @@
                 <listitem>
                     <para><emphasis role="bold">dhcp agent</emphasis>
                             (<literal>neutron-dhcp-agent</literal>).
-                        Provides DHCP services to tenant networks. All
-                        plug-ins use this agent. </para>
+                        Provides DHCP services to tenant networks.
+                        Some plug-ins use this agent. </para>
                 </listitem>
                 <listitem>
                     <para><emphasis role="bold">l3 agent</emphasis>
                         <literal>(neutron-l3-agent</literal>).
                         Provides L3/NAT forwarding to provide external
-                        network access for VMs on tenant networks. All
-                        plug-ins use this agent. </para>
+                        network access for VMs on tenant networks.
+                        Some plug-ins use this agent. </para>
                 </listitem>
             </itemizedlist>
             <para>These agents interact with the main neutron process
@@ -506,7 +531,7 @@
             <para>The CLI includes a number of options. For details,
                 refer to the <link
                     xlink:href="http://docs.openstack.org/user-guide/content/"
-                        ><citetitle>OpenStack End User
+                    ><citetitle>OpenStack End User
                         Guide</citetitle></link>.</para>
             <section xml:id="api_abstractions">
                 <title>API abstractions</title>
@@ -1034,8 +1059,8 @@
                                 VM NIC is automatically created and
                                 associated with the default security
                                 group. You can configure <link
-                                   linkend="enabling_ping_and_ssh"
-                                   >security group rules</link> to
+                                    linkend="enabling_ping_and_ssh"
+                                    >security group rules</link> to
                                 enable users to access the VM.</para>
                         </listitem>
                         <listitem>
@@ -1157,7 +1182,7 @@
             Service endpoint. For more information about
             authentication with the Identity Service, see <link
                 xlink:href="http://docs.openstack.org/api/openstack-identity-service/2.0/content/"
-                    ><citetitle>OpenStack Identity Service API v2.0
+                ><citetitle>OpenStack Identity Service API v2.0
                     Reference</citetitle></link>. When the Identity
             Service is enabled, it is not mandatory to specify the
             tenant ID for resources in create requests because the
@@ -1205,7 +1230,7 @@
             a policy, which is evaluated. For instance in
                 <code>create_subnet:
                 [["admin_or_network_owner"]]</code>, <emphasis
-                role="italic">create_subnet</emphasis> is a policy,
+                    role="italic">create_subnet</emphasis> is a policy,
             and <emphasis role="italic"
                 >admin_or_network_owner</emphasis> is a rule.</para>
         <para>Policies are triggered by the Networking policy engine
@@ -1338,7 +1363,7 @@
             helps prevent individual node failures. In general, you
             can run <systemitem class="service"
                 >neutron-server</systemitem> and <systemitem
-                class="service">neutron-dhcp-agent</systemitem> in an
+                    class="service">neutron-dhcp-agent</systemitem> in an
             active-active fashion. You can run the <systemitem
                 class="service">neutron-l3-agent</systemitem> service
             as active/passive, which avoids IP conflicts with respect
@@ -1352,18 +1377,18 @@
             <itemizedlist>
                 <listitem>
                     <para>neutron-server: <link
-                            xlink:href="https://github.com/madkiss/openstack-resource-agents/blob/master/ocf/neutron-server"
-                            >https://github.com/madkiss/openstack-resource-agents</link></para>
+                        xlink:href="https://github.com/madkiss/openstack-resource-agents/blob/master/ocf/neutron-server"
+                        >https://github.com/madkiss/openstack-resource-agents</link></para>
                 </listitem>
                 <listitem>
                     <para>neutron-dhcp-agent : <link
-                            xlink:href="https://github.com/madkiss/openstack-resource-agents/blob/master/ocf/neutron-agent-dhcp"
-                            >https://github.com/madkiss/openstack-resource-agents</link></para>
+                        xlink:href="https://github.com/madkiss/openstack-resource-agents/blob/master/ocf/neutron-agent-dhcp"
+                        >https://github.com/madkiss/openstack-resource-agents</link></para>
                 </listitem>
                 <listitem>
                     <para>neutron-l3-agent : <link
-                            xlink:href="https://github.com/madkiss/openstack-resource-agents/blob/master/ocf/neutron-agent-l3"
-                            >https://github.com/madkiss/openstack-resource-agents</link></para>
+                        xlink:href="https://github.com/madkiss/openstack-resource-agents/blob/master/ocf/neutron-agent-l3"
+                        >https://github.com/madkiss/openstack-resource-agents</link></para>
                 </listitem>
             </itemizedlist>
             <note xmlns:db="http://docbook.org/ns/docbook">
@@ -1387,6 +1412,11 @@
                 </tr>
             </thead>
             <tbody>
+                <tr>
+                    <td>ML2</td>
+                    <td>True</td>
+                    <td>True</td>
+                </tr>
                 <tr>
                     <td>Open vSwitch</td>
                     <td>True</td>
