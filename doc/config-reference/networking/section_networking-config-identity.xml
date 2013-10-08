@@ -15,13 +15,13 @@
       <substeps>
         <step>
           <para>Add the following function to your
-              <filename>.bashrc</filename> file: </para>
+              <filename>.bashrc</filename> file:</para>
           <screen><prompt>$</prompt> <userinput>function get_id () {
 echo `"$@" | awk '/ id / { print $4 }'`
 }</userinput></screen>
         </step>
         <step>
-          <para>Source the <filename>.bashrc</filename> file: </para>
+          <para>Source the <filename>.bashrc</filename> file:</para>
           <screen><prompt>$</prompt> <userinput>source .bashrc</userinput></screen>
         </step>
       </substeps>
@@ -29,7 +29,7 @@ echo `"$@" | awk '/ id / { print $4 }'`
     <step>
       <title>Create the OpenStack Networking Service Entry</title>
       <para>OpenStack Networking must be available in the OpenStack
-        Compute service catalog. Create the service, as follows: </para>
+        Compute service catalog. Create the service, as follows:</para>
       <screen><prompt>$</prompt> <userinput>NEUTRON_SERVICE_ID=$(get_id keystone service-create --name neutron --type network --description 'OpenStack Networking Service')</userinput></screen>
     </step>
     <step>
@@ -37,7 +37,7 @@ echo `"$@" | awk '/ id / { print $4 }'`
         Entry</title>
       <para>The way that you create an OpenStack Networking endpoint
         entry depends on whether you are using the SQL catalog driver
-        or the template catalog driver: </para>
+        or the template catalog driver:</para>
       <para>
         <itemizedlist>
           <listitem>
@@ -58,7 +58,7 @@ echo `"$@" | awk '/ id / { print $4 }'`
               OpenStack Compute catalog template file
               (default_catalog.templates), using these parameters:
               given region ($REGION) and IP address of the OpenStack
-              Networking server ($IP). </para>
+              Networking server ($IP).</para>
             <programlisting language="bash">catalog.$REGION.network.publicURL = http://$IP:9696
 catalog.$REGION.network.adminURL = http://$IP:9696
 catalog.$REGION.network.internalURL = http://$IP:9696
@@ -80,32 +80,32 @@ catalog.$Region.network.internalURL = http://10.211.55.17:9696
         approach is to create a special <literal>service</literal>
         tenant, create a <literal>neutron</literal> user within this
         tenant, and to assign this user an <literal>admin</literal>
-        role. </para>
+        role.</para>
       <substeps>
         <step>
-          <para>Create the <literal>admin</literal> role: </para>
+          <para>Create the <literal>admin</literal> role:</para>
           <screen><prompt>$</prompt> <userinput>ADMIN_ROLE=$(get_id keystone role-create --name=admin)
 </userinput></screen>
         </step>
         <step>
-          <para> Create the <literal>neutron</literal> user: </para>
+          <para>Create the <literal>neutron</literal> user:</para>
           <screen><prompt>$</prompt> <userinput>NEUTRON_USER=$(get_id keystone user-create --name=neutron --pass="$NEUTRON_PASSWORD" --email=demo@example.com --tenant-id service)
 </userinput></screen>
         </step>
         <step>
-          <para>Create the <literal>service</literal> tenant: </para>
+          <para>Create the <literal>service</literal> tenant:</para>
           <screen><prompt>$</prompt> <userinput>SERVICE_TENANT=$(get_id keystone tenant-create --name service --description "Services Tenant")</userinput></screen>
         </step>
         <step>
           <para>Establish the relationship among the tenant, user, and
-            role: </para>
+            role:</para>
           <screen><prompt>$</prompt> <userinput>keystone user-role-add --user_id $NEUTRON_USER --role_id $ADMIN_ROLE --tenant_id $SERVICE_TENANT</userinput></screen>
         </step>
       </substeps>
     </step>
   </procedure>
   <para>See the OpenStack Installation Guides for more details about
-    creating service entries and service users. </para>
+    creating service entries and service users.</para>
 
   <section xml:id="nova_with_neutron">
     <title>OpenStack Compute</title>
@@ -118,7 +118,7 @@ catalog.$Region.network.internalURL = http://10.211.55.17:9696
       IPs are proxied by OpenStack Compute to OpenStack Network APIs.
       However, operator-facing tools (for example, <systemitem
         class="service">nova-manage</systemitem>) are not proxied and
-       should not be used. </para>
+       should not be used.</para>
     <warning>
       <para>When you
         configure networking, you must use this guide. Do not rely on OpenStack
@@ -144,11 +144,11 @@ catalog.$Region.network.internalURL = http://10.211.55.17:9696
           <systemitem class="service">nova-network</systemitem>.
       </para>
     </note>
-    <para> To ensure that OpenStack Compute works properly with
+    <para>To ensure that OpenStack Compute works properly with
       OpenStack Networking (rather than the legacy <systemitem
         class="service">nova-network</systemitem> mechanism), you must
       adjust settings in the <filename>nova.conf</filename>
-      configuration file. </para>
+      configuration file.</para>
   </section>
   <section xml:id="nova_with_neutron_api">
     <title>Networking API &amp; and Credential Configuration</title>
@@ -158,7 +158,7 @@ catalog.$Region.network.internalURL = http://10.211.55.17:9696
       standard API. For this to happen, you must configure the
       following items in the <filename>nova.conf</filename> file (used
       by each <systemitem class="service">nova-compute</systemitem>
-      and <systemitem class="service">nova-api</systemitem> instance). </para>
+      and <systemitem class="service">nova-api</systemitem> instance).</para>
     <table rules="all">
       <caption>nova.conf API and Credential Settings</caption>
       <col width="20%"/>
@@ -184,18 +184,18 @@ catalog.$Region.network.internalURL = http://10.211.55.17:9696
           <td><para>Update to the hostname/IP and port of the
                 <systemitem class="service"
                 >neutron-server</systemitem> instance for this
-              deployment. </para></td>
+              deployment.</para></td>
         </tr>
         <tr>
           <td><para><literal>neutron_auth_strategy</literal></para></td>
           <td><para>Keep the default <literal>keystone</literal> value
-              for all production deployments. </para></td>
+              for all production deployments.</para></td>
         </tr>
         <tr>
           <td><para><literal>neutron_admin_tenant_name</literal></para></td>
           <td><para>Update to the name of the service tenant created
               in the above section on OpenStack Identity
-              configuration. </para></td>
+              configuration.</para></td>
         </tr>
         <tr>
           <td><para><literal>neutron_admin_username</literal></para></td>
@@ -214,7 +214,7 @@ catalog.$Region.network.internalURL = http://10.211.55.17:9696
           <td><para>Update to the OpenStack Identity server IP and
               port. This is the Identity (keystone) admin API server
               IP and port value, and not the Identity service API IP
-              and port. </para></td>
+              and port.</para></td>
         </tr>
       </tbody>
     </table>
@@ -228,10 +228,10 @@ catalog.$Region.network.internalURL = http://10.211.55.17:9696
       you should always disable built-in security groups and proxy all
       security group calls to the OpenStack Networking API . If you do
       not, security policies will conflict by being simultaneously
-      applied by both services. </para>
+      applied by both services.</para>
     <para>To proxy security groups to OpenStack Networking, use the
       following configuration values in
-      <filename>nova.conf</filename>: </para>
+      <filename>nova.conf</filename>:</para>
     <table rules="all">
       <caption>nova.conf Security Group Settings</caption>
       <col width="20%"/>
@@ -255,7 +255,7 @@ catalog.$Region.network.internalURL = http://10.211.55.17:9696
           <td><para><literal>security_group_api</literal></para></td>
           <td><para>Update to <literal>neutron</literal>, so that all
               security group requests are proxied to the OpenStack
-              Network Service. </para></td>
+              Network Service.</para></td>
         </tr>
       </tbody>
     </table>
@@ -268,9 +268,9 @@ catalog.$Region.network.internalURL = http://10.211.55.17:9696
       those requests to <systemitem class="service"
         >nova-api</systemitem>, even when the requests are made from
       isolated networks, or from multiple networks that use
-      overlapping IP addresses. </para>
+      overlapping IP addresses.</para>
     <para>To enable proxying the requests, you must update the
-      following fields in <filename>nova.conf</filename>. </para>
+      following fields in <filename>nova.conf</filename>.</para>
     <table rules="all">
       <caption>nova.conf Metadata Settings</caption>
       <col width="20%"/>
@@ -297,12 +297,12 @@ catalog.$Region.network.internalURL = http://10.211.55.17:9696
           <td><para>Update to a string "password" value. You must also
               configure the same value in the
                 <filename>metadata_agent.ini</filename> file, to
-              authenticate requests made for metadata. </para>
+              authenticate requests made for metadata.</para>
             <para>The default value of an empty string in both files
               will allow metadata to function, but will not be secure
               if any non-trusted entities have access to the metadata
               APIs exposed by <systemitem class="service"
-                >nova-api</systemitem>. </para></td>
+                >nova-api</systemitem>.</para></td>
         </tr>
       </tbody>
     </table>
@@ -318,7 +318,7 @@ catalog.$Region.network.internalURL = http://10.211.55.17:9696
           class="service">nova-api</systemitem> instance exposes
         metadata APIs is determined by the value of
           <literal>enabled_apis</literal> in its
-          <filename>nova.conf</filename>. </para>
+          <filename>nova.conf</filename>.</para>
     </note>
   </section>
   <section xml:id="nova_with_neutron_vifplugging">
@@ -330,8 +330,8 @@ catalog.$Region.network.internalURL = http://10.211.55.17:9696
       Networking plugins may require different types of vif-plugging.
       You must specify the type of vif-plugging to be used for each
         <systemitem class="service">nova-compute</systemitem> instance
-      in the <filename>nova.conf</filename> file. </para>
-    <para> The following plugins support the "port bindings" API
+      in the <filename>nova.conf</filename> file.</para>
+    <para>The following plugins support the "port bindings" API
       extension that allows Nova to query for the type of vif-plugging
       required: <itemizedlist>
         <listitem>
@@ -357,19 +357,19 @@ catalog.$Region.network.internalURL = http://10.211.55.17:9696
     <para>For these plugins, the default values in
         <filename>nova.conf</filename> are sufficient. For other
       plugins, see the sub-sections below for vif-plugging
-      configuration, or consult external plugin documentation. </para>
+      configuration, or consult external plugin documentation.</para>
     <note>
       <para>The vif-plugging configuration required for <systemitem
           class="service">nova-compute</systemitem> might vary even
         within a single deployment if your deployment includes
         heterogeneous compute platforms (for example, some Compute
-        hosts are KVM while others are ESX). </para>
+        hosts are KVM while others are ESX).</para>
     </note>
     <section xml:id="nova_with_neutron_vifplugging_nvp">
       <title>Vif-plugging with Nicira NVP Plugin</title>
       <para>The choice of vif-plugging for the NVP Plugin depends on
         which version of libvirt you use. To check your libvirt
-        version, use: </para>
+        version, use:</para>
       <screen><prompt>$</prompt> <userinput>libvirtd version</userinput></screen>
       <para>In the <filename>nova.conf</filename> file, update the
           <literal>libvirt_vif_driver</literal> value, depending on
@@ -412,7 +412,7 @@ catalog.$Region.network.internalURL = http://10.211.55.17:9696
             <filename>/etc/libvirt/qemu.conf</filename>, uncomment the
           entry for 'cgroup_device_acl', add the value '/dev/net/tun'
           to the list of items for the configuration entry, and then
-          restart libvirtd. </para>
+          restart libvirtd.</para>
       </note>
     </section>
   </section>
