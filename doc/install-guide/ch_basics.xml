@@ -230,7 +230,7 @@ hwclock -w</programlisting>
     <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install rabbitmq-server</userinput></screen>
     <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>yum install qpid-cpp-server memcached</userinput></screen>
 
-    <!-- FIXME: configure and start/enable rabbitmq? -->
+    <!-- FIXME ubuntu: configure and start/enable rabbitmq? -->
 
     <para os="fedora;centos;rhel">Disable Qpid authentication by setting the
       value of the <literal>auth</literal> configuration key to
@@ -244,13 +244,24 @@ hwclock -w</programlisting>
 
     <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>service qpidd start</userinput>
 <prompt>#</prompt> <userinput>chkconfig qpidd on</userinput></screen>
+
+    <para os="opensuse">Start the messaging service and set it to start automatically when the system boots:
+    </para>
+    <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl start rabbitmq-server.service</userinput>
+<prompt>#</prompt> <userinput>systemctl enable rabbitmq-server.service</userinput></screen>
+
   </section>
 
   <section xml:id="basics-packages">
     <title>OpenStack Packages</title>
 
-    <!-- FIXME: ubuntu and opensuse -->
-    <para os="ubuntu;opensuse">FIXME</para>
+    <para>
+      Distributions releases and OpenStack releases are independend of
+      each other and thus you might need to add some extra steps to access
+      the latest OpenStack release after installation of the machine before
+      installation of any OpenStack packages.
+    </para>
+
     <para os="fedora;centos;rhel">This guide uses the OpenStack packages from
       the RDO repository. These packages work on Red Hat Enterprise Linux 6 and
       compatible versions of CentOS, as well as Fedora 19. Enable the repository
@@ -267,6 +278,34 @@ hwclock -w</programlisting>
       access the RDO repository.</para>
 
     <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>yum install openstack-utils</userinput></screen>
+
+    <para os="opensuse">Use the Open Build Service repositories for Havana based on your openSUSE version, for example if you run
+      openSUSE 12.3 use:
+    </para>
+    <screen os="opensuse"><prompt>#</prompt> <userinput>zypper ar -f obs://Cloud:OpenStack:Havana/openSUSE_12.3 Havana</userinput></screen>
+    <para os="opensuse">For openSUSE 13.1, nothing needs to be done since OpenStack Havana packages are part of the distribution itself.
+    </para>
+
+    <procedure xml:id="ubuntu-cloud-archive" os="ubuntu">
+      <title>To use the Ubuntu Cloud Archive for Havana</title>
+      <step>
+        <para>Install the keyring:
+        <screen><prompt>#</prompt> <userinput>apt-get install ubuntu-cloud-keyring</userinput></screen>
+        </para>
+      </step>
+      <step>
+        <para>
+          Edit <filename>/etc/apt/sources.list.d/cloud-archive.list</filename>:
+          <programlisting>deb http://ubuntu-cloud.archive.canonical.com/ubuntu precise-updates/havana main</programlisting>
+        </para>
+      </step>
+      <step>
+        <para>
+          Upgrade the system (and reboot if you need):
+          <screen><prompt>#</prompt> <userinput>apt-get update &amp;&amp; apt-get dist-upgrade</userinput></screen>
+        </para>
+      </step>
+    </procedure>
 
   </section>
 
