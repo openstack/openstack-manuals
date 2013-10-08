@@ -353,7 +353,12 @@ def validate_individual_files(rootdir, exceptions, verbose,
     modified_files = get_modified_files(rootdir, "--diff-filter=ACMRT")
 
     modified_files = filter(is_xml, modified_files)
-    print("\nValidating files...")
+    if check_syntax and check_niceness:
+        print("Checking syntax and niceness of xml files...")
+    elif check_syntax:
+        print("Checking syntax of xml files...")
+    elif check_niceness:
+        print("Checking niceness of xml files...")
     modified_files = map(lambda x: os.path.abspath(x), modified_files)
 
     for f in modified_files:
@@ -367,10 +372,10 @@ def validate_individual_files(rootdir, exceptions, verbose,
         no_validated = no_validated + 1
 
     if voting and any_failures:
-        print("Validation failed, validated %d files.\n" % no_validated)
+        print("Check failed, validated %d xml files.\n" % no_validated)
         sys.exit(1)
 
-    print("Validation passed, validated %d files.\n" % no_validated)
+    print("Check passed, validated %d xml files.\n" % no_validated)
 
 
 def validate_all_files(rootdir, exceptions, verbose,
@@ -380,7 +385,13 @@ def validate_all_files(rootdir, exceptions, verbose,
     schema = get_schema()
     any_failures = False
     no_validated = 0
-    print("\nValidating all files...")
+    if check_syntax and check_niceness:
+        print("Checking syntax and niceness of all xml files...")
+    elif check_syntax:
+        print("Checking syntax of all xml files...")
+    elif check_niceness:
+        print("Checking niceness of all xml files...")
+
 
     for root, dirs, files in os.walk(rootdir):
         # Don't descend into 'target' subdirectories
@@ -402,9 +413,9 @@ def validate_all_files(rootdir, exceptions, verbose,
                 no_validated = no_validated + 1
 
     if voting and any_failures:
-        print("Validation failed, validated %d files.\n" % no_validated)
+        print("Check failed, validated %d xml files.\n" % no_validated)
         sys.exit(1)
-    print("Validation passed, validated %d files.\n" % no_validated)
+    print("Check passed, validated %d xml files.\n" % no_validated)
 
 
 def logging_build_book(result):
