@@ -1705,5 +1705,112 @@
                 </section>
             </section>
         </section>
+
+        <section xml:id="section_bigswitch_extensions">
+            <title>Big Switch Plugin Extensions</title>
+            <para>The following section explains the Big Switch Neutron plugin-specific extension.</para>
+            <section xml:id="section_bigswitch_extension_routerrules">
+                <title>Big Switch Router Rules</title>
+                <para>Big Switch allows router rules to be added to each
+                    tenant router. These rules can be used to enforce routing
+                    policies such as denying traffic between subnets or traffic
+                    to external networks. By enforcing these at the router
+                    level, network segmentation policies can be enforced across
+                    many VMs that have differing security groups.</para>
+                <section xml:id="section_bigswitch_routerrule_fields">
+                    <title>Router Rule Attributes</title>
+                    <para>Each tenant router has a set of router rules
+                        associated with it. Each router rule has the attributes
+                        in the following table. Router rules and their
+                        attributes can be set using the
+                        <command>neutron router-update</command> command,
+                        via the Horizon interface, or through the Neutron API.
+                        </para>
+                    <table rules="all">
+                        <caption>Big Switch Router Rule Attributes</caption>
+                        <col width="20%"/>
+                        <col width="15%"/>
+                        <col width="25%"/>
+                        <col width="40%"/>
+                        <thead>
+                            <tr>
+                                <th>Attribute name</th>
+                                <th>Required</th>
+                                <th>Input Type</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>source</td>
+                                <td>Yes</td>
+                                <td>A valid CIDR or one of the keywords
+                                    'any' or 'external'</td>
+                                <td>The network that a packet's source IP must
+                                    match for the rule to be applied</td>
+                            </tr>
+                            <tr>
+                                <td>destination</td>
+                                <td>Yes</td>
+                                <td>A valid CIDR or one of the keywords
+                                    'any' or 'external'</td>
+                                <td>The network that a packet's destination IP
+                                    must match for the rule to be applied</td>
+                            </tr>
+                            <tr>
+                                <td>action</td>
+                                <td>Yes</td>
+                                <td>'permit' or 'deny'</td>
+                                <td>Determines whether or not the matched
+                                packets will allowed to cross the router</td>
+                            </tr>
+                            <tr>
+                                <td>nexthop</td>
+                                <td>No</td>
+                                <td>A plus-separated (+) list of next-hop IP
+                                    addresses (e.g. '1.1.1.1+1.1.1.2')</td>
+                                <td>Overrides the default virtual router used to
+                                    handle traffic for packets that match the
+                                    rule</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+                <section xml:id="section_bigswitch_routerrule_processorder">
+                    <title>Order of Rule Processing</title>
+                    <para>The order of router rules has no effect. Overlapping
+                        rules are evaluated using longest prefix matching on
+                        the source and destination fields. The source field
+                        is matched first so it always takes higher precedence
+                        over the destination field. In other words, longest
+                        prefix matching is used on the destination field only
+                        if there are multiple matching rules with the same
+                        source.</para>
+                </section>
+                <section xml:id="section_bigswitch_routerrule_walkthrough">
+                    <title>Big Switch Router Rules Operations</title>
+                    <para>Router rules are configured with a router update
+                        operation in Neutron. The update overrides any previous
+                        rules so all of the rules must be provided at the same
+                        time.</para>
+                    <para>Update a router with rules to permit traffic by
+                        default but block traffic from external networks to the
+                        10.10.10.0/24 subnet:</para>
+                    <screen><prompt>$</prompt> <userinput>neutron router-update <replaceable>Router-UUID</replaceable> --router_rules type=dict list=true\
+source=any,destination=any,action=permit \
+source=external,destination=10.10.10.0/24,action=deny</userinput></screen>
+                    <para>Specify alternate next-hop addresses for a specific
+                        subnet:</para>
+                    <screen><prompt>$</prompt> <userinput>neutron router-update <replaceable>Router-UUID</replaceable> --router_rules type=dict list=true\
+source=any,destination=any,action=permit \
+source=10.10.10.0/24,destination=any,action=permit,nexthops=10.10.10.254+10.10.10.253</userinput></screen>
+                    <para>Block traffic between two subnets while
+                        allowing everything else:</para>
+                    <screen><prompt>$</prompt> <userinput>neutron router-update <replaceable>Router-UUID</replaceable> --router_rules type=dict list=true\
+source=any,destination=any,action=permit \
+source=10.10.10.0/24,destination=10.20.20.20/24,action=deny</userinput></screen>
+                </section>
+            </section>
+        </section>
     </section>
 </section>
