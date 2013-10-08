@@ -84,16 +84,19 @@ Allow from all
 # Require all granted
 &lt;/Directory&gt;
 &lt;/VirtualHost&gt;</programlisting>
-            <para>In this configuration, Apache listens on the
+            <para>In this configuration, Apache http server listens on the
                 port 443 and redirects all the hits to the HTTPS
                 protocol for all the non-secured requests. The secured
                 section defines the private key, public key, and
                 certificate to use.</para>
         </step>
         <step>
-            <para>Restart Apache and memcached:</para>
-            <screen><prompt>#</prompt> <userinput>service apache2 restart</userinput>
-<prompt>#</prompt> <userinput>service memcached restart</userinput></screen>
+            <para>Restart Apache http server. For Debian/Ubuntu/SUSE:</para>
+            <screen><prompt>#</prompt> <userinput>service apache2 restart</userinput></screen>
+            <para>Or for Fedora/RHEL/CentOS:</para>
+            <screen><prompt>#</prompt> <userinput>service httpd restart</userinput></screen>
+            <para>Next, restart memcached:</para>
+            <screen><prompt>#</prompt> <userinput>service memcached restart</userinput></screen>
             <para>If you try to access the dashboard through HTTP,
                 the browser redirects you to the HTTPS page.</para>
         </step>
