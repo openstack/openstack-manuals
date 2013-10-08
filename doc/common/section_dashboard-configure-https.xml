@@ -35,8 +35,12 @@ SESSION_COOKIE_HTTPONLY = True</programlisting>
 WSGIDaemonProcess horizon user=www-data group=www-data processes=3 threads=10
 Alias /static /usr/share/openstack-dashboard/openstack_dashboard/static/
 &lt;Directory /usr/share/openstack-dashboard/openstack_dashboard/wsgi&gt;
+# For Apache http server 2.2 and earlier:
 Order allow,deny
 Allow from all
+
+# For Apache http server 2.4 and later:
+# Require all granted
 &lt;/Directory&gt;</programlisting>
 
             <para>After:</para>
@@ -72,8 +76,12 @@ WSGIScriptAlias / /usr/share/openstack-dashboard/openstack_dashboard/wsgi/django
 WSGIDaemonProcess horizon user=www-data group=www-data processes=3 threads=10
 Alias /static /usr/share/openstack-dashboard/openstack_dashboard/static/
 &lt;Directory /usr/share/openstack-dashboard/openstack_dashboard/wsgi&gt;
+# For Apache http server 2.2 and earlier:
 Order allow,deny
 Allow from all
+
+# For Apache http server 2.4 and later:
+# Require all granted
 &lt;/Directory&gt;
 &lt;/VirtualHost&gt;</programlisting>
             <para>In this configuration, Apache listens on the
