@@ -10,6 +10,7 @@
 import os
 import re
 import tempfile
+import shutil
 
 # should be the same like in tools/validate.py
 FILE_EXCEPTIONS = ['ha-guide-docinfo.xml','bk001-ch003-associate-general.xml']
@@ -33,7 +34,7 @@ for element in elements:
     checks.append(re.compile("(.*<%s>)\s+([\w\-().:!?{}\[\]]+.*\n)" % element)),
     checks.append(re.compile("(.*[\w\-().:!?{}\[\]]+)\s+(<\/%s>.*\n)" % element))
 
-for root, dirs, files in os.walk('doc/src/docbkx/'):
+for root, dirs, files in os.walk('doc/'):
     for f in files:
         if (not (f.endswith('.xml') and
                  f != 'pom.xml' and
@@ -51,6 +52,5 @@ for root, dirs, files in os.walk('doc/src/docbkx/'):
             tmpfd.write(line)
         tmpfd.close()
         if match:
-            os.rename(tmpfile[1], docfile)
-        else:
-            os.unlink(tmpfile[1])
+            shutil.copyfile(tmpfile[1], docfile)
+        os.unlink(tmpfile[1])
