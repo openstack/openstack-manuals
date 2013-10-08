@@ -1,0 +1,43 @@
+    <section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="object-storage-service">
+      <title>Object Storage Service</title>
+      <para>The Object Storage Service is a highly scalable and
+        durable multi-tenant object storage system for large amounts
+        of unstructured data at low cost through a RESTful http
+        API.</para>
+      <para>It includes the following components:</para>
+      <itemizedlist>
+        <listitem>
+          <para><systemitem class="service"
+              >swift-proxy-server</systemitem>. Accepts Object Storage
+            API and raw HTTP requests to upload files, modify
+            metadata, and create containers. It also serves file or
+            container listings to web browsers. To improve
+            performance, the proxy server can use an optional cache
+            usually deployed with memcache.</para>
+        </listitem>
+        <listitem>
+          <para>Account servers. Manage accounts defined with the
+            Object Storage Service.</para>
+        </listitem>
+        <listitem>
+          <para>Container servers. Manage a mapping of containers, or
+            folders, within the Object Storage Service.</para>
+        </listitem>
+        <listitem>
+          <para>Object servers. Manage actual objects, such as files,
+            on the storage nodes.</para>
+        </listitem>
+        <listitem>
+          <para>A number of periodic processes. Performs housekeeping
+            tasks on the large data store. The replication services
+            ensure consistency and availability through the cluster.
+            Other periodic processes include auditors, updaters, and
+            reapers.</para>
+        </listitem>
+      </itemizedlist>
+      <para>Configurable WSGI middleware, which is usually the
+        Identity Service, handles authentication.</para>
+    </section>

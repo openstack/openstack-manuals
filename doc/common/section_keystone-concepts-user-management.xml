@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="keystone-user-management">
+        <title>User management</title>
+        <para>The main components of Identity user management are: <itemizedlist>
+                <listitem>
+                    <para>Users</para>
+                </listitem>
+                <listitem>
+                    <para>Tenants</para>
+                </listitem>
+                <listitem>
+                    <para>Roles</para>
+                </listitem>
+            </itemizedlist></para>
+        <para>A <emphasis>user</emphasis> represents a human user, and
+            has associated information such as user name, password,
+            and email. This example creates a user named
+            "alice":</para>
+        <screen><prompt>$</prompt> <userinput>keystone user-create --name=alice \
+        --pass=mypassword123 --email=alice@example.com</userinput></screen>
+        <para>A <emphasis>tenant</emphasis> can be a project, group,
+            or organization. Whenever you make requests to OpenStack
+            services, you must specify a tenant. For example, if you
+            query the Compute service for a list of running instances,
+            you receive a list of all of the running instances in the
+            tenant that you specified in your query. This example
+            creates a tenant named "acme":</para>
+        <screen><prompt>$</prompt> <userinput>keystone tenant-create --name=acme</userinput></screen>
+        <note>
+            <para>Because the term <emphasis>project</emphasis> was
+                used instead of <emphasis>tenant</emphasis> in earlier
+                versions of OpenStack Compute, some command-line tools
+                use <literal>--project_id</literal> instead of
+                    <literal>--tenant-id</literal> or
+                    <literal>--os-tenant-id</literal> to refer to a
+                tenant ID.</para>
+        </note>
+        <para>A <emphasis>role</emphasis> captures what operations a
+            user is permitted to perform in a given tenant. This
+            example creates a role named "compute-user":</para>
+        <screen><prompt>$</prompt> <userinput>keystone role-create --name=compute-user</userinput></screen>
+        <note>
+            <para>It is up to individual services such as the Compute
+                service and Image service to assign meaning to these
+                roles. As far as the Identity service is concerned, a
+                role is simply a name.</para>
+        </note>
+        <?hard-pagebreak?>
+        <para>The Identity service associates a user with a tenant and
+            a role. To continue with the previous examples, you might
+            to assign the "alice" user the "compute-user" role in the
+            "acme" tenant:</para>
+        <screen><prompt>$</prompt> <userinput>keystone user-list</userinput></screen>
+        <screen><computeroutput>+--------+---------+-------------------+--------+
+|   id   | enabled |       email       |  name  |
++--------+---------+-------------------+--------+
+| 892585 |   True  | alice@example.com | alice  |
++--------+---------+-------------------+--------+</computeroutput></screen>
+        <screen><prompt>$</prompt> <userinput>keystone role-list</userinput></screen>
+        <screen><computeroutput>+--------+--------------+
+|   id   |     name     |
++--------+--------------+
+| 9a764e | compute-user |
++--------+--------------+</computeroutput></screen>
+        <screen><prompt>$</prompt> <userinput>keystone tenant-list</userinput></screen>
+        <screen><computeroutput>+--------+------+---------+
+|   id   | name | enabled |
++--------+------+---------+
+| 6b8fd2 | acme |   True  |
++--------+------+---------+</computeroutput></screen>
+        <screen><prompt>$</prompt> <userinput>keystone user-role-add --user=892585 --role=9a764e --tenant-id=6b8fd2</userinput>       </screen>
+        <para>A user can be assigned different roles in different
+            tenants: for example, Alice might also have the "admin"
+            role in the "Cyberdyne" tenant. A user can also be
+            assigned multiple roles in the same tenant.</para>
+        <para>The
+                    <filename>/etc/<replaceable>[SERVICE_CODENAME]</replaceable>/policy.json</filename>
+            file controls the tasks that users can perform for a given
+            service. For example,
+                <filename>/etc/nova/policy.json</filename> specifies
+            the access policy for the Compute service,
+                <filename>/etc/glance/policy.json</filename> specifies
+            the access policy for the Image service, and
+                <filename>/etc/keystone/policy.json</filename>
+            specifies the access policy for the Identity
+            service.</para>
+        <para>The default <filename>policy.json</filename> files in
+            the Compute, Identity, and Image service recognize only
+            the <literal>admin</literal> role: all operations that do
+            not require the <literal>admin</literal> role are
+            accessible by any user that has any role in a
+            tenant.</para>
+        <para>If you wish to restrict users from performing operations
+            in, say, the Compute service, you need to create a role in
+            the Identity service and then modify
+                <filename>/etc/nova/policy.json</filename> so that
+            this role is required for Compute operations.</para>
+        <?hard-pagebreak?>
+        <para>For example, this line in
+                <filename>/etc/nova/policy.json</filename> specifies
+            that there are no restrictions on which users can create
+            volumes: if the user has any role in a tenant, they can
+            create volumes in that tenant.</para>
+        <programlisting language="json">"volume:create": [],</programlisting>
+        <para>To restrict creation of volumes to users who had the
+                <literal>compute-user</literal> role in a particular
+            tenant, you would add
+                <literal>"role:compute-user"</literal>, like
+            so:</para>
+        <programlisting language="json">"volume:create": ["role:compute-user"],</programlisting>
+        <para>To restrict all Compute service requests to require this
+            role, the resulting file would look like:</para>
+        <programlisting language="json"><?db-font-size 50%?>{
+    "admin_or_owner":  [["role:admin"], ["project_id:%(project_id)s"]],
+    "default": [["rule:admin_or_owner"]],
+
+    "compute:create": ["role":"compute-user"],
+    "compute:create:attach_network": ["role":"compute-user"],
+    "compute:create:attach_volume": ["role":"compute-user"],
+    "compute:get_all": ["role":"compute-user"],
+
+    "admin_api": [["role:admin"]],
+    "compute_extension:accounts": [["rule:admin_api"]],
+    "compute_extension:admin_actions": [["rule:admin_api"]],
+    "compute_extension:admin_actions:pause": [["rule:admin_or_owner"]],
+    "compute_extension:admin_actions:unpause": [["rule:admin_or_owner"]],
+    "compute_extension:admin_actions:suspend": [["rule:admin_or_owner"]],
+    "compute_extension:admin_actions:resume": [["rule:admin_or_owner"]],
+    "compute_extension:admin_actions:lock": [["rule:admin_api"]],
+    "compute_extension:admin_actions:unlock": [["rule:admin_api"]],
+    "compute_extension:admin_actions:resetNetwork": [["rule:admin_api"]],
+    "compute_extension:admin_actions:injectNetworkInfo": [["rule:admin_api"]],
+    "compute_extension:admin_actions:createBackup": [["rule:admin_or_owner"]],
+    "compute_extension:admin_actions:migrateLive": [["rule:admin_api"]],
+    "compute_extension:admin_actions:migrate": [["rule:admin_api"]],
+    "compute_extension:aggregates": [["rule:admin_api"]],
+    "compute_extension:certificates": ["role":"compute-user"],
+    "compute_extension:cloudpipe": [["rule:admin_api"]],
+    "compute_extension:console_output": ["role":"compute-user"],
+    "compute_extension:consoles": ["role":"compute-user"],
+    "compute_extension:createserverext": ["role":"compute-user"],
+    "compute_extension:deferred_delete": ["role":"compute-user"],
+    "compute_extension:disk_config": ["role":"compute-user"],
+    "compute_extension:evacuate": [["rule:admin_api"]],
+    "compute_extension:extended_server_attributes": [["rule:admin_api"]],
+    "compute_extension:extended_status": ["role":"compute-user"],
+    "compute_extension:flavorextradata": ["role":"compute-user"],
+    "compute_extension:flavorextraspecs": ["role":"compute-user"],
+    "compute_extension:flavormanage": [["rule:admin_api"]],
+    "compute_extension:floating_ip_dns": ["role":"compute-user"],
+    "compute_extension:floating_ip_pools": ["role":"compute-user"],
+    "compute_extension:floating_ips": ["role":"compute-user"],
+    "compute_extension:hosts": [["rule:admin_api"]],
+    "compute_extension:keypairs": ["role":"compute-user"],
+    "compute_extension:multinic": ["role":"compute-user"],
+    "compute_extension:networks": [["rule:admin_api"]],
+    "compute_extension:quotas": ["role":"compute-user"],
+    "compute_extension:rescue": ["role":"compute-user"],
+    "compute_extension:security_groups": ["role":"compute-user"],
+    "compute_extension:server_action_list": [["rule:admin_api"]],
+    "compute_extension:server_diagnostics": [["rule:admin_api"]],
+    "compute_extension:simple_tenant_usage:show": [["rule:admin_or_owner"]],
+    "compute_extension:simple_tenant_usage:list": [["rule:admin_api"]],
+    "compute_extension:users": [["rule:admin_api"]],
+    "compute_extension:virtual_interfaces": ["role":"compute-user"],
+    "compute_extension:virtual_storage_arrays": ["role":"compute-user"],
+    "compute_extension:volumes": ["role":"compute-user"],
+    "compute_extension:volume_attachments:index": ["role":"compute-user"],
+    "compute_extension:volume_attachments:show": ["role":"compute-user"],
+    "compute_extension:volume_attachments:create": ["role":"compute-user"],
+    "compute_extension:volume_attachments:delete": ["role":"compute-user"],
+    "compute_extension:volumetypes": ["role":"compute-user"],
+
+    "volume:create": ["role":"compute-user"],
+    "volume:get_all": ["role":"compute-user"],
+    "volume:get_volume_metadata": ["role":"compute-user"],
+    "volume:get_snapshot": ["role":"compute-user"],
+    "volume:get_all_snapshots": ["role":"compute-user"],
+
+    "network:get_all_networks": ["role":"compute-user"],
+    "network:get_network": ["role":"compute-user"],
+    "network:delete_network": ["role":"compute-user"],
+    "network:disassociate_network": ["role":"compute-user"],
+    "network:get_vifs_by_instance": ["role":"compute-user"],
+    "network:allocate_for_instance": ["role":"compute-user"],
+    "network:deallocate_for_instance": ["role":"compute-user"],
+    "network:validate_networks": ["role":"compute-user"],
+    "network:get_instance_uuids_by_ip_filter": ["role":"compute-user"],
+
+    "network:get_floating_ip": ["role":"compute-user"],
+    "network:get_floating_ip_pools": ["role":"compute-user"],
+    "network:get_floating_ip_by_address": ["role":"compute-user"],
+    "network:get_floating_ips_by_project": ["role":"compute-user"],
+    "network:get_floating_ips_by_fixed_address": ["role":"compute-user"],
+    "network:allocate_floating_ip": ["role":"compute-user"],
+    "network:deallocate_floating_ip": ["role":"compute-user"],
+    "network:associate_floating_ip": ["role":"compute-user"],
+    "network:disassociate_floating_ip": ["role":"compute-user"],
+
+    "network:get_fixed_ip": ["role":"compute-user"],
+    "network:add_fixed_ip_to_instance": ["role":"compute-user"],
+    "network:remove_fixed_ip_from_instance": ["role":"compute-user"],
+    "network:add_network_to_project": ["role":"compute-user"],
+    "network:get_instance_nw_info": ["role":"compute-user"],
+
+    "network:get_dns_domains": ["role":"compute-user"],
+    "network:add_dns_entry": ["role":"compute-user"],
+    "network:modify_dns_entry": ["role":"compute-user"],
+    "network:delete_dns_entry": ["role":"compute-user"],
+    "network:get_dns_entries_by_address": ["role":"compute-user"],
+    "network:get_dns_entries_by_name": ["role":"compute-user"],
+    "network:create_private_dns_domain": ["role":"compute-user"],
+    "network:create_public_dns_domain": ["role":"compute-user"],
+    "network:delete_dns_domain": ["role":"compute-user"]
+}</programlisting>
+</section>

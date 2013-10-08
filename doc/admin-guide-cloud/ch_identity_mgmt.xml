@@ -11,7 +11,12 @@
       (<filename>etc/keystone.conf</filename>), possibly a separate
     logging configuration file, and initializing data into keystone
     using the command line client.</para>
-  <xi:include href="../common/section_keystone-concepts.xml"/>
+  <section xml:id="keystone-admin-concepts">
+  <title>Identity Service Concepts</title>
+  <xi:include href="../common/section_keystone-concepts-user-management.xml"/>
+  <xi:include href="../common/section_keystone-concepts-service-management.xml"/>
+  <xi:include href="../common/section_keystone-concepts-group-management.xml"/>
+  </section>
   <section xml:id="user-crud">
     <title>User CRUD</title>
     <para>Keystone provides a user CRUD filter that can be added to
@@ -58,23 +63,23 @@ pipeline = stats_monitoring url_normalize token_auth admin_token_auth xml_body j
         <filename>nova.conf</filename>. For example in Compute, you
       can remove the middleware parameters from
         <filename>api-paste.ini</filename>, as follows:</para>
-    <programlisting language="ini"><?db-font-size 75%?>[filter:authtoken] 
+    <programlisting language="ini"><?db-font-size 75%?>[filter:authtoken]
 paste.filter_factory =
 keystoneclient.middleware.auth_token:filter_factory</programlisting>
     <para>And set the following values in
         <filename>nova.conf</filename>, as follows:</para>
-    <programlisting language="ini"><?db-font-size 75%?>[DEFAULT] 
-... 
+    <programlisting language="ini"><?db-font-size 75%?>[DEFAULT]
+...
 auth_strategy=keystone
-      
-[keystone_authtoken] 
-auth_host = 127.0.0.1 
+
+[keystone_authtoken]
+auth_host = 127.0.0.1
 auth_port = 35357
-auth_protocol = http 
+auth_protocol = http
 auth_uri = http://127.0.0.1:5000/
-admin_user = admin 
+admin_user = admin
 admin_password = SuperSekretPassword
-admin_tenant_name = service </programlisting>
+admin_tenant_name = service</programlisting>
     <note>
       <para>Middleware parameters in paste config take priority. You
         must remove them to use values in [keystone_authtoken]
