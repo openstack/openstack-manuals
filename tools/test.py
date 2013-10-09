@@ -364,7 +364,7 @@ def validate_individual_files(rootdir, exceptions, verbose,
     for f in modified_files:
         base_f = os.path.basename(f)
         if (base_f == "pom.xml" or
-                f in exceptions):
+                base_f in exceptions):
             continue
         any_failures = validate_one_file(
             schema, rootdir, f, verbose, any_failures,
@@ -630,7 +630,8 @@ def main(args):
     if args.check_syntax or args.check_niceness:
         if args.force:
             validate_all_files(args.path, FILE_EXCEPTIONS, args.verbose,
-                               args.check_niceness, args.non_voting)
+                               args.check_syntax, args.check_niceness,
+                               args.non_voting)
         else:
             validate_individual_files(args.path, FILE_EXCEPTIONS,
                                       args.verbose, args.check_syntax,
