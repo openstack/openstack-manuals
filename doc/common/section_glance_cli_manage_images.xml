@@ -80,6 +80,30 @@
 | status                                | active                               |
 | updated_at                            | 2013-07-22T19:46:42                  |
 +---------------------------------------+--------------------------------------+</computeroutput></screen>
+                <note><para>The OpenStack Image Service can store location metadata for images, which can enable direct file access for a
+                        client. Update <filename>/etc/glance/glance.conf</filename> with:</para>
+                    <para>
+                        <itemizedlist>
+                            <listitem>
+                                <para><code>show_multiple_locations = True</code></para>
+                            </listitem>
+                            <listitem>
+                                <para><code>filesystem_store_metadata_file =
+                                            <replaceable>filePath</replaceable></code>, where
+                                        <replaceable>filePath</replaceable> points to a JSON file
+                                    containing the mount point for OpenStack images on your system
+                                    and a unique ID. For example:
+                                    <programlisting language="json">[{
+    "id": "b9d69795-5951-4cb0-bb5c-29491e1e2daf",
+    "mountpoint": "/var/lib/glance/images/"
+  }]</programlisting></para>
+                            </listitem>
+                        </itemizedlist>
+                    </para>
+                    <para>After you restart the Image Service, you can use the following syntax to view the image's location information:</para>
+                    <screen><prompt>$</prompt> <userinput>glance --os-image-api-version=2 image-show <replaceable>imageID</replaceable></userinput></screen>
+                    <para>For example:</para>
+                    <screen><prompt>$</prompt> <userinput>glance --os-image-api-version=2 image-show 2d9bb53f-70ea-4066-a68b-67960eaae673</userinput></screen></note>
             </step>
         </procedure>
     </section>
@@ -90,7 +114,7 @@
                 <para>To upload a CentOS 6.3 image in qcow2 format and
                     configure it for public access:</para>
                 <screen><prompt>$</prompt> <userinput>glance image-create --name centos63-image --disk-format=qcow2 \
-  --container-format=bare --is-public=True ./centos63.qcow2</userinput></screen>
+  --container-format=bare --is-public=True --file=./centos63.qcow2</userinput></screen>
             </step>
             <step>
                 <para>To update an image by name or ID:</para>
