@@ -10,7 +10,7 @@
         enable account management by configuring it in the
             <filename>proxy-server.conf</filename> file.</para>
     <note>
-        <para>It is assumed that all commands are run as the root user.</para>
+        <para>Swift processes  run under a separate user and group, set by configuration options, and referred to as swift:swift. The default user is swift, which may not exist on your system.</para>
     </note>
     <orderedlist>
         <listitem>
@@ -44,7 +44,7 @@ to
                 <screen><prompt>#</prompt> <userinput>service memcached restart</userinput></screen></para>
         </listitem>
         <listitem os="rhel;centos;fedora">
-            <para>RHEL/CentOS/Fedora Only: To set up Object Storage to authenticate tokens we need to set the keystone Admin
+            <para>RHEL/CentOS/Fedora only: To set up Object Storage to authenticate tokens we need to set the keystone Admin
                 token in the swift proxy file with the openstack-config command.
                 <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/swift/proxy-server.conf filter:authtoken admin_token $ADMIN_TOKEN</userinput>
 <prompt>#</prompt> sudo <userinput>openstack-config --set /etc/swift/proxy-server.conf filter:authtoken auth_token $ADMIN_TOKEN</userinput></screen>
@@ -53,14 +53,14 @@ to
         <listitem>
             <para>Create <filename>/etc/swift/proxy-server.conf</filename>:</para>
             <para>
-                <literallayout class="monospaced"><xi:include parse="text" href="samples/proxy-server.conf.txt" /></literallayout>
+                <literallayout class="monospaced"><xi:include parse="text" href="../samples/proxy-server.conf.txt" /></literallayout>
             </para>
             <note>
                 <para>If you run multiple memcache servers, put the multiple
                     IP:port listings in the [filter:cache] section of
                     the proxy-server.conf file like:
-                    <literallayout class="monospaced">10.1.2.3:11211,10.1.2.4:11211</literallayout>Only
-                    the proxy server uses memcache.</para>
+                    <literallayout class="monospaced">10.1.2.3:11211,10.1.2.4:11211</literallayout></para>
+                    <para>Only the proxy server uses memcache.</para>
             </note>
         </listitem>
         <listitem>

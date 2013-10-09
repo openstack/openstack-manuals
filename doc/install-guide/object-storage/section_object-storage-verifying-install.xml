@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="verify-swift-installation"
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+    <title>Verify the Installation</title>
+    <para>You can run these commands from the proxy server or any
+        server that has access to the Identity Service.</para>
+    <procedure><title>To verify the installation</title>
+        <step>
+            <para>Export the swift admin password, which you set up as
+                an Identity service admin, and added to the
+                    <filename>proxy-server.conf</filename> file, to a
+                variable. You can also set up an openrc file as
+                described in the <citetitle><link
+                    xlink:href="http://docs.openstack.org/user-guide/content/"
+                    >OpenStack User Guide</link></citetitle> where the variable is
+                <literal>OS_USERNAME</literal>.</para>
+            <screen><prompt>$</prompt> <userinput>export OS_PASSWORD=<replaceable>ADMIN_PASS</replaceable></userinput></screen>
+            <screen><prompt>$</prompt> <userinput>export OS_AUTH_URL=<replaceable>http://controller:5000/v2.0</replaceable></userinput></screen>
+            <note>
+                <para>The sample <filename>proxy-server.conf</filename> file uses "swift" for <replaceable>ADMIN_PASS</replaceable>. If you do not wish to have the swift admin
+                    password stored in your shell's history, you can
+                    run the following command:</para>
+                <screen><prompt>$</prompt> <userinput>export SWIFT_PROXY_CONF="/etc/swift/proxy-server.conf export OS_PASSWORD=$( grep admin_password ${SWIFT_PROXY_CONF} | awk '{ print $NF }' )</userinput></screen>
+            </note>
+        </step>
+        <step><para>Run the following swift command with the correct Identity
+                Service URL:</para><screen><prompt>$</prompt> <userinput>swift -V 2.0 -A $OS_AUTH_URL -U demo:admin -K $ADMINPASS stat</userinput></screen>
+            <screen><computeroutput>Account: AUTH_11b9758b7049476d9b48f7a91ea11493
+Containers: 0
+   Objects: 0
+     Bytes: 0
+Content-Type: text/plain; charset=utf-8
+X-Timestamp: 1381434243.83760
+X-Trans-Id: txdcdd594565214fb4a2d33-0052570383
+X-Put-Timestamp: 1381434243.83760</computeroutput></screen>
+        </step>
+        <step>
+            <para>Run the following swift commands to upload files to
+                a container (create a test text files if needed):</para>
+            <screen><prompt>$</prompt> <userinput>swift -V 2.0 -A $OS_AUTH_URL -U demo:admin -K $OS_PASSWORD upload myfiles test.txt</userinput>
+<prompt>$</prompt> <userinput>swift -V 2.0 -A $OS_AUTH_URL -U demo:admin -K $ADMINPASS upload myfiles test2.txt</userinput></screen>
+        </step>
+        <step>
+            <para>Run the following swift command to download all
+                files from the &#8216;myfiles&#8217; container:</para>
+            <screen><prompt>$</prompt> <userinput>swift -V 2.0 -A $OS_AUTH_URL -U demo:admin -K $ADMINPASS download myfiles</userinput></screen>
+            <screen><computeroutput>test2.txt [headers 0.267s, total 0.267s, 0.000s MB/s]
+test.txt [headers 0.271s, total 0.271s, 0.000s MB/s]</computeroutput></screen>
+        </step>
+    </procedure>
+</section>
