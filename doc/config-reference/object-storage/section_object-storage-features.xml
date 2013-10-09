@@ -5,6 +5,94 @@
     xmlns:xlink="http://www.w3.org/1999/xlink"
          version="5.0">
     <title>Configuring OpenStack Object Storage Features</title>
+    <section xml:id="swift-zones">
+        <title>OpenStack Object Storage Zones</title>
+        <para>In OpenStack Object Storage, data is placed across different tiers
+            of failure domains. First, data is spread across regions, then
+            zones, then servers, and finally across drives. Data is placed to
+            get the highest failure domain isolation. If you deploy multiple
+            regions, the Object Storage service places the data across the
+            regions. Within a region, each replica of the data is stored in
+            unique zones, if possible. If there is only one zone, data is placed
+            on different servers. And if there is only one server, data is
+            placed on different drives.</para>
+        <para>Regions are widely separated installations with a high-latency or
+            otherwise constrained network link between them. Zones are
+            arbitrarily assigned, and it is up to the administrator of the
+            Object Storage cluster to choose an isolation level and attempt to
+            maintain the isolation level through appropriate zone assignment.
+            For example, a zone may be defined as a rack with a single power
+            source. Or a zone may be a DC room with a common utility provider.
+            Servers are identified by a unique IP/port. Drives are locally
+            attached storage volumes identified by mount point.</para>
+        <para>In small clusters (five nodes or fewer), everything is normally in
+            a single zone. Larger Object Storage deployments may assign zone
+            designations differently; for example, an entire cabinet or rack of
+            servers may be designated as a single zone to maintain replica
+            availability if the cabinet becomes unavailable (for example, due to
+            failure of the top of rack switches or a dedicated circuit). In very
+            large deployments, such as service provider level deployments, each
+            zone might have an entirely autonomous switching and power
+            infrastructure, so that even the loss of an electrical circuit or
+            switching aggregator would result in the loss of a single replica at
+            most.</para>
+        <section xml:id="swift-zones-rackspacerecs">
+            <title>Rackspace Zone Recommendations</title>
+            <para>For ease of maintenance on OpenStack Object Storage, Rackspace
+                recommends that you set up at least five nodes. Each node will
+                be assigned its own zone (for a total of five zones), which will
+                give you host level redundancy. This allows you to take down a
+                single zone for maintenance and still guarantee object
+                availability in the event that another zone fails during your
+                maintenance.</para>
+            <para>You could keep each server in its own cabinet to achieve
+                cabinet level isolation, but you may wish to wait until your
+                swift service is better established before developing
+                cabinet-level isolation. OpenStack Object Storage is flexible;
+                if you later decide to change the isolation level, you can take
+                down one zone at a time and move them to appropriate new homes.
+            </para>
+        </section>
+    </section>
+    <section xml:id="swift-raid-controller"><title>RAID Controller Configuration</title>
+        <para>OpenStack Object Storage does not require RAID. In fact,
+            most RAID configurations cause significant performance
+            degradation. The main reason for using a RAID
+            controller is the battery backed cache. It is very
+            important for data integrity reasons that when the
+            operating system confirms a write has been committed
+            that the write has actually been committed to a
+            persistent location. Most disks lie about hardware
+            commits by default, instead writing to a faster write
+            cache for performance reasons. In most cases, that
+            write cache exists only in non-persistent memory. In
+            the case of a loss of power, this data may never
+            actually get committed to disk, resulting in
+            discrepancies that the underlying filesystem must
+            handle.</para>
+        <para>OpenStack Object Storage works best on the XFS file
+            system, and this document assumes that the hardware
+            being used is configured appropriately to be mounted
+            with the <command>nobarriers</command> option.   For
+            more information, refer to the XFS FAQ: <link
+                xlink:href="http://xfs.org/index.php/XFS_FAQ"
+                >http://xfs.org/index.php/XFS_FAQ</link>
+        </para>
+        <para>To get the most out of your hardware, it is
+            essential that every disk used in OpenStack Object
+            Storage is configured as a standalone, individual RAID
+            0 disk; in the case of 6 disks, you would have six
+            RAID 0s or one JBOD. Some RAID controllers do not
+            support JBOD or do not support battery backed cache
+            with JBOD. To ensure the integrity of your data, you
+            must ensure that the individual drive caches are
+            disabled and the battery backed cache in your RAID
+            card is configured and used. Failure to configure the
+            controller properly in this case puts data at risk in
+            the case of sudden loss of power.</para>
+        <para>You can also use hybrid drives or similar options
+            for battery backed up cache configurations without a
+            RAID controller.</para></section>
     <section xml:id="object-storage-rate-limits">
         <?dbhtml stop-chunking?>
         <title>Throttling Resources by Setting Rate Limits</title>
@@ -162,7 +250,6 @@
         </section>
     <section xml:id="object-storage-constraints">
             <title>Constraints</title>
-
             <para>To change the OpenStack Object Storage internal
             limits, update the values in the
             <literal>swift-constraints</literal> section in the
@@ -288,7 +375,6 @@ Sample represents 1.00% of the object partition space
                 not rely on eventually consistent container listings
                 to do so. Instead, a user defined manifest of the
                 object segments is used.</para>
-
             <xi:include href="../../common/tables/swift-proxy-server-filter-slo.xml"/>
         </section>
         <section xml:id="object-storage-container-quotas">
@@ -301,18 +387,15 @@ Sample represents 1.00% of the object partition space
                 delegated to non-admin users, exposed to formpost
                 uploads, or just as a self-imposed sanity
                 check.</para>
-
             <para>Any object PUT operations that exceed these quotas
                 return a 413 response (request entity too large) with
                 a descriptive body.</para>
-
             <para>Quotas are subject to several limitations: eventual
                 consistency, the timeliness of the cached
                 container_info (60 second ttl by default), and it's
                 unable to reject chunked transfer uploads that exceed
                 the quota (though once the quota is exceeded, new
                 chunked transfers will be refused).</para>
-
             <para>Quotas are set by adding meta values to the
                 container, and are validated when set: <itemizedlist>
                     <listitem>
@@ -410,27 +493,26 @@ X-Trans-Id: tx602634cf478546a39b1be-0051e6bc7a</computeroutput></screen>
   Optionally, you can include an object prefix to better separate different users’ uploads, such as:
   <uri>https://swift-cluster.example.com/v1/AUTH_account/container/object_prefix</uri>
   </para>
-
-  <para>Note the form method must be POST and the enctype must be set as “multipart/form-data”.
-
-  The redirect attribute is the URL to redirect the browser to after the upload completes. The URL
-  will have status and message query parameters added to it, indicating the HTTP status code for the
-  upload (2xx is success) and a possible message for further information if there was an error (such
-  as “max_file_size exceeded”).
-
-  The max_file_size attribute must be included and indicates the largest single file upload that can
-  be done, in bytes.
-
-  The max_file_count attribute must be included and indicates the
-  maximum number of files that can be uploaded with the form. Include
-  additional <code>&lt;![CDATA[&lt;input type="file" name="filexx"/&gt;]]&gt;</code>
-  attributes if desired.
-
-  The expires attribute is the Unix timestamp before which the form must be submitted before it is
-  invalidated.
-
-  The signature attribute is the HMAC-SHA1 signature of the form. Here is sample code for computing
-  the signature:
+  <para>Note the form method must be POST and the enctype must be set
+  as “multipart/form-data”.</para>
+  <para>The redirect attribute is the URL to redirect the browser to
+  after the upload completes. The URL will have status and message
+  query parameters added to it, indicating the HTTP status code for
+  the upload (2xx is success) and a possible message for further
+  information if there was an error (such as <literal>“max_file_size
+  exceeded”</literal>).</para>
+  <para>The <literal>max_file_size</literal> attribute must be
+  included and indicates the largest single file upload that can be
+  done, in bytes.</para>
+  <para>The <literal>max_file_count</literal> attribute must be
+  included and indicates the maximum number of files that can be
+  uploaded with the form. Include additional
+  <code>&lt;![CDATA[&lt;input type="file"
+  name="filexx"/&gt;]]&gt;</code> attributes if desired.</para>
+  <para>The expires attribute is the Unix timestamp before which the form must be submitted before it is
+  invalidated.</para>
+ <para>The signature attribute is the HMAC-SHA1 signature of the form. Here is sample code for computing
+  the signature:</para>
 <programlisting language="python">
 import hmac
 from hashlib import sha1
@@ -445,13 +527,14 @@ hmac_body = '%s\n%s\n%s\n%s\n%s' % (path, redirect,
     max_file_size, max_file_count, expires)
 signature = hmac.new(key, hmac_body, sha1).hexdigest()
 </programlisting>
-  The key is the value of the X-Account-Meta-Temp-URL-Key header on the account.
-
-  Be certain to use the full path, from the /v1/ onward.
-
-  The command line tool swift-form-signature may be used (mostly just when testing) to compute
-  expires and signature.
-  </para>
+  <para>The key is the value of the
+  <literal>X-Account-Meta-Temp-URL-Key</literal> header on the
+  account.</para>
+  <para>Be certain to use the full path, from the
+  <literal>/v1/</literal> onward.</para>
+  <para>The command line tool <command>swift-form-signature</command>
+  may be used (mostly just when testing) to compute expires and
+  signature.</para>
   <para>
   Also note that the file attributes must be after the other attributes in order to be processed
   correctly. If attributes come after the file, they won’t be sent with the subrequest (there is no
