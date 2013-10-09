@@ -16,7 +16,60 @@
   </section>
 
   <section xml:id="overview-architecture">
-    <title>Sample Architecture</title>
-   <para> <!-- FIXME --></para>
+    <title>Sample Architectures</title>
+   <para>This guide is written so that you can choose your own
+      OpenStack adventure. Because OpenStack is highly configurable to
+      meet different use cases, with many storage choices and
+      underlying software-defined networking scenarios, this guide
+      offers these main examples with the intention of expanding on
+      each: </para>
+    <itemizedlist>
+      <listitem>
+        <para>Example architecture for simplicity:  the most basic
+   architecture you can have: one node to run the "control" services, such
+   as database, message queue and API services for the Identity Service,
+   Image Service and Compute Service; and a second node to be our
+   Compute node that runs the hypervisor where our virtual machines will live.</para>
+  <figure xml:id="basic-architecture">
+  <title>Basic Architecture</title>
+  <mediaobject>
+    <imageobject>
+      <imagedata contentwidth="6in" fileref="figures/basic-architecture.svg"/>
+    </imageobject>
+  </mediaobject>
+  </figure>
+         <para os="fedora;rhel;centos">Technical details: Compute with KVM,
+          local ephemeral storage, nova-networks in multi-host flatDHCP,
+          MySQL, nova-api, default scheduler, Qpid for messaging,
+          Identity with SQL backend, Image with local storage,
+          Dashboard (optional extra). Use as many default options as possible.
+          </para>
+         <para os="ubuntu;debian;opensuse">Technical details: Compute with KVM,
+          local ephemeral storage, nova-networks in multi-host flatDHCP,
+          MySQL, nova-api, default scheduler, RabbitMQ for messaging,
+          Identity with SQL backend, Image with local storage, Dashboard (optional extra).
+          Use as many default options as possible.
+          </para>
+      </listitem>
+      <listitem>
+        <para>Example architecture from the OpenStack Operations
+          Guide: Same as above but with Block Storage backend
+          LVM/iSCSI, nova-network in multi-host with FlatDHCP, Live
+          Migration backend shared storage with NFS, and Object
+          Storage. One controller node and multiple compute
+          nodes.</para>
+      </listitem>
+      <listitem>
+        <para>Example architecture with Identity and Object Storage
+          only (no Dashboard): Five node installation with Identity on
+          the proxy node and three replications of object servers.
+          Dashboard does not support this configuration so examples
+          are with CLI.</para>
+      </listitem>
+      <listitem>
+        <para>Example architecture with OpenStack Networking
+          (Neutron)</para>
+      </listitem>
+    </itemizedlist>
   </section>
 </chapter>
