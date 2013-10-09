@@ -181,26 +181,22 @@ hwclock -w</programlisting>
       this guide, we use a MySQL database running on the controller node. The
       controller node needs to have the MySQL database installed. Any additional
       nodes that access MySQL need to have the MySQL client software
-      installed.</para>
-
-    <para>On any nodes besides the controller node, just install the MySQL
-      client and the MySQL Python library. This is all you need to do on any
-      system not hosting the MySQL database.</para>
-
-    <screen os="ubuntu;deb"><prompt>#</prompt> <userinput>apt-get install python-mysqldb</userinput></screen>
-    <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>yum install mysql MySQL-python</userinput></screen>
-    <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install mysql-community-server-client python-mysql</userinput></screen>
-
-    <para>On the controller node, install the MySQL client, the MySQL database,
-      and the MySQL Python library.</para>
-
-    <screen os="ubuntu;deb"><prompt>#</prompt> <userinput>apt-get install python-mysqldb mysql-server</userinput></screen>
-    <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>yum install mysql mysql-server MySQL-python</userinput></screen>
-    <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install mysql-community-server-client mysql-community-server python-mysql</userinput></screen>
-
+      installed:</para>
+    <itemizedlist>
+      <listitem><para>On the controller node, install the MySQL client, the MySQL database,
+        and the MySQL Python library.</para>
+        <screen os="ubuntu;deb"><prompt>#</prompt> <userinput>apt-get install python-mysqldb mysql-server</userinput></screen>
+        <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>yum install mysql mysql-server MySQL-python</userinput></screen>
+        <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install mysql-community-server-client mysql-community-server python-mysql</userinput></screen></listitem>
+      <listitem><para>On any nodes besides the controller node, just install the MySQL
+        client and the MySQL Python library. This is all you need to do on any
+        system not hosting the MySQL database.</para>
+        <screen os="ubuntu;deb"><prompt>#</prompt> <userinput>apt-get install python-mysqldb</userinput></screen>
+        <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>yum install mysql MySQL-python</userinput></screen>
+        <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install mysql-community-server-client python-mysql</userinput></screen></listitem>
+    </itemizedlist>
     <para>Start the MySQL database server and set it to start automatically when
       the system boots.</para>
-
     <screen os="rhel;centos;fedora;ubuntu"><prompt>#</prompt> <userinput>service mysqld start</userinput>
 <prompt>#</prompt> <userinput>chkconfig mysqld on</userinput></screen>
     <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl enable mysqld.service</userinput>
@@ -210,12 +206,9 @@ hwclock -w</programlisting>
       database. The OpenStack programs that set up databases and tables will
       prompt you for this password if it's set.</para>
 
-    <screen><prompt>#</prompt> <userinput>mysqladmin password</userinput></screen>
-
+    <screen><prompt>#</prompt> <userinput>mysqladmin password <replaceable>newPassword</replaceable></userinput></screen>
     <para>Enter your desired password when prompted.</para>
-
   </section>
-
   <section xml:id="basics-queue">
     <title>Messaging Server</title>
     <para>Install the messaging queue server. Typically this is <phrase
@@ -243,7 +236,6 @@ hwclock -w</programlisting>
     <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>service qpidd start</userinput>
 <prompt>#</prompt> <userinput>chkconfig qpidd on</userinput></screen>
   </section>
-
   <section xml:id="basics-packages">
     <title>OpenStack Packages</title>
 
@@ -252,11 +244,16 @@ hwclock -w</programlisting>
     <para os="fedora;centos;rhel">This guide uses the OpenStack packages from
       the RDO repository. These packages work on Red Hat Enterprise Linux 6 and
       compatible versions of CentOS, as well as Fedora 19. Enable the repository
-      by donwloading and installing the <literal>rdo-release-havana</literal>
+      by downloading and installing the <literal>rdo-release-havana</literal>
       package.</para>
 
-    <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>curl -O http://repos.fedorapeople.org/repos/openstack/openstack-havana/rdo-release-havana-6.noarch.rpm</userinput>
-<prompt>#</prompt> <userinput>rpm -Uvh rdo-release-havana-6.noarch.rpm</userinput></screen>
+    <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>yum install http://repos.fedorapeople.org/repos/openstack/openstack-havana/rdo-release-havana-6.noarch.rpm</userinput></screen>
+    <para os="fedora;centos;rhel">The EPEL package includes gpg keys for package signing and repository information.Install
+      the latest 'epel-release' package (see <link
+        xlink:href="http://download.fedoraproject.org/pub/epel/6/i386/repoview/epel-release.html"
+        >http://download.fedoraproject.org/pub/epel/6/x86_64/repoview/epel-release.html</link>). For
+      example:</para>
+    <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>yum install http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm</userinput></screen>
 
     <para os="fedora;centos;rhel">The <literal>openstack-utils</literal> package
       contains utility programs that make installation and configuration easier.
