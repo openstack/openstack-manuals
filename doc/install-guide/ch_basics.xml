@@ -12,7 +12,7 @@
     only possible configuration. However, you do need to configure certain
     aspects of the operating system on each node.</para>
 
-  <para>This chapters details a sample configuration for both the controller
+  <para>This chapter details a sample configuration for both the controller
     node and any additional nodes. It's possible to configure the operating
     system in other ways, but the remainder of this guide assumes you have a
     configuration compatible with the one shown here.</para>
@@ -32,7 +32,7 @@
     <para>This section sets up networking on two networks with static IP
       addresses and manually manages a list of hostnames on each machine. If you
       manage a large network, you probably already have systems in place to
-      manage this. You may skip this section, but note that the rest of this
+      manage this. If so, you may skip this section, but note that the rest of this
       guide assumes that each node can reach the other nodes on the internal
       network using hostnames like <literal>controller</literal> and
         <literal>compute1</literal>.</para>
@@ -48,11 +48,13 @@
 <prompt>#</prompt> <userinput>chkconfig network on</userinput></screen>
 
     <note os="fedora">
-      <para>On Fedora 19, <literal>firewalld</literal> replaced
-          <literal>iptables</literal> as the default firewall. You can configure
-          <literal>iptables</literal> to allow OpenStack to work, but this guide
-        currently recommends switching to <literal>iptables</literal>.</para>
-      <screen><prompt>#</prompt> <userinput>service firewalld stop</userinput>
+      <para>Since Fedora 19, <literal>firewalld</literal> replaced
+          <literal>iptables</literal> as the default firewall system. You can configure
+          <literal>firewalld</literal> successfully, but this guide
+          currently recommends and demonstrates the use of <literal>iptables</literal>.
+	  For Fedora 19 systems, run the following commands to disable
+	  <literal>firewalld</literal> and enable <literal>iptables</literal>.</para>
+<screen><prompt>#</prompt> <userinput>service firewalld stop</userinput>
 <prompt>#</prompt> <userinput>service iptables start</userinput>
 <prompt>#</prompt> <userinput>chkconfig firewalld off</userinput>
 <prompt>#</prompt> <userinput>chkconfig iptables on</userinput></screen>
@@ -103,7 +105,7 @@ ONBOOT=yes</programlisting>
 
     <screen><prompt>#</prompt> <userinput>hostname controller</userinput></screen>
 
-    <para os="rhel;fedora;centos">To have this hostname set when the system
+    <para os="rhel;fedora;centos">To have the hostname change persist when the system
       reboots, you need to specify it in the proper configuration file. In Red
       Het Enterprise Linux, Centos, and older versions of Fedora, you set this
       in the file <filename>/etc/sysconfig/network</filename>. Change the line
@@ -261,7 +263,7 @@ hwclock -w</programlisting>
     <para os="fedora;centos;rhel">The <literal>openstack-utils</literal> package
       contains utility programs that make installation and configuration easier.
       These programs will be used throughout this guide. Install
-        <literal>openstack-utils</literal>. This will also verity that you can
+        <literal>openstack-utils</literal>. This will also verify that you can
       access the RDO repository.</para>
 
     <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>yum install openstack-utils</userinput></screen>
