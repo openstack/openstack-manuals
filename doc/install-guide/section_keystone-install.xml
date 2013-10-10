@@ -19,17 +19,39 @@
       with the username <literal>keystone</literal>. Replace
       <literal><replaceable>KEYSTONE_DBPASS</replaceable></literal>
       with a suitable password for the database user.</para>
-      <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/keystone/keystone.conf \
+      <screen os="rhel;centos;fedora;opensuse"><prompt>#</prompt> <userinput>openstack-config --set /etc/keystone/keystone.conf \
   sql connection mysql://keystone:<replaceable>KEYSTONE_DBPASS</replaceable>@controller/keystone</userinput></screen>
+      <para os="ubuntu">Edit <filename>/etc/keystone/keystone.conf</filename> and change the <literal>[sql]</literal> section.</para>
+      <programlisting os="ubuntu" language="ini">
+...
+[sql]
+# The SQLAlchemy connection string used to connect to the database
+connection = mysql://keystone:KEYSTONE_DBPASS@controller/keystone
+...
+      </programlisting>
     </step>
 
-    <step>
+    <step os="rhel;centos;fedora;opensuse">
       <para>Use the <command>openstack-db</command> command to create the
       database and tables, as well as a database user called
       <literal>keystone</literal> to connect to the database. Replace
       <literal><replaceable>KEYSTONE_DBPASS</replaceable></literal>
       with the same password used in the previous step.</para>
       <screen><prompt>#</prompt> <userinput>openstack-db --init --service keystone --password <replaceable>KEYSTONE_DBPASS</replaceable></userinput></screen>
+    </step>
+
+    <step os="ubuntu">
+      <para>First, we need to create a database user called <literal>keystone</literal>, by logging in
+      as root using the password we set earlier.</para>
+      <screen><prompt>#</prompt> <userinput>mysql -u root -p</userinput>
+<prompt>mysql></prompt> <userinput>CREATE DATABASE keystone;</userinput>
+<prompt>mysql></prompt> <userinput>GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'localhost' \
+IDENTIFIED BY 'KEYSTONE_DBPASS';</userinput></screen>
+    </step>
+    <step os="ubuntu">
+      <para>We now start the keystone service and create its tables.</para>
+      <screen><prompt>#</prompt> <userinput>keystone-manage db_sync</userinput>
+<prompt>#</prompt> <userinput>service keystone restart</userinput></screen>
     </step>
 
     <step>
@@ -40,20 +62,35 @@
       <screen os="rhel;centos;fedora;opensuse"><prompt>#</prompt> <userinput>ADMIN_TOKEN=$(openssl rand -hex 10)</userinput>
 <prompt>#</prompt> <userinput>echo $ADMIN_TOKEN</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/keystone/keystone.conf DEFAULT admin_token $ADMIN_TOKEN</userinput></screen>
+      <screen os="ubuntu"><prompt>#</prompt> <userinput>openssl rand -hex 10</userinput></screen>
+<para os="ubuntu">Edit <filename>/etc/keystone/keystone.conf</filename> and
+       change the <literal>[DEFAULT]</literal> section, replacing ADMIN_TOKEN with the results of the command.</para>
+      <programlisting os="ubuntu" language="ini">
+[DEFAULT]
+# A "shared secret" between keystone and other openstack services
+admin_token = ADMIN_TOKEN
+...
+      </programlisting>
+
     </step>
 
-    <step>
+
+    <step os="rhel;centos;fedora;opensuse">
       <para>By default Keystone will use PKI tokens. Create the signing
       keys and certificates.</para>
       <screen><prompt>#</prompt> <userinput>keystone-manage pki_setup --keystone-user keystone --keystone-group keystone</userinput>
 <prompt>#</prompt> <userinput>chown -R keystone:keystone /etc/keystone/* /var/log/keystone/keystone.log</userinput></screen>
     </step>
 
-    <step>
-      <para>Start the Identiy Service and enable it so it start when
+    <step os="ubuntu">
+      <para>Restart the Identity service.</para>
+      <screen><prompt>#</prompt> <userinput>service keystone restart</userinput></screen>
+    </step>
+
+
+    <step os="rhel;fedora;centos;opensuse">
+      <para>Start the Identity Service and enable it so it start when
       the system boots.</para>
-      <screen os="ubuntu"><prompt>#</prompt> <userinput>service keystone start</userinput>
-<prompt>#</prompt> <userinput>chkconfig keystone on</userinput></screen>
       <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>service openstack-keystone start</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-keystone on</userinput></screen>
       <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl start openstack-keystone.service</userinput>

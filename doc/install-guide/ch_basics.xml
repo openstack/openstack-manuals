@@ -36,13 +36,12 @@
       guide assumes that each node can reach the other nodes on the internal
       network using hostnames like <literal>controller</literal> and
         <literal>compute1</literal>.</para>
-
-    <para>Start by disabling the <literal>NetworkManager</literal> service and
+    <para os="fedora">Start by disabling the <literal>NetworkManager</literal> service and
       enabling the <literal>network</literal> service. The
         <literal>network</literal> service is more suitable for the static
       network configuration done in this guide.</para>
 
-    <screen><prompt>#</prompt> <userinput>service NetworkManager stop</userinput>
+    <screen os="fedora"><prompt>#</prompt> <userinput>service NetworkManager stop</userinput>
 <prompt>#</prompt> <userinput>service network start</userinput>
 <prompt>#</prompt> <userinput>chkconfig NetworkManager off</userinput>
 <prompt>#</prompt> <userinput>chkconfig network on</userinput></screen>
@@ -72,8 +71,16 @@
       creating the compute node, use <literal>192.168.0.11</literal> and
         <literal>10.0.0.11</literal> instead. Additional nodes added in later
       chapters will follow this pattern.</para>
+ <figure xml:id="basic-architecture-networking">
+  <title>Basic Architecture</title>
+  <mediaobject>
+    <imageobject>
+      <imagedata contentwidth="6in" fileref="figures/basic-architecture-networking.svg"/>
+    </imageobject>
+  </mediaobject>
+  </figure>
 
-    <example>
+    <example os="fedora">
       <title><filename>/etc/sysconfig/network-scripts/ifcfg-eth0</filename></title>
       <programlisting language="ini"># Internal Network
 DEVICE=eth0
@@ -85,7 +92,7 @@ DEFROUTE=yes
 ONBOOT=yes</programlisting>
     </example>
 
-    <example>
+    <example os="fedora">
       <title><filename>/etc/sysconfig/network-scripts/ifcfg-eth1</filename></title>
       <programlisting language="ini"># External Network
 DEVICE=eth1
@@ -96,6 +103,40 @@ NETMASK=255.255.255.0
 DEFROUTE=yes
 ONBOOT=yes</programlisting>
     </example>
+
+    <example os="opensuse">
+      <title><filename>/etc/sysconfig/network-scripts/ifcfg-eth0</filename></title>
+      <programlisting language="ini"># Internal Network
+FIXME</programlisting>
+    </example>
+
+    <example os="opensuse">
+      <title><filename>/etc/sysconfig/network-scripts/ifcfg-eth1</filename></title>
+      <programlisting language="ini"># External Network
+FIXME</programlisting>
+    </example>
+
+    <example os="ubuntu">
+      <title><filename>/etc/network/interfaces</filename></title>
+      <programlisting language="ini"># Internal Network
+auto eth0
+iface eth0 inet static
+    address 192.168.0.10
+    netmask 255.255.255.0
+
+# External Network
+auto eth1
+iface eth1 inet static
+    address 10.0.0.10
+    netmask 255.255.255.0
+    </programlisting>
+    </example>
+
+   <para>Once you've configured the network, restart the daemon for changes to take effect:</para>
+
+    <screen os="ubuntu"><prompt>#</prompt> <userinput>service networking restart</userinput></screen>
+    <screen os="fedora"><prompt>#</prompt> <userinput>service network restart</userinput></screen>
+    <screen os="opensuse"><prompt>#</prompt> <userinput>service FIXME restart</userinput></screen>
 
     <para>Set the hostname of each machine. Name the controller node
         <literal>controller</literal> and the first compute node
@@ -149,14 +190,10 @@ ONBOOT=yes</programlisting>
     <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>yum install ntp</userinput></screen>
     <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install ntp</userinput></screen>
 
-    <para>Set up the NTP server on your controller node so that it receives data
-      by modifying the <filename>ntp.conf</filename> file and restarting the
-      service.</para>
+    <para os="rhel;fedora;centos;opensuse">Set up the NTP server on your
+      controller node so that it receives data by modifying the <filename>ntp.conf</filename>
+      file and restarting the service.</para>
 
-    <!-- FIXME: why is the sed necessary on ubuntu? -->
-    <screen os="ubuntu"><prompt>#</prompt> <userinput>sed -i 's/server ntp.ubuntu.com/server ntp.ubuntu.com\nserver 127.127.1.0\nfudge 127.127.1.0 stratum 10/g' /etc/ntp.conf</userinput>
-<prompt>#</prompt> <userinput>service ntp restart</userinput>
-<prompt>#</prompt> <userinput>chkconfig ntpd on</userinput></screen>
     <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>service ntpd start</userinput>
 <prompt>#</prompt> <userinput>chkconfig ntpd on</userinput></screen>
     <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl start ntp.service</userinput>
@@ -197,18 +234,23 @@ hwclock -w</programlisting>
         <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>yum install mysql MySQL-python</userinput></screen>
         <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install mysql-community-server-client python-mysql</userinput></screen></listitem>
     </itemizedlist>
-    <para>Start the MySQL database server and set it to start automatically when
+    <note os="ubuntu"><para>When you install the server package, you will
+    be asked to enter a root password for the database. Be sure to choose
+    a strong password and remember it - it will be needed later.</para></note>
+
+    <para os="rhel;centos;fedora;opensuse">Start the MySQL database server and set it to start automatically when
       the system boots.</para>
-    <screen os="rhel;centos;fedora;ubuntu"><prompt>#</prompt> <userinput>service mysqld start</userinput>
+    <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>service mysqld start</userinput>
 <prompt>#</prompt> <userinput>chkconfig mysqld on</userinput></screen>
     <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl enable mysqld.service</userinput>
 <prompt>#</prompt> <userinput>systemctl enable mysqld.service</userinput></screen>
 
-    <para>Finally, it's a good idea to set a root password for your MySQL
+    <para os="rhel;centos;fedora;opensuse">Finally, it's a good idea to set a root password for your MySQL
       database. The OpenStack programs that set up databases and tables will
       prompt you for this password if it's set.</para>
 
-    <screen><prompt>#</prompt> <userinput>mysqladmin password <replaceable>newPassword</replaceable></userinput></screen>
+    <screen os="rhel;centos;fedora;opensuse"><prompt>#</prompt> <userinput>mysqladmin password <replaceable>newPassword</replaceable></userinput></screen>
+    <para os="rhel;centos;fedora;opensuse">Enter your desired password when prompted.</para>
   </section>
   <section xml:id="basics-queue">
     <title>Messaging Server</title>
@@ -247,7 +289,7 @@ hwclock -w</programlisting>
     <title>OpenStack Packages</title>
 
     <para>
-      Distributions releases and OpenStack releases are independent of
+      Distribution releases and OpenStack releases are often independent of
       each other and thus you might need to add some extra steps to access
       the latest OpenStack release after installation of the machine before
       installation of any OpenStack packages.
@@ -284,6 +326,9 @@ hwclock -w</programlisting>
 
     <procedure xml:id="ubuntu-cloud-archive" os="ubuntu">
       <title>To use the Ubuntu Cloud Archive for Havana</title>
+      <para>The <link xlink:href="https://wiki.ubuntu.com/ServerTeam/CloudArchive">Ubuntu Cloud Archive</link>
+      is a special repository that allows you to install newer releases of OpenStack on
+      the stable supported version of Ubuntu.</para>
       <step>
         <para>Install the keyring:
         <screen><prompt>#</prompt> <userinput>apt-get install ubuntu-cloud-keyring</userinput></screen>
@@ -302,7 +347,7 @@ hwclock -w</programlisting>
         </para>
       </step>
     </procedure>
-
+  <para>Congratulations, now you are ready to start installing OpenStack services!</para>
   </section>
 
 </chapter>
