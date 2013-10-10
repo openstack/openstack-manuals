@@ -5,5 +5,136 @@
          xml:id="nova-boot">
   <title>Booting an Image</title>
 
-  <para>FIXME</para>
+  <para>After you've configured the Compute service, you
+    can now launch an instance. An instance is a virtual machine provisioned by
+    OpenStack on one of the Compute servers. Use the procedure below to launch a
+    low-resource instance using an image you've already downloaded.</para>
+  <note>
+      <para>This procedure assumes you have:
+        <itemizedlist>
+          <listitem><para>Appropriate environment
+            variables set to specify your credentials (see
+            <xref linkend="keystone-verify"/>
+            </para></listitem>
+          <listitem><para>Downloaded an image (see <xref linkend="glance-verify"/>).
+            </para></listitem>
+          <listitem><para>Configured networking (see <xref linkend="nova-network"/>).
+          </para></listitem>
+        </itemizedlist>
+        </para>
+       </note>
+  <procedure>
+         <title>Launch a Compute instance</title>
+         <step><para>Generate a keypair consisting of a private key and a public key to be able to launch instances
+                            on OpenStack. These keys are injected into the instances to make
+                            password-less SSH access to the instance. This depends on the way the
+                            necessary tools are bundled into the images. For more details, see
+                            "Manage instances" in the
+           <link xlink:href="http://docs.openstack.org/user-guide-admin/content/cli_manage_images.html">Administration User Guide</link>.</para>
+         <screen><prompt>$</prompt> <userinput>ssh-keygen</userinput>
+<prompt>$</prompt> <userinput>cd .ssh</userinput>
+<prompt>$</prompt> <userinput>nova keypair-add --pub_key id_rsa.pub mykey</userinput></screen>
+                <para>You have just created a new keypair called mykey. The private key id_rsa is
+                            saved locally in ~/.ssh which can be used to connect to an instance
+                            launched using mykey as the keypair. You can view available keypairs
+                            using the <command>nova keypair-list</command> command.</para>
+                     <screen><prompt>$</prompt> <userinput>nova keypair-list</userinput>
+<computeroutput>+-------+-------------------------------------------------+
+|  Name |                   Fingerprint                   |
++-------+-------------------------------------------------+
+| mykey  | b0:18:32:fa:4e:d4:3c:1b:c4:6c:dd:cb:53:29:13:82 |
+| mykey2 | b0:18:32:fa:4e:d4:3c:1b:c4:6c:dd:cb:53:29:13:82 |
++-------+-------------------------------------------------+</computeroutput></screen>
+         </step>
+         <step><para>To launch an instance using OpenStack, you must specify the ID for the flavor you want to use
+                            for the instance. A flavor is a resource allocation profile. For
+                            example, it specifies how many virtual CPUs and how much RAM your
+                            instance will get. To see a list of the available profiles, run the
+                                   <command>nova flavor-list</command> command.</para>
+<screen><prompt>$</prompt> <userinput>nova flavor-list</userinput>
+<computeroutput>+----+-----------+-----------+------+-----------+------+-------+-------------+-----------+
+| ID | Name      | Memory_MB | Disk | Ephemeral | Swap | VCPUs | RXTX_Factor | Is_Public |
+ +----+-----------+-----------+------+-----------+------+-------+-------------+-----------+
+| 1  | m1.tiny   | 512       | 1    | 0         |      | 1     | 1.0         | True      |
+| 2  | m1.small  | 2048      | 20   | 0         |      | 1     | 1.0         | True      |
+| 3  | m1.medium | 4096      | 40   | 0         |      | 2     | 1.0         | True      |
+| 4  | m1.large  | 8192      | 80   | 0         |      | 4     | 1.0         | True      |
+| 5  | m1.xlarge | 16384     | 160  | 0         |      | 8     | 1.0         | True      |
+ +----+-----------+-----------+------+-----------+------+-------+-------------+-----------+</computeroutput></screen>
+         </step>
+         <step>
+           <para>Get the ID of the image you would like to use for the instance using the
+            <command>nova image-list</command> command.</para>
+            <screen><prompt>$</prompt> nova image-list
+<computeroutput>+--------------------------------------+--------------+--------+--------+
+| ID                                   | Name         | Status | Server |
++--------------------------------------+--------------+--------+--------+
+| 9e5c2bee-0373-414c-b4af-b91b0246ad3b | CirrOS 0.3.1 | ACTIVE |        |
++--------------------------------------+--------------+--------+--------+</computeroutput></screen>
+              </step>
+         <step><para>Create the instance using the <command>nova boot</command>.
+        <screen><prompt>$</prompt> <userinput>nova boot --flavor <replaceable>flavorType</replaceable> --key_name <replaceable>keypairName</replaceable> --image <replaceable>ID</replaceable> <replaceable>newInstanceName</replaceable></userinput> </screen>Create
+        an instance using flavor 1 or 2, for example:</para>
+         <screen><prompt>$</prompt> <userinput>nova boot --flavor 1 --key_name mykey --image 9e5c2bee-0373-414c-b4af-b91b0246ad3b cirrOS</userinput>
+<computeroutput>+--------------------------------------+--------------------------------------+
+| Property                             | Value                                |
++--------------------------------------+--------------------------------------+
+| OS-EXT-STS:task_state                | scheduling                           |
+| image                                | CirrOS 0.3.1                         |
+| OS-EXT-STS:vm_state                  | building                             |
+| OS-EXT-SRV-ATTR:instance_name        | instance-00000001                    |
+| OS-SRV-USG:launched_at               | None                                 |
+| flavor                               | m1.tiny                              |
+| id                                   | 3bdf98a0-c767-4247-bf41-2d147e4aa043 |
+| security_groups                      | [{u'name': u'default'}]              |
+| user_id                              | 530166901fa24d1face95cda82cfae56     |
+| OS-DCF:diskConfig                    | MANUAL                               |
+| accessIPv4                           |                                      |
+| accessIPv6                           |                                      |
+| progress                             | 0                                    |
+| OS-EXT-STS:power_state               | 0                                    |
+| OS-EXT-AZ:availability_zone          | nova                                 |
+| config_drive                         |                                      |
+| status                               | BUILD                                |
+| updated                              | 2013-10-10T06:47:26Z                 |
+| hostId                               |                                      |
+| OS-EXT-SRV-ATTR:host                 | None                                 |
+| OS-SRV-USG:terminated_at             | None                                 |
+| key_name                             | mykey                                |
+| OS-EXT-SRV-ATTR:hypervisor_hostname  | None                                 |
+| name                                 | cirrOS                               |
+| adminPass                            | DWCdW6FnsKNq                         |
+| tenant_id                            | e66d97ac1b704897853412fc8450f7b9     |
+| created                              | 2013-10-10T06:47:23Z                 |
+| os-extended-volumes:volumes_attached | []                                   |
+| metadata                             | {}                                   |
++--------------------------------------+--------------------------------------+</computeroutput></screen>
+           <note><para>If there is not enough RAM available for the instance, Compute will create the instance, but
+          will not start it (status 'Error').</para></note>
+         </step>
+         <step><para>After the instance has been created, it will show up in the output of <command>nova
+          list</command> (as the instance is booted up, the status will change from 'BUILD' to
+        'ACTIVE').</para>
+         <screen><prompt>$</prompt> <userinput>nova list</userinput>
+<computeroutput>+--------------------------------------+--------+--------+----------------------+
+|                  ID                  |  Name  | Status |     Networks         |
++--------------------------------------+--------+--------+----------------------+
+| 3bdf98a0-c767-4247-bf41-2d147e4aa043 | cirrOS | BUILD  | demonet=192.168.0.11 |
++--------------------------------------+--------+--------+----------------------+</computeroutput>
+<prompt>$</prompt> <userinput>nova list</userinput>
+<computeroutput>+--------------------------------------+--------+--------+----------------------+
+|                  ID                  |  Name  | Status |     Networks         |
++--------------------------------------+--------+--------+----------------------+
+| 3bdf98a0-c767-4247-bf41-2d147e4aa043     | cirrOS | ACTIVE | demonet=192.168.0.11 |
++--------------------------------------+--------+--------+----------------------+</computeroutput>
+</screen>
+           <note><para>You can also retrieve additional details about the specific instance using the
+             <command>nova show</command> command.</para>
+             <screen><prompt>$</prompt> <userinput>nova show 3bdf98a0-c767-4247-bf41-2d147e4aa043</userinput></screen></note>
+</step>
+         <step><para>Once enough time has passed so that the instance is fully booted and initialized,
+                you can <command>ssh</command> into the instance. You can obtain the IP address of the instance from the
+                output of <command>nova list</command>.</para>
+         <screen><prompt>$</prompt> ssh -i mykey root@192.168.0.11</screen></step>
+  </procedure>
 </section>
