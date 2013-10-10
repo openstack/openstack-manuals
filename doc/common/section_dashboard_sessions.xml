@@ -9,12 +9,12 @@
             >Django sessions framework</link> to handle user session
         data. However, you can use any available session back end. You
         customize the session back end through the
-            <literal>SESSION_ENGINE</literal> setting in your
-            <filename os="centos;fedora;rhel">
-            /etc/openstack-dashboard/local_settings</filename>
-        <filename os="ubuntu">local_settings.py</filename><filename
-        os="opensuse">/usr/share/openstack-dashboard/openstack_dashboard/local/local_settings.py</filename>
-            file.</para>
+            <literal>SESSION_ENGINE</literal> setting in your <filename>local_settings</filename> file
+            (on Fedora/RHEL/CentOS: <filename>
+            /etc/openstack-dashboard/local_settings</filename>, on Ubuntu:
+            <filename>local_settings.py</filename> and on openSUSE: <filename
+        >/usr/share/openstack-dashboard/openstack_dashboard/local/local_settings.py</filename>).
+    </para>
     <para>The following sections describe the pros and cons of each
         option as it pertains to deploying the dashboard.</para>
     <section xml:id="dashboard-session-local">
@@ -129,13 +129,12 @@ CACHES = {
                     prompt to exit MySQL.</para>
             </step>
             <step>
-                <para>In the <filename os="ubuntu"
-                        >/etc/openstack-dashboard/local_settings.py</filename>
-                    <filename os="centos;fedora;rhel"
-                        >/etc/openstack-dashboard/local_settings</filename>
-                    <filename os="opensuse"
-                        >/usr/share/openstack-dashboard/openstack_dashboard/local/local_settings.py</filename>
-                    file, change these options:</para>
+                <para>In the <filename>local_settings</filename> file
+                (on Fedora/RHEL/CentOS: <filename>
+                /etc/openstack-dashboard/local_settings</filename>, on Ubuntu:
+                <filename>local_settings.py</filename> and on openSUSE: <filename
+                >/usr/share/openstack-dashboard/openstack_dashboard/local/local_settings.py</filename>),
+                    change these options:</para>
                 <programlisting language="python"><?db-font-size 75%?>SESSION_ENGINE = 'django.core.cache.backends.db.DatabaseCache'
 DATABASES = {
     'default': {
@@ -150,10 +149,7 @@ DATABASES = {
 }</programlisting>
             </step>
             <step>
-                <para>After configuring the <filename os="ubuntu;opensuse"
-                        >local_settings.py</filename>
-                    <filename os="centos;fedora;rhel"
-                        >/etc/openstack-dashboard/local_settings</filename>
+                <para>After configuring the <filename>local_settings</filename>
                     as shown, you can run the <command>manage.py
                         syncdb</command> command to populate this
                     newly-created database.</para>
@@ -165,8 +161,8 @@ Installing indexes ...
 DEBUG:django.db.backends:(0.008) CREATE INDEX `django_session_c25c2c28` ON `django_session` (`expire_date`);; args=()
 No fixtures found.</computeroutput></screen>
             </step>
-            <step os="ubuntu">
-                <para>If you want to avoid a warning when you restart
+            <step>
+                <para>On Ubuntu: If you want to avoid a warning when you restart
                     apache2, create a blackhole directory in the
                     dashboard directory, as follows:</para>
                 <screen><prompt>#</prompt> <userinput>sudo mkdir -p /var/lib/dash/.blackhole</userinput></screen>
@@ -174,12 +170,19 @@ No fixtures found.</computeroutput></screen>
             <step>
                 <para>Restart Apache to pick up the default site and
                     symbolic link settings:</para>
-                <screen os="ubuntu"><prompt>#</prompt> <userinput>/etc/init.d/apache2 restart</userinput></screen>
-                <screen os="centos;fedora;rhel"><prompt>#</prompt> <userinput>service httpd restart</userinput></screen>
-                <screen os="centos;fedora;rhel"><prompt>#</prompt> <userinput>service apache2 restart</userinput></screen>
+                    <para>On Ubuntu:
+                    <screen><prompt>#</prompt> <userinput>/etc/init.d/apache2 restart</userinput></screen>
+                    </para>
+                    <para>On Fedora/RHEL/CentOS:
+                <screen><prompt>#</prompt> <userinput>service httpd restart</userinput></screen>
+                <screen><prompt>#</prompt> <userinput>service apache2 restart</userinput></screen>
+                    </para>
+                    <para>On openSUSE:
+                <screen><prompt>#</prompt> <userinput>systemctl restart apache2.service</userinput></screen>
+                    </para>
             </step>
-            <step os="ubuntu">
-                <para>Restart the <systemitem class="service">nova-api</systemitem> service to ensure that the
+            <step>
+                <para>On Ubuntu, restart the <systemitem class="service">nova-api</systemitem> service to ensure that the
                     API server can connect to the dashboard without
                     error:</para>
                 <screen><prompt>#</prompt> <userinput>sudo restart nova-api</userinput></screen>
