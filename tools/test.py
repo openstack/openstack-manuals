@@ -450,7 +450,7 @@ def build_book(book):
             output = subprocess.check_output(
                 ["mvn", "generate-sources", "-B",
                  "-Doperating.system=yum",
-                 "-Dprofile.os='centos;fedora;rhel'"],
+                 "-Dprofile.os=centos;fedora;rhel"],
                 stderr=subprocess.STDOUT
             )
             # Build openSUSE
@@ -464,7 +464,7 @@ def build_book(book):
             base_book = "install-guide (for Ubuntu)"
             output = subprocess.check_output(
                 ["mvn", "generate-sources", "-B",
-                 "-Doperating.system=apt", "-Dprofile.os=ubuntu"],
+                 "-Doperating.system=apt", "-Dprofile.os=ubuntu;debian"],
                 stderr=subprocess.STDOUT
             )
             # Success
