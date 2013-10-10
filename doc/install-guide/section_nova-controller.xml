@@ -104,7 +104,20 @@ admin_password=<replaceable>NOVA_PASS</replaceable>
   DEFAULT rpc_backend nova.openstack.common.rpc.impl_qpid</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT qpid_hostname controller</userinput></screen>
 
-  <!-- FIXME: ubuntu -->
+  <para os="ubuntu;debian">Configure the Compute Service to use the RabbitMQ
+  message broker by setting the following configuration keys. They are found in
+  the <literal>DEFAULT</literal> configuration group of the
+  <filename>/etc/nova/nova.conf</filename> file.</para>
+
+  <screen os="ubuntu;debian">rpc_backend = nova.rpc.impl_kombu
+rabbit_host = controller</screen>
+
+  <para os="opensuse">Configure the Compute Service to use the RabbitMQ
+  message broker by setting the following configuration keys.</para>
+
+  <screen os="opensuse"><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf \
+  DEFAULT rpc_backend nova.rpc.impl_kombu</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT rabbit_host controller</userinput></screen>
 
   <para>Finally, start the various Nova services and configure them
   to start when the system boots.</para>
