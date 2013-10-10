@@ -7,107 +7,97 @@
     xmlns:html="http://www.w3.org/1999/xhtml"
     version="5.0">
   <title>Installing the Image Service</title>
-
-  <para>Install the Image Service on the controller node.</para>
-  <screen os="ubuntu"><prompt>#</prompt> <userinput>sudo apt-get install glance</userinput></screen>
-  <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-glance</userinput></screen>
-  <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install openstack-glance</userinput></screen>
-
-  <para>The Image Service stores information about images in a database.
-  This guide uses the MySQL database used by other OpenStack services.
-  <phrase os="ubuntu">The Ubuntu packages create an sqlite database by
-  default. Delete the <filename>glance.sqlite</filename> file created in
-  the <filename>/var/lib/glance/</filename> directory.</phrase></para>
-
-  <para>Use the <command>openstack-db</command> command to create the
-  database and tables for the Image Service, as well as a database user
-  called <literal>glance</literal> to connect to the database. Replace
-  <literal><replaceable>GLANCE_DBPASS</replaceable></literal> with a
-  password of your choosing.</para>
-
-  <screen><prompt>#</prompt> <userinput>openstack-db --init --service glance --password <replaceable>GLANCE_DBPASS</replaceable></userinput></screen>
-
-  <para>You now have to tell the Image Service to use that database. The Image
-  Service provides two OpenStack services: <literal>glance-api</literal> and
-  <literal>glance-registry</literal>. They each have separate configuration
-  files, so you will have to configure both throughout this section.</para>
-
-  <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf \
-  DEFAULT sql_connection mysql://glance:<replaceable>GLANCE_PASS</replaceable>@controller/glance</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-registry.conf \
-  DEFAULT sql_connection mysql://glance:<replaceable>GLANCE_PASS</replaceable>@controller/glance</userinput></screen>
-
-  <para>Create a user called <literal>glance</literal> that the Image
-  Service can use to authenticate with the Identity Service. Use the
-  <literal>service</literal> tenant and give the user the
-  <literal>admin</literal> role.</para>
-
+  <para>The Image service acts as a registry for virtual disk images. Users can add new images
+  or take a snapshot (copy) of an existing server for immediate storage. Snapshots can be
+  used as back up or as templates for new servers. Registered images can be stored in the
+  Object Storage service, as well as in other locations (for example, in simple file
+  systems or external web servers).</para>
   <note>
-    <para>These examples assume you have the appropriate environment
-    variables set to specify your credentials, as described in
-    <xref linkend="keystone-verify"/>.</para>
+    <para>Steps in this procedure assume you have the appropriate environment
+      variables set to specify your credentials, as described in
+      <xref linkend="keystone-verify"/>.</para>
   </note>
-
-  <screen><prompt>#</prompt> <userinput>keystone user-create --name=glance --pass=<replaceable>GLANCE_PASS</replaceable> --email=<replaceable>glance@example.com</replaceable></userinput>
-<prompt>#</prompt> <userinput>keystone user-role-add --user=glance --tenant=service --role=admin</userinput></screen>
-
-  <para>For the Image Service to use these credentials, you have to add
-  them to the configuration files.</para>
-
-  <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf keystone_authtoken auth_host controller</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf keystone_authtoken admin_user keystone</userinput>
+  <procedure>
+    <title>Install the Image Service</title>
+    <step><para>Install the Image Service on the controller node.</para>
+      <screen os="ubuntu"><prompt>#</prompt> <userinput>sudo apt-get install glance</userinput></screen>
+      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-glance</userinput></screen>
+      <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install openstack-glance</userinput></screen></step>
+    <step><para>The Image Service stores information about images in a database.
+      This guide uses the MySQL database used by other OpenStack services.
+      <phrase os="ubuntu">The Ubuntu packages create an sqlite database by
+        default. Delete the <filename>glance.sqlite</filename> file created in
+        the <filename>/var/lib/glance/</filename> directory.</phrase></para>
+      <para>Use the <command>openstack-db</command> command to create the
+      database and tables for the Image Service, as well as a database user
+      called <literal>glance</literal> to connect to the database. Replace
+      <literal><replaceable>GLANCE_DBPASS</replaceable></literal> with a
+      password of your choosing.</para>
+      <screen><prompt>#</prompt> <userinput>openstack-db --init --service glance --password <replaceable>GLANCE_DBPASS</replaceable></userinput></screen></step>
+    <step><para>Tell the Image Service to use the created database. The Image Service provides two OpenStack
+        services: <literal>glance-api</literal> and <literal>glance-registry</literal>. They each
+        have separate configuration files, so you must configure both files throughout this
+        section.</para>
+      <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf \
+  DEFAULT sql_connection mysql://glance:<replaceable>GLANCE_PASS</replaceable>@<replaceable>controller</replaceable>/glance</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-registry.conf \
+  DEFAULT sql_connection mysql://glance:<replaceable>GLANCE_PASS</replaceable>@<replaceable>controller</replaceable>/glance</userinput></screen></step>
+    <step><para>Create a user called <literal>glance</literal> that the Image
+      Service can use to authenticate with the Identity Service. Use the
+      <literal>service</literal> tenant and give the user the
+      <literal>admin</literal> role.</para>
+      <screen><prompt>#</prompt> <userinput>keystone user-create --name=glance --pass=<replaceable>GLANCE_PASS</replaceable> --email=<replaceable>glance@example.com</replaceable></userinput>
+<prompt>#</prompt> <userinput>keystone user-role-add --user=glance --tenant=service --role=admin</userinput></screen></step>
+    <step><para>Add the credentials to the Image Service's configuration files.</para>
+      <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf keystone_authtoken auth_host <replaceable>controller</replaceable></userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf keystone_authtoken admin_user glance</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf keystone_authtoken admin_tenant_name service</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf keystone_authtoken admin_password <replaceable>GLANCE_PASS</replaceable></userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-registry.conf keystone_authtoken auth_host controller</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-registry.conf keystone_authtoken admin_user keystone</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-registry.conf keystone_authtoken auth_host <replaceable>controller</replaceable></userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-registry.conf keystone_authtoken admin_user glance</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-registry.conf keystone_authtoken admin_tenant_name service</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-registry.conf keystone_authtoken admin_password <replaceable>GLANCE_PASS</replaceable></userinput></screen>
-
-  <para>You also have to add the credentials to the files
+      <!-- <para>You also have to add the credentials to the files
   <filename>/etc/glance/glance-api-paste.ini</filename> and
   <filename>/etc/glance/glance-registry-paste.ini</filename>. Open each file
   in a text editor and locate the section <literal>[filter:authtoken]</literal>.
   Make sure the following options are set:</para>
-
   <programlisting language="ini">[filter:authtoken]
 paste.filter_factory=keystoneclient.middleware.auth_token:filter_factory
 auth_host=controller
 admin_user=glance
 admin_tenant_name=service
-admin_password=<replaceable>GLANCE_PASS</replaceable>
-</programlisting>
-
-  <para>You have to register the Image Service with the Identity Service
-  so that other OpenStack services can locate it. Register the service and
-  specify the endpoint using the <command>keystone</command> command.</para>
-
-  <screen><prompt>#</prompt> <userinput>keystone service-create --name=glance --type=image \
-  --description="Glance Image Service"</userinput></screen>
-
-  <para>Note the <literal>id</literal> property returned and use it when
-  creating the endpoint.</para>
-
-  <screen><prompt>#</prompt> <userinput>keystone endpoint-create \
+admin_password=<replaceable>GLANCE_PASS</replaceable></programlisting> -->
+      <para>
+        <note><para>If you have troubles connecting to the database, try using the IP address instead of the
+          host name in the credentials.</para></note>
+      </para></step>
+    <step><para>Register the Image Service with the Identity Service
+      so that other OpenStack services can locate it. Register the service and
+      specify the endpoint using the <command>keystone</command> command.</para>
+      <screen><prompt>#</prompt> <userinput>keystone service-create --name=glance --type=image \
+  --description="Glance Image Service"</userinput></screen></step>
+    <step><para>Note the service's <literal>id</literal> property returned in the previous step and use it when
+      creating the endpoint.</para>
+      <screen><prompt>#</prompt> <userinput>keystone endpoint-create \
   --service-id=<replaceable>the_service_id_above</replaceable> \
-  --publicurl=http://controller:9292 \
-  --internalurl=http://controller:9292 \
-  --adminurl=http://controller:9292</userinput></screen>
-
-  <para>Finally, start the <literal>glance-api</literal> and
-  <literal>glance-registry</literal> services and configure them to
-  start when the system boots.</para>
-
-  <screen os="ubuntu"><prompt>#</prompt> <userinput>service glance-api start</userinput>
+  --publicurl=http://<replaceable>controller</replaceable>:9292 \
+  --internalurl=http://<replaceable>controller</replaceable>:9292 \
+  --adminurl=http://<replaceable>controller</replaceable>:9292</userinput></screen></step>
+    <step><para>Start the <literal>glance-api</literal> and
+      <literal>glance-registry</literal> services and configure them to
+      start when the system boots.</para>
+      <screen os="ubuntu"><prompt>#</prompt> <userinput>service glance-api start</userinput>
 <prompt>#</prompt> <userinput>service glance-registry start</userinput>
 <prompt>#</prompt> <userinput>chkconfig glance-api on</userinput>
 <prompt>#</prompt> <userinput>chkconfig glance-registry on</userinput></screen>
-  <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>service openstack-glance-api start</userinput>
+      <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>service openstack-glance-api start</userinput>
 <prompt>#</prompt> <userinput>service openstack-glance-registry start</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-glance-api on</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-glance-registry on</userinput></screen>
-  <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl start openstack-glance-api.service</userinput>
+      <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl start openstack-glance-api.service</userinput>
 <prompt>#</prompt> <userinput>systemctl start openstack-glance-registry.service</userinput>
 <prompt>#</prompt> <userinput>systemctl enable openstack-glance-api.service</userinput>
-<prompt>#</prompt> <userinput>systemctl enable openstack-glance-registry.service</userinput></screen>
-
+<prompt>#</prompt> <userinput>systemctl enable openstack-glance-registry.service</userinput></screen></step>
+  </procedure>
 </section>
