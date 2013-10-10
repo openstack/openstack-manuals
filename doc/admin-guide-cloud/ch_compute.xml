@@ -7,11 +7,10 @@
     xml:id="ch_introduction-to-openstack-compute">
     <?dbhtml stop-chunking?>
     <title>Compute</title>
-    <para>Compute provides a tool that lets you orchestrate a cloud. By using Nova, you can run instances, manage networks, and manage access
-        to the cloud through users and projects. Nova provides software
-        that enables you to control an Infrastructure as a Service (IaaS) cloud
-        computing platform and is similar in scope to Amazon EC2 and
-        Rackspace Cloud Servers.</para>
+    <para>The Compute service, code-named Nova, provides a tool that lets you orchestrate a cloud.
+        By using Compute, you can run instances, manage networks, and manage access to the cloud
+        through users and projects. Compute provides software that enables you to control an
+        Infrastructure as a Service (IaaS) cloud computing platform.</para>
     <section xml:id="section_compute-intro">
         <title>Introduction to Compute</title>
         <para>Compute does not include any virtualization software;
@@ -21,190 +20,139 @@
             API.</para>
         <section xml:id="section_hypervisors">
             <title>Hypervisors</title>
-            <para>OpenStack Compute requires a hypervisor. Compute
-                controls hypervisors through an API server. To select a hypervisor, you must prioritize and make decisions
-                based on budget,
-                resource constraints,
-                supported features, and required technical
-                specifications. The majority of development is done
-                with the KVM and Xen-based hypervisors. For a detailed list of features and support across the
-                hypervisors, see <link
+            <para>Compute requires a hypervisor. Compute controls hypervisors through an API server.
+                To select a hypervisor, you must prioritize and make decisions based on budget,
+                resource constraints, supported features, and required technical specifications. The
+                majority of development is done with the KVM and Xen-based hypervisors. For a
+                detailed list of features and support across the hypervisors, see <link
                     xlink:href="http://wiki.openstack.org/HypervisorSupportMatrix"
-                    >http://wiki.openstack.org/HypervisorSupportMatrix</link>.
-                With OpenStack Compute, you can
-                orchestrate clouds using multiple hypervisors in
-                different zones. The types of virtualization standards
-                that can be used with Compute include:</para>
+                    >http://wiki.openstack.org/HypervisorSupportMatrix</link>. </para>
+            <para>With Compute, you can orchestrate clouds using multiple hypervisors in different
+                availability zones. The types of virtualization standards that can be used with
+                Compute include:</para>
             <itemizedlist>
                 <listitem>
-                    <para><link
-                            xlink:href="http://www.linux-kvm.org/page/Main_Page"
-                            >KVM</link> - Kernel-based Virtual
-                        Machine</para>
+                    <para><link xlink:href="https://wiki.openstack.org/wiki/Baremetal"
+                        >Baremetal</link>.</para>
                 </listitem>
                 <listitem>
-                    <para><link
-                            xlink:href="http://lxc.sourceforge.net/"
-                            >LXC</link> - Linux Containers (through
-                        libvirt)</para>
+                    <para><link xlink:href="http://www.microsoft.com/en-us/server-cloud/hyper-v-server/default.aspx">Hyper-V</link></para>
                 </listitem>
                 <listitem>
-                    <para><link
-                            xlink:href="http://wiki.qemu.org/Manual"
-                            >QEMU</link> - Quick EMUlator</para>
+                    <para>Kernel-based Virtual Machine (<link
+                            xlink:href="http://www.linux-kvm.org/page/Main_Page">KVM</link>).</para>
                 </listitem>
                 <listitem>
-                    <para><link
-                            xlink:href="http://user-mode-linux.sourceforge.net/"
-                            >UML</link> - User Mode Linux</para>
+                    <para>Linux Containers (<link xlink:href="http://lxc.sourceforge.net/"
+                            >LXC</link>). </para>
+                </listitem>
+                <listitem>
+                    <para>Quick EMUlator (<link xlink:href="http://wiki.qemu.org/Manual"
+                        >QEMU</link>).</para>
+                </listitem>
+                <listitem>
+                    <para>User Mode Linux (<link
+                            xlink:href="http://user-mode-linux.sourceforge.net/">UML</link>).</para>
                 </listitem>
                 <listitem>
                     <para><link
                             xlink:href="http://www.vmware.com/products/vsphere-hypervisor/support.html"
-                            >VMWare vSphere</link> 4.1 update 1 and
-                        newer</para>
+                            >VMWare vSphere</link>.</para>
                 </listitem>
                 <listitem>
-                    <para><link
-                            xlink:href="http://www.xen.org/support/documentation.html"
-                            >Xen</link> - Xen, Citrix XenServer and
-                        Xen Cloud Platform (XCP)</para>
-                </listitem>
-                <listitem>
-                    <para><link
-                            xlink:href="https://wiki.openstack.org/wiki/Baremetal"
-                            >Bare Metal</link> - Provisions physical
-                        hardware through pluggable sub-drivers</para>
+                    <para><link xlink:href="http://www.xen.org/support/documentation.html"
+                            >Xen</link>.</para>
                 </listitem>
             </itemizedlist>
+            <para>Please see the <link
+                            xlink:href="http://docs.openstack.org/trunk/config-reference/content/section_compute-hypervisors.html"
+                            >Hypervisors</link> section in <citetitle>OpenStack Configuration
+                            Reference</citetitle> for more information. </para>
         </section>
         <section xml:id="section_users-and-projects">
-            <title>Users and tenants</title>
-            <para>The OpenStack Compute system is designed to be used
-                by many different cloud computing consumers or
-                customers, basically tenants on a shared system, using
-                role-based access assignments. Roles control the
-                actions that a user is allowed to perform.</para><para>In the
-                default configuration, most actions do not require a
-                particular role, but this is configurable by the
-                system administrator editing the appropriate
-                    <filename>policy.json</filename> file that
-                maintains the rules. For example, a rule can be
-                defined so that a user cannot allocate a public IP
-                without the admin role. A user's access to particular
-                images is limited by tenant, but the username and
-                password are assigned for each user. Key pairs
-                granting access to an instance are enabled for each
-                user, but quotas to control resource consumption
-                across available hardware resources are for each
-                tenant. <note>
-                    <para>Earlier versions of OpenStack used the term
-                        "project" instead of "tenant". Because of this
-                        legacy terminology, some command-line tools
-                        use <parameter>--project_id</parameter> when a
-                        tenant ID is expected.</para>
-                </note></para>
-            <para>While the original EC2 API supports users, OpenStack
-                Compute adds the concept of tenants. Tenants are
-                isolated resource containers that form the principal
-                organizational structure within the Compute service.
-                They consist of a separate VLAN, volumes, instances,
-                images, keys, and users. A user can specify which
-                tenant he or she wishes to be known as by appending
-                    <literal>:project_id</literal> to his or her
-                access key. If no tenant is specified in the API
-                request, Compute attempts to use a tenant with the
-                same ID as the user.</para>
+            <title>Tenants, users, and roles</title>
+            <para>The Compute system is designed to be used by many different cloud computing
+                consumers or customers, in native terms, tenants on a shared system, using
+                role-based access assignments. Roles control the actions that a user is allowed to
+                perform.</para>
+            <para>While the original EC2 API supports users, Compute uses the concept of tenants.
+                Tenants are isolated resource containers that form the principal organizational
+                structure within the Compute service. They consist of a separate VLAN, volumes,
+                instances, images, keys, and users. A user can specify the tenant by appending
+                    <literal>:project_id</literal> to their access key. If no tenant is specified in
+                the API request, Compute attempts to use a tenant with the same ID as the
+                user.</para>
             <para>For tenants, quota controls are available to limit the:<itemizedlist>
                     <listitem>
-                        <para>Number of volumes which may be
-                            created</para>
+                        <para>Number of volumes that may be launched.</para>
                     </listitem>
                     <listitem>
-                        <para>Total size of all volumes within a
-                            project as measured in GB</para>
+                        <para>Number of processor cores and the amount of RAM that may be
+                            allocated.</para>
                     </listitem>
                     <listitem>
-                        <para>Number of instances which may be
-                            launched</para>
+                        <para>Floating IP addresses (assigned to any instance when it launches so
+                            the instance has the same publicly accessible IP addresses).</para>
                     </listitem>
                     <listitem>
-                        <para>Number of processor cores which may be
-                            allocated</para>
+                        <para>Fixed IP addresses (assigned to the same instance each time it boots,
+                            publicly or privately accessibletypically private for management
+                            purposes).</para>
                     </listitem>
-                    <listitem>
-                        <para>Floating IP addresses (assigned to any
-                            instance when it launches so the instance
-                            has the same publicly accessible IP
-                            addresses)</para>
-                    </listitem>
-                    <listitem>
-                        <para>Fixed IP addresses (assigned to the same
-                            instance each time it boots, publicly or
-                            privately accessible, typically private
-                            for management purposes)</para>
-                    </listitem>
-                </itemizedlist>
-            </para>
+                </itemizedlist></para><para>Roles control the actions a user is allowed to perform. In the default configuration, most
+                actions do not require a particular role, but the system administrator can configure
+                them by editing the appropriate <filename>policy.json</filename> file that maintains
+                the rules. For example, a rule can be defined so that a user cannot allocate a
+                public IP without the admin role. A tenant limits the users' access to particular
+                images, but each user is assigned the username and password. Key pairs granting
+                access to an instance are enabled for each user, but quotas are set for each tenant
+                to control resource consumption across available hardware resources . <note>
+                    <para>Earlier versions of OpenStack used the term "project" instead of "tenant."
+                        Because of this legacy terminology, some command-line tools use
+                            <parameter>--project_id</parameter> when a tenant ID is expected.
+                    </para>
+                </note></para>
         </section>
         <?hard-pagebreak?>
         <section xml:id="section_images-and-instances">
             <title>Images and instances</title>
-            <para>This introduction provides a high level overview of
-                what images and instances are and description of the
-                life-cycle of a typical virtual system within the
-                cloud. There are many ways to configure the details of
-                an OpenStack cloud and many ways to implement a
-                virtual system within that cloud. These configuration
-                details as well as the specific command line utilities
-                and API calls to perform the actions described are
-                presented in <xref linkend="section_image-mgmt"/> and
-                the volume-specific info in <link
-                    xlink:href="http://docs.openstack.org/trunk/config-reference/content/"
-                        ><citetitle> OpenStack Configuration
-                        Reference</citetitle></link>.</para>
-            <para>Images are disk images which are templates for
-                virtual machine file systems. The image service,
-                Glance, is responsible for the storage and management
-                of images within OpenStack.</para>
-            <para>Instances are the individual virtual machines
-                running on physical compute nodes. The compute
-                service, Nova, manages instances. Any number of
-                instances maybe started from the same image. Each
-                instance is run from a copy of the base image so
-                runtime changes made by an instance do not change the
-                image it is based on. Snapshots of running instances
-                may be taken which create a new image based on the
-                current disk state of a particular instance.</para>
-            <para>When starting an instance a set of virtual resources
-                known as a flavor must be selected. Flavors define how
-                many virtual CPUs an instance has and the amount of
-                RAM and size of its ephemeral disks. OpenStack
-                provides a number of predefined flavors which cloud
-                administrators may edit or add to. Users must select
-                from the set of available flavors defined on their
-                cloud.</para>
-            <para>Additional resources such as persistent volume
-                storage and public IP address may be added to and
-                removed from running instances. The examples below
-                show the <systemitem class="service"
-                    >cinder-volume</systemitem> service which provide
-                persistent block storage as opposed to the ephemeral
-                storage provided by the instance flavor.</para>
-            <para>Here is an example of the life cycle of a typical
-                virtual system within an OpenStack cloud to illustrate
-                these concepts.</para>
+            <para>Images are disk images which are templates for virtual machine file systems. The
+                image service, Glance, is responsible for the storage and management of images
+                within OpenStack.</para>
+            <para>The <link
+                    xlink:href="http://docs.openstack.org/trunk/config-reference/content/ch_configuring-openstack-image-service.html"
+                    >Image Services</link> section of <citetitle>OpenStack Configuration
+                    Reference</citetitle>  explains image configuration options, while the <link
+                    xlink:href="http://docs.openstack.org/user-guide-admin/content/cli_manage_images.html"
+                    >Manage Images</link> section of <citetitle>OpenStack Admin User
+                    Guide</citetitle> for specifics about creating and troubleshooting
+                images.</para>
+            <para>Instances are the individual virtual machines running on physical compute nodes.
+                Compute manages instances. Any number of instances may be started from the same
+                image. Each instance is run from a copy of the base image so runtime changes made by
+                an instance do not change the image it is based on. Snapshots of running instances
+                may be taken, creating a new image based on the current disk state of a particular
+                instance.</para>
+            <para>When starting an instance, a user must select a set of virtual resources known as
+                a flavor. Flavors define how many virtual CPUs an instance has and the amount of RAM
+                and size of its ephemeral disks. OpenStack provides a number of predefined flavors
+                that cloud administrators may edit or add to. Users must select from the set of
+                available flavors defined on their cloud. For more information about flavors, see
+                the <link xlink:href="http://docs.openstack.org/trunk/openstack-ops/content/flavors.html">Flavors</link> section in <citetitle>OpenStack Operations Guide</citetitle>.</para>
+            <para>A user may add and remove additional resources from running instances, such as
+                persistent volume storage and public IP address. The following example shows the
+                lifecycle of a typical virtual system within an OpenStack cloud. It features the
+                    <systemitem class="service">cinder-volume</systemitem> service, which provides
+                persistent block storage, as opposed to the ephemeral storage provided by the
+                instance flavor.</para>
             <simplesect xml:id="initial-instance-state">
                 <title>Initial state</title>
-                <para>The following diagram shows the system state
-                    prior to launching an instance. The image store
-                    fronted by the image service, Glance, has some
-                    number of predefined images. In the cloud there is
-                    an available compute node with available vCPU,
-                    memory and local disk resources. Plus there are a
-                    number of predefined volumes in the <systemitem
-                        class="service">cinder-volume</systemitem>
-                    service.</para>
+                <para>The following diagram shows the system state prior to launching an instance.
+                    The image store fronted by the image service, Glance, has a number of predefined
+                    images. Inside the cloud, a compute node contains available vCPU, memory, and
+                    local disk resources. Additionaly, the <systemitem class="service"
+                        >cinder-volume</systemitem> service provides a number of predefined
+                    volumes.</para>
                 <figure xml:id="initial-instance-state-figure">
                     <title>Base image state with no running
                         instances</title>
@@ -219,15 +167,12 @@
             </simplesect>
             <simplesect xml:id="running-instance-state">
                 <title>Launching an instance</title>
-                <para>To launch an instance the user selects an image,
-                    a flavor and optionally other attributes. In this
-                    case the selected flavor provides a root volume
-                    (as all flavors do) labeled vda in the diagram and
-                    additional ephemeral storage labeled vdb in the
-                    diagram. The user has also opted to map a volume
-                    from the <systemitem class="service"
-                        >cinder-volume</systemitem> store to the third
-                    virtual disk, vdc, on this instance.</para>
+                <para>To launch an instance, the user selects an image, a flavor, and other optional
+                    attributes. In this case, the selected flavor provides a root volume (as all
+                    flavors do) labeled vda in the diagram and additional ephemeral storage labeled
+                    vdb in the diagram. The user has also opted to map a volume from the <systemitem
+                        class="service">cinder-volume</systemitem> store to the third virtual disk,
+                    vdc, on this instance.</para>
                 <figure xml:id="run-instance-state-figure">
                     <title>Instance creation from image and run time
                         state</title>
@@ -239,40 +184,27 @@
                         </imageobject>
                     </mediaobject>
                 </figure>
-                <para>The OpenStack system copies the base image from
-                    the image store to the local disk. The local disk
-                    is the first disk (vda) that the instance
-                    accesses. Using small images results in faster
-                    start up of your instances as less data is copied
-                    across the network. The system also creates a new
-                    empty disk image to present as the second disk
-                    (vdb). Be aware that the second disk is an empty
-                    disk with an ephemeral life as it is destroyed
-                    when you delete the instance. The compute node
-                    attaches to the requested <systemitem
-                        class="service">cinder-volume</systemitem>
-                    using iSCSI and maps this to the third disk (vdc)
-                    as requested. The vCPU and memory resources are
-                    provisioned and the instance is booted from the
-                    first drive. The instance runs and changes data on
-                    the disks indicated in red in the diagram <link
-                        linkend="run-instance-state-figure"/>.</para>
-                <para>The details of this scenario can vary,
-                    particularly the type of back-end storage and the
-                    network protocols that are used. One variant worth
-                    mentioning here is that the ephemeral storage used
-                    for volumes vda and vdb in this example may be
-                    backed by network storage rather than local disk.
-                    The details are left for later chapters.</para>
+                <para>The OpenStack system copies the base image from the image store to the local
+                    disk. The local disk is the first disk (vda) that the instance accesses. Using
+                    small images results in a faster start up of your instances as less data is
+                    copied across the network. The system also creates a new empty disk image to
+                    present as the second disk (vdb). Please note that the second disk is an empty
+                    disk with an ephemeral life because it is destroyed when you delete an instance.
+                    The compute node attaches to the requested <systemitem class="service"
+                        >cinder-volume</systemitem> using iSCSI and maps this to the third disk
+                    (vdc) as requested. The vCPU and memory resources are provisioned and the
+                    instance is booted from the first drive. The instance runs and changes data on
+                    the disks indicated in red in the diagram.</para>
+                <para>The details of this scenario can vary, particularly the type of back-end
+                    storage and the network protocols that are used. One variant worth mentioning
+                    here is that the ephemeral storage used for volumes vda and vdb in this example
+                    may be backed by network storage rather than local disk. </para>
             </simplesect>
             <simplesect xml:id="end-instance-state">
                 <title>End state</title>
-                <para>Once the instance has served its purpose and is
-                    deleted all state is reclaimed, except the
-                    persistent volume. The ephemeral storage is
-                    purged. Memory and vCPU resources are released.
-                    And of course the image has remained unchanged
-                    through out.</para>
+                <para>Once the instance has served its purpose and is deleted, all state is
+                    reclaimed, except the persistent volume. The ephemeral storage is purged. Memory
+                    and vCPU resources are released. The image remains unchanged throughout.</para>
                 <figure xml:id="end-instance-state-figure">
                     <title>End state of image and volume after
                         instance exits</title>
@@ -288,69 +220,47 @@
         </section>
         <section xml:id="section_system-architecture">
             <title>System architecture</title>
-            <para>OpenStack Compute consists of several main
-                components. A "cloud controller" contains many of
-                these components, and it represents the global state
-                and interacts with all other components. An API Server
-                acts as the web services front end for the cloud
-                controller. The compute controller provides compute
-                server resources and typically contains the compute
-                service.</para><para>The Object Store component optionally
-                provides storage services. An auth manager provides
-                authentication and authorization services when used
-                with the Compute system, or you can use the Identity
-                Service (keystone) as a separate authentication
-                service. A volume controller provides fast and
-                permanent block-level storage for the compute servers.
-                A network controller provides virtual networks to
-                enable compute servers to interact with each other and
-                with the public network. A scheduler selects the most
-                suitable compute controller to host an
-                instance.</para>
-            <para>OpenStack Compute is built on a shared-nothing,
-                messaging-based architecture. You can run all of the
-                major components on multiple servers including a
-                compute controller, volume controller, network
-                controller, and object store (or image service). A
-                cloud controller communicates with the internal object
-                store through HTTP (Hyper Text Transfer Protocol), but
-                it communicates with a scheduler, network controller,
-                and volume controller through AMQP (Advanced Message
-                Queue Protocol). To avoid blocking each component
-                while waiting for a response, OpenStack Compute uses
-                asynchronous calls, with a call-back that gets
-                triggered when a response is received.</para>
-            <para>To achieve the shared-nothing property with multiple
-                copies of the same component, OpenStack Compute keeps
-                all the cloud system state in a database.</para>
+            <para>Compute consists of several main components. A "cloud controller" contains many of
+                these components, and it represents the global state and interacts with all other
+                components. An API Server acts as the web services front end for the cloud
+                controller. The compute controller provides compute server resources and typically
+                contains the compute service.</para><para>The Object Store component optionally provides storage services. An auth manager provides
+                authentication and authorization services when used with the Compute system, or you
+                can use the Identity Service (Keystone) as a separate authentication service. A
+                volume controller provides fast and permanent block-level storage for the compute
+                servers. A network controller provides virtual networks to enable compute servers to
+                interact with each other and with the public network. A scheduler selects the most
+                suitable compute controller to host an instance.</para>
+            <para>Compute is built on a shared-nothing, messaging-based architecture. You can run
+                all of the major components on multiple servers including a compute controller,
+                volume controller, network controller, and object store (or image service). A cloud
+                controller communicates with the internal object store through Hyper Text Transfer
+                Protocol (HTTP), but it communicates with a scheduler, network controller, and
+                volume controller through Advanced Message Queue Protocol (AMQP). To avoid blocking
+                each component while waiting for a response, Compute uses asynchronous calls, with a
+                callback that gets triggered when a response is received.</para>
+            <para>To achieve the shared-nothing property with multiple copies of the same component,
+                Compute keeps all of the cloud system state in a database.</para>
         </section>
         <section xml:id="section_storage-and-openstack-compute">
             <title>Block Storage and Compute</title>
-            <para>OpenStack provides two classes of block storage,
-                "ephemeral" storage and persistent "volumes".
-                Ephemeral storage exists only for the life of an
-                instance. It persists across reboots of the guest
-                operating system, but when the instance is deleted so
-                is the associated storage. All instances have some
-                ephemeral storage. Volumes are persistent virtualized
-                block devices independent of any particular instance.
-                Volumes may be attached to a single instance at a
-                time, but may be detached or reattached to a different
-                instance while retaining all data, much like a USB
-                drive.</para>
+            <para>OpenStack provides two classes of block storage, ephemeral storage and persistent
+                volumes. Ephemeral storage exists only for the life of an instance. It persists
+                across reboots of the guest operating system, but when the instance is deleted so is
+                the associated storage. All instances have some ephemeral storage. Volumes are
+                persistent virtualized block devices independent of any particular instance. Volumes
+                may be attached to a single instance at a time, but may be detached or reattached to
+                a different instance while retaining all data, much like a USB drive.</para>
             <simplesect xml:id="section_about-ephemeral-storage">
                 <title>Ephemeral storage</title>
                 <para>Ephemeral storage is associated with a single
                     unique instance. Its size is defined by the flavor
                     of the instance.</para>
-                <para>Data on ephemeral storage ceases to exist when
-                    the instance it is associated with is terminated.
-                    Rebooting the VM or restarting the host server,
-                    however, does not destroy ephemeral data. In the
-                    typical use case an instance's root file system is
-                    stored on ephemeral storage. This is often an
-                    unpleasant surprise for people unfamiliar with the
-                    cloud model of computing.</para>
+                <para>Data on ephemeral storage ceases to exist when the instance it is associated
+                    with is terminated. Rebooting the VM or restarting the host server, however,
+                    does not destroy ephemeral data. In the typical use case, an instance's root
+                    file system is stored on ephemeral storage. This is often an unpleasant surprise
+                    for people unfamiliar with the cloud model of computing.</para>
                 <para>In addition to the ephemeral root volume, all
                     flavors except the smallest, m1.tiny, provide an
                     additional ephemeral block device whose size
@@ -380,87 +290,64 @@
                     attached to only one instance at a time, but may
                     be detached and reattached to either the same or
                     different instances.</para>
-                <para>It is possible to configure a volume so that it
-                    is bootable and provides a persistent virtual
-                    instance similar to traditional non-cloud based
-                    virtualization systems. In this use case the
-                    resulting instance may still have ephemeral
-                    storage depending on the flavor selected, but the
-                    root file system (and possibly others) is on the
-                    persistent volume and its state is maintained even
-                    if the instance it shut down. Details of this
-                    configuration are discussed in the <link
-                        xlink:href="http://docs.openstack.org/user-guide/content/index.html">
-                        <citetitle>OpenStack End User
-                            Guide</citetitle></link>.</para>
-                <para>Volumes do not provide concurrent access from
-                    multiple instances. For that you need either a
-                    traditional network file system like NFS or CIFS
-                    or a cluster file system such as GlusterFS. These
-                    may be built within an OpenStack cluster or
-                    provisioned outside of it, but are not features
-                    provided by the OpenStack software.</para>
+                <para>It is possible to configure a volume so that it is bootable and provides a
+                    persistent virtual instance similar to traditional non-cloud-based
+                    virtualization systems. In this use case, the resulting instance may still have
+                    ephemeral storage depending on the flavor selected, but the root file system
+                    (and possibly others) is on the persistent volume and its state is maintained
+                    even if the instance it shut down. Details of this configuration are discussed
+                    in the <citetitle>OpenStack Configuration Reference</citetitle> .</para>
+                <para>Volumes do not provide concurrent access from multiple instances. For that,
+                    you need either a traditional network file system like NFS or CIFS or a cluster
+                    file system such as GlusterFS. These may be built within an OpenStack cluster or
+                    provisioned outside of it, but are not features provided by the OpenStack
+                    software.</para>
             </simplesect>
         </section>
     </section>
     <section xml:id="section_image-mgmt">
         <title>Image management</title>
-        <para>The OpenStack Image Service, code-named <emphasis
-                role="italic">glance</emphasis>, discovers, registers,
-            and retrieves virtual machine images. The service includes
-            a <link
-                xlink:href="http://api.openstack.org/api-ref.html#os-images-2.0"
-                >RESTful API</link> that allows users to query VM
-            image metadata and retrieve the actual image with HTTP
+        <para>The Image service, code-named Glance, discovers,
+            registers, and retrieves virtual machine images. The service includes a <link
+                xlink:href="http://api.openstack.org/api-ref.html#os-images-2.0">RESTful API</link>
+            that allows users to query VM image metadata and retrieve the actual image with HTTP
             requests. You can also use the <link
                 xlink:href="http://docs.openstack.org/user-guide/content/cli_manage_images.html"
                 >glance command-line tool</link>, or the <link
-                xlink:href="http://docs.openstack.org/developer/python-glanceclient/"
-                >Python API</link> to accomplish the same
-            tasks.</para>
-        <para>VM images made available through OpenStack Image Service
-            can be stored in a variety of locations. The OpenStack
-            Image Service supports the following back end
-            stores:</para>
+                xlink:href="http://docs.openstack.org/developer/python-glanceclient/">Python
+                API</link> to accomplish the same tasks.</para>
+        <para>VM images made available through the Image service can be stored in a variety of
+            locations. The Image service supports the following back-end stores:</para>
         <itemizedlist>
             <listitem>
-                <para>OpenStack Object Storage - OpenStack Object
-                    Storage (code-named <emphasis role="italic"
-                        >swift</emphasis>) is the highly-available
-                    object storage project in OpenStack.</para>
+                <para>Object Storage service (code-named Swift)The highly-available object storage
+                    project in OpenStack.</para>
             </listitem>
             <listitem>
-                <para>File system - The default back end that
-                    OpenStack Image Service uses to store virtual
-                    machine images is the file system back end. This
-                    simple back end writes image files to the local
-                    file system.</para>
+                <para>File systemThe default back-end that OpenStack Image Service uses to store
+                    virtual machine images is the file system back-end. This simple back-end writes
+                    image files to the local file system.</para>
             </listitem>
             <listitem>
-                <para>S3 - This back end allows OpenStack Image
-                    Service to store virtual machine images in
-                    Amazon’s S3 service.</para>
+                <para>S3This back-end allows OpenStack Image Service to store virtual machine
+                    images in Amazon’s S3 service.</para>
             </listitem>
             <listitem>
-                <para>HTTP - OpenStack Image Service can read virtual
-                    machine images that are available through HTTP
-                    somewhere on the Internet. This store is read
+                <para>HTTPOpenStack Image Service can read virtual machine images that are
+                    available through HTTP somewhere on the Internet. This store is read
                     only.</para>
             </listitem>
             <listitem>
-                <para>Rados Block Device (RBD) - This back end stores
-                    images inside of a Ceph storage cluster using
-                    Ceph's RBD interface.</para>
+                <para>Rados Block Device (RBD)This back-end stores images inside of a Ceph storage
+                    cluster using Ceph's RBD interface.</para>
             </listitem>
             <listitem>
-                <para>GridFS - This back end stores images inside of
-                    MongoDB.</para>
+                <para>GridFSThis back-end stores images inside of MongoDB.</para>
             </listitem>
         </itemizedlist>
-        <para>You must have a working installation of the Image
-            Service, with a working endpoint and users created in the
-            Identity Service. Also, you must source the environment
-            variables required by the nova and glance clients.</para>
+        <para>You must have a working installation of the Image Service, with a working endpoint and
+            users created in the Identity Service. Also, you must source the environment variables
+            required by the Compute and Image clients.</para>
     </section>
     <section xml:id="section_instance-mgmt">
         <title>Instance management</title>
@@ -487,18 +374,15 @@
                     installer:
                     <programlisting language="bash">sudo pip install python-novaclient</programlisting>
                 </para>
-                <para>Full details for <application>nova</application>
-                    and other CLI tools are provided in the <link
-                    xlink:href="http://docs.openstack.org/user-guide/content/index.html"
-                    ><citetitle>OpenStack End User Guide</citetitle></link>. What follows is
-                    the minimal introduction required to follow the
-                    CLI example in this chapter. In the case of a
-                    conflict the
-                    <link
+                <para>Full details for <application>nova</application> and other CLI tools are
+                    provided in <link
                         xlink:href="http://docs.openstack.org/user-guide/content/index.html"
-                        ><citetitle>OpenStack End User Guide</citetitle></link> should be
-                    considered authoritative (and a bug filed against
-                    this section).</para>
+                            ><citetitle>OpenStack End User Guide</citetitle></link>. What follows is
+                    the minimal introduction required to follow the CLI example in this chapter. In
+                    the case of a conflict in <link
+                        xlink:href="http://docs.openstack.org/user-guide/content/index.html"
+                            ><citetitle>OpenStack End User Guide</citetitle></link> should be
+                    considered authoritative (and a bug filed against this section).</para>
                 <para>To function, the
                         <application>nova</application> CLI needs the following information:</para>
                 <itemizedlist>
@@ -561,15 +445,11 @@ export OS_TENANT_NAME=demoproject</programlisting>
             </simplesect>
             <simplesect xml:id="instance-mgmt-novaapi">
                 <title>Compute API</title>
-                <para>OpenStack provides a RESTful API for all
-                    functionality. Complete API documentation is
-                    available at <link
-                        xlink:href="http://docs.openstack.org/api"
-                        >http://docs.openstack.org/api</link>. The
-                        <link
-                        xlink:href="http://docs.openstack.org/api/openstack-compute/2"
-                        >OpenStack Compute API</link> documentation
-                    refers to instances as "servers".</para>
+                <para>OpenStack provides a RESTful API for all functionality. Complete API
+                    documentation is available at <link xlink:href="http://docs.openstack.org/api"
+                        >http://docs.openstack.org/api</link>. The <link
+                        xlink:href="http://docs.openstack.org/api/openstack-compute/2">OpenStack
+                        Compute API</link> documentation refers to instances as "servers."</para>
                 <para>The <link linkend="instance-mgmt-novaclient"
                         >nova cli</link> can be made to show the API
                     calls it is making by passing it the
@@ -1580,13 +1460,11 @@ net.bridge.bridge-nf-call-ip6tables=0</programlisting>
     </section>
     <section xml:id="section_compute-system-admin">
         <title>System administration</title>
-        <para>By understanding how the different installed nodes
-            interact with each other you can administer the Compute
-            installation. Compute offers many ways to install using
-            multiple servers but the general idea is that you can have
-            multiple compute nodes that control the virtual servers
-            and a cloud controller node that contains the remaining
-            Nova services.</para>
+        <para>By understanding how the different installed nodes interact with each other you can
+            administer the Compute installation. Compute offers many ways to install using multiple
+            servers but the general idea is that you can have multiple compute nodes that control
+            the virtual servers and a cloud controller node that contains the remaining Compute
+            services.</para>
         <para>The Compute cloud works through the interaction of a
             series of daemon processes named nova-* that reside
             persistently on the host machine or machines. These
@@ -1761,8 +1639,7 @@ net.bridge.bridge-nf-call-ip6tables=0</programlisting>
                 signed with the secret key. Upon receipt of API
                 requests, Compute verifies the signature and runs
                 commands on behalf of the user.</para>
-            <para>To begin using nova, you must create a user with the
-                Identity Service.</para>
+            <para>To begin using Compute, you must create a user with the Identity Service.</para>
         </section>
         <section xml:id="section_manage-the-cloud">
             <title>Manage the cloud</title>
@@ -1919,15 +1796,12 @@ qualname = nova</programlisting></para>
             </simplesect>
             <simplesect>
                 <title>Syslog</title>
-                <para>You can configure OpenStack Compute services to
-                    send logging information to syslog. This is useful
-                    if you want to use rsyslog, which forwards the
-                    logs to a remote machine. You need to separately
-                    configure the Compute service (nova), the Identity
-                    service (keystone), the Image service (glance),
-                    and, if you are using it, the Block Storage
-                    service (cinder) to send log messages to syslog.
-                    To do so, add the following lines to:</para>
+                <para>You can configure OpenStack Compute services to send logging information to
+                    syslog. This is useful if you want to use rsyslog, which forwards the logs to a
+                    remote machine. You need to separately configure the Compute service (Nova), the
+                    Identity service (Keystone), the Image service (Glance), and, if you are using
+                    it, the Block Storage service (Cinder) to send log messages to syslog. To do so,
+                    add the following lines to:</para>
                 <itemizedlist>
                     <listitem>
                         <para><filename>/etc/nova/nova.conf</filename></para>
@@ -2198,37 +2072,26 @@ HostC            p2            5     10240     150
                         <programlisting>UPDATE instances SET host = 'np-rcc46' WHERE uuid = '3f57699a-e773-4650-a443-b4b37eed5a06'; </programlisting>
                     </step>
                     <step>
-                        <para>Next, if using a hypervisor that relies
-                            on libvirt (such as KVM) it is a good idea
-                            to update the
-                                <literal>libvirt.xml</literal> file
-                            (found in
-                                <literal>/var/lib/nova/instances/[instance
-                                ID]</literal>). The important changes
-                            to make are to change the
-                                <literal>DHCPSERVER</literal> value to
-                            the host ip address of the nova compute
-                            host that is the VMs new home, and update
-                            the VNC IP if it isn't already
-                                <literal>0.0.0.0</literal>.</para>
+                        <para>Next, if using a hypervisor that relies on libvirt (such as KVM) it is
+                            a good idea to update the <literal>libvirt.xml</literal> file (found in
+                                <literal>/var/lib/nova/instances/[instance ID]</literal>). The
+                            important changes to make are to change the
+                                <literal>DHCPSERVER</literal> value to the host ip address of the
+                            Compute host that is the VMs new home, and update the VNC IP if it isn't
+                            already <literal>0.0.0.0</literal>.</para>
                     </step>
                     <step>
                         <para>Next, reboot the VM:</para>
                         <screen><prompt>$</prompt> <userinput>nova reboot --hard 3f57699a-e773-4650-a443-b4b37eed5a06</userinput></screen>
                     </step>
                     <step>
-                        <para>In theory, the above database update and
-                                <literal>nova reboot</literal> command
-                            are all that is required to recover the
-                            VMs from a failed host. However, if
-                            further problems occur, consider looking
-                            at recreating the network filter
-                            configuration using
-                                <literal>virsh</literal>, restarting
-                            the nova services or updating the
-                                <literal>vm_state</literal> and
-                                <literal>power_state</literal> in the
-                            nova database.</para>
+                        <para>In theory, the above database update and <literal>nova
+                                reboot</literal> command are all that is required to recover the VMs
+                            from a failed host. However, if further problems occur, consider looking
+                            at recreating the network filter configuration using
+                                <literal>virsh</literal>, restarting the Compute services or
+                            updating the <literal>vm_state</literal> and
+                                <literal>power_state</literal> in the Compute database.</para>
                     </step>
                 </procedure>
             </section>
@@ -2301,9 +2164,7 @@ find / -gid 120 -exec chgrp nova {} \;</programlisting>
             </procedure>
         </section>
         <section xml:id="section_nova-disaster-recovery-process">
-            <title>Nova disaster recovery process</title>
-            <para>Sometimes, things just don't go right. An incident
-                is never planned, by its definition.</para>
+            <title>Compute disaster recovery process</title>
             <para>In this section describes how to manage your cloud
                 after a disaster, and how to easily back up the
                 persistent storage volumes. Back ups ARE mandatory,
@@ -2313,8 +2174,7 @@ find / -gid 120 -exec chgrp nova {} \;</programlisting>
                     xlink:href="http://en.wikipedia.org/wiki/Disaster_Recovery_Plan"
                     >http://en.wikipedia.org/wiki/Disaster_Recovery_Plan</link>.</para>
             <simplesect>
-                <title>A- The disaster Recovery Process
-                    presentation</title>
+                <title>A- The disaster recovery process presentation</title>
                 <para>A disaster could happen to several components of
                     your architecture: a disk crash, a network loss, a
                     power cut, and so on. In this example, assume the
@@ -2399,9 +2259,8 @@ find / -gid 120 -exec chgrp nova {} \;</programlisting>
                             are no longer running)</para>
                     </listitem>
                     <listitem>
-                        <para>Into the database, data was not updated
-                            at all, since nova could not have guessed
-                            the crash.</para>
+                        <para>Into the database, data was not updated at all, since Compute could
+                            not have guessed the crash.</para>
                     </listitem>
                 </itemizedlist>
                 <para>Before going further, and to prevent the admin
@@ -2446,89 +2305,62 @@ find / -gid 120 -exec chgrp nova {} \;</programlisting>
                 </para>
             </simplesect>
             <simplesect>
-                <title>B - The Disaster Recovery Process
-                    itself</title>
+                <title>B - The disaster recovery procedure</title>
                 <para><itemizedlist>
                         <listitem>
-                            <para><emphasis role="bold"> Instance to
-                                   Volume relation </emphasis>
+                            <para><emphasis role="bold"> Instance-to-volume relation </emphasis>
                             </para>
-                            <para>We need to get the current relation
-                                from a volume to its instance, because
-                                we recreate the attachment:</para>
-                            <para>This relation could be figured by
-                                running <command>nova
-                                   volume-list</command> (note that
-                                nova client includes ability to get
-                                volume info from cinder)</para>
+                            <para>We need to get the current relation from a volume to its instance,
+                                because we recreate the attachment:</para>
+                            <para>This relation could be figured by running <command>nova
+                                    volume-list</command> (note that nova client includes ability to
+                                get volume info from cinder)</para>
                         </listitem>
                         <listitem>
-                            <para><emphasis role="bold"> Database
-                                   Update </emphasis>
+                            <para><emphasis role="bold"> Update the database </emphasis>
                             </para>
-                            <para>Second, we need to update the
-                                database in order to clean the stalled
-                                state. Now that we have saved the
-                                attachments we need to restore for
-                                every volume, the database can be
-                                cleaned with the following queries:
+                            <para>Second, we need to update the database in order to clean the
+                                stalled state. Now that we have saved the attachments we need to
+                                restore for every volume, the database can be cleaned with the
+                                following queries:
                                 <programlisting><prompt>mysql></prompt> <userinput>use cinder;</userinput>
 <prompt>mysql></prompt> <userinput>update volumes set mountpoint=NULL;</userinput>
 <prompt>mysql></prompt> <userinput>update volumes set status="available" where status &lt;&gt;"error_deleting";</userinput>
 <prompt>mysql></prompt> <userinput>update volumes set attach_status="detached";</userinput>
 <prompt>mysql></prompt> <userinput>update volumes set instance_id=0;</userinput>               </programlisting>Now,
-                                when running <command>nova
-                                   volume-list</command> all volumes
-                                should be available.</para>
+                                when running <command>nova volume-list</command> all volumes should
+                                be available.</para>
                         </listitem>
                         <listitem>
-                            <para><emphasis role="bold"> Instances
-                                   Restart </emphasis>
+                            <para><emphasis role="bold"> Restart nstances </emphasis>
                             </para>
-                            <para>We need to restart the instances.
-                                This can be done through a simple
-                                   <command>nova reboot
-                                   <replaceable>$instance</replaceable></command>
+                            <para>You can restart the instances through a simple <command>nova
+                                    reboot <replaceable>$instance</replaceable></command>
                             </para>
-                            <para>At that stage, depending on your
-                                image, some instances completely
-                                reboot and become reachable, while
-                                others stop on the "plymouth"
+                            <para>At that stage, depending on your image, some instances completely
+                                reboot and become reachable, while others stop on the "plymouth"
                                 stage.</para>
-                            <para><emphasis role="bold">DO NOT reboot
-                                   a second time</emphasis> the ones
-                                which are stopped at that stage
-                                   (<emphasis role="italic">see below,
-                                   the fourth step</emphasis>). In
-                                fact it depends on whether or not you
-                                added an
-                                   <filename>/etc/fstab</filename>
-                                entry for that volume. Images built
-                                with the <emphasis role="italic"
-                                   >cloud-init</emphasis> package
-                                remain in a pending state, while
-                                others skip the missing volume and
-                                start. (More information is available
-                                on <link
-                                   xlink:href="https://help.ubuntu.com/community/CloudInit"
-                                   >help.ubuntu.com</link>.) The idea
-                                of that stage is only to ask nova to
-                                reboot every instance, so the stored
-                                state is preserved.</para>
+                            <para><emphasis role="bold">DO NOT reboot a second time</emphasis> the
+                                ones which are stopped at that stage (<emphasis role="italic">see
+                                    below, the fourth step</emphasis>). In fact it depends on
+                                whether or not you added an <filename>/etc/fstab</filename> entry
+                                for that volume. Images built with the <emphasis role="italic"
+                                    >cloud-init</emphasis> package remain in a pending state, while
+                                others skip the missing volume and start. (More information is
+                                available on <link
+                                    xlink:href="https://help.ubuntu.com/community/CloudInit"
+                                    >help.ubuntu.com</link>.) The idea of that stage is only to ask
+                                nova to reboot every instance, so the stored state is
+                                preserved.</para>
                         </listitem>
                         <listitem>
-                            <para><emphasis role="bold"> Volume
-                                   Attachment </emphasis>
+                            <para><emphasis role="bold"> Reattach volumes</emphasis>
                             </para>
-                            <para>After the restart, we can reattach
-                                the volumes to their respective
-                                instances. Now that nova has restored
-                                the right status, it is time to
-                                perform the attachments through a
-                                   <command>nova
-                                   volume-attach</command></para>
-                            <para>Here is a simple snippet that uses
-                                the file we created:</para>
+                            <para>After the restart, we can reattach the volumes to their respective
+                                instances. Now that nova has restored the right status, it is time
+                                to perform the attachments through a <command>nova
+                                    volume-attach</command></para>
+                            <para>Here is a simple snippet that uses the file we created:</para>
                             <programlisting language="bash">#!/bin/bash
 
 while read line; do
@@ -2539,30 +2371,22 @@ while read line; do
     nova volume-attach $instance $volume $mount_point
     sleep 2
 done &lt; $volumes_tmp_file</programlisting>
-                            <para>At that stage, instances that were
-                                pending on the boot sequence
-                                   (<emphasis role="italic"
-                                   >plymouth</emphasis>) automatically
-                                continue their boot, and restart
-                                normally, while the ones that booted
-                                see the volume.</para>
+                            <para>At that stage, instances that were pending on the boot sequence
+                                    (<emphasis role="italic">plymouth</emphasis>) automatically
+                                continue their boot, and restart normally, while the ones that
+                                booted see the volume.</para>
                         </listitem>
                         <listitem>
-                            <para><emphasis role="bold"> SSH into
-                                   instances </emphasis>
+                            <para><emphasis role="bold"> SSH into instances </emphasis>
                             </para>
-                            <para>If some services depend on the
-                                volume, or if a volume has an entry
-                                into fstab, it could be good to simply
-                                restart the instance. This restart
-                                needs to be made from the instance
-                                itself, not through nova. So, we SSH
-                                into the instance and perform a
-                                reboot:</para>
+                            <para>If some services depend on the volume, or if a volume has an entry
+                                into fstab, it could be good to simply restart the instance. This
+                                restart needs to be made from the instance itself, not through nova.
+                                So, we SSH into the instance and perform a reboot:</para>
                             <screen><prompt>#</prompt> <userinput>shutdown -r now</userinput></screen>
                         </listitem>
-                    </itemizedlist>Voila! You successfully recovered
-                    your cloud after that.</para>
+                    </itemizedlist>By completing this procedure, you will have successfully
+                    recovered your cloud.</para>
                 <para>Here are some suggestions:</para>
                 <para><itemizedlist>
                         <listitem>
@@ -2619,7 +2443,7 @@ done &lt; $volumes_tmp_file</programlisting>
                 </para>
             </simplesect>
             <simplesect>
-                <title>C- Scripted DRP</title>
+                <title>C- scripted DRP</title>
                 <para>You can download from <link
                         xlink:href="https://github.com/Razique/BashStuff/blob/master/SYSTEMS/OpenStack/SCR_5006_V00_NUAC-OPENSTACK-DRP-OpenStack.sh"
                         >here</link> a bash script which performs

@@ -5,37 +5,30 @@
     xmlns:xlink="http://www.w3.org/1999/xlink"
     version="5.0">
     <title>Secure with root wrappers</title>
-    <para>The goal of the root wrapper is to allow the nova
-        unprivileged user to run a number of actions as the root user,
-        in the safest manner possible. Historically, Nova used a
-        specific sudoers file listing every command that the nova user
-        was allowed to run, and just used sudo to run that command as
-        root. However this was difficult to maintain (the sudoers file
-        was in packaging), and did not allow for complex filtering of
-        parameters (advanced filters). The rootwrap was designed to
-        solve those issues.</para>
+    <para>The goal of the root wrapper is to allow the Compute unprivileged user to run a number of
+        actions as the root user, in the safest manner possible. Historically, Compute used a
+        specific sudoers file listing every command that the Compute user was allowed to run, and
+        just used sudo to run that command as root. However this was difficult to maintain (the
+        sudoers file was in packaging), and did not allow for complex filtering of parameters
+        (advanced filters). The rootwrap was designed to solve those issues.</para>
    <simplesect> <title>How rootwrap works</title>
     <para>Instead of just calling sudo make me a sandwich, Compute services starting with nova- call
-        sudo nova-rootwrap /etc/nova/rootwrap.conf make me a sandwich.
-        A generic sudoers entry lets the nova user run nova-rootwrap
-        as root. The nova-rootwrap code looks for filter definition directories
-        in its configuration file, and loads command filters from
-        them. Then it checks if the command requested by Compute matches
-        one of those filters, in which case it executes the command
-        (as root). If no filter matches, it denies the request.</para></simplesect>
+            sudo nova-rootwrap /etc/nova/rootwrap.conf make me a sandwich. A generic sudoers entry
+            lets the Compute user run nova-rootwrap as root. The nova-rootwrap code looks for filter
+            definition directories in its configuration file, and loads command filters from them.
+            Then it checks if the command requested by Compute matches one of those filters, in
+            which case it executes the command (as root). If no filter matches, it denies the
+            request.</para></simplesect>
     <simplesect>
         <title>Security model</title>
-        <para>The escalation path is fully controlled by the root
-            user. A sudoers entry (owned by root) allows nova to run
-            (as root) a specific rootwrap executable, and only with a
-            specific configuration file (which should be owned by
-            root). nova-rootwrap imports the Python modules it needs
-            from a cleaned (and system-default) PYTHONPATH. The
-            configuration file (also root-owned) points to root-owned
-            filter definition directories, which contain root-owned
-            filters definition files. This chain ensures that the nova
-            user itself is not in control of the configuration or
-            modules used by the nova-rootwrap executable.</para>
+        <para>The escalation path is fully controlled by the root user. A sudoers entry (owned by
+            root) allows Compute to run (as root) a specific rootwrap executable, and only with a
+            specific configuration file (which should be owned by root). nova-rootwrap imports the
+            Python modules it needs from a cleaned (and system-default) PYTHONPATH. The
+            configuration file (also root-owned) points to root-owned filter definition directories,
+            which contain root-owned filters definition files. This chain ensures that the Compute
+            user itself is not in control of the configuration or modules used by the nova-rootwrap
+            executable.</para>
     </simplesect>
     <simplesect>
 <title>Details of rootwrap.conf</title>
