@@ -308,10 +308,11 @@ def check_deleted_files(rootdir, file_exceptions, verbose):
 
 
 def validate_one_file(schema, rootdir, path, verbose,
-                      any_failures, check_syntax, check_niceness):
+                      check_syntax, check_niceness):
     """Validate a single file"""
     # We pass schema in as a way of caching it, generating it is expensive
 
+    any_failures = False
     if verbose:
         print(" Validating %s" % os.path.relpath(path, rootdir))
     try:
@@ -347,6 +348,7 @@ def validate_individual_files(rootdir, exceptions, verbose,
     schema = get_schema()
     any_failures = False
     no_validated = 0
+    no_failed = 0
 
     # Do not select delete files, just Added, Copied, Modified, Renamed,
     # or Type changed
@@ -366,16 +368,18 @@ def validate_individual_files(rootdir, exceptions, verbose,
         if (base_f == "pom.xml" or
                 base_f in exceptions):
             continue
-        any_failures = validate_one_file(
-            schema, rootdir, f, verbose, any_failures,
-            check_syntax, check_niceness)
+        any_failures = validate_one_file(schema, rootdir, f, verbose,
+                                         check_syntax, check_niceness)
+        if any_failures:
+            no_failed = no_failed + 1
         no_validated = no_validated + 1
 
-    if voting and any_failures:
-        print("Check failed, validated %d xml files.\n" % no_validated)
-        sys.exit(1)
-
-    print("Check passed, validated %d xml files.\n" % no_validated)
+    if no_failed > 0:
+        print("Check failed, validated %d xml files with %d failures.\n" % (no_validated, no_failed))
+        if voting:
+            sys.exit(1)
+    else:
+        print("Check passed, validated %d xml files.\n" % no_validated)
 
 
 def validate_all_files(rootdir, exceptions, verbose,
@@ -383,8 +387,8 @@ def validate_all_files(rootdir, exceptions, verbose,
     """Validate all xml files."""
 
     schema = get_schema()
-    any_failures = False
     no_validated = 0
+    no_failed = 0
     if check_syntax and check_niceness:
         print("Checking syntax and niceness of all xml files...")
     elif check_syntax:
@@ -407,14 +411,18 @@ def validate_all_files(rootdir, exceptions, verbose,
                     f not in exceptions):
                 path = os.path.abspath(os.path.join(root, f))
                 any_failures = validate_one_file(
-                    schema, rootdir, path, verbose, any_failures,
+                    schema, rootdir, path, verbose,
                     check_syntax, check_niceness)
+                if any_failures:
+                    no_failed = no_failed + 1
                 no_validated = no_validated + 1
 
-    if voting and any_failures:
-        print("Check failed, validated %d xml files.\n" % no_validated)
-        sys.exit(1)
-    print("Check passed, validated %d xml files.\n" % no_validated)
+    if no_failed > 0:
+        print("Check failed, validated %d xml files with %d failures.\n" % (no_validated, no_failed))
+        if voting:
+            sys.exit(1)
+    else:
+        print("Check passed, validated %d xml files.\n" % no_validated)
 
 
 def logging_build_book(result):
@@ -641,7 +649,7 @@ def build_affected_books(rootdir, book_exceptions,
         maxjobs = 4
     pool = multiprocessing.Pool(maxjobs)
     print("Queuing the following books for building:")
-    for book in books:
+    for book in sorted(books):
         print("  %s" % os.path.basename(book))
         pool.apply_async(build_book, (book, ),
                          callback=logging_build_book)
@@ -659,9 +667,12 @@ def build_affected_books(rootdir, book_exceptions,
                   % (book, returncode))
             print("\n%s" % output)
 
-    if voting and any_failures:
-        sys.exit(1)
-    print("Building finished.")
+    if any_failures:
+        print("Building of books finished with failures.\n")
+        if voting:
+            sys.exit(1)
+    else:
+        print("Building of books finished successfully.\n")
 
 
 def main(args):
@@ -673,7 +684,7 @@ def main(args):
         args.check_niceness = True
 
     if not args.force and only_www_touched():
-        print("Only files in www directory changed, nothing to do.")
+        print("Only files in www directory changed, nothing to do.\n")
         return
 
     if args.check_deletions:
