@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<section xml:id="installing-openstack-object-storage-on-ubuntu"
+<section xml:id="installing-openstack-object-storage"
     xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
-    <title>Installing OpenStack Object Storage on Ubuntu</title>
+    <title>Installing OpenStack Object Storage</title>
     <para>Though you can install OpenStack Object Storage for development or testing purposes on a single server, a multiple-server installation enables the high availability and redundancy you want in a production distributed object storage system.</para>
-    <para>If you would like to perform a single node installation on
-        Ubuntu for development purposes from source code, use the
-        Swift All In One instructions or DevStack. See <link
+    <para>If you would like to perform a single node installation for development purposes from source code, use the
+        Swift All In One instructions (Ubuntu) or DevStack (multiple distros). See <link
             xlink:href="http://swift.openstack.org/development_saio.html"
             >http://swift.openstack.org/development_saio.html</link>
         for manual instructions or <link xlink:href="http://devstack.org">http://devstack.org</link> for all-in-one
-        including authentication and a dashboard.</para>
+        including authentication with the OpenStack Identity service (keystone).</para>
     <section xml:id="before-you-begin-swift-install">
         <title>Before You Begin</title>
-        <para>Have a copy of the Ubuntu Server installation media on
+        <para>Have a copy of the operating system installation media on
             hand if you are installing on a new server.</para>
+        <para>These steps assume you have set up repositories for
+            packages for your operating system as shown in <link
+                linkend="basics-packages">OpenStack
+            Packages</link>.</para>
         <para>This document demonstrates installing a cluster using the following
             types of nodes:</para>
         <itemizedlist>
             <listitem>
-                <para>One Proxy node which runs the swift-proxy-server
-                    processes and may also run the optional swauth or
-                    tempauth services, this walkthrough uses the
-                    Identity service code-named Keystone. The proxy
-                    server serves proxy requests to the appropriate
-                    Storage nodes.</para>
+                <para>One proxy node which runs the swift-proxy-server
+                    processes. The proxy server proxies requests
+                    to the appropriate storage nodes.</para>
             </listitem>
             <listitem>
-                <para>Five Storage nodes that run the swift-account-server,
+                <para>Five storage nodes that run the swift-account-server,
                     swift-container-server, and swift-object-server
                     processes which control storage of the account
                     databases, the container databases, as well as the
@@ -36,45 +36,31 @@
             </listitem>
         </itemizedlist>
         <note>
-            <para>Fewer Storage nodes can be used initially, but a minimum of 5
+            <para>Fewer storage nodes can be used initially, but a minimum of 5
                 is recommended for a production cluster.</para>
         </note>
     </section>
      <section xml:id="general-installation-steps-swift">
         <title>General Installation Steps</title>
-        <orderedlist>
-            <listitem>
-                <para>Install the baseline operating system, such as
-                    Ubuntu Server (12.04) or RHEL, CentOS, or Fedora,
-                    on all nodes.</para>
-            </listitem>
-            <listitem>
-                <para>Add Cloud Archive for grizzly updates.</para>
-                <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install ubuntu-cloud-keyring</userinput>
-<prompt>#</prompt> <userinput>echo "deb http://ubuntu-cloud.archive.canonical.com/ubuntu precise-updates/grizzly main" >> /etc/apt/sources.list.d/cloud-archive.list</userinput>
-<prompt>#</prompt> <userinput>apt-get update</userinput>
-<prompt>#</prompt> <userinput>apt-get upgrade</userinput>
-<prompt>#</prompt> <userinput>apt-get dist-upgrade</userinput></screen>
-            </listitem>
-            <listitem>
+        <procedure>
+            <step>
                 <para>Install core Swift files and openSSH.</para>
                 <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install swift openssh-server rsync memcached python-netifaces python-xattr python-memcache</userinput> </screen>
                 <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-swift openstack-swift-proxy openstack-swift-account openstack-swift-container openstack-swift-object memcached</userinput> </screen>
-            </listitem>
-            <listitem>
+            </step>
+            <step>
                 <para>Create and populate configuration directories on all nodes:</para>
                 <para>
                     <screen><prompt>#</prompt> <userinput>mkdir -p /etc/swift</userinput>
 <prompt>#</prompt> <userinput>chown -R swift:swift /etc/swift/</userinput>                    </screen>
                 </para>
-            </listitem>
-
-            <listitem>
-                <para>Create /etc/swift/swift.conf:</para>
-                <para><literallayout class="monospaced"><xi:include parse="text" href="samples/swift.conf.txt" />
+            </step>
+            <step>
+                <para>Create /etc/swift/swift.conf on all nodes:</para>
+                <para><literallayout class="monospaced"><xi:include parse="text" href="../samples/swift.conf.txt" />
                                 </literallayout></para>
-            </listitem>
-        </orderedlist>
+            </step>
+        </procedure>
         <note>
             <para>The suffix value in
                     <filename>/etc/swift/swift.conf</filename> should
@@ -83,9 +69,8 @@
                 This file should be the same on every node in the
                 cluster!</para>
         </note>
-        <para>Next, set up your storage nodes, proxy node, and an auth
-            node, in this walkthrough we'll use the OpenStack Identity
+        <para>Next, set up your storage nodes and proxy node.
+            In this example we'll use the OpenStack Identity
             Service, Keystone, for the common auth piece.</para>
     </section>
-
 </section>

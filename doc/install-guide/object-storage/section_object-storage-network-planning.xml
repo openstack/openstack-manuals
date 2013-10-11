@@ -18,21 +18,24 @@
         must be configured in the Ring.</para>
   <para>By default, all of the OpenStack Object Storage services, as well as the
         rsync daemon on the Storage nodes are configured to listen on their
-        STORAGE_LOCAL_NET IP addresses.</para>
+        <literal>STORAGE_LOCAL_NET</literal> IP addresses.</para>
     <para>If Replication Network configured in the Ring, then Account, Container
-          and Object servers listen on both STORAGE_LOCAL_NET and STORAGE_REPLICATION_NET
-          IP addresses. Rsync daemon will only listen on STORAGE_REPLICATION_NET IP
+          and Object servers listen on both <literal>STORAGE_LOCAL_NET</literal>
+          and <literal>STORAGE_REPLICATION_NET</literal>
+          IP addresses. Rsync daemon will only listen on
+          <literal>STORAGE_REPLICATION_NET</literal> IP
           address in this case.</para>
     <para>Public Network (Publicly routable IP range): This network is utilized
         for providing Public IP accessibility to the API endpoints within the cloud
         infrastructure.</para>
-        <para>Minimum size: 8 IPs (CIDR /29)</para>
+        <para>Minimum size: one IP address per proxy server (For example, two).</para>
     <para>Storage Network (RFC1918 IP Range, not publicly routable):
         This network is utilized for all inter-server communications
         within the Object Storage infrastructure.</para>
-    <para>Recommended size: 255 IPs (CIDR /24)</para>
+    <para>Minimum size: one IP address per storage node, and proxy server.</para>
+    <para>Recommended size: as above, with room for expansion to the largest your cluster will be (For example, 255 or CIDR /24)</para>
     <para>Replication Network (RFC1918 IP Range, not publicly routable):
         This network is utilized for replication-related communications
         between storage servers within the Object Storage infrastructure.</para>
-    <para>Recommended size: 255 IPs (CIDR /24)</para>
+    <para>Recommended size: as for <literal>STORAGE_LOCAL_NET</literal></para>
 </section>
