@@ -238,10 +238,10 @@ def check_deleted_files(rootdir, file_exceptions, verbose):
     references them.
 
     """
-    print("\nChecking that no removed files are referenced...")
+    print("Checking that no removed files are referenced...")
     deleted_files = get_modified_files(rootdir, "--diff-filter=D")
     if not deleted_files:
-        print("No files were removed.")
+        print("No files were removed.\n")
         return
 
     if verbose:
@@ -285,9 +285,6 @@ def check_deleted_files(rootdir, file_exceptions, verbose):
 
                         break
 
-                if missing_reference:
-                    break
-
                 # Check for inclusion of files as part of xi:include
                 ns = {"xi": "http://www.w3.org/2001/XInclude"}
                 for node in doc.xpath('//xi:include', namespaces=ns):
@@ -298,12 +295,12 @@ def check_deleted_files(rootdir, file_exceptions, verbose):
                         missing_reference = True
     if missing_reference:
         print("Failed removed file check, %d files were removed, "
-              "%d files checked."
+              "%d files checked.\n"
               % (len(deleted_files), no_checked_files))
         sys.exit(1)
 
     print("Passed removed file check, %d files were removed, "
-          "%d files checked."
+          "%d files checked.\n"
           % (len(deleted_files), no_checked_files))
 
 
@@ -342,7 +339,7 @@ def is_xml(filename):
 
 def validate_individual_files(rootdir, exceptions, verbose,
                               check_syntax=False, check_niceness=False,
-                              voting=True):
+                              ignore_errors=False):
     """Validate list of modified files."""
 
     schema = get_schema()
@@ -376,14 +373,15 @@ def validate_individual_files(rootdir, exceptions, verbose,
 
     if no_failed > 0:
         print("Check failed, validated %d xml files with %d failures.\n" % (no_validated, no_failed))
-        if voting:
+        if not ignore_errors:
             sys.exit(1)
     else:
         print("Check passed, validated %d xml files.\n" % no_validated)
 
 
 def validate_all_files(rootdir, exceptions, verbose,
-                       check_syntax, check_niceness=False, voting=True):
+                       check_syntax, check_niceness=False,
+                       ignore_errors=False):
     """Validate all xml files."""
 
     schema = get_schema()
@@ -419,7 +417,7 @@ def validate_all_files(rootdir, exceptions, verbose,
 
     if no_failed > 0:
         print("Check failed, validated %d xml files with %d failures.\n" % (no_validated, no_failed))
-        if voting:
+        if not ignore_errors:
             sys.exit(1)
     else:
         print("Check passed, validated %d xml files.\n" % no_validated)
@@ -628,7 +626,7 @@ def find_affected_books(rootdir, book_exceptions, verbose,
 
 
 def build_affected_books(rootdir, book_exceptions,
-                         verbose, force=False, voting=True):
+                         verbose, force=False, ignore_errors=False):
     """Build all the books which are affected by modified files.
 
     Looks for all directories with "pom.xml" and checks if a
@@ -663,13 +661,16 @@ def build_affected_books(rootdir, book_exceptions,
             print(">>> Build of book %s succeeded." % book)
         else:
             any_failures = True
-            print(">>> Build of book %s failed (returncode = %d)."
-                  % (book, returncode))
-            print("\n%s" % output)
 
     if any_failures:
+        for book, result, output, returncode in RESULTS_OF_BUILDS:
+            if not result:
+                print(">>> Build of book %s failed (returncode = %d)."
+                      % (book, returncode))
+                print("\n%s" % output)
+
         print("Building of books finished with failures.\n")
-        if voting:
+        if not ignore_errors:
             sys.exit(1)
     else:
         print("Building of books finished successfully.\n")
@@ -678,7 +679,7 @@ def build_affected_books(rootdir, book_exceptions,
 def main(args):
 
     if args.check_all:
-        args.check_deletion = True
+        args.check_deletions = True
         args.check_syntax = True
         args.check_build = True
         args.check_niceness = True
@@ -687,22 +688,23 @@ def main(args):
         print("Only files in www directory changed, nothing to do.\n")
         return
 
-    if args.check_deletions:
-        check_deleted_files(args.path, FILE_EXCEPTIONS, args.verbose)
-
     if args.check_syntax or args.check_niceness:
         if args.force:
             validate_all_files(args.path, FILE_EXCEPTIONS, args.verbose,
                                args.check_syntax, args.check_niceness,
-                               args.non_voting)
+                               args.ignore_errors)
         else:
             validate_individual_files(args.path, FILE_EXCEPTIONS,
                                       args.verbose, args.check_syntax,
-                                      args.check_niceness, args.non_voting)
+                                      args.check_niceness,
+                                      args.ignore_errors)
+
+    if args.check_deletions:
+        check_deleted_files(args.path, FILE_EXCEPTIONS, args.verbose)
 
     if args.check_build:
         build_affected_books(args.path, BOOK_EXCEPTIONS,
-                             args.verbose, args.force, args.non_voting)
+                             args.verbose, args.force, args.ignore_errors)
 
 
 def default_root():
@@ -739,8 +741,8 @@ if __name__ == '__main__':
     parser.add_argument("--check-all", help="Run all checks "
                         "(default if no arguments are given)",
                         action="store_true")
-    parser.add_argument("--non-voting", help="Do not exit on failures",
-                        action="store_false")
+    parser.add_argument("--ignore-errors", help="Do not exit on failures",
+                        action="store_true")
     parser.add_argument("--verbose", help="Verbose execution",
                         action="store_true")
     prog_args = parser.parse_args()
