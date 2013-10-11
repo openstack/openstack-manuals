@@ -1,0 +1,41 @@
+<section xmlns="http://docbook.org/ns/docbook"
+         xmlns:xi="http://www.w3.org/2001/XInclude"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         version="5.0"
+         xml:id="cinder-node">
+  <title>Configuring a Block Storage Node</title>
+
+  <para>After configuring the services on the controller node, configure a second system to
+    be a Block Storage node.</para>
+
+  <para>The Block Storage Service relies on a driver for a particular
+  storage system. OpenStack can use various systemes, but this guide uses
+  LVM.</para>
+  <procedure>
+    <title>Configure a Block Storage Node</title>
+    <step><para>Begin by configuring the system using the instructions in
+      <xref linkend="ch_basics"/>. Note the following differences from the
+      controller node:</para>
+      <itemizedlist>
+        <listitem>
+          <para>Set the hostname to <literal>block1</literal>. Ensure that the
+            IP addresses and hostnames for both nodes are listed in the
+            <filename>/etc/hosts</filename> file on each system.</para>
+        </listitem>
+        <listitem>
+          <para>Follow the instructions in
+            <xref linkend="basics-ntp"/> to synchronize from the controller node.</para>
+        </listitem>
+      </itemizedlist>
+    </step>
+
+    <step><para>After configuring the operating system, install the appropriate
+      packages for the block storage service.</para>
+      <!-- FIXME: Double check list of packages for ubuntu fedora -->
+      <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install cinder-api cinder-scheduler cinder-volume</userinput></screen>
+      <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>yum install openstack-cinder openstack-utils openstack-selinux</userinput></screen>
+      <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install  openstack-cinder-api openstack-cinder-scheduler \
+ openstack-cinder-volume</userinput></screen>
+    </step>
+      </procedure>
+ </section>
