@@ -1,46 +1,171 @@
 <?xml version="1.0" encoding="utf-8"?>
 <chapter xmlns="http://docbook.org/ns/docbook"
-  xmlns:xi="http://www.w3.org/2001/XInclude"
-  xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
-  xml:id="ch_getting-started-with-openstack">
-  <title>Get started with OpenStack</title>
-  <?dbhtml stop-chunking?>
-  <para>The OpenStack project is an open source cloud computing
-    platform for all types of clouds, which aims to be simple to
-    implement, massively scalable, and feature rich. Developers and
-    cloud computing technologists from around the world create the
-    OpenStack project.</para>
-  <para>OpenStack provides an Infrastructure as a Service (IaaS)
-    solution through a set of interrelated services. Each service
-    offers an application programming interface (API) that facilitates
-    this integration.</para>
-  <xi:include href="section_getstart_architecture.xml"/>
-  <?hard-pagebreak?>
-  <section xml:id="openstack-services">
-    <title>OpenStack services</title>
-    <para>This section describes OpenStack services in detail.</para>
-    <xi:include href="section_getstart_dashboard.xml"/>
-    <xi:include href="section_keystone-concepts.xml"/>
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="ch_getting-started-with-openstack">
+    <title>Get started with OpenStack</title>
+    <?dbhtml stop-chunking?>
+    <para xml:id="para1">The OpenStack project is an open source cloud
+        computing platform for all types of clouds, which aims to be
+        simple to implement, massively scalable, and feature
+        rich. Developers and cloud computing technologists
+        from around the world create the OpenStack project.</para>
+    <para xml:id="para2">OpenStack provides an Infrastructure as a
+        Service (IaaS) solution through a set of interrelated
+        services. Each service offers an application programming
+        interface (API) that facilitates this integration. Depending
+        on your needs, you can install some or all services.</para>
+    <para xml:id="para3">The following table describes the OpenStack
+        services that make up the OpenStack architecture:</para>
+    <table rules="all" xml:id="table1" width="85%">
+        <caption>OpenStack services</caption>
+        <col width="15%"/>
+        <col width="15%"/>
+        <col width="70%"/>
+        <thead>
+            <tr>
+                <th>Service</th>
+                <th>Project name</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><link
+                    xlink:href="http://www.openstack.org/software/openstack-dashboard/"
+                    >Dashboard</link></td>
+                <td><link
+                    xlink:href="http://docs.openstack.org/developer/horizon/"
+                    >Horizon</link></td>
+                <td>Enables users to interact with OpenStack services
+                    to launch an instance, assign IP addresses, set
+                    access controls, and so on.</td>
+            </tr>
+            <tr>
+                <td><link
+                        xlink:href="http://www.openstack.org/software/openstack-compute/"
+                        >Compute</link></td>
+                <td><link
+                        xlink:href="http://docs.openstack.org/developer/nova/"
+                        >Nova</link></td>
+                <td>Provisions and manages large networks of virtual
+                    machines on demand.</td>
+            </tr>
+            <tr>
+                <td><link
+                        xlink:href="http://www.openstack.org/software/openstack-networking/"
+                        >Networking</link></td>
+                <td><link
+                        xlink:href="http://docs.openstack.org/developer/neutron/"
+                        >Neutron</link></td>
+                <td>Enables network connectivity as a service among
+                    interface devices managed by other OpenStack
+                    services, usually Compute. Enables users to create
+                    and attach interfaces to networks. Has a pluggable
+                    architecture that supports many popular networking
+                    vendors and technologies.</td>
+            </tr>
+            <tr><th colspan="3" align="center">Storage</th></tr>
+            <tr>
+                <td><link
+                    xlink:href="http://www.openstack.org/software/openstack-storage/"
+                    >Object Storage</link></td>
+                <td><link
+                    xlink:href="http://docs.openstack.org/developer/swift/"
+                    >Swift</link></td>
+                <td>Stores and gets files. Does not mount directories
+                    like a file server.</td>
+            </tr>
+            <tr>
+                <td><link
+                    xlink:href="http://www.openstack.org/software/openstack-storage/"
+                    >Block Storage</link></td>
+                <td><link
+                    xlink:href="http://docs.openstack.org/developer/cinder/"
+                    >Cinder</link></td>
+                <td>Provides persistent block storage to guest virtual
+                    machines.</td>
+            </tr>
+            <tr><th colspan="3" align="center">Shared services</th></tr>
+            <tr>
+                <td><link
+                        xlink:href="http://www.openstack.org/software/openstack-shared-services/"
+                        >Identity Service</link></td>
+                <td><link
+                        xlink:href="http://docs.openstack.org/developer/keystone/"
+                        >Keystone</link></td>
+                <td>Provides authentication and authorization for the
+                    OpenStack services. Also provides a service
+                    catalog within a particular OpenStack cloud.</td>
+            </tr>
+            <tr>
+                <td><link
+                        xlink:href="http://www.openstack.org/software/openstack-shared-services/"
+                        >Image Service</link></td>
+                <td><link
+                        xlink:href="http://docs.openstack.org/developer/glance/"
+                        >Glance</link></td>
+                <td>Provides a registry of virtual machine images.
+                    Compute uses it to provision instances.</td>
+            </tr>
+
+            <tr>
+                <td><link
+                        xlink:href="http://www.openstack.org/software/openstack-shared-services/"
+                        >Metering/Monitoring Service</link></td>
+                <td><link
+                        xlink:href="http://docs.openstack.org/developer/ceilometer/"
+                        >Ceilometer</link></td>
+                <td>Monitors and meters the OpenStack cloud for
+                    billing, benchmarking, scalability, and statistics
+                    purposes.</td>
+            </tr>
+            <tr><th colspan="3" align="center">Higher-level services</th></tr>
+            <tr>
+                <td><link
+                        xlink:href="http://www.openstack.org/software/openstack-shared-services/"
+                        >Orchestration Service</link></td>
+                <td><link
+                        xlink:href="http://docs.openstack.org/developer/heat/"
+                        >Heat</link></td>
+                <td>Orchestrates multiple composite cloud applications by using
+                    either the native HOT template format or the AWS
+                    CloudFormation template format, through both an
+                    OpenStack-native REST API and a CloudFormation-compatible
+                    Query API.</td>
+            </tr>
+        </tbody>
+    </table>
+    <xi:include href="section_getstart_conceptual_arch.xml"/>
+    <xi:include href="section_getstart_logical_arch.xml"/>
     <?hard-pagebreak?>
-    <xi:include href="section_getstart_compute.xml"/>
-    <?hard-pagebreak?>
-    <xi:include href="section_storage-concepts.xml"/>
-    <xi:include href="section_getstart_object-storage.xml"/>
-    <xi:include href="section_getstart_block-storage.xml"/>
-    <xi:include href="section_getstart_image.xml"/>
-    <xi:include href="section_getstart_networking.xml"/>
-    <?hard-pagebreak?>
-    <xi:include href="section_getstart_metering.xml"/>
-    <xi:include href="section_getstart_orchestration.xml"/>
-  </section>
-  <section xml:id="feedback">
-    <title>Feedback</title>
-    <para>To provide feedback on documentation, join and use the
-        <email>openstack-docs@lists.openstack.org</email> mailing list
-      at <link
-        xlink:href="http://lists.openstack.org/cgi-bin/mailman/listinfo/openstack-docs"
-        >OpenStack Documentation Mailing List</link>, or <link
-        xlink:href="https://bugs.launchpad.net/openstack-manuals/+filebug"
-        >report a bug</link>.</para>
-  </section>
+    <section xml:id="openstack-services">
+        <title>OpenStack services</title>
+        <para>This section describes OpenStack services in
+            detail.</para>
+        <xi:include href="section_getstart_compute.xml"/>
+        <?hard-pagebreak?>
+        <xi:include href="section_storage-concepts.xml"/>
+        <xi:include href="section_getstart_object-storage.xml"/>
+        <xi:include href="section_getstart_block-storage.xml"/>
+        <?hard-pagebreak?>
+        <xi:include href="section_getstart_networking.xml"/>
+        <?hard-pagebreak?>
+        <xi:include href="section_getstart_dashboard.xml"/>
+        <xi:include href="section_keystone-concepts.xml"/>
+        <?hard-pagebreak?>
+        <xi:include href="section_getstart_image.xml"/>
+        <xi:include href="section_getstart_metering.xml"/>
+        <xi:include href="section_getstart_orchestration.xml"/>
+    </section>
+    <section xml:id="feedback">
+        <title>Feedback</title>
+        <para>To provide feedback on documentation, join and use the
+                <email>openstack-docs@lists.openstack.org</email>
+            mailing list at <link
+                xlink:href="http://lists.openstack.org/cgi-bin/mailman/listinfo/openstack-docs"
+                >OpenStack Documentation Mailing List</link>, or <link
+                xlink:href="https://bugs.launchpad.net/openstack-manuals/+filebug"
+                >report a bug</link>.</para>
+    </section>
 </chapter>

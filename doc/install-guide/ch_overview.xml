@@ -1,74 +1,77 @@
 <chapter xmlns="http://docbook.org/ns/docbook"
-         xmlns:xi="http://www.w3.org/2001/XInclude"
-         xmlns:xlink="http://www.w3.org/1999/xlink"
-         version="5.0"
-         xml:id="ch_overview">
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+  xml:id="ch_overview">
   <?dbhtml stop-chunking?>
-  <title>Overview and Architecture</title>
-  <section xml:id="overview-concepts">
-    <title>OpenStack Overview</title>
-    <para>The OpenStack project is an open source cloud computing
-    platform for all types of clouds, which aims to be simple to
-    implement, massively scalable, and feature rich. Developers and
-    cloud computing technologists from around the world create the
-    OpenStack project.</para>
-    <xi:include href="../common/section_getstart_architecture.xml"/>
-  </section>
-
+  <title>Architecture</title>
+  <para>This install guide offers a few of the many ways to install
+    OpenStack components and have them work together. It is meant as a
+    "choose your own adventure" guide, not a comprehensive guide. The
+      <citetitle>OpenStack Configuration Reference</citetitle> lists
+    every option in all OpenStack services. Before you begin an
+    installation adventure, here are some things you should know about
+    OpenStack concepts.</para>
+  <xi:include href="../common/ch_getstart.xml"
+    xpointer="element(para1)"/>
+  <xi:include href="../common/ch_getstart.xml"
+    xpointer="element(para2)"/>
+  <xi:include href="../common/ch_getstart.xml"
+    xpointer="element(para3)"/>
+  <xi:include href="../common/ch_getstart.xml"
+    xpointer="element(table1)"/>
+  <xi:include href="../common/section_getstart_conceptual_arch.xml"/>
+  <xi:include href="../common/section_getstart_logical_arch.xml"/>
   <section xml:id="overview-architecture">
-    <title>Sample Architectures</title>
-   <para>This guide is written so that you can choose your own
-      OpenStack adventure. Because OpenStack is highly configurable to
-      meet different use cases, with many storage choices and
-      underlying software-defined networking scenarios, this guide
-      offers these main examples with the intention of expanding on
-      each:</para>
+    <title>Sample architectures</title>
+    <para>This guide enables you to choose your own OpenStack
+      adventure. OpenStack is highly configurable to meet different
+      needs with various storage and networking options.</para>
+    <para>This guide offers the following sample architecture
+      examples:</para>
     <itemizedlist>
       <listitem>
-        <para>Example architecture for simplicity:  the most basic
-   architecture you can have: one node to run the "control" services, such
-   as database, message queue and API services for the Identity Service,
-   Image Service and Compute Service; and a second node to be our
-   Compute node that runs the hypervisor where our virtual machines will live.</para>
-  <figure xml:id="basic-architecture">
-  <title>Basic Architecture</title>
-  <mediaobject>
-    <imageobject>
-      <imagedata contentwidth="6in" fileref="figures/basic-architecture.svg"/>
-    </imageobject>
-  </mediaobject>
-  </figure>
-         <para os="fedora;rhel;centos">Technical details: Compute with KVM,
-          local ephemeral storage, nova-networks in multi-host flatDHCP,
-          MySQL, nova-api, default scheduler, Qpid for messaging,
-          Identity with SQL backend, Image with local storage,
-          Dashboard (optional extra). Use as many default options as possible.
-          </para>
-         <para os="ubuntu;debian;opensuse;sles">Technical details: Compute with KVM,
-          local ephemeral storage, nova-networks in multi-host flatDHCP,
-          MySQL, nova-api, default scheduler, RabbitMQ for messaging,
-          Identity with SQL backend, Image with local storage, Dashboard (optional extra).
-          Use as many default options as possible.
-          </para>
+        <para>Example basic architecture. This architecture has two
+          nodes. A cloud controller node runs the control services,
+          such as database, message queue and API services for the
+          Identity Service, Image Service and Compute. A compute node
+          runs the hypervisor where virtual machines live.</para>
+        <figure xml:id="basic-architecture">
+          <title>Basic architecture</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata contentwidth="6in"
+                fileref="figures/basic-architecture.svg"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+        <para>Technical details: Compute with KVM, local ephemeral
+          storage, nova-network in multi-host flatDHCP mode, MySQL,
+          nova-api, default scheduler, <phrase os="fedora;rhel;centos"
+            >Qpid for messaging,</phrase><phrase
+            os="ubuntu;debian;opensuse">RabbitMQ for
+            messaging,</phrase> Identity with SQL back end, Image with
+          local storage, Dashboard (optional extra). Uses as many
+          default options as possible.</para>
       </listitem>
       <listitem>
-        <para>Example architecture from the OpenStack Operations
-          Guide: Same as above but with Block Storage backend
-          LVM/iSCSI, nova-network in multi-host with FlatDHCP, Live
-          Migration backend shared storage with NFS, and Object
-          Storage. One controller node and multiple compute
-          nodes.</para>
+        <para>Example architecture from the <link
+            xlink:href="http://docs.openstack.org/trunk/openstack-ops/content/"
+              ><citetitle>OpenStack Operations
+            Guide</citetitle></link>. Same as the basic architecture
+          but with Block Storage LVM/iSCSI back end, nova-network in
+          multi-host with FlatDHCP, Live Migration back end shared
+          storage with NFS, and Object Storage. One controller node
+          and multiple compute nodes.</para>
       </listitem>
       <listitem>
-        <para>Example architecture with Identity and Object Storage
-          only (no Dashboard): Five node installation with Identity on
-          the proxy node and three replications of object servers.
+        <para>Example architecture with Identity Service and Object
+          Storage: Five node installation with Identity Service on the
+          proxy node and three replications of object servers.
           Dashboard does not support this configuration so examples
           are with CLI.</para>
       </listitem>
       <listitem>
-        <para>Example architecture with OpenStack Networking
-          (Neutron)</para>
+        <para>Example architecture with OpenStack Networking.</para>
       </listitem>
     </itemizedlist>
   </section>
