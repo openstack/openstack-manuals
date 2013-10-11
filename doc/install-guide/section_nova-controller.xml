@@ -39,13 +39,12 @@
   <literal><replaceable>NOVA_DBPASS</replaceable></literal> with a
   password of your choosing.</para>
   <screen os="fedora;rhel;centos;opensuse"><prompt>#</prompt> <userinput>openstack-db --init --service nova --password <replaceable>NOVA_DBPASS</replaceable></userinput></screen>
-  <para os="ubuntu;debian">Edit <filename>/etc/nova/nova.conf</filename> and change the <literal>[database]</literal> section.</para>
+  <para os="ubuntu;debian">Edit <filename>/etc/nova/nova.conf</filename> and add the <literal>[database]</literal> section.</para>
   <programlisting os="ubuntu;debian" language="ini">
 ...
 [database]
 # The SQLAlchemy connection string used to connect to the database
 connection = mysql://nova:NOVA_DBPASS@controller/nova
-...
       </programlisting>
     </step>
     <step os="ubuntu;debian">
@@ -58,7 +57,7 @@ IDENTIFIED BY 'NOVA_DBPASS';</userinput></screen>
     </step>
     <step os="ubuntu;debian">
       <para>We now create the tables for the nova service.</para>
-      <screen><prompt>#</prompt> <userinput>nova-manage db_sync</userinput></screen>
+      <screen><prompt>#</prompt> <userinput>nova-manage db sync</userinput></screen>
     </step>
 
   <step os="fedora;rhel;centos;opensuse">
@@ -168,13 +167,7 @@ rabbit_host = controller</screen>
 <prompt>#</prompt> <userinput>service nova-consoleauth start</userinput>
 <prompt>#</prompt> <userinput>service nova-scheduler start</userinput>
 <prompt>#</prompt> <userinput>service nova-conductor start</userinput>
-<prompt>#</prompt> <userinput>service nova-novncproxy start</userinput>
-<prompt>#</prompt> <userinput>chkconfig nova-api on</userinput>
-<prompt>#</prompt> <userinput>chkconfig nova-cert on</userinput>
-<prompt>#</prompt> <userinput>chkconfig nova-consoleauth on</userinput>
-<prompt>#</prompt> <userinput>chkconfig nova-scheduler on</userinput>
-<prompt>#</prompt> <userinput>chkconfig nova-conductor on</userinput>
-<prompt>#</prompt> <userinput>chkconfig nova-novncproxy on</userinput></screen>
+<prompt>#</prompt> <userinput>service nova-novncproxy start</userinput></screen>
   <screen os='centos;rhel;fedora'><prompt>#</prompt> <userinput>service openstack-nova-api start</userinput>
 <prompt>#</prompt> <userinput>service openstack-nova-cert start</userinput>
 <prompt>#</prompt> <userinput>service openstack-nova-consoleauth start</userinput>
