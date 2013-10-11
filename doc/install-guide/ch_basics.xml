@@ -104,17 +104,35 @@ DEFROUTE=yes
 ONBOOT=yes</programlisting>
     </example>
 
-    <example os="opensuse">
-      <title><filename>/etc/sysconfig/network-scripts/ifcfg-eth0</filename></title>
-      <programlisting language="ini"># Internal Network
-FIXME</programlisting>
-    </example>
-
-    <example os="opensuse">
-      <title><filename>/etc/sysconfig/network-scripts/ifcfg-eth1</filename></title>
-      <programlisting language="ini"># External Network
-FIXME</programlisting>
-    </example>
+    <para os="opensuse">
+      To set up the two network interfaces, start the YaST
+      network module, as follows:
+      <screen><prompt>#</prompt> <userinput>yast2 network</userinput></screen>
+      <itemizedlist>
+        <listitem>
+          <para>
+            Use the following parameters to set up the first ethernet card
+            <emphasis role="bold">eth0</emphasis> for the internal network:
+            <programlisting>
+  Statically assigned IP Address
+  IP Address: 192.168.0.10
+  Subnet Mask: 255.255.255.0
+            </programlisting>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Use the following parameters to set up the second ethernet card
+            <emphasis role="bold">eth1</emphasis> for the external network:
+            <programlisting>
+  Statically assigned IP Address
+  IP Address: 10.0.0.10
+  Subnet Mask: 255.255.255.0
+            </programlisting>
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
 
     <example os="ubuntu">
       <title><filename>/etc/network/interfaces</filename></title>
@@ -134,18 +152,20 @@ iface eth1 inet static
 
    <para>Once you've configured the network, restart the daemon for changes to take effect:</para>
 
-    <screen os="ubuntu"><prompt>#</prompt> <userinput>service networking restart</userinput></screen>
-    <screen os="fedora"><prompt>#</prompt> <userinput>service network restart</userinput></screen>
-    <screen os="opensuse"><prompt>#</prompt> <userinput>service FIXME restart</userinput></screen>
+    <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service networking restart</userinput></screen>
+    <screen os="fedora;rhel;centos"><prompt>#</prompt> <userinput>service network restart</userinput></screen>
+    <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl restart network.service</userinput></screen>
 
     <para>Set the hostname of each machine. Name the controller node
         <literal>controller</literal> and the first compute node
         <literal>compute1</literal>. These are the hostnames used in the
-      examples throughout this guide. Use the <command>hostname</command>
-      command to set the hostname.</para>
-
-    <screen><prompt>#</prompt> <userinput>hostname controller</userinput></screen>
-
+      examples throughout this guide.</para>
+    <para os="ubuntu;debian;fedora;rhel;centos">Use the <command>hostname</command>
+         command to set the hostname:
+         <screen><prompt>#</prompt> <userinput>hostname controller</userinput></screen>
+    </para>
+    <para os="opensuse">Use <command>yast network</command> to set the hostname with YaST.
+    </para>
     <para os="rhel;fedora;centos">To have the hostname change persist when the system
       reboots, you need to specify it in the proper configuration file. In Red
       Het Enterprise Linux, Centos, and older versions of Fedora, you set this
@@ -158,7 +178,7 @@ iface eth1 inet static
         <filename>/etc/hostname</filename>. This file contains a single line
       with just the hostname.</para>
 
-    <para os="ubuntu;opensuse">To have this hostname set when the system
+    <para os="ubuntu;debian">To have this hostname set when the system
       reboots, you need to specify it in the file
         <filename>/etc/hostname</filename>. This file contains a single line
       with just the hostname.</para>
@@ -186,7 +206,7 @@ iface eth1 inet static
     <para>Install the <literal>ntp</literal> package on each system running
       OpenStack services.</para>
 
-    <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install ntp</userinput></screen>
+    <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install ntp</userinput></screen>
     <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>yum install ntp</userinput></screen>
     <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install ntp</userinput></screen>
 
@@ -224,17 +244,17 @@ hwclock -w</programlisting>
     <itemizedlist>
       <listitem><para>On the controller node, install the MySQL client, the MySQL database,
         and the MySQL Python library.</para>
-        <screen os="ubuntu;deb"><prompt>#</prompt> <userinput>apt-get install python-mysqldb mysql-server</userinput></screen>
+        <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install python-mysqldb mysql-server</userinput></screen>
         <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>yum install mysql mysql-server MySQL-python</userinput></screen>
         <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install mysql-community-server-client mysql-community-server python-mysql</userinput></screen></listitem>
       <listitem><para>On any nodes besides the controller node, just install the MySQL
         client and the MySQL Python library. This is all you need to do on any
         system not hosting the MySQL database.</para>
-        <screen os="ubuntu;deb"><prompt>#</prompt> <userinput>apt-get install python-mysqldb</userinput></screen>
+        <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install python-mysqldb</userinput></screen>
         <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>yum install mysql MySQL-python</userinput></screen>
         <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install mysql-community-server-client python-mysql</userinput></screen></listitem>
     </itemizedlist>
-    <note os="ubuntu"><para>When you install the server package, you will
+    <note os="ubuntu;debian"><para>When you install the server package, you will
     be asked to enter a root password for the database. Be sure to choose
     a strong password and remember it - it will be needed later.</para></note>
 
@@ -260,7 +280,7 @@ hwclock -w</programlisting>
         os="centos;rhel;fedora">RabbitMQ</phrase> and ZeroMQ (0MQ) are also
       available.</para>
 
-    <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install rabbitmq-server</userinput></screen>
+    <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install rabbitmq-server</userinput></screen>
     <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install rabbitmq-server</userinput></screen>
     <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>yum install qpid-cpp-server memcached</userinput></screen>
 
