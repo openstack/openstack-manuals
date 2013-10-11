@@ -7,7 +7,7 @@
 # Call ./tools/cleanup/remove_trailing_whitespaces.sh in the
 # root of openstack-manuals.
 
-files=$(find doc/src/docbkx -name *.xml -not -name pom.xml)
+files=$(find doc -name *.xml -not -name pom.xml)
 for file in $files; do
     sed -i -e 's/[[:space:]]*$//' $file
 done
