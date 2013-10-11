@@ -21,8 +21,8 @@
       controller node:</para>
       <itemizedlist>
         <listitem>
-          <para>Use different IP addresses when editing the files <filename>ifcfg-eth0</filename>
-            and <filename>ifcfg-eth1</filename>. This guide uses <literal>192.168.0.11</literal> for
+          <para>Use different IP addresses when configuring <filename>eth0</filename>
+            and <filename>eth1</filename>. This guide uses <literal>192.168.0.11</literal> for
             the internal network and <literal>10.0.0.11</literal> for the external network.</para>
         </listitem>
         <listitem>
@@ -31,7 +31,7 @@
             <filename>/etc/hosts</filename> file on each system.</para>
         </listitem>
         <listitem>
-          <para>Do not run the NTP server. Follow the instructions in
+          <para>Follow the instructions in
             <xref linkend="basics-ntp"/> to synchronize from the controller node.</para>
         </listitem>
         <listitem>
@@ -39,8 +39,8 @@
             server or start the MySQL service.</para>
         </listitem>
       </itemizedlist>
-      <note><para>You do not need to install a messaging queue server.</para>
-      </note></step>
+      </step>
+
     <step><para>After configuring the operating system, install the appropriate
       packages for the compute service.</para>
       <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install nova-compute-kvm</userinput></screen>
@@ -49,24 +49,55 @@
     </step>
     <step><para>Either copy the file <filename>/etc/nova/nova.conf</filename> from the
           <replaceable>controller</replaceable> node, or run the same configuration commands.</para>
-      <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf \
+      <screen os="fedora;rhel;centos;opensuse"><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf \
   database connection mysql://nova:<replaceable>NOVA_DBPASS</replaceable>@controller/nova</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT auth_strategy keystone</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT auth_host <replaceable>controller</replaceable></userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT admin_user nova</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT admin_tenant_name service</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT admin_password <replaceable>NOVA_PASS</replaceable></userinput></screen>
-      <!-- FIXME: ubuntu -->
+  <para os="ubuntu;debian">Edit <filename>/etc/nova/nova.conf</filename> and add to the <literal>[DEFAULT]</literal> section.</para>
+  <programlisting os="ubuntu;debian" language="ini">
+...
+[DEFAULT]
+...
+auth_strategy=keystone
+auth_host=<replaceable>controller</replaceable>
+admin_user=nova
+admin_tenant_name=service
+admin_password=<replaceable>NOVA_PASS</replaceable>
+      </programlisting>
+
       <screen os="fedora;rhel;centos"><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf \
   DEFAULT rpc_backend nova.openstack.common.rpc.impl_qpid</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT qpid_hostname <replaceable>controller</replaceable></userinput></screen></step>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT qpid_hostname <replaceable>controller</replaceable></userinput></screen>
+
+    <para os="ubuntu;debian">
+  Configure the Compute Service to use the RabbitMQ
+  message broker by setting the following configuration keys. They are found in
+  the <literal>DEFAULT</literal> configuration group of the
+  <filename>/etc/nova/nova.conf</filename> file.</para>
+  <screen os="ubuntu;debian">rpc_backend = nova.rpc.impl_kombu
+rabbit_host = controller</screen>
+</step>
+
     <step><para>Set the configuration keys <literal>my_ip</literal>,
       <literal>vncserver_listen</literal>, and
       <literal>vncserver_proxyclient_address</literal> to the IP address of the
       compute node on the internal network.</para>
-      <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT my_ip 192.168.0.11</userinput>
+      <screen os="fedora;rhel;centos;opensuse"><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT my_ip 192.168.0.11</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT vncserver_listen 192.168.0.11</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT vncserver_proxyclient_address 192.168.0.11</userinput></screen></step>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT vncserver_proxyclient_address 192.168.0.11</userinput></screen>
+  <para os="ubuntu;debian">Edit <filename>/etc/nova/nova.conf</filename> and add to the <literal>[DEFAULT]</literal> section.</para>
+  <programlisting os="ubuntu;debian" language="ini">
+[DEFAULT]
+...
+my_ip=192.168.0.11
+vncserver_listen=192.168.0.11
+vncserver_proxyclient_address=192.168.0.11
+      </programlisting>
+
+    </step>
     <step><para>Copy the file <filename>/etc/nova/api-paste.ini</filename> from the
           <replaceable>controller</replaceable> node, or edit the file to add the credentials in the
           <literal>[filter:authtoken]</literal> section.</para>
@@ -77,12 +108,11 @@ admin_user=nova
 admin_tenant_name=service
 admin_password=<replaceable>NOVA_PASS</replaceable>
 </programlisting>
-      <note><para>Ensure that <filename>api_paste_config=/etc/nova/api-paste.ini</filename> is set in
+      <note os="fedora;rhel;centos;opensuse"><para>Ensure that <filename>api_paste_config=/etc/nova/api-paste.ini</filename> is set in
         <filename>/etc/nova/nova.conf</filename>.</para></note>
       </step>
     <step><para>Start the Compute service and configure it to start when the system boots.</para>
-      <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service nova-compute start</userinput>
-<prompt>#</prompt> <userinput>chkconfig nova-compute on</userinput></screen>
+      <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service nova-compute start</userinput></screen>
       <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>service openstack-nova-compute start</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-nova-compute on</userinput></screen>
       <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl start openstack-nova-compute</userinput>
