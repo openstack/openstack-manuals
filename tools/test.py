@@ -347,7 +347,7 @@ def validate_individual_files(rootdir, exceptions, verbose,
     no_validated = 0
     no_failed = 0
 
-    # Do not select delete files, just Added, Copied, Modified, Renamed,
+    # Do not select deleted files, just Added, Copied, Modified, Renamed,
     # or Type changed
     modified_files = get_modified_files(rootdir, "--diff-filter=ACMRT")
 
@@ -583,7 +583,9 @@ def find_affected_books(rootdir, book_exceptions, verbose,
 
     if not build_all_books:
         # Generate list of modified_files
-        modified_files = get_modified_files(rootdir)
+        # Do not select deleted files, just Added, Copied, Modified, Renamed,
+        # or Type changed
+        modified_files = get_modified_files(rootdir, "--diff-filter=ACMRT")
         modified_files = map(lambda x: os.path.abspath(x), modified_files)
 
         # 2. Find all modified files and where they are included
