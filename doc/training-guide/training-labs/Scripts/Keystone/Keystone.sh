@@ -73,13 +73,17 @@ keystone_conf() {
     # Load the Auth Creds
     source Scripts/Credentials.sh
 
-    # Check The Keystone Useres
+    # List keystone users
     keystone user-list
 }
 
-# Create required MySQL Databases and Populate It.
-echo "Enter MySQL root pass"
-read MySQL_RPaSS
+if [ "$#" -ne 1 ]; then
+    # Create and populate required MySQL databases
+    echo "Enter MySQL root password:"
+    read MySQL_RPaSS
+else
+    MySQL_RPaSS=$1
+fi
 
 echo "Running pre_keystone"
 pre_keystone
