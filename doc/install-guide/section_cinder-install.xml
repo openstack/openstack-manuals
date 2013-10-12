@@ -4,21 +4,18 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink"
     version="5.0">
-    <title>Installing and configuring Block Storage (Cinder)</title>
-    <para>Install the packages for OpenStack Block Storage (Cinder) on the cloud
-        controller.</para>
-    <screen os="ubuntu"><prompt>$</prompt> <userinput>sudo apt-get install cinder-api \
-        cinder-scheduler cinder-volume open-iscsi python-cinderclient tgt</userinput></screen>
-    <screen os="rhel;centos;fedora"><prompt>$</prompt> <userinput>sudo yum install openstack-cinder openstack-cinder-doc \
-        iscsi-initiator-utils scsi-target-utils</userinput></screen>
-    <screen os="opensuse"><prompt>$</prompt> <userinput>sudo zypper install openstack-cinder openstack-cinder-doc \
-        open-iscsi tgt</userinput></screen>
+    <title>Installing and configuring Block Storage</title>
+    <para>Install the packages for OpenStack Block Storage on the cloud controller.</para>
+    <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install cinder-api cinder-scheduler cinder-volume</userinput></screen>
+    <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>yum install openstack-cinder openstack-utils openstack-selinux</userinput></screen>
+    <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install  openstack-cinder-api openstack-cinder-scheduler \
+openstack-cinder-volume</userinput></screen>
     <note><para>If you are using XenServer type vhd images, you will also need the <command>vhd-util</command>
     binary to be able to create volumes from uploaded images.</para>
     <para>This could be installed by:</para>
-    <screen os="ubuntu"><prompt>$</prompt> <userinput>sudo apt-get install blktap-utils</userinput></screen>
-    <screen os="opensuse"><prompt>$</prompt> <userinput>sudo zypper in xen-tools</userinput></screen>
-    <screen os="rhel;centos;fedora"><prompt>$</prompt> <userinput>sudo yum install blktap</userinput></screen>
+    <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install blktap-utils</userinput></screen>
+    <screen os="opensuse"><prompt>#</prompt> <userinput>zypper in xen-tools</userinput></screen>
+    <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install blktap</userinput></screen>
     </note>
 
     <para>Edit <filename>/etc/cinder/api-paste.ini</filename> (filter
