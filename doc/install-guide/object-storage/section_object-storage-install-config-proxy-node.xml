@@ -10,7 +10,15 @@
         enable account management by configuring it in the
             <filename>proxy-server.conf</filename> file.</para>
     <note>
-        <para>Swift processes  run under a separate user and group, set by configuration options, and referred to as swift:swift. The default user is swift, which may not exist on your system.</para>
+        <para>Swift processes run under a separate user and group, set
+        by configuration options, and referred to as <phrase
+        os="ubuntu;debian;rhel;centos;fedora">swift:swift</phrase><phrase
+        os="opensuse">openstack-swift:openstack-swift</phrase>. The
+        default user is <phrase
+        os="ubuntu;debian;rhel;centos;fedora">swift, which may not
+        exist on your system.</phrase><phrase
+        os="opensuse">openstack-swift.</phrase>
+        </para>
     </note>
     <orderedlist>
         <listitem>
@@ -53,7 +61,8 @@ to
         <listitem>
             <para>Create <filename>/etc/swift/proxy-server.conf</filename>:</para>
             <para>
-                <literallayout class="monospaced"><xi:include parse="text" href="../samples/proxy-server.conf.txt" /></literallayout>
+                <literallayout os="rhel;centos;fedora;ubuntu;debian" class="monospaced"><xi:include parse="text" href="../samples/proxy-server.conf.txt" /></literallayout>
+                <literallayout os="opensuse" class="monospaced"><xi:include parse="text" href="../samples/proxy-server.conf.txt-openSUSE" /></literallayout>
             </para>
             <note>
                 <para>If you run multiple memcache servers, put the multiple
@@ -66,8 +75,10 @@ to
         <listitem>
             <para>Create the <parameter class="option"
                     >signing_dir</parameter> and set its permissions
-                accordingly.<screen><prompt>#</prompt> <userinput>mkdir -p /home/swift/keystone-signing</userinput>
+                accordingly.<screen os="ubuntu;debian;rhel;centos;fedora"><prompt>#</prompt> <userinput>mkdir -p /home/swift/keystone-signing</userinput>
 <prompt>#</prompt> <userinput>chown -R swift:swift /home/swift/keystone-signing</userinput></screen>
+                <screen os="opensuse"><prompt>#</prompt> <userinput>mkdir -p /home/swift/keystone-signing</userinput>
+<prompt>#</prompt> <userinput>chown -R openstack-swift:openstack-swift /home/swift/keystone-signing</userinput></screen>
             </para>
         </listitem>
         <listitem>
@@ -85,7 +96,7 @@ to
                 <screen><prompt>#</prompt> <userinput>cd /etc/swift</userinput>
 <prompt>#</prompt> <userinput>swift-ring-builder account.builder create 18 3 1</userinput>
 <prompt>#</prompt> <userinput>swift-ring-builder container.builder create 18 3 1</userinput>
-<prompt>#</prompt> <userinput>swift-ring-builder object.builder create 18 3 1</userinput>            </screen>
+<prompt>#</prompt> <userinput>swift-ring-builder object.builder create 18 3 1</userinput></screen>
             </para>
         </listitem>
         <listitem>
@@ -101,7 +112,7 @@ to
                     optional parameter which must be omitted if you do not
                     want to use dedicated network for replication</para>
             </note>
-			<para>For example, if you were setting up a storage node with a
+            <para>For example, if you were setting up a storage node with a
                 partition in Zone 1 on IP 10.0.0.1. Storage node has address 10.0.1.1 from
                 replication network. The mount point of
                 this partition is /srv/node/sdb1, and the path in
@@ -145,11 +156,15 @@ to
         <listitem>
             <para>Make sure all the config files are owned by the swift
                 user:</para>
-            <para><screen><prompt>#</prompt> <userinput>chown -R swift:swift /etc/swift</userinput></screen></para>
+            <para>
+            <screen os="ubuntu;debian;rhel;centos;fedora"><prompt>#</prompt> <userinput>chown -R swift:swift /etc/swift</userinput></screen>
+            <screen os="opensuse"><prompt>#</prompt> <userinput>chown -R openstack-swift:openstack-swift /etc/swift</userinput></screen>
+            </para>
         </listitem>
         <listitem>
             <para>Start Proxy services:</para>
-            <para><screen><prompt>#</prompt> <userinput>service proxy-server start</userinput></screen></para>
+            <para><screen><prompt>#</prompt> <userinput>service proxy-server start</userinput></screen>
+            </para>
         </listitem>
     </orderedlist>
 </section>
