@@ -57,16 +57,14 @@
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT admin_tenant_name service</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT admin_password <replaceable>NOVA_PASS</replaceable></userinput></screen>
   <para os="ubuntu;debian">Edit <filename>/etc/nova/nova.conf</filename> and add to the <literal>[DEFAULT]</literal> section.</para>
-  <programlisting os="ubuntu;debian" language="ini">
-...
+  <programlisting os="ubuntu;debian" language="ini">...
 [DEFAULT]
 ...
 auth_strategy=keystone
 auth_host=<replaceable>controller</replaceable>
 admin_user=nova
 admin_tenant_name=service
-admin_password=<replaceable>NOVA_PASS</replaceable>
-      </programlisting>
+admin_password=<replaceable>NOVA_PASS</replaceable></programlisting>
 
       <screen os="fedora;rhel;centos"><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf \
   DEFAULT rpc_backend nova.openstack.common.rpc.impl_qpid</userinput>
@@ -89,15 +87,20 @@ rabbit_host = controller</screen>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT vncserver_listen 192.168.0.11</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT vncserver_proxyclient_address 192.168.0.11</userinput></screen>
   <para os="ubuntu;debian">Edit <filename>/etc/nova/nova.conf</filename> and add to the <literal>[DEFAULT]</literal> section.</para>
-  <programlisting os="ubuntu;debian" language="ini">
-[DEFAULT]
+  <programlisting os="ubuntu;debian" language="ini">[DEFAULT]
 ...
 my_ip=192.168.0.11
 vncserver_listen=192.168.0.11
-vncserver_proxyclient_address=192.168.0.11
-      </programlisting>
+vncserver_proxyclient_address=192.168.0.11</programlisting>
 
     </step>
+    <step><para>Specify the host running the Image Service.<phrase os="ubuntu;debian"> Edit <filename>/etc/nova/nova.conf</filename> and add to the <literal>[DEFAULT]</literal> section.</phrase></para>
+    <screen os="fedora;rhel;centos;opensuse"><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT glance_host <replaceable>controller</replaceable></userinput></screen>
+    <programlisting os="ubuntu;debian" language="ini">[DEFAULT]
+...
+glance_host=<replaceable>controller</replaceable></programlisting>
+    </step>
+
     <step><para>Copy the file <filename>/etc/nova/api-paste.ini</filename> from the
           <replaceable>controller</replaceable> node, or edit the file to add the credentials in the
           <literal>[filter:authtoken]</literal> section.</para>
