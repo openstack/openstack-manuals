@@ -22,7 +22,7 @@
     <step><para>Install the Image Service on the controller node.</para>
       <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install glance</userinput></screen>
       <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-glance</userinput></screen>
-      <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install openstack-glance</userinput></screen></step>
+      <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install openstack-glance python-glanceclient</userinput></screen></step>
 
     <step os="rhel;centos;fedora;opensuse"><para>The Image Service stores information about images in a database.
       This guide uses the MySQL database used by other OpenStack services.</para>
@@ -53,9 +53,9 @@ IDENTIFIED BY 'GLANCE_DBPASS';</userinput></screen>
         have separate configuration files, so you must configure both files throughout this
         section.</para>
       <screen os="rhel;centos;fedora;opensuse"><prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf \
-  DEFAULT sql_connection mysql://glance:<replaceable>GLANCE_PASS</replaceable>@<replaceable>controller</replaceable>/glance</userinput>
+  DEFAULT sql_connection mysql://glance:<replaceable>GLANCE_DBPASS</replaceable>@<replaceable>controller</replaceable>/glance</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-registry.conf \
-  DEFAULT sql_connection mysql://glance:<replaceable>GLANCE_PASS</replaceable>@<replaceable>controller</replaceable>/glance</userinput></screen>
+  DEFAULT sql_connection mysql://glance:<replaceable>GLANCE_DBPASS</replaceable>@<replaceable>controller</replaceable>/glance</userinput></screen>
       <para os="ubuntu;debian">Edit <filename>/etc/glance/glance-api.conf</filename> and  <filename>/etc/glance/glance-registry.conf</filename>
        and change the <literal>[DEFAULT]</literal> section.</para>
       <programlisting os="ubuntu;debian" language="ini">
@@ -81,18 +81,18 @@ sql_connection = mysql://glance:GLANCE_DBPASS@localhost/glance
       Service can use to authenticate with the Identity Service. Use the
       <literal>service</literal> tenant and give the user the
       <literal>admin</literal> role.</para>
-      <screen><prompt>#</prompt> <userinput>keystone user-create --name=glance --pass=<replaceable>GLANCE_PASS</replaceable> --email=<replaceable>glance@example.com</replaceable></userinput>
+      <screen><prompt>#</prompt> <userinput>keystone user-create --name=glance --pass=<replaceable>GLANCE_DBPASS</replaceable> --email=<replaceable>glance@example.com</replaceable></userinput>
 <prompt>#</prompt> <userinput>keystone user-role-add --user=glance --tenant=service --role=admin</userinput></screen></step>
     <step><para>Add the credentials to the Image Service's configuration files.</para>
 
       <screen os="centos;rhel;fedora;opensuse"><prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf keystone_authtoken auth_host <replaceable>controller</replaceable></userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf keystone_authtoken admin_user glance</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf keystone_authtoken admin_tenant_name service</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf keystone_authtoken admin_password <replaceable>GLANCE_PASS</replaceable></userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf keystone_authtoken admin_password <replaceable>GLANCE_DBPASS</replaceable></userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-registry.conf keystone_authtoken auth_host <replaceable>controller</replaceable></userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-registry.conf keystone_authtoken admin_user glance</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-registry.conf keystone_authtoken admin_tenant_name service</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-registry.conf keystone_authtoken admin_password <replaceable>GLANCE_PASS</replaceable></userinput></screen>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-registry.conf keystone_authtoken admin_password <replaceable>GLANCE_DBPASS</replaceable></userinput></screen>
       <para os="ubuntu;debian">Edit <filename>/etc/glance/glance-api.conf</filename> and <filename>/etc/glance/glance-registry.conf</filename>
  and change the <literal>[keystone_authtoken]</literal> section.</para>
       <programlisting os="ubuntu;debian" language="ini">
@@ -103,7 +103,7 @@ auth_port = 35357
 auth_protocol = http
 admin_tenant_name = service
 admin_user = glance
-admin_password = GLANCE_PASS
+admin_password = GLANCE_DBPASS
 ...
       </programlisting>
 
@@ -117,7 +117,7 @@ paste.filter_factory=keystoneclient.middleware.auth_token:filter_factory
 auth_host=controller
 admin_user=glance
 admin_tenant_name=service
-admin_password=<replaceable>GLANCE_PASS</replaceable></programlisting> -->
+admin_password=<replaceable>GLANCE_DBPASS</replaceable></programlisting> -->
       <para>
         <note><para>If you have troubles connecting to the database, try using the IP address instead of the
           host name in the credentials.</para></note>

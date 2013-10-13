@@ -78,15 +78,23 @@ admin_token = ADMIN_TOKEN
     <step os="rhel;centos;fedora;opensuse">
       <para>By default Keystone will use PKI tokens. Create the signing
       keys and certificates.</para>
-      <screen><prompt>#</prompt> <userinput>keystone-manage pki_setup --keystone-user keystone --keystone-group keystone</userinput>
+      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>keystone-manage pki_setup --keystone-user keystone --keystone-group keystone</userinput>
 <prompt>#</prompt> <userinput>chown -R keystone:keystone /etc/keystone/* /var/log/keystone/keystone.log</userinput></screen>
+      <screen os="opensuse"><prompt>#</prompt> <userinput>keystone-manage pki_setup --keystone-user openstack-keystone --keystone-group openstack-keystone</userinput>
+<prompt>#</prompt> <userinput>chown -R openstack-keystone:openstack-keystone /etc/keystone/* /var/log/keystone/keystone.log</userinput></screen>
     </step>
 
+    <step os="opensuse">
+      <para>Setup the <filename>/etc/keystone/default_catalog.templates</filename> file:
+      </para>
+      <screen><prompt>#</prompt> <userinput>KEYSTONE_CATALOG=/etc/keystone/default_catalog.templates</userinput>
+<prompt>#</prompt> <userinput>sed -e "s,%SERVICE_HOST%,192.168.0.10,g" -e "s/%S3_SERVICE_PORT%/8080/" \
+   $KEYSTONE_CATALOG.sample > $KEYSTONE_CATALOG</userinput></screen>
+    </step>
     <step os="ubuntu">
       <para>Restart the Identity service.</para>
       <screen><prompt>#</prompt> <userinput>service keystone restart</userinput></screen>
     </step>
-
 
     <step os="rhel;fedora;centos;opensuse">
       <para>Start the Identity Service and enable it so it start when
