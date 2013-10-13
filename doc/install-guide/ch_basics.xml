@@ -51,15 +51,21 @@
           <literal>iptables</literal> as the default firewall system. You can configure
           <literal>firewalld</literal> successfully, but this guide
           currently recommends and demonstrates the use of <literal>iptables</literal>.
-	  For Fedora 19 systems, run the following commands to disable
-	  <literal>firewalld</literal> and enable <literal>iptables</literal>.</para>
+          For Fedora 19 systems, run the following commands to disable
+          <literal>firewalld</literal> and enable <literal>iptables</literal>.</para>
 <screen><prompt>#</prompt> <userinput>service firewalld stop</userinput>
 <prompt>#</prompt> <userinput>service iptables start</userinput>
 <prompt>#</prompt> <userinput>chkconfig firewalld off</userinput>
 <prompt>#</prompt> <userinput>chkconfig iptables on</userinput></screen>
     </note>
 
-    <para>Next, create the configuration files for both <literal>eth0</literal>
+    <para os="opensuse">When you setup your system, use the
+    traditional network scripts and do not use the
+    <literal>NetworkManager</literal>. You can change the settings also after
+    installation with the YaST network module:</para>
+    <screen os="opensuse"><prompt>#</prompt> <userinput>yast2 network</userinput></screen>
+
+    <para>Next, create the configuration for both <literal>eth0</literal>
       and <literal>eth1</literal>. This guide uses
         <literal>192.168.0.x</literal> address for the internal network and
         <literal>10.0.0.x</literal> addresses for the external network. Make
@@ -129,6 +135,11 @@ ONBOOT=yes</programlisting>
   IP Address: 10.0.0.10
   Subnet Mask: 255.255.255.0
             </programlisting>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Setup a default route on the external network.
           </para>
         </listitem>
       </itemizedlist>
@@ -262,15 +273,14 @@ hwclock -w</programlisting>
       the system boots.</para>
     <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>service mysqld start</userinput>
 <prompt>#</prompt> <userinput>chkconfig mysqld on</userinput></screen>
-    <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl enable mysqld.service</userinput>
-<prompt>#</prompt> <userinput>systemctl start mysqld.service</userinput></screen>
+    <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl enable mysql.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start mysql.service</userinput></screen>
 
     <para os="rhel;centos;fedora;opensuse">Finally, it's a good idea to set a root password for your MySQL
       database. The OpenStack programs that set up databases and tables will
       prompt you for this password if it's set.</para>
 
     <screen os="rhel;centos;fedora;opensuse"><prompt>#</prompt> <userinput>mysqladmin password <replaceable>newPassword</replaceable></userinput></screen>
-    <para os="rhel;centos;fedora;opensuse">Enter your desired password when prompted.</para>
   </section>
   <section xml:id="basics-queue">
     <title>Messaging Server</title>
