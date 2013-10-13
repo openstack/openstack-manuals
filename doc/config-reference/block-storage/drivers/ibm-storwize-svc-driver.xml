@@ -61,17 +61,27 @@
             </simplesect>
             <simplesect>
                 <title>iSCSI CHAP Authentication</title>
-                <para>If using iSCSI for data access, all new hosts created by
-                the driver on the Storwize family or SVC system has a
-                randomly-generated CHAP secret associated with them.
+                <para>If using iSCSI for data access and the
+                <literal>storwize_svc_iscsi_chap_enabled</literal> is set to
+                <literal>True</literal>, the driver will associate
+                randomly-generated CHAP secrets with all hosts
+                on the Storwize family system.
                 OpenStack compute nodes use these secrets when creating
                 iSCSI connections.
                 <note>
-                    <para>CHAP secrets are not added to existing
-                        hosts.</para>
+                    <para>CHAP secrets are added to existing hosts as well
+                        as newly-created ones. If the CHAP option is enabled,
+                        hosts will not be able to access the storage without
+                        the generated secrets.</para>
                 </note>
                 <note>
-                    <para>CHAP secrets are passed from Cinder to Nova
+                    <para>Not all OpenStack Compute drivers support CHAP
+                    authentication. Please check compatibility before using.
+                    </para>
+                </note>
+                <note>
+                    <para>CHAP secrets are passed from OpenStack Block Storage
+                        to Compute
                         in clear text. This communication should be
                         secured to ensure that CHAP secrets are not
                         discovered.</para>
@@ -445,6 +455,18 @@
                         <td><para>iSCSI</para></td>
                         <td><para>Connection protocol to use (currently
                                   supports 'iSCSI' or 'FC')
+                        </para></td>
+                    </tr>
+                    <tr>
+                        <td><para>
+                        <literal>storwize_svc_iscsi_chap_enabled
+                        </literal>
+                        </para>
+                        </td>
+                        <td><para>Optional</para></td>
+                        <td><para>True</para></td>
+                        <td><para>Configure CHAP authentication for
+                                  iSCSI connections
                         </para></td>
                     </tr>
                     <tr>
