@@ -30,43 +30,52 @@
             <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install memcached libapache2-mod-wsgi openstack-dashboard</userinput></screen>
             <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install memcached python-memcached mod_wsgi openstack-dashboard</userinput></screen>
             <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install memcached python-python-memcached apache2-mod_wsgi openstack-dashboard</userinput></screen>
-        </step>
-        <step>
-            <para>Modify the value of
-                    <literal>CACHES['default']['LOCATION']</literal>
-                in <filename os="ubuntu;debian"
-                    >/etc/openstack-dashboard/local_settings.py</filename><filename
-                    os="centos;fedora;rhel"
-                    >/etc/openstack-dashboard/local_settings</filename><filename
-                    os="opensuse"
-                    >/usr/share/openstack-dashboard/openstack_dashboard/local/local_settings.py</filename>
-                to match the ones set in <filename os="ubuntu;debian"
-                    >/etc/memcached.conf</filename><filename
-                    os="centos;fedora;rhel;opensuse"
-                    >/etc/sysconfig/memcached.conf</filename>.</para>
-            <para>Open <filename os="ubuntu;debian"
-                    >/etc/openstack-dashboard/local_settings.py</filename>
-                <filename os="centos;fedora;rhel"
-                    >/etc/openstack-dashboard/local_settings</filename>
-                and look for this line:</para>
-            <programlisting language="bash" linenumbering="unnumbered"><?db-font-size 75%?>CACHES = {
-       'default': {
-       'BACKEND' : 'django.core.cache.backends.memcached.MemcachedCache',
-       'LOCATION' : '127.0.0.1:11211'
-       }
-    }</programlisting>
-            <note xlink:href="#installing-openstack-dashboard"
-                xlink:title="Notes">
-                <title>Notes</title>
-                <itemizedlist>
-                    <listitem>
-                        <para>The address and port must match the ones
-                            set in <filename os="ubuntu;debian"
-                                >/etc/memcached.conf</filename><filename
-                                os="centos;fedora;rhel;opensuse"
-                                >/etc/sysconfig/memcached</filename>.</para>
-                        <para>If you change the memcached settings,
-                            you must restart the Apache web server for
+        <note os="ubuntu">
+
+            <para>Remove the
+                    <literal>openstack-dashboard-ubuntu-theme</literal>
+                package. This theme prevents translations, several menus
+                as well as the network map from rendering correctly:
+                <screen><prompt>#</prompt> <userinput>apt-get remove --purge openstack-dashboard-ubuntu-theme</userinput></screen>
+            </para>
+        </note>
+</step>
+<step>
+    <para>Modify the value of
+        <literal>CACHES['default']['LOCATION']</literal>
+    in <filename os="ubuntu;debian"
+        >/etc/openstack-dashboard/local_settings.py</filename><filename
+        os="centos;fedora;rhel"
+        >/etc/openstack-dashboard/local_settings</filename><filename
+        os="opensuse"
+        >/usr/share/openstack-dashboard/openstack_dashboard/local/local_settings.py</filename>
+    to match the ones set in <filename os="ubuntu;debian"
+        >/etc/memcached.conf</filename><filename
+        os="centos;fedora;rhel;opensuse"
+        >/etc/sysconfig/memcached.conf</filename>.</para>
+    <para>Open <filename os="ubuntu;debian"
+        >/etc/openstack-dashboard/local_settings.py</filename>
+    <filename os="centos;fedora;rhel"
+        >/etc/openstack-dashboard/local_settings</filename>
+    and look for this line:</para>
+    <programlisting language="bash" linenumbering="unnumbered"><?db-font-size 75%?>CACHES = {
+'default': {
+'BACKEND' : 'django.core.cache.backends.memcached.MemcachedCache',
+'LOCATION' : '127.0.0.1:11211'
+}
+}</programlisting>
+    <note xlink:href="#installing-openstack-dashboard"
+    xlink:title="Notes">
+    <title>Notes</title>
+    <itemizedlist>
+        <listitem>
+        <para>The address and port must match the ones
+            set in <filename os="ubuntu;debian"
+            >/etc/memcached.conf</filename><filename
+            os="centos;fedora;rhel;opensuse"
+            >/etc/sysconfig/memcached</filename>.</para>
+        <para>If you change the memcached settings,
+            you must restart the Apache web server for
                             the changes to take effect.</para>
                     </listitem>
                     <listitem>
@@ -92,6 +101,21 @@
                     </listitem>
                 </itemizedlist>
             </note>
+        </step>
+        <step>
+        <para>This guide assumes that you are running the Dashboard on the controller node.
+        You can easily run the dashboard on a separate server, by changing the appropriate settings in
+       <filename>local_settings.py</filename></para>
+      <para>Edit <filename
+                                os="centos;fedora;rhel"
+                                >/etc/openstack-dashboard/local_settings</filename><filename
+                                os="ubuntu;debian"
+                                >/etc/openstack-dashboard/local_settings.py</filename><filename
+                                os="opensuse"
+                                >/usr/share/openstack-dashboard/openstack_dashboard/local/local_settings.py</filename>
+       and change <literal>OPENSTACK_HOST</literal> to the hostname of your Identity Service.</para>
+            <programlisting language="bash" linenumbering="unnumbered"><?db-font-size 75%?>OPENSTACK_HOST = "controller"
+    </programlisting>
         </step>
         <step>
           <para>You can now access the dashboard at <uri>http://controller/horizon</uri>.</para>
