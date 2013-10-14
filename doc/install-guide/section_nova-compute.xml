@@ -60,11 +60,7 @@
   <programlisting os="ubuntu;debian" language="ini">...
 [DEFAULT]
 ...
-auth_strategy=keystone
-auth_host=<replaceable>controller</replaceable>
-admin_user=nova
-admin_tenant_name=service
-admin_password=<replaceable>NOVA_DBPASS</replaceable></programlisting>
+auth_strategy=keystone</programlisting>
 
       <screen os="fedora;rhel;centos"><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf \
   DEFAULT rpc_backend nova.openstack.common.rpc.impl_qpid</userinput>
@@ -114,8 +110,10 @@ admin_password=<replaceable>NOVA_DBPASS</replaceable>
       <note os="fedora;rhel;centos;opensuse"><para>Ensure that <filename>api_paste_config=/etc/nova/api-paste.ini</filename> is set in
         <filename>/etc/nova/nova.conf</filename>.</para></note>
       </step>
-    <step><para>Start the Compute service and configure it to start when the system boots.</para>
-      <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service nova-compute start</userinput></screen>
+    <step>
+    <para os="fedora;rhel;centos;opensuse">Start the Compute service and configure it to start when the system boots.</para>
+    <para os="ubuntu;debian">Restart the Compute service.</para>
+      <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service nova-compute restart</userinput></screen>
       <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>service openstack-nova-compute start</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-nova-compute on</userinput></screen>
       <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl start openstack-nova-compute</userinput>

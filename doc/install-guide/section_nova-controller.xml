@@ -73,7 +73,7 @@ IDENTIFIED BY 'NOVA_DBPASS';</userinput></screen>
   <step>
   <para>Set the configuration keys <literal>my_ip</literal>,
   <literal>vncserver_listen</literal>, and
-  <literal>vncserver_proxyclient_address</literal> to the IP address of the
+  <literal>vncserver_proxyclient_address</literal> to the internal IP address of the
   controller node.</para>
 
   <screen os="fedora;rhel;centos;opensuse"><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT my_ip 192.168.0.10</userinput>
@@ -101,9 +101,8 @@ vncserver_proxyclient_address=192.168.0.10
 <prompt>#</prompt> <userinput>keystone user-role-add --user=nova --tenant=service --role=admin</userinput></screen>
   </step>
   <step>
-  <para>For the Compute Service to use these credentials, you must add
-  them to the <filename>nova.conf</filename> configuration file.</para>
-
+  <para>For the Compute Service to use these credentials, you must alter the <filename>nova.conf</filename> configuration file.</para>
+  <!-- FIXME don't think this is necessary - now happens in api-paste.ini -->
   <screen os="fedora;rhel;centos;opensuse"><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT auth_strategy keystone</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT auth_host <replaceable>controller</replaceable></userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT admin_user nova</userinput>
@@ -115,10 +114,6 @@ vncserver_proxyclient_address=192.168.0.10
 [DEFAULT]
 ...
 auth_strategy=keystone
-auth_host=<replaceable>controller</replaceable>
-admin_user=nova
-admin_tenant_name=service
-admin_password=<replaceable>NOVA_DBPASS</replaceable>
       </programlisting>
 
 
@@ -134,8 +129,8 @@ admin_password=<replaceable>NOVA_DBPASS</replaceable>
   <programlisting language="ini">[filter:authtoken]
 paste.filter_factory=keystoneclient.middleware.auth_token:filter_factory
 auth_host=<replaceable>controller</replaceable>
-admin_user=nova
 admin_tenant_name=service
+admin_user=nova
 admin_password=<replaceable>NOVA_DBPASS</replaceable>
 </programlisting>
   <note os="fedora;rhel;centos;opensuse;debian"><para>Ensure that <literal>api_paste_config=/etc/nova/api-paste.ini</literal>
@@ -172,8 +167,7 @@ admin_password=<replaceable>NOVA_DBPASS</replaceable>
 
     <step os="ubuntu;debian">
 <para>Configure the Compute Service to use the RabbitMQ
-  message broker by setting the following configuration keys. They are found in
-  the <literal>DEFAULT</literal> configuration group of the
+  message broker by setting the following configuration keys. Add them in the <literal>DEFAULT</literal> configuration group of the
   <filename>/etc/nova/nova.conf</filename> file.</para>
   <screen>rpc_backend = nova.rpc.impl_kombu
 rabbit_host = controller</screen>
@@ -186,15 +180,15 @@ rabbit_host = controller</screen>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT rabbit_host controller</userinput></screen>
    </step>
    <step>
-  <para>Finally, start the various Nova services and configure them
+  <para os="centos;fedora;rhel;opensuse">Finally, start the various Nova services and configure them
   to start when the system boots.</para>
-
+  <para os="ubuntu;debian">Finally, restart the various Nova services.</para>
   <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service nova-api start</userinput>
-<prompt>#</prompt> <userinput>service nova-cert start</userinput>
-<prompt>#</prompt> <userinput>service nova-consoleauth start</userinput>
-<prompt>#</prompt> <userinput>service nova-scheduler start</userinput>
-<prompt>#</prompt> <userinput>service nova-conductor start</userinput>
-<prompt>#</prompt> <userinput>service nova-novncproxy start</userinput></screen>
+<prompt>#</prompt> <userinput>service nova-cert restart</userinput>
+<prompt>#</prompt> <userinput>service nova-consoleauth restart</userinput>
+<prompt>#</prompt> <userinput>service nova-scheduler restart</userinput>
+<prompt>#</prompt> <userinput>service nova-conductor restart</userinput>
+<prompt>#</prompt> <userinput>service nova-novncproxy restart</userinput></screen>
   <screen os='centos;rhel;fedora'><prompt>#</prompt> <userinput>service openstack-nova-api start</userinput>
 <prompt>#</prompt> <userinput>service openstack-nova-cert start</userinput>
 <prompt>#</prompt> <userinput>service openstack-nova-consoleauth start</userinput>
