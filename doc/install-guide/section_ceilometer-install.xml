@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<section xml:id="ceilometer-install"
+  xmlns="http://docbook.org/ns/docbook"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+  <title>Installing the Metering Service</title>
+  <procedure>
+    <title>Installing the central Metering Service components</title>
+    <para>The Metering service consists of an API service, collector
+    and a range of disparate agents.  This procedure details
+    installing the "central" components, prior to installing agents
+    elsewhere, such as on the compute node.</para>
+    <step>
+      <para>Install the Metering Service on the controller node:</para>
+      <screen os="ubuntu;deb"><prompt>#</prompt> <userinput>apt-get install ceilometer-api ceilometer-collector ceilometer-agent-central python-ceilometerclient</userinput></screen>
+      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-ceilometer-api openstack-ceilometer-collector openstack-ceilometer-agent-central python-ceilometerclient FIXME</userinput></screen>
+      <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install openstack-ceilometer-api openstack-ceilometer-collector openstack-ceilometer-agent-central python-ceilometerclient</userinput></screen>
+    </step>
+
+    <step>
+      <para>The Orchestration Service uses a database to store information.
+      Specify the location of the database in the configuration file.
+      In this guide, we use a MongoDB database on the controller node.</para>
+      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>FIXME</userinput></screen>
+      <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install mongodb</userinput></screen>
+
+      <screen os="ubuntu;debian">
+      <prompt>#</prompt> <userinput>apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10</userinput></screen>
+      <para os="ubuntu;debian">Create a new repository source <filename>/etc/apt/sources.list.d/10gen.list</filename>:</para>
+      <programlisting os="ubuntu;debian" language="ini">
+      deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen
+      </programlisting>
+      <para os="ubuntu;debian">Update the sources, and install the package:</para>
+      <screen os="ubuntu;debian">
+      <prompt>#</prompt> <userinput>apt-get update</userinput>
+      <prompt>#</prompt> <userinput>apt-get install mongodb-10gen</userinput></screen>
+      <para>Now, we create the database and a <literal>ceilometer</literal> user for it:</para>
+      <screen><prompt>#</prompt> <userinput>mongo</userinput>
+<prompt>></prompt> <userinput>use ceilometer</userinput>
+<prompt>></prompt> <userinput>db.addUser( { user: "ceilometer",
+              pwd: "<replaceable>CEILOMETER_DBPASS</replaceable>",
+              roles: [ "readWrite", "dbAdmin" ]
+            } )
+</userinput></screen>
+    </step>
+
+
+    <step><para>Tell the Metering Service to use the created database.</para>
+      <screen os="rhel;centos;fedora;opensuse"><prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf \
+  database connection mongodb://ceilometer:<replaceable>CEILOMETER_DBPASS</replaceable>@<replaceable>controller</replaceable>:27017/ceilometer</userinput></screen>
+      <para os="ubuntu;debian">Edit <filename>/etc/ceilometer/ceilometer.conf</filename>
+       and change the <literal>[database]</literal> section.</para>
+      <programlisting os="ubuntu;debian" language="ini">
+...
+[database]
+...
+# The SQLAlchemy connection string used to connect to the
+# database (string value)
+connection = mongodb://ceilometer:<replaceable>CEILOMETER_DBPASS</replaceable>@<replaceable>controller</replaceable>:27017/ceilometer
+...
+      </programlisting>
+
+</step>
+
+   <step>
+      <para>You need to define an secret key that is used as a
+      shared secret between the Metering Service nodes.
+      Use <command>openssl</command> to generate a random token, then store it
+      in the configuration file.</para>
+      <screen os="rhel;centos;fedora;opensuse"><prompt>#</prompt> <userinput>ADMIN_TOKEN=$(openssl rand -hex 10)</userinput>
+<prompt>#</prompt> <userinput>echo $ADMIN_TOKEN</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/keystone/keystone.conf publisher_rpc metering_secret $ADMIN_TOKEN</userinput></screen>
+      <screen os="ubuntu"><prompt>#</prompt> <userinput>openssl rand -hex 10</userinput></screen>
+<para os="ubuntu">Edit <filename>/etc/ceilometer/ceilometer.conf</filename> and
+       change the <literal>[DEFAULT]</literal> section, replacing ADMIN_TOKEN with the results of the command.</para>
+      <programlisting os="ubuntu" language="ini">
+...
+[publisher_rpc]
+...
+# Secret value for signing metering messages (string value)
+metering_secret = ADMIN_TOKEN
+...
+      </programlisting>
+
+    </step>
+
+
+
+    <step><para>Create a user called <literal>ceilometer</literal> so that the Metering
+      Service can use to authenticate with the Identity Service. Use the
+      <literal>service</literal> tenant and give the user the
+      <literal>admin</literal> role.</para>
+      <screen><prompt>#</prompt> <userinput>keystone user-create --name=ceilometer --pass=<replaceable>CEILOMETER_DBPASS</replaceable> --email=<replaceable>ceilometer@example.com</replaceable></userinput>
+<prompt>#</prompt> <userinput>keystone user-role-add --user=ceilometer --tenant=service --role=admin</userinput></screen></step>
+
+<step><para>Add the credentials to the Metering Service's configuration files.</para>
+
+      <screen os="centos;rhel;fedora;opensuse"><prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf keystone_authtoken auth_host <replaceable>controller</replaceable></userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf keystone_authtoken admin_user ceilometer</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf keystone_authtoken admin_tenant_name service</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf keystone_authtoken admin_password <replaceable>CEILOMETER_DBPASS</replaceable></userinput></screen>
+      <para os="ubuntu;debian">Edit <filename>/etc/ceilometer/ceilometer.conf</filename>
+       and change the <literal>[keystone_authtoken]</literal> section.</para>
+      <programlisting os="ubuntu;debian" language="ini">
+...
+[keystone_authtoken]
+auth_host = controller
+auth_port = 35357
+auth_protocol = http
+admin_tenant_name = service
+admin_user = ceilometer
+admin_password = CEILOMETER_DBPASS
+...
+      </programlisting>
+</step>
+
+
+    <step><para>Register the Metering Service with the Identity Service
+      so that other OpenStack services can locate it. Register the service and
+      specify the endpoint using the <command>keystone</command> command.</para>
+      <screen><prompt>#</prompt> <userinput>keystone service-create --name=ceilometer --type=metering \
+  --description="Ceilometer Metering Service"</userinput></screen></step>
+    <step><para>Note the service's <literal>id</literal> property returned in the previous step and use it when
+      creating the endpoint.</para>
+      <screen><prompt>#</prompt> <userinput>keystone endpoint-create \
+  --service-id=<replaceable>the_service_id_above</replaceable> \
+  --publicurl=http://<replaceable>controller</replaceable>:8777/ \
+  --internalurl=http://<replaceable>controller</replaceable>:8777/ \
+  --adminurl=http://<replaceable>controller</replaceable>:8777/</userinput></screen>
+    </step>
+
+    <step os="ubuntu;debian">
+      <para>We now restart the service with its new settings.</para>
+<screen><prompt>#</prompt> <userinput>service ceilometer-agent-central restart</userinput>
+<prompt>#</prompt> <userinput>service ceilometer-api restart</userinput>
+<prompt>#</prompt> <userinput>service ceilometer-collector restart</userinput></screen>
+    </step>
+
+    <step os="rhel;fedora;centos;opensuse"><para>Start the <systemitem
+      class="service">ceilometer-api</systemitem> and <systemitem
+      class="service">ceilometer-api-cfn</systemitem> services and
+      configure them to start when the system boots.</para>
+      <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>service openstack-ceilometer-api start</userinput>
+<prompt>#</prompt> <userinput>service openstack-ceilometer-agent-central start</userinput>
+<prompt>#</prompt> <userinput>service openstack-ceilometer-collector start</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-api on</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-agent-central on</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-collector on</userinput></screen>
+      <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl start openstack-ceilometer-api.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-ceilometer-agent-central.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-ceilometer-collector.service</userinput>
+<prompt>#</prompt> <userinput>systemctl enable openstack-ceilometer-api.service</userinput>
+<prompt>#</prompt> <userinput>systemctl enable openstack-ceilometer-agent-central.service</userinput>
+<prompt>#</prompt> <userinput>systemctl enable openstack-ceilometer-collector.service</userinput></screen>
+</step>
+
+  </procedure>
+</section>
