@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  version="5.0"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xml:id="coraid_aoe_driver_configuration">
+  <title>Coraid AoE Driver Configuration</title>
+  <para>Coraid storage appliances can provide block-level storage to OpenStack instances. Coraid
+    storage appliances use the low-latency ATA-over-Ethernet (ATA) protocol to provide
+    high-bandwidth data transfer between hosts and data on the network.</para>
+  <para>Once configured for OpenStack, you can:<itemizedlist>
+      <listitem>
+        <para>Create, delete, attach, and detach block storage volumes.</para>
+      </listitem>
+      <listitem>
+        <para>Create, list, and delete volume snapshots.</para>
+      </listitem>
+      <listitem>
+        <para>Create a volume from a snapshot, copy an image to a volume, copy a volume to an image,
+          clone a volume, and get volume statistics.</para>
+      </listitem>
+    </itemizedlist></para>
+  <para>This document describes how to configure the OpenStack Block Storage service for
+    use with Coraid storage appliances.</para>
+  <section xml:id="coraid_terminology">
+    <title>Terminology</title>
+    <para>The following terms are used throughout this section:<informaltable frame="all">
+        <tgroup cols="2">
+          <colspec colname="Term" colnum="1" colwidth="1*"/>
+          <colspec colname="Definition" colnum="2" colwidth="2.77*"/>
+          <thead>
+            <row>
+              <entry>Term</entry>
+              <entry>Definition</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry>AoE</entry>
+              <entry>ATA-over-Ethernet protocol</entry>
+            </row>
+            <row>
+              <entry>EtherCloud Storage Manager (ESM)</entry>
+              <entry>ESM provides live monitoring and management of EtherDrive appliances that use
+                the AoE protocol, such as the SRX and VSX.</entry>
+            </row>
+            <row>
+              <entry>Fully-Qualified Repository Name (FQRN)</entry>
+              <entry>The FQRN is the full identifier of a storage profile. FQRN syntax is:
+                  <replaceable>performance_class</replaceable><command>-</command><replaceable>availability_class</replaceable><command>:</command><replaceable>profile_name</replaceable><command>:</command><replaceable>repository_name</replaceable></entry>
+            </row>
+            <row>
+              <entry>SAN</entry>
+              <entry>Storage Area Network</entry>
+            </row>
+            <row>
+              <entry>SRX</entry>
+              <entry>Coraid EtherDrive SRX block storage appliance</entry>
+            </row>
+            <row>
+              <entry>VSX</entry>
+              <entry>Coraid EtherDrive VSX storage virtualization appliance</entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable></para>
+  </section>
+  <section xml:id="coraid_requirements">
+    <title>Requirements</title>
+    <para>To support OpenStack Block Storage, your SAN must include an SRX for physical storage, a
+      VSX running at least CorOS v2.0.6 for snapshot support, and an ESM running at least v2.1.1 for storage repository
+      orchestration. Ensure that all storage appliances are installed and connected to your network
+      before configuring OpenStack volumes.</para>
+    <para>Each compute node on the network running an OpenStack instance must have the Coraid AoE
+      Linux driver installed so that the node can communicate with the SAN.</para>
+  </section>
+  <section xml:id="coraid_overview">
+    <title>Overview</title>
+    <para>To configure the OpenStack Block Storage for use with Coraid storage appliances, perform
+      the following procedures:<procedure>
+        <step>
+          <para>Download and install the Coraid Linux AoE driver.</para>
+        </step>
+        <step>
+          <para>Create a storage profile using the Coraid ESM GUI.</para>
+        </step>
+        <step>
+          <para>Create a storage repository using the ESM GUI and record the FQRN.</para>
+        </step>
+        <step>
+          <para>Configure the <filename>cinder.conf</filename> file.</para>
+        </step>
+        <step>
+          <para>Create and associate a block storage volume type.</para>
+        </step>
+      </procedure></para>
+  </section>
+  <section xml:id="coraid_installing_aoe_driver">
+    <title>Installing the Coraid AoE Driver</title>
+    <para>Install the Coraid AoE driver on every compute node that will require access to block
+      storage.</para>
+    <para>The latest AoE drivers will always be located at <link
+        xlink:href="http://support.coraid.com/support/linux/"
+        >http://support.coraid.com/support/linux/</link>.</para>
+    <para>To download and install the AoE driver, follow the instructions below, replacing “aoeXXX”
+      with the AoE driver file name:</para>
+    <procedure>
+      <step>
+        <para>Download the latest Coraid AoE driver.</para>
+        <para>
+          <screen><prompt>#</prompt> <userinput>wget http://support.coraid.com/support/linux/aoeXXX.tar.gz</userinput></screen>
+        </para>
+      </step>
+      <step>
+        <para>Unpack the AoE driver.</para>
+      </step>
+      <step>
+        <para>Install the AoE driver.</para>
+        <screen><prompt>#</prompt> <userinput>cd aoeXXX</userinput></screen>
+        <screen><prompt>#</prompt> <userinput>make</userinput></screen>
+        <screen><prompt>#</prompt> <userinput>make install</userinput></screen>
+      </step>
+      <step>
+        <para>Initialize the AoE driver.</para>
+        <para>
+          <screen><prompt>#</prompt> <userinput>modprobe aoe</userinput></screen>
+        </para>
+      </step>
+      <step>
+        <para>Optionally, specify the Ethernet interfaces that the node can use to communicate with
+          the SAN.</para>
+        <para>The AoE driver may use every Ethernet interface available to the node unless limited
+          with the <literal>aoe_iflist</literal> parameter. For more information about the
+            <literal>aoe_iflist</literal> parameter, see the <filename>aoe readme</filename> file
+          included with the AoE driver.</para>
+        <para>
+          <screen><prompt>#</prompt> <userinput>modprobe aoe_iflist="<replaceable>eth1 eth2 ...</replaceable>"</userinput></screen>
+        </para>
+      </step>
+    </procedure>
+  </section>
+  <section xml:id="coraid_creating_storage_profile">
+    <title>Creating a Storage Profile</title>
+    <para>To create a storage profile using the ESM GUI:</para>
+    <procedure>
+      <step>
+        <para>Log on to the ESM.</para>
+      </step>
+      <step>
+        <para>Click on <guibutton>Storage Profiles</guibutton> in the SAN Domain pane.</para>
+      </step>
+      <step>
+        <para>Choose <emphasis role="bold">Menu &gt; Create Storage Profile</emphasis>. If the
+          option is unavailable, you may not have the appropriate permission level. Make sure you
+          are logged on to the ESM as the SAN Administrator.</para>
+      </step>
+      <step>
+        <para>Select a storage class using the storage class selector.</para>
+        <para>Each storage class includes performance and availability criteria (see the Storage
+          Classes topic in the ESM Online Help for information on the different options).</para>
+      </step>
+      <step>
+        <para>Select a RAID type (if more than one is available) for the selected profile
+          type.</para>
+      </step>
+      <step>
+        <para>Type a Storage Profile name.</para>
+        <para>The name is restricted to alphanumeric characters, underscore (_), and hyphen (-), and
+          cannot exceed 32 characters.</para>
+      </step>
+      <step>
+        <para>Select the drive size from the drop-down menu.</para>
+      </step>
+      <step>
+        <para>Select the number of drives to be initialized per RAID (LUN) from the drop-down menu
+          (if the RAID type selected requires multiple drives).</para>
+      </step>
+      <step>
+        <para>Type the number of RAID sets (LUNs) you want to create in the repository using this
+          profile.</para>
+      </step>
+      <step>
+        <para>Click <guibutton>Next</guibutton> to continue with creating a Storage Repository.</para>
+      </step>
+    </procedure>
+  </section>
+  <section xml:id="coraid_creating_storage_repository">
+    <title>Creating a Storage Repository and Retrieving the FQRN</title>
+    <para>To create a storage repository and retrieve the FQRN:</para>
+    <procedure>
+      <step>
+        <para>Access the Create Storage Repository dialog box.</para>
+      </step>
+      <step>
+        <para>Type a Storage Repository name.</para>
+        <para>The name is restricted to alphanumeric characters, underscore (_), hyphen (-), and
+          cannot exceed 32 characters.</para>
+      </step>
+      <step>
+        <para>Click on <guibutton>Limited</guibutton> or <guibutton>Unlimited</guibutton> to indicate the maximum repository size.</para>
+        <para><emphasis role="bold">Limited</emphasis>—Limited means that the amount of space that can be allocated to the
+          repository is set to a size you specify (size is specified in TB, GB, or MB).</para>
+        <para>When the difference between the reserved space and the space already allocated to LUNs
+          is less than is required by a LUN allocation request, the reserved space is increased
+          until the repository limit is reached.</para>
+        <note>
+          <para>The reserved space does not include space used for parity or space used for mirrors.
+            If parity and/or mirrors are required, the actual space allocated to the repository from
+            the SAN is greater than that specified in reserved space.</para>
+        </note>
+        <para><emphasis role="bold">Unlimited</emphasis>—Unlimited means that the amount of space allocated to the repository
+          is unlimited and additional space is allocated to the repository automatically when space
+          is required and available.</para>
+        <note>
+          <para>Drives specified in the associated Storage Profile must be available on the SAN in
+            order to allocate additional resources.</para>
+        </note>
+      </step>
+      <step>
+        <para>Check the <guibutton>Resizable LUN</guibutton> box.</para>
+        <para>This is required for OpenStack volumes.</para>
+        <note>
+          <para>If the Storage Profile associated with the repository has platinum availability, the
+            Resizable LUN box is automatically checked.</para>
+        </note>
+      </step>
+      <step>
+        <para>Check the <guibutton>Show Allocation Plan API calls</guibutton> box. Click <guibutton>Next</guibutton>.</para>
+      </step>
+      <step>
+        <para>Record the FQRN and then click <guibutton>Finish</guibutton>.</para>
+        <para>The QRN is located in the Repository Creation Plan window, on the first line of
+          output, following the “Plan” keyword. The FQRN syntax consists of four parameters, in the
+          format
+            <replaceable>performance_class</replaceable><command>-</command><replaceable>availability_class</replaceable><command>:</command><replaceable>profile_name</replaceable><command>:</command><replaceable>repository_name</replaceable>.</para>
+        <para>In the example below, the FQRN is <literal>Bronze-Platinum:BP1000:OSTest</literal>,
+          and is highlighted.</para>
+        <figure>
+          <title>Repository Creation Plan Screen</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="../../../common/figures/coraid/Repository_Creation_Plan_screen.png"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+        <para>Record the FQRN; it is a required parameter later in the configuration
+          procedure.</para>
+      </step>
+    </procedure>
+  </section>
+  <section xml:id="coraid_configuring_cinder.conf">
+    <title>Configuring the cinder.conf file</title>
+    <para>Edit or add the following lines to the file<filename>
+      /etc/cinder/cinder.conf</filename>:</para>
+    <programlisting language="ini">volume_driver = cinder.volume.drivers.coraid.CoraidDriver
+coraid_esm_address = <replaceable>ESM_IP_address</replaceable>
+coraid_user = <replaceable>username</replaceable>
+coraid_group = <replaceable>Access_Control_Group_name</replaceable>
+coraid_password = <replaceable>password</replaceable>
+coraid_repository_key = <replaceable>coraid_repository_key</replaceable></programlisting>
+    <xi:include href="../../../common/tables/cinder-coraid.xml"/>
+    <para>Access to storage devices and storage repositories can be controlled using Access Control
+      Groups configured in ESM. Configuring <filename>cinder.conf</filename> to log on to ESM as the
+      SAN administrator (user name <literal>admin</literal>), will grant full access to the devices
+      and repositories configured in ESM.</para>
+    <para>Optionally, configuring an ESM Access Control Group and user, and then configuring
+        <filename>cinder.conf</filename> to access the ESM using that Access Control Group and user
+      limits access from the OpenStack instance to devices and storage repositories defined in the
+      ESM Access Control Group.</para>
+    <para>To manage access to the SAN using Access Control Groups, you must enable the Use Access
+      Control setting in the <emphasis role="bold">ESM System Setup</emphasis> &gt;<emphasis
+        role="bold"> Security</emphasis> screen.</para>
+    <para>For more information about creating Access Control Groups and setting access rights, see
+      the ESM Online Help.</para>
+  </section>
+  <section xml:id="coraid_creating_associating_volume_type">
+    <title>Creating and Associating a Volume Type</title>
+    <para>To create and associate a volume with the ESM storage repository:</para>
+    <procedure>
+      <step>
+        <para>Restart Cinder.</para>
+        <screen><prompt>#</prompt> <userinput>service openstack-cinder-api restart</userinput></screen>
+        <screen><prompt>#</prompt> <userinput>service openstack-cinder-scheduler restart</userinput></screen>
+        <screen><prompt>#</prompt> <userinput>service openstack-cinder-volume restart</userinput></screen>
+      </step>
+      <step>
+        <para>Create a volume.</para>
+        <screen><prompt>#</prompt> <userinput>cinder type-create ‘<replaceable>volume_type_name</replaceable>’</userinput></screen>
+        <para>where <replaceable>volume_type_name</replaceable> is the name you assign the volume.
+          You will see output similar to the following:</para>
+        <screen><computeroutput>+--------------------------------------+-------------+
+|                ID                    |     Name    |
++--------------------------------------+-------------+
+| 7fa6b5ab-3e20-40f0-b773-dd9e16778722 | JBOD-SAS600 |
++--------------------------------------+-------------+</computeroutput></screen>
+        <para>Record the value in the ID field; you will use this value in the next configuration
+          step.</para>
+      </step>
+      <step>
+        <para>Associate the volume type with the Storage Repository.</para>
+        <para>
+          <screen><prompt>#</prompt><userinput>cinder type-key <replaceable>UUID</replaceable> set <replaceable>coraid_repository_key</replaceable>=’<replaceable>FQRN</replaceable>’</userinput></screen>
+        </para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="1*"/>
+            <colspec colwidth="2.43*"/>
+            <thead>
+              <row>
+                <entry align="center">Variable</entry>
+                <entry align="center">Description</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><replaceable>UUID</replaceable></entry>
+                <entry>The ID returned after issuing the <literal>cinder type-create</literal>
+                  command. Note: you can use the command <literal>cinder type-list</literal> to
+                  recover the ID.</entry>
+              </row>
+              <row>
+                <entry><replaceable>coraid_repository_key</replaceable></entry>
+                <entry>The key name used to associate the Cinder volume type with the ESM in the
+                    <filename>cinder.conf</filename> file. If no key name was defined, this will be
+                  the default value of <literal>coraid_repository</literal>. </entry>
+              </row>
+              <row>
+                <entry><replaceable>FQRN</replaceable></entry>
+                <entry>The FQRN recorded during the Create Storage Repository process.</entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+      </step>
+    </procedure>
+  </section>
+</section>
