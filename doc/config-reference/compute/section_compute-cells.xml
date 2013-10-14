@@ -72,11 +72,9 @@
                 <varlistentry>
                     <term>scheduler_filter_classes</term>
                     <listitem>
-                        <para>Filter classes that the cells scheduler should
-                            use. By default, uses
-                                "<literal>nova.cells.filters.all_filters</literal>"
-                            to map to all cells filters included with
-                            nova.</para>
+                        <para>Filter classes that the cells scheduler should use. By default, uses
+                                "<literal>nova.cells.filters.all_filters</literal>" to map to all
+                            cells filters included with Compute.</para>
                     </listitem>
                 </varlistentry>
                 <varlistentry>
@@ -176,32 +174,66 @@ rabbit_virtual_host=cell1_vhost</programlisting></para>
     </section>
     <section xml:id="cell-weights-filters">
         <title>Cell scheduling configuration</title>
-        <para>New for the Havana release, you can configure some cells with
-            higher weights so that those cells are given priority for new VMs to
-            be launched.</para>
+        <para>To determine the best cell for launching a new instance, Compute  uses a set of
+            filters and weights configured in <filename>/etc/nova/nova.conf</filename>. The
+            following options are available to prioritize cells for scheduling:</para>
+        <para>
+            <itemizedlist>
+                <listitem>
+                    <para><code>scheduler_filter_classes</code> - Specifies the list of filter
+                        classes. By default <code>nova.cells.weights.all_filters</code> is
+                        specified, which maps to all cells filters included with Compute (see
+                        <xref linkend="scheduler-filters"/>.</para>
+                </listitem>
+                <listitem>
+                    <para><code>scheduler_weight_classes</code> - Specifies the list of weight
+                        classes. By default <code>nova.cells.weights.all_weighers</code> is
+                        specified, which maps to all cell weight algorithms (weighers) included with
+                        Compute. The following modules are available:</para>
+                    <itemizedlist><listitem>
+                            <para><code>mute_child</code>: Downgrades the likelihood of child cells
+                                being chosen for scheduling requests, which haven't sent capacity or
+                                capability updates in a while. Options include
+                                    <code>mute_weight_multiplier</code> (multiplier for mute
+                                children; value should be negative) and
+                                    <code>mute_weight_value</code> (assigned to mute children;
+                                should be a positive value).</para>
+                        </listitem>
+                        <listitem>
+                            <para><code>ram_by_instance_type</code>: Select cells with the most RAM
+                                capacity for the instance type being requested. Because higher
+                                weights win, Compute returns the number of available units for the
+                                instance type requested. The <code>ram_weight_multiplier</code>
+                                option defaults to 10.0 that adds to the weight by a factor of 10.
+                                Use a negative number to stack VMs on one host instead of spreading
+                                out new VMs to more hosts in the cell.</para>
+                        </listitem>
+                        <listitem><para><code>weight_offset</code>: Allows modifying the database to weight a particular cell. You can
+                                use this when you want to disable a cell (for example, '0'), or to
+                                set a default cell by making its weight_offset very high (for
+                                example, '999999999999999'). The highest weight will be the first
+                                cell to be scheduled for launching an instance.</para></listitem></itemizedlist>
+                </listitem>
+            </itemizedlist>
+        </para>
+        <para>Additionally, the following options are available for the cell scheduler:</para>
+        <para>
+            <itemizedlist>
+                <listitem>
+                    <para><code>scheduler_retries</code> - Specifies how many times the scheduler
+                        will try to launch a new instance when no cells are available (default=10).</para>
+                </listitem>
+                <listitem>
+                    <para><code>scheduler_retry_delay</code> - Specifies the delay (in seconds)
+                        between retries (default=2).</para>
+                </listitem>
+            </itemizedlist>
+        </para>
         <para>As an admin user, you can also add a filter that directs builds to
             a particular cell. The <filename>policy.json</filename> file must
             have a line with <literal>"cells_scheduler_filter:TargetCellFilter"
                 : "is_admin:True"</literal> to let an admin user specify a
             scheduler hint to direct a build to a particular cell.</para>
-        <para>There are two modules available by default in the
-                <filename>nova.conf</filename> file so that cell selection is no
-            longer random. These are selected with the default
-                <filename>nova.conf</filename> file which has
-                <literal>scheduler_weight_classes=nova.cells.weights.all_weighers</literal>
-            as the default.</para>
-            <itemizedlist><listitem><para>ram_by_instance_type: Select cells with the most RAM capacity for the
-                    instance type being requested. Since higher weights win,
-                    Compute returns the number of available units for the
-                    instance type requested. In nova.conf there's a
-                    ram_weight_multiplier defaulted to 10.0 that adds to the
-                    weight by a factor of 10.</para></listitem>
-            <listitem><para>weight_offset: Allows modifying the database to weight a particular cell.
-                    You can use this when you want to disable a cell. Originally
-                    designed so you can set a default cell by making its
-                    weight_offset very high, like 999999999999999. The highest
-                    weight will be first cell scheduled for launching
-                        VMs.</para></listitem></itemizedlist>
     </section>
     <section xml:id="cell-config-optional-json">
         <title>Optional cell configuration</title>
