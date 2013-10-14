@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<section xml:id="cinder-install-cinder"
+  xmlns="http://docbook.org/ns/docbook"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+  <title>Adding the Agent: Block Storage</title>
+  <procedure>
+  <step>
+  <para>If you want to be able to retrieve volume samples, you need to
+        instruct Block Storage to send notifications to the bus by
+        editing the <filename>cinder.conf</filename> file and changing
+          <literal>notification_driver</literal> to
+          <literal>cinder.openstack.common.notifier.rabbit_notifier</literal>
+        and <literal>control_exchange</literal> to
+          <literal>cinder</literal>, before restarting the service.</para>
+  </step>
+    <step os="ubuntu;debian">
+      <para>We now restart the Block Storage service with its new
+        settings.</para>
+<screen><prompt>#</prompt> <userinput>service cinder-volume restart</userinput>
+<prompt>#</prompt> <userinput>service cinder-api restart</userinput></screen>
+    </step>
+    <step os="rhel;fedora;centos;opensuse"><para>We now restart the Block Storage service with its new
+        settings.</para>
+      <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>service openstack-cinder-api start</userinput>
+<prompt>#</prompt> <userinput>service openstack-cinder-agent-central start</userinput></screen>
+      <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl start openstack-cinder-api.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-cinder-volume.service</userinput></screen>
+    </step>
+
+  </procedure>
+</section>

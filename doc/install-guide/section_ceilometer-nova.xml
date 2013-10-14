@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<section xml:id="ceilometer-install-nova"
+  xmlns="http://docbook.org/ns/docbook"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+  <title>Adding the Agent: Compute</title>
+  <procedure>
+    <title>Installing the Compute Agent for Metering</title>
+    <para>The Metering service consists of an API service, collector and a range
+      of disparate agents. This procedure details the installation of the agent
+      that runs on compute nodes.</para>
+    <step>
+      <para>Install the Metering service on the controller node:</para>
+      <screen os="ubuntu;deb"><prompt>#</prompt> <userinput>apt-get install ceilometer-agent-compute</userinput></screen>
+      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-ceilometer-agent-compute FIXME</userinput></screen>
+      <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install openstack-ceilometer-agent-compute</userinput></screen>
+    </step>
+
+    <step><para>Set the following options in
+        <filename>/etc/nova/nova.conf</filename>.</para>
+      <screen os="fedora;rhel;centos;opensuse">
+<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT instance_usage_audit True</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT instance_usage_audit Hhour</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT notify_on_state_change vm_and_task_state</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT notification_driver nova.openstack.common.notifier.rpc_notifier</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT notification_driver ceilometer.compute.nova_driver</userinput></screen>
+  <para os="ubuntu;debian">Edit <filename>/etc/nova/nova.conf</filename> and add to the <literal>[DEFAULT]</literal> section.</para>
+  <programlisting os="ubuntu;debian" language="ini">...
+[DEFAULT]
+...
+instance_usage_audit=True
+instance_usage_audit_period=hour
+notify_on_state_change=vm_and_task_state
+notification_driver=nova.openstack.common.notifier.rpc_notifier
+notification_driver=ceilometer.compute.nova_notifier
+</programlisting>
+</step>
+
+
+   <step>
+      <para>You need to set the secret key defined earlier that is used as a
+        shared secret between the Metering service nodes.</para>
+<screen><prompt>#</prompt> <userinput>openstack-config --set /etc/keystone/keystone.conf publisher_rpc metering_secret $ADMIN_TOKEN</userinput></screen>
+<para os="ubuntu">Edit <filename>/etc/ceilometer/ceilometer.conf</filename> and
+       change the <literal>[DEFAULT]</literal> section, replacing ADMIN_TOKEN with the one created earlier.</para>
+      <programlisting os="ubuntu" language="ini">
+...
+[publisher_rpc]
+# Secret value for signing metering messages (string value)
+metering_secret = ADMIN_TOKEN
+...
+      </programlisting>
+
+    </step>
+
+
+
+    <step os="ubuntu;debian">
+      <para>Next, restart the service with its new settings.</para>
+<screen><prompt>#</prompt> <userinput>service ceilometer-agent-compute restart</userinput></screen>
+    </step>
+
+
+    <step os="rhel;fedora;centos;opensuse"><para>Start the <literal>ceilometer-agent-compute</literal> service and configure
+      to start when the system boots.</para>
+      <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>service openstack-ceilometer-agent-compute start</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-agent-compute on</userinput></screen>
+      <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl start openstack-ceilometer-api.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-ceilometer-agent-compute.service</userinput>
+<prompt>#</prompt> <userinput>systemctl enable openstack-ceilometer-agent-compute.service</userinput></screen>
+</step>
+
+  </procedure>
+</section>
