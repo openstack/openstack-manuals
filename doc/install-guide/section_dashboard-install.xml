@@ -117,9 +117,26 @@
             <programlisting language="bash" linenumbering="unnumbered"><?db-font-size 75%?>OPENSTACK_HOST = "controller"
     </programlisting>
         </step>
+        <step os="opensuse">
+        <para>Setup Apache configuration:
+<screen><prompt>#</prompt> <userinput>cp /etc/apache2/conf.d/openstack-dashboard.conf.sample \
+   /etc/apache2/conf.d/openstack-dashboard.conf</userinput>
+<prompt>#</prompt> <userinput>a2enmod rewrite;a2enmod ssl;a2enmod wsgi</userinput></screen>
+        </para>
+        </step>
+        <step os="opensuse">
+          <para>
+            Start the Apache web server and memcached:
+          </para>
+          <screen><prompt>#</prompt> <userinput>systemctl start apache2.service memcached.service</userinput>
+<prompt>#</prompt> <userinput>systemctl enable apache2.service memcached.service</userinput></screen>
+        </step>
         <step>
-          <para>You can now access the dashboard at <uri>http://controller/horizon</uri>.</para>
-          <para>Login with credentials for any user that you created with the OpenStack Identity Service.</para>
+          <para>You can now access the dashboard at
+          <uri os="centos;fedora;rhel;debian;ubuntu">http://controller/horizon</uri>
+          <uri os="opensuse">http://controller</uri>.</para>
+          <para>Login with credentials for any user that you created
+          with the OpenStack Identity Service.</para>
         </step>
     </procedure>
 </section>
