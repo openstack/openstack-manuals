@@ -17,7 +17,8 @@
             <para>List images, and note the ID of the image to use for
                     your volume:</para>
             <screen><prompt>$</prompt> <userinput>nova image-list</userinput></screen>
-            <screen><?db-font-size 65%?><computeroutput>+--------------------------------------+---------------------------------+--------+--------------------------------------+
+            <screen><?db-font-size 65%?><computeroutput>
++--------------------------------------+---------------------------------+--------+--------------------------------------+
 | ID                                   | Name                            | Status | Server                               |
 +--------------------------------------+---------------------------------+--------+--------------------------------------+
 | 397e713c-b95b-4186-ad46-6126863ea0a9 | cirros-0.3.1-x86_64-uec         | ACTIVE |                                      |
@@ -32,7 +33,8 @@
                     availability zone in which to create your
                     volume:</para>
             <screen><prompt>$</prompt> <userinput>nova availability-zone-list</userinput></screen>
-            <screen><?db-font-size 65%?><computeroutput>+-----------------------+----------------------------------------+
+            <screen><?db-font-size 65%?><computeroutput>
++-----------------------+----------------------------------------+
 | Name                  | Status                                 |
 +-----------------------+----------------------------------------+
 | internal              | available                              |
@@ -51,7 +53,8 @@
             <para>Create a volume with 8 GBs of space. Specify the
                     availability zone and image, as follows:</para>
             <screen><prompt>$</prompt> <userinput>cinder create 8 --display-name my-new-volume --image-id 397e713c-b95b-4186-ad46-6126863ea0a9 --availability-zone nova</userinput></screen>
-            <screen><?db-font-size 65%?><computeroutput>+---------------------+--------------------------------------+
+            <screen><?db-font-size 65%?><computeroutput>
++---------------------+--------------------------------------+
 |       Property      |                Value                 |
 +---------------------+--------------------------------------+
 |     attachments     |                  []                  |
@@ -74,7 +77,8 @@
             <para>To verify that your volume was created successfully,
                 list the available volumes:</para>
             <screen><prompt>$</prompt> <userinput>cinder list</userinput></screen>
-            <screen><?db-font-size 65%?><computeroutput>+--------------------------------------+-----------+-----------------+------+-------------+----------+-------------+
+            <screen><?db-font-size 65%?><computeroutput>
++--------------------------------------+-----------+-----------------+------+-------------+----------+-------------+
 |                  ID                  |   Status  |   Display Name  | Size | Volume Type | Bootable | Attached to |
 +--------------------------------------+-----------+-----------------+------+-------------+----------+-------------+
 | 573e024d-5235-49ce-8332-be1576d323f8 | available |  my-new-volume  |  8   |     None    |   true   |             |
@@ -91,7 +95,8 @@
        <procedure> <step>
             <para>Attach your volume to a server:</para>
             <screen><prompt>$</prompt> <userinput>nova volume-attach 84c6e57d-a6b1-44b6-81eb-fcb36afd31b5  573e024d-5235-49ce-8332-be1576d323f8 /dev/vdb</userinput></screen>
-            <screen><?db-font-size 65%?><computeroutput>+----------+--------------------------------------+
+            <screen><?db-font-size 65%?><computeroutput>
++----------+--------------------------------------+
 | Property | Value                                |
 +----------+--------------------------------------+
 | device   | /dev/vdb                             |
@@ -104,7 +109,8 @@
         <step>
             <para>Show information for your volume:</para>
             <screen><prompt>$</prompt> <userinput>cinder show 573e024d-5235-49ce-8332-be1576d323f8</userinput></screen>
-            <screen><?db-font-size 65%?><computeroutput>+------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+            <screen><?db-font-size 65%?><computeroutput>
++------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |           Property           |                                                                                                      Value                                                                                                       |
 +------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |         attachments          |             [{u'device': u'/dev/vdb', u'server_id': u'84c6e57d-a6b1-44b6-81eb-fcb36afd31b5', u'id': u'573e024d-5235-49ce-8332-be1576d323f8', u'volume_id': u'573e024d-5235-49ce-8332-be1576d323f8'}]             |
@@ -131,28 +137,40 @@
                     bootable.</para>
         </step>
        </procedure></section>
-<section xml:id="cli_delete_volumes" os="enduser"><title>Delete a volume</title>
+       <section xml:id="cli_extend_volumes" os="enduser"><title>Resize a volume</title>
 <procedure>
         <step>
-            <para>To delete your volume, you must first detach it from
-                the server.</para>
+            <para>To resize your volume, you must first detach it from the server.</para>
             <para>To detach the volume from your server, pass the
                 server ID and volume ID to the command, as
                 follows:</para>
             <screen><prompt>$</prompt> <userinput>nova volume-detach 84c6e57d-a6b1-44b6-81eb-fcb36afd31b5 573e024d-5235-49ce-8332-be1576d323f8</userinput></screen>
-            <para>The <command>volume-detach</command> command does
-                not return any output.</para>
+            <para>The <command>volume-detach</command> command does not return any output.</para>
         </step>
         <step>
             <para>List volumes:</para>
             <screen><prompt>$</prompt> <userinput>cinder list</userinput></screen>
-            <screen><?db-font-size 65%?><computeroutput>+--------------------------------------+-----------+-----------------+------+-------------+----------+-------------+
+            <screen><?db-font-size 65%?><computeroutput>
++--------------------------------------+-----------+-----------------+------+-------------+----------+-------------+
 |                  ID                  |   Status  |   Display Name  | Size | Volume Type | Bootable | Attached to |
 +--------------------------------------+-----------+-----------------+------+-------------+----------+-------------+
 | 573e024d-5235-49ce-8332-be1576d323f8 | available |  my-new-volume  |  8   |     None    |   true   |             |
 | bd7cf584-45de-44e3-bf7f-f7b50bf235e3 | available | my-bootable-vol |  8   |     None    |   true   |             |
 +--------------------------------------+-----------+-----------------+------+-------------+----------+-------------+</computeroutput></screen>
             <para>Note that the volume is now available.</para>
+        </step>
+        <step>
+            <para>Now you can resize the volume, by passing the volume id and the new size (a value greater than the old one) as parameters, as follows:</para>
+            <screen><prompt>$</prompt> <userinput>cinder extend <replaceable>573e024d-5235-49ce-8332-be1576d323f8</replaceable> <replaceable>10</replaceable></userinput></screen>
+            <para>The <command>extend</command> command does not return any output.</para>
+        </step>
+    </procedure></section>
+<section xml:id="cli_delete_volumes" os="enduser"><title>Delete a volume</title>
+<procedure>
+        <step>
+            <para>To delete your volume, you must first detach it from
+                the server.</para>
+                <para>To detach the volume from your server and check for the list of existing volumes, see steps 1 and 2 mentioned in <link linkend="cli_extend_volumes">Resize a volume</link> procedure.</para>
         </step>
         <step>
             <para>Now you can delete the volume, as follows:</para>
@@ -164,7 +182,8 @@
             <para>List the volumes again, and note that the status of
                 your volume is <literal>deleting</literal>:</para>
             <screen><prompt>$</prompt> <userinput>cinder list</userinput></screen>
-            <screen><?db-font-size 65%?><computeroutput>+--------------------------------------+-----------+-----------------+------+-------------+----------+-------------+
+            <screen><?db-font-size 65%?><computeroutput>
++--------------------------------------+-----------+-----------------+------+-------------+----------+-------------+
 |                  ID                  |   Status  |   Display Name  | Size | Volume Type | Bootable | Attached to |
 +--------------------------------------+-----------+-----------------+------+-------------+----------+-------------+
 | 573e024d-5235-49ce-8332-be1576d323f8 |  deleting |  my-new-volume  |  8   |     None    |   true   |             |
@@ -173,7 +192,8 @@
             <para>When the volume is fully deleted, it disappears from
                 the list of volumes:</para>
             <screen><prompt>$</prompt> <userinput>cinder list</userinput></screen>
-            <screen><?db-font-size 65%?><computeroutput>+--------------------------------------+-----------+-----------------+------+-------------+----------+-------------+
+            <screen><?db-font-size 65%?><computeroutput>
++--------------------------------------+-----------+-----------------+------+-------------+----------+-------------+
 |                  ID                  |   Status  |   Display Name  | Size | Volume Type | Bootable | Attached to |
 +--------------------------------------+-----------+-----------------+------+-------------+----------+-------------+
 | bd7cf584-45de-44e3-bf7f-f7b50bf235e3 | available | my-bootable-vol |  8   |     None    |   true   |             |
