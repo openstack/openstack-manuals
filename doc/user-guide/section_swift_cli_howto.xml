@@ -6,33 +6,35 @@
     version="5.0"
     xml:id="managing-openstack-object-storage-with-swift-cli">
     <title>Manage object storage</title>
-    <para>The OpenStack Object Storage service provides the swift
-        command-line interface (CLI) that enables you to gather
-        statistics, list items, update metadata, upload, download, and
-        delete files. This client is based on the native swift client
-        library, <literal>client.py</literal>, which seamlessly
-        re-authenticates if the current token expires during
-        processing, retries operations multiple times, and provides a
-        processing concurrency of 10.</para>
+    <para>The Object Storage service provides the
+            <command>swift</command> command-line interface (CLI) that
+        enables you to gather statistics, list items, update metadata,
+        upload, download, and delete files. This client is based on
+        the native swift client library, <literal>client.py</literal>,
+        which seamlessly re-authenticates if the current token expires
+        during processing, retries operations multiple times, and
+        provides a processing concurrency of 10.</para>
         <para>Users have roles on accounts. For example, the admin
         role enables full access to all containers and objects in an
         account.</para>
-    <para>You can set access control lists (ACLs) are set at the container level
+    <para>You can set access control lists (ACLs) at the container level
         and support lists for read and write access, which are set
         with the <literal>X-Container-Read</literal> and
             <literal>X-Container-Write</literal> header
         respectively.</para>
-        <para>You can use the swift client to set the ACLs by using the
-            <command>post</command> subcommand with the <parameter>-r</parameter> parameter for the read access and
-            <parameter>-w</parameter> option for the write access. The following example enables the testuser user
-            to read objects in the container:</para>
+        <para>You can use the <command>swift</command> client to set
+        the ACLs by using the <command>post</command> subcommand with
+        the <parameter>-r</parameter> parameter for the read access
+        and <parameter>-w</parameter> parameter for the write access.
+        The following example enables the <literal>testuser</literal>
+        user to read objects in the container:</para>
             <screen><prompt>$</prompt> <userinput>swift post -r 'testuser'</userinput></screen>
 <para>You can also use this command with a list of users.</para>
-        <para>If you use the StaticWeb middleware to enable
-            OpenStack Object Storage to serve public web content,
-            be aware of the ACL syntax for
-            managing allowed referrers. The syntax is <literal>.r:</literal>
-            followed by a list of allowed referrers. For example,
-            the following command gives object access to all referring domains access:</para>
+        <para>If you use the StaticWeb middleware to enable Object
+        Storage to serve public web content, the syntax for allowed
+        referrers is <literal>.r:</literal> followed by a list of
+        allowed referrers.</para>
+    <para>The following command gives object access to all referring
+        domains:</para>
             <screen><prompt>$</prompt> <userinput>swift post -r '.r:*'</userinput></screen>
 </section>
