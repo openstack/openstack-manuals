@@ -1,22 +1,52 @@
 <section xml:id="solidfire-volume-driver"
     xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xlink="http://www.w3.org/1999/xlink"
-    version="5.0">
-<title>SolidFire</title>
-    <para>The SolidFire Cluster is a high performance all SSD iSCSI storage device,
-        providing massive scale out capability and extreme fault tolerance.  A key
-        feature of the SolidFire cluster is the ability to set and modify during
-        operation specific QoS levels on a volume per volume basis.  The SolidFire
-        cluster offers all of these things along with de-duplication, compression and an
-        architecture that takes full advantage of SSD's.</para>
-    <para>To configure and use a SolidFire cluster with Cinder modify your
-    <filename>cinder.conf</filename> file as shown below:</para>
-    <programlisting language="ini">
-    volume_driver=cinder.volume.drivers.solidfire.SolidFire
-    san_ip=172.17.1.182         # the address of your MVIP
-    san_login=sfadmin           # your cluster admin login
-    san_password=sfpassword     # your cluster admin password
-    </programlisting>
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+    <title>SolidFire</title>
+    <para>The SolidFire Cluster is a high performance all SSD iSCSI
+        storage device that provides massive scale out capability and
+        extreme fault tolerance. A key feature of the SolidFire
+        cluster is the ability to set and modify during operation
+        specific QoS levels on a volume for volume basis. The
+        SolidFire cluster offers this along with de-duplication,
+        compression, and an architecture that takes full advantage of
+        SSDs.</para>
+    <para>To configure the use of a SolidFire cluster with Block
+        Storage, modify your <filename>cinder.conf</filename> file as
+        follows:</para>
+    <programlisting language="ini">volume_driver=cinder.volume.drivers.solidfire.SolidFire
+san_ip=172.17.1.182         # the address of your MVIP
+san_login=sfadmin           # your cluster admin login
+san_password=sfpassword     # your cluster admin password
+sf_account_prefix=''        # prefix for tenant account creation on solidfire cluster (see warning below)</programlisting>
+    <warning>
+        <para>The SolidFire driver creates a unique account prefixed
+            with
+                <literal>$cinder-volume-service-hostname-$tenant-id</literal>
+            on the SolidFire cluster for each tenant that accesses the
+            cluster through the Volume API. Unfortunately, this
+            account formation results in issues for High Availability
+            (HA) installations and installations where the <systemitem
+                class="service">cinder-volume</systemitem> service can
+            move to a new node. HA installations can return an
+                <errortext>Account Not Found</errortext> error because
+            the call to the SolidFire cluster is not always going to
+            be sent from the same node. In installations where the
+                <systemitem class="service">cinder-volume</systemitem>
+            service moves to a new node, the same issue can occur when
+            you perform operations on existing volumes, such as clone,
+            extend, delete, and so on.</para>
+    </warning>
+    <tip>
+        <para>Set the <literal>sf_account_prefix</literal> option to
+            an empty string ('') in the
+                <filename>cinder.conf</filename> file. This setting
+            results in unique accounts being created on the SolidFire
+            cluster, but the accounts are prefixed with the tenant-id
+            or any unique identifier that you choose and are
+            independent of the host where the <systemitem
+                class="service">cinder-volume</systemitem> service
+            resides.</para>
+    </tip>
     <xi:include href="../../../common/tables/cinder-solidfire.xml"/>
 </section>
