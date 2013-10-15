@@ -296,8 +296,15 @@ hwclock -w</programlisting>
     <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install rabbitmq-server</userinput></screen>
     <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>yum install qpid-cpp-server memcached</userinput></screen>
 
-    <!-- FIXME ubuntu: configure and start/enable rabbitmq? -->
-
+    <note os="ubuntu;debian">
+      <para>
+        The <package>rabbitmq-server</package> package configures the RabbitMQ
+        service to start automatically. A user named <literal>guest</literal>,
+        with a default password of <literal>guest</literal>, is also created.
+        The <literal>guest</literal> account will be used when interacting with
+        RabbitMQ throughout this guide.
+      </para>
+    </note>
     <para os="fedora;centos;rhel">Disable Qpid authentication by setting the
       value of the <literal>auth</literal> configuration key to
         <literal>no</literal> in the <filename>/etc/qpidd.conf</filename>
