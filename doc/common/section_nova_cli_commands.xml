@@ -13,7 +13,8 @@
         <screen><computeroutput>nova [--version] [--debug] [--os-cache] [--timings]
      [--timeout &lt;seconds>] [--os-username &lt;auth-user-name>]
      [--os-password &lt;auth-password>]
-     [--os-tenant-name &lt;auth-tenant-name>] [--os-auth-url &lt;auth-url>]
+     [--os-tenant-name &lt;auth-tenant-name>]
+     [--os-tenant-id &lt;auth-tenant-id>] [--os-auth-url &lt;auth-url>]
      [--os-region-name &lt;region-name>] [--os-auth-system &lt;auth-system>]
      [--service-type &lt;service-type>] [--service-name &lt;service-name>]
      [--volume-service-name &lt;volume-service-name>]
@@ -125,6 +126,7 @@
     keypair-delete      Delete keypair by its name.
     keypair-list        Print a list of keypairs for a user.
     list                List active servers.
+    list-secgroup       List Security Group(s) of a server.
     live-migration      Migrates a running instance to a new machine.
     lock                Lock a server.
     meta                Set or Delete metadata on a server.
@@ -209,6 +211,7 @@
     volume-type-create  Create a new volume type.
     volume-type-delete  Delete a specific flavor.
     volume-type-list    Print a list of available 'volume types'.
+    volume-update       Update volume attachment.
     x509-create-cert    Create x509 cert for a user in tenant.
     x509-get-root-cert  Fetches the x509 root cert.
     bash-completion     Prints out a list of all possible commands and flags
@@ -216,6 +219,17 @@
                         for tab-completion of commands.
     help                Display help about this program or one of its
                         subcommands.
+    cell-capacities     Get cell capacities for all cells or a given cell.
+    cell-show           Show details of a given cell.
+    host-servers-migrate
+                        Migrate all instances of the specified host to other
+                        available hosts.
+    net                 Show a network
+    net-create          Create a network
+    net-delete          Delete a network
+    net-list            List networks
+    force-delete        Force delete a server.
+    restore             Restore a soft-deleted server.
     baremetal-interface-add
                         Add a network interface to a baremetal node.
     baremetal-interface-list
@@ -231,17 +245,17 @@
                         Print a list of available baremetal nodes.
     baremetal-node-show
                         Show information about a baremetal node.
+    migration-list      Print a list of migrations.
+    host-meta           Set or Delete metadata on all instances of a host.
     host-evacuate       Evacuate all instances from failed host to specified
                         one.
     instance-action     Show an action.
     instance-action-list
                         List actions on a server.
     list-extensions     List all the os-api extensions that are available.
-    host-meta           Set or Delete metadata on all instances of a host.
-    net                 Show a network.
-    net-create          Create a network.
-    net-delete          Delete a network.
-    net-list            List networks</computeroutput></screen>
+    instance-action     Show an action.
+    instance-action-list
+                        List actions on a server.</computeroutput></screen>
     </example>
     <example>
         <title>Optional arguments</title>
@@ -257,6 +271,8 @@
                         Defaults to env[OS_PASSWORD].
   --os-tenant-name &lt;auth-tenant-name>
                         Defaults to env[OS_TENANT_NAME].
+  --os-tenant-id &lt;auth-tenant-id>
+                        Defaults to env[OS_TENANT_ID].
   --os-auth-url &lt;auth-url>
                         Defaults to env[OS_AUTH_URL].
   --os-region-name &lt;region-name>
