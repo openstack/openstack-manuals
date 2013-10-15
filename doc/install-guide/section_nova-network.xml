@@ -10,8 +10,8 @@
   chosen the simplest production-ready configuration for this guide: the legacy
   networking in OpenStack Compute, with a flat network, that takes care of DHCP
   and is made highly available by splitting across multiple hosts.</para>
-  <note><para>If you require the full software-defined networking stack, see
-  <link linkend="ch_neutron">Using Neutron Networking</link></para></note>
+  <note><para>If you require the full software-defined networking stack, see <link
+        linkend="ch_neutron">Using Neutron Networking</link>.</para></note>
 <procedure>
     <step><para>After performing initial configuration of the compute node,
        install the appropriate  packages for compute networking.</para>
@@ -58,22 +58,17 @@ public_interface = br100
   <step>
   <para>Now, restart the relevant services:</para>
 
-  <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service nova-api restart</userinput>
-<prompt>#</prompt> <userinput>service nova-consoleauth restart</userinput>
-<prompt>#</prompt> <userinput>service nova-novncproxy restart</userinput>
+  <screen os="ubuntu;debian">
 <prompt>#</prompt> <userinput>service nova-network restart</userinput></screen>
-  <screen os='centos;rhel;fedora'><prompt>#</prompt> <userinput>service openstack-nova-api restart</userinput>
-<prompt>#</prompt> <userinput>service openstack-nova-consoleauth restart</userinput>
-<prompt>#</prompt> <userinput>service openstack-nova-novncproxy restart</userinput>
+  <screen os='centos;rhel;fedora'>
 <prompt>#</prompt> <userinput>service openstack-nova-network restart</userinput></screen>
-  <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl restart openstack-nova-api.service</userinput>
-<prompt>#</prompt> <userinput>systemctl restart openstack-nova-consoleauth.service</userinput>
-<prompt>#</prompt> <userinput>systemctl restart openstack-nova-novncproxy.service</userinput>
+  <screen os="opensuse">
 <prompt>#</prompt> <userinput>systemctl restart openstack-nova-network.service</userinput></screen>
   </step>
   <step>
-  <para>You must run the command that creates the network that the virtual machines use.
+  <para>You must run the command that creates the network that the virtual machines use. 
   You only need to run this command once, from a place where your admin user credentials are loaded.</para>
+  <screen>source keystonerc</screen>
   <screen><prompt>#</prompt> <userinput>nova network-create vmnet --fixed-range-v4=10.0.0.0/24 --bridge-interface=br100 --multi-host=T</userinput></screen>
   </step>
 </procedure>
