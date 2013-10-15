@@ -5,49 +5,125 @@
   <?dbhtml stop-chunking?>
   <section xml:id="vmware-intro">
     <title>Introduction</title>
-    <para>OpenStack Compute supports the VMware vSphere product family. This section describes the
-      additional configuration required to launch VMWare-based virtual machine images. vSphere
-      versions 4.1 and greater are supported.</para>
-    <para>There are two OpenStack Compute drivers that can be used with vSphere:</para>
-    <itemizedlist>
+    <para>OpenStack Compute supports the VMware vSphere product family and enables access to advanced
+      features such as vMotion, High Availability, and Dynamic Resource Scheduling (DRS). This
+      section describes the configuration required to launch VMware-based virtual machine images.
+      vSphere versions 4.1 and later are supported.</para>
+    <para>The VMware vCenter Driver enables <systemitem class="service">nova-compute</systemitem> to
+      communicate with a VMware vCenter server managing one or more ESX host clusters. The
+      driver aggregates the ESX hosts in each cluster to present one large hypervisor entity for each
+      cluster to the Compute scheduler. Because individual ESX hosts are not exposed to the
+      scheduler, Compute schedules to the granularity of clusters and vCenter uses DRS to select the
+      actual ESX host within the cluster. When a virtual machine makes its way into a vCenter
+      cluster, it can take advantage of all the features that come with vSphere.</para>
+    <para>The following sections describe how to configure the VMware vCenter driver.</para>
+  </section>
+  <section xml:id="vmware_architecture">
+    <title>High Level Architecture</title>
+    <para>The following diagram shows a high-level view of the VMware driver architecture:</para>
+    <para><inlinemediaobject>
+        <imageobject>
+          <imagedata fileref="../../common/figures/vmware-nova-driver-architecture.jpg" format="JPG" contentwidth="6in"/>
+        </imageobject>
+      </inlinemediaobject></para>
+    <para>In the previous diagram, the OpenStack Compute Scheduler sees three hypervisors, each
+      corresponding to a cluster in vCenter. <systemitem class="service">Nova-compute</systemitem> contains the VMware Driver and as the
+      figure shows, you can run with multiple <systemitem class="service">nova-compute</systemitem> services. While Compute schedules
+      at the granularity of a cluster, the VMware driver inside <systemitem class="service">nova-compute</systemitem> interacts with the
+      vCenter APIs to select an appropriate ESX host within the cluster. Internally, vCenter
+      uses DRS for placement.</para>
+    <para>The VMware vCenter Driver also interacts with the OpenStack Image Service to copy
+      VMDK images from the Image Service back end store. The dotted line in the figure represents the
+      copying of VMDK images from the OpenStack Image Service to the vSphere datastore. VMDK images
+      are cached in the datastore so the copy operation is only required the first time that the
+      VMDK image is used.</para>
+    <para>After a VM is booted by OpenStack into a vSphere cluster, the VM becomes visible in vCenter
+      and can access vSphere advanced features. At the same time, the VM is visible in
+      the OpenStack Dashboard and you can manage it as you would any other OpenStack VM.
+      You perform advanced vSphere operations in vCenter while you configure OpenStack resources
+      such as VMs through the OpenStack dashboard.</para>
+    <para>Not shown in the figure above is how networking fits into the architecture. Both
+        <systemitem class="service">nova-network</systemitem> and the OpenStack Networking Service
+      are supported. For details, see <xref linkend="VMWare_networking"/>.</para>
+  </section>
+  <section xml:id="vmware_configuration_overview">
+    <title>Overview of Configuration</title>
+    <para>Here are the basic steps to get started with the VMware vCenter Driver:</para>
+    <orderedlist>
       <listitem>
-        <para>vmwareapi.VMwareVCDriver: a driver that lets <systemitem class="service"
-            >nova-compute</systemitem> communicate with a VMware vCenter server managing a cluster
-          of ESX hosts. With this driver and access to shared storage, advanced vSphere features
-          like vMotion, High Availability, and Dynamic Resource Scheduling (DRS) are available. With
-          this driver, one <systemitem class="service">nova-compute</systemitem> service is run per
-          vCenter cluster.</para>
+        <para>Ensure vCenter is configured correctly. See <xref linkend="vmware-prereqs"/>.</para>
       </listitem>
       <listitem>
-        <para>vmwareapi.VMwareESXDriver: a driver that lets <systemitem class="service"
-            >nova-compute</systemitem> communicate directly to an ESX host, but does not support
-          advanced VMware features. With this driver, one <systemitem class="service"
-            >nova-compute</systemitem> service is run per ESX host.</para>
+        <para>Configure <filename>nova.conf</filename> for the VMware vCenter Driver. See <xref
+            linkend="VMWareVCDriver_details"/>.</para>
       </listitem>
-    </itemizedlist>
+      <listitem>
+        <para>Load desired VMDK images into the OpenStack Image Service. See <xref
+            linkend="VMWare_images"/>.</para>
+      </listitem>
+      <listitem>
+        <para>Configure networking with either <systemitem class="service">nova-network</systemitem>
+          or the OpenStack Networking Service. See <xref linkend="VMWare_networking"/>.</para>
+      </listitem>
+    </orderedlist>
   </section>
   <section xml:id="vmware-prereqs">
-    <title>Prerequisites</title>
-    <para>You will need to install the following software installed on each <systemitem
-        class="service">nova-compute</systemitem> node:</para>
-    <itemizedlist>
-      <listitem>
-        <para>python-suds: This software is needed by the <systemitem class="service"
-            >nova-compute</systemitem> service to communicate with vSphere APIs. If not installed,
-          the <systemitem class="service">nova-compute</systemitem> service shuts down with the
-          message: "Unable to import suds".</para>
-      </listitem>
-    </itemizedlist>
-    <para>On Ubuntu, this package can be installed by running:</para>
-    <screen><prompt>$</prompt> <userinput>sudo apt-get install python-suds</userinput></screen>
+    <title>Prerequisites and Limitations</title>
+    <para>The following is a list of items that will help prepare a vSphere environment to run with
+      the VMware vCenter Driver.</para>
+    <para>
+      <itemizedlist>
+        <listitem>
+          <para><emphasis role="bold">vCenter Inventory</emphasis>: Make sure any vCenter used by
+            OpenStack contains a single datacenter. (this is a temporary limitation that will be
+            removed in a future Havana stable release).</para>
+        </listitem>
+        <listitem>
+          <para><emphasis role="bold">DRS</emphasis>: For any cluster that contains multiple ESX
+            hosts, enable DRS with "Fully automated" placement turned on.</para>
+        </listitem>
+        <listitem>
+          <para><emphasis role="bold">Shared Storage</emphasis>: Only shared storage is supported
+            and datastores must be shared among all hosts in a cluster. It is recommended to remove
+            datastores not intended for OpenStack from clusters being configured for OpenStack.
+            Currently, a single datastore can be used per cluster (this is a temporary limitation
+            that will be removed in a future Havana stable release).</para>
+        </listitem>
+        <listitem>
+          <para><emphasis role="bold">Clusters and Datastores</emphasis>: Clusters and datastores
+            used by OpenStack should not be used for other purposes. Using clusters or datastores
+            for other purposes will cause OpenStack to display incorrect usage information.</para>
+        </listitem>
+        <listitem>
+          <para><emphasis role="bold">Networking</emphasis>: The networking configuration depends on
+            the desired networking model. See <xref linkend="VMWare_networking"/>.</para>
+        </listitem>
+        <listitem>
+          <para><emphasis role="bold">Security Groups</emphasis>: Security Groups are not supported
+            if <systemitem class="service">nova-network</systemitem> is used. Security Groups are
+            only supported if the VMware driver is used in conjunction with the OpenStack Networking
+            Service running the NSX plugin.</para>
+        </listitem>
+        <listitem>
+          <para><emphasis role="bold">VNC</emphasis>: Enable port range 5900 - 6000 for VNC
+            Connections on every ESX Host in all the clusters under OpenStack control. See the
+            following link for more details on enabling VNC: <link
+              xlink:href="http://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;cmd=displayKC&amp;externalId=1246"
+              >http://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;cmd=displayKC&amp;externalId=1246</link></para>
+        </listitem>
+      </itemizedlist>
+    </para>
   </section>
   <section xml:id="VMWareVCDriver_details">
-    <title>Using the VMwareVCDriver</title>
-    <para>This section covers details of using the VMwareVCDriver.</para>
+    <title>Using the VMware vCenter Driver</title>
+    <para>Use the VMware vCenter Driver (VMwareVCDriver) to connect OpenStack Compute with vCenter.
+      This is the recommended configuration and allows access through vCenter to advanced vSphere
+      features like vMotion, High Availability, and Dynamic Resource Scheduling (DRS).</para>
     <section xml:id="VMWareVCDriver_configuration_options">
-      <title>VMWareVCDriver configuration options</title>
-      <para>When using the VMwareVCDriver (i.e., vCenter) with OpenStack Compute, <filename>nova.conf</filename> must
-        include the following VMWare-specific config options:</para>
+      <title>VMwareVCDriver configuration options</title>
+      <para>When using the VMwareVCDriver (i.e., vCenter) with OpenStack Compute,
+          <filename>nova.conf</filename> must include the following VMware-specific config
+        options:</para>
 
       <programlisting language="ini">[DEFAULT]
 compute_driver=vmwareapi.VMwareVCDriver
@@ -57,201 +133,244 @@ host_ip=&lt;vCenter host IP&gt;
 host_username=&lt;vCenter username&gt;
 host_password=&lt;vCenter password&gt;
 cluster_name=&lt;vCenter cluster name&gt;
+datastore_regex=&lt;optional datastore regex&gt;
 wsdl_location=http://127.0.0.1:8080/vmware/SDK/wsdl/vim25/vimService.wsdl</programlisting>
-      <para>Remember that you will have only one <systemitem class="service"
-          >nova-compute</systemitem> service per cluster. It is recommended that this host run as a
-        VM with high-availability enabled as part of that same cluster.</para>
-      <para>Also note that many of the <filename>nova.conf</filename>
-         options mentioned elsewhere in this document that are relevant
-         to libvirt do not apply to using this driver.</para>
-    </section>
-    <section xml:id="vmware-wsdl-workaround">
-      <title>vSphere 5.0 (and below) additional setup</title>
-      <para>Users of vSphere 5.0 or earlier will need to locally host their WSDL files.
-        These steps are applicable for vCenter 5.0 or ESXi 5.0 and you may
-        accomplish this by either mirroring the WSDL from the vCenter or ESXi
-        server you intend on using, or you may download the SDK directly from VMware.
-        These are both workaround steps used to fix a <link
-         xlink:href="http://kb.vmware.com/selfservice/microsites/search.do?cmd=displayKC&amp;externalId=2010507"
-         >known issue</link> with the WSDL that was resolved in later versions.
+      <para>Most of the configuration options above are straightforward to understand, but here are
+        a few points to note:</para>
+      <para>
+        <itemizedlist>
+          <listitem>
+            <para>Clusters: The vCenter driver can support multiple clusters. To use more than one
+              cluster, simply add multiple <code>cluster_name</code> lines in
+                <filename>nova.conf</filename> with the appropriate cluster name. Clusters and
+              datastores used by the vCenter driver should not contain any VMs other than those
+              created by the driver.</para>
+          </listitem>
+          <listitem>
+            <para>Datastores: The <code>datastore_regex</code> field specifies the datastores to use
+              with Compute. For example, <code>datastore_regex="nas.*"</code> selects all the
+              datastores that have a name starting with "nas". If this line is omitted, Compute uses
+              the first datastore returned by the vSphere API. It is recommended not to use this
+              field and instead remove datastores that are not intended for OpenStack.</para>
+          </listitem>
+        </itemizedlist>
       </para>
-      <procedure>
-        <title>Mirror WSDL from vCenter (or ESXi)</title>
-        <step>
-          <para>You'll need the IP address for your vCenter or
-          ESXi host that you'll be mirroring the files from. Set the
-          shell variable <code>VMWAREAPI_IP</code> to the IP address
-          to allow you to cut and paste commands from these instructions:
-          <screen><prompt>$</prompt> <userinput>export VMWAREAPI_IP=&lt;your_vsphere_host_ip&gt;</userinput></screen>
-          </para>
-        </step>
-        <step>
-          <para>
-            Create a local file system directory to hold the WSDL files in.
-        <screen><prompt>$</prompt> <userinput>mkdir -p /opt/stack/vmware/wsdl/5.0</userinput></screen>
-          </para>
-        </step>
-        <step>
-          <para>Change into the new directory.
-        <screen><prompt>$</prompt> <userinput>cd /opt/stack/vmware/wsdl/5.0</userinput></screen>
-          </para>
-        </step>
-        <step>
-          <para>Install a command line tool that can download the the files like
-          <command>wget</command>. Install it with your OS specific tools.
-          </para>
-        </step>
-        <step>
-          <para>
-            Download the files to the local file cache.
-        <programlisting language="bash">wget  --no-check-certificate https://$VMWAREAPI_IP/sdk/vimService.wsdl
-wget  --no-check-certificate https://$VMWAREAPI_IP/sdk/vim.wsdl
-wget  --no-check-certificate https://$VMWAREAPI_IP/sdk/core-types.xsd
-wget  --no-check-certificate https://$VMWAREAPI_IP/sdk/query-messagetypes.xsd
-wget  --no-check-certificate https://$VMWAREAPI_IP/sdk/query-types.xsd
-wget  --no-check-certificate https://$VMWAREAPI_IP/sdk/vim-messagetypes.xsd
-wget  --no-check-certificate https://$VMWAREAPI_IP/sdk/reflect-messagetypes.xsd
-wget  --no-check-certificate https://$VMWAREAPI_IP/sdk/reflect-types.xsd</programlisting>
-        There will be two files that did not fetch properly
-        <filename>reflect-types.xsd</filename> and
-        <filename>reflect-messagetypes.xsd</filename>. These two files
-        will need to be stubbed out. The following XML listing can be
-        used to replace the missing file content. The XML parser
-        underneath Python can be very particular and if you put a
-        space in the wrong place it can break the parser. Copy the
-        contents below carefully and watch the formatting carefully.
-        <programlisting language="xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-  &lt;schema
-     targetNamespace="urn:reflect"
-     xmlns="http://www.w3.org/2001/XMLSchema"
-     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-     elementFormDefault="qualified"&gt;
-  &lt;/schema&gt;
-        </programlisting>
-          </para>
-        </step>
-        <step>
-          <para>
-            Now that the files are locally present, tell
-            the driver to look for the SOAP service WSDLs in the local
-            file system and not on the remote vSphere server. The
-            following setting should be added to the
-            <filename>nova.conf</filename> for your nova-compute node:
-        <programlisting language="ini">[vmware]
-wsdl_location=file:///opt/stack/vmware/wsdl/5.0/vimService.wsdl</programlisting>
-          </para>
-        </step>
-      </procedure>
-      <para>Alternatively, download the version appropriate SDK from
-      <link
-      xlink:href="http://www.vmware.com/support/developer/vc-sdk/"
-      >http://www.vmware.com/support/developer/vc-sdk/</link> and copy
-      it into <filename>/opt/stack/vmware</filename>. You should
-      ensure that the WSDL is available, in for example
-      <filename>/opt/stack/vmware/SDK/wsdl/vim25/vimService.wsdl</filename>.
-      Below we will point <filename>nova.conf</filename> to fetch this
-      WSDL file from the local file system using a URL.</para>
-        <para>When using the VMwareVCDriver (i.e vCenter) with OpenStack Compute with vSphere
-        version 5.0 or below, <filename>nova.conf</filename> must include the following extra config option:</para>
-      <programlisting language="ini">[vmware]
-wsdl_location=file:///opt/stack/vmware/SDK/wsdl/vim25/vimService.wsdl</programlisting>
-    </section>
-    <section xml:id="VMwareVCDriver_limitations">
-      <title>Requirements and limitations</title>
-      <para>The VMwareVCDriver is new in Grizzly, and as a result there are some important
-        deployment requirements and limitations to be aware of. In many cases, these items will be
-        addressed in future releases.</para>
-      <itemizedlist>
-        <listitem>
-          <para>Each cluster can only be configured with a single Datastore. If multiple Datastores
-            are configured, the first one returned via the vSphere API will be used.</para>
-        </listitem>
-        <listitem>
-          <para>Because a single <systemitem
-          class="service">nova-compute</systemitem> is used per
-          cluster, the <systemitem
-          class="service">nova-scheduler</systemitem> views this as a
-          single host with resources amounting to the aggregate
-          resources of all ESX hosts managed by the cluster. This may
-          result in unexpected behavior depending on your choice of
-          scheduler.</para>
-        </listitem>
-        <listitem>
-          <para>Security Groups are not supported if <systemitem
-          class="service">nova-network</systemitem> is used. Security
-          Groups are only supported if the VMware driver is used in
-          conjunction with the OpenStack Networking Service running
-          the Nicira NVP plugin.</para>
-        </listitem>
-      </itemizedlist>
-    </section>
-  </section>
-
-  <section xml:id="VMWareESXDriver_details">
-    <title>Using the VMwareESXDriver</title>
-    <para>This section covers details of using the VMwareESXDriver.</para>
-    <section xml:id="VMWareESXDriver_configuration_options">
-      <title>VMWareESXDriver configuration options</title>
-      <para>When using the VMwareESXDriver (i.e., no vCenter) with OpenStack Compute, configure
-        <filename>nova.conf</filename> with the following VMWare-specific config options:</para>
-
-      <programlisting language="ini">[DEFAULT]
-compute_driver=vmwareapi.VMwareESXDriver
-
-[vmware]
-host_ip=&lt;ESXi host IP&gt;
-host_username=&lt;ESXi host username&gt;
-host_password=&lt;ESXi host password&gt;
-wsdl_location=http://127.0.0.1:8080/vmware/SDK/wsdl/vim25/vimService.wsdl</programlisting>
-      <para>Remember that you will have one <systemitem class="service">nova-compute</systemitem>
-        service per ESXi host. It is recommended that this host run as a VM on the same ESXi host it
-        is managing.</para>
-      <para>Also note that many of the <filename>nova.conf</filename> options mentioned elsewhere in this document that
-        are relevant to libvirt do not apply to using this driver.</para>
-    </section>
-    <section xml:id="VMwareESXDriver_limitations">
-      <title>Requirements and limitations</title>
-      <para>The ESXDriver is unable to take advantage of many of the advanced capabilities
-        associated with the vSphere platform, namely vMotion, High Availability, and Dynamic
-        Resource Scheduler (DRS).</para>
+      <para>A <systemitem class="service">nova-compute</systemitem> service can control one or more
+        clusters containing multiple ESX hosts, making <systemitem class="service"
+          >nova-compute</systemitem> a critical service from a high availabilility perspective.
+        Since it is possible for the host running nova-compute to fail while the vCenter and ESX
+        resources are still alive, it is recommended that <systemitem class="service"
+          >nova-compute</systemitem> be protected against host failures like other critical
+        OpenStack Services.</para>
+      <para>Also note that many of the <filename>nova.conf</filename> options mentioned elsewhere in
+        this document that are relevant to libvirt do not apply to using this driver.</para>
+      <para>Environments using vSphere 5.0 and below require additional configuration. See <xref
+          linkend="VMWare_additional_config"/>.</para>
     </section>
   </section>
 
   <section xml:id="VMWare_images">
     <title>Images with VMware vSphere</title>
-    <para>When using either VMware driver, images should be uploaded to the OpenStack Image Service
-      in the VMDK format. Both thick and thin images are currently supported and all images must be
-      flat (i.e. contained within 1 file). For example:</para>
-    <para>To load a thick image with a SCSI adaptor:</para>
-    <screen><prompt>$</prompt> <userinput>glance image-create name="ubuntu-thick-scsi" disk_format=vmdk container_format=bare \
-is_public=true --property vmware_adaptertype="lsiLogic" \
+    <para>The vCenter Driver supports images in the VMDK format. Disks in this format can be
+      obtained from VMware Fusion or from an ESX environment. It is also possible to convert other
+      formats, such as qcow2, to the VMDK format using the <code>qemu-img</code> utility. Once a
+      VMDK disk is available, it should be loaded into the OpenStack Image Service and can then used
+      with the VMware vCenter Driver. The following sections provide additional details on the exact
+      types of disks supported and the commands used for conversion and upload.</para>
+    <section xml:id="VMware_supported_images">
+      <title>Supported Image Types</title>
+      <para>Images should be uploaded to the OpenStack Image Service in the VMDK format. The
+        following VMDK disk types are supported:</para>
+      <itemizedlist>
+        <listitem>
+          <para><emphasis role="italic">VMFS Flat Disks</emphasis> (includes thin, thick,
+            zeroedthick, and eagerzeroedthick). Note that once a VMFS thin disk is exported from
+            VMFS to a non-VMFS location, like the OpenStack Image Service, it becomes a preallocated
+            flat disk. This has an impact on the transfer time from the OpenStack Image Service to
+            the datastore when the full preallocated flat disk, rather than the thin disk, has to be
+            transferred.</para>
+        </listitem>
+        <listitem>
+          <para><emphasis role="italic">Monolithic Sparse disks</emphasis>. Sparse disks get
+            imported from the OpenStack Image Service into ESX as thin provisioned disks. Monolithic
+            Sparse disks can be obtained from VMware Fusion or can be created by converting from
+            other virtual disk formats using the <code>qemu-img</code> utility.</para>
+        </listitem>
+      </itemizedlist>
+      <para>The following table shows the <code>vmware_disktype</code> property that applies to each
+        of the supported VMDK disk types:</para>
+      <para>
+        <table frame="all">
+          <title>OpenStack Image Service Disk Type Settings</title>
+          <tgroup cols="2">
+            <colspec colname="c1" colnum="1" colwidth="1*"/>
+            <colspec colname="c2" colnum="2" colwidth="2.85*"/>
+            <thead>
+              <row>
+                <entry>vmware_disktype property</entry>
+                <entry>VMDK disk type</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry>sparse</entry>
+                <entry>
+                  <para>Monolithic Sparse</para>
+                </entry>
+              </row>
+              <row>
+                <entry>thin</entry>
+                <entry>
+                  <para>VMFS flat, thin provisioned</para>
+                </entry>
+              </row>
+              <row>
+                <entry>preallocated (default)</entry>
+                <entry>
+                  <para>VMFS flat, thick/zeroedthick/eagerzeroedthick</para>
+                </entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </table>
+      </para>
+      <para>The <code>vmware_disktype</code> property is set when an image is loaded into the
+        OpenStack Image Service. For example, the following command creates a Monolithic Sparse
+        image by setting <code>vmware_disktype</code> to "sparse":</para>
+      <screen><prompt>$</prompt> <userinput>glance image-create name="ubuntu-sparse" disk_format=vmdk \
+container_format=bare is_public=true \
+--property vmware_disktype="sparse" \
+--property vmware_ostype="ubuntu64Guest" &lt; ubuntuLTS-sparse.vmdk</userinput></screen>
+      <para>Note that specifying "thin" does not provide any advantage over "preallocated" with the
+        current version of the driver. Future versions however may restore the thin properties of
+        the disk after it is downloaded to a vSphere datastore.</para>
+    </section>
+    <section xml:id="VMware_converting_images">
+      <title>Converting and Loading Images</title>
+      <para>Using the <code>qemu-img</code> utility, disk images in several formats (e.g. qcow2) can
+        be converted to the VMDK format.</para>
+      <para>For example, the following command can be used to convert a <link
+          xlink:href="http://cloud-images.ubuntu.com/precise/current/precise-server-cloudimg-amd64-disk1.img"
+          >qcow2 Ubuntu Precise cloud image</link>:</para>
+      <screen><prompt>$</prompt> <userinput>qemu-img convert -f raw ~/Downloads/precise-server-cloudimg-amd64-disk1.img \
+-O vmdk precise-server-cloudimg-amd64-disk1.vmdk</userinput></screen>
+      <para>VMDK disks converted via <code>qemu-img</code> are <emphasis role="italic"
+          >always</emphasis> monolithic sparse VMDK disks with an IDE adapter type. Using the above
+        example of the Precise Ubuntu image after the <code>qemu-img</code> conversion, the command
+        to upload the VMDK disk should be something like:</para>
+      <screen><prompt>$</prompt> <userinput>glance image-create --name precise-cloud --is-public=True \
+--container-format=bare --disk-format=vmdk \
+--property vmware_disktype="sparse" \
+--property vmware_adaptertype="ide" &lt; \
+precise-server-cloudimg-amd64-disk1.vmdk</userinput></screen>
+      <para>Note that the <code>vmware_disktype</code> is set to <emphasis role="italic"
+          >sparse</emphasis> and the <code>vmware_adaptertype</code> is set to <emphasis
+          role="italic">ide</emphasis> in the command above.</para>
+      <para>If the image did not come from the <code>qemu-img</code> utility, the
+          <code>vmware_disktype</code> and <code>vmware_adaptertype</code> might be different. To
+        determine the image adapter type from an image file, use the following command and look for
+        the <code>ddb.adapterType=</code> line :</para>
+      <para>
+        <screen><prompt>$</prompt> <userinput>head -20 &lt;vmdk file name></userinput></screen>
+      </para>
+      <para>Assuming a preallocated disk type and an iSCSI "lsiLogic" adapter type, below is the
+        command to upload the VMDK disk:</para>
+      <screen><prompt>$</prompt> <userinput>glance image-create name="ubuntu-thick-scsi" disk_format=vmdk \
+container_format=bare is_public=true \
+--property vmware_adaptertype="lsiLogic" \
 --property vmware_disktype="preallocated" \
 --property vmware_ostype="ubuntu64Guest" &lt; ubuntuLTS-flat.vmdk</userinput></screen>
-    <para>To load a thin image with an IDE adaptor:</para>
-    <screen><prompt>$</prompt> <userinput>glance image-create name="unbuntu-thin-ide" disk_format=vmdk container_format=bare \
-is_public=true --property vmware_adaptertype="ide" \
---property vmware_disktype="thin" \
---property vmware_ostype="ubuntu64Guest" &lt; unbuntuLTS-thin-flat.vmdk</userinput></screen>
-    <para>The complete list of supported vmware disk properties is documented in the Image
-      Management section. It's critical that the adaptertype is correct; In fact, the image will not
-      boot with the incorrect adaptertype. If you have the meta-data VMDK file, the
-      ddb.adapterType property specifies the adaptertype. The default adaptertype is "lsilogic"
-      which is SCSI.</para>
+      <para>Currently, there is a limitation that OS boot VMDK disks with an IDE adapter type cannot
+        be attached to a virtual SCSI controller and likewise disks with one of the SCSI adapter
+        types (e.g. busLogic, lsiLogic) cannot be attached to the IDE controller. Therefore, as the
+        examples above show, it is important to set the <code>vmware_adaptertype</code> property
+        correctly. The default adapter type is "lsiLogic" which is SCSI, so you may omit the
+        vmware_adaptertype property if you are certain that the image adapter type is
+        "lsiLogic."</para>
+    </section>
+    <section xml:id="VMware_tagging_images">
+      <title>Tagging VMware Images</title>
+      <para>In a mixed hypervisor environment, OpenStack Compute uses the
+          <code>hypervisor_type</code> tag to match images to the correct hypervisor type. For
+        VMware images, set the hypervisor type to "vmware" as shown below. Other valid hypervisor
+        types include: xen, qemu, kvm, lxc, uml, hyperv, and powervm.</para>
+      <screen><prompt>$</prompt> <userinput>glance image-create name="ubuntu-thick-scsi" disk_format=vmdk \
+container_format=bare is_public=true \
+--property vmware_adaptertype="lsiLogic" \
+--property vmware_disktype="preallocated" \
+--property hypervisor_type="vmware" \
+--property vmware_ostype="ubuntu64Guest" &lt; ubuntuLTS-flat.vmdk</userinput></screen>
+    </section>
+    <section xml:id="VMware_optimizing_images">
+      <title>Optimizing Images</title>
+      <para>Monolithic Sparse disks are considerably faster to download but have the overhead of an
+        additional conversion step. When imported into ESX, sparse disks get converted to VMFS flat
+        thin provisioned disks. The download and conversion steps only affect the first launched
+        instance that uses the sparse disk image. The converted disk image is cached, so subsequent
+        instances that use this disk image can simply use the cached version.</para>
+      <para>To avoid the conversion step (at the cost of longer download times) consider converting
+        sparse disks to thin provisioned or preallocated disks before loading them into the
+        OpenStack Image Service. Below are some tools that can be used to pre-convert sparse
+        disks.</para>
+      <orderedlist>
+        <listitem><para><emphasis role="bold">Using vSphere CLI (or sometimes called the remote CLI or rCLI)
+              tools</emphasis></para>
+            <para>Assuming that the sparse disk is made available on a datastore accessible by an
+            ESX host, the following command converts it to preallocated format:</para>
+          <programlisting>vmkfstools --server=ip_of_some_ESX_host -i /vmfs/volumes/datastore1/sparse.vmdk /vmfs/volumes/datastore1/converted.vmdk</programlisting>
+          <para>(Note that the vifs tool from the same CLI package can be used to upload the disk to
+            be converted. The vifs tool can also be used to download the converted disk if
+            necessary.)</para>
+        </listitem>
+        <listitem><para><emphasis role="bold">Using vmkfstools directly on the ESX host</emphasis></para>
+          <para>If the SSH service is enabled on an ESX host, the sparse disk can be uploaded to the
+            ESX datastore via scp and the vmkfstools local to the ESX host can use used to perform
+            the conversion: (After logging in to the host via ssh)</para>
+          <programlisting>vmkfstools -i /vmfs/volumes/datastore1/sparse.vmdk /vmfs/volumes/datastore1/converted.vmdk</programlisting>
+        </listitem>
+        <listitem>
+          <para><emphasis role="bold">vmware-vdiskmanager</emphasis></para>
+          <para><code>vmware-vdiskmanager</code> is a utility that comes bundled with VMware Fusion and VMware
+            Workstation. Below is an example of converting a sparse disk to preallocated format:</para>
+          <programlisting>'/Applications/VMware Fusion.app/Contents/Library/vmware-vdiskmanager' -r sparse.vmdk -t 4 converted.vmdk</programlisting>
+          <para>In all of the above cases, the converted vmdk is actually a pair of files: the
+            descriptor file <emphasis role="italic">converted.vmdk</emphasis> and the actual virtual
+            disk data file <emphasis role="italic">converted-flat.vmdk</emphasis>. The file to be
+            uploaded to the OpenStack Image Service is <emphasis role="italic"
+              >converted-flat.vmdk</emphasis>.</para>
+        </listitem>
+      </orderedlist>
+    </section>
+    <section xml:id="VMware_copying_images">
+      <title>Image Handling</title>
+      <para>The ESX hypervisor requires a copy of the VMDK file in order to boot up a virtual
+        machine. As a result, the vCenter OpenStack Compute driver must download the VMDK via HTTP
+        from the OpenStack Image Service to a datastore that is visible to the hypervisor. To
+        optimize this process, the first time a VMDK file is used, it gets cached in the datastore.
+        Subsequent virtual machines that need the VMDK use the cached version and don't have to copy
+        the file again from the OpenStack Image Service.</para>
+      <para>Even with a cached VMDK, there is still a copy operation from the cache location to the
+        hypervisor file directory in the shared datastore. To avoid this copy, boot the image in
+        linked_clone mode. To learn how to enable this mode, see <xref linkend="VMWare_config"/>.
+        Note also that it is possible to override the linked_clone mode on a per-image basis by
+        using the <code>vmware_linked_clone</code> property in the OpenStack Image Service.</para>
+    </section>
   </section>
 
   <section xml:id="VMWare_networking">
     <title>Networking with VMware vSphere</title>
-    <para>The VMware driver support networking with both Nova-Network and the OpenStack Networking
-      Service.</para>
+    <para>The VMware driver supports networking with both <systemitem class="service">nova-network</systemitem> and the OpenStack Networking Service.</para>
     <itemizedlist>
       <listitem>
-        <para>If using nova-network with the FlatManager or FlatDHCPManager, before provisioning
-          VMs, create a port group with the same name as the <literal>flat_network_bridge</literal> value in
-          <filename>nova.conf</filename> (default is <literal>br100</literal>).
-          All VM NICs will be attached to this port group.</para>
+        <para>If using <systemitem class="service">nova-network</systemitem> with the FlatManager or
+          FlatDHCPManager, before provisioning VMs, create a port group with the same name as the
+            <literal>flat_network_bridge</literal> value in <filename>nova.conf</filename> (default
+          is <literal>br100</literal>). All VM NICs will be attached to this port group. Ensure the
+          flat interface of the node running <systemitem class="service">nova-network</systemitem> has a path to this
+          network.</para>
       </listitem>
       <listitem>
-        <para>If using nova-network with the VlanManager, before provisioning VMs, make sure the
+        <para>If using <systemitem class="service">nova-network</systemitem> with the VlanManager, before provisioning VMs, make sure the
           <literal>vlan_interface</literal> configuration option is set to match the ESX host interface
           that will handle VLAN-tagged VM traffic. OpenStack Compute will automatically create the
           corresponding port groups.</para>
@@ -270,10 +389,122 @@ is_public=true --property vmware_adaptertype="ide" \
 
   <section xml:id="VMWare_volumes">
     <title>Volumes with VMware vSphere</title>
-    <para>The VMware driver supports attaching volumes from the OpenStack Block
-    Storage service. 'iscsi' volume driver provides limited support and can be
-    used only for attachments. VMware VMDK driver of OpenStack Block Storage
-    can be used for managing volumes based out of vSphere datastores.</para>
+    <para>The VMware driver supports attaching volumes from the OpenStack Block Storage service. The
+      VMware VMDK driver for OpenStack Block Storage is recommended and should be used for managing
+      volumes based on vSphere datastores. More information about the VMware VMDK driver can be
+      found at: <link
+        xlink:href="http://docs.openstack.org/trunk/config-reference/content/vmware-vmdk-driver.html"
+        >VMware VMDK Driver</link>. There is also a "iscsi" volume driver which provides limited
+      support and can be used only for attachments.</para>
+  </section>
+  <section xml:id="VMWare_additional_config">
+    <title>vSphere 5.0 (and below) additional setup</title>
+    <para>Users of vSphere 5.0 or earlier will need to locally host their WSDL files. These steps
+      are applicable for vCenter 5.0 or ESXi 5.0 and you may accomplish this by either mirroring the
+      WSDL from the vCenter or ESXi server you intend on using, or you may download the SDK directly
+      from VMware. These are both workaround steps used to fix a <link
+        xlink:href="http://kb.vmware.com/selfservice/microsites/search.do?cmd=displayKC&amp;externalId=2010507"
+        >known issue</link> with the WSDL that was resolved in later versions.</para>
+    <procedure>
+      <title>Mirror WSDL from vCenter (or ESXi)</title>
+      <step>
+        <para>You'll need the IP address for your vCenter or ESXi host that you'll be mirroring the
+          files from. Set the shell variable <code>VMWAREAPI_IP</code> to the IP address to allow
+          you to cut and paste commands from these instructions:
+          <screen><prompt>$</prompt> <userinput>export VMWAREAPI_IP=&lt;your_vsphere_host_ip&gt;</userinput></screen>
+        </para>
+      </step>
+      <step>
+        <para>Create a local file system directory to hold the WSDL files in.
+          <screen><prompt>$</prompt> <userinput>mkdir -p /opt/stack/vmware/wsdl/5.0</userinput></screen>
+        </para>
+      </step>
+      <step>
+        <para>Change into the new directory.
+          <screen><prompt>$</prompt> <userinput>cd /opt/stack/vmware/wsdl/5.0</userinput></screen>
+        </para>
+      </step>
+      <step>
+        <para>Install a command line tool that can download the files like <command>wget</command>.
+          Install it with your OS specific tools.</para>
+      </step>
+      <step>
+        <para>Download the files to the local file cache.
+          <programlisting language="bash">wget  --no-check-certificate https://$VMWAREAPI_IP/sdk/vimService.wsdl
+wget  --no-check-certificate https://$VMWAREAPI_IP/sdk/vim.wsdl
+wget  --no-check-certificate https://$VMWAREAPI_IP/sdk/core-types.xsd
+wget  --no-check-certificate https://$VMWAREAPI_IP/sdk/query-messagetypes.xsd
+wget  --no-check-certificate https://$VMWAREAPI_IP/sdk/query-types.xsd
+wget  --no-check-certificate https://$VMWAREAPI_IP/sdk/vim-messagetypes.xsd
+wget  --no-check-certificate https://$VMWAREAPI_IP/sdk/reflect-messagetypes.xsd
+wget  --no-check-certificate https://$VMWAREAPI_IP/sdk/reflect-types.xsd</programlisting>
+          There will be two files that did not fetch properly <filename>reflect-types.xsd</filename>
+          and <filename>reflect-messagetypes.xsd</filename>. These two files will need to be stubbed
+          out. The following XML listing can be used to replace the missing file content. The XML
+          parser underneath Python can be very particular and if you put a space in the wrong place
+          it can break the parser. Copy the contents below carefully and watch the formatting
+          carefully.
+          <programlisting language="xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+  &lt;schema
+     targetNamespace="urn:reflect"
+     xmlns="http://www.w3.org/2001/XMLSchema"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+     elementFormDefault="qualified"&gt;
+  &lt;/schema&gt;
+        </programlisting>
+        </para>
+      </step>
+      <step>
+        <para>Now that the files are locally present, tell the driver to look for the SOAP service
+          WSDLs in the local file system and not on the remote vSphere server. The following setting
+          should be added to the <filename>nova.conf</filename> for your <systemitem class="service">nova-compute</systemitem> node:
+          <programlisting language="ini">[vmware]
+wsdl_location=file:///opt/stack/vmware/wsdl/5.0/vimService.wsdl</programlisting>
+        </para>
+      </step>
+    </procedure>
+    <para>Alternatively, download the version appropriate SDK from <link
+        xlink:href="http://www.vmware.com/support/developer/vc-sdk/"
+        >http://www.vmware.com/support/developer/vc-sdk/</link> and copy it into
+        <filename>/opt/stack/vmware</filename>. You should ensure that the WSDL is available, in for
+      example <filename>/opt/stack/vmware/SDK/wsdl/vim25/vimService.wsdl</filename>. Below we will
+      point <filename>nova.conf</filename> to fetch this WSDL file from the local file system using
+      a URL.</para>
+    <para>When using the VMwareVCDriver (i.e vCenter) with OpenStack Compute with vSphere version
+      5.0 or below, <filename>nova.conf</filename> must include the following extra config
+      option:</para>
+    <programlisting language="ini">[vmware]
+wsdl_location=file:///opt/stack/vmware/SDK/wsdl/vim25/vimService.wsdl</programlisting>
+  </section>
+  <section xml:id="VMWareESXDriver_details">
+    <title>Using the VMware ESX Driver</title>
+    <para>This section covers details of using the VMwareESXDriver. Note that the ESX Driver has not
+      been extensively tested and is not recommended. To configure the VMware vCenter Driver
+      instead, see <xref linkend="VMWareVCDriver_details"/></para>
+    <section xml:id="VMWareESXDriver_configuration_options">
+      <title>VMwareESXDriver configuration options</title>
+      <para>When using the VMwareESXDriver (i.e., no vCenter) with OpenStack Compute, configure
+          <filename>nova.conf</filename> with the following VMware-specific config options:</para>
+      <programlisting language="ini">[DEFAULT]
+compute_driver=vmwareapi.VMwareESXDriver
+
+[vmware]
+host_ip=&lt;ESXi host IP&gt;
+host_username=&lt;ESXi host username&gt;
+host_password=&lt;ESXi host password&gt;
+wsdl_location=http://127.0.0.1:8080/vmware/SDK/wsdl/vim25/vimService.wsdl</programlisting>
+      <para>Remember that you will have one <systemitem class="service">nova-compute</systemitem>
+        service per ESXi host. It is recommended that this host run as a VM on the same ESXi host it
+        is managing.</para>
+      <para>Also note that many of the <filename>nova.conf</filename> options mentioned elsewhere in
+        this document that are relevant to libvirt do not apply to using this driver.</para>
+    </section>
+    <section xml:id="VMwareESXDriver_limitations">
+      <title>Requirements and limitations</title>
+      <para>The ESXDriver is unable to take advantage of many of the advanced capabilities
+        associated with the vSphere platform, namely vMotion, High Availability, and Dynamic
+        Resource Scheduler (DRS).</para>
+    </section>
   </section>
   <section xml:id="VMWare_config">
     <title>Configuration Reference</title>
