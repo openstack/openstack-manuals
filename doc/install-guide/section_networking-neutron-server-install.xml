@@ -11,24 +11,22 @@
             <step>
                 <para>Install neutron-server and CLI for accessing the
                     API:</para>
-                <screen><prompt>$</prompt><userinput>sudo apt-get install neutron-server python-neutronclient</userinput> </screen>
+                <screen os="ubuntu;debian"><prompt>$</prompt> <userinput>sudo apt-get install neutron-server python-neutronclient</userinput> </screen>
+                <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-neutron python-neutronclient</userinput></screen>
             </step>
             <step>
                 <para>You must also install the plugin you choose to use,
                     for example:</para>
-                <screen><prompt>$</prompt><userinput>sudo apt-get install neutron-plugin-&lt;plugin-name&gt;</userinput></screen>
-                <!--<para>See
-              <xref linkend="flexibility"/>.</para>-->
+                <screen os="ubuntu;debian"><prompt>$</prompt><userinput>sudo apt-get install neutron-plugin-openvswitch</userinput></screen>
+                <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-neutron-openvswitch</userinput></screen>
             </step>
             <step>
                 <para>Most plugins require that you install a database and
-                    configure it in a plugin configuration file. For
-                    example:</para>
-                <screen><prompt>$</prompt><userinput>sudo apt-get install mysql-server python-mysqldb python-sqlalchemy</userinput></screen>
+                    configure it in a plugin configuration file.</para>
                 <para>If you already use a database for other OpenStack
                     services, you only need to create a neutron
                     database:</para>
-                <screen><prompt>$</prompt><userinput>mysql -u &lt;user&gt; -p &lt;pass&gt; -e “create database neutron”</userinput></screen>
+                <screen os="ubuntu;debian"><prompt>$</prompt><userinput>mysql -u &lt;user&gt; -p &lt;pass&gt; -e “create database neutron”</userinput></screen>
             </step>
             <step>
                 <para>Configure the database in the plugin’s configuration
@@ -54,26 +52,8 @@
             agents to communicate with the main <systemitem
                 class="service">neutron-server</systemitem> process. If
             your plugin requires agents, they can use the same RPC
-            mechanism used by other OpenStack components like Nova.</para>
-        <para>
-            <procedure>
-                <title>To use RabbitMQ as the message bus for RPC</title>
-                <step>
-                    <para>Install RabbitMQ on a host reachable through the
-                        management network (this step is not necessary if
-                        RabbitMQ has already been installed for another
-                        service, like Compute):</para>
-                    <screen><prompt>$</prompt><userinput>sudo apt-get install rabbitmq-server</userinput>
-<prompt>$</prompt><userinput>rabbitmqctl change_password guest &lt;password&gt;</userinput></screen>
-                </step>
-                <step>
-                    <para>Update
-                        <filename>/etc/neutron/neutron.conf</filename> with
-                        the following values:</para>
-                    <screen><computeroutput>rabbit_host=&lt;mgmt-IP-of-rabbit-host&gt; rabbit_password=&lt;password&gt; rabbit_userid=guest</computeroutput></screen>
-                </step>
-            </procedure>
-        </para>
+            mechanism used by other OpenStack components like Nova. 
+        These are installed in the Basic Operating System Configuration.</para>
         <important>
             <para>The <filename>/etc/neutron/neutron.conf</filename>
                 file should be copied to and used on all hosts running
@@ -90,10 +70,6 @@
             Tunneling is easier to deploy because it does not require
             configuring VLANs on network switches.</para>
         <para>The following procedure uses tunneling:</para>
-        <!--<para>See
-          <xref linkend="ch_adv_config"/> for more
-         advanced deployment options:
-         </para>-->
         <para>
             <procedure>
                 <title>To configure OpenStack Networking to use the OVS
