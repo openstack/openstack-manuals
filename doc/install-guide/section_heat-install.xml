@@ -9,7 +9,7 @@
       <para>Install the Orchestration Service on the controller node:</para>
       <screen os="ubuntu;deb"><prompt>#</prompt> <userinput>apt-get install heat-api heat-api-cfn</userinput></screen>
       <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-heat-api FIXME</userinput></screen>
-      <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install openstack-heat-api FIXME</userinput></screen>
+      <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install openstack-heat-api openstack-heat-api-cfn</userinput></screen>
     </step>
 
     <step>
@@ -20,7 +20,7 @@
       <literal><replaceable>HEAT_DBPASS</replaceable></literal>
       with a suitable password for the database user.</para>
       <screen os="rhel;centos;fedora;opensuse"><prompt>#</prompt> <userinput>openstack-config --set /etc/heat/heat.conf \
-  DEFAULT sql_connection mysql://heat:<replaceable>HEAT_DBPASS</replaceable>@controller/heat</userinput></screen>
+  database connection mysql://heat:<replaceable>HEAT_DBPASS</replaceable>@controller/heat</userinput></screen>
       <para os="ubuntu">Edit <filename>/etc/heat/heat.conf</filename> and change the <literal>[DEFAULT]</literal> section.</para>
       <programlisting os="ubuntu" language="ini">
 [DEFAULT]
@@ -30,35 +30,26 @@ sql_connection = mysql://heat:HEAT_DBPASS@controller/heat
       </programlisting>
     </step>
 
-    <step os="rhel;centos;fedora;opensuse">
-      <para>Use the <command>openstack-db</command> command to create the
-      database and tables, as well as a database user called
-      <literal>keystone</literal> to connect to the database. Replace
-      <literal><replaceable>HEAT_DBPASS</replaceable></literal>
-      with the same password used in the previous step.</para>
-      <screen><prompt>#</prompt> <userinput>openstack-db --init --service heat --password <replaceable>HEAT_DBPASS</replaceable></userinput></screen>
-    </step>
-
-    <step os="ubuntu">
+    <step>
       <para>First, we need to create a database user called <literal>heat</literal>, by logging in
       as root using the password we set earlier.</para>
       <screen><prompt>#</prompt> <userinput>mysql -u root -p</userinput>
 <prompt>mysql></prompt> <userinput>CREATE DATABASE heat;</userinput>
 <prompt>mysql></prompt> <userinput>GRANT ALL PRIVILEGES ON heat.* TO 'heat'@'localhost' \
-IDENTIFIED BY 'HEAT_DBPASS';</userinput></screen>
+IDENTIFIED BY 'HEAT_DBPASS';
+FLUSH PRIVILEGES;</userinput></screen>
     </step>
-    <step os="ubuntu">
-      <para>We now start the heat service and create its tables.</para>
-      <screen><prompt>#</prompt> <userinput>heat-manage db_sync</userinput>
-<prompt>#</prompt> <userinput>service heat-api restart</userinput>
-<prompt>#</prompt> <userinput>service heat-api-cfn restart</userinput></screen>
+    <step os="fedora;centos;rhel;ubuntu;debian">
+      <para>We now create the heat service tables:
+      <screen><prompt>#</prompt> <userinput>heat-manage db_sync</userinput></screen>
+      </para>
     </step>
 
     <step><para>Create a user called <literal>heat</literal> that the Orchestration
       Service can use to authenticate with the Identity Service. Use the
       <literal>service</literal> tenant and give the user the
       <literal>admin</literal> role.</para>
-      <screen><prompt>#</prompt> <userinput>keystone user-create --name=heat --pass=<replaceable>HEAT_DBPASS</replaceable> --email=<replaceable>heat@example.com</replaceable></userinput>
+      <screen><prompt>#</prompt> <userinput>keystone user-create --name=heat --pass=<replaceable>HEAT_PASS</replaceable> --email=<replaceable>heat@example.com</replaceable></userinput>
 <prompt>#</prompt> <userinput>keystone user-role-add --user=heat --tenant=service --role=admin</userinput></screen></step>
 
 
@@ -67,14 +58,14 @@ IDENTIFIED BY 'HEAT_DBPASS';</userinput></screen>
  and change the <literal>[filter:authtoken]</literal> section.</para>
       <programlisting language="ini">
 ...
-[keystone_authtoken]
-paste.filter_factory = heat.common.auth_password:filter_factory
+[filter:authtoken]
+paste.filter_factory = heat.common.auth_token:filter_factory
 auth_host = controller
 auth_port = 35357
 auth_protocol = http
 admin_tenant_name = service
 admin_user = heat
-admin_password = HEAT_DBPASS
+admin_password = HEAT_PASS
 ...
       </programlisting>
 
@@ -111,7 +102,6 @@ admin_password = HEAT_DBPASS
     </step>
 
 
-
     <step os="rhel;fedora;centos;opensuse"><para>Start the <literal>heat-api</literal> and
       <literal>heat-api-cfn</literal> services and configure them to
       start when the system boots.</para>
@@ -122,9 +112,9 @@ admin_password = HEAT_DBPASS
       <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl start openstack-heat-api.service</userinput>
 <prompt>#</prompt> <userinput>systemctl start openstack-heat-api-cfn.service</userinput>
 <prompt>#</prompt> <userinput>systemctl enable openstack-heat-api.service</userinput>
-<prompt>#</prompt> <userinput>systemctl enable openstack-heat-api-cfn.service</userinput></screen></step>
+<prompt>#</prompt> <userinput>systemctl enable openstack-heat-api-cfn.service</userinput></screen>
 
-
+    </step>
 
   </procedure>
 </section>
