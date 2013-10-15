@@ -14,54 +14,55 @@
     <screen><computeroutput> neutron [--version] [-v] [-q] [-h] [--debug]
          [--os-auth-strategy &lt;auth-strategy>] [--os-auth-url &lt;auth-url>]
          [--os-tenant-name &lt;auth-tenant-name>]
+         [--os-tenant-id &lt;auth-tenant-id>]
          [--os-username &lt;auth-username>] [--os-password &lt;auth-password>]
          [--os-region-name &lt;auth-region-name>] [--os-token &lt;token>]
-         [--endpoint-type &lt;endpoint-type>] [--os-url &lt;url>] [--insecure]</computeroutput></screen>
+         [--endpoint-type &lt;endpoint-type>] [--os-url &lt;url>]
+         [--os-cacert &lt;ca-certificate>] [--insecure]</computeroutput></screen>
   </example>
   <example>
-    <title>Optional arguments</title>
-
-    <screen><computeroutput>  --version             show program's version number and exit
-  -v, --verbose         Increase verbosity of output. Can be repeated.
-  -q, --quiet           suppress output except warnings and errors
-  -h, --help            show this help message and exit
-  --debug               show tracebacks on errors
-  --os-auth-strategy &lt;auth-strategy>
-                        Authentication strategy (Env: OS_AUTH_STRATEGY,
-                        default keystone). For now, any other value will
-                        disable the authentication
-  --os-auth-url &lt;auth-url>
-                        Authentication URL (Env: OS_AUTH_URL)
-  --os-tenant-name &lt;auth-tenant-name>
-                        Authentication tenant name (Env: OS_TENANT_NAME)
-  --os-username &lt;auth-username>
-                        Authentication username (Env: OS_USERNAME)
-  --os-password &lt;auth-password>
-                        Authentication password (Env: OS_PASSWORD)
-  --os-region-name &lt;auth-region-name>
-                        Authentication region name (Env: OS_REGION_NAME)
-  --os-token &lt;token>    Defaults to env[OS_TOKEN]
-  --endpoint-type &lt;endpoint-type>
-                        Defaults to env[OS_ENDPOINT_TYPE] or publicURL.
-  --os-url &lt;url>        Defaults to env[OS_URL]
-  --insecure            Explicitly allow neutronclient to perform "insecure"
-                        SSL (https) requests. The server's certificate will
-                        not be verified against any certificate authorities.
-                        This option should be used with caution.</computeroutput></screen>
-  </example>
-  <example>
-    <title>Commands</title>
+    <title>Positional Arguments</title>
 
 
-    <screen><computeroutput>  agent-delete                   Delete a given agent.
+    <screen><computeroutput>
+  agent-delete                   Delete a given agent.
   agent-list                     List agents.
   agent-show                     Show information of a given agent.
   agent-update                   Update a given agent.
+  cisco-credential-create        Creates a credential.
+  cisco-credential-delete        Delete a  given credential.
+  cisco-credential-list          List credentials that belong to a given tenant.
+  cisco-credential-show          Show information of a given credential.
+  cisco-network-profile-create   Creates a network profile.
+  cisco-network-profile-delete   Delete a given network profile.
+  cisco-network-profile-list     List network profiles that belong to a given tenant.
+  cisco-network-profile-show     Show information of a given network profile.
+  cisco-network-profile-update   Update network profile's information.
+  cisco-policy-profile-list      List policy profiles that belong to a given tenant.
+  cisco-policy-profile-show      Show information of a given policy profile.
+  cisco-policy-profile-update    Update policy profile's information.
   dhcp-agent-list-hosting-net    List DHCP agents hosting a network.
   dhcp-agent-network-add         Add a network to a DHCP agent.
   dhcp-agent-network-remove      Remove a network from a DHCP agent.
   ext-list                       List all extensions.
   ext-show                       Show information of a given resource.
+  firewall-create                Create a firewall.
+  firewall-delete                Delete a given firewall.
+  firewall-list                  List firewalls that belong to a given tenant.
+  firewall-policy-create         Create a firewall policy.
+  firewall-policy-delete         Delete a given firewall policy.
+  firewall-policy-insert-rule    Insert a rule into a given firewall policy.
+  firewall-policy-list           List firewall policies that belong to a given tenant.
+  firewall-policy-remove-rule    Remove a rule from a given firewall policy.
+  firewall-policy-show           Show information of a given firewall policy.
+  firewall-policy-update         Update a given firewall policy.
+  firewall-rule-create           Create a firewall rule.
+  firewall-rule-delete           Delete a given firewall rule.
+  firewall-rule-list             List firewall rules that belong to a given tenant.
+  firewall-rule-show             Show information of a given firewall rule.
+  firewall-rule-update           Update a given firewall rule.
+  firewall-show                  Show information of a given firewall.
+  firewall-update                Update a given firewall.
   floatingip-associate           Create a mapping between a floating ip and a fixed ip.
   floatingip-create              Create a floating ip for a given tenant.
   floatingip-delete              Delete a given floating ip.
@@ -69,9 +70,15 @@
   floatingip-list                List floating ips that belong to a given tenant.
   floatingip-show                Show information of a given floating ip.
   help                           print detailed help for another command
+  ipsec-site-connection-create   Create an IPsecSiteConnection.
+  ipsec-site-connection-delete   Delete a given IPsecSiteConnection.
+  ipsec-site-connection-list     List IPsecSiteConnections that belong to a given tenant.
+  ipsec-site-connection-show     Show information of a given IPsecSiteConnection.
+  ipsec-site-connection-update   Update a given IPsecSiteConnection.
   l3-agent-list-hosting-router   List L3 agents hosting a router.
   l3-agent-router-add            Add a router to a L3 agent.
   l3-agent-router-remove         Remove a router from a L3 agent.
+  lb-agent-hosting-pool          Get loadbalancer agent hosting a pool.
   lb-healthmonitor-associate     Create a mapping between a health monitor and a pool.
   lb-healthmonitor-create        Create a healthmonitor.
   lb-healthmonitor-delete        Delete a given healthmonitor.
@@ -87,6 +94,7 @@
   lb-pool-create                 Create a pool.
   lb-pool-delete                 Delete a given pool.
   lb-pool-list                   List pools that belong to a given tenant.
+  lb-pool-list-on-agent          List the pools on a loadbalancer agent.
   lb-pool-show                   Show information of a given pool.
   lb-pool-stats                  Retrieve stats for a given pool.
   lb-pool-update                 Update a given pool.
@@ -95,7 +103,7 @@
   lb-vip-list                    List vips that belong to a given tenant.
   lb-vip-show                    Show information of a given vip.
   lb-vip-update                  Update a given vip.
-<?sbr?>  net-create                     Create a network for a given tenant.
+  net-create                     Create a network for a given tenant.
   net-delete                     Delete a given network.
   net-external-list              List external networks that belong to a given tenant.
   net-gateway-connect            Add an internal network interface to a router.
@@ -142,10 +150,60 @@
   security-group-rule-show       Show information of a given security group rule.
   security-group-show            Show information of a given security group.
   security-group-update          Update a given security group.
+  service-provider-list          List service providers.
   subnet-create                  Create a subnet for a given tenant.
   subnet-delete                  Delete a given subnet.
   subnet-list                    List networks that belong to a given tenant.
   subnet-show                    Show information of a given subnet.
-  subnet-update                  Update subnet's information.</computeroutput></screen>
+  subnet-update                  Update subnet's information.
+  vpn-ikepolicy-create           Create an IKEPolicy.
+  vpn-ikepolicy-delete           Delete a given IKE Policy.
+  vpn-ikepolicy-list             List IKEPolicies that belong to a tenant.
+  vpn-ikepolicy-show             Show information of a given IKEPolicy.
+  vpn-ikepolicy-update           Update a given IKE Policy.
+  vpn-ipsecpolicy-create         Create an ipsecpolicy.
+  vpn-ipsecpolicy-delete         Delete a given ipsecpolicy.
+  vpn-ipsecpolicy-list           List ipsecpolicies that belongs to a given tenant connection.
+  vpn-ipsecpolicy-show           Show information of a given ipsecpolicy.
+  vpn-ipsecpolicy-update         Update a given ipsec policy.
+  vpn-service-create             Create a VPNService.
+  vpn-service-delete             Delete a given VPNService.
+  vpn-service-list               List VPNService configurations that belong to a given tenant.
+  vpn-service-show               Show information of a given VPNService.
+  vpn-service-update             Update a given VPNService.
+</computeroutput></screen>
+  </example>
+  <example>
+    <title>Optional arguments</title>
+
+    <screen><computeroutput>  --version             show program's version number and exit
+  -v, --verbose         Increase verbosity of output. Can be repeated.
+  -q, --quiet           suppress output except warnings and errors
+  -h, --help            show this help message and exit
+  --debug               show tracebacks on errors
+  --os-auth-strategy &lt;auth-strategy>
+                        Authentication strategy (Env: OS_AUTH_STRATEGY,
+                        default keystone). For now, any other value will
+                        disable the authentication
+  --os-auth-url &lt;auth-url>
+                        Authentication URL (Env: OS_AUTH_URL)
+  --os-tenant-name &lt;auth-tenant-name>
+                        Authentication tenant name (Env: OS_TENANT_NAME)
+  --os-tenant-id &lt;auth-tenant-id>
+                        Authentication tenant name (Env: OS_TENANT_ID)
+  --os-username &lt;auth-username>
+                        Authentication username (Env: OS_USERNAME)
+  --os-password &lt;auth-password>
+                        Authentication password (Env: OS_PASSWORD)
+  --os-region-name &lt;auth-region-name>
+                        Authentication region name (Env: OS_REGION_NAME)
+  --os-token &lt;token>    Defaults to env[OS_TOKEN]
+  --endpoint-type &lt;endpoint-type>
+                        Defaults to env[OS_ENDPOINT_TYPE] or publicURL.
+  --os-url &lt;url>        Defaults to env[OS_URL]
+  --insecure            Explicitly allow neutronclient to perform "insecure"
+                        SSL (https) requests. The server's certificate will
+                        not be verified against any certificate authorities.
+                        This option should be used with caution.</computeroutput></screen>
   </example>
 </section>
