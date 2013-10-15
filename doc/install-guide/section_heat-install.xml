@@ -36,8 +36,9 @@ sql_connection = mysql://heat:HEAT_DBPASS@controller/heat
       <screen><prompt>#</prompt> <userinput>mysql -u root -p</userinput>
 <prompt>mysql></prompt> <userinput>CREATE DATABASE heat;</userinput>
 <prompt>mysql></prompt> <userinput>GRANT ALL PRIVILEGES ON heat.* TO 'heat'@'localhost' \
-IDENTIFIED BY 'HEAT_DBPASS';
-FLUSH PRIVILEGES;</userinput></screen>
+IDENTIFIED BY '<replaceable>HEAT_DBPASS</replaceable>';</userinput>
+<prompt>mysql></prompt> <userinput>GRANT ALL PRIVILEGES ON heat.* TO 'heat'@'%' \
+IDENTIFIED BY '<replaceable>HEAT_DBPASS</replaceable>';</userinput></screen>
     </step>
     <step os="fedora;centos;rhel;ubuntu;debian">
       <para>We now create the heat service tables:

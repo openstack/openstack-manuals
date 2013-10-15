@@ -67,7 +67,9 @@ rabbit_port = 5672
     <para>Set up the cinder database.</para>
     <programlisting>CREATE DATABASE cinder;
 GRANT ALL PRIVILEGES ON cinder.* TO 'cinder'@'localhost' \
-IDENTIFIED BY 'password';
+IDENTIFIED BY '<replaceable>CINDER_DBPASS</replaceable>';
+GRANT ALL PRIVILEGES ON cinder.* TO 'cinder'@'%' \
+IDENTIFIED BY '<replaceable>CINDER_DBPASS</replaceable>';
 FLUSH PRIVILEGES;</programlisting>
     <para>Add a filter entry to the devices section
     <filename>/etc/lvm/lvm.conf</filename> to keep LVM from scanning devices
