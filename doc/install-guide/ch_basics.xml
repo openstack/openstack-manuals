@@ -291,13 +291,29 @@ hwclock -w</programlisting>
     <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl enable mysql.service</userinput>
 <prompt>#</prompt> <userinput>systemctl start mysql.service</userinput></screen>
 
-    <para os="rhel;centos;fedora;opensuse">Finally, it's a good idea to set a root password for your
+    <para os="rhel;centos;fedora;opensuse">Finally, you should set a root password for your
         <phrase os="rhel;fedora;centos">MySQL</phrase>
         <phrase os="opensuse">MariaDB</phrase>
       database. The OpenStack programs that set up databases and tables will
-      prompt you for this password if it's set.</para>
+      prompt you for this password if it's set. You also need to delete the
+      anonymous users that are created when the database is first started.
+      Otherwise, you will get database connection problems when following
+      the instructions in this guide. You can do both of these with the
+      <command>mysql_secure_installation</command> command.</para>
 
-    <screen os="rhel;centos;fedora;opensuse"><prompt>#</prompt> <userinput>mysqladmin password <replaceable>newPassword</replaceable></userinput></screen>
+    <para os="ubuntu;debian">You need to delete the anonymous users
+      that are created when the database is first started. Otherwise, you
+      will get database connection problems when following the instructions
+      in this guide. You can do this with the
+      <command>mysql_secure_installation</command> command.</para>
+
+    <screen><prompt>#</prompt> <userinput>mysql_secure_installation</userinput></screen>
+
+    <para><phrase os="rhel;centos;fedora;opensuse">If you have not already
+      set a root database password, press enter when first prompted for the
+      password.</phrase> This command will present a number of options for
+      you to secure your database installation. Answer yes to all of them
+      unless you have a good reason to do otherwise.</para>
   </section>
   <section xml:id="basics-queue">
     <title>Messaging Server</title>
