@@ -175,8 +175,7 @@
         <step>
             <para>Now you can delete the volume, as follows:</para>
             <screen><prompt>$</prompt> <userinput>cinder delete my-new-volume</userinput></screen>
-            <para>The delete command does not return any
-                output.</para>
+            <para>The delete command does not return any output.</para>
         </step>
         <step>
             <para>List the volumes again, and note that the status of
@@ -200,4 +199,157 @@
 +--------------------------------------+-----------+-----------------+------+-------------+----------+-------------+</computeroutput></screen>
         </step>
     </procedure></section>
+    <section xml:id="cli_transfer_volumes" os="enduser">
+        <title>Transfer volumes</title>
+        <para>A volume can be transferred from one owner to another using the <command>cinder
+                transfer*</command> commands. The basic process is:</para>
+        <para>
+            <orderedlist>
+                <listitem>
+                    <para>The volume donor (or original owner) creates a transfer request, then
+                        sends the created transfer ID and authorisation key to the volume
+                        recipient.</para>
+                </listitem>
+                <listitem>
+                    <para>The volume recipient (or new owner) accepts the transfer using the ID and
+                        key.</para>
+                </listitem>
+            </orderedlist>
+        </para>
+        <para>Use cases include:</para>
+        <para>
+            <itemizedlist>
+                <listitem>
+                    <para>Creating a custom bootable volume or a volume with a large data set, and then
+                        transferring it to the end customer.</para>
+                </listitem>
+                <listitem>
+                    <para>For bulk import of data to the cloud, the data ingress system can create a new
+                        Block Storage volume, copy the data from the physical device, and then transfer
+                        ownership of the device to the end user.</para>
+                </listitem>
+            </itemizedlist>
+        </para>
+        <procedure>
+            <title>Create a volume transfer request</title>
+            <step><para>While logged in as the volume donor, list available volumes:</para>
+                <screen><prompt>$</prompt> <userinput>cinder list</userinput>
+<computeroutput>+--------------------------------------+-----------+--------------+------+-------------+----------+-------------+
+|                  ID                  |   Status  | Display Name | Size | Volume Type | Bootable | Attached to |
++--------------------------------------+-----------+--------------+------+-------------+----------+-------------+
+| 72bfce9f-cacf-477a-a092-bf57a7712165 |   error   |     None     |  1   |     None    |  false   |             |
+| a1cdace0-08e4-4dc7-b9dc-457e9bcfe25f | available |     None     |  1   |     None    |  false   |             |
++--------------------------------------+-----------+--------------+------+-------------+----------+-------------+</computeroutput></screen>
+            </step>
+            <step><para>As the volume donor, request a volume transfer authorization code for a specific volume, as
+                follows:</para>
+                <screen><prompt>$</prompt> <userinput>cinder transfer-create <replaceable>volumeID</replaceable></userinput></screen>
+                <para>The volume must be in an ‘available’ state or the request will be denied. If the
+                    transfer request is valid in the database (that is, it has not expired or been
+                    deleted), the volume is placed in an ‘awaiting transfer’ state.  For example:</para>
+                <screen><prompt>$</prompt> <userinput>cinder transfer-create a1cdace0-08e4-4dc7-b9dc-457e9bcfe25f</userinput>
+<computeroutput>+------------+--------------------------------------+
+|  Property  |                Value                 |
++------------+--------------------------------------+
+|  auth_key  |           b2c8e585cbc68a80           |
+| created_at |      2013-10-14T15:20:10.121458      |
+|     id     | 6e4e9aa4-bed5-4f94-8f76-df43232f44dc |
+|    name    |                 None                 |
+| volume_id  | a1cdace0-08e4-4dc7-b9dc-457e9bcfe25f |
++------------+--------------------------------------+</computeroutput></screen>
+                <note><para>Optionally, you can specify a name for the transfer using the <code>--display-name
+                    <replaceable>displayName</replaceable></code> option.</para></note>
+            </step>
+            <step><para>Send the volume transfer ID and authorisation key to the new owner (for example, by
+                email).</para></step>
+            <step><para>View pending transfers, as follows:</para>
+                <screen><prompt>$</prompt> <userinput>cinder transfer-list</userinput>
+<computeroutput>+--------------------------------------+--------------------------------------+------+
+|               ID                     |             VolumeID                 | Name |
++--------------------------------------+--------------------------------------+------+
+| 6e4e9aa4-bed5-4f94-8f76-df43232f44dc | a1cdace0-08e4-4dc7-b9dc-457e9bcfe25f | None |
++--------------------------------------+--------------------------------------+------+</computeroutput></screen>
+            </step>
+            <step><para>After the volume recipient (or new owner) has accepted the transfer, you can see that the
+                    transfer is no longer available:</para>
+                <screen><prompt>$</prompt> <userinput>cinder transfer-list</userinput>
+<computeroutput>+----+-----------+------+
+| ID | Volume ID | Name |
++----+-----------+------+
++----+-----------+------+</computeroutput></screen>
+            </step>
+        </procedure>
+        <procedure>
+            <title>Accept a volume transfer request</title>
+            <step><para>As the volume recipient, you must first obtain the transfer ID and authorization key from the
+                original owner.
+            </para></step>
+            <step><para>Display the transfer request details using the ID, as follows:</para>
+                <screen><prompt>$</prompt> <userinput>cinder transfer-show <replaceable>transferID</replaceable></userinput></screen>
+                <para>For example:</para>
+                <screen><prompt>$</prompt> <userinput>cinder transfer-show 6e4e9aa4-bed5-4f94-8f76-df43232f44dc</userinput>
+<computeroutput>+------------+--------------------------------------+
+|  Property  |                Value                 |
++------------+--------------------------------------+
+| created_at |      2013-10-14T15:20:10.000000      |
+|     id     | 6e4e9aa4-bed5-4f94-8f76-df43232f44dc |
+|    name    |                 None                 |
+| volume_id  | a1cdace0-08e4-4dc7-b9dc-457e9bcfe25f |
++------------+--------------------------------------+</computeroutput></screen>
+            </step>
+            <step><para>Accept the request, as follows:</para>
+                <screen><prompt>$</prompt> <userinput>cinder transfer-accept <replaceable>transferID</replaceable> <replaceable>authKey</replaceable></userinput></screen>
+                <para>For example:</para>
+                <screen><prompt>$</prompt> <userinput>cinder transfer-accept 6e4e9aa4-bed5-4f94-8f76-df43232f44dc b2c8e585cbc68a80</userinput>
+<computeroutput>+-----------+--------------------------------------+
+|  Property |                Value                 |
++-----------+--------------------------------------+
+|     id    | 6e4e9aa4-bed5-4f94-8f76-df43232f44dc |
+|    name   |                 None                 |
+| volume_id | a1cdace0-08e4-4dc7-b9dc-457e9bcfe25f |
++-----------+--------------------------------------+</computeroutput></screen>
+                <note><para>If you do not have sufficient quota for the transfer, the transfer is refused.</para></note>
+            </step>
+        </procedure>
+        <procedure>
+            <title>Delete a transfer</title>
+            <step><para>List available volumes and their status, as follows:</para>
+                <screen><prompt>$</prompt> <userinput>cinder list</userinput>
+<computeroutput>+--------------------------------------+-------------------+--------------+------+-------------+----------+-------------+
+|                  ID                  |       Status      | Display Name | Size | Volume Type | Bootable | Attached to |
++--------------------------------------+-------------------+--------------+------+-------------+----------+-------------+
+| 72bfce9f-cacf-477a-a092-bf57a7712165 |       error       |     None     |  1   |     None    |  false   |             |
+| a1cdace0-08e4-4dc7-b9dc-457e9bcfe25f | awaiting-transfer |     None     |  1   |     None    |  false   |             |
++--------------------------------------+-------------------+--------------+------+-------------+----------+-------------+</computeroutput></screen>
+            </step>
+            <step><para>Find the matching transfer ID:</para>
+                <screen><prompt>$</prompt> <userinput>cinder transfer-list</userinput>
+<computeroutput>+--------------------------------------+--------------------------------------+------+
+|               ID                     |             VolumeID                 | Name |
++--------------------------------------+--------------------------------------+------+
+| a6da6888-7cdf-4291-9c08-8c1f22426b8a | a1cdace0-08e4-4dc7-b9dc-457e9bcfe25f | None |
++--------------------------------------+--------------------------------------+------+</computeroutput></screen>
+            </step>
+            <step><para>Delete the volume, as follows:</para>
+                <screen><prompt>$</prompt> <userinput>cinder transfer-delete <replaceable>transferID</replaceable></userinput></screen>
+                <para>For example:</para>
+                <screen><prompt>$</prompt> <userinput>cinder transfer-delete a6da6888-7cdf-4291-9c08-8c1f22426b8a</userinput></screen>
+            </step>
+            <step><para>You can now see that the transfer list is empty, and the volume is once more available for
+                transfer:</para>
+                <screen><prompt>$</prompt> <userinput>cinder transfer-list</userinput>
+<computeroutput>+----+-----------+------+
+| ID | Volume ID | Name |
++----+-----------+------+
++----+-----------+------+</computeroutput>
+<prompt>$</prompt> <userinput>cinder list</userinput>
+<computeroutput>+--------------------------------------+-----------+--------------+------+-------------+----------+-------------+
+|                  ID                  |   Status  | Display Name | Size | Volume Type | Bootable | Attached to |
++--------------------------------------+-----------+--------------+------+-------------+----------+-------------+
+| 72bfce9f-cacf-477a-a092-bf57a7712165 |   error   |     None     |  1   |     None    |  false   |             |
+| a1cdace0-08e4-4dc7-b9dc-457e9bcfe25f | available |     None     |  1   |     None    |  false   |             |
++--------------------------------------+-----------+--------------+------+-------------+----------+-------------+</computeroutput></screen>
+            </step>
+        </procedure>
+    </section>
 </section>
