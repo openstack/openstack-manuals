@@ -29,12 +29,13 @@
       communicate only with other OpenStack nodes. For simple test cases, you
       can use machines with only a single network interface card.</para>
 
-    <para>This section sets up networking on two networks with static IP
-      addresses and manually manages a list of hostnames on each machine. If you
-      manage a large network, you probably already have systems in place to
-      manage this. If so, you may skip this section, but note that the rest of this
-      guide assumes that each node can reach the other nodes on the internal
-      network using hostnames like <literal>controller</literal> and
+    <para>This section sets up networking on two networks with static
+      IP addresses and manually manages a list of host names on each
+      machine. If you manage a large network, you probably already
+      have systems in place to manage this. If so, you may skip this
+      section, but note that the rest of this guide assumes that each
+      node can reach the other nodes on the internal network using
+      host names like <literal>controller</literal> and
         <literal>compute1</literal>.</para>
     <para os="fedora">Start by disabling the <literal>NetworkManager</literal> service and
       enabling the <literal>network</literal> service. The
@@ -116,8 +117,7 @@ ONBOOT=yes</programlisting>
       <screen><prompt>#</prompt> <userinput>yast2 network</userinput></screen>
       <itemizedlist>
         <listitem>
-          <para>
-            Use the following parameters to set up the first ethernet card
+          <para>      Use the following parameters to set up the first ethernet card
             <emphasis role="bold">eth0</emphasis> for the internal network:
             <programlisting>
   Statically assigned IP Address
@@ -127,8 +127,7 @@ ONBOOT=yes</programlisting>
           </para>
         </listitem>
         <listitem>
-          <para>
-            Use the following parameters to set up the second ethernet card
+          <para>      Use the following parameters to set up the second ethernet card
             <emphasis role="bold">eth1</emphasis> for the external network:
             <programlisting>
   Statically assigned IP Address
@@ -138,12 +137,10 @@ ONBOOT=yes</programlisting>
           </para>
         </listitem>
         <listitem>
-          <para>
-            Setup a default route on the external network.
+          <para>      Setup a default route on the external network.
           </para>
         </listitem>
-      </itemizedlist>
-    </para>
+      </itemizedlist></para>
 
     <example os="ubuntu">
       <title><filename>/etc/network/interfaces</filename></title>
@@ -167,38 +164,38 @@ iface eth1 inet static
     <screen os="fedora;rhel;centos"><prompt>#</prompt> <userinput>service network restart</userinput></screen>
     <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl restart network.service</userinput></screen>
 
-    <para>Set the hostname of each machine. Name the controller node
+    <para>Set the host name of each machine. Name the controller node
         <literal>controller</literal> and the first compute node
-        <literal>compute1</literal>. These are the hostnames used in the
-      examples throughout this guide.</para>
-    <para os="ubuntu;debian;fedora;rhel;centos">Use the <command>hostname</command>
-         command to set the hostname:
-         <screen><prompt>#</prompt> <userinput>hostname controller</userinput></screen>
-    </para>
-    <para os="opensuse">Use <command>yast network</command> to set the hostname with YaST.
-    </para>
-    <para os="rhel;fedora;centos">To have the hostname change persist when the system
-      reboots, you need to specify it in the proper configuration file. In Red
-      Het Enterprise Linux, Centos, and older versions of Fedora, you set this
-      in the file <filename>/etc/sysconfig/network</filename>. Change the line
+        <literal>compute1</literal>. These are the host names used in
+      the examples throughout this guide.</para>
+    <para os="ubuntu;debian;fedora;rhel;centos">Use the
+        <command>hostname</command> command to set the host name:
+      <screen><prompt>#</prompt> <userinput>hostname controller</userinput></screen></para>
+    <para os="opensuse">Use <command>yast network</command> to set the
+      host name with YaST. </para>
+    <para os="rhel;fedora;centos">To have the host name change persist
+      when the system reboots, you need to specify it in the proper
+      configuration file. In Red Hat Enterprise Linux, Centos, and
+      older versions of Fedora, you set this in the file
+        <filename>/etc/sysconfig/network</filename>. Change the line
       starting with <literal>HOSTNAME=</literal>.</para>
 
     <programlisting language="ini" os="rhel;fedora;centos">HOSTNAME=controller</programlisting>
 
-    <para os="rhel;fedora;centos">As of Fedora 18, Fedora now uses the file
-        <filename>/etc/hostname</filename>. This file contains a single line
-      with just the hostname.</para>
+    <para os="rhel;fedora;centos">As of Fedora 18, Fedora now uses the
+      file <filename>/etc/hostname</filename>. This file contains a
+      single line with just the host name.</para>
 
-    <para os="ubuntu;debian">To have this hostname set when the system
-      reboots, you need to specify it in the file
-        <filename>/etc/hostname</filename>. This file contains a single line
-      with just the hostname.</para>
+    <para os="ubuntu;debian">To have this host name set when the
+      system reboots, you need to specify it in the file
+        <filename>/etc/hostname</filename>. This file contains a
+      single line with just the host name.</para>
 
-    <para>Finally, ensure that each node can reach the other nodes using
-      hostnames. In this guide, we will manually edit the
-        <filename>/etc/hosts</filename> file on each system. For large-scale
-      deployments, you should use DNS or a configuration management system like
-      Puppet.</para>
+    <para>Finally, ensure that each node can reach the other nodes
+      using host names. In this guide, we will manually edit the
+        <filename>/etc/hosts</filename> file on each system. For
+      large-scale deployments, you should use DNS or a configuration
+      management system like Puppet.</para>
 
     <programlisting>127.0.0.1       localhost
 192.168.0.10    controller
@@ -297,20 +294,16 @@ hwclock -w</programlisting>
     <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>yum install qpid-cpp-server memcached</userinput></screen>
 
     <note os="ubuntu;debian">
-      <para>
-        The <package>rabbitmq-server</package> package configures the RabbitMQ
-        service to start automatically. A user named <literal>guest</literal>,
-        with a default password of <literal>guest</literal>, is also created.
-        The <literal>guest</literal> account will be used when interacting with
-        RabbitMQ throughout this guide.
-      </para>
+      <para>The <package>rabbitmq-server</package> package configures
+        the RabbitMQ service to start automatically and creates a
+          <literal>guest</literal> user with a default
+          <literal>guest</literal> password. The RabbitMQ examples in
+        this guide use the <literal>guest</literal> account. </para>
     </note>
-    <para os="fedora;centos;rhel">Disable Qpid authentication by setting the
-      value of the <literal>auth</literal> configuration key to
-        <literal>no</literal> in the <filename>/etc/qpidd.conf</filename>
-      file.</para>
+    <para os="fedora;centos;rhel">Disable Qpid authentication by editing <filename>/etc/qpidd.conf</filename> file and
+    changing the <literal>auth</literal> option to <literal>no</literal>.</para>
 
-    <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>echo "auth=no" >> /etc/qpidd.conf</userinput></screen>
+    <screen os="fedora;centos;rhel"> <userinput>auth=no</userinput></screen>
 
     <para os="fedora;centos;rhel">Start Qpid and set it to start automatically
       when the system boots.</para>
@@ -318,8 +311,7 @@ hwclock -w</programlisting>
     <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>service qpidd start</userinput>
 <prompt>#</prompt> <userinput>chkconfig qpidd on</userinput></screen>
 
-    <para os="opensuse">Start the messaging service and set it to start automatically when the system boots:
-    </para>
+    <para os="opensuse">Start the messaging service and set it to start automatically when the system boots:</para>
     <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl start rabbitmq-server.service</userinput>
 <prompt>#</prompt> <userinput>systemctl enable rabbitmq-server.service</userinput></screen>
 
@@ -327,12 +319,10 @@ hwclock -w</programlisting>
   <section xml:id="basics-packages">
     <title>OpenStack Packages</title>
 
-    <para>
-      Distribution releases and OpenStack releases are often independent of
+    <para>Distribution releases and OpenStack releases are often independent of
       each other and thus you might need to add some extra steps to access
       the latest OpenStack release after installation of the machine before
-      installation of any OpenStack packages.
-    </para>
+      installation of any OpenStack packages.</para>
 
     <para os="fedora;centos;rhel">This guide uses the OpenStack packages from
       the RDO repository. These packages work on Red Hat Enterprise Linux 6 and
@@ -341,11 +331,12 @@ hwclock -w</programlisting>
       package.</para>
 
     <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>yum install http://repos.fedorapeople.org/repos/openstack/openstack-havana/rdo-release-havana-6.noarch.rpm</userinput></screen>
-    <para os="fedora;centos;rhel">The EPEL package includes gpg keys for package signing and repository information.Install
-      the latest 'epel-release' package (see <link
+    <para os="fedora;centos;rhel">The EPEL package includes gpg keys
+      for package signing and repository information. Install the
+      latest 'epel-release' package (see <link
         xlink:href="http://download.fedoraproject.org/pub/epel/6/i386/repoview/epel-release.html"
-        >http://download.fedoraproject.org/pub/epel/6/x86_64/repoview/epel-release.html</link>). For
-      example:</para>
+        >http://download.fedoraproject.org/pub/epel/6/x86_64/repoview/epel-release.html</link>).
+      For example:</para>
     <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>yum install http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm</userinput></screen>
 
     <para os="fedora;centos;rhel">The <literal>openstack-utils</literal> package
@@ -357,11 +348,9 @@ hwclock -w</programlisting>
     <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>yum install openstack-utils</userinput></screen>
 
     <para os="opensuse">Use the Open Build Service repositories for Havana based on your openSUSE version, for example if you run
-      openSUSE 12.3 use:
-    </para>
+      openSUSE 12.3 use:</para>
     <screen os="opensuse"><prompt>#</prompt> <userinput>zypper ar -f obs://Cloud:OpenStack:Havana/openSUSE_12.3 Havana</userinput></screen>
-    <para os="opensuse">For openSUSE 13.1, nothing needs to be done since OpenStack Havana packages are part of the distribution itself.
-    </para>
+    <para os="opensuse">For openSUSE 13.1, nothing needs to be done since OpenStack Havana packages are part of the distribution itself.</para>
 
     <procedure xml:id="ubuntu-cloud-archive" os="ubuntu">
       <title>To use the Ubuntu Cloud Archive for Havana</title>
@@ -370,20 +359,17 @@ hwclock -w</programlisting>
       the stable supported version of Ubuntu.</para>
       <step>
         <para>Install the keyring:
-        <screen><prompt>#</prompt> <userinput>apt-get install ubuntu-cloud-keyring</userinput></screen>
-        </para>
+          <screen><prompt>#</prompt> <userinput>apt-get install ubuntu-cloud-keyring</userinput> </screen></para>
       </step>
       <step>
-        <para>
-          Create a new repository sources file <filename>/etc/apt/sources.list.d/cloud-archive.list</filename> containing:
-          <programlisting>deb http://ubuntu-cloud.archive.canonical.com/ubuntu precise-updates/havana main</programlisting>
-        </para>
+        <para> Create a new repository sources file
+            <filename>/etc/apt/sources.list.d/cloud-archive.list</filename>
+          containing:
+          <programlisting>deb http://ubuntu-cloud.archive.canonical.com/ubuntu precise-updates/havana main</programlisting></para>
       </step>
       <step>
-        <para>
-          Upgrade the system (and reboot if you need):
-          <screen><prompt>#</prompt> <userinput>apt-get update &amp;&amp; apt-get dist-upgrade</userinput></screen>
-        </para>
+        <para> Upgrade the system (and reboot if you need):
+          <screen><prompt>#</prompt> <userinput>apt-get update &amp;&amp; apt-get dist-upgrade</userinput> </screen></para>
       </step>
     </procedure>
   <para>Congratulations, now you are ready to start installing OpenStack services!</para>
