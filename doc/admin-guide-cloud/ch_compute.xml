@@ -244,64 +244,51 @@
         </section>
         <section xml:id="section_storage-and-openstack-compute">
             <title>Block Storage and Compute</title>
-            <para>OpenStack provides two classes of block storage, ephemeral storage and persistent
+            <para>OpenStack provides two classes of block storage: ephemeral storage and persistent
                 volumes. Ephemeral storage exists only for the life of an instance. It persists
                 across reboots of the guest operating system, but when the instance is deleted so is
                 the associated storage. All instances have some ephemeral storage. Volumes are
-                persistent virtualized block devices independent of any particular instance. Volumes
-                may be attached to a single instance at a time, but may be detached or reattached to
-                a different instance while retaining all data, much like a USB drive.</para>
+                persistent virtualized block devices independent of any particular instance. </para>
             <simplesect xml:id="section_about-ephemeral-storage">
                 <title>Ephemeral storage</title>
                 <para>Ephemeral storage is associated with a single
                     unique instance. Its size is defined by the flavor
                     of the instance.</para>
-                <para>Data on ephemeral storage ceases to exist when the instance it is associated
-                    with is terminated. Rebooting the VM or restarting the host server, however,
-                    does not destroy ephemeral data. In the typical use case, an instance's root
-                    file system is stored on ephemeral storage. This is often an unpleasant surprise
-                    for people unfamiliar with the cloud model of computing.</para>
-                <para>In addition to the ephemeral root volume, all
-                    flavors except the smallest, m1.tiny, provide an
-                    additional ephemeral block device whose size
-                    ranges from 20 GB for m1.small to 160 GB for
-                    m1.xlarge. You can configure these sizes. This is
-                    presented as a raw block device with no partition
-                    table or file system. Cloud aware operating system
-                    images may discover, format, and mount this
-                    device. For example the cloud-init package
-                    included in Ubuntu's stock cloud images format
-                    this space as an ext3 file system and mount it on
-                        <filename>/mnt</filename>. It is important to
-                    note this a feature of the guest operating system.
-                    OpenStack only provisions the raw storage.</para>
+                <para>Terminating the instance associated with ephemeral storage causes the loss of
+                    data from that ephemeral storage. Rebooting the VM or restarting the host
+                    server, however, does not destroy ephemeral data. In a typical use case, an
+                    instance's root file system is stored on ephemeral storage. </para>
+                <para>In addition to the ephemeral root volume, all flavors except the smallest,
+                    m1.tiny, provide an additional ephemeral block device whose size ranges from 20
+                    GB for m1.small to 160 GB for m1.xlarge. You can configure these sizes. This is
+                    presented as a raw block device with no partition table or file system.
+                    Cloud-aware operating system images may discover, format, and mount this device.
+                    For example, the cloud-init package included in Ubuntu's stock cloud images
+                    format this space as an ext3 file system and mount it on
+                        <filename>/mnt</filename>. It is important to note this a feature of the
+                    guest operating system. OpenStack only provisions the raw storage.</para>
             </simplesect>
             <simplesect xml:id="section_about-persistent-storage">
                 <title>Volume storage</title>
-                <para>Volume storage is independent of any particular
-                    instance and is persistent. Volumes are user
-                    created and within quota and availability limits
-                    may be of any arbitrary size.</para>
-                <para>When first created volumes are raw block devices
-                    with n partition table and no file system. They
-                    must be attached to an instance to be partitioned
-                    and/or formatted. Once this is done they may be
-                    used much like an external disk drive. Volumes may
-                    attached to only one instance at a time, but may
-                    be detached and reattached to either the same or
-                    different instances.</para>
-                <para>It is possible to configure a volume so that it is bootable and provides a
-                    persistent virtual instance similar to traditional non-cloud-based
-                    virtualization systems. In this use case, the resulting instance may still have
-                    ephemeral storage depending on the flavor selected, but the root file system
-                    (and possibly others) is on the persistent volume and its state is maintained
-                    even if the instance it shut down. Details of this configuration are discussed
-                    in the <citetitle>OpenStack Configuration Reference</citetitle> .</para>
+                <para>Volumes are created by users and their size may go up to the quota and
+                    availability limits. Upon initial creation, volumes are raw block devices
+                    without a partition table or a file system. To partition or format volumes, you
+                    must attach them to an instance. After you attach them to an instance, you may
+                    use volumes much like you would an external disk drive. You may attach volumes
+                    to one instance at a time. However, you may detach and reattach volumes to
+                    either the same or a different instance.</para>
+                <para>You may configure a volume so that it is bootable and provides a persistent
+                    virtual instance similar to traditional non-cloud-based virtualization systems.
+                    Typically, the resulting instance may still have ephemeral storage depending on
+                    the flavor selected, but the root file system (and possibly others) may be on
+                    the persistent volume and its state may be maintained even if the instance is
+                    shut down. The details of this configuration are discussed in the
+                        <citetitle>OpenStack Configuration Reference</citetitle> .</para>
                 <para>Volumes do not provide concurrent access from multiple instances. For that,
                     you need either a traditional network file system like NFS or CIFS or a cluster
-                    file system such as GlusterFS. These may be built within an OpenStack cluster or
-                    provisioned outside of it, but are not features provided by the OpenStack
-                    software.</para>
+                    file system such as GlusterFS. These systems may be built within an OpenStack
+                    cluster or provisioned outside of it, but OpenStack software does not provide
+                    such features.</para>
             </simplesect>
         </section>
     </section>
