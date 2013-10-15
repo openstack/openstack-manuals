@@ -34,6 +34,13 @@
       <screen os="ubuntu;debian">
       <prompt>#</prompt> <userinput>apt-get update</userinput>
       <prompt>#</prompt> <userinput>apt-get install mongodb-10gen</userinput></screen>
+    </step>
+    <step os="opensuse">
+      <para>Start the MonoDB server and configure it to start when the system boots:</para>
+      <screen><prompt>#</prompt> <userinput>systemctl start mongodb.service</userinput>
+<prompt>#</prompt> <userinput>systemctl enable mongodb.service</userinput></screen>
+    </step>
+    <step>
       <para>Now, we create the database and a <literal>ceilometer</literal> user for it:</para>
       <screen><prompt>#</prompt> <userinput>mongo</userinput>
 <prompt>></prompt> <userinput>use ceilometer</userinput>
@@ -90,7 +97,7 @@ metering_secret = ADMIN_TOKEN
       Service can use to authenticate with the Identity Service. Use the
       <literal>service</literal> tenant and give the user the
       <literal>admin</literal> role.</para>
-      <screen><prompt>#</prompt> <userinput>keystone user-create --name=ceilometer --pass=<replaceable>CEILOMETER_DBPASS</replaceable> --email=<replaceable>ceilometer@example.com</replaceable></userinput>
+      <screen><prompt>#</prompt> <userinput>keystone user-create --name=ceilometer --pass=<replaceable>CEILOMETER_PASS</replaceable> --email=<replaceable>ceilometer@example.com</replaceable></userinput>
 <prompt>#</prompt> <userinput>keystone user-role-add --user=ceilometer --tenant=service --role=admin</userinput></screen></step>
 
 <step><para>Add the credentials to the Metering Service's configuration files.</para>
@@ -98,7 +105,8 @@ metering_secret = ADMIN_TOKEN
       <screen os="centos;rhel;fedora;opensuse"><prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf keystone_authtoken auth_host <replaceable>controller</replaceable></userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf keystone_authtoken admin_user ceilometer</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf keystone_authtoken admin_tenant_name service</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf keystone_authtoken admin_password <replaceable>CEILOMETER_DBPASS</replaceable></userinput></screen>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf keystone_authtoken auth_protocol http</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf keystone_authtoken admin_password <replaceable>CEILOMETER_PASS</replaceable></userinput></screen>
       <para os="ubuntu;debian">Edit <filename>/etc/ceilometer/ceilometer.conf</filename>
        and change the <literal>[keystone_authtoken]</literal> section.</para>
       <programlisting os="ubuntu;debian" language="ini">
@@ -109,7 +117,7 @@ auth_port = 35357
 auth_protocol = http
 admin_tenant_name = service
 admin_user = ceilometer
-admin_password = CEILOMETER_DBPASS
+admin_password = CEILOMETER_PASS
 ...
       </programlisting>
 </step>
@@ -137,9 +145,11 @@ admin_password = CEILOMETER_DBPASS
     </step>
 
     <step os="rhel;fedora;centos;opensuse"><para>Start the <systemitem
-      class="service">ceilometer-api</systemitem> and <systemitem
-      class="service">ceilometer-api-cfn</systemitem> services and
-      configure them to start when the system boots.</para>
+      class="service">ceilometer-api</systemitem>, <systemitem
+      class="service">ceilometer-agent-central</systemitem> and
+      <systemitem class="service">ceilometer-collector</systemitem>
+      services and configure them to start when the system
+      boots.</para>
       <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>service openstack-ceilometer-api start</userinput>
 <prompt>#</prompt> <userinput>service openstack-ceilometer-agent-central start</userinput>
 <prompt>#</prompt> <userinput>service openstack-ceilometer-collector start</userinput>
