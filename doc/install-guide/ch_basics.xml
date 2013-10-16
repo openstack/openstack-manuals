@@ -271,6 +271,12 @@ hwclock -w</programlisting>
     <note os="ubuntu;debian"><para>When you install the server package, you will
     be asked to enter a root password for the database. Be sure to choose
     a strong password and remember it - it will be needed later.</para></note>
+    <para>Edit <filename>/etc/mysql/my.cnf</filename> and set the <literal>bind-address</literal> to the internal IP address of the controller, to allow access from outside the controller node.</para>
+    <programlisting language="ini">
+    # Instead of skip-networking the default is now to listen only on
+    # localhost which is more compatible and is not less secure.
+    bind-address            = 192.168.0.10
+    </programlisting>
 </listitem>
       <listitem><para>On any nodes besides the controller node, just install the
         <phrase os="ubuntu;debian;rhel;fedora;centos">MySQL</phrase>
