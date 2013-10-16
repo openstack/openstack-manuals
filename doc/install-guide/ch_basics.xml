@@ -111,7 +111,7 @@ DEFROUTE=yes
 ONBOOT=yes</programlisting>
     </example>
 
-    <para os="opensuse">
+    <para os="opensuse;sles">
       To set up the two network interfaces, start the YaST
       network module, as follows:
       <screen><prompt>#</prompt> <userinput>yast2 network</userinput></screen>
@@ -161,8 +161,7 @@ iface eth1 inet static
    <para>Once you've configured the network, restart the daemon for changes to take effect:</para>
 
     <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service networking restart</userinput></screen>
-    <screen os="fedora;rhel;centos"><prompt>#</prompt> <userinput>service network restart</userinput></screen>
-    <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl restart network.service</userinput></screen>
+    <screen os="fedora;rhel;centos;opensuse;sles"><prompt>#</prompt> <userinput>service network restart</userinput></screen>
 
     <para>Set the host name of each machine. Name the controller node
         <literal>controller</literal> and the first compute node
@@ -171,7 +170,7 @@ iface eth1 inet static
     <para os="ubuntu;debian;fedora;rhel;centos">Use the
         <command>hostname</command> command to set the host name:
       <screen><prompt>#</prompt> <userinput>hostname controller</userinput></screen></para>
-    <para os="opensuse">Use <command>yast network</command> to set the
+    <para os="opensuse;sles">Use <command>yast network</command> to set the
       host name with YaST.</para>
     <para os="rhel;fedora;centos">To have the host name change persist
       when the system reboots, you need to specify it in the proper
@@ -216,16 +215,14 @@ iface eth1 inet static
 
     <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install ntp</userinput></screen>
     <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>yum install ntp</userinput></screen>
-    <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install ntp</userinput></screen>
+    <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install ntp</userinput></screen>
 
-    <para os="rhel;fedora;centos;opensuse">Set up the NTP server on your
+    <para os="rhel;fedora;centos;opensuse;sles">Set up the NTP server on your
       controller node so that it receives data by modifying the <filename>ntp.conf</filename>
       file and restarting the service.</para>
 
-    <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>service ntpd start</userinput>
+    <screen os="rhel;fedora;centos;opensuse;sles"><prompt>#</prompt> <userinput>service ntpd start</userinput>
 <prompt>#</prompt> <userinput>chkconfig ntpd on</userinput></screen>
-    <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl start ntp.service</userinput>
-<prompt>#</prompt> <userinput>systemctl enable ntp.service</userinput></screen>
 
     <para>Set up all additional nodes to synchronize their time from the
       controller node. The simplest way to do this is to add a daily cron job.
@@ -292,12 +289,10 @@ hwclock -w</programlisting>
         <phrase os="opensuse">MariaDB</phrase>
         database server and set it to start automatically when
         the system boots.</para>
-    <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>service mysqld start</userinput>
+    <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>service mysqld start</userinput>
 <prompt>#</prompt> <userinput>chkconfig mysqld on</userinput></screen>
-    <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl enable mysql.service</userinput>
-<prompt>#</prompt> <userinput>systemctl start mysql.service</userinput></screen>
 
-    <para os="rhel;centos;fedora;opensuse">Finally, you should set a root password for your
+    <para os="rhel;centos;fedora;opensuse;sles">Finally, you should set a root password for your
         <phrase os="rhel;fedora;centos">MySQL</phrase>
         <phrase os="opensuse">MariaDB</phrase>
       database. The OpenStack programs that set up databases and tables will
@@ -324,13 +319,13 @@ hwclock -w</programlisting>
   <section xml:id="basics-queue">
     <title>Messaging Server</title>
     <para>On the controller node, install the messaging queue server. Typically this is <phrase
-        os="ubuntu;opensuse">RabbitMQ</phrase><phrase os="centos;rhel;fedora"
-        >Qpid</phrase> but <phrase os="ubuntu;opensuse">Qpid</phrase><phrase
+        os="ubuntu;opensuse;sles">RabbitMQ</phrase><phrase os="centos;rhel;fedora"
+        >Qpid</phrase> but <phrase os="ubuntu;opensuse;sles">Qpid</phrase><phrase
         os="centos;rhel;fedora">RabbitMQ</phrase> and ZeroMQ (0MQ) are also
       available.</para>
 
     <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install rabbitmq-server</userinput></screen>
-    <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install rabbitmq-server</userinput></screen>
+    <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install rabbitmq-server</userinput></screen>
     <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>yum install qpid-cpp-server memcached</userinput></screen>
 
     <note os="ubuntu;debian">
@@ -351,9 +346,9 @@ hwclock -w</programlisting>
     <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>service qpidd start</userinput>
 <prompt>#</prompt> <userinput>chkconfig qpidd on</userinput></screen>
 
-    <para os="opensuse">Start the messaging service and set it to start automatically when the system boots:</para>
-    <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl start rabbitmq-server.service</userinput>
-<prompt>#</prompt> <userinput>systemctl enable rabbitmq-server.service</userinput></screen>
+    <para os="opensuse;sles">Start the messaging service and set it to start automatically when the system boots:</para>
+    <screen os="opensuse;sles"><prompt>#</prompt> <userinput>service rabbitmq-server start</userinput>
+<prompt>#</prompt> <userinput>service rabbitmq-server enable</userinput></screen>
 
   </section>
   <section xml:id="basics-packages">

@@ -22,9 +22,9 @@
     <step><para>Install the Image Service on the controller node.</para>
       <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install glance</userinput></screen>
       <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-glance</userinput></screen>
-      <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install openstack-glance python-glanceclient</userinput></screen></step>
+      <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-glance python-glanceclient</userinput></screen></step>
 
-    <step os="rhel;centos;fedora;opensuse"><para>The Image Service stores information about images in a database.
+    <step os="rhel;centos;fedora;opensuse;sles"><para>The Image Service stores information about images in a database.
       This guide uses the MySQL database used by other OpenStack services.</para>
       <para>Use the <command>openstack-db</command> command to create the
       database and tables for the Image Service, as well as a database user
@@ -54,7 +54,7 @@ IDENTIFIED BY '<replaceable>GLANCE_DBPASS</replaceable>';</userinput></screen>
         services: <literal>glance-api</literal> and <literal>glance-registry</literal>. They each
         have separate configuration files, so you must configure both files throughout this
         section.</para>
-      <screen os="rhel;centos;fedora;opensuse"><prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf \
+      <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf \
   DEFAULT sql_connection mysql://glance:<replaceable>GLANCE_DBPASS</replaceable>@<replaceable>controller</replaceable>/glance</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-registry.conf \
   DEFAULT sql_connection mysql://glance:<replaceable>GLANCE_DBPASS</replaceable>@<replaceable>controller</replaceable>/glance</userinput></screen>
@@ -87,7 +87,7 @@ sql_connection = mysql://glance:GLANCE_DBPASS@localhost/glance
 <prompt>#</prompt> <userinput>keystone user-role-add --user=glance --tenant=service --role=admin</userinput></screen></step>
     <step><para>Add the credentials to the Image Service's configuration files.</para>
 
-      <screen os="centos;rhel;fedora;opensuse"><prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf keystone_authtoken auth_host <replaceable>controller</replaceable></userinput>
+      <screen os="centos;rhel;fedora;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf keystone_authtoken auth_host <replaceable>controller</replaceable></userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf keystone_authtoken admin_user glance</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf keystone_authtoken admin_tenant_name service</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf keystone_authtoken admin_password <replaceable>GLANCE_DBPASS</replaceable></userinput>
@@ -146,16 +146,13 @@ admin_password=<replaceable>GLANCE_DBPASS</replaceable></programlisting> -->
 
 
 
-    <step os="rhel;fedora;centos;opensuse"><para>Start the <literal>glance-api</literal> and
+    <step os="rhel;fedora;centos;opensuse;sles"><para>Start the <literal>glance-api</literal> and
       <literal>glance-registry</literal> services and configure them to
       start when the system boots.</para>
-      <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>service openstack-glance-api start</userinput>
+      <screen os="rhel;fedora;centos;opensuse;sles"><prompt>#</prompt> <userinput>service openstack-glance-api start</userinput>
 <prompt>#</prompt> <userinput>service openstack-glance-registry start</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-glance-api on</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-glance-registry on</userinput></screen>
-      <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl start openstack-glance-api.service</userinput>
-<prompt>#</prompt> <userinput>systemctl start openstack-glance-registry.service</userinput>
-<prompt>#</prompt> <userinput>systemctl enable openstack-glance-api.service</userinput>
-<prompt>#</prompt> <userinput>systemctl enable openstack-glance-registry.service</userinput></screen></step>
+    </step>
   </procedure>
 </section>

@@ -13,12 +13,12 @@
       <para>Install the Metering service on the controller node:</para>
       <screen os="ubuntu;deb"><prompt>#</prompt> <userinput>apt-get install ceilometer-agent-compute</userinput></screen>
       <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-ceilometer-agent-compute FIXME</userinput></screen>
-      <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install openstack-ceilometer-agent-compute</userinput></screen>
+      <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-ceilometer-agent-compute</userinput></screen>
     </step>
 
     <step><para>Set the following options in
         <filename>/etc/nova/nova.conf</filename>.</para>
-      <screen os="fedora;rhel;centos;opensuse">
+      <screen os="fedora;rhel;centos;opensuse;sles">
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT instance_usage_audit True</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT instance_usage_audit Hhour</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT notify_on_state_change vm_and_task_state</userinput>
@@ -61,12 +61,10 @@ metering_secret = ADMIN_TOKEN
     </step>
 
 
-    <step os="rhel;fedora;centos;opensuse"><para>Start the <literal>ceilometer-agent-compute</literal> service and configure
+    <step os="rhel;fedora;centos;opensuse;sles"><para>Start the <literal>ceilometer-agent-compute</literal> service and configure
       to start when the system boots.</para>
-      <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>service openstack-ceilometer-agent-compute start</userinput>
+      <screen os="rhel;fedora;centos;opensuse;sles"><prompt>#</prompt> <userinput>service openstack-ceilometer-agent-compute start</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-agent-compute on</userinput></screen>
-      <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl start openstack-ceilometer-agent-compute.service</userinput>
-<prompt>#</prompt> <userinput>systemctl enable openstack-ceilometer-agent-compute.service</userinput></screen>
 </step>
 
   </procedure>

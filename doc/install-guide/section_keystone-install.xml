@@ -9,7 +9,7 @@
       <para>Install the Identity Service on the controller node:</para>
       <screen os="ubuntu;deb"><prompt>#</prompt> <userinput>apt-get install keystone python-keystone python-keystoneclient</userinput></screen>
       <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-keystone python-keystoneclient</userinput></screen>
-      <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install openstack-keystone python-keystoneclient openstack-utils</userinput></screen>
+      <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-keystone python-keystoneclient openstack-utils</userinput></screen>
     </step>
 
     <step>
@@ -19,7 +19,7 @@
       with the username <literal>keystone</literal>. Replace
       <literal><replaceable>KEYSTONE_DBPASS</replaceable></literal>
       with a suitable password for the database user.</para>
-      <screen os="rhel;centos;fedora;opensuse"><prompt>#</prompt> <userinput>openstack-config --set /etc/keystone/keystone.conf \
+      <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/keystone/keystone.conf \
   sql connection mysql://keystone:<replaceable>KEYSTONE_DBPASS</replaceable>@controller/keystone</userinput></screen>
       <para os="ubuntu">Edit <filename>/etc/keystone/keystone.conf</filename> and change the <literal>[sql]</literal> section.</para>
       <programlisting os="ubuntu" language="ini">
@@ -31,7 +31,7 @@ connection = mysql://keystone:KEYSTONE_DBPASS@controller/keystone
       </programlisting>
     </step>
 
-    <step os="rhel;centos;fedora;opensuse">
+    <step os="rhel;centos;fedora;opensuse;sles">
       <para>Use the <command>openstack-db</command> command to create the
       database and tables, as well as a database user called
       <literal>keystone</literal> to connect to the database. Replace
@@ -61,7 +61,7 @@ IDENTIFIED BY '<replaceable>KEYSTONE_DBPASS</replaceable>';</userinput></screen>
       shared secret between the Identity Service and other OpenStack services.
       Use <command>openssl</command> to generate a random token, then store it
       in the configuration file.</para>
-      <screen os="rhel;centos;fedora;opensuse"><prompt>#</prompt> <userinput>ADMIN_TOKEN=$(openssl rand -hex 10)</userinput>
+      <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>ADMIN_TOKEN=$(openssl rand -hex 10)</userinput>
 <prompt>#</prompt> <userinput>echo $ADMIN_TOKEN</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/keystone/keystone.conf DEFAULT admin_token $ADMIN_TOKEN</userinput></screen>
       <screen os="ubuntu"><prompt>#</prompt> <userinput>openssl rand -hex 10</userinput></screen>
@@ -77,16 +77,16 @@ admin_token = ADMIN_TOKEN
     </step>
 
 
-    <step os="rhel;centos;fedora;opensuse">
+    <step os="rhel;centos;fedora;opensuse;sles">
       <para>By default Keystone will use PKI tokens. Create the signing
       keys and certificates.</para>
       <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>keystone-manage pki_setup --keystone-user keystone --keystone-group keystone</userinput>
 <prompt>#</prompt> <userinput>chown -R keystone:keystone /etc/keystone/* /var/log/keystone/keystone.log</userinput></screen>
-      <screen os="opensuse"><prompt>#</prompt> <userinput>keystone-manage pki_setup --keystone-user openstack-keystone --keystone-group openstack-keystone</userinput>
+      <screen os="opensuse;sles"><prompt>#</prompt> <userinput>keystone-manage pki_setup --keystone-user openstack-keystone --keystone-group openstack-keystone</userinput>
 <prompt>#</prompt> <userinput>chown -R openstack-keystone:openstack-keystone /etc/keystone/* /var/log/keystone/keystone.log</userinput></screen>
     </step>
 
-    <step os="opensuse">
+    <step os="opensuse;sles">
       <para>Setup the <filename>/etc/keystone/default_catalog.templates</filename> file:
       </para>
       <screen><prompt>#</prompt> <userinput>KEYSTONE_CATALOG=/etc/keystone/default_catalog.templates</userinput>
@@ -98,13 +98,11 @@ admin_token = ADMIN_TOKEN
       <screen><prompt>#</prompt> <userinput>service keystone restart</userinput></screen>
     </step>
 
-    <step os="rhel;fedora;centos;opensuse">
+    <step os="rhel;fedora;centos;opensuse;sles">
       <para>Start the Identity Service and enable it so it start when
       the system boots.</para>
-      <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>service openstack-keystone start</userinput>
+      <screen os="rhel;fedora;centos;sles;opensuse"><prompt>#</prompt> <userinput>service openstack-keystone start</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-keystone on</userinput></screen>
-      <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl start openstack-keystone.service</userinput>
-<prompt>#</prompt> <userinput>systemctl enable openstack-keystone.service</userinput></screen>
     </step>
 
   </procedure>
