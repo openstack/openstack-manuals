@@ -5,16 +5,13 @@
          xml:id="cinder-node">
   <title>Configuring a Block Storage Node</title>
 
-  <para>After configuring the services on the controller node, configure a second system to
-    be a Block Storage node.</para>
+  <para>After you configure the services on the controller node, configure a second system to be a Block Storage node. This node contains the disk that will be used to serve volumes.</para>
 
-  <para>The Block Storage Service relies on a driver for a particular
-  storage system. OpenStack can use various systemes, but this guide uses
-  LVM.</para>
+  <para>You can configure OpenStack to use various storage systems. The examples in this guide show how to configure LVM.</para>
   <procedure>
     <title>Configure a Block Storage Node</title>
-    <step><para>Begin by configuring the system using the instructions in
-      <xref linkend="ch_basics"/>. Note the following differences from the
+    <step><para>Using the instructions in
+      <xref linkend="ch_basics"/> to configure the system. Note the following differences from the
       controller node:</para>
       <itemizedlist>
         <listitem>
@@ -29,13 +26,86 @@
       </itemizedlist>
     </step>
 
-    <step><para>After configuring the operating system, install the appropriate
+    <step><para>After you configure the operating system, install the appropriate
       packages for the block storage service.</para>
       <!-- FIXME: Double check list of packages for ubuntu -->
-      <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install cinder-api cinder-scheduler cinder-volume</userinput></screen>
+      <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install cinder-volume</userinput></screen>
       <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>yum install openstack-cinder openstack-utils openstack-selinux</userinput></screen>
-      <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install  openstack-cinder-api openstack-cinder-scheduler \
- openstack-cinder-volume</userinput></screen>
+      <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-cinder-volume</userinput></screen>
     </step>
+
+
+    <step> <para>Copy the <filename>/etc/cinder/api-paste.ini</filename>
+   file from the controller,
+   or open the file in a text editor
+  and locate the section <literal>[filter:authtoken]</literal>.
+  Make sure the following options are set:</para>
+
+  <programlisting language="ini">[filter:authtoken]
+paste.filter_factory=keystoneclient.middleware.auth_token:filter_factory
+auth_host=<replaceable>controller</replaceable>
+admin_tenant_name=service
+admin_user=cinder
+admin_password=<replaceable>CINDER_DBPASS</replaceable>
+</programlisting>
+      </step>
+
+   <step>
+    <para>Configure messaging also in <filename>/etc/cinder/cinder.conf</filename>.</para>
+    <programlisting os="ubuntu">
+rabbit_host = controller
+rabbit_port = 5672
+# Change the following settings if you're not using the default RabbitMQ configuration
+#rabbit_userid = guest
+#rabbit_password = guest
+#rabbit_virtual_host = /nova</programlisting>
+    <programlisting os="rhel;centos;fedora">
+qpid_hostname = controller</programlisting>
+    <programlisting os="opensuse;sles">
+rabbit_host = controller
+rabbit_port = 5672
+# Change the following settings if you're not using the default RabbitMQ configuration
+#rabbit_userid = guest
+#rabbit_password = guest
+#rabbit_virtual_host = /nova</programlisting>
+ </step>
+
+
+<step>
+    <para>Add a filter entry to the devices section
+    <filename>/etc/lvm/lvm.conf</filename> to keep LVM from scanning devices
+    used by virtual machines.</para>
+    <note><para>You must add every physical volume that is
+    needed for LVM on the Cinder host. You can get a list by running
+    <command>pvdisplay</command>.</para></note>
+    <para>Each item in the filter array starts with either an
+    "<literal>a</literal>" for accept, or an "<literal>r</literal>" for reject.
+    Physical volumes that are needed on the Cinder host begin with
+    "<literal>a</literal>". The array must end with
+    "<literal>r/.*/</literal>"</para>
+    <programlisting>devices {
+...
+filter = [ "a/sda1/", "a/sdb1/", "r/.*/"]
+...
+}</programlisting>
+</step>
+
+
+    <step os="ubuntu;debian">
+      <para>We now restart the cinder service with its new settings.</para>
+<screen><prompt>#</prompt> <userinput>service cinder-volume restart</userinput>
+<prompt>#</prompt> <userinput>service tgt restart</userinput></screen>
+    </step>
+
+
+    <step os="rhel;fedora;centos;opensuse;sles"><para>Start the cinder services and configure them to
+      start when the system boots.</para>
+      <screen>
+<prompt>#</prompt> <userinput>service openstack-cinder-volume start</userinput>
+<prompt>#</prompt> <userinput>service tgtd start</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-cinder-volume on</userinput>
+<prompt>#</prompt> <userinput>chkconfig tgtd on</userinput></screen>
+</step>
+
       </procedure>
  </section>
