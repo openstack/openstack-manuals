@@ -23,8 +23,8 @@
         <procedure>
             <step>
                 <para>To list the available images:</para>
-                <screen><prompt>$</prompt> <userinput>glance image-list</userinput></screen>
-                <screen><?db-font-size 45%?><computeroutput>+--------------------------------------+---------------------------------+-------------+------------------+----------+--------+
+                <screen><prompt>$</prompt> <userinput>glance image-list</userinput>
+<computeroutput>+--------------------------------------+---------------------------------+-------------+------------------+----------+--------+
 | ID                                   | Name                            | Disk Format | Container Format | Size     | Status |
 +--------------------------------------+---------------------------------+-------------+------------------+----------+--------+
 | 397e713c-b95b-4186-ad46-6126863ea0a9 | cirros-0.3.1-x86_64-uec         | ami         | ami              | 25165824 | active |
@@ -34,15 +34,15 @@
 +--------------------------------------+---------------------------------+-------------+------------------+----------+--------+</computeroutput></screen>
                 <para>You can use grep to filter the list, as
                     follows:</para>
-                <screen><prompt>$</prompt> <userinput>glance image-list | grep 'cirros'</userinput></screen>
-                <screen><?db-font-size 45%?><computeroutput>| 397e713c-b95b-4186-ad46-6126863ea0a9 | cirros-0.3.1-x86_64-uec         | ami         | ami              | 25165824 | active |
+                <screen><prompt>$</prompt> <userinput>glance image-list | grep 'cirros'</userinput>
+<computeroutput>| 397e713c-b95b-4186-ad46-6126863ea0a9 | cirros-0.3.1-x86_64-uec         | ami         | ami              | 25165824 | active |
 | df430cc2-3406-4061-b635-a51c16e488ac | cirros-0.3.1-x86_64-uec-kernel  | aki         | aki              | 4955792  | active |
 | 3cf852bd-2332-48f4-9ae4-7d926d50945e | cirros-0.3.1-x86_64-uec-ramdisk | ari         | ari              | 3714968  | active |</computeroutput></screen>
             </step>
             <step>
                 <para>To get image details, by name or ID:</para>
-                <screen><prompt>$</prompt> <userinput>glance image-show myCirrosImage</userinput></screen>
-                <screen><?db-font-size 45%?><computeroutput>+---------------------------------------+--------------------------------------+
+                <screen><prompt>$</prompt> <userinput>glance image-show myCirrosImage</userinput>
+<?db-font-size 45%?><computeroutput>+---------------------------------------+--------------------------------------+
 | Property                              | Value                                |
 +---------------------------------------+--------------------------------------+
 | Property 'base_image_ref'             | 397e713c-b95b-4186-ad46-6126863ea0a9 |
@@ -80,23 +80,29 @@
 | status                                | active                               |
 | updated_at                            | 2013-07-22T19:46:42                  |
 +---------------------------------------+--------------------------------------+</computeroutput></screen>
-                <note><para>The OpenStack Image Service can store location metadata for images, which can enable direct file access for a
-                        client. Update <filename>/etc/glance/glance.conf</filename> with:</para>
+                <note><para>To store location metadata for images, which enables direct file
+                        access for a client, update the
+                            <filename>/etc/glance/glance.conf</filename>
+                        file with the following statements:</para>
                     <para>
                         <itemizedlist>
                             <listitem>
                                 <para><code>show_multiple_locations = True</code></para>
                             </listitem>
                             <listitem>
-                                <para><code>filesystem_store_metadata_file =
-                                            <replaceable>filePath</replaceable></code>, where
-                                        <replaceable>filePath</replaceable> points to a JSON file
-                                    containing the mount point for OpenStack images on your system
-                                    and a unique ID. For example:
-                                    <programlisting language="json">[{
+                                <para><code>filesystem_store_metadata_file
+                                   =
+                                   <replaceable>filePath</replaceable></code>,
+                                   where
+                                   <replaceable>filePath</replaceable>
+                                   points to a JSON file that defines
+                                   the mount point for OpenStack
+                                   images on your system and a unique
+                                   ID. For example:
+                                   <programlisting language="json">[{
     "id": "b9d69795-5951-4cb0-bb5c-29491e1e2daf",
     "mountpoint": "/var/lib/glance/images/"
-  }]</programlisting></para>
+}]</programlisting></para>
                             </listitem>
                         </itemizedlist>
                     </para>
