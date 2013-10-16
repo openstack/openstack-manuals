@@ -46,9 +46,15 @@
 
     <step><para>After configuring the operating system, install the appropriate
       packages for the compute service.</para>
-      <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install nova-compute-kvm python-novaclient</userinput></screen>
+      <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install nova-compute-kvm python-novaclient python-guestfs</userinput></screen>
       <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>yum install openstack-nova-compute</userinput></screen>
       <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install openstack-nova-compute kvm openstack-utils</userinput></screen>
+    </step>
+    <step os="ubuntu">
+    <para>Due to <link xlink:href="https://bugs.launchpad.net/ubuntu/+source/linux/+bug/759725">a bug</link> 
+    that Canonical "Won't Fix", guestfs is broken out of the box.
+    Run the following command to fix it:</para>
+      <screen><prompt>#</prompt> <userinput> chmod 0644 /boot/vmlinuz*</userinput></screen>
     </step>
     <step><para>Either copy the file <filename>/etc/nova/nova.conf</filename> from the
           <replaceable>controller</replaceable> node, or run the same configuration commands.</para>
