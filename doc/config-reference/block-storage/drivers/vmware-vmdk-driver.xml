@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="vmware-vmdk-driver"
+         xmlns="http://docbook.org/ns/docbook"
+         xmlns:xi="http://www.w3.org/2001/XInclude"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         version="5.0">
+    <title>VMware VMDK driver</title>
+    <para>VMware VMDK driver enables management of cinder volume on VMware
+    vCenter Server or ESX managed datastore. Cinder volume is backed by VMDK
+    files on the datastore.</para>
+    <simplesect>
+        <title>Configuration</title>
+        <para>Two cinder drivers for VMware vCenter server and ESX are
+        provided. Appropriate driver must be configured when using VMware
+        server. For attach/detach operation to an instance, the driver works as
+        expected only with the VMware driver for nova and it does not work
+        with other nova drivers. Both nova and cinder drivers must be
+        configured to the same server. The following table captures the
+        configuration mapping:</para>
+        <table rules="all">
+            <caption>
+                Cinder-Nova configuration mapping with VMware server
+            </caption>
+            <thead>
+                <tr>
+                    <td>VMware server</td>
+                    <td>Nova driver</td>
+                    <td>Cinder driver</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>vCenter server</td>
+                    <td>vmwareapi.VMwareVCDriver</td>
+                    <td>
+                        cinder.volume.drivers.vmware.vmdk.VMwareVcVmdkDriver
+                    </td>
+                </tr>
+                <tr>
+                    <td>ESX/ESXi server</td>
+                    <td>vmwareapi.VMwareESXDriver</td>
+                    <td>
+                        cinder.volume.drivers.vmware.vmdk.VMwareEsxVmdkDriver
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <para>The following are mandatory properties to be specified in the
+        configuration file:</para>
+        <table rules="all">
+            <caption>
+                Mandatory properties
+            </caption>
+            <thead>
+                <tr>
+                    <td>Name</td>
+                    <td>Description</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>vmware_host_ip</td>
+                    <td>
+                        IP address for connecting to VMware ESX/VC server
+                    </td>
+                </tr>
+                <tr>
+                    <td>vmware_host_username</td>
+                    <td>
+                        Username for authenticating with VMware ESX/VC server
+                    </td>
+                </tr>
+                <tr>
+                    <td>vmware_host_password</td>
+                    <td>
+                        Password for authenticating with VMware ESX/VC server
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <para>The following are optional properties to be specified in the
+        configuration file:</para>
+        <table rules="all">
+            <caption>
+                Optional properties
+            </caption>
+            <thead>
+                <tr>
+                    <td>Name</td>
+                    <td>Default value</td>
+                    <td>Description</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>vmware_wsdl_location</td>
+                    <td>None</td>
+                    <td>Optional VIM service WSDL Location e.g
+                    http://server/vimService.wsdl. Optional over-ride to
+                    default location for bug work-arounds.
+                    </td>
+                </tr>
+                <tr>
+                    <td>vmware_api_retry_count</td>
+                    <td>10</td>
+                    <td>Number of times VMware ESX/VC server API must be
+                    retried upon connection related issues
+                    </td>
+                </tr>
+                <tr>
+                    <td>vmware_task_poll_interval</td>
+                    <td>5</td>
+                    <td>The interval used for polling remote tasks invoked on
+                    VMware ESX/VC server
+                    </td>
+                </tr>
+                <tr>
+                    <td>vmware_volume_folder</td>
+                    <td>cinder-volumes</td>
+                    <td>Name for the folder in the VC datacenter that will
+                    contain cinder volumes
+                    </td>
+                </tr>
+                <tr>
+                    <td>vmware_image_transfer_timeout_secs</td>
+                    <td>7200</td>
+                    <td>Timeout in seconds for VMDK volume transfer between
+                    Cinder and Glance
+                    </td>
+                </tr>
+                <tr>
+                    <td>vmware_max_objects_retrieval</td>
+                    <td>100</td>
+                    <td>Max number of objects to be retrieved per batch. Query
+                    results will be obtained in batches from the server and not
+                    in one shot. Server may still limit the count to something
+                    less than the configured value.
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </simplesect>
+    <simplesect>
+        <title>VMDK disk type</title>
+        <para>VMwareVcVmdkDriver and VMwareEsxVmdkDriver support creating
+        VMDK disk file of types: <literal>thin</literal>,
+        <literal>thick</literal> and <literal>eagerZeroedThick</literal>.
+        VMDK disk file type can be specified via volume type extra specs. By
+        using any volume type with appropriate extra spec for volume creation,
+        the driver creates one of the above VMDK disk file type. The following
+        captures extra spec entry to VMDK disk file type mapping:</para>
+        <table rules="all">
+            <caption>Extra spec entry to VMDK disk file type mapping</caption>
+            <thead>
+                <tr>
+                    <td>Disk file type</td>
+                    <td>Extra spec key</td>
+                    <td>Extra spec value</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>thin</td>
+                    <td>vmware:vmdk_type</td>
+                    <td>thin</td>
+                </tr>
+                <tr>
+                    <td>thick</td>
+                    <td>vmware:vmdk_type</td>
+                    <td>thick</td>
+                </tr>
+                <tr>
+                    <td>eagerZeroedThick</td>
+                    <td>vmware:vmdk_type</td>
+                    <td>eagerZeroedThick</td>
+                </tr>
+            </tbody>
+        </table>
+        <para>When no volume type is used or if none of the above extra spec
+        entry is found in the volume type, then the default disk file type
+        used is <literal>thin</literal>.</para>
+        <para>Example: creation of thick VMDK volume</para>
+        <screen>
+        <prompt>$</prompt> <userinput>cinder type-create thick_volume</userinput>
+        <prompt>$</prompt> <userinput>cinder type-key thick_volume set vmware:vmdk_type=thick</userinput>
+        <prompt>$</prompt> <userinput>cinder create --volume-type thick_volume --display-name volume1 1</userinput>
+        </screen>
+    </simplesect>
+    <simplesect>
+        <title>Clone type</title>
+        <para>VMwareVcVmdkDriver supports clone types: <literal>full</literal>
+        and <literal>linked/fast</literal> while creating volume from another
+        source volume or from a snapshot point. Clone type can be specified via
+        volume type extra specs. By using volume type with appropriate extra
+        spec for creating volume from another source volume or from a snapshot
+        point, the driver creates a <literal>full</literal> clone or a
+        <literal>linked</literal> clone. The following captures extra spec
+        entry to clone type mapping:</para>
+        <table rules="all">
+            <caption>Extra spec entry to clone type mapping</caption>
+            <thead>
+                <tr>
+                    <td>Clone type</td>
+                    <td>Extra spec key</td>
+                    <td>Extra spec value</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>full</td>
+                    <td>vmware:clone_type</td>
+                    <td>full</td>
+                </tr>
+                <tr>
+                    <td>linked/fast</td>
+                    <td>vmware:clone_type</td>
+                    <td>linked</td>
+                </tr>
+            </tbody>
+        </table>
+        <para>When no volume type is used or if none of the above extra spec
+        entry is found in the volume type, then the default clone type is
+        <literal>full</literal>.</para>
+        <para>Example: linked cloning from another source volume</para>
+        <screen>
+        <prompt>$</prompt> <userinput>cinder type-create fast_clone</userinput>
+        <prompt>$</prompt> <userinput>cinder type-key fast_clone set vmware:clone_type=linked</userinput>
+        <prompt>$</prompt> <userinput>cinder create --volume-type fast_clone --source-volid 25743b9d-3605-462b-b9eb-71459fe2bb35 --display-name volume1 1</userinput>
+        </screen>
+        <para>Note: VMwareEsxVmdkDriver ignores the extra spec entry and always
+        creates a <literal>full</literal> clone while creating volume from
+        another source volume or from a snapshot point.</para>
+    </simplesect>
+    <simplesect>
+        <title>Supported operations</title>
+        <para>The following operations are supported by VMwareVcVmdkDriver and
+        VMwareEsxVmdkDriver:</para>
+        <itemizedlist>
+            <listitem>
+                <para>create volume</para>
+            </listitem>
+            <listitem>
+                <para>create volume from another source volume: Supported only
+                if source volume is not attached to an instance.</para>
+            </listitem>
+            <listitem>
+                <para>create volume from snapshot</para>
+            </listitem>
+            <listitem>
+                <para>create volume from glance image</para>
+            </listitem>
+            <listitem>
+                <para>attach volume: When a volume is attached to an instance,
+                a reconfigure operation is performed on the instance to add the
+                volume's VMDK to it. The user must manually rescan and mount
+                the device from within the guest operating system.</para>
+            </listitem>
+            <listitem>
+                <para>detach volume</para>
+            </listitem>
+            <listitem>
+                <para>create snapshot: Allowed only if volume is not attached
+                to an instance.</para>
+            </listitem>
+            <listitem>
+                <para>delete snapshot: Allowed only if volume is not attached
+                to an instance.</para>
+            </listitem>
+            <listitem>
+                <para>upload as image to glance: Allowed only if volume is not
+                attached to an instance.</para>
+            </listitem>
+        </itemizedlist>
+    </simplesect>
+    <simplesect>
+        <title>Datastore selection</title>
+        <para>The driver chooses datastore that can accommodate for the volume
+        space and has highest <literal>freespace/totalspace</literal> metric
+        value.</para>
+        <para>When the volume is being attached to an instance, the driver
+        tries to place the volume under instance's ESX host on a datastore
+        selected based on the above strategy.</para>
+    </simplesect>
+</section>
