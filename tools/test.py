@@ -457,7 +457,7 @@ def build_book(book):
             base_book = "install-guide (for openSUSE)"
             output = subprocess.check_output(
                 ["mvn", "generate-sources", "-B",
-                 "-Doperating.system=zypper", "-Dprofile.os=opensuse"],
+                 "-Doperating.system=zypper", "-Dprofile.os=opensuse;sles"],
                 stderr=subprocess.STDOUT
             )
             # Build Ubuntu
