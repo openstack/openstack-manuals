@@ -9,9 +9,29 @@
         USB hard drive. You can attach a volume to only one instance.
         To create and manage volumes, you use a combination of nova
         and cinder client commands.</para>
-    <para os="adminuser">For an example of how to create and manage volumes, see the <link xlink:href="http://docs.openstack.org/user-guide/content/"><citetitle>OpenStack End User Guide</citetitle></link>.</para>
+    <para os="adminuser">For general user information about how to create and manage volumes, see
+        the <link xlink:href="http://docs.openstack.org/user-guide/content/"><citetitle>OpenStack End User Guide</citetitle></link>.
+    </para>
     <para os="enduser">This example creates a volume named
-            <literal>my-new-volume</literal> based on an image.</para>
+        <literal>my-new-volume</literal> based on an image.</para>
+    <section xml:id="cli_migrate_volumes" os="adminuser">
+        <title>Migrate a volume</title>
+        <para>As an administrator, you can migrate a volume with its data from one location to
+            another in a manner that is transparent to users and workloads. Only detached volumes
+            with no snapshots can be migrated.</para>
+        <para>Possible use cases for migrating data include:
+            <itemizedlist>
+                <listitem><para>To bring down a physical storage device for maintenance without interferring with workloads.</para></listitem>
+                <listitem><para>To modify the properties of a volume.</para></listitem>
+                <listitem><para>To free up space in a thinly-provisioned back-end.</para></listitem>
+            </itemizedlist></para>
+        <para>Migrate a volume, as follows:</para>
+        <screen><prompt>$</prompt> <userinput>cinder migrate <replaceable>volumeID</replaceable> <replaceable>destinationHost</replaceable> --force-host-copy=<replaceable>True|False</replaceable></userinput></screen>
+        <para>Where <literal>--force-host-copy=True</literal> forces the generic host-based
+            migration mechanism and bypasses any driver optimizations.</para>
+        <note><para>If the volume is in use, has snapshots, the specified host destination cannot accept the
+            volume, or if the user is not an administrator, the migration will fail.</para></note>
+    </section>
     <section xml:id="cli_list_volumes" os="enduser"><title>Create a volume</title><procedure>
         <step>
             <para>List images, and note the ID of the image to use for
