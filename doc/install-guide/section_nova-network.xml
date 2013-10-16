@@ -43,7 +43,6 @@
 network_manager=nova.network.manager.FlatDHCPManager
 firewall_driver=nova.virt.libvirt.firewall.IptablesFirewallDriver
 network_size=254
-routing_source_ip=my_ip
 allow_same_net_traffic=False
 multi_host=True
 send_arp_for_ha=True
@@ -66,7 +65,7 @@ public_interface = br100
 <prompt>#</prompt> <userinput>systemctl restart openstack-nova-network.service</userinput></screen>
   </step>
   <step>
-  <para>You must run the command that creates the network that the virtual machines use. 
+  <para>You must run the command that creates the network that the virtual machines use.
   You only need to run this command once, from a place where your admin user credentials are loaded.</para>
   <screen>source keystonerc</screen>
   <screen><prompt>#</prompt> <userinput>nova network-create vmnet --fixed-range-v4=10.0.0.0/24 --bridge-interface=br100 --multi-host=T</userinput></screen>
