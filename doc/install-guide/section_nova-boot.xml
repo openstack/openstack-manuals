@@ -43,7 +43,6 @@
 |  Name |                   Fingerprint                   |
 +-------+-------------------------------------------------+
 | mykey  | b0:18:32:fa:4e:d4:3c:1b:c4:6c:dd:cb:53:29:13:82 |
-| mykey2 | b0:18:32:fa:4e:d4:3c:1b:c4:6c:dd:cb:53:29:13:82 |
 +-------+-------------------------------------------------+</computeroutput></screen>
          </step>
          <step><para>To launch an instance using OpenStack, you must specify the ID for the flavor you want to use
@@ -72,10 +71,13 @@
 | 9e5c2bee-0373-414c-b4af-b91b0246ad3b | CirrOS 0.3.1 | ACTIVE |        |
 +--------------------------------------+--------------+--------+--------+</computeroutput></screen>
               </step>
+    <step><para>Your instances need security group rules to be set for SSH and ping. Refer to the <link xlink:href="http://docs.openstack.org/user-guide/content/"><citetitle>OpenStack User Guide</citetitle></link> for detailed information.</para>
+      <screen><prompt>#</prompt> <userinput>nova secgroup-add-rule <replaceable>default</replaceable> tcp 22 22 0.0.0.0/0</userinput></screen>
+      <screen><prompt>#</prompt> <userinput>nova secgroup-add-rule <replaceable>default</replaceable> icmp -1 -1 0.0.0.0/0</userinput></screen></step>
          <step><para>Create the instance using the <command>nova boot</command>.
         <screen><prompt>$</prompt> <userinput>nova boot --flavor <replaceable>flavorType</replaceable> --key_name <replaceable>keypairName</replaceable> --image <replaceable>ID</replaceable> <replaceable>newInstanceName</replaceable></userinput> </screen>Create
         an instance using flavor 1 or 2, for example:</para>
-         <screen><prompt>$</prompt> <userinput>nova boot --flavor 1 --key_name mykey --image 9e5c2bee-0373-414c-b4af-b91b0246ad3b cirrOS</userinput>
+         <screen><prompt>$</prompt> <userinput>nova boot --flavor 1 --key_name mykey --image 9e5c2bee-0373-414c-b4af-b91b0246ad3b --security_group default cirrOS</userinput>
 <computeroutput>+--------------------------------------+--------------------------------------+
 | Property                             | Value                                |
 +--------------------------------------+--------------------------------------+
@@ -103,7 +105,7 @@
 | key_name                             | mykey                                |
 | OS-EXT-SRV-ATTR:hypervisor_hostname  | None                                 |
 | name                                 | cirrOS                               |
-| adminPass                            | DWCdW6FnsKNq                         |
+| adminPass                            | DWCDW6FnsKNq                         |
 | tenant_id                            | e66d97ac1b704897853412fc8450f7b9     |
 | created                              | 2013-10-10T06:47:23Z                 |
 | os-extended-volumes:volumes_attached | []                                   |
@@ -116,25 +118,59 @@
           list</command> (as the instance is booted up, the status will change from 'BUILD' to
         'ACTIVE').</para>
          <screen><prompt>$</prompt> <userinput>nova list</userinput>
-<computeroutput>+--------------------------------------+--------+--------+----------------------+
-|                  ID                  |  Name  | Status |     Networks         |
-+--------------------------------------+--------+--------+----------------------+
-| 3bdf98a0-c767-4247-bf41-2d147e4aa043 | cirrOS | BUILD  | demonet=192.168.0.11 |
-+--------------------------------------+--------+--------+----------------------+</computeroutput>
-<prompt>$</prompt> <userinput>nova list</userinput>
-<computeroutput>+--------------------------------------+--------+--------+----------------------+
-|                  ID                  |  Name  | Status |     Networks         |
-+--------------------------------------+--------+--------+----------------------+
-| 3bdf98a0-c767-4247-bf41-2d147e4aa043 | cirrOS | ACTIVE | demonet=192.168.0.11 |
-+--------------------------------------+--------+--------+----------------------+</computeroutput>
+<computeroutput>+--------------------------------------+-----------+--------+------------+-------------+----------------+
+| ID                                   | Name      | Status | Task State | Power State | Networks       |
++--------------------------------------+-----------+--------+------------+-------------+----------------+
+| dcc4a894-869b-479a-a24a-659eef7a54bd | cirrOS    | BUILD  | spawning   | NOSTATE     | vmnet=10.0.0.3 |
++--------------------------------------+-----------+--------+------------+-------------+----------------+
+</computeroutput><prompt>$</prompt> <userinput>nova list</userinput>
+<computeroutput>+--------------------------------------+-----------+--------+------------+-------------+----------------+
+| ID                                   | Name      | Status | Task State | Power State | Networks       |
++--------------------------------------+-----------+--------+------------+-------------+----------------+
+| dcc4a894-869b-479a-a24a-659eef7a54bd | cirrOS    | ACTIVE | None       | Running     | vmnet=10.0.0.3 |
++--------------------------------------+-----------+--------+------------+-------------+----------------+</computeroutput>
 </screen>
            <note><para>You can also retrieve additional details about the specific instance using the
              <command>nova show</command> command.</para>
-             <screen><prompt>$</prompt> <userinput>nova show 3bdf98a0-c767-4247-bf41-2d147e4aa043</userinput></screen></note>
+             <screen><prompt>$</prompt> <userinput>nova show dcc4a894-869b-479a-a24a-659eef7a54bd</userinput>
+             <computeroutput>+--------------------------------------+----------------------------------------------------------+
+| Property                             | Value                                                    |
++--------------------------------------+----------------------------------------------------------+
+| status                               | ACTIVE                                                   |
+| updated                              | 2013-10-16T21:55:24Z                                     |
+| OS-EXT-STS:task_state                | None                                                     |
+| OS-EXT-SRV-ATTR:host                 | compute-node                                             |
+| key_name                             | mykey                                                    |
+| image                                | cirros (918a1017-8a1b-41ff-8809-6106ba45366e)            |
+| vmnet network                        | 10.0.0.3                                                 |
+| hostId                               | 306d7c693911170ad4e5218f626f531cc68caa45f3a0f70f1aeba94d |
+| OS-EXT-STS:vm_state                  | active                                                   |
+| OS-EXT-SRV-ATTR:instance_name        | instance-0000000a                                        |
+| OS-SRV-USG:launched_at               | 2013-10-16T21:55:24.000000                               |
+| OS-EXT-SRV-ATTR:hypervisor_hostname  | compute-node                                             |
+| flavor                               | m1.tiny (1)                                              |
+| id                                   | dcc4a894-869b-479a-a24a-659eef7a54bd                     |
+| security_groups                      | [{u'name': u'default'}]                                  |
+| OS-SRV-USG:terminated_at             | None                                                     |
+| user_id                              | 887ac8736b5b473b9dc3c5430a88b15f                         |
+| name                                 | cirrOS                                                   |
+| created                              | 2013-10-16T21:54:52Z                                     |
+| tenant_id                            | 43ab520b2b484578bb6924c0ea926190                         |
+| OS-DCF:diskConfig                    | MANUAL                                                   |
+| metadata                             | {}                                                       |
+| os-extended-volumes:volumes_attached | []                                                       |
+| accessIPv4                           |                                                          |
+| accessIPv6                           |                                                          |
+| progress                             | 0                                                        |
+| OS-EXT-STS:power_state               | 1                                                        |
+| OS-EXT-AZ:availability_zone          | nova                                                     |
+| config_drive                         |                                                          |
++--------------------------------------+----------------------------------------------------------+</computeroutput></screen>
+           </note>
 </step>
-         <step><para>Once enough time has passed so that the instance is fully booted and initialized,
+    <step><para>Once enough time has passed so that the instance is fully booted and initialized and your security groups are set,
                 you can <command>ssh</command> into the instance. You can obtain the IP address of the instance from the
                 output of <command>nova list</command>.</para>
-         <screen><prompt>$</prompt> ssh -i mykey root@192.168.0.11</screen></step>
+         <screen><prompt>$</prompt> ssh -i mykey root@10.0.0.3</screen></step>
   </procedure>
 </section>

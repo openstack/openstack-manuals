@@ -4,7 +4,6 @@
          version="5.0"
          xml:id="nova-network">
   <title>Enabling Networking</title>
-
   <para>Configuring Networking can be one of the most bewildering experiences
   you will encounter when working with OpenStack. To assist in this we have
   chosen the simplest production-ready configuration for this guide: the legacy
@@ -40,6 +39,7 @@
   <programlisting os="ubuntu;debian" language="ini">
 [DEFAULT]
 ...
+
 network_manager=nova.network.manager.FlatDHCPManager
 firewall_driver=nova.virt.libvirt.firewall.IptablesFirewallDriver
 network_size=254
@@ -48,9 +48,9 @@ multi_host=True
 send_arp_for_ha=True
 share_dhcp_address=True
 force_dhcp_release=True
-flat_interface = eth1
-flat_network_bridge = br100
-public_interface = br100
+flat_network_bridge=br100
+flat_interface=eth1
+public_interface=eth0
       </programlisting>
 
   </step>
