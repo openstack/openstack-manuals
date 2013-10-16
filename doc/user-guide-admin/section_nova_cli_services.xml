@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="nova-manage-services">
+    <title>Manage services</title>
+    <para>You can enable and disable services. In the following example, we will disable and enable the nova-compute service.</para>
+    <procedure>
+     <step><para>List the nova services.</para>
+        <screen><prompt>$</prompt> <userinput>nova service-list</userinput>
+        <computeroutput>
++------------------+----------+----------+---------+-------+----------------------------+-----------------+
+| Binary           | Host     | Zone     | Status  | State | Updated_at                 | Disabled Reason |
++------------------+----------+----------+---------+-------+----------------------------+-----------------+
+| nova-conductor   | devstack | internal | enabled | up    | 2013-10-16T00:56:08.000000 | None            |
+| nova-cert        | devstack | internal | enabled | up    | 2013-10-16T00:56:09.000000 | None            |
+| nova-compute     | devstack | nova     | enabled | up    | 2013-10-16T00:56:07.000000 | None            |
+| nova-network     | devstack | internal | enabled | up    | 2013-10-16T00:56:06.000000 | None            |
+| nova-scheduler   | devstack | internal | enabled | up    | 2013-10-16T00:56:04.000000 | None            |
+| nova-consoleauth | devstack | internal | enabled | up    | 2013-10-16T00:56:07.000000 | None            |
++------------------+----------+----------+---------+-------+----------------------------+-----------------+</computeroutput></screen>
+    </step>
+    <step><para>Disable a nova service.</para>
+        <screen><prompt>$</prompt> <userinput>nova service-disable localhost.localdomain nova-compute --reason 'trial log'</userinput>
+        <computeroutput>
++----------+--------------+----------+-------------------+
+| Host     | Binary       | Status   | Disabled Reason   |
++----------+--------------+----------+-------------------+
+| devstack | nova-compute | disabled | Trial log         |
++----------+--------------+----------+-------------------+</computeroutput></screen>
+    <note>
+      <para>For the Havana release, new optional parameter <parameter>--reason</parameter> has been included to help users log a reason for disabling a service.</para>
+    </note></step>
+    <step><para>Check the service list.</para>
+        <screen><prompt>$</prompt> <userinput>nova service-list</userinput>
+        <computeroutput>
++------------------+----------+----------+---------+-------+----------------------------+------------------+
+| Binary           | Host     | Zone     | Status   | State | Updated_at                 | Disabled Reason |
++------------------+----------+----------+---------+-------+----------------------------+------------------+
+| nova-conductor   | devstack | internal | enabled  | up    | 2013-10-16T00:56:48.000000 | None            |
+| nova-cert        | devstack | internal | enabled  | up    | 2013-10-16T00:56:49.000000 | None            |
+| nova-compute     | devstack | nova     | disabled | up    | 2013-10-16T00:56:47.000000 | Trial log       |
+| nova-network     | devstack | internal | enabled  | up    | 2013-10-16T00:56:51.000000 | None            |
+| nova-scheduler   | devstack | internal | enabled  | up    | 2013-10-16T00:56:44.000000 | None            |
+| nova-consoleauth | devstack | internal | enabled  | up    | 2013-10-16T00:56:47.000000 | None            |
++------------------+----------+----------+---------+-------+----------------------------+-----------------+</computeroutput></screen></step>
+    <step><para>Enable the service.</para>
+        <screen><prompt>$</prompt> <userinput>nova service-enable localhost.localdomain nova-compute</userinput>
+        <computeroutput>
++----------+--------------+---------+
+| Host     | Binary       | Status  |
++----------+--------------+---------+
+| devstack | nova-compute | enabled |
++----------+--------------+---------+</computeroutput></screen>
+    </step>
+    <step><para>Check the service list.</para>
+        <screen><prompt>$</prompt> <userinput>nova service-list</userinput>
+        <computeroutput>
++------------------+----------+----------+---------+-------+----------------------------+-----------------+
+| Binary           | Host     | Zone     | Status  | State | Updated_at                 | Disabled Reason |
++------------------+----------+----------+---------+-------+----------------------------+-----------------+
+| nova-conductor   | devstack | internal | enabled | up    | 2013-10-16T00:57:08.000000 | None            |
+| nova-cert        | devstack | internal | enabled | up    | 2013-10-16T00:57:09.000000 | None            |
+| nova-compute     | devstack | nova     | enabled | up    | 2013-10-16T00:57:07.000000 | None            |
+| nova-network     | devstack | internal | enabled | up    | 2013-10-16T00:57:11.000000 | None            |
+| nova-scheduler   | devstack | internal | enabled | up    | 2013-10-16T00:57:14.000000 | None            |
+| nova-consoleauth | devstack | internal | enabled | up    | 2013-10-16T00:57:07.000000 | None            |
++------------------+----------+----------+---------+-------+----------------------------+-----------------+</computeroutput></screen></step>
+</procedure>
+</section>
