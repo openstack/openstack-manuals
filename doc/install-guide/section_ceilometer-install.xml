@@ -14,7 +14,7 @@
       <para>Install the Metering Service on the controller node:</para>
       <screen os="ubuntu;deb"><prompt>#</prompt> <userinput>apt-get install ceilometer-api ceilometer-collector ceilometer-agent-central python-ceilometerclient</userinput></screen>
       <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-ceilometer-api openstack-ceilometer-collector openstack-ceilometer-agent-central python-ceilometerclient FIXME</userinput></screen>
-      <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install openstack-ceilometer-api openstack-ceilometer-collector openstack-ceilometer-agent-central python-ceilometerclient</userinput></screen>
+      <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-ceilometer-api openstack-ceilometer-collector openstack-ceilometer-agent-central python-ceilometerclient</userinput></screen>
     </step>
 
     <step>
@@ -22,7 +22,7 @@
       Specify the location of the database in the configuration file.
       In this guide, we use a MongoDB database on the controller node.</para>
       <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>FIXME</userinput></screen>
-      <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install mongodb</userinput></screen>
+      <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install mongodb</userinput></screen>
 
       <screen os="ubuntu;debian">
       <prompt>#</prompt> <userinput>apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10</userinput></screen>
@@ -35,7 +35,7 @@
       <prompt>#</prompt> <userinput>apt-get update</userinput>
       <prompt>#</prompt> <userinput>apt-get install mongodb-10gen</userinput></screen>
     </step>
-    <step os="opensuse">
+    <step os="opensuse;sles">
       <para>Start the MonoDB server and configure it to start when the system boots:</para>
       <screen><prompt>#</prompt> <userinput>systemctl start mongodb.service</userinput>
 <prompt>#</prompt> <userinput>systemctl enable mongodb.service</userinput></screen>
@@ -53,7 +53,7 @@
 
 
     <step><para>Tell the Metering Service to use the created database.</para>
-      <screen os="rhel;centos;fedora;opensuse"><prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf \
+      <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf \
   database connection mongodb://ceilometer:<replaceable>CEILOMETER_DBPASS</replaceable>@<replaceable>controller</replaceable>:27017/ceilometer</userinput></screen>
       <para os="ubuntu;debian">Edit <filename>/etc/ceilometer/ceilometer.conf</filename>
        and change the <literal>[database]</literal> section.</para>
@@ -74,7 +74,7 @@ connection = mongodb://ceilometer:<replaceable>CEILOMETER_DBPASS</replaceable>@<
       shared secret between the Metering Service nodes.
       Use <command>openssl</command> to generate a random token, then store it
       in the configuration file.</para>
-      <screen os="rhel;centos;fedora;opensuse"><prompt>#</prompt> <userinput>ADMIN_TOKEN=$(openssl rand -hex 10)</userinput>
+      <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>ADMIN_TOKEN=$(openssl rand -hex 10)</userinput>
 <prompt>#</prompt> <userinput>echo $ADMIN_TOKEN</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/keystone/keystone.conf publisher_rpc metering_secret $ADMIN_TOKEN</userinput></screen>
       <screen os="ubuntu"><prompt>#</prompt> <userinput>openssl rand -hex 10</userinput></screen>
@@ -102,7 +102,7 @@ metering_secret = ADMIN_TOKEN
 
 <step><para>Add the credentials to the Metering Service's configuration files.</para>
 
-      <screen os="centos;rhel;fedora;opensuse"><prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf keystone_authtoken auth_host <replaceable>controller</replaceable></userinput>
+      <screen os="centos;rhel;fedora;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf keystone_authtoken auth_host <replaceable>controller</replaceable></userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf keystone_authtoken admin_user ceilometer</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf keystone_authtoken admin_tenant_name service</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf keystone_authtoken auth_protocol http</userinput>
@@ -144,24 +144,18 @@ admin_password = CEILOMETER_PASS
 <prompt>#</prompt> <userinput>service ceilometer-collector restart</userinput></screen>
     </step>
 
-    <step os="rhel;fedora;centos;opensuse"><para>Start the <systemitem
+    <step os="rhel;fedora;centos;opensuse;sles"><para>Start the <systemitem
       class="service">ceilometer-api</systemitem>, <systemitem
       class="service">ceilometer-agent-central</systemitem> and
       <systemitem class="service">ceilometer-collector</systemitem>
       services and configure them to start when the system
       boots.</para>
-      <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>service openstack-ceilometer-api start</userinput>
+      <screen os="rhel;fedora;centos;sles"><prompt>#</prompt> <userinput>service openstack-ceilometer-api start</userinput>
 <prompt>#</prompt> <userinput>service openstack-ceilometer-agent-central start</userinput>
 <prompt>#</prompt> <userinput>service openstack-ceilometer-collector start</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-api on</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-agent-central on</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-collector on</userinput></screen>
-      <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl start openstack-ceilometer-api.service</userinput>
-<prompt>#</prompt> <userinput>systemctl start openstack-ceilometer-agent-central.service</userinput>
-<prompt>#</prompt> <userinput>systemctl start openstack-ceilometer-collector.service</userinput>
-<prompt>#</prompt> <userinput>systemctl enable openstack-ceilometer-api.service</userinput>
-<prompt>#</prompt> <userinput>systemctl enable openstack-ceilometer-agent-central.service</userinput>
-<prompt>#</prompt> <userinput>systemctl enable openstack-ceilometer-collector.service</userinput></screen>
 </step>
 
   </procedure>

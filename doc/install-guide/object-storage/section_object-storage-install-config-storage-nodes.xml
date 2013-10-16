@@ -19,7 +19,7 @@
             <para>
                 <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install swift-account swift-container swift-object xfsprogs</userinput></screen>
                 <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-swift-account openstack-swift-container openstack-swift-object xfsprogs</userinput></screen>
-                <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install openstack-swift-account openstack-swift-container openstack-swift-object xfsprogs</userinput></screen>
+                <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-swift-account openstack-swift-container openstack-swift-object xfsprogs</userinput></screen>
             </para>
         </step>
         <step>
@@ -36,7 +36,7 @@
 <prompt>#</prompt> <userinput>mkdir -p /srv/node/sdb1</userinput>
 <prompt>#</prompt> <userinput>mount /srv/node/sdb1</userinput>
 <prompt>#</prompt> <userinput>chown -R swift:swift /srv/node</userinput></screen>
-            <screen os="opensuse"><prompt>#</prompt> <userinput>fdisk /dev/sdb</userinput>
+            <screen os="opensuse;sles"><prompt>#</prompt> <userinput>fdisk /dev/sdb</userinput>
 <prompt>#</prompt> <userinput>mkfs.xfs /dev/sdb1</userinput>
 <prompt>#</prompt> <userinput>echo "/dev/sdb1 /srv/node/sdb1 xfs noatime,nodiratime,nobarrier,logbufs=8 0 0" &gt;&gt; /etc/fstab</userinput>
 <prompt>#</prompt> <userinput>mkdir -p /srv/node/sdb1</userinput>
@@ -70,7 +70,7 @@ max connections = 2
 path = /srv/node/
 read only = false
 lock file = /var/lock/object.lock</programlisting>
-                <programlisting language="ini" os="opensuse">uid = openstack-swift
+                <programlisting language="ini" os="opensuse;sles">uid = openstack-swift
 gid = openstack-swift
 log file = /var/log/rsyncd.log
 pid file = /var/run/rsyncd.pid
@@ -125,7 +125,7 @@ address = &lt;STORAGE_REPLICATION_NET_IP&gt;
             <para>Create the swift recon cache directory and set its
                 permissions.<screen os="ubuntu;debian;rhel;centos;fedora"><prompt>#</prompt> <userinput>mkdir -p /var/swift/recon</userinput>
 <prompt>#</prompt> <userinput>chown -R swift:swift /var/swift/recon</userinput></screen>
-                <screen os="opensuse"><prompt>#</prompt> <userinput>mkdir -p /var/swift/recon</userinput>
+                <screen os="opensuse;sles"><prompt>#</prompt> <userinput>mkdir -p /var/swift/recon</userinput>
 <prompt>#</prompt> <userinput>chown -R openstack-swift:openstack-swift /var/swift/recon</userinput></screen>
             </para>
         </step>

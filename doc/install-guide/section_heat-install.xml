@@ -9,7 +9,7 @@
       <para>Install the Orchestration Service on the controller node:</para>
       <screen os="ubuntu;deb"><prompt>#</prompt> <userinput>apt-get install heat-api heat-api-cfn</userinput></screen>
       <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-heat-api FIXME</userinput></screen>
-      <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install openstack-heat-api openstack-heat-api-cfn</userinput></screen>
+      <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-heat-api openstack-heat-api-cfn</userinput></screen>
     </step>
 
     <step>
@@ -19,7 +19,7 @@
       with the username <literal>heat</literal>. Replace
       <literal><replaceable>HEAT_DBPASS</replaceable></literal>
       with a suitable password for the database user.</para>
-      <screen os="rhel;centos;fedora;opensuse"><prompt>#</prompt> <userinput>openstack-config --set /etc/heat/heat.conf \
+      <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/heat/heat.conf \
   database connection mysql://heat:<replaceable>HEAT_DBPASS</replaceable>@controller/heat</userinput></screen>
       <para os="ubuntu">Edit <filename>/etc/heat/heat.conf</filename> and change the <literal>[DEFAULT]</literal> section.</para>
       <programlisting os="ubuntu" language="ini">
@@ -103,18 +103,13 @@ admin_password = HEAT_PASS
     </step>
 
 
-    <step os="rhel;fedora;centos;opensuse"><para>Start the <literal>heat-api</literal> and
+    <step os="rhel;fedora;centos;opensuse;sles"><para>Start the <literal>heat-api</literal> and
       <literal>heat-api-cfn</literal> services and configure them to
       start when the system boots.</para>
-      <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>service openstack-heat-api start</userinput>
+      <screen os="rhel;fedora;centos;opensuse;sles"><prompt>#</prompt> <userinput>service openstack-heat-api start</userinput>
 <prompt>#</prompt> <userinput>service openstack-heat-api-cfn start</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-heat-api on</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-heat-api-cfn on</userinput></screen>
-      <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl start openstack-heat-api.service</userinput>
-<prompt>#</prompt> <userinput>systemctl start openstack-heat-api-cfn.service</userinput>
-<prompt>#</prompt> <userinput>systemctl enable openstack-heat-api.service</userinput>
-<prompt>#</prompt> <userinput>systemctl enable openstack-heat-api-cfn.service</userinput></screen>
-
     </step>
 
   </procedure>

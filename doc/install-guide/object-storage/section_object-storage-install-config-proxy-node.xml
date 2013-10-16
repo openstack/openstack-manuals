@@ -13,11 +13,11 @@
         <para>Swift processes run under a separate user and group, set
         by configuration options, and referred to as <phrase
         os="ubuntu;debian;rhel;centos;fedora">swift:swift</phrase><phrase
-        os="opensuse">openstack-swift:openstack-swift</phrase>. The
+        os="opensuse;sles">openstack-swift:openstack-swift</phrase>. The
         default user is <phrase
         os="ubuntu;debian;rhel;centos;fedora">swift, which may not
         exist on your system.</phrase><phrase
-        os="opensuse">openstack-swift.</phrase>
+        os="opensuse;sles">openstack-swift.</phrase>
         </para>
     </note>
     <orderedlist>
@@ -25,7 +25,7 @@
             <para>Install swift-proxy service:</para>
             <para><screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install swift-proxy memcached python-keystoneclient python-swiftclient python-webob</userinput></screen>
             <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-swift-proxy memcached openstack-utils python-swiftclient python-keystone-auth-token</userinput></screen>
-            <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install openstack-swift-proxy memcached openstack-utils python-swiftclient python-keystoneclient</userinput></screen>
+            <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-swift-proxy memcached openstack-utils python-swiftclient python-keystoneclient</userinput></screen>
             </para>
         </listitem>
         <listitem>
@@ -62,7 +62,7 @@ to
             <para>Create <filename>/etc/swift/proxy-server.conf</filename>:</para>
             <para>
                 <literallayout os="rhel;centos;fedora;ubuntu;debian" class="monospaced"><xi:include parse="text" href="../samples/proxy-server.conf.txt" /></literallayout>
-                <literallayout os="opensuse" class="monospaced"><xi:include parse="text" href="../samples/proxy-server.conf.txt-openSUSE" /></literallayout>
+                <literallayout os="opensuse;sles" class="monospaced"><xi:include parse="text" href="../samples/proxy-server.conf.txt-openSUSE" /></literallayout>
             </para>
             <note>
                 <para>If you run multiple memcache servers, put the multiple
@@ -77,7 +77,7 @@ to
                     >signing_dir</parameter> and set its permissions
                 accordingly.<screen os="ubuntu;debian;rhel;centos;fedora"><prompt>#</prompt> <userinput>mkdir -p /home/swift/keystone-signing</userinput>
 <prompt>#</prompt> <userinput>chown -R swift:swift /home/swift/keystone-signing</userinput></screen>
-                <screen os="opensuse"><prompt>#</prompt> <userinput>mkdir -p /home/swift/keystone-signing</userinput>
+                <screen os="opensuse;sles"><prompt>#</prompt> <userinput>mkdir -p /home/swift/keystone-signing</userinput>
 <prompt>#</prompt> <userinput>chown -R openstack-swift:openstack-swift /home/swift/keystone-signing</userinput></screen>
             </para>
         </listitem>
@@ -158,7 +158,7 @@ to
                 user:</para>
             <para>
             <screen os="ubuntu;debian;rhel;centos;fedora"><prompt>#</prompt> <userinput>chown -R swift:swift /etc/swift</userinput></screen>
-            <screen os="opensuse"><prompt>#</prompt> <userinput>chown -R openstack-swift:openstack-swift /etc/swift</userinput></screen>
+            <screen os="opensuse;sles"><prompt>#</prompt> <userinput>chown -R openstack-swift:openstack-swift /etc/swift</userinput></screen>
             </para>
         </listitem>
         <listitem>

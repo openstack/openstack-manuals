@@ -29,7 +29,7 @@
                 the Identity Service as root:</para>
             <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install memcached libapache2-mod-wsgi openstack-dashboard</userinput></screen>
             <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install memcached python-memcached mod_wsgi openstack-dashboard</userinput></screen>
-            <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install memcached python-python-memcached apache2-mod_wsgi openstack-dashboard</userinput></screen>
+            <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install memcached python-python-memcached apache2-mod_wsgi openstack-dashboard</userinput></screen>
         <note os="ubuntu">
 
             <para>Remove the
@@ -47,11 +47,11 @@
         >/etc/openstack-dashboard/local_settings.py</filename><filename
         os="centos;fedora;rhel"
         >/etc/openstack-dashboard/local_settings</filename><filename
-        os="opensuse"
+        os="opensuse;sles"
         >/usr/share/openstack-dashboard/openstack_dashboard/local/local_settings.py</filename>
     to match the ones set in <filename os="ubuntu;debian"
         >/etc/memcached.conf</filename><filename
-        os="centos;fedora;rhel;opensuse"
+        os="centos;fedora;rhel;opensuse;sles"
         >/etc/sysconfig/memcached.conf</filename>.</para>
     <para>Open <filename os="ubuntu;debian"
         >/etc/openstack-dashboard/local_settings.py</filename>
@@ -72,7 +72,7 @@
         <para>The address and port must match the ones
             set in <filename os="ubuntu;debian"
             >/etc/memcached.conf</filename><filename
-            os="centos;fedora;rhel;opensuse"
+            os="centos;fedora;rhel;opensuse;sles"
             >/etc/sysconfig/memcached</filename>.</para>
         <para>If you change the memcached settings,
             you must restart the Apache web server for
@@ -92,7 +92,7 @@
                                 >/etc/openstack-dashboard/local_settings</filename><filename
                                 os="ubuntu;debian"
                                 >/etc/openstack-dashboard/local_settings.py</filename><filename
-                                os="opensuse"
+                                os="opensuse;sles"
                                 >/usr/share/openstack-dashboard/openstack_dashboard/local/local_settings.py</filename>
                             file.</para>
                         <para>Change the following parameter:
@@ -111,20 +111,20 @@
                                 >/etc/openstack-dashboard/local_settings</filename><filename
                                 os="ubuntu;debian"
                                 >/etc/openstack-dashboard/local_settings.py</filename><filename
-                                os="opensuse"
+                                os="opensuse;sles"
                                 >/usr/share/openstack-dashboard/openstack_dashboard/local/local_settings.py</filename>
        and change <literal>OPENSTACK_HOST</literal> to the hostname of your Identity Service.</para>
             <programlisting language="python" linenumbering="unnumbered"><?db-font-size 75%?>OPENSTACK_HOST = "controller"
     </programlisting>
         </step>
-        <step os="opensuse">
+        <step os="opensuse;sles">
         <para>Setup Apache configuration:
 <screen><prompt>#</prompt> <userinput>cp /etc/apache2/conf.d/openstack-dashboard.conf.sample \
    /etc/apache2/conf.d/openstack-dashboard.conf</userinput>
 <prompt>#</prompt> <userinput>a2enmod rewrite;a2enmod ssl;a2enmod wsgi</userinput></screen>
         </para>
         </step>
-        <step os="opensuse">
+        <step os="opensuse;sles">
           <para>By default, the
           <systemitem>openstack-dashboard</systemitem> package enables
           a database as session store. Before you continue, either
@@ -134,17 +134,19 @@
           linkend="dashboard-session-database"/>.
           </para>
         </step>
-        <step os="opensuse">
+        <step os="opensuse;sles">
           <para>
             Start the Apache web server and memcached:
           </para>
-          <screen><prompt>#</prompt> <userinput>systemctl start apache2.service memcached.service</userinput>
-<prompt>#</prompt> <userinput>systemctl enable apache2.service memcached.service</userinput></screen>
+          <screen><prompt>#</prompt> <userinput>service apache2 start</userinput>
+<prompt>#</prompt> <userinput>service memcached start</userinput>
+<prompt>#</prompt> <userinput>chckconfig apache2 on</userinput>
+<prompt>#</prompt> <userinput>chckconfig memcached on</userinput></screen>
         </step>
         <step>
           <para>You can now access the dashboard at
           <uri os="centos;fedora;rhel;debian;ubuntu">http://controller/horizon</uri>
-          <uri os="opensuse">http://controller</uri>.</para>
+          <uri os="opensuse;sles">http://controller</uri>.</para>
           <para>Login with credentials for any user that you created
           with the OpenStack Identity Service.</para>
         </step>

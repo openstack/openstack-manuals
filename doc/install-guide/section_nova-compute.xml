@@ -48,18 +48,18 @@
       packages for the compute service.</para>
       <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install nova-compute-kvm python-novaclient python-guestfs</userinput></screen>
       <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>yum install openstack-nova-compute</userinput></screen>
-      <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install openstack-nova-compute kvm openstack-utils</userinput></screen>
+      <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-nova-compute kvm openstack-utils</userinput></screen>
     </step>
     <step os="ubuntu">
-    <para>Due to <link xlink:href="https://bugs.launchpad.net/ubuntu/+source/linux/+bug/759725">a bug</link> 
+    <para>Due to <link xlink:href="https://bugs.launchpad.net/ubuntu/+source/linux/+bug/759725">a bug</link>
     that Canonical "Won't Fix", guestfs is broken out of the box.
     Run the following command to fix it:</para>
-      <screen><prompt>#</prompt> <userinput> chmod 0644 /boot/vmlinuz*</userinput></screen>
+      <screen><prompt>#</prompt> <userinput>chmod 0644 /boot/vmlinuz*</userinput></screen>
     </step>
 
     <step><para>Either copy the file <filename>/etc/nova/nova.conf</filename> from the
           <replaceable>controller</replaceable> node, or run the same configuration commands.</para>
-      <screen os="fedora;rhel;centos;opensuse"><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf \
+      <screen os="fedora;rhel;centos;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf \
   database connection mysql://nova:<replaceable>NOVA_DBPASS</replaceable>@controller/nova</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT auth_strategy keystone</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT auth_host <replaceable>controller</replaceable></userinput>
@@ -105,7 +105,7 @@ rabbit_host = controller</programlisting>
       <literal>vncserver_listen</literal>, and
       <literal>vncserver_proxyclient_address</literal> to the IP address of the
       compute node on the internal network.</para>
-      <screen os="fedora;rhel;centos;opensuse"><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT my_ip 192.168.0.11</userinput>
+      <screen os="fedora;rhel;centos;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT my_ip 192.168.0.11</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT vncserver_listen 192.168.0.11</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT vncserver_proxyclient_address 192.168.0.11</userinput></screen>
   <para os="ubuntu;debian">Edit <filename>/etc/nova/nova.conf</filename> and add to the <literal>[DEFAULT]</literal> section.</para>
@@ -117,7 +117,7 @@ vncserver_proxyclient_address=192.168.0.11</programlisting>
 
     </step>
     <step><para>Specify the host running the Image Service.<phrase os="ubuntu;debian"> Edit <filename>/etc/nova/nova.conf</filename> and add to the <literal>[DEFAULT]</literal> section.</phrase></para>
-    <screen os="fedora;rhel;centos;opensuse"><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT glance_host <replaceable>controller</replaceable></userinput></screen>
+    <screen os="fedora;rhel;centos;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT glance_host <replaceable>controller</replaceable></userinput></screen>
     <programlisting os="ubuntu;debian" language="ini">[DEFAULT]
 ...
 glance_host=<replaceable>controller</replaceable></programlisting>
@@ -133,16 +133,15 @@ admin_user=nova
 admin_tenant_name=service
 admin_password=<replaceable>NOVA_DBPASS</replaceable>
 </programlisting>
-      <note os="fedora;rhel;centos;opensuse"><para>Ensure that <filename>api_paste_config=/etc/nova/api-paste.ini</filename> is set in
+      <note os="fedora;rhel;centos;opensuse;sles"><para>Ensure that <filename>api_paste_config=/etc/nova/api-paste.ini</filename> is set in
         <filename>/etc/nova/nova.conf</filename>.</para></note>
       </step>
     <step>
-    <para os="fedora;rhel;centos;opensuse">Start the Compute service and configure it to start when the system boots.</para>
+    <para os="fedora;rhel;centos;opensuse;Sles">Start the Compute service and configure it to start when the system boots.</para>
     <para os="ubuntu;debian">Restart the Compute service.</para>
       <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service nova-compute restart</userinput></screen>
-      <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>service openstack-nova-compute start</userinput>
+      <screen os="centos;rhel;fedora;opensuse;sles"><prompt>#</prompt> <userinput>service openstack-nova-compute start</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-nova-compute on</userinput></screen>
-      <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl start openstack-nova-compute.service</userinput>
-<prompt>#</prompt> <userinput>systemctl enable openstack-nova-compute.service</userinput></screen></step>
+    </step>
   </procedure>
  </section>
