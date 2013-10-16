@@ -4,53 +4,69 @@
   xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
   xml:id="boot_from_volume">
   <title>Launch an instance from a volume</title>
-  <para>After you <link linkend="create_volume_from_image">create
-      a bootable volume</link>, you <link
-      linkend="launch_image_from_volume">launch an instance from
-      the volume</link>.</para>
+  <para>After you create a bootable volume, you can launch an instance
+    from that volume.</para>
+  <para>Optionally, to configure your volume, see the <link
+    xlink:href="http://docs.openstack.org/trunk/config-reference/content/config_overview.html"
+    ><citetitle>OpenStack Configuration
+      Reference</citetitle></link>.</para>
   <procedure xml:id="create_volume_from_image">
-    <title>To launch and instance from a volume</title>
+    <title>To launch an instance from a volume</title>
+    <step><para>To choose an image to create a bootable volume from, run the
+        following command to list images:</para>
+    <screen><prompt>$</prompt> <userinput>nova image-list</userinput>
+<computeroutput>+--------------------------------------+---------------------------------+--------+--------+
+| ID                                   | Name                            | Status | Server |
++--------------------------------------+---------------------------------+--------+--------+
+| e0b7734d-2331-42a3-b19e-067adc0da17d | cirros-0.3.1-x86_64-uec         | ACTIVE |        |
+| 75bf193b-237b-435e-8712-896c51484de9 | cirros-0.3.1-x86_64-uec-kernel  | ACTIVE |        |
+| 19eee81c-f972-44e1-a952-1dceee148c47 | cirros-0.3.1-x86_64-uec-ramdisk | ACTIVE |        |
++--------------------------------------+---------------------------------+--------+--------+</computeroutput></screen></step>
     <step>
-      <para>To create a bootable volume from an image, run the
-        following command:
-        <screen><prompt>#</prompt> <userinput>cinder create --image-id 397e713c-b95b-4186-ad46-6126863ea0a9 \
-  --display-name my-bootable-vol 8</userinput></screen>
-      </para>
-      <note>
-        <para>You can also use the <command>nova</command>
-          <option>volume-create</option> command to complete the same
-          action:
-          <screen><prompt>#</prompt> <userinput>nova volume-create \
-  --image-id 397e713c-b95b-4186-ad46-6126863ea0a9 \
-  --display-name my-bootable-vol 8</userinput></screen></para>
-      </note>
-      <para>Optionally, to configure your volume, see the
-          <citetitle>Configuring Image Service and Storage for
-          Compute</citetitle> chapter in the <citetitle>OpenStack
-          Configuration Reference</citetitle>.</para>
+      <para>To create a bootable volume from an image, include the
+        image ID in the command:</para>
+        <screen><prompt>#</prompt> <userinput>cinder create --image-id e0b7734d-2331-42a3-b19e-067adc0da17d --display-name my-boot-vol 8</userinput>
+<computeroutput>+---------------------+--------------------------------------+
+|       Property      |                Value                 |
++---------------------+--------------------------------------+
+|     attachments     |                  []                  |
+|  availability_zone  |                 nova                 |
+|       bootable      |                false                 |
+|      created_at     |      2013-10-16T01:27:48.645390      |
+| display_description |                 None                 |
+|     display_name    |             my-boot-vol              |
+|          id         | 3195a5a7-fd0d-4ac3-b919-7ba6cbe11d46 |
+|       image_id      | e0b7734d-2331-42a3-b19e-067adc0da17d |
+|       metadata      |                  {}                  |
+|         size        |                  8                   |
+|     snapshot_id     |                 None                 |
+|     source_volid    |                 None                 |
+|        status       |               creating               |
+|     volume_type     |                 None                 |
++---------------------+--------------------------------------+</computeroutput></screen>
+      <para>Before the volume builds, its <literal>bootable</literal>
+        state is <literal>false</literal>.</para>
     </step>
     <step>
       <para>To list volumes, run the following command:</para>
-      <screen><prompt>$</prompt> <userinput>nova volume-list</userinput></screen>
-      <screen><?db-font-size 55%?><computeroutput>+--------------------------------------+-----------+-----------------+------+-------------+-------------+
-| ID                                   | Status    | Display Name    | Size | Volume Type | Attached to |
-+--------------------------------------+-----------+-----------------+------+-------------+-------------+
-| bd7cf584-45de-44e3-bf7f-f7b50bf235e3 | available | my-bootable-vol | 8    | None        |             |
-+--------------------------------------+-----------+-----------------+------+-------------+-------------+</computeroutput></screen>
-      <para>Copy the value in the <literal>ID</literal> field for your
-        volume.</para>
+      <screen><prompt>$</prompt> <userinput>cinder list</userinput>
+<computeroutput>+--------------------------------------+-----------+-----------------+------+-------------+----------+-------------+
+|                  ID                  |   Status  |   Display Name  | Size | Volume Type | Bootable | Attached to |
++--------------------------------------+-----------+-----------------+------+-------------+----------+-------------+
+| 3195a5a7-fd0d-4ac3-b919-7ba6cbe11d46 | available |   my-boot-vol   |  8   |     None    |   true   |             |
++--------------------------------------+-----------+-----------------+------+-------------+----------+-------------+</computeroutput></screen>
+      <para>Note that the <literal>bootable</literal> state is now
+          <literal>true</literal>. Copy the value in the
+          <literal>ID</literal> field for your volume.</para>
     </step>
     <step xml:id="launch_image_from_volume">
-      <para>To launch an instance, run the <command>nova</command>
-        <option>boot</option> command with the
-          <parameter>--block_device_mapping</parameter> parameter, as
-        follows:</para>
-      <screen><prompt>$</prompt> <userinput>nova boot --flavor <replaceable>FLAVOR</replaceable> --block_device_mapping \
-  <replaceable>DEVNAME</replaceable>=<replaceable>ID</replaceable>:<replaceable>TYPE</replaceable>:<replaceable>SIZE</replaceable>:<replaceable>DELETE_ON_TERMINATE</replaceable> <replaceable>NAME</replaceable></userinput></screen>
+      <para>To launch an instance, include the
+          <parameter>--block_device_mapping</parameter>
+        parameter:</para>
+      <screen><prompt>$</prompt> <userinput>nova boot --flavor <replaceable>FLAVOR</replaceable> --block_device_mapping <replaceable>DEVNAME</replaceable>=<replaceable>ID</replaceable>:<replaceable>TYPE</replaceable>:<replaceable>SIZE</replaceable>:<replaceable>DELETE_ON_TERMINATE</replaceable> <replaceable>NAME</replaceable></userinput></screen>
       <para>The command arguments are:</para>
       <informaltable>
-        <col width="30%"/>
-        <col width="70%"/>
+        <thead><tr><th>Parameter</th><th>Description</th></tr></thead>
         <tbody>
           <tr>
             <td>
@@ -132,56 +148,48 @@
       <para>You can also attach a swap disk on boot with the <parameter>--swap</parameter>
         flag, or you can attach an ephemeral disk on boot with the <parameter>--ephemeral</parameter> flag.</para>
       <para>For example, you might enter the following command to boot
-        from a volume with ID bd7cf584-45de-44e3-bf7f-f7b50bf235e. The
-        volume is not deleted when the instance is terminated:</para>
-      <screen><prompt>$</prompt> <userinput>nova boot --flavor 2 --image 397e713c-b95b-4186-ad46-6126863ea0a9 --block_device_mapping vda=bd7cf584-45de-44e3-bf7f-f7b50bf235e3:::0 myInstanceFromVolume</userinput></screen>
-      <screen><?db-font-size 65%?><computeroutput>+-------------------------------------+-------------------------------------------------+
-| Property                            | Value                                           |
-+-------------------------------------+-------------------------------------------------+
-| OS-EXT-STS:task_state               | scheduling                                      |
-| image                               | cirros-0.3.1-x86_64-uec                         |
-| OS-EXT-STS:vm_state                 | building                                        |
-| OS-EXT-SRV-ATTR:instance_name       | instance-00000003                               |
-| flavor                              | m1.small                                        |
-| id                                  | 8a99547e-7385-4ad1-ae50-4ecfaaad5f42            |
-| security_groups                     | [{u'name': u'default'}]                         |
-| user_id                             | 376744b5910b4b4da7d8e6cb483b06a8                |
-| OS-DCF:diskConfig                   | MANUAL                                          |
-| accessIPv4                          |                                                 |
-| accessIPv6                          |                                                 |
-| progress                            | 0                                               |
-| OS-EXT-STS:power_state              | 0                                               |
-| OS-EXT-AZ:availability_zone         | nova                                            |
-| config_drive                        |                                                 |
-| status                              | BUILD                                           |
-| updated                             | 2013-07-16T20:14:19Z                            |
-| hostId                              |                                                 |
-| OS-EXT-SRV-ATTR:host                | None                                            |
-| key_name                            | None                                            |
-| OS-EXT-SRV-ATTR:hypervisor_hostname | None                                            |
-| name                                | myInstanceFromVolume                            |
-| adminPass                           | LhwEmx5Ho22M                                    |
-| tenant_id                           | 66265572db174a7aa66eba661f58eb9e                |
-| created                             | 2013-07-16T20:14:18Z                            |
-| metadata                            | {}                                              |
-+-------------------------------------+-------------------------------------------------+</computeroutput></screen>
-      <para>Now when you list volumes, you can see that the volume is
-        attached to a server:</para>
-      <screen><prompt>$</prompt> <userinput>nova volume-list</userinput></screen>
-      <screen><?db-font-size 65%?><computeroutput>+--------------------------------------+--------+-----------------+------+-------------+--------------------------------------+
-| ID                                   | Status | Display Name    | Size | Volume Type | Attached to                          |
-+--------------------------------------+--------+-----------------+------+-------------+--------------------------------------+
-| bd7cf584-45de-44e3-bf7f-f7b50bf235e3 | in-use | my-bootable-vol | 8    | None        | 8a99547e-7385-4ad1-ae50-4ecfaaad5f42 |
-+--------------------------------------+--------+-----------------+------+-------------+--------------------------------------+</computeroutput></screen>
-      <para>Additionally, when you list servers, you see the server
-        that you booted from a volume:</para>
-      <screen><prompt>$</prompt> <userinput>nova list</userinput></screen>
-      <screen><?db-font-size 65%?><computeroutput>+--------------------------------------+----------------------+--------+------------+-------------+------------------+
-| ID                                   | Name                 | Status | Task State | Power State | Networks         |
-+--------------------------------------+----------------------+--------+------------+-------------+------------------+
-| b3cdc6c0-85a7-4904-ae85-71918f734048 | myCirrosServer       | ACTIVE | None       | Running     | private=10.0.0.3 |
-| 8a99547e-7385-4ad1-ae50-4ecfaaad5f42 | myInstanceFromVolume | ACTIVE | None       | Running     | private=10.0.0.4 |
-+--------------------------------------+----------------------+--------+------------+-------------+------------------+</computeroutput></screen>
+        from a volume. The volume is not deleted when the instance is
+        terminated:</para>
+      <screen><prompt>$</prompt> <userinput>nova boot --flavor 2 --image e0b7734d-2331-42a3-b19e-067adc0da17d \
+     --block_device_mapping vda=3195a5a7-fd0d-4ac3-b919-7ba6cbe11d46:::0 myInstanceFromVolume</userinput>
+<computeroutput>+-------------------------------------+--------------------------------------+
+| Property                            | Value                                |
++-------------------------------------+--------------------------------------+
+| OS-EXT-STS:task_state               | scheduling                           |
+| image                               | cirros-0.3.1-x86_64-uec              |
+| OS-EXT-STS:vm_state                 | building                             |
+| OS-EXT-SRV-ATTR:instance_name       | instance-00000003                    |
+| flavor                              | m1.small                             |
+| id                                  | 8ed8b0f9-70de-4662-a16c-0b51ce7b17b4 |
+| security_groups                     | [{u'name': u'default'}]              |
+| user_id                             | 352b37f5c89144d4ad0534139266d51f     |
+| OS-DCF:diskConfig                   | MANUAL                               |
+| accessIPv4                          |                                      |
+| accessIPv6                          |                                      |
+| progress                            | 0                                    |
+| OS-EXT-STS:power_state              | 0                                    |
+| OS-EXT-AZ:availability_zone         | nova                                 |
+| config_drive                        |                                      |
+| status                              | BUILD                                |
+| updated                             | 2013-10-16T01:43:26Z                 |
+| hostId                              |                                      |
+| OS-EXT-SRV-ATTR:host                | None                                 |
+| key_name                            | None                                 |
+| OS-EXT-SRV-ATTR:hypervisor_hostname | None                                 |
+| name                                | myInstanceFromVolume                 |
+| adminPass                           | BULD33uzYwhq                         |
+| tenant_id                           | f7ac731cc11f40efbc03a9f9e1d1d21f     |
+| created                             | 2013-10-16T01:43:25Z                 |
+| metadata                            | {}                                   |
++-------------------------------------+--------------------------------------+</computeroutput></screen>
+      <para>Now when you list volumes, the volume is attached to a
+        server:</para>
+      <screen><prompt>$</prompt> <userinput>nova volume-list</userinput>
+<computeroutput>+--------------------------------------+-----------+-----------------+------+-------------+--------------------------------------+
+| ID                                   | Status    | Display Name    | Size | Volume Type | Attached to                          |
++--------------------------------------+-----------+-----------------+------+-------------+--------------------------------------+
+| 3195a5a7-fd0d-4ac3-b919-7ba6cbe11d46 | in-use    | my-boot-vol     | 8    | None        | 8ed8b0f9-70de-4662-a16c-0b51ce7b17b4 |
++--------------------------------------+-----------+-----------------+------+-------------+--------------------------------------+</computeroutput></screen>
     </step>
   </procedure>
 </section>
