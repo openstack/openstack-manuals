@@ -115,6 +115,7 @@
         <screen os="rhel;fedora;centos">
           <prompt>#</prompt> <userinput>sudo yum install openstack-neutron-openvswitch</userinput>
         </screen>
+        <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-neutron-openvswitch</userinput></screen>
         <para>Now, we start up Open vSwitch.</para>
         <screen>
           <prompt>#</prompt> <userinput>service openvswitch start</userinput>
@@ -408,10 +409,11 @@ net.ipv4.conf.default.rp_filter=0</programlisting>
         <screen os="rhel;fedora;centos">
           <prompt>#</prompt> <userinput>sudo yum install openstack-neutron-openvswitch</userinput>
         </screen>
+        <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-neutron-openvswitch</userinput></screen>
         <!-- TODO(sross): support other distros -->
         <para>Now, we start up Open vSwitch.</para>
-        <screen os="rhel;fedora;centos">
-          <prompt>#</prompt> <userinput>sudo service openvswitch start</userinput>
+        <screen os="rhel;fedora;centos;sles;opensuse">
+          <prompt>#</prompt> <userinput>service openvswitch start</userinput>
         </screen>
         <para>Next, we must do some initial configuration for Open vSwitch, no
           matter whether we are using VLANs or GRE tunneling. We need to add the
@@ -522,6 +524,9 @@ net.ipv4.conf.default.rp_filter=0</programlisting>
     <screen os="fedora;rhel;centos">
       <prompt>#</prompt> <userinput>yum install openstack-neutron python-neutron python-neutronclient</userinput>
     </screen>
+    <screen os="opensuse;sles">
+      <prompt>#</prompt> <userinput>zypper install openstack-neutron python-neutron python-neutronclient</userinput>
+    </screen>
     <!-- TODO(sross): support other distros -->
     <para>Now, we need to set up the Neutron server, as usual. Make sure to do the core
       server component setup (RPC backend config, auth_strategy, and so on). Then, we'll
@@ -564,6 +569,9 @@ net.ipv4.conf.default.rp_filter=0</programlisting>
         <para>First, we must install the Open vSwitch plugin:</para>
         <screen os="rhel;fedora;centos">
           <prompt>#</prompt> <userinput>sudo yum install openstack-neutron-openvswitch</userinput>
+        </screen>
+        <screen os="opensuse;sles">
+          <prompt>#</prompt> <userinput>zypper install openstack-neutron-openvswitch</userinput>
         </screen>
         <!-- TODO(sross): support other distros -->
         <para>Then, we can now configure the settings for the particular plugins. First, there are some general <acronym>OVS</acronym> configuration options to set, no matter whether you use VLANs or GRE tunneling. We need to tell Neutron core to use <acronym>OVS</acronym> by editing <filename>/etc/neutron/neutron.conf</filename>:</para>
