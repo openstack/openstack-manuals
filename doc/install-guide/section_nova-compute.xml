@@ -21,9 +21,11 @@
       controller node:</para>
       <itemizedlist>
         <listitem>
-          <para>Use different IP addresses when configuring <filename>eth0</filename>. This guide uses <literal>192.168.0.11</literal> for
-            the internal network. Do not configure <literal>eth1</literal>, as this is automatically configured by the
-compute networking service.</para>
+          <para>Use different IP addresses when configuring
+              <filename>eth0</filename>. This guide uses
+              <literal>192.168.0.11</literal> for the internal network. Change
+            or configure <literal>eth1</literal> to manual rather than
+            static.</para>
         </listitem>
         <listitem>
           <para>Set the hostname to <literal>compute1</literal>. Ensure that the
@@ -47,18 +49,17 @@ compute networking service.</para>
     <step><para>After configuring the operating system, install the appropriate
       packages for the compute service.</para>
       <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install nova-compute-kvm python-novaclient python-guestfs</userinput></screen>
-      <para os="ubuntu;debian">Select "yes" when asked to create a supermin appliance during install.</para>
+      <para os="ubuntu;debian">Select "Yes" when asked to create a supermin appliance during install.</para>
       <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>yum install openstack-nova-compute</userinput></screen>
       <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-nova-compute kvm openstack-utils</userinput></screen>
     </step>
     <step os="ubuntu">
-    <para>Due to <link xlink:href="https://bugs.launchpad.net/ubuntu/+source/linux/+bug/759725">a bug</link>
-    that Canonical "Won't Fix", guestfs is broken out of the box.
-    Run the following command to fix it:</para>
+    <para>Due to <link xlink:href="https://bugs.launchpad.net/ubuntu/+source/linux/+bug/759725">this bug</link>
+    that is marked "Won't Fix", guestfs is restricted.
+    Run the following command to relax the restriction:</para>
       <screen><prompt>#</prompt> <userinput>chmod 0644 /boot/vmlinuz*</userinput></screen>
     </step>
-
-    <step><para>Either copy the file <filename>/etc/nova/nova.conf</filename> from the
+    <step os="rhel;centos;fedora"><para>Either copy and modify the file <filename>/etc/nova/nova.conf</filename> from the
           <replaceable>controller</replaceable> node, or run the same configuration commands.</para>
       <screen os="fedora;rhel;centos;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf \
   database connection mysql://nova:<replaceable>NOVA_DBPASS</replaceable>@controller/nova</userinput>
@@ -100,8 +101,6 @@ rabbit_host = controller</programlisting>
 <para>Remove the SQLite Database created by the packages</para>
 <screen><prompt>#</prompt> <userinput>rm /var/lib/nova/nova.sqlite</userinput></screen>
 </step>
-
-
     <step><para>Set the configuration keys <literal>my_ip</literal>,
       <literal>vncserver_listen</literal>, and
       <literal>vncserver_proxyclient_address</literal> to the IP address of the
@@ -113,7 +112,7 @@ rabbit_host = controller</programlisting>
   <programlisting os="ubuntu;debian" language="ini">[DEFAULT]
 ...
 my_ip=192.168.0.11
-vncserver_listen=192.168.0.11
+vncserver_listen=0.0.0.0
 vncserver_proxyclient_address=192.168.0.11</programlisting>
 
     </step>
@@ -130,6 +129,8 @@ glance_host=<replaceable>controller</replaceable></programlisting>
       <programlisting language="ini">[filter:authtoken]
 paste.filter_factory=keystoneclient.middleware.auth_token:filter_factory
 auth_host=controller
+auth_port = 35357
+auth_protocol = http
 admin_user=nova
 admin_tenant_name=service
 admin_password=<replaceable>NOVA_DBPASS</replaceable>
