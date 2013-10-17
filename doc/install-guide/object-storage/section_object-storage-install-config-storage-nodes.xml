@@ -18,8 +18,10 @@
             <para>Install Storage node packages:</para>
             <para>
                 <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install swift-account swift-container swift-object xfsprogs</userinput></screen>
-                <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-swift-account openstack-swift-container openstack-swift-object xfsprogs</userinput></screen>
-                <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-swift-account openstack-swift-container openstack-swift-object xfsprogs</userinput></screen>
+                <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-swift-account openstack-swift-container \
+  openstack-swift-object xfsprogs</userinput></screen>
+                <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-swift-account openstack-swift-container \
+openstack-swift-object xfsprogs</userinput></screen>
             </para>
         </step>
         <step>
@@ -30,7 +32,7 @@
                 operating system which should not be touched in this step. The
                 other 10 or 11 disks should be partitioned with a single
                 partition, then formatted in XFS.</para>
-            <para><screen os="ubuntu;debian;rhel;centos;fedora"><prompt>#</prompt> <userinput>fdisk /dev/sdb</userinput>
+            <screen os="ubuntu;debian;rhel;centos;fedora"><prompt>#</prompt> <userinput>fdisk /dev/sdb</userinput>
 <prompt>#</prompt> <userinput>mkfs.xfs /dev/sdb1</userinput>
 <prompt>#</prompt> <userinput>echo "/dev/sdb1 /srv/node/sdb1 xfs noatime,nodiratime,nobarrier,logbufs=8 0 0" &gt;&gt; /etc/fstab</userinput>
 <prompt>#</prompt> <userinput>mkdir -p /srv/node/sdb1</userinput>
@@ -42,11 +44,9 @@
 <prompt>#</prompt> <userinput>mkdir -p /srv/node/sdb1</userinput>
 <prompt>#</prompt> <userinput>mount /srv/node/sdb1</userinput>
 <prompt>#</prompt> <userinput>chown -R openstack-swift:openstack-swift /srv/node</userinput></screen>
-            </para>
         </step>
         <step>
             <para>Create <filename>/etc/rsyncd.conf</filename>:</para>
-            <para>
                 <programlisting language="ini" os="ubuntu;debian;rhel;centos;fedora">uid = swift
 gid = swift
 log file = /var/log/rsyncd.log
@@ -93,28 +93,22 @@ max connections = 2
 path = /srv/node/
 read only = false
 lock file = /var/lock/object.lock</programlisting>
-            </para>
         </step>
         <step>
             <para>(Optional) If you want to separate rsync and replication
                 traffic to replication network, set
                     <literal>STORAGE_REPLICATION_NET_IP</literal> instead of
                     <literal>STORAGE_LOCAL_NET_IP</literal>:</para>
-            <para>
-                <programlisting>
-address = &lt;STORAGE_REPLICATION_NET_IP&gt;
-                 </programlisting>
-            </para>
+            <programlisting language="ini">address = &lt;STORAGE_REPLICATION_NET_IP&gt;</programlisting>
         </step>
         <step>
             <para>Edit the following line in
                     <filename>/etc/default/rsync</filename>:</para>
-            <para>
-                <literallayout class="monospaced">RSYNC_ENABLE = true</literallayout></para>
+            <programlisting language="ini">RSYNC_ENABLE = true</programlisting>
         </step>
         <step>
             <para>Start rsync daemon:</para>
-            <para><screen><prompt>#</prompt> <userinput>service rsync start</userinput></screen></para>
+            <screen><prompt>#</prompt> <userinput>service rsync start</userinput></screen>
             <note>
                 <title>Note</title>
                 <para>The rsync daemon requires no authentication, so it should
@@ -123,11 +117,11 @@ address = &lt;STORAGE_REPLICATION_NET_IP&gt;
         </step>
         <step>
             <para>Create the swift recon cache directory and set its
-                permissions.<screen os="ubuntu;debian;rhel;centos;fedora"><prompt>#</prompt> <userinput>mkdir -p /var/swift/recon</userinput>
+                permissions.</para>
+            <screen os="ubuntu;debian;rhel;centos;fedora"><prompt>#</prompt> <userinput>mkdir -p /var/swift/recon</userinput>
 <prompt>#</prompt> <userinput>chown -R swift:swift /var/swift/recon</userinput></screen>
-                <screen os="opensuse;sles"><prompt>#</prompt> <userinput>mkdir -p /var/swift/recon</userinput>
+            <screen os="opensuse;sles"><prompt>#</prompt> <userinput>mkdir -p /var/swift/recon</userinput>
 <prompt>#</prompt> <userinput>chown -R openstack-swift:openstack-swift /var/swift/recon</userinput></screen>
-            </para>
         </step>
     </procedure>
 </section>
