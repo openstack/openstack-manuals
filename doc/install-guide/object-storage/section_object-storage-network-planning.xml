@@ -9,33 +9,48 @@
         storage network as necessary, this section offers
         recommendations and required minimum sizes. Throughput of at
         least 1000 Mbps is suggested.</para>
-  <para>This document refers to three networks. One is a Public Network for
-        connecting to the Proxy server. The second is a Storage Network that is not
+  <para>This document refers to three networks. One is a public network for
+        connecting to the Proxy server. The second is a storage network that is not
         accessible from outside the cluster, to which all of the nodes are
-        connected. Third is a Replication Network that is also isolated from
+        connected. The third is a replication network that is also isolated from
         outside networks and dedicated to replication traffic between Storage nodes.</para>
-  <para>Public and Storage Networks are mandatory. Replication Network is optional and
-        must be configured in the Ring.</para>
+  <para>The public and storage networks are mandatory. The replication network
+        is optional and must be configured in the Ring.</para>
   <para>By default, all of the OpenStack Object Storage services, as well as the
-        rsync daemon on the Storage nodes are configured to listen on their
+        rsync daemon on the Storage nodes, are configured to listen on their
         <literal>STORAGE_LOCAL_NET</literal> IP addresses.</para>
-    <para>If Replication Network configured in the Ring, then Account, Container
-          and Object servers listen on both <literal>STORAGE_LOCAL_NET</literal>
+    <para>If a replication network is configured in the Ring, then Account, Container
+          and Object servers listen on both the <literal>STORAGE_LOCAL_NET</literal>
           and <literal>STORAGE_REPLICATION_NET</literal>
-          IP addresses. Rsync daemon will only listen on
+          IP addresses. The rsync daemon will only listen on the
           <literal>STORAGE_REPLICATION_NET</literal> IP
           address in this case.</para>
-    <para>Public Network (Publicly routable IP range): This network is utilized
-        for providing Public IP accessibility to the API endpoints within the cloud
-        infrastructure.</para>
-        <para>Minimum size: one IP address per proxy server (For example, two).</para>
-    <para>Storage Network (RFC1918 IP Range, not publicly routable):
-        This network is utilized for all inter-server communications
+  <variablelist>
+    <varlistentry>
+      <term>Public Network (Publicly routable IP range)</term>
+      <listitem>
+      <para>This network provides public IP accessibility to the API endpoints
+        within the cloud infrastructure.</para>
+      <para>Minimum size: one IP address per proxy server.</para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>Storage Network (RFC1918 IP Range, not publicly routable)</term>
+      <listitem>
+      <para>This network is utilized for all inter-server communications
         within the Object Storage infrastructure.</para>
-    <para>Minimum size: one IP address per storage node, and proxy server.</para>
-    <para>Recommended size: as above, with room for expansion to the largest your cluster will be (For example, 255 or CIDR /24)</para>
-    <para>Replication Network (RFC1918 IP Range, not publicly routable):
-        This network is utilized for replication-related communications
+      <para>Minimum size: one IP address per storage node, and proxy server.</para>
+      <para>Recommended size: as above, with room for expansion to the largest your
+        cluster will be (For example, 255 or CIDR /24)</para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>Replication Network (RFC1918 IP Range, not publicly routable)</term>
+      <listitem>
+      <para>This network is utilized for replication-related communications
         between storage servers within the Object Storage infrastructure.</para>
-    <para>Recommended size: as for <literal>STORAGE_LOCAL_NET</literal></para>
+      <para>Recommended size: as for <literal>STORAGE_LOCAL_NET</literal></para>
+      </listitem>
+    </varlistentry>
+  </variablelist>
 </section>

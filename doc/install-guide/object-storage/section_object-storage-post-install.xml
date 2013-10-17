@@ -13,31 +13,28 @@
                         manner that you set up the first proxy node
                         but with additional configuration
                         steps.</para>
-                <para>Once you have more than two proxies, you also
-                        want to load balance between the two, which
-                        means your storage endpoint (what clients use
-                        to connect to your storage) also changes. You
-                        can select from different strategies for load
-                        balancing. For example, you could use round
-                        robin dns, or a software or hardware load
-                        balancer (like pound) in front of the two
-                        proxies, and point your storage url to the
-                        load balancer.</para>
+                <para>Once you have more than two proxies, you also want to load
+                        balance between the two, which means your storage
+                        endpoint (what clients use to connect to your storage)
+                        also changes. You can select from different strategies
+                        for load balancing. For example, you could use round
+                        robin DNS, or a software or hardware load balancer (like
+                        pound) in front of the two proxies, and point your
+                        storage URL to the load balancer.</para>
                 <para>Configure an initial proxy node for the initial
                         setup, and then follow these additional steps
                         for more proxy servers.</para>
                 <orderedlist>
                         <listitem>
-                                <para>Update the list of memcache
-                                        servers in
-                                        <filename>/etc/swift/proxy-server.conf</filename> for
-                                        all the added proxy servers. If you
-                                        run multiple memcache servers, use
-                                        this pattern for the multiple
-                                        IP:port listings:
+                                <para>Update the list of memcache servers in
+                                        <filename>/etc/swift/proxy-server.conf</filename>
+                                        for all the added proxy servers. If you
+                                        run multiple memcache servers, use this
+                                        pattern for the multiple IP:port
+                                        listings:
                                         <literallayout class="monospaced">10.1.2.3:11211,10.1.2.4:11211</literallayout>
                                         in each proxy server&#8217;s conf
-                                        file.:</para>
+                                        file:</para>
                                 <para>
                                         <literallayout class="monospaced">
 [filter:cache]
