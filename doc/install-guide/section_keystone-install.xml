@@ -65,6 +65,8 @@ IDENTIFIED BY '<replaceable>KEYSTONE_DBPASS</replaceable>';</userinput></screen>
 <prompt>#</prompt> <userinput>echo $ADMIN_TOKEN</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/keystone/keystone.conf DEFAULT admin_token $ADMIN_TOKEN</userinput></screen>
       <screen os="ubuntu"><prompt>#</prompt> <userinput>openssl rand -hex 10</userinput></screen>
+      <para os="sles;opensuse">For SUSE Linux Enterprise use instead as first command:</para>
+      <screen os="opensuse;sles"><prompt>#</prompt> <userinput>ADMIN_TOKEN=$(openssl rand 10|hexdump  -e '1/1 "%.2x"')</userinput></screen>
 <para os="ubuntu">Edit <filename>/etc/keystone/keystone.conf</filename> and
        change the <literal>[DEFAULT]</literal> section, replacing ADMIN_TOKEN with the results of the command.</para>
       <programlisting os="ubuntu" language="ini">
