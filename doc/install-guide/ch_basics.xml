@@ -330,40 +330,6 @@ hwclock -w</programlisting>
       password.</phrase> This command will present a number of options for
       you to secure your database installation. Answer yes to all of them
       unless you have a good reason to do otherwise.</para>
-  </section>
-  <section xml:id="basics-queue">
-    <title>Messaging Server</title>
-    <para>On the controller node, install the messaging queue server. Typically this is <phrase
-        os="ubuntu;opensuse;sles">RabbitMQ</phrase><phrase os="centos;rhel;fedora"
-        >Qpid</phrase> but <phrase os="ubuntu;opensuse;sles">Qpid</phrase><phrase
-        os="centos;rhel;fedora">RabbitMQ</phrase> and ZeroMQ (0MQ) are also
-      available.</para>
-
-    <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install rabbitmq-server</userinput></screen>
-    <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install rabbitmq-server</userinput></screen>
-    <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>yum install qpid-cpp-server memcached</userinput></screen>
-
-    <note os="ubuntu;debian">
-      <para>The <package>rabbitmq-server</package> package configures
-        the RabbitMQ service to start automatically and creates a
-          <literal>guest</literal> user with a default
-          <literal>guest</literal> password. The RabbitMQ examples in
-        this guide use the <literal>guest</literal> account.</para>
-    </note>
-    <para os="fedora;centos;rhel">Disable Qpid authentication by editing <filename>/etc/qpidd.conf</filename> file and
-    changing the <literal>auth</literal> option to <literal>no</literal>.</para>
-
-    <screen os="fedora;centos;rhel"> <userinput>auth=no</userinput></screen>
-
-    <para os="fedora;centos;rhel">Start Qpid and set it to start automatically
-      when the system boots.</para>
-
-    <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>service qpidd start</userinput>
-<prompt>#</prompt> <userinput>chkconfig qpidd on</userinput></screen>
-
-    <para os="opensuse;sles">Start the messaging service and set it to start automatically when the system boots:</para>
-    <screen os="opensuse;sles"><prompt>#</prompt> <userinput>service rabbitmq-server start</userinput>
-<prompt>#</prompt> <userinput>chkconfig rabbitmq-server on</userinput></screen>
 
   </section>
   <section xml:id="basics-packages">
@@ -430,7 +396,42 @@ hwclock -w</programlisting>
           <screen><prompt>#</prompt> <userinput>apt-get update &amp;&amp; apt-get dist-upgrade</userinput> </screen></para>
       </step>
     </procedure>
-  <para>Congratulations, now you are ready to start installing OpenStack services!</para>
   </section>
 
+  <section xml:id="basics-queue">
+    <title>Messaging Server</title>
+    <para>On the controller node, install the messaging queue server. Typically this is <phrase
+        os="ubuntu;opensuse;sles">RabbitMQ</phrase><phrase os="centos;rhel;fedora"
+        >Qpid</phrase> but <phrase os="ubuntu;opensuse;sles">Qpid</phrase><phrase
+        os="centos;rhel;fedora">RabbitMQ</phrase> and ZeroMQ (0MQ) are also
+      available.</para>
+
+    <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install rabbitmq-server</userinput></screen>
+    <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install rabbitmq-server</userinput></screen>
+    <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>yum install qpid-cpp-server memcached</userinput></screen>
+
+    <note os="ubuntu;debian">
+      <para>The <package>rabbitmq-server</package> package configures
+        the RabbitMQ service to start automatically and creates a
+          <literal>guest</literal> user with a default
+          <literal>guest</literal> password. The RabbitMQ examples in
+        this guide use the <literal>guest</literal> account.</para>
+    </note>
+    <para os="fedora;centos;rhel">Disable Qpid authentication by editing <filename>/etc/qpidd.conf</filename> file and
+    changing the <literal>auth</literal> option to <literal>no</literal>.</para>
+
+    <screen os="fedora;centos;rhel"> <userinput>auth=no</userinput></screen>
+
+    <para os="fedora;centos;rhel">Start Qpid and set it to start automatically
+      when the system boots.</para>
+
+    <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>service qpidd start</userinput>
+<prompt>#</prompt> <userinput>chkconfig qpidd on</userinput></screen>
+
+    <para os="opensuse;sles">Start the messaging service and set it to start automatically when the system boots:</para>
+    <screen os="opensuse;sles"><prompt>#</prompt> <userinput>service rabbitmq-server start</userinput>
+<prompt>#</prompt> <userinput>chkconfig rabbitmq-server on</userinput></screen>
+
+  <para>Congratulations, now you are ready to start installing OpenStack services!</para>
+  </section>
 </chapter>
