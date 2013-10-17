@@ -35,25 +35,24 @@ To create the Block Storage Service database and tables and a <literal>cinder</l
       <para>Using the password that you set in the previous example, log in as root to create a <literal>cinder</literal> database.</para>
       <screen><prompt>#</prompt> <userinput>mysql -u root -p</userinput>
 <prompt>mysql></prompt> <userinput>CREATE DATABASE cinder;</userinput>
+<prompt>mysql></prompt> <userinput>GRANT ALL PRIVILEGES ON cinder.* TO 'cinder'@'localhost' \
+IDENTIFIED BY '<replaceable>CINDER_DBPASS</replaceable>';</userinput>
 <prompt>mysql></prompt> <userinput>GRANT ALL PRIVILEGES ON cinder.* TO 'cinder'@'%' \
-IDENTIFIED BY 'CINDER_DBPASS';</userinput></screen>
+IDENTIFIED BY '<replaceable>CINDER_DBPASS</replaceable>';</userinput></screen>
     </step>
 
 
     <step><para>Configure the Block Storage Service to use the created database.</para>
       <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/cinder/cinder.conf \
-  database connection mysql://cinder:<replaceable>CINDER_DBPASS</replaceable>@<replaceable>controller</replaceable>/cinder</userinput>
-      </screen>
+  database connection mysql://cinder:<replaceable>CINDER_DBPASS</replaceable>@<replaceable>controller</replaceable>/cinder</userinput></screen>
       <para os="ubuntu;debian">Edit <filename>/etc/cinder/cinder.conf</filename>
        and change the <literal>[database]</literal> section.</para>
-      <programlisting os="ubuntu;debian" language="ini">
-[database]
+      <programlisting os="ubuntu;debian" language="ini">[database]
 ...
 # The SQLAlchemy connection string used to connect to the
 # database (string value)
 connection = mysql://cinder:CINDER_DBPASS@localhost/cinder
-...
-      </programlisting>
+...</programlisting>
 
 </step>
 
@@ -78,6 +77,8 @@ connection = mysql://cinder:CINDER_DBPASS@localhost/cinder
   <programlisting language="ini">[filter:authtoken]
 paste.filter_factory=keystoneclient.middleware.auth_token:filter_factory
 auth_host=<replaceable>controller</replaceable>
+auth_port = 35357
+auth_protocol = http
 admin_tenant_name=service
 admin_user=cinder
 admin_password=<replaceable>CINDER_PASS</replaceable>
@@ -91,18 +92,21 @@ admin_password=<replaceable>CINDER_PASS</replaceable>
       so that other OpenStack services can locate it. Register the service and
       specify the endpoint using the <command>keystone</command> command.</para>
       <screen><prompt>#</prompt> <userinput>keystone service-create --name=cinder --type=volume \
-  --description="Cinder Volume Service"</userinput></screen></step>
-    <step><para>Note the service's <literal>id</literal> property returned in the previous step and use it when
-      creating the endpoint.</para>
+  --description="Cinder Volume Service"</userinput></screen>
+      <para>Note the <literal>id</literal> property returned and use it to create
+      the endpoint.</para>
       <screen><prompt>#</prompt> <userinput>keystone endpoint-create \
   --service-id=<replaceable>the_service_id_above</replaceable> \
   --publicurl=http://<replaceable>controlller</replaceable>:8776/v1/%\(tenant_id\)s \
   --internalurl=http://<replaceable>controlller</replaceable>:8776/v1/%\(tenant_id\)s \
   --adminurl=http://<replaceable>controlller</replaceable>:8776/v1/%\(tenant_id\)s</userinput></screen>
+    </step>
+    <step><para>Also register a service and endpoint for version 2 of the
+      Block Storage Service API.</para>
       <screen><prompt>#</prompt> <userinput>keystone service-create --name=cinder --type=volumev2 \
-  --description="Cinder Volume Service V2"</userinput></screen></step>
-    <step><para>Note the service's <literal>id</literal> property returned in the previous step and use it when
-      creating the endpoint.</para>
+  --description="Cinder Volume Service V2"</userinput></screen>
+      <para>Note the <literal>id</literal> property returned and use it to create
+      the endpoint.</para>
       <screen><prompt>#</prompt> <userinput>keystone endpoint-create \
   --service-id=<replaceable>the_service_id_above</replaceable> \
   --publicurl=http://<replaceable>controlller</replaceable>:8776/v2/%\(tenant_id\)s \
