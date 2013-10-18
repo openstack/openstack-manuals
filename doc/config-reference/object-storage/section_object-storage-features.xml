@@ -175,72 +175,113 @@
             <xi:include href="../../common/tables/swift-proxy-server-filter-cname_lookup.xml"/>
         </section>
     <section xml:id="object-storage-tempurl">
+            <?dbhtml stop-chunking?>
             <title>Temporary URL</title>
-            <para>Allows the creation of URLs to provide temporary
-                access to objects. For example, a website may wish to
-                provide a link to download a large object in Swift,
-                but the Swift account has no public access. The
-                website can generate a URL that will provide GET
-                access for a limited time to the resource. When the
-                web browser user clicks on the link, the browser will
-                download the object directly from Swift, obviating the
-                need for the website to act as a proxy for the
-                request. If the user were to share the link with all
-                his friends, or accidentally post it on a forum, etc.
-                the direct access would be limited to the expiration
-                time set when the website created the link. To create
-                such temporary URLs, first an
-                X-Account-Meta-Temp-URL-Key header must be set on the
-                Swift account. Then, an HMAC-SHA1 (RFC 2104) signature
-                is generated using the HTTP method to allow (GET or
-                PUT), the Unix timestamp the access should be allowed
-                until, the full path to the object, and the key set on
-                the account. For example, here is code generating the
-                signature for a GET for 60 seconds on
-                <code>/v1/AUTH_account/container/object</code>:
-                <programlisting language="python">
-    import hmac
-    from hashlib import sha1
-    from time import time
-    method = 'GET'
-    expires = int(time() + 60)
-    path = '/v1/AUTH_account/container/object'
-    key = 'mykey'
-    hmac_body = '%s\n%s\n%s' % (method, expires, path)
-    sig = hmac.new(key, hmac_body, sha1).hexdigest()
-</programlisting></para>
-            <para>Be certain to use the full path, from the /v1/
-                onward. Let's say the sig ends up equaling
-                da39a3ee5e6b4b0d3255bfef95601890afd80709 and expires
-                ends up 1323479485. Then, for example, the website
-                could provide a link to:
-                <programlisting>
-    https://swift-cluster.example.com/v1/AUTH_account/container/object?
+            <para>Allows the creation of URLs to provide temporary access to objects. For example, a
+            website may wish to provide a link to download a large object in Swift, but the Swift
+            account has no public access. The website can generate a URL that will provide GET
+            access for a limited time to the resource. When the web browser user clicks on the link,
+            the browser will download the object directly from Swift, obviating the need for the
+            website to act as a proxy for the request. If the user were to share the link with all
+            his friends, or accidentally post it on a forum, the direct access would be limited to
+            the expiration time set when the website created the link.</para>
+        <para>A temporary URL is the typical URL associated with an object, with two additional
+            query parameters:<variablelist>
+                <varlistentry>
+                    <term><literal>temp_url_sig</literal></term>
+                    <listitem>
+                        <para>A cryptographic signature</para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term><literal>temp_url_expires</literal></term>
+                    <listitem>
+                        <para>An expiration date, in Unix time.</para>
+                    </listitem>
+                </varlistentry>
+            </variablelist></para>
+        <para>An example of a temporary
+            URL:<programlisting>
+    https://swift-cluster.example.com/v1/AUTH_a422b2-91f3-2f46-74b7-d7c9e8958f5d30/container/object?
     temp_url_sig=da39a3ee5e6b4b0d3255bfef95601890afd80709&amp;
     temp_url_expires=1323479485
 </programlisting></para>
-            <para>Any alteration of the resource path or query
-                arguments would result in 401 Unauthorized. Similarly,
-                a PUT where GET was the allowed method would 401. HEAD
-                is allowed if GET or PUT is allowed. Using this in
-                combination with browser form post translation
-                middleware could also allow direct-from-browser
-                uploads to specific locations in Swift. Note that
-                changing the X-Account-Meta-Temp-URL-Key will
-                invalidate any previously generated temporary URLs
-                within 60 seconds (the memcache time for the key).</para>
-            <para>A script called swift-temp-url distributed with swift source
-                code eases the temporary URL creation:
-                <programlisting>
-    $ bin/swift-temp-url GET 3600 /v1/AUTH_account/container/object mykey
-    /v1/AUTH_account/container/object?
-    temp_url_sig=5c4cc8886f36a9d0919d708ade98bf0cc71c9e91&amp;
-    temp_url_expires=1374497657
-                </programlisting>
-                The path returned by the above command is prefixed with swift
-                storage hostname.</para>
-            <xi:include href="../../common/tables/swift-proxy-server-filter-tempurl.xml"/>
-        </section>
+        <para>To create temporary URLs, first set the <literal>X-Account-Meta-Temp-URL-Key</literal>
+            header on your Swift account to an arbitrary string. This string will serve as a secret
+            key. For example, to set a key of <literal>b3968d0207b54ece87cccc06515a89d4</literal>
+            using the <command>swift</command> command-line
+            tool:<screen><prompt>$</prompt> <userinput>swift post -m "Temp-URL-Key:<replaceable>b3968d0207b54ece87cccc06515a89d4</replaceable>"</userinput></screen></para>
+        <para>Next, generate an HMAC-SHA1 (RFC 2104) signature to specify:<itemizedlist>
+                <listitem>
+                    <para>Which HTTP method to allow (typically <literal>GET</literal> or
+                            <literal>PUT</literal>)</para>
+                </listitem>
+                <listitem>
+                    <para>The expiry date as a a Unix timestamp</para>
+                </listitem>
+                <listitem>
+                    <para>the full path to the object</para>
+                </listitem>
+                <listitem>
+                    <para>The secret key set as the
+                        <literal>X-Account-Meta-Temp-URL-Key</literal></para>
+                </listitem>
+            </itemizedlist>Here is code generating the signature for a GET for 24 hours on
+                <code>/v1/AUTH_account/container/object</code>:
+            <programlisting language="python">import hmac
+from hashlib import sha1
+from time import time
+method = 'GET'
+duration_in_seconds = 60*60*24
+expires = int(time() + duration_in_seconds)
+path = '/v1/AUTH_a422b2-91f3-2f46-74b7-d7c9e8958f5d30/container/object'
+key = 'mykey'
+hmac_body = '%s\n%s\n%s' % (method, expires, path)
+sig = hmac.new(key, hmac_body, sha1).hexdigest()
+s = 'https://{host}/{path}?temp_url_sig={sig}&amp;temp_url_expires={expires}'
+url = s.format(host='swift-cluster.example.com', path=path, sig=sig, expires=expires)</programlisting></para>
+            <para>Any alteration of the resource path or query arguments would result in 401
+            Unauthorized. Similarly, a PUT where GET was the allowed method would 401. HEAD is
+            allowed if GET or PUT is allowed. Using this in combination with browser form post
+            translation middleware could also allow direct-from-browser uploads to specific
+            locations in Swift. Note that <note>
+                <para>Changing the <literal>X-Account-Meta-Temp-URL-Key</literal> will invalidate
+                    any previously generated temporary URLs within 60 seconds (the memcache time for
+                    the key). Swift supports up to two keys, specified by
+                        <literal>X-Account-Meta-Temp-URL-Key</literal> and
+                        <literal>X-Account-Meta-Temp-URL-Key-2</literal>. Signatures are checked
+                    against both keys, if present. This is to allow for key rotation without
+                    invalidating all existing temporary URLs.</para>
+            </note></para>
+            <para>Swift includes a script called <command>swift-temp-url</command> that will
+            generate the query parameters
+            automatically:<screen><prompt>$</prompt> <userinput>bin/swift-temp-url GET 3600 /v1/AUTH_account/container/object mykey</userinput>
+<computeroutput>/v1/AUTH_account/container/object?
+temp_url_sig=5c4cc8886f36a9d0919d708ade98bf0cc71c9e91&amp;
+temp_url_expires=1374497657</computeroutput>                </screen>Because
+            this command only returns the path, you must prepend the Swift storage hostname (for
+            example, <literal>https://swift-cluster.example.com</literal>).</para>
+        <para>With GET Temporary URLs, a <literal>Content-Disposition</literal> header will be set
+            on the response so that browsers will interpret this as a file attachment to be saved.
+            The filename chosen is based on the object name, but you can override this with a
+                <literal>filename</literal> query parameter. The following example specifies a
+            filename of <filename>My Test File.pdf</filename>:</para>
+        <programlisting>https://swift-cluster.example.com/v1/AUTH_a422b2-91f3-2f46-74b7-d7c9e8958f5d30/container/object?
+temp_url_sig=da39a3ee5e6b4b0d3255bfef95601890afd80709&amp;
+temp_url_expires=1323479485&amp;
+filename=My+Test+File.pdf</programlisting>
+                <para>To enable Temporary URL functionality, edit
+                <filename>/etc/swift/proxy-server.conf</filename> to add <literal>tempurl</literal>
+            to the <literal>pipeline</literal> variable defined in the
+                <literal>[pipeline:main]</literal> section. The <literal>tempurl</literal> entry
+            should appear immediately before the authentication filters in the pipeline, such as
+                <literal>authtoken</literal>, <literal>tempauth</literal> or
+                <literal>keystoneauth</literal>. For
+            example:<programlisting>[pipeline:main]
+pipeline = pipeline = healthcheck cache <emphasis role="bold">tempurl</emphasis> authtoken keystoneauth proxy-server</programlisting></para>
+
+                <xi:include href="../../common/tables/swift-proxy-server-filter-tempurl.xml"/>
+    </section>
     <section xml:id="object-storage-name-check">
             <title>Name Check Filter</title>
             <para>Name Check is a filter that disallows any paths that
@@ -511,8 +552,8 @@ X-Trans-Id: tx602634cf478546a39b1be-0051e6bc7a</computeroutput></screen>
   name="filexx"/&gt;]]&gt;</code> attributes if desired.</para>
   <para>The expires attribute is the Unix timestamp before which the form must be submitted before it is
   invalidated.</para>
- <para>The signature attribute is the HMAC-SHA1 signature of the form. Here is sample code for computing
-  the signature:</para>
+ <para>The signature attribute is the HMAC-SHA1 signature of the form. Here is sample Python code
+            for computing the signature:</para>
 <programlisting language="python">
 import hmac
 from hashlib import sha1
