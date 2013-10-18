@@ -28,8 +28,7 @@
 
     <step><para>After you configure the operating system, install the appropriate
       packages for the block storage service.</para>
-      <!-- FIXME: Double check list of packages for ubuntu -->
-      <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install cinder-volume</userinput></screen>
+      <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install cinder-volume lvm2</userinput></screen>
       <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>yum install openstack-cinder openstack-utils openstack-selinux</userinput></screen>
       <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-cinder-volume</userinput></screen>
     </step>
@@ -84,6 +83,13 @@ rabbit_port = 5672
   DEFAULT rabbit_port 5672</userinput></screen>
  </step>
 
+    <step>
+    <para>Now, create the LVM Physical Volume and Logical Volume.
+    This guide assumes a second disk <literal>/dev/sdb</literal> that
+    will be used for this purpose.</para>
+    <screen><prompt>#</prompt> <userinput>pvgreate /dev/sdb</userinput>
+    <prompt>#</prompt> <userinput>vgcreate cinder-volumes /dev/sdb</userinput></screen>
+    </step>
 
 <step>
     <para>Add a filter entry to the devices section
@@ -96,14 +102,13 @@ rabbit_port = 5672
     "<literal>a</literal>" for accept, or an "<literal>r</literal>" for reject.
     Physical volumes that are needed on the Cinder host begin with
     "<literal>a</literal>". The array must end with
-    "<literal>r/.*/</literal>"</para>
+    "<literal>r/.*/</literal>" to reject any device not listed.</para>
     <programlisting>devices {
 ...
 filter = [ "a/sda1/", "a/sdb1/", "r/.*/"]
 ...
 }</programlisting>
 </step>
-
 
     <step os="ubuntu;debian">
       <para>We now restart the cinder service with its new settings.</para>
