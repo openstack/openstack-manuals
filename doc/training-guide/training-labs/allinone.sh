@@ -26,5 +26,4 @@ mkdir Logs
 #Execute the deployment scripts
 #./auto_scripts.sh
 echo "Execute PreInstall Script to Build Student Environment"
-bash PreInstall/PreInstall.sh "single-node" > Logs/PreInstall.log
-
+bash PreInstall/Vagrant-PreInstall.sh "single-node" > Logs/PreInstall.log
