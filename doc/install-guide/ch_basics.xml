@@ -273,7 +273,12 @@ hwclock -w</programlisting>
     <note os="ubuntu;debian"><para>When you install the server package, you will
     be asked to enter a root password for the database. Be sure to choose
     a strong password and remember it - it will be needed later.</para></note>
-    <para>Edit <filename>/etc/mysql/my.cnf</filename> and set the <literal>bind-address</literal> to the internal IP address of the controller, to allow access from outside the controller node.</para>
+    <para>Edit <filename
+    os="ubuntu;debian;rhel;fedora;centos">/etc/mysql/my.cnf</filename><filename
+    os="opensuse;sles">/etc/my.cnf</filename> and set the
+    <literal>bind-address</literal> to the internal IP address of the
+    controller, to allow access from outside the controller
+    node.</para>
     <programlisting language="ini">
     # Instead of skip-networking the default is now to listen only on
     # localhost which is more compatible and is not less secure.
@@ -297,8 +302,10 @@ hwclock -w</programlisting>
         <phrase os="opensuse;sles">MariaDB or MySQL</phrase>
         database server and set it to start automatically when
         the system boots.</para>
-    <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>service mysqld start</userinput>
+    <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>service mysqld start</userinput>
 <prompt>#</prompt> <userinput>chkconfig mysqld on</userinput></screen>
+    <screen os="opensuse;sles"><prompt>#</prompt> <userinput>service mysql start</userinput>
+<prompt>#</prompt> <userinput>chkconfig mysql on</userinput></screen>
 
     <para os="rhel;centos;fedora;opensuse;sles">Finally, you should set a root password for your
         <phrase os="rhel;fedora;centos">MySQL</phrase>
@@ -356,7 +363,7 @@ hwclock -w</programlisting>
 
     <para os="opensuse;sles">Start the messaging service and set it to start automatically when the system boots:</para>
     <screen os="opensuse;sles"><prompt>#</prompt> <userinput>service rabbitmq-server start</userinput>
-<prompt>#</prompt> <userinput>service rabbitmq-server enable</userinput></screen>
+<prompt>#</prompt> <userinput>chkconfig rabbitmq-server on</userinput></screen>
 
   </section>
   <section xml:id="basics-packages">
