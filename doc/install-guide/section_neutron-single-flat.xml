@@ -179,7 +179,7 @@ libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtHybridOVSBridgeDriver
                             </listitem>
                             <listitem>
                                 <para>Add the integration bridge to the Open vSwitch:</para>
-                                <screen><prompt>#</prompt> <userinput>sudo ovs-vsctl add-br br-int</userinput></screen>
+                                <screen><prompt>#</prompt> <userinput>ovs-vsctl add-br br-int</userinput></screen>
                             </listitem>
                             <listitem>
                                 <para>Update the Networking configuration file, <filename>
@@ -200,14 +200,14 @@ network_vlan_ranges = physnet1
 bridge_mappings = physnet1:br-eth0</programlisting>
                             </listitem>
                             <listitem>
-                                <para>Create the network bridge <emphasis role="bold"
-                                        >br-eth0</emphasis> (All VM communication between the nodes
-                                    will be done via eth0):</para>
-                                <screen><prompt>#</prompt> <userinput>sudo ovs-vsctl add-br br-eth0</userinput>
-<prompt>#</prompt> <userinput>sudo ovs-vsctl add-port br-eth0 eth0</userinput></screen>
+                                <para>Create the <emphasis role="bold"
+                                >br-eth0</emphasis> network bridge  to handle communication
+                                between nodes using eth0:</para>
+                                <screen><prompt>#</prompt> <userinput>ovs-vsctl add-br br-eth0</userinput>
+<prompt>#</prompt> <userinput>ovs-vsctl add-port br-eth0 eth0</userinput></screen>
                             </listitem>
                             <listitem>
-                                <para>Start the OpenStack Networking L2 agent</para>
+                                <para>Start the OpenStack Networking L2 agent.</para>
                             </listitem>
                         </orderedlist></para>
                 </listitem>
@@ -342,8 +342,8 @@ export OS_AUTH_URL=http://127.0.0.1:5000/v2.0/</programlisting>
                             <listitem>
                                 <para>Ping the server of tenant A:</para>
                                 <screen>
-<prompt>$</prompt> <userinput>sudo ip addr flush eth0</userinput>
-<prompt>$</prompt> <userinput>sudo ip addr add 30.0.0.201/24 dev br-eth0</userinput>
+<prompt>#</prompt> <userinput>ip addr flush eth0</userinput>
+<prompt>#</prompt> <userinput>ip addr add 30.0.0.201/24 dev br-eth0</userinput>
 <prompt>$</prompt> <userinput>ping 30.0.0.3</userinput>
 </screen>
                             </listitem>
