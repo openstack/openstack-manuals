@@ -103,6 +103,20 @@
             </note>
         </step>
         <step>
+        <para>Update the <literal>ALLOWED_HOSTS</literal>in
+       <filename>local_settings.py</filename> to include the addresses you wish to
+       access the dashboard from.</para>
+      <para>Edit <filename
+                                os="centos;fedora;rhel"
+                                >/etc/openstack-dashboard/local_settings</filename><filename
+                                os="ubuntu;debian"
+                                >/etc/openstack-dashboard/local_settings.py</filename><filename
+                                os="opensuse;sles"
+                                >/usr/share/openstack-dashboard/openstack_dashboard/local/local_settings.py</filename></para>
+            <programlisting language="python" linenumbering="unnumbered"><?db-font-size 75%?>ALLOWED_HOSTS = ['localhost', 'my-desktop']
+    </programlisting>
+        </step>
+        <step>
         <para>This guide assumes that you are running the Dashboard on the controller node.
         You can easily run the dashboard on a separate server, by changing the appropriate settings in
        <filename>local_settings.py</filename></para>
@@ -134,18 +148,25 @@
           linkend="dashboard-session-database"/>.
           </para>
         </step>
-        <step os="opensuse;sles">
+        <step os="opensuse;sles;fedora;centos;rhel">
           <para>
             Start the Apache web server and memcached:
           </para>
-          <screen><prompt>#</prompt> <userinput>service apache2 start</userinput>
+          <screen os="opensuse;sles"><prompt>#</prompt> <userinput>service apache2 start</userinput>
 <prompt>#</prompt> <userinput>service memcached start</userinput>
 <prompt>#</prompt> <userinput>chckconfig apache2 on</userinput>
 <prompt>#</prompt> <userinput>chckconfig memcached on</userinput></screen>
+          <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>service httpd start</userinput>
+<prompt>#</prompt> <userinput>service memcached start</userinput>
+<prompt>#</prompt> <userinput>chckconfig httpd on</userinput>
+<prompt>#</prompt> <userinput>chckconfig memcached on</userinput></screen>
+          <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service apache2 restart</userinput>
+<prompt>#</prompt> <userinput>service memcached restart</userinput></screen>
         </step>
         <step>
           <para>You can now access the dashboard at
-          <uri os="centos;fedora;rhel;debian;ubuntu">http://controller/horizon</uri>
+          <uri os="debian;ubuntu">http://controller/horizon</uri>
+          <uri os="centos;fedora;rhel">http://controller/dashboard</uri>
           <uri os="opensuse;sles">http://controller</uri>.</para>
           <para>Login with credentials for any user that you created
           with the OpenStack Identity Service.</para>

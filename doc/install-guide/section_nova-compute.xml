@@ -23,7 +23,7 @@
         <listitem>
           <para>Use different IP addresses when configuring
               <filename>eth0</filename>. This guide uses
-              <literal>192.168.0.11</literal> for the internal network. 
+              <literal>192.168.0.11</literal> for the internal network.
             Do not configure <literal>eth1</literal> with a static IP address.
             An IP address will be assigned and configured by the networking component of OpenStack.</para>
         </listitem>
@@ -142,6 +142,11 @@ admin_password=<replaceable>NOVA_DBPASS</replaceable>
     <para os="fedora;rhel;centos;opensuse;sles">Start the Compute service and configure it to start when the system boots.</para>
     <para os="ubuntu;debian">Restart the Compute service.</para>
       <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service nova-compute restart</userinput></screen>
+      <screen os="fedora;rhel;centos"><prompt>#</prompt> <userinput>service libvirtd start</userinput>
+<prompt>#</prompt> <userinput>service messagebus start</userinput>
+<prompt>#</prompt> <userinput>chkconfig libvirtd on</userinput>
+<prompt>#</prompt> <userinput>chkconfig messagebus on</userinput>
+</screen>
       <screen os="centos;rhel;fedora;opensuse;sles"><prompt>#</prompt> <userinput>service openstack-nova-compute start</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-nova-compute on</userinput></screen>
     </step>
