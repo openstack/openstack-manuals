@@ -108,9 +108,23 @@ admin_user = glance
 admin_password = GLANCE_DBPASS
 ...
       </programlisting>
+      <para>
+        <note><para>If you have troubles connecting to the database, try using the IP address instead of the
+          host name in the credentials.</para></note>
+      </para>
+</step>
+<step>
       <para>You also have to add the credentials to the files
   <filename>/etc/glance/glance-api-paste.ini</filename> and
-  <filename>/etc/glance/glance-registry-paste.ini</filename>. Open each file
+  <filename>/etc/glance/glance-registry-paste.ini</filename>.</para>
+  <para os="centos">On CentOS, these files are not created correctly by
+  the package installation. Copy the files to the correct location:</para>
+<screen os="centos">
+<prompt>#</prompt> <userinput>cp /usr/share/glance/glance-api-dist-paste.ini /etc/glance/glance-api-paste.ini</userinput>
+<prompt>#</prompt> <userinput>cp /usr/share/glance/glance-registry-dist-paste.ini /etc/glance/glance-registry-paste.ini</userinput>
+</screen>
+
+  <para>Open each file
   in a text editor and locate the section <literal>[filter:authtoken]</literal>.
   Make sure the following options are set:</para>
   <programlisting language="ini">[filter:authtoken]
@@ -119,10 +133,7 @@ auth_host=controller
 admin_user=glance
 admin_tenant_name=service
 admin_password=<replaceable>GLANCE_DBPASS</replaceable></programlisting>
-      <para>
-        <note><para>If you have troubles connecting to the database, try using the IP address instead of the
-          host name in the credentials.</para></note>
-      </para></step>
+</step>
 
     <step><para>Register the Image Service with the Identity Service
       so that other OpenStack services can locate it. Register the service and
