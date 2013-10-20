@@ -51,13 +51,14 @@ service, and its dependent resources, on one of your nodes.
 
 Edit +/etc/ceilometer/ceilometer.conf+ :
 ----
-# We have to use MySQL connection to store datas :
-sql_connection=mysql://ceilometer:password@192.168.42.101/ceilometer
-
 # We use API VIP for Identity Service connection :
 os_auth_url=http://192.168.42.103:5000/v2.0
 
 # We send notifications to High Available RabbitMQ :
 notifier_strategy = rabbit
 rabbit_host = 192.168.42.102
+
+[database]
+# We have to use MySQL connection to store datas :
+sql_connection=mysql://ceilometer:password@192.168.42.101/ceilometer
 ----
