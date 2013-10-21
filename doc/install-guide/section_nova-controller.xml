@@ -35,13 +35,13 @@
   <step>
   <para>The Compute Service stores information in a database. This guide uses
   the MySQL database used by other OpenStack services.</para>
-  <para os="fedora;rhel;centos;opensuse;sles"> Use the
-  <command>openstack-db</command> command to create the database and tables
-  for the Compute Service, as well as a database user called
-  <literal>nova</literal> to connect to the database. Replace
+  <para>Specify the location of the database in the
+        configuration files.  Replace
   <literal><replaceable>NOVA_DBPASS</replaceable></literal> with a
-  password of your choosing.</para>
-  <screen os="fedora;rhel;centos;opensuse;sles"><prompt>#</prompt> <userinput>openstack-db --init --service nova --password <replaceable>NOVA_DBPASS</replaceable></userinput></screen>
+  Compute Service password of your choosing.</para>
+  <screen os="fedora;rhel;centos;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf \
+  database connection mysql://nova:<replaceable>NOVA_DBPASS</replaceable>@controller/nova</userinput></screen>
+
   <para os="ubuntu;debian">Edit <filename>/etc/nova/nova.conf</filename> and add the <literal>[database]</literal> section.</para>
   <programlisting os="ubuntu;debian" language="ini">
 ...
@@ -49,8 +49,17 @@
 # The SQLAlchemy connection string used to connect to the database
 connection = mysql://nova:NOVA_DBPASS@controller/nova
       </programlisting>
-    </step>
-    <step os="ubuntu;debian">
+
+  </step>
+
+  <step os="fedora;rhel;centos;opensuse;sles">
+  <para>Use the
+    <command>openstack-db</command> command to create the Compute Service
+    database and tables and a <literal>nova</literal> database user.
+  </para>
+  <screen os="fedora;rhel;centos;opensuse;sles"><prompt>#</prompt> <userinput>openstack-db --init --service nova --password <replaceable>NOVA_DBPASS</replaceable></userinput></screen>
+  </step>
+  <step os="ubuntu;debian">
       <para>Next, we need to create a database user called <literal>nova</literal>, by logging in
       as root using the password we set earlier.</para>
       <screen><prompt>#</prompt> <userinput>mysql -u root -p</userinput>
@@ -65,13 +74,6 @@ IDENTIFIED BY '<replaceable>NOVA_DBPASS</replaceable>';</userinput></screen>
       <screen><prompt>#</prompt> <userinput>nova-manage db sync</userinput></screen>
     </step>
 
-  <step os="fedora;rhel;centos;opensuse;sles">
-  <para>Tell the Compute Service to use the created database.</para>
-
-  <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf \
-  database connection mysql://nova:<replaceable>NOVA_DBPASS</replaceable>@controller/nova</userinput></screen>
-
-  </step>
   <step>
   <para>Set the configuration keys <literal>my_ip</literal>,
   <literal>vncserver_listen</literal>, and
