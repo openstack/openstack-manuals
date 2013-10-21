@@ -24,36 +24,18 @@
       <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-glance</userinput></screen>
       <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-glance python-glanceclient</userinput></screen></step>
 
-    <step os="rhel;centos;fedora;opensuse;sles"><para>The Image Service stores information about images in a database.
-      This guide uses the MySQL database used by other OpenStack services.</para>
-      <para>Use the <command>openstack-db</command> command to create the
-      database and tables for the Image Service, as well as a database user
-      called <literal>glance</literal> to connect to the database. Replace
-      <literal><replaceable>GLANCE_DBPASS</replaceable></literal> with a
-      password of your choosing.</para>
-      <screen><prompt>#</prompt> <userinput>openstack-db --init --service glance --password <replaceable>GLANCE_DBPASS</replaceable></userinput></screen></step>
-
-    <step os="ubuntu;debian">
-    <para>The Image Service stores information about images in a database.
-      This guide uses the MySQL database used by other OpenStack services.
-      The Ubuntu packages create an sqlite database by
-        default. Delete the <filename>glance.sqlite</filename> file created in
-        the <filename>/var/lib/glance/</filename> directory so it is not used by mistake.</para>
-      <para>First, we need to create a database user called <literal>glance</literal>, by logging in
-      as root using the password we set earlier.</para>
-      <screen><prompt>#</prompt> <userinput>mysql -u root -p</userinput>
-<prompt>mysql></prompt> <userinput>CREATE DATABASE glance;</userinput>
-<prompt>mysql></prompt> <userinput>GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'localhost' \
-IDENTIFIED BY '<replaceable>GLANCE_DBPASS</replaceable>';</userinput>
-<prompt>mysql></prompt> <userinput>GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'%' \
-IDENTIFIED BY '<replaceable>GLANCE_DBPASS</replaceable>';</userinput></screen>
-    </step>
-
-
-    <step><para>Tell the Image Service to use the created database. The Image Service provides two OpenStack
-        services: <literal>glance-api</literal> and <literal>glance-registry</literal>. They each
-        have separate configuration files, so you must configure both files throughout this
-        section.</para>
+    <step os="rhel;centos;fedora;opensuse;sles"><para>The Image
+        Service stores information about images in a database.  This
+        guide uses the MySQL database that is used by other OpenStack
+        services.</para>
+        <para>Specify the location of the database in the
+        configuration files. The Image Service provides two OpenStack
+        services: <literal>glance-api</literal> and
+        <literal>glance-registry</literal>. They each have separate
+        configuration files, so you must configure both files
+        throughout this section.  Replace
+      <literal><replaceable>GLANCE_DBPASS</replaceable></literal> with an
+      Image Service database password of your choosing.</para>
       <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf \
   DEFAULT sql_connection mysql://glance:<replaceable>GLANCE_DBPASS</replaceable>@<replaceable>controller</replaceable>/glance</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-registry.conf \
@@ -73,11 +55,30 @@ sql_connection = mysql://glance:GLANCE_DBPASS@localhost/glance
 
 </step>
 
+    <step os="rhel;centos;fedora;opensuse;sles">
+      <para>Use the <command>openstack-db</command> command to create the
+      database and tables for the Image Service, as well as a database user
+      called <literal>glance</literal> to connect to the database.</para>
+      <screen><prompt>#</prompt> <userinput>openstack-db --init --service glance --password <replaceable>GLANCE_DBPASS</replaceable></userinput></screen></step>
+
+    <step os="ubuntu;debian">
+    <para>The Ubuntu packages create an sqlite database by
+        default. Delete the <filename>glance.sqlite</filename> file created in
+        the <filename>/var/lib/glance/</filename> directory so it is not used by mistake.</para>
+      <para>First, we need to create a database user called <literal>glance</literal>, by logging in
+      as root using the password we set earlier.</para>
+      <screen><prompt>#</prompt> <userinput>mysql -u root -p</userinput>
+<prompt>mysql></prompt> <userinput>CREATE DATABASE glance;</userinput>
+<prompt>mysql></prompt> <userinput>GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'localhost' \
+IDENTIFIED BY '<replaceable>GLANCE_DBPASS</replaceable>';</userinput>
+<prompt>mysql></prompt> <userinput>GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'%' \
+IDENTIFIED BY '<replaceable>GLANCE_DBPASS</replaceable>';</userinput></screen>
+    </step>
+
     <step os="ubuntu;debian">
       <para>We now create the database tables for the Image service.</para>
       <screen><prompt>#</prompt> <userinput>glance-manage db_sync</userinput></screen>
     </step>
-
 
     <step><para>Create a user called <literal>glance</literal> that the Image
       Service can use to authenticate with the Identity Service. Choose a
