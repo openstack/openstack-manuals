@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<section xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="dell-equallogic-driver" version="5.0">
+    <title>Dell EqualLogic Volume Driver</title>
+    <para>The Dell EqualLogic volume driver interacts with configured
+        EqualLogic arrays and supports various operations, such as
+        volume creation and deletion, volume attachment and
+        detachment, snapshot creation and deletion, and clone
+        creation.</para>
+    <para>To configure and use a Dell EqualLogic array with Block
+        Storage, modify your <filename>cinder.conf</filename>
+        as follows.</para>
+    <para>Set the <option>volume_driver</option> option to the
+          Dell EqualLogic volume driver:<programlisting language="ini">volume_driver=cinder.volume.drivers.eqlx.DellEQLSanISCSIDriver</programlisting></para>
+    <para>Set the <option>san_ip</option> option to the IP address
+          to reach the EqualLogic Group via SSH:
+          <programlisting language="ini">san_ip=10.10.72.53</programlisting></para>
+    <para>Set the <option>san_login</option> option to the user name to login to the Group manager:<programlisting language="ini">san_login=grpadmin</programlisting></para>
+    <para>Set the <option>san_password</option> option to the password to login the Group manager with:<programlisting language="ini">san_password=password</programlisting></para>
+    <para>Optionally set the <option>san_thin_privision</option> option to false to disable creation of thin-provisioned volumes:<programlisting language="ini">san_thin_provision=false</programlisting></para>
+    <para>The following table describes additional options that the driver
+        supports:</para>
+    <xi:include href="../../../common/tables/cinder-eqlx.xml"/>
+</section>
