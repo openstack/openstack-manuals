@@ -178,7 +178,7 @@ enable_tunneling = True
                                     system. The command to start the service depends on your
                                     operating system. The following command runs the Networking
                                     server directly:</para>
-                                <screen><prompt>#</prompt> <userinput>sudo neutron-server --config-file /etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini \
+                                <screen><prompt>#</prompt> <userinput>neutron-server --config-file /etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini \
   --config-file /etc/neutron/neutron.conf</userinput></screen>
                             </listitem>
                         </orderedlist></para>
@@ -218,12 +218,12 @@ libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtHybridOVSBridgeDriver
                                 <para>Install the L2 agent (Neutron Open vSwitch agent).</para>
                             </listitem>
                             <listitem>
-                                <para>Add the integration bridge to the Open vSwitch</para>
-                                <screen><prompt>#</prompt> <userinput>sudo ovs-vsctl add-br br-int</userinput></screen>
+                                <para>Add the integration bridge to the Open vSwitch:</para>
+                                <screen><prompt>#</prompt> <userinput>ovs-vsctl add-br br-int</userinput></screen>
                             </listitem>
                             <listitem>
                                 <para>Update the Networking configuration file, <filename>
-                                        /etc/neutron/neutron.conf</filename></para>
+                                        /etc/neutron/neutron.conf</filename>:</para>
                                 <programlisting language="ini">[DEFAULT]
 core_plugin = neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2
 control_exchange = neutron
@@ -256,15 +256,17 @@ local_ip = 9.181.89.203
                             <listitem>
                                 <para>Create the integration bridge <emphasis role="bold"
                                         >br-int</emphasis>:</para>
-                                <screen><prompt>#</prompt> <userinput>sudo ovs-vsctl --may-exist add-br br-int</userinput></screen>
+                                <screen><prompt>#</prompt> <userinput>ovs-vsctl --may-exist add-br br-int</userinput></screen>
                             </listitem>
                             <listitem>
                                 <para>Start the Networking L2 agent</para>
-                                <para>The Networking Open vSwitch L2 agent can be a service of
-                                    operating system. The command may be different to start the
-                                    service on different operating systems. However the command to
-                                    run it directly is kind of like:</para>
-                                <screen><prompt>#</prompt> <userinput>sudo neutron-openvswitch-agent --config-file /etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini \
+                                <para>The Networking Open vSwitch L2
+                                agent can be a service of operating
+                                system. The command to start depends
+                                on your operating systems. The following command
+                                runs the service directly:
+                                </para>
+                                <screen><prompt>#</prompt> <userinput>neutron-openvswitch-agent --config-file /etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini \
   --config-file /etc/neutron/neutron.conf</userinput></screen>
                             </listitem>
                         </orderedlist></para>
@@ -298,7 +300,7 @@ allow_overlapping_ips = True</programlisting>
                                     system. The command to start the service depends on your
                                     operating system. The following command runs the service
                                     directly:</para>
-                                <screen><prompt>#</prompt> <userinput>sudo neutron-dhcp-agent --config-file /etc/neutron/neutron.conf \
+                                <screen><prompt>#</prompt> <userinput>neutron-dhcp-agent --config-file /etc/neutron/neutron.conf \
   --config-file /etc/neutron/dhcp_agent.ini</userinput></screen>
                             </listitem>
                         </orderedlist></para>
@@ -310,12 +312,12 @@ allow_overlapping_ips = True</programlisting>
                             </listitem>
                             <listitem>
                                 <para>Add the external network bridge</para>
-                                <screen><prompt>$</prompt> <userinput>sudo ovs-vsctl add-br br-ex</userinput></screen>
+                                <screen><prompt>#</prompt> <userinput>ovs-vsctl add-br br-ex</userinput></screen>
                             </listitem>
                             <listitem>
                                 <para>Add the physical interface, for example eth0, that is
                                     connected to the outside network to this bridge:</para>
-                                <screen><prompt>$</prompt> <userinput>sudo ovs-vsctl add-port br-ex eth0</userinput></screen>
+                                <screen><prompt>#</prompt> <userinput>ovs-vsctl add-port br-ex eth0</userinput></screen>
                             </listitem>
                             <listitem>
                                 <para>Update the L3 configuration file <filename>
@@ -334,7 +336,7 @@ use_namespaces=True</programlisting>
                                 <para>The Networking L3 agent can be a service of operating system.
                                     The command to start the service depends on your operating
                                     system. The following command starts the agent directly:</para>
-                                <screen><prompt>$</prompt> <userinput>sudo neutron-l3-agent --config-file /etc/neutron/neutron.conf \
+                                <screen><prompt>#</prompt> <userinput>neutron-l3-agent --config-file /etc/neutron/neutron.conf \
 --config-file /etc/neutron/l3_agent.ini</userinput></screen>
                             </listitem>
                         </orderedlist></para>
@@ -439,8 +441,8 @@ use_namespaces=True</programlisting>
                         bridge, add an IP 30.0.0.100/24 to br-ex and
                         ping the floating IP of the VM from our
                         network node.</para>
-                    <screen><prompt>$</prompt> <userinput>sudo ip addr add 30.0.0.100/24 dev br-ex
-<prompt>$</prompt> sudo ip link set br-ex up</userinput></screen>
+                    <screen><prompt>#</prompt> <userinput>ip addr add 30.0.0.100/24 dev br-ex</userinput>
+<prompt>#</prompt> <userinput>ip link set br-ex up</userinput></screen>
                 </listitem>
                 <listitem>
                     <para>Serve TenantA.</para>
