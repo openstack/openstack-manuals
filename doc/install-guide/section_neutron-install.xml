@@ -803,8 +803,16 @@ bridge_mappings = physnet1:br-<replaceable>DATA_INTERFACE</replaceable></program
     </section>
   </section>
   <section xml:id="install-neutron.dedicated-controller-node">
-    <title>Install Networking support on a dedicated controller
-      node</title>
+    <title>Install networking support on a dedicated
+      controller node</title>
+    <note>
+      <para>This is for a node which runs the control components
+        of Neutron, but does not run any of the components that
+        provide the underlying functionality (such as the plug-in
+        agent or the L3 agent).  If you wish to have a combined
+        controller/compute node follow these instructions, and then
+        those for the compute node.</para>
+    </note>
     <warning os="rhel;centos">
       <para>By default, the <literal>system-config-firewall</literal>
         automated firewall configuration tool is in place on RHEL.
@@ -824,15 +832,34 @@ bridge_mappings = physnet1:br-<replaceable>DATA_INTERFACE</replaceable></program
     <procedure>
       <step>
         <para>Install the main Neutron server, Neutron libraries for
-          python, and the neutron command-line interface (CLI):</para>
+          Python, and the Neutron command-line interface (CLI):</para>
         <screen os="fedora;rhel;centos"><prompt>#</prompt> <userinput>yum install openstack-neutron python-neutron python-neutronclient</userinput></screen>
         <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-neutron python-neutron python-neutronclient</userinput></screen>
         <!-- TODO(sross): support other distros -->
       </step>
       <step>
-        <para>Set up the Neutron server, as usual. Make sure to do the
-          core server component set up (RPC back end configuration,
-          auth_strategy, and so on). Configure the Neutron copy of the
+        <para>Configure the core components of Neutron. Edit the
+            <filename>/etc/neutron/neutron.conf</filename>
+          file:</para>
+        <programlisting language="ini">auth_host = <replaceable>controller</replaceable>
+admin_tenant_name = service
+admin_user = neutron
+admin_password = <replaceable>NEUTRON_PASS</replaceable>
+auth_url = http://controller:35357/v2.0
+auth_strategy = keystone
+rpc_backend = <replaceable>YOUR_RPC_BACKEND</replaceable>
+<replaceable>PUT_YOUR_RPC_BACKEND_SETTINGS_HERE_TOO</replaceable></programlisting>
+      </step>
+      <step>
+        <para>Edit the database URL under the
+          <literal>[database]</literal> section in the above
+          file, to tell Neutron how to connect to the
+          database:</para>
+        <programlisting language="ini">[database]
+connection = mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@<replaceable>controller</replaceable>/neutron</programlisting>
+      </step>
+      <step>
+        <para>Configure the Neutron copy of the
             <filename>api-paste.ini</filename> at
             <filename>/etc/neutron/api-paste.ini</filename>
           file:</para>
@@ -840,28 +867,36 @@ bridge_mappings = physnet1:br-<replaceable>DATA_INTERFACE</replaceable></program
 EXISTING_STUFF_HERE
 admin_tenant_name = service
 admin_user = neutron
-admin_password = ADMIN_PASSWORD</programlisting>
+admin_password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
       </step>
       <step>
-        <para>Configure the plug-in you chose when you configured the
-          Network node. Follow the <link
+        <para>Configure the plug-in you chose when you set up the
+          network node. Follow the <link
             linkend="install-neutron.install-plug-in-controller"
-            >instructions</link> and return.</para>
+            >instructions</link> and return here.</para>
       </step>
       <step>
         <para>Tell Nova about Neutron. Specifically, you must tell
-          Nova about the Neutron endpoint and that it handles firewall
-          issues, so a firewall is not required through Nova. Edit the
+          Nova that Neutron will be handling networking and the
+          firewall. Edit the
             <filename>/etc/nova/nova.conf</filename> file:</para>
         <programlisting language="ini">network_api_class=nova.network.neutronv2.api.API
-neutron_url=http://CONTROLLER_MGMT_IP:9696
+neutron_url=http://<replaceable>controller</replaceable>:9696
 neutron_auth_strategy=keystone
 neutron_admin_tenant_name=service
 neutron_admin_username=neutron
-neutron_admin_password=password
-neutron_admin_auth_url=http://CONTROLLER_MGMT_IP:35357/v2.0
+neutron_admin_password=<replaceable>NEUTRON_PASS</replaceable>
+neutron_admin_auth_url=http://controller:35357/v2.0
 firewall_driver=nova.virt.firewall.NoopFirewallDriver
 security_group_api=neutron</programlisting>
+      <note>
+        <para>Regardless of which firewall driver you chose when
+          configuring the network and compute nodes, this driver
+          here should be set as the No-Op firewall.  The difference
+          here is that this is <emphasis>Nova</emphasis>'s firewall,
+          and since Neutron is handling the Firewall, we need to
+          tell Nova not to use one.</para>
+      </note>
       </step>
       <step>
         <para>Start neutron-server:</para>
@@ -878,11 +913,11 @@ security_group_api=neutron</programlisting>
       </step>
     </procedure>
     <section xml:id="install-neutron.install-plug-in-controller">
-      <title>Install and configure the Neutron plug-ins on the
-        dedicated controller Node</title>
+      <title>Install and configure the Neutron plug-ins on a
+        dedicated controller node</title>
       <section xml:id="install-neutron.install-plug-in-controller.ovs">
-        <title>Install the Open vSwitch (OVS) plug-in on the dedicated
-          controller node</title>
+        <title>Install the Open vSwitch (OVS) plug-in on a
+          dedicated controller node</title>
         <procedure>
           <step>
             <para>Install the Open vSwitch plug-in:</para>
@@ -891,10 +926,10 @@ security_group_api=neutron</programlisting>
             <!-- TODO(sross): support other distros -->
           </step>
           <step>
-            <para>Configure the settings for the particular plug-ins.
-              You must set some general <acronym>OVS</acronym>
-              configuration options whether you use VLANs or GRE
-              tunneling. You must tell Neutron core to use
+            <para>Regardless of which networking technology
+              you chose to use with Open vSwitch, there are some
+              common configuration options which must be set.
+              You must tell Neutron core to use
                 <acronym>OVS</acronym>. Edit the
                 <filename>/etc/neutron/neutron.conf</filename>
               file:</para>
@@ -906,17 +941,18 @@ security_group_api=neutron</programlisting>
                 <filename>/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>
               file:</para>
             <programlisting language="ini">[database]
-connection = mysql://neutron:NEUTRON_DBPASS@controller/neutron</programlisting>
+              connection = mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@controller/neutron</programlisting>
           </step>
           <step>
-            <para>Configure the network type that you chose when you
-              configured the network node. <link
+            <para>Configure the <acronym>OVS</acronym> plugin for
+              whichever
+              networking type you chose when you configured the
+              network node: <link
                 linkend="install-neutron.install-plug-in-controller.ovs.gre"
                 >GRE tunneling</link> or <link
                 linkend="install-neutron.install-plug-in-controller.ovs.vlan"
                 >VLANs</link>.</para>
             <!-- TODO(sross): support provider networks?  you need to modify things above for this to work -->
-            <!-- TODO(sross): document firewall? -->
             <note>
               <para>Notice that the dedicated controller node does not
                 actually need to run the Open vSwitch agent or run
@@ -924,13 +960,14 @@ connection = mysql://neutron:NEUTRON_DBPASS@controller/neutron</programlisting>
             </note>
           </step>
           <step>
-            <para>Return where you started.</para>
+            <para>Now, return whence you came.</para>
           </step>
         </procedure>
         <section
           xml:id="install-neutron.install-plug-in-controller.ovs.gre">
-          <title>Configure the Neutron <acronym>OVS</acronym> plug-in
-            for GRE Tunneling on the dedicated compute node</title>
+          <title>Configure the Neutron <acronym>OVS</acronym>
+            plug-in for GRE tunneling on a dedicated controller
+            node</title>
           <procedure>
             <step>
               <para>Tell the <acronym>OVS</acronym> plug-in to use GRE
@@ -943,16 +980,15 @@ tunnel_id_ranges = 1:1000
 enable_tunneling = True</programlisting>
             </step>
             <step>
-              <para>Return to the <acronym>OVS</acronym> general
+              <para>Return to the general <acronym>OVS</acronym>
                 instructions.</para>
             </step>
           </procedure>
         </section>
         <section
           xml:id="install-neutron.install-plug-in-controller.ovs.vlan">
-          <title>Configure the Neutron <acronym>OVS</acronym> plug-in
-            for VLANs</title>
-          <!-- NOTE(sross): this is a WIP, and has yet to be tested.  Additionally, a plug-in install guide specific to compute nodes will have to be written -->
+          <title>Configure the Neutron <acronym>OVS</acronym>
+            plug-in for VLANs on a dedicated controller node</title>
           <procedure>
             <step>
               <para>Tell <acronym>OVS</acronym> to use VLANS. Edit the
@@ -963,7 +999,7 @@ tenant_network_type = vlan
 network_vlan_ranges = physnet1:1:4094</programlisting>
             </step>
             <step>
-              <para>Return to the <acronym>OVS</acronym> general
+              <para>Return to the general <acronym>OVS</acronym>
                 instructions.</para>
             </step>
           </procedure>
