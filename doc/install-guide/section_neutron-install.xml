@@ -80,9 +80,9 @@ IDENTIFIED BY '<replaceable>NEUTRON_DBPASS</replaceable>';</userinput></screen>
       <para>To list role IDs:</para>
       <screen><prompt>#</prompt> <userinput>keystone role-list</userinput></screen>
       <para>Create a neutron user:</para>
-      <screen><prompt>#</prompt> <userinput>keystone user-create --name=neutron --pass=<replaceable>NEUTRON_PASS</replaceable> --tenant-id SERVICE_TENANT_ID --email=<replaceable>neutron@example.com</replaceable></userinput>   </screen>
+      <screen><prompt>#</prompt> <userinput>keystone user-create --name=neutron --pass=<replaceable>NEUTRON_PASS</replaceable> --email=<replaceable>neutron@example.com</replaceable></userinput>   </screen>
       <para>Add the user role to the neutron user:</para>
-      <screen><prompt>#</prompt> <userinput>keystone user-role-add --tenant-id SERVICE_TENANT_ID --user-id NEUTRON_USER_ID --role-id ADMIN_ROLE_ID</userinput> </screen>
+      <screen><prompt>#</prompt> <userinput>keystone user-role-add --user=neutron --tenant=service --role=admin</userinput> </screen>
       <para>Create the neutron service:</para>
       <screen><prompt>#</prompt> <userinput>keystone service-create --name=neutron --type=network \
      --description="OpenStack Networking Service"</userinput>  </screen>
@@ -90,10 +90,10 @@ IDENTIFIED BY '<replaceable>NEUTRON_DBPASS</replaceable>';</userinput></screen>
           <literal>id</literal> property for the service returned in
         the previous step and use it to create the endpoint:</para>
       <screen><prompt>#</prompt> <userinput>keystone endpoint-create --region RegionOne \
-                               --service-id NEUTRON_SERVICE_ID \
-                               --publicurl http://controller:9696 \
-                               --adminurl http://controller:9696 \
-                               --internalurl http://controller:9696</userinput></screen>
+                               --service-id <replaceable>the_service_id_above</replaceable> \
+                               --publicurl http://<replaceable>controller</replaceable>:9696 \
+                               --adminurl http://<replaceable>controller</replaceable>:9696 \
+                               --internalurl http://<replaceable>controller</replaceable>:9696</userinput></screen>
     </step>
     <step>
       <para>Configure networking core. Edit the
