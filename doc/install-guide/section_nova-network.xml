@@ -51,6 +51,13 @@ flat_network_bridge=br100
 flat_interface=eth1
 public_interface=eth1
       </programlisting>
+    </step>
+  <step os="fedora;rhel;centos">
+  <para>Provide a local metadata service that will be reachable from instances on this compute node.
+        This step is only necessary on compute nodes that do not run the <systemitem class="service">nova-api</systemitem> service.</para>
+  <screen><prompt>#</prompt> <userinput>yum install openstack-nova-api</userinput>
+<prompt>#</prompt> <userinput>service openstack-nova-metadata-api start</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-nova-metadata-api on</userinput></screen>
   </step>
   <step>
   <para os="ubuntu;debian">Restart the network service.</para>
