@@ -20,19 +20,19 @@
         os="opensuse;sles">openstack-swift.</phrase>
         </para>
     </note>
-    <orderedlist>
-        <listitem>
+    <procedure>
+        <step>
             <para>Install swift-proxy service:</para>
             <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install swift-proxy memcached python-keystoneclient python-swiftclient python-webob</userinput></screen>
             <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-swift-proxy memcached openstack-utils python-swiftclient python-keystone-auth-token</userinput></screen>
             <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-swift-proxy memcached openstack-utils python-swiftclient python-keystoneclient</userinput></screen>
-        </listitem>
-        <listitem>
+        </step>
+        <step>
             <para>Create self-signed cert for SSL:</para>
             <screen><prompt>#</prompt> <userinput>cd /etc/swift</userinput>
 <prompt>#</prompt> <userinput>openssl req -new -x509 -nodes -out cert.crt -keyout cert.key</userinput></screen>
-        </listitem>
-        <listitem>
+        </step>
+        <step>
             <para>Modify memcached to listen on the default interfaces.
                 Preferably this should be on a local, non-public network.
                 Edit the following line in <filename>/etc/memcached.conf</filename>,
@@ -40,20 +40,27 @@
             <literallayout class="monospaced">-l 127.0.0.1</literallayout>
             <para>to</para>
             <literallayout class="monospaced">-l &lt;PROXY_LOCAL_NET_IP&gt;</literallayout>
-        </listitem>
-        <listitem>
+        </step>
+        <step>
             <para>Restart the memcached server:</para>
             <screen><prompt>#</prompt> <userinput>service memcached restart</userinput></screen>
-        </listitem>
-        <listitem os="rhel;centos;fedora">
+        </step>
+        <step os="rhel;centos;fedora">
             <para>RHEL/CentOS/Fedora only: To set up Object Storage to authenticate tokens we need to set the keystone Admin
                 token in the swift proxy file with the openstack-config command.</para>
             <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/swift/proxy-server.conf \
   filter:authtoken admin_token $ADMIN_TOKEN</userinput>
 <prompt>#</prompt> sudo <userinput>openstack-config --set /etc/swift/proxy-server.conf \
   filter:authtoken auth_token $ADMIN_TOKEN</userinput></screen>
-        </listitem>
-        <listitem>
+        </step>
+        <step os="ubuntu"><para>Ubuntu only: Because the distribution packages do not include a copy of the keystoneauth middleware, here are steps to ensure the proxy server includes them:</para>
+            <screen><prompt>$</prompt> <userinput>git clone https://github.com/openstack/swift.git</userinput>
+                <prompt>$</prompt> <userinput>cd swift</userinput>
+                <prompt>$</prompt> <userinput>python setup.py install</userinput>
+                <prompt>$</prompt> <userinput>swift-init proxy start</userinput>
+            </screen>
+        </step>
+        <step>
             <para>Create <filename>/etc/swift/proxy-server.conf</filename>:</para>
             <programlisting os="rhel;centos;fedora;ubuntu;debian" language="ini"><xi:include parse="text" href="../samples/proxy-server.conf.txt" /></programlisting>
             <programlisting os="opensuse;sles" language="ini"><xi:include parse="text" href="../samples/proxy-server.conf.txt-openSUSE" /></programlisting>
@@ -64,8 +71,8 @@
                     <literallayout class="monospaced">10.1.2.3:11211,10.1.2.4:11211</literallayout></para>
                     <para>Only the proxy server uses memcache.</para>
             </note>
-        </listitem>
-        <listitem>
+        </step>
+        <step>
             <para>Create the <parameter class="option"
                     >signing_dir</parameter> and set its permissions
                 accordingly.</para>
@@ -73,8 +80,8 @@
 <prompt>#</prompt> <userinput>chown -R swift:swift /home/swift/keystone-signing</userinput></screen>
                 <screen os="opensuse;sles"><prompt>#</prompt> <userinput>mkdir -p /home/swift/keystone-signing</userinput>
 <prompt>#</prompt> <userinput>chown -R openstack-swift:openstack-swift /home/swift/keystone-signing</userinput></screen>
-        </listitem>
-        <listitem>
+        </step>
+        <step>
             <para>Create the account, container and object rings. The
                 builder command is basically creating a builder file
                 with a few parameters. The parameter with the value of
@@ -89,8 +96,8 @@
 <prompt>#</prompt> <userinput>swift-ring-builder account.builder create 18 3 1</userinput>
 <prompt>#</prompt> <userinput>swift-ring-builder container.builder create 18 3 1</userinput>
 <prompt>#</prompt> <userinput>swift-ring-builder object.builder create 18 3 1</userinput></screen>
-        </listitem>
-        <listitem>
+        </step>
+        <step>
             <para>For every storage device on each node add entries to each
                 ring:</para>
             <screen><prompt>#</prompt> <userinput>swift-ring-builder account.builder add z&lt;ZONE&gt;-&lt;STORAGE_LOCAL_NET_IP&gt;:6002[R&lt;STORAGE_REPLICATION_NET_IP&gt;:6005]/&lt;DEVICE&gt; 100</userinput>
@@ -116,14 +123,14 @@
                     should start at 1 and increment by one for each
                     additional node.</para>
             </note>
-        </listitem>
-        <listitem>
+        </step>
+        <step>
             <para>Verify the ring contents for each ring:</para>
             <screen><prompt>#</prompt> <userinput>swift-ring-builder account.builder</userinput>
 <prompt>#</prompt> <userinput>swift-ring-builder container.builder</userinput>
 <prompt>#</prompt> <userinput>swift-ring-builder object.builder</userinput></screen>
-        </listitem>
-        <listitem>
+        </step>
+        <step>
             <para>Rebalance the rings:</para>
             <screen><prompt>#</prompt> <userinput>swift-ring-builder account.builder rebalance</userinput>
 <prompt>#</prompt> <userinput>swift-ring-builder container.builder rebalance</userinput>
@@ -131,22 +138,22 @@
             <note>
                 <para>Rebalancing rings can take some time.</para>
             </note>
-        </listitem>
-        <listitem>
+        </step>
+        <step>
             <para>Copy the <filename>account.ring.gz</filename>,
                     <filename>container.ring.gz</filename>, and
                     <filename>object.ring.gz</filename> files to each
                 of the Proxy and Storage nodes in /etc/swift.</para>
-        </listitem>
-        <listitem>
+        </step>
+        <step>
             <para>Make sure all the config files are owned by the swift
                 user:</para>
             <screen os="ubuntu;debian;rhel;centos;fedora"><prompt>#</prompt> <userinput>chown -R swift:swift /etc/swift</userinput></screen>
             <screen os="opensuse;sles"><prompt>#</prompt> <userinput>chown -R openstack-swift:openstack-swift /etc/swift</userinput></screen>
-        </listitem>
-        <listitem>
+        </step>
+        <step>
             <para>Start Proxy services:</para>
             <screen><prompt>#</prompt> <userinput>service proxy-server start</userinput></screen>
-        </listitem>
-    </orderedlist>
+        </step>
+    </procedure>
 </section>
