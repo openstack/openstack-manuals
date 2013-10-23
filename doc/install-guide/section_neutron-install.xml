@@ -45,7 +45,7 @@
         node:</para>
       <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install neutron-server neutron-dhcp-agent neutron-plugin-openvswitch neutron-l3-agent</userinput></screen>
       <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-neutron</userinput></screen>
-      <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-neutron</userinput></screen>
+      <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-neutron openstack-neutron-l3-agent openstack-neutron-dhcp-agent</userinput></screen>
     </step>
     <step>
       <para>Enable packet forwarding and disable packet destination
@@ -214,14 +214,17 @@ admin_password=<replaceable>NEUTRON_PASS</replaceable></programlisting>
       <procedure>
         <step>
           <para>Install the Open vSwitch plug-in and its
-            dependencies.</para>
+            dependencies:</para>
           <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install neutron-plugin-openvswitch</userinput></screen>
-          <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>yum install openstack-neutron-openvswitch</userinput>        </screen>
-          <screen os="opensuse;sles;"><prompt>#</prompt> <userinput>zypper install openstack-neutron-openvswitch</userinput></screen>
+          <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>yum install openstack-neutron-openvswitch</userinput></screen>
+          <screen os="opensuse;sles;"><prompt>#</prompt> <userinput>zypper install openstack-neutron-openvswitch-agent</userinput></screen>
         </step>
         <step>
-          <para>Start Open vSwitch:</para>
-          <screen><prompt>#</prompt> <userinput>service openvswitch start</userinput>        </screen>
+          <para>Start Open vSwitch and and configure it to start when the system boots:</para>
+          <screen os="ubuntu;debian;rhel;fedora;centos"><prompt>#</prompt> <userinput>service openvswitch start</userinput>
+<prompt>#</prompt> <userinput>chkconfig openvswitch on</userinput></screen>
+          <screen os="opensuse;sles"><prompt>#</prompt> <userinput>service openvswitch-switch start</userinput>
+<prompt>#</prompt> <userinput>chkconfig openvswitch-switch on</userinput></screen>
         </step>
         <step>
           <para>You must configure Open vSwitch whether you use VLANs
@@ -646,12 +649,14 @@ PUT_YOUR_RPC_BACKEND_SETTINGS_HERE_TOO</programlisting>
             <para>Install the Open vSwitch plug-in and its
               dependencies.</para>
             <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>yum install openstack-neutron-openvswitch</userinput></screen>
-            <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-neutron-openvswitch</userinput></screen>
+            <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-neutron-openvswitch-agent</userinput></screen>
           </step>
-          <!-- TODO(sross): support other distros -->
           <step>
-            <para>Start Open vSwitch:</para>
-            <screen os="rhel;fedora;centos;sles;opensuse"><prompt>#</prompt> <userinput>service openvswitch start</userinput></screen>
+          <para>Start Open vSwitch and and configure it to start when the system boots:</para>
+          <screen os="ubuntu;debian;rhel;fedora;centos"><prompt>#</prompt> <userinput>service openvswitch start</userinput>
+<prompt>#</prompt> <userinput>chkconfig openvswitch on</userinput></screen>
+          <screen os="opensuse;sles"><prompt>#</prompt> <userinput>service openvswitch-switch start</userinput>
+<prompt>#</prompt> <userinput>chkconfig openvswitch-switch on</userinput></screen>
           </step>
           <step>
             <para>You must configure Open vSwitch whether you use
@@ -863,7 +868,7 @@ security_group_api=neutron</programlisting>
           <step>
             <para>Install the Open vSwitch plug-in:</para>
             <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>yum install openstack-neutron-openvswitch</userinput></screen>
-            <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-neutron-openvswitch</userinput></screen>
+            <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-neutron-openvswitch-agent</userinput></screen>
             <!-- TODO(sross): support other distros -->
           </step>
           <step>
