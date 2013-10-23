@@ -6,12 +6,33 @@
   <title>Installing the Identity Service</title>
   <procedure>
     <step>
-      <para>Install the Identity Service on the controller node:</para>
-      <screen os="ubuntu;deb"><prompt>#</prompt> <userinput>apt-get install keystone python-keystone python-keystoneclient</userinput></screen>
+      <para>Install the Identity Service on the controller node, together
+      with python-keystoneclient (which is a dependency):</para>
+      <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install keystone</userinput></screen>
       <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-keystone python-keystoneclient</userinput></screen>
       <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-keystone python-keystoneclient openstack-utils</userinput></screen>
+      <note os="debian"><title>Note for Debian users</title>
+      <para>Note that on Debian system, the above is all what is needed
+      to install the Identity Service. During the setup, the debconf system will prompt
+      the user for the database access information. It will then
+      automatically create the database, configure access rights,
+      and then modify <filename>/etc/keystone/keystone.conf</filename> to reflect this
+      configuration. Debconf will also be used to configure the AUTH_TOKEN
+      administrator password.</para>
+      <para>The Debian package will then perform the
+      <code>keystone-manage db_sync</code> for you, and create an "admin/admin" tenant
+      and user, which you can later use for setting-up the other OpenStack
+      service (later called "auth token" in this documentation). Finally,
+      the package will also ask the user to setup the keystone endpoint.
+      Therefore, if you use Debian, you can skip all the remaining steps below.</para>
+      <para>If you need to reconfigure Keystone, you can use:
+      <screen><prompt>#</prompt> <userinput>dpkg-reconfigure -plow keystone</userinput></screen>
+      or edit the configuration files and manually restart the daemon.</para>
+      <para>Remember that for using a database server that is installed remotely,
+      you need to call before installing the Identity Service:
+      <screen><prompt>#</prompt> <userinput>apt-get install dbconfig-common &amp;&amp; dpkg-reconfigure -plow dbconfig-common</userinput></screen></para>
+      </note>
     </step>
-
     <step>
       <para>The Identity Service uses a database to store information.
       Specify the location of the database in the configuration file.
@@ -21,8 +42,8 @@
       with a suitable password for the database user.</para>
       <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/keystone/keystone.conf \
   sql connection mysql://keystone:<replaceable>KEYSTONE_DBPASS</replaceable>@controller/keystone</userinput></screen>
-      <para os="ubuntu">Edit <filename>/etc/keystone/keystone.conf</filename> and change the <literal>[sql]</literal> section.</para>
-      <programlisting os="ubuntu" language="ini">
+      <para os="ubuntu;debian">Edit <filename>/etc/keystone/keystone.conf</filename> and change the <literal>[sql]</literal> section.</para>
+      <programlisting os="ubuntu;debian" language="ini">
 ...
 [sql]
 # The SQLAlchemy connection string used to connect to the database
@@ -40,7 +61,7 @@ connection = mysql://keystone:KEYSTONE_DBPASS@controller/keystone
       <screen><prompt>#</prompt> <userinput>openstack-db --init --service keystone --password <replaceable>KEYSTONE_DBPASS</replaceable></userinput></screen>
     </step>
 
-    <step os="ubuntu">
+    <step os="ubuntu;debian">
       <para>First, we need to create a database user called <literal>keystone</literal>, by logging in
       as root using the password we set earlier.</para>
       <screen><prompt>#</prompt> <userinput>mysql -u root -p</userinput>
@@ -50,7 +71,7 @@ IDENTIFIED BY '<replaceable>KEYSTONE_DBPASS</replaceable>';</userinput>
 <prompt>mysql></prompt> <userinput>GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'%' \
 IDENTIFIED BY '<replaceable>KEYSTONE_DBPASS</replaceable>';</userinput></screen>
     </step>
-    <step os="ubuntu">
+    <step os="ubuntu;debian">
       <para>We now start the keystone service and create its tables.</para>
       <screen><prompt>#</prompt> <userinput>keystone-manage db_sync</userinput>
 <prompt>#</prompt> <userinput>service keystone restart</userinput></screen>
@@ -64,12 +85,12 @@ IDENTIFIED BY '<replaceable>KEYSTONE_DBPASS</replaceable>';</userinput></screen>
       <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>ADMIN_TOKEN=$(openssl rand -hex 10)</userinput>
 <prompt>#</prompt> <userinput>echo $ADMIN_TOKEN</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/keystone/keystone.conf DEFAULT admin_token $ADMIN_TOKEN</userinput></screen>
-      <screen os="ubuntu"><prompt>#</prompt> <userinput>openssl rand -hex 10</userinput></screen>
+      <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>openssl rand -hex 10</userinput></screen>
       <para os="sles;opensuse">For SUSE Linux Enterprise use instead as first command:</para>
       <screen os="opensuse;sles"><prompt>#</prompt> <userinput>ADMIN_TOKEN=$(openssl rand 10|hexdump  -e '1/1 "%.2x"')</userinput></screen>
-<para os="ubuntu">Edit <filename>/etc/keystone/keystone.conf</filename> and
+<para os="ubuntu;debian">Edit <filename>/etc/keystone/keystone.conf</filename> and
        change the <literal>[DEFAULT]</literal> section, replacing ADMIN_TOKEN with the results of the command.</para>
-      <programlisting os="ubuntu" language="ini">
+      <programlisting os="ubuntu;debian" language="ini">
 [DEFAULT]
 # A "shared secret" between keystone and other openstack services
 admin_token = ADMIN_TOKEN
@@ -95,7 +116,7 @@ admin_token = ADMIN_TOKEN
 <prompt>#</prompt> <userinput>sed -e "s,%SERVICE_HOST%,192.168.0.10,g" -e "s/%S3_SERVICE_PORT%/8080/" \
    $KEYSTONE_CATALOG.sample > $KEYSTONE_CATALOG</userinput></screen>
     </step>
-    <step os="ubuntu">
+    <step os="ubuntu;debian">
       <para>Restart the Identity service.</para>
       <screen><prompt>#</prompt> <userinput>service keystone restart</userinput></screen>
     </step>

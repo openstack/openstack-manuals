@@ -7,7 +7,7 @@
   <procedure>
     <step>
       <para>Install the Orchestration Service on the controller node:</para>
-      <screen os="ubuntu;deb"><prompt>#</prompt> <userinput>apt-get install heat-api heat-api-cfn heat-engine python-heat-client</userinput></screen>
+      <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install heat-api heat-api-cfn heat-engine</userinput></screen>
       <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-heat-api openstack-heat-engine FIXME</userinput></screen>
       <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-heat-api openstack-heat-api-cfn openstack-heat-engine</userinput></screen>
     </step>
@@ -21,8 +21,8 @@
       with a suitable password for the database user.</para>
       <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/heat/heat.conf \
   database connection mysql://heat:<replaceable>HEAT_DBPASS</replaceable>@controller/heat</userinput></screen>
-      <para os="ubuntu">Edit <filename>/etc/heat/heat.conf</filename> and change the <literal>[DEFAULT]</literal> section.</para>
-      <programlisting os="ubuntu" language="ini">[database]
+      <para os="ubuntu;debian">Edit <filename>/etc/heat/heat.conf</filename> and change the <literal>[DEFAULT]</literal> section.</para>
+      <programlisting os="ubuntu;debian" language="ini">[database]
 # The SQLAlchemy connection string used to connect to the database
 connection = mysql://heat:<replaceable>HEAT_DBPASS</replaceable>@controller/heat
 ...

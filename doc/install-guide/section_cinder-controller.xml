@@ -18,6 +18,21 @@
       <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install cinder-api cinder-scheduler</userinput></screen>
       <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>yum install openstack-cinder openstack-utils openstack-selinux</userinput></screen>
       <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install  openstack-cinder-api openstack-cinder-scheduler</userinput></screen>
+
+      <note os="debian"><title>Note for Debian users</title>
+        <para>As for the rest of OpenStack, the Block Storage service is configured through
+        debconf. So you will not need to manually configure the database, do the
+        <code>cinder-manage db sync</code> manually, configure the Keystone auth token, or
+        the RabbitMQ parameters of Cinder. Therefore, all the below steps can be
+        skipped.</para>
+        <para>If you need to reconfigure the Block Storage packages, you can use:
+        <screen><prompt>#</prompt> <userinput>dpkg-reconfigure -plow cinder-common</userinput></screen>
+        or edit the configuration files and manually restart the daemons.</para>
+        <para>Remember that if your database server is installed remotely,
+        before installing the Block Storage service, you will need to do:
+        <screen><prompt>#</prompt> <userinput>apt-get install dbconfig-common &amp;&amp; \
+    dpkg-reconfigure -plow dbconfig-common</userinput></screen>.</para>
+      </note>
     </step>
 
     <step os="rhel;centos;fedora;opensuse;sles"><para>The Block Storage Service stores volume information in a database.

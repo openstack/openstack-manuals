@@ -28,7 +28,8 @@
             An IP address will be assigned and configured by the networking component of OpenStack.</para>
         </listitem>
         <listitem>
-          <para>Set the hostname to <literal>compute1</literal>. Ensure that the
+          <para>Set the hostname to <literal>compute1</literal> (this can be
+          checked using <code>uname -n</code>). Ensure that the
             IP addresses and hostnames for both nodes are listed in the
             <filename>/etc/hosts</filename> file on each system.</para>
         </listitem>
@@ -48,12 +49,38 @@
 
     <step><para>After configuring the operating system, install the appropriate
       packages for the compute service.</para>
-      <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install nova-compute-kvm python-novaclient python-guestfs</userinput></screen>
+      <note os="debian"><title>Note for Debian users</title>
+      <para>Before installing anything, make sure that you have installed dbconfig-common, and that
+      you configured it correctly to allow the use of remote database servers:</para>
+      <screen><prompt>#</prompt> <userinput>dpkg-reconfigure dbconfig-common</userinput></screen>
+      <para>Then, on the host running the MySQL server (which is the controller
+      node in this manual), simply run:
+      <screen><prompt>#</prompt> <userinput>/usr/share/openstack-proxy-node/mysql-remote-root</userinput></screen>
+      (available from the openstack-proxy-node package) so that your
+      controller node is configured to allow the compute node to access it.</para>
+      </note>
+      <para os="ubuntu;debian">Then do:</para>
+      <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install nova-compute-kvm python-guestfs</userinput></screen>
       <para os="ubuntu;debian">Select "Yes" when asked to create a supermin appliance during install.</para>
+      <note os="debian"><title>Note for Debian users</title>
+      <para>You can also use the meta-package with:
+      <screen><prompt>#</prompt> <userinput>apt-get install openstack-compute-node</userinput></screen>
+      which will also install other components on your compute node, like the OVS
+      Neutron agent, Ceilometer agent, and more.</para>
+      <para>As for the rest of OpenStack, the Nova packages are configured through
+      debconf. So you will not need to manually configure the database, do the
+      "nova-manage db sync" manually, configure the keystone auth token, or
+      the RabbitMQ parameters of Nova. Therefore, all the below steps can be
+      skipped. If you need to reconfigure Nova, you can use:
+      <screen><prompt>#</prompt> <userinput>dpkg-reconfigure -plow nova-common</userinput></screen>
+      or edit the configuration files and manually restart the daemons.
+      Remember that if your database server is installed remotely, before
+      installing the Compute service, you will need to do:
+      <screen><prompt>#</prompt> <userinput>apt-get install dbconfig-common &amp;&amp; dpkg-reconfigure -plow dbconfig-common</userinput></screen></para></note>
       <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>yum install openstack-nova-compute</userinput></screen>
       <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-nova-compute kvm openstack-utils</userinput></screen>
     </step>
-    <step os="ubuntu">
+    <step os="ubuntu;debian">
     <para>Due to <link xlink:href="https://bugs.launchpad.net/ubuntu/+source/linux/+bug/759725">this bug</link>
     that is marked "Won't Fix", guestfs is restricted.
     Run the following command to relax the restriction:</para>

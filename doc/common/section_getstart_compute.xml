@@ -30,15 +30,16 @@
             enforces some policies.</para>
         </listitem>
         <listitem>
-          <para><systemitem class="service"
-              >nova-api-metadata</systemitem> service. Accepts
-            metadata requests from instances. The <systemitem
-              class="service">nova-api-metadata</systemitem> service
+          <para><systemitem class="service">nova-api-metadata</systemitem> service. Accepts
+            metadata requests from instances. The <systemitem class="service">nova-api-metadata</systemitem> service
             is generally only used when you run in multi-host mode
             with <systemitem class="service">nova-network</systemitem>
-            installations. For details, see <link
-            xlink:href="http://docs.openstack.org/admin-guide-cloud/content/section_metadata-service.html"
-            >Metadata service</link> in the <citetitle>Cloud Administrator Guide</citetitle>.</para>
+            installations. For details, see
+            <link xlink:href="http://docs.openstack.org/admin-guide-cloud/content/section_metadata-service.html">Metadata service</link>
+            in the <citetitle>Cloud Administrator Guide</citetitle>.
+            </para>
+            <para>Note for Debian users: on Debian system, it is included in the <application>nova-api</application>
+            package, and can be selected through debconf.</para>
         </listitem>
       </itemizedlist>
       <itemizedlist>
@@ -140,6 +141,11 @@
             daemon. Manages x509 certificates.</para>
         </listitem>
       </itemizedlist>
+      <para os="debian">Note for Debian users:
+      A unique package called <application>nova-consoleproxy</application> contains <application>nova-novncproxy</application>,
+      <application>nova-spicehtml5proxy</application>, and <application>nova-xvpvncproxy</application>.
+      Selection of which to use is done either by configuring
+      <filename>/etc/default/nova-consoleproxy</filename> or through Debconf.</para>
       <itemizedlist>
         <title>Image Management (EC2 scenario)</title>
         <listitem>

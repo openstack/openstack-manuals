@@ -11,7 +11,7 @@
       that runs on compute nodes.</para>
     <step>
       <para>Install the Metering service on the compute node:</para>
-      <screen os="ubuntu;deb"><prompt>#</prompt> <userinput>apt-get install ceilometer-agent-compute</userinput></screen>
+      <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install ceilometer-agent-compute</userinput></screen>
       <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-ceilometer-agent-compute FIXME</userinput></screen>
       <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-ceilometer-agent-compute</userinput></screen>
     </step>
@@ -41,9 +41,9 @@ notification_driver=ceilometer.compute.nova_notifier
       <para>You need to set the secret key defined earlier that is used as a
         shared secret between the Metering service nodes.</para>
 <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/keystone/keystone.conf publisher_rpc metering_secret $ADMIN_TOKEN</userinput></screen>
-<para os="ubuntu">Edit <filename>/etc/ceilometer/ceilometer.conf</filename> and
+<para os="ubuntu;debian">Edit <filename>/etc/ceilometer/ceilometer.conf</filename> and
        change the <literal>[DEFAULT]</literal> section, replacing ADMIN_TOKEN with the one created earlier.</para>
-      <programlisting os="ubuntu" language="ini">
+      <programlisting os="ubuntu;debian" language="ini">
 ...
 [publisher_rpc]
 # Secret value for signing metering messages (string value)
