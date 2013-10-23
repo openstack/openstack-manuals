@@ -127,7 +127,7 @@ admin_password=<replaceable>NEUTRON_PASS</replaceable></programlisting>
     </step>
     <step>
       <para>Edit the
-          <filename>/etc/neutron/plug-ins/openvswitch/ovs_neutron_plugin.ini</filename>
+          <filename>/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>
         file under the <literal>[database]</literal> section:</para>
       <programlisting language="ini">[DATABASE]
 connection = mysql://neutronUser:NEUTRON_DBPass@10.10.10.51/neutron</programlisting>
@@ -164,7 +164,7 @@ firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewal
         <step>
           <para>Install the Open vSwitch plug-in and its
             dependencies.</para>
-          <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>sudo apt-get install neutron-plug-in-openvswitch</userinput></screen>
+          <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>sudo apt-get install neutron-plugin-openvswitch</userinput></screen>
           <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>sudo yum install openstack-neutron-openvswitch</userinput>        </screen>
           <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-neutron-openvswitch</userinput></screen>
         </step>
@@ -307,13 +307,13 @@ admin_password = NEUTRON_PASS</programlisting>
               <acronym>OVS</acronym> by editing
               <filename>/etc/neutron/neutron.conf</filename>:</para>
           <programlisting language="ini">
-        core_plug-in = neutron.plug-ins.openvswitch.ovs_neutron_plug-in.OVSNeutronplug-inV2
+        core_plugin = neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2
       </programlisting>
         </step>
         <step>
           <para>Finally, you must tell the <acronym>OVS</acronym>
             plug-in how to connect to the database by editing
-              <filename>/etc/neutron/plug-ins/openvswitch/ovs_neutron_plugin.ini</filename>:</para>
+              <filename>/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>:</para>
           <programlisting language="ini">
           [database]
           connection = mysql://neutron:NEUTRON_DBPASS@controller/neutron
@@ -338,7 +338,7 @@ admin_password = NEUTRON_PASS</programlisting>
             Otherwise, you can choose to use one of the Neutron
             firewall plug-ins. To use the Hybrid OVS-IPTables driver
             (the most common choice), edit
-              <filename>/etc/neutron/plug-ins/openvswitch/ovs_neutron_plugin.ini</filename>:</para>
+              <filename>/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>:</para>
           <programlisting language="ini">[securitygroup]
 # Firewall driver for realizing neutron security group function.
 firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver</programlisting>
@@ -376,7 +376,7 @@ firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewal
                 <literal>br-tun</literal>, and to use a local IP for
               the tunnel of
               <replaceable>DATA_INTERFACE</replaceable>'s IP. Edit
-                <filename>/etc/neutron/plug-ins/openvswitch/ovs_neutron_plugin.ini</filename>:</para>
+                <filename>/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>:</para>
             <programlisting language="ini">[ovs]
 tenant_network_type = gre
 tunnel_id_ranges = 1:1000
@@ -397,7 +397,7 @@ local_ip = DATA_INTERFACE_IP</programlisting>
         <procedure>
           <step>
             <para>Tell <acronym>OVS</acronym> to use VLANS. Edit the
-                <filename>/etc/neutron/plug-ins/openvswitch/ovs_neutron_plug-in</filename>
+                <filename>/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>
               file:</para>
             <programlisting language="ini">[ovs]
           tenant_network_type = vlan
@@ -677,12 +677,12 @@ PUT_YOUR_RPC_BACKEND_SETTINGS_HERE_TOO</programlisting>
                 <acronym>OVS</acronym>. Edit the
                 <filename>/etc/neutron/neutron.conf</filename>
               file:</para>
-            <programlisting language="ini">core_plug-in = neutron.plug-ins.openvswitch.ovs_neutron_plug-in.OVSNeutronplug-inV2</programlisting>
+            <programlisting language="ini">core_plugin = neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2</programlisting>
           </step>
           <step>
             <para>Tell the <acronym>OVS</acronym> plug-in how to
               connect to the database. Edit the
-                <filename>/etc/neutron/plug-ins/openvswitch/ovs_neutron_plugin.ini</filename>
+                <filename>/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>
               file:</para>
             <programlisting language="ini">[database]
 sql_connection = DATABASE_TYPE://neutron:NETURON_PASSWORD@CONTROLLER_NODE_HOSTNAME/neutron</programlisting>
@@ -704,7 +704,7 @@ sql_connection = DATABASE_TYPE://neutron:NETURON_PASSWORD@CONTROLLER_NODE_HOSTNA
               Otherwise, you can choose to use one of the Neutron
               firewall plug-ins. To use the Hybrid OVS-IPTables driver
               (the most common choice), edit the
-                <filename>/etc/neutron/plug-ins/openvswitch/ovs_neutron_plugin.ini</filename>
+                <filename>/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>
               file:</para>
             <programlisting language="ini">[securitygroup]
 # Firewall driver for realizing neutron security group function.
@@ -740,7 +740,7 @@ firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewal
                 and a local IP for the tunnel of
                   <replaceable>DATA_INTERFACE</replaceable>'s IP. Edit
                 the
-                  <filename>/etc/neutron/plug-ins/openvswitch/ovs_neutron_plugin.ini</filename>
+                  <filename>/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>
                 file:</para>
               <programlisting language="ini">[ovs]
 tenant_network_type = gre
@@ -764,7 +764,7 @@ local_ip = DATA_INTERFACE_IP</programlisting>
           <procedure>
             <step>
               <para>Tell <acronym>OVS</acronym> to use VLANS. Edit the
-                  <filename>/etc/neutron/plug-ins/openvswitch/ovs_neutron_plug-in</filename>
+                  <filename>/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>
                 file:</para>
               <programlisting language="ini">[ovs]
 tenant_network_type = vlan
@@ -857,9 +857,9 @@ security_group_api=neutron</programlisting>
             you get errors about a missing
               <filename>plugin.ini</filename> file, make a symlink
             that points to
-              <filename>/etc/neutron/plug-ins/openvswitch/ovs_neutron_plugin.ini</filename>
+              <filename>/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>
             with the name
-              <filename>/etc/neutron/plug-ins.ini</filename>.</para>
+              <filename>/etc/neutron/plugins.ini</filename>.</para>
         </note>
       </step>
     </procedure>
@@ -884,12 +884,12 @@ security_group_api=neutron</programlisting>
                 <acronym>OVS</acronym>. Edit the
                 <filename>/etc/neutron/neutron.conf</filename>
               file:</para>
-            <programlisting language="ini">core_plug-in = neutron.plug-ins.openvswitch.ovs_neutron_plug-in.OVSNeutronplug-inV2</programlisting>
+            <programlisting language="ini">core_plugin = neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2</programlisting>
           </step>
           <step>
             <para>Tell the <acronym>OVS</acronym> plug-in how to
               connect to the database. Edit the
-                <filename>/etc/neutron/plug-ins/openvswitch/ovs_neutron_plugin.ini</filename>
+                <filename>/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>
               file:</para>
             <programlisting language="ini">[database]
 sql_connection = DATABASE_TYPE://neutron:NETURON_PASSWORD@CONTROLLER_NODE_HOSTNAME/neutron</programlisting>
@@ -922,7 +922,7 @@ sql_connection = DATABASE_TYPE://neutron:NETURON_PASSWORD@CONTROLLER_NODE_HOSTNA
             <step>
               <para>Tell the <acronym>OVS</acronym> plug-in to use GRE
                 tunneling. Edit the
-                  <filename>/etc/neutron/plug-ins/openvswitch/ovs_neutron_plugin.ini</filename>
+                  <filename>/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>
                 file:</para>
               <programlisting language="ini">[ovs]
 tenant_network_type = gre
@@ -943,7 +943,7 @@ enable_tunneling = True</programlisting>
           <procedure>
             <step>
               <para>Tell <acronym>OVS</acronym> to use VLANS. Edit the
-                  <filename>/etc/neutron/plug-ins/openvswitch/ovs_neutron_plug-in</filename>
+                  <filename>/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>
                 file, as follows:</para>
               <programlisting language="ini">[ovs]
 tenant_network_type = vlan
