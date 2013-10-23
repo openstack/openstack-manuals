@@ -579,11 +579,12 @@ router_id = <replaceable>EXT_TO_INT_ID</replaceable></programlisting>
     </section>
   </section>
   <section xml:id="install-neutron.dedicated-compute-node">
-    <title>Install required networking support on a dedicated compute
+    <title>Install networking support on a dedicated compute
       node</title>
     <note>
-      <para>This section details setup for any node that runs compute services but does
-        not run the full network stack.</para>
+      <para>This section details setup for any node that runs
+        the <literal>nova-compute</literal> component but does not
+        run the full network stack.</para>
     </note>
     <warning os="rhel;centos">
       <para>By default, the <literal>system-config-firewall</literal>
@@ -606,35 +607,61 @@ router_id = <replaceable>EXT_TO_INT_ID</replaceable></programlisting>
         <para>Disable packet destination filtering (route
           verification) to let the networking services route traffic
           to the VMs. Edit the <filename>/etc/sysctl.conf</filename>
-          file and restart networking:</para>
+          file and then restart networking:</para>
         <programlisting language="ini">net.ipv4.conf.all.rp_filter=0
 net.ipv4.conf.default.rp_filter=0</programlisting>
       </step>
       <step>
-        <para>Install and configure plug-in components. To install and
-          configure your plug-in, see <xref
-            linkend="install-neutron.install-plugin-compute"/>.</para>
+        <para>Install and configure your networking plug-in
+          components. To install and configure the network plug-in
+          that you chose when you set up your network node, see
+          <xref linkend="install-neutron.install-plugin-compute"/>.
+        </para>
       </step>
       <step>
-        <para>Configure the main part of Neutron. Edit the
+        <para>Configure the core components of Neutron. Edit the
             <filename>/etc/neutron/neutron.conf</filename>
           file:</para>
-        <programlisting language="ini">auth_host = CONTROLLER_NODE_MGMT_IP
+        <programlisting language="ini">auth_host = <replaceable>controller</replaceable>
 admin_tenant_name = service
 admin_user = neutron
-admin_password = ADMIN_PASSWORD
-auth_url = http://CONTROLLER_NODE_MGMT_IP:35357/v2.0
+admin_password = <replaceable>NEUTRON_PASS</replaceable>
+auth_url = http://controller:35357/v2.0
 auth_strategy = keystone
-rpc_backend = YOUR_RPC_BACKEND
-PUT_YOUR_RPC_BACKEND_SETTINGS_HERE_TOO</programlisting>
+rpc_backend = <replaceable>YOUR_RPC_BACKEND</replaceable>
+<replaceable>PUT_YOUR_RPC_BACKEND_SETTINGS_HERE_TOO</replaceable></programlisting>
+      </step>
+      <step>
+        <para>Edit the database URL under the
+          <literal>[database]</literal> section in the above
+          file, to tell Neutron how to connect to the
+          database:</para>
+        <programlisting language="ini">[database]
+connection = mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@controller/neutron</programlisting>
+      </step>
+      <step>
+        <para>Edit the <filename>/etc/neutron/api-paste.ini</filename>
+          file and copying the following statements under
+            <literal>[filter:authtoken]</literal> section:</para>
+        <programlisting language="ini">[filter:authtoken]
+paste.filter_factory = keystoneclient.middleware.auth_token:filter_factory
+auth_host=controller
+admin_user=neutron
+admin_tenant_name=service
+admin_password=<replaceable>NEUTRON_PASS</replaceable></programlisting>
+      </step>
+      <step>
+        <para>Now, you will need to
+          <link linkend="install-neutron.install-plugin-compute"
+            >configure the networking plug-in</link></para>
       </step>
     </procedure>
     <section xml:id="install-neutron.install-plugin-compute">
-      <title>Install and configure the Neutron plug-ins on the
+      <title>Install and configure the Neutron plug-ins on a
         dedicated compute node</title>
       <section xml:id="install-neutron.install-plugin-compute.ovs">
-        <title>Install the Open vSwitch (OVS) plug-in on the dedicated
-          compute node</title>
+        <title>Install the Open vSwitch (OVS) plug-in on a
+          dedicated compute node</title>
         <procedure>
           <step>
             <para>Install the Open vSwitch plug-in and its
@@ -650,17 +677,16 @@ PUT_YOUR_RPC_BACKEND_SETTINGS_HERE_TOO</programlisting>
 <prompt>#</prompt> <userinput>chkconfig openvswitch-switch on</userinput></screen>
           </step>
           <step>
-            <para>You must configure Open vSwitch whether you use
-              VLANs or GRE tunneling. You must add the
+            <para>Regardless of which networking technology you
+              chose to use with Open vSwitch, there is some common
+              setup. You must add the
                 <literal>br-int</literal> integration bridge, which
               connects to the VMs.</para>
             <screen><prompt>#</prompt> <userinput>ovs-vsctl add-br br-int</userinput></screen>
           </step>
           <step>
-            <para>Configure the settings for the particular plug-ins.
-              You must set some general <acronym>OVS</acronym>
-              configuration options whether you use VLANs or GRE
-              tunneling. You must tell Neutron core to use
+            <para>Similarly, there are some common configuration
+              options to be set.  You must tell Neutron core to use
                 <acronym>OVS</acronym>. Edit the
                 <filename>/etc/neutron/neutron.conf</filename>
               file:</para>
@@ -675,8 +701,8 @@ PUT_YOUR_RPC_BACKEND_SETTINGS_HERE_TOO</programlisting>
 connection = mysql://neutron:NEUTRON_DBPASS@controller/neutron</programlisting>
           </step>
           <step>
-            <para>Configure the network type that you chose when you
-              configured the network node, which is <link
+            <para>Configure the networking type that you chose
+              when you set up the network node: either <link
                 linkend="install-neutron.install-plugin-compute.ovs.gre"
                 >GRE tunneling</link> or <link
                 linkend="install-neutron.install-plugin-compute.ovs.vlan"
@@ -684,15 +710,16 @@ connection = mysql://neutron:NEUTRON_DBPASS@controller/neutron</programlisting>
           </step>
           <!-- TODO(sross): support provider networks?  you need to modify things above for this to work -->
           <step>
-            <para>You can configure a firewall. If you do not wish to
-              enforce firewall rules (called <firstterm>security
-                groups</firstterm> by Neutron), you can use the
-                <literal>neutron.agent.firewall.NoopFirewall</literal>.
-              Otherwise, you can choose to use one of the Neutron
-              firewall plug-ins. To use the Hybrid OVS-IPTables driver
-              (the most common choice), edit the
-                <filename>/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>
-              file:</para>
+            <para>You must configure a firewall as well.  You should
+              use the same firewall plugin that you chose to use
+              when setting up the network node.  To do this, edit
+              <filename>/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>
+                file and set the <literal>firewall_driver</literal>
+                value under the <literal>securitygroup</literal> to
+                the same value used on the network node.
+                For instance, if you chose to use the
+                Hybrid OVS-IPTables plugin, your configuration
+                would look like this:</para>
             <programlisting language="ini">[securitygroup]
 # Firewall driver for realizing neutron security group function.
 firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver</programlisting>
@@ -702,7 +729,6 @@ firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewal
                 get and set required VM boot options.</para>
             </warning>
           </step>
-          <!-- TODO(sross): document other firewall options -->
           <step>
             <para>After you complete OVS configuration <emphasis>and
                 the core Neutron configuration after this
@@ -711,21 +737,23 @@ firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewal
             <screen><prompt>#</prompt> <userinput>service neutron-openvswitch-agent restart</userinput></screen>
           </step>
           <step>
-            <para>Return where you started.</para>
+            <para>Now, return to the general <acronym>OVS</acronym>
+              instructions.</para>
           </step>
         </procedure>
         <section
           xml:id="install-neutron.install-plugin-compute.ovs.gre">
-          <title>Configure the Neutron <acronym>OVS</acronym> plug-in
-            for GRE tunneling on the dedicated compute node</title>
+          <title>Configure the Neutron <acronym>OVS</acronym>
+            plug-in for GRE tunneling on a dedicated compute
+            node</title>
           <procedure>
             <step>
-              <para>Tell the <acronym>OVS</acronym> plug-in to use GRE
-                tunneling with a <literal>br-int</literal> integration
-                bridge, a <literal>br-tun</literal> tunneling bridge,
-                and a local IP for the tunnel of
-                  <replaceable>DATA_INTERFACE</replaceable>'s IP. Edit
-                the
+              <para>Tell the <acronym>OVS</acronym> plug-in to use
+                GRE tunneling with a <literal>br-int</literal>
+                integration bridge, a <literal>br-tun</literal>
+                tunneling bridge, and a local IP for the tunnel of
+                <replaceable>DATA_INTERFACE</replaceable>'s IP
+                Edit the
                   <filename>/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>
                 file:</para>
               <programlisting language="ini">[ovs]
@@ -734,40 +762,40 @@ tunnel_id_ranges = 1:1000
 enable_tunneling = True
 integration_bridge = br-int
 tunnel_bridge = br-tun
-local_ip = DATA_INTERFACE_IP</programlisting>
+local_ip = <replaceable>DATA_INTERFACE_IP</replaceable></programlisting>
             </step>
             <step>
-              <para>Now, return to the <acronym>OVS</acronym> general
+              <para>Now, return to the general <acronym>OVS</acronym>
                 instructions.</para>
             </step>
           </procedure>
         </section>
         <section
           xml:id="install-neutron.install-plugin-compute.ovs.vlan">
-          <title>Configure the Neutron <acronym>OVS</acronym> plug-in
-            for VLANs (work in progress)</title>
-          <!-- NOTE(sross): this is a WIP, and has yet to be tested.  Additionally, a plug-in install guide specific to compute nodes will have to be written -->
+          <title>Configure the Neutron <acronym>OVS</acronym>
+            plug-in for VLANs on a dedicated compute node</title>
           <procedure>
             <step>
-              <para>Tell <acronym>OVS</acronym> to use VLANS. Edit the
+              <para>Tell <acronym>OVS</acronym> to use VLANs.
+                Edit the
                   <filename>/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>
                 file:</para>
               <programlisting language="ini">[ovs]
 tenant_network_type = vlan
 network_vlan_ranges = physnet1:1:4094
-bridge_mappings = physnet1:br-DATA_INTERFACE</programlisting>
+bridge_mappings = physnet1:br-<replaceable>DATA_INTERFACE</replaceable></programlisting>
             </step>
             <step>
-              <para>Create the bridge for
+              <para>Create the bridge for the
                   <replaceable>DATA_INTERFACE</replaceable> and add
                   <replaceable>DATA_INTERFACE</replaceable> to
-                it:</para>
+                it, the same way you did on the network node:</para>
               <screen><prompt>#</prompt> <userinput>ovs-vsctl add-br br-DATA_INTERFACE</userinput>
 <prompt>#</prompt> <userinput>ovs-vsctl add-port br-DATA_INTERFACE DATA_INTERFACE</userinput></screen>
             </step>
             <step>
-              <para>Return to the <acronym>OVS</acronym> general
-                instruction.</para>
+              <para>Return to the general <acronym>OVS</acronym>
+                instructions.</para>
             </step>
           </procedure>
         </section>
