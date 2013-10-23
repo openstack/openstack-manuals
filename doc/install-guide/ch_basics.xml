@@ -139,7 +139,7 @@ Subnet Mask: 255.255.255.0</programlisting>
         </listitem>
       </itemizedlist></para>
 
-    <example os="ubuntu">
+    <example os="ubuntu;debian">
       <title><filename>/etc/network/interfaces</filename></title>
       <programlisting language="ini"># Internal Network
 auto eth0
@@ -385,13 +385,37 @@ bind-address            = 192.168.0.10</programlisting>
           <screen><prompt>#</prompt> <userinput>apt-get update &amp;&amp; apt-get dist-upgrade</userinput> </screen></para>
       </step>
     </procedure>
+    <procedure xml:id="debian-cloud-archive" os="debian">
+      <title>To use the Debian Wheezy backports archive for Havana</title>
+      <para>The Havana release is available only in Debian Sid (otherwise
+      called Unstable). However, the Debian maintainers of OpenStack also
+      maintain a non-official Debian repository for OpenStack containing
+      Wheezy backports.</para>
+      <step>
+        <para>Install the Debian Wheezy backport repository Havana:
+          <screen><prompt>#</prompt> <userinput>echo "deb http://archive.gplhost.com/debian havana-backports main" >>/etc/apt/sources.list</userinput> </screen></para>
+      </step>
+      <step>
+        <para>Install the Debian Wheezy OpenStack repository for Havana:
+          <screen><prompt>#</prompt> <userinput>echo "deb http://archive.gplhost.com/debian havana main" >>/etc/apt/sources.list</userinput> </screen></para>
+      </step>
+      <step>
+        <para>Upgrade the system and install the repository key:
+          <screen><prompt>#</prompt> <userinput>apt-get update &amp;&amp; apt-get install gplhost-archive-keyring &amp;&amp; apt-get update &amp;&amp; apt-get dist-upgrade</userinput> </screen></para>
+      </step>
+    </procedure>
+      <para>There are also numerous mirrors of archive.gplhost.com available
+      from around the world, all available with both FTP and HTTP
+      protocols (you should use the closest mirror). The list of mirrors is
+      available at <link xlink:href="http://archive.gplhost.com/readme.mirrors">http://archive.gplhost.com/readme.mirrors</link>.
+      </para>
   </section>
 
   <section xml:id="basics-queue">
     <title>Messaging Server</title>
     <para>On the controller node, install the messaging queue server. Typically this is <phrase
-        os="ubuntu;opensuse;sles">RabbitMQ</phrase><phrase os="centos;rhel;fedora"
-        >Qpid</phrase> but <phrase os="ubuntu;opensuse;sles">Qpid</phrase><phrase
+        os="ubuntu;debian;opensuse;sles">RabbitMQ</phrase><phrase os="centos;rhel;fedora"
+        >Qpid</phrase> but <phrase os="ubuntu;debian;opensuse;sles">Qpid</phrase><phrase
         os="centos;rhel;fedora">RabbitMQ</phrase> and ZeroMQ (0MQ) are also
       available.</para>
 
@@ -399,12 +423,19 @@ bind-address            = 192.168.0.10</programlisting>
     <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install rabbitmq-server</userinput></screen>
     <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>yum install qpid-cpp-server memcached</userinput></screen>
 
-    <note os="ubuntu;debian">
+    <note os="ubuntu;debian"><title>Important security consideration</title>
       <para>The <package>rabbitmq-server</package> package configures
         the RabbitMQ service to start automatically and creates a
           <literal>guest</literal> user with a default
           <literal>guest</literal> password. The RabbitMQ examples in
-        this guide use the <literal>guest</literal> account.</para>
+        this guide use the <literal>guest</literal> account, though it
+        is strongly advised to change its default password, especially
+        if you have IPv6 available: by default the RabbitMQ server will
+        allow anyone to connect to it using guest as login and password,
+        and with IPv6, it will be reachable from the outside.</para>
+        <para>To change the default guest password of RabbitMQ, you can do:
+        <screen><prompt>#</prompt> <userinput>rabbitmqctl change_password guest <replaceable>NEW_PASS</replaceable></userinput></screen>
+        </para>
     </note>
     <para os="fedora;centos;rhel">Disable Qpid authentication by editing <filename>/etc/qpidd.conf</filename> file and
     changing the <literal>auth</literal> option to <literal>no</literal>.</para>

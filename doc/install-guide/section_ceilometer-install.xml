@@ -12,7 +12,7 @@
     elsewhere, such as on the compute node.</para>
     <step>
       <para>Install the Metering Service on the controller node:</para>
-      <screen os="ubuntu;deb"><prompt>#</prompt> <userinput>apt-get install ceilometer-api ceilometer-collector ceilometer-agent-central python-ceilometerclient</userinput></screen>
+      <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install ceilometer-api ceilometer-collector ceilometer-agent-central python-ceilometerclient</userinput></screen>
       <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-ceilometer-api openstack-ceilometer-collector openstack-ceilometer-agent-central python-ceilometerclient FIXME</userinput></screen>
       <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-ceilometer-api openstack-ceilometer-collector openstack-ceilometer-agent-central python-ceilometerclient</userinput></screen>
     </step>
@@ -69,10 +69,10 @@ connection = mongodb://ceilometer:<replaceable>CEILOMETER_DBPASS</replaceable>@<
 <prompt>#</prompt> <userinput>openstack-config --set /etc/keystone/keystone.conf publisher_rpc metering_secret $ADMIN_TOKEN</userinput></screen>
       <para os="sles;opensuse">For SUSE Linux Enterprise use instead as first command:</para>
       <screen os="opensuse;sles"><prompt>#</prompt> <userinput>ADMIN_TOKEN=$(openssl rand 10|hexdump  -e '1/1 "%.2x"')</userinput></screen>
-      <screen os="ubuntu"><prompt>#</prompt> <userinput>openssl rand -hex 10</userinput></screen>
-<para os="ubuntu">Edit <filename>/etc/ceilometer/ceilometer.conf</filename> and
+      <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>openssl rand -hex 10</userinput></screen>
+<para os="ubuntu;debian">Edit <filename>/etc/ceilometer/ceilometer.conf</filename> and
        change the <literal>[DEFAULT]</literal> section, replacing ADMIN_TOKEN with the results of the command.</para>
-      <programlisting os="ubuntu" language="ini">
+      <programlisting os="ubuntu;debian" language="ini">
 ...
 [publisher_rpc]
 ...

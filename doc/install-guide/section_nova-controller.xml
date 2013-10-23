@@ -24,8 +24,19 @@
   the OpenStack Compute services that will be run on the controller node in this
   guide.</para>
 
-  <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install nova-novncproxy novnc nova-api nova-ajax-console-proxy nova-cert \
-  nova-conductor nova-consoleauth nova-doc nova-scheduler python-novaclient</userinput></screen>
+  <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install nova-novncproxy novnc nova-api \
+  nova-ajax-console-proxy nova-cert nova-conductor \
+  nova-consoleauth nova-doc nova-scheduler</userinput></screen>
+
+  <note os="debian"><title>Note for Debian users</title>
+  <para>You can use <code>nova-consoleproxy</code>
+  instead of <code>nova-novncproxy</code> and <code>novnc</code>. The Debconf system will prompt
+  the user for setting-up the database, which will be automatically created
+  and configured with the correct access rights. Then <code>nova-manage db sync</code>
+  will automatically be called. The system will also prompt you for the
+  keystone auth token configuration, the RabbitMQ server access, and the
+  API service and endpoint configuration. You can therefore skip the steps
+  below.</para></note>
   <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-nova-api openstack-nova-scheduler \
    openstack-nova-cert openstack-nova-conductor openstack-nova-console \
    openstack-nova-consoleauth openstack-nova-doc \

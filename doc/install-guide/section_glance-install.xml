@@ -61,6 +61,19 @@ sql_connection = mysql://glance:GLANCE_DBPASS@localhost/glance
       <screen><prompt>#</prompt> <userinput>openstack-db --init --service glance --password <replaceable>GLANCE_DBPASS</replaceable></userinput></screen></step>
 
     <step os="ubuntu;debian">
+    <note os="debian"><title>Note for Debian users</title>
+    <para>As for the rest of OpenStack, the Image Service is configured through
+    debconf. So you will not need to manually configure the database, do the
+    <code>glance-manage db_sync</code> manually, configure the Keystone auth token, or
+    the RabbitMQ parameters of Glance. Therefore, all the below steps can be
+    skipped. If you need to reconfigure the Image Service, you can use:</para>
+    <screen><prompt>#</prompt> <userinput>dpkg-reconfigure -plow glance-common</userinput></screen>
+    <para>or edit the configuration files and manually restart the daemons.
+    Remember that if your database server is installed remotely, before
+    installing the Image Service, you will need to do:</para>
+    <screen><prompt>#</prompt> <userinput>apt-get install dbconfig-common &amp;&amp; \
+    dpkg-reconfigure -plow dbconfig-common</userinput></screen>
+    </note>
     <para>The Ubuntu packages create an sqlite database by
         default. Delete the <filename>glance.sqlite</filename> file created in
         the <filename>/var/lib/glance/</filename> directory so it is not used by mistake.</para>
