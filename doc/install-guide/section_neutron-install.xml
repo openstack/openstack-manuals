@@ -315,14 +315,36 @@ GATEWAY=EXTERNAL_INTERFACE_GATEWAY</programlisting>
 connection = mysql://neutron:NEUTRON_DBPASS@controller/neutron</programlisting>
         </step>
         <step>
-          <para>Decide which networking type you want. You can either
-            use GRE tunneling or VLANs. <link
-              linkend="install-neutron.install-plug-in.ovs.gre">GRE
-              tunneling</link> can be easier and simpler to set up,
-            but is less flexible in certain regards. <link
-              linkend="install-neutron.install-plug-in.ovs.vlan"
-              >VLANs</link> are more flexible, but can be harder to
-            set up and have more issues.</para>
+          <para>Now, we must decide which type of networking
+            technology we wish to use to create the virtual
+            networks.  Neutron has support for GRE tunneling, VLANs,
+            and VXLANs.  Currently, this guide supports GRE
+            tunneling and VLANs.</para>
+          <para>
+            <link linkend="install-neutron.install-plug-in.ovs.gre"
+              >GRE tunneling</link> is simpler to set up, since it
+            does not require any special configuration from
+            any physical network hardware.  However, it is its own
+            type of protocol, and thus is harder to filter, if you
+            are concerned about filtering traffic on the physical
+            network.  Additionally, the configuration given here
+            does not use namespaces, meaning you can have only one
+            router per network node (however, this can be overcome
+            by enabling namespacing, and potentially veth, as
+            specified in the section detailing how to use VLANs
+            with <acronym>OVS</acronym>).</para>
+          <para>On the other hand,
+            <link linkend="install-neutron.install-plug-in.ovs.vlan"
+              >VLAN tagging</link> modifies the ethernet header of
+            packets, meaning that packets can be filtered on the
+            physical network via normal methods.  However, not all
+            NICs handle the increased packet size of VLAN-tagged
+            packets well, and additional configuration may need to
+            be made on physical network hardware to ensure that your
+            Neutron VLANs do not interfere with any other VLANs on
+            your network, and to ensure that any physical network
+            hardware between nodes does not strip VLAN tags.</para>
+
           <note>
             <para>While this guide currently enables network
               namespaces by default, you can disable them if you have
