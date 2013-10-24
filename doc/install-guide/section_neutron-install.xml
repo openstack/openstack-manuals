@@ -129,12 +129,12 @@ admin_password=<replaceable>NEUTRON_PASS</replaceable></programlisting>
       <para>Edit the
           <filename>/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>
         file under the <literal>[database]</literal> section:</para>
-      <programlisting language="ini">[DATABASE]
-connection = mysql://neutronUser:NEUTRON_DBPass@10.10.10.51/neutron</programlisting>
+      <programlisting language="ini">[database]
+connection = mysql://neutron:NEUTRON_DBPASS@controller/neutron</programlisting>
     </step>
     <step>
-      <para>Also edit the <literal>[OVS]</literal> section:</para>
-      <programlisting language="ini">[OVS]
+      <para>Also edit the <literal>[ovs]</literal> section:</para>
+      <programlisting language="ini">[ovs]
 tenant_network_type = gre
 tunnel_id_ranges = 1:1000
 enable_tunneling = True</programlisting>
@@ -142,7 +142,7 @@ enable_tunneling = True</programlisting>
     <step>
       <para>Edit the <literal>[securitygroup]</literal> to change the
         firewall driver:</para>
-      <programlisting language="ini">[SECURITYGROUP]
+      <programlisting language="ini">[securitygroup]
 firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver</programlisting>
     </step>
   </procedure>
@@ -259,7 +259,7 @@ admin_password = NEUTRON_PASS</programlisting>
           <para>Edit the database URL under the
               <literal>[database]</literal> section:</para>
           <programlisting language="ini">[database]
-        connection = mysql://neutron:NEUTRON_DBPASS@controller/neutron</programlisting>
+connection = mysql://neutron:NEUTRON_DBPASS@controller/neutron</programlisting>
         </step>
         <step>
           <para>Edit the
@@ -314,10 +314,8 @@ admin_password = NEUTRON_PASS</programlisting>
           <para>Finally, you must tell the <acronym>OVS</acronym>
             plug-in how to connect to the database by editing
               <filename>/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>:</para>
-          <programlisting language="ini">
-          [database]
-          connection = mysql://neutron:NEUTRON_DBPASS@controller/neutron
-      </programlisting>
+          <programlisting language="ini">[database]
+connection = mysql://neutron:NEUTRON_DBPASS@controller/neutron</programlisting>
         </step>
         <step>
           <para>Now, you must decide which networking type you want.
@@ -685,7 +683,7 @@ PUT_YOUR_RPC_BACKEND_SETTINGS_HERE_TOO</programlisting>
                 <filename>/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>
               file:</para>
             <programlisting language="ini">[database]
-sql_connection = DATABASE_TYPE://neutron:NETURON_PASSWORD@CONTROLLER_NODE_HOSTNAME/neutron</programlisting>
+connection = mysql://neutron:NEUTRON_DBPASS@controller/neutron</programlisting>
           </step>
           <step>
             <para>Configure the network type that you chose when you
@@ -892,7 +890,7 @@ security_group_api=neutron</programlisting>
                 <filename>/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>
               file:</para>
             <programlisting language="ini">[database]
-sql_connection = DATABASE_TYPE://neutron:NETURON_PASSWORD@CONTROLLER_NODE_HOSTNAME/neutron</programlisting>
+connection = mysql://neutron:NEUTRON_DBPASS@controller/neutron</programlisting>
           </step>
           <step>
             <para>Configure the network type that you chose when you
