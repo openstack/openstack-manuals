@@ -92,44 +92,42 @@
                         verify the snapshot. You should see now your
                         snapshot:</para>
                     <para>
-                        <programlisting>
-                  --- Logical volume ---
-  LV Name                /dev/nova-volumes/volume-00000001
-  VG Name                nova-volumes
-  LV UUID                gI8hta-p21U-IW2q-hRN1-nTzN-UC2G-dKbdKr
-  LV Write Access        read/write
-  LV snapshot status     source of
-                         /dev/nova-volumes/volume-00000026-snap [active]
-  LV Status              available
-  # open                 1
-  LV Size                15,00 GiB
-  Current LE             3840
-  Segments               1
-  Allocation             inherit
-  Read ahead sectors     auto
-  - currently set to     256
-  Block device           251:13
+                        <programlisting>--- Logical volume ---
+LV Name                /dev/nova-volumes/volume-00000001
+VG Name                nova-volumes
+LV UUID                gI8hta-p21U-IW2q-hRN1-nTzN-UC2G-dKbdKr
+LV Write Access        read/write
+LV snapshot status     source of
+                       /dev/nova-volumes/volume-00000026-snap [active]
+LV Status              available
+# open                 1
+LV Size                15,00 GiB
+Current LE             3840
+Segments               1
+Allocation             inherit
+Read ahead sectors     auto
+- currently set to     256
+Block device           251:13
 
-  --- Logical volume ---
-  LV Name                /dev/nova-volumes/volume-00000001-snap
-  VG Name                nova-volumes
-  LV UUID                HlW3Ep-g5I8-KGQb-IRvi-IRYU-lIKe-wE9zYr
-  LV Write Access        read/write
-  LV snapshot status     active destination for /dev/nova-volumes/volume-00000026
-  LV Status              available
-  # open                 0
-  LV Size                15,00 GiB
-  Current LE             3840
-  COW-table size         10,00 GiB
-  COW-table LE           2560
-  Allocated to snapshot  0,00%
-  Snapshot chunk size    4,00 KiB
-  Segments               1
-  Allocation             inherit
-  Read ahead sectors     auto
-  - currently set to     256
-  Block device           251:14
-            </programlisting>
+--- Logical volume ---
+LV Name                /dev/nova-volumes/volume-00000001-snap
+VG Name                nova-volumes
+LV UUID                HlW3Ep-g5I8-KGQb-IRvi-IRYU-lIKe-wE9zYr
+LV Write Access        read/write
+LV snapshot status     active destination for /dev/nova-volumes/volume-00000026
+LV Status              available
+# open                 0
+LV Size                15,00 GiB
+Current LE             3840
+COW-table size         10,00 GiB
+COW-table LE           2560
+Allocated to snapshot  0,00%
+Snapshot chunk size    4,00 KiB
+Segments               1
+Allocation             inherit
+Read ahead sectors     auto
+- currently set to     256
+Block device           251:14</programlisting>
                     </para>
                 </listitem>
             </itemizedlist>
@@ -148,9 +146,7 @@
                         be able to see its content and create
                         efficient backups.</para>
                     <para>
-                        <programlisting>
-<prompt>$</prompt> <userinput>kpartx -av /dev/nova-volumes/volume-00000001-snapshot</userinput>
-                        </programlisting>
+<screen><prompt>$</prompt> <userinput>kpartx -av /dev/nova-volumes/volume-00000001-snapshot</userinput></screen>
                     </para>
                     <para>If no errors are displayed, it means the
                         tools has been able to find it, and map the
@@ -159,10 +155,9 @@
                             install kpartx</command>.</para>
                     <para>You can easily check the partition table map
                         by running the following command:</para>
-                    <para><programlisting>
-<prompt>$</prompt> <userinput>ls /dev/mapper/nova*</userinput>
-                    </programlisting>You
-                        should now see a partition called
+                    <para>
+<screen><prompt>$</prompt> <userinput>ls /dev/mapper/nova*</userinput></screen>
+                    You should now see a partition called
                             <literal>nova--volumes-volume--00000001--snapshot1</literal>
                     </para>
                     <para>If you created more than one partition on
@@ -173,9 +168,7 @@
                         and so forth.</para>
                     <para>We can now mount our partition:</para>
                     <para>
-                        <programlisting>
-<prompt>$</prompt> <userinput>mount /dev/mapper/nova--volumes-volume--volume--00000001--snapshot1 /mnt</userinput>
-                        </programlisting>
+<screen><prompt>$</prompt> <userinput>mount /dev/mapper/nova--volumes-volume--volume--00000001--snapshot1 /mnt</userinput></screen>
                     </para>
                     <para>If there are no errors, you have
                         successfully mounted the partition.</para>
@@ -287,8 +280,7 @@
                 It is meant to be launched from the server which runs
                 the Block Storage component.</para>
             <para>Here is an example of a mail report:</para>
-            <programlisting>
-Backup Start Time - 07/10 at 01:00:01
+            <programlisting>Backup Start Time - 07/10 at 01:00:01
 Current retention - 7 days
 
 The backup volume is mounted. Proceed...
@@ -300,8 +292,7 @@ Removing old backups...  : /BACKUPS/EBS-VOL/volume-0000001a/volume-0000001a_28_0
      /BACKUPS/EBS-VOL/volume-0000001a - 0 h 4 m and 15 seconds. Size - 6,9G
 ---------------------------------------
 Total backups size - 267G - Used space : 35%
-Total execution time - 1 h 75 m and 35 seconds
-            </programlisting>
+Total execution time - 1 h 75 m and 35 seconds</programlisting>
             <para>The script also provides the ability to SSH to your
                 instances and run a mysqldump into them. In order to
                 make this to work, ensure the connection via the
