@@ -34,8 +34,8 @@ paste.filter_factory = keystone.contrib.user_crud:CrudExtension.factory
 pipeline = stats_monitoring url_normalize token_auth admin_token_auth xml_body json_body debug ec2_extension user_crud_extension public_service</programlisting>
     <para>Each user can then change their own password with a HTTP
       PATCH</para>
-    <programlisting language="ini"><?db-font-size 75%?>&gt; curl -X PATCH http://localhost:5000/v2.0/OS-KSCRUD/users/&lt;userid&gt; -H &quot;Content-type: application/json&quot;  \
--H &quot;X_Auth_Token: &lt;authtokenid&gt;&quot; -d '{&quot;user&quot;: {&quot;password&quot;: &quot;ABCD&quot;, &quot;original_password&quot;: &quot;DCBA&quot;}}'</programlisting>
+    <screen><prompt>$</prompt> <userinput>curl -X PATCH http://localhost:5000/v2.0/OS-KSCRUD/users/&lt;userid&gt; -H &quot;Content-type: application/json&quot;  \
+  -H &quot;X_Auth_Token: &lt;authtokenid&gt;&quot; -d '{&quot;user&quot;: {&quot;password&quot;: &quot;ABCD&quot;, &quot;original_password&quot;: &quot;DCBA&quot;}}'</userinput></screen>
     <para>In addition to changing their password all of the users
       current tokens are deleted (if the back end is kvs or
       sql).</para>
@@ -170,7 +170,7 @@ keystone --username=admin --password=secrete --tenant_name=admin tenant-create -
     <para>Here is an example paste config filter that makes use of the
         <option>admin_user</option> and
         <option>admin_password</option> parameters:</para>
-    <screen>[filter:authtoken]
+    <programlisting language="ini"><?db-font-size 75%?>[filter:authtoken]
 paste.filter_factory = keystoneclient.middleware.auth_token:filter_factory
 service_port = 5000
 service_host = 127.0.0.1
@@ -178,7 +178,7 @@ auth_port = 35357
 auth_host = 127.0.0.1
 auth_token = 012345SECRET99TOKEN012345
 admin_user = admin
-admin_password = keystone123</screen>
+admin_password = keystone123</programlisting>
     <para>It should be noted that when using this option an admin
       tenant/role relationship is required. The admin user is granted
       access to the Admin role on the admin tenant.</para>
