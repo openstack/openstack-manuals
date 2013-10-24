@@ -23,7 +23,7 @@
             Config values in the <literal>[DEFAULT]</literal> config group will not be used.
         </para>
         <para>The following example shows three backends:</para>
-            <programlisting># a list of backends that will be served by this compute node
+            <programlisting language="ini"># a list of backends that will be served by this compute node
 enabled_backends=lvmdriver-1,lvmdriver-2,lvmdriver-3
 [lvmdriver-1]
 volume_group=cinder-volumes-1
@@ -55,7 +55,7 @@ volume_backend_name=LVM_iSCSI_b
                 </listitem>
             </orderedlist>
             According to the filtering and weighing, the scheduler will be able to pick "the best" backend in order to handle the request. In that way, filter scheduler achieves the goal that one can explicitly creates volume on specifics backends using volume types.
-            <note><para>To enable the filter scheduler, the following line has to be added into the <literal>cinder.conf</literal> configuration file: <programlisting>scheduler_driver=cinder.scheduler.filter_scheduler.FilterScheduler</programlisting></para>
+            <note><para>To enable the filter scheduler, the following line has to be added into the <literal>cinder.conf</literal> configuration file: <programlisting language="ini">scheduler_driver=cinder.scheduler.filter_scheduler.FilterScheduler</programlisting></para>
         <para>However, <literal>filter_scheduler</literal> is the default Cinder Scheduler in Grizzly, this line is not mandatory.</para></note>
             <!-- TODO: when filter/weighing scheduler documentation will be up, a ref should be added here -->
         </para>
@@ -63,22 +63,20 @@ volume_backend_name=LVM_iSCSI_b
     <simplesect>
         <title>Volume type</title>
         <para>Before using it, a volume type has to be declared to Cinder. This can be done by the following command:
-        <programlisting language="bash">$ cinder --os-username admin --os-tenant-name admin type-create lvm</programlisting>
+        <screen><prompt>$</prompt> <userinput>cinder --os-username admin --os-tenant-name admin type-create lvm</userinput></screen>
         Then, an extra-specification have to be created to link the volume type to a backend name.
         This can be done by the following command:
-        <programlisting language="bash">$ cinder --os-username admin --os-tenant-name admin type-key lvm set volume_backend_name=LVM_iSCSI
-        </programlisting>
+        <screen><prompt>$</prompt> <userinput>cinder --os-username admin --os-tenant-name admin type-key lvm set volume_backend_name=LVM_iSCSI</userinput></screen>
             In this example we have created a volume type named <literal>lvm</literal> with <literal>volume_backend_name=LVM_iSCSI</literal> as extra-specifications.
         </para>
         <para>We complete this example by creating another volume type:</para>
-            <programlisting language="bash">$ cinder --os-username admin --os-tenant-name admin type-create lvm_gold
-$ cinder --os-username admin --os-tenant-name admin type-key lvm_gold set volume_backend_name=LVM_iSCSI_b
-            </programlisting>
+            <screen><prompt>$</prompt> <userinput>cinder --os-username admin --os-tenant-name admin type-create lvm_gold</userinput></screen>
+            <screen><prompt>$</prompt> <userinput>cinder --os-username admin --os-tenant-name admin type-key lvm_gold set volume_backend_name=LVM_iSCSI_b</userinput></screen>
             <para>This second volume type is named <literal>lvm_gold</literal> and has <literal>LVM_iSCSI_b</literal> as backend name.
         </para>
         <note>
             <para>To list the extra-specifications, use the following command line:
-                <programlisting>$ cinder --os-username admin --os-tenant-name admin extra-specs-list</programlisting>
+                <screen><prompt>$</prompt> <userinput>cinder --os-username admin --os-tenant-name admin extra-specs-list</userinput></screen>
             </para>
         </note>
         <note>
@@ -90,9 +88,9 @@ $ cinder --os-username admin --os-tenant-name admin type-key lvm_gold set volume
         <title>Usage</title>
         <para>When creating a volume, the volume type has to be specified.
             The extra-specifications of the volume type will be used to determine which backend has to be used.
-            <programlisting>cinder create --volume_type lvm --display_name test_multi_backend 1</programlisting>
+            <screen><prompt>$</prompt> <userinput>cinder create --volume_type lvm --display_name test_multi_backend 1</userinput></screen>
             Considering the <literal>cinder.conf</literal> described above, the scheduler will create this volume on <literal>lvmdriver-1</literal> or <literal>lvmdriver-2</literal>.
-            <programlisting>cinder create --volume_type lvm_gold --display_name test_multi_backend 1</programlisting>
+            <screen><prompt>$</prompt> <userinput>cinder create --volume_type lvm_gold --display_name test_multi_backend 1</userinput></screen>
             This second volume will be created on <literal>lvmdriver-3</literal>.
         </para>
     </simplesect>

@@ -4,9 +4,7 @@
          version="5.0"
          xml:id="cinder-node">
   <title>Configuring a Block Storage Node</title>
-
   <para>After you configure the services on the controller node, configure a second system to be a Block Storage node. This node contains the disk that will be used to serve volumes.</para>
-
   <para>You can configure OpenStack to use various storage systems. The examples in this guide show how to configure LVM.</para>
   <procedure>
     <title>Configure a Block Storage Node</title>
@@ -25,21 +23,17 @@
         </listitem>
       </itemizedlist>
     </step>
-
     <step><para>After you configure the operating system, install the appropriate
       packages for the block storage service.</para>
       <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install cinder-volume lvm2</userinput></screen>
       <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>yum install openstack-cinder openstack-utils openstack-selinux</userinput></screen>
       <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-cinder-volume</userinput></screen>
     </step>
-
-
-    <step> <para>Copy the <filename>/etc/cinder/api-paste.ini</filename>
+    <step><para>Copy the <filename>/etc/cinder/api-paste.ini</filename>
    file from the controller,
    or open the file in a text editor
   and locate the section <literal>[filter:authtoken]</literal>.
   Make sure the following options are set:</para>
-
   <programlisting language="ini">[filter:authtoken]
 paste.filter_factory=keystoneclient.middleware.auth_token:filter_factory
 auth_host=<replaceable>controller</replaceable>
@@ -50,22 +44,19 @@ admin_user=cinder
 admin_password=<replaceable>CINDER_PASS</replaceable>
 </programlisting>
       </step>
-
    <step>
     <para os="ubuntu;debian">
   Configure the Block Storage Service to use the RabbitMQ
   message broker by setting the following configuration keys. They are found in
   the <literal>DEFAULT</literal> configuration group of the
   <filename>/etc/cinder/cinder.conf</filename> file.</para>
-    <programlisting os="ubuntu">
-rpc_backend = cinder.openstack.common.rpc.impl_kombu
+    <programlisting os="ubuntu" language="ini">rpc_backend = cinder.openstack.common.rpc.impl_kombu
 rabbit_host = controller
 rabbit_port = 5672
 # Change the following settings if you're not using the default RabbitMQ configuration
 #rabbit_userid = guest
 #rabbit_password = guest
 #rabbit_virtual_host = /nova</programlisting>
-
     <para os="rhel;centos;fedora">Configure the Block Storage Service to
     use Qpid as the message broker.</para>
     <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>openstack-config --set /etc/cinder/cinder.conf \
