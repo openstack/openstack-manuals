@@ -5,7 +5,7 @@
     xml:id="section_networking-provider-router_with-provate-networks">
     <title>Provider router with private networks</title>
     <para>This section describes how to install the OpenStack Networking service and its components
-        for a single router use casea provider router with private networks.</para>
+        for a single router use case: a provider router with private networks.</para>
     <para>The following figure shows the setup:</para>
     <note>
         <para>Because you run the DHCP agent and L3 agent on one node, you must set
@@ -86,7 +86,9 @@
                     node</title>
                 <step>
                     <para>Run the following command:</para>
-                    <screen><prompt>#</prompt> <userinput>apt-get install neutron-server</userinput></screen>
+                    <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install neutron-server</userinput></screen>
+                    <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-neutron</userinput></screen>
+                    <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install openstack-neutron</userinput></screen>
                 </step>
                 <step>
                     <para>Configure Neutron services:</para>
@@ -105,7 +107,7 @@ rabbit_password = guest</programlisting>
                             /etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>
                                 and modify:</para>
                             <programlisting language="ini">[database]
-connection = mysql://neutron:password@localhost:3306/neutron
+connection = mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@localhost:3306/neutron
 [ovs]
 tenant_network_type = vlan
 network_vlan_ranges = physnet1:100:2999</programlisting>
@@ -116,7 +118,7 @@ network_vlan_ranges = physnet1:100:2999</programlisting>
                             and modify:</para>
                             <programlisting language="ini">admin_tenant_name = service
 admin_user = neutron
-admin_password = password</programlisting>
+admin_password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
                         </listitem>
                     </itemizedlist>
                 </step>
@@ -134,6 +136,7 @@ admin_password = password</programlisting>
                     node</title>
                 <step>
                     <para>Install the packages:</para>
+                    <!-- FIXME openSUSE, Fedora instructions -->
                     <screen><prompt>#</prompt> <userinput>apt-get install neutron-plugin-openvswitch-agent \
 neutron-dhcp-agent neutron-l3-agent</userinput></screen>
                 </step>
@@ -159,7 +162,7 @@ rabbit_host = controller</programlisting>
                               /etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini
                             </filename>:</para>
                     <programlisting language="ini">[database]
-connection = mysql://neutron:password@192.168.0.1:3306/neutron
+connection = mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@controller:3306/neutron
 [ovs]
 tenant_network_type=vlan
 network_vlan_ranges = physnet1:1:4094
@@ -184,11 +187,11 @@ bridge_mappings = physnet1:br-eth1</programlisting>
                     /etc/neutron/l3_agent.ini</filename>
                         and modify:</para>
                     <programlisting language="ini">[DEFAULT]
-auth_url = http://192.168.0.1:35357/v2.0
+auth_url = http://controller:35357/v2.0
 admin_tenant_name = service
 admin_user = neutron
-admin_password = password
-metadata_ip = 192.168.0.1
+admin_password = <replaceable>NEUTRON_PASS</replaceable>
+metadata_ip = controller
 use_namespaces = True</programlisting>
                 </step>
                 <step>
@@ -196,10 +199,10 @@ use_namespaces = True</programlisting>
                     /etc/neutron/api-paste.ini</filename>
                     and modify:</para>
                     <programlisting language="ini">[DEFAULT]
-auth_host = 192.168.0.1
+auth_host = controller
 admin_tenant_name = service
 admin_user = neutron
-admin_password = password</programlisting>
+admin_password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
                 </step>
                 <step>
                     <para>Edit the file <filename>
@@ -221,6 +224,7 @@ admin_password = password</programlisting>
             <procedure>
                 <title>To install and configure the compute node</title>
                 <step>
+                    <!-- FIXME openSUSE, Fedora instructions -->
                     <para>Install the
                         packages:<screen><prompt>#</prompt> <userinput>apt-get install openvswitch-switch neutron-plugin-openvswitch-agent</userinput></screen></para>
                 </step>
@@ -251,7 +255,7 @@ rabbit_host = controller</programlisting>
                     <para>Update the file <filename>
                     /etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>:</para>
                     <programlisting language="ini">[database]
-connection = mysql://neutron:password@192.168.0.1:3306/neutron
+connection = mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@controller:3306/neutron
 [ovs]
 tenant_network_type = vlan
 network_vlan_ranges = physnet1:1:4094
@@ -279,8 +283,8 @@ bridge_mappings = physnet1:br-eth1</programlisting>
                         <programlisting language="bash">export OS_TENANT_NAME=provider_tenant
 export OS_USERNAME=admin
 export OS_PASSWORD=password
-export OS_AUTH_URL="http://192.168.0.1:5000/v2.0/"
-export SERVICE_ENDPOINT="http://192.168.0.1:35357/v2.0"
+export OS_AUTH_URL="http://controller:5000/v2.0/"
+export SERVICE_ENDPOINT="http://controller:35357/v2.0"
 export SERVICE_TOKEN=password</programlisting></para>
                 </listitem>
             </itemizedlist>
