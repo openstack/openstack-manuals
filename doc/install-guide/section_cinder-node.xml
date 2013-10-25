@@ -83,12 +83,25 @@ rabbit_port = 5672
   DEFAULT rabbit_port 5672</userinput></screen>
  </step>
 
+    <step><para>Configure the Block Storage Service on this Block Storage node to use the cinder database on the controller node.</para>
+      <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/cinder/cinder.conf \
+  database connection mysql://cinder:<replaceable>CINDER_DBPASS</replaceable>@<replaceable>controller</replaceable>/cinder</userinput></screen>
+      <para os="ubuntu;debian">Edit <filename>/etc/cinder/cinder.conf</filename>
+       and change the <literal>[database]</literal> section.</para>
+      <programlisting os="ubuntu;debian" language="ini">[database]
+...
+# The SQLAlchemy connection string used to connect to the
+# database (string value)
+connection = mysql://cinder:CINDER_DBPASS@controller/cinder
+...</programlisting>
+    </step>
+
     <step>
     <para>Now, create the LVM Physical Volume and Logical Volume.
     This guide assumes a second disk <literal>/dev/sdb</literal> that
     will be used for this purpose.</para>
-    <screen><prompt>#</prompt> <userinput>pvgreate /dev/sdb</userinput>
-    <prompt>#</prompt> <userinput>vgcreate cinder-volumes /dev/sdb</userinput></screen>
+    <screen><prompt>#</prompt> <userinput>pvcreate /dev/sdb</userinput>
+<prompt>#</prompt> <userinput>vgcreate cinder-volumes /dev/sdb</userinput></screen>
     </step>
 
 <step>
@@ -103,9 +116,12 @@ rabbit_port = 5672
     Physical volumes that are needed on the Cinder host begin with
     "<literal>a</literal>". The array must end with
     "<literal>r/.*/</literal>" to reject any device not listed.</para>
+    <para>In this example, <literal>/dev/sda1</literal> is the volume on which the
+    node's own operating system volumes reside, while <literal>/dev/sdb</literal>
+    is the volume reserved for <literal>cinder-volumes</literal>.</para>
     <programlisting>devices {
 ...
-filter = [ "a/sda1/", "a/sdb1/", "r/.*/"]
+filter = [ "a/sda1/", "a/sdb/", "r/.*/"]
 ...
 }</programlisting>
 </step>
@@ -116,6 +132,13 @@ filter = [ "a/sda1/", "a/sdb1/", "r/.*/"]
 <prompt>#</prompt> <userinput>service tgt restart</userinput></screen>
     </step>
 
+
+    <step os="rhel;fedora;centos">
+      <para>Configure the ISCI target service to discover cinder volumes.
+            Add the following line to the top of <literal>/etc/tgt/targets.conf</literal>
+            if it is not already present:</para>
+        <programlisting>include /etc/cinder/volumes/*</programlisting>
+    </step>
 
     <step os="rhel;fedora;centos;opensuse;sles"><para>Start the cinder services and configure them to
       start when the system boots.</para>
