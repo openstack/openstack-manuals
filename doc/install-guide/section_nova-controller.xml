@@ -101,7 +101,7 @@ vncserver_proxyclient_address=192.168.0.10
   <literal>service</literal> tenant and give the user the
   <literal>admin</literal> role.</para>
 
-  <screen><prompt>#</prompt> <userinput>keystone user-create --name=nova --pass=<replaceable>NOVA_DBPASS</replaceable> --email=<replaceable>nova@example.com</replaceable></userinput>
+  <screen><prompt>#</prompt> <userinput>keystone user-create --name=nova --pass=<replaceable>NOVA_PASS</replaceable> --email=<replaceable>nova@example.com</replaceable></userinput>
 <prompt>#</prompt> <userinput>keystone user-role-add --user=nova --tenant=service --role=admin</userinput></screen>
   </step>
   <step>
@@ -111,7 +111,7 @@ vncserver_proxyclient_address=192.168.0.10
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT auth_host <replaceable>controller</replaceable></userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT admin_user nova</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT admin_tenant_name service</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT admin_password <replaceable>NOVA_DBPASS</replaceable></userinput></screen>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT admin_password <replaceable>NOVA_PASS</replaceable></userinput></screen>
   <para os="ubuntu;debian">Edit <filename>/etc/nova/nova.conf</filename> and add to the <literal>[DEFAULT]</literal> section.</para>
   <programlisting os="ubuntu;debian" language="ini">
 ...
@@ -135,7 +135,7 @@ paste.filter_factory=keystoneclient.middleware.auth_token:filter_factory
 auth_host=<replaceable>controller</replaceable>
 admin_tenant_name=service
 admin_user=nova
-admin_password=<replaceable>NOVA_DBPASS</replaceable>
+admin_password=<replaceable>NOVA_PASS</replaceable>
 </programlisting>
   <note os="fedora;rhel;centos;opensuse;debian;sles"><para>Ensure that <literal>api_paste_config=/etc/nova/api-paste.ini</literal>
   is set in <filename>/etc/nova/nova.conf</filename>.</para></note>
