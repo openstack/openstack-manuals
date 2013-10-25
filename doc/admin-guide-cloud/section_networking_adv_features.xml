@@ -35,96 +35,109 @@
             <para>A number of terms are used in the provider extension
                 and in the configuration of plug-ins supporting the
                 provider extension:</para>
-            <itemizedlist>
-                <listitem>
-                    <para><emphasis role="bold">virtual
-                            network</emphasis>. An Networking L2
-                        network (identified by a UUID and optional
-                        name) whose ports can be attached as vNICs to
-                        Compute instances and to various Networking
-                        agents. The Open vSwitch and Linux Bridge
-                        plug-ins each support several different
-                        mechanisms to realize virtual networks.</para>
-                </listitem>
-                <listitem>
-                    <para><emphasis role="bold">physical
-                            network</emphasis>. A network connecting
-                        virtualization hosts (such as, Compute nodes)
-                        with each other and with other network
-                        resources. Each physical network might support
-                        multiple virtual networks. The provider
-                        extension and the plug-in configurations
-                        identify physical networks using simple string
-                        names.</para>
-                </listitem>
-                <listitem>
-                    <para><emphasis role="bold">tenant
-                            network</emphasis>. A virtual network that
-                        a tenant or an administrator creates. The
-                        physical details of the network are not
-                        exposed to the tenant.</para>
-                </listitem>
-                <listitem>
-                    <para><emphasis role="bold">provider
-                            network</emphasis>. A virtual network
-                        administratively created to map to a specific
-                        network in the data center, typically to
-                        enable direct access to non-OpenStack
-                        resources on that network. Tenants can be
-                        given access to provider networks.</para>
-                </listitem>
-                <listitem>
-                    <para><emphasis role="bold">VLAN
-                            network</emphasis>. A virtual network
-                        implemented as packets on a specific physical
-                        network containing IEEE 802.1Q headers with a
-                        specific VID field value. VLAN networks
-                        sharing the same physical network are isolated
-                        from each other at L2, and can even have
-                        overlapping IP address spaces. Each distinct
-                        physical network supporting VLAN networks is
-                        treated as a separate VLAN trunk, with a
-                        distinct space of VID values. Valid VID values
-                        are 1 through 4094.</para>
-                </listitem>
-                <listitem>
-                    <para><emphasis role="bold">flat
-                            network</emphasis>. A virtual network
-                        implemented as packets on a specific physical
-                        network containing no IEEE 802.1Q header. Each
-                        physical network can realize at most one flat
-                        network.</para>
-                </listitem>
-                <listitem>
-                    <para><emphasis role="bold">local
-                            network</emphasis>. A virtual network that
-                        allows communication within each host, but not
-                        across a network. Local networks are intended
-                        mainly for single-node test scenarios, but can
-                        have other uses.</para>
-                </listitem>
-                <listitem>
-                    <para><emphasis role="bold">GRE
-                        network</emphasis>. A virtual network
-                        implemented as network packets encapsulated
-                        using GRE. GRE networks are also referred to
-                        as <emphasis role="italic">tunnels</emphasis>.
-                        GRE tunnel packets are routed by the IP
-                        routing table for the host, so GRE networks
-                        are not associated by Networking with specific
-                        physical networks.</para>
-                </listitem>
-                <listitem>
-                    <para><emphasis role="bold">Virtual Extensible LAN
-                        (VXLAN) network</emphasis>. VXLAN is a proposed
-                        encapsulation protocol for running an overlay
-                        network on existing Layer 3 infrastructure. An
-                        overlay network is a virtual network that is
-                        built on top of existing network Layer 2 and
-                        Layer 3 technologies to support elastic compute
-                        architectures.</para>
-                </listitem>
-            </itemizedlist>
+            <para>
+                <table rules="all">
+                    <caption>Provider extension terminology</caption>
+                    <col width="20%"/>
+                    <col width="80%"/>
+                    <thead>
+                        <tr>
+                            <th>Term</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><emphasis role="bold">virtual network</emphasis></td>
+                            <td>An Networking L2
+                            network (identified by a UUID and optional
+                            name) whose ports can be attached as vNICs to
+                            Compute instances and to various Networking
+                            agents. The Open vSwitch and Linux Bridge
+                            plug-ins each support several different
+                            mechanisms to realize virtual networks.</td>
+                        </tr>
+                        <tr>
+                            <td><emphasis role="bold">physical network</emphasis></td>
+                            <td>A network connecting
+                            virtualization hosts (such as, Compute nodes)
+                            with each other and with other network
+                            resources. Each physical network might support
+                            multiple virtual networks. The provider
+                            extension and the plug-in configurations
+                            identify physical networks using simple string
+                            names.</td>
+                        </tr>
+                        <tr>
+                            <td><emphasis role="bold">tenant network</emphasis></td>
+                            <td>A virtual network that
+                            a tenant or an administrator creates. The
+                            physical details of the network are not
+                            exposed to the tenant.</td>
+                        </tr>
+                        <tr>
+                            <td><emphasis role="bold">provider network</emphasis></td>
+                            <td>A virtual network
+                            administratively created to map to a specific
+                            network in the data center, typically to
+                            enable direct access to non-OpenStack
+                            resources on that network. Tenants can be
+                            given access to provider networks.</td>
+                        </tr>
+                        <tr>
+                            <td><emphasis role="bold">VLAN network</emphasis></td>
+                            <td>A virtual network
+                            implemented as packets on a specific physical
+                            network containing IEEE 802.1Q headers with a
+                            specific VID field value. VLAN networks
+                            sharing the same physical network are isolated
+                            from each other at L2, and can even have
+                            overlapping IP address spaces. Each distinct
+                            physical network supporting VLAN networks is
+                            treated as a separate VLAN trunk, with a
+                            distinct space of VID values. Valid VID values
+                            are 1 through 4094.</td>
+                        </tr>
+                        <tr>
+                            <td><emphasis role="bold">flat network</emphasis></td>
+                            <td>A virtual network
+                            implemented as packets on a specific physical
+                            network containing no IEEE 802.1Q header. Each
+                            physical network can realize at most one flat
+                            network.</td>
+                        </tr>
+                        <tr>
+                            <td><emphasis role="bold">local network</emphasis></td>
+                            <td>A virtual network that
+                            allows communication within each host, but not
+                            across a network. Local networks are intended
+                            mainly for single-node test scenarios, but can
+                            have other uses.</td>
+                        </tr>
+                        <tr>
+                            <td><emphasis role="bold">GRE network</emphasis></td>
+                            <td>A virtual network
+                            implemented as network packets encapsulated
+                            using GRE. GRE networks are also referred to
+                            as <emphasis role="italic">tunnels</emphasis>.
+                            GRE tunnel packets are routed by the IP
+                            routing table for the host, so GRE networks
+                            are not associated by Networking with specific
+                            physical networks.</td>
+                        </tr>
+                        <tr>
+                            <td><emphasis role="bold">Virtual Extensible LAN (VXLAN) network</emphasis></td>
+                            <td>VXLAN is a proposed
+                            encapsulation protocol for running an overlay
+                            network on existing Layer 3 infrastructure. An
+                            overlay network is a virtual network that is
+                            built on top of existing network Layer 2 and
+                            Layer 3 technologies to support elastic compute
+                            architectures.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </para>
             <para>The ML2, Open vSwitch and Linux Bridge plug-ins support
                 VLAN networks, flat networks, and local networks. Only
                 the ML2 and Open vSwitch plug-ins currently support GRE

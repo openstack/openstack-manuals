@@ -33,29 +33,34 @@
             <para>The Compute API has a virtual server abstraction to
                 describe computing resources. Similarly, the
                 Networking API has virtual network, subnet, and port
-                abstractions to describe networking resources. In more
-                detail:</para>
-            <itemizedlist>
-                <listitem>
-                    <para><emphasis role="bold">Network</emphasis>. An
-                        isolated L2 segment, analogous to VLAN in the
-                        physical networking world.</para>
-                </listitem>
-                <listitem>
-                    <para><emphasis role="bold">Subnet</emphasis>. A
-                        block of v4 or v6 IP addresses and associated
-                        configuration state.</para>
-                </listitem>
-                <listitem>
-                    <para><emphasis role="bold">Port</emphasis>. A
-                        connection point for attaching a single
-                        device, such as the NIC of a virtual server,
-                        to a virtual network. Also describes the
-                        associated network configuration, such as the
-                        MAC and IP addresses to be used on that
-                        port.</para>
-                </listitem>
-            </itemizedlist>
+                abstractions to describe networking resources.</para>
+            <para>
+                <table rules="all">
+                    <caption>Networking resources</caption>
+                    <col width="10%"/>
+                    <col width="90%"/>
+                    <thead>
+                        <tr>
+                            <th>Resource</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><emphasis role="bold">Network</emphasis></td>
+                            <td>An isolated L2 segment, analogous to VLAN in the physical networking world.</td>
+                        </tr>
+                        <tr>
+                            <td><emphasis role="bold">Subnet</emphasis></td>
+                            <td>A block of v4 or v6 IP addresses and associated configuration state.</td>
+                        </tr>
+                        <tr>
+                            <td><emphasis role="bold">Port</emphasis></td>
+                            <td>A connection point for attaching a single device, such as the NIC of a virtual server, to a virtual network. Also describes the associated network configuration, such as the MAC and IP addresses to be used on that port.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </para>
             <para>You can configure rich network topologies by
                 creating and configuring networks and subnets, and
                 then instructing other OpenStack services like Compute
@@ -98,100 +103,88 @@
                 others might use more advanced technologies, such as
                 L2-in-L3 tunneling or OpenFlow, to provide similar
                 benefits.</para>
-            <para>Networking includes the following plug-ins:</para>
-            <itemizedlist>
-                <listitem>
-                    <para><emphasis role="bold">Big Switch Plug-in
-                            (Floodlight REST Proxy)</emphasis>. <link
-                            xlink:href="http://www.openflowhub.org/display/floodlightcontroller/Neutron+REST+Proxy+Plugin"
+            <para>
+                <table rules="all">
+                    <caption>Available networking plugins</caption>
+                    <col width="40%"/>
+                    <col width="60%"/>
+                    <thead>
+                        <tr>
+                            <th>Plugin</th>
+                            <th>Documentation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><emphasis role="bold">Big Switch Plug-in (Floodlight REST Proxy)</emphasis></td>
+                            <td>
+                            <link xlink:href="http://www.openflowhub.org/display/floodlightcontroller/Neutron+REST+Proxy+Plugin"
                             >http://www.openflowhub.org/display/floodlightcontroller/Neutron+REST+Proxy+Plugin</link>
-                    </para>
-                </listitem>
-                <listitem>
-                    <para><emphasis role="bold">Brocade
-                            Plug-in</emphasis>. <link
-                            xlink:href="https://github.com/brocade/brocade"
-                            >https://github.com/brocade/brocade</link>
-                    </para>
-                </listitem>
-                <listitem>
-                    <para><emphasis role="bold">Cisco</emphasis>.
-                            <link
-                            xlink:href="http://wiki.openstack.org/cisco-neutron"
-                            >http://wiki.openstack.org/cisco-neutron</link>
-                    </para>
-                </listitem>
-                <listitem>
-                    <para><emphasis role="bold">Cloudbase Hyper-V
-                            Plug-in</emphasis>. <link
-                            xlink:href="http://www.cloudbase.it/quantum-hyper-v-plugin/"
-                            >http://www.cloudbase.it/quantum-hyper-v-plugin/</link>
-                    </para>
-                </listitem>
-                <listitem>
-                    <para><emphasis role="bold">Linux Bridge
-                            Plug-in</emphasis>. Documentation included
-                        in this guide at <link
-                            xlink:href="http://wiki.openstack.org/Quantum-Linux-Bridge-Plugin"
-                            >http://wiki.openstack.org/Neutron-Linux-Bridge-Plugin</link>
-                    </para>
-                </listitem>
-                <listitem>
-                    <para><emphasis role="bold">Mellanox
-                            Plug-in</emphasis>. <link
-                            xlink:href="https://wiki.openstack.org/wiki/Mellanox-Neutron/"
-                            >https://wiki.openstack.org/wiki/Mellanox-Neutron/</link>
-                    </para>
-                </listitem>
-                <listitem>
-                    <para><emphasis role="bold">Midonet
-                        Plug-in</emphasis>. <link
-                        xlink:href="http://www.midokura.com/">
-                        http://www.midokura.com/</link></para>
-                </listitem>
-                <listitem>
-                    <para><emphasis role="bold">ML2 (Modular Layer 2)
-                        Plug-in</emphasis>. <link
-                        xlink:href="https://wiki.openstack.org/wiki/Neutron/ML2">
-                        https://wiki.openstack.org/wiki/Neutron/ML2</link></para>
-                </listitem>
-                <listitem>
-                    <para><emphasis role="bold">NEC OpenFlow
-                            Plug-in</emphasis>. <link
-                            xlink:href="http://wiki.openstack.org/Quantum-NEC-OpenFlow-Plugin"
-                            >http://wiki.openstack.org/Quantum-NEC-OpenFlow-Plugin</link>
-                    </para>
-                </listitem>
-                <listitem>
-                    <para><emphasis role="bold">Nicira NVP
-                            Plug-in</emphasis>. Documentation is
-                        included in this guide, <link
-                            xlink:href="http://www.vmware.com/products/datacenter-virtualization/nicira.html"
-                            >NVP Product Overview</link>, and <link
-                            xlink:href="http://www.nicira.com/support"
-                            >NVP Product Support</link>
-                    </para>
-                </listitem>
-                <listitem>
-                    <para><emphasis role="bold">Open vSwitch
-                            Plug-in</emphasis>. Documentation included
-                        in this guide.</para>
-                </listitem>
-                <listitem>
-                    <para><emphasis role="bold">PLUMgrid</emphasis>.
-                            <link
-                            xlink:href="https://wiki.openstack.org/wiki/PLUMgrid-Neutron"
-                            >https://https://wiki.openstack.org/wiki/PLUMgrid-Neutron</link>
-                    </para>
-                </listitem>
-                <listitem>
-                    <para><emphasis role="bold">Ryu
-                        Plug-in</emphasis>. <link
-                            xlink:href="https://github.com/osrg/ryu/wiki/OpenStack"
-                            >https://github.com/osrg/ryu/wiki/OpenStack</link>
-                    </para>
-                </listitem>
-            </itemizedlist>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><emphasis role="bold">Brocade Plug-in</emphasis></td>
+                            <td><link xlink:href="https://github.com/brocade/brocade"
+                            >https://github.com/brocade/brocade</link></td>
+                        </tr>
+                        <tr>
+                            <td><emphasis role="bold">Cisco</emphasis></td>
+                            <td><link xlink:href="http://wiki.openstack.org/cisco-neutron"
+                            >http://wiki.openstack.org/cisco-neutron</link></td>
+                        </tr>
+                        <tr>
+                            <td><emphasis role="bold">Cloudbase Hyper-V Plug-in</emphasis></td>
+                            <td><link xlink:href="http://www.cloudbase.it/quantum-hyper-v-plugin/"
+                            >http://www.cloudbase.it/quantum-hyper-v-plugin/</link></td>
+                        </tr>
+                        <tr>
+                            <td><emphasis role="bold">Linux Bridge Plug-in</emphasis></td>
+                            <td><link xlink:href="http://wiki.openstack.org/Quantum-Linux-Bridge-Plugin"
+                            >http://wiki.openstack.org/Neutron-Linux-Bridge-Plugin</link></td>
+                        </tr>
+                        <tr>
+                            <td><emphasis role="bold">Mellanox Plug-in</emphasis></td>
+                            <td><link xlink:href="https://wiki.openstack.org/wiki/Mellanox-Neutron/"
+                            >https://wiki.openstack.org/wiki/Mellanox-Neutron/</link></td>
+                        </tr>
+                        <tr>
+                            <td><emphasis role="bold">Midonet Plug-in</emphasis></td>
+                            <td><link xlink:href="http://www.midokura.com/"
+                            >http://www.midokura.com/</link></td>
+                        </tr>
+                        <tr>
+                            <td><emphasis role="bold">ML2 (Modular Layer 2) Plug-in</emphasis></td>
+                            <td><link xlink:href="https://wiki.openstack.org/wiki/Neutron/ML2"
+                            >https://wiki.openstack.org/wiki/Neutron/ML2</link></td>
+                        </tr>
+                        <tr>
+                            <td><emphasis role="bold">NEC OpenFlow Plug-in</emphasis></td>
+                            <td><link xlink:href="http://wiki.openstack.org/Quantum-NEC-OpenFlow-Plugin"
+                            >http://wiki.openstack.org/Quantum-NEC-OpenFlow-Plugin</link></td>
+                        </tr>
+                        <tr>
+                            <td><emphasis role="bold">Nicira NVP Plug-in</emphasis></td>
+                            <td><link xlink:href="http://www.vmware.com/products/datacenter-virtualization/nicira.html"
+                            >NVP Product Overview</link>, <link xlink:href="http://www.nicira.com/support"
+                            >NVP Product Support</link></td>
+                        </tr>
+                        <tr>
+                            <td><emphasis role="bold">Open vSwitch Plug-in</emphasis></td>
+                            <td>included in this guide</td>
+                        </tr>
+                        <tr>
+                            <td><emphasis role="bold">PLUMgrid</emphasis></td>
+                            <td><link xlink:href="https://wiki.openstack.org/wiki/PLUMgrid-Neutron"
+                            >https://https://wiki.openstack.org/wiki/PLUMgrid-Neutron</link></td>
+                        </tr>
+                        <tr>
+                            <td><emphasis role="bold">Ryu Plug-in</emphasis></td>
+                            <td><link xlink:href="https://github.com/osrg/ryu/wiki/OpenStack"
+                            >https://github.com/osrg/ryu/wiki/OpenStack</link></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </para>
             <para>Plug-ins can have different properties for hardware requirements, features,
                 performance, scale, or operator tools. Because Networking supports a large number of
                 plug-ins, the cloud administrator can weigh options to decide on the right
@@ -375,31 +368,43 @@
                 Networking is entirely standalone and can be deployed
                 on its own host as well. Depending on your deployment,
                 Networking can also include the following
-                agents:</para>
-            <itemizedlist>
-                <listitem>
-                    <para><emphasis role="bold">plug-in
-                            agent</emphasis>
-                            (<literal>neutron-*-agent</literal>). Runs
-                        on each hypervisor to perform local vswitch
-                        configuration. The agent that runs depends on
-                        the plug-in that you use, and some plug-ins do
-                        not require an agent.</para>
-                </listitem>
-                <listitem>
-                    <para><emphasis role="bold">dhcp agent</emphasis>
-                            (<literal>neutron-dhcp-agent</literal>).
-                        Provides DHCP services to tenant networks.
-                        Some plug-ins use this agent.</para>
-                </listitem>
-                <listitem>
-                    <para><emphasis role="bold">l3 agent</emphasis>
-                        <literal>(neutron-l3-agent</literal>).
-                        Provides L3/NAT forwarding to provide external
-                        network access for VMs on tenant networks.
-                        Some plug-ins use this agent.</para>
-                </listitem>
-            </itemizedlist>
+                agents.</para>
+            <para>
+                <table rules="all">
+                    <caption>Networking agents</caption>
+                    <col width="30%"/>
+                    <col width="70%"/>
+                    <thead>
+                        <tr>
+                            <th>Agent</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><emphasis role="bold">plug-in agent</emphasis>
+                            (<literal>neutron-*-agent</literal>)</td>
+                            <td>Runs on each hypervisor to perform local vswitch
+                            configuration. The agent that runs depends on
+                            the plug-in that you use, and some plug-ins do
+                            not require an agent.</td>
+                        </tr>
+                        <tr>
+                            <td><emphasis role="bold">dhcp agent</emphasis>
+                            (<literal>neutron-dhcp-agent</literal>)</td>
+                            <td>Provides DHCP services to tenant networks.
+                            Some plug-ins use this agent.</td>
+                        </tr>
+                        <tr>
+                            <td><emphasis role="bold">l3 agent</emphasis>
+                            (<literal>neutron-l3-agent</literal>)</td>
+                            <td>Provides L3/NAT forwarding to provide external
+                            network access for VMs on tenant networks.
+                            Some plug-ins use this agent.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </para>
             <para>These agents interact with the main neutron process
                 through RPC (for example, rabbitmq or qpid) or through
                 the standard Networking API. Further:</para>
@@ -462,43 +467,46 @@
             </mediaobject>
             <para>A standard Networking set up has one or more of the
                 following distinct physical data center
-                networks:</para>
-            <itemizedlist>
-                <listitem>
-                    <para><emphasis role="bold">Management
-                            network</emphasis>. Provides internal
-                        communication between OpenStack Components. IP
-                        addresses on this network should be reachable
-                        only within the data center.  </para>
-                </listitem>
-                <listitem>
-                    <para><emphasis role="bold">Data
-                            network</emphasis>. Provides VM data
-                        communication within the cloud deployment. 
-                        The IP addressing requirements of this network
-                        depend on the Networking plug-in that is
-                        used.</para>
-                </listitem>
-                <listitem>
-                    <para><emphasis role="bold">External
-                            network</emphasis>. Provides VMs with
-                        Internet access in some deployment scenarios. 
-                        Anyone on the Internet can reach IP addresses
-                        on this network.</para>
-                </listitem>
-                <listitem>
-                    <para><emphasis role="bold">API
-                        network</emphasis>. Exposes all OpenStack
-                        APIs, including the Networking API, to
-                        tenants. IP addresses on this network should
-                        be reachable by anyone on the Internet. The
-                        API network might be the same as the external
-                        network, because it is possible to create an
-                        external-network subnet that is allocated IP
-                        ranges that use less than the full range of IP
-                        addresses in an IP block.</para>
-                </listitem>
-            </itemizedlist>
+                networks.</para>
+
+            <para>
+                <table rules="all">
+                    <caption>General distinct physical data center networks</caption>
+                    <col width="20%"/>
+                    <col width="80%"/>
+                    <thead>
+                        <tr>
+                            <th>Network</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><emphasis role="bold">Management network</emphasis></td>
+                            <td>Provides internal communication between OpenStack Components. IP
+                            addresses on this network should be reachable only within the data center.</td>
+                        </tr>
+                        <tr>
+                            <td><emphasis role="bold">Data network</emphasis></td>
+                            <td>Provides VM data communication within the cloud deployment.  The IP addressing
+                            requirements of this network depend on the Networking plug-in that is used.</td>
+                        </tr>
+                        <tr>
+                            <td><emphasis role="bold">External network</emphasis></td>
+                            <td>Provides VMs with Internet access in some deployment scenarios.
+                            Anyone on the Internet can reach IP addresses on this network.</td>
+                        </tr>
+                        <tr>
+                            <td><emphasis role="bold">API network</emphasis></td>
+                            <td>Exposes all OpenStack APIs, including the Networking API, to
+                            tenants. IP addresses on this network should be reachable by anyone on the Internet. The
+                            API network might be the same as the external network, because it is possible to create an
+                            external-network subnet that is allocated IP ranges that use less than the full range of IP
+                            addresses in an IP block.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </para>
         </section>
     </section>
     <section xml:id="section_networking-use">
@@ -541,26 +549,37 @@
                     IPAM). There is also an extension to cover basic
                     L3 forwarding and NAT, which provides capabilities
                     similar to <command>nova-network</command>.</para>
-                <para>In the Networking API:</para>
-                <itemizedlist>
-                    <listitem>
-                        <para>Network. An isolated L2 network segment
+                <para><table rules="all">
+                    <caption>API abstractions</caption>
+                    <col width="10%"/>
+                    <col width="90%"/>
+                    <thead>
+                        <tr>
+                            <th>Abstraction</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><emphasis role="bold">Network</emphasis></td>
+                            <td>An isolated L2 network segment
                             (similar to a VLAN) that forms the basis
                             for describing the L2 network topology
-                            available in an Networking deployment.
-                        </para>
-                    </listitem>
-                    <listitem>
-                        <para>Subnet. Associates a block of IP
+                            available in an Networking deployment.</td>
+                        </tr>
+                        <tr>
+                            <td><emphasis role="bold">Subnet</emphasis></td>
+                            <td>Associates a block of IP
                             addresses and other network configuration,
                             such as, default gateways or dns-servers,
                             with an Networking network. Each subnet
                             represents an IPv4 or IPv6 address block
                             and, if needed, each Networking network
-                            can have multiple subnets.</para>
-                    </listitem>
-                    <listitem>
-                        <para>Port. Represents an attachment port to a
+                            can have multiple subnets.</td>
+                        </tr>
+                        <tr>
+                            <td><emphasis role="bold">Port</emphasis></td>
+                            <td>Represents an attachment port to a
                             L2 Networking network. When a port is
                             created on the network, by default it is
                             allocated an available fixed IP address
@@ -571,9 +590,10 @@
                             subnet. Users of the Networking API can
                             either choose a specific IP address from
                             the block, or let Networking choose the
-                            first available IP address.</para>
-                    </listitem>
-                </itemizedlist>
+                            first available IP address.</td>
+                        </tr>
+                    </tbody>
+                </table></para>
                 <?hard-pagebreak?>
                 <para>The following table summarizes the attributes
                     available for each networking abstraction. For
