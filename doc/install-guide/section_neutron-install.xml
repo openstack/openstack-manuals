@@ -166,9 +166,8 @@ admin_password=<replaceable>NEUTRON_PASS</replaceable></programlisting>
       </step>
       <step>
         <para>Now, restart the rest of Neutron:</para>
-        <screen>
-          <prompt>#</prompt> <userinput>service neutron-dhcp-agent restart</userinput>
-          <prompt>#</prompt> <userinput>service neutron-l3-agent restart</userinput></screen>
+        <screen><prompt>#</prompt> <userinput>service neutron-dhcp-agent restart</userinput>
+<prompt>#</prompt> <userinput>service neutron-l3-agent restart</userinput></screen>
         <!-- TODO(sross): enable Neutron metadata as well? -->
       </step>
       <step>
@@ -406,9 +405,9 @@ local_ip = DATA_INTERFACE_IP</programlisting>
                   <filename>/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>
                 file:</para>
               <programlisting language="ini">[ovs]
-            tenant_network_type = vlan
-            network_vlan_ranges = physnet1:1:4094
-            bridge_mappings = physnet1:br-DATA_INTERFACE</programlisting>
+tenant_network_type = vlan
+network_vlan_ranges = physnet1:1:4094
+bridge_mappings = physnet1:br-DATA_INTERFACE</programlisting>
             </step>
             <step>
               <para>Create the bridge for
@@ -416,7 +415,7 @@ local_ip = DATA_INTERFACE_IP</programlisting>
                   <replaceable>DATA_INTERFACE</replaceable> to
                 it:</para>
               <screen><prompt>#</prompt> <userinput>ovs-vsctl add-br br-DATA_INTERFACE</userinput>
-            <prompt>#</prompt> <userinput>ovs-vsctl add-port br-DATA_INTERFACE DATA_INTERFACE</userinput></screen>
+<prompt>#</prompt> <userinput>ovs-vsctl add-port br-DATA_INTERFACE DATA_INTERFACE</userinput></screen>
             </step>
             <step>
               <para>Now that you have added
@@ -469,7 +468,10 @@ local_ip = DATA_INTERFACE_IP</programlisting>
           had, and the same CIDR address as well. It does not have
           DHCP, because it represents a slice of the external
           world:</para>
-        <screen><prompt>#</prompt> <userinput>neutron subnet-create ext-net --allocation-pool start=<replaceable>FLOATING_IP_START</replaceable>,end=<replaceable>FLOATING_IP_END</replaceable> --gateway=<replaceable>EXTERNAL_INTERFACE_GATEWAY</replaceable> --enable_dhcp=False <replaceable>EXTERNAL_INTERFACE_CIDR</replaceable></userinput></screen>
+        <screen><prompt>#</prompt> <userinput>neutron subnet-create ext-net \
+  --allocation-pool start=<replaceable>FLOATING_IP_START</replaceable>,end=<replaceable>FLOATING_IP_END</replaceable> \
+  --gateway=<replaceable>EXTERNAL_INTERFACE_GATEWAY</replaceable> --enable_dhcp=False \
+  <replaceable>EXTERNAL_INTERFACE_CIDR</replaceable></userinput></screen>
       </step>
       <step>
         <para>Create one or more initial tenants. Choose one (we'll
@@ -496,10 +498,9 @@ local_ip = DATA_INTERFACE_IP</programlisting>
           subnet over an arbitrary internal IP range, such as,
             <literal>10.5.5.0/24</literal>), and connect it to the
           router by setting it as a port:</para>
-        <screen>
-          <prompt>#</prompt> <userinput>neutron net-create --tenant-id <replaceable>DEMO_TENANT_ID</replaceable> demo-net <replaceable>SPECIAL_OPTIONS</replaceable></userinput>
-          <prompt>#</prompt> <userinput>neutron subnet-create --tenant-id <replaceable>DEMO_TENANT_ID</replaceable> demo-net 10.5.5.0/24 --gateway 10.5.5.1</userinput>
-          <prompt>#</prompt> <userinput>neutron router-interface-add <replaceable>EXT_TO_INT_ID</replaceable> <replaceable>DEMO_NET_SUBNET_ID</replaceable></userinput></screen>
+        <screen><prompt>#</prompt> <userinput>neutron net-create --tenant-id <replaceable>DEMO_TENANT_ID</replaceable> demo-net <replaceable>SPECIAL_OPTIONS</replaceable></userinput>
+<prompt>#</prompt> <userinput>neutron subnet-create --tenant-id <replaceable>DEMO_TENANT_ID</replaceable> demo-net 10.5.5.0/24 --gateway 10.5.5.1</userinput>
+<prompt>#</prompt> <userinput>neutron router-interface-add <replaceable>EXT_TO_INT_ID</replaceable> <replaceable>DEMO_NET_SUBNET_ID</replaceable></userinput></screen>
       </step>
       <step>
         <para>Check your plug-in's special options page for
