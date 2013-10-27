@@ -149,7 +149,7 @@
                                 <para>Update the Networking configuration file, <filename>
                                         /etc/neutron/neutron.conf</filename>, with plug-in choice
                                     and Identity Service user as necessary:</para>
-                                <programlisting>[DEFAULT]
+                                <programlisting language="ini">[DEFAULT]
 core_plugin = neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2
 control_exchange = neutron
 rabbit_host = controller
@@ -164,7 +164,7 @@ admin_password=servicepassword
                             <listitem>
                                 <para>Update the plug-in configuration file,
                                         <filename>/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>:</para>
-                                <programlisting>[database]
+                                <programlisting language="ini">[database]
 connection = mysql://root:root@controlnode:3306/ovs_neutron?charset=utf8
 [ovs]
 tenant_network_type = gre
@@ -192,7 +192,7 @@ enable_tunneling = True
                                 <para>Update the Compute configuration file, <filename>
                                         /etc/nova/nova.conf</filename>. Make sure the following line
                                     appears at the end of this file:</para>
-                                <programlisting>network_api_class=nova.network.neutronv2.api.API
+                                <programlisting language="ini">network_api_class=nova.network.neutronv2.api.API
 
 neutron_admin_username=neutron
 neutron_admin_password=servicepassword
@@ -279,7 +279,7 @@ local_ip = 9.181.89.203
                             <listitem>
                                 <para>Update the Networking configuration file, <filename>
                                         /etc/neutron/neutron.conf</filename></para>
-                                <programlisting>[DEFAULT]
+                                <programlisting language="ini">[DEFAULT]
 core_plugin = neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2
 control_exchange = neutron
 rabbit_host = controller
@@ -292,7 +292,7 @@ allow_overlapping_ips = True</programlisting>
                             <listitem>
                                 <para>Update the DHCP configuration file <filename>
                                         /etc/neutron/dhcp_agent.ini</filename></para>
-                                <programlisting>interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver</programlisting>
+                                <programlisting language="ini">interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver</programlisting>
                             </listitem>
                             <listitem>
                                 <para>Start the DHCP agent.</para>
@@ -322,7 +322,7 @@ allow_overlapping_ips = True</programlisting>
                             <listitem>
                                 <para>Update the L3 configuration file <filename>
                                         /etc/neutron/l3_agent.ini</filename>:</para>
-                                <programlisting>[DEFAULT]
+                                <programlisting language="ini">[DEFAULT]
 interface_driver=neutron.agent.linux.interface.OVSInterfaceDriver
 use_namespaces=True</programlisting>
                                 <para><emphasis role="bold">Set the

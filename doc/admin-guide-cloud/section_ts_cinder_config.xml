@@ -57,9 +57,9 @@
                     haven't or you're running into issues, verify that you have a file
                         <filename>/etc/tgt/conf.d/cinder.conf</filename>.</para>
                 <para>If the file is not there, you can create with the following
-                    command:<programlisting>
-sudo sh -c "echo 'include /var/lib/cinder/volumes/*' >> /etc/tgt/conf.d/cinder.conf"
-                    </programlisting></para>
+                    command:
+<screen><prompt>$</prompt> <userinput>sudo sh -c "echo 'include /var/lib/cinder/volumes/*' >> /etc/tgt/conf.d/cinder.conf"</userinput></screen>
+                </para>
             </listitem>
             <listitem>
                 <para>No sign of attach call in the <systemitem class="service"
@@ -67,29 +67,23 @@ sudo sh -c "echo 'include /var/lib/cinder/volumes/*' >> /etc/tgt/conf.d/cinder.c
                 <para>This is most likely going to be a minor adjustment to your
                         <filename>nova.conf</filename> file. Make sure that your
                         <filename>nova.conf</filename> has the following
-                    entry:<programlisting>
-volume_api_class=nova.volume.cinder.API
-        </programlisting></para>
+                    entry: <programlisting language="ini">volume_api_class=nova.volume.cinder.API</programlisting></para>
                 <caution>
                     <para>Make certain that you explicitly set <filename>enabled_apis</filename>
                         because the default will include
-                        <filename>osapi_volume</filename>:<programlisting>
-enabled_apis=ec2,osapi_compute,metadata
-    </programlisting>
+                        <filename>osapi_volume</filename>: <programlisting language="ini">enabled_apis=ec2,osapi_compute,metadata</programlisting>
                     </para>
                 </caution>
             </listitem>
             <listitem>
                 <para>Failed to create iscsi target error in the
                         <filename>cinder-volume.log</filename> file.</para>
-                <programlisting language="bash">2013-03-12 01:35:43 1248 TRACE cinder.openstack.common.rpc.amqp ISCSITargetCreateFailed: Failed to create iscsi target for volume volume-137641b2-af72-4a2f-b243-65fdccd38780.
-</programlisting>
+                <programlisting language="bash">2013-03-12 01:35:43 1248 TRACE cinder.openstack.common.rpc.amqp ISCSITargetCreateFailed: Failed to create iscsi target for volume volume-137641b2-af72-4a2f-b243-65fdccd38780.</programlisting>
                 <para>You may see this error in <filename>cinder-volume.log</filename> after trying
                     to create a volume that is 1 GB. To fix this issue:</para>
                 <para>Change content of the <filename>/etc/tgt/targets.conf</filename> from "include
                     /etc/tgt/conf.d/*.conf" to: include /etc/tgt/conf.d/cinder_tgt.conf:</para>
-                <programlisting language="bash">
-            include /etc/tgt/conf.d/cinder_tgt.conf
+                <programlisting language="bash">            include /etc/tgt/conf.d/cinder_tgt.conf
             include /etc/tgt/conf.d/cinder.conf
             default-driver iscsi</programlisting>
                 <para>Then restart tgt and <literal>cinder-*</literal> services so they pick up the
