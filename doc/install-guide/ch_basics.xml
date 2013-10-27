@@ -61,11 +61,11 @@
 <prompt>#</prompt> <userinput>chkconfig iptables on</userinput></screen>
     </note>
 
-    <para os="opensuse">When you setup your system, use the
+    <para os="opensuse;sles">When you setup your system, use the
     traditional network scripts and do not use the
     <literal>NetworkManager</literal>. You can change the settings also after
     installation with the YaST network module:</para>
-    <screen os="opensuse"><prompt>#</prompt> <userinput>yast2 network</userinput></screen>
+    <screen os="opensuse;sles"><prompt>#</prompt> <userinput>yast2 network</userinput></screen>
 
     <para>Next, create the configuration for both <literal>eth0</literal>
       and <literal>eth1</literal>. This guide uses
@@ -177,7 +177,7 @@ iface eth1 inet static
 
     <programlisting language="ini" os="rhel;fedora;centos">HOSTNAME=controller</programlisting>
 
-    <para os="rhel;fedora;centos">As of Fedora 18, Fedora now uses the
+    <para os="fedora">As of Fedora 18, Fedora now uses the
       file <filename>/etc/hostname</filename>. This file contains a
       single line with just the host name.</para>
 
@@ -228,7 +228,7 @@ iface eth1 inet static
       the following:</para>
 
     <screen><prompt>#</prompt> <userinput>ntpdate <replaceable>controller</replaceable></userinput>
-    <prompt>#</prompt> <userinput>hwclock -w</userinput></screen>
+<prompt>#</prompt> <userinput>hwclock -w</userinput></screen>
 
     <para>Make sure to mark this file as executable.</para>
 
@@ -246,21 +246,21 @@ iface eth1 inet static
       nodes that access MySQL need to have the MySQL client software
       installed:</para>
     <para os="opensuse;sles">Most OpenStack services require a database to store
-      information. In this guide, we use a MySQL on SUSE Linux
-      Enterprise Server and compatible database on openSUSE running on
+      information. In this guide, we use a MySQL database on SUSE Linux
+      Enterprise Server and a compatible database on openSUSE running on
       the controller node. This compatible database for openSUSE is MariaDB. The
       controller node needs to have the MariaDB database
-      installed. Any additional nodesf that access the MariaDB
+      installed. Any additional nodes that access the MariaDB
       database need to have the MariaDB client software
       installed:</para>
     <itemizedlist>
       <listitem>
-        <para><phrase os="sles;opensuse">For SUSE Linux Enterprise Server: </phrase>
+        <para><phrase os="sles">For SUSE Linux Enterprise Server: </phrase>
         On the controller node,
         install the MySQL client, the MySQL database,
         and the MySQL Python library.</para>
         <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install mysql-client mysql python-mysql</userinput></screen>
-        <para os="opensuse;sles">For openSUSE: On the controller node, install
+        <para os="opensuse">For openSUSE: On the controller node, install
         the MariaDB client, the MariaDB database, and the MySQL Python
         library.</para>
         <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install mariadb-client mariadb python-mysql</userinput></screen>
@@ -281,14 +281,14 @@ bind-address            = 192.168.0.10</programlisting>
 </listitem>
       <listitem><para>On any nodes besides the controller node, just install the
         <phrase os="ubuntu;debian;rhel;fedora;centos">MySQL</phrase>
-        <phrase os="opensuse;sles">MariaDB (on openSUSE)</phrase>
+        <phrase os="opensuse">MariaDB (on openSUSE)</phrase>
         client and the MySQL Python library. This is all you need to do on any
         system not hosting the MySQL database.</para>
         <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install python-mysqldb</userinput></screen>
         <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>yum install mysql MySQL-python</userinput></screen>
-        <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install mariadb-client python-mysql</userinput></screen>
-        <para os="opensuse;sles">For SUSE Linux Enterprise, install MySQL:</para>
-        <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install mysql-client python-mysql</userinput></screen>
+        <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install mariadb-client python-mysql</userinput></screen>
+        <para os="sles">For SUSE Linux Enterprise, install MySQL:</para>
+        <screen os="sles"><prompt>#</prompt> <userinput>zypper install mysql-client python-mysql</userinput></screen>
       </listitem>
     </itemizedlist>
     <para os="rhel;centos;fedora;opensuse;sles">Start the
@@ -360,15 +360,22 @@ bind-address            = 192.168.0.10</programlisting>
     <para os="opensuse;sles">Use the Open Build Service repositories
     for Havana based on your openSUSE or SUSE Linux Enterprise Server
     version, for example if you run openSUSE 12.3 use:</para>
-    <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper ar -f obs://Cloud:OpenStack:Havana/openSUSE_12.3 Havana</userinput></screen>
-    <para os="opensuse;sles">
+    <screen os="opensuse"><prompt>#</prompt> <userinput>zypper addrepo -f obs://Cloud:OpenStack:Havana/openSUSE_12.3 Havana</userinput></screen>
+    <para os="sles">
       If you use SUSE Linux Enterprise Server 11 SP3, use:
-      <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper ar -f obs://Cloud:OpenStack:Havana/SLE_11_SP3 Havana</userinput></screen>
+      <screen><prompt>#</prompt> <userinput>zypper addrepo -f obs://Cloud:OpenStack:Havana/SLE_11_SP3 Havana</userinput></screen>
     </para>
-    <para os="opensuse;sles">For openSUSE 13.1, nothing needs to be
+    <para os="opensuse">For openSUSE 13.1, nothing needs to be
       done since OpenStack Havana packages are part of the distribution
       itself.
     </para>
+    <para os="opensuse;sles">The <literal>openstack-utils</literal> package
+      contains utility programs that make installation and configuration easier.
+      These programs will be used throughout this guide. Install
+        <literal>openstack-utils</literal>. This will also verify that you can
+      access the Open Build Service repository:</para>
+
+    <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-utils</userinput></screen>
 
     <procedure xml:id="ubuntu-cloud-archive" os="ubuntu">
       <title>To use the Ubuntu Cloud Archive for Havana</title>
@@ -377,8 +384,8 @@ bind-address            = 192.168.0.10</programlisting>
       the stable supported version of Ubuntu.</para>
       <step>
         <para>Install the Ubuntu Cloud Archive for Havana:
-          <screen><prompt>#</prompt> <userinput>apt-get install python-software-properties</userinput> </screen>
-          <screen><prompt>#</prompt> <userinput>add-apt-repository cloud-archive:havana</userinput> </screen></para>
+          <screen><prompt>#</prompt> <userinput>apt-get install python-software-properties</userinput>
+<prompt>#</prompt> <userinput>add-apt-repository cloud-archive:havana</userinput></screen></para>
       </step>
       <step>
         <para>Upgrade the system (and reboot if you need):
