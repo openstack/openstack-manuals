@@ -1,37 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<section xml:id="heat-install"
-  xmlns="http://docbook.org/ns/docbook"
+<section xml:id="heat-install" xmlns="http://docbook.org/ns/docbook"
   xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
-  <title>Installing the Orchestration Service</title>
+  <title>Install the Orchestration Service</title>
   <procedure>
     <step>
-      <para>Install the Orchestration Service on the controller node:</para>
+      <para>Install the Orchestration Service on the controller
+        node:</para>
       <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install heat-api heat-api-cfn heat-engine</userinput></screen>
       <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-heat-api openstack-heat-engine FIXME</userinput></screen>
       <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-heat-api openstack-heat-api-cfn openstack-heat-engine</userinput></screen>
     </step>
-
     <step>
-      <para>The Orchestration Service uses a database to store information.
-      Specify the location of the database in the configuration file.
-      In this guide, we use a MySQL database on the controller node
-      with the username <literal>heat</literal>. Replace
-      <literal><replaceable>HEAT_DBPASS</replaceable></literal>
-      with a suitable password for the database user.</para>
+      <para>In the configuration file, specify the location of the
+        database where the Orchestration Service stores data. The
+        examples in this guide use a MySQL database on the controller
+        node with the <literal>heat</literal> user name. Replace
+            <literal><replaceable>HEAT_DBPASS</replaceable></literal>
+        with the password for the database user:</para>
       <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/heat/heat.conf \
   database connection mysql://heat:<replaceable>HEAT_DBPASS</replaceable>@controller/heat</userinput></screen>
-      <para os="ubuntu;debian">Edit <filename>/etc/heat/heat.conf</filename> and change the <literal>[DEFAULT]</literal> section.</para>
-      <programlisting os="ubuntu;debian" language="ini">[database]
+      <para os="ubuntu">Edit the
+          <filename>/etc/heat/heat.conf</filename> file and change the
+          <literal>[DEFAULT]</literal> section:</para>
+      <programlisting os="ubuntu" language="ini">[database]
 # The SQLAlchemy connection string used to connect to the database
 connection = mysql://heat:<replaceable>HEAT_DBPASS</replaceable>@controller/heat
-...
-      </programlisting>
+...</programlisting>
     </step>
-
     <step>
-      <para>First, we need to create a database user called <literal>heat</literal>, by logging in
-      as root using the password we set earlier.</para>
+      <para>Create a <literal>heat</literal> database user. Log in as
+        root by using the password that you set previously:</para>
       <screen><prompt>#</prompt> <userinput>mysql -u root -p</userinput>
 <prompt>mysql></prompt> <userinput>CREATE DATABASE heat;</userinput>
 <prompt>mysql></prompt> <userinput>GRANT ALL PRIVILEGES ON heat.* TO 'heat'@'localhost' \
@@ -40,16 +39,18 @@ IDENTIFIED BY '<replaceable>HEAT_DBPASS</replaceable>';</userinput>
 IDENTIFIED BY '<replaceable>HEAT_DBPASS</replaceable>';</userinput></screen>
     </step>
     <step os="fedora;centos;rhel;ubuntu;debian">
-      <para>We now create the heat service tables:
+      <para>Create the heat service tables:</para>
       <screen><prompt>#</prompt> <userinput>heat-manage db_sync</userinput></screen>
-      </para>
-      <note><para>If you see DeprecationWarning errors, it is safe to ignore these.</para></note>
+      <note>
+        <para>You can ignore any
+            <errortext>DeprecationWarning</errortext> errors.</para>
+      </note>
     </step>
     <step os="ubuntu;debian">
-      <para>The Ubuntu packages do not correctly set up logging.
-      Edit <filename>/etc/heat/heat.conf</filename> and change the <literal>[DEFAULT]</literal> section.</para>
-      <programlisting os="ubuntu" language="ini">
-[DEFAULT]
+      <para>The Ubuntu packages do not correctly set up logging. Edit
+        the <filename>/etc/heat/heat.conf</filename> file and change
+        the <literal>[DEFAULT]</literal> section:</para>
+      <programlisting os="ubuntu" language="ini">[DEFAULT]
 ...
 # Print more verbose output (set logging level to INFO instead
 # of default WARNING level). (boolean value)
@@ -57,24 +58,24 @@ verbose = True
 ...
 # (Optional) The base directory used for relative --log-file
 # paths (string value)
-log_dir=/var/log/heat
-      </programlisting>
+log_dir=/var/log/heat</programlisting>
     </step>
-
-    <step><para>Create an Identity Service user called <literal>heat</literal>
-      that the Orchestration
-      Service can use to authenticate with the Identity Service. Use the
-      <literal>service</literal> tenant and give the user the
-      <literal>admin</literal> role.</para>
+    <step>
+      <para>Create an Identity Service user named
+          <literal>heat</literal> that the Orchestration Service can
+        use to authenticate with the Identity Service. Use the
+          <literal>service</literal> tenant and give the user the
+          <literal>admin</literal> role:</para>
       <screen><prompt>#</prompt> <userinput>keystone user-create --name=heat --pass=<replaceable>HEAT_PASS</replaceable> --email=<replaceable>heat@example.com</replaceable></userinput>
 <prompt>#</prompt> <userinput>keystone user-role-add --user=heat --tenant=service --role=admin</userinput></screen>
     </step>
-
-    <step><para>Add the credentials to the Image Service's configuration files.</para>
-    <para >Edit <filename>/etc/heat/api-paste.ini</filename>
- and change the <literal>[filter:authtoken]</literal> section.</para>
-      <programlisting language="ini">
-...
+    <step>
+      <para>Add the credentials to the Image Service configuration
+        files.</para>
+      <para>Edit the <filename>/etc/heat/api-paste.ini</filename> file
+        and change the <literal>[filter:authtoken]</literal>
+        section:</para>
+      <programlisting language="ini">...
 [filter:authtoken]
 paste.filter_factory = heat.common.auth_token:filter_factory
 auth_host = controller
@@ -83,46 +84,48 @@ auth_protocol = http
 admin_tenant_name = service
 admin_user = heat
 admin_password = <replaceable>HEAT_PASS</replaceable>
-...
-      </programlisting>
-
+...</programlisting>
     </step>
-
-    <step><para>Register the Orchestration Service (both Heat and CloudFormation APIs)
-        with the Identity Service so that other OpenStack services can locate
-        it. Register the service and specify the endpoint using the
-          <command>keystone</command> command.</para>
+    <step>
+      <para>Register the Orchestration Service (both Heat and
+        CloudFormation APIs) with the Identity Service so that other
+        OpenStack services can locate it. Use the
+          <command>keystone</command> command to register the service
+        and specify the endpoint:</para>
       <screen><prompt>#</prompt> <userinput>keystone service-create --name=heat --type=orchestration \
-  --description="Heat Orchestration API"</userinput></screen></step>
-    <step><para>Note the service's <literal>id</literal> property returned in the previous step and use it when
-      creating the endpoint.</para>
+  --description="Heat Orchestration API"</userinput></screen>
+    </step>
+    <step>
+      <para>Note the <literal>id</literal> property for the service
+        and use it to create the endpoint.</para>
       <screen><prompt>#</prompt> <userinput>keystone endpoint-create \
   --service-id=<replaceable>the_service_id_above</replaceable> \
   --publicurl=http://<replaceable>controller</replaceable>:8004/v1/%\(tenant_id\)s \
   --internalurl=http://<replaceable>controller</replaceable>:8004/v1/%\(tenant_id\)s \
   --adminurl=http://<replaceable>controller</replaceable>:8004/v1/%\(tenant_id\)s</userinput></screen>
       <screen><prompt>#</prompt> <userinput>keystone service-create --name=heat-cfn --type=cloudformation \
-  --description="Heat CloudFormation API"</userinput></screen></step>
-    <step><para>Note the service's <literal>id</literal> property returned in the previous step and use it when
-      creating the endpoint.</para>
+  --description="Heat CloudFormation API"</userinput></screen>
+    </step>
+    <step>
+      <para>Note the <literal>id</literal> property for the service
+        and use it to create the endpoint.</para>
       <screen><prompt>#</prompt> <userinput>keystone endpoint-create \
   --service-id=<replaceable>the_service_id_above</replaceable> \
   --publicurl=http://<replaceable>controller</replaceable>:8000/v1 \
   --internalurl=http://<replaceable>controller</replaceable>:8000/v1 \
   --adminurl=http://<replaceable>controller</replaceable>:8000/v1</userinput></screen>
     </step>
-
     <step os="ubuntu;debian">
-      <para>We now restart the service with its new settings.</para>
-<screen><prompt>#</prompt> <userinput>service heat-api restart</userinput>
+      <para>Restart the service with its new settings:</para>
+      <screen><prompt>#</prompt> <userinput>service heat-api restart</userinput>
 <prompt>#</prompt> <userinput>service heat-api-cfn restart</userinput>
 <prompt>#</prompt> <userinput>service heat-engine restart</userinput></screen>
     </step>
-
-
-    <step os="rhel;fedora;centos;opensuse;sles"><para>Start the <literal>heat-api</literal>, <literal>heat-api-cfn</literal> and
-      <literal>heat-engine</literal> services and configure them to
-      start when the system boots.</para>
+    <step os="rhel;fedora;centos;opensuse;sles">
+      <para>Start the <literal>heat-api</literal>, <systemitem
+          role="service">heat-api-cfn</systemitem> and <systemitem
+          role="service">heat-engine</systemitem> services. Also,
+        configure them to start when the system boots.</para>
       <screen os="rhel;fedora;centos;opensuse;sles"><prompt>#</prompt> <userinput>service openstack-heat-api start</userinput>
 <prompt>#</prompt> <userinput>service openstack-heat-api-cfn start</userinput>
 <prompt>#</prompt> <userinput>service openstack-heat-engine start</userinput>
@@ -130,6 +133,5 @@ admin_password = <replaceable>HEAT_PASS</replaceable>
 <prompt>#</prompt> <userinput>chkconfig openstack-heat-api-cfn on</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-heat-engine on</userinput></screen>
     </step>
-
   </procedure>
 </section>
