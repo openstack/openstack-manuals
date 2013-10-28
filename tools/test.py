@@ -445,6 +445,13 @@ def build_book(book):
             stderr=subprocess.STDOUT
         )
         if base_book == "install-guide":
+            # Build Debian
+            base_book = "install-guide (for debian)"
+            output = subprocess.check_output(
+                ["mvn", "generate-sources", "-B",
+                 "-Doperating.system=apt-debian", "-Dprofile.os=debian"],
+                stderr=subprocess.STDOUT
+            )
             # Build Fedora
             base_book = "install-guide (for Fedora)"
             output = subprocess.check_output(
@@ -464,11 +471,11 @@ def build_book(book):
             base_book = "install-guide (for Ubuntu)"
             output = subprocess.check_output(
                 ["mvn", "generate-sources", "-B",
-                 "-Doperating.system=apt", "-Dprofile.os=ubuntu;debian"],
+                 "-Doperating.system=apt", "-Dprofile.os=ubuntu"],
                 stderr=subprocess.STDOUT
             )
             # Success
-            base_book = "install-guide (for Fedora, openSUSE, Ubuntu)"
+            base_book = "install-guide (for Debian, Fedora, openSUSE, Ubuntu)"
         elif base_book == "high-availability-guide":
             output = subprocess.check_output(
                 ["../../tools/build-ha-guide.sh", ],
