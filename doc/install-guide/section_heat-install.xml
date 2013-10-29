@@ -8,6 +8,24 @@
       <para>Install the Orchestration Service on the controller
         node:</para>
       <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install heat-api heat-api-cfn heat-engine</userinput></screen>
+      <note os="debian">
+        <title>Note for Debian users</title>
+        <para>As for the rest of OpenStack, you configure the
+          Orchestration Service through the
+            <filename>debconf</filename>. You do not need to manually
+          configure the database, Keystone auth token, or the RabbitMQ
+          parameters of Heat, or run the <command>heat-manage
+            db_sync</command> command. You can skip the following
+          steps. If you must reconfigure the Orchestration Service,
+          run the following command:</para>
+        <screen><prompt>#</prompt> <userinput>dpkg-reconfigure -plow heat-common</userinput></screen>
+        <para>Alternatively, edit the configuration files and manually
+          restart the daemons. If your database server is installed
+          remotely, you must run the following command before you
+          install the Orchestration Service:</para>
+        <screen><prompt>#</prompt> <userinput>apt-get install dbconfig-common &amp;&amp; \
+          dpkg-reconfigure -plow dbconfig-common</userinput></screen>
+      </note>
       <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-heat-api openstack-heat-engine FIXME</userinput></screen>
       <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-heat-api openstack-heat-api-cfn openstack-heat-engine</userinput></screen>
     </step>
@@ -20,17 +38,17 @@
         with the password for the database user:</para>
       <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/heat/heat.conf \
   database connection mysql://heat:<replaceable>HEAT_DBPASS</replaceable>@controller/heat</userinput></screen>
-      <para os="ubuntu">Edit the
-          <filename>/etc/heat/heat.conf</filename> file and change the
-          <literal>[DEFAULT]</literal> section:</para>
-      <programlisting os="ubuntu" language="ini">[database]
+      <para os="ubuntu;debian">Edit
+          <filename>/etc/heat/heat.conf</filename> and change the
+          <literal>[DEFAULT]</literal> section.</para>
+      <programlisting os="ubuntu;debian" language="ini">[database]
 # The SQLAlchemy connection string used to connect to the database
 connection = mysql://heat:<replaceable>HEAT_DBPASS</replaceable>@controller/heat
 ...</programlisting>
     </step>
     <step>
-      <para>Create a <literal>heat</literal> database user. Log in as
-        root by using the password that you set previously:</para>
+      <para>Create a <literal>heat</literal> database user by logging
+        in as root using the password you set previously:</para>
       <screen><prompt>#</prompt> <userinput>mysql -u root -p</userinput>
 <prompt>mysql></prompt> <userinput>CREATE DATABASE heat;</userinput>
 <prompt>mysql></prompt> <userinput>GRANT ALL PRIVILEGES ON heat.* TO 'heat'@'localhost' \
@@ -61,20 +79,19 @@ verbose = True
 log_dir=/var/log/heat</programlisting>
     </step>
     <step>
-      <para>Create an Identity Service user named
-          <literal>heat</literal> that the Orchestration Service can
-        use to authenticate with the Identity Service. Use the
-          <literal>service</literal> tenant and give the user the
-          <literal>admin</literal> role:</para>
+      <para>Create a <literal>heat</literal> user that the
+        Orchestration Service can use to authenticate with the
+        Identity Service. Use the <literal>service</literal> tenant
+        and give the user the <literal>admin</literal> role.</para>
       <screen><prompt>#</prompt> <userinput>keystone user-create --name=heat --pass=<replaceable>HEAT_PASS</replaceable> --email=<replaceable>heat@example.com</replaceable></userinput>
 <prompt>#</prompt> <userinput>keystone user-role-add --user=heat --tenant=service --role=admin</userinput></screen>
     </step>
     <step>
-      <para>Add the credentials to the Image Service configuration
-        files.</para>
-      <para>Edit the <filename>/etc/heat/api-paste.ini</filename> file
-        and change the <literal>[filter:authtoken]</literal>
-        section:</para>
+      <para>Add the credentials to the configuration files for the
+        Orchestration Service.</para>
+      <para>Edit <filename>/etc/heat/api-paste.ini</filename> and
+        change the <literal>[filter:authtoken]</literal>
+        section.</para>
       <programlisting language="ini">...
 [filter:authtoken]
 paste.filter_factory = heat.common.auth_token:filter_factory
@@ -97,7 +114,8 @@ admin_password = <replaceable>HEAT_PASS</replaceable>
     </step>
     <step>
       <para>Note the <literal>id</literal> property for the service
-        and use it to create the endpoint.</para>
+        that was returned in the previous step. Use it to create the
+        endpoint.</para>
       <screen><prompt>#</prompt> <userinput>keystone endpoint-create \
   --service-id=<replaceable>the_service_id_above</replaceable> \
   --publicurl=http://<replaceable>controller</replaceable>:8004/v1/%\(tenant_id\)s \
@@ -108,7 +126,8 @@ admin_password = <replaceable>HEAT_PASS</replaceable>
     </step>
     <step>
       <para>Note the <literal>id</literal> property for the service
-        and use it to create the endpoint.</para>
+        that was returned in the previous step. Use it to create the
+        endpoint.</para>
       <screen><prompt>#</prompt> <userinput>keystone endpoint-create \
   --service-id=<replaceable>the_service_id_above</replaceable> \
   --publicurl=http://<replaceable>controller</replaceable>:8000/v1 \
