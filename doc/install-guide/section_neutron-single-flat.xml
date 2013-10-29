@@ -35,7 +35,7 @@
                     are required to deploy VMs (<systemitem class="service">nova-api</systemitem>,
                         <systemitem class="service">nova-scheduler</systemitem>, for example). The
                     node must have at least one network interface, which is connected to the
-                    "Management Network". The hostname is 'controlnode', which every other node
+                    "Management Network". The hostname is 'controller', which every other node
                     resolve to the controller node's IP. <emphasis role="bold">Note</emphasis> The
                     nova-network service should not be running. This is replaced by Networking.</td>
                 </tr>
@@ -77,8 +77,8 @@
         <listitem>
             <para>OpenStack Identity is installed, configured and running. A Networking user
                     <emphasis role="bold">neutron</emphasis> should be created on tenant <emphasis
-                    role="bold">servicetenant</emphasis> with password <emphasis role="bold"
-                    >servicepassword</emphasis>.</para>
+                    role="bold">service</emphasis> with password <emphasis role="bold"
+                    >NEUTRON_PASS</emphasis>.</para>
         </listitem>
         <listitem>
             <para>Additional services: <itemizedlist>
@@ -103,7 +103,7 @@
         <para>
             <itemizedlist>
                 <listitem>
-                    <para><emphasis role="bold">Controller nodeNetworking server</emphasis><orderedlist>
+                    <para><emphasis role="bold">Controller node - Networking server</emphasis><orderedlist>
                             <listitem>
                                 <para>Install the Networking server.</para>
                             </listitem>
@@ -122,16 +122,16 @@ rabbit_host = controller
 notification_driver = neutron.openstack.common.notifier.rabbit_notifier
 
 [keystone_authtoken]
-admin_tenant_name=servicetenant
+admin_tenant_name=service
 admin_user=neutron
-admin_password=servicepassword
+admin_password=<replaceable>NEUTRON_PASS</replaceable>
 </programlisting>
                             </listitem>
                             <listitem>
                                 <para>Update the plugin configuration file, <filename>
                                         /etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>:</para>
                                 <programlisting language="ini">[database]
-connection = mysql://root:root@controlnode:3306/ovs_neutron?charset=utf8
+connection = mysql://root:root@controller:3306/ovs_neutron?charset=utf8
 [ovs]
 network_vlan_ranges = physnet1
 bridge_mappings = physnet1:br-eth0
@@ -143,7 +143,7 @@ bridge_mappings = physnet1:br-eth0
                         </orderedlist></para>
                 </listitem>
                 <listitem>
-                    <para><emphasis role="bold">Compute nodeCompute </emphasis><orderedlist>
+                    <para><emphasis role="bold">Compute node - Compute </emphasis><orderedlist>
                             <listitem>
                                 <para>Install the <systemitem class="service"
                                         >nova-compute</systemitem> service.</para>
@@ -155,11 +155,11 @@ bridge_mappings = physnet1:br-eth0
                                 <programlisting language="ini">network_api_class=nova.network.neutronv2.api.API
 
 neutron_admin_username=neutron
-neutron_admin_password=servicepassword
-neutron_admin_auth_url=http://controlnode:35357/v2.0/
+neutron_admin_password=<replaceable>NEUTRON_PASS</replaceable>
+neutron_admin_auth_url=http://controller:35357/v2.0/
 neutron_auth_strategy=keystone
-neutron_admin_tenant_name=servicetenant
-neutron_url=http://controlnode:9696/
+neutron_admin_tenant_name=service
+neutron_url=http://controller:9696/
 
 libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtHybridOVSBridgeDriver
                                 </programlisting>
@@ -194,7 +194,7 @@ notification_driver = neutron.openstack.common.notifier.rabbit_notifier</program
                                 <para>Update the plugin configuration file, <filename>
                                         /etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>:</para>
                                 <programlisting language="ini">[database]
-connection = mysql://root:root@controlnode:3306/ovs_neutron?charset=utf8
+connection = mysql://root:root@controller:3306/ovs_neutron?charset=utf8
 [ovs]
 network_vlan_ranges = physnet1
 bridge_mappings = physnet1:br-eth0</programlisting>

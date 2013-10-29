@@ -115,8 +115,8 @@
         <listitem>
             <para>Identity is installed, configured, and running. A Networking user named <emphasis
                     role="bold">neutron</emphasis> should be created on tenant <emphasis role="bold"
-                    >servicetenant</emphasis> with password <emphasis role="bold"
-                    >servicepassword</emphasis>.</para>
+                    >service</emphasis> with password <emphasis role="bold"
+                    >NEUTRON_PASS</emphasis>.</para>
         </listitem>
         <listitem>
             <para>Additional services: <itemizedlist>
@@ -156,9 +156,9 @@ rabbit_host = controller
 notification_driver = neutron.openstack.common.notifier.rabbit_notifier
 
 [keystone_authtoken]
-admin_tenant_name=servicetenant
+admin_tenant_name=service
 admin_user=neutron
-admin_password=servicepassword
+admin_password=<replaceable>NEUTRON_PASS</replaceable>
 </programlisting>
                             </listitem>
                             <listitem>
@@ -195,10 +195,10 @@ enable_tunneling = True
                                 <programlisting language="ini">network_api_class=nova.network.neutronv2.api.API
 
 neutron_admin_username=neutron
-neutron_admin_password=servicepassword
+neutron_admin_password=<replaceable>NEUTRON_PASS</replaceable>
 neutron_admin_auth_url=http://controlnode:35357/v2.0/
 neutron_auth_strategy=keystone
-neutron_admin_tenant_name=servicetenant
+neutron_admin_tenant_name=service
 neutron_url=http://controlnode:9696/
 
 libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtHybridOVSBridgeDriver
