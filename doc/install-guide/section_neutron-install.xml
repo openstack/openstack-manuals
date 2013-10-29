@@ -113,6 +113,10 @@ IDENTIFIED BY '<replaceable>NEUTRON_DBPASS</replaceable>';</userinput></screen>
         <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-neutron openstack-neutron-l3-agent openstack-neutron-dhcp-agent</userinput></screen>
       </step>
       <step>
+        <para>Make sure basic Neturon-related service are set to start at boot time:</para>
+        <screen><prompt>#</prompt> <userinput>for s in neutron-{dhcp,l3}-agent; do chkconfig $s on; done</userinput></screen>
+      </step>
+      <step>
         <para>Enable packet forwarding and disable packet destination
           filtering so that the network node can coordinate traffic
           for the VMs. Edit the <filename>/etc/sysctl.conf</filename>
@@ -417,8 +421,9 @@ firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewal
           </step>
           <!-- TODO(sross): document other firewall options -->
           <step>
-            <para>Restart the <acronym>OVS</acronym> plug-in:</para>
-            <screen><prompt>#</prompt> <userinput>service neutron-openvswitch-agent restart</userinput></screen>
+            <para>Restart the <acronym>OVS</acronym> plug-in, and make sure it starts on boot:</para>
+            <screen><prompt>#</prompt> <userinput>service neutron-openvswitch-agent restart</userinput>
+<prompt>#</prompt> <userinput>chkconfig neutron-openvswitch-agent on</userinput></screen>
           </step>
           <step>
             <para>Now, return whence you came!</para>
@@ -800,8 +805,9 @@ firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewal
             <para>After you complete OVS configuration <emphasis>and
                 the core Neutron configuration after this
                 section</emphasis>, restart the Neutron Open vSwitch
-              agent:</para>
-            <screen><prompt>#</prompt> <userinput>service neutron-openvswitch-agent restart</userinput></screen>
+              agent, and set it to start at boot:</para>
+            <screen><prompt>#</prompt> <userinput>service neutron-openvswitch-agent restart</userinput>
+<prompt>#</prompt> <userinput>chkconfig neutron-openvswitch-agent on</userinput></screen>
           </step>
           <step>
             <para>Now, return to the general <acronym>OVS</acronym>
@@ -963,8 +969,9 @@ security_group_api=neutron</programlisting>
         </note>
       </step>
       <step>
-        <para>Start neutron-server:</para>
-        <screen><prompt>#</prompt> <userinput>service neutron-server start</userinput></screen>
+        <para>Start neutron-server and set it to start at boot:</para>
+        <screen><prompt>#</prompt> <userinput>service neutron-server start</userinput>
+<prompt>#</prompt> <userinput>chkconfig neutron-server on</userinput></screen>
         <note>
           <para>Make sure that the plug-in restarted successfully. If
             you get errors about a missing
