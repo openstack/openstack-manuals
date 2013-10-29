@@ -1,75 +1,57 @@
 [[ch-intro]]
 == Introduction to OpenStack High Availability
 
-High Availability systems, fundamentally, seek to minimize two things:
+High Availability systems seek to minimize two things:
 
-* *System downtime* -- the unavailability of a _user-facing_ service
-  beyond a specified maximum amount of time, and
-* *Data loss* -- the accidental deletion or destruction of data.
+* *System downtime* -- occurs when a _user-facing_ service is unavailable beyond a specified maximum amount of time, and
+* *Data loss* -- accidental deletion or destruction of data.
 
-It is important to understand that most high availability systems can
-_guarantee_ protection against these issues only in the face of a
-single failure event. They are also expected to protect against
-cascading failures, where an originally singular failure deteriorates
-into a series of consequential failures.
+Most high availability systems guarantee protection against system downtime and data loss only in the event of a single failure. However, they are also expected to protect against cascading failures, where a single failure deteriorates into a series of consequential failures.
 
-A crucial aspect of high availability is thus the elimination of
-single points of failure (SPOFs). A SPOF is an individual piece of
-equipment, or software, whose failure can cause system downtime or
-data loss. Eliminating SPOFs typically includes
+A crucial aspect of high availability is the elimination of single points of failure (SPOFs). A SPOF is an individual piece of equipment or software which will cause system downtime or data loss if it fails. In order to eliminate SPOFs, check that mechanisms exist for redundancy of:
 
-* Redundancy of network components, such as switches and routers,
-* Redundancy of applications and automatic service migration,
-* Redundancy of storage components,
-* Redundancy of facility services such as power, air conditioning,
-  fire protection, and others.
+* Network components, such as switches and routers
+* Applications and automatic service migration
+* Storage components
+* Facility services such as power, air conditioning, and fire protection
 
-In contrast, in the face of multiple _independent_ (non-interrelated)
-failures, high availability becomes a best-effort affair. In such an
-event, most high-availability systems tend to favor protecting data
-over maintaining availability.
+Most high availability systems will fail in the event of multiple independent (non-consequential) failures. In this case, most systems will protect data over maintaining availability.
 
-High-availability systems typically achieve uptime of 99.99% or more,
-meaning less than roughly an hour of cumulative downtime per
-year. From this, it follows that highly-available systems are
-generally expected to keep recovery times in the face of a failure on
-the order of 1-2 minutes, sometimes significantly less.
+High-availability systems typically achieve uptime of 99.99% or more, which roughly equates to less than an hour of cumulative downtime per year. In order to achieve this, high availability systems should keep recovery times after a failure to about one to two minutes, sometimes significantly less.
 
-OpenStack can currently meet such availability requirements for its
-own infrastructure services, meaning that an uptime of 99.99% is
-feasible for the OpenStack infrastructure proper. At this time,
-OpenStack _cannot_ guarantee 99.99% availability for individual guest
-instances.
+OpenStack currently meets such availability requirements for its own infrastructure services, meaning that an uptime of 99.99% is feasible for the OpenStack infrastructure proper. However, OpenStack _does_ _not_ guarantee 99.99% availability for individual guest instances.
+
+Preventing single points of failure can depend on whether or not a service is stateless.
 
 [[stateless-vs-stateful]]
 === Stateless vs. Stateful services
 
-How to prevent a single point of failure depends partially on whether a service is stateless or not. For example, the nova-scheduler service is stateless; you make a request, it provides a response, and no further attention is required; subsequent requests do not depend on the results of the first. All you need to do to make nova-scheduler highly-available is to provide redundant instances and load balance them. OpenStack services that are stateless include nova-api, nova-conductor, glance-api, keystone-api, neutron-api and nova-scheduler.
+A stateless service is one that provides a response after your request, and then requires no further attention. To make a stateless service highly available, you need to provide redundant instances and load balance them. OpenStack services that are stateless include nova-api, nova-conductor, glance-api, keystone-api, neutron-api and nova-scheduler.
 
-Stateful services, on the other hand, are more difficult to manage; a single action typically involves more than one request, so simply providing additional instances and load balancing will not solve the problem. One user-facing example of a stateful OpenStack service would be Horizon; if the UI reset itself every time the user went to a new page, it wouldn't be very useful. On a more basic level, the OpenStack database and message queue are also stateful, and must be managed accordingly to provide high-availability.
+A stateful service is one where subsequent requests to the service depend on the results of the first request. Stateful services are more difficult to manage because a single action typically involves more than one request, so simply providing additional instances and load balancing will not solve the problem. For example, if the Horizon user interface reset itself every time you went to a new page, it wouldn't be very useful. OpenStack services that are stateful include the OpenStack database and message queue.
 
-How you manage stateful services depends partially on whether you choose an Active/Passive or Active/Active configuration.
+Making stateful services highly available can depend on whether you choose an active/passive or active/active configuration.
 
 [[ap-intro]]
 === Active/Passive
 
-In an active/passive configuration, systems are set up to prevent availability and data loss problems by ensuring that in the event of a problem, additional resources can be brought online to replace those that have failed. For example, OpenStack would write to the main database while maintaining a disaster recovery database that can be brought online in the event that the main database fails.
+In an active/passive configuration, systems are set up to bring additional resources online to replace those that have failed. For example, OpenStack would write to the main database while maintaining a disaster recovery database that can be brought online in the event that the main database fails.
 
-Typically, an Active/Passive installation looks like this:
+Typically, an active/passive installation for a stateless service would maintain a redundant instance that can be brought online when required. Requests are load balanced using a virtual IP address and a load balancer such as HAProxy.
 
- * Redundant instances of stateless services are available, and requests are load balanced using a virtual IP address and a load balancer such as HAProxy.
- * Stateful services are managed in such a way that in the event of a system failure, a replacement resource can be brought online. A separate application (such as Pacemaker/Corosync) monitors these services, bringing the backup online as necessary. 
+A typical active/passive installation for a stateful service maintains a replacement resource that can be brought online when required. A separate application (such as Pacemaker or Corosync) monitors these services, bringing the backup online as necessary.
+
+// Removed bullets and made into parallel prose. However, I'm not certain on the difference between "a redundant instance" (for stateless) and "a replacement resource" (stateful). Please FIXME.
 
 [[aa-intro]]
 === Active/Active
 
-In an active/active configuration, the system is also set up with a backup, but rather than bringing it online when there's a problem, the system manages both the main and redundant systems concurrently. This way, if there's a problem, the user is unlikely to even notice; the backup system is already online, and takes on the increased load while the problem system is dealt with.
+In an active/active configuration, systems also use a backup but will manage both the main and redundant systems concurrently. This way, if there is a failure the user is unlikely to notice. The backup system is already online, and takes on increased load while the main system is fixed and brought back online.
 
-Typically, an Active/Active installation looks like this:
+Typically, an active/active installation for a stateless service would maintain a redundant instance, and requests are load balanced using a virtual IP address and a load balancer such as HAProxy.
 
- * Redundant instances of stateless services are available, and requests are load balanced using a virtual IP address and a load balancer such as HAProxy.
- * Stateful services are managed in such a way that services are redundant, and that all instances have an identical state. For example, updates to one instance of a database would also update all other instances. This way a request to one instance is the same as a request to any other. A load balancer manages the traffic to these systems, ensuring that working systems always handle the request.
+A typical active/active installation for a stateful service would include redundant services with all instances having an identical state. For example, updates to one instance of a database would also update all other instances. This way a request to one instance is the same as a request to any other. A load balancer manages the traffic to these systems, ensuring that operational systems always handle the request.
 
-This document discusses some of the more common ways to implement these architectures, but they are by no means the only ways to do it. The important thing is to make sure that your services are redundant, and available; how you achieve that is up to you. Let's look at some options for making that happen.
+These are some of the more common ways to implement these high availability architectures, but they are by no means the only ways to do it. The important thing is to make sure that your services are redundant, and available; how you achieve that is up to you. This document will cover some of the more common options for highly available systems.
 
 
