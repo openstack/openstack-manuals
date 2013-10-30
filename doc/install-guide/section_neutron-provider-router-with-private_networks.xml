@@ -96,7 +96,7 @@
                         <listitem>
                             <para>Edit file <filename>/etc/neutron/neutron.conf</filename>
                                 and modify:
-<programlisting language="ini">core_plugin = neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2
+<programlisting language="ini">core_plugin = neutron.plugins.ml2.plugin.Ml2Plugin
 auth_strategy = keystone
 fake_rabbit = False
 rabbit_password = guest</programlisting>
@@ -104,12 +104,13 @@ rabbit_password = guest</programlisting>
                         </listitem>
                         <listitem>
                             <para>Edit file <filename>
-                            /etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>
+                            /etc/neutron/plugins/ml2/ml2_conf.ini</filename>
                                 and modify:</para>
                             <programlisting language="ini">[database]
 connection = mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@localhost:3306/neutron
-[ovs]
+[ml2]
 tenant_network_type = vlan
+[ml2_type_vlan]
 network_vlan_ranges = physnet1:100:2999</programlisting>
                         </listitem>
                         <listitem>
@@ -165,13 +166,15 @@ rabbit_host = controller</programlisting>
                 <step>
                     <para>Update the plug-in configuration file,
                             <filename>
-                              /etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini
-                            </filename>:</para>
+                              /etc/neutron/plugins/ml2/ml2_conf.ini
+			    </filename>:</para>
                     <programlisting language="ini">[database]
 connection = mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@controller:3306/neutron
-[ovs]
+[ml2]
 tenant_network_type=vlan
+[ml2_type_vlan]
 network_vlan_ranges = physnet1:1:4094
+[ovs]
 bridge_mappings = physnet1:br-eth1</programlisting>
                 </step>
                 <step>
@@ -278,12 +281,14 @@ rabbit_host = controller</programlisting>
                 </step>
                 <step>
                     <para>Update the file <filename>
-                    /etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>:</para>
+                    /etc/neutron/plugins/ml2/ml2_conf.ini</filename>:</para>
                     <programlisting language="ini">[database]
 connection = mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@controller:3306/neutron
-[ovs]
+[ml2]
 tenant_network_type = vlan
+[ml2_type_vlan]
 network_vlan_ranges = physnet1:1:4094
+[ovs]
 bridge_mappings = physnet1:br-eth1</programlisting>
                 </step>
                 <step>
