@@ -39,6 +39,12 @@
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT flat_interface eth1</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT flat_network_bridge br100</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT public_interface eth1</userinput></screen>
+<screen os ="opensuse;sles">
+<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT network_api_class nova.network.api.API</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT security_group_api nova</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT rabbit_host <replaceable>controller</replaceable></userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf database connection mysql://nova:<replaceable>NOVA_DBPASS</replaceable>@<replaceable>controller</replaceable>/nova</userinput></screen>
+
   <para os="ubuntu;debian">Edit <filename>/etc/nova/nova.conf</filename> and add to the <literal>[DEFAULT]</literal> section.</para>
   <programlisting os="ubuntu;debian" language="ini">[DEFAULT]
 ...
@@ -54,6 +60,7 @@ force_dhcp_release=True
 flat_network_bridge=br100
 flat_interface=eth1
 public_interface=eth1
+rabbit_host=<replaceable>controller</replaceable>
       </programlisting>
     </step>
   <step os="fedora;rhel;centos">
