@@ -252,9 +252,9 @@ admin_password=<replaceable>NEUTRON_PASS</replaceable></programlisting>
           <step>
             <para>Start Open vSwitch and configure it to start when
               the system boots:</para>
-            <screen os="ubuntu;debian;rhel;fedora;centos"><prompt>#</prompt> <userinput>service openvswitch start</userinput>
+            <screen os="debian;rhel;fedora;centos"><prompt>#</prompt> <userinput>service openvswitch start</userinput>
 <prompt>#</prompt> <userinput>chkconfig openvswitch on</userinput></screen>
-            <screen os="opensuse;sles"><prompt>#</prompt> <userinput>service openvswitch-switch start</userinput>
+            <screen os="opensuse;sles;ubuntu"><prompt>#</prompt> <userinput>service openvswitch-switch start</userinput>
 <prompt>#</prompt> <userinput>chkconfig openvswitch-switch on</userinput></screen>
           </step>
           <step>
@@ -423,8 +423,12 @@ firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewal
           <!-- TODO(sross): document other firewall options -->
           <step>
             <para>Restart the <acronym>OVS</acronym> plug-in, and make sure it starts on boot:</para>
-            <screen><prompt>#</prompt> <userinput>service neutron-openvswitch-agent restart</userinput>
+            <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>service neutron-openvswitch-agent restart</userinput>
 <prompt>#</prompt> <userinput>chkconfig neutron-openvswitch-agent on</userinput></screen>
+            <screen os="opensuse;sles"><prompt>#</prompt> <userinput>service openstack-neutron-openvswitch-agent restart</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-neutron-openvswitch-agent on</userinput></screen>
+            <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service neutron-plugin-openvswitch-agent restart</userinput>
+<prompt>#</prompt> <userinput>chkconfig neutron-plugin-openvswitch-agent on</userinput></screen>
           </step>
           <step>
             <para>Now, return whence you came!</para>
@@ -746,9 +750,9 @@ admin_password=<replaceable>NEUTRON_PASS</replaceable></programlisting>
           <step>
             <para>Start Open vSwitch and configure it to start when
               the system boots:</para>
-            <screen os="ubuntu;debian;rhel;fedora;centos"><prompt>#</prompt> <userinput>service openvswitch start</userinput>
+            <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>service openvswitch start</userinput>
 <prompt>#</prompt> <userinput>chkconfig openvswitch on</userinput></screen>
-            <screen os="opensuse;sles"><prompt>#</prompt> <userinput>service openvswitch-switch start</userinput>
+            <screen os="opensuse;sles;ubuntu;debian"><prompt>#</prompt> <userinput>service openvswitch-switch start</userinput>
 <prompt>#</prompt> <userinput>chkconfig openvswitch-switch on</userinput></screen>
           </step>
           <step>
@@ -807,8 +811,12 @@ firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewal
                 the core Neutron configuration after this
                 section</emphasis>, restart the Neutron Open vSwitch
               agent, and set it to start at boot:</para>
-            <screen><prompt>#</prompt> <userinput>service neutron-openvswitch-agent restart</userinput>
+            <screen os="opensuse;sles;fedora;centos;rhel"><prompt>#</prompt> <userinput>service neutron-openvswitch-agent restart</userinput>
 <prompt>#</prompt> <userinput>chkconfig neutron-openvswitch-agent on</userinput></screen>
+            <screen os="opensuse;sles"><prompt>#</prompt> <userinput>service openstack-neutron-openvswitch-agent restart</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-neutron-openvswitch-agent on</userinput></screen>
+            <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service neutron-plugin-openvswitch-agent restart</userinput>
+<prompt>#</prompt> <userinput>chkconfig neutron-plugin-openvswitch-agent on</userinput></screen>
           </step>
           <step>
             <para>Now, return to the general <acronym>OVS</acronym>
