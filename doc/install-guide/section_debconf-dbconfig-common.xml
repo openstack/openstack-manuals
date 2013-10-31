@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<section xml:id="debconf-dbconfig-common"
+  xmlns="http://docbook.org/ns/docbook"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+  <title>dbconfig-common package</title>
+  <para>The <systemitem class="library">dbconfig-common</systemitem>
+    package provides a standard Debian interface that enables you to
+    configure Debian database parameters. It includes localized
+    prompts for many languages and it supports OpenStack-supported
+    database back ends, which are SQLite, MySQL, and
+    PostgreSQL.</para>
+  <para>By default, the <systemitem class="library"
+      >dbconfig-common</systemitem> system will configure your packages to
+      use SQLite3. So if you use
+    <systemitem class="library">debconf</systemitem> in non-interactive
+    mode without using pre-seeding, the OpenStack services that you
+    install will be using SQLite3.</para>
+  <para>By default, <systemitem class="library"
+      >dbconfig-common</systemitem> does not provide access to
+    database servers over a network. If you want the <systemitem
+      class="library">dbconfig-common</systemitem> package to prompt
+    for remote database servers that are accessed over a network and
+    not through a UNIX socket file, you must reconfigure it, as
+    follows:</para>
+  <screen><prompt>#</prompt> <userinput>apt-get install dbconfig-common &amp;&amp; dpkg-reconfigure dbconfig-common</userinput></screen>
+  <para>Here is a snapshot of the two configuration screens that
+    appear when you re-configure the <systemitem class="service"
+      >dbconfig-common</systemitem> package:</para>
+  <mediaobject>
+    <imageobject>
+      <imagedata scale="40"
+        fileref="figures/debconf-screenshots/dbconfig-common_keep_admin_pass.png"/>
+    </imageobject>
+  </mediaobject>
+  <mediaobject>
+    <imageobject>
+      <imagedata scale="40"
+        fileref="figures/debconf-screenshots/dbconfig-common_used_for_remote_db.png"/>
+    </imageobject>
+  </mediaobject>
+  <para>Unlike other debconf prompts, you cannot pre-seed the answers
+    for the <systemitem class="library">dbconfig-common</systemitem>
+    prompts by using <command>debconf-set-selections</command>. Instead, you
+    must create a file in <filename>/etc/dbconfig-common</filename>.
+    For example, you might create a keystone configuration file for
+      <systemitem class="library">dbconfig-common</systemitem> that is
+    located in
+    <filename>/etc/dbconfig-common/keystone.conf</filename>:</para>
+  <programlisting language="ini">dbc_install='true'
+dbc_upgrade='true'
+dbc_remove=''
+dbc_dbtype='mysql'
+dbc_dbuser='keystone'
+dbc_dbpass='MyKeyStoneDbPassWord'
+dbc_dbserver=''
+dbc_dbport=''
+dbc_dbname='keystonedb'
+dbc_dbadmin='root'
+dbc_basepath=''
+dbc_ssl=''
+dbc_authmethod_admin=''
+dbc_authmethod_user=''</programlisting>
+  <para>After you create this file, run the following command:</para>
+  <screen><prompt>#</prompt> <userinput>apt-get install keystone</userinput></screen>
+  <para>The Identity Service is installed with MySQL as the database
+    back end, keystonedb as database name, and the localhost socket
+    file.</para>
+  <para>The following screens are in the <systemitem class="service">cinder-common</systemitem>
+    package.</para>
+  <mediaobject>
+    <imageobject>
+      <imagedata scale="40"
+        fileref="figures/debconf-screenshots/dbconfig-common_1_configure-with-dbconfig-yes-no.png"/>
+    </imageobject>
+  </mediaobject>
+  <mediaobject>
+    <imageobject>
+      <imagedata scale="40"
+        fileref="figures/debconf-screenshots/dbconfig-common_2_db-types.png"/>
+    </imageobject>
+  </mediaobject>
+  <mediaobject>
+    <imageobject>
+      <imagedata scale="40"
+        fileref="figures/debconf-screenshots/dbconfig-common_3_connection_method.png"/>
+    </imageobject>
+  </mediaobject>
+  <mediaobject>
+    <imageobject>
+      <imagedata scale="40"
+        fileref="figures/debconf-screenshots/dbconfig-common_4_mysql_root_password.png"/>
+    </imageobject>
+  </mediaobject>
+  <mediaobject>
+    <imageobject>
+      <imagedata scale="40"
+        fileref="figures/debconf-screenshots/dbconfig-common_5_mysql_app_password.png"/>
+    </imageobject>
+  </mediaobject>
+  <mediaobject>
+    <imageobject>
+      <imagedata scale="40"
+        fileref="figures/debconf-screenshots/dbconfig-common_6_mysql_app_password_confirm.png"/>
+    </imageobject>
+  </mediaobject>
+</section>
