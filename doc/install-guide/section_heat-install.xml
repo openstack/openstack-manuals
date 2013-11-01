@@ -3,29 +3,21 @@
   xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
   <title>Install the Orchestration Service</title>
-  <procedure>
+  <procedure os="debian">
+    <step>
+      <para>Install the Orchestration Service on the controller node:</para>
+      <screen os="debian"><prompt>#</prompt> <userinput>apt-get install heat-api heat-api-cfn heat-engine</userinput></screen>
+    </step>
+    <step><para>Answer to the <systemitem class="library">debconf</systemitem>
+    prompts about the database, the RabbitMQ and the
+    <code>keystone_authtoken</code> configuration, and the API endpoint registration.</para>
+    </step>
+  </procedure>
+  <procedure os="rhel;centos;fedora;opensuse;sles;ubuntu">
     <step>
       <para>Install the Orchestration Service on the controller
         node:</para>
-      <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install heat-api heat-api-cfn heat-engine</userinput></screen>
-      <note os="debian">
-        <title>Note for Debian users</title>
-        <para>As for the rest of OpenStack, you configure the
-          Orchestration Service through the
-            <filename>debconf</filename>. You do not need to manually
-          configure the database, Keystone auth token, or the RabbitMQ
-          parameters of Heat, or run the <command>heat-manage
-            db_sync</command> command. You can skip the following
-          steps. If you must reconfigure the Orchestration Service,
-          run the following command:</para>
-        <screen><prompt>#</prompt> <userinput>dpkg-reconfigure -plow heat-common</userinput></screen>
-        <para>Alternatively, edit the configuration files and manually
-          restart the daemons. If your database server is installed
-          remotely, you must run the following command before you
-          install the Orchestration Service:</para>
-        <screen><prompt>#</prompt> <userinput>apt-get install dbconfig-common &amp;&amp; \
-          dpkg-reconfigure -plow dbconfig-common</userinput></screen>
-      </note>
+      <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install heat-api heat-api-cfn heat-engine</userinput></screen>
       <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-heat-api openstack-heat-engine FIXME</userinput></screen>
       <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-heat-api openstack-heat-api-cfn openstack-heat-engine</userinput></screen>
     </step>
@@ -56,7 +48,7 @@ IDENTIFIED BY '<replaceable>HEAT_DBPASS</replaceable>';</userinput>
 <prompt>mysql></prompt> <userinput>GRANT ALL PRIVILEGES ON heat.* TO 'heat'@'%' \
 IDENTIFIED BY '<replaceable>HEAT_DBPASS</replaceable>';</userinput></screen>
     </step>
-    <step os="fedora;centos;rhel;ubuntu;debian">
+    <step os="fedora;centos;rhel;ubuntu">
       <para>Create the heat service tables:</para>
       <screen><prompt>#</prompt> <userinput>heat-manage db_sync</userinput></screen>
       <note>
@@ -64,7 +56,7 @@ IDENTIFIED BY '<replaceable>HEAT_DBPASS</replaceable>';</userinput></screen>
             <errortext>DeprecationWarning</errortext> errors.</para>
       </note>
     </step>
-    <step os="ubuntu;debian">
+    <step os="ubuntu">
       <para>The Ubuntu packages do not correctly set up logging. Edit
         the <filename>/etc/heat/heat.conf</filename> file and change
         the <literal>[DEFAULT]</literal> section:</para>
@@ -134,7 +126,7 @@ admin_password = <replaceable>HEAT_PASS</replaceable>
   --internalurl=http://<replaceable>controller</replaceable>:8000/v1 \
   --adminurl=http://<replaceable>controller</replaceable>:8000/v1</userinput></screen>
     </step>
-    <step os="ubuntu;debian">
+    <step os="ubuntu">
       <para>Restart the service with its new settings:</para>
       <screen><prompt>#</prompt> <userinput>service heat-api restart</userinput>
 <prompt>#</prompt> <userinput>service heat-api-cfn restart</userinput>
