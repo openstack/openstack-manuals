@@ -10,25 +10,16 @@
       and a range of disparate agents. This procedure details how to
       install the core components before you install the agents
       elsewhere, such as on the compute node.</para>
-    <note os="debian">
-      <title>Note for Debian users</title>
-      <para>As for the rest of OpenStack, you configure the Metering
-        Service through the <filename>debconf</filename> file. You do
-        not need to manually configure the API endpoint and the
-        RabbitMQ parameters of Ceilometer. However, you must configure
-        the metering_secret and the auth_token manually.</para>
-      <para>If you must reconfigure the Metering Service, run the
-        following command:</para>
-      <screen><prompt>#</prompt> <userinput>dpkg-reconfigure -plow ceilometer-common</userinput></screen>
-      <para>Alternatively, edit the configuration files and manually
-        restart the daemons.</para>
-    </note>
     <step>
       <para>Install the Metering Service on the controller
         node:</para>
       <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install ceilometer-api ceilometer-collector ceilometer-agent-central python-ceilometerclient</userinput></screen>
       <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-ceilometer-api openstack-ceilometer-collector openstack-ceilometer-agent-central python-ceilometerclient FIXME</userinput></screen>
       <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-ceilometer-api openstack-ceilometer-collector openstack-ceilometer-agent-central python-ceilometerclient</userinput></screen>
+    </step>
+    <step os="debian"><para>Answer to the <systemitem class="library">debconf</systemitem>
+    prompts about the API endpoint registration, the RabbitMQ credentials,
+    and the <code>keystone_autotoken</code>.</para>
     </step>
     <step>
       <para>The Metering Service uses a database to store information.
@@ -96,7 +87,7 @@ connection = mongodb://ceilometer:<replaceable>CEILOMETER_DBPASS</replaceable>@<
 metering_secret = ADMIN_TOKEN
 ...</programlisting>
     </step>
-    <step>
+    <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
       <para>Create a user called <literal>ceilometer</literal> so that
         the Metering Service can use to authenticate with the Identity
         Service. Use the <literal>service</literal> tenant and give
@@ -104,7 +95,7 @@ metering_secret = ADMIN_TOKEN
       <screen><prompt>#</prompt> <userinput>keystone user-create --name=ceilometer --pass=<replaceable>CEILOMETER_PASS</replaceable> --email=<replaceable>ceilometer@example.com</replaceable></userinput>
 <prompt>#</prompt> <userinput>keystone user-role-add --user=ceilometer --tenant=service --role=admin</userinput></screen>
     </step>
-    <step>
+    <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
       <para>Add the credentials to the configuration files for the
         Metering Service.</para>
       <screen os="centos;rhel;fedora;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf keystone_authtoken auth_host <replaceable>controller</replaceable></userinput>
@@ -126,7 +117,7 @@ admin_user = ceilometer
 admin_password = CEILOMETER_PASS
 ...</programlisting>
     </step>
-    <step>
+    <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
       <para>Register the Metering Service with the Identity Service so
         that other OpenStack services can locate it. Register the
         service and specify the endpoint using the
@@ -134,7 +125,7 @@ admin_password = CEILOMETER_PASS
       <screen><prompt>#</prompt> <userinput>keystone service-create --name=ceilometer --type=metering \
   --description="Ceilometer Metering Service"</userinput></screen>
     </step>
-    <step>
+    <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
       <para>Note the <literal>id</literal> property for the service
         that was returned in the previous step. Use it when you create
         the endpoint.</para>
