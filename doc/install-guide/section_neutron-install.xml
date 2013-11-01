@@ -6,120 +6,128 @@
   xmlns:svg="http://www.w3.org/2000/svg"
   xmlns:html="http://www.w3.org/1999/xhtml" version="5.0">
   <title>Install Networking Services</title>
-  <para os="debian">When you install a Neutron node, you must configure it
-  for API endpoints, RabbitMQ, <code>keystone_authtoken</code>, and the database.
-  This is done through <systemitem class="library">debconf</systemitem>, like for the rest of OpenStack,
-  when installing any package for the Networking service.</para>
-  <para os="debian">When installing a Neutron package, <systemitem class="library">debconf</systemitem>
-  will prompt you to choose configuration options including the plug-in to use:</para>
-  <informalfigure os="debian">
-    <mediaobject>
-      <imageobject>
-        <imagedata scale="50" fileref="figures/debconf-screenshots/neutron_1_plugin_selection.png"/>
-      </imageobject>
-    </mediaobject>
-  </informalfigure>
-  <para os="debian">This parameter sets the for the
-  <parameter>core_plugin</parameter> option value in the
-  <filename>/etc/neutron/neutron.conf</filename> file.</para>
-  <note os="debian"><para>When you install the <systemitem class="service">neutron-common</systemitem> package,
-  all plug-ins are installed by default.</para>
+  <para os="debian">When you install a Neutron node, you must
+    configure it for API endpoints, RabbitMQ,
+      <code>keystone_authtoken</code>, and the database. Use
+      <systemitem class="library">debconf</systemitem> to configure
+    these values.</para>
+  <para os="debian">When you install a Neutron package, <systemitem
+      class="library">debconf</systemitem> prompts you to choose
+    configuration options including which plug-in to use, as
+    follows:</para>
+  <mediaobject>
+    <imageobject>
+      <imagedata scale="50"
+        fileref="figures/debconf-screenshots/neutron_1_plugin_selection.png"
+      />
+    </imageobject>
+  </mediaobject>
+  <para>This parameter sets the <parameter>core_plugin</parameter>
+    option value in the <filename>/etc/neutron/neutron.conf</filename>
+    file.</para>
+  <note>
+    <para>When you install the <systemitem class="service"
+        >neutron-common</systemitem> package, all plug-ins are
+      installed by default.</para>
   </note>
-  <para os="debian">The following table lists the values for the
-  <parameter>core_plugin</parameter> option. These values depend on your
-  answer to the <systemitem class="library">debconf</systemitem> prompt.</para>
-  <table rules="all" os="debian">
+  <para>The following table lists the values for the
+      <parameter>core_plugin</parameter> option. These values depend
+    on your response to the <systemitem class="library"
+      >debconf</systemitem> prompt.</para>
+  <table rules="all">
     <caption>Plug-ins and the core_plugin option</caption>
-      <thead>
-        <tr>
-          <th>Plug-in name</th>
-          <th>core_plugin value in neutron.conf</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><para>OpenVSwitch</para></td>
-          <td><para>neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2</para></td>
-        </tr>
-        <tr>
-          <td><para>LinuxBridge</para></td>
-          <td><para>neutron.plugins.linuxbridge.lb_neutron_plugin.LinuxBridgePluginV2</para></td>
-        </tr>
-        <tr>
-          <td><para>ml2</para></td>
-          <td><para>neutron.plugins.ml2.plugin.Ml2Plugin</para></td>
-        </tr>
-        <tr>
-          <td><para>RYU</para></td>
-          <td><para>neutron.plugins.ryu.ryu_neutron_plugin.RyuNeutronPluginV2</para></td>
-        </tr>
-        <tr>
-          <td><para>PLUMgrid</para></td>
-          <td><para>neutron.plugins.plumgrid.plumgrid_nos_plugin.plumgrid_plugin.NeutronPluginPLUMgridV2</para></td>
-        </tr>
-        <tr>
-          <td><para>Brocade</para></td>
-          <td><para>neutron.plugins.brocade.NeutronPlugin.BrocadePluginV2</para></td>
-        </tr>
-        <tr>
-          <td><para>Hyper-V</para></td>
-          <td><para>neutron.plugins.hyperv.hyperv_neutron_plugin.HyperVNeutronPlugin</para></td>
-        </tr>
-        <tr>
-          <td><para>BigSwitch</para></td>
-          <td><para>neutron.plugins.bigswitch.plugin.NeutronRestProxyV2</para></td>
-        </tr>
-        <tr>
-          <td><para>Cisco</para></td>
-          <td><para>neutron.plugins.cisco.network_plugin.PluginV2</para></td>
-        </tr>
-        <tr>
-          <td><para>Midonet</para></td>
-          <td><para>neutron.plugins.midonet.plugin.MidonetPluginV2</para></td>
-        </tr>
-        <tr>
-          <td><para>Nec</para></td>
-          <td><para>neutron.plugins.nec.nec_plugin.NECPluginV2</para></td>
-        </tr>
-        <tr>
-          <td><para>MetaPlugin</para></td>
-          <td><para>neutron.plugins.metaplugin.meta_neutron_plugin.MetaPluginV2</para></td>
-        </tr>
-        <tr>
-          <td><para>Mellanox</para></td>
-          <td><para>neutron.plugins.mlnx.mlnx_plugin.MellanoxEswitchPlugin</para></td>
-        </tr>
-      </tbody>
-    </table>
-    <para os="debian">Depending on the value of
-    <parameter>core_plugin</parameter>, the start-up scripts start the
-    daemons by using the corresponding plugin configuration file as
-    parameter directly. For example, if you selected the Open vSwitch
-    plugin, then <code>neutron-server</code> will be launched with
-    <code>--config-file /etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</code>
+    <thead>
+      <tr>
+        <th>Plug-in</th>
+        <th>core_plugin value in
+          <filename>neutron.conf</filename></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><para>OpenVSwitch</para></td>
+        <td><para>neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2</para></td>
+      </tr>
+      <tr>
+        <td><para>LinuxBridge</para></td>
+        <td><para>neutron.plugins.linuxbridge.lb_neutron_plugin.LinuxBridgePluginV2</para></td>
+      </tr>
+      <tr>
+        <td><para>ml2</para></td>
+        <td><para>neutron.plugins.ml2.plugin.Ml2Plugin</para></td>
+      </tr>
+      <tr>
+        <td><para>RYU</para></td>
+        <td><para>neutron.plugins.ryu.ryu_neutron_plugin.RyuNeutronPluginV2</para></td>
+      </tr>
+      <tr>
+        <td><para>PLUMgrid</para></td>
+        <td><para>neutron.plugins.plumgrid.plumgrid_nos_plugin.plumgrid_plugin.NeutronPluginPLUMgridV2</para></td>
+      </tr>
+      <tr>
+        <td><para>Brocade</para></td>
+        <td><para>neutron.plugins.brocade.NeutronPlugin.BrocadePluginV2</para></td>
+      </tr>
+      <tr>
+        <td><para>Hyper-V</para></td>
+        <td><para>neutron.plugins.hyperv.hyperv_neutron_plugin.HyperVNeutronPlugin</para></td>
+      </tr>
+      <tr>
+        <td><para>BigSwitch</para></td>
+        <td><para>neutron.plugins.bigswitch.plugin.NeutronRestProxyV2</para></td>
+      </tr>
+      <tr>
+        <td><para>Cisco</para></td>
+        <td><para>neutron.plugins.cisco.network_plugin.PluginV2</para></td>
+      </tr>
+      <tr>
+        <td><para>Midonet</para></td>
+        <td><para>neutron.plugins.midonet.plugin.MidonetPluginV2</para></td>
+      </tr>
+      <tr>
+        <td><para>Nec</para></td>
+        <td><para>neutron.plugins.nec.nec_plugin.NECPluginV2</para></td>
+      </tr>
+      <tr>
+        <td><para>MetaPlugin</para></td>
+        <td><para>neutron.plugins.metaplugin.meta_neutron_plugin.MetaPluginV2</para></td>
+      </tr>
+      <tr>
+        <td><para>Mellanox</para></td>
+        <td><para>neutron.plugins.mlnx.mlnx_plugin.MellanoxEswitchPlugin</para></td>
+      </tr>
+    </tbody>
+  </table>
+  <para>Depending on the value of <parameter>core_plugin</parameter>,
+    the start-up scripts start the daemons by using the corresponding
+    plug-in configuration file directly. For example, if you selected
+    the Open vSwitch plug-in, <code>neutron-server</code> is launched
+    with <parameter>--config-file
+      /etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</parameter>
     automatically.</para>
-  <para os="debian">The <systemitem class="library">neutron-common</systemitem> package
-  also prompt you for the default network configuration that you wish to use:
-  <informalfigure>
-    <mediaobject>
-      <imageobject>
-        <imagedata scale="50" fileref="figures/debconf-screenshots/neutron_2_networking_type.png"/>
-      </imageobject>
-    </mediaobject>
-  </informalfigure>
-  <informalfigure>
-    <mediaobject>
-      <imageobject>
-        <imagedata scale="50" fileref="figures/debconf-screenshots/neutron_3_hypervisor_ip.png"/>
-      </imageobject>
-    </mediaobject>
-  </informalfigure>
-  </para>
-  <para os="rhel;centos;fedora;opensuse;sles;ubuntu">Before you configure individual nodes for Neutron, you must
-    perform the initial setup required for any OpenStack component:
-    creating a user, a service, endpoint(s), and a database. Once you
-    have completed the steps below, follow the subsections of this
-    guide to set up each of your OpenStack nodes for Neutron.</para>
+  <para os="debian">The <systemitem class="library"
+      >neutron-common</systemitem> package also prompts you for the
+    default network configuration:</para>
+  <mediaobject>
+    <imageobject>
+      <imagedata scale="50"
+        fileref="figures/debconf-screenshots/neutron_2_networking_type.png"
+      />
+    </imageobject>
+  </mediaobject>
+  <mediaobject>
+    <imageobject>
+      <imagedata scale="50"
+        fileref="figures/debconf-screenshots/neutron_3_hypervisor_ip.png"
+      />
+    </imageobject>
+  </mediaobject>
+  <para os="rhel;centos;fedora;opensuse;sles;ubuntu">Before you
+    configure individual nodes for Neutron, you must create the
+    required OpenStack components: user, service, database, and one or
+    more endpoints. After you complete the following steps, follow the
+    instructions in the subsections of this guide to set up OpenStack
+    nodes for Neutron.</para>
   <procedure os="rhel;centos;fedora;opensuse;sles;ubuntu">
     <step>
       <!-- TODO(sross): change this to use `openstack-db` once it supports Neutron -->
@@ -135,23 +143,21 @@ IDENTIFIED BY '<replaceable>NEUTRON_DBPASS</replaceable>';</userinput></screen>
     </step>
     <step>
       <para>Create the required user, service, and endpoint so that
-        Neutron can interface with the Identity Service,
-        Keystone.</para>
+        Neutron can interface with the Identity Service.</para>
       <para>To list the tenant IDs:</para>
-      <screen><prompt>#</prompt> <userinput>keystone tenant-list</userinput>  </screen>
+      <screen><prompt>#</prompt> <userinput>keystone tenant-list</userinput></screen>
       <para>To list role IDs:</para>
       <screen><prompt>#</prompt> <userinput>keystone role-list</userinput></screen>
       <para>Create a neutron user:</para>
       <screen><prompt>#</prompt> <userinput>keystone user-create --name=neutron --pass=<replaceable>NEUTRON_PASS</replaceable> --email=<replaceable>neutron@example.com</replaceable></userinput></screen>
       <para>Add the user role to the neutron user:</para>
-      <screen><prompt>#</prompt> <userinput>keystone user-role-add --user=neutron --tenant=service --role=admin</userinput> </screen>
+      <screen><prompt>#</prompt> <userinput>keystone user-role-add --user=neutron --tenant=service --role=admin</userinput></screen>
       <para>Create the neutron service:</para>
       <screen><prompt>#</prompt> <userinput>keystone service-create --name=neutron --type=network \
-     --description="OpenStack Networking Service"</userinput>  </screen>
-      <para>Create the neutron endpoint. Note the
-          <literal>id</literal> property for the service that was
-        returned in the previous step. Use it to create the
-        endpoint:</para>
+     --description="OpenStack Networking Service"</userinput></screen>
+      <para>Create the neutron endpoint. Use the <literal>id</literal>
+        property for the service that was returned in the previous
+        step to create the endpoint:</para>
       <screen><prompt>#</prompt> <userinput>keystone endpoint-create --service-id <replaceable>the_service_id_above</replaceable> \
                                --publicurl http://<replaceable>controller</replaceable>:9696 \
                                --adminurl http://<replaceable>controller</replaceable>:9696 \
@@ -171,14 +177,13 @@ IDENTIFIED BY '<replaceable>NEUTRON_DBPASS</replaceable>';</userinput></screen>
           <replaceable>EXTERNAL_INTERFACE</replaceable>).</para>
       <para>The management network handles communication between
         nodes. The data network handles communication coming to and
-        from VMs. The external NIC connects the network node (and the
-        controller node, as well, if you so choose) to the outside
-        world, so your VMs can have connectivity to the outside
-        world.</para>
-      <para>All NICs should have static IPs. However, the data and
-        external NICs have some special set up. For details about your
-        chosen Neutron plug-in, see <xref
-          linkend="install-neutron.install-plug-in"/>.</para>
+        from VMs. The external NIC connects the network node, and
+        optionally to the controller node, so your VMs can have
+        connectivity to the outside world.</para>
+      <para>All NICs must have static IPs. However, the data and
+        external NICs have a special set up. For details about Neutron
+        plug-ins, see <xref linkend="install-neutron.install-plug-in"
+        />.</para>
     </note>
     <warning os="rhel;centos">
       <para>By default, the <literal>system-config-firewall</literal>
@@ -205,12 +210,14 @@ IDENTIFIED BY '<replaceable>NEUTRON_DBPASS</replaceable>';</userinput></screen>
         <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-neutron openstack-neutron-l3-agent openstack-neutron-dhcp-agent</userinput></screen>
       </step>
       <step os="debian">
-        <para>Answer the <systemitem class="library">debconf</systemitem> prompts about the database setup, the
-        <literal>[keystone_authtoken]</literal>, the RabbitMQ credentials,
-        and the API endpoing configuration.</para>
+        <para>Response to the <systemitem class="library"
+            >debconf</systemitem> prompts to set up the database,
+            <literal>[keystone_authtoken]</literal>, RabbitMQ
+          credentials, and API endpoints.</para>
       </step>
       <step os="rhel;centos;fedora;opensuse;sles">
-        <para>Make sure basic Neutron-related service are set to start at boot time:</para>
+        <para>Make sure basic Neutron-related service are set to start
+          at boot time:</para>
         <screen><prompt>#</prompt> <userinput>for s in neutron-{dhcp,l3}-agent; do chkconfig $s on; done</userinput></screen>
       </step>
       <step>
@@ -222,10 +229,9 @@ IDENTIFIED BY '<replaceable>NEUTRON_DBPASS</replaceable>';</userinput></screen>
 net.ipv4.conf.all.rp_filter=0
 net.ipv4.conf.default.rp_filter=0</programlisting>
         <note>
-          <para>When dealing with system network-related
-            configurations, you might need to restart the network
-            service to get the configurations to take effect. Do so
-            with the following command:</para>
+          <para>With system network-related configurations, you might
+            need to restart the network service to get the
+            configurations to take effect, as follows:</para>
           <screen os="ubuntu"><prompt>#</prompt> <userinput>service networking restart</userinput></screen>
           <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>service network restart</userinput></screen>
         </note>
@@ -244,9 +250,9 @@ admin_user = neutron
 admin_password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
       </step>
       <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
-        <para>Tell Neutron how to connect to the database by editing
-            <literal>[database]</literal> section in the same
-          file:</para>
+        <para>Tell Neutron how to connect to the database. Edit the
+            <literal>[database]</literal> section in the same file, as
+          follows:</para>
         <programlisting language="ini">[database]
 connection = mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@controller/neutron</programlisting>
       </step>
@@ -262,18 +268,17 @@ admin_user=neutron
 admin_tenant_name=service
 admin_password=<replaceable>NEUTRON_PASS</replaceable></programlisting>
       </step>
-      <step os="debian"><para>Make sure you have configured your network
-      plug-in throughout the <link linkend="install-neutron.install-plug-in">instructions</link>
-      for it in the linked section, and then return here.</para>
+      <step os="debian">
+        <para>Configure your network plug-in. For instructions, see
+            <link linkend="install-neutron.install-plug-in"
+            >instructions</link>. Then, return here.</para>
       </step>
       <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
-        <para>Now, you can install, and then configure, a networking
-          plug-in. The networking plug-in is what Neutron uses to
-          perform the actual software-defined networking. There are
-          several options for this. Choose one, follow the <link
+        <para>Install and configure a networking plug-in. Neutron uses
+          the networking plug-in to perform software-defined
+          networking. For instructions, see <link
             linkend="install-neutron.install-plug-in"
-            >instructions</link> for it in the linked section, and
-          then return here.</para>
+            >instructions</link>. Then, return here.</para>
       </step>
     </procedure>
     <para>Now that you've installed and configured a plug-in (you did
@@ -384,7 +389,7 @@ GATEWAY=EXTERNAL_INTERFACE_GATEWAY</programlisting>
           </step>
           <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
             <para>Similarly, you must also tell Neutron core to use
-                <acronym>OVS</acronym> by editing
+                <acronym>OVS</acronym>. Edit the
                 <filename>/etc/neutron/neutron.conf</filename>:</para>
             <programlisting language="ini">core_plugin = neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2</programlisting>
           </step>
@@ -399,67 +404,62 @@ GATEWAY=EXTERNAL_INTERFACE_GATEWAY</programlisting>
             <para os="rhel;centos">Additionally, if you a using
               certain kernels with partial support for namespaces
               (such as some recent versions of RHEL (not RHOS) and
-              CentOS), you must enable veth support, by editing the
-              above files again:</para>
+              CentOS), you must enable veth support. Edit the previous
+              files, as follows:</para>
             <programlisting language="ini" os="rhel;centos">ovs_use_veth = True</programlisting>
           </step>
           <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
             <para>Tell the <acronym>OVS</acronym> plug-in how to
-              connect to the database. To do so, edit the
+              connect to the database. Edit the
                 <filename>/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>
               file:</para>
             <programlisting language="ini">[database]
 connection = mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@controller/neutron</programlisting>
           </step>
           <step>
-            <para>Now, you must decide which type of networking
-              technology you wish to use to create the virtual
-              networks. Neutron has support for GRE tunneling, VLANs,
-              and VXLANs. Currently, this guide supports GRE tunneling
+            <para>Choose a networking technology to create the virtual
+              networks. Neutron supports GRE tunneling, VLANs, and
+              VXLANs. This guide shows how to configure GRE tunneling
               and VLANs.</para>
             <para>
               <link linkend="install-neutron.install-plug-in.ovs.gre"
-                >GRE tunneling</link> is simpler to set up, since it
+                >GRE tunneling</link> is simpler to set up because it
               does not require any special configuration from any
-              physical network hardware. However, it is its own type
-              of protocol, and thus is harder to filter, if you are
-              concerned about filtering traffic on the physical
-              network. Additionally, the configuration given here does
-              not use namespaces, meaning you can have only one router
-              per network node (however, this can be overcome by
-              enabling namespacing, and potentially veth, as specified
-              in the section detailing how to use VLANs with
-                <acronym>OVS</acronym>).</para>
+              physical network hardware. However, its protocol makes
+              it difficult to filter traffic on the physical network.
+              Additionally, the following configuration does not use
+              namespaces. You can have only one router for each
+              network node. However, you can enable namespacing, and
+              potentially veth, as described in the section detailing
+              how to use VLANs with <acronym>OVS</acronym>).</para>
             <para>On the other hand, <link
                 linkend="install-neutron.install-plug-in.ovs.vlan"
                 >VLAN tagging</link> modifies the ethernet header of
-              packets, meaning that packets can be filtered on the
-              physical network via normal methods. However, not all
-              NICs handle the increased packet size of VLAN-tagged
-              packets well, and you might need to complete additional
-              configuration on physical network hardware to ensure
-              that your Neutron VLANs do not interfere with any other
-              VLANs on your network, and to ensure that any physical
-              network hardware between nodes does not strip VLAN
-              tags.</para>
+              packets. You can filter packets on the physical network
+              through normal methods. However, not all NICs handle the
+              increased packet size of VLAN-tagged packets well, and
+              you might need to complete additional configuration on
+              physical network hardware to ensure that your Neutron
+              VLANs do not interfere with any other VLANs on your
+              network, and to ensure that any physical network
+              hardware between nodes does not strip VLAN tags.</para>
             <note>
               <para>While this guide currently enables network
                 namespaces by default, you can disable them if you
-                have issues or your kernel does not support them. To
-                do so, edit the
-                  <filename>/etc/neutron/l3_agent.ini</filename> and
+                have issues or your kernel does not support them. Edit
+                the <filename>/etc/neutron/l3_agent.ini</filename> and
                   <filename>/etc/neutron/dhcp_agent.ini</filename>
                 files (respectively):</para>
               <programlisting language="ini">use_namespaces = False</programlisting>
-              <para>Additionally, edit the
+              <para>Edit the
                   <filename>/etc/neutron/neutron.conf</filename> file
-                to tell Neutron that overlapping IP address should not
-                be enabled:</para>
+                to disable overlapping IP addresses:</para>
               <programlisting language="ini">allow_overlapping_ips = False</programlisting>
-              <para>Note that with network namespaces disabled, you
-                will only be able to have one router per network node,
-                and overlapping IP addresses will not be
-                supported.</para>
+              <note>
+                <para>With network namespaces disabled, you can have
+                  only one router for each network node, and
+                  overlapping IP addresses are not supported.</para>
+              </note>
               <para>You must complete additional steps after you
                 create the initial Neutron virtual networks and
                 router.</para>
@@ -472,12 +472,12 @@ connection = mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@controlle
                 <firstterm>security groups</firstterm> by Neutron),
               you can use the
                 <literal>neutron.agent.firewall.NoopFirewall</literal>.
-              Otherwise, you can choose to use one of the Neutron
-              firewall plug-ins. The most common choice is the Hybrid
-              OVS-IPTables driver, but there is also the
-              Firewall-as-a-Service driver. To use the Hybrid
-              OVS-IPTables driver, edit
-                <filename>/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>:</para>
+              Otherwise, you can choose one of the Neutron firewall
+              plug-ins. The most common choice is the Hybrid
+              OVS-IPTables driver, but you can also use the
+              Firewall-as-a-Service driver. Edit the
+                <filename>/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>
+              file:</para>
             <programlisting language="ini">[securitygroup]
 # Firewall driver for realizing neutron security group function.
 firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver</programlisting>
@@ -489,7 +489,8 @@ firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewal
           </step>
           <!-- TODO(sross): document other firewall options -->
           <step>
-            <para>Restart the <acronym>OVS</acronym> plug-in, and make sure it starts on boot:</para>
+            <para>Restart the <acronym>OVS</acronym> plug-in and make
+              sure it starts on boot:</para>
             <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>service neutron-openvswitch-agent restart</userinput>
 <prompt>#</prompt> <userinput>chkconfig neutron-openvswitch-agent on</userinput></screen>
             <screen os="opensuse;sles"><prompt>#</prompt> <userinput>service openstack-neutron-openvswitch-agent restart</userinput>
@@ -507,12 +508,13 @@ firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewal
           <procedure>
             <step>
               <para>Tell the <acronym>OVS</acronym> plug-in to use GRE
-                tunneling, using an integration bridge of
-                  <literal>br-int</literal> and a tunneling bridge of
-                  <literal>br-tun</literal>, and to use a local IP for
-                the tunnel of
-                  <replaceable>DATA_INTERFACE</replaceable>'s IP. Edit
-                  <filename>/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>:</para>
+                tunneling, the <literal>br-int</literal> integration
+                bridge, the <literal>br-tun</literal> tunneling
+                bridge, and a local IP for the
+                  <replaceable>DATA_INTERFACE</replaceable> tunnel IP.
+                Edit the
+                  <filename>/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>
+                file:</para>
               <programlisting language="ini">[ovs]
 tenant_network_type = gre
 tunnel_id_ranges = 1:1000
@@ -522,8 +524,8 @@ tunnel_bridge = br-tun
 local_ip = DATA_INTERFACE_IP</programlisting>
             </step>
             <step>
-              <para>Now return to the general <acronym>OVS</acronym>
-                instructions</para>
+              <para>Return to the general <acronym>OVS</acronym>
+                instructions.</para>
             </step>
           </procedure>
         </section>
@@ -549,14 +551,12 @@ bridge_mappings = physnet1:br-DATA_INTERFACE</programlisting>
 <prompt>#</prompt> <userinput>ovs-vsctl add-port br-DATA_INTERFACE DATA_INTERFACE</userinput></screen>
             </step>
             <step>
-              <para>Now that you have added
-                  <replaceable>DATA_INTERFACE</replaceable> to a
-                bridge, you must transfer its IP address over to the
-                bridge. This is done in a manner similar to the way
-                  <replaceable>EXTERNAL_INTERFACE</replaceable>'s IP
-                address was transfered to <literal>br-ex</literal>.
-                However, in this case, you do not need to turn
-                promiscuous mode on.</para>
+              <para>Transfer the IP address for
+                  <replaceable>DATA_INTERFACE</replaceable> to the
+                bridge. Do this in the same way that you transferred
+                the <replaceable>EXTERNAL_INTERFACE</replaceable> IP
+                address to <literal>br-ex</literal>. However, you do
+                not need to turn on promiscuous mode.</para>
             </step>
             <step>
               <para>Return to the <acronym>OVS</acronym> general
@@ -568,14 +568,13 @@ bridge_mappings = physnet1:br-DATA_INTERFACE</programlisting>
     </section>
   </section>
   <section xml:id="install-neutron.configure-networks">
-    <title>Creating the Base Neutron Networks</title>
+    <title>Create the base Neutron networks</title>
     <note>
-      <para>In the following sections, the text
-          <replaceable>SPECIAL_OPTIONS</replaceable> may occur.
-        Replace this text with any options specific to your networking
-        plug-in choices. See <link
+      <para>In the following sections, replace
+          <replaceable>SPECIAL_OPTIONS</replaceable> with any options
+        specific to your networking plug-in choices. See <link
           linkend="install-neutron.configure-networks.plug-in-specific"
-          >here</link> to check if your plug-in needs any special
+          >here</link> to check if your plug-in requires any special
         options.</para>
     </note>
     <procedure>
@@ -593,26 +592,23 @@ bridge_mappings = physnet1:br-DATA_INTERFACE</programlisting>
         <screen><prompt>#</prompt> <userinput>neutron net-create ext-net -- --router:external=True <replaceable>SPECIAL_OPTIONS</replaceable></userinput></screen>
       </step>
       <step>
-        <para>Next, create the associated subnet. It should have the
-          same gateway as
-            <replaceable>EXTERNAL_INTERFACE</replaceable> would have
-          had, and the same CIDR address as well. It does not have
-          DHCP, because it represents a slice of the external
-          world:</para>
+        <para>Create the associated subnet with the same gateway and
+          CIDR as <replaceable>EXTERNAL_INTERFACE</replaceable>. It
+          does not have DHCP, because it represents a slice of the
+          external world:</para>
         <screen><prompt>#</prompt> <userinput>neutron subnet-create ext-net \
   --allocation-pool start=<replaceable>FLOATING_IP_START</replaceable>,end=<replaceable>FLOATING_IP_END</replaceable> \
   --gateway=<replaceable>EXTERNAL_INTERFACE_GATEWAY</replaceable> --enable_dhcp=False \
   <replaceable>EXTERNAL_INTERFACE_CIDR</replaceable></userinput></screen>
       </step>
       <step>
-        <para>Create one or more initial tenants. Choose one (we'll
-          call it <replaceable>DEMO_TENANT</replaceable>) to use for
-          the following steps.</para>
+        <para>Create one or more initial tenants. Choose one (call it
+            <replaceable>DEMO_TENANT</replaceable>) to use for the
+          following steps.</para>
         <para>Create the router attached to the external network. This
           router routes traffic to the internal subnets as appropriate
-          (you may wish to create it under the a given tenant, in
-          which case you should append <literal>--tenant-id</literal>
-          option with a value of
+          (you can create it under the a given tenant: Append
+            <literal>--tenant-id</literal> option with a value of
             <replaceable>DEMO_TENANT_ID</replaceable> to the
           command).</para>
         <screen><prompt>#</prompt> <userinput>neutron router-create ext-to-int</userinput></screen>
@@ -801,7 +797,7 @@ admin_password=<replaceable>NEUTRON_PASS</replaceable></programlisting>
             the networking plug-in</link>.</para>
       </step>
     </procedure>
-  <section xml:id="install-neutron.install-plugin-compute">
+    <section xml:id="install-neutron.install-plugin-compute">
       <title>Install and configure the Neutron plug-ins on a dedicated
         compute node</title>
       <section xml:id="install-neutron.install-plugin-compute.ovs">

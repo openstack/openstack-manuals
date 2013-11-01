@@ -1,95 +1,123 @@
 <?xml version="1.0" encoding="UTF-8"?>
-        <section xmlns="http://docbook.org/ns/docbook"
-            xmlns:xi="http://www.w3.org/2001/XInclude"
-            xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
-            xml:id="section_neutron-single-flat">
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="section_neutron-single-flat">
     <title>Single flat network</title>
-    <para>This section describes how to install the OpenStack Networking service and its components
-        for a single flat network use case.</para>
-    <para>The diagram below shows the setup. For simplicity all of the
+    <para>This section describes how to install the OpenStack
+        Networking service and its components for a single flat
+        network use case.</para>
+    <para>The following diagram shows the set up. For simplicity, all
         nodes should have one interface for management traffic and one
         or more interfaces for traffic to and from VMs. The management
-        network is 100.1.1.0/24 with controller node at 100.1.1.2. The example uses the Open vSwitch
-        plugin and agent.</para>
-    <para><emphasis role="bold">Note</emphasis> the setup can be tweaked to make use of another
-        supported plugin and its agent.</para>
-     <mediaobject>
-            <imageobject>
-                  <imagedata scale="60" fileref="../common/figures/demo_flat_install.png"/>
-            </imageobject>
-     </mediaobject>
-    <para>Here are some nodes in the setup.</para>
-         <informaltable rules="all" width="100%">
-                    <col width="20%"/>
-                    <col width="80%"/>
-            <thead>
-                <tr>
-                    <th>Node</th>
-                    <th>Description</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Controller Node</td>
-                    <td>Runs the Networking service, Identity, and all of the Compute services that
-                    are required to deploy VMs (<systemitem class="service">nova-api</systemitem>,
-                        <systemitem class="service">nova-scheduler</systemitem>, for example). The
-                    node must have at least one network interface, which is connected to the
-                    "Management Network". The hostname is 'controller', which every other node
-                    resolve to the controller node's IP. <emphasis role="bold">Note</emphasis> The
-                    nova-network service should not be running. This is replaced by Networking.</td>
-                </tr>
-                <tr>
-                    <td>Compute Node</td>
-                <td>Runs the OpenStack Networking L2 agent and the Compute services that run VMs
-                        (<systemitem class="service">nova-compute</systemitem> specifically, and
-                    optionally other nova-* services depending on configuration). The node must have
-                    at least two network interfaces. The first is used to communicate with the
-                    controller node via the management network. The second interface is used for the
-                    VM traffic on the Data network. The VM will be able to receive its IP address
-                    from the DHCP agent on this network.</td>
-                </tr>
-                <tr>
-                    <td>Network Node</td>
-                    <td>Runs Networking L2 agent and the DHCP agent. The DHCP agent will allocate IP
-                    addresses to the VMs on the network. The node must have at least two network
-                    interfaces. The first is used to communicate with the controller node via the
-                    management network. The second interface will be used for the VM traffic on the
-                    data network.</td>
-                </tr>
-                <tr>
-                    <td>Router</td>
-                    <td>Router has IP 30.0.0.1, which is the default gateway for
-                    all VMs. The router should have ability to access public networks.</td>
-                </tr>
-            </tbody>
-        </informaltable>
-     <para>The demo assumes the following:</para>
+        network is 100.1.1.0/24 with controller node at 100.1.1.2. The
+        example uses the Open vSwitch plug-in and agent.</para>
+    <note>
+        <para>You can modify this set up to make use of another
+            supported plug-in and its agent.</para>
+    </note>
+    <mediaobject>
+        <imageobject>
+            <imagedata scale="60"
+                fileref="../common/figures/demo_flat_install.png"/>
+        </imageobject>
+    </mediaobject>
+    <para>The following table describes some nodes in the set
+        up:</para>
+    <informaltable rules="all" width="100%">
+        <col width="20%"/>
+        <col width="80%"/>
+        <thead>
+            <tr>
+                <th>Node</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Controller Node</td>
+                <td><para>Runs the Networking service, Identity
+                        Service, and Compute services that are
+                        required to deploy VMs (<systemitem
+                            class="service">nova-api</systemitem>,
+                            <systemitem class="service"
+                            >nova-scheduler</systemitem>, for
+                        example). The node must have at least one
+                        network interface, which is connected to the
+                        Management Network. The host name is
+                            <literal>controller</literal>, which every
+                        other node resolves to the IP of the
+                        controller node.</para>
+                    <note>
+                        <para>The nova-network service should not be
+                            running. This is replaced by
+                            Networking.</para>
+                    </note></td>
+            </tr>
+            <tr>
+                <td>Compute Node</td>
+                <td>Runs the OpenStack Networking L2 agent and the
+                    Compute services that run VMs (<systemitem
+                        class="service">nova-compute</systemitem>
+                    specifically, and optionally other nova-* services
+                    depending on configuration). The node must have at
+                    least two network interfaces. The first
+                    communicates with the controller node through the
+                    management network. The second interface handles
+                    the VM traffic on the data network. The VM can
+                    receive its IP address from the DHCP agent on this
+                    network.</td>
+            </tr>
+            <tr>
+                <td>Network Node</td>
+                <td>Runs Networking L2 agent and the DHCP agent. The
+                    DHCP agent allocates IP addresses to the VMs on
+                    the network. The node must have at least two
+                    network interfaces. The first communicates with
+                    the controller node through the management
+                    network. The second interface handles the VM
+                    traffic on the data network.</td>
+            </tr>
+            <tr>
+                <td>Router</td>
+                <td>Router has IP 30.0.0.1, which is the default
+                    gateway for all VMs. The router must be able to
+                    access public networks.</td>
+            </tr>
+        </tbody>
+    </informaltable>
+    <para>The demo assumes the following prerequisites:</para>
     <para><emphasis role="bold">Controller node</emphasis></para>
     <orderedlist>
         <listitem>
-            <para>Relevant Compute services are installed, configured and running.</para>
+            <para>Relevant Compute services are installed, configured,
+                and running.</para>
         </listitem>
         <listitem>
-            <para>Glance is installed, configured and running.  In
-                addition to this there should be an image.</para>
+            <para>Glance is installed, configured, and running.
+                Additionally, an image must be available.</para>
         </listitem>
         <listitem>
-            <para>OpenStack Identity is installed, configured and running. A Networking user
-                    <emphasis role="bold">neutron</emphasis> should be created on tenant <emphasis
-                    role="bold">service</emphasis> with password <emphasis role="bold"
-                    >NEUTRON_PASS</emphasis>.</para>
+            <para>OpenStack Identity is installed, configured, and
+                running. A Networking user <emphasis role="bold"
+                    >neutron</emphasis> is in place on tenant
+                    <emphasis role="bold">service</emphasis> with
+                password
+                <replaceable>NEUTRON_PASS</replaceable>.</para>
         </listitem>
         <listitem>
-            <para>Additional services: <itemizedlist>
-                    <listitem>
-                        <para>RabbitMQ is running with default guest and its password</para>
-                    </listitem>
-                    <listitem os="rhel;centos;fedora;opensuse;sles;ubuntu">
-                        <para>MySQL server (user is <emphasis role="bold">root</emphasis> and
-                            password is <emphasis role="bold">root</emphasis>)</para>
-                    </listitem>
-                </itemizedlist></para>
+            <para>Additional services:</para>
+            <itemizedlist>
+                <listitem>
+                    <para>RabbitMQ is running with default guest and
+                        its password.</para>
+                </listitem>
+                <listitem os="rhel;centos;fedora;opensuse;sles;ubuntu">
+                    <para>MySQL server (user is <emphasis role="bold"
+                            >root</emphasis> and password is <emphasis
+                            role="bold">root</emphasis>).</para>
+                </listitem>
+            </itemizedlist>
         </listitem>
     </orderedlist>
     <para><emphasis role="bold">Compute node</emphasis></para>
@@ -100,25 +128,36 @@
     </orderedlist>
     <section xml:id="demo_flat_installions">
         <title>Install</title>
-        <para>
-            <itemizedlist>
-                <listitem>
-                    <para><emphasis role="bold">Controller node - Networking server</emphasis><orderedlist>
-                            <listitem>
-                                <para os="rhel;centos;fedora;opensuse;sles;ubuntu">Install the Networking server.</para>
-                                <para os="debian">Install the Networking server and answer to the
-                                <systemitem class="library">debconf</systemitem> prompts
-                                for configuring the database, the <code>keystone_authtoken</code> and the RabbitMQ credentials.</para>
-                            </listitem>
-                            <listitem os="rhel;centos;fedora;opensuse;sles;ubuntu">
-                                <para>Create database <emphasis role="bold"
-                                    >ovs_neutron</emphasis>.</para>
-                            </listitem>
-                            <listitem os="rhel;centos;fedora;opensuse;sles;ubuntu">
-                                <para>Update the Networking configuration file, <filename>
-                                        /etc/neutron/neutron.conf</filename> setting plugin choice
-                                    and Identity Service user as necessary:</para>
-                                <programlisting language="ini">[DEFAULT]
+        <itemizedlist>
+            <listitem>
+                <para><emphasis role="bold">Controller node -
+                        Networking server</emphasis><orderedlist>
+                        <listitem>
+                            <para
+                                os="rhel;centos;fedora;opensuse;sles;ubuntu"
+                                >Install the Networking server.</para>
+                            <para os="debian">Install the Networking
+                                server and respond to <systemitem
+                                   class="library"
+                                   >debconf</systemitem> prompts to
+                                configure the database, the
+                                   <code>keystone_authtoken</code>,
+                                and the RabbitMQ credentials.</para>
+                        </listitem>
+                        <listitem
+                            os="rhel;centos;fedora;opensuse;sles;ubuntu">
+                            <para>Create database <emphasis
+                                   role="bold"
+                                >ovs_neutron</emphasis>.</para>
+                        </listitem>
+                        <listitem
+                            os="rhel;centos;fedora;opensuse;sles;ubuntu">
+                            <para>Update the Networking <filename>
+                                   /etc/neutron/neutron.conf</filename>
+                                configuration file to choose a plug-in
+                                and Identity Service user as
+                                necessary:</para>
+                            <programlisting language="ini">[DEFAULT]
 core_plugin = neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2
 control_exchange = neutron
 rabbit_host = controller
@@ -129,33 +168,38 @@ admin_tenant_name=service
 admin_user=neutron
 admin_password=<replaceable>NEUTRON_PASS</replaceable>
 </programlisting>
-                            </listitem>
-                            <listitem>
-                                <para>Update the plugin configuration file, <filename>
-                                        /etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>:</para>
-                                <programlisting language="ini">[database]
+                        </listitem>
+                        <listitem>
+                            <para>Update the plug-in <filename>
+                                   /etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>
+                                configuration file:</para>
+                            <programlisting language="ini">[database]
 connection = mysql://root:root@controller:3306/ovs_neutron?charset=utf8
 [ovs]
 network_vlan_ranges = physnet1
 bridge_mappings = physnet1:br-eth0
 </programlisting>
-                            </listitem>
-                            <listitem>
-                                <para>Start the Networking service</para>
-                            </listitem>
-                        </orderedlist></para>
-                </listitem>
-                <listitem>
-                    <para><emphasis role="bold">Compute node - Compute </emphasis><orderedlist>
-                            <listitem>
-                                <para>Install the <systemitem class="service"
-                                        >nova-compute</systemitem> service.</para>
-                            </listitem>
-                            <listitem>
-                                <para>Update the Compute configuration file, <filename>
-                                        /etc/nova/nova.conf</filename>. Make sure the following is
-                                    at the end of this file:</para>
-                                <programlisting language="ini">network_api_class=nova.network.neutronv2.api.API
+                        </listitem>
+                        <listitem>
+                            <para>Start the Networking service</para>
+                        </listitem>
+                    </orderedlist></para>
+            </listitem>
+            <listitem>
+                <para><emphasis role="bold">Compute node - Compute </emphasis><orderedlist>
+                        <listitem>
+                            <para>Install the <systemitem
+                                   class="service"
+                                   >nova-compute</systemitem>
+                                service.</para>
+                        </listitem>
+                        <listitem>
+                            <para>Update the Compute <filename>
+                                   /etc/nova/nova.conf</filename>
+                                configuration file. Make sure the
+                                following line is at the end of the
+                                file:</para>
+                            <programlisting language="ini">network_api_class=nova.network.neutronv2.api.API
 
 neutron_admin_username=neutron
 neutron_admin_password=<replaceable>NEUTRON_PASS</replaceable>
@@ -166,98 +210,108 @@ neutron_url=http://controller:9696/
 
 libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtHybridOVSBridgeDriver
                                 </programlisting>
-                            </listitem>
-                            <listitem>
-                                <para>Restart the Compute service</para>
-                            </listitem>
-                        </orderedlist></para>
-                </listitem>
-                <listitem>
-                    <para><emphasis role="bold">Compute and Network nodeL2 agent</emphasis><orderedlist>
-                            <listitem>
-                                <para>Install and start Open vSwitch.</para>
-                            </listitem>
-                            <listitem>
-                                <para>Install the L2 agent (Neutron Open vSwitch agent).</para>
-                            </listitem>
-                            <listitem>
-                                <para>Add the integration bridge to the Open vSwitch:</para>
-                                <screen><prompt>#</prompt> <userinput>ovs-vsctl add-br br-int</userinput></screen>
-                            </listitem>
-                            <listitem>
-                                <para>Update the Networking configuration file, <filename>
-                                        /etc/neutron/neutron.conf</filename>:</para>
-                                <programlisting language="ini">[DEFAULT]
+                        </listitem>
+                        <listitem>
+                            <para>Restart the Compute service</para>
+                        </listitem>
+                    </orderedlist></para>
+            </listitem>
+            <listitem>
+                <para><emphasis role="bold">Compute and Network
+                        nodeL2 agent</emphasis><orderedlist>
+                        <listitem>
+                            <para>Install and start Open
+                                vSwitch.</para>
+                        </listitem>
+                        <listitem>
+                            <para>Install the L2 agent (Neutron Open
+                                vSwitch agent).</para>
+                        </listitem>
+                        <listitem>
+                            <para>Add the integration bridge to Open
+                                vSwitch:</para>
+                            <screen><prompt>#</prompt> <userinput>ovs-vsctl add-br br-int</userinput></screen>
+                        </listitem>
+                        <listitem>
+                            <para>Update the Networking <filename>
+                                   /etc/neutron/neutron.conf</filename>
+                                configuration file:</para>
+                            <programlisting language="ini">[DEFAULT]
 core_plugin = neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2
 control_exchange = neutron
 rabbit_host = controller
 notification_driver = neutron.openstack.common.notifier.rabbit_notifier</programlisting>
-                            </listitem>
-                            <listitem>
-                                <para>Update the plugin configuration file, <filename>
-                                        /etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>:</para>
-                                <programlisting language="ini">[database]
+                        </listitem>
+                        <listitem>
+                            <para>Update the plug-in <filename>
+                                   /etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>
+                                configuration file:</para>
+                            <programlisting language="ini">[database]
 connection = mysql://root:root@controller:3306/ovs_neutron?charset=utf8
 [ovs]
 network_vlan_ranges = physnet1
 bridge_mappings = physnet1:br-eth0</programlisting>
-                            </listitem>
-                            <listitem>
-                                <para>Create the <emphasis role="bold"
-                                >br-eth0</emphasis> network bridge  to handle communication
-                                between nodes using eth0:</para>
-                                <screen><prompt>#</prompt> <userinput>ovs-vsctl add-br br-eth0</userinput>
+                        </listitem>
+                        <listitem>
+                            <para>Create the <emphasis role="bold"
+                                   >br-eth0</emphasis> network bridge
+                                to handle communication between nodes
+                                using eth0:</para>
+                            <screen><prompt>#</prompt> <userinput>ovs-vsctl add-br br-eth0</userinput>
 <prompt>#</prompt> <userinput>ovs-vsctl add-port br-eth0 eth0</userinput></screen>
-                            </listitem>
-                            <listitem>
-                                <para>Start the OpenStack Networking L2 agent.</para>
-                            </listitem>
-                        </orderedlist></para>
-                </listitem>
-                <listitem>
-                    <para><emphasis role="bold">Network nodeDHCP agent</emphasis><orderedlist>
-                            <listitem>
-                                <para>Install the DHCP agent.</para>
-                            </listitem>
-                            <listitem>
-                                <para>Update the Networking configuration file, <filename>
-                                        /etc/neutron/neutron.conf</filename>:</para>
-                                <programlisting language="ini">[DEFAULT]
+                        </listitem>
+                        <listitem>
+                            <para>Start the OpenStack Networking L2
+                                agent.</para>
+                        </listitem>
+                    </orderedlist></para>
+            </listitem>
+            <listitem>
+                <para><emphasis role="bold">Network nodeDHCP
+                        agent</emphasis><orderedlist>
+                        <listitem>
+                            <para>Install the DHCP agent.</para>
+                        </listitem>
+                        <listitem>
+                            <para>Update the Networking <filename>
+                                   /etc/neutron/neutron.conf</filename>
+                                configuration file:</para>
+                            <programlisting language="ini">[DEFAULT]
 core_plugin = neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2
 control_exchange = neutron
 rabbit_host = controller
 notification_driver = neutron.openstack.common.notifier.rabbit_notifier</programlisting>
-                            </listitem>
-                            <listitem>
-                                <para>Update the DHCP configuration file <filename>
-                                        /etc/neutron/dhcp_agent.ini</filename>:</para>
-                                <programlisting language="ini">interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver</programlisting>
-                            </listitem>
-                            <listitem>
-                                <para>Start the DHCP agent.</para>
-                            </listitem>
-                        </orderedlist></para>
-                </listitem>
-             </itemizedlist>
-        </para>
+                        </listitem>
+                        <listitem>
+                            <para>Update the DHCP <filename>
+                                   /etc/neutron/dhcp_agent.ini</filename>
+                                configuration file:</para>
+                            <programlisting language="ini">interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver</programlisting>
+                        </listitem>
+                        <listitem>
+                            <para>Start the DHCP agent.</para>
+                        </listitem>
+                    </orderedlist></para>
+            </listitem>
+        </itemizedlist>
     </section>
     <section xml:id="demo_flat_logical_network_config">
         <title>Configure logical network</title>
-        <para>All of the commands below can be executed on the network node.</para>
-        <para><emphasis role="bold">Note</emphasis> please ensure that the following environment
-            variables are set. These are used by the various clients to access Identity.</para>
-        <para>
-            <programlisting language="bash">export OS_USERNAME=admin
+        <para>Use the following commands on the network node.</para>
+        <note>
+            <para>Ensure that the following environment variables are
+                set. Various clients use these variables to access the
+                Identity Service.</para>
+        </note>
+        <programlisting language="bash">export OS_USERNAME=admin
 export OS_PASSWORD=adminpassword
 export OS_TENANT_NAME=admin
 export OS_AUTH_URL=http://127.0.0.1:5000/v2.0/</programlisting>
-        </para>
-        <para>
-                   <orderedlist>
-                            <listitem>
-                                <para>Get the tenant ID (Used as
-                                   $TENANT_ID later):</para>
-                                <screen><prompt>#</prompt> <userinput>keystone tenant-list</userinput>
+        <orderedlist>
+            <listitem>
+                <para>Get the tenant ID (Used as $TENANT_ID
+                    later):</para>
+                <screen><prompt>#</prompt> <userinput>keystone tenant-list</userinput>
 <computeroutput>+----------------------------------+---------+---------+
 |                id                |   name  | enabled |
 +----------------------------------+---------+---------+
@@ -266,12 +320,11 @@ export OS_AUTH_URL=http://127.0.0.1:5000/v2.0/</programlisting>
 | 3719a4940bf24b5a8124b58c9b0a6ee6 | TenantB |   True  |
 | 5fcfbc3283a142a5bb6978b549a511ac |   demo  |   True  |
 | b7445f221cda4f4a8ac7db6b218b1339 |  admin  |   True  |
-+----------------------------------+---------+---------+
-</computeroutput></screen>
-                            </listitem>
-                            <listitem>
-                                <para>Get the User information:</para>
-                                <screen><prompt>#</prompt> <userinput>keystone user-list</userinput>
++----------------------------------+---------+---------+</computeroutput></screen>
+            </listitem>
+            <listitem>
+                <para>Get the user information:</para>
+                <screen><prompt>#</prompt> <userinput>keystone user-list</userinput>
 <computeroutput>+----------------------------------+-------+---------+-------------------+
 |                id                |  name | enabled |       email       |
 +----------------------------------+-------+---------+-------------------+
@@ -280,14 +333,13 @@ export OS_AUTH_URL=http://127.0.0.1:5000/v2.0/</programlisting>
 | 8e37cb8193cb4873a35802d257348431 | UserC |   True  |                   |
 | c11f6b09ed3c45c09c21cbbc23e93066 | UserB |   True  |                   |
 | ca567c4f6c0942bdac0e011e97bddbe3 | UserA |   True  |                   |
-+----------------------------------+-------+---------+-------------------+
-</computeroutput></screen>
-                            </listitem>
-                            <listitem>
-                                <para>Create a internal shared network on the
-                                   demo tenant ($TENANT_ID will be
-                                   b7445f221cda4f4a8ac7db6b218b1339):</para>
-                                <screen><prompt>$</prompt> <userinput>neutron net-create --tenant-id $TENANT_ID sharednet1 --shared --provider:network_type flat \
++----------------------------------+-------+---------+-------------------+</computeroutput></screen>
+            </listitem>
+            <listitem>
+                <para>Create a internal shared network on the demo
+                    tenant ($TENANT_ID is
+                    b7445f221cda4f4a8ac7db6b218b1339):</para>
+                <screen><prompt>$</prompt> <userinput>neutron net-create --tenant-id $TENANT_ID sharednet1 --shared --provider:network_type flat \
   --provider:physical_network physnet1</userinput>
 <computeroutput>Created a new network:
 +---------------------------+--------------------------------------+
@@ -304,12 +356,11 @@ export OS_AUTH_URL=http://127.0.0.1:5000/v2.0/</programlisting>
 | status                    | ACTIVE                               |
 | subnets                   |                                      |
 | tenant_id                 | b7445f221cda4f4a8ac7db6b218b1339     |
-+---------------------------+--------------------------------------+
-</computeroutput></screen>
-                            </listitem>
-                            <listitem>
-                                <para>Create a subnet on the network:</para>
-                                <screen><prompt>#</prompt> <userinput>neutron subnet-create --tenant-id $TENANT_ID sharednet1 30.0.0.0/24</userinput>
++---------------------------+--------------------------------------+</computeroutput></screen>
+            </listitem>
+            <listitem>
+                <para>Create a subnet on the network:</para>
+                <screen><prompt>#</prompt> <userinput>neutron subnet-create --tenant-id $TENANT_ID sharednet1 30.0.0.0/24</userinput>
 <computeroutput>Created a new subnet:
 +------------------+--------------------------------------------+
 | Field            | Value                                      |
@@ -325,34 +376,31 @@ export OS_AUTH_URL=http://127.0.0.1:5000/v2.0/</programlisting>
 | name             |                                            |
 | network_id       | 04457b44-e22a-4a5c-be54-a53a9b2818e7       |
 | tenant_id        | 5fcfbc3283a142a5bb6978b549a511ac           |
-+------------------+--------------------------------------------+
-</computeroutput></screen>
-                            </listitem>
-                            <listitem>
-                                <para>Create a server for tenant A:</para>
-                                <screen><prompt>#</prompt> <userinput>nova --os-tenant-name TenantA --os-username UserA --os-password password \
++------------------+--------------------------------------------+</computeroutput></screen>
+            </listitem>
+            <listitem>
+                <para>Create a server for tenant A:</para>
+                <screen><prompt>#</prompt> <userinput>nova --os-tenant-name TenantA --os-username UserA --os-password password \
   --os-auth-url=http://localhost:5000/v2.0 boot --image tty --flavor 1 \
   --nic net-id=04457b44-e22a-4a5c-be54-a53a9b2818e7 TenantA_VM1</userinput></screen>
-<screen><prompt>#</prompt> <userinput>nova --os-tenant-name TenantA --os-username UserA --os-password password \
+                <screen><prompt>#</prompt> <userinput>nova --os-tenant-name TenantA --os-username UserA --os-password password \
 --os-auth-url=http://localhost:5000/v2.0  list</userinput>
 <computeroutput>+--------------------------------------+-------------+--------+---------------------+
 | ID                                   | Name        | Status | Networks            |
 +--------------------------------------+-------------+--------+---------------------+
 | 09923b39-050d-4400-99c7-e4b021cdc7c4 | TenantA_VM1 | ACTIVE | sharednet1=30.0.0.3 |
-+--------------------------------------+-------------+--------+---------------------+
-</computeroutput></screen>
-                            </listitem>
-                            <listitem>
-                                <para>Ping the server of tenant A:</para>
-                                <screen>
-<prompt>#</prompt> <userinput>ip addr flush eth0</userinput>
++--------------------------------------+-------------+--------+---------------------+</computeroutput></screen>
+            </listitem>
+            <listitem>
+                <para>Ping the server of tenant A:</para>
+                <screen><prompt>#</prompt> <userinput>ip addr flush eth0</userinput>
 <prompt>#</prompt> <userinput>ip addr add 30.0.0.201/24 dev br-eth0</userinput>
-<prompt>$</prompt> <userinput>ping 30.0.0.3</userinput>
-</screen>
-                            </listitem>
-                            <listitem>
-                                <para>Ping the public network within the server of tenant A:</para>
-                                <screen><prompt>#</prompt> <userinput>ping 192.168.1.1</userinput>
+<prompt>$</prompt> <userinput>ping 30.0.0.3</userinput></screen>
+            </listitem>
+            <listitem>
+                <para>Ping the public network within the server of
+                    tenant A:</para>
+                <screen><prompt>#</prompt> <userinput>ping 192.168.1.1</userinput>
 <computeroutput>PING 192.168.1.1 (192.168.1.1) 56(84) bytes of data.
 64 bytes from 192.168.1.1: icmp_req=1 ttl=64 time=1.74 ms
 64 bytes from 192.168.1.1: icmp_req=2 ttl=64 time=1.50 ms
@@ -360,78 +408,81 @@ export OS_AUTH_URL=http://127.0.0.1:5000/v2.0/</programlisting>
 ^C
 --- 192.168.1.1 ping statistics ---
 3 packets transmitted, 3 received, 0% packet loss, time 2003ms
-rtt min/avg/max/mdev = 1.234/1.495/1.745/0.211 ms
-</computeroutput></screen>
-                            <para>Note: The 192.168.1.1 is an IP on public network that the router is connecting.</para></listitem>
-                            <listitem>
-                                <para>Create servers for other tenants</para>
-                                <para>We can create servers for other
-                        tenants with similar commands. Since all these
-                        VMs share the same subnet, they will be able
-                        to access each other.</para></listitem>
-                        </orderedlist>
-        </para>
+rtt min/avg/max/mdev = 1.234/1.495/1.745/0.211 ms</computeroutput></screen>
+                <note>
+                    <para>The 192.168.1.1 is an IP on public network
+                        to which the router connects.</para>
+                </note>
+            </listitem>
+            <listitem>
+                <para>Create servers for other tenants with similar
+                    commands. Because all VMs share the same subnet,
+                    they can access each other.</para>
+            </listitem>
+        </orderedlist>
     </section>
-<section xml:id="section_use-cases-single-flat">
-    <title>Use case: single flat network</title>
-    <para>The simplest use case is a single network. This is a "shared" network, meaning it is
-            visible to all tenants via the Networking API. Tenant VMs have a single NIC, and receive
-            a fixed IP address from the subnet(s) associated with that network. This use case
-            essentially maps to the FlatManager and FlatDHCPManager models provided by Compute.
-            Floating IPs are not supported.</para>
-    <para>This network type is often created by the OpenStack administrator
-        to map directly to an existing physical network in the data center (called a
-        "provider network").  This allows the provider to use a physical
-        router on that data center network as the gateway for VMs to reach
-        the outside world.  For each subnet on an external network, the gateway
-        configuration on the physical router must be manually configured
-        outside of OpenStack.</para>
-    <para>
+    <section xml:id="section_use-cases-single-flat">
+        <title>Use case: single flat network</title>
+        <para>The simplest use case is a single network. This is a
+            "shared" network, meaning it is visible to all tenants via
+            the Networking API. Tenant VMs have a single NIC, and
+            receive a fixed IP address from the subnet(s) associated
+            with that network. This use case essentially maps to the
+            FlatManager and FlatDHCPManager models provided by
+            Compute. Floating IPs are not supported.</para>
+        <para>This network type is often created by the OpenStack
+            administrator to map directly to an existing physical
+            network in the data center (called a "provider network").
+            This allows the provider to use a physical router on that
+            data center network as the gateway for VMs to reach the
+            outside world. For each subnet on an external network, the
+            gateway configuration on the physical router must be
+            manually configured outside of OpenStack.</para>
+            <mediaobject>
+                <imageobject>
+                    <imagedata scale="80"
+                        fileref="../common/figures/UseCase-SingleFlat.png"
+                    />
+                </imageobject>
+            </mediaobject>
+            <!--Image source link: https://docs.google.com/a/nicira.com/drawings/d/1Jb6iSoBo4G7fv7i2EMpYTMTxesLPmEPKIbI7sVbhhqY/edit -->
+    </section>
+    <?hard-pagebreak?>
+    <section xml:id="section_use-cases-multi-flat">
+        <title>Use case: multiple flat network</title>
+        <para>This use case is similar to the above single flat
+            network use case, except that tenants can see multiple
+            shared networks via the Networking API and can choose
+            which network (or networks) to plug into.</para>
+            <mediaobject>
+                <imageobject>
+                    <imagedata scale="60"
+                        fileref="../common/figures/UseCase-MultiFlat.png"
+                    />
+                </imageobject>
+            </mediaobject>
+            <!--Image source link: https://docs.google.com/a/nicira.com/drawings/d/14ayGsyunW_P-wvY8OiueE407f7540JD3VsWUH18KHvU/edit -->
+    </section>
+    <section xml:id="section_use-cases-mixed">
+        <title>Use case: mixed flat and private network</title>
+        <para>This use case is an extension of the above Flat Network
+            use cases. In addition to being able to see one or more
+            shared networks via the OpenStack Networking API, tenants
+            can also have access to private per-tenant networks (only
+            visible to tenant users).</para>
+        <para>Created VMs can have NICs on any of the shared or
+            private networks that the tenant owns. This enables the
+            creation of multi-tier topologies that use VMs with
+            multiple NICs. It also enables a VM to act as a gateway so
+            that it can provide services such as routing, NAT, and
+            load balancing.</para>
         <mediaobject>
             <imageobject>
-                <imagedata scale="80" fileref="../common/figures/UseCase-SingleFlat.png"/>
-            </imageobject>
-        </mediaobject>
-        <!--Image source link: https://docs.google.com/a/nicira.com/drawings/d/1Jb6iSoBo4G7fv7i2EMpYTMTxesLPmEPKIbI7sVbhhqY/edit -->
-    </para>
-</section>
-<?hard-pagebreak?>
-<section xml:id="section_use-cases-multi-flat">
-    <title>Use case: multiple flat network</title>
-    <para>This use case is similar to the above single flat network use case, except that tenants
-            can see multiple shared networks via the Networking API and can choose which network (or
-            networks) to plug into.</para>
-    <para>
-        <mediaobject>
-            <imageobject>
-                <imagedata scale="60" fileref="../common/figures/UseCase-MultiFlat.png"/>
-            </imageobject>
-        </mediaobject>
-        <!--Image source link: https://docs.google.com/a/nicira.com/drawings/d/14ayGsyunW_P-wvY8OiueE407f7540JD3VsWUH18KHvU/edit -->
-    </para>
-</section>
-<section xml:id="section_use-cases-mixed">
-    <title>Use case: mixed flat and private network</title>
-    <para>
-        This use case is an extension of the above Flat Network use cases.
-        In addition to being able to see one or more shared networks via
-        the OpenStack Networking API, tenants can also have access to private per-tenant
-        networks (only visible to tenant users).
-    </para>
-    <para>
-        Created VMs can have NICs on any of the shared networks and/or any of the private networks
-        belonging to the tenant.  This enables the creation of "multi-tier"
-        topologies using VMs with multiple NICs.  It also supports a model where
-        a VM acting as a gateway can provide services such as routing, NAT, or
-        load balancing.
-    </para>
-    <para>
-        <mediaobject>
-            <imageobject>
-                <imagedata scale="55" fileref="../common/figures/UseCase-MixedFlatPrivate.png"/>
+                <imagedata scale="55"
+                    fileref="../common/figures/UseCase-MixedFlatPrivate.png"
+                />
             </imageobject>
         </mediaobject>
         <!--Image source link: https://docs.google.com/a/nicira.com/drawings/d/1efSqR6KA2gv-OKl5Rl-oV_zwgYP8mgQHFP2DsBj5Fqo/edit -->
-    </para>
-</section>
+    </section>
 </section>
