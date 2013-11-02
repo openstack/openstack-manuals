@@ -12,19 +12,23 @@
   when installing any package for the Networking service.</para>
   <para os="debian">When installing a Neutron package, <systemitem class="library">debconf</systemitem>
   will prompt you to choose configuration options including the plug-in to use:</para>
-  <mediaobject>
-    <imageobject>
-      <imagedata scale="50" fileref="figures/debconf-screenshots/neutron_1_plugin_selection.png"/>
-    </imageobject>
-  </mediaobject>
-  <para>This parameter sets the for the <parameter>core_plugin</parameter> option value in the
+  <informalfigure os="debian">
+    <mediaobject>
+      <imageobject>
+        <imagedata scale="50" fileref="figures/debconf-screenshots/neutron_1_plugin_selection.png"/>
+      </imageobject>
+    </mediaobject>
+  </informalfigure>
+  <para os="debian">This parameter sets the for the
+  <parameter>core_plugin</parameter> option value in the
   <filename>/etc/neutron/neutron.conf</filename> file.</para>
-  <note><para>When you install the <systemitem class="service">neutron-common</systemitem> package,
-  all plug-ins are installed by default.</para></note>
-  <para>The following table lists the values for the
+  <note os="debian"><para>When you install the <systemitem class="service">neutron-common</systemitem> package,
+  all plug-ins are installed by default.</para>
+  </note>
+  <para os="debian">The following table lists the values for the
   <parameter>core_plugin</parameter> option. These values depend on your
-  answer to the debconf prompt.</para>
-  <table rules="all">
+  answer to the <systemitem class="library">debconf</systemitem> prompt.</para>
+  <table rules="all" os="debian">
     <caption>Plug-ins and the core_plugin option</caption>
       <thead>
         <tr>
@@ -87,24 +91,29 @@
         </tr>
       </tbody>
     </table>
-    <para>Depending on the value of <parameter>core_plugin</parameter>, the
-    start-up scripts start the daemons by using the corresponding plugin configuration file
-    as parameter directly. For example, if you selected the Open vSwitch
+    <para os="debian">Depending on the value of
+    <parameter>core_plugin</parameter>, the start-up scripts start the
+    daemons by using the corresponding plugin configuration file as
+    parameter directly. For example, if you selected the Open vSwitch
     plugin, then <code>neutron-server</code> will be launched with
     <code>--config-file /etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</code>
     automatically.</para>
   <para os="debian">The <systemitem class="library">neutron-common</systemitem> package
   also prompt you for the default network configuration that you wish to use:
-  <mediaobject>
-    <imageobject>
-      <imagedata scale="50" fileref="figures/debconf-screenshots/neutron_2_networking_type.png"/>
-    </imageobject>
-  </mediaobject>
-  <mediaobject>
-    <imageobject>
-      <imagedata scale="50" fileref="figures/debconf-screenshots/neutron_3_hypervisor_ip.png"/>
-    </imageobject>
-  </mediaobject>
+  <informalfigure>
+    <mediaobject>
+      <imageobject>
+        <imagedata scale="50" fileref="figures/debconf-screenshots/neutron_2_networking_type.png"/>
+      </imageobject>
+    </mediaobject>
+  </informalfigure>
+  <informalfigure>
+    <mediaobject>
+      <imageobject>
+        <imagedata scale="50" fileref="figures/debconf-screenshots/neutron_3_hypervisor_ip.png"/>
+      </imageobject>
+    </mediaobject>
+  </informalfigure>
   </para>
   <para os="rhel;centos;fedora;opensuse;sles;ubuntu">Before you configure individual nodes for Neutron, you must
     perform the initial setup required for any OpenStack component:
