@@ -142,7 +142,6 @@ def error_message(error_log):
     return "\n".join(errs)
 
 
-# Check whether only files in www got updated
 def only_www_touched():
     """Check whether only files in www directory are touched"""
 
@@ -164,7 +163,6 @@ def only_www_touched():
     return www_changed and not other_changed
 
 
-# Check whether only files in www got updated
 def ha_guide_touched():
     """Check whether files in high-availability-guide directory are touched"""
 
@@ -200,7 +198,6 @@ def check_modified_affects_all(rootdir, verbose):
         sys.exit(1)
 
     special_files = [
-        "tools/validate.py",
         "tools/test.py",
         "doc/pom.xml"
     ]
@@ -431,13 +428,14 @@ def logging_build_book(result):
 def build_book(book):
     """Build book(s) in directory book"""
 
+    # Note that we cannot build in parallel several books in the same
+    # directory like the Install Guide. Thus we build sequentially per
+    # directory.
     os.chdir(book)
     result = True
     returncode = 0
     base_book = os.path.basename(book)
     try:
-        shutil.rmtree(os.path.expanduser("~/.fop"),
-                      ignore_errors=True)
         # Clean first and then build so that the output of all guides
         # is available
         output = subprocess.check_output(
@@ -648,6 +646,11 @@ def build_affected_books(rootdir, book_exceptions,
 
     books = find_affected_books(rootdir, book_exceptions,
                                 verbose, force)
+
+    # Remove cache content which can cause build failures
+    shutil.rmtree(os.path.expanduser("~/.fop"),
+                  ignore_errors=True)
+
     maxjobs = multiprocessing.cpu_count()
     # Jenkins fails sometimes with errors if too many jobs run, artificially
     # limit to 4 for now.
