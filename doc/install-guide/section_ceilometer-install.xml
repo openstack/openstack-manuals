@@ -14,7 +14,7 @@
       <para>Install the Metering Service on the controller
         node:</para>
       <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install ceilometer-api ceilometer-collector ceilometer-agent-central python-ceilometerclient</userinput></screen>
-      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-ceilometer-api openstack-ceilometer-collector openstack-ceilometer-agent-central python-ceilometerclient FIXME</userinput></screen>
+      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-ceilometer-api openstack-ceilometer-collector openstack-ceilometer-central python-ceilometerclient</userinput></screen>
       <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-ceilometer-api openstack-ceilometer-collector openstack-ceilometer-agent-central python-ceilometerclient</userinput></screen>
     </step>
     <step os="debian"><para>Answer to the <systemitem class="library">debconf</systemitem>
@@ -26,15 +26,19 @@
         Specify the location of the database in the configuration
         file. The examples in this guide use a MongoDB database on the
         controller node.</para>
-      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>FIXME</userinput></screen>
+      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install mongodb-server mongodb</userinput></screen>
       <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install mongodb</userinput></screen>
       <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install mongodb</userinput></screen>
     </step>
-    <step os="opensuse;sles">
+    <step os="rhel;centos;fedora;opensuse;sles">
       <para>Start the MongoDB server and configure it to start when
         the system boots:</para>
-      <screen><prompt>#</prompt> <userinput>systemctl start mongodb.service</userinput>
+      <screen os="opensuse;sles"><prompt>#</prompt> <userinput>systemctl start mongodb.service</userinput>
 <prompt>#</prompt> <userinput>systemctl enable mongodb.service</userinput></screen>
+      <!-- NB: The use of mongod, and not mongodb, in the below screen is
+           intentional. -->
+      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>service mongod start</userinput>
+<prompt>#</prompt> <userinput>chkconfig mongod on</userinput></screen>
     </step>
     <step>
       <para>Create the database and a <literal>ceilometer</literal>
