@@ -24,7 +24,18 @@
       <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-glance</userinput></screen>
       <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-glance python-glanceclient</userinput></screen></step>
 
-    <step><para>The Image
+    <step os="debian"><para>Answer to the <systemitem class="library">debconf</systemitem> prompts to setup the
+    database, register the Image service into the Identity service
+    catalogue (API endpoint), configure the <code>keystone_authtoken</code>,
+    and the RabbitMQ credentials. You will also have to select the type
+    of caching as per the screenshot below:
+        <mediaobject>
+          <imageobject>
+            <imagedata scale="50" fileref="figures/debconf-screenshots/glance-common_pipeline_flavor.png"/>
+          </imageobject>
+        </mediaobject>
+    </para></step>
+    <step os="rhel;centos;fedora;opensuse;sles;ubuntu"><para>The Image
         Service stores information about images in a database.  This
         guide uses the MySQL database that is used by other OpenStack
         services.</para>
@@ -60,20 +71,7 @@ sql_connection = mysql://glance:GLANCE_DBPASS@localhost/glance
       called <literal>glance</literal> to connect to the database.</para>
       <screen><prompt>#</prompt> <userinput>openstack-db --init --service glance --password <replaceable>GLANCE_DBPASS</replaceable></userinput></screen></step>
 
-    <step os="ubuntu;debian">
-    <note os="debian"><title>Note for Debian users</title>
-    <para>As for the rest of OpenStack, the Image Service is configured through
-    debconf. So you will not need to manually configure the database, do the
-    <code>glance-manage db_sync</code> manually, configure the Keystone auth token, or
-    the RabbitMQ parameters of Glance. Therefore, all the below steps can be
-    skipped. If you need to reconfigure the Image Service, you can use:</para>
-    <screen><prompt>#</prompt> <userinput>dpkg-reconfigure -plow glance-common</userinput></screen>
-    <para>or edit the configuration files and manually restart the daemons.
-    Remember that if your database server is installed remotely, before
-    installing the Image Service, you will need to do:</para>
-    <screen><prompt>#</prompt> <userinput>apt-get install dbconfig-common &amp;&amp; \
-    dpkg-reconfigure -plow dbconfig-common</userinput></screen>
-    </note>
+    <step os="ubuntu">
     <para>The Ubuntu packages create an sqlite database by
         default. Delete the <filename>glance.sqlite</filename> file created in
         the <filename>/var/lib/glance/</filename> directory so it is not used by mistake.</para>
@@ -87,12 +85,12 @@ IDENTIFIED BY '<replaceable>GLANCE_DBPASS</replaceable>';</userinput>
 IDENTIFIED BY '<replaceable>GLANCE_DBPASS</replaceable>';</userinput></screen>
     </step>
 
-    <step os="ubuntu;debian">
+    <step os="ubuntu">
       <para>We now create the database tables for the Image service.</para>
       <screen><prompt>#</prompt> <userinput>glance-manage db_sync</userinput></screen>
     </step>
 
-    <step><para>Create a user called <literal>glance</literal> that the Image
+    <step os="rhel;centos;fedora;opensuse;sles;ubuntu"><para>Create a user called <literal>glance</literal> that the Image
       Service can use to authenticate with the Identity Service. Choose a
       password for the <literal>glance</literal> user and specify an email
       address for the account. Use the
@@ -100,7 +98,7 @@ IDENTIFIED BY '<replaceable>GLANCE_DBPASS</replaceable>';</userinput></screen>
       <literal>admin</literal> role.</para>
       <screen><prompt>#</prompt> <userinput>keystone user-create --name=glance --pass=<replaceable>GLANCE_PASS</replaceable> --email=<replaceable>glance@example.com</replaceable></userinput>
 <prompt>#</prompt> <userinput>keystone user-role-add --user=glance --tenant=service --role=admin</userinput></screen></step>
-    <step><para>Add the credentials to the Image Service's configuration files.</para>
+    <step os="rhel;centos;fedora;opensuse;sles;ubuntu"><para>Add the credentials to the Image Service's configuration files.</para>
 
       <screen os="centos;rhel;fedora;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf keystone_authtoken auth_host <replaceable>controller</replaceable></userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf keystone_authtoken admin_user glance</userinput>
@@ -110,9 +108,9 @@ IDENTIFIED BY '<replaceable>GLANCE_DBPASS</replaceable>';</userinput></screen>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-registry.conf keystone_authtoken admin_user glance</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-registry.conf keystone_authtoken admin_tenant_name service</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-registry.conf keystone_authtoken admin_password <replaceable>GLANCE_PASS</replaceable></userinput></screen>
-      <para os="ubuntu;debian">Edit <filename>/etc/glance/glance-api.conf</filename> and <filename>/etc/glance/glance-registry.conf</filename>
+      <para os="ubuntu">Edit <filename>/etc/glance/glance-api.conf</filename> and <filename>/etc/glance/glance-registry.conf</filename>
  and change the <literal>[keystone_authtoken]</literal> section.</para>
-      <programlisting os="ubuntu;debian" language="ini">
+      <programlisting os="ubuntu" language="ini">
 ...
 [keystone_authtoken]
 auth_host = controller
@@ -128,7 +126,7 @@ admin_password = GLANCE_PASS
           host name in the credentials.</para></note>
       </para>
 </step>
-<step>
+<step os="rhel;centos;fedora;opensuse;sles;ubuntu">
       <para>You also have to add the credentials to the files
   <filename>/etc/glance/glance-api-paste.ini</filename> and
   <filename>/etc/glance/glance-registry-paste.ini</filename>.</para>
@@ -150,12 +148,12 @@ admin_tenant_name=service
 admin_password=<replaceable>GLANCE_PASS</replaceable></programlisting>
 </step>
 
-    <step><para>Register the Image Service with the Identity Service
+    <step os="rhel;centos;fedora;opensuse;sles;ubuntu"><para>Register the Image Service with the Identity Service
       so that other OpenStack services can locate it. Register the service and
       specify the endpoint using the <command>keystone</command> command.</para>
       <screen><prompt>#</prompt> <userinput>keystone service-create --name=glance --type=image \
   --description="Glance Image Service"</userinput></screen></step>
-    <step><para>Note the service's <literal>id</literal> property returned in the previous step and use it when
+    <step os="rhel;centos;fedora;opensuse;sles;ubuntu"><para>Note the service's <literal>id</literal> property returned in the previous step and use it when
       creating the endpoint.</para>
       <screen><prompt>#</prompt> <userinput>keystone endpoint-create \
   --service-id=<replaceable>the_service_id_above</replaceable> \
@@ -163,7 +161,7 @@ admin_password=<replaceable>GLANCE_PASS</replaceable></programlisting>
   --internalurl=http://<replaceable>controller</replaceable>:9292 \
   --adminurl=http://<replaceable>controller</replaceable>:9292</userinput></screen></step>
 
-    <step os="ubuntu;debian">
+    <step os="ubuntu">
       <para>We now restart the glance service with its new settings.</para>
 <screen><prompt>#</prompt> <userinput>service glance-registry restart</userinput>
 <prompt>#</prompt> <userinput>service glance-api restart</userinput></screen>
