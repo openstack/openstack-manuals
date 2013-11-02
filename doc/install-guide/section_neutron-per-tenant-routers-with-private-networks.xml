@@ -123,7 +123,7 @@
                     <listitem>
                         <para>RabbitMQ is running with default guest and its password</para>
                     </listitem>
-                    <listitem>
+                    <listitem os="rhel;centos;fedora;opensuse;sles;ubuntu">
                         <para>MySQL server (user is <emphasis role="bold">root</emphasis> and
                             password is <emphasis role="bold">root</emphasis>)</para>
                     </listitem>
@@ -141,7 +141,7 @@
                             <listitem>
                                 <para>Install the Networking server.</para>
                             </listitem>
-                            <listitem>
+                            <listitem os="rhel;centos;fedora;opensuse;sles;ubuntu">
                                 <para>Create database <emphasis role="bold"
                                     >ovs_neutron</emphasis>.</para>
                             </listitem>
@@ -149,7 +149,7 @@
                                 <para>Update the Networking configuration file, <filename>
                                         /etc/neutron/neutron.conf</filename>, with plug-in choice
                                     and Identity Service user as necessary:</para>
-                                <programlisting language="ini">[DEFAULT]
+                                <programlisting language="ini" os="rhel;centos;fedora;opensuse;sles;ubuntu">[DEFAULT]
 core_plugin = neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2
 control_exchange = neutron
 rabbit_host = controller
@@ -160,19 +160,25 @@ admin_tenant_name=service
 admin_user=neutron
 admin_password=<replaceable>NEUTRON_PASS</replaceable>
 </programlisting>
+                                <programlisting language="ini" os="debian">[DEFAULT]
+control_exchange = neutron
+rabbit_host = controller
+notification_driver = neutron.openstack.common.notifier.rabbit_notifier
+</programlisting>
                             </listitem>
-                            <listitem>
+                            <listitem os="rhel;centos;fedora;opensuse;sles;ubuntu">
                                 <para>Update the plug-in configuration file,
                                         <filename>/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>:</para>
                                 <programlisting language="ini">[database]
 connection = mysql://root:root@controlnode:3306/ovs_neutron?charset=utf8
+
 [ovs]
 tenant_network_type = gre
 tunnel_id_ranges = 1:1000
 enable_tunneling = True
 </programlisting>
                             </listitem>
-                            <listitem>
+                            <listitem os="rhel;centos;fedora;opensuse;sles;ubuntu">
                                 <para>Start the Networking server</para>
                                 <para>The Networking server can be a service of the operating
                                     system. The command to start the service depends on your

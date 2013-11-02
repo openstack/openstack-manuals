@@ -6,28 +6,112 @@
   xmlns:svg="http://www.w3.org/2000/svg"
   xmlns:html="http://www.w3.org/1999/xhtml" version="5.0">
   <title>Install Networking Services</title>
-  <para>Before you configure individual nodes for Neutron, you must
+  <para os="debian">When you install a Neutron node, you must configure it
+  for API endpoints, RabbitMQ, <code>keystone_authtoken</code>, and the database.
+  This is done through <systemitem class="library">debconf</systemitem>, like for the rest of OpenStack,
+  when installing any package for the Networking service.</para>
+  <para os="debian">When installing a Neutron package, <systemitem class="library">debconf</systemitem>
+  will prompt you to choose configuration options including the plug-in to use:</para>
+  <mediaobject>
+    <imageobject>
+      <imagedata scale="50" fileref="figures/debconf-screenshots/neutron_1_plugin_selection.png"/>
+    </imageobject>
+  </mediaobject>
+  <para>This parameter sets the for the <parameter>core_plugin</parameter> option value in the
+  <filename>/etc/neutron/neutron.conf</filename> file.</para>
+  <note><para>When you install the <systemitem class="service">neutron-common</systemitem> package,
+  all plug-ins are installed by default.</para></note>
+  <para>The following table lists the values for the
+  <parameter>core_plugin</parameter> option. These values depend on your
+  answer to the debconf prompt.</para>
+  <table rules="all">
+    <caption>Plug-ins and the core_plugin option</caption>
+      <thead>
+        <tr>
+          <th>Plug-in name</th>
+          <th>core_plugin value in neutron.conf</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><para>OpenVSwitch</para></td>
+          <td><para>neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2</para></td>
+        </tr>
+        <tr>
+          <td><para>LinuxBridge</para></td>
+          <td><para>neutron.plugins.linuxbridge.lb_neutron_plugin.LinuxBridgePluginV2</para></td>
+        </tr>
+        <tr>
+          <td><para>ml2</para></td>
+          <td><para>neutron.plugins.ml2.plugin.Ml2Plugin</para></td>
+        </tr>
+        <tr>
+          <td><para>RYU</para></td>
+          <td><para>neutron.plugins.ryu.ryu_neutron_plugin.RyuNeutronPluginV2</para></td>
+        </tr>
+        <tr>
+          <td><para>PLUMgrid</para></td>
+          <td><para>neutron.plugins.plumgrid.plumgrid_nos_plugin.plumgrid_plugin.NeutronPluginPLUMgridV2</para></td>
+        </tr>
+        <tr>
+          <td><para>Brocade</para></td>
+          <td><para>neutron.plugins.brocade.NeutronPlugin.BrocadePluginV2</para></td>
+        </tr>
+        <tr>
+          <td><para>Hyper-V</para></td>
+          <td><para>neutron.plugins.hyperv.hyperv_neutron_plugin.HyperVNeutronPlugin</para></td>
+        </tr>
+        <tr>
+          <td><para>BigSwitch</para></td>
+          <td><para>neutron.plugins.bigswitch.plugin.NeutronRestProxyV2</para></td>
+        </tr>
+        <tr>
+          <td><para>Cisco</para></td>
+          <td><para>neutron.plugins.cisco.network_plugin.PluginV2</para></td>
+        </tr>
+        <tr>
+          <td><para>Midonet</para></td>
+          <td><para>neutron.plugins.midonet.plugin.MidonetPluginV2</para></td>
+        </tr>
+        <tr>
+          <td><para>Nec</para></td>
+          <td><para>neutron.plugins.nec.nec_plugin.NECPluginV2</para></td>
+        </tr>
+        <tr>
+          <td><para>MetaPlugin</para></td>
+          <td><para>neutron.plugins.metaplugin.meta_neutron_plugin.MetaPluginV2</para></td>
+        </tr>
+        <tr>
+          <td><para>Mellanox</para></td>
+          <td><para>neutron.plugins.mlnx.mlnx_plugin.MellanoxEswitchPlugin</para></td>
+        </tr>
+      </tbody>
+    </table>
+    <para>Depending on the value of <parameter>core_plugin</parameter>, the
+    start-up scripts start the daemons by using the corresponding plugin configuration file
+    as parameter directly. For example, if you selected the Open vSwitch
+    plugin, then <code>neutron-server</code> will be launched with
+    <code>--config-file /etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</code>
+    automatically.</para>
+  <para os="debian">The <systemitem class="library">neutron-common</systemitem> package
+  also prompt you for the default network configuration that you wish to use:
+  <mediaobject>
+    <imageobject>
+      <imagedata scale="50" fileref="figures/debconf-screenshots/neutron_2_networking_type.png"/>
+    </imageobject>
+  </mediaobject>
+  <mediaobject>
+    <imageobject>
+      <imagedata scale="50" fileref="figures/debconf-screenshots/neutron_3_hypervisor_ip.png"/>
+    </imageobject>
+  </mediaobject>
+  </para>
+  <para os="rhel;centos;fedora;opensuse;sles;ubuntu">Before you configure individual nodes for Neutron, you must
     perform the initial setup required for any OpenStack component:
     creating a user, a service, endpoint(s), and a database. Once you
     have completed the steps below, follow the subsections of this
     guide to set up each of your OpenStack nodes for Neutron.</para>
-  <note os="debian">
-    <title>Note for Debian users</title>
-    <para>As for the rest of OpenStack, you must configure Networking
-      Services through the <filename>debconf</filename> file. You do
-      not need to manually configure the database or create the
-      Keystone endpoint. You can skip the following steps can. If you
-      must reconfigure the Networking Service, run the following
-      command:</para>
-    <screen><prompt>#</prompt> <userinput>dpkg-reconfigure -plow neutron-common</userinput></screen>
-    <para>Alternatively, edit the configuration files and manually
-      restart the daemons. Remember that if your database server is
-      installed remotely, you must run the following command before
-      you install the Networking Service:
-      <screen><prompt>#</prompt> <userinput>apt-get install dbconfig-common &amp;&amp; \
-    dpkg-reconfigure -plow dbconfig-common</userinput></screen></para>
-  </note>
-  <procedure>
+  <procedure os="rhel;centos;fedora;opensuse;sles;ubuntu">
     <step>
       <!-- TODO(sross): change this to use `openstack-db` once it supports Neutron -->
       <!-- TODO(sross): move this into its own section -->
@@ -112,8 +196,13 @@ IDENTIFIED BY '<replaceable>NEUTRON_DBPASS</replaceable>';</userinput></screen>
         <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-neutron</userinput></screen>
         <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-neutron openstack-neutron-l3-agent openstack-neutron-dhcp-agent</userinput></screen>
       </step>
-      <step>
-        <para>Make sure basic Neturon-related service are set to start at boot time:</para>
+      <step os="debian">
+        <para>Answer the <systemitem class="library">debconf</systemitem> prompts about the database setup, the
+        <literal>[keystone_authtoken]</literal>, the RabbitMQ credentials,
+        and the API endpoing configuration.</para>
+      </step>
+      <step os="rhel;centos;fedora;opensuse;sles">
+        <para>Make sure basic Neutron-related service are set to start at boot time:</para>
         <screen><prompt>#</prompt> <userinput>for s in neutron-{dhcp,l3}-agent; do chkconfig $s on; done</userinput></screen>
       </step>
       <step>
@@ -132,16 +221,8 @@ net.ipv4.conf.default.rp_filter=0</programlisting>
           <screen os="ubuntu"><prompt>#</prompt> <userinput>service networking restart</userinput></screen>
           <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>service network restart</userinput></screen>
         </note>
-        <note os="debian">
-          <title>Note for Debian users</title>
-          <para>Because this configuration is automated in the Debian
-            packages through debconf, you do not need to manually
-            configure the <literal>[keystone_authtoken]</literal>, the
-              <literal>[database]</literal> , or the RabbitMQ sections
-            of the Neutron configuration files.</para>
-        </note>
       </step>
-      <step>
+      <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
         <para>Configure the core networking components. Edit the
             <filename>/etc/neutron/neutron.conf</filename> file and
           copying the following under the
@@ -154,14 +235,14 @@ admin_tenant_name = service
 admin_user = neutron
 admin_password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
       </step>
-      <step>
+      <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
         <para>Tell Neutron how to connect to the database by editing
             <literal>[database]</literal> section in the same
           file:</para>
         <programlisting language="ini">[database]
 connection = mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@controller/neutron</programlisting>
       </step>
-      <step>
+      <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
         <para>Edit the <filename>/etc/neutron/api-paste.ini</filename>
           file by copying the following statements under
             <literal>[filter:authtoken]</literal> section:</para>
@@ -173,7 +254,11 @@ admin_user=neutron
 admin_tenant_name=service
 admin_password=<replaceable>NEUTRON_PASS</replaceable></programlisting>
       </step>
-      <step>
+      <step os="debian"><para>Make sure you have configured your network
+      plug-in throughout the <link linkend="install-neutron.install-plug-in">instructions</link>
+      for it in the linked section, and then return here.</para>
+      </step>
+      <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
         <para>Now, you can install, and then configure, a networking
           plug-in. The networking plug-in is what Neutron uses to
           perform the actual software-defined networking. There are
@@ -217,32 +302,6 @@ admin_password=<replaceable>NEUTRON_PASS</replaceable></programlisting>
         <title>Install the Open vSwitch (OVS) plug-in</title>
         <procedure>
           <step>
-            <note os="debian">
-              <title>Note for Debian users</title>
-              <para>Debian systems do not have specific plug-in
-                packages. Instead, the
-                  <literal>neutron-common</literal> package installs
-                all plug-ins by default. Set an option in the
-                  <filename>debconf</filename> file to choose a
-                plug-in. The package automatically modifies the
-                  <literal>core_plugin</literal> directive to reflect
-                your choice. Depending on the value of the
-                  <literal>core_plugin</literal> directive after you
-                set up the <literal>neutron-common</literal> package,
-                the init script of the Neutron daemons automatically
-                chooses which plug-in configuration file to load from
-                the <filename>/etc/neutron/plugins</filename> folder.
-                Also, the OpenStack Networking Service is already
-                configured to be working directly with OVS, so you do
-                not need to modify the
-                  <filename>/etc/neutron/neutron.conf</filename> file
-                to work with it (but you might need to edit it if you
-                wish to use another plug-in).</para>
-              <para>However, you must set up the OVS bridges manually,
-                and install the
-                  <literal>neutron-openvswitch-agent</literal> as
-                follows.</para>
-            </note>
             <para>Install the Open vSwitch plug-in and its
               dependencies:</para>
             <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install neutron-plugin-openvswitch-agent openvswitch-switch</userinput></screen>
@@ -315,7 +374,7 @@ GATEWAY=EXTERNAL_INTERFACE_GATEWAY</programlisting>
               (respectively):</para>
             <programlisting language="ini">interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver</programlisting>
           </step>
-          <step>
+          <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
             <para>Similarly, you must also tell Neutron core to use
                 <acronym>OVS</acronym> by editing
                 <filename>/etc/neutron/neutron.conf</filename>:</para>
@@ -336,7 +395,7 @@ GATEWAY=EXTERNAL_INTERFACE_GATEWAY</programlisting>
               above files again:</para>
             <programlisting language="ini" os="rhel;centos">ovs_use_veth = True</programlisting>
           </step>
-          <step>
+          <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
             <para>Tell the <acronym>OVS</acronym> plug-in how to
               connect to the database. To do so, edit the
                 <filename>/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>
@@ -697,7 +756,7 @@ net.ipv4.conf.default.rp_filter=0</programlisting>
             linkend="install-neutron.install-plugin-compute"/>.
         </para>
       </step>
-      <step>
+      <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
         <para>Configure the core components of Neutron. Edit the
             <filename>/etc/neutron/neutron.conf</filename>
           file:</para>
@@ -710,7 +769,7 @@ auth_strategy = keystone
 rpc_backend = <replaceable>YOUR_RPC_BACKEND</replaceable>
 <replaceable>PUT_YOUR_RPC_BACKEND_SETTINGS_HERE_TOO</replaceable></programlisting>
       </step>
-      <step>
+      <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
         <para>Edit the database URL under the
             <literal>[database]</literal> section in the above file,
           to tell Neutron how to connect to the database:</para>
@@ -734,7 +793,7 @@ admin_password=<replaceable>NEUTRON_PASS</replaceable></programlisting>
             the networking plug-in</link>.</para>
       </step>
     </procedure>
-    <section xml:id="install-neutron.install-plugin-compute">
+  <section xml:id="install-neutron.install-plugin-compute">
       <title>Install and configure the Neutron plug-ins on a dedicated
         compute node</title>
       <section xml:id="install-neutron.install-plugin-compute.ovs">
@@ -762,7 +821,7 @@ admin_password=<replaceable>NEUTRON_PASS</replaceable></programlisting>
               bridge, which connects to the VMs.</para>
             <screen><prompt>#</prompt> <userinput>ovs-vsctl add-br br-int</userinput></screen>
           </step>
-          <step>
+          <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
             <para>Similarly, there are some common configuration
               options to be set. You must tell Neutron core to use
                 <acronym>OVS</acronym>. Edit the
@@ -770,7 +829,7 @@ admin_password=<replaceable>NEUTRON_PASS</replaceable></programlisting>
               file:</para>
             <programlisting language="ini">core_plugin = neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2</programlisting>
           </step>
-          <step>
+          <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
             <para>Tell the <acronym>OVS</acronym> plug-in how to
               connect to the database. Edit the
                 <filename>/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>
