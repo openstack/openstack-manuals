@@ -24,7 +24,7 @@
       <literal><replaceable>KEYSTONE_DBPASS</replaceable></literal>
       with a suitable password for the database user.</para>
       <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/keystone/keystone.conf \
-  sql connection mysql://keystone:<replaceable>KEYSTONE_DBPASS</replaceable>@controller/keystone</userinput></screen>
+   sql connection mysql://keystone:<replaceable>KEYSTONE_DBPASS</replaceable>@controller/keystone</userinput></screen>
       <para os="ubuntu">Edit <filename>/etc/keystone/keystone.conf</filename> and change the <literal>[sql]</literal> section.</para>
       <programlisting os="ubuntu" language="ini">
 ...
@@ -141,7 +141,8 @@ admin_token = ADMIN_TOKEN
       in the configuration file.</para>
       <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>ADMIN_TOKEN=$(openssl rand -hex 10)</userinput>
 <prompt>#</prompt> <userinput>echo $ADMIN_TOKEN</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/keystone/keystone.conf DEFAULT admin_token $ADMIN_TOKEN</userinput></screen>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/keystone/keystone.conf DEFAULT \
+   admin_token $ADMIN_TOKEN</userinput></screen>
       <screen os="ubuntu"><prompt>#</prompt> <userinput>openssl rand -hex 10</userinput></screen>
       <para os="sles;opensuse">For SUSE Linux Enterprise use instead as first command:</para>
       <screen os="opensuse;sles"><prompt>#</prompt> <userinput>ADMIN_TOKEN=$(openssl rand 10|hexdump  -e '1/1 "%.2x"')</userinput></screen>
@@ -161,15 +162,18 @@ admin_token = ADMIN_TOKEN
       keys and certificates.</para>
       <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>keystone-manage pki_setup --keystone-user keystone --keystone-group keystone</userinput>
 <prompt>#</prompt> <userinput>chown -R keystone:keystone /etc/keystone/* /var/log/keystone/keystone.log</userinput></screen>
-      <screen os="opensuse;sles"><prompt>#</prompt> <userinput>keystone-manage pki_setup --keystone-user openstack-keystone --keystone-group openstack-keystone</userinput>
-<prompt>#</prompt> <userinput>chown -R openstack-keystone:openstack-keystone /etc/keystone/* /var/log/keystone/keystone.log</userinput></screen>
+      <screen os="opensuse;sles"><prompt>#</prompt> <userinput>keystone-manage pki_setup --keystone-user openstack-keystone \
+   --keystone-group openstack-keystone</userinput>
+<prompt>#</prompt> <userinput>chown -R openstack-keystone:openstack-keystone /etc/keystone/* \
+   /var/log/keystone/keystone.log</userinput></screen>
     </step>
 
     <step os="opensuse;sles">
       <para>Setup the <filename>/etc/keystone/default_catalog.templates</filename> file:
       </para>
       <screen><prompt>#</prompt> <userinput>KEYSTONE_CATALOG=/etc/keystone/default_catalog.templates</userinput>
-<prompt>#</prompt> <userinput>sed -e "s,%SERVICE_HOST%,192.168.0.10,g" -e "s/%S3_SERVICE_PORT%/8080/" \
+<prompt>#</prompt> <userinput>sed -e "s,%SERVICE_HOST%,192.168.0.10,g" \
+   -e "s/%S3_SERVICE_PORT%/8080/" \
    $KEYSTONE_CATALOG.sample > $KEYSTONE_CATALOG</userinput></screen>
     </step>
     <step os="ubuntu">
