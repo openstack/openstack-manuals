@@ -136,17 +136,22 @@ admin_password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
                     node</title>
                 <step>
                     <para>Install the packages:</para>
-                    <!-- FIXME openSUSE instructions -->
                     <screen os="debian;ubuntu"><prompt>#</prompt> <userinput>apt-get install neutron-plugin-openvswitch-agent \
 neutron-dhcp-agent neutron-l3-agent</userinput></screen>
                     <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-neutron-openvswitch \
 openstack-neutron</userinput></screen>
+                    <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-neutron-openvswitch-agent \
+openstack-neutron openstack-neutron-dhcp-agent openstack-neutron-l3-agent</userinput></screen>
                 </step>
                 <step>
-                    <para>Start Open vSwitch:</para>
+                    <para>Start Open vSwitch<phrase os="rhel;centos;fedora;opensuse;sles"
+                    > and configure it to start when the system boots</phrase>:
+                    </para>
                     <screen os="debian;ubuntu"><prompt>#</prompt> <userinput>service openvswitch-switch start</userinput></screen>
                     <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>service openvswitch start</userinput>
 <prompt>#</prompt> <userinput>chkconfig openvswitch on</userinput></screen>
+                    <screen os="opensuse;sles;ubuntu"><prompt>#</prompt> <userinput>service openvswitch-switch start</userinput>
+<prompt>#</prompt> <userinput>chkconfig openvswitch-switch on</userinput></screen>
                 </step>
                 <step>
                     <para>Add the integration bridge to the Open
@@ -159,8 +164,10 @@ openstack-neutron</userinput></screen>
                         /etc/neutron/neutron.conf</filename>:</para>
                     <programlisting language="ini" os="debian;ubuntu">rabbit_password = guest
 rabbit_host = controller</programlisting>
-                    <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf \</userinput>
-<userinput>DEFAULT qpid_hostname controller</userinput></screen>
+                    <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf \
+  DEFAULT qpid_hostname controller</userinput></screen>
+                    <screen os="opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf \
+  DEFAULT rabbit_host controller</userinput></screen>
                 </step>
                 <step>
                     <para>Update the plug-in configuration file,
@@ -222,7 +229,7 @@ admin_password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
 <prompt>#</prompt> <userinput>service neutron-dhcp-agent restart</userinput>
 <prompt>#</prompt> <userinput>service neutron-l3-agent restart</userinput></screen>
                 </step>
-                <step os="rhel;centos;fedora">
+                <step os="rhel;centos;fedora;opensuse;sles">
                     <para>Start and permanently enable networking services:</para>
                     <screen><prompt>#</prompt> <userinput>service neutron-openvswitch-agent start</userinput>
 <prompt>#</prompt> <userinput>service neutron-dhcp-agent start</userinput>
@@ -230,16 +237,23 @@ admin_password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
 <prompt>#</prompt> <userinput>chkconfig neutron-openvswitch-agent on</userinput>
 <prompt>#</prompt> <userinput>chkconfig neutron-dhcp-agent on</userinput>
 <prompt>#</prompt> <userinput>chkconfig neutron-l3-agent on</userinput></screen>
+                    <screen os="opensuse;sles"><prompt>#</prompt> <userinput>service openstack-neutron-openvswitch-agent start</userinput>
+<prompt>#</prompt> <userinput>service openstack-neutron-dhcp-agent start</userinput>
+<prompt>#</prompt> <userinput>service openstack-neutron-l3-agent start</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-neutron-openvswitch-agent on</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-neutron-dhcp-agent on</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-neutron-l3-agent on</userinput></screen>
                 </step>
-                <step os="rhel;centos;fedora">
-                   <!-- FIXME: Required on Debian/Ubuntu/openSUSE? -->
+                <step os="rhel;centos;fedora;opensuse;sles">
+                   <!-- FIXME: Required on Debian/Ubuntu? -->
                    <para>
                      Enable the <systemitem class="service">neutron-ovs-cleanup</systemitem>
                      service. This service starts on boot and ensures that
                      Neutron has full control over the creation and management
                      of <literal>tap</literal> devices.
                    </para>
-                   <screen><prompt>#</prompt> <userinput>chkconfig neutron-ovs-cleanup on</userinput></screen>
+                   <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>chkconfig neutron-ovs-cleanup on</userinput></screen>
+                   <screen os="opensuse;sles"><prompt>#</prompt> <userinput>chkconfig openstack-neutron-ovs-cleanup on</userinput></screen>
                 </step>
             </procedure>
         </section>
@@ -249,13 +263,21 @@ admin_password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
             <procedure>
                 <title>To install and configure the compute node</title>
                 <step>
-                    <!-- FIXME openSUSE, Fedora instructions -->
-                    <para>Install the
-                        packages:<screen><prompt>#</prompt> <userinput>apt-get install openvswitch-switch neutron-plugin-openvswitch-agent</userinput></screen></para>
+                    <!-- FIXME Review Fedora instructions -->
+                    <para>Install the packages:</para>
+                    <screen os="debian;ubuntu"><prompt>#</prompt> <userinput>apt-get install openvswitch-switch neutron-plugin-openvswitch-agent</userinput></screen>
+                    <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-neutron-openvswitch-agent</userinput></screen>
+                    <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-neutron-openvswitch</userinput></screen>
                 </step>
                 <step>
-                    <para>Start the OpenvSwitch
-                        service:<screen><prompt>#</prompt> <userinput>service openvswitch-switch start</userinput></screen></para>
+                    <para>Start the OpenvSwitch service<phrase os="rhel;centos;fedora;opensuse;sles"
+                    > and configure it to start when the system boots</phrase>:
+                    </para>
+                    <screen os="debian;ubuntu"><prompt>#</prompt> <userinput>service openvswitch-switch start</userinput></screen>
+                    <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>service openvswitch start</userinput>
+<prompt>#</prompt> <userinput>chkconfig openvswitch on</userinput></screen>
+                    <screen os="opensuse;sles;ubuntu"><prompt>#</prompt> <userinput>service openvswitch-switch start</userinput>
+<prompt>#</prompt> <userinput>chkconfig openvswitch-switch on</userinput></screen>
                 </step>
                 <step>
                     <para>Create the integration
@@ -273,8 +295,12 @@ admin_password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
                     <para>Update the OpenStack Networking
                         configuration file <filename>
                         /etc/neutron/neutron.conf</filename>:</para>
-                    <programlisting language="ini">rabbit_password = guest
+                    <programlisting language="ini" os="debian;ubuntu">rabbit_password = guest
 rabbit_host = controller</programlisting>
+                    <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf \
+  DEFAULT qpid_hostname controller</userinput></screen>
+                    <screen os="opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf \
+  DEFAULT rabbit_host controller</userinput></screen>
                 </step>
                 <step>
                     <para>Update the file <filename>
@@ -286,9 +312,16 @@ tenant_network_type = vlan
 network_vlan_ranges = physnet1:1:4094
 bridge_mappings = physnet1:br-eth1</programlisting>
                 </step>
-                <step>
+                <step os="debian;ubuntu">
                     <para>Restart the OpenvSwitch Neutron plug-in agent:</para>
                     <screen><prompt>#</prompt> <userinput>service neutron-plugin-openvswitch-agent restart</userinput></screen>
+                </step>
+                <step os="rhel;centos;fedora;opensuse;sles">
+                    <para>Start and permanently enable networking services:</para>
+                    <screen><prompt>#</prompt> <userinput>service neutron-openvswitch-agent start</userinput>
+<prompt>#</prompt> <userinput>chkconfig neutron-openvswitch-agent on</userinput></screen>
+                    <screen os="opensuse;sles"><prompt>#</prompt> <userinput>service openstack-neutron-openvswitch-agent start</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-neutron-openvswitch-agent on</userinput></screen>
                 </step>
             </procedure>
         </section>
