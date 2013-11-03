@@ -99,16 +99,18 @@
 <programlisting language="ini">core_plugin = neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2
 auth_strategy = keystone
 fake_rabbit = False
-rabbit_password = guest</programlisting>
+rabbit_password = guest
+
+[database]
+connection = mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@<replaceable>controller</replaceable>/neutron
+</programlisting>
                             </para>
                         </listitem>
                         <listitem>
                             <para>Edit file <filename>
                             /etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>
                                 and modify:</para>
-                            <programlisting language="ini">[database]
-connection = mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@localhost:3306/neutron
-[ovs]
+                            <programlisting language="ini">[ovs]
 tenant_network_type = vlan
 network_vlan_ranges = physnet1:100:2999</programlisting>
                         </listitem>
@@ -163,20 +165,25 @@ openstack-neutron openstack-neutron-dhcp-agent openstack-neutron-l3-agent</useri
                         configuration file, <filename>
                         /etc/neutron/neutron.conf</filename>:</para>
                     <programlisting language="ini" os="debian;ubuntu">rabbit_password = guest
-rabbit_host = controller</programlisting>
+rabbit_host = <replaceable>controller</replaceable>
+
+[database]
+connection = mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@<replaceable>controller</replaceable>:3306/neutron</programlisting>
                     <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf \
-  DEFAULT qpid_hostname controller</userinput></screen>
+  DEFAULT qpid_hostname controller</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf \
+   database connection mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@<replaceable>controller</replaceable>:3306/neutron</userinput></screen>
                     <screen os="opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf \
-  DEFAULT rabbit_host controller</userinput></screen>
+  DEFAULT rabbit_host controller</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf \
+   database connection mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@<replaceable>controller</replaceable>:3306/neutron</userinput></screen>
                 </step>
                 <step>
                     <para>Update the plug-in configuration file,
                             <filename>
                               /etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini
                             </filename>:</para>
-                    <programlisting language="ini">[database]
-connection = mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@controller:3306/neutron
-[ovs]
+                    <programlisting language="ini">[ovs]
 tenant_network_type=vlan
 network_vlan_ranges = physnet1:1:4094
 bridge_mappings = physnet1:br-eth1</programlisting>
@@ -200,11 +207,11 @@ bridge_mappings = physnet1:br-eth1</programlisting>
                     /etc/neutron/l3_agent.ini</filename>
                         and modify:</para>
                     <programlisting language="ini">[DEFAULT]
-auth_url = http://controller:35357/v2.0
+auth_url = http://<replaceable>controller</replaceable>:35357/v2.0
 admin_tenant_name = service
 admin_user = neutron
 admin_password = <replaceable>NEUTRON_PASS</replaceable>
-metadata_ip = controller
+metadata_ip = <replaceable>controller</replaceable>
 use_namespaces = True</programlisting>
                 </step>
                 <step>
@@ -212,7 +219,7 @@ use_namespaces = True</programlisting>
                     /etc/neutron/api-paste.ini</filename>
                     and modify:</para>
                     <programlisting language="ini">[DEFAULT]
-auth_host = controller
+auth_host = <replaceable>controller</replaceable>
 admin_tenant_name = service
 admin_user = neutron
 admin_password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
@@ -296,18 +303,23 @@ admin_password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
                         configuration file <filename>
                         /etc/neutron/neutron.conf</filename>:</para>
                     <programlisting language="ini" os="debian;ubuntu">rabbit_password = guest
-rabbit_host = controller</programlisting>
+rabbit_host = <replaceable>controller</replaceable>
+
+[database]
+connection = mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@<replaceable>controller</replaceable>:3306/neutron</programlisting>
                     <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf \
-  DEFAULT qpid_hostname controller</userinput></screen>
+  DEFAULT qpid_hostname controller</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf \
+   database connection mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@<replaceable>controller</replaceable>:3306/neutron</userinput></screen>
                     <screen os="opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf \
-  DEFAULT rabbit_host controller</userinput></screen>
+  DEFAULT rabbit_host controller</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf \
+   database connection mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@<replaceable>controller</replaceable>:3306/neutron</userinput></screen>
                 </step>
                 <step>
                     <para>Update the file <filename>
                     /etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>:</para>
-                    <programlisting language="ini">[database]
-connection = mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@controller:3306/neutron
-[ovs]
+                    <programlisting language="ini">[ovs]
 tenant_network_type = vlan
 network_vlan_ranges = physnet1:1:4094
 bridge_mappings = physnet1:br-eth1</programlisting>
@@ -341,8 +353,8 @@ bridge_mappings = physnet1:br-eth1</programlisting>
                         <programlisting language="bash">export OS_TENANT_NAME=provider_tenant
 export OS_USERNAME=admin
 export OS_PASSWORD=password
-export OS_AUTH_URL="http://controller:5000/v2.0/"
-export SERVICE_ENDPOINT="http://controller:35357/v2.0"
+export OS_AUTH_URL="http://<replaceable>controller</replaceable>:5000/v2.0/"
+export SERVICE_ENDPOINT="http://<replaceable>controller</replaceable>:35357/v2.0"
 export SERVICE_TOKEN=password</programlisting></para>
                 </listitem>
             </itemizedlist>
