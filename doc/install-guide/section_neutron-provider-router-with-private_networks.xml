@@ -136,13 +136,17 @@ admin_password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
                     node</title>
                 <step>
                     <para>Install the packages:</para>
-                    <!-- FIXME openSUSE, Fedora instructions -->
-                    <screen><prompt>#</prompt> <userinput>apt-get install neutron-plugin-openvswitch-agent \
+                    <!-- FIXME openSUSE instructions -->
+                    <screen os="debian;ubuntu"><prompt>#</prompt> <userinput>apt-get install neutron-plugin-openvswitch-agent \
 neutron-dhcp-agent neutron-l3-agent</userinput></screen>
+                    <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-neutron-openvswitch \
+openstack-neutron</userinput></screen>
                 </step>
                 <step>
                     <para>Start Open vSwitch:</para>
-                    <screen><prompt>#</prompt> <userinput>service openvswitch-switch start</userinput></screen>
+                    <screen os="debian;ubuntu"><prompt>#</prompt> <userinput>service openvswitch-switch start</userinput></screen>
+                    <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>service openvswitch start</userinput>
+<prompt>#</prompt> <userinput>chkconfig openvswitch on</userinput></screen>
                 </step>
                 <step>
                     <para>Add the integration bridge to the Open
@@ -153,8 +157,10 @@ neutron-dhcp-agent neutron-l3-agent</userinput></screen>
                     <para>Update the OpenStack Networking
                         configuration file, <filename>
                         /etc/neutron/neutron.conf</filename>:</para>
-                    <programlisting language="ini">rabbit_password = guest
+                    <programlisting language="ini" os="debian;ubuntu">rabbit_password = guest
 rabbit_host = controller</programlisting>
+                    <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf \</userinput>
+<userinput>DEFAULT qpid_hostname controller</userinput></screen>
                 </step>
                 <step>
                     <para>Update the plug-in configuration file,
@@ -210,11 +216,30 @@ admin_password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
                         and modify:</para>
                     <programlisting language="ini">use_namespaces = True</programlisting>
                 </step>
-                <step>
+                <step os="debian;ubuntu">
                     <para>Restart networking services:</para>
-                    <screen><prompt>#</prompt> <userinput>service neutron-plugin-openvswitch-agent start
-<prompt>#</prompt> service neutron-dhcp-agent restart
-<prompt>#</prompt> service neutron-l3-agent restart</userinput></screen>
+                    <screen><prompt>#</prompt> <userinput>service neutron-plugin-openvswitch-agent start</userinput>
+<prompt>#</prompt> <userinput>service neutron-dhcp-agent restart</userinput>
+<prompt>#</prompt> <userinput>service neutron-l3-agent restart</userinput></screen>
+                </step>
+                <step os="rhel;centos;fedora">
+                    <para>Start and permanently enable networking services:</para>
+                    <screen><prompt>#</prompt> <userinput>service neutron-openvswitch-agent start</userinput>
+<prompt>#</prompt> <userinput>service neutron-dhcp-agent start</userinput>
+<prompt>#</prompt> <userinput>service neutron-l3-agent start</userinput>
+<prompt>#</prompt> <userinput>chkconfig neutron-openvswitch-agent on</userinput>
+<prompt>#</prompt> <userinput>chkconfig neutron-dhcp-agent on</userinput>
+<prompt>#</prompt> <userinput>chkconfig neutron-l3-agent on</userinput></screen>
+                </step>
+                <step os="rhel;centos;fedora">
+                   <!-- FIXME: Required on Debian/Ubuntu/openSUSE? -->
+                   <para>
+                     Enable the <systemitem class="service">neutron-ovs-cleanup</systemitem>
+                     service. This service starts on boot and ensures that
+                     Neutron has full control over the creation and management
+                     of <literal>tap</literal> devices.
+                   </para>
+                   <screen><prompt>#</prompt> <userinput>chkconfig neutron-ovs-cleanup on</userinput></screen>
                 </step>
             </procedure>
         </section>
