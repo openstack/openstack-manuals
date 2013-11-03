@@ -253,7 +253,7 @@ net.ipv4.conf.default.rp_filter=0</programlisting>
           copying the following under the
             <literal>keystone_authtoken</literal> section:</para>
         <programlisting language="ini">[keystone_authtoken]
-auth_host = controller
+auth_host = <replaceable>controller</replaceable>
 auth_port = 35357
 auth_protocol = http
 admin_tenant_name = service
@@ -265,7 +265,7 @@ admin_password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
             <literal>[database]</literal> section in the same file, as
           follows:</para>
         <programlisting language="ini">[database]
-connection = mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@controller/neutron</programlisting>
+connection = mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@<replaceable>controller</replaceable>/neutron</programlisting>
       </step>
       <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
         <para>Edit the <filename>/etc/neutron/api-paste.ini</filename>
@@ -273,7 +273,7 @@ connection = mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@controlle
             <literal>[filter:authtoken]</literal> section:</para>
         <programlisting language="ini">[filter:authtoken]
 paste.filter_factory = keystoneclient.middleware.auth_token:filter_factory
-auth_host=controller
+auth_host=<replaceable>controller</replaceable>
 auth_uri=http://<replaceable>controller</replaceable>:5000
 admin_user=neutron
 admin_tenant_name=service
@@ -418,14 +418,6 @@ GATEWAY=EXTERNAL_INTERFACE_GATEWAY</programlisting>
               CentOS), you must enable veth support. Edit the previous
               files, as follows:</para>
             <programlisting language="ini" os="rhel;centos">ovs_use_veth = True</programlisting>
-          </step>
-          <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
-            <para>Tell the <acronym>OVS</acronym> plug-in how to
-              connect to the database. Edit the
-                <filename>/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>
-              file:</para>
-            <programlisting language="ini">[database]
-connection = mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@controller/neutron</programlisting>
           </step>
           <step>
             <para>Choose a networking technology to create the virtual
@@ -779,7 +771,7 @@ net.ipv4.conf.default.rp_filter=0</programlisting>
 admin_tenant_name = service
 admin_user = neutron
 admin_password = <replaceable>NEUTRON_PASS</replaceable>
-auth_url = http://controller:35357/v2.0
+auth_url = http://<replaceable>controller</replaceable>:35357/v2.0
 auth_strategy = keystone
 rpc_backend = <replaceable>YOUR_RPC_BACKEND</replaceable>
 <replaceable>PUT_YOUR_RPC_BACKEND_SETTINGS_HERE_TOO</replaceable></programlisting>
@@ -789,7 +781,7 @@ rpc_backend = <replaceable>YOUR_RPC_BACKEND</replaceable>
             <literal>[database]</literal> section in the above file,
           to tell Neutron how to connect to the database:</para>
         <programlisting language="ini">[database]
-connection = mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@controller/neutron</programlisting>
+connection = mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@<replaceable>controller</replaceable>/neutron</programlisting>
       </step>
       <step>
         <para>Edit the <filename>/etc/neutron/api-paste.ini</filename>
@@ -797,7 +789,7 @@ connection = mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@controlle
             <literal>[filter:authtoken]</literal> section:</para>
         <programlisting language="ini">[filter:authtoken]
 paste.filter_factory = keystoneclient.middleware.auth_token:filter_factory
-auth_host=controller
+auth_host=<replaceable>controller</replaceable>
 admin_user=neutron
 admin_tenant_name=service
 admin_password=<replaceable>NEUTRON_PASS</replaceable></programlisting>
@@ -843,14 +835,6 @@ admin_password=<replaceable>NEUTRON_PASS</replaceable></programlisting>
                 <filename>/etc/neutron/neutron.conf</filename>
               file:</para>
             <programlisting language="ini">core_plugin = neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2</programlisting>
-          </step>
-          <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
-            <para>Tell the <acronym>OVS</acronym> plug-in how to
-              connect to the database. Edit the
-                <filename>/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>
-              file:</para>
-            <programlisting language="ini">[database]
-connection = mysql://neutron:NEUTRON_DBPASS@controller/neutron</programlisting>
           </step>
           <step>
             <para>Configure the networking type that you chose when
@@ -999,7 +983,7 @@ bridge_mappings = physnet1:br-<replaceable>DATA_INTERFACE</replaceable></program
 admin_tenant_name = service
 admin_user = neutron
 admin_password = <replaceable>NEUTRON_PASS</replaceable>
-auth_url = http://controller:35357/v2.0
+auth_url = http://<replaceable>controller</replaceable>:35357/v2.0
 auth_strategy = keystone
 rpc_backend = <replaceable>YOUR_RPC_BACKEND</replaceable>
 <replaceable>PUT_YOUR_RPC_BACKEND_SETTINGS_HERE_TOO</replaceable></programlisting>
@@ -1039,7 +1023,7 @@ neutron_auth_strategy=keystone
 neutron_admin_tenant_name=service
 neutron_admin_username=neutron
 neutron_admin_password=<replaceable>NEUTRON_PASS</replaceable>
-neutron_admin_auth_url=http://controller:35357/v2.0
+neutron_admin_auth_url=http://<replaceable>controller</replaceable>:35357/v2.0
 firewall_driver=nova.virt.firewall.NoopFirewallDriver
 security_group_api=neutron</programlisting>
         <note>
@@ -1087,14 +1071,6 @@ security_group_api=neutron</programlisting>
                 <filename>/etc/neutron/neutron.conf</filename>
               file:</para>
             <programlisting language="ini">core_plugin = neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2</programlisting>
-          </step>
-          <step>
-            <para>Tell the <acronym>OVS</acronym> plug-in how to
-              connect to the database. Edit the
-                <filename>/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>
-              file:</para>
-            <programlisting language="ini">[database]
-              connection = mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@controller/neutron</programlisting>
           </step>
           <step>
             <para>Configure the <acronym>OVS</acronym> plug-in for the
