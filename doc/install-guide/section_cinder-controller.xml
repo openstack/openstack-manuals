@@ -1,70 +1,61 @@
 <section xmlns="http://docbook.org/ns/docbook"
-         xmlns:xi="http://www.w3.org/2001/XInclude"
-         xmlns:xlink="http://www.w3.org/1999/xlink"
-         version="5.0"
-         xml:id="cinder-controller">
-  <title>Configuring a Block Storage Controller</title>
-
-  <para>To create the components that control the Block Storage Service, complete the following steps on the controller node.</para>
-
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+  xml:id="cinder-controller">
+  <title>Configure a Block Storage controller</title>
+  <para>To create the components that control the Block Storage
+    Service, complete the following steps on the controller
+    node.</para>
   <para>You can configure OpenStack to use various storage systems.
-   The examples in this guide show how to configure LVM.
-  </para>
+    The examples in this guide show you how to configure LVM.</para>
   <procedure>
-   <title>Configure a Block Storage Controller</title>
-
-    <step><para>Install the appropriate
-      packages for the Block Storage Service.</para>
+    <step>
+      <para>Install the appropriate packages for the Block Storage
+        Service.</para>
       <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install cinder-api cinder-scheduler</userinput></screen>
       <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>yum install openstack-cinder openstack-utils openstack-selinux</userinput></screen>
       <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install  openstack-cinder-api openstack-cinder-scheduler</userinput></screen>
-
-      <note os="debian"><title>Note for Debian users</title>
-        <para>As for the rest of OpenStack, the Block Storage service is configured through
-        debconf. So you will not need to manually configure the database, do the
-        <code>cinder-manage db sync</code> manually, configure the Keystone auth token, or
-        the RabbitMQ parameters of Cinder. Therefore, all the below steps can be
-        skipped.</para>
-        <para>If you need to reconfigure the Block Storage packages, you can use:
-        <screen><prompt>#</prompt> <userinput>dpkg-reconfigure -plow cinder-common</userinput></screen>
-        or edit the configuration files and manually restart the daemons.</para>
-        <para>Remember that if your database server is installed remotely,
-        before installing the Block Storage service, you will need to do:
-        <screen><prompt>#</prompt> <userinput>apt-get install dbconfig-common &amp;&amp; \
-    dpkg-reconfigure -plow dbconfig-common</userinput></screen>.</para>
-      </note>
     </step>
-
-    <step>
-      <para>The Block Storage Service stores volume information in a database.
-      The examples in this section use the same MySQL database that is used by other OpenStack services.</para>
+    <step os="debian">
+      <para>Respond to the <systemitem class="library"
+          >debconf</systemitem> prompts about <link
+          linkend="debconf-dbconfig-common">database
+        management</link>, <link linkend="debconf-keystone_authtoken"
+            ><literal>[keystone_authtoken]</literal> settings</link>,
+          <link linkend="debconf-rabbitqm">RabbitMQ credentials</link>
+        and <link linkend="debconf-api-endpoints">API endpoint</link>
+        registration.</para>
+    </step>
+    <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
+      <para>The Block Storage Service stores volume information in a
+        database. The examples in this section use the MySQL database
+        that is used by other OpenStack services.</para>
       <para>Configure the Block Storage Service to use the database.
-      Replace
-      <literal><replaceable>CINDER_DBPASS</replaceable></literal> with a
-      password of your choosing.</para>
+        Replace
+          <literal><replaceable>CINDER_DBPASS</replaceable></literal>
+        with a password of your choosing.</para>
       <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/cinder/cinder.conf \
-  database connection mysql://cinder:<replaceable>CINDER_DBPASS</replaceable>@<replaceable>controller</replaceable>/cinder</userinput></screen>
-      <para os="ubuntu;debian">Edit <filename>/etc/cinder/cinder.conf</filename>
-       and change the <literal>[database]</literal> section.</para>
+        database connection mysql://cinder:<replaceable>CINDER_DBPASS</replaceable>@<replaceable>controller</replaceable>/cinder</userinput></screen>
+      <para os="ubuntu;debian">Edit
+          <filename>/etc/cinder/cinder.conf</filename> and change the
+          <literal>[database]</literal> section.</para>
       <programlisting os="ubuntu;debian" language="ini">[database]
-...
-# The SQLAlchemy connection string used to connect to the
-# database (string value)
-connection = mysql://cinder:CINDER_DBPASS@localhost/cinder
-...</programlisting>
-
+        ...
+        # The SQLAlchemy connection string used to connect to the
+        # database (string value)
+        connection = mysql://cinder:CINDER_DBPASS@localhost/cinder
+        ...</programlisting>
     </step>
-
     <step os="rhel;centos;fedora;opensuse;sles">
-      <para>
-        To create the Block Storage Service database and tables and a
-        <literal>cinder</literal> database user, run the
-        <command>openstack-db</command> command.
-      </para>
-      <screen><prompt>#</prompt> <userinput>openstack-db --init --service cinder --password <replaceable>CINDER_DBPASS</replaceable></userinput></screen></step>
-
-    <step os="ubuntu;debian">
-      <para>Using the password that you set in the previous example, log in as root to create a <literal>cinder</literal> database.</para>
+      <para>To create the Block Storage Service database and tables
+        and a <literal>cinder</literal> database user, run the
+          <command>openstack-db</command> command.</para>
+      <screen><prompt>#</prompt> <userinput>openstack-db --init --service cinder --password <replaceable>CINDER_DBPASS</replaceable></userinput></screen>
+    </step>
+    <step os="ubuntu">
+      <para>Use the password that you set in the previous example to
+        log in as root to create a <literal>cinder</literal>
+        database.</para>
       <screen><prompt>#</prompt> <userinput>mysql -u root -p</userinput>
 <prompt>mysql></prompt> <userinput>CREATE DATABASE cinder;</userinput>
 <prompt>mysql></prompt> <userinput>GRANT ALL PRIVILEGES ON cinder.* TO 'cinder'@'localhost' \
@@ -72,26 +63,26 @@ IDENTIFIED BY '<replaceable>CINDER_DBPASS</replaceable>';</userinput>
 <prompt>mysql></prompt> <userinput>GRANT ALL PRIVILEGES ON cinder.* TO 'cinder'@'%' \
 IDENTIFIED BY '<replaceable>CINDER_DBPASS</replaceable>';</userinput></screen>
     </step>
-
-    <step os="ubuntu;debian">
-      <para>Create the database tables for the Block Storage Service.</para>
+    <step os="ubuntu">
+      <para>Create the database tables for the Block Storage
+        Service.</para>
       <screen><prompt>#</prompt> <userinput>cinder-manage db sync</userinput></screen>
     </step>
-
-
-    <step><para>Create a <literal>cinder</literal> user. The Block Storage
-      Service use this user to authenticate with the Identity Service. Use the
-      <literal>service</literal> tenant and give the user the
-      <literal>admin</literal> role.</para>
+    <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
+      <para>Create a <literal>cinder</literal> user. The Block Storage
+        Service use this user to authenticate with the Identity
+        Service. Use the <literal>service</literal> tenant and give
+        the user the <literal>admin</literal> role.</para>
       <screen><prompt>#</prompt> <userinput>keystone user-create --name=cinder --pass=<replaceable>CINDER_PASS</replaceable> --email=<replaceable>cinder@example.com</replaceable></userinput>
-<prompt>#</prompt> <userinput>keystone user-role-add --user=cinder --tenant=service --role=admin</userinput></screen></step>
-
-    <step> <para>Add the credentials to the file
-  <filename>/etc/cinder/api-paste.ini</filename>. Open the file in a text editor
-  and locate the section <literal>[filter:authtoken]</literal>.
-  Make sure the following options are set:</para>
-
-  <programlisting language="ini">[filter:authtoken]
+<prompt>#</prompt> <userinput>keystone user-role-add --user=cinder --tenant=service --role=admin</userinput></screen>
+    </step>
+    <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
+      <para>Add the credentials to the file
+          <filename>/etc/cinder/api-paste.ini</filename>. Open the
+        file in a text editor and locate the section
+          <literal>[filter:authtoken]</literal>. Set the following
+        options:</para>
+      <programlisting language="ini">[filter:authtoken]
 paste.filter_factory=keystoneclient.middleware.auth_token:filter_factory
 auth_host=<replaceable>controller</replaceable>
 auth_port = 35357
@@ -100,49 +91,47 @@ admin_tenant_name=service
 admin_user=cinder
 admin_password=<replaceable>CINDER_PASS</replaceable>
 </programlisting>
-      </step>
-
-
-
-
-    <step><para>Register the Block Storage Service with the Identity Service
-      so that other OpenStack services can locate it. Register the service and
-      specify the endpoint using the <command>keystone</command> command.</para>
+    </step>
+    <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
+      <para>Register the Block Storage Service with the Identity
+        Service so that other OpenStack services can locate it.
+        Register the service and specify the endpoint using the
+          <command>keystone</command> command.</para>
       <screen><prompt>#</prompt> <userinput>keystone service-create --name=cinder --type=volume \
   --description="Cinder Volume Service"</userinput></screen>
-      <para>Note the <literal>id</literal> property returned and use it to create
-      the endpoint.</para>
+      <para>Note the <literal>id</literal> property returned and use
+        it to create the endpoint.</para>
       <screen><prompt>#</prompt> <userinput>keystone endpoint-create \
   --service-id=<replaceable>the_service_id_above</replaceable> \
   --publicurl=http://<replaceable>controller</replaceable>:8776/v1/%\(tenant_id\)s \
   --internalurl=http://<replaceable>controller</replaceable>:8776/v1/%\(tenant_id\)s \
   --adminurl=http://<replaceable>controller</replaceable>:8776/v1/%\(tenant_id\)s</userinput></screen>
     </step>
-    <step><para>Also register a service and endpoint for version 2 of the
-      Block Storage Service API.</para>
+    <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
+      <para>Also register a service and endpoint for version 2 of the
+        Block Storage Service API.</para>
       <screen><prompt>#</prompt> <userinput>keystone service-create --name=cinder --type=volumev2 \
   --description="Cinder Volume Service V2"</userinput></screen>
-      <para>Note the <literal>id</literal> property returned and use it to create
-      the endpoint.</para>
+      <para>Note the <literal>id</literal> property returned and use
+        it to create the endpoint.</para>
       <screen><prompt>#</prompt> <userinput>keystone endpoint-create \
   --service-id=<replaceable>the_service_id_above</replaceable> \
   --publicurl=http://<replaceable>controller</replaceable>:8776/v2/%\(tenant_id\)s \
   --internalurl=http://<replaceable>controller</replaceable>:8776/v2/%\(tenant_id\)s \
   --adminurl=http://<replaceable>controller</replaceable>:8776/v2/%\(tenant_id\)s</userinput></screen>
-  </step>
-
-    <step os="ubuntu;debian">
-      <para>We now restart the cinder service with its new settings.</para>
-<screen><prompt>#</prompt> <userinput>service cinder-scheduler restart</userinput>
-<prompt>#</prompt> <userinput>service cinder-api restart</userinput></screen>
     </step>
-
-    <step os="rhel;fedora;centos;opensuse;sles"><para>Start the cinder services and configure them to
-      start when the system boots.</para>
+    <step os="ubuntu">
+      <para>Restart the cinder service with its new settings:</para>
+      <screen><prompt>#</prompt> <userinput>service cinder-scheduler restart</userinput>
+        <prompt>#</prompt> <userinput>service cinder-api restart</userinput></screen>
+    </step>
+    <step os="rhel;fedora;centos;opensuse;sles">
+      <para>Start the cinder services and configure them to start when
+        the system boots.</para>
       <screen os="rhel;fedora;centos;opensuse;sles"><prompt>#</prompt> <userinput>service openstack-cinder-api start</userinput>
-<prompt>#</prompt> <userinput>service openstack-cinder-scheduler start</userinput>
-<prompt>#</prompt> <userinput>chkconfig openstack-cinder-api on</userinput>
-<prompt>#</prompt> <userinput>chkconfig openstack-cinder-scheduler on</userinput></screen>
-</step>
-      </procedure>
- </section>
+        <prompt>#</prompt> <userinput>service openstack-cinder-scheduler start</userinput>
+        <prompt>#</prompt> <userinput>chkconfig openstack-cinder-api on</userinput>
+        <prompt>#</prompt> <userinput>chkconfig openstack-cinder-scheduler on</userinput></screen>
+    </step>
+  </procedure>
+</section>
