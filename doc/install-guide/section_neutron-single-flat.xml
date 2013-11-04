@@ -88,7 +88,7 @@
     </informaltable>
     <para>The demo assumes the following prerequisites:</para>
     <para><emphasis role="bold">Controller node</emphasis></para>
-    <itemizedlist>
+    <orderedlist>
         <listitem>
             <para>Relevant Compute services are installed, configured,
                 and running.</para>
@@ -119,13 +119,13 @@
                 </listitem>
             </itemizedlist>
         </listitem>
-    </itemizedlist>
+    </orderedlist>
     <para><emphasis role="bold">Compute node</emphasis></para>
-    <itemizedlist>
+    <orderedlist>
         <listitem>
             <para>Compute is installed and configured.</para>
         </listitem>
-    </itemizedlist>
+    </orderedlist>
     <section xml:id="demo_flat_installions">
         <title>Install</title>
         <itemizedlist>
@@ -162,6 +162,7 @@ core_plugin = neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2
 control_exchange = neutron
 rabbit_host = controller
 notification_driver = neutron.openstack.common.notifier.rabbit_notifier
+
 [keystone_authtoken]
 admin_tenant_name=service
 admin_user=neutron
@@ -176,7 +177,6 @@ admin_password=<replaceable>NEUTRON_PASS</replaceable>
 connection = mysql://root:root@controller:3306/ovs_neutron?charset=utf8
 [ovs]
 network_vlan_ranges = physnet1
-[ovs]
 bridge_mappings = physnet1:br-eth0
 </programlisting>
                         </listitem>
@@ -200,12 +200,14 @@ bridge_mappings = physnet1:br-eth0
                                 following line is at the end of the
                                 file:</para>
                             <programlisting language="ini">network_api_class=nova.network.neutronv2.api.API
+
 neutron_admin_username=neutron
 neutron_admin_password=<replaceable>NEUTRON_PASS</replaceable>
 neutron_admin_auth_url=http://controller:35357/v2.0/
 neutron_auth_strategy=keystone
 neutron_admin_tenant_name=service
 neutron_url=http://controller:9696/
+
 libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtHybridOVSBridgeDriver
                                 </programlisting>
                         </listitem>
@@ -248,7 +250,6 @@ notification_driver = neutron.openstack.common.notifier.rabbit_notifier</program
 connection = mysql://root:root@controller:3306/ovs_neutron?charset=utf8
 [ovs]
 network_vlan_ranges = physnet1
-[ovs]
 bridge_mappings = physnet1:br-eth0</programlisting>
                         </listitem>
                         <listitem>
@@ -437,14 +438,14 @@ rtt min/avg/max/mdev = 1.234/1.495/1.745/0.211 ms</computeroutput></screen>
             outside world. For each subnet on an external network, the
             gateway configuration on the physical router must be
             manually configured outside of OpenStack.</para>
-        <mediaobject>
-            <imageobject>
-                <imagedata scale="80"
-                    fileref="../common/figures/UseCase-SingleFlat.png"
-                />
-            </imageobject>
-        </mediaobject>
-        <!--Image source link: https://docs.google.com/a/nicira.com/drawings/d/1Jb6iSoBo4G7fv7i2EMpYTMTxesLPmEPKIbI7sVbhhqY/edit -->
+            <mediaobject>
+                <imageobject>
+                    <imagedata scale="80"
+                        fileref="../common/figures/UseCase-SingleFlat.png"
+                    />
+                </imageobject>
+            </mediaobject>
+            <!--Image source link: https://docs.google.com/a/nicira.com/drawings/d/1Jb6iSoBo4G7fv7i2EMpYTMTxesLPmEPKIbI7sVbhhqY/edit -->
     </section>
     <?hard-pagebreak?>
     <section xml:id="section_use-cases-multi-flat">
@@ -453,14 +454,14 @@ rtt min/avg/max/mdev = 1.234/1.495/1.745/0.211 ms</computeroutput></screen>
             network use case, except that tenants can see multiple
             shared networks via the Networking API and can choose
             which network (or networks) to plug into.</para>
-        <mediaobject>
-            <imageobject>
-                <imagedata scale="60"
-                    fileref="../common/figures/UseCase-MultiFlat.png"
-                />
-            </imageobject>
-        </mediaobject>
-        <!--Image source link: https://docs.google.com/a/nicira.com/drawings/d/14ayGsyunW_P-wvY8OiueE407f7540JD3VsWUH18KHvU/edit -->
+            <mediaobject>
+                <imageobject>
+                    <imagedata scale="60"
+                        fileref="../common/figures/UseCase-MultiFlat.png"
+                    />
+                </imageobject>
+            </mediaobject>
+            <!--Image source link: https://docs.google.com/a/nicira.com/drawings/d/14ayGsyunW_P-wvY8OiueE407f7540JD3VsWUH18KHvU/edit -->
     </section>
     <section xml:id="section_use-cases-mixed">
         <title>Use case: mixed flat and private network</title>
