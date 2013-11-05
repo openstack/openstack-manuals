@@ -28,7 +28,7 @@ def git_check(repo_path):
         package_name = os.path.basename(repo.remotes.origin.url).rstrip('.git')
     except:
         print "\nThere is a problem verifying that the directory passed in"
-        print "is a valid git repoistory.  Please try again.\n"
+        print "is a valid git repository.  Please try again.\n"
         sys.exit(1)
     return package_name
 
