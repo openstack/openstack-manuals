@@ -449,6 +449,26 @@ bind-address            = 192.168.0.10</programlisting>
         xlink:href="http://archive.gplhost.com/readme.mirrors"
         >http://archive.gplhost.com/readme.mirrors</link>.</para>
   </section>
+  <section xml:id="basics-argparse" os="debian">
+    <title>Manually installing python-argparse</title>
+    <para>The Debian OpenStack packages are maintained on Debian Sid (aka, Debian Unstable)
+    - the current development version. The (backported) packages can run fine on Debian
+    Wheezy with a single caveat:</para>
+    <para>All the OpenStack packages are written in python. Wheezy uses Python version 2.6
+    and Python version 2.7, with Python 2.6 being the default interpreter, while Sid has
+    only Python version 2.7. There is one packaging change between these two. With
+    Python 2.6 python-argparse was a separate package that needs to be installed on its
+    own, with Python 2.7 it is included as part of the Python 2.7 packages. Unfortunately,
+    the Python 2.7 package does not have a <code>Provides: python-argparse</code> in it.</para>
+    <para>Since the packages are maintained in Sid where a require on python-argparse
+    would be an error and the Debian OpenStack maintainer only want to maintain a single
+    version of the OpenStack packages, you have to install
+    <systemitem class="library">python-argparse</systemitem> manually on each OpenStack
+    system running Debian Wheezy, before installing any other OpenStack packages. Install
+    the package with:</para>
+    <screen><prompt>#</prompt> <userinput>apt-get install python-argparse</userinput></screen>
+    <para>This applies to nearly all OpenStack packages in Wheezy.</para>
+  </section>
   <section xml:id="basics-queue">
     <title>Messaging Server</title>
     <para>On the controller node, install the messaging queue server.
