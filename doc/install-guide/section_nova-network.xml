@@ -69,6 +69,14 @@ flat_interface=eth1
 public_interface=eth1
 rabbit_host=<replaceable>controller</replaceable></programlisting>
     </step>
+    <step os="ubuntu;debian">
+      <para>In the multi-host scenario, you also need to configure the database
+      access. Edit <filename>/etc/nova/nova.conf</filename> and set the
+      <code>connection</code> variable in the <literal>[database]</literal>
+      section.</para>
+      <programlisting language="ini">[database]
+connection = mysql://nova:<replaceable>NOVA_DBPASS</replaceable>@<replaceable>controller</replaceable>/nova</programlisting>
+    </step>
     <step os="fedora;rhel;centos">
       <para>Provide a local metadata service that is reachable from
         instances on this compute node. Perform this step only on
