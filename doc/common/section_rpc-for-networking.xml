@@ -4,16 +4,17 @@
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="networking-configuring-rpc">
     <?dbhtml stop-chunking?>
-    <title>Configuring the Oslo RPC Messaging System</title>
+    <title>Configuration options for the Oslo RPC Messaging System</title>
 
-    <para>OpenStack projects use an open standard for messaging middleware
-    known as AMQP. This messaging middleware enables the OpenStack
-    services which will exist across multiple servers to talk to each other.
-    OpenStack Oslo RPC supports three implementations of AMQP:
-    <application>RabbitMQ</application>,
-    <application>Qpid</application>, and
-    <application>ZeroMQ</application></para>
-
+  <para>Many OpenStack Networking plug-ins use RPC to enable agents to communicate with the main
+      <systemitem class="service">neutron-server</systemitem> process. If your plugin requires
+    agents, they can use the same RPC mechanism used by other OpenStack components like Nova.
+    OpenStack projects use an open standard for messaging middleware known as AMQP. This messaging
+    middleware enables the OpenStack services which will exist across multiple servers to talk to
+    each other. OpenStack Oslo RPC supports three implementations of AMQP:
+      <application>RabbitMQ</application>, <application>Qpid</application>, and
+      <application>ZeroMQ</application>
+  </para>
     <section xml:id="networking-configuration-rabbitmq">
       <title>Configuration for RabbitMQ</title>
 
@@ -43,67 +44,50 @@ rpc_backend=neutron.openstack.common.rpc.impl_kombu
 
         <xi:include href="tables/neutron-rabbitmq.xml"/>
         <xi:include href="tables/neutron-kombu.xml"/>
+
     </section>
 
     <section xml:id="networking-configuration-qpid">
-      <title>Configuration for Qpid</title>
-
-      <para>This section discusses the configuration options that are relevant
-      if <application>Qpid</application> is used as the messaging system for
-      OpenStack Oslo RPC. <application>Qpid</application> is not the default
-      messaging system, so it must be enabled by setting the
-      <literal>rpc_backend</literal> option in
+    <title>Configuration for Qpid</title>
+    <para>This section discusses the configuration options that are relevant if
+        <application>Qpid</application> is used as the messaging system for OpenStack Oslo RPC.
+        <application>Qpid</application> is not the default messaging system, so it must be enabled
+      by setting the <literal>rpc_backend</literal> option in
       <filename>neutron.conf</filename>.</para>
-
-      <programlisting language="ini">
+    <programlisting language="ini">
 rpc_backend=neutron.openstack.common.rpc.impl_qpid
       </programlisting>
-
-      <para>This next critical option points the compute nodes to the
-      <application>Qpid</application> broker (server). Set
-      <literal>qpid_hostname</literal> in <filename>neutron.conf</filename> to
+    <para>This next critical option points the compute nodes to the <application>Qpid</application>
+      broker (server). Set <literal>qpid_hostname</literal> in <filename>neutron.conf</filename> to
       be the hostname where the broker is running.</para>
-
-      <note>
-        <para>The -<literal>-qpid_hostname</literal> option accepts a value in
-        the form of either a hostname or an IP address.</para>
-      </note>
-
-      <programlisting language="ini">
+    <note>
+      <para>The -<literal>-qpid_hostname</literal> option accepts a value in the form of either a
+        hostname or an IP address.</para>
+    </note>
+    <programlisting language="ini">
 qpid_hostname=hostname.example.com
       </programlisting>
-
-      <para>If the <application>Qpid</application> broker is listening on a
-      port other than the AMQP default of <literal>5672</literal>, you will
-      need to set the <literal>qpid_port</literal> option:</para>
-
-      <programlisting language="ini">
+    <para>If the <application>Qpid</application> broker is listening on a port other than the AMQP
+      default of <literal>5672</literal>, you will need to set the <literal>qpid_port</literal>
+      option:</para>
+    <programlisting language="ini">
 qpid_port=12345
       </programlisting>
-
-      <para>If you configure the <application>Qpid</application> broker to
-      require authentication, you will need to add a username and password to
-      the configuration:</para>
-
-      <programlisting language="ini">
+    <para>If you configure the <application>Qpid</application> broker to require authentication, you
+      will need to add a username and password to the configuration:</para>
+    <programlisting language="ini">
 qpid_username=username
 qpid_password=password
       </programlisting>
-
-      <para>By default, TCP is used as the transport. If you would like to
-      enable SSL, set the <literal>qpid_protocol</literal> option:</para>
-
-      <programlisting language="ini">
+    <para>By default, TCP is used as the transport. If you would like to enable SSL, set the
+        <literal>qpid_protocol</literal> option:</para>
+    <programlisting language="ini">
 qpid_protocol=ssl
       </programlisting>
-
-      <para>The following table lists the rest of the options used by the Qpid
-      messaging driver for OpenStack Oslo RPC. It is not common that these
-      options are used.</para>
-
-     <xi:include href="tables/neutron-qpid.xml"/>
-
-    </section>
+    <para>The following table lists the rest of the options used by the Qpid messaging driver for
+      OpenStack Oslo RPC. It is not common that these options are used.</para>
+    <xi:include href="tables/neutron-qpid.xml"/>
+  </section>
     <section xml:id="networking-configuration-zeromq">
      <title>Configuration for ZeroMQ</title>
       <para>This section discusses the configuration options that are relevant
@@ -115,7 +99,7 @@ qpid_protocol=ssl
      <xi:include href="tables/neutron-zeromq.xml"/>
     </section>
     <section xml:id="networking-common-messaging-configuration">
-      <title>Common Configuration for Messaging</title>
+      <title>Common configuration for messaging</title>
 
       <para>This section lists options that are common between the
       <application>RabbitMQ</application>, <application>Qpid</application>

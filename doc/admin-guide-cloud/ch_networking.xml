@@ -15,10 +15,10 @@
             API for defining network connectivity and addressing in
             the cloud. The Networking service enables operators to
             leverage different networking technologies to power their
-            cloud networking. The Networking service also provides an API to configure
-            and manage a variety of network services ranging from L3
-            forwarding and NAT to load balancing, edge firewalls, and
-            IPSEC VPN.</para>
+            cloud networking. The Networking service also provides an
+            API to configure and manage a variety of network services
+            ranging from L3 forwarding and NAT to load balancing, edge
+            firewalls, and IPSEC VPN.</para>
         <para>For a detailed description of the Networking API
             abstractions and their attributes, see the <link
                 xlink:href="http://docs.openstack.org/api/openstack-network/2.0/content/"
@@ -34,40 +34,49 @@
                 describe computing resources. Similarly, the
                 Networking API has virtual network, subnet, and port
                 abstractions to describe networking resources.</para>
-            <para>
-                <table rules="all">
-                    <caption>Networking resources</caption>
-                    <col width="10%"/>
-                    <col width="90%"/>
-                    <thead>
-                        <tr>
-                            <th>Resource</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><emphasis role="bold">Network</emphasis></td>
-                            <td>An isolated L2 segment, analogous to VLAN in the physical networking world.</td>
-                        </tr>
-                        <tr>
-                            <td><emphasis role="bold">Subnet</emphasis></td>
-                            <td>A block of v4 or v6 IP addresses and associated configuration state.</td>
-                        </tr>
-                        <tr>
-                            <td><emphasis role="bold">Port</emphasis></td>
-                            <td>A connection point for attaching a single device, such as the NIC of a virtual server, to a virtual network. Also describes the associated network configuration, such as the MAC and IP addresses to be used on that port.</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </para>
+            <table rules="all">
+                <caption>Networking resources</caption>
+                <col width="10%"/>
+                <col width="90%"/>
+                <thead>
+                    <tr>
+                        <th>Resource</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><emphasis role="bold"
+                            >Network</emphasis></td>
+                        <td>An isolated L2 segment, analogous to VLAN
+                            in the physical networking world.</td>
+                    </tr>
+                    <tr>
+                        <td><emphasis role="bold"
+                            >Subnet</emphasis></td>
+                        <td>A block of v4 or v6 IP addresses and
+                            associated configuration state.</td>
+                    </tr>
+                    <tr>
+                        <td><emphasis role="bold">Port</emphasis></td>
+                        <td>A connection point for attaching a single
+                            device, such as the NIC of a virtual
+                            server, to a virtual network. Also
+                            describes the associated network
+                            configuration, such as the MAC and IP
+                            addresses to be used on that port.</td>
+                    </tr>
+                </tbody>
+            </table>
             <para>You can configure rich network topologies by
                 creating and configuring networks and subnets, and
                 then instructing other OpenStack services like Compute
-                to attach virtual devices to ports on these networks.</para><para>In particular, Networking supports each tenant having
-                multiple private networks, and allows tenants to
-                choose their own IP addressing scheme (even if those
-                IP addresses overlap with those used by other
+                to attach virtual devices to ports on these
+                networks.</para>
+            <para>In particular, Networking supports each tenant
+                having multiple private networks, and allows tenants
+                to choose their own IP addressing scheme (even if
+                those IP addresses overlap with those used by other
                 tenants). The Networking service:</para>
             <itemizedlist>
                 <listitem>
@@ -103,105 +112,141 @@
                 others might use more advanced technologies, such as
                 L2-in-L3 tunneling or OpenFlow, to provide similar
                 benefits.</para>
-            <para>
-                <table rules="all">
-                    <caption>Available networking plugins</caption>
-                    <col width="40%"/>
-                    <col width="60%"/>
-                    <thead>
-                        <tr>
-                            <th>Plugin</th>
-                            <th>Documentation</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><emphasis role="bold">Big Switch Plug-in (Floodlight REST Proxy)</emphasis></td>
-                            <td>
-                            <link xlink:href="http://www.openflowhub.org/display/floodlightcontroller/Neutron+REST+Proxy+Plugin"
-                            >http://www.openflowhub.org/display/floodlightcontroller/Neutron+REST+Proxy+Plugin</link>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><emphasis role="bold">Brocade Plug-in</emphasis></td>
-                            <td><link xlink:href="https://github.com/brocade/brocade"
-                            >https://github.com/brocade/brocade</link></td>
-                        </tr>
-                        <tr>
-                            <td><emphasis role="bold">Cisco</emphasis></td>
-                            <td><link xlink:href="http://wiki.openstack.org/cisco-neutron"
-                            >http://wiki.openstack.org/cisco-neutron</link></td>
-                        </tr>
-                        <tr>
-                            <td><emphasis role="bold">Cloudbase Hyper-V Plug-in</emphasis></td>
-                            <td><link xlink:href="http://www.cloudbase.it/quantum-hyper-v-plugin/"
-                            >http://www.cloudbase.it/quantum-hyper-v-plugin/</link></td>
-                        </tr>
-                        <tr>
-                            <td><emphasis role="bold">Linux Bridge Plug-in</emphasis></td>
-                            <td><link xlink:href="http://wiki.openstack.org/Quantum-Linux-Bridge-Plugin"
-                            >http://wiki.openstack.org/Neutron-Linux-Bridge-Plugin</link></td>
-                        </tr>
-                        <tr>
-                            <td><emphasis role="bold">Mellanox Plug-in</emphasis></td>
-                            <td><link xlink:href="https://wiki.openstack.org/wiki/Mellanox-Neutron/"
-                            >https://wiki.openstack.org/wiki/Mellanox-Neutron/</link></td>
-                        </tr>
-                        <tr>
-                            <td><emphasis role="bold">Midonet Plug-in</emphasis></td>
-                            <td><link xlink:href="http://www.midokura.com/"
-                            >http://www.midokura.com/</link></td>
-                        </tr>
-                        <tr>
-                            <td><emphasis role="bold">ML2 (Modular Layer 2) Plug-in</emphasis></td>
-                            <td><link xlink:href="https://wiki.openstack.org/wiki/Neutron/ML2"
-                            >https://wiki.openstack.org/wiki/Neutron/ML2</link></td>
-                        </tr>
-                        <tr>
-                            <td><emphasis role="bold">NEC OpenFlow Plug-in</emphasis></td>
-                            <td><link xlink:href="http://wiki.openstack.org/Quantum-NEC-OpenFlow-Plugin"
-                            >http://wiki.openstack.org/Quantum-NEC-OpenFlow-Plugin</link></td>
-                        </tr>
-                        <tr>
-                            <td><emphasis role="bold">Nicira NVP Plug-in</emphasis></td>
-                            <td><link xlink:href="http://www.vmware.com/products/datacenter-virtualization/nicira.html"
-                            >NVP Product Overview</link>, <link xlink:href="http://www.nicira.com/support"
-                            >NVP Product Support</link></td>
-                        </tr>
-                        <tr>
-                            <td><emphasis role="bold">Open vSwitch Plug-in</emphasis></td>
-                            <td>included in this guide</td>
-                        </tr>
-                        <tr>
-                            <td><emphasis role="bold">PLUMgrid</emphasis></td>
-                            <td><link xlink:href="https://wiki.openstack.org/wiki/PLUMgrid-Neutron"
-                            >https://https://wiki.openstack.org/wiki/PLUMgrid-Neutron</link></td>
-                        </tr>
-                        <tr>
-                            <td><emphasis role="bold">Ryu Plug-in</emphasis></td>
-                            <td><link xlink:href="https://github.com/osrg/ryu/wiki/OpenStack"
-                            >https://github.com/osrg/ryu/wiki/OpenStack</link></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </para>
-            <para>Plug-ins can have different properties for hardware requirements, features,
-                performance, scale, or operator tools. Because Networking supports a large number of
-                plug-ins, the cloud administrator can weigh options to decide on the right
-                networking technology for the deployment.</para>
-            <para>In the Havana release, OpenStack Networking provides the <emphasis role="bold">Modular
-                    Layer 2 (ML2)</emphasis> plug-in that can concurrently use multiple layer 2
-                networking technologies that are found in real-world data centers. It currently
-                works with the existing Open vSwitch, Linux Bridge, and Hyper-v L2 agents. The ML2
-                framework simplifies the addition of support for new L2 technologies and reduces the
-                effort that is required to add and maintain them compared to monolithic
-                plug-ins.</para>
+            <table rules="all">
+                <caption>Available networking plug-ins</caption>
+                <col width="40%"/>
+                <col width="60%"/>
+                <thead>
+                    <tr>
+                        <th>Plug-in</th>
+                        <th>Documentation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><emphasis role="bold">Big Switch Plug-in
+                                (Floodlight REST
+                            Proxy)</emphasis></td>
+                        <td>Documentation included in this guide and
+                                <link
+                                xlink:href="http://www.openflowhub.org/display/floodlightcontroller/Neutron+REST+Proxy+Plugin"
+                                >http://www.openflowhub.org/display/floodlightcontroller/Neutron+REST+Proxy+Plugin</link>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><emphasis role="bold">Brocade
+                                Plug-in</emphasis></td>
+                        <td><link
+                                xlink:href="https://github.com/brocade/brocade"
+                                >https://github.com/brocade/brocade</link></td>
+                    </tr>
+                    <tr>
+                        <td><emphasis role="bold"
+                            >Cisco</emphasis></td>
+                        <td><link
+                                xlink:href="http://wiki.openstack.org/cisco-neutron"
+                                >http://wiki.openstack.org/cisco-neutron</link></td>
+                    </tr>
+                    <tr>
+                        <td><emphasis role="bold">Cloudbase Hyper-V
+                                Plug-in</emphasis></td>
+                        <td><link
+                                xlink:href="http://www.cloudbase.it/quantum-hyper-v-plugin/"
+                                >http://www.cloudbase.it/quantum-hyper-v-plugin/</link></td>
+                    </tr>
+                    <tr>
+                        <td><emphasis role="bold">Linux Bridge
+                                Plug-in</emphasis></td>
+                        <td><link
+                                xlink:href="http://wiki.openstack.org/Quantum-Linux-Bridge-Plugin"
+                                >http://wiki.openstack.org/Neutron-Linux-Bridge-Plugin</link></td>
+                    </tr>
+                    <tr>
+                        <td><emphasis role="bold">Mellanox
+                                Plug-in</emphasis></td>
+                        <td><link
+                                xlink:href="https://wiki.openstack.org/wiki/Mellanox-Neutron/"
+                                >https://wiki.openstack.org/wiki/Mellanox-Neutron/</link></td>
+                    </tr>
+                    <tr>
+                        <td><emphasis role="bold">Midonet
+                                Plug-in</emphasis></td>
+                        <td><link
+                                xlink:href="http://www.midokura.com/"
+                                >http://www.midokura.com/</link></td>
+                    </tr>
+                    <tr>
+                        <td><emphasis role="bold">ML2 (Modular Layer
+                                2) Plug-in</emphasis></td>
+                        <td><link
+                                xlink:href="https://wiki.openstack.org/wiki/Neutron/ML2"
+                                >https://wiki.openstack.org/wiki/Neutron/ML2</link></td>
+                    </tr>
+                    <tr>
+                        <td><emphasis role="bold">NEC OpenFlow
+                                Plug-in</emphasis></td>
+                        <td><link
+                                xlink:href="http://wiki.openstack.org/Quantum-NEC-OpenFlow-Plugin"
+                                >http://wiki.openstack.org/Quantum-NEC-OpenFlow-Plugin</link></td>
+                    </tr>
+                    <tr>
+                        <td><emphasis role="bold">Nicira NVP
+                                Plug-in</emphasis></td>
+                        <td>Documentation included in this guide as
+                            well as in <link
+                                xlink:href="http://www.vmware.com/products/datacenter-virtualization/nicira.html"
+                                >NVP Product Overview</link>, <link
+                                xlink:href="http://www.nicira.com/support"
+                                >NVP Product Support</link></td>
+                    </tr>
+                    <tr>
+                        <td><emphasis role="bold">Open vSwitch
+                                Plug-in</emphasis></td>
+                        <td>Documentation included in this guide.</td>
+                    </tr>
+                    <tr>
+                        <td><emphasis role="bold"
+                            >PLUMgrid</emphasis></td>
+                        <td>Documentation included in this guide as
+                            well as in <link
+                                xlink:href="https://wiki.openstack.org/wiki/PLUMgrid-Neutron"
+                                >https://https://wiki.openstack.org/wiki/PLUMgrid-Neutron</link></td>
+                    </tr>
+                    <tr>
+                        <td><emphasis role="bold">Ryu
+                                Plug-in</emphasis></td>
+                        <td>Documentation included in this guide as
+                            well as in <link
+                                xlink:href="https://github.com/osrg/ryu/wiki/OpenStack"
+                                >https://github.com/osrg/ryu/wiki/OpenStack</link></td>
+                    </tr>
+                </tbody>
+            </table>
+            <para>Plug-ins can have different properties for hardware
+                requirements, features, performance, scale, or
+                operator tools. Because Networking supports a large
+                number of plug-ins, the cloud administrator can weigh
+                options to decide on the right networking technology
+                for the deployment.</para>
+            <para>In the Havana release, OpenStack Networking provides
+                the <emphasis role="bold">Modular Layer 2
+                    (ML2)</emphasis> plug-in that can concurrently use
+                multiple layer 2 networking technologies that are
+                found in real-world data centers. It currently works
+                with the existing Open vSwitch, Linux Bridge, and
+                Hyper-v L2 agents. The ML2 framework simplifies the
+                addition of support for new L2 technologies and
+                reduces the effort that is required to add and
+                maintain them compared to monolithic plug-ins.</para>
             <note>
-                <title>Plugins Deprecation Notice:</title>
-                <para>The Open vSwitch and Linux Bridge plug-ins are deprecated in the Havana
-                    release and will be removed in the Icehouse release. All features have been
-                    ported to the ML2 plug-in in the form of mechanism drivers. ML2 currently
-                    provides Linux Bridge, Open vSwitch and Hyper-v mechanism drivers.</para>
+                <title>Plug-ins deprecation notice:</title>
+                <para>The Open vSwitch and Linux Bridge plug-ins are
+                    deprecated in the Havana release and will be
+                    removed in the Icehouse release. All features have
+                    been ported to the ML2 plug-in in the form of
+                    mechanism drivers. ML2 currently provides Linux
+                    Bridge, Open vSwitch and Hyper-v mechanism
+                    drivers.</para>
             </note>
             <para>Not all Networking plug-ins are compatible with all
                 possible Compute drivers:</para>
@@ -210,7 +255,7 @@
                     drivers</caption>
                 <thead>
                     <tr>
-                        <th/>
+                        <th>Plug-in</th>
                         <th>Libvirt (KVM/QEMU)</th>
                         <th>XenServer</th>
                         <th>VMware</th>
@@ -221,7 +266,7 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Bigswitch / Floodlight</td>
+                        <td>Big Switch / Floodlight</td>
                         <td>Yes</td>
                         <td/>
                         <td/>
@@ -340,13 +385,776 @@
                     </tr>
                 </tbody>
             </table>
+            <section xml:id="section_plugin-config">
+                <title>Plug-in configurations</title>
+                <para>For configurations options, see <link
+                        xlink:href="http://docs.openstack.org/havana/config-reference/content/section_networking-options-reference.html"
+                        >Networking configuration options</link> in
+                        <citetitle>Configuration
+                    Reference</citetitle>. The following sections
+                    explain in detail how to configure specific
+                    plug-ins.</para>
+                <section xml:id="bigswitch_floodlight_plugin">
+                    <title>Configure Big Switch, Floodlight REST Proxy
+                        plug-in</title>
+                    <procedure>
+                        <title>To use the REST Proxy plug-in with
+                            OpenStack Networking</title>
+                        <step>
+                            <para>Edit
+                                   <filename>/etc/neutron/neutron.conf</filename>
+                                and set:</para>
+                            <programlisting language="ini">core_plugin = neutron.plugins.bigswitch.plugin.NeutronRestProxyV2</programlisting>
+                        </step>
+                        <step>
+                            <para>Edit the plug-in configuration file,
+                                   <filename>/etc/neutron/plugins/bigswitch/restproxy.ini</filename>,
+                                and specify a comma-separated list of
+                                   <systemitem>controller_ip:port</systemitem>
+                                pairs:
+                                <programlisting language="ini">server = &lt;controller-ip&gt;:&lt;port&gt;</programlisting>
+                                For database configuration, see <link
+                                   xlink:href="http://docs.openstack.org/havana/install-guide/install/apt/content/neutron-install-network-node.html"
+                                   >Install Networking Services</link>
+                                in any of the <citetitle>Installation
+                                   Guides</citetitle> in the <link
+                                   xlink:href="http://docs.openstack.org"
+                                   >OpenStack Documentation
+                                   index</link>. (The link defaults to
+                                the Ubuntu version.)</para>
+                        </step>
+                        <step>
+                            <para>To apply the new settings, restart
+                                   <systemitem class="service"
+                                   >neutron-server</systemitem>:</para>
+                            <screen><prompt>#</prompt> <userinput>sudo service neutron-server restart</userinput></screen>
+                        </step>
+                    </procedure>
+                </section>
+                <section xml:id="openvswitch_plugin">
+                    <title>Configure OVS plug-in</title>
+                    <para>If you use the Open vSwitch (OVS) plug-in in
+                        a deployment with multiple hosts, you will
+                        need to use either tunneling or vlans to
+                        isolate traffic from multiple networks.
+                        Tunneling is easier to deploy because it does
+                        not require configuring VLANs on network
+                        switches.</para>
+                    <para>The following procedure uses
+                        tunneling:</para>
+                    <procedure>
+                        <title>To configure OpenStack Networking to
+                            use the OVS plug-in</title>
+                        <step>
+                            <para>Edit
+                                   <filename>/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini
+                                </filename> to specify the following
+                                values (for database configuration,
+                                see <link
+                                   xlink:href="http://docs.openstack.org/havana/install-guide/install/apt/content/neutron-install-network-node.html"
+                                   >Install Networking Services</link>
+                                in <citetitle>Installation
+                                   Guide</citetitle>):</para>
+                            <programlisting language="ini">enable_tunneling=True tenant_network_type=gre tunnel_id_ranges=1:1000 # only required for nodes running agents local_ip=&lt;data-net-IP-address-of-node&gt;</programlisting>
+                        </step>
+                        <step>
+                            <para>If you are using the neutron DHCP
+                                agent, add the following to
+                                   <filename>/etc/neutron/dhcp_agent.ini</filename>:</para>
+                            <programlisting language="ini">dnsmasq_config_file=/etc/neutron/dnsmasq-neutron.conf</programlisting>
+                        </step>
+                        <step>
+                            <para>Create
+                                   <filename>/etc/neutron/dnsmasq-neutron.conf</filename>,
+                                and add the following values to lower
+                                the MTU size on instances and prevent
+                                packet fragmentation over the GRE
+                                tunnel:</para>
+                            <programlisting language="ini">dhcp-option-force=26,1400</programlisting>
+                        </step>
+                        <step>
+                            <para>After performing that change on the
+                                node running <systemitem
+                                   class="service"
+                                   >neutron-server</systemitem>,
+                                restart <systemitem class="service"
+                                   >neutron-server</systemitem> to
+                                apply the new settings:</para>
+                            <screen><prompt>#</prompt> <userinput>sudo service neutron-server restart</userinput></screen>
+                        </step>
+                    </procedure>
+                </section>
+                <section xml:id="nvp_plugin">
+                    <title>Configure Nicira NVP plug-in</title>
+                    <procedure>
+                        <title>To configure OpenStack Networking to
+                            use the NVP plug-in</title>
+                        <step>
+                            <para>Install the NVP plug-in, as
+                                follows:</para>
+                            <screen><prompt>#</prompt> <userinput>sudo apt-get install neutron-plugin-nicira</userinput></screen>
+                        </step>
+                        <step>
+                            <para>Edit
+                                   <filename>/etc/neutron/neutron.conf</filename>
+                                and set:</para>
+                            <programlisting language="ini">core_plugin = neutron.plugins.nicira.NeutronPlugin.NvpPluginV2</programlisting>
+                            <para>Example
+                                   <filename>neutron.conf</filename>
+                                file for NVP:</para>
+                            <programlisting language="ini">core_plugin = neutron.plugins.nicira.NeutronPlugin.NvpPluginV2
+rabbit_host = 192.168.203.10
+allow_overlapping_ips = True</programlisting>
+                        </step>
+                        <step>
+                            <para>To tell OpenStack Networking about a
+                                controller cluster, create a new
+                                [cluster:&lt;name&gt;] section in the
+                                   <filename>/etc/neutron/plugins/nicira/nvp.ini</filename>
+                                file, and add the following entries
+                                (for database configuration, see <link
+                                   xlink:href="http://docs.openstack.org/havana/install-guide/install/apt/content/neutron-install-network-node.html"
+                                   >Install Networking Services</link>
+                                in <citetitle>Installation
+                                   Guide</citetitle>): <itemizedlist>
+                                   <listitem>
+                                   <para>The UUID of the NVP Transport
+                                   Zone that should be used by default
+                                   when a tenant creates a network.
+                                   This value can be retrieved from
+                                   the NVP Manager Transport Zones
+                                   page:</para>
+                                   <programlisting language="ini">default_tz_uuid = &lt;uuid_of_the_transport_zone&gt;</programlisting>
+                                   </listitem>
+                                   <listitem>
+                                   <para>A connection string
+                                   indicating parameters to be used by
+                                   the NVP plug-in when connecting to
+                                   the NVP web service API. There will
+                                   be one of these lines in the file
+                                   for each NVP controller in your
+                                   deployment. An NVP operator will
+                                   likely want to update the NVP
+                                   controller IP and password, but the
+                                   remaining fields can be the
+                                   defaults:</para>
+                                   <programlisting language="ini">nvp_controller_connection = &lt;controller_node_ip&gt;:&lt;controller_port&gt;:&lt;api_user&gt;:&lt;api_password&gt;:&lt;request_timeout&gt;:&lt;http_timeout&gt;:&lt;retries&gt;:&lt;redirects&gt;</programlisting>
+                                   </listitem>
+                                   <listitem>
+                                   <para>The UUID of an NVP L3 Gateway
+                                   Service that should be used by
+                                   default when a tenant creates a
+                                   router. This value can be retrieved
+                                   from the NVP Manager Gateway
+                                   Services page:</para>
+                                   <programlisting language="ini">default_l3_gw_service_uuid = &lt;uuid_of_the_gateway_service&gt;</programlisting>
+                                   <warning>
+                                   <para>Ubuntu packaging currently
+                                   does not update the neutron init
+                                   script to point to the NVP
+                                   configuration file. Instead, you
+                                   must manually update
+                                   <filename>/etc/default/neutron-server</filename>
+                                   with the following:</para>
+                                   <programlisting language="ini">NEUTRON_PLUGIN_CONFIG = /etc/neutron/plugins/nicira/nvp.ini</programlisting>
+                                   </warning>
+                                   </listitem>
+                                </itemizedlist></para>
+                        </step>
+                        <step>
+                            <para>To apply the new settings, restart
+                                   <systemitem class="service"
+                                   >neutron-server</systemitem>:</para>
+                            <screen><prompt>#</prompt> <userinput>sudo service neutron-server restart</userinput></screen>
+                        </step>
+                    </procedure>
+                    <para>Example <filename>nvp.ini</filename>
+                        file:</para>
+                    <programlisting language="ini">[cluster:main]
+default_tz_uuid = d3afb164-b263-4aaa-a3e4-48e0e09bb33c
+default_l3_gw_service_uuid=5c8622cc-240a-40a1-9693-e6a5fca4e3cf
+nvp_controller_connection=10.0.0.2:443:admin:admin:30:10:2:2
+nvp_controller_connection=10.0.0.3:443:admin:admin:30:10:2:2
+nvp_controller_connection=10.0.0.4:443:admin:admin:30:10:2:2</programlisting>
+                    <note>
+                        <para>To debug <filename>nvp.ini</filename>
+                            configuration issues, run the following
+                            command from the host running
+                            neutron-server:
+                            <screen><prompt>#</prompt> <userinput>check-nvp-config &lt;path/to/nvp.ini&gt;</userinput></screen>This
+                            command tests whether <systemitem
+                                class="service"
+                                >neutron-server</systemitem> can log
+                            into all of the NVP Controllers, SQL
+                            server, and whether all of the UUID values
+                            are correct.</para>
+                    </note>
+                </section>
+                <section xml:id="PLUMgridplugin">
+                    <title>Configure PLUMgrid plug-in</title>
+                    <procedure>
+                        <title>To use the PLUMgrid plug-in with
+                            OpenStack Networking</title>
+                        <step>
+                            <para>Edit
+                                   <filename>/etc/neutron/neutron.conf</filename>
+                                and set:</para>
+                            <programlisting language="ini">core_plugin = neutron.plugins.plumgrid.plumgrid_plugin.plumgrid_plugin.NeutronPluginPLUMgridV2</programlisting>
+                        </step>
+                        <step>
+                            <para>Edit
+                                   <filename>/etc/neutron/plugins/plumgrid/plumgrid.ini</filename>
+                                under the
+                                   <systemitem>[PLUMgridDirector]</systemitem>
+                                section, and specify the IP address,
+                                port, admin user name, and password of
+                                the PLUMgrid Director:
+                                <programlisting language="ini">[PLUMgridDirector]
+director_server = "PLUMgrid-director-ip-address"
+director_server_port = "PLUMgrid-director-port"
+username = "PLUMgrid-director-admin-username"
+password = "PLUMgrid-director-admin-password"</programlisting>
+                                For database configuration, see <link
+                                   xlink:href="http://docs.openstack.org/havana/install-guide/install/apt/content/neutron-install-network-node.html"
+                                   >Install Networking Services</link>
+                                in <citetitle>Installation
+                                   Guide</citetitle>.</para>
+                        </step>
+                        <step>
+                            <para>To apply the new settings, restart
+                                   <systemitem class="service"
+                                   >neutron-server</systemitem>:</para>
+                            <screen><prompt>#</prompt> <userinput>sudo service neutron-server restart</userinput></screen>
+                        </step>
+                    </procedure>
+                </section>
+                <section xml:id="ryu_plugin">
+                    <title>Configure Ryu plug-in</title>
+                    <procedure>
+                        <title>To use the Ryu plug-in with OpenStack
+                            Networking</title>
+                        <step>
+                            <para>Install the Ryu plug-in, as
+                                follows:</para>
+                            <screen><prompt>#</prompt> <userinput>sudo apt-get install neutron-plugin-ryu</userinput> </screen>
+                        </step>
+                        <step>
+                            <para>Edit
+                                   <filename>/etc/neutron/neutron.conf</filename>
+                                and set:</para>
+                            <programlisting language="ini">core_plugin = neutron.plugins.ryu.ryu_neutron_plugin.RyuNeutronPluginV2</programlisting>
+                        </step>
+                        <step>
+                            <para>Edit
+                                   <filename>/etc/neutron/plugins/ryu/ryu.ini</filename>
+                                (for database configuration, see <link
+                                   xlink:href="http://docs.openstack.org/havana/install-guide/install/apt/content/neutron-install-network-node.html"
+                                   >Install Networking Services</link>
+                                in <citetitle>Installation
+                                   Guide</citetitle>), and update the
+                                following in the
+                                   <systemitem>[ovs]</systemitem>
+                                section for the
+                                   <systemitem>ryu-neutron-agent</systemitem>: <itemizedlist>
+                                   <listitem>
+                                   <para>The
+                                   <systemitem>openflow_rest_api</systemitem>
+                                   is used to tell where Ryu is
+                                   listening for REST API. Substitute
+                                   <systemitem>ip-address</systemitem>
+                                   and
+                                   <systemitem>port-no</systemitem>
+                                   based on your Ryu setup.</para>
+                                   </listitem>
+                                   <listitem>
+                                   <para>The
+                                   <literal>ovsdb_interface</literal>
+                                   is used for Ryu to access the
+                                   <systemitem>ovsdb-server</systemitem>.
+                                   Substitute eth0 based on your set
+                                   up. The IP address is derived from
+                                   the interface name. If you want to
+                                   change this value irrespective of
+                                   the interface name,
+                                   <systemitem>ovsdb_ip</systemitem>
+                                   can be specified. If you use a
+                                   non-default port for
+                                   <systemitem>ovsdb-server</systemitem>,
+                                   it can be specified by
+                                   <systemitem>ovsdb_port</systemitem>.</para>
+                                   </listitem>
+                                   <listitem>
+                                   <para><systemitem>tunnel_interface</systemitem>
+                                   needs to be set to tell what IP
+                                   address is used for tunneling (if
+                                   tunneling isn't used, this value is
+                                   ignored). The IP address is derived
+                                   from the network interface
+                                   name.</para>
+                                   </listitem>
+                                </itemizedlist></para>
+                            <para>You can use the same configuration
+                                file for many Compute nodes by using a
+                                network interface name with a
+                                different IP address:</para>
+                            <programlisting language="ini">openflow_rest_api = &lt;ip-address&gt;:&lt;port-no&gt; ovsdb_interface = &lt;eth0&gt; tunnel_interface = &lt;eth0&gt;</programlisting>
+                        </step>
+                        <step>
+                            <para>To apply the new settings, restart
+                                   <systemitem class="service"
+                                   >neutron-server</systemitem>:</para>
+                            <screen><prompt>#</prompt> <userinput>sudo service neutron-server restart</userinput></screen>
+                        </step>
+                    </procedure>
+                </section>
+            </section>
+        </section>
+        <section xml:id="install_neutron_agent">
+            <title>Configure neutron agents</title>
+            <para>Plug-ins typically have requirements for particular
+                software that must be run on each node that handles
+                data packets. This includes any node that runs
+                    <systemitem class="service"
+                    >nova-compute</systemitem> and nodes that run
+                dedicated OpenStack Networking service agents such as,
+                    <systemitem>neutron-dhcp-agent</systemitem>,
+                    <systemitem>neutron-l3-agent</systemitem>, or
+                    <systemitem>neutron-lbaas-agent</systemitem> (see
+                below for more information about individual service
+                agents).</para>
+            <para>A data-forwarding node typically has a network
+                interface with an IP address on the “management
+                network” and another interface on the “data
+                network”.</para>
+            <para>This section shows you how to install and configure
+                a subset of the available plug-ins, which may include
+                the installation of switching software (for example,
+                Open vSwitch) as well as agents used to communicate
+                with the <systemitem class="service"
+                    >neutron-server</systemitem> process running
+                elsewhere in the data center.</para>
+            <section xml:id="config_neutron_data_fwd_node">
+                <title>Configure data-forwarding nodes</title>
+                <section xml:id="install_neutron_agent_ovs">
+                    <title>Node set up: OVS plug-in</title>
+                    <para>If you use the Open vSwitch plug-in, you
+                        must install Open vSwitch and the
+                            <systemitem>neutron-plugin-openvswitch-agent</systemitem>
+                        agent on each data-forwarding node:</para>
+                    <warning>
+                        <para>Do not install the openvswitch-brcompat
+                            package as it breaks the security groups
+                            functionality.</para>
+                    </warning>
+                    <procedure>
+                        <title>To set up each node for the OVS
+                            plug-in</title>
+                        <step>
+                            <para>Install the OVS agent package (this
+                                pulls in the Open vSwitch software as
+                                a dependency):</para>
+                            <screen><prompt>#</prompt> <userinput>sudo apt-get install neutron-plugin-openvswitch-agent</userinput></screen>
+                        </step>
+                        <step>
+                            <para>On each node that runs the
+                                   <systemitem>neutron-plugin-openvswitch-agent</systemitem>:</para>
+                            <itemizedlist>
+                                <listitem>
+                                   <para>Replicate the
+                                   <filename>ovs_neutron_plugin.ini</filename>
+                                   file created in the first step onto
+                                   the node.</para>
+                                </listitem>
+                                <listitem>
+                                   <para>If using tunneling, the
+                                   node's
+                                   <filename>ovs_neutron_plugin.ini</filename>
+                                   file must also be updated with the
+                                   node's IP address configured on the
+                                   data network using the
+                                   <systemitem>local_ip</systemitem>
+                                   value.</para>
+                                </listitem>
+                            </itemizedlist>
+                        </step>
+                        <step>
+                            <para>Restart Open vSwitch to properly
+                                load the kernel module:</para>
+                            <screen><prompt>#</prompt> <userinput>sudo service openvswitch-switch restart</userinput></screen>
+                        </step>
+                        <step>
+                            <para>Restart the agent:</para>
+                            <screen><prompt>#</prompt> <userinput>sudo service neutron-plugin-openvswitch-agent restart</userinput></screen>
+                        </step>
+                        <step>
+                            <para>All nodes that run
+                                   <systemitem>neutron-plugin-openvswitch-agent</systemitem>
+                                must have an OVS
+                                   <literal>br-int</literal> bridge. .
+                                To create the bridge, run:</para>
+                            <screen><prompt>#</prompt> <userinput>sudo ovs-vsctl add-br br-int</userinput></screen>
+                        </step>
+                    </procedure>
+                </section>
+                <section xml:id="install_neutron_agent_nvp">
+                    <title>Node set up: Nicira NVP plug-in</title>
+                    <para>If you use the Nicira NVP plug-in, you must
+                        also install Open vSwitch on each
+                        data-forwarding node. However, you do not need
+                        to install an additional agent on each
+                        node.</para>
+                    <warning>
+                        <para>It is critical that you are running an
+                            Open vSwitch version that is compatible
+                            with the current version of the NVP
+                            Controller software. Do not use the Open
+                            vSwitch version that is installed by
+                            default on Ubuntu. Instead, use the Open
+                            Vswitch version that is provided on the
+                            Nicira support portal for your NVP
+                            Controller version.</para>
+                    </warning>
+                    <procedure>
+                        <title>To set up each node for the Nicira NVP
+                            plug-in</title>
+                        <step>
+                            <para>Ensure each data-forwarding node has
+                                an IP address on the "management
+                                network," and an IP address on the
+                                "data network" that is used for
+                                tunneling data traffic. For full
+                                details on configuring your forwarding
+                                node, see the <citetitle>NVP
+                                   Administrator
+                                Guide</citetitle>.</para>
+                        </step>
+                        <step>
+                            <para>Use the <citetitle>NVP Administrator
+                                   Guide</citetitle> to add the node
+                                as a "Hypervisor" using the NVP
+                                Manager GUI. Even if your forwarding
+                                node has no VMs and is only used for
+                                services agents like
+                                   <systemitem>neutron-dhcp-agent</systemitem>
+                                or
+                                   <systemitem>neutron-lbaas-agent</systemitem>,
+                                it should still be added to NVP as a
+                                Hypervisor.</para>
+                        </step>
+                        <step>
+                            <para>After following the <citetitle>NVP
+                                   Administrator Guide</citetitle>,
+                                use the page for this Hypervisor in
+                                the NVP Manager GUI to confirm that
+                                the node is properly connected to the
+                                NVP Controller Cluster and that the
+                                NVP Controller Cluster can see the
+                                   <literal>br-int</literal>
+                                integration bridge.</para>
+                        </step>
+                    </procedure>
+                </section>
+                <section xml:id="install_neutron_agent_ryu">
+                    <title>Node set up: Ryu plug-in</title>
+                    <para>If you use the Ryu plug-in, you must install
+                        both Open vSwitch and Ryu, in addition to the
+                        Ryu agent package:</para>
+                    <procedure>
+                        <title>To set up each node for the Ryu
+                            plug-in</title>
+                        <step>
+                            <para>Install Ryu (there isn't currently
+                                an Ryu package for ubuntu):</para>
+                            <screen><prompt>#</prompt> <userinput>sudo pip install ryu</userinput></screen>
+                        </step>
+                        <step>
+                            <para>Install the Ryu agent and Open
+                                vSwitch packages:</para>
+                            <screen><prompt>#</prompt> <userinput>sudo apt-get install neutron-plugin-ryu-agent openvswitch-switch python-openvswitch openvswitch-datapath-dkms</userinput></screen>
+                        </step>
+                        <step>
+                            <para>Replicate the
+                                   <filename>ovs_ryu_plugin.ini</filename>
+                                and <filename>neutron.conf</filename>
+                                files created in the above step on all
+                                nodes running
+                                   <systemitem>neutron-plugin-ryu-agent</systemitem>.
+                            </para>
+                        </step>
+                        <step>
+                            <para>Restart Open vSwitch to properly
+                                load the kernel module:</para>
+                            <screen><prompt>#</prompt> <userinput>sudo service openvswitch-switch restart</userinput></screen>
+                        </step>
+                        <step>
+                            <para>Restart the agent:</para>
+                            <screen><prompt>#</prompt> <userinput>sudo service neutron-plugin-ryu-agent restart</userinput> </screen>
+                        </step>
+                        <step>
+                            <para>All nodes running
+                                   <systemitem>neutron-plugin-ryu-agent</systemitem>
+                                also require that an OVS bridge named
+                                "br-int" exists on each node. To
+                                create the bridge, run:</para>
+                            <screen><prompt>#</prompt> <userinput>sudo ovs-vsctl add-br br-int</userinput></screen>
+                        </step>
+                    </procedure>
+                </section>
+            </section>
+            <section xml:id="install_neutron_dhcp">
+                <title>Configure DHCP agent</title>
+                <para>The DHCP service agent is compatible with all
+                    existing plug-ins and is required for all
+                    deployments where VMs should automatically receive
+                    IP addresses through DHCP.</para>
+                <procedure>
+                    <title>To install and configure the DHCP
+                        agent</title>
+                    <step>
+                        <para>You must configure the host running the
+                                <systemitem>neutron-dhcp-agent</systemitem>
+                            as a "data forwarding node" according to
+                            the requirements for your plug-in (see
+                                <xref linkend="install_neutron_agent"
+                            />).</para>
+                    </step>
+                    <step>
+                        <para>Install the DHCP agent:</para>
+                        <screen><prompt>#</prompt> <userinput>sudo apt-get install neutron-dhcp-agent</userinput></screen>
+                    </step>
+                    <step>
+                        <para>Finally, update any options in the
+                                <filename>/etc/neutron/dhcp_agent.ini</filename>
+                            file that depend on the plug-in in use
+                            (see the sub-sections).</para>
+                    </step>
+                </procedure>
+                <section xml:id="dhcp_agent_ovs">
+                    <title>DHCP agent setup: OVS plug-in</title>
+                    <para>The following DHCP agent options are
+                        required in the
+                            <filename>/etc/neutron/dhcp_agent.ini</filename>
+                        file for the OVS plug-in:</para>
+                    <programlisting language="bash">[DEFAULT]
+ovs_use_veth = True
+enable_isolated_metadata = True
+use_namespaces = True
+interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver</programlisting>
+                </section>
+                <section xml:id="dhcp_agent_nvp">
+                    <title>DHCP agent setup: NVP plug-in</title>
+                    <para>The following DHCP agent options are
+                        required in the
+                            <filename>/etc/neutron/dhcp_agent.ini</filename>
+                        file for the NVP plug-in:</para>
+                    <programlisting language="bash">[DEFAULT]
+ovs_use_veth = True
+enable_metadata_network = True
+enable_isolated_metadata = True
+use_namespaces = True
+interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver</programlisting>
+                </section>
+                <section xml:id="dhcp_agent_ryu">
+                    <title>DHCP agent setup: Ryu plug-in</title>
+                    <para>The following DHCP agent options are
+                        required in the
+                            <filename>/etc/neutron/dhcp_agent.ini</filename>
+                        file for the Ryu plug-in:</para>
+                    <programlisting language="bash">[DEFAULT]
+ovs_use_veth = True
+use_namespace = True
+interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver</programlisting>
+                </section>
+            </section>
+            <section xml:id="install_neutron-l3">
+                <title>Configure L3 agent</title>
+                <para>Neutron has a widely used API extension to allow
+                    administrators and tenants to create "routers"
+                    that connect to L2 networks.</para>
+                <para>Many plug-ins rely on the L3 service agent to
+                    implement the L3 functionality. However, the
+                    following plug-ins already have built-in L3
+                    capabilities:</para>
+                <para>
+                    <itemizedlist>
+                        <listitem>
+                            <para>Nicira NVP plug-in</para>
+                        </listitem>
+                        <listitem>
+                            <para>Big Switch/Floodlight plug-in, which
+                                supports both the open source <link
+                                   xlink:href="http://www.projectfloodlight.org/floodlight/"
+                                   >Floodlight</link> controller and
+                                the proprietary Big Switch
+                                controller.</para>
+                            <note>
+                                <para>Only the proprietary BigSwitch
+                                   controller implements L3
+                                   functionality. When using
+                                   Floodlight as your OpenFlow
+                                   controller, L3 functionality is not
+                                   available.</para>
+                            </note>
+                        </listitem>
+                        <listitem>
+                            <para>PLUMgrid plug-in</para>
+                        </listitem>
+                    </itemizedlist>
+                    <warning>
+                        <para>Do not configure or use
+                                <filename>neutron-l3-agent</filename>
+                            if you use one of these plug-ins.</para>
+                    </warning>
+                    <procedure>
+                        <title>To install the L3 agent for all other
+                            plug-ins</title>
+                        <step>
+                            <para>Install the
+                                   <systemitem>neutron-l3-agent</systemitem>
+                                binary on the network node:</para>
+                            <screen><prompt>#</prompt> <userinput>sudo apt-get install neutron-l3-agent</userinput> </screen>
+                        </step>
+                        <step>
+                            <para>To uplink the node that runs
+                                   <systemitem>neutron-l3-agent</systemitem>
+                                to the external network, create a
+                                bridge named "br-ex" and attach the
+                                NIC for the external network to this
+                                bridge.</para>
+                            <para>For example, with Open vSwitch and
+                                NIC eth1 connected to the external
+                                network, run:</para>
+                            <screen><prompt>#</prompt> <userinput>sudo ovs-vsctl add-br br-ex</userinput>
+<prompt>#</prompt> <userinput>sudo ovs-vsctl add-port br-ex eth1</userinput></screen>
+                            <para>Do not manually configure an IP
+                                address on the NIC connected to the
+                                external network for the node running
+                                   <systemitem>neutron-l3-agent</systemitem>.
+                                Rather, you must have a range of IP
+                                addresses from the external network
+                                that can be used by OpenStack
+                                Networking for routers that uplink to
+                                the external network. This range must
+                                be large enough to have an IP address
+                                for each router in the deployment, as
+                                well as each floating IP.</para>
+                        </step>
+                        <step>
+                            <para>The
+                                   <systemitem>neutron-l3-agent</systemitem>
+                                uses the Linux IP stack and iptables
+                                to perform L3 forwarding and NAT. In
+                                order to support multiple routers with
+                                potentially overlapping IP addresses,
+                                   <systemitem>neutron-l3-agent</systemitem>
+                                defaults to using Linux network
+                                namespaces to provide isolated
+                                forwarding contexts. As a result, the
+                                IP addresses of routers will not be
+                                visible simply by running <command>ip
+                                   addr list</command> or
+                                   <command>ifconfig</command> on the
+                                node. Similarly, you will not be able
+                                to directly <command>ping</command>
+                                fixed IPs.</para>
+                            <para>To do either of these things, you
+                                must run the command within a
+                                particular router's network namespace.
+                                The namespace will have the name
+                                "qrouter-&lt;UUID of the router&gt;.
+                                The following commands are examples of
+                                running commands in the namespace of a
+                                router with UUID
+                                47af3868-0fa8-4447-85f6-1304de32153b:</para>
+                            <screen><prompt>#</prompt> <userinput>ip netns exec qrouter-47af3868-0fa8-4447-85f6-1304de32153b ip addr list</userinput>
+<prompt>#</prompt> <userinput>ip netns exec qrouter-47af3868-0fa8-4447-85f6-1304de32153b ping &lt;fixed-ip&gt;</userinput></screen>
+                        </step>
+                    </procedure>
+                </para>
+            </section>
+            <section xml:id="install_neutron-lbaas-agent">
+                <title>Configure LBaaS agent</title>
+                <para>Starting with the Havana release, the Neutron
+                    Load-Balancer-as-a-Service (LBaaS) supports an
+                    agent scheduling mechanism, so several
+                        <systemitem>neutron-lbaas-agents</systemitem>
+                    can be run on several nodes (one per one).</para>
+                <procedure>
+                    <title>To install the LBaas agent and configure
+                        the node</title>
+                    <step>
+                        <para>Install the agent by running:</para>
+                        <screen><prompt>#</prompt> <userinput>sudo apt-get install neutron-lbaas-agent</userinput></screen>
+                    </step>
+                    <step>
+                        <para>If you are using: <itemizedlist>
+                                <listitem>
+                                   <para>An OVS-based plug-in (OVS,
+                                   NVP, Ryu, NEC,
+                                   BigSwitch/Floodlight), you must
+                                   set:</para>
+                                   <programlisting language="ini">interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver</programlisting>
+                                </listitem>
+                                <listitem>
+                                   <para>A plug-in that uses
+                                   LinuxBridge, you must set:</para>
+                                   <programlisting language="ini">interface_driver = neutron.agent.linux.interface.BridgeInterfaceDriver</programlisting>
+                                </listitem>
+                            </itemizedlist></para>
+                    </step>
+                    <step>
+                        <para>To use the reference implementation, you
+                            must also set:</para>
+                        <programlisting language="ini">device_driver = neutron.plugins.services.agent_loadbalancer.drivers.haproxy.namespace_driver.HaproxyNSDriver</programlisting>
+                    </step>
+                    <step>
+                        <para>Make sure to set the following parameter
+                            in <filename>neutron.conf</filename> on
+                            the host that runs <systemitem
+                                class="service"
+                                >neutron-server</systemitem>:</para>
+                        <programlisting language="ini">service_plugins = neutron.plugins.services.agent_loadbalancer.plugin.LoadBalancerPlugin</programlisting>
+                    </step>
+                </procedure>
+            </section>
+            <section xml:id="install_neutron-fwaas-agent">
+                <title>Configure FWaaS agent</title>
+                <para>The Firewall-as-a-Service (FWaaS) agent is
+                    co-located with the Neutron L3 agent and does not
+                    require any additional packages apart from those
+                    required for the Neutron L3 agent. You can enable
+                    the FWaaS functionality by setting the
+                    configuration, as follows.</para>
+                <procedure>
+                    <title>To configure FWaaS service and
+                        agent</title>
+                    <step>
+                        <para>Make sure to set the following parameter
+                            in the <filename>neutron.conf</filename>
+                            file on the host that runs <systemitem
+                                class="service"
+                                >neutron-server</systemitem>:</para>
+                        <programlisting language="ini">service_plugins = neutron.services.firewall.fwaas_plugin.FirewallPlugin</programlisting>
+                    </step>
+                    <step>
+                        <para>To use the reference implementation, you
+                            must also add a FWaaS driver configuration
+                            to the <filename>neutron.conf</filename>
+                            file on every node where the Neutron L3
+                            agent is deployed:</para>
+                        <programlisting language="ini">[fwaas]
+driver = neutron.services.firewall.drivers.linux.iptables_fwaas.IptablesFwaasDriver
+enabled = True</programlisting>
+                    </step>
+                </procedure>
+            </section>
         </section>
     </section>
     <section xml:id="section_networking-arch">
         <title>Networking architecture</title>
         <para>Before you deploy Networking, it helps to understand the
             Networking components and how these components interact
-            with each other and with other OpenStack services.</para>
+            with each other and other OpenStack services.</para>
         <section xml:id="arch_overview">
             <title>Overview</title>
             <para>Networking is a standalone service, just like other
@@ -356,7 +1164,7 @@
                 deploying several processes on a variety of
                 hosts.</para>
             <para>The Networking server uses the <systemitem
-                class="service">neutron-server</systemitem> daemon
+                    class="service">neutron-server</systemitem> daemon
                 to expose the Networking API and to pass user requests
                 to the configured Networking plug-in for additional
                 processing. Typically, the plug-in requires access to
@@ -382,25 +1190,31 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td><emphasis role="bold">plug-in agent</emphasis>
-                            (<literal>neutron-*-agent</literal>)</td>
-                            <td>Runs on each hypervisor to perform local vswitch
-                            configuration. The agent that runs depends on
-                            the plug-in that you use, and some plug-ins do
-                            not require an agent.</td>
+                            <td><emphasis role="bold">plug-in
+                                   agent</emphasis>
+                                   (<literal>neutron-*-agent</literal>)</td>
+                            <td>Runs on each hypervisor to perform
+                                local vswitch configuration. The agent
+                                that runs depends on the plug-in that
+                                you use, and some plug-ins do not
+                                require an agent.</td>
                         </tr>
                         <tr>
-                            <td><emphasis role="bold">dhcp agent</emphasis>
-                            (<literal>neutron-dhcp-agent</literal>)</td>
-                            <td>Provides DHCP services to tenant networks.
-                            Some plug-ins use this agent.</td>
+                            <td><emphasis role="bold">dhcp
+                                   agent</emphasis>
+                                   (<literal>neutron-dhcp-agent</literal>)</td>
+                            <td>Provides DHCP services to tenant
+                                networks. Some plug-ins use this
+                                agent.</td>
                         </tr>
                         <tr>
-                            <td><emphasis role="bold">l3 agent</emphasis>
-                            (<literal>neutron-l3-agent</literal>)</td>
-                            <td>Provides L3/NAT forwarding to provide external
-                            network access for VMs on tenant networks.
-                            Some plug-ins use this agent.</td>
+                            <td><emphasis role="bold">l3
+                                   agent</emphasis>
+                                   (<literal>neutron-l3-agent</literal>)</td>
+                            <td>Provides L3/NAT forwarding to provide
+                                external network access for VMs on
+                                tenant networks. Some plug-ins use
+                                this agent.</td>
                         </tr>
                     </tbody>
                 </table>
@@ -421,7 +1235,7 @@
                             >nova-compute</systemitem> service
                         communicates with the Networking API to plug
                         each virtual NIC on the VM into a particular
-                        network.  </para>
+                        network. </para>
                 </listitem>
                 <listitem>
                     <para>The Dashboard (Horizon) integrates with the
@@ -471,7 +1285,8 @@
 
             <para>
                 <table rules="all">
-                    <caption>General distinct physical data center networks</caption>
+                    <caption>General distinct physical data center
+                        networks</caption>
                     <col width="20%"/>
                     <col width="80%"/>
                     <thead>
@@ -482,27 +1297,45 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td><emphasis role="bold">Management network</emphasis></td>
-                            <td>Provides internal communication between OpenStack Components. IP
-                            addresses on this network should be reachable only within the data center.</td>
+                            <td><emphasis role="bold">Management
+                                   network</emphasis></td>
+                            <td>Provides internal communication
+                                between OpenStack Components. IP
+                                addresses on this network should be
+                                reachable only within the data
+                                center.</td>
                         </tr>
                         <tr>
-                            <td><emphasis role="bold">Data network</emphasis></td>
-                            <td>Provides VM data communication within the cloud deployment.  The IP addressing
-                            requirements of this network depend on the Networking plug-in that is used.</td>
+                            <td><emphasis role="bold">Data
+                                   network</emphasis></td>
+                            <td>Provides VM data communication within
+                                the cloud deployment. The IP
+                                addressing requirements of this
+                                network depend on the Networking
+                                plug-in that is used.</td>
                         </tr>
                         <tr>
-                            <td><emphasis role="bold">External network</emphasis></td>
-                            <td>Provides VMs with Internet access in some deployment scenarios.
-                            Anyone on the Internet can reach IP addresses on this network.</td>
+                            <td><emphasis role="bold">External
+                                   network</emphasis></td>
+                            <td>Provides VMs with Internet access in
+                                some deployment scenarios. Anyone on
+                                the Internet can reach IP addresses on
+                                this network.</td>
                         </tr>
                         <tr>
-                            <td><emphasis role="bold">API network</emphasis></td>
-                            <td>Exposes all OpenStack APIs, including the Networking API, to
-                            tenants. IP addresses on this network should be reachable by anyone on the Internet. The
-                            API network might be the same as the external network, because it is possible to create an
-                            external-network subnet that is allocated IP ranges that use less than the full range of IP
-                            addresses in an IP block.</td>
+                            <td><emphasis role="bold">API
+                                   network</emphasis></td>
+                            <td>Exposes all OpenStack APIs, including
+                                the Networking API, to tenants. IP
+                                addresses on this network should be
+                                reachable by anyone on the
+                                Internet. The API network might be the
+                                same as the external network, because
+                                it is possible to create an
+                                external-network subnet that is
+                                allocated IP ranges that use less than
+                                the full range of IP addresses in an
+                                IP block.</td>
                         </tr>
                     </tbody>
                 </table>
@@ -511,7 +1344,19 @@
     </section>
     <section xml:id="section_networking-use">
         <title>Use Networking</title>
-
+        <para>You can start and stop OpenStack Networking services
+            using the <systemitem>service</systemitem> command. For
+            example:</para>
+        <screen><prompt>#</prompt> <userinput>sudo service neutron-server stop</userinput>
+<prompt>#</prompt> <userinput>sudo service neutron-server status</userinput>
+<prompt>#</prompt> <userinput>sudo service neutron-server start</userinput>
+<prompt>#</prompt> <userinput>sudo service neutron-server restart</userinput></screen>
+        <para>Log files are in the
+                <systemitem>/var/log/neutron</systemitem>
+            directory.</para>
+        <para>Configuration files are in the
+                <systemitem>/etc/neutron</systemitem>
+            directory.</para>
         <para>You can use Networking in the following ways:</para>
         <itemizedlist>
             <listitem>
@@ -539,7 +1384,7 @@
             <para>The CLI includes a number of options. For details,
                 refer to the <link
                     xlink:href="http://docs.openstack.org/user-guide/content/"
-                    ><citetitle>OpenStack End User
+                        ><citetitle>OpenStack End User
                         Guide</citetitle></link>.</para>
             <section xml:id="api_abstractions">
                 <title>API abstractions</title>
@@ -550,50 +1395,58 @@
                     L3 forwarding and NAT, which provides capabilities
                     similar to <command>nova-network</command>.</para>
                 <para><table rules="all">
-                    <caption>API abstractions</caption>
-                    <col width="10%"/>
-                    <col width="90%"/>
-                    <thead>
-                        <tr>
-                            <th>Abstraction</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><emphasis role="bold">Network</emphasis></td>
-                            <td>An isolated L2 network segment
-                            (similar to a VLAN) that forms the basis
-                            for describing the L2 network topology
-                            available in an Networking deployment.</td>
-                        </tr>
-                        <tr>
-                            <td><emphasis role="bold">Subnet</emphasis></td>
-                            <td>Associates a block of IP
-                            addresses and other network configuration,
-                            such as, default gateways or dns-servers,
-                            with an Networking network. Each subnet
-                            represents an IPv4 or IPv6 address block
-                            and, if needed, each Networking network
-                            can have multiple subnets.</td>
-                        </tr>
-                        <tr>
-                            <td><emphasis role="bold">Port</emphasis></td>
-                            <td>Represents an attachment port to a
-                            L2 Networking network. When a port is
-                            created on the network, by default it is
-                            allocated an available fixed IP address
-                            out of one of the designated subnets for
-                            each IP version (if one exists). When the
-                            port is destroyed, its allocated addresses
-                            return to the pool of available IPs on the
-                            subnet. Users of the Networking API can
-                            either choose a specific IP address from
-                            the block, or let Networking choose the
-                            first available IP address.</td>
-                        </tr>
-                    </tbody>
-                </table></para>
+                        <caption>API abstractions</caption>
+                        <col width="10%"/>
+                        <col width="90%"/>
+                        <thead>
+                            <tr>
+                                <th>Abstraction</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><emphasis role="bold"
+                                   >Network</emphasis></td>
+                                <td>An isolated L2 network segment
+                                   (similar to a VLAN) that forms the
+                                   basis for describing the L2 network
+                                   topology available in an Networking
+                                   deployment.</td>
+                            </tr>
+                            <tr>
+                                <td><emphasis role="bold"
+                                   >Subnet</emphasis></td>
+                                <td>Associates a block of IP addresses
+                                   and other network configuration,
+                                   such as, default gateways or
+                                   dns-servers, with an Networking
+                                   network. Each subnet represents an
+                                   IPv4 or IPv6 address block and, if
+                                   needed, each Networking network can
+                                   have multiple subnets.</td>
+                            </tr>
+                            <tr>
+                                <td><emphasis role="bold"
+                                   >Port</emphasis></td>
+                                <td>Represents an attachment port to a
+                                   L2 Networking network. When a port
+                                   is created on the network, by
+                                   default it is allocated an
+                                   available fixed IP address out of
+                                   one of the designated subnets for
+                                   each IP version (if one exists).
+                                   When the port is destroyed, its
+                                   allocated addresses return to the
+                                   pool of available IPs on the
+                                   subnet. Users of the Networking API
+                                   can either choose a specific IP
+                                   address from the block, or let
+                                   Networking choose the first
+                                   available IP address.</td>
+                            </tr>
+                        </tbody>
+                    </table></para>
                 <?hard-pagebreak?>
                 <para>The following table summarizes the attributes
                     available for each networking abstraction. For
@@ -947,14 +1800,14 @@
                     of tenants by specifying an Identity
                         <option>tenant_id</option> in the command, as
                     follows:</para>
-                <screen><prompt>$</prompt> <userinput>neutron net-create --tenant-id=<replaceable>tenant-id</replaceable> <replaceable>network-name</replaceable></userinput></screen>
+                <screen><prompt>#</prompt> <userinput>neutron net-create --tenant-id=<replaceable>tenant-id</replaceable> <replaceable>network-name</replaceable></userinput></screen>
                 <para>For example:</para>
-                <screen><prompt>$</prompt> <userinput>neutron net-create --tenant-id=5e4bbe24b67a4410bc4d9fae29ec394e net1</userinput></screen>
+                <screen><prompt>#</prompt> <userinput>neutron net-create --tenant-id=5e4bbe24b67a4410bc4d9fae29ec394e net1</userinput></screen>
                 <note>
                     <para>To view all tenant IDs in Identity, run the
                         following command as an Identity Service admin
                         user:</para>
-                    <screen><prompt>$</prompt> <userinput>keystone tenant-list</userinput></screen>
+                    <screen><prompt>#</prompt> <userinput>keystone tenant-list</userinput></screen>
                 </note>
             </section>
             <?hard-pagebreak?>
@@ -977,37 +1830,37 @@
                         <tr>
                             <td>Creates a network that all tenants can
                                 use.</td>
-                            <td><screen><prompt>$</prompt> <userinput>neutron net-create --shared public-net</userinput></screen></td>
+                            <td><screen><prompt>#</prompt> <userinput>neutron net-create --shared public-net</userinput></screen></td>
                         </tr>
                         <tr>
                             <td>Creates a subnet with a specified
                                 gateway IP address.</td>
-                            <td><screen><prompt>$</prompt> <userinput>neutron subnet-create --gateway 10.0.0.254 net1 10.0.0.0/24</userinput></screen></td>
+                            <td><screen><prompt>#</prompt> <userinput>neutron subnet-create --gateway 10.0.0.254 net1 10.0.0.0/24</userinput></screen></td>
                         </tr>
                         <tr>
                             <td>Creates a subnet that has no gateway
                                 IP address.</td>
-                            <td><screen><prompt>$</prompt> <userinput>neutron subnet-create --no-gateway net1 10.0.0.0/24</userinput></screen></td>
+                            <td><screen><prompt>#</prompt> <userinput>neutron subnet-create --no-gateway net1 10.0.0.0/24</userinput></screen></td>
                         </tr>
                         <tr>
                             <td>Creates a subnet with DHCP
                                 disabled.</td>
-                            <td><screen><prompt>$</prompt> <userinput>neutron subnet-create net1 10.0.0.0/24 --enable_dhcp False</userinput></screen></td>
+                            <td><screen><prompt>#</prompt> <userinput>neutron subnet-create net1 10.0.0.0/24 --enable_dhcp False</userinput></screen></td>
                         </tr>
                         <tr>
                             <td>Creates a subnet with a specified set
                                 of host routes.</td>
-                            <td><screen><prompt>$</prompt> <userinput>neutron subnet-create test-net1 40.0.0.0/24 --host_routes type=dict list=true destination=40.0.1.0/24,nexthop=40.0.0.2</userinput></screen></td>
+                            <td><screen><prompt>#</prompt> <userinput>neutron subnet-create test-net1 40.0.0.0/24 --host_routes type=dict list=true destination=40.0.1.0/24,nexthop=40.0.0.2</userinput></screen></td>
                         </tr>
                         <tr>
                             <td>Creates a subnet with a specified set
                                 of dns name servers.</td>
-                            <td><screen><prompt>$</prompt> <userinput>neutron subnet-create test-net1 40.0.0.0/24 --dns_nameservers list=true 8.8.8.7 8.8.8.8</userinput></screen></td>
+                            <td><screen><prompt>#</prompt> <userinput>neutron subnet-create test-net1 40.0.0.0/24 --dns_nameservers list=true 8.8.8.7 8.8.8.8</userinput></screen></td>
                         </tr>
                         <tr>
                             <td>Displays all ports and IPs allocated
                                 on a network.</td>
-                            <td><screen><prompt>$</prompt> <userinput>neutron port-list --network_id <replaceable>net-id</replaceable></userinput></screen></td>
+                            <td><screen><prompt>#</prompt> <userinput>neutron port-list --network_id <replaceable>net-id</replaceable></userinput></screen></td>
                         </tr>
                     </tbody>
                 </table>
@@ -1035,12 +1888,12 @@
                     <tbody>
                         <tr>
                             <td>Checks available networks.</td>
-                            <td><screen><prompt>$</prompt> <userinput>neutron net-list</userinput></screen></td>
+                            <td><screen><prompt>#</prompt> <userinput>neutron net-list</userinput></screen></td>
                         </tr>
                         <tr>
                             <td>Boots a VM with a single NIC on a
                                 selected Networking network.</td>
-                            <td><screen><prompt>$</prompt> <userinput>nova boot --image <replaceable>img</replaceable> --flavor <replaceable>flavor</replaceable> --nic net-id=<replaceable>net-id</replaceable> <replaceable>vm-name</replaceable></userinput></screen>
+                            <td><screen><prompt>#</prompt> <userinput>nova boot --image <replaceable>img</replaceable> --flavor <replaceable>flavor</replaceable> --nic net-id=<replaceable>net-id</replaceable> <replaceable>vm-name</replaceable></userinput></screen>
                             </td>
                         </tr>
                         <tr>
@@ -1048,21 +1901,21 @@
                                    <option>device_id</option> that
                                    matches the Compute instance UUID.
                                    See <xref
-                                   linkend="network_compute_note"/>.
-                                </para>
+                                   linkend="network_compute_note"
+                                   />.</para>
                             </td>
-                            <td><screen><prompt>$</prompt> <userinput>neutron port-list --device_id=<replaceable>vm-id</replaceable></userinput></screen></td>
+                            <td><screen><prompt>#</prompt> <userinput>neutron port-list --device_id=<replaceable>vm-id</replaceable></userinput></screen></td>
                         </tr>
                         <tr>
                             <td>Searches for ports, but shows only the
                                    <option>mac_address</option> for
                                 the port.</td>
-                            <td><screen><prompt>$</prompt> <userinput>neutron port-list --field mac_address --device_id=<replaceable>vm-id</replaceable></userinput></screen></td>
+                            <td><screen><prompt>#</prompt> <userinput>neutron port-list --field mac_address --device_id=<replaceable>vm-id</replaceable></userinput></screen></td>
                         </tr>
                         <tr>
                             <td>Temporarily disables a port from
                                 sending traffic.</td>
-                            <td><screen><prompt>$</prompt> <userinput>neutron port-update <replaceable>port-id</replaceable> --admin_state_up=False</userinput></screen></td>
+                            <td><screen><prompt>#</prompt> <userinput>neutron port-update <replaceable>port-id</replaceable> --admin_state_up=False</userinput></screen></td>
                         </tr>
                     </tbody>
                 </table>
@@ -1079,8 +1932,8 @@
                                 VM NIC is automatically created and
                                 associated with the default security
                                 group. You can configure <link
-                                    linkend="enabling_ping_and_ssh"
-                                    >security group rules</link> to
+                                   linkend="enabling_ping_and_ssh"
+                                   >security group rules</link> to
                                 enable users to access the VM.</para>
                         </listitem>
                         <listitem>
@@ -1109,7 +1962,7 @@
                     <tbody>
                         <tr>
                             <td>Boots a VM with multiple NICs.</td>
-                            <td><screen><prompt>$</prompt> <userinput>nova boot --image <replaceable>img</replaceable> --flavor <replaceable>flavor</replaceable> --nic net-id=<replaceable>net1-id</replaceable> --nic net-id=<replaceable>net2-id</replaceable> <replaceable>vm-name</replaceable></userinput></screen></td>
+                            <td><screen><prompt>#</prompt> <userinput>nova boot --image <replaceable>img</replaceable> --flavor <replaceable>flavor</replaceable> --nic net-id=<replaceable>net1-id</replaceable> --nic net-id=<replaceable>net2-id</replaceable> <replaceable>vm-name</replaceable></userinput></screen></td>
                         </tr>
                         <tr>
                             <td>Boots a VM with a specific IP address.
@@ -1118,8 +1971,8 @@
                                 specifying a <option>port-id</option>
                                 rather than a
                                 <option>net-id</option>.</td>
-                            <td><screen><prompt>$</prompt> <userinput>neutron port-create --fixed-ip subnet_id=<replaceable>subnet-id</replaceable>,ip_address=<replaceable>IP</replaceable> <replaceable>net-id</replaceable></userinput>
-<prompt>$</prompt> <userinput>nova boot --image <replaceable>img</replaceable> --flavor <replaceable>flavor</replaceable> --nic port-id=<replaceable>port-id</replaceable> <replaceable>vm-name</replaceable></userinput></screen>
+                            <td><screen><prompt>#</prompt> <userinput>neutron port-create --fixed-ip subnet_id=<replaceable>subnet-id</replaceable>,ip_address=<replaceable>IP</replaceable> <replaceable>net-id</replaceable></userinput>
+<prompt>#</prompt> <userinput>nova boot --image <replaceable>img</replaceable> --flavor <replaceable>flavor</replaceable> --nic port-id=<replaceable>port-id</replaceable> <replaceable>vm-name</replaceable></userinput></screen>
                             </td>
                         </tr>
                         <tr>
@@ -1128,7 +1981,7 @@
                                 tenant who submits the request
                                 (without the <option>--nic</option>
                                 option).</td>
-                            <td><screen><prompt>$</prompt> <userinput>nova boot --image <replaceable>img</replaceable> --flavor <replaceable>flavor</replaceable> <replaceable>vm-name</replaceable></userinput></screen>
+                            <td><screen><prompt>#</prompt> <userinput>nova boot --image <replaceable>img</replaceable> --flavor <replaceable>flavor</replaceable> <replaceable>vm-name</replaceable></userinput></screen>
                             </td>
                         </tr>
                     </tbody>
@@ -1156,9 +2009,9 @@
                                 <command>ping</command> and
                                 <command>ssh</command> access to your
                             VMs.</para>
-                        <screen><prompt>$</prompt> <userinput>neutron security-group-rule-create --protocol icmp \
+                        <screen><prompt>#</prompt> <userinput>neutron security-group-rule-create --protocol icmp \
     --direction ingress default</userinput></screen>
-                        <screen><prompt>$</prompt> <userinput>neutron security-group-rule-create --protocol tcp --port-range-min 22 \
+                        <screen><prompt>#</prompt> <userinput>neutron security-group-rule-create --protocol tcp --port-range-min 22 \
     --port-range-max 22 --direction ingress default</userinput></screen>
                     </listitem>
                     <listitem>
@@ -1172,8 +2025,8 @@
                                 <command>ping</command> and
                                 <command>ssh</command> access to your
                             VMs.</para>
-                        <screen><prompt>$</prompt> <userinput>nova secgroup-add-rule default icmp -1 -1 0.0.0.0/0</userinput>
-<prompt>$</prompt> <userinput>nova secgroup-add-rule default tcp 22 22 0.0.0.0/0</userinput></screen>
+                        <screen><prompt>#</prompt> <userinput>nova secgroup-add-rule default icmp -1 -1 0.0.0.0/0</userinput>
+<prompt>#</prompt> <userinput>nova secgroup-add-rule default tcp 22 22 0.0.0.0/0</userinput></screen>
                     </listitem>
                 </itemizedlist>
                 <note>
@@ -1202,7 +2055,7 @@
             Service endpoint. For more information about
             authentication with the Identity Service, see <link
                 xlink:href="http://docs.openstack.org/api/openstack-identity-service/2.0/content/"
-                ><citetitle>OpenStack Identity Service API v2.0
+                    ><citetitle>OpenStack Identity Service API v2.0
                     Reference</citetitle></link>. When the Identity
             Service is enabled, it is not mandatory to specify the
             tenant ID for resources in create requests because the
@@ -1250,7 +2103,7 @@
             a policy, which is evaluated. For instance in
                 <code>create_subnet:
                 [["admin_or_network_owner"]]</code>, <emphasis
-                    role="italic">create_subnet</emphasis> is a policy,
+                role="italic">create_subnet</emphasis> is a policy,
             and <emphasis role="italic"
                 >admin_or_network_owner</emphasis> is a rule.</para>
         <para>Policies are triggered by the Networking policy engine
@@ -1378,18 +2231,18 @@
 }</programlisting>
     </section>
     <section xml:id="section_high_avail">
-        <title>High Availability</title>
+        <title>High availability</title>
         <para>The use of high-availability in a Networking deployment
             helps prevent individual node failures. In general, you
             can run <systemitem class="service"
                 >neutron-server</systemitem> and <systemitem
-                    class="service">neutron-dhcp-agent</systemitem> in an
+                class="service">neutron-dhcp-agent</systemitem> in an
             active-active fashion. You can run the <systemitem
                 class="service">neutron-l3-agent</systemitem> service
             as active/passive, which avoids IP conflicts with respect
             to gateway IP addresses.</para>
         <section xml:id="ha_pacemaker">
-            <title>Networking High Availability with Pacemaker</title>
+            <title>Networking high availability with Pacemaker</title>
             <para>You can run some Networking services into a cluster
                 (Active / Passive or Active / Active for Networking
                 Server only) with Pacemaker.</para>
@@ -1397,18 +2250,18 @@
             <itemizedlist>
                 <listitem>
                     <para>neutron-server: <link
-                        xlink:href="https://github.com/madkiss/openstack-resource-agents/blob/master/ocf/neutron-server"
-                        >https://github.com/madkiss/openstack-resource-agents</link></para>
+                            xlink:href="https://github.com/madkiss/openstack-resource-agents/blob/master/ocf/neutron-server"
+                            >https://github.com/madkiss/openstack-resource-agents</link></para>
                 </listitem>
                 <listitem>
                     <para>neutron-dhcp-agent : <link
-                        xlink:href="https://github.com/madkiss/openstack-resource-agents/blob/master/ocf/neutron-agent-dhcp"
-                        >https://github.com/madkiss/openstack-resource-agents</link></para>
+                            xlink:href="https://github.com/madkiss/openstack-resource-agents/blob/master/ocf/neutron-agent-dhcp"
+                            >https://github.com/madkiss/openstack-resource-agents</link></para>
                 </listitem>
                 <listitem>
                     <para>neutron-l3-agent : <link
-                        xlink:href="https://github.com/madkiss/openstack-resource-agents/blob/master/ocf/neutron-agent-l3"
-                        >https://github.com/madkiss/openstack-resource-agents</link></para>
+                            xlink:href="https://github.com/madkiss/openstack-resource-agents/blob/master/ocf/neutron-agent-l3"
+                            >https://github.com/madkiss/openstack-resource-agents</link></para>
                 </listitem>
             </itemizedlist>
             <note xmlns:db="http://docbook.org/ns/docbook">
