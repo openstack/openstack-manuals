@@ -250,9 +250,9 @@ net.ipv4.conf.default.rp_filter=0</programlisting>
       </step>
       <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
         <para>Configure the core networking components. Edit the
-            <filename>/etc/neutron/neutron.conf</filename> file and
+          <filename>/etc/neutron/neutron.conf</filename> file and
           copying the following under the
-            <literal>keystone_authtoken</literal> section:</para>
+          <literal>keystone_authtoken</literal> section:</para>
         <programlisting language="ini">[keystone_authtoken]
 auth_host = <replaceable>controller</replaceable>
 auth_port = 35357
@@ -260,6 +260,8 @@ auth_protocol = http
 admin_tenant_name = service
 admin_user = neutron
 admin_password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
+        <para>To activate changes in the <filename>/etc/sysctl.conf</filename> file, run the following command:</para>
+        <screen><prompt>#</prompt> <userinput>sysctl -p</userinput></screen>
       </step>
       <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
         <para>Tell Neutron how to connect to the database. Edit the
@@ -279,6 +281,12 @@ auth_uri=http://<replaceable>controller</replaceable>:5000
 admin_user=neutron
 admin_tenant_name=service
 admin_password=<replaceable>NEUTRON_PASS</replaceable></programlisting>
+        <warning>
+          <para><literal>keystoneclient.middleware.auth_token</literal>:
+            You must configure <literal>auth_uri</literal> to point to
+            the public identity endpoint. Otherwise, clients might not
+            be able to authenticate against an admin endpoint.</para>
+        </warning>
       </step>
       <step os="debian">
         <para>Configure your network plug-in. For instructions, see
@@ -662,7 +670,7 @@ bridge_mappings = physnet1:br-DATA_INTERFACE</programlisting>
               file:</para>
             <programlisting language="ini">gateway_external_network_id = <replaceable>EXT_NET_ID</replaceable>
 router_id = <replaceable>EXT_TO_INT_ID</replaceable></programlisting>
-            <para>Then, restart the L3 agent</para>
+            <para>Then, restart the L3 agent:</para>
             <screen><prompt>#</prompt> <userinput>service neutron-l3-agent restart</userinput></screen>
           </note>
           <para>When creating networks, you should use the
