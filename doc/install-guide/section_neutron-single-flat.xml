@@ -265,6 +265,11 @@ connection = mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@<replacea
 network_vlan_ranges = physnet1
 bridge_mappings = physnet1:br-eth0</programlisting>
                         </listitem>
+                            <listitem os="centos">
+                                <para>Create a symbolic link from <filename>/etc/neutron/plugin.ini</filename> to <filename>/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename> or <code>neutron-server</code> will not run:
+                                </para>
+<screen><prompt>#</prompt> <userinput>ln -s /etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini /etc/neutron/plugin.ini</userinput></screen>
+                            </listitem>
                         <listitem>
                             <para>Create the <emphasis role="bold"
                                    >br-eth0</emphasis> network bridge
