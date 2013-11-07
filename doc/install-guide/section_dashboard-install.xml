@@ -15,10 +15,10 @@
         requirements in <xref linkend="dashboard-system-requirements"
         />.</para>
     <note>
-            <para>When you install Object Storage and Identity only,
-                even if you install the Dashboard, it does not pull up
-                projects and is unusable.</para>
-        </note>
+        <para>When you install only Object Storage and the Identity
+            Service, even if you install the dashboard, it does not
+            pull up projects and is unusable.</para>
+    </note>
     <para>For more information about how to deploy the dashboard, see
             <link
             xlink:href="http://docs.openstack.org/developer/horizon/topics/deployment.html"
@@ -30,62 +30,67 @@
             <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install memcached libapache2-mod-wsgi openstack-dashboard</userinput></screen>
             <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install memcached python-memcached mod_wsgi openstack-dashboard</userinput></screen>
             <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install memcached python-python-memcached apache2-mod_wsgi openstack-dashboard</userinput></screen>
-        <note os="ubuntu"><title>Note for Ubuntu users</title>
+            <note os="ubuntu">
+                <title>Note for Ubuntu users</title>
 
-            <para>Remove the
-                    <literal>openstack-dashboard-ubuntu-theme</literal>
-                package. This theme prevents translations, several menus
-                as well as the network map from rendering correctly:
-                <screen><prompt>#</prompt> <userinput>apt-get remove --purge openstack-dashboard-ubuntu-theme</userinput></screen>
-            </para>
-        </note>
-        <note os="debian"><title>Note for Debian users</title>
+                <para>Remove the
+                        <literal>openstack-dashboard-ubuntu-theme</literal>
+                    package. This theme prevents translations, several
+                    menus as well as the network map from rendering
+                    correctly:
+                    <screen><prompt>#</prompt> <userinput>apt-get remove --purge openstack-dashboard-ubuntu-theme</userinput></screen>
+                </para>
+            </note>
+            <note os="debian">
+                <title>Note for Debian users</title>
 
-             <para>It is as well possible to install the apache package:
-             <screen><prompt>#</prompt> <userinput>apt-get install openstack-dashboard-apache</userinput></screen>
-             This will install and configure Apache correctly, provided that
-             the user asks for it during the debconf prompts. The default SSL
-             certificate is self-signed, and it is probably wise to have it
-             signed by a root CA (Certificate Authority).
-             </para>
-        </note>
-</step>
-<step>
-    <para>Modify the value of
-        <literal>CACHES['default']['LOCATION']</literal>
-    in <filename os="ubuntu;debian"
-        >/etc/openstack-dashboard/local_settings.py</filename><filename
-        os="centos;fedora;rhel"
-        >/etc/openstack-dashboard/local_settings</filename><filename
-        os="opensuse;sles"
-        >/usr/share/openstack-dashboard/openstack_dashboard/local/local_settings.py</filename>
-    to match the ones set in <filename os="ubuntu;debian"
-        >/etc/memcached.conf</filename><filename
-        os="centos;fedora;rhel;opensuse;sles"
-        >/etc/sysconfig/memcached.conf</filename>.</para>
-    <para>Open <filename os="ubuntu;debian"
-        >/etc/openstack-dashboard/local_settings.py</filename>
-    <filename os="centos;fedora;rhel"
-        >/etc/openstack-dashboard/local_settings</filename>
-    and look for this line:</para>
-    <programlisting language="python" linenumbering="unnumbered"><?db-font-size 75%?>CACHES = {
+                <para>It is as well possible to install the apache
+                    package:
+                    <screen><prompt>#</prompt> <userinput>apt-get install openstack-dashboard-apache</userinput></screen>
+                    This will install and configure Apache correctly,
+                    provided that the user asks for it during the
+                    debconf prompts. The default SSL certificate is
+                    self-signed, and it is probably wise to have it
+                    signed by a root CA (Certificate
+                    Authority).</para>
+            </note>
+        </step>
+        <step>
+            <para>Modify the value of
+                    <literal>CACHES['default']['LOCATION']</literal>
+                in <filename os="ubuntu;debian"
+                    >/etc/openstack-dashboard/local_settings.py</filename><filename
+                    os="centos;fedora;rhel"
+                    >/etc/openstack-dashboard/local_settings</filename><filename
+                    os="opensuse;sles"
+                    >/usr/share/openstack-dashboard/openstack_dashboard/local/local_settings.py</filename>
+                to match the ones set in <filename os="ubuntu;debian"
+                    >/etc/memcached.conf</filename><filename
+                    os="centos;fedora;rhel;opensuse;sles"
+                    >/etc/sysconfig/memcached.conf</filename>.</para>
+            <para>Open <filename os="ubuntu;debian"
+                    >/etc/openstack-dashboard/local_settings.py</filename>
+                <filename os="centos;fedora;rhel"
+                    >/etc/openstack-dashboard/local_settings</filename>
+                and look for this line:</para>
+            <programlisting language="python" linenumbering="unnumbered"><?db-font-size 75%?>CACHES = {
 'default': {
 'BACKEND' : 'django.core.cache.backends.memcached.MemcachedCache',
 'LOCATION' : '127.0.0.1:11211'
 }
 }</programlisting>
-    <note xlink:href="#installing-openstack-dashboard"
-    xlink:title="Notes">
-    <title>Notes</title>
-    <itemizedlist>
-        <listitem>
-        <para>The address and port must match the ones
-            set in <filename os="ubuntu;debian"
-            >/etc/memcached.conf</filename><filename
-            os="centos;fedora;rhel;opensuse;sles"
-            >/etc/sysconfig/memcached</filename>.</para>
-        <para>If you change the memcached settings,
-            you must restart the Apache web server for
+            <note xlink:href="#installing-openstack-dashboard"
+                xlink:title="Notes">
+                <title>Notes</title>
+                <itemizedlist>
+                    <listitem>
+                        <para>The address and port must match the ones
+                            set in <filename os="ubuntu;debian"
+                                >/etc/memcached.conf</filename><filename
+                                os="centos;fedora;rhel;opensuse;sles"
+                                >/etc/sysconfig/memcached</filename>.</para>
+                        <para>If you change the memcached settings,
+                            you must restart the Apache web server for
                             the changes to take effect.</para>
                     </listitem>
                     <listitem>
@@ -106,80 +111,81 @@
                                 >/usr/share/openstack-dashboard/openstack_dashboard/local/local_settings.py</filename>
                             file.</para>
                         <para>Change the following parameter:
-                                <code>TIME_ZONE = "UTC"</code>
-                        </para>
+                                <code>TIME_ZONE = "UTC"</code></para>
                     </listitem>
                 </itemizedlist>
             </note>
         </step>
         <step>
-        <para>Update the <literal>ALLOWED_HOSTS</literal>in
-       <filename>local_settings.py</filename> to include the addresses you wish to
-       access the dashboard from.</para>
-      <para>Edit <filename
-                                os="centos;fedora;rhel"
-                                >/etc/openstack-dashboard/local_settings</filename><filename
-                                os="ubuntu;debian"
-                                >/etc/openstack-dashboard/local_settings.py</filename><filename
-                                os="opensuse;sles"
-                                >/usr/share/openstack-dashboard/openstack_dashboard/local/local_settings.py</filename></para>
+            <para>Update the <literal>ALLOWED_HOSTS</literal>in
+                    <filename>local_settings.py</filename> to include
+                the addresses you wish to access the dashboard
+                from.</para>
+            <para>Edit <filename os="centos;fedora;rhel"
+                    >/etc/openstack-dashboard/local_settings</filename><filename
+                    os="ubuntu;debian"
+                    >/etc/openstack-dashboard/local_settings.py</filename><filename
+                    os="opensuse;sles"
+                    >/usr/share/openstack-dashboard/openstack_dashboard/local/local_settings.py</filename></para>
             <programlisting language="python" linenumbering="unnumbered"><?db-font-size 75%?>ALLOWED_HOSTS = ['localhost', 'my-desktop']
     </programlisting>
         </step>
         <step>
-        <para>This guide assumes that you are running the Dashboard on the controller node.
-        You can easily run the dashboard on a separate server, by changing the appropriate settings in
-       <filename>local_settings.py</filename></para>
-      <para>Edit <filename
-                                os="centos;fedora;rhel"
-                                >/etc/openstack-dashboard/local_settings</filename><filename
-                                os="ubuntu;debian"
-                                >/etc/openstack-dashboard/local_settings.py</filename><filename
-                                os="opensuse;sles"
-                                >/usr/share/openstack-dashboard/openstack_dashboard/local/local_settings.py</filename>
-       and change <literal>OPENSTACK_HOST</literal> to the hostname of your Identity Service.</para>
+            <para>This guide assumes that you are running the
+                Dashboard on the controller node. You can easily run
+                the dashboard on a separate server, by changing the
+                appropriate settings in
+                    <filename>local_settings.py</filename></para>
+            <para>Edit <filename os="centos;fedora;rhel"
+                    >/etc/openstack-dashboard/local_settings</filename><filename
+                    os="ubuntu;debian"
+                    >/etc/openstack-dashboard/local_settings.py</filename><filename
+                    os="opensuse;sles"
+                    >/usr/share/openstack-dashboard/openstack_dashboard/local/local_settings.py</filename>
+                and change <literal>OPENSTACK_HOST</literal> to the
+                hostname of your Identity Service.</para>
             <programlisting language="python" linenumbering="unnumbered"><?db-font-size 75%?>OPENSTACK_HOST = "controller"
     </programlisting>
         </step>
         <step os="opensuse;sles">
-        <para>Setup Apache configuration:
-<screen><prompt>#</prompt> <userinput>cp /etc/apache2/conf.d/openstack-dashboard.conf.sample \
+            <para>Setup Apache configuration:
+                <screen><prompt>#</prompt> <userinput>cp /etc/apache2/conf.d/openstack-dashboard.conf.sample \
    /etc/apache2/conf.d/openstack-dashboard.conf</userinput>
 <prompt>#</prompt> <userinput>a2enmod rewrite;a2enmod ssl;a2enmod wsgi</userinput></screen>
-        </para>
+            </para>
         </step>
         <step os="opensuse;sles">
-          <para>By default, the
-          <systemitem>openstack-dashboard</systemitem> package enables
-          a database as session store. Before you continue, either
-          change the session store setup as described in <xref
-          linkend="dashboard-sessions"/> or finish the setup of the
-          database session store as explained in <xref
-          linkend="dashboard-session-database"/>.
-          </para>
+            <para>By default, the
+                    <systemitem>openstack-dashboard</systemitem>
+                package enables a database as session store. Before
+                you continue, either change the session store set up
+                as described in <xref linkend="dashboard-sessions"/>
+                or finish the setup of the database session store as
+                explained in <xref
+                    linkend="dashboard-session-database"/>.</para>
         </step>
         <step os="opensuse;sles;fedora;centos;rhel">
-          <para>
-            Start the Apache web server and memcached:
-          </para>
-          <screen os="opensuse;sles"><prompt>#</prompt> <userinput>service apache2 start</userinput>
+            <para>Start the Apache web server and memcached:</para>
+            <screen os="opensuse;sles"><prompt>#</prompt> <userinput>service apache2 start</userinput>
 <prompt>#</prompt> <userinput>service memcached start</userinput>
 <prompt>#</prompt> <userinput>chckconfig apache2 on</userinput>
 <prompt>#</prompt> <userinput>chckconfig memcached on</userinput></screen>
-          <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>service httpd start</userinput>
+            <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>service httpd start</userinput>
 <prompt>#</prompt> <userinput>service memcached start</userinput>
 <prompt>#</prompt> <userinput>chkconfig httpd on</userinput>
 <prompt>#</prompt> <userinput>chkconfig memcached on</userinput></screen>
-          <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service apache2 restart</userinput>
+            <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service apache2 restart</userinput>
 <prompt>#</prompt> <userinput>service memcached restart</userinput></screen>
         </step>
         <step>
-          <para>You can now access the dashboard at
-          <uri os="debian;ubuntu">http://controller/horizon</uri>
-          <uri os="centos;fedora;rhel">http://controller/dashboard</uri>
-          <uri os="opensuse;sles">http://controller</uri>.</para>
-          <para>Login with credentials for any user that you created
-          with the OpenStack Identity Service.</para>
+            <para>You can now access the dashboard at <uri
+                    os="debian;ubuntu">http://controller/horizon</uri>
+                <uri os="centos;fedora;rhel"
+                    >http://controller/dashboard</uri>
+                <uri os="opensuse;sles"
+                >http://controller</uri>.</para>
+            <para>Login with credentials for any user that you created
+                with the OpenStack Identity Service.</para>
         </step>
     </procedure>
 </section>

@@ -2,20 +2,18 @@
          xmlns:xi="http://www.w3.org/2001/XInclude"
          xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
          xml:id="compute-service">
-      <title>Compute Service</title>
-      <para>The Compute Service is a cloud computing fabric
-        controller, the main part of an IaaS system. It can be used
-        for hosting and managing cloud computing systems. The main
-        modules are implemented in Python.</para>
-      <para>
-        Compute interacts with the Identity service for authentication, Image
-        service for images, and the Dashboard service for the user and
-        administrative interface. Access to images is limited by project and
-        by user; quotas are limited per project (for example, the number of
-        instances). The Compute service is designed to scale horizontally on
-        standard hardware, and can download images to launch instances as
-        required.
-      </para>
+      <title>Compute service</title>
+      <para>The Compute service is a cloud computing fabric
+    controller, which is the main part of an IaaS system. Use it to
+    host and manage cloud computing systems. The main modules are
+    implemented in Python.</para>
+      <para>Compute interacts with the Identity Service for
+    authentication, Image Service for images, and the Dashboard for
+    the user and administrative interface. Access to images is limited
+    by project and by user; quotas are limited per project (for
+    example, the number of instances). The Compute service scales
+    horizontally on standard hardware, and downloads images to launch
+    instances as required.</para>
       <para>The Compute Service is made up of the following functional
         areas and their underlying components:</para>
       <itemizedlist>
@@ -36,8 +34,7 @@
             with <systemitem class="service">nova-network</systemitem>
             installations. For details, see
             <link xlink:href="http://docs.openstack.org/admin-guide-cloud/content/section_metadata-service.html">Metadata service</link>
-            in the <citetitle>Cloud Administrator Guide</citetitle>.
-            </para>
+            in the <citetitle>Cloud Administrator Guide</citetitle>.</para>
             <para>Note for Debian users: on Debian system, it is included in the
             <systemitem class="service">nova-api</systemitem>
             package, and can be selected through <systemitem class="library">debconf</systemitem>.</para>
@@ -142,13 +139,16 @@
             daemon. Manages x509 certificates.</para>
         </listitem>
       </itemizedlist>
-      <para os="debian">In Debian, a unique package called
-      <application>nova-consoleproxy</application> contains <application>nova-novncproxy</application>,
-      <application>nova-spicehtml5proxy</application>, and <application>nova-xvpvncproxy</application>.
-      Selection of which to use is done either by configuring
-      <filename>/etc/default/nova-consoleproxy</filename> or through
-      Debconf, or manually, by editing <filename>/etc/default/nova-consoleproxy</filename>
-      and stopping / starting the console daemons.</para>
+      <para os="debian">In Debian, a unique
+      <package>nova-consoleproxy</package> package provides the
+      <package>nova-novncproxy</package>,
+      <package>nova-spicehtml5proxy</package>, and
+      <package>nova-xvpvncproxy</package> packages. To select
+    packages, edit the
+      <filename>/etc/default/nova-consoleproxy</filename> file or use
+    the <package>debconf</package> interface. You can also manually
+    edit the <filename>/etc/default/nova-consoleproxy</filename> file
+    and stop and start the console daemons.</para>
       <itemizedlist>
         <title>Image Management (EC2 scenario)</title>
         <listitem>
@@ -207,6 +207,6 @@
       </itemizedlist>
       <para>The Compute Service interacts with other OpenStack
         services: Identity Service for authentication, Image Service
-        for images, and the OpenStack Dashboard for a web
+        for images, and the OpenStack dashboard for a web
         interface.</para>
 </section>

@@ -1,55 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section xml:id="object-storage-network-planning"
-    xmlns="http://docbook.org/ns/docbook"
-    xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"><title>Object Storage Network Planning</title>
-    <para>For both conserving network resources and ensuring that
-        network administrators understand the needs for networks and
-        public IP addresses for providing access to the APIs and
-        storage network as necessary, this section offers
-        recommendations and required minimum sizes. Throughput of at
-        least 1000 Mbps is suggested.</para>
-  <para>This document refers to three networks. One is a public network for
-        connecting to the Proxy server. The second is a storage network that is not
-        accessible from outside the cluster, to which all of the nodes are
-        connected. The third is a replication network that is also isolated from
-        outside networks and dedicated to replication traffic between Storage nodes.</para>
-  <para>The public and storage networks are mandatory. The replication network
-        is optional and must be configured in the Ring.</para>
-  <para>By default, all of the OpenStack Object Storage services, as well as the
-        rsync daemon on the Storage nodes, are configured to listen on their
-        <literal>STORAGE_LOCAL_NET</literal> IP addresses.</para>
-    <para>If a replication network is configured in the Ring, then Account, Container
-          and Object servers listen on both the <literal>STORAGE_LOCAL_NET</literal>
-          and <literal>STORAGE_REPLICATION_NET</literal>
-          IP addresses. The rsync daemon will only listen on the
-          <literal>STORAGE_REPLICATION_NET</literal> IP
-          address in this case.</para>
+  xmlns="http://docbook.org/ns/docbook"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+  <title>Plan networking for Object Storage</title>
+  <para>For both conserving network resources and ensuring that
+    network administrators understand the needs for networks and
+    public IP addresses for providing access to the APIs and storage
+    network as necessary, this section offers recommendations and
+    required minimum sizes. Throughput of at least 1000 Mbps is
+    suggested.</para>
+  <para>This guide describes the following networks:<itemizedlist>
+      <listitem>
+        <para>A mandatory public network. Connects to the Proxy
+          server.</para>
+      </listitem>
+      <listitem>
+        <para>A mandatory storage network. Not accessible from outside
+the cluster. All nodes connect to this network.</para>
+      </listitem>
+      <listitem>
+        <para>An optional replication network. Not accessible from
+          outside the cluster. Dedicated to replication traffic among
+          Storage nodes. Must be configured in the Ring.</para>
+      </listitem>
+    </itemizedlist></para>
+  <para>By default, all of the OpenStack Object Storage services, as
+    well as the rsync daemon on the Storage nodes, are configured to
+    listen on their <literal>STORAGE_LOCAL_NET</literal> IP
+    addresses.</para>
+  <para>If you configure a replication network in the Ring, the
+    Account, Container and Object servers listen on both the
+      <literal>STORAGE_LOCAL_NET</literal> and
+      <literal>STORAGE_REPLICATION_NET</literal> IP addresses. The
+    rsync daemon only listens on the
+      <literal>STORAGE_REPLICATION_NET</literal> IP address.</para>
   <variablelist>
     <varlistentry>
       <term>Public Network (Publicly routable IP range)</term>
       <listitem>
-      <para>This network provides public IP accessibility to the API endpoints
-        within the cloud infrastructure.</para>
-      <para>Minimum size: one IP address per proxy server.</para>
+        <para>Provides public IP accessibility to the API endpoints
+          within the cloud infrastructure.</para>
+        <para>Minimum size: one IP address for each proxy
+          server.</para>
       </listitem>
     </varlistentry>
     <varlistentry>
-      <term>Storage Network (RFC1918 IP Range, not publicly routable)</term>
+      <term>Storage Network (RFC1918 IP Range, not publicly
+        routable)</term>
       <listitem>
-      <para>This network is utilized for all inter-server communications
-        within the Object Storage infrastructure.</para>
-      <para>Minimum size: one IP address per storage node, and proxy server.</para>
-      <para>Recommended size: as above, with room for expansion to the largest your
-        cluster will be (For example, 255 or CIDR /24)</para>
+        <para>Manages all inter-server communications within the
+          Object Storage infrastructure.</para>
+        <para>Minimum size: one IP address for each storage node and
+          proxy server.</para>
+        <para>Recommended size: as above, with room for expansion to
+          the largest your cluster size. For example, 255 or CIDR
+          /24.</para>
       </listitem>
     </varlistentry>
     <varlistentry>
-      <term>Replication Network (RFC1918 IP Range, not publicly routable)</term>
+      <term>Replication Network (RFC1918 IP Range, not publicly
+        routable)</term>
       <listitem>
-      <para>This network is utilized for replication-related communications
-        between storage servers within the Object Storage infrastructure.</para>
-      <para>Recommended size: as for <literal>STORAGE_LOCAL_NET</literal></para>
+        <para>Manages replication-related communications among storage
+          servers within the Object Storage infrastructure.</para>
+        <para>Recommended size: as for
+            <literal>STORAGE_LOCAL_NET</literal>.</para>
       </listitem>
     </varlistentry>
   </variablelist>

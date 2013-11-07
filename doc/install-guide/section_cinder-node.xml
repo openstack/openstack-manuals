@@ -2,17 +2,18 @@
   xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
   xml:id="cinder-node">
-  <title>Configure a Block Storage node</title>
+  <?dbhtml-stop-chunking?>
+  <title>Configure a Block Storage Service node</title>
   <para>After you configure the services on the controller node,
-    configure a second system to be a Block Storage node. This node
-    contains the disk that serves volumes.</para>
+    configure a second system to be a Block Storage Service node. This
+    node contains the disk that serves volumes.</para>
   <para>You can configure OpenStack to use various storage systems.
-    The examples in this guide show how to configure LVM.</para>
+    The examples in this guide show you how to configure LVM.</para>
   <procedure>
     <step>
       <para>Use the instructions in <xref linkend="ch_basics"/> to
         configure the system. Note the following differences from the
-        controller node:</para>
+        installation instructions for the controller node:</para>
       <itemizedlist>
         <listitem>
           <para>Set the host name to <literal>block1</literal>. Ensure
@@ -61,7 +62,7 @@ filter = [ "a/sda1/", "a/sdb/", "r/.*/"]
     </step>
     <step>
       <para>After you configure the operating system, install the
-        appropriate packages for the Block Storage service.</para>
+        appropriate packages for the Block Storage Service.</para>
       <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install cinder-volume lvm2</userinput></screen>
       <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>yum install openstack-cinder openstack-utils openstack-selinux</userinput></screen>
       <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-cinder-volume</userinput></screen>
@@ -74,7 +75,7 @@ filter = [ "a/sda1/", "a/sdb/", "r/.*/"]
             ><literal>[keystone_authtoken]</literal> settings</link>,
         and <link linkend="debconf-rabbitqm">RabbitMQ
           credentials</link>. Make sure to enter the same details as
-        for your Block Storage controller node.</para>
+        for your Block Storage Service controller node.</para>
       <para>Another screen prompts you for the <systemitem
           class="library">volume-group</systemitem> to use. The Debian
         package configuration script detects every active volume
@@ -138,8 +139,8 @@ rabbit_port = 5672
     </step>
 
     <step os="centos;rhel;fedora;opensuse;sles;ubuntu">
-      <para>Configure the Block Storage Service on this Block Storage
-        node to use the cinder database on the controller node.</para>
+      <para>Configure the Block Storage Service on this node to use
+        the cinder database on the controller node.</para>
       <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/cinder/cinder.conf \
   database connection mysql://cinder:<replaceable>CINDER_DBPASS</replaceable>@<replaceable>controller</replaceable>/cinder</userinput></screen>
       <para os="ubuntu;debian">Edit

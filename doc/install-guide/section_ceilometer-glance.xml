@@ -3,20 +3,20 @@
   xmlns="http://docbook.org/ns/docbook"
   xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
-  <title>Adding the Agent: Image Service</title>
+  <title>Add the Image Service agent for the Metering service</title>
   <procedure>
     <step>
-    <para>If you want to be able to retrieve image samples, you need
-        to instruct the Image Service to send notifications to the bus
-        by editing the <filename>glance-api.conf</filename> file
-        changing <literal>notifier_strategy</literal> to
-          <literal>rabbit</literal> or <literal>qpid</literal> and
-        restarting the <systemitem class="service">glance-api</systemitem> and
-        <systemitem class="service">glance-registry</systemitem> services.</para>
+    <para>To retrieve image samples, you must configure the Image
+        Service to send notifications to the bus. Edit the
+          <filename>glance-api.conf</filename> file and change
+          <option>notifier_strategy</option> option to
+          <literal>rabbit</literal> or <literal>qpid</literal>.
+        Restart the <systemitem class="service"
+          >glance-api</systemitem> and <systemitem class="service"
+          >glance-registry</systemitem> services.</para>
     </step>
     <step os="ubuntu;debian">
-      <para>We now restart the Image service with its new
-        settings.</para>
+      <para>Restart the Image Service with its new settings.</para>
 <screen><prompt>#</prompt> <userinput>service glance-registry restart</userinput>
 <prompt>#</prompt> <userinput>service glance-api restart</userinput></screen>
     </step>

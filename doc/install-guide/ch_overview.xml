@@ -32,8 +32,8 @@
       <listitem>
         <para>Example basic architecture. This architecture has two
           nodes. A cloud controller node runs the control services,
-          such as database, message queue and API services for the
-          Identity Service, Image Service and Compute. A compute node
+          such as database, message queue, and API services for the
+          Identity Service, Image Service, and Compute. A compute node
           runs the hypervisor where virtual machines live.</para>
         <figure xml:id="basic-architecture">
           <title>Basic architecture</title>
@@ -45,11 +45,11 @@
           </mediaobject>
         </figure>
         <para>Technical details: Compute with KVM, local ephemeral
-          storage, nova-network in multi-host flatDHCP mode, MySQL,
+          storage, <systemitem role="service">nova-network</systemitem> in multi-host flatDHCP mode, MySQL,
           nova-api, default scheduler, <phrase os="fedora;rhel;centos"
             >Qpid for messaging,</phrase><phrase
             os="ubuntu;debian;opensuse">RabbitMQ for
-            messaging,</phrase> Identity with SQL back end, Image with
+            messaging,</phrase> Identity Service  with SQL back end, Image Service with
           local storage, Dashboard (optional extra). Uses as many
           default options as possible.</para>
       </listitem>
@@ -58,14 +58,14 @@
             xlink:href="http://docs.openstack.org/trunk/openstack-ops/content/"
               ><citetitle>OpenStack Operations
             Guide</citetitle></link>. Same as the basic architecture
-          but with Block Storage LVM/iSCSI back end, nova-network in
-          multi-host with FlatDHCP, Live Migration back end shared
+          but with the Block Storage Service LVM/iSCSI back end, <systemitem role="service">nova-network</systemitem> in
+          multi-host with FlatDHCP, Live Migration back end, shared
           storage with NFS, and Object Storage. One controller node
           and multiple compute nodes.</para>
       </listitem>
       <listitem>
         <para>Example architecture with Identity Service and Object
-          Storage: Five node installation with Identity Service on the
+          Storage: Five-node installation with Identity Service on the
           proxy node and three replications of object servers.
           Dashboard does not support this configuration so examples
           are with CLI.</para>

@@ -1,86 +1,102 @@
 <section xmlns="http://docbook.org/ns/docbook"
-         xmlns:xi="http://www.w3.org/2001/XInclude"
-         xmlns:xlink="http://www.w3.org/1999/xlink"
-         version="5.0"
-         xml:id="nova-compute">
-  <title>Configuring a Compute Node</title>
-
-  <para>After configuring the Compute Services on the controller node, configure a second system to
-    be a Compute node. The Compute node receives requests from the controller node and hosts virtual
-    machine instances. You can run all services on a single node, but this guide uses separate
-    systems. This makes it easy to scale horizontally by adding additional Compute nodes following
-    the instructions in this section.</para>
-
-  <para>The Compute Service relies on a hypervisor to run virtual machine
-  instances. OpenStack can use various hypervisors, but this guide uses
-  KVM.</para>
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+  xml:id="nova-compute">
+  <title>Configure a Compute node</title>
+  <para>After you configure the Compute service on the controller
+    node, you must configure another system as a Compute node. The
+    Compute node receives requests from the controller node and hosts
+    virtual machine instances. You can run all services on a single
+    node, but the examples in this guide use separate systems. This
+    makes it easy to scale horizontally by adding additional Compute
+    nodes following the instructions in this section.</para>
+  <para>The Compute service relies on a hypervisor to run virtual
+    machine instances. OpenStack can use various hypervisors, but this
+    guide uses KVM.</para>
   <procedure>
-    <title>Configure a Compute Node</title>
-    <step><para>Begin by configuring the system using the instructions in
-      <xref linkend="ch_basics"/>. Note the following differences from the
-      controller node:</para>
+    <step>
+      <para>Configure the system. Use the instructions in <xref
+          linkend="ch_basics"/>, but note the following differences
+        from the controller node:</para>
       <itemizedlist>
         <listitem>
-          <para>Use different IP addresses when configuring
+          <para>Use different IP addresses when you configure
               <filename>eth0</filename>. This guide uses
-              <literal>192.168.0.11</literal> for the internal network.
-            Do not configure <literal>eth1</literal> with a static IP address.
-            An IP address will be assigned and configured by the networking component of OpenStack.</para>
+              <literal>192.168.0.11</literal> for the internal
+            network. Do not configure <literal>eth1</literal> with a
+            static IP address. The networking component of OpenStack
+            assigns and configures an IP address.</para>
         </listitem>
         <listitem>
-          <para>Set the hostname to <literal>compute1</literal> (this can be
-          checked using <code>uname -n</code>). Ensure that the
-            IP addresses and hostnames for both nodes are listed in the
-            <filename>/etc/hosts</filename> file on each system.</para>
+          <para>Set the host name to <literal>compute1</literal>. To
+            verify, use the <code>uname -n</code> parameter. Ensure
+            that the IP addresses and host names for both nodes are
+            listed in the <filename>/etc/hosts</filename> file on each
+            system.</para>
         </listitem>
         <listitem>
-          <para>Follow the instructions in
-            <xref linkend="basics-ntp"/> to synchronize from the controller node.</para>
+          <para>Synchronize from the controller node. Follow the
+            instructions in <xref linkend="basics-ntp"/>.</para>
         </listitem>
         <listitem>
-          <para>Install the MySQL client libraries. You do not need to install the MySQL database
-            server or start the MySQL service.</para>
+          <para>Install the MySQL client libraries. You do not need to
+            install the MySQL database server or start the MySQL
+            service.</para>
         </listitem>
         <listitem>
-          <para>Enable the OpenStack packages for the distribution you are using, see <xref linkend="basics-packages"/>.</para>
+          <para>Enable the OpenStack packages for the distribution
+            that you are using. See <xref linkend="basics-packages"
+            />.</para>
         </listitem>
       </itemizedlist>
-      </step>
-
-    <step><para>After configuring the operating system, install the appropriate
-      packages for the compute service.</para>
-      <para os="ubuntu;debian">Then do:</para>
+    </step>
+    <step>
+      <para>After you configure the operating system, install the
+        appropriate packages for the Compute service.</para>
+      <para os="ubuntu;debian">Run this command:</para>
       <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install nova-compute-kvm python-guestfs</userinput></screen>
-      <para os="ubuntu;debian">Select "Yes" when asked to create a supermin appliance during install.</para>
+      <para os="ubuntu;debian">When prompted to create a
+          <literal>supermin</literal> appliance, respond
+          <userinput>yes</userinput>.</para>
 
       <note os="debian">
-      <para>In Debian, you can also use the meta-packages with the following command:
-      <screen><prompt>#</prompt> <userinput>apt-get install openstack-compute-node</userinput></screen>
-      which will also install other components on your compute node, like the OVS
-      Neutron agent, Ceilometer agent, and more. There is also a
-      meta-package for the controler node called
-      <systemitem class="library">openstack-proxy-node</systemitem> and a meta-package
-      called <systemitem class="library">openstack-toaster</systemitem> that
-      installs both <systemitem class="library">openstack-proxy-node</systemitem> and
-      <systemitem class="library">openstack-toaster</systemitem> at the same time.</para></note>
+        <para>To use the meta-packages and install other components on
+          your compute node, such as OVS Networking and Ceilometer
+          agents, run this command:</para>
+        <screen><prompt>#</prompt> <userinput>apt-get install openstack-compute-node</userinput></screen>
+        <para>The controller node has the
+            <package>openstack-proxy-node</package> and
+            <package>openstack-toaster</package> meta-packages that
+          install <package>openstack-proxy-node</package> and
+            <package>openstack-toaster</package> at the same
+          time.</para>
+      </note>
 
       <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>yum install openstack-nova-compute</userinput></screen>
       <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-nova-compute kvm openstack-utils</userinput></screen>
     </step>
-    <step os="debian"><para>Answer to the <systemitem class="library">debconf</systemitem>
-    prompts about the <link linkend="debconf-dbconfig-common">database management</link>,
-    the <link linkend="debconf-keystone_authtoken"><literal>[keystone_authtoken]</literal>
-    settings</link>, the <link linkend="debconf-rabbitqm">RabbitMQ credentials</link> and
-    the <link linkend="debconf-api-endpoints">API endpoint</link> registration.</para>
+    <step os="debian">
+      <para>Respond to the prompts for <link
+          linkend="debconf-dbconfig-common">database
+        management</link>, <link linkend="debconf-keystone_authtoken"
+            ><literal>[keystone_authtoken]</literal> settings</link>,
+          <link linkend="debconf-rabbitqm">RabbitMQ
+        credentials</link>, and <link linkend="debconf-api-endpoints"
+          >API endpoint</link> registration.</para>
     </step>
     <step os="ubuntu">
-    <para>Due to <link xlink:href="https://bugs.launchpad.net/ubuntu/+source/linux/+bug/759725">this bug</link>
-    that is marked "Won't Fix", guestfs is restricted.
-    Run the following command to relax the restriction:</para>
+      <para>Due to <link
+          xlink:href="https://bugs.launchpad.net/ubuntu/+source/linux/+bug/759725"
+          >this bug</link> that is marked <literal>Won't
+        Fix</literal>, guestfs is restricted. Run this command to
+        relax the restriction:</para>
       <screen><prompt>#</prompt> <userinput>chmod 0644 /boot/vmlinuz*</userinput></screen>
     </step>
-    <step os="rhel;centos;fedora"><para>Either copy and modify the file <filename>/etc/nova/nova.conf</filename> from the
-          <replaceable>controller</replaceable> node, or run the same configuration commands.</para>
+    <step os="rhel;centos;fedora">
+      <para>Either copy and modify the
+          <filename>/etc/nova/nova.conf</filename> file from the
+          <replaceable>controller</replaceable> node, or run the same
+        configuration commands.</para>
       <screen os="fedora;rhel;centos;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf \
   database connection mysql://nova:<replaceable>NOVA_DBPASS</replaceable>@controller/nova</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT auth_strategy keystone</userinput>
@@ -89,61 +105,70 @@
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT admin_tenant_name service</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT admin_password <replaceable>NOVA_PASS</replaceable></userinput>
 </screen>
-  <para os="ubuntu;debian">Edit <filename>/etc/nova/nova.conf</filename> and add to the appropriate sections.</para>
-  <programlisting os="ubuntu;debian" language="ini">...
+      <para os="ubuntu;debian">Edit the
+          <filename>/etc/nova/nova.conf</filename> file and add these
+        lines to the appropriate sections:</para>
+      <programlisting os="ubuntu;debian" language="ini">...
 [DEFAULT]
 ...
 auth_strategy=keystone
 ...
 [database]
 # The SQLAlchemy connection string used to connect to the database
-connection = mysql://nova:NOVA_DBPASS@controller/nova
-</programlisting>
+connection = mysql://nova:NOVA_DBPASS@controller/nova</programlisting>
 
       <screen os="fedora;rhel;centos"><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf \
   DEFAULT rpc_backend nova.openstack.common.rpc.impl_qpid</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT qpid_hostname <replaceable>controller</replaceable></userinput></screen>
 
 
-    <para os="ubuntu;debian">
-  Configure the Compute Service to use the RabbitMQ
-  message broker by setting the following configuration keys. They are found in
-  the <literal>DEFAULT</literal> configuration group of the
-  <filename>/etc/nova/nova.conf</filename> file.</para>
-  <programlisting os="ubuntu;debian" language="ini">rpc_backend = nova.rpc.impl_kombu
+      <para os="ubuntu;debian">Configure the Compute service to use
+        the RabbitMQ message broker by setting these configuration
+        keys in the <literal>DEFAULT</literal> configuration group of
+        the <filename>/etc/nova/nova.conf</filename> file:</para>
+      <programlisting os="ubuntu;debian" language="ini">rpc_backend = nova.rpc.impl_kombu
 rabbit_host = controller</programlisting>
+    </step>
 
-</step>
-
-<step os="ubuntu">
-<para>Remove the SQLite Database created by the packages</para>
-<screen><prompt>#</prompt> <userinput>rm /var/lib/nova/nova.sqlite</userinput></screen>
-</step>
-    <step><para>Set the configuration keys <literal>my_ip</literal>,
-      <literal>vncserver_listen</literal>, and
-      <literal>vncserver_proxyclient_address</literal> to the IP address of the
-      compute node on the internal network.</para>
+    <step os="ubuntu">
+      <para>Remove the SQLite database created by the packages:</para>
+      <screen><prompt>#</prompt> <userinput>rm /var/lib/nova/nova.sqlite</userinput></screen>
+    </step>
+    <step>
+      <para>Set the <literal>my_ip</literal>,
+          <literal>vncserver_listen</literal>, and
+          <literal>vncserver_proxyclient_address</literal>
+        configuration keys to the IP address of the compute node on
+        the internal network:</para>
       <screen os="fedora;rhel;centos;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT my_ip 192.168.0.11</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT vncserver_listen 192.168.0.11</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT vncserver_proxyclient_address 192.168.0.11</userinput></screen>
-  <para os="ubuntu;debian">Edit <filename>/etc/nova/nova.conf</filename> and add to the <literal>[DEFAULT]</literal> section.</para>
-  <programlisting os="ubuntu;debian" language="ini">[DEFAULT]
+      <para os="ubuntu;debian">Edit
+          <filename>/etc/nova/nova.conf</filename> and add to the
+          <literal>[DEFAULT]</literal> section.</para>
+      <programlisting os="ubuntu;debian" language="ini">[DEFAULT]
 ...
 my_ip=192.168.0.11
 vncserver_listen=0.0.0.0
 vncserver_proxyclient_address=192.168.0.11</programlisting>
-
     </step>
-    <step><para>Specify the host running the Image Service.<phrase os="ubuntu;debian"> Edit <filename>/etc/nova/nova.conf</filename> and add to the <literal>[DEFAULT]</literal> section.</phrase></para>
-    <screen os="fedora;rhel;centos;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT glance_host <replaceable>controller</replaceable></userinput></screen>
-    <programlisting os="ubuntu;debian" language="ini">[DEFAULT]
+    <step>
+      <para>Specify the host that runs the Image Service.<phrase
+          os="ubuntu;debian"> Edit
+            <filename>/etc/nova/nova.conf</filename> file and add
+          these lines to the <literal>[DEFAULT]</literal>
+          section:</phrase></para>
+      <screen os="fedora;rhel;centos;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT glance_host <replaceable>controller</replaceable></userinput></screen>
+      <programlisting os="ubuntu;debian" language="ini">[DEFAULT]
 ...
 glance_host=<replaceable>controller</replaceable></programlisting>
     </step>
 
-    <step><para>Copy the file <filename>/etc/nova/api-paste.ini</filename> from the
-          <replaceable>controller</replaceable> node, or edit the file to add the credentials in the
-          <literal>[filter:authtoken]</literal> section.</para>
+    <step>
+      <para>Copy the <filename>/etc/nova/api-paste.ini</filename> file
+        from the <replaceable>controller</replaceable> node, or edit
+        the file to add the credentials to the
+          <literal>[filter:authtoken]</literal> section:</para>
       <programlisting language="ini">[filter:authtoken]
 paste.filter_factory=keystoneclient.middleware.auth_token:filter_factory
 auth_host=controller
@@ -153,12 +178,18 @@ admin_user=nova
 admin_tenant_name=service
 admin_password=<replaceable>NOVA_PASS</replaceable>
 </programlisting>
-      <note os="fedora;rhel;centos;opensuse;sles"><para>Ensure that <filename>api_paste_config=/etc/nova/api-paste.ini</filename> is set in
-        <filename>/etc/nova/nova.conf</filename>.</para></note>
-      </step>
+      <note os="fedora;rhel;centos;opensuse;sles">
+        <para>Ensure that the
+            <option>api_paste_config=/etc/nova/api-paste.ini</option>
+          option is set in <filename>/etc/nova/nova.conf</filename>
+          file.</para>
+      </note>
+    </step>
     <step>
-    <para os="fedora;rhel;centos;opensuse;sles">Start the Compute service and configure it to start when the system boots.</para>
-    <para os="ubuntu;debian">Restart the Compute service.</para>
+      <para os="fedora;rhel;centos;opensuse;sles">Start the Compute
+        service and configure it to start when the system
+        boots.</para>
+      <para os="ubuntu;debian">Restart the Compute service.</para>
       <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service nova-compute restart</userinput></screen>
       <screen os="fedora;rhel;centos"><prompt>#</prompt> <userinput>service libvirtd start</userinput>
 <prompt>#</prompt> <userinput>service messagebus start</userinput>
@@ -170,4 +201,4 @@ admin_password=<replaceable>NOVA_PASS</replaceable>
 <prompt>#</prompt> <userinput>chkconfig libvirtd on</userinput></screen>
     </step>
   </procedure>
- </section>
+</section>

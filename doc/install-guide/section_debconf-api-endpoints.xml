@@ -3,74 +3,82 @@
   xmlns="http://docbook.org/ns/docbook"
   xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
-  <title>API end-points registration</title>
-  <para>Every Debian package that contains an API service contains the
-    debconf logic to register themselves into the Keystone end-point
-    catalogue (at the exception of the Orchestration service, which is
-    configured within the <systemitem class="service">heat-common</systemitem>
-    package and not in the <systemitem class="service">heat-api</systemitem>
-    package). This is very useful because the URLs and ports of each API
-    are difficult to remember.</para>
-    <para>When installing a package containing an API server, the first
-    debconf screen prompts users whether to register the service.
-    However, after the package is installed (or upgraded), the answer
-    to this prompt is immediately removed form the debconf database.
-    As a consequence, this debconf screen displays every time, which
-    enables the user to re-register the API in the Identity Service,
-    but making sure that it is registered only once.</para>
-  <informalfigure>
-    <mediaobject>
-      <imageobject>
-        <imagedata scale="50" fileref="figures/debconf-screenshots/api-endpoint_1_register_endpoint.png"/>
-      </imageobject>
-    </mediaobject>
-  </informalfigure>
-  <para>If you answer <literal>yes</literal> to the previous prompt
-    and the API service is already registered in the Identity Service
-    database, do not answer <literal>yes</literal> again when you
+  <title>Register API endpoints</title>
+  <para>All Debian packages for API services, except the
+      <package>heat-api</package> package, register the service in the
+    Identity Service catalog. This feature is helpful because API
+    endpoints are difficult to remember.</para>
+  <note>
+    <para>The <package>heat-common</package> package and not the
+        <package>heat-api</package> package configures the
+      Orchestration service.</para>
+  </note>
+  <para>When you install a package for an API service, you are
+    prompted to register that service. However, after you install or
+    upgrade the package for an API service, Debian immediately removes
+    your response to this prompt from the <package>debconf</package>
+    database. Consequently, you are prompted to re-register the
+    service with the Identity Service. If you already registered the
+    API service, respond <literal>no</literal> when you
     upgrade.</para>
-  <para>The following debconf screens are necessary for the package to
-    reach Keystone and register itself in the catalog.</para>
   <informalfigure>
     <mediaobject>
       <imageobject>
-        <imagedata scale="50" fileref="figures/debconf-screenshots/api-endpoint_2_keystone_server_ip.png"/>
+        <imagedata scale="50"
+          fileref="figures/debconf-screenshots/api-endpoint_1_register_endpoint.png"
+        />
       </imageobject>
     </mediaobject>
   </informalfigure>
-  <para>The following screen prompts for the value in the admin_token
-    of Keystone, which is necessary for registering an API server in
-    the Identity Service. This admin_token is normally configured
-    automatically when setting-up the <systemitem class="library">keystone</systemitem>
-    package.</para>
+  <para>This screen registers packages in the Identity Service
+    catalog:</para>
   <informalfigure>
     <mediaobject>
       <imageobject>
-        <imagedata scale="50" fileref="figures/debconf-screenshots/api-endpoint_3_keystone_authtoken.png"/>
+        <imagedata scale="50"
+          fileref="figures/debconf-screenshots/api-endpoint_2_keystone_server_ip.png"
+        />
       </imageobject>
     </mediaobject>
   </informalfigure>
-  <para>The following screen is the IP addresses of the service that
-    the user is configuring. The configuration script automatically
-    detects the IP address by using <code>/sbin/route</code> and
-      <code>/sbin/ip</code> (detecting the IP address used by the
-    interface that is connected to the default route). So in most
-    cases, and unless you have a very specific network set up, you
-    simply press ENTER.</para>
+  <para>You are prompted for the Identity Service
+      <literal>admin_token</literal> value. The Identity Service uses
+    this value to register the API service. When you set up the
+      <package>keystone</package> package, this value is configured
+    automatically.</para>
   <informalfigure>
     <mediaobject>
       <imageobject>
-        <imagedata scale="50" fileref="figures/debconf-screenshots/api-endpoint_4_service_endpoint_ip_address.png"/>
+        <imagedata scale="50"
+          fileref="figures/debconf-screenshots/api-endpoint_3_keystone_authtoken.png"
+        />
       </imageobject>
     </mediaobject>
   </informalfigure>
-  <para>The last parameter is the region name for the service you are
-    currently configuring. For example, <code>us-east-coast</code> or
-      <code>europe-paris</code>.</para>
+  <para>This screen configures the IP addresses for the service. The
+    configuration script automatically detects the IP address used by
+    the interface that is connected to the default route
+      (<code>/sbin/route</code> and <code>/sbin/ip</code>).</para>
+  <para>Unless you have a unique set up for your network, press
+      <keycap>ENTER</keycap>.</para>
   <informalfigure>
     <mediaobject>
       <imageobject>
-        <imagedata scale="50" fileref="figures/debconf-screenshots/api-endpoint_5_region_name.png"/>
+        <imagedata scale="50"
+          fileref="figures/debconf-screenshots/api-endpoint_4_service_endpoint_ip_address.png"
+        />
+      </imageobject>
+    </mediaobject>
+  </informalfigure>
+  <para>This screen configures the region name for the service. For
+    example, <code>us-east-coast</code> or
+    <code>europe-paris</code>.</para>
+  <informalfigure>
+    <mediaobject>
+      <imageobject>
+        <imagedata scale="50"
+          fileref="figures/debconf-screenshots/api-endpoint_5_region_name.png"
+        />
       </imageobject>
     </mediaobject>
   </informalfigure>

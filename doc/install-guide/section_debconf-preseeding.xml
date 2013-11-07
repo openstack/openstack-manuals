@@ -3,14 +3,14 @@
   xmlns="http://docbook.org/ns/docbook"
   xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
-  <title>Debconf preseeding</title>
+  <title>Pre-seed debconf prompts</title>
   <para>You can <firstterm>pre-seed</firstterm> all <systemitem
-  class="library">debconf</systemitem> prompts.
-    To pre-seed means to write answers to the <systemitem
-    class="library">debconf</systemitem> database so that
-    the user is not prompted for an answer. Pre-seeding enables a
-    hands-free installation for users. The package maintainer creates
-    scripts that automatically configure the services.</para>
+      class="library">debconf</systemitem> prompts. To pre-seed means
+    to store responses in the <package>debconf</package> database so
+    that <package>debconf</package> does not prompt the user for
+    responses. Pre-seeding enables a hands-free installation for
+    users. The package maintainer creates scripts that automatically
+    configure the services.</para>
   <para>The following example shows how to pre-seed an automated MySQL
     Server installation:</para>
   <programlisting language="bash">MYSQL_PASSWORD=<replaceable>MYSQL_PASSWORD</replaceable>
@@ -20,7 +20,8 @@ mysql-server-5.5 mysql-server/root_password_again password ${<replaceable>MYSQL_
 mysql-server-5.5 mysql-server/root_password_again seen true
 " | debconf-set-selections
 DEBIAN_FRONTEND=noninteractive apt-get install -y --force-yes mysql-server</programlisting>
-  <para>The <code>seen true</code> option tells <systemitem class="library">debconf</systemitem>
-  that a specified screen was already seen by the user, so do not show it
-  again. This option is useful for upgrades.</para>
+  <para>The <code>seen true</code> option tells
+      <package>debconf</package> that a specified screen was already
+    seen by the user so do not show it again. This option is useful
+    for upgrades.</para>
 </section>

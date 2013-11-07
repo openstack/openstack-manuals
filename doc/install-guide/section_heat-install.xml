@@ -2,23 +2,26 @@
 <section xml:id="heat-install" xmlns="http://docbook.org/ns/docbook"
   xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
-  <title>Install the Orchestration Service</title>
+  <title>Install the Orchestration service</title>
   <procedure os="debian">
     <step>
-      <para>Install the Orchestration Service on the controller node:</para>
+      <para>Install the Orchestration service on the controller
+        node:</para>
       <screen os="debian"><prompt>#</prompt> <userinput>apt-get install heat-api heat-api-cfn heat-engine</userinput></screen>
     </step>
     <step>
-      <para>Answer to the <systemitem class="library">debconf</systemitem>
-      prompts about the <link linkend="debconf-dbconfig-common">database management</link>,
-      the <link linkend="debconf-keystone_authtoken"><literal>[keystone_authtoken]</literal>
-      settings</link>, the <link linkend="debconf-rabbitqm">RabbitMQ credentials</link> and
-      the <link linkend="debconf-api-endpoints">API endpoint</link> registration.</para>
+      <para>Respond to prompts for <link
+          linkend="debconf-dbconfig-common">database
+        management</link>, <link linkend="debconf-keystone_authtoken"
+            ><systemitem>[keystone_authtoken]</systemitem>
+          settings</link>, <link linkend="debconf-rabbitqm">RabbitMQ
+          credentials</link> and <link linkend="debconf-api-endpoints"
+          >API endpoint</link> registration.</para>
     </step>
   </procedure>
   <procedure os="rhel;centos;fedora;opensuse;sles;ubuntu">
     <step>
-      <para>Install the Orchestration Service on the controller
+      <para>Install the Orchestration service on the controller
         node:</para>
       <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install heat-api heat-api-cfn heat-engine</userinput></screen>
       <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-heat-api openstack-heat-engine FIXME</userinput></screen>
@@ -26,11 +29,11 @@
     </step>
     <step>
       <para>In the configuration file, specify the location of the
-        database where the Orchestration Service stores data. The
-        examples in this guide use a MySQL database on the controller
-        node with the <literal>heat</literal> user name. Replace
-            <literal><replaceable>HEAT_DBPASS</replaceable></literal>
-        with the password for the database user:</para>
+        database where the Orchestration service stores data. The
+        examples in this guide use a MySQL database with a
+          <literal>heat</literal> user on the controller node. Replace
+          <replaceable>HEAT_DBPASS</replaceable> with the password for
+        the database user:</para>
       <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/heat/heat.conf \
   database connection mysql://heat:<replaceable>HEAT_DBPASS</replaceable>@controller/heat</userinput></screen>
       <para os="ubuntu;debian">Edit
@@ -42,8 +45,8 @@ connection = mysql://heat:<replaceable>HEAT_DBPASS</replaceable>@controller/heat
 ...</programlisting>
     </step>
     <step>
-      <para>Create a <literal>heat</literal> database user by logging
-        in as root using the password you set previously:</para>
+      <para>Use the password you set previously to log in as root and
+        create a <literal>heat</literal> database user:</para>
       <screen><prompt>#</prompt> <userinput>mysql -u root -p</userinput>
 <prompt>mysql></prompt> <userinput>CREATE DATABASE heat;</userinput>
 <prompt>mysql></prompt> <userinput>GRANT ALL PRIVILEGES ON heat.* TO 'heat'@'localhost' \
@@ -55,8 +58,8 @@ IDENTIFIED BY '<replaceable>HEAT_DBPASS</replaceable>';</userinput></screen>
       <para>Create the heat service tables:</para>
       <screen><prompt>#</prompt> <userinput>heat-manage db_sync</userinput></screen>
       <note>
-        <para>You can ignore any
-            <errortext>DeprecationWarning</errortext> errors.</para>
+        <para>Ignore <errortext>DeprecationWarning</errortext>
+          errors.</para>
       </note>
     </step>
     <step os="ubuntu">
@@ -75,18 +78,18 @@ log_dir=/var/log/heat</programlisting>
     </step>
     <step>
       <para>Create a <literal>heat</literal> user that the
-        Orchestration Service can use to authenticate with the
+        Orchestration service can use to authenticate with the
         Identity Service. Use the <literal>service</literal> tenant
-        and give the user the <literal>admin</literal> role.</para>
+        and give the user the <literal>admin</literal> role:</para>
       <screen><prompt>#</prompt> <userinput>keystone user-create --name=heat --pass=<replaceable>HEAT_PASS</replaceable> --email=<replaceable>heat@example.com</replaceable></userinput>
 <prompt>#</prompt> <userinput>keystone user-role-add --user=heat --tenant=service --role=admin</userinput></screen>
     </step>
     <step>
-      <para>Add the credentials to the configuration files for the
-        Orchestration Service.</para>
-      <para>Edit <filename>/etc/heat/api-paste.ini</filename> and
-        change the <literal>[filter:authtoken]</literal>
-        section.</para>
+      <para>Add the credentials to the Orchestration service
+        configuration files:</para>
+      <para>Edit the <filename>/etc/heat/api-paste.ini</filename> file
+        and change the <literal>[filter:authtoken]</literal>
+        section:</para>
       <programlisting language="ini">...
 [filter:authtoken]
 paste.filter_factory = heat.common.auth_token:filter_factory
@@ -99,18 +102,16 @@ admin_password = <replaceable>HEAT_PASS</replaceable>
 ...</programlisting>
     </step>
     <step>
-      <para>Register the Orchestration Service (both Heat and
-        CloudFormation APIs) with the Identity Service so that other
-        OpenStack services can locate it. Use the
-          <command>keystone</command> command to register the service
-        and specify the endpoint:</para>
+      <para>Register the Heat and CloudFormation APIs with the
+        Identity Service so that other OpenStack services can locate
+        these APIs. Register the service and specify the
+        endpoint:</para>
       <screen><prompt>#</prompt> <userinput>keystone service-create --name=heat --type=orchestration \
   --description="Heat Orchestration API"</userinput></screen>
     </step>
     <step>
-      <para>Note the <literal>id</literal> property for the service
-        that was returned in the previous step. Use it to create the
-        endpoint.</para>
+      <para>Use the <literal>id</literal> property that is returned
+        for the service to create the endpoint:</para>
       <screen><prompt>#</prompt> <userinput>keystone endpoint-create \
   --service-id=<replaceable>the_service_id_above</replaceable> \
   --publicurl=http://<replaceable>controller</replaceable>:8004/v1/\$(tenant_id)s \
@@ -120,9 +121,8 @@ admin_password = <replaceable>HEAT_PASS</replaceable>
   --description="Heat CloudFormation API"</userinput></screen>
     </step>
     <step>
-      <para>Note the <literal>id</literal> property for the service
-        that was returned in the previous step. Use it to create the
-        endpoint.</para>
+      <para>Use the <literal>id</literal> property that is returned
+        for the service to create the endpoint:</para>
       <screen><prompt>#</prompt> <userinput>keystone endpoint-create \
   --service-id=<replaceable>the_service_id_above</replaceable> \
   --publicurl=http://<replaceable>controller</replaceable>:8000/v1 \
@@ -136,10 +136,12 @@ admin_password = <replaceable>HEAT_PASS</replaceable>
 <prompt>#</prompt> <userinput>service heat-engine restart</userinput></screen>
     </step>
     <step os="rhel;fedora;centos;opensuse;sles">
-      <para>Start the <literal>heat-api</literal>, <systemitem
+      <para>Start the <systemitem role="service"
+        >heat-api</systemitem>, <systemitem role="service"
           class="service">heat-api-cfn</systemitem> and <systemitem
-          class="service">heat-engine</systemitem> services. Also,
-        configure them to start when the system boots.</para>
+          role="service" class="service">heat-engine</systemitem>
+        services and configure them to start when the system
+        boots:</para>
       <screen os="rhel;fedora;centos;opensuse;sles"><prompt>#</prompt> <userinput>service openstack-heat-api start</userinput>
 <prompt>#</prompt> <userinput>service openstack-heat-api-cfn start</userinput>
 <prompt>#</prompt> <userinput>service openstack-heat-engine start</userinput>

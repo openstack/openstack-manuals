@@ -2,15 +2,17 @@
 <section xml:id="installing-and-configuring-storage-nodes"
     xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0" >
-    <title>Installing and Configuring the Storage Nodes</title>
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+    <title>Install and configure storage nodes</title>
     <note>
-        <para>OpenStack Object Storage should work on any modern filesystem that
-            supports Extended Attributes (XATTRS). We currently recommend XFS as
-            it demonstrated the best overall performance for the swift use case
-            after considerable testing and benchmarking at Rackspace. It is also
-            the only filesystem that has been thoroughly tested. Consult the
-            <citetitle>OpenStack Configuration Reference</citetitle> for additional
+        <para>Object Storage works on any file system that supports
+            Extended Attributes (XATTRS). XFS shows the best overall
+            performance for the swift use case after considerable
+            testing and benchmarking at Rackspace. It is also the only
+            file system that has been thoroughly tested. See the <link
+                xlink:href="http://docs.openstack.org/havana/config-reference/content/"
+                    ><citetitle>OpenStack Configuration
+                    Reference</citetitle></link> for additional
             recommendations.</para>
     </note>
     <procedure>
@@ -21,17 +23,18 @@
                 <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-swift-account openstack-swift-container \
   openstack-swift-object xfsprogs</userinput></screen>
                 <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-swift-account openstack-swift-container \
-openstack-swift-object xfsprogs</userinput></screen>
-            </para>
+openstack-swift-object xfsprogs</userinput></screen></para>
         </step>
         <step>
-            <para>For every device on the node you wish to use for storage, set
-                up the XFS volume (<literal>/dev/sdb</literal> is used as an
-                example). Use a single partition per drive. For example, in a
-                server with 12 disks you may use one or two disks for the
-                operating system which should not be touched in this step. The
-                other 10 or 11 disks should be partitioned with a single
-                partition, then formatted in XFS.</para>
+            <para>For each device on the node that you want to use for
+                storage, set up the XFS volume
+                    (<literal>/dev/sdb</literal> is used as an
+                example). Use a single partition per drive. For
+                example, in a server with 12 disks you may use one or
+                two disks for the operating system which should not be
+                touched in this step. The other 10 or 11 disks should
+                be partitioned with a single partition, then formatted
+                in XFS.</para>
             <screen os="ubuntu;debian;rhel;centos;fedora"><prompt>#</prompt> <userinput>fdisk /dev/sdb</userinput>
 <prompt>#</prompt> <userinput>mkfs.xfs /dev/sdb1</userinput>
 <prompt>#</prompt> <userinput>echo "/dev/sdb1 /srv/node/sdb1 xfs noatime,nodiratime,nobarrier,logbufs=8 0 0" &gt;&gt; /etc/fstab</userinput>
@@ -47,7 +50,7 @@ openstack-swift-object xfsprogs</userinput></screen>
         </step>
         <step>
             <para>Create <filename>/etc/rsyncd.conf</filename>:</para>
-                <programlisting language="ini" os="ubuntu;debian;rhel;centos;fedora">uid = swift
+            <programlisting language="ini" os="ubuntu;debian;rhel;centos;fedora">uid = swift
 gid = swift
 log file = /var/log/rsyncd.log
 pid file = /var/run/rsyncd.pid
@@ -70,7 +73,7 @@ max connections = 2
 path = /srv/node/
 read only = false
 lock file = /var/lock/object.lock</programlisting>
-                <programlisting language="ini" os="opensuse;sles">uid = openstack-swift
+            <programlisting language="ini" os="opensuse;sles">uid = openstack-swift
 gid = openstack-swift
 log file = /var/log/rsyncd.log
 pid file = /var/run/rsyncd.pid
@@ -95,10 +98,11 @@ read only = false
 lock file = /var/lock/object.lock</programlisting>
         </step>
         <step>
-            <para>(Optional) If you want to separate rsync and replication
-                traffic to replication network, set
-                    <literal>STORAGE_REPLICATION_NET_IP</literal> instead of
-                    <literal>STORAGE_LOCAL_NET_IP</literal>:</para>
+            <para>(Optional) If you want to separate rsync and
+                replication traffic to replication network, set
+                    <literal>STORAGE_REPLICATION_NET_IP</literal>
+                instead of
+                <literal>STORAGE_LOCAL_NET_IP</literal>:</para>
             <programlisting language="ini">address = &lt;STORAGE_REPLICATION_NET_IP&gt;</programlisting>
         </step>
         <step>
@@ -110,9 +114,8 @@ lock file = /var/lock/object.lock</programlisting>
             <para>Start rsync daemon:</para>
             <screen><prompt>#</prompt> <userinput>service rsync start</userinput></screen>
             <note>
-                <title>Note</title>
-                <para>The rsync daemon requires no authentication, so it should
-                    be run on a local, private network.</para>
+                <para>The rsync daemon requires no authentication, so
+                    run it on a local, private network.</para>
             </note>
         </step>
         <step>

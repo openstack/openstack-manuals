@@ -3,28 +3,30 @@
   xmlns="http://docbook.org/ns/docbook"
   xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
-  <title>Adding the Agent: Block Storage</title>
+  <?dbhtml-stop-chunking?>
+  <title>Add the Block Storage Service agent for the Metering
+    service</title>
   <procedure>
-  <step>
-  <para>If you want to be able to retrieve volume samples, you need to
-        instruct Block Storage to send notifications to the bus by
-        editing the <filename>cinder.conf</filename> file and changing
-          <literal>notification_driver</literal> to
+    <step>
+      <para>To retrieve volume samples, you must configure Block
+        Storage to send notifications to the bus. Before you restart
+        the service, edit the <filename>cinder.conf</filename> file
+        and change the <option>notification_driver</option> option to
           <literal>cinder.openstack.common.notifier.rabbit_notifier</literal>
-        and <literal>control_exchange</literal> to
-          <literal>cinder</literal>, before restarting the service.</para>
-  </step>
+        and the <option>control_exchange</option> option to
+          <literal>cinder</literal>.</para>
+    </step>
     <step os="ubuntu;debian">
-      <para>We now restart the Block Storage service with its new
-        settings.</para>
-<screen><prompt>#</prompt> <userinput>service cinder-volume restart</userinput>
+      <para>Restart the Block Storage Service with its new
+        settings:</para>
+      <screen><prompt>#</prompt> <userinput>service cinder-volume restart</userinput>
 <prompt>#</prompt> <userinput>service cinder-api restart</userinput></screen>
     </step>
-    <step os="rhel;fedora;centos;opensuse;sles"><para>We now restart the Block Storage service with its new
-        settings.</para>
+    <step os="rhel;fedora;centos;opensuse;sles">
+      <para>Restart the Block Storage Service with its new
+        settings:</para>
       <screen os="rhel;fedora;centos;sles;opensuse"><prompt>#</prompt> <userinput>service openstack-cinder-api restart</userinput>
 <prompt>#</prompt> <userinput>service openstack-cinder-agent-central restart</userinput></screen>
     </step>
-
   </procedure>
 </section>
