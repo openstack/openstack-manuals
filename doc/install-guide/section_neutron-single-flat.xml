@@ -160,8 +160,11 @@
                             <programlisting language="ini">[DEFAULT]
 core_plugin = neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2
 control_exchange = neutron
-rabbit_host = controller
+rabbit_host = <replaceable>controller</replaceable>
 notification_driver = neutron.openstack.common.notifier.rabbit_notifier
+
+[database]
+connection = mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@<replaceable>controller</replaceable>/neutron
 
 [keystone_authtoken]
 admin_tenant_name=service
@@ -173,9 +176,7 @@ admin_password=<replaceable>NEUTRON_PASS</replaceable>
                             <para>Update the plug-in <filename>
                                    /etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>
                                 configuration file:</para>
-                            <programlisting language="ini">[database]
-connection = mysql://root:root@controller:3306/ovs_neutron?charset=utf8
-[ovs]
+                            <programlisting language="ini">[ovs]
 network_vlan_ranges = physnet1
 bridge_mappings = physnet1:br-eth0
 </programlisting>
@@ -203,10 +204,10 @@ bridge_mappings = physnet1:br-eth0
 
 neutron_admin_username=neutron
 neutron_admin_password=<replaceable>NEUTRON_PASS</replaceable>
-neutron_admin_auth_url=http://controller:35357/v2.0/
+neutron_admin_auth_url=http://<replaceable>controller</replaceable>:35357/v2.0/
 neutron_auth_strategy=keystone
 neutron_admin_tenant_name=service
-neutron_url=http://controller:9696/
+neutron_url=http://<replaceable>controller</replaceable>:9696/
 
 libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtHybridOVSBridgeDriver
                                 </programlisting>
@@ -239,16 +240,18 @@ libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtHybridOVSBridgeDriver
                             <programlisting language="ini">[DEFAULT]
 core_plugin = neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2
 control_exchange = neutron
-rabbit_host = controller
-notification_driver = neutron.openstack.common.notifier.rabbit_notifier</programlisting>
+rabbit_host = <replaceable>controller</replaceable>
+notification_driver = neutron.openstack.common.notifier.rabbit_notifier
+
+[database]
+connection = mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@<replaceable>controller</replaceable>/neutron
+</programlisting>
                         </listitem>
                         <listitem>
                             <para>Update the plug-in <filename>
                                    /etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>
                                 configuration file:</para>
-                            <programlisting language="ini">[database]
-connection = mysql://root:root@controller:3306/ovs_neutron?charset=utf8
-[ovs]
+                            <programlisting language="ini">[ovs]
 network_vlan_ranges = physnet1
 bridge_mappings = physnet1:br-eth0</programlisting>
                         </listitem>
@@ -279,7 +282,7 @@ bridge_mappings = physnet1:br-eth0</programlisting>
                             <programlisting language="ini">[DEFAULT]
 core_plugin = neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2
 control_exchange = neutron
-rabbit_host = controller
+rabbit_host = <replaceable>controller</replaceable>
 notification_driver = neutron.openstack.common.notifier.rabbit_notifier</programlisting>
                         </listitem>
                         <listitem>

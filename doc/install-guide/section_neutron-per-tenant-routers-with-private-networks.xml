@@ -152,8 +152,11 @@
                                 <programlisting language="ini" os="rhel;centos;fedora;opensuse;sles;ubuntu">[DEFAULT]
 core_plugin = neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2
 control_exchange = neutron
-rabbit_host = controller
+rabbit_host = <replaceable>controller</replaceable>
 notification_driver = neutron.openstack.common.notifier.rabbit_notifier
+
+[database]
+connection = mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@<replaceable>controller</replaceable>:3306/neutron
 
 [keystone_authtoken]
 admin_tenant_name=service
@@ -162,17 +165,17 @@ admin_password=<replaceable>NEUTRON_PASS</replaceable>
 </programlisting>
                                 <programlisting language="ini" os="debian">[DEFAULT]
 control_exchange = neutron
-rabbit_host = controller
+rabbit_host = <replaceable>controller</replaceable>
 notification_driver = neutron.openstack.common.notifier.rabbit_notifier
+
+[database]
+connection = mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@<replaceable>controller</replaceable>:3306/neutron
 </programlisting>
                             </listitem>
                             <listitem os="rhel;centos;fedora;opensuse;sles;ubuntu">
                                 <para>Update the plug-in configuration file,
                                         <filename>/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>:</para>
-                                <programlisting language="ini">[database]
-connection = mysql://root:root@controlnode:3306/ovs_neutron?charset=utf8
-
-[ovs]
+                                <programlisting language="ini">[ovs]
 tenant_network_type = gre
 tunnel_id_ranges = 1:1000
 enable_tunneling = True
@@ -233,26 +236,24 @@ libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtHybridOVSBridgeDriver
                                 <programlisting language="ini">[DEFAULT]
 core_plugin = neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2
 control_exchange = neutron
-rabbit_host = controller
+rabbit_host = <replaceable>controller</replaceable>
 notification_driver = neutron.openstack.common.notifier.rabbit_notifier
-</programlisting>
+
+[database]
+connection = mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@<replaceable>controller</replaceable>:3306/neutron</programlisting>
                             </listitem>
                             <listitem>
                                 <para>Update the plug-in configuration file, <filename>
                                         /etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>.</para>
                                 <para>Compute node:</para>
-                                <programlisting language="ini">[database]
-connection = mysql://root:root@controlnode:3306/ovs_neutron?charset=utf8
-[ovs]
+                                <programlisting language="ini">[ovs]
 tenant_network_type = gre
 tunnel_id_ranges = 1:1000
 enable_tunneling = True
 local_ip = 9.181.89.202
 </programlisting>
                                 <para>Network node:</para>
-                                <programlisting language="ini">[database]
-connection = mysql://root:root@controlnode:3306/ovs_neutron?charset=utf8
-[ovs]
+                                <programlisting language="ini">[ovs]
 tenant_network_type = gre
 tunnel_id_ranges = 1:1000
 enable_tunneling = True
@@ -288,7 +289,7 @@ local_ip = 9.181.89.203
                                 <programlisting language="ini">[DEFAULT]
 core_plugin = neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2
 control_exchange = neutron
-rabbit_host = controller
+rabbit_host = <replaceable>controller</replaceable>
 notification_driver = neutron.openstack.common.notifier.rabbit_notifier
 allow_overlapping_ips = True</programlisting>
                                 <para><emphasis role="bold">Set
