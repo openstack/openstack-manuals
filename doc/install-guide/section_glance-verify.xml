@@ -1,101 +1,115 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<section xml:id="glance-verify"
-    xmlns="http://docbook.org/ns/docbook"
+<section xml:id="glance-verify" xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
-            <title>Verifying the Image Service Installation</title>
-    <para>To test the Image Service installation, download at least one virtual machine image that
-        is known to work with OpenStack. For example, CirrOS is a small test image that is often
-        used for testing OpenStack deployments (<link xlink:href="http://download.cirros-cloud.net/"
-            >CirrOS downloads</link>). The 64-bit CirrOS QCOW2 image is the image we'll use for this
-        walkthrough.</para>
-    <para>For more information about:</para>
-    <para>
-        <itemizedlist>
-            <listitem>
-                <para>Downloading and building images, refer to the <link
-                        xlink:href="http://docs.openstack.org/image-guide/content/index.html"
-                        ><citetitle>OpenStack Virtual Machine Image Guide</citetitle></link>.
-                </para>
-            </listitem>
-            <listitem>
-                <para>How to manage images, refer to the "Image Management" chapter in the <link
-                        xlink:href="http://docs.openstack.org/user-guide/content/dashboard_manage_images.html"><citetitle>OpenStack User
-                        Guide</citetitle></link>.</para>
-            </listitem>
-        </itemizedlist>
-    </para>
-<procedure>
-    <title>Upload and View an Image in the Image Service</title>
-    <step><para>Download the image into a dedicated directory:</para>
-        <screen><prompt>$</prompt> <userinput>mkdir images</userinput>
+    <title>Verify the Image Service installation</title>
+    <para>To test the Image Service installation, download at least
+        one virtual machine image that is known to work with
+        OpenStack. For example, CirrOS is a small test image that is
+        often used for testing OpenStack deployments (<link
+            xlink:href="http://download.cirros-cloud.net/">CirrOS
+            downloads</link>). This walk through uses the 64-bit
+        CirrOS QCOW2 image.</para>
+    <para>For more information about how to download and build images,
+        see <link
+            xlink:href="http://docs.openstack.org/image-guide/content/index.html"
+                ><citetitle>OpenStack Virtual Machine Image
+                Guide</citetitle></link>. For information about how to
+        manage images, see the <link
+            xlink:href="http://docs.openstack.org/user-guide/content/index.html"
+                ><citetitle>OpenStack User
+        Guide</citetitle></link>.</para>
+    <procedure>
+        <step>
+            <para>Download the image into a dedicated
+                directory:</para>
+            <screen><prompt>$</prompt> <userinput>mkdir images</userinput>
 <prompt>$</prompt> <userinput>cd images/</userinput>
-<prompt>$</prompt> <userinput>curl -O http://cdn.download.cirros-cloud.net/0.3.1/cirros-0.3.1-x86_64-disk.img</userinput></screen></step>
-    <step><para>Use the <command>glance image-create</command> command to upload the image to the Image
-                Service, as follows:</para>
-        <para><screen><prompt>#</prompt> <userinput>glance image-create --name=<replaceable>imageLabel</replaceable> --disk-format=<replaceable>fileFormat</replaceable> \
+<prompt>$</prompt> <userinput>curl -O http://cdn.download.cirros-cloud.net/0.3.1/cirros-0.3.1-x86_64-disk.img</userinput></screen>
+        </step>
+        <step>
+            <para>Upload the image to the Image Service:</para>
+            <para><screen><prompt>#</prompt> <userinput>glance image-create --name=<replaceable>imageLabel</replaceable> --disk-format=<replaceable>fileFormat</replaceable> \
   --container-format=<replaceable>containerFormat</replaceable> --is-public=<replaceable>accessValue</replaceable> &lt; <replaceable>imageFile</replaceable></userinput></screen></para>
-        <para>Where: <variablelist>
-                    <varlistentry>
-                        <term><literal><replaceable>imageLabel</replaceable></literal></term>
-                        <listitem>
-                            <para>Arbitrary label. This is the name by which users will refer to the image.</para>
-                        </listitem>
-                    </varlistentry>
-                    <varlistentry>
-                        <term><literal><replaceable>fileFormat</replaceable></literal></term>
-                        <listitem>
-                            <para>Specifies the format of the image file. Valid formats include
-                                    <literal>qcow2</literal>, <literal>raw</literal>,
-                                    <literal>vhd</literal>, <literal>vmdk</literal>,
-                                    <literal>vdi</literal>, <literal>iso</literal>,
-                                    <literal>aki</literal>, <literal>ari</literal>, and
-                                    <literal>ami</literal>.</para>
-                            <para>You can verify the format using the <command>file</command>
-                                command:
-                                <screen><prompt>$</prompt> <userinput>file cirros-0.3.1-x86_64-disk.img</userinput>
+            <para>Where:</para>
+            <variablelist>
+                <varlistentry>
+                    <term><literal><replaceable>imageLabel</replaceable></literal></term>
+                    <listitem>
+                        <para>Arbitrary label. This is the name by
+                            which users will refer to the
+                            image.</para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term><literal><replaceable>fileFormat</replaceable></literal></term>
+                    <listitem>
+                        <para>Specifies the format of the image file.
+                            Valid formats include
+                                <literal>qcow2</literal>,
+                                <literal>raw</literal>,
+                                <literal>vhd</literal>,
+                                <literal>vmdk</literal>,
+                                <literal>vdi</literal>,
+                                <literal>iso</literal>,
+                                <literal>aki</literal>,
+                                <literal>ari</literal>, and
+                                <literal>ami</literal>.</para>
+                        <para>You can verify the format using the
+                                <command>file</command> command:
+                            <screen><prompt>$</prompt> <userinput>file cirros-0.3.1-x86_64-disk.img</userinput>
 <computeroutput>cirros-0.3.1-x86_64-disk.img: QEMU QCOW Image (v2), 41126400 bytes</computeroutput></screen></para>
-                        </listitem>
-                    </varlistentry>
-                    <varlistentry>
-                        <term><literal><replaceable>containerFormat</replaceable></literal></term>
-                        <listitem>
-                            <para>Specifies the container format. Valid formats include:
-                                    <literal>bare</literal>, <literal>ovf</literal>,
-                                    <literal>aki</literal>, <literal>ari</literal> and
-                                    <literal>ami</literal>.</para>
-                            <para>Specify <literal>bare</literal> to indicate that the image file is
-                                not in a file format that contains metadata about the virtual
-                                machine. Although this field is currently  required, it is not
-                                actually used by any of the OpenStack services and has no effect on
-                                system behavior.  Because the value is not used anywhere, it safe to
-                                always specify <literal>bare</literal> as the container
-                                format.</para>
-                        </listitem>
-                    </varlistentry>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term><literal><replaceable>containerFormat</replaceable></literal></term>
+                    <listitem>
+                        <para>Specifies the container format. Valid
+                            formats include: <literal>bare</literal>,
+                                <literal>ovf</literal>,
+                                <literal>aki</literal>,
+                                <literal>ari</literal> and
+                                <literal>ami</literal>.</para>
+                        <para>Specify <literal>bare</literal> to
+                            indicate that the image file is not in a
+                            file format that contains metadata about
+                            the virtual machine. Although this field
+                            is currently required, it is not actually
+                            used by any of the OpenStack services and
+                            has no effect on system behavior. Because
+                            the value is not used anywhere, it safe to
+                            always specify <literal>bare</literal> as
+                            the container format.</para>
+                    </listitem>
+                </varlistentry>
                 <varlistentry>
                     <term><literal><replaceable>accessValue</replaceable></literal></term>
                     <listitem>
-                        <para>Specifies image access:
-                        <itemizedlist>
-                            <listitem><para>true - All users will be able to view
-                                and use the image.</para></listitem>
-                            <listitem><para>false - Only administrators will be
-                                able to view and use the image.</para></listitem>
-                        </itemizedlist></para>
+                        <para>Specifies image access: <itemizedlist>
+                                <listitem>
+                                   <para>true - All users will be able
+                                   to view and use the image.</para>
+                                </listitem>
+                                <listitem>
+                                   <para>false - Only administrators
+                                   will be able to view and use the
+                                   image.</para>
+                                </listitem>
+                            </itemizedlist></para>
                     </listitem>
-            </varlistentry>
-            <varlistentry>
-                <term><literal><replaceable>imageFile</replaceable></literal></term>
-                <listitem>
-                    <para>Specifies the name of your downloaded image file.</para>
-                </listitem>
-            </varlistentry>
-                </variablelist></para>
-       <para>For example:</para>
-      <screen><prompt>#</prompt> <userinput>glance image-create --name="CirrOS 0.3.1" --disk-format=qcow2 \
-  --container-format=bare --is-public=true &lt; cirros-0.3.1-x86_64-disk.img</userinput>
-<computeroutput>+------------------+--------------------------------------+
+                </varlistentry>
+                <varlistentry>
+                    <term><literal><replaceable>imageFile</replaceable></literal></term>
+                    <listitem>
+                        <para>Specifies the name of your downloaded
+                            image file.</para>
+                    </listitem>
+                </varlistentry>
+            </variablelist>
+            <para>For example:</para>
+            <screen><prompt>#</prompt> <userinput>glance image-create --name="CirrOS 0.3.1" --disk-format=qcow2 \
+  --container-format=bare --is-public=true &lt; cirros-0.3.1-x86_64-disk.img</userinput></screen>
+            <screen><computeroutput>+------------------+--------------------------------------+
 | Property         | Value                                |
 +------------------+--------------------------------------+
 | checksum         | d972013792949d0d3ba628fbe8685bce     |
@@ -115,18 +129,21 @@
 | status           | active                               |
 | updated_at       | 2013-05-08T18:59:18                  |
 +------------------+--------------------------------------+</computeroutput></screen>
-        <note>
-            <para>The returned image ID is generated dynamically, and therefore
-                will be different on your deployment than in this example.</para>
-        </note>
-       </step>
-    <step><para>Use the <userinput>glance image-list</userinput> command to confirm
-        that the image has been uploaded and to display its attributes:</para>
-        <screen><prompt>#</prompt> <userinput>glance image-list</userinput>
-<computeroutput>+--------------------------------------+-----------------+-------------+------------------+----------+--------+
+            <note>
+                <para>Because the returned image ID is generated
+                    dynamically, your deployment generates a different
+                    ID than the one shown in this example.</para>
+            </note>
+        </step>
+        <step>
+            <para>Confirm that the image was uploaded and display its
+                attributes:</para>
+            <screen><prompt>#</prompt> <userinput>glance image-list</userinput></screen>
+            <screen><computeroutput>+--------------------------------------+-----------------+-------------+------------------+----------+--------+
 | ID                                   | Name            | Disk Format | Container Format | Size     | Status |
 +--------------------------------------+-----------------+-------------+------------------+----------+--------+
 | acafc7c0-40aa-4026-9673-b879898e1fc2 | CirrOS 0.3.1    | qcow2       | bare             | 13147648 | active |
-+--------------------------------------+-----------------+-------------+------------------+----------+--------+</computeroutput></screen></step>
-</procedure>
-    </section>
++--------------------------------------+-----------------+-------------+------------------+----------+--------+</computeroutput></screen>
+        </step>
+    </procedure>
+</section>

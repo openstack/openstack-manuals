@@ -3,43 +3,46 @@
   xmlns="http://docbook.org/ns/docbook"
   xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
-  <title>Adding the Agent: Object Storage</title>
+  <title>Add the Object Storage agent for the Metering service</title>
   <procedure>
     <step>
-    <para>In order to retrieve object store statistics, the Metering
-        Service needs access to Object Storage with
-          <literal>ResellerAdmin</literal> role. You should give this
-        role to your <literal>os_username</literal> user for tenant
-          <literal>os_tenant_name</literal>:
-        <screen><prompt>$</prompt> <userinput>keystone role-create --name=ResellerAdmin</userinput>
+      <para>To retrieve object store statistics, the Metering service
+        needs access to Object Storage with the
+          <literal>ResellerAdmin</literal> role. Give this role to
+        your <literal>os_username</literal> user for the
+          <literal>os_tenant_name</literal>tenant:</para>
+      <screen><prompt>$</prompt> <userinput>keystone role-create --name=ResellerAdmin</userinput>
 <computeroutput>+----------+----------------------------------+
 | Property |              Value               |
 +----------+----------------------------------+
 |    id    | 462fa46c13fd4798a95a3bfbe27b5e54 |
 |   name   |          ResellerAdmin           |
 +----------+----------------------------------+
-</computeroutput>
-<prompt>$</prompt> <userinput>keystone user-role-add --tenant_id $SERVICE_TENANT \
+</computeroutput></screen>
+      <screen><prompt>$</prompt> <userinput>keystone user-role-add --tenant_id $SERVICE_TENANT \
       --user_id $CEILOMETER_USER \
       --role_id 462fa46c13fd4798a95a3bfbe27b5e54</userinput></screen>
-      </para>
     </step>
     <step>
-    <para>You’ll also need to add the Metering middleware to Object
-        Storage to account for incoming and outgoing traffic, by
-        adding these lines to
-          <filename>/etc/swift/proxy-server.conf</filename>:
-        <programlisting language="ini">[filter:ceilometer]
-use = egg:ceilometer#swift</programlisting>Next,
-        add <literal>ceilometer</literal> to the
+      <para>You must also add the Metering middleware to Object
+        Storage to handle incoming and outgoing traffic. Add
+        these lines to the
+          <filename>/etc/swift/proxy-server.conf</filename>
+        file:</para>
+      <programlisting language="ini">[filter:ceilometer]
+use = egg:ceilometer#swift</programlisting>
+    </step>
+    <step>
+      <para>Add <literal>ceilometer</literal> to the
           <literal>pipeline</literal> parameter of that same file,
         right before the entry <literal>proxy-server</literal>.</para>
     </step>
     <step os="ubuntu;debian">
-      <para>We now restart the service with its new settings.</para>
-<screen><prompt>#</prompt> <userinput>service swift-proxy-server restart</userinput></screen>
+      <para>Restart the service with its new settings.</para>
+      <screen><prompt>#</prompt> <userinput>service swift-proxy-server restart</userinput></screen>
     </step>
-    <step os="rhel;fedora;centos;opensuse;sles"><para>We now restart the service with its new settings.</para>
+    <step os="rhel;fedora;centos;opensuse;sles">
+      <para>Restart the service with its new settings.</para>
       <screen os="rhel;fedora;centos;sles;opensuse"><prompt>#</prompt> <userinput>service openstack-swift-proxy-server restart</userinput></screen>
     </step>
   </procedure>

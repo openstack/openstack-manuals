@@ -2,7 +2,7 @@
   xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
   xml:id="cinder-controller">
-  <title>Configure a Block Storage controller</title>
+  <title>Configure a Block Storage Service controller</title>
   <para>To create the components that control the Block Storage
     Service, complete the following steps on the controller
     node.</para>
@@ -11,14 +11,13 @@
   <procedure>
     <step>
       <para>Install the appropriate packages for the Block Storage
-        Service.</para>
+        Service:</para>
       <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install cinder-api cinder-scheduler</userinput></screen>
       <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>yum install openstack-cinder openstack-utils openstack-selinux</userinput></screen>
       <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install  openstack-cinder-api openstack-cinder-scheduler</userinput></screen>
     </step>
     <step os="debian">
-      <para>Respond to the <systemitem class="library"
-          >debconf</systemitem> prompts about <link
+      <para>Respond to the prompts for <link
           linkend="debconf-dbconfig-common">database
         management</link>, <link linkend="debconf-keystone_authtoken"
             ><literal>[keystone_authtoken]</literal> settings</link>,
@@ -53,9 +52,8 @@ connection = mysql://cinder:CINDER_DBPASS@localhost/cinder
       <screen><prompt>#</prompt> <userinput>openstack-db --init --service cinder --password <replaceable>CINDER_DBPASS</replaceable></userinput></screen>
     </step>
     <step os="ubuntu">
-      <para>Use the password that you set in the previous example to
-        log in as root to create a <literal>cinder</literal>
-        database.</para>
+      <para>Use the password that you set to log in as root to create
+        a <literal>cinder</literal> database.</para>
       <screen><prompt>#</prompt> <userinput>mysql -u root -p</userinput>
 <prompt>mysql></prompt> <userinput>CREATE DATABASE cinder;</userinput>
 <prompt>mysql></prompt> <userinput>GRANT ALL PRIVILEGES ON cinder.* TO 'cinder'@'localhost' \
@@ -70,7 +68,7 @@ IDENTIFIED BY '<replaceable>CINDER_DBPASS</replaceable>';</userinput></screen>
     </step>
     <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
       <para>Create a <literal>cinder</literal> user. The Block Storage
-        Service use this user to authenticate with the Identity
+        Service uses this user to authenticate with the Identity
         Service. Use the <literal>service</literal> tenant and give
         the user the <literal>admin</literal> role.</para>
       <screen><prompt>#</prompt> <userinput>keystone user-create --name=cinder --pass=<replaceable>CINDER_PASS</replaceable> --email=<replaceable>cinder@example.com</replaceable></userinput>

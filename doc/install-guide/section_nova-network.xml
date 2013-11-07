@@ -1,32 +1,37 @@
 <section xmlns="http://docbook.org/ns/docbook"
-         xmlns:xi="http://www.w3.org/2001/XInclude"
-         xmlns:xlink="http://www.w3.org/1999/xlink"
-         version="5.0"
-         xml:id="nova-network">
-  <title>Enabling Networking</title>
-  <para>Configuring Networking can be one of the most bewildering experiences you will encounter
-    when working with OpenStack. To assist in this we have chosen the simplest production-ready
-    configuration for this guide: the legacy networking in OpenStack Compute, with a flat network,
-    that takes care of DHCP.</para>
-  <para>This setup uses "multi-host" functionality: the networking is configured to be highly
-    available by splitting networking functionality across multiple hosts. As a result, there is no
-    single network controller that acts as a single point of failure.  Because each compute node is
-    configured for networking in this setup, no additional networking configuration is required on
-    the controller.</para>
-  <note><para>If you require the full software-defined networking stack, see <link
-        linkend="ch_neutron">Using Neutron Networking</link>.</para></note>
-<procedure>
-    <title>Enable networking on a compute node</title>
-    <step><para>After performing initial configuration of the compute node,
-       install the appropriate  packages for compute networking.</para>
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+  xml:id="nova-network">
+  <title>Enable Networking</title>
+  <para>Configuring Networking can be a bewildering experience. The
+    following example shows the simplest production-ready
+    configuration that is available: the legacy networking in
+    OpenStack Compute, with a flat network, that takes care of
+    DHCP.</para>
+  <para>This set up uses multi-host functionality: You configure
+    networking to be highly available by splitting networking
+    functionality across multiple hosts. As a result, no single
+    network controller acts as a single point of failure. Because this
+    set up configures each compute node for networking, you do not
+    have to complete any additional networking configuration on the
+    controller.</para>
+  <note>
+    <para>If you need the full software-defined networking stack, see
+        <xref linkend="ch_neutron"/>.</para>
+  </note>
+  <procedure>
+    <step>
+      <para>Install the appropriate packages for compute
+        networking:</para>
       <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install nova-network</userinput></screen>
       <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>yum install openstack-nova-network</userinput></screen>
       <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-nova-network</userinput></screen>
     </step>
 
-  <step>
-  <para>First, set the configuration options needed in <filename>nova.conf</filename> for the chosen networking mode.</para>
-  <screen os="fedora;rhel;centos;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT \
+    <step>
+      <para>Edit the <filename>nova.conf</filename> file to define the
+        networking mode:</para>
+      <screen os="fedora;rhel;centos;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT \
   network_manager nova.network.manager.FlatDHCPManager</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT \
   firewall_driver nova.virt.libvirt.firewall.IptablesFirewallDriver</userinput>
@@ -39,14 +44,16 @@
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT flat_interface eth1</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT flat_network_bridge br100</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT public_interface eth1</userinput></screen>
-<screen os ="opensuse;sles">
+      <screen os="opensuse;sles">
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT network_api_class nova.network.api.API</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT security_group_api nova</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT rabbit_host <replaceable>controller</replaceable></userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf database connection mysql://nova:<replaceable>NOVA_DBPASS</replaceable>@<replaceable>controller</replaceable>/nova</userinput></screen>
 
-  <para os="ubuntu;debian">Edit <filename>/etc/nova/nova.conf</filename> and add to the <literal>[DEFAULT]</literal> section.</para>
-  <programlisting os="ubuntu;debian" language="ini">[DEFAULT]
+      <para os="ubuntu;debian">Edit the
+          <filename>/etc/nova/nova.conf</filename> file and add these
+        lines to the <literal>[DEFAULT]</literal> section:</para>
+      <programlisting os="ubuntu;debian" language="ini">[DEFAULT]
 ...
 
 network_manager=nova.network.manager.FlatDHCPManager
@@ -60,32 +67,34 @@ force_dhcp_release=True
 flat_network_bridge=br100
 flat_interface=eth1
 public_interface=eth1
-rabbit_host=<replaceable>controller</replaceable>
-      </programlisting>
+rabbit_host=<replaceable>controller</replaceable></programlisting>
     </step>
-  <step os="fedora;rhel;centos">
-  <para>Provide a local metadata service that will be reachable from instances on this compute node.
-        This step is only necessary on compute nodes that do not run the <systemitem class="service">nova-api</systemitem> service.</para>
-  <screen><prompt>#</prompt> <userinput>yum install openstack-nova-api</userinput>
+    <step os="fedora;rhel;centos">
+      <para>Provide a local metadata service that is reachable from
+        instances on this compute node. Perform this step only on
+        compute nodes that do not run the <systemitem class="service"
+          >nova-api</systemitem> service.</para>
+      <screen><prompt>#</prompt> <userinput>yum install openstack-nova-api</userinput>
 <prompt>#</prompt> <userinput>service openstack-nova-metadata-api start</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-nova-metadata-api on</userinput></screen>
-  </step>
-  <step>
-  <para os="ubuntu;debian">Restart the network service.</para>
-  <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service nova-network restart</userinput></screen>
+    </step>
+    <step>
+      <para os="ubuntu;debian">Restart the network service:</para>
+      <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service nova-network restart</userinput></screen>
 
-  <para os="fedora;rhel;centos;opensuse;sles">Start the network service and configure it to start when the system boots.</para>
-  <screen os="centos;rhel;fedora;opensuse;sles"><prompt>#</prompt> <userinput>service openstack-nova-network restart</userinput>
+      <para os="fedora;rhel;centos;opensuse;sles">Start the network
+        service and configure it to start when the system
+        boots:</para>
+      <screen os="centos;rhel;fedora;opensuse;sles"><prompt>#</prompt> <userinput>service openstack-nova-network restart</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-nova-network on</userinput></screen>
-  </step>
-</procedure>
+    </step>
+  </procedure>
 
-<para>Finally, you have to create a network that virtual machines can use. You
-only need to do this once for the entire installation, not for each compute node.
-Run the <command>nova network-create</command> command anywhere your admin user
-credentials are loaded.</para>
-<screen><prompt>#</prompt> <userinput>source keystonerc</userinput></screen>
-<screen><prompt>#</prompt> <userinput>nova network-create vmnet --fixed-range-v4=10.0.0.0/24 \
+  <para>Create a network that virtual machines can use. Do this once
+    for the entire installation and not on each compute node. Run the
+      <command>nova network-create</command> command anywhere your
+    admin user credentials are loaded.</para>
+  <screen><prompt>#</prompt> <userinput>source keystonerc</userinput></screen>
+  <screen><prompt>#</prompt> <userinput>nova network-create vmnet --fixed-range-v4=10.0.0.0/24 \
   --bridge-interface=br100 --multi-host=T</userinput></screen>
-
 </section>

@@ -2,8 +2,8 @@
 <section xml:id="installing-and-configuring-the-proxy-node"
     xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0" >
-    <title>Installing and Configuring the Proxy Node</title>
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+    <title>Install and configure the proxy node</title>
     <para>The proxy server takes each request and looks up locations
         for the account, container, or object and routes the requests
         correctly. The proxy server also handles API requests. You
@@ -11,14 +11,14 @@
             <filename>proxy-server.conf</filename> file.</para>
     <note>
         <para>Swift processes run under a separate user and group, set
-        by configuration options, and referred to as <phrase
-        os="ubuntu;debian;rhel;centos;fedora">swift:swift</phrase><phrase
-        os="opensuse;sles">openstack-swift:openstack-swift</phrase>. The
-        default user is <phrase
-        os="ubuntu;debian;rhel;centos;fedora">swift, which may not
-        exist on your system.</phrase><phrase
-        os="opensuse;sles">openstack-swift.</phrase>
-        </para>
+            by configuration options, and referred to as <phrase
+                os="ubuntu;debian;rhel;centos;fedora"
+                >swift:swift</phrase><phrase os="opensuse;sles"
+                >openstack-swift:openstack-swift</phrase>. The default
+            user is <phrase os="ubuntu;debian;rhel;centos;fedora"
+                >swift, which may not exist on your
+                system.</phrase><phrase os="opensuse;sles"
+                >openstack-swift.</phrase></para>
     </note>
     <procedure>
         <step>
@@ -33,12 +33,11 @@
 <prompt>#</prompt> <userinput>openssl req -new -x509 -nodes -out cert.crt -keyout cert.key</userinput></screen>
         </step>
         <step>
-            <para>Modify memcached to listen on the default interfaces.
-                Preferably this should be on a local, non-public network.
-                Edit the following line in <filename>/etc/memcached.conf</filename>,
-                changing:</para>
+            <para>Modify memcached to listen on the default interfaces
+                on a local, non-public network. Edit this line in
+                    the <filename>/etc/memcached.conf</filename> file:</para>
             <literallayout class="monospaced">-l 127.0.0.1</literallayout>
-            <para>to</para>
+            <para>Change it to:</para>
             <literallayout class="monospaced">-l &lt;PROXY_LOCAL_NET_IP&gt;</literallayout>
         </step>
         <step>
@@ -46,30 +45,37 @@
             <screen><prompt>#</prompt> <userinput>service memcached restart</userinput></screen>
         </step>
         <step os="rhel;centos;fedora">
-            <para>RHEL/CentOS/Fedora only: To set up Object Storage to authenticate tokens we need to set the keystone Admin
-                token in the swift proxy file with the openstack-config command.</para>
+            <para>RHEL/CentOS/Fedora only: To set up Object Storage to
+                authenticate tokens, set the Identity Service Admin
+                token in the swift proxy file with the
+                <command>openstack-config</command> command.</para>
             <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/swift/proxy-server.conf \
   filter:authtoken admin_token $ADMIN_TOKEN</userinput>
 <prompt>#</prompt> sudo <userinput>openstack-config --set /etc/swift/proxy-server.conf \
   filter:authtoken auth_token $ADMIN_TOKEN</userinput></screen>
         </step>
-        <step os="ubuntu"><para>Ubuntu only: Because the distribution packages do not include a copy of the keystoneauth middleware, here are steps to ensure the proxy server includes them:</para>
+        <step os="ubuntu">
+            <para>Ubuntu only: Because the distribution packages do
+                not include a copy of the keystoneauth middleware,
+                ensure that the proxy server includes
+                them:</para>
             <screen><prompt>$</prompt> <userinput>git clone https://github.com/openstack/swift.git</userinput>
-                <prompt>$</prompt> <userinput>cd swift</userinput>
-                <prompt>$</prompt> <userinput>python setup.py install</userinput>
-                <prompt>$</prompt> <userinput>swift-init proxy start</userinput>
-            </screen>
+<prompt>$</prompt> <userinput>cd swift</userinput>
+<prompt>$</prompt> <userinput>python setup.py install</userinput>
+<prompt>$</prompt> <userinput>swift-init proxy start</userinput></screen>
         </step>
         <step>
-            <para>Create <filename>/etc/swift/proxy-server.conf</filename>:</para>
-            <programlisting os="rhel;centos;fedora;ubuntu;debian" language="ini"><xi:include parse="text" href="../samples/proxy-server.conf.txt" /></programlisting>
-            <programlisting os="opensuse;sles" language="ini"><xi:include parse="text" href="../samples/proxy-server.conf.txt-openSUSE" /></programlisting>
+            <para>Create
+                    <filename>/etc/swift/proxy-server.conf</filename>:</para>
+            <programlisting os="rhel;centos;fedora;ubuntu;debian" language="ini"><xi:include parse="text" href="../samples/proxy-server.conf.txt"/></programlisting>
+            <programlisting os="opensuse;sles" language="ini"><xi:include parse="text" href="../samples/proxy-server.conf.txt-openSUSE"/></programlisting>
             <note>
-                <para>If you run multiple memcache servers, put the multiple
-                    IP:port listings in the [filter:cache] section of the
-                        <filename>proxy-server.conf</filename> file like:
-                    <literallayout class="monospaced">10.1.2.3:11211,10.1.2.4:11211</literallayout></para>
-                    <para>Only the proxy server uses memcache.</para>
+                <para>If you run multiple memcache servers, put the
+                    multiple IP:port listings in the [filter:cache]
+                    section of the
+                        <filename>proxy-server.conf</filename> file:</para>
+                    <literallayout class="monospaced">10.1.2.3:11211,10.1.2.4:11211</literallayout>
+                <para>Only the proxy server uses memcache.</para>
             </note>
         </step>
         <step>
@@ -78,17 +84,17 @@
                 accordingly.</para>
             <screen os="ubuntu;debian;rhel;centos;fedora"><prompt>#</prompt> <userinput>mkdir -p /home/swift/keystone-signing</userinput>
 <prompt>#</prompt> <userinput>chown -R swift:swift /home/swift/keystone-signing</userinput></screen>
-                <screen os="opensuse;sles"><prompt>#</prompt> <userinput>mkdir -p /home/swift/keystone-signing</userinput>
+            <screen os="opensuse;sles"><prompt>#</prompt> <userinput>mkdir -p /home/swift/keystone-signing</userinput>
 <prompt>#</prompt> <userinput>chown -R openstack-swift:openstack-swift /home/swift/keystone-signing</userinput></screen>
         </step>
         <step>
-            <para>Create the account, container and object rings. The
-                builder command is basically creating a builder file
+            <para>Create the account, container, and object rings. The
+                builder command creates a builder file
                 with a few parameters. The parameter with the value of
                 18 represents 2 ^ 18th, the value that the partition
-                will be sized to. Set this “partition power” value
+                is sized to. Set this “partition power” value
                 based on the total amount of storage you expect your
-                entire ring to use. The value of 3 represents the
+                entire ring to use. The value 3 represents the
                 number of replicas of each object, with the last value
                 being the number of hours to restrict moving a
                 partition more than once.</para>
@@ -98,30 +104,30 @@
 <prompt>#</prompt> <userinput>swift-ring-builder object.builder create 18 3 1</userinput></screen>
         </step>
         <step>
-            <para>For every storage device on each node add entries to each
-                ring:</para>
+            <para>For every storage device on each node add entries to
+                each ring:</para>
             <screen><prompt>#</prompt> <userinput>swift-ring-builder account.builder add z&lt;ZONE&gt;-&lt;STORAGE_LOCAL_NET_IP&gt;:6002[R&lt;STORAGE_REPLICATION_NET_IP&gt;:6005]/&lt;DEVICE&gt; 100</userinput>
 <prompt>#</prompt> <userinput>swift-ring-builder container.builder add z&lt;ZONE&gt;-&lt;STORAGE_LOCAL_NET_IP_1&gt;:6001[R&lt;STORAGE_REPLICATION_NET_IP&gt;:6004]/&lt;DEVICE&gt; 100</userinput>
 <prompt>#</prompt> <userinput>swift-ring-builder object.builder add z&lt;ZONE&gt;-&lt;STORAGE_LOCAL_NET_IP_1&gt;:6000[R&lt;STORAGE_REPLICATION_NET_IP&gt;:6003]/&lt;DEVICE&gt; 100</userinput></screen>
             <note>
-                <para><literal>STORAGE_REPLICATION_NET_IP</literal> is an
-                    optional parameter which must be omitted if you do not
-                    want to use dedicated network for replication</para>
+                <para>You must omit the optional <parameter>STORAGE_REPLICATION_NET_IP</parameter> parameter if you
+                    do not want to use dedicated network for
+                    replication.</para>
             </note>
-            <para>For example, if you were setting up a storage node with a
-                partition in Zone 1 on IP 10.0.0.1. Storage node has address 10.0.1.1 from
-                replication network. The mount point of
-                this partition is /srv/node/sdb1, and the path in
-                    <filename>rsyncd.conf</filename> is /srv/node/,
-                the DEVICE would be sdb1 and the commands would look
-                like:</para>
+            <para>For example, if a storage node
+                has a partition in Zone 1 on IP 10.0.0.1, the storage
+                node has address 10.0.1.1 from replication network.
+                The mount point of this partition is /srv/node/sdb1,
+                and the path in <filename>rsyncd.conf</filename> is
+                /srv/node/, the DEVICE would be sdb1 and the commands
+                are:</para>
             <screen><prompt>#</prompt> <userinput>swift-ring-builder account.builder add z1-10.0.0.1:6002R10.0.1.1:6005/sdb1 100</userinput>
 <prompt>#</prompt> <userinput>swift-ring-builder container.builder add z1-10.0.0.1:6001R10.0.1.1:6005/sdb1 100</userinput>
 <prompt>#</prompt> <userinput>swift-ring-builder object.builder add z1-10.0.0.1:6000R10.0.1.1:6005/sdb1 100</userinput></screen>
             <note>
-                <para>Assuming there are 5 zones with 1 node per zone, ZONE
-                    should start at 1 and increment by one for each
-                    additional node.</para>
+                <para>If you assume five zones with one node for each
+                    zone, start ZONE at 1. For each additional node,
+                    increment ZONE by 1.</para>
             </note>
         </step>
         <step>
@@ -146,8 +152,7 @@
                 of the Proxy and Storage nodes in /etc/swift.</para>
         </step>
         <step>
-            <para>Make sure all the config files are owned by the swift
-                user:</para>
+            <para>Make sure the swift user owns all configuration files:</para>
             <screen os="ubuntu;debian;rhel;centos;fedora"><prompt>#</prompt> <userinput>chown -R swift:swift /etc/swift</userinput></screen>
             <screen os="opensuse;sles"><prompt>#</prompt> <userinput>chown -R openstack-swift:openstack-swift /etc/swift</userinput></screen>
         </step>
