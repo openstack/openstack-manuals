@@ -117,10 +117,8 @@ admin_password=<replaceable>CINDER_PASS</replaceable></programlisting>
       <programlisting os="ubuntu;debian" language="ini">rpc_backend = cinder.openstack.common.rpc.impl_kombu
 rabbit_host = controller
 rabbit_port = 5672
-# Change the following settings if you're not using the default RabbitMQ configuration
-#rabbit_userid = guest
-#rabbit_password = guest
-#rabbit_virtual_host = /nova</programlisting>
+rabbit_userid = guest
+rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
       <para os="rhel;centos;fedora">Configure the Block Storage
         Service to use Qpid as the message broker.</para>
       <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>openstack-config --set /etc/cinder/cinder.conf \
@@ -135,7 +133,9 @@ rabbit_port = 5672
 <prompt>#</prompt> <userinput>openstack-config --set /etc/cinder/cinder.conf \
   DEFAULT rabbit_host controller</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/cinder/cinder.conf \
-  DEFAULT rabbit_port 5672</userinput></screen>
+  DEFAULT rabbit_port 5672</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/cinder/cinder.conf \
+  DEFAULT rabbit_password <replaceable>RABBIT_PASS</replaceable></userinput></screen>
     </step>
 
     <step os="centos;rhel;fedora;opensuse;sles;ubuntu">

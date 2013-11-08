@@ -82,6 +82,19 @@ verbose = True
 # paths (string value)
 log_dir=/var/log/heat</programlisting>
     </step>
+    <step os="opensuse;sles;ubuntu">
+      <para>Configure the Orchestration Service to use the RabbitMQ message
+      broker.</para>
+
+      <para os="ubuntu">Edit <filename>/etc/heat/heat.conf</filename> and
+      modify the <literal>[DEFAULT]</literal> section:</para>
+      <programlisting os="ubuntu" language="ini">rabbit_host = controller
+rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
+
+      <para os="opensuse;sles">Run the following commands:</para>
+      <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/heat/heat.conf DEFAULT rabbit_host controller</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/heat/heat.conf DEFAULT rabbit_password <replaceable>RABBIT_PASS</replaceable></userinput></screen>
+    </step>
     <step>
       <para>Create a <literal>heat</literal> user that the
         Orchestration service can use to authenticate with the
