@@ -391,34 +391,26 @@ GATEWAY=EXTERNAL_INTERFACE_GATEWAY</programlisting>
           <!-- TODO(sross): support other distros -->
           <step>
             <para>You must set some common configuration options no
-              matter which networking technology you choose to use
-              with Open vSwitch. You must configure a L3 agent and
-              DHCP agent. Edit the
+            matter which networking technology you choose to use with
+            Open vSwitch. Configure the L3 and DHCP agents to use
+            <acronym>OVS</acronym> and namespaces. Edit the
                 <filename>/etc/neutron/l3_agent.ini</filename> and
                 <filename>/etc/neutron/dhcp_agent.ini</filename>
               files, respectively:</para>
-            <programlisting language="ini">interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver</programlisting>
+            <programlisting language="ini">interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
+use_namespaces = True</programlisting>
+            <para os="rhel;centos">You must enable veth support if you
+            use certain kernels. Some kernels, such as recent versions
+            of RHEL (not RHOS) and CentOS, only partially support
+            namespaces. Edit the previous
+              files, as follows:</para>
+            <programlisting language="ini" os="rhel;centos">ovs_use_veth = True</programlisting>
           </step>
           <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
             <para>Similarly, you must also tell Neutron core to use
                 <acronym>OVS</acronym>. Edit the
-                <filename>/etc/neutron/neutron.conf</filename>:</para>
+                <filename>/etc/neutron/neutron.conf</filename> file:</para>
             <programlisting language="ini">core_plugin = neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2</programlisting>
-          </step>
-          <step>
-            <para>Tell the L3 and DHCP agents that you want to use
-              namespaces. To do so, edit the
-                <filename>/etc/neutron/l3_agent.ini</filename> and
-                <filename>/etc/neutron/dhcp_agent.ini</filename>
-              files, respectively:</para>
-            <programlisting language="ini">use_namespaces = True</programlisting>
-
-            <para os="rhel;centos">Additionally, if you a using
-              certain kernels with partial support for namespaces
-              (such as some recent versions of RHEL (not RHOS) and
-              CentOS), you must enable veth support. Edit the previous
-              files, as follows:</para>
-            <programlisting language="ini" os="rhel;centos">ovs_use_veth = True</programlisting>
           </step>
           <step>
             <para>Choose a networking technology to create the virtual
