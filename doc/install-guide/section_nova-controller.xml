@@ -75,6 +75,12 @@ connection = mysql://nova:NOVA_DBPASS@controller/nova</programlisting>
       <screen os="fedora;rhel;centos;opensuse;sles"><prompt>#</prompt> <userinput>openstack-db --init --service nova --password <replaceable>NOVA_DBPASS</replaceable></userinput></screen>
     </step>
     <step os="ubuntu">
+      <para>By default, the Ubuntu packages create an sqlite database.
+        Delete the <filename>nova.sqlite</filename> file created in
+        the <filename>/var/lib/nova/</filename> directory so that it
+        does not get used by mistake.</para>
+      </step>
+    <step os="ubuntu">
       <para>Use the password you created previously to log in as root.
         Create a <literal>nova</literal> database user:</para>
       <screen><prompt>#</prompt> <userinput>mysql -u root -p</userinput>
@@ -116,7 +122,6 @@ my_ip=192.168.0.10
 vncserver_listen=192.168.0.10
 vncserver_proxyclient_address=192.168.0.10</programlisting>
     </step>
-
     <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
       <para>Create a <literal>nova</literal> user that Compute uses to
         authenticate with the Identity Service. Use the
