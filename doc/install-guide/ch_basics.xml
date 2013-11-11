@@ -238,18 +238,12 @@ iface eth1 inet static
     <screen os="opensuse;sles"><prompt>#</prompt> <userinput>service ntp start</userinput>
 <prompt>#</prompt> <userinput>chkconfig ntp on</userinput></screen>
 
-    <para>On additional nodes, set up a daily cron job to synchronize
-      their time from the controller node. To do so, add the
-        <filename>/etc/cron.daily/ntpdate</filename> file, which
-      contains the following lines:</para>
-    <!-- A comment on the docs (http://docs.openstack.org/havana/install-guide/install/apt/content/basics-ntp.html) suggests that the -u switch is needed here. I haven't fully tested this yet, though, so can't confirm. -->
-    <screen><prompt>#</prompt> <userinput>ntpdate <replaceable>controller</replaceable></userinput>
-<prompt>#</prompt> <userinput>hwclock -w</userinput></screen>
-
-    <para>Mark this file as executable.</para>
-
-    <screen><prompt>#</prompt> <userinput>chmod a+x /etc/cron.daily/ntpdate</userinput></screen>
-
+    <para>On additional nodes, it is advised to configure the
+    other nodes to synchronize their time from the controller node rather
+    than from outside of your LAN. To do so, install the ntp daemon as above,
+    then edit <filename>/etc/ntp.conf</filename> and change the
+    <code>server</code> directive to use the controller node as internet time
+    source.</para>
   </section>
 
   <section xml:id="basics-database">
