@@ -3,9 +3,329 @@
   xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
   xml:id="associate-controller-node-concept-neutron">
   <title>Conceptual Neutron</title>
-    <para>foobar  foobar  foobar  foobar  foobar  foobar  foobar  foobar  foobar  foobar
-        foobar  foobar  foobar  foobar  foobar  foobar  foobar  foobar  foobar  foobar
-        foobar  foobar  foobar  foobar  foobar  foobar  foobar  foobar  foobar  foobar
-        foobar  foobar  foobar  foobar  foobar  foobar  foobar  foobar  foobar  foobar
-    </para>
+  <itemizedlist>
+    <listitem>
+      <para>Networking in OpenStack</para>
+      <para><guilabel>Networking in OpenStack</guilabel></para>
+      <para>OpenStack Networking provides a rich tenant-facing API
+        for defining network connectivity and addressing in the
+        cloud. The OpenStack Networking project gives operators
+        the ability to leverage different networking technologies
+        to power their cloud networking. It is a virtual network
+        service that provides a powerful API to define the network
+        connectivity and addressing used by devices from other
+        services, such as OpenStack Compute. It has a rich API
+        which consists of the following components.</para>
+      <itemizedlist>
+        <listitem>
+          <para><emphasis role="bold">Network:</emphasis> An
+            isolated L2 segment, analogous to VLAN in the physical
+            networking world.</para>
+        </listitem>
+        <listitem>
+          <para><emphasis role="bold">Subnet:</emphasis> A block
+            of v4 or v6 IP addresses and associated configuration
+            state.</para>
+        </listitem>
+        <listitem>
+          <para><emphasis role="bold">Port:</emphasis> A
+            connection point for attaching a single device, such
+            as the NIC of a virtual server, to a virtual network.
+            Also describes the associated network configuration,
+            such as the MAC and IP addresses to be used on that
+            port.</para>
+        </listitem>
+      </itemizedlist>
+      <para>You can configure rich network topologies by creating
+        and configuring networks and subnets, and then instructing
+        other OpenStack services like OpenStack Compute to attach
+        virtual devices to ports on these networks. In
+        particular, OpenStack Networking supports each tenant
+        having multiple private networks, and allows tenants to
+        choose their own IP addressing scheme, even if those IP
+        addresses overlap with those used by other tenants. This
+        enables very advanced cloud networking use cases, such as
+        building multi-tiered web applications and allowing
+        applications to be migrated to the cloud without changing
+        IP addresses.</para>
+      <para><guilabel>Plugin Architecture: Flexibility to Choose
+        Different Network Technologies</guilabel></para>
+      <para>Enhancing traditional networking solutions to provide rich
+        cloud networking is challenging. Traditional networking is not
+        designed to scale to cloud proportions or to configure
+        automatically.</para>
+      <para>The original OpenStack Compute network implementation
+        assumed a very basic model of performing all isolation through
+        Linux VLANs and IP tables. OpenStack Networking introduces the
+        concept of a plugin, which is a pluggable back-end
+        implementation of the OpenStack Networking API. A plugin can
+        use a variety of technologies to implement the logical API
+        requests. Some OpenStack Networking plugins might use basic
+        Linux VLANs and IP tables, while others might use more
+        advanced technologies, such as L2-in-L3 tunneling or OpenFlow,
+        to provide similar benefits.</para>
+      <para>The current set of plugins include:</para>
+      <itemizedlist>
+        <listitem>
+          <para><emphasis role="bold">Open vSwitch:</emphasis>
+            Documentation included in this guide.</para>
+        </listitem>
+        <listitem>
+          <para><emphasis role="bold">Cisco:</emphasis> Documented
+            externally at: <link
+              xlink:href="http://wiki.openstack.org/cisco-quantum"
+              >http://wiki.openstack.org/cisco-quantum</link></para>
+        </listitem>
+        <listitem>
+          <para><emphasis role="bold">Linux Bridge:</emphasis>
+            Documentation included in this guide and <link
+              xlink:href="http://wiki.openstack.org/Quantum-Linux-Bridge-Plugin"
+              >http://wiki.openstack.org/Quantum-Linux-Bridge-Plugin</link>
+          </para>
+        </listitem>
+        <listitem>
+          <para><emphasis role="bold">Nicira NVP:</emphasis>
+            Documentation include in this guide, <link
+              xlink:href="http://www.vmware.com/products/datacenter-virtualization/nicira.html"
+              >NVP Product Overview </link>, and <link
+                xlink:href="http://www.nicira.com/support">NVP
+                Product Support</link>.</para>
+        </listitem>
+        <listitem>
+          <para><emphasis role="bold">Ryu:</emphasis>
+            <link
+              xlink:href="https://github.com/osrg/ryu/wiki/OpenStack"
+              >https://github.com/osrg/ryu/wiki/OpenStack</link></para>
+        </listitem>
+        <listitem>
+          <para><emphasis role="bold">NEC OpenFlow:</emphasis>
+            <link
+              xlink:href="http://wiki.openstack.org/Quantum-NEC-OpenFlow-Plugin"
+              >http://wiki.openstack.org/Quantum-NEC-OpenFlow-Plugin</link></para>
+        </listitem>
+        <listitem>
+          <para><emphasis role="bold">Big Switch, Floodlight REST
+            Proxy:</emphasis>
+            <link
+              xlink:href="http://www.openflowhub.org/display/floodlightcontroller/Quantum+REST+Proxy+Plugin"
+              >http://www.openflowhub.org/display/floodlightcontroller/Quantum+REST+Proxy+Plugin</link></para>
+        </listitem>
+        <listitem>
+          <para><emphasis role="bold">PLUMgrid:</emphasis>
+            <link
+              xlink:href="https://wiki.openstack.org/wiki/Plumgrid-quantum"
+              >https://wiki.openstack.org/wiki/Plumgrid-quantum</link></para>
+        </listitem>
+        <listitem>
+          <para><emphasis role="bold">Hyper-V
+            Plugin</emphasis></para>
+        </listitem>
+        <listitem>
+          <para><emphasis role="bold">Brocade
+            Plugin</emphasis></para>
+        </listitem>
+        <listitem>
+          <para><emphasis role="bold">Midonet
+            Plugin</emphasis></para>
+        </listitem>
+      </itemizedlist>
+      <para>Plugins can have different properties in terms of hardware
+        requirements, features, performance, scale, operator tools,
+        etc. Supporting many plugins enables the cloud administrator
+        to weigh different options and decide which networking
+        technology is right for the deployment.</para>
+      <para>Components of OpenStack Networking</para>
+      <para>To deploy OpenStack Networking, it is useful to understand
+        the different components that make up the solution and how
+        those components interact with each other and with other
+        OpenStack services.</para>
+      <para>OpenStack Networking is a standalone service, just like
+        other OpenStack services such as OpenStack Compute, OpenStack
+        Image service, OpenStack Identity service, and the OpenStack
+        Dashboard. Like those services, a deployment of OpenStack
+        Networking often involves deploying several processes on a
+        variety of hosts.</para>
+      <para>The main process of the OpenStack Networking server is
+        quantum-server, which is a Python daemon that exposes the
+        OpenStack Networking API and passes user requests to the
+        configured OpenStack Networking plugin for additional
+        processing. Typically, the plugin requires access to a
+        database for persistent storage, similar to other OpenStack
+        services.</para>
+      <para>If your deployment uses a controller host to run centralized
+        OpenStack Compute components, you can deploy the OpenStack
+        Networking server on that same host. However, OpenStack
+        Networking is entirely standalone and can be deployed on its
+        own server as well. OpenStack Networking also includes
+        additional agents that might be required depending on your
+        deployment:</para>
+      <itemizedlist>
+        <listitem>
+          <para><emphasis role="bold">plugin agent
+            (quantum-*-agent):</emphasis>Runs on each
+            hypervisor to perform local vswitch configuration.
+            Agent to be run depends on which plugin you are using,
+            as some plugins do not require an agent.</para>
+        </listitem>
+        <listitem>
+          <para><emphasis role="bold">dhcp agent
+            (quantum-dhcp-agent):</emphasis>Provides DHCP
+            services to tenant networks. This agent is the same
+            across all plugins.</para>
+        </listitem>
+        <listitem>
+          <para><emphasis role="bold">l3 agent
+            (quantum-l3-agent):</emphasis>Provides L3/NAT
+            forwarding to provide external network access for VMs
+            on tenant networks. This agent is the same across all
+            plugins.</para>
+        </listitem>
+      </itemizedlist>
+      <para>These agents interact with the main quantum-server process
+        in the following ways:</para>
+      <itemizedlist>
+        <listitem>
+          <para>Through RPC. For example, rabbitmq or qpid.</para>
+        </listitem>
+        <listitem>
+          <para>Through the standard OpenStack Networking
+            API.</para>
+        </listitem>
+      </itemizedlist>
+      <para>OpenStack Networking relies on the OpenStack Identity
+        Project (Keystone) for authentication and authorization of all
+        API request.</para>
+      <para>OpenStack Compute interacts with OpenStack Networking
+        through calls to its standard API. As part of creating a VM,
+        nova-compute communicates with the OpenStack Networking API to
+        plug each virtual NIC on the VM into a particular
+        network.</para>
+      <para>The OpenStack Dashboard (Horizon) has integration with the
+        OpenStack Networking API, allowing administrators and tenant
+        users, to create and manage network services through the
+        Horizon GUI.</para>
+      <para><emphasis role="bold">Place Services on Physical
+        Hosts</emphasis></para>
+      <para>Like other OpenStack services, OpenStack Networking provides
+        cloud administrators with significant flexibility in deciding
+        which individual services should run on which physical
+        devices. On one extreme, all service daemons can be run on a
+        single physical host for evaluation purposes. On the other,
+        each service could have its own physical hosts, and some cases
+        be replicated across multiple hosts for redundancy.</para>
+      <para>In this guide, we focus primarily on a standard architecture
+        that includes a “cloud controller” host, a “network gateway”
+        host, and a set of hypervisors for running VMs. The "cloud
+        controller" and "network gateway" can be combined in simple
+        deployments, though if you expect VMs to send significant
+        amounts of traffic to or from the Internet, a dedicated
+        network gateway host is suggested to avoid potential CPU
+        contention between packet forwarding performed by the
+        quantum-l3-agent and other OpenStack services.</para>
+      <para><emphasis role="bold">Network Connectivity for Physical
+        Hosts</emphasis></para>
+      <figure>
+        <title>Network Diagram</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="figures/image33.png"/>
+          </imageobject>
+        </mediaobject>
+      </figure>
+      <para>A standard OpenStack Networking setup has up to four
+        distinct physical data center networks:</para>
+      <itemizedlist>
+        <listitem>
+          <para><emphasis role="bold">Management
+            network:</emphasis>Used for internal communication
+            between OpenStack Components. The IP addresses on this
+            network should be reachable only within the data
+            center.</para>
+        </listitem>
+        <listitem>
+          <para><emphasis role="bold">Data network:</emphasis>Used
+            for VM data communication within the cloud deployment.
+            The IP addressing requirements of this network depend
+            on the OpenStack Networking plugin in use.</para>
+        </listitem>
+        <listitem>
+          <para><emphasis role="bold">External
+            network:</emphasis>Used to provide VMs with Internet
+            access in some deployment scenarios. The IP addresses
+            on this network should be reachable by anyone on the
+            Internet.</para>
+        </listitem>
+        <listitem>
+          <para><emphasis role="bold">API network:</emphasis>Exposes
+            all OpenStack APIs, including the OpenStack Networking
+            API, to tenants. The IP addresses on this network
+            should be reachable by anyone on the Internet. This
+            may be the same network as the external network, as it
+            is possible to create a subnet for the external
+            network that uses IP allocation ranges to use only
+            less than the full range of IP addresses in an IP
+            block.</para>
+        </listitem>
+      </itemizedlist>
+    </listitem>
+    <listitem>
+      <para>OpenStack Networking Concepts</para>
+      <para><emphasis role="bold">Network Types</emphasis></para>
+      <para>The OpenStack Networking configuration provided by the
+        Rackspace Private Cloud cookbooks allows you to choose between
+        VLAN or GRE isolated networks, both provider- and
+        tenant-specific. From the provider side, an administrator can
+        also create a flat network.</para>
+      <para>The type of network that is used for private tenant networks
+        is determined by the network_type attribute, which can be
+        edited in the Chef override_attributes. This attribute sets
+        both the default provider network type and the only type of
+        network that tenants are able to create. Administrators can
+        always create flat and VLAN networks. GRE networks of any type
+        require the network_type to be set to gre.</para>
+      <para><emphasis role="bold">Namespaces</emphasis></para>
+      <para>For each network you create, the Network node (or Controller
+        node, if combined) will have a unique network namespace
+        (netns) created by the DHCP and Metadata agents. The netns
+        hosts an interface and IP addresses for dnsmasq and the
+        quantum-ns-metadata-proxy. You can view the namespaces with
+        the ip netns [list], and can interact with the namespaces with
+        the ip netns exec &lt;namespace&gt; &lt;command&gt;
+        command.</para>
+      <para><emphasis role="bold">Metadata</emphasis></para>
+      <para>Not all networks or VMs need metadata access. Rackspace
+        recommends that you use metadata if you are using a single
+        network. If you need metadata, you may also need a default
+        route. (If you don't need a default route, no-gateway will
+        do.)</para>
+      <para>To communicate with the metadata IP address inside the
+        namespace, instances need a route for the metadata network
+        that points to the dnsmasq IP address on the same namespaced
+        interface. OpenStack Networking only injects a route when you
+        do not specify a gateway-ip in the subnet.</para>
+      <para>If you need to use a default route and provide instances
+        with access to the metadata route, create the subnet without
+        specifying a gateway IP and with a static route from 0.0.0.0/0
+        to your gateway IP address. Adjust the DHCP allocation pool so
+        that it will not assign the gateway IP. With this
+        configuration, dnsmasq will pass both routes to instances.
+        This way, metadata will be routed correctly without any
+        changes on the external gateway.</para>
+      <para><emphasis role="bold">OVS Bridges</emphasis></para>
+      <para>An OVS bridge for provider traffic is created and configured
+        on the nodes where single-network-node and single-compute are
+        applied. Bridges are created, but physical interfaces are not
+        added. An OVS bridge is not created on a Controller-only
+        node.</para>
+      <para>When creating networks, you can specify the type and
+        properties, such as Flat vs. VLAN, Shared vs. Tenant, or
+        Provider vs. Overlay. These properties identify and determine
+        the behavior and resources of instances attached to the
+        network. The cookbooks will create bridges for the
+        configuration that you specify, although they do not add
+        physical interfaces to provider bridges. For example, if you
+        specify a network type of GRE, a br-tun tunnel bridge will be
+        created to handle overlay traffic.</para>
+    </listitem>
+  </itemizedlist>
 </section>
