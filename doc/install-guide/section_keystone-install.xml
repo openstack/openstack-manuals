@@ -49,7 +49,12 @@ connection = mysql://keystone:KEYSTONE_DBPASS@controller/keystone
         with the same password used in the previous step.</para>
       <screen><prompt>#</prompt> <userinput>openstack-db --init --service keystone --password <replaceable>KEYSTONE_DBPASS</replaceable></userinput></screen>
     </step>
-
+    <step os="ubuntu">
+      <para>By default, the Ubuntu packages create an sqlite database.
+        Delete the <filename>keystone.sqlite</filename> file created in
+        the <filename>/var/lib/keystone/</filename> directory so that it
+        does not get used by mistake.</para>
+      </step>
     <step os="ubuntu">
       <para>Use the password that you set previously to log in as
         root. Create a <literal>keystone</literal> database
