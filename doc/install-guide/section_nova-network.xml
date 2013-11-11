@@ -2,19 +2,18 @@
   xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
   xml:id="nova-network">
-  <title>Enable Networking</title>
-  <para>Configuring Networking can be a bewildering experience. The
+  <title>Enable networking</title>
+  <para>Configuring networking can be a bewildering experience. The
     following example shows the simplest production-ready
     configuration that is available: the legacy networking in
     OpenStack Compute, with a flat network, that takes care of
     DHCP.</para>
-  <para>This set up uses multi-host functionality: You configure
-    networking to be highly available by splitting networking
+  <para>This set up uses multi-host functionality. Networking is
+    configured to be highly available by splitting networking
     functionality across multiple hosts. As a result, no single
-    network controller acts as a single point of failure. Because this
-    set up configures each compute node for networking, you do not
-    have to complete any additional networking configuration on the
-    controller.</para>
+    network controller acts as a single point of failure. This
+    process configures each compute node for networking, so there is minimal
+    additional networking configuration to do on the controller.</para>
   <note>
     <para>If you need the full software-defined networking stack, see
         <xref linkend="ch_neutron"/>.</para>
@@ -92,8 +91,7 @@ rabbit_host=<replaceable>controller</replaceable></programlisting>
 
   <para>Create a network that virtual machines can use. Do this once
     for the entire installation and not on each compute node. Run the
-      <command>nova network-create</command> command anywhere your
-    admin user credentials are loaded.</para>
+      <command>nova network-create</command> command on the controller:</para>
   <screen><prompt>#</prompt> <userinput>source keystonerc</userinput></screen>
   <screen><prompt>#</prompt> <userinput>nova network-create vmnet --fixed-range-v4=10.0.0.0/24 \
   --bridge-interface=br100 --multi-host=T</userinput></screen>
