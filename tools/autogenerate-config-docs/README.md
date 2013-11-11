@@ -4,7 +4,7 @@ autogenerate-config-docs
 Automatically generate configuration tables to document OpenStack.
 
 
-Dependencies: python-git (version: 0.3.2 RC1), oslo.config
+Dependencies: python-git (at least version 0.3.2 RC1), oslo.config
 
 Setting up your environment
 ---------------------------
@@ -20,7 +20,7 @@ First install git and python-pip,
 
 next, install oslo.config and GitPython
 
-    $ sudo pip install oslo.config GitPython
+    $ sudo pip install oslo.config "GitPython>=0.3.2.RC1"
 
 then, checkout the repository you are working with:
 
