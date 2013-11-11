@@ -87,26 +87,23 @@
     <step os="ubuntu">
       <para>Due to <link
           xlink:href="https://bugs.launchpad.net/ubuntu/+source/linux/+bug/759725"
-          >this bug</link> that is marked <literal>Won't
+          >this bug</link>, which is marked <literal>Won't
         Fix</literal>, guestfs is restricted. Run this command to
         relax the restriction:</para>
       <screen><prompt>#</prompt> <userinput>chmod 0644 /boot/vmlinuz*</userinput></screen>
     </step>
     <step os="rhel;centos;fedora">
-      <para>Either copy and modify the
-          <filename>/etc/nova/nova.conf</filename> file from the
-          <replaceable>controller</replaceable> node, or run the same
-        configuration commands.</para>
-      <screen os="fedora;rhel;centos;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf \
-  database connection mysql://nova:<replaceable>NOVA_DBPASS</replaceable>@controller/nova</userinput>
+      <para>Edit the <filename>/etc/nova/nova.conf</filename> configuration file:</para>
+      <screen os="fedora;rhel;centos;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf database connection mysql://nova:<replaceable>NOVA_DBPASS</replaceable>@controller/nova</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT auth_strategy keystone</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT auth_host <replaceable>controller</replaceable></userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT admin_user nova</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT admin_tenant_name service</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT admin_password <replaceable>NOVA_PASS</replaceable></userinput>
-</screen>
-      <para os="ubuntu;debian">Edit the
-          <filename>/etc/nova/nova.conf</filename> file and add these
+<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT admin_password <replaceable>NOVA_PASS</replaceable></userinput></screen>
+<screen os="fedora;rhel;centos"><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT rpc_backend nova.openstack.common.rpc.impl_qpid</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT qpid_hostname <replaceable>controller</replaceable></userinput></screen>
+    <para os="ubuntu;debian">Edit the
+          <filename>/etc/nova/nova.conf</filename> configuration file and add these
         lines to the appropriate sections:</para>
       <programlisting os="ubuntu;debian" language="ini">...
 [DEFAULT]
@@ -116,17 +113,14 @@ auth_strategy=keystone
 [database]
 # The SQLAlchemy connection string used to connect to the database
 connection = mysql://nova:NOVA_DBPASS@controller/nova</programlisting>
-
-      <screen os="fedora;rhel;centos"><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf \
-  DEFAULT rpc_backend nova.openstack.common.rpc.impl_qpid</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT qpid_hostname <replaceable>controller</replaceable></userinput></screen>
-
-
-      <para os="ubuntu;debian">Configure the Compute service to use
-        the RabbitMQ message broker by setting these configuration
-        keys in the <literal>DEFAULT</literal> configuration group of
-        the <filename>/etc/nova/nova.conf</filename> file:</para>
-      <programlisting os="ubuntu;debian" language="ini">rpc_backend = nova.rpc.impl_kombu
+    </step>
+    <step os="ubuntu;debian">
+      <para>Configure the Compute service to use the RabbitMQ message
+        broker by setting these configuration keys in the
+        <literal>DEFAULT</literal> configuration group of the
+        <filename>/etc/nova/nova.conf</filename> file:</para>
+      <programlisting os="ubuntu;debian" language="ini">
+rpc_backend = nova.rpc.impl_kombu
 rabbit_host = controller</programlisting>
     </step>
 
@@ -165,10 +159,9 @@ glance_host=<replaceable>controller</replaceable></programlisting>
     </step>
 
     <step>
-      <para>Copy the <filename>/etc/nova/api-paste.ini</filename> file
-        from the <replaceable>controller</replaceable> node, or edit
-        the file to add the credentials to the
-          <literal>[filter:authtoken]</literal> section:</para>
+      <para>Edit the <filename>/etc/nova/api-paste.ini</filename>
+      configuration file to add the credentials to the
+      <literal>[filter:authtoken]</literal> section:</para>
       <programlisting language="ini">[filter:authtoken]
 paste.filter_factory=keystoneclient.middleware.auth_token:filter_factory
 auth_host=controller
