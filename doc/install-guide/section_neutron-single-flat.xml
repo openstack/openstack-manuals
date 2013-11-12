@@ -10,8 +10,8 @@
     <para>The following diagram shows the set up. For simplicity, all
         nodes should have one interface for management traffic and one
         or more interfaces for traffic to and from VMs. The management
-        network is 100.1.1.0/24 with controller node at 100.1.1.2. The
-        example uses the Open vSwitch plug-in and agent.</para>
+        network is 100.1.1.0/24 with controller node at 100.1.1.2. The example uses the Open vSwitch
+        plugin and agent.</para>
     <note>
         <para>You can modify this set up to make use of another
             supported plug-in and its agent.</para>
@@ -49,9 +49,19 @@
                         other node resolves to the IP of the
                         controller node.</para>
                     <note>
-                        <para>The nova-network service should not be
-                            running. This is replaced by
-                            Networking.</para>
+                        <para>The <systemitem class="service">nova-network</systemitem> service
+                            should not be running. This is replaced by Networking. To delete a network, use <code>nova-manage network delete</code>:</para>
+                        <screen><prompt>#</prompt> <userinput>nova-manage network delete --help</userinput>
+<computeroutput>  Usage: nova-manage network delete &lt;args&gt; [options]
+
+  Options:
+    -h, --help            show this help message and exit
+    --fixed_range=&lt;x.x.x.x/yy&gt;
+                          Network to delete
+    --uuid=&lt;uuid&gt;       UUID of network to delete</computeroutput></screen>
+                        <para>Note that a network must first be disassociated from a project
+                            using the <code>nova network-disassociate</code> command before it can be
+                            deleted.</para>
                     </note></td>
             </tr>
             <tr>
