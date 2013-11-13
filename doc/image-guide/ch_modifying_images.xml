@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0" xml:id="ch_modifying_images">
-    <title>Modifying images</title>
+    <title>Modify images</title>
     <?dbhtml stop-chunking?>
     <para>Once you have obtained a virtual machine image, you may want to make some changes to it
         before uploading it to the OpenStack Image service. Here we describe several tools available
@@ -82,7 +82,7 @@ Type: 'help' for help on commands
                 command:<screen><prompt>>&lt;fs></prompt> <userinput>exit</userinput></screen></para>
         </simplesect>
         <simplesect>
-            <title>Going further with guestfish</title>
+            <title>Go further with guestfish</title>
             <para>There is an enormous amount of functionality in guestfish and a full treatment is
                 beyond the scope of this document. Instead, we recommend that you read the <link
                     xlink:href="http://libguestfs.org/guestfs-recipes.1.html">guestfs-recipes</link>
@@ -209,7 +209,7 @@ disk, carefully check that the resized disk boots and works correctly.
                         OS</link> by Daniel Berrangé for more details.</para>
             </warning></para>
         <simplesect>
-            <title>Mounting a raw image (without LVM)</title>
+            <title>Mount a raw image (without LVM)</title>
             <para>If you have a raw virtual machine image that is not using LVM to manage its
                 partitions. First, use the <command>losetup</command> command to find an unused loop
                 device.
@@ -239,7 +239,7 @@ brw-rw---- 1 root disk 43, 51 2012-03-05 15:32 /dev/mapper/loop0p3</computeroutp
 <prompt>#</prompt> <userinput>losetup -d /dev/loop0</userinput></screen></para>
         </simplesect>
         <simplesect>
-            <title>Mounting a raw image (with LVM)</title>
+            <title>Mount a raw image (with LVM)</title>
             <para>If your partitions are managed with LVM, use losetup and kpartx as in the previous
                 example to expose the partitions to the
                 host:</para><screen><prompt>#</prompt> <userinput>losetup -f</userinput>
@@ -261,7 +261,7 @@ brw-rw---- 1 root disk 43, 51 2012-03-05 15:32 /dev/mapper/loop0p3</computeroutp
 <prompt>#</prompt> <userinput>losetup -d /dev/loop0</userinput></screen>
         </simplesect>
         <simplesect>
-            <title>Mounting a qcow2 image (without LVM)</title>
+            <title>Mount a qcow2 image (without LVM)</title>
             <para>You need the <literal>nbd</literal> (network block device) kernel module loaded to
                 mount qcow2 images. This will load it with support for 16 block devices, which is
                 fine for our purposes. As
@@ -290,7 +290,7 @@ brw-rw---- 1 root disk 43, 51 2012-03-05 15:32 /dev/nbd0p3</computeroutput></scr
 <prompt>#</prompt> <userinput>qemu-nbd -d /dev/g nbd0</userinput></screen>
         </simplesect>
         <simplesect>
-            <title>Mounting a qcow2 image (with LVM)</title>
+            <title>Mount a qcow2 image (with LVM)</title>
             <para>If the image partitions are managed with LVM, after you use
                     <command>qemu-nbd</command> and <command>partprobe</command>, you must use
                     <command>vgscan</command> and <command>vgchange -ay</command> in order to expose
