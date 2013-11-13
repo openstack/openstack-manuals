@@ -3,33 +3,40 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="specify-host-to-boot-instances-on">
-    <title>Select on which host instances are launched</title>
+    <title>Select hosts where instances are launched</title>
     <para>With the appropriate permissions, you can select on which
         host instances are launched and which roles can boot instances
         on this host.</para>
-   <procedure><step><para>To select the host where instances are launched, use the
-                    <literal>--availability_zone
+    <procedure>
+        <step>
+            <para>To select the host where instances are launched, use
+                the <literal>--availability_zone
                         <replaceable>zone</replaceable>:<replaceable>host</replaceable></literal>
-                parameter on the <command>nova boot</command>
-                command, </para>
+                parameter on the <command>nova boot</command> command, </para>
             <para>For example:</para>
-        <screen><prompt>$</prompt> <userinput>nova boot --image &lt;uuid&gt; --flavor m1.tiny --key_name test --availability-zone nova:server2</userinput></screen>
-    </step><step><para>To specify which roles can launch an instance on a specified
-                host, enable the <literal>create:forced_host</literal>
-                option in the <filename>policy.json</filename> file.
-                By default, this option is enabled for only the admin
-                role.</para></step>
-<step>
-    <para>To view the list of valid compute hosts, use the
+            <screen><prompt>$</prompt> <userinput>nova boot --image &lt;uuid&gt; --flavor m1.tiny --key_name test --availability-zone nova:server2</userinput></screen>
+        </step>
+        <step>
+            <para>To specify which roles can launch an instance on a
+                specified host, enable the
+                    <literal>create:forced_host</literal> option in
+                the <filename>policy.json</filename> file. By default,
+                this option is enabled for only the admin role.</para>
+        </step>
+        <step>
+            <para>To view the list of valid compute hosts, use the
                     <command>nova hypervisor-list</command> command,
-                as follows:</para><screen><prompt>$</prompt> <userinput>nova hypervisor-list</userinput>
+                as follows:</para>
+            <screen><prompt>$</prompt> <userinput>nova hypervisor-list</userinput>
 <computeroutput>+----+---------------------+
 | ID | Hypervisor hostname |
 +----+---------------------+
 | 1  | server2             |
 | 2  | server3             |
 | 3  | server4             |
-+----+---------------------+</computeroutput></screen></step></procedure>
++----+---------------------+</computeroutput></screen>
+        </step>
+    </procedure>
     <note>
         <para>
             <itemizedlist>
