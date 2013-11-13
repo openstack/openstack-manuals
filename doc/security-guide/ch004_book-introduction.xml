@@ -11,10 +11,10 @@
     <para>Each OpenStack deployment embraces a wide variety of technologies, spanning Linux distributions, database systems, messaging queues, OpenStack components themselves, access control policies, logging services, security monitoring tools, and much more. It should come as no surprise that the security issues involved are equally diverse, and their in-depth analysis would require several guides. We strive to find a balance, providing enough context to understand OpenStack security issues and their handling, and provide external references for further information. The guide could be read from start to finish or sampled as necessary like a reference.</para>
     <para>We briefly introduce the kinds of clouds: private, public, and hybrid before presenting an overview of the OpenStack components and their related security concerns in the remainder of the chapter.</para>
     <section xml:id="ch004_book-introduction-idp117824">
-      <title>Cloud Types</title>
+      <title>Cloud types</title>
       <para>OpenStack is a key enabler in adoption of cloud technology and has several common deployment use cases. These are commonly known as Public, Private, and Hybrid models. The following sections use the National Institute of Standards and Technology (NIST) <link xlink:href="http://csrc.nist.gov/publications/nistpubs/800-145/SP800-145.pdf">definition of cloud</link> to introduce these different types of cloud as they apply to OpenStack.</para>
       <section xml:id="ch004_book-introduction-idp119328">
-        <title>Public Cloud</title>
+        <title>Public cloud</title>
         <para>According to NIST, a public cloud is one in which the
         infrastructure is open to the general public for consumption.
         OpenStack public clouds are typically run by a service
@@ -33,7 +33,7 @@
         infrastructure from external attacks.</para>
       </section>
       <section xml:id="ch004_book-introduction-idp121488">
-        <title>Private Cloud</title>
+        <title>Private cloud</title>
         <para>At the opposite end of the spectrum is the private
         cloud. As NIST defines it, a private cloud is provisioned for
         exclusive use by a single organization comprising multiple
@@ -48,7 +48,7 @@
         <para>NIST defines a community cloud as one whose  infrastructure is provisioned for the exclusive use by a specific community of consumers from organizations that have shared concerns (e.g., mission, security requirements, policy, and compliance considerations). It may be owned, managed, and operated by one or more of the organizations in the community, a third-party, or some combination of them, and it may exist on or off premises.</para>
       </section>
       <section xml:id="ch004_book-introduction-idp125312">
-        <title>Hybrid Cloud</title>
+        <title>Hybrid cloud</title>
         <para>A hybrid cloud is defined by NIST as a composition of two or more distinct cloud infrastructures (private, community, or public) that remain unique entities, but are bound together by standardized or proprietary technology that enables data and application portability (e.g., cloud bursting for load balancing between clouds). For example an online retailer may have their advertising and catalogue presented on a public cloud that allows for elastic provisioning. This would enable them to handle seasonal loads in a flexible, cost-effective fashion. Once a customer begins to process their order, they are transferred to the more secure private cloud backend that is PCI compliant.</para>
         <para>For the purposes of this document, we treat Community
         and Hybrid similarly, dealing explicitly only with the
@@ -58,7 +58,7 @@
       </section>
     </section>
     <section xml:id="ch004_book-introduction-idp128528">
-      <title>OpenStack Service Overview</title>
+      <title>OpenStack service overview</title>
       <para>OpenStack embraces a modular architecture to provide a set of core services that facilitates scalability and elasticity as core design tenets. This chapter briefly reviews OpenStack components, their use cases and security considerations.</para>
       <para><inlinemediaobject><imageobject role="html">
             <imagedata contentdepth="374" contentwidth="976" fileref="static/marketecture-diagram.png" format="PNG" scalefit="1"/>
@@ -104,7 +104,7 @@
         <para>The OpenStack dashboard service (Horizon) provides a web-based interface for both cloud administrators and cloud tenants. Through this interface administrators and tenants can provision, manage, and monitor cloud resources. Horizon is commonly deployed in a public facing manner with all the usual security concerns of public web portals.</para>
       </section>
       <section xml:id="ch004_book-introduction-idp147104">
-        <title>Identity Management</title>
+        <title>Identity management</title>
         <para>The identity management service (Keystone) is a <emphasis role="bold">shared service</emphasis> that provides authentication and authorization services throughout the entire cloud infrastructure. Keystone has pluggable support for multiple forms of authentication.</para>
         <para>Security concerns here pertain to trust in authentication, management of authorization tokens, and secure communication.</para>
       </section>
@@ -114,7 +114,7 @@
         <para>Trusted processes for managing the life cycle of disk images are required, as are all the previously mentioned issues with respect to data security.</para>
       </section>
       <section xml:id="ch004_book-introduction-idp152400">
-        <title>Other Supporting Technology</title>
+        <title>Other supporting technology</title>
         <para>OpenStack relies on messaging for internal communication between several of its services. By default, OpenStack uses message queues based on the Advanced Message Queue Protocol (<glossterm>AMQP</glossterm>). Similar to most OpenStack services, it supports pluggable components. Today the implementation backend could be <glossterm>RabbitMQ</glossterm>, <glossterm>Qpid</glossterm>, or <glossterm>ZeroMQ</glossterm>.</para>
         <para>As most management commands flow through the message queueing system, it is a primary security concern for any OpenStack deployment. Message queueing security is discussed in detail later in this guide.</para>
         <para>Several of the components use databases though it is not explicitly called out. Securing the access to the databases and their contents is yet another security concern, and consequently discussed in more detail later in this guide.</para>
