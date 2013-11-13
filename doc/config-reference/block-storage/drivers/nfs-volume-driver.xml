@@ -1,7 +1,7 @@
 <section xml:id="NFS-driver" xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
-    <title>NFS Driver</title>
+    <title>NFS driver</title>
     <para>The Network File System (NFS) is a distributed file system
         protocol originally developed by Sun Microsystems in 1984. An
         NFS server <emphasis>exports</emphasis> one or more of its
@@ -10,7 +10,7 @@
         You can perform file actions on this mounted remote file
         system as if the file system were local.</para>
     <section xml:id="nfs-driver-background">
-        <title>How the NFS Driver Works</title>
+        <title>How the NFS driver works</title>
         <para>The NFS driver, and other drivers based off of it, work
             quite differently than a traditional block storage
             driver.</para>
@@ -23,19 +23,19 @@
             directory.</para>
     </section>
     <section xml:id="nfs-driver-options">
-        <title>Enabling the NFS Driver and Related Options</title>
+        <title>Enable the NFS driver and related options</title>
         <para>To use Cinder with the NFS driver, first set the
                 <literal>volume_driver</literal> in
                 <filename>cinder.conf</filename>:</para>
         <programlisting>volume_driver=cinder.volume.drivers.nfs.NfsDriver</programlisting>
         <para>The following table contains the options supported by
             the NFS driver.</para>
-            <xi:include href="../../../common/tables/cinder-storage_nfs.xml" />
+        <xi:include
+            href="../../../common/tables/cinder-storage_nfs.xml"/>
     </section>
     <section xml:id="nfs-driver-howto">
-        <title>How to Use the NFS Driver</title>
+        <title>How to use the NFS driver</title>
         <procedure>
-            <title>To Use the NFS Driver</title>
             <step>
                 <para>Access to one or more NFS servers. Creating an
                     NFS server is outside the scope of this document.
@@ -106,45 +106,41 @@
         </procedure>
     </section>
     <simplesect xml:id="nfs-driver-notes">
-        <title>NFS Driver Notes</title>
-        <para>
-            <itemizedlist>
-                <listitem>
-                    <para><systemitem class="service"
-                            >cinder-volume</systemitem> manages the
-                        mounting of the NFS shares as well as volume
-                        creation on the shares. Keep this in mind when
-                        planning your OpenStack architecture. If you
-                        have one master NFS server, it might make
-                        sense to only have one <systemitem
-                            class="service">cinder-volume</systemitem>
-                        service to handle all requests to that NFS
-                        server. However, if that single server is
-                        unable to handle all requests, more than one
-                            <systemitem class="service"
-                            >cinder-volume</systemitem> service is
-                        needed as well as potentially more than one
-                        NFS server.</para>
-                </listitem>
-                <listitem>
-                    <para>Because data is stored in a file and not
-                        actually on a block storage device, you might
-                        not see the same IO performance as you would
-                        with a traditional block storage driver.
-                        Please test accordingly.</para>
-                </listitem>
-                <listitem>
-                    <para>Despite possible IO performance loss, having
-                        volume data stored in a file might be
-                        beneficial. For example, backing up volumes
-                        can be as easy as copying the volume
-                        files.</para>
-                    <note>
-                        <para>Regular IO flushing and syncing still
-                            stands.</para>
-                    </note>
-                </listitem>
-            </itemizedlist>
-        </para>
+        <title>NFS driver notes</title>
+        <itemizedlist>
+            <listitem>
+                <para><systemitem class="service"
+                        >cinder-volume</systemitem> manages the
+                    mounting of the NFS shares as well as volume
+                    creation on the shares. Keep this in mind when
+                    planning your OpenStack architecture. If you have
+                    one master NFS server, it might make sense to only
+                    have one <systemitem class="service"
+                        >cinder-volume</systemitem> service to handle
+                    all requests to that NFS server. However, if that
+                    single server is unable to handle all requests,
+                    more than one <systemitem class="service"
+                        >cinder-volume</systemitem> service is needed
+                    as well as potentially more than one NFS
+                    server.</para>
+            </listitem>
+            <listitem>
+                <para>Because data is stored in a file and not
+                    actually on a block storage device, you might not
+                    see the same IO performance as you would with a
+                    traditional block storage driver. Please test
+                    accordingly.</para>
+            </listitem>
+            <listitem>
+                <para>Despite possible IO performance loss, having
+                    volume data stored in a file might be beneficial.
+                    For example, backing up volumes can be as easy as
+                    copying the volume files.</para>
+                <note>
+                    <para>Regular IO flushing and syncing still
+                        stands.</para>
+                </note>
+            </listitem>
+        </itemizedlist>
     </simplesect>
 </section>

@@ -1,61 +1,58 @@
-<section xml:id="xenapinfs"
-    xmlns="http://docbook.org/ns/docbook"
+<section xml:id="xenapinfs" xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xlink="http://www.w3.org/1999/xlink"
-    version="5.0">
-<title>XenAPINFS</title>
-<para>XenAPINFS is a Block Storage (Cinder) driver which is using an
-        NFS share through XenAPI's Storage Manager to store virtual
-        disk images and exposing those virtual disks as volumes.</para>
-
-<para>
-This driver is not accessing the NFS share directly, it is only accessing the
-share through XenAPI Storage Manager. This driver should be considered as a
-reference implementation for using XenAPI's storage manager in OpenStack
-(present in XenServer and XCP).
-</para>
-
-<simplesect>
-    <title>Requirements</title>
-    <itemizedlist>
-        <listitem>
-            <para>A XenServer/XCP installation acting as Storage Controller. This document refers to this hypervisor as Storage Controller.
-            </para>
-        </listitem>
-        <listitem>
-            <para>Use XenServer/XCP as your hypervisor for compute nodes.
-            </para>
-        </listitem>
-        <listitem>
-            <para>An NFS share, that is configured for XenServer/XCP. For the
-            specific requirements, export options, please refer to the
-            administration guide of your specific XenServer version. It is also
-            required that the NFS share is accessible by all the XenServers
-            components within your cloud.</para>
-        </listitem>
-        <listitem>
-            <para>For creating volumes from XenServer type images (vhd tgz
-            files), XenServer Nova plugins are also required on the Storage
-            Controller.
-            </para>
-        </listitem>
-    </itemizedlist>
-    <note>
-        <para>It is possible to use a XenServer as a Storage
-                Controller and as a compute node in the same time,
-                thus the minimal configuration consists of a
-                XenServer/XCP box and an NFS share.</para>
-    </note>
-</simplesect>
-
-<simplesect>
-    <title>Configuration Patterns</title>
-    <itemizedlist>
-        <listitem>
-            <para>Local configuration (Recommended): The driver is running in a
-            virtual machine on top of the storage controller. With this
-            configuration, it is possible to create volumes from other
-            formats supported by <literal>qemu-img</literal>.
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+    <title>XenAPINFS</title>
+    <para>XenAPINFS is a Block Storage (Cinder) driver that uses an
+        NFS share through the XenAPI Storage Manager to store virtual
+        disk images and expose those virtual disks as volumes.</para>
+    <para>This driver does not access the NFS share directly. It
+        accesses the share only through XenAPI Storage Manager.
+        Consider this driver as a reference implementation for use of
+        the XenAPI Storage Manager in OpenStack (present in XenServer
+        and XCP).</para>
+    <simplesect>
+        <title>Requirements</title>
+        <itemizedlist>
+            <listitem>
+                <para>A XenServer/XCP installation that acts as
+                    Storage Controller. This hypervisor is known as
+                    the storage controller.</para>
+            </listitem>
+            <listitem>
+                <para>Use XenServer/XCP as your hypervisor for Compute
+                    nodes.</para>
+            </listitem>
+            <listitem>
+                <para>An NFS share that is configured for
+                    XenServer/XCP. For specific requirements and
+                    export options, see the administration guide for
+                    your specific XenServer version. The NFS share
+                    must be accessible by all XenServers components
+                    within your cloud.</para>
+            </listitem>
+            <listitem>
+                <para>To create volumes from XenServer type images
+                    (vhd tgz files), XenServer Nova plug-ins are also
+                    required on the storage controller.</para>
+            </listitem>
+        </itemizedlist>
+        <note>
+            <para>You can use a XenServer as a storage controller and
+                Compute node at the same time. This minimal
+                configuration consists of a XenServer/XCP box and an
+                NFS share.</para>
+        </note>
+    </simplesect>
+    <simplesect>
+        <title>Configuration patterns</title>
+        <itemizedlist>
+            <listitem>
+                <para>Local configuration (Recommended): The driver
+                    runs in a virtual machine on top of the storage
+                    controller. With this configuration, you can
+                    create volumes from
+                    <literal>qemu-img</literal>-supported
+                    formats.</para>
                 <figure>
                     <title>Local configuration</title>
                     <mediaobject>
@@ -66,55 +63,58 @@ reference implementation for using XenAPI's storage manager in OpenStack
                         </imageobject>
                     </mediaobject>
                 </figure>
-            </para>
-        </listitem>
-        <listitem>
-            <para>Remote configuration: The driver is not a guest VM
-                    of the storage controller. With this
+            </listitem>
+            <listitem>
+                <para>Remote configuration: The driver is not a guest
+                    VM of the storage controller. With this
                     configuration, you can only use XenServer vhd-type
-                    images to create volumes. <figure>
-                        <title>Remote configuration</title>
-                        <mediaobject>
-                            <imageobject>
-                                <imagedata
-                                   fileref="../../../common/figures/xenapinfs/remote_config.png"
-                                   contentwidth="120mm"/>
-                            </imageobject>
-                        </mediaobject>
-                    </figure>
-                </para>
-        </listitem>
-    </itemizedlist>
-</simplesect>
-
-<simplesect>
-    <title>Configuration Options</title>
-    <para>Assuming the following setup:</para>
-    <itemizedlist>
-        <listitem><para>XenServer box at <literal>10.2.2.1</literal></para>
-        </listitem>
-        <listitem><para>XenServer password is <literal>r00tme</literal></para>
-        </listitem>
-        <listitem><para>NFS server is <literal>nfs.example.com</literal></para>
-        </listitem>
-        <listitem><para>NFS export is at <literal>/volumes</literal></para>
-        </listitem>
-    </itemizedlist>
-
-    <para>To use XenAPINFS as your cinder driver, set the following
-    configuration options in <filename>cinder.conf</filename>:
-    </para>
-<programlisting language="ini">
-volume_driver = cinder.volume.drivers.xenapi.sm.XenAPINFSDriver
+                    images to create volumes.</para>
+                <figure>
+                    <title>Remote configuration</title>
+                    <mediaobject>
+                        <imageobject>
+                            <imagedata
+                                fileref="../../../common/figures/xenapinfs/remote_config.png"
+                                contentwidth="120mm"/>
+                        </imageobject>
+                    </mediaobject>
+                </figure>
+            </listitem>
+        </itemizedlist>
+    </simplesect>
+    <simplesect>
+        <title>Configuration options</title>
+        <para>Assuming the following setup:</para>
+        <itemizedlist>
+            <listitem>
+                <para>XenServer box at
+                    <literal>10.2.2.1</literal></para>
+            </listitem>
+            <listitem>
+                <para>XenServer password is
+                    <literal>r00tme</literal></para>
+            </listitem>
+            <listitem>
+                <para>NFS server is
+                    <literal>nfs.example.com</literal></para>
+            </listitem>
+            <listitem>
+                <para>NFS export is at
+                    <literal>/volumes</literal></para>
+            </listitem>
+        </itemizedlist>
+        <para>To use XenAPINFS as your cinder driver, set these
+            configuration options in the
+                <filename>cinder.conf</filename> file:</para>
+        <programlisting language="ini">volume_driver = cinder.volume.drivers.xenapi.sm.XenAPINFSDriver
 xenapi_connection_url = http://10.2.2.1
 xenapi_connection_username = root
 xenapi_connection_password = r00tme
 xenapi_nfs_server = nfs.example.com
-xenapi_nfs_serverpath = /volumes
-</programlisting>
-
-    <para>The following table contains the configuration options
-    supported by the XenAPINFS driver.</para>
-    <xi:include href="../../../common/tables/cinder-storage_xen.xml" />
-</simplesect>
+xenapi_nfs_serverpath = /volumes</programlisting>
+        <para>The following table shows the configuration options that
+            the XenAPINFS driver supports:</para>
+        <xi:include
+            href="../../../common/tables/cinder-storage_xen.xml"/>
+    </simplesect>
 </section>

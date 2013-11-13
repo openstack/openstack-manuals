@@ -2,35 +2,35 @@
     xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
-    <title>EMC SMI-S iSCSI Driver</title>
-    <para>The EMCSMISISCSIDriver is based on the existing ISCSIDriver,
-        with the ability to create/delete and attach/detach volumes
-        and create/delete snapshots, and so on.</para>
-    <para>The EMCSMISISCSIDriver runs volume operations by
-        communicating with the backend EMC storage. It uses a CIM
-        client in python called PyWBEM to make CIM operations over
+    <title>EMC SMI-S iSCSI driver</title>
+    <para>The EMC SMI-S iSCSI driver, which is based on the iSCSI
+        driver, can create, delete, attach, and detach volumes, create
+        and delete snapshots, and so on.</para>
+    <para>The EMC SMI-S iSCSI driver runs volume operations by
+        communicating with the back-end EMC storage. It uses a CIM
+        client in Python called PyWBEM to perform CIM operations over
         HTTP.</para>
     <para>The EMC CIM Object Manager (ECOM) is packaged with the EMC
-        SMI-S Provider. It is a CIM server that allows CIM clients to
-        make CIM operations over HTTP, using SMI-S in the backend for
+        SMI-S provider. It is a CIM server that enables CIM clients to
+        perform CIM operations over HTTP by using SMI-S in the back-end for
         EMC storage operations.</para>
     <para>The EMC SMI-S Provider supports the SNIA Storage Management
         Initiative (SMI), an ANSI standard for storage management. It
         supports VMAX and VNX storage systems.</para>
     <section xml:id="emc-reqs">
-        <title>System Requirements</title>
+        <title>System requirements</title>
         <para>EMC SMI-S Provider V4.5.1 and higher is required. You
-            can download SMI-S from <link
-                xlink:href="http://powerlink.emc.com"> EMC's
+            can download SMI-S from the <link
+                xlink:href="http://powerlink.emc.com">EMC
                 Powerlink</link> web site. See the EMC SMI-S Provider
             release notes for installation instructions.</para>
         <para>EMC storage VMAX Family and VNX Series are
             supported.</para>
     </section>
     <section xml:id="emc-supported-ops">
-        <title>Supported Operations</title>
-        <para>The following operations are supported on both VMAX and
-            VNX arrays:</para>
+        <title>Supported operations</title>
+        <para>VMAX and
+            VNX arrays support these operations:</para>
         <itemizedlist>
             <listitem>
                 <para>Create volume</para>
@@ -60,8 +60,7 @@
                 <para>Copy volume to image</para>
             </listitem>
         </itemizedlist>
-        <para>The following operations are supported on VNX
-            only:</para>
+        <para>Only VNX supports these operations:</para>
         <itemizedlist>
             <listitem>
                 <para>Create volume from snapshot</para>
@@ -74,7 +73,7 @@
         <procedure>
             <title>To set up the EMC SMI-S iSCSI driver</title>
             <step>
-                <para>Install the python-pywbem package for your
+                <para>Install the <package>python-pywbem</package> package for your
                     distribution. See <xref linkend="install-pywbem"
                     />.</para>
             </step>
@@ -93,13 +92,12 @@
                         linkend="create-masking"/>.</para>
             </step>
         </procedure>
-
         <section xml:id="install-pywbem">
-            <title>Install the python-pywbem package</title>
+            <title>Install the <package>python-pywbem</package> package</title>
             <procedure>
                 <step>
-                    <para>Install the python-pywbem package for your
-                        distribution, as follows:</para>
+                    <para>Install the <package>python-pywbem</package> package for your
+                        distribution:</para>
                     <itemizedlist>
                         <listitem>
                             <para>On Ubuntu:</para>
@@ -121,15 +119,14 @@
             <title>Set up SMI-S</title>
             <para>You can install SMI-S on a non-OpenStack host.
                 Supported platforms include different flavors of
-                Windows, Red Hat, and SUSE Linux. It can be either a
-                physical server or a VM hosted by an ESX server. See
+                Windows, Red Hat, and SUSE Linux. The host can be either a
+                physical server or VM hosted by an ESX server. See
                 the EMC SMI-S Provider release notes for supported
                 platforms and installation instructions.</para>
             <note>
-                <para>Storage arrays must be discovered on the SMI-S
-                    server before using the Cinder Driver. Follow
-                    instructions in the SMI-S release notes to
-                    discover the arrays.</para>
+                <para>You must discover storage arrays on the SMI-S
+                    server before you can use the Cinder driver. Follow
+                    instructions in the SMI-S release notes.</para>
             </note>
             <para>SMI-S is usually installed at
                     <filename>/opt/emc/ECIM/ECOM/bin</filename> on
@@ -143,58 +140,57 @@
                 array. Use <command>dv</command> and examine the
                 output after the array is added. Make sure that the
                 arrays are recognized by the SMI-S server before using
-                the EMC Cinder Driver.</para>
+                the EMC Cinder driver.</para>
         </section>
         <section xml:id="register-emc">
             <title>Register with VNX</title>
-            <para>To export a VNX volume to a Compute node, you
-                must register the node with VNX.</para>
-            <para>On the Compute node <literal>1.1.1.1</literal>, do
-                the following (assume <literal>10.10.61.35</literal>
+            <para>To export a VNX volume to a Compute node, you must
+                register the node with VNX.</para>
+            <para>On the Compute node <literal>1.1.1.1</literal>, run these commands (assume <literal>10.10.61.35</literal>
                 is the iscsi target):</para>
             <screen><prompt>$</prompt> <userinput>sudo /etc/init.d/open-iscsi start</userinput></screen>
             <screen><prompt>$</prompt> <userinput>sudo iscsiadm -m discovery -t st -p <literal>10.10.61.35</literal></userinput></screen>
             <screen><prompt>$</prompt> <userinput>cd /etc/iscsi</userinput></screen>
             <screen><prompt>$</prompt> <userinput>sudo more initiatorname.iscsi</userinput></screen>
             <screen><prompt>$</prompt> <userinput>iscsiadm -m node</userinput></screen>
-            <para>Log in to VNX from the Compute node using the target
+            <para>Log in to VNX from the Compute node by using the target
                 corresponding to the SPA port:</para>
             <screen><prompt>$</prompt> <userinput>sudo iscsiadm -m node -T <literal>iqn.1992-04.com.emc:cx.apm01234567890.a0</literal> -p <literal>10.10.61.35</literal> -l</userinput></screen>
             <para>Assume
                     <literal>iqn.1993-08.org.debian:01:1a2b3c4d5f6g</literal>
-                is the initiator name of the Compute node. Login to
+                is the initiator name of the Compute node. Log in to
                 Unisphere, go to
                 <literal>VNX00000</literal>->Hosts->Initiators,
-                Refresh and wait until initiator
+                refresh and wait until initiator
                     <literal>iqn.1993-08.org.debian:01:1a2b3c4d5f6g</literal>
                 with SP Port <literal>A-8v0</literal> appears.</para>
-            <para>Click the "Register" button, select "CLARiiON/VNX"
-                and enter the host name <literal>myhost1</literal> and
-                IP address <literal>myhost1</literal>. Click Register.
-                Now host <literal>1.1.1.1</literal> appears under
-                Hosts->Host List as well.</para>
+            <para>Click <guibutton>Register</guibutton>, select <guilabel>CLARiiON/VNX</guilabel>,
+                and enter the <literal>myhost1</literal> host name and <literal>myhost1</literal>
+                IP address. Click <guibutton>Register</guibutton>.
+                Now the <literal>1.1.1.1</literal> host appears under
+                <guimenu>Hosts</guimenu> <guimenuitem>Host List</guimenuitem> as well.</para>
             <para>Log out of VNX on the Compute node:</para>
-            <screen><prompt>$</prompt> <userinput>sudo iscsiadm -m node -u</userinput>                       </screen>
+            <screen><prompt>$</prompt> <userinput>sudo iscsiadm -m node -u</userinput></screen>
             <para>Log in to VNX from the Compute node using the target
                 corresponding to the SPB port:</para>
-            <screen><prompt>$</prompt> <userinput>sudo iscsiadm -m node -T iqn.1992-04.com.emc:cx.apm01234567890.b8 -p 10.10.10.11 -l</userinput>                </screen>
-            <para>In Unisphere register the initiator with the SPB
+            <screen><prompt>$</prompt> <userinput>sudo iscsiadm -m node -T iqn.1992-04.com.emc:cx.apm01234567890.b8 -p 10.10.10.11 -l</userinput></screen>
+            <para>In Unisphere, register the initiator with the SPB
                 port.</para>
             <para>Log out:</para>
-            <screen><prompt>$</prompt> <userinput>sudo iscsiadm -m node -u</userinput>                       </screen>
+            <screen><prompt>$</prompt> <userinput>sudo iscsiadm -m node -u</userinput></screen>
         </section>
         <section xml:id="create-masking">
-            <title>Create a Masking View on VMAX</title>
+            <title>Create a masking view on VMAX</title>
             <para>For VMAX, you must set up the Unisphere for VMAX
                 server. On the Unisphere for VMAX server, create
-                initiator group, storage group, port group, and put
+                initiator group, storage group, and port group and put
                 them in a masking view. Initiator group contains the
-                initiator names of the openstack hosts. Storage group
-                should have at least six gatekeepers.</para>
+                initiator names of the OpenStack hosts. Storage group
+                must have at least six gatekeepers.</para>
         </section>
         <section xml:id="emc-config-file">
-            <title>Config file
-                <filename>cinder.conf</filename></title>
+            <title><filename>cinder.conf</filename> configuration
+                file</title>
             <para>Make the following changes in
                     <filename>/etc/cinder/cinder.conf</filename>.</para>
             <para>For VMAX, add the following entries, where
@@ -215,8 +211,8 @@ cinder_emc_config_file = /etc/cinder/cinder_emc_config.xml</programlisting>
                     >cinder-volume</systemitem> service.</para>
         </section>
         <section xml:id="emc-config-file-2">
-            <title>Config file
-                    <filename>cinder_emc_config.xml</filename></title>
+            <title><filename>cinder_emc_config.xml</filename>
+                configuration file</title>
             <para>Create the file
                     <filename>/etc/cinder/cinder_emc_config.xml</filename>.
                 You do not need to restart the service for this
@@ -249,7 +245,7 @@ cinder_emc_config_file = /etc/cinder/cinder_emc_config.xml</programlisting>
                 that hosts the VM.</para>
             <para>StorageType is the thin pool where user wants to
                 create the volume from. Only thin LUNs are supported
-                by the plugin. Thin pools can be created using
+                by the plug-in. Thin pools can be created using
                 Unisphere for VMAX and VNX.</para>
             <para>EcomServerIp and EcomServerPort are the IP address
                 and port number of the ECOM server which is packaged

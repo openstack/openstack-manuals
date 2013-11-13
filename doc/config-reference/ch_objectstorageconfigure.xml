@@ -4,91 +4,135 @@
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="ch_configuring-object-storage">
     <title>OpenStack Object Storage</title>
-    <para>OpenStack Object Storage uses multiple configuration files for multiple services and
-        background daemons, and paste.deploy to manage server configurations. Default configuration
-        options are set in the <code>[DEFAULT]</code> section, and any options specified there can
-        be overridden in any of the other sections.</para>
+    <para>OpenStack Object Storage uses multiple configuration files
+        for multiple services and background daemons, and
+            <command>paste.deploy</command> to manage server
+        configurations. Default configuration options appear in the
+            <code>[DEFAULT]</code> section. You can override the default values
+        by setting values in the other sections.</para>
     <xi:include href="../common/section_about-object-storage.xml"/>
-    <xi:include href="object-storage/section_object-storage-general-service-conf.xml"/>
-   <section xml:id="object-server-configuration">
-        <title>Object Server Configuration</title>
-        <para>An example Object Server configuration can be found at
-            etc/object-server.conf-sample in the source code
+    <xi:include
+        href="object-storage/section_object-storage-general-service-conf.xml"/>
+    <section xml:id="object-server-configuration">
+        <title>Object server configuration</title>
+        <para>Find an example object server configuration at
+            <filename>etc/object-server.conf-sample</filename> in the source code
             repository.</para>
-        <para>The following configuration options are
-            available:</para>
-
-        <xi:include href="../common/tables/swift-object-server-DEFAULT.xml"/>
-        <xi:include href="../common/tables/swift-object-server-app-object-server.xml"/>
-        <xi:include href="../common/tables/swift-object-server-pipeline-main.xml"/>
-        <xi:include href="../common/tables/swift-object-server-object-replicator.xml"/>
-        <xi:include href="../common/tables/swift-object-server-object-updater.xml"/>
-        <xi:include href="../common/tables/swift-object-server-object-auditor.xml"/>
-        <xi:include href="../common/tables/swift-object-server-filter-healthcheck.xml"/>
-        <xi:include href="../common/tables/swift-object-server-filter-recon.xml"/>
-    <section xml:id="object-server-conf">
-        <title>Sample Object Server configuration file</title>
-        <programlisting><xi:include parse="text"  href="http://git.openstack.org/cgit/openstack/swift/plain/etc/object-server.conf-sample"/></programlisting></section>
-    </section>
-        <section xml:id="container-server-configuration">
-            <title>Container Server Configuration</title>
-            <para>An example Container Server configuration can be found at
-                etc/container-server.conf-sample in the source code repository.</para>
-            <para>The following configuration options are available:</para>
-            <xi:include href="../common/tables/swift-container-server-DEFAULT.xml"/>
-            <xi:include href="../common/tables/swift-container-server-app-container-server.xml"/>
-            <xi:include href="../common/tables/swift-container-server-pipeline-main.xml"/>
-            <xi:include href="../common/tables/swift-container-server-container-replicator.xml"/>
-            <xi:include href="../common/tables/swift-container-server-container-updater.xml"/>
-            <xi:include href="../common/tables/swift-container-server-container-auditor.xml"/>
-            <xi:include href="../common/tables/swift-container-server-container-sync.xml"/>
-            <xi:include href="../common/tables/swift-container-server-filter-healthcheck.xml"/>
-            <xi:include href="../common/tables/swift-container-server-filter-recon.xml"/>
-   <section xml:id="container-server-conf">
-        <title>Sample Container Server configuration file</title>
-        <programlisting language="ini"><xi:include parse="text"  href="http://git.openstack.org/cgit/openstack/swift/plain/etc/container-server.conf-sample"/></programlisting></section>
-
+        <para>The available configuration options are:</para>
+        <xi:include
+            href="../common/tables/swift-object-server-DEFAULT.xml"/>
+        <xi:include
+            href="../common/tables/swift-object-server-app-object-server.xml"/>
+        <xi:include
+            href="../common/tables/swift-object-server-pipeline-main.xml"/>
+        <xi:include
+            href="../common/tables/swift-object-server-object-replicator.xml"/>
+        <xi:include
+            href="../common/tables/swift-object-server-object-updater.xml"/>
+        <xi:include
+            href="../common/tables/swift-object-server-object-auditor.xml"/>
+        <xi:include
+            href="../common/tables/swift-object-server-filter-healthcheck.xml"/>
+        <xi:include
+            href="../common/tables/swift-object-server-filter-recon.xml"/>
+        <section xml:id="object-server-conf">
+            <title>Sample object server configuration file</title>
+            <programlisting><xi:include parse="text" href="http://git.openstack.org/cgit/openstack/swift/plain/etc/object-server.conf-sample"/></programlisting>
         </section>
-        <section xml:id="account-server-configuration">
-            <title>Account Server Configuration</title>
-            <para>An example Account Server configuration can be found at
-                etc/account-server.conf-sample in the source code repository.</para>
-
-            <para>The following configuration options are available:</para>
-            <xi:include href="../common/tables/swift-account-server-DEFAULT.xml"/>
-            <xi:include href="../common/tables/swift-account-server-app-account-server.xml"/>
-            <xi:include href="../common/tables/swift-account-server-pipeline-main.xml"/>
-            <xi:include href="../common/tables/swift-account-server-account-replicator.xml"/>
-            <xi:include href="../common/tables/swift-account-server-account-auditor.xml"/>
-            <xi:include href="../common/tables/swift-account-server-account-reaper.xml"/>
-            <xi:include href="../common/tables/swift-account-server-filter-healthcheck.xml"/>
-            <xi:include href="../common/tables/swift-account-server-filter-recon.xml"/>
-    <section xml:id="account-server-conf">
-        <title>Sample Account Server configuration file</title>
-        <programlisting language="ini"><xi:include parse="text"  href="http://git.openstack.org/cgit/openstack/swift/plain/etc/account-server.conf-sample"/></programlisting></section>
-        </section>
-        <section xml:id="proxy-server-configuration">
-            <title>Proxy Server Configuration</title>
-            <para>An example Proxy Server configuration can be found at etc/proxy-server.conf-sample
-                in the source code repository.</para>
-            <para>The following configuration options are available:</para>
-            <xi:include href="../common/tables/swift-proxy-server-DEFAULT.xml"/>
-            <xi:include href="../common/tables/swift-proxy-server-app-proxy-server.xml"/>
-            <xi:include href="../common/tables/swift-proxy-server-pipeline-main.xml"/>
-            <xi:include href="../common/tables/swift-proxy-server-filter-account-quotas.xml"/>
-            <xi:include href="../common/tables/swift-proxy-server-filter-authtoken.xml"/>
-            <xi:include href="../common/tables/swift-proxy-server-filter-cache.xml"/>
-            <xi:include href="../common/tables/swift-proxy-server-filter-catch_errors.xml"/>
-            <xi:include href="../common/tables/swift-proxy-server-filter-healthcheck.xml"/>
-            <xi:include href="../common/tables/swift-proxy-server-filter-keystoneauth.xml"/>
-            <xi:include href="../common/tables/swift-proxy-server-filter-list-endpoints.xml"/>
-            <xi:include href="../common/tables/swift-proxy-server-filter-proxy-logging.xml"/>
-            <xi:include href="../common/tables/swift-proxy-server-filter-tempauth.xml"/>
-    <section xml:id="proxy-server-conf">
-        <title>Sample Proxy Server configuration file</title>
-        <programlisting language="ini"><xi:include parse="text"  href="http://git.openstack.org/cgit/openstack/swift/plain/etc/proxy-server.conf-sample"/></programlisting></section>
     </section>
+    <section xml:id="container-server-configuration">
+        <title>Container server configuration</title>
+        <para>Find an example container server configuration at
+                <filename>etc/container-server.conf-sample</filename>
+            in the source code repository.</para>
+        <para>The available configuration options are:</para>
+        <xi:include
+            href="../common/tables/swift-container-server-DEFAULT.xml"/>
+        <xi:include
+            href="../common/tables/swift-container-server-app-container-server.xml"/>
+        <xi:include
+            href="../common/tables/swift-container-server-pipeline-main.xml"/>
+        <xi:include
+            href="../common/tables/swift-container-server-container-replicator.xml"/>
+        <xi:include
+            href="../common/tables/swift-container-server-container-updater.xml"/>
+        <xi:include
+            href="../common/tables/swift-container-server-container-auditor.xml"/>
+        <xi:include
+            href="../common/tables/swift-container-server-container-sync.xml"/>
+        <xi:include
+            href="../common/tables/swift-container-server-filter-healthcheck.xml"/>
+        <xi:include
+            href="../common/tables/swift-container-server-filter-recon.xml"/>
+        <section xml:id="container-server-conf">
+            <title>Sample container server configuration file</title>
+            <programlisting language="ini"><xi:include parse="text" href="http://git.openstack.org/cgit/openstack/swift/plain/etc/container-server.conf-sample"/></programlisting>
+        </section>
 
-<!-- section on Object Storage Features -->
-<xi:include href="object-storage/section_object-storage-features.xml"/>
+    </section>
+    <section xml:id="account-server-configuration">
+        <title>Account server configuration</title>
+        <para>Find an example account server configuration at
+                <filename>etc/account-server.conf-sample</filename> in
+            the source code repository.</para>
+        <para>The available configuration options are:</para>
+        <xi:include
+            href="../common/tables/swift-account-server-DEFAULT.xml"/>
+        <xi:include
+            href="../common/tables/swift-account-server-app-account-server.xml"/>
+        <xi:include
+            href="../common/tables/swift-account-server-pipeline-main.xml"/>
+        <xi:include
+            href="../common/tables/swift-account-server-account-replicator.xml"/>
+        <xi:include
+            href="../common/tables/swift-account-server-account-auditor.xml"/>
+        <xi:include
+            href="../common/tables/swift-account-server-account-reaper.xml"/>
+        <xi:include
+            href="../common/tables/swift-account-server-filter-healthcheck.xml"/>
+        <xi:include
+            href="../common/tables/swift-account-server-filter-recon.xml"/>
+        <section xml:id="account-server-conf">
+            <title>Sample account server configuration file</title>
+            <programlisting language="ini"><xi:include parse="text" href="http://git.openstack.org/cgit/openstack/swift/plain/etc/account-server.conf-sample"/></programlisting>
+        </section>
+    </section>
+    <section xml:id="proxy-server-configuration">
+        <title>Proxy server configuration</title>
+        <para>Find an example proxy server configuration at
+                <filename>etc/proxy-server.conf-sample</filename> in
+            the source code repository.</para>
+        <para>The available configuration options are:</para>
+        <xi:include
+            href="../common/tables/swift-proxy-server-DEFAULT.xml"/>
+        <xi:include
+            href="../common/tables/swift-proxy-server-app-proxy-server.xml"/>
+        <xi:include
+            href="../common/tables/swift-proxy-server-pipeline-main.xml"/>
+        <xi:include
+            href="../common/tables/swift-proxy-server-filter-account-quotas.xml"/>
+        <xi:include
+            href="../common/tables/swift-proxy-server-filter-authtoken.xml"/>
+        <xi:include
+            href="../common/tables/swift-proxy-server-filter-cache.xml"/>
+        <xi:include
+            href="../common/tables/swift-proxy-server-filter-catch_errors.xml"/>
+        <xi:include
+            href="../common/tables/swift-proxy-server-filter-healthcheck.xml"/>
+        <xi:include
+            href="../common/tables/swift-proxy-server-filter-keystoneauth.xml"/>
+        <xi:include
+            href="../common/tables/swift-proxy-server-filter-list-endpoints.xml"/>
+        <xi:include
+            href="../common/tables/swift-proxy-server-filter-proxy-logging.xml"/>
+        <xi:include
+            href="../common/tables/swift-proxy-server-filter-tempauth.xml"/>
+        <section xml:id="proxy-server-conf">
+            <title>Sample proxy server configuration file</title>
+            <programlisting language="ini"><xi:include parse="text" href="http://git.openstack.org/cgit/openstack/swift/plain/etc/proxy-server.conf-sample"/></programlisting>
+        </section>
+    </section>
+    <!-- section on Object Storage Features -->
+    <xi:include
+        href="object-storage/section_object-storage-features.xml"/>
 </chapter>
