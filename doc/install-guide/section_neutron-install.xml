@@ -763,7 +763,7 @@ net.ipv4.conf.default.rp_filter=0</programlisting>
           that you chose when you set up your network node, see <xref
             linkend="install-neutron.install-plugin-compute"/>.</para>
       </step>
-      <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
+      <step os="rhel;centos;fedora">
         <para>Configure the core components of Neutron. Edit the
             <filename>/etc/neutron/neutron.conf</filename>
           file:</para>
@@ -773,8 +773,40 @@ admin_user = neutron
 admin_password = <replaceable>NEUTRON_PASS</replaceable>
 auth_url = http://<replaceable>controller</replaceable>:35357/v2.0
 auth_strategy = keystone
-rpc_backend = <replaceable>YOUR_RPC_BACKEND</replaceable>
-<replaceable>PUT_YOUR_RPC_BACKEND_SETTINGS_HERE_TOO</replaceable></programlisting>
+rpc_backend = neutron.openstack.common.rpc.impl_qpid
+qpid_hostname = controller</programlisting>
+      </step>
+      <step os="opensuse;sles">
+        <para>Configure the core components of Neutron. Edit the
+            <filename>/etc/neutron/neutron.conf</filename>
+          file:</para>
+        <programlisting language="ini">auth_host = <replaceable>controller</replaceable>
+admin_tenant_name = service
+admin_user = neutron
+admin_password = <replaceable>NEUTRON_PASS</replaceable>
+auth_url = http://controller:35357/v2.0
+auth_strategy = keystone
+rpc_backend = neutron.openstack.common.rpc.impl_kombu
+rabbit_host = controller
+rabbit_port = 5672
+rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
+      </step>
+      <step os="ubuntu;debian">
+        <para>Configure the core components of Neutron. Edit the
+            <filename>/etc/neutron/neutron.conf</filename>
+          file:</para>
+        <programlisting language="ini">auth_host = <replaceable>controller</replaceable>
+admin_tenant_name = service
+admin_user = neutron
+admin_password = <replaceable>NEUTRON_PASS</replaceable>
+auth_url = http://controller:35357/v2.0
+auth_strategy = keystone
+rpc_backend = neutron.openstack.common.rpc.impl_kombu
+rabbit_host = controller
+rabbit_port = 5672
+# Change the following settings if you're not using the default RabbitMQ configuration
+#rabbit_userid = guest
+rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
       </step>
       <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
         <para>Edit the database URL under the
