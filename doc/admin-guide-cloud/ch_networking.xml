@@ -7,7 +7,6 @@
     <title>Networking</title>
     <para>Learn Networking concepts, architecture, and basic and
         advanced neutron and nova command-line interface (CLI)
-        commands so that you can administer Networking in a
         cloud.</para>
     <section xml:id="section_networking-intro">
         <title>Introduction to Networking</title>
@@ -491,6 +490,8 @@ local_ip=&lt;data-net-IP-address-of-node&gt;</programlisting>
                     <procedure>
                         <title>To configure OpenStack Networking to
                             use the NVP plug-in</title>
+                        <para>While the instructions in this section refer to the Nicira NVP
+                            platform, they also apply to VMware NSX.</para>
                         <step>
                             <para>Install the NVP plug-in, as
                                 follows:</para>
@@ -509,58 +510,61 @@ rabbit_host = 192.168.203.10
 allow_overlapping_ips = True</programlisting>
                         </step>
                         <step>
-                            <para>To tell OpenStack Networking about a
-                                controller cluster, create a new
-                                [cluster:&lt;name&gt;] section in the
-                                   <filename>/etc/neutron/plugins/nicira/nvp.ini</filename>
-                                file, and add these entries (for
-                                database configuration, see <link
-                                   xlink:href="http://docs.openstack.org/havana/install-guide/install/apt/content/neutron-install-network-node.html"
-                                   >Install Networking Services</link>
-                                in <citetitle>Installation
-                                   Guide</citetitle>): <itemizedlist>
-                                   <listitem>
-                                   <para>The UUID of the NVP Transport
-                                   Zone that should be used by default
-                                   when a tenant creates a network.
-                                   This value can be retrieved from
-                                   the NVP Manager Transport Zones
-                                   page:</para>
-                                   <programlisting language="ini">default_tz_uuid = &lt;uuid_of_the_transport_zone&gt;</programlisting>
-                                   </listitem>
-                                   <listitem>
-                                   <para>A connection string
-                                   indicating parameters to be used by
-                                   the NVP plug-in when connecting to
-                                   the NVP web service API. There will
-                                   be one of these lines in the file
-                                   for each NVP controller in your
-                                   deployment. An NVP operator will
-                                   likely want to update the NVP
-                                   controller IP and password, but the
-                                   remaining fields can be the
-                                   defaults:</para>
-                                   <programlisting language="ini">nvp_controller_connection = &lt;controller_node_ip&gt;:&lt;controller_port&gt;:&lt;api_user&gt;:&lt;api_password&gt;:&lt;request_timeout&gt;:&lt;http_timeout&gt;:&lt;retries&gt;:&lt;redirects&gt;</programlisting>
-                                   </listitem>
-                                   <listitem>
-                                   <para>The UUID of an NVP L3 Gateway
-                                   Service that should be used by
-                                   default when a tenant creates a
-                                   router. This value can be retrieved
-                                   from the NVP Manager Gateway
-                                   Services page:</para>
-                                   <programlisting language="ini">default_l3_gw_service_uuid = &lt;uuid_of_the_gateway_service&gt;</programlisting>
-                                   <warning>
-                                   <para>Ubuntu packaging currently
-                                   does not update the neutron init
-                                   script to point to the NVP
-                                   configuration file. Instead, you
-                                   must manually update the
-                                   <filename>/etc/default/neutron-server</filename>
-                                   file as follows:</para>
-                                   <programlisting language="ini">NEUTRON_PLUGIN_CONFIG = /etc/neutron/plugins/nicira/nvp.ini</programlisting>
-                                   </warning>
-                                   </listitem>
+                            <para>To configure the NVP controller cluster for the Openstack
+                                Networking Service, locate the <literal>[default]</literal> section
+                                in the <filename>/etc/neutron/plugins/nicira/nvp.ini</filename>
+                                file, and add the following entries (for database configuration, see
+                                    <link
+                                    xlink:href="http://docs.openstack.org/havana/install-guide/install/apt/content/neutron-install-network-node.html"
+                                    >Install Networking Services</link> in <citetitle>Installation
+                                    Guide</citetitle>): <itemizedlist>
+                                    <listitem>
+                                        <para>A set of parameters need to establish and configure
+                                            the connection with the controller cluster. Such
+                                            parameters include NVP API endpoints, access
+                                            credentials, and settings for HTTP redirects and retries
+                                            in case of connection
+                                            failures<programlisting>nvp_user = &lt;admin user name>
+nvp_password = &lt;password for nvp_user>
+req_timeout = &lt;timeout in seconds for NVP_requests> # default 30 seconds
+http_timeout = &lt;tiemout in seconds for single HTTP request> # default 10 seconds
+retries = &lt;number of HTTP request retries> # default 2
+redirects = &lt;maximum allowed redirects for a HTTP request> # default 3
+nvp_controllers = &lt;comma separated list of API endpoints></programlisting></para>
+                                        <para>In order to ensure correct operations
+                                                <literal>nvp_user</literal> shoud be a user with
+                                            administrator credentials on the NVP platform.</para>
+                                        <para>A controller API endpoint consists of the
+                                            controller's IP address and port; if the port is
+                                            omitted, port 443 will be used. If multiple API
+                                            endpoints are specified, it is up to the user to ensure
+                                            that all these endpoints belong to the same controller
+                                            cluster; The Openstack Networking Nicira NVP plugin does
+                                            not perform this check, and results might be
+                                            unpredictable.</para>
+                                        <para>When multiple API endpoints are specified, the plugin
+                                            will load balance requests on the various API
+                                            endpoints.</para>
+                                    </listitem>
+                                    <listitem>
+                                        <para>The UUID of the NVP Transport Zone that should be used
+                                            by default when a tenant creates a network. This value
+                                            can be retrieved from the NVP Manager's Transport Zones
+                                            page:</para>
+                                        <programlisting language="ini">default_tz_uuid = &lt;uuid_of_the_transport_zone&gt;</programlisting>
+                                    </listitem>
+                                    <listitem>
+                                        <programlisting language="ini">default_l3_gw_service_uuid = &lt;uuid_of_the_gateway_service&gt;</programlisting>
+                                        <warning>
+                                            <para>Ubuntu packaging currently does not update the
+                                                neutron init script to point to the NVP
+                                                configuration file. Instead, you must manually
+                                                update
+                                                  <filename>/etc/default/neutron-server</filename>
+                                                with the following:</para>
+                                            <programlisting language="ini">NEUTRON_PLUGIN_CONFIG = /etc/neutron/plugins/nicira/nvp.ini</programlisting>
+                                        </warning>
+                                    </listitem>
                                 </itemizedlist></para>
                         </step>
                         <step>
@@ -572,12 +576,12 @@ allow_overlapping_ips = True</programlisting>
                     </procedure>
                     <para>Example <filename>nvp.ini</filename>
                         file:</para>
-                    <programlisting language="ini">[cluster:main]
+                    <programlisting language="ini">[DEFAULT]
 default_tz_uuid = d3afb164-b263-4aaa-a3e4-48e0e09bb33c
 default_l3_gw_service_uuid=5c8622cc-240a-40a1-9693-e6a5fca4e3cf
-nvp_controller_connection=10.0.0.2:443:admin:admin:30:10:2:2
-nvp_controller_connection=10.0.0.3:443:admin:admin:30:10:2:2
-nvp_controller_connection=10.0.0.4:443:admin:admin:30:10:2:2</programlisting>
+nvp_user=admin
+nvp_password=changeme
+nvp_controllers=10.127.0.100,10.127.0.200:8888</programlisting>
                     <note>
                         <para>To debug <filename>nvp.ini</filename>
                             configuration issues, run this command
