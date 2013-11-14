@@ -497,8 +497,7 @@ firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewal
 <prompt>#</prompt> <userinput>chkconfig neutron-openvswitch-agent on</userinput></screen>
             <screen os="opensuse;sles"><prompt>#</prompt> <userinput>service openstack-neutron-openvswitch-agent restart</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-neutron-openvswitch-agent on</userinput></screen>
-            <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service neutron-plugin-openvswitch-agent restart</userinput>
-<prompt>#</prompt> <userinput>chkconfig neutron-plugin-openvswitch-agent on</userinput></screen>
+            <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service neutron-plugin-openvswitch-agent restart</userinput></screen>
           </step>
           <step>
             <para>Now, return to the general <acronym>OVS</acronym>
@@ -846,12 +845,16 @@ admin_password=<replaceable>NEUTRON_PASS</replaceable></programlisting>
             <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>yum install openstack-neutron-openvswitch</userinput></screen>
             <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-neutron-openvswitch-agent</userinput></screen>
           </step>
-          <step>
+          <step os="ubuntu;debian">
+            <para>Restart Open vSwitch:</para>
+            <screen><prompt>#</prompt> <userinput>service openvswitch-switch restart</userinput></screen>
+          </step>
+          <step os="rhel;fedora;centos;opensuse;sles">
             <para>Start Open vSwitch and configure it to start when
               the system boots:</para>
             <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>service openvswitch start</userinput>
 <prompt>#</prompt> <userinput>chkconfig openvswitch on</userinput></screen>
-            <screen os="opensuse;sles;ubuntu;debian"><prompt>#</prompt> <userinput>service openvswitch-switch start</userinput>
+            <screen os="opensuse;sles"><prompt>#</prompt> <userinput>service openvswitch-switch start</userinput>
 <prompt>#</prompt> <userinput>chkconfig openvswitch-switch on</userinput></screen>
           </step>
           <step>
@@ -902,13 +905,13 @@ firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewal
             <para>After you complete OVS configuration <emphasis>and
                 the core Neutron configuration after this
                 section</emphasis>, restart the Neutron Open vSwitch
-              agent, and set it to start at boot:</para>
-            <screen os="opensuse;sles;fedora;centos;rhel"><prompt>#</prompt> <userinput>service neutron-openvswitch-agent restart</userinput>
+              agent<phrase os="opensuse;sles;fedora;centos;rhel">, and set it
+              to start at boot</phrase>:</para>
+            <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>service neutron-openvswitch-agent restart</userinput>
 <prompt>#</prompt> <userinput>chkconfig neutron-openvswitch-agent on</userinput></screen>
             <screen os="opensuse;sles"><prompt>#</prompt> <userinput>service openstack-neutron-openvswitch-agent restart</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-neutron-openvswitch-agent on</userinput></screen>
-            <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service neutron-plugin-openvswitch-agent restart</userinput>
-<prompt>#</prompt> <userinput>chkconfig neutron-plugin-openvswitch-agent on</userinput></screen>
+            <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service neutron-plugin-openvswitch-agent restart</userinput></screen>
           </step>
           <step>
             <para>Now, return to the general <acronym>OVS</acronym>
@@ -1069,7 +1072,7 @@ security_group_api=neutron</programlisting>
             one.</para>
         </note>
       </step>
-      <step>
+      <step os="fedora;rhel;centos;opensuse;sles">
         <para>Start neutron-server and set it to start at boot:</para>
         <screen><prompt>#</prompt> <userinput>service neutron-server start</userinput>
 <prompt>#</prompt> <userinput>chkconfig neutron-server on</userinput></screen>
@@ -1082,6 +1085,10 @@ security_group_api=neutron</programlisting>
             with the name
               <filename>/etc/neutron/plugins.ini</filename>.</para>
         </note>
+      </step>
+      <step os="ubuntu;debian">
+        <para>Restart neutron-server:</para>
+        <screen><prompt>#</prompt> <userinput>service neutron-server restart</userinput></screen>
       </step>
     </procedure>
     <section xml:id="install-neutron.install-plug-in-controller">
