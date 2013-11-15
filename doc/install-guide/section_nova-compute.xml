@@ -181,8 +181,13 @@ rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
 
     <step>
       <para>Edit the <filename>/etc/nova/api-paste.ini</filename>
-      configuration file to add the credentials to the
+      file to add the credentials to the
       <literal>[filter:authtoken]</literal> section:</para>
+      <note><title>Use of .ini files</title>
+         <para>Files with the extension <filename>.ini</filename>
+         sometimes need to be edited during initial setup. However,
+         they should not be used for general configuration tasks.</para>
+      </note>
       <programlisting language="ini">[filter:authtoken]
 paste.filter_factory=keystoneclient.middleware.auth_token:filter_factory
 auth_host=controller
