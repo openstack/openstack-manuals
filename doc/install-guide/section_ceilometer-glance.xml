@@ -6,17 +6,27 @@
   <title>Add the Image Service agent for the Metering service</title>
   <procedure>
     <step>
-    <para>To retrieve image samples, you must configure the Image
-        Service to send notifications to the bus. Edit the
-          <filename>glance-api.conf</filename> file and change
-          <option>notifier_strategy</option> option to
-          <literal>rabbit</literal> or <literal>qpid</literal>.
-        Restart the <systemitem class="service"
-          >glance-api</systemitem> and <systemitem class="service"
-          >glance-registry</systemitem> services.</para>
+      <para>To retrieve image samples, you must configure the Image
+        Service to send notifications to the bus.</para>
+
+        <para os="debian;ubuntu">Edit
+        <filename>/etc/glance/glance-api.conf</filename> and modify the
+        <literal>[DEFAULT]</literal> section:</para>
+        <programlisting language="ini" os="debian;ubuntu">notifier_strategy = rabbit
+rabbit_host = controller
+rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
+
+        <para os="opensuse;sles;fedora;rhel;centos">Run the following commands:</para>
+        <screen os="opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf DEFAULT notifier_strategy rabbit</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf DEFAULT rabbit_host controller</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf DEFAULT rabbit_password <replaceable>RABBIT_PASS</replaceable></userinput></screen>
+
+        <screen os="fedora;rhel;centos"><prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf DEFAULT notifier_strategy qpid</userinput></screen>
+
     </step>
     <step os="ubuntu;debian">
-      <para>Restart the Image Service with its new settings.</para>
+      <para>Restart the Image Service with its new
+        settings:</para>
 <screen><prompt>#</prompt> <userinput>service glance-registry restart</userinput>
 <prompt>#</prompt> <userinput>service glance-api restart</userinput></screen>
     </step>

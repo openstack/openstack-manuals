@@ -111,7 +111,7 @@
                             <programlisting language="ini">core_plugin = neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2
 auth_strategy = keystone
 fake_rabbit = False
-rabbit_password = guest
+rabbit_password = <replaceable>RABBIT_PASS</replaceable>
 
 [database]
 connection = mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@<replaceable>controller</replaceable>/neutron</programlisting>
@@ -177,6 +177,7 @@ openstack-neutron openstack-neutron-dhcp-agent openstack-neutron-l3-agent</useri
                         configuration file:</para>
                     <programlisting language="ini" os="debian;ubuntu">rabbit_password = guest
 rabbit_host = <replaceable>controller</replaceable>
+rabbit_password = <replaceable>RABBIT_PASS</replaceable>
 
 [database]
 connection = mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@<replaceable>controller</replaceable>:3306/neutron</programlisting>
@@ -186,6 +187,8 @@ connection = mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@<replacea
    database connection mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@<replaceable>controller</replaceable>:3306/neutron</userinput></screen>
                     <screen os="opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf \
   DEFAULT rabbit_host controller</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf \
+  DEFAULT rabbit_password <replaceable>RABBIT_PASS</replaceable></userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf \
    database connection mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@<replaceable>controller</replaceable>:3306/neutron</userinput></screen>
                 </step>
@@ -317,6 +320,7 @@ admin_password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
                         configuration file and add this line:</para>
                     <programlisting language="ini" os="debian;ubuntu">rabbit_password = guest
 rabbit_host = <replaceable>controller</replaceable>
+rabbit_password = <replaceable>RABBIT_PASS</replaceable>
 
 [database]
 connection = mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@<replaceable>controller</replaceable>:3306/neutron</programlisting>
@@ -326,6 +330,8 @@ connection = mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@<replacea
    database connection mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@<replaceable>controller</replaceable>:3306/neutron</userinput></screen>
                     <screen os="opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf \
   DEFAULT rabbit_host controller</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf \
+  DEFAULT rabbit_password <replaceable>RABBIT_PASS</replaceable></userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf \
    database connection mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@<replaceable>controller</replaceable>:3306/neutron</userinput></screen>
                 </step>

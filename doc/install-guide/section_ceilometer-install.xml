@@ -104,6 +104,16 @@ connection = mongodb://ceilometer:<replaceable>CEILOMETER_DBPASS</replaceable>@<
 metering_secret = <replaceable>ADMIN_TOKEN</replaceable>
 ...</programlisting>
     </step>
+
+    <step os="opensuse;sles;ubuntu">
+      <para>Configure the RabbitMQ access.</para>
+      <screen os="opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf DEFAULT rabbit_host controller</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf DEFAULT rabbit_password <replaceable>RABBIT_PASS</replaceable></userinput></screen>
+      <para os="ubuntu">Edit the <filename>/etc/ceilometer/ceilometer.conf</filename> file and update the <literal>[DEFAULT]</literal>section.</para>
+      <programlisting os="ubuntu" language="ini">rabbit_host = <replaceable>controller</replaceable>
+rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
+    </step>
+
     <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
       <para>Create a <literal>ceilometer</literal> user that the
         Metering service uses to authenticate with the Identity
