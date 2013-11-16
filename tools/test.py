@@ -90,6 +90,28 @@ def verify_section_tags_have_xmid(doc):
                              node.sourceline)
 
 
+def verify_no_conflicting_profiling(doc):
+    """Check for elements with os profiling set that conflicts with the
+       os profiling of nodes below them in the DOM tree. This picks up cases
+       where content is accidentally ommitted via conflicting profiling."""
+
+    ns = {"docbook": "http://docbook.org/ns/docbook"}
+
+    for parent in doc.xpath('//docbook:*[@os]', namespaces=ns):
+        p_tag = parent.tag
+        p_line = parent.sourceline
+        p_os_list = parent.attrib['os'].split(';')
+        for child in parent.xpath('.//docbook:*[@os]', namespaces=ns):
+            c_tag = child.tag
+            c_line = child.sourceline
+            c_os_list = child.attrib['os'].split(';')
+            for os in c_os_list:
+                if os not in p_os_list:
+                    raise ValueError(
+                        "%s os profiling (%s) conflicts with os profiling of %s on line %d." %
+                        (p_tag, p_os_list, c_tag, c_line))
+
+
 def verify_nice_usage_of_whitespaces(docfile):
     """Check that no unnecessary whitespaces are used"""
     checks = [
@@ -316,6 +338,7 @@ def validate_one_file(schema, rootdir, path, verbose,
                 any_failures = True
                 print(error_message(schema.error_log))
             verify_section_tags_have_xmid(doc)
+            verify_no_conflicting_profiling(doc)
         if check_niceness:
             verify_nice_usage_of_whitespaces(path)
     except etree.XMLSyntaxError as e:
