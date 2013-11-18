@@ -3,33 +3,50 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="configuring-tenant-specific-storage-for-images">
-    <title>Configuring Tenant-specific Storage Locations for Images
-        with Object Storage</title>
-    <para>For some deployers, storing all images in a single place for
-        all tenants and users to access is not ideal. To enable access
-        control to specific images for cloud users, you can configure
-        the Image service with the ability to store image data in the
-        image owner-specific locations.</para>
-    <para>The relevant configuration options in the
-            <filename>glance-api.conf</filename> file are:</para>
-    <itemizedlist>
-        <listitem>
-            <para><literal>swift_store_multi_tenant</literal>: set to
-                    <literal>True</literal> to enable tenant-specific storage locations (Default
-                value is <literal>False</literal>).</para>
-        </listitem>
-        <listitem>
-            <para><literal>swift_store_admin_tenants</literal>: Specify a list of tenants
-                by ID to which to grant read and write access to all Object Storage
-                containers created by the Image service.</para>
-        </listitem>
-    </itemizedlist>
-    <para>Assuming you configured 'swift' as your default_store in
-            <filename>glance-api.conf</filename> and you enable this
-        feature as described above, images will be stored in an Object
-        Storage service (swift) endpoint pulled from the authenticated
-        user's service_catalog. The created image data will only be
-        accessible through the Image service by the tenant that owns
-        it and any tenants defined in swift_store_admin_tenants that
-        are identified as having admin-level accounts.</para>
+    <title>Configure tenant-specific image locations with Object
+        Storage</title>
+    <para>For some deployers, it is not ideal to store all images in
+        one place to enable all tenants and users to access them. You
+        can configure the Image Service to store image data in
+        tenant-specific image locations. Then, only the following
+        tenants can use the Image Service to access the created image:<itemizedlist>
+            <listitem>
+                <para>The tenant who owns the image</para>
+            </listitem>
+            <listitem>
+                <para>Tenants that are defined in
+                        <option>swift_store_admin_tenants</option> and
+                    that have admin-level accounts</para>
+            </listitem>
+        </itemizedlist></para>
+    <procedure>
+        <title>To configure tenant-specific image locations</title>
+        <step>
+            <para>Configure swift as your
+                    <option>default_store</option> in the
+                    <filename>glance-api.conf</filename> file.</para>
+        </step>
+        <step>
+            <para>Set these configuration options in the
+                    <filename>glance-api.conf</filename> file: <itemizedlist>
+                    <listitem>
+                        <para><option>swift_store_multi_tenant</option>.
+                            Set to <literal>True</literal> to enable
+                            tenant-specific storage locations. Default
+                            is <literal>False</literal>.</para>
+                    </listitem>
+                    <listitem>
+                        <para><option>swift_store_admin_tenants</option>.
+                            Specify a list of tenant IDs that can
+                            grant read and write access to all Object
+                            Storage containers that are created by the
+                            Image Service.</para>
+                    </listitem>
+                </itemizedlist></para>
+        </step>
+    </procedure>
+    <para>With this configuration, images are stored in an
+        Object Storage service (swift) endpoint that is pulled
+        from the service catalog for the authenticated
+        user.</para>
 </section>

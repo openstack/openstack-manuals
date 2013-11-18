@@ -3,24 +3,27 @@
   xmlns="http://docbook.org/ns/docbook"
   xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
-      <title>Manage Networking service quotas</title>
-      <para>A quota is a function used to limit the number of resources. A default quota may be
-    enforced for all tenants. Attempting to create resources over the limit triggers an
-    error.</para>
-      <screen><prompt>$</prompt> <userinput>neutron net-create test_net</userinput>
-<computeroutput>Quota exceeded for resources: ['network']</computeroutput></screen>
-      <para>Per-tenant quota configuration is also supported by the quota extension API. See <link
-      linkend="cfg_quotas_per_tenant"> Per-tenant quota configuration</link> for details.</para>
-      <section xml:id="cfg_quotas_common">
-        <title>Basic quota configuration</title>
-        <para>In the Networking default quota mechanism, all tenants have the same quota value, such
-      as the number of resources that a tenant can create. This is enabled by default.</para>
-        <para>The quota value is defined in the OpenStack Networking configuration file
-        (<filename>neutron.conf</filename>). If you want to disable quotas for a specific resource
-      (e.g., network, subnet, port), remove a corresponding item from
-      <literal>quota_items</literal>. Each of the quota values in the example below is the default
-      value.</para>
-        <programlisting language="ini">[quotas]
+  <title>Manage Networking service quotas</title>
+  <para>A quota limits the number of available resources. A default
+    quota might be enforced for all tenants. When you try to create
+    more resources than the quota allows, an errors:</para>
+  <screen><prompt>$</prompt> <userinput>neutron net-create test_net</userinput></screen>
+  <screen><computeroutput>Quota exceeded for resources: ['network']</computeroutput></screen>
+  <para>Per-tenant quota configuration is also supported by the quota
+    extension API. See <link linkend="cfg_quotas_per_tenant">
+      Per-tenant quota configuration</link> for details.</para>
+  <section xml:id="cfg_quotas_common">
+    <title>Basic quota configuration</title>
+    <para>In the Networking default quota mechanism, all tenants have
+      the same quota values, such as the number of resources that a
+      tenant can create.</para>
+    <para>The quota value is defined in the OpenStack Networking
+        <filename>neutron.conf</filename> configuration file. To
+      disable quotas for a specific resource, such as network, subnet,
+      or port, remove a corresponding item from
+        <option>quota_items</option>. This example shows the default
+      quota values:</para>
+    <programlisting language="ini">[quotas]
 # resource name(s) that are supported in quota features
 quota_items = network,subnet,port
 
@@ -35,38 +38,79 @@ quota_port = 50
 
 # default driver to use for quota checks
 quota_driver = neutron.quota.ConfDriver</programlisting>
-      <para>OpenStack Networking also supports quotas for L3 resources: router and floating IP. You
-        can configure them by adding the following lines to <literal>quotas</literal> section in
-          <filename>neutron.conf</filename>. (Note that <literal>quota_items</literal> does not
-        affect these quotas.)</para>
-      <programlisting language="ini">[quotas]
+    <para>OpenStack Networking also supports quotas for L3 resources:
+      router and floating IP. Add these lines to the
+        <literal>quotas</literal> section in the
+        <filename>neutron.conf</filename> file.</para>
+    <programlisting language="ini">[quotas]
 # number of routers allowed per tenant, and minus means unlimited
 quota_router = 10
 
 # number of floating IPs allowed per tenant, and minus means unlimited
 quota_floatingip = 50</programlisting>
-        <para>OpenStack Networking also supports quotas for security group resources: number of
-        security groups and the number of rules per security group. You can configure them by adding
-        the following lines to <literal>quotas</literal> section in
-          <filename>neutron.conf</filename>. (Note that <literal>quota_items</literal> does not
-        affect these quotas.)</para>
-        <programlisting language="ini">[quotas]
+    <note>
+      <para>The <option>quota_items</option> option does not affect
+        these quotas.</para>
+    </note>
+    <para>OpenStack Networking also supports quotas for security group
+      resources: number of security groups and the number of rules for
+      each security group. Add these lines to the
+        <literal>quotas</literal> section in the
+        <filename>neutron.conf</filename> file:</para>
+    <programlisting language="ini">[quotas]
 # number of security groups per tenant, and minus means unlimited
 quota_security_group = 10
 
 # number of security rules allowed per tenant, and minus means unlimited
 quota_security_group_rule = 100</programlisting>
-      </section>
-      <section xml:id="cfg_quotas_per_tenant">
-        <title>Per-tenant quota configuration</title>
-        <para>OpenStack Networking also supports per-tenant quota limit by quota extension API. To
-        enable per-tenant quota, you need to set <literal>quota_driver</literal> in
-          <literal>neutron.conf</literal>. For example:</para>
+    <note>
+      <para>The <option>quota_items</option> option does not affect
+        these quotas.</para>
+    </note>
+  </section>
+  <section xml:id="cfg_quotas_per_tenant">
+    <title>Configure per-tenant quotas</title>
+    <para>OpenStack Networking also supports per-tenant quota limit by
+      quota extension API.</para>
+    <para>Use these commands to manage per-tenant quotas:<itemizedlist>
+        <listitem>
+          <para><command>neutron quota-delete</command>. Deletes
+            defined quotas for a specified tenant.</para>
+        </listitem>
+        <listitem>
+          <para><command>neutron quota-list</command>. Lists defined
+            quotas for all tenants.</para>
+        </listitem>
+        <listitem>
+          <para><command>neutron quota-show</command>. Shows quotas
+            for a specified tenant.</para>
+        </listitem>
+        <listitem>
+          <para><command>neutron quota-update</command>. Updates
+            quotas for a specified tenant.</para>
+        </listitem>
+      </itemizedlist>Only users with the <literal>admin</literal> role
+      can change a quota value. By default, the default set of quotas
+      are enforced for all tenants, so no
+        <command>quota-create</command> command exists.</para>
+    <procedure>
+      <step>
+        <title>Configure Networking to show per-tenant quotas</title>
+        <para>Set the <literal>quota_driver</literal> option in the
+            <literal>neutron.conf</literal> file:</para>
         <programlisting language="ini">quota_driver = neutron.db.quota_db.DbQuotaDriver</programlisting>
-        <para>When per-tenant quota is enabled, the output of the following commands contain
-          <literal>quotas</literal>.</para>
-        <screen><prompt>$</prompt> <userinput>neutron ext-list -c alias -c name</userinput>
-<computeroutput>+-----------------+--------------------------+
+        <para>When you set this option, the output for Networking
+          commands shows <literal>quotas</literal>.</para>
+      </step>
+      <step>
+        <title>List Networking extensions</title>
+        <para>To list the Networking extensions, run this
+          command:</para>
+        <screen><prompt>$</prompt> <userinput>neutron ext-list -c alias -c name</userinput></screen>
+        <para>The command shows the <literal>quotas</literal>
+          extension, which provides per-tenant quota management
+          support:</para>
+        <screen><computeroutput>+-----------------+--------------------------+
 | alias           | name                     |
 +-----------------+--------------------------+
 | agent_scheduler | Agent Schedulers         |
@@ -79,9 +123,13 @@ quota_security_group_rule = 100</programlisting>
 | lbaas           | LoadBalancing service    |
 | extraroute      | Neutron Extra Route      |
 +-----------------+--------------------------+</computeroutput></screen>
-      <screen>
-<prompt>$</prompt> <userinput>neutron ext-show quotas</userinput>
-<computeroutput>+-------------+------------------------------------------------------------+
+      </step>
+      <step>
+        <title>Show information for the quotas extension</title>
+        <para>To show information for the <literal>quotas</literal>
+          extension, run this command:</para>
+        <screen><prompt>$</prompt> <userinput>neutron ext-show quotas</userinput></screen>
+        <screen><computeroutput>+-------------+------------------------------------------------------------+
 | Field       | Value                                                      |
 +-------------+------------------------------------------------------------+
 | alias       | quotas                                                     |
@@ -91,49 +139,38 @@ quota_security_group_rule = 100</programlisting>
 | namespace   | http://docs.openstack.org/network/ext/quotas-sets/api/v2.0 |
 | updated     | 2012-07-29T10:00:00-00:00                                  |
 +-------------+------------------------------------------------------------+</computeroutput></screen>
-        <note><para>
-          Per-tenant quotas are supported only supported by some plugins. At least Open vSwitch,
-          Linux Bridge, and Nicira NVP are known to work but new versions of other plugins may
-          bring additional functionality - consult the documentation for each plugin.
-        </para></note>
-        <para>There are four CLI commands to manage per-tenant quotas:<itemizedlist>
-          <listitem>
-            <para><command>neutron quota-delete</command> - Delete defined quotas of a given
-              tenant.</para>
-          </listitem>
-          <listitem>
-            <para><command>neutron quota-list</command> - List defined quotas of all tenants.</para>
-          </listitem>
-          <listitem>
-            <para><command>neutron quota-show</command> - Show quotas of a given tenant.</para>
-          </listitem>
-          <listitem>
-            <para><command>neutron quota-update</command> - Define tenant's quotas not to use
-              defaults.</para>
-          </listitem>
-        </itemizedlist>Only users with 'admin' role can change a quota value. Note that the default
-        set of quotas are enforced for all tenants by default, so there is no
-          <literal>quota-create</literal> command.</para>
-        <para>
-          <literal>quota-list</literal> displays a list of tenants for which per-tenant quota is enabled.
-          The tenants who have the default set of quota limits are not listed.
-          This command is permitted to only 'admin' users.
-        </para>
-        <screen><prompt>$</prompt> <userinput>neutron quota-list</userinput>
-<computeroutput>+------------+---------+------+--------+--------+----------------------------------+
+        <note>
+          <para>Only some plug-ins support per-tenant quotas.
+            Specifically, Open vSwitch, Linux Bridge, and Nicira NVP
+            support them, but new versions of other plug-ins might
+            bring additional functionality. See the documentation for
+            each plug-in.</para>
+        </note>
+      </step>
+      <step>
+        <title>List tenants who have per-tenant quota support</title>
+        <para>The <command>quota-list</command> command lists tenants
+          for which the per-tenant quota is enabled. The command does
+          not list tenants with default quota support. You must be an
+          administrative user to run this command:</para>
+        <screen><prompt>$</prompt> <userinput>neutron quota-list</userinput></screen>
+        <screen><computeroutput>+------------+---------+------+--------+--------+----------------------------------+
 | floatingip | network | port | router | subnet | tenant_id                        |
 +------------+---------+------+--------+--------+----------------------------------+
 |         20 |       5 |   20 |     10 |      5 | 6f88036c45344d9999a1f971e4882723 |
 |         25 |      10 |   30 |     10 |     10 | bff5c9455ee24231b5bc713c1b96d422 |
 +------------+---------+------+--------+--------+----------------------------------+</computeroutput></screen>
-        <para>
-          <literal>quota-show</literal> reports the current set of quota limits for the specified tenant.
-          Regular (non-admin) users can call this command (without --tenant_id parameter).
-          If per-tenant quota limits are not defined for the tenant, the default set of
-          quotas are displayed.
-        </para>
-        <screen><prompt>$</prompt> <userinput>neutron quota-show --tenant_id 6f88036c45344d9999a1f971e4882723</userinput>
-<computeroutput>+------------+-------+
+      </step>
+      <step>
+        <title>Show per-tenant quota values</title>
+        <para>The <command>quota-show</command> reports the current
+          set of quota limits for the specified tenant.
+          Non-administrative users can run this command without the
+            <parameter>--tenant_id</parameter> parameter. If
+          per-tenant quota limits are not enabled for the tenant, the
+          command shows the default set of quotas:</para>
+        <screen><prompt>$</prompt> <userinput>neutron quota-show --tenant_id 6f88036c45344d9999a1f971e4882723</userinput></screen>
+        <screen><computeroutput>+------------+-------+
 | Field      | Value |
 +------------+-------+
 | floatingip | 20    |
@@ -142,11 +179,10 @@ quota_security_group_rule = 100</programlisting>
 | router     | 10    |
 | subnet     | 5     |
 +------------+-------+</computeroutput></screen>
-        <para>
-          The below is an example called by a non-admin user.
-        </para>
-        <screen><prompt>$</prompt> <userinput>neutron quota-show</userinput>
-<computeroutput>+------------+-------+
+        <para>The following command shows the command output for a
+          non-administrative user:</para>
+        <screen><prompt>$</prompt> <userinput>neutron quota-show</userinput></screen>
+        <screen><computeroutput>+------------+-------+
 | Field      | Value |
 +------------+-------+
 | floatingip | 20    |
@@ -155,8 +191,11 @@ quota_security_group_rule = 100</programlisting>
 | router     | 10    |
 | subnet     | 5     |
 +------------+-------+</computeroutput></screen>
-        <para>You can update a quota of the given tenant by <literal>quota-update</literal> command.</para>
-        <para>Update the limit of network quota.</para>
+      </step>
+      <step>
+        <title>Update quota values for a specified tenant</title>
+        <para>Use the <command>quota-update</command> command to
+          update a quota for a specified tenant:</para>
         <screen><prompt>$</prompt> <userinput>neutron quota-update --tenant_id 6f88036c45344d9999a1f971e4882723 --network 5</userinput>
 <computeroutput>+------------+-------+
 | Field      | Value |
@@ -167,7 +206,8 @@ quota_security_group_rule = 100</programlisting>
 | router     | 10    |
 | subnet     | 10    |
 +------------+-------+</computeroutput></screen>
-        <para>You can update quotas of multiple resources in one command.</para>
+        <para>You can update quotas for multiple resources through one
+          command:</para>
         <screen><prompt>$</prompt> <userinput>neutron quota-update --tenant_id 6f88036c45344d9999a1f971e4882723 --subnet 5 --port 20</userinput>
 <computeroutput>+------------+-------+
 | Field      | Value |
@@ -178,13 +218,13 @@ quota_security_group_rule = 100</programlisting>
 | router     | 10    |
 | subnet     | 5     |
 +------------+-------+</computeroutput></screen>
-        <para>
-          To update the limits of L3 resource (router, floating IP), we need to
-          specify new values of the quotas after '--'. The example below updates
-          the limit of the number of floating IPs for the given tenant.
-        </para>
-        <screen><prompt>$</prompt> <userinput>neutron quota-update --tenant_id 6f88036c45344d9999a1f971e4882723 -- --floatingip 20</userinput>
-<computeroutput>+------------+-------+
+        <para>To update the limits for an L3 resource such as, router
+          or floating IP, you must define new values for the quotas
+          after the <parameter>--</parameter> directive.</para>
+        <para>This example updates the limit of the number of floating
+          IPs for the specified tenant:</para>
+        <screen><prompt>$</prompt> <userinput>neutron quota-update --tenant_id 6f88036c45344d9999a1f971e4882723 -- --floatingip 20</userinput></screen>
+        <screen><computeroutput>+------------+-------+
 | Field      | Value |
 +------------+-------+
 | floatingip | 20    |
@@ -193,9 +233,9 @@ quota_security_group_rule = 100</programlisting>
 | router     | 10    |
 | subnet     | 5     |
 +------------+-------+</computeroutput></screen>
-        <para>
-          You can update the limits of multiple resources including L2 resources and L3 resource in one command.
-        </para>
+        <para>You can update the limits of multiple resources by
+          including L2 resources and L3 resource through one
+          command.</para>
         <screen><prompt>$</prompt> <userinput>neutron quota-update --tenant_id 6f88036c45344d9999a1f971e4882723 --network 3 --subnet 3 --port 3 -- --floatingip 3 --router 3</userinput>
 <computeroutput>+------------+-------+
 | Field      | Value |
@@ -206,16 +246,18 @@ quota_security_group_rule = 100</programlisting>
 | router     | 3     |
 | subnet     | 3     |
 +------------+-------+</computeroutput></screen>
-        <para>
-          To clear per-tenant quota limits, use <literal>quota-delete</literal>.
-          After <literal>quota-delete</literal>, quota limits enforced to the tenant are reset to
-          the default set of quotas.
-        </para>
-        <screen><prompt>$</prompt> <userinput>neutron quota-delete --tenant_id 6f88036c45344d9999a1f971e4882723</userinput>
-<computeroutput>Deleted quota: 6f88036c45344d9999a1f971e4882723</computeroutput></screen>
-      <screen>
-<prompt>$</prompt> <userinput>neutron quota-show --tenant_id 6f88036c45344d9999a1f971e4882723</userinput>
-<computeroutput>+------------+-------+
+      </step>
+      <step>
+        <title>Delete per-tenant quota values</title>
+        <para>To clear per-tenant quota limits, use the
+            <command>quota-delete</command> command:</para>
+        <screen><prompt>$</prompt> <userinput>neutron quota-delete --tenant_id 6f88036c45344d9999a1f971e4882723</userinput></screen>
+        <screen><computeroutput>Deleted quota: 6f88036c45344d9999a1f971e4882723</computeroutput></screen>
+        <para>After you run this command, you can see that quota
+          values for the tenant are reset to the default
+          values:</para>
+        <screen><prompt>$</prompt> <userinput>neutron quota-show --tenant_id 6f88036c45344d9999a1f971e4882723</userinput></screen>
+        <screen><computeroutput>+------------+-------+
 | Field      | Value |
 +------------+-------+
 | floatingip | 50    |
@@ -224,5 +266,7 @@ quota_security_group_rule = 100</programlisting>
 | router     | 10    |
 | subnet     | 10    |
 +------------+-------+</computeroutput></screen>
-      </section>
+      </step>
+    </procedure>
+  </section>
 </section>

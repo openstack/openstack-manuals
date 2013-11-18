@@ -7,25 +7,26 @@
   <para>After you create a bootable volume, you can launch an instance
     from that volume.</para>
   <para>Optionally, to configure your volume, see the <link
-    xlink:href="http://docs.openstack.org/trunk/config-reference/content/config_overview.html"
-    ><citetitle>OpenStack Configuration
+      xlink:href="http://docs.openstack.org/trunk/config-reference/content/config_overview.html"
+        ><citetitle>OpenStack Configuration
       Reference</citetitle></link>.</para>
   <procedure xml:id="create_volume_from_image">
-    <title>To launch an instance from a volume</title>
-    <step><para>To choose an image to create a bootable volume from, run the
-        following command to list images:</para>
-    <screen><prompt>$</prompt> <userinput>nova image-list</userinput>
+    <step>
+      <para>For a list of images to choose from to create a bootable
+        volume, run this command:</para>
+      <screen><prompt>$</prompt> <userinput>nova image-list</userinput>
 <computeroutput>+--------------------------------------+---------------------------------+--------+--------+
 | ID                                   | Name                            | Status | Server |
 +--------------------------------------+---------------------------------+--------+--------+
 | e0b7734d-2331-42a3-b19e-067adc0da17d | cirros-0.3.1-x86_64-uec         | ACTIVE |        |
 | 75bf193b-237b-435e-8712-896c51484de9 | cirros-0.3.1-x86_64-uec-kernel  | ACTIVE |        |
 | 19eee81c-f972-44e1-a952-1dceee148c47 | cirros-0.3.1-x86_64-uec-ramdisk | ACTIVE |        |
-+--------------------------------------+---------------------------------+--------+--------+</computeroutput></screen></step>
++--------------------------------------+---------------------------------+--------+--------+</computeroutput></screen>
+    </step>
     <step>
       <para>To create a bootable volume from an image, include the
         image ID in the command:</para>
-        <screen><prompt>#</prompt> <userinput>cinder create --image-id e0b7734d-2331-42a3-b19e-067adc0da17d --display-name my-boot-vol 8</userinput>
+      <screen><prompt>#</prompt> <userinput>cinder create --image-id e0b7734d-2331-42a3-b19e-067adc0da17d --display-name my-boot-vol 8</userinput>
 <computeroutput>+---------------------+--------------------------------------+
 |       Property      |                Value                 |
 +---------------------+--------------------------------------+
@@ -66,7 +67,12 @@
       <screen><prompt>$</prompt> <userinput>nova boot --flavor <replaceable>FLAVOR</replaceable> --block_device_mapping <replaceable>DEVNAME</replaceable>=<replaceable>ID</replaceable>:<replaceable>TYPE</replaceable>:<replaceable>SIZE</replaceable>:<replaceable>DELETE_ON_TERMINATE</replaceable> <replaceable>NAME</replaceable></userinput></screen>
       <para>The command arguments are:</para>
       <informaltable>
-        <thead><tr><th>Parameter</th><th>Description</th></tr></thead>
+        <thead>
+          <tr>
+            <th>Parameter</th>
+            <th>Description</th>
+          </tr>
+        </thead>
         <tbody>
           <tr>
             <td>
@@ -145,8 +151,10 @@
             <literal>Attempt to boot from volume - no image
             supplied</literal> error is returned.</para>
       </note>
-      <para>You can also attach a swap disk on boot with the <parameter>--swap</parameter>
-        flag, or you can attach an ephemeral disk on boot with the <parameter>--ephemeral</parameter> flag.</para>
+      <para>You can also attach a swap disk on boot with the
+          <parameter>--swap</parameter> flag, or you can attach an
+        ephemeral disk on boot with the
+          <parameter>--ephemeral</parameter> flag.</para>
       <para>For example, you might enter the following command to boot
         from a volume. The volume is not deleted when the instance is
         terminated:</para>
