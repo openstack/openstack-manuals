@@ -1,126 +1,138 @@
 <?xml version= "1.0" encoding= "UTF-8"?>
 <section xml:id="compute-options"
-    xmlns= "http://docbook.org/ns/docbook"
-    xmlns:xi= "http://www.w3.org/2001/XInclude"
-    xmlns:xlink= "http://www.w3.org/1999/xlink" version= "5.0">
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
     <title>File format for nova.conf</title>
     <simplesect>
         <title>Overview</title>
-        <para>The Compute service supports a large number of configuration options. These options
-            are specified in a configuration file whose default location in
-                <filename>/etc/nova/nova.conf</filename>.</para>
-        <para>The configuration file is in <link xlink:href="https://en.wikipedia.org/wiki/INI_file"
-                >INI file format</link>, with options specified as <literal>key=value</literal>
-            pairs, grouped into sections. Almost all of the configuration options are in the
-                <literal>DEFAULT</literal> section. Here's a brief
-            example:<programlisting language="ini">[DEFAULT]
+        <para>The Compute service supports a large number of
+            configuration options. These options are specified in the
+                <filename>/etc/nova/nova.conf</filename> configuration
+            file.</para>
+        <para>The configuration file is in <link
+                xlink:href="https://en.wikipedia.org/wiki/INI_file"
+                >INI file format</link>, with options specified as
+                <literal>key=value</literal> pairs, grouped into
+            sections. Almost all configuration options are in the
+                <literal>DEFAULT</literal> section. For
+            example:</para>
+        <programlisting language="ini">[DEFAULT]
 debug=true
 verbose=true
 
 [trusted_computing]
-server=10.3.4.2</programlisting></para>
-
-        </simplesect>
+server=10.3.4.2</programlisting>
+    </simplesect>
     <simplesect>
         <title>Types of configuration options</title>
-        <para>Each configuration option has an associated type that indicates what values can be
-            set. The supported option types are as follows:<variablelist>
-                <varlistentry>
-                    <term>BoolOpt</term>
-                    <listitem>
-                        <para>Boolean option. Value must be either <literal>true</literal> or
-                                <literal>false</literal> .
-                            Example:<programlisting language="ini">debug=false</programlisting></para>
-                    </listitem>
-                </varlistentry>
-                <varlistentry>
-                    <term>StrOpt</term>
-                    <listitem>
-                        <para>String option. Value is an arbitrary string.
-                            Example:<programlisting language="ini">my_ip=10.0.0.1</programlisting></para>
-                    </listitem>
-                </varlistentry>
-                <varlistentry>
-                    <term>IntOption</term>
-                    <listitem>
-                        <para>Integer option. Value must be an integer. Example:
-                            <programlisting language="ini">glance_port=9292</programlisting></para>
-                    </listitem>
-                </varlistentry>
-                <varlistentry>
-                    <term>MultiStrOpt</term>
-                    <listitem>
-                        <para>String option. Same as StrOpt, except that it can be declared multiple
-                            times to indicate multiple values.
-                            Example:<programlisting language="ini">ldap_dns_servers=dns1.example.org
-ldap_dns_servers=dns2.example.org</programlisting></para>
-                    </listitem>
-                </varlistentry>
-                <varlistentry>
-                    <term>ListOpt</term>
-                    <listitem>
-                        <para>List option. Value is a list of arbitrary strings separated by commas.
-                            Example:<programlisting language="ini">enabled_apis=ec2,osapi_compute,metadata</programlisting></para>
-                    </listitem>
-                </varlistentry>
-                <varlistentry>
-                    <term>FloatOpt</term>
-                    <listitem>
-                        <para>Floating-point option. Value must be a floating-point number.
-                            Example:<programlisting language="ini">ram_allocation_ratio=1.5</programlisting></para>
-                    </listitem>
-                </varlistentry>
-            </variablelist>
-        </para>
-
-    <important>
-      <para>Nova options should <emphasis>not</emphasis>
-      be quoted.</para>
-    </important>
-        </simplesect>
+        <para>Each configuration option has an associated type that
+            indicates which values can be set. The supported option
+            types are:</para>
+        <variablelist>
+            <varlistentry>
+                <term>BoolOpt</term>
+                <listitem>
+                    <para>Boolean option. Value must be either
+                            <literal>true</literal> or
+                            <literal>false</literal> .
+                        Example:<programlisting language="ini">debug=false</programlisting></para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term>StrOpt</term>
+                <listitem>
+                    <para>String option. Value is an arbitrary string.
+                        Example:<programlisting language="ini">my_ip=10.0.0.1</programlisting></para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term>IntOption</term>
+                <listitem>
+                    <para>Integer option. Value must be an integer.
+                        Example:
+                        <programlisting language="ini">glance_port=9292</programlisting></para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term>MultiStrOpt</term>
+                <listitem>
+                    <para>String option. Same as StrOpt, except that
+                        it can be declared multiple times to indicate
+                        multiple values. Example:</para>
+                    <programlisting language="ini">ldap_dns_servers=dns1.example.org
+ldap_dns_servers=dns2.example.org</programlisting>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term>ListOpt</term>
+                <listitem>
+                    <para>List option. Value is a list of arbitrary
+                        strings separated by commas. Example:</para>
+                    <programlisting language="ini">enabled_apis=ec2,osapi_compute,metadata</programlisting>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term>FloatOpt</term>
+                <listitem>
+                    <para>Floating-point option. Value must be a
+                        floating-point number. Example:</para>
+                    <programlisting language="ini">ram_allocation_ratio=1.5</programlisting>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <important>
+            <para>Do not specify quotes around Nova options.</para>
+        </important>
+    </simplesect>
     <simplesect>
         <title>Sections</title>
-        <para>Configuration options are grouped by section. The Compute config file supports the
-            following sections.<variablelist>
+        <para>Configuration options are grouped by section. The
+            Compute configuration file supports the following sections.<variablelist>
                 <varlistentry>
                     <term><literal>[DEFAULT]</literal></term>
                     <listitem>
-                        <para>Almost all of the configuration options are organized into this
-                            section. If the documentation for a configuration option does not
-                            specify its section, assume that it should be placed in this one.</para>
+                        <para>Contains most configuration options. If
+                            the documentation for a configuration
+                            option does not specify its section,
+                            assume that it appears in this
+                            section.</para>
                     </listitem>
                 </varlistentry>
                 <varlistentry>
                     <term><literal>[cells]</literal></term>
                     <listitem>
-                        <para>The <literal>cells</literal> section is
-                            used for options for configuring cells
-                            functionality. See the <link
-                                xlink:href="../openstack-compute/admin/content/ch_cells.html">Cells</link>
-                            section of the OpenStack Compute Admin
-                            Manual for more details.</para>
+                        <para>Use options in this section to configure
+                            cells functionality. For details, see the
+                            Cells section (<link
+                                xlink:href="../config-reference/content/section_compute-cells.html"
+                            />) in the <citetitle>OpenStack
+                                Configuration
+                            Reference</citetitle>.</para>
                     </listitem>
                 </varlistentry>
                 <varlistentry>
                     <term><literal>[baremetal]</literal></term>
                     <listitem>
-                        <para>This section is used for options that relate to the baremetal
-                            hypervisor driver.</para>
+                        <para>Use options in this section to configure
+                            the baremetal hypervisor driver.</para>
                     </listitem>
                 </varlistentry>
                 <varlistentry>
                     <term><literal>[conductor]</literal></term>
                     <listitem>
-                        <para>The <literal>conductor</literal> section is used for options for
-                            configuring the <systemitem class="service">nova-conductor</systemitem> service.</para>
+                        <para>Use options in this section to configure
+                            the <systemitem class="service"
+                                >nova-conductor</systemitem>
+                            service.</para>
                     </listitem>
                 </varlistentry>
                 <varlistentry>
                     <term><literal>[trusted_computing]</literal></term>
                     <listitem>
-                        <para>The <literal>trusted_computing</literal> section is used for options
-                            that relate to the trusted computing pools functionality. Options in
-                            this section describe how to connect to a remote attestation
+                        <para>Use options in this section to configure
+                            the trusted computing pools functionality
+                            and how to connect to a remote attestation
                             service.</para>
                     </listitem>
                 </varlistentry>
@@ -128,35 +140,47 @@ ldap_dns_servers=dns2.example.org</programlisting></para>
     </simplesect>
     <simplesect>
         <title>Variable substitution</title>
-        <para>The configuration file supports variable substitution. Once a configuration option is
-            set,  it can be referenced in later configuration values when preceded by
-                <literal>$</literal>. Consider the following example where <literal>my_ip</literal>
-            is defined and then <literal>$my_ip</literal> is used as a
-            variable.<programlisting language="ini">my_ip=10.2.3.4
+        <para>The configuration file supports variable substitution.
+            After you set a configuration option, it can be referenced
+            in later configuration values when you precede it with
+                <literal>$</literal>. This example defines
+                <literal>my_ip</literal> and then uses
+                <literal>$my_ip</literal> as a
+            variable:<programlisting language="ini">my_ip=10.2.3.4
 glance_host=$my_ip
 metadata_host=$my_ip</programlisting></para>
-        <para>If you need a value to contain the <literal>$</literal> symbol, escape it by doing
-                <literal>$$</literal>. For example, if your LDAP DNS password was
-                <literal>$xkj432</literal>, you would
-            do:<programlisting language="ini">ldap_dns_password=$$xkj432</programlisting></para>
-        <para>The Compute code uses Python's <literal>string.Template.safe_substitute()</literal>
-            method to implement variable substitution. For more details on how variable substitution
-            is resolved, see <link
-                xlink:href="http://docs.python.org/2/library/string.html#template-strings">Python
-                documentation on template strings</link> and <link
-                xlink:href="http://www.python.org/dev/peps/pep-0292/">PEP 292</link>.</para>
+        <para>If you need a value to contain the <literal>$</literal>
+            symbol, escape it with <literal>$$</literal>. For example,
+            if your LDAP DNS password was <literal>$xkj432</literal>,
+            specify it, as
+            follows:<programlisting language="ini">ldap_dns_password=$$xkj432</programlisting></para>
+        <para>The Compute code uses the Python
+                <literal>string.Template.safe_substitute()</literal>
+            method to implement variable substitution. For more
+            details on how variable substitution is resolved, see
+                <link
+                xlink:href="http://docs.python.org/2/library/string.html#template-strings"
+                >http://docs.python.org/2/library/string.html#template-strings</link>
+            and <link
+                xlink:href="http://www.python.org/dev/peps/pep-0292/"
+                >http://www.python.org/dev/peps/pep-0292/</link>.</para>
     </simplesect>
     <simplesect>
         <title>Whitespace</title>
-        <para>To include whitespace in a configuration value, use a quoted string. For
-            example:<programlisting language="ini">ldap_dns_passsword='a password with spaces'</programlisting></para>
+        <para>To include whitespace in a configuration value, use a
+            quoted string. For example:</para>
+        <programlisting language="ini">ldap_dns_passsword='a password with spaces'</programlisting>
     </simplesect>
     <simplesect>
-        <title>Specifying an alternate location for nova.conf</title>
-        <para>The configuration file is loaded by all of the nova-* services, as well as the
-                <command>nova-manage</command> command-line tool. To specify an alternate location
-            for the configuration file, pass the <literal>--config-file
-                    <replaceable>/path/to/nova.conf</replaceable></literal> argument when starting a
-            nova-* service or calling <command>nova-manage</command>.</para>
+        <title>Define an alternate location for nova.conf</title>
+        <para>All <systemitem class="service">nova-*</systemitem>
+            services and the <command>nova-manage</command>
+            command-line client load the configuration file. To define
+            an alternate location for the configuration file, pass the
+                <parameter>--config-file
+                    <replaceable>/path/to/nova.conf</replaceable></parameter>
+            parameter when you start a <systemitem class="service"
+                >nova-*</systemitem> service or call a
+                <command>nova-manage</command> command.</para>
     </simplesect>
 </section>

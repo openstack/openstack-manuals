@@ -7,13 +7,13 @@
     <para>If a cloud compute node fails due to a hardware malfunction
         or another reason, you can evacuate instances to make them
         available again.</para>
-    <para>You can choose evacuation parameters for your use case.</para>
+    <para>You can choose evacuation parameters for your use
+        case.</para>
     <para>To preserve user data on server disk, you must configure
         shared storage on the target host. Also, you must validate
         that the current VM host is down. Otherwise the evacuation
         fails with an error.</para>
     <procedure xml:id="evacuate_shared">
-        <title>To evacuate your server</title>
         <step>
             <para>To find a different host for the evacuated instance,
                 run the following command to lists hosts:</para>
@@ -40,9 +40,13 @@
         </step>
         <step>
             <para>To preserve the user disk data on the evacuated
-                server, deploy OpenStack Compute with shared
-                filesystem. To configure your system, see <link	xlink:href="http://docs.openstack.org/trunk/config-reference/content/configuring-openstack-compute-basics.html#section_configuring-compute-migrations">Configure migrations</link> in <citetitle>OpenStack Configuration Reference</citetitle>. In this
-                example, the password remains unchanged.</para>
+                server, deploy OpenStack Compute with shared file
+                system. To configure your system, see <link
+                    xlink:href="http://docs.openstack.org/trunk/config-reference/content/configuring-openstack-compute-basics.html#section_configuring-compute-migrations"
+                    >Configure migrations</link> in
+                    <citetitle>OpenStack Configuration
+                    Reference</citetitle>. In this example, the
+                password remains unchanged.</para>
             <screen><prompt>$</prompt> <userinput>nova evacuate <replaceable>evacuated_server_name</replaceable> <replaceable>host_b</replaceable> --on-shared-storage</userinput>    </screen>
         </step>
     </procedure>

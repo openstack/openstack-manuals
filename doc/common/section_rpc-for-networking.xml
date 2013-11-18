@@ -1,113 +1,122 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section xmlns="http://docbook.org/ns/docbook"
-    xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
-    xml:id="networking-configuring-rpc">
-    <?dbhtml stop-chunking?>
-    <title>Configuration options for the Oslo RPC Messaging System</title>
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+  xml:id="networking-configuring-rpc">
+  <?dbhtml stop-chunking?>
+  <title>Configure the Oslo RPC messaging system</title>
 
-  <para>Many OpenStack Networking plug-ins use RPC to enable agents to communicate with the main
-      <systemitem class="service">neutron-server</systemitem> process. If your plugin requires
-    agents, they can use the same RPC mechanism used by other OpenStack components like Nova.
-    OpenStack projects use an open standard for messaging middleware known as AMQP. This messaging
-    middleware enables the OpenStack services which will exist across multiple servers to talk to
-    each other. OpenStack Oslo RPC supports three implementations of AMQP:
-      <application>RabbitMQ</application>, <application>Qpid</application>, and
-      <application>ZeroMQ</application>
-  </para>
-    <section xml:id="networking-configuration-rabbitmq">
-      <title>Configuration for RabbitMQ</title>
+  <para>OpenStack projects use an open standard for messaging
+    middleware known as AMQP. This messaging middleware enables the
+    OpenStack services that run on multiple servers to talk to each
+    other. OpenStack Oslo RPC supports three implementations of AMQP:
+      <application>RabbitMQ</application>,
+      <application>Qpid</application>, and
+      <application>ZeroMQ</application>.</para>
 
-      <para>OpenStack Oslo RPC uses <application>RabbitMQ</application> by
-      default. This section discusses the configuration options that are
-      relevant when <application>RabbitMQ</application> is used. The
-      <literal>rpc_backend</literal> option is not required as long as
-      <application>RabbitMQ</application> is the default messaging system.
-      However, if it is included the configuration, it must be set to
-      <literal>neutron.openstack.common.rpc.impl_kombu</literal>.</para>
+  <section xml:id="networking-configuration-rabbitmq">
+    <title>Configure RabbitMQ</title>
+
+    <para>OpenStack Oslo RPC uses <application>RabbitMQ</application>
+      by default. Use these options to configure the
+        <application>RabbitMQ</application> message system. The
+        <option>rpc_backend</option> option is optional as long as
+        <application>RabbitMQ</application> is the default messaging
+      system. However, if it is included the configuration, you must
+      set it to
+        <literal>neutron.openstack.common.rpc.impl_kombu</literal>.</para>
 
 
-      <programlisting language="ini">
+    <programlisting language="ini">
 rpc_backend=neutron.openstack.common.rpc.impl_kombu
       </programlisting>
 
-      <para>The following tables describe the rest of the options that
-        can be used when <application>RabbitMQ</application> is used
-        as the messaging system. You can configure the messaging
-        communication for different installation scenarios as well as
-        tune RabbitMQ's retries and the size of the RPC thread pool.
-        If you want to monitor notifications through RabbitMQ, you
-        must set the <literal>notification_driver</literal> option in
-        <filename>neutron.conf</filename> to
-        <literal>neutron.notifier.rabbit_notifier</literal>.
-      </para>
-
-        <xi:include href="tables/neutron-rabbitmq.xml"/>
-        <xi:include href="tables/neutron-kombu.xml"/>
-
-    </section>
-
-    <section xml:id="networking-configuration-qpid">
-    <title>Configuration for Qpid</title>
-    <para>This section discusses the configuration options that are relevant if
-        <application>Qpid</application> is used as the messaging system for OpenStack Oslo RPC.
-        <application>Qpid</application> is not the default messaging system, so it must be enabled
-      by setting the <literal>rpc_backend</literal> option in
-      <filename>neutron.conf</filename>.</para>
+    <para>Use these options to configure the
+        <application>RabbitMQ</application> messaging system. You can
+      configure messaging communication for different installation
+      scenarios, tune retries for RabbitMQ, and define the size of the
+      RPC thread pool. To monitor notifications through RabbitMQ, you
+      must set the <option>notification_driver</option> option to
+        <literal>neutron.notifier.rabbit_notifier</literal> in the
+        <filename>neutron.conf</filename> file:</para>
+    <xi:include href="tables/neutron-rabbitmq.xml"/>
+    <xi:include href="tables/neutron-kombu.xml"/>
+  </section>
+  <section xml:id="networking-configuration-qpid">
+    <title>Configure Qpid</title>
+    <para>Use these options to configure the
+        <application>Qpid</application> messaging system for OpenStack
+      Oslo RPC. <application>Qpid</application> is not the default
+      messaging system, so you must enable it by setting the
+        <option>rpc_backend</option> option in the
+        <filename>neutron.conf</filename> file:</para>
     <programlisting language="ini">
 rpc_backend=neutron.openstack.common.rpc.impl_qpid
       </programlisting>
-    <para>This next critical option points the compute nodes to the <application>Qpid</application>
-      broker (server). Set <literal>qpid_hostname</literal> in <filename>neutron.conf</filename> to
-      be the hostname where the broker is running.</para>
+    <para>This critical option points the compute nodes to the
+        <application>Qpid</application> broker (server). Set the
+        <option>qpid_hostname</option> option to the host name where
+      the broker runs in the <filename>neutron.conf</filename>
+      file.</para>
     <note>
-      <para>The -<literal>-qpid_hostname</literal> option accepts a value in the form of either a
-        hostname or an IP address.</para>
+      <para>The <option>--qpid_hostname</option> option accepts a host
+        name or IP address value.</para>
     </note>
     <programlisting language="ini">
 qpid_hostname=hostname.example.com
       </programlisting>
-    <para>If the <application>Qpid</application> broker is listening on a port other than the AMQP
-      default of <literal>5672</literal>, you will need to set the <literal>qpid_port</literal>
-      option:</para>
+
+    <para>If the <application>Qpid</application> broker listens on a
+      port other than the AMQP default of <literal>5672</literal>, you
+      must set the <option>qpid_port</option> option to that
+      value:</para>
+
     <programlisting language="ini">
 qpid_port=12345
       </programlisting>
-    <para>If you configure the <application>Qpid</application> broker to require authentication, you
-      will need to add a username and password to the configuration:</para>
+
+    <para>If you configure the <application>Qpid</application> broker
+      to require authentication, you must add a user name and password
+      to the configuration:</para>
+
     <programlisting language="ini">
 qpid_username=username
 qpid_password=password
       </programlisting>
-    <para>By default, TCP is used as the transport. If you would like to enable SSL, set the
-        <literal>qpid_protocol</literal> option:</para>
+
+    <para>By default, TCP is used as the transport. To enable SSL, set
+      the <option>qpid_protocol</option> option:</para>
+
     <programlisting language="ini">
 qpid_protocol=ssl
       </programlisting>
-    <para>The following table lists the rest of the options used by the Qpid messaging driver for
-      OpenStack Oslo RPC. It is not common that these options are used.</para>
+
+    <para>Use these additional options to configure the Qpid messaging
+      driver for OpenStack Oslo RPC. These options are used
+      infrequently.</para>
+
     <xi:include href="tables/neutron-qpid.xml"/>
+
   </section>
-    <section xml:id="networking-configuration-zeromq">
-     <title>Configuration for ZeroMQ</title>
-      <para>This section discusses the configuration options that are relevant
-      if <application>ZeroMQ</application> is used as the messaging system for
-      OpenStack Oslo RPC. <application>ZeroMQ</application> is not the default
-      messaging system, so it must be enabled by setting the
-      <literal>rpc_backend</literal> option in
-      <filename>neutron.conf</filename>.</para>
-     <xi:include href="tables/neutron-zeromq.xml"/>
-    </section>
-    <section xml:id="networking-common-messaging-configuration">
-      <title>Common configuration for messaging</title>
+  <section xml:id="networking-configuration-zeromq">
+    <title>Configure ZeroMQ</title>
+    <para>Use these options to configure the
+        <application>ZeroMQ</application> messaging system for
+      OpenStack Oslo RPC. <application>ZeroMQ</application> is not the
+      default messaging system, so you must enable it by setting the
+        <option>rpc_backend</option> option in the
+        <filename>neutron.conf</filename> file:</para>
+    <xi:include href="tables/neutron-zeromq.xml"/>
+  </section>
+  <section xml:id="networking-common-messaging-configuration">
+    <title>Configure messaging</title>
 
-      <para>This section lists options that are common between the
-      <application>RabbitMQ</application>, <application>Qpid</application>
-      and <application>ZeroMq</application>
-      messaging drivers.</para>
+    <para>Use these common options to configure the
+        <application>RabbitMQ</application>,
+        <application>Qpid</application>, and
+        <application>ZeroMq</application> messaging drivers:</para>
 
-     <xi:include href="tables/neutron-rpc.xml"/>
-     <xi:include href="tables/neutron-notifier.xml"/>
-    </section>
+    <xi:include href="tables/neutron-rpc.xml"/>
+    <xi:include href="tables/neutron-notifier.xml"/>
+  </section>
 </section>
-
