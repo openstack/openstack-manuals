@@ -1826,4 +1826,197 @@ source=10.10.10.0/24,destination=10.20.20.20/24,action=deny</userinput></screen>
             </section>
         </section>
     </section>
+    <section xml:id="metering">
+        <title>L3 metering</title>
+        <para>The L3 metering is an API extension which allows administrators to configure IP ranges
+            and to assign a specific label to them in order to be able to measure traffic going
+            through a virtual router. L3 metering extension is decoupled from the technology used to
+            implement the measurement. Two abstractions have been added, one is the metering label
+            which can contain metering rules. Since a metering label is assciated with a tenant all
+            virtual routers of this tenant will be associated with this label.</para>
+        <?hard-pagebreak?>
+        <section xml:id="metering_abstraction">
+            <title>L3 metering API abstractions</title>
+            <table rules="all">
+                <caption>Label</caption>
+                <col width="20%"/>
+                <col width="20%"/>
+                <col width="20%"/>
+                <col width="40%"/>
+                <thead>
+                    <tr>
+                        <th>Attribute name</th>
+                        <th>Type</th>
+                        <th>Default Value</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>id</td>
+                        <td>uuid-str</td>
+                        <td>generated</td>
+                        <td>UUID for the metering label.</td>
+                    </tr>
+                    <tr>
+                        <td>name</td>
+                        <td>String</td>
+                        <td>None</td>
+                        <td>Human-readable name for the metering label. Might not be unique.</td>
+                    </tr>
+                    <tr>
+                        <td>description</td>
+                        <td>String</td>
+                        <td>None</td>
+                        <td>The optional description for the metering label.</td>
+                    </tr>
+                    <tr>
+                        <td>tenant_id</td>
+                        <td>uuid-str</td>
+                        <td>N/A</td>
+                        <td>Owner of the metering label.</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table rules="all">
+                <caption>Rules</caption>
+                <col width="20%"/>
+                <col width="20%"/>
+                <col width="20%"/>
+                <col width="40%"/>
+                <thead>
+                    <tr>
+                        <th>Attribute name</th>
+                        <th>Type</th>
+                        <th>Default Value</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>id</td>
+                        <td>uuid-str</td>
+                        <td>generated</td>
+                        <td>UUID for the metering rule.</td>
+                    </tr>
+                    <tr>
+                        <td>direction</td>
+                        <td>String (Either ingress or egress)</td>
+                        <td>ingress</td>
+                        <td>The direction in which metering rule is applied, either ingress or
+                            egress.</td>
+                    </tr>
+                    <tr>
+                        <td>metering_label_id</td>
+                        <td>uuid-str</td>
+                        <td>N/A</td>
+                        <td>
+                            <para>The metering label ID to associate with this metering rule.</para>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>excluded</td>
+                        <td>Boolean</td>
+                        <td>False</td>
+                        <td>Specify whether the remote_ip_prefix will be excluded or not from
+                            traffic counters of the metering label, For example to not count
+                            the traffic of a specific IP address of a range.</td>
+                    </tr>
+                    <tr>
+                        <td>remote_ip_prefix</td>
+                        <td>String (CIDR)</td>
+                        <td>N/A</td>
+                        <td>Indicates remote IP prefix to be associated with this metering rule.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        <?hard-pagebreak?>
+        <section xml:id="metering_operations">
+            <title>Basic L3 metering operations</title>
+            <para>Only administrators are allowed to manage the L3 metering labels/rules.</para>
+            <para>The following table shows example neutron commands that enable you to complete
+                basic L3 metering operations:</para>
+            <table rules="all">
+                <caption>Basic L3 operations</caption>
+                <col width="40%"/>
+                <col width="60%"/>
+                <thead>
+                    <tr>
+                        <th>Operation</th>
+                        <th>Command</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <para>Creates a metering label.</para>
+                        </td>
+                        <td>
+                            <screen><prompt>$</prompt> <userinput>neutron meter-label-create <replaceable>label1</replaceable> --description <replaceable>"description of label1"</replaceable></userinput></screen>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <para>Lists metering labels.</para>
+                        </td>
+                        <td>
+                            <screen><prompt>$</prompt> <userinput>neutron meter-label-list</userinput></screen>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <para>Shows information for a specified label.</para>
+                        </td>
+                        <td>
+                            <screen><prompt>$</prompt> <userinput>neutron meter-label-show <replaceable>label-uuid</replaceable></userinput>
+<prompt>$</prompt> <userinput>neutron meter-label-show <replaceable>label1</replaceable></userinput></screen>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <para>Delete a metering label.</para>
+                        </td>
+                        <td>
+                            <screen><prompt>$</prompt> <userinput>neutron meter-label-delete <replaceable>label-uuid</replaceable></userinput>
+<prompt>$</prompt> <userinput>neutron meter-label-delete <replaceable>label1</replaceable></userinput></screen>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <para>Create a metering rule.</para>
+                        </td>
+                        <td>
+                            <screen><prompt>$</prompt> <userinput>neutron meter-label-rule-create <replaceable>label-uuid</replaceable> <replaceable>cidr</replaceable> --direction <replaceable>direction</replaceable> --excluded</userinput>
+<prompt>$</prompt> <userinput>neutron meter-label-rule-create <replaceable>label1</replaceable> <replaceable>10.0.0.0/24</replaceable> --direction <replaceable>ingress</replaceable></userinput>
+<prompt>$</prompt> <userinput>neutron meter-label-rule-create <replaceable>label1</replaceable> <replaceable>20.0.0.0/24</replaceable> --excluded</userinput></screen>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <para>Lists metering all label rules.</para>
+                        </td>
+                        <td>
+                            <screen><prompt>$</prompt> <userinput>neutron meter-label-rule-list</userinput></screen>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <para>Shows information for a specified label rule.</para>
+                        </td>
+                        <td>
+                            <screen><prompt>$</prompt> <userinput>neutron meter-label-rule-show <replaceable>rule-uuid</replaceable></userinput></screen>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Delete a metering label rule.</td>
+                        <td>
+                            <screen><prompt>$</prompt> <userinput>neutron meter-label-rule-delete <replaceable>rule-uuid</replaceable></userinput></screen>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </section>
 </section>
