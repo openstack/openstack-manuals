@@ -107,9 +107,10 @@ def verify_no_conflicting_profiling(doc):
             c_os_list = child.attrib['os'].split(';')
             for os in c_os_list:
                 if os not in p_os_list:
+                    len_ns = len("{http://docbook.org/ns/docbook}")
                     raise ValueError(
                         "%s os profiling (%s) conflicts with os profiling of %s on line %d." %
-                        (p_tag, p_os_list, c_tag, c_line))
+                        (p_tag[len_ns:], p_os_list, c_tag[len_ns:], c_line))
 
 
 def verify_nice_usage_of_whitespaces(docfile):
