@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="ceilometer-verify" xmlns="http://docbook.org/ns/docbook"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+  <title>Verify the Metering Service installation</title>
+  <para>To test the Metering Service installation, download an image from the
+    Image Service, and use the Metering Service to display usage statistics.</para>
+
+  <procedure>
+    <step>
+      <para>Use the <literal>ceilometer meter-list</literal> command to test
+        the access to the Metering Service:</para>
+      <screen><prompt>$</prompt> <userinput>ceilometer meter-list</userinput></screen>
+      <screen><computeroutput>+------------+-------+-------+--------------------------------------+---------+----------------------------------+
+| Name       | Type  | Unit  | Resource ID                          | User ID | Project ID                       |
++------------+-------+-------+--------------------------------------+---------+----------------------------------+
+| image      | gauge | image | 9e5c2bee-0373-414c-b4af-b91b0246ad3b | None    | e66d97ac1b704897853412fc8450f7b9 |
+| image.size | gauge | B     | 9e5c2bee-0373-414c-b4af-b91b0246ad3b | None    | e66d97ac1b704897853412fc8450f7b9 |
++------------+-------+-------+--------------------------------------+---------+----------------------------------+</computeroutput></screen>
+    </step>
+    <step>
+      <para>Download an image from the Image Service:</para>
+      <screen><prompt>$</prompt> <userinput>glance image-download "CirrOS 0.3.1" > cirros.img</userinput></screen>
+    </step>
+    <step>
+      <para>Call the <literal>ceilometer meter-list</literal> command again to
+        validate that the download has been detected and stored by the Metering
+        Service:</para>
+      <screen><prompt>$</prompt> <userinput>ceilometer meter-list</userinput></screen>
+      <screen><computeroutput>+----------------+-------+-------+--------------------------------------+---------+----------------------------------+
+| Name           | Type  | Unit  | Resource ID                          | User ID | Project ID                       |
++----------------+-------+-------+--------------------------------------+---------+----------------------------------+
+| image          | gauge | image | 9e5c2bee-0373-414c-b4af-b91b0246ad3b | None    | e66d97ac1b704897853412fc8450f7b9 |
+| image.download | delta | B     | 9e5c2bee-0373-414c-b4af-b91b0246ad3b | None    | e66d97ac1b704897853412fc8450f7b9 |
+| image.serve    | delta | B     | 9e5c2bee-0373-414c-b4af-b91b0246ad3b | None    | e66d97ac1b704897853412fc8450f7b9 |
+| image.size     | gauge | B     | 9e5c2bee-0373-414c-b4af-b91b0246ad3b | None    | e66d97ac1b704897853412fc8450f7b9 |
++----------------+-------+-------+--------------------------------------+---------+----------------------------------+</computeroutput></screen>
+    </step>
+    <step>
+      <para>You can now get usage statistics for the various meters:</para>
+      <screen><prompt>$</prompt> <userinput>ceilometer statistics -m image.download -p 60</userinput></screen>
+      <screen><computeroutput>+--------+---------------------+---------------------+-------+------------+------------+------------+------------+----------+----------------------------+----------------------------+
+| Period | Period Start        | Period End          | Count | Min        | Max        | Sum        | Avg        | Duration | Duration Start             | Duration End               |
++--------+---------------------+---------------------+-------+------------+------------+------------+------------+----------+----------------------------+----------------------------+
+| 60     | 2013-11-18T18:08:50 | 2013-11-18T18:09:50 | 1     | 13147648.0 | 13147648.0 | 13147648.0 | 13147648.0 | 0.0      | 2013-11-18T18:09:05.334000 | 2013-11-18T18:09:05.334000 |
++--------+---------------------+---------------------+-------+------------+------------+------------+------------+----------+----------------------------+----------------------------+</computeroutput></screen>
+     </step>
+  </procedure>
+</section>
