@@ -5,130 +5,136 @@
     xml:id="managing-volumes">
     <?dbhtml stop-chunking?>
     <title>Block Storage</title>
-    <para>
-        OpenStack Block Storage allows you to add block-level storage to your
-        OpenStack Compute instances. It is similar in function to the Amazon
-        EC2 Elastic Block Storage (EBS) offering.
-    </para>
-    <para>
-        The OpenStack Block Storage service uses a series of daemon processes.
-        Each process will have the prefix
-        <systemitem class="service">cinder-</systemitem>, and they will all
-        run persistently on the host. The binaries can all be run on from a 
-        single node, or they can be spread across multiple nodes. They can 
-        also be run on the same node as other OpenStack services.
-    </para>
-    <para>
-        The default OpenStack Block Storage service implementation is an iSCSI
-        solution that uses Logical Volume Manager (LVM) for Linux. It also
-        provides drivers that allow you to use a back-end storage device from
-        a different vendor, in addition to or instead of the base LVM 
-        implementation.
-    </para>
-    <note>
-        <para>
-            The OpenStack Block Storage service is not a shared storage
-            solution like a Storage Area Network (SAN) of NFS volumes, where
-            you can attach a volume to multiple servers. With the OpenStack
-            Block Storage service, you can attach a volume to only one 
-            instance at a time.
-        </para>
-    </note>
-    <para>
-        This chapter uses a simple example to demonstrate Block Storage. In 
-        this example, one cloud controller runs the
-        <systemitem class="service">nova-api</systemitem>,
-        <systemitem class="service">nova-scheduler</systemitem>,
-        <systemitem class="service">nova-objectstore</systemitem>,
-        <literal>nova-network</literal> and <literal>cinder-*</literal>
-        services. There are two additional compute nodes running
-        <systemitem class="service">nova-compute</systemitem>.
-    </para>
-    <para>
-        The example in this chapter uses a custom partitioning scheme that
-        uses 60GB of space and labels it as a Logical Volume (LV). The network
-        uses <literal>FlatManager</literal> as the
-        <literal>NetworkManager</literal> setting for OpenStack Compute.
-    </para>
-    <para>
-        The network mode does not interfere with the way Block Storage works,
-        but networking must be set up. For more information on networking, see
-        <xref linkend="ch_networking"/>.
-    </para>
-
+    <para>The OpenStack Block Storage service works though the
+        interaction of a series of daemon processes named <systemitem
+            class="daemon">cinder-*</systemitem> that reside
+        persistently on the host machine or machines. The binaries can
+        all be run from a single node, or spread across multiple
+        nodes. They can also be run on the same node as other
+        OpenStack services.</para>
+    <section xml:id="section_block-storage-intro">
+        <title>Introduction to Block Storage</title>
+        <para>To administer the OpenStack Block Storage service, it is
+            helpful to understand a number of concepts. You must make
+            certain choices when you configure the Block Storage
+            service in OpenStack. The bulk of the options come down to
+            two choices, single node or multi-node install. You can
+            read a longer discussion about storage decisions in <link
+                xlink:href="http://docs.openstack.org/trunk/openstack-ops/content/storage_decision.html"
+                >Storage Decisions</link> in the <citetitle>OpenStack
+                Operations Guide</citetitle>.</para>
+        <para>The OpenStack Block Storage Service enables you to add
+            extra block-level storage to your OpenStack Compute
+            instances. This service is similar to the Amazon EC2
+            Elastic Block Storage (EBS) offering.</para>
+    </section>
+    <?hard-pagebreak?>
     <section xml:id="section_manage-volumes">
-    <title>Manage volumes</title>
-    <para>
-        To set up Compute to use volumes, you must have
-        <systemitem class="service">lvm2</systemitem> installed.
-    </para>
-        <para>
-            This procedure creates and attaches a volume to a server instance.
-        </para>
+        <title>Manage volumes</title>
+        <para>The default OpenStack Block Storage service
+            implementation is an iSCSI solution that uses Logical
+            Volume Manager (LVM) for Linux.</para>
+        <note>
+            <para>The OpenStack Block Storage service is not a shared
+                storage solution like a Storage Area Network (SAN) of
+                NFS volumes, where you can attach a volume to multiple
+                servers. With the OpenStack Block Storage service, you
+                can attach a volume to only one instance at a
+                time.</para>
+            <para>The OpenStack Block Storage service also provides
+                drivers that enable you to use several vendors'
+                back-end storage devices, in addition to or instead of
+                the base LVM implementation.</para>
+        </note>
+        <para>This high-level procedure shows you how to create and
+            attach a volume to a server instance.</para>
         <procedure>
             <step>
-                <para>
-                    The <command>cinder create</command> command creates a
-                    logical volume (LV) in the volume group (VG)
-                    <parameter>cinder-volumes</parameter>.
-                </para>
-                <para>
-                    Create a volume:
-                </para>
-                <programlisting>$ cinder create</programlisting>
+                <para>You must configure both OpenStack Compute and
+                    the OpenStack Block Storage service through the
+                        <filename>cinder.conf</filename> file.</para>
             </step>
             <step>
-                <para>
-                    The <command>nova volume-attach</command> command creates
-                    a unique iSCSI IQN that is exposed to the compute node.
-                </para>
-                <para>
-                    Attach the LV to an instance:
-                </para>
-                <programlisting>$ nova volume-attach</programlisting>
+                <para>Create a volume through the <command>cinder
+                        create</command> command. This command creates
+                    an LV into the volume group (VG)
+                    "cinder-volumes."</para>
             </step>
             <step>
-                <para>
-                    The OpenStack Block Storage service and OpenStack Compute
-                    can now be configured using the
-                    <filename>cinder.conf</filename> configuration file.
-                </para>
+                <para>Attach the volume to an instance through the
+                        <command>nova volume-attach</command> command.
+                    This command creates a unique iSCSI IQN that is
+                    exposed to the compute node.</para>
+                <substeps>
+                    <step>
+                        <para>The compute node, which runs the
+                            instance, now has an active ISCSI session
+                            and new local storage (usually a
+                                <filename>/dev/sdX</filename>
+                            disk).</para>
+                    </step>
+                    <step>
+                        <para>libvirt uses that local storage as
+                            storage for the instance. The instance get
+                            a new disk, usually a
+                                <filename>/dev/vdX</filename>
+                            disk.</para>
+                    </step>
+                </substeps>
             </step>
         </procedure>
-            <para>
-                The compute node, which runs the instance, now has an active
-                iSCSI session. It will also have a new local disk, usually a
-                <filename>/dev/sdX</filename> disk. This local storage is
-                used by libvirt as storage for the instance. The instance
-                itself will usually get a separate new disk, usually a
-                <filename>/dev/vdX</filename> disk.
-            </para>
-            <para>
-                In some cases, instances can be stored and run from within
-                volumes. For more information, see the 
-                <link xlink:href="http://docs.openstack.org/user-guide/content/boot_from_volume.html">
-                Launch an instance from a volume</link> section in the
-                <link xlink:href="http://docs.openstack.org/user-guide/content/">
-                <citetitle>OpenStack End User Guide</citetitle></link>.
-            </para>
-    <xi:include href="section_multi_backend.xml"/>
-    <xi:include href="section_backup-block-storage-disks.xml"/>
-    <xi:include href="section_volume-migration.xml"/>
+        <para>For this particular walk through, one cloud controller
+            runs <systemitem class="service">nova-api</systemitem>,
+                <systemitem class="service"
+                >nova-scheduler</systemitem>, <systemitem
+                class="service">nova-objectstore</systemitem>,
+                <literal>nova-network</literal> and
+                <literal>cinder-*</literal> services. Two additional
+            compute nodes run <systemitem class="service"
+                >nova-compute</systemitem>. The walk through uses a
+            custom partitioning scheme that carves out 60 GB of space
+            and labels it as LVM. The network uses the
+                <literal>FlatManager</literal> and
+                <literal>NetworkManager</literal> settings for
+            OpenStack Compute (Nova).</para>
+        <para>The network mode does not interfere with the way cinder
+            works, but you must set up networking for cinder to work.
+            For details, see <xref linkend="ch_networking"/>.</para>
+        <para>To set up Compute to use volumes, ensure that Block
+            Storage is installed along with lvm2. This guide describes
+            how to troubleshoot your installation and back up your
+            Compute volumes.</para>
+        <section xml:id="boot-from-volume">
+            <title>Boot from volume</title>
+            <para>In some cases, instances can be stored and run from
+                inside volumes. For information, see the <link
+                    xlink:href="http://docs.openstack.org/user-guide/content/boot_from_volume.html"
+                    >Launch an instance from a volume</link> section
+                in the <link
+                    xlink:href="http://docs.openstack.org/user-guide/content/"
+                        ><citetitle>OpenStack End User
+                        Guide</citetitle></link>.</para>
+        </section>
+        <?hard-pagebreak?>
+        <xi:include href="section_multi_backend.xml"/>
+        <xi:include href="section_backup-block-storage-disks.xml"/>
+        <xi:include href="section_volume-migration.xml"/>
     </section>
     <section xml:id="troubleshooting-cinder-install">
-       <title>Troubleshoot your installation</title>
-       <para>
-            This section contains troubleshooting information for Block 
-            Storage.
-        </para>
+        <title>Troubleshoot your installation</title>
+        <para>This section provides useful tips to help troubleshoot
+            your Block Storage Service installation.</para>
         <xi:include href="section_ts_cinder_config.xml"/>
         <xi:include href="section_ts_multipath_warn.xml"/>
         <xi:include href="section_ts_vol_attach_miss_sg_scan.xml"/>
-        <xi:include href="section_ts_HTTP_bad_req_in_cinder_vol_log.xml"/>
+        <xi:include
+            href="section_ts_HTTP_bad_req_in_cinder_vol_log.xml"/>
         <xi:include href="section_ts_attach_vol_fail_not_JSON.xml"/>
         <xi:include href="section_ts_duplicate_3par_host.xml"/>
-        <xi:include href="section_ts_failed_attach_vol_after_detach.xml"/>
-        <xi:include href="section_ts_failed_attach_vol_no_sysfsutils.xml"/>
+        <xi:include
+            href="section_ts_failed_attach_vol_after_detach.xml"/>
+        <xi:include
+            href="section_ts_failed_attach_vol_no_sysfsutils.xml"/>
         <xi:include href="section_ts_failed_connect_vol_FC_SAN.xml"/>
         <xi:include href="section_ts_failed_sched_create_vol.xml"/>
         <xi:include href="section_ts_no_emulator_x86_64.xml"/>

@@ -16,7 +16,7 @@
             tenants direct access to a public network that can be used
             to reach the Internet. It might also be used to integrate
             with VLANs in the network that already have a defined
-            meaning (for example, allow a VM from the "marketing"
+            meaning (for example, enable a VM from the "marketing"
             department to be placed on the same VLAN as bare-metal
             marketing hosts in the same data center).</para>
         <para>The provider extension allows administrators to
@@ -35,122 +35,130 @@
             <para>A number of terms are used in the provider extension
                 and in the configuration of plug-ins supporting the
                 provider extension:</para>
-            <para>
-                <table rules="all">
-                    <caption>Provider extension terminology</caption>
-                    <col width="20%"/>
-                    <col width="80%"/>
-                    <thead>
-                        <tr>
-                            <th>Term</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><emphasis role="bold">virtual network</emphasis></td>
-                            <td>An Networking L2
-                            network (identified by a UUID and optional
-                            name) whose ports can be attached as vNICs to
-                            Compute instances and to various Networking
-                            agents. The Open vSwitch and Linux Bridge
-                            plug-ins each support several different
-                            mechanisms to realize virtual networks.</td>
-                        </tr>
-                        <tr>
-                            <td><emphasis role="bold">physical network</emphasis></td>
-                            <td>A network connecting
-                            virtualization hosts (such as, Compute nodes)
-                            with each other and with other network
-                            resources. Each physical network might support
-                            multiple virtual networks. The provider
-                            extension and the plug-in configurations
-                            identify physical networks using simple string
+            <table rules="all">
+                <caption>Provider extension terminology</caption>
+                <col width="20%"/>
+                <col width="80%"/>
+                <thead>
+                    <tr>
+                        <th>Term</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><emphasis role="bold">virtual
+                                network</emphasis></td>
+                        <td>An Networking L2 network (identified by a
+                            UUID and optional name) whose ports can be
+                            attached as vNICs to Compute instances and
+                            to various Networking agents. The Open
+                            vSwitch and Linux Bridge plug-ins each
+                            support several different mechanisms to
+                            realize virtual networks.</td>
+                    </tr>
+                    <tr>
+                        <td><emphasis role="bold">physical
+                                network</emphasis></td>
+                        <td>A network connecting virtualization hosts
+                            (such as, Compute nodes) with each other
+                            and with other network resources. Each
+                            physical network might support multiple
+                            virtual networks. The provider extension
+                            and the plug-in configurations identify
+                            physical networks using simple string
                             names.</td>
-                        </tr>
-                        <tr>
-                            <td><emphasis role="bold">tenant network</emphasis></td>
-                            <td>A virtual network that
-                            a tenant or an administrator creates. The
-                            physical details of the network are not
-                            exposed to the tenant.</td>
-                        </tr>
-                        <tr>
-                            <td><emphasis role="bold">provider network</emphasis></td>
-                            <td>A virtual network
-                            administratively created to map to a specific
-                            network in the data center, typically to
-                            enable direct access to non-OpenStack
-                            resources on that network. Tenants can be
-                            given access to provider networks.</td>
-                        </tr>
-                        <tr>
-                            <td><emphasis role="bold">VLAN network</emphasis></td>
-                            <td>A virtual network
-                            implemented as packets on a specific physical
-                            network containing IEEE 802.1Q headers with a
-                            specific VID field value. VLAN networks
-                            sharing the same physical network are isolated
-                            from each other at L2, and can even have
-                            overlapping IP address spaces. Each distinct
-                            physical network supporting VLAN networks is
-                            treated as a separate VLAN trunk, with a
-                            distinct space of VID values. Valid VID values
-                            are 1 through 4094.</td>
-                        </tr>
-                        <tr>
-                            <td><emphasis role="bold">flat network</emphasis></td>
-                            <td>A virtual network
-                            implemented as packets on a specific physical
-                            network containing no IEEE 802.1Q header. Each
-                            physical network can realize at most one flat
+                    </tr>
+                    <tr>
+                        <td><emphasis role="bold">tenant
+                                network</emphasis></td>
+                        <td>A virtual network that a tenant or an
+                            administrator creates. The physical
+                            details of the network are not exposed to
+                            the tenant.</td>
+                    </tr>
+                    <tr>
+                        <td><emphasis role="bold">provider
+                                network</emphasis></td>
+                        <td>A virtual network administratively created
+                            to map to a specific network in the data
+                            center, typically to enable direct access
+                            to non-OpenStack resources on that
+                            network. Tenants can be given access to
+                            provider networks.</td>
+                    </tr>
+                    <tr>
+                        <td><emphasis role="bold">VLAN
+                                network</emphasis></td>
+                        <td>A virtual network implemented as packets
+                            on a specific physical network containing
+                            IEEE 802.1Q headers with a specific VID
+                            field value. VLAN networks sharing the
+                            same physical network are isolated from
+                            each other at L2, and can even have
+                            overlapping IP address spaces. Each
+                            distinct physical network supporting VLAN
+                            networks is treated as a separate VLAN
+                            trunk, with a distinct space of VID
+                            values. Valid VID values are 1 through
+                            4094.</td>
+                    </tr>
+                    <tr>
+                        <td><emphasis role="bold">flat
+                                network</emphasis></td>
+                        <td>A virtual network implemented as packets
+                            on a specific physical network containing
+                            no IEEE 802.1Q header. Each physical
+                            network can realize at most one flat
                             network.</td>
-                        </tr>
-                        <tr>
-                            <td><emphasis role="bold">local network</emphasis></td>
-                            <td>A virtual network that
-                            allows communication within each host, but not
-                            across a network. Local networks are intended
-                            mainly for single-node test scenarios, but can
-                            have other uses.</td>
-                        </tr>
-                        <tr>
-                            <td><emphasis role="bold">GRE network</emphasis></td>
-                            <td>A virtual network
-                            implemented as network packets encapsulated
-                            using GRE. GRE networks are also referred to
-                            as <emphasis role="italic">tunnels</emphasis>.
-                            GRE tunnel packets are routed by the IP
-                            routing table for the host, so GRE networks
-                            are not associated by Networking with specific
-                            physical networks.</td>
-                        </tr>
-                        <tr>
-                            <td><emphasis role="bold">Virtual Extensible LAN (VXLAN) network</emphasis></td>
-                            <td>VXLAN is a proposed
-                            encapsulation protocol for running an overlay
-                            network on existing Layer 3 infrastructure. An
-                            overlay network is a virtual network that is
-                            built on top of existing network Layer 2 and
-                            Layer 3 technologies to support elastic compute
+                    </tr>
+                    <tr>
+                        <td><emphasis role="bold">local
+                                network</emphasis></td>
+                        <td>A virtual network that allows
+                            communication within each host, but not
+                            across a network. Local networks are
+                            intended mainly for single-node test
+                            scenarios, but can have other uses.</td>
+                    </tr>
+                    <tr>
+                        <td><emphasis role="bold">GRE
+                                network</emphasis></td>
+                        <td>A virtual network implemented as network
+                            packets encapsulated using GRE. GRE
+                            networks are also referred to as <emphasis
+                                role="italic">tunnels</emphasis>. GRE
+                            tunnel packets are routed by the IP
+                            routing table for the host, so GRE
+                            networks are not associated by Networking
+                            with specific physical networks.</td>
+                    </tr>
+                    <tr>
+                        <td><emphasis role="bold">Virtual Extensible
+                                LAN (VXLAN) network</emphasis></td>
+                        <td>VXLAN is a proposed encapsulation protocol
+                            for running an overlay network on existing
+                            Layer 3 infrastructure. An overlay network
+                            is a virtual network that is built on top
+                            of existing network Layer 2 and Layer 3
+                            technologies to support elastic compute
                             architectures.</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </para>
-            <para>The ML2, Open vSwitch and Linux Bridge plug-ins support
-                VLAN networks, flat networks, and local networks. Only
-                the ML2 and Open vSwitch plug-ins currently support GRE
-                and VXLAN networks, provided that the required features
-                exist in the hosts Linux kernel, Open vSwitch and iproute2
-                packages.</para>
+                    </tr>
+                </tbody>
+            </table>
+            <para>The ML2, Open vSwitch, and Linux Bridge plug-ins
+                support VLAN networks, flat networks, and local
+                networks. Only the ML2 and Open vSwitch plug-ins
+                currently support GRE and VXLAN networks, provided
+                that the required features exist in the hosts Linux
+                kernel, Open vSwitch, and iproute2 packages.</para>
         </section>
         <section xml:id="provider_attributes">
             <title>Provider attributes</title>
             <para>The provider extension extends the Networking
-                network resource with the following attributes:</para>
+                network resource with these attributes:</para>
             <table rules="all">
-                <caption>Provider Network Attributes</caption>
+                <caption>Provider network attributes</caption>
                 <col width="25%"/>
                 <col width="10%"/>
                 <col width="25%"/>
@@ -229,13 +237,13 @@
                 on policy configuration.</para>
         </section>
         <section xml:id="provider_api_workflow">
-            <title>Provider Extension API operations</title>
+            <title>Provider extension API operations</title>
             <para>To use the provider extension with the default
                 policy settings, you must have the administrative
                 role.</para>
-            <para>The following table shows example neutron commands
-                that enable you to complete basic provider extension
-                API operations:</para>
+            <para>This table shows example neutron commands that
+                enable you to complete basic provider extension API
+                operations:</para>
             <table rules="all">
                 <caption>Basic provider extension API
                     operations</caption>
@@ -325,7 +333,7 @@
         </section>
     </section>
     <section xml:id="section_l3_router_and_nat">
-        <title>L3 Routing and NAT</title>
+        <title>L3 routing and NAT</title>
         <para>The Networking API provides abstract L2 network segments
             that are decoupled from the technology used to implement
             the L2 network. Networking includes an API extension that
@@ -495,9 +503,8 @@
                 the default policy settings enable only administrative
                 users to create, update, and delete external
                 networks.</para>
-            <para>The following table shows example neutron commands
-                that enable you to complete basic L3
-                operations:</para>
+            <para>This table shows example neutron commands that
+                enable you to complete basic L3 operations:</para>
             <table rules="all">
                 <caption>Basic L3 operations</caption>
                 <col width="40%"/>
@@ -711,10 +718,12 @@
         <note>
             <itemizedlist>
                 <listitem>
-                    <para>To use the Compute security group API with Networking, the Networking
-                        plug-in must implement the security group API. The following plug-ins
-                        currently implement this: ML2, Nicira NVP, Open vSwitch, Linux Bridge, NEC,
-                        and Ryu.</para>
+                    <para>To use the Compute security group API with
+                        Networking, the Networking plug-in must
+                        implement the security group API. The
+                        following plug-ins currently implement this:
+                        ML2, Nicira NVP, Open vSwitch, Linux Bridge,
+                        NEC, and Ryu.</para>
                 </listitem>
                 <listitem>
                     <para>You must configure the correct firewall
@@ -735,9 +744,9 @@
             </itemizedlist>
         </note>
         <section xml:id="securitygroup_api_abstractions">
-            <title>Security Group API Abstractions</title>
+            <title>Security group API abstractions</title>
             <table rules="all">
-                <caption>Security Group Attributes</caption>
+                <caption>Security group attributes</caption>
                 <col width="20%"/>
                 <col width="20%"/>
                 <col width="20%"/>
@@ -784,7 +793,7 @@
                 </tbody>
             </table>
             <table rules="all">
-                <caption>Security Group Rules</caption>
+                <caption>Security group rules</caption>
                 <col width="20%"/>
                 <col width="20%"/>
                 <col width="20%"/>
@@ -870,8 +879,8 @@
         </section>
         <section xml:id="securitygroup_workflow">
             <title>Basic security group operations</title>
-            <para>The following table shows example neutron commands
-                that enable you to complete basic security group
+            <para>This table shows example neutron commands that
+                enable you to complete basic security group
                 operations:</para>
             <table rules="all">
                 <caption>Basic security group operations</caption>
@@ -949,8 +958,8 @@
                 release offers a reference implementation that is
                 based on the HAProxy software load balancer.</para>
         </note>
-        <para>The following table shows example neutron commands that
-            enable you to complete basic LBaaS operations:</para>
+        <para>This table shows example neutron commands that enable
+            you to complete basic LBaaS operations:</para>
         <table rules="all">
             <caption>Basic LBaaS operations</caption>
             <col width="40%"/>
@@ -1024,7 +1033,6 @@
         <para>The Firewall-as-a-Service (FWaaS) API is an experimental
             API that enables early adopters and vendors to test their
             networking implementations.</para>
-
         <para>The FWaaS is backed by a <emphasis role="bold">reference
                 implementation</emphasis> that works with the
             Networking OVS plug-in and provides perimeter firewall
@@ -1398,15 +1406,13 @@
                 </listitem>
             </itemizedlist>
             <note>
-                <para>The FWaaS features and the above workflow can also be accessed from the
-                    Horizon user interface. This support is disabled by default, but can be enabled
-                    by configuring
+                <para>The FWaaS features and the above workflow can
+                    also be accessed from the Horizon user interface.
+                    This support is disabled by default, but can be
+                    enabled by configuring
                         <filename>#HORIZON_DIR/openstack_dashboard/local/local_settings.py
-                    </filename> and setting
-                    <programlisting language="ini">
-            'enable_firewall' = True
-            </programlisting>
-                </para>
+                    </filename> and setting:</para>
+                <programlisting language="ini">'enable_firewall' = True</programlisting>
             </note>
         </section>
     </section>
@@ -1422,8 +1428,8 @@
             two instances to enable fast data plane failover.</para>
         <note>
             <para>The allowed-address-pairs extension is currently
-                only supported by the following plug-ins: ML2, Nicira
-                NVP, and Open vSwitch.</para>
+                only supported by these plug-ins: ML2, Nicira NVP, and
+                Open vSwitch.</para>
         </note>
         <section xml:id="section_allowed_address_pairs_workflow">
             <title>Basic allowed address pairs operations</title>
@@ -1467,7 +1473,7 @@
             extensions for each plug-in.</para>
         <section xml:id="section_nicira_extensions">
             <title>Nicira NVP extensions</title>
-            <para>The following sections explain Nicira NVP plug-in
+            <para>These sections explain Nicira NVP plug-in
                 extensions.</para>
             <section xml:id="section_nicira_nvp_plugin_qos_extension">
                 <title>Nicira NVP QoS extension</title>
@@ -1505,7 +1511,7 @@
                     xml:id="section_nicira_nvp_qos_api_abstractions">
                     <title>Nicira NVP QoS API abstractions</title>
                     <table rules="all">
-                        <caption>Nicira NVP QoS Attributes</caption>
+                        <caption>Nicira NVP QoS attributes</caption>
                         <col width="20%"/>
                         <col width="20%"/>
                         <col width="20%"/>
@@ -1578,9 +1584,9 @@
                 </section>
                 <section xml:id="nicira_nvp_qos_walk_through">
                     <title>Basic Nicira NVP QoS operations</title>
-                    <para>The following table shows example neutron
-                        commands that enable you to complete basic
-                        queue operations:</para>
+                    <para>This table shows example neutron commands
+                        that enable you to complete basic queue
+                        operations:</para>
                     <table rules="all">
                         <caption>Basic Nicira NVP QoS
                             operations</caption>
@@ -1652,45 +1658,43 @@
                     parameter, which has a default value of
                     5,000.</para>
                 <para>The recommended value for this parameter varies
-                    with the NVP version running in the back end, as
+                    with the NVP version running in the back-end, as
                     shown in the following table.</para>
-                <para>
-                    <table rules="all">
-                        <caption>Recommended values for
-                            max_lp_per_bridged_ls</caption>
-                        <col width="50%"/>
-                        <col width="50%"/>
-                        <thead>
-                            <tr>
-                                <td>NVP version</td>
-                                <td>Recommended Value</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>2.x</td>
-                                <td>64</td>
-                            </tr>
-                            <tr>
-                                <td>3.0.x</td>
-                                <td>5,000</td>
-                            </tr>
-                            <tr>
-                                <td>3.1.x</td>
-                                <td>5,000</td>
-                            </tr>
-                            <tr>
-                                <td>3.2.x</td>
-                                <td>10,000</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </para>
-                <para>In addition to the above network types, the NVP
+                <table rules="all">
+                    <caption>Recommended values for
+                        max_lp_per_bridged_ls</caption>
+                    <col width="50%"/>
+                    <col width="50%"/>
+                    <thead>
+                        <tr>
+                            <td>NVP version</td>
+                            <td>Recommended Value</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>2.x</td>
+                            <td>64</td>
+                        </tr>
+                        <tr>
+                            <td>3.0.x</td>
+                            <td>5,000</td>
+                        </tr>
+                        <tr>
+                            <td>3.1.x</td>
+                            <td>5,000</td>
+                        </tr>
+                        <tr>
+                            <td>3.2.x</td>
+                            <td>10,000</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <para>In addition to these network types, the NVP
                     plug-in also supports a special
                         <emphasis>l3_ext</emphasis> network type,
                     which maps external networks to specific NVP
-                    gateway services as discussed in the following
+                    gateway services as discussed in the next
                     section.</para>
             </section>
             <section xml:id="section_nicira_nvp_plugin_l3_extension">
@@ -1718,29 +1722,42 @@
             </section>
             <section xml:id="section_nicira_nvp_plugin_status_sync">
                 <title>Operational status synchronization in the
-                    Nicira NVP plugin</title>
-                <para>Starting with the Havana release, the Nicira NVP plugin
-                    provides an asynchronous mechanism for retrieving the
-                    operational status for neutron resources from the NVP
-                    backend; this applies to <emphasis>network</emphasis>,
-                    <emphasis>port</emphasis>, and <emphasis>router</emphasis> resources.</para>
-                <para>The backend is polled periodically, and the status for every resource is
-                    retrieved; then the status in the Neutron database is updated only for the
-                    resources for which a status change occurred. As operational status is now
-                    retrieved asynchronously, performance for <literal>GET</literal> operations is
+                    Nicira NVP plug-in</title>
+                <para>Starting with the Havana release, the Nicira NVP
+                    plug-in provides an asynchronous mechanism for
+                    retrieving the operational status for neutron
+                    resources from the NVP back-end; this applies to
+                        <emphasis>network</emphasis>,
+                        <emphasis>port</emphasis>, and
+                        <emphasis>router</emphasis> resources.</para>
+                <para>The back-end is polled periodically, and the
+                    status for every resource is retrieved; then the
+                    status in the Neutron database is updated only for
+                    the resources for which a status change occurred.
+                    As operational status is now retrieved
+                    asynchronously, performance for
+                        <literal>GET</literal> operations is
                     consistently improved.</para>
-                <para>Data to retrieve from the backend are divided in chunks in order to avoid
-                    expensive API requests; this is achieved leveraging NVP APIs response paging
-                    capabilities. The minimum chunk size can be specified using a configuration
-                    option; the actual chunk size is then determined dynamically according to:
-                    total number of resources to retrieve, interval between two synchronization task
-                    runs, minimum delay between two subsequent requests to the NVP backend.</para>
-                <para>The operational status synchronization can be tuned or disabled using the
-                    configuration options reported in the following table; it is however worth
-                    noting that the default values will work fine in most cases.</para>
+                <para>Data to retrieve from the back-end are divided
+                    in chunks in order to avoid expensive API
+                    requests; this is achieved leveraging NVP APIs
+                    response paging capabilities. The minimum chunk
+                    size can be specified using a configuration
+                    option; the actual chunk size is then determined
+                    dynamically according to: total number of
+                    resources to retrieve, interval between two
+                    synchronization task runs, minimum delay between
+                    two subsequent requests to the NVP
+                    back-end.</para>
+                <para>The operational status synchronization can be
+                    tuned or disabled using the configuration options
+                    reported in this table; it is however worth noting
+                    that the default values work fine in most
+                    cases.</para>
                 <table rules="all">
-                    <caption>Configuration options for tuning operational status synchronization
-                        in the NVP plugin</caption>
+                    <caption>Configuration options for tuning
+                        operational status synchronization in the NVP
+                        plug-in</caption>
                     <col width="12%"/>
                     <col width="8%"/>
                     <col width="10%"/>
@@ -1761,97 +1778,119 @@
                             <td><literal>nvp_sync</literal></td>
                             <td>120 seconds</td>
                             <td>Integer; no constraint.</td>
-                            <td>Interval in seconds between two run of the synchronization task.
-                                If the synchronization task takes more than
-                                    <literal>state_sync_interval</literal> seconds to execute, a
-                                new instance of the task is started as soon as the other is
-                                completed. Setting the value for this option to 0 will disable
-                                the synchronization task.</td>
+                            <td>Interval in seconds between two run of
+                                the synchronization task. If the
+                                synchronization task takes more than
+                                   <literal>state_sync_interval</literal>
+                                seconds to execute, a new instance of
+                                the task is started as soon as the
+                                other is completed. Setting the value
+                                for this option to 0 will disable the
+                                synchronization task.</td>
                         </tr>
                         <tr>
                             <td><literal>max_random_sync_delay</literal></td>
                             <td><literal>nvp_sync</literal></td>
                             <td>0 seconds</td>
                             <td>Integer. Must not exceed
-                                <literal>min_sync_req_delay</literal></td>
-                            <td>When different from zero, a random delay between 0 and
-                                <literal>max_random_sync_delay</literal> will be added
-                                before processing the next chunk.</td>
+                                   <literal>min_sync_req_delay</literal></td>
+                            <td>When different from zero, a random
+                                delay between 0 and
+                                   <literal>max_random_sync_delay</literal>
+                                will be added before processing the
+                                next chunk.</td>
                         </tr>
                         <tr>
                             <td><literal>min_sync_req_delay</literal></td>
                             <td><literal>nvp_sync</literal></td>
                             <td>10 seconds</td>
                             <td>Integer. Must not exceed
-                                <literal>state_sync_interval</literal>.</td>
-                            <td>The value of this option can be tuned according to the observed
-                                load on the NVP controllers. Lower values will result in faster
-                                synchronization, but might increase the load on the controller
-                                cluster.</td>
+                                   <literal>state_sync_interval</literal>.</td>
+                            <td>The value of this option can be tuned
+                                according to the observed load on the
+                                NVP controllers. Lower values will
+                                result in faster synchronization, but
+                                might increase the load on the
+                                controller cluster.</td>
                         </tr>
                         <tr>
                             <td><literal>min_chunk_size</literal></td>
                             <td><literal>nvp_sync</literal></td>
                             <td>500 resources</td>
                             <td>Integer; no constraint.</td>
-                            <td>Minimum number of resources to retrieve from the backend for
-                                each synchronization chunk.  The expected number of
-                                synchronization chunks is given by the ratio between
-                                <literal>state_sync_interval</literal> and
-                                <literal>min_sync_req_delay</literal>. This size of a chunk
-                                might increase if the total number of resources is such that
-                                more than <literal>min_chunk_size</literal> resources must be
-                                fetched in one chunk with the current number of chunks.</td>
+                            <td>Minimum number of resources to
+                                retrieve from the back-end for each
+                                synchronization chunk. The expected
+                                number of synchronization chunks is
+                                given by the ratio between
+                                   <literal>state_sync_interval</literal>
+                                and
+                                   <literal>min_sync_req_delay</literal>.
+                                This size of a chunk might increase if
+                                the total number of resources is such
+                                that more than
+                                   <literal>min_chunk_size</literal>
+                                resources must be fetched in one chunk
+                                with the current number of
+                                chunks.</td>
                         </tr>
                         <tr>
                             <td><literal>always_read_status</literal></td>
                             <td><literal>nvp_sync</literal></td>
                             <td>False</td>
                             <td>Boolean; no constraint.</td>
-                            <td>When this option is enabled, the operational status will always
-                                be retrieved from the NVP backend ad every
-                                <literal>GET</literal> request. In this case it is advisable
-                                to disable the synchronization task.</td>
+                            <td>When this option is enabled, the
+                                operational status will always be
+                                retrieved from the NVP back-end ad
+                                every <literal>GET</literal> request.
+                                In this case it is advisable to
+                                disable the synchronization task.</td>
                         </tr>
                     </tbody>
                 </table>
-                <para>When running multiple Neutron server instances, the status
-                    synchronization task should not run on every node; doing so will need to
-                    unnecessary traffic towards the NVP backend as well as unnecessary DB
-                    operations. The configuration option <literal>state_sync_interval</literal>
-                    should therefore be non-zero exclusively on a node designated for backend status
-                    synchronization.</para>
-                <para>Explicitly specifying the <emphasis role="italic">status</emphasis> attribute
-                    in Neutron API requests (e.g.: <literal>GET
-                        /v2.0/networks/&lt;net-id>?fields=status&amp;fields=name</literal>) will
-                    always trigger an explicit query to the NVP backend, even when asynchronous
-                    state synchronization is enabled.</para>
+                <para>When running multiple Neutron server instances,
+                    the status synchronization task should not run on
+                    every node; doing so sends unnecessary traffic to
+                    the NVP back-end and performs unnecessary DB
+                    operations. Set the
+                        <option>state_sync_interval</option>
+                    configuration option to a non-zero value
+                    exclusively on a node designated for back-end
+                    status synchronization.</para>
+                <para>Explicitly specifying the <emphasis
+                        role="italic">status</emphasis> attribute in
+                    Neutron API requests (e.g.: <literal>GET
+                        /v2.0/networks/&lt;net-id>?fields=status&amp;fields=name</literal>)
+                    always triggers an explicit query to the NVP
+                    back-end, even when asynchronous state
+                    synchronization is enabled.</para>
             </section>
         </section>
-
         <section xml:id="section_bigswitch_extensions">
             <title>Big Switch plug-in extensions</title>
-            <para>The following section explains the Big Switch Neutron plug-in-specific
-                extension.</para>
+            <para>This section explains the Big Switch Neutron
+                plug-in-specific extension.</para>
             <section xml:id="section_bigswitch_extension_routerrules">
                 <title>Big Switch router rules</title>
-                <para>Big Switch allows router rules to be added to each
-                    tenant router. These rules can be used to enforce routing
-                    policies such as denying traffic between subnets or traffic
-                    to external networks. By enforcing these at the router
-                    level, network segmentation policies can be enforced across
-                    many VMs that have differing security groups.</para>
+                <para>Big Switch allows router rules to be added to
+                    each tenant router. These rules can be used to
+                    enforce routing policies such as denying traffic
+                    between subnets or traffic to external networks.
+                    By enforcing these at the router level, network
+                    segmentation policies can be enforced across many
+                    VMs that have differing security groups.</para>
                 <section xml:id="section_bigswitch_routerrule_fields">
                     <title>Router rule attributes</title>
                     <para>Each tenant router has a set of router rules
-                        associated with it. Each router rule has the attributes
-                        in the following table. Router rules and their
-                        attributes can be set using the
-                        <command>neutron router-update</command> command,
-                        via the Horizon interface, or through the Neutron API.
-                        </para>
+                        associated with it. Each router rule has the
+                        attributes in this table. Router rules and
+                        their attributes can be set using the
+                            <command>neutron router-update</command>
+                        command, through the Horizon interface or the
+                        Neutron API.</para>
                     <table rules="all">
-                        <caption>Big Switch Router rule attributes</caption>
+                        <caption>Big Switch Router rule
+                            attributes</caption>
                         <col width="20%"/>
                         <col width="15%"/>
                         <col width="25%"/>
@@ -1868,63 +1907,70 @@
                             <tr>
                                 <td>source</td>
                                 <td>Yes</td>
-                                <td>A valid CIDR or one of the keywords
-                                    'any' or 'external'</td>
-                                <td>The network that a packet's source IP must
-                                    match for the rule to be applied</td>
+                                <td>A valid CIDR or one of the
+                                   keywords 'any' or 'external'</td>
+                                <td>The network that a packet's source
+                                   IP must match for the rule to be
+                                   applied</td>
                             </tr>
                             <tr>
                                 <td>destination</td>
                                 <td>Yes</td>
-                                <td>A valid CIDR or one of the keywords
-                                    'any' or 'external'</td>
-                                <td>The network that a packet's destination IP
-                                    must match for the rule to be applied</td>
+                                <td>A valid CIDR or one of the
+                                   keywords 'any' or 'external'</td>
+                                <td>The network that a packet's
+                                   destination IP must match for the
+                                   rule to be applied</td>
                             </tr>
                             <tr>
                                 <td>action</td>
                                 <td>Yes</td>
                                 <td>'permit' or 'deny'</td>
-                                <td>Determines whether or not the matched
-                                packets will allowed to cross the router</td>
+                                <td>Determines whether or not the
+                                   matched packets will allowed to
+                                   cross the router</td>
                             </tr>
                             <tr>
                                 <td>nexthop</td>
                                 <td>No</td>
-                                <td>A plus-separated (+) list of next-hop IP
-                                    addresses (e.g. '1.1.1.1+1.1.1.2')</td>
-                                <td>Overrides the default virtual router used to
-                                    handle traffic for packets that match the
-                                    rule</td>
+                                <td>A plus-separated (+) list of
+                                   next-hop IP addresses (e.g.
+                                   '1.1.1.1+1.1.1.2')</td>
+                                <td>Overrides the default virtual
+                                   router used to handle traffic for
+                                   packets that match the rule</td>
                             </tr>
                         </tbody>
                     </table>
                 </section>
-                <section xml:id="section_bigswitch_routerrule_processorder">
+                <section
+                    xml:id="section_bigswitch_routerrule_processorder">
                     <title>Order of rule processing</title>
-                    <para>The order of router rules has no effect. Overlapping
-                        rules are evaluated using longest prefix matching on
-                        the source and destination fields. The source field
-                        is matched first so it always takes higher precedence
-                        over the destination field. In other words, longest
-                        prefix matching is used on the destination field only
-                        if there are multiple matching rules with the same
-                        source.</para>
+                    <para>The order of router rules has no effect.
+                        Overlapping rules are evaluated using longest
+                        prefix matching on the source and destination
+                        fields. The source field is matched first so
+                        it always takes higher precedence over the
+                        destination field. In other words, longest
+                        prefix matching is used on the destination
+                        field only if there are multiple matching
+                        rules with the same source.</para>
                 </section>
-                <section xml:id="section_bigswitch_routerrule_walkthrough">
+                <section
+                    xml:id="section_bigswitch_routerrule_walkthrough">
                     <title>Big Switch router rules operations</title>
-                    <para>Router rules are configured with a router update
-                        operation in Neutron. The update overrides any previous
-                        rules so all of the rules must be provided at the same
-                        time.</para>
-                    <para>Update a router with rules to permit traffic by
-                        default but block traffic from external networks to the
-                        10.10.10.0/24 subnet:</para>
+                    <para>Router rules are configured with a router
+                        update operation in Neutron. The update
+                        overrides any previous rules so all rules must
+                        be provided at the same time.</para>
+                    <para>Update a router with rules to permit traffic
+                        by default but block traffic from external
+                        networks to the 10.10.10.0/24 subnet:</para>
                     <screen><prompt>#</prompt> <userinput>neutron router-update <replaceable>Router-UUID</replaceable> --router_rules type=dict list=true\
 source=any,destination=any,action=permit \
 source=external,destination=10.10.10.0/24,action=deny</userinput></screen>
-                    <para>Specify alternate next-hop addresses for a specific
-                        subnet:</para>
+                    <para>Specify alternate next-hop addresses for a
+                        specific subnet:</para>
                     <screen><prompt>#</prompt> <userinput>neutron router-update <replaceable>Router-UUID</replaceable> --router_rules type=dict list=true\
 source=any,destination=any,action=permit \
 source=10.10.10.0/24,destination=any,action=permit,nexthops=10.10.10.254+10.10.10.253</userinput></screen>
@@ -1939,13 +1985,16 @@ source=10.10.10.0/24,destination=10.20.20.20/24,action=deny</userinput></screen>
     </section>
     <section xml:id="metering">
         <title>L3 metering</title>
-        <para>The L3 metering is an API extension which allows administrators to configure IP ranges
-            and to assign a specific label to them in order to be able to measure traffic going
-            through a virtual router. L3 metering extension is decoupled from the technology used to
-            implement the measurement. Two abstractions have been added, one is the metering label
-            which can contain metering rules. Since a metering label is assciated with a tenant all
-            virtual routers of this tenant will be associated with this label.</para>
-        <?hard-pagebreak?>
+        <para>The L3 metering API extension enables administrators to
+            configure IP ranges and assign a specified label to them
+            to be able to measure traffic that goes through a virtual
+            router.</para>
+        <para>The L3 metering extension is decoupled from the
+            technology that implements the measurement. Two
+            abstractions have been added: One is the metering label
+            that can contain metering rules. Because a metering label
+            is associated with a tenant, all virtual routers in this
+            tenant are associated with this label.</para>
         <section xml:id="metering_abstraction">
             <title>L3 metering API abstractions</title>
             <table rules="all">
@@ -1973,13 +2022,15 @@ source=10.10.10.0/24,destination=10.20.20.20/24,action=deny</userinput></screen>
                         <td>name</td>
                         <td>String</td>
                         <td>None</td>
-                        <td>Human-readable name for the metering label. Might not be unique.</td>
+                        <td>Human-readable name for the metering
+                            label. Might not be unique.</td>
                     </tr>
                     <tr>
                         <td>description</td>
                         <td>String</td>
                         <td>None</td>
-                        <td>The optional description for the metering label.</td>
+                        <td>The optional description for the metering
+                            label.</td>
                     </tr>
                     <tr>
                         <td>tenant_id</td>
@@ -2014,31 +2065,34 @@ source=10.10.10.0/24,destination=10.20.20.20/24,action=deny</userinput></screen>
                         <td>direction</td>
                         <td>String (Either ingress or egress)</td>
                         <td>ingress</td>
-                        <td>The direction in which metering rule is applied, either ingress or
-                            egress.</td>
+                        <td>The direction in which metering rule is
+                            applied, either ingress or egress.</td>
                     </tr>
                     <tr>
                         <td>metering_label_id</td>
                         <td>uuid-str</td>
                         <td>N/A</td>
                         <td>
-                            <para>The metering label ID to associate with this metering rule.</para>
+                            <para>The metering label ID to associate
+                                with this metering rule.</para>
                         </td>
                     </tr>
                     <tr>
                         <td>excluded</td>
                         <td>Boolean</td>
                         <td>False</td>
-                        <td>Specify whether the remote_ip_prefix will be excluded or not from
-                            traffic counters of the metering label, For example to not count
-                            the traffic of a specific IP address of a range.</td>
+                        <td>Specify whether the remote_ip_prefix will
+                            be excluded or not from traffic counters
+                            of the metering label, For example to not
+                            count the traffic of a specific IP address
+                            of a range.</td>
                     </tr>
                     <tr>
                         <td>remote_ip_prefix</td>
                         <td>String (CIDR)</td>
                         <td>N/A</td>
-                        <td>Indicates remote IP prefix to be associated with this metering rule.
-                        </td>
+                        <td>Indicates remote IP prefix to be
+                            associated with this metering rule.</td>
                     </tr>
                 </tbody>
             </table>
@@ -2046,9 +2100,11 @@ source=10.10.10.0/24,destination=10.20.20.20/24,action=deny</userinput></screen>
         <?hard-pagebreak?>
         <section xml:id="metering_operations">
             <title>Basic L3 metering operations</title>
-            <para>Only administrators are allowed to manage the L3 metering labels/rules.</para>
-            <para>The following table shows example neutron commands that enable you to complete
-                basic L3 metering operations:</para>
+            <para>Only administrators can manage the L3
+                metering labels and rules.</para>
+            <para>This table shows example <command>neutron</command> commands
+                that enable you to complete basic L3 metering
+                operations:</para>
             <table rules="all">
                 <caption>Basic L3 operations</caption>
                 <col width="40%"/>
@@ -2078,7 +2134,8 @@ source=10.10.10.0/24,destination=10.20.20.20/24,action=deny</userinput></screen>
                     </tr>
                     <tr>
                         <td>
-                            <para>Shows information for a specified label.</para>
+                            <para>Shows information for a specified
+                                label.</para>
                         </td>
                         <td>
                             <screen><prompt>$</prompt> <userinput>neutron meter-label-show <replaceable>label-uuid</replaceable></userinput>
@@ -2087,7 +2144,7 @@ source=10.10.10.0/24,destination=10.20.20.20/24,action=deny</userinput></screen>
                     </tr>
                     <tr>
                         <td>
-                            <para>Delete a metering label.</para>
+                            <para>Deletes a metering label.</para>
                         </td>
                         <td>
                             <screen><prompt>$</prompt> <userinput>neutron meter-label-delete <replaceable>label-uuid</replaceable></userinput>
@@ -2096,7 +2153,7 @@ source=10.10.10.0/24,destination=10.20.20.20/24,action=deny</userinput></screen>
                     </tr>
                     <tr>
                         <td>
-                            <para>Create a metering rule.</para>
+                            <para>Creates a metering rule.</para>
                         </td>
                         <td>
                             <screen><prompt>$</prompt> <userinput>neutron meter-label-rule-create <replaceable>label-uuid</replaceable> <replaceable>cidr</replaceable> --direction <replaceable>direction</replaceable> --excluded</userinput>
@@ -2106,7 +2163,8 @@ source=10.10.10.0/24,destination=10.20.20.20/24,action=deny</userinput></screen>
                     </tr>
                     <tr>
                         <td>
-                            <para>Lists metering all label rules.</para>
+                            <para>Lists metering all label
+                                rules.</para>
                         </td>
                         <td>
                             <screen><prompt>$</prompt> <userinput>neutron meter-label-rule-list</userinput></screen>
@@ -2114,14 +2172,15 @@ source=10.10.10.0/24,destination=10.20.20.20/24,action=deny</userinput></screen>
                     </tr>
                     <tr>
                         <td>
-                            <para>Shows information for a specified label rule.</para>
+                            <para>Shows information for a specified
+                                label rule.</para>
                         </td>
                         <td>
                             <screen><prompt>$</prompt> <userinput>neutron meter-label-rule-show <replaceable>rule-uuid</replaceable></userinput></screen>
                         </td>
                     </tr>
                     <tr>
-                        <td>Delete a metering label rule.</td>
+                        <td>Deletes a metering label rule.</td>
                         <td>
                             <screen><prompt>$</prompt> <userinput>neutron meter-label-rule-delete <replaceable>rule-uuid</replaceable></userinput></screen>
                         </td>

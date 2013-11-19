@@ -12,7 +12,7 @@
     <section xml:id="section_networking-intro">
         <title>Introduction to Networking</title>
         <para>The Networking service, code-named Neutron, provides an
-            API for defining network connectivity and addressing in
+            API that lets you define network connectivity and addressing in
             the cloud. The Networking service enables operators to
             leverage different networking technologies to power their
             cloud networking. The Networking service also provides an
@@ -229,8 +229,8 @@
                 options to decide on the right networking technology
                 for the deployment.</para>
             <para>In the Havana release, OpenStack Networking provides
-                the <emphasis role="bold">Modular Layer 2
-                    (ML2)</emphasis> plug-in that can concurrently use
+                the <firstterm>Modular Layer 2
+                    (ML2)</firstterm> plug-in that can concurrently use
                 multiple layer 2 networking technologies that are
                 found in real-world data centers. It currently works
                 with the existing Open vSwitch, Linux Bridge, and
@@ -239,7 +239,7 @@
                 reduces the effort that is required to add and
                 maintain them compared to monolithic plug-ins.</para>
             <note>
-                <title>Plug-ins deprecation notice:</title>
+                <title>Plug-in deprecation notice:</title>
                 <para>The Open vSwitch and Linux Bridge plug-ins are
                     deprecated in the Havana release and will be
                     removed in the Icehouse release. All features have
@@ -391,9 +391,8 @@
                         xlink:href="http://docs.openstack.org/havana/config-reference/content/section_networking-options-reference.html"
                         >Networking configuration options</link> in
                         <citetitle>Configuration
-                    Reference</citetitle>. The following sections
-                    explain in detail how to configure specific
-                    plug-ins.</para>
+                    Reference</citetitle>. These sections explain how
+                    to configure specific plug-ins.</para>
                 <section xml:id="bigswitch_floodlight_plugin">
                     <title>Configure Big Switch, Floodlight REST Proxy
                         plug-in</title>
@@ -440,38 +439,38 @@
                         Tunneling is easier to deploy because it does
                         not require configuring VLANs on network
                         switches.</para>
-                    <para>The following procedure uses
-                        tunneling:</para>
+                    <para>This procedure uses tunneling:</para>
                     <procedure>
                         <title>To configure OpenStack Networking to
                             use the OVS plug-in</title>
                         <step>
                             <para>Edit
                                    <filename>/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini
-                                </filename> to specify the following
-                                values (for database configuration,
-                                see <link
+                                </filename> to specify these values
+                                (for database configuration, see <link
                                    xlink:href="http://docs.openstack.org/havana/install-guide/install/apt/content/neutron-install-network-node.html"
                                    >Install Networking Services</link>
                                 in <citetitle>Installation
                                    Guide</citetitle>):</para>
                             <programlisting language="ini">enable_tunneling=True
 tenant_network_type=gre
-tunnel_id_ranges=1:1000 # only required for nodes running agents
-local_ip=&lt;net-IP-address-of-node&gt;</programlisting>
+tunnel_id_ranges=1:1000
+# only required for nodes running agents
+local_ip=&lt;data-net-IP-address-of-node&gt;</programlisting>
                         </step>
                         <step>
-                            <para>If you are using the neutron DHCP
-                                agent, add the following to
-                                   <filename>/etc/neutron/dhcp_agent.ini</filename>:</para>
+                            <para>If you use the neutron DHCP agent,
+                                add these lines to the
+                                   <filename>/etc/neutron/dhcp_agent.ini</filename>
+                                file:</para>
                             <programlisting language="ini">dnsmasq_config_file=/etc/neutron/dnsmasq-neutron.conf</programlisting>
                         </step>
                         <step>
                             <para>Create
                                    <filename>/etc/neutron/dnsmasq-neutron.conf</filename>,
-                                and add the following values to lower
-                                the MTU size on instances and prevent
-                                packet fragmentation over the GRE
+                                and add these values to lower the MTU
+                                size on instances and prevent packet
+                                fragmentation over the GRE
                                 tunnel:</para>
                             <programlisting language="ini">dhcp-option-force=26,1400</programlisting>
                         </step>
@@ -514,8 +513,8 @@ allow_overlapping_ips = True</programlisting>
                                 controller cluster, create a new
                                 [cluster:&lt;name&gt;] section in the
                                    <filename>/etc/neutron/plugins/nicira/nvp.ini</filename>
-                                file, and add the following entries
-                                (for database configuration, see <link
+                                file, and add these entries (for
+                                database configuration, see <link
                                    xlink:href="http://docs.openstack.org/havana/install-guide/install/apt/content/neutron-install-network-node.html"
                                    >Install Networking Services</link>
                                 in <citetitle>Installation
@@ -556,9 +555,9 @@ allow_overlapping_ips = True</programlisting>
                                    does not update the neutron init
                                    script to point to the NVP
                                    configuration file. Instead, you
-                                   must manually update
+                                   must manually update the
                                    <filename>/etc/default/neutron-server</filename>
-                                   with the following:</para>
+                                   file as follows:</para>
                                    <programlisting language="ini">NEUTRON_PLUGIN_CONFIG = /etc/neutron/plugins/nicira/nvp.ini</programlisting>
                                    </warning>
                                    </listitem>
@@ -581,15 +580,16 @@ nvp_controller_connection=10.0.0.3:443:admin:admin:30:10:2:2
 nvp_controller_connection=10.0.0.4:443:admin:admin:30:10:2:2</programlisting>
                     <note>
                         <para>To debug <filename>nvp.ini</filename>
-                            configuration issues, run the following
-                            command from the host running
-                            neutron-server:
-                            <screen><prompt>#</prompt> <userinput>check-nvp-config &lt;path/to/nvp.ini&gt;</userinput></screen>This
-                            command tests whether <systemitem
+                            configuration issues, run this command
+                            from the host that runs <systemitem
+                                class="service"
+                                >neutron-server</systemitem>:</para>
+                        <screen><prompt>#</prompt> <userinput>check-nvp-config &lt;path/to/nvp.ini&gt;</userinput></screen>
+                        <para>This command tests whether <systemitem
                                 class="service"
                                 >neutron-server</systemitem> can log
-                            into all of the NVP Controllers, SQL
-                            server, and whether all of the UUID values
+                            into all of the NVP Controllers and the
+                            SQL server, and whether all UUID values
                             are correct.</para>
                     </note>
                 </section>
@@ -624,7 +624,7 @@ password = "PLUMgrid-director-admin-password"</programlisting>
                                    Guide</citetitle>.</para>
                         </step>
                         <step>
-                            <para>To apply the new settings, restart
+                            <para>To apply the settings, restart
                                    <systemitem class="service"
                                    >neutron-server</systemitem>:</para>
                             <screen><prompt>#</prompt> <userinput>sudo service neutron-server restart</userinput></screen>
@@ -934,8 +934,7 @@ password = "PLUMgrid-director-admin-password"</programlisting>
                 </procedure>
                 <section xml:id="dhcp_agent_ovs">
                     <title>DHCP agent setup: OVS plug-in</title>
-                    <para>The following DHCP agent options are
-                        required in the
+                    <para>These DHCP agent options are required in the
                             <filename>/etc/neutron/dhcp_agent.ini</filename>
                         file for the OVS plug-in:</para>
                     <programlisting language="bash">[DEFAULT]
@@ -946,8 +945,7 @@ interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver</programlist
                 </section>
                 <section xml:id="dhcp_agent_nvp">
                     <title>DHCP agent setup: NVP plug-in</title>
-                    <para>The following DHCP agent options are
-                        required in the
+                    <para>These DHCP agent options are required in the
                             <filename>/etc/neutron/dhcp_agent.ini</filename>
                         file for the NVP plug-in:</para>
                     <programlisting language="bash">[DEFAULT]
@@ -959,8 +957,7 @@ interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver</programlist
                 </section>
                 <section xml:id="dhcp_agent_ryu">
                     <title>DHCP agent setup: Ryu plug-in</title>
-                    <para>The following DHCP agent options are
-                        required in the
+                    <para>These DHCP agent options are required in the
                             <filename>/etc/neutron/dhcp_agent.ini</filename>
                         file for the Ryu plug-in:</para>
                     <programlisting language="bash">[DEFAULT]
@@ -1015,7 +1012,7 @@ interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver</programlist
                             <para>Install the
                                    <systemitem>neutron-l3-agent</systemitem>
                                 binary on the network node:</para>
-                            <screen><prompt>#</prompt> <userinput>sudo apt-get install neutron-l3-agent</userinput> </screen>
+                            <screen><prompt>#</prompt> <userinput>sudo apt-get install neutron-l3-agent</userinput></screen>
                         </step>
                         <step>
                             <para>To uplink the node that runs
@@ -1065,9 +1062,8 @@ interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver</programlist
                                 particular router's network namespace.
                                 The namespace will have the name
                                 "qrouter-&lt;UUID of the router&gt;.
-                                The following commands are examples of
-                                running commands in the namespace of a
-                                router with UUID
+                                These example commands run in the
+                                router namespace with UUID
                                 47af3868-0fa8-4447-85f6-1304de32153b:</para>
                             <screen><prompt>#</prompt> <userinput>ip netns exec qrouter-47af3868-0fa8-4447-85f6-1304de32153b ip addr list</userinput>
 <prompt>#</prompt> <userinput>ip netns exec qrouter-47af3868-0fa8-4447-85f6-1304de32153b ping &lt;fixed-ip&gt;</userinput></screen>
@@ -1111,9 +1107,9 @@ interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver</programlist
                         <programlisting language="ini">device_driver = neutron.services.loadbalancer.drivers.haproxy.namespace_driver.HaproxyNSDriver</programlisting>
                     </step>
                     <step>
-                        <para>Make sure to set the following parameter
-                            in <filename>neutron.conf</filename> on
-                            the host that runs <systemitem
+                        <para>Set this parameter in the
+                                <filename>neutron.conf</filename> file
+                            on the host that runs <systemitem
                                 class="service"
                                 >neutron-server</systemitem>:</para>
                         <programlisting language="ini">service_plugins = neutron.plugins.services.agent_loadbalancer.plugin.LoadBalancerPlugin</programlisting>
@@ -1132,9 +1128,9 @@ interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver</programlist
                     <title>To configure FWaaS service and
                         agent</title>
                     <step>
-                        <para>Make sure to set the following parameter
-                            in the <filename>neutron.conf</filename>
-                            file on the host that runs <systemitem
+                        <para>Set this parameter in the
+                                <filename>neutron.conf</filename> file
+                            on the host that runs <systemitem
                                 class="service"
                                 >neutron-server</systemitem>:</para>
                         <programlisting language="ini">service_plugins = neutron.services.firewall.fwaas_plugin.FirewallPlugin</programlisting>
@@ -1178,50 +1174,45 @@ enabled = True</programlisting>
                 Networking server on that same host. However,
                 Networking is entirely standalone and can be deployed
                 on its own host as well. Depending on your deployment,
-                Networking can also include the following
-                agents.</para>
-            <para>
-                <table rules="all">
-                    <caption>Networking agents</caption>
-                    <col width="30%"/>
-                    <col width="70%"/>
-                    <thead>
-                        <tr>
-                            <th>Agent</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><emphasis role="bold">plug-in
-                                   agent</emphasis>
-                                   (<literal>neutron-*-agent</literal>)</td>
-                            <td>Runs on each hypervisor to perform
-                                local vswitch configuration. The agent
-                                that runs depends on the plug-in that
-                                you use, and some plug-ins do not
-                                require an agent.</td>
-                        </tr>
-                        <tr>
-                            <td><emphasis role="bold">dhcp
-                                   agent</emphasis>
-                                   (<literal>neutron-dhcp-agent</literal>)</td>
-                            <td>Provides DHCP services to tenant
-                                networks. Some plug-ins use this
-                                agent.</td>
-                        </tr>
-                        <tr>
-                            <td><emphasis role="bold">l3
-                                   agent</emphasis>
-                                   (<literal>neutron-l3-agent</literal>)</td>
-                            <td>Provides L3/NAT forwarding to provide
-                                external network access for VMs on
-                                tenant networks. Some plug-ins use
-                                this agent.</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </para>
+                Networking can also include these agents.</para>
+            <table rules="all">
+                <caption>Networking agents</caption>
+                <col width="30%"/>
+                <col width="70%"/>
+                <thead>
+                    <tr>
+                        <th>Agent</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><emphasis role="bold">plug-in
+                                agent</emphasis>
+                                (<literal>neutron-*-agent</literal>)</td>
+                        <td>Runs on each hypervisor to perform local
+                            vswitch configuration. The agent that runs
+                            depends on the plug-in that you use, and
+                            some plug-ins do not require an
+                            agent.</td>
+                    </tr>
+                    <tr>
+                        <td><emphasis role="bold">dhcp
+                                agent</emphasis>
+                                (<literal>neutron-dhcp-agent</literal>)</td>
+                        <td>Provides DHCP services to tenant networks.
+                            Some plug-ins use this agent.</td>
+                    </tr>
+                    <tr>
+                        <td><emphasis role="bold">l3 agent</emphasis>
+                                (<literal>neutron-l3-agent</literal>)</td>
+                        <td>Provides L3/NAT forwarding to provide
+                            external network access for VMs on tenant
+                            networks. Some plug-ins use this
+                            agent.</td>
+                    </tr>
+                </tbody>
+            </table>
             <para>These agents interact with the main neutron process
                 through RPC (for example, rabbitmq or qpid) or through
                 the standard Networking API. Further:</para>
@@ -1451,10 +1442,10 @@ enabled = True</programlisting>
                         </tbody>
                     </table></para>
                 <?hard-pagebreak?>
-                <para>The following table summarizes the attributes
-                    available for each networking abstraction. For
-                    information about API abstraction and operations,
-                    see the <link
+                <para>This table summarizes the attributes available
+                    for each networking abstraction. For information
+                    about API abstraction and operations, see the
+                        <link
                         xlink:href="http://docs.openstack.org/api/openstack-network/2.0/content/"
                         >Networking API v2.0 Reference</link>.</para>
                 <table rules="all">
@@ -1531,7 +1522,7 @@ enabled = True</programlisting>
                     </tbody>
                 </table>
                 <table rules="all">
-                    <caption>Subnet Attributes</caption>
+                    <caption>Subnet attributes</caption>
                     <col width="20%"/>
                     <col width="15%"/>
                     <col width="17%"/>
@@ -1735,9 +1726,9 @@ enabled = True</programlisting>
                     the <link
                         xlink:href="http://docs.openstack.org/user-guide/content/index.html"
                         > OpenStack End User Guide</link>.</para>
-                <para>The following table shows example neutron
-                    commands that enable you to complete basic
-                    Networking operations:</para>
+                <para>This table shows example neutron commands that
+                    enable you to complete basic Networking
+                    operations:</para>
                 <table rules="all">
                     <caption>Basic Networking operations</caption>
                     <col width="40%"/>
@@ -1816,9 +1807,9 @@ enabled = True</programlisting>
             <?hard-pagebreak?>
             <section xml:id="advanced_networking">
                 <title>Advanced Networking operations</title>
-                <para>The following table shows example neutron
-                    commands that enable you to complete advanced
-                    Networking operations:</para>
+                <para>This table shows example neutron commands that
+                    enable you to complete advanced Networking
+                    operations:</para>
                 <table rules="all">
                     <caption>Advanced Networking operations</caption>
                     <col width="40%"/>
@@ -1874,11 +1865,11 @@ enabled = True</programlisting>
             <title>Use Compute with Networking</title>
             <section xml:id="basic_workflow_with_nova">
                 <title>Basic Compute and Networking operations</title>
-                <para>The following table shows example neutron and
-                    nova commands that enable you to complete basic
-                    Compute and Networking operations:</para>
+                <para>This table shows example neutron and nova
+                    commands that enable you to complete basic Compute
+                    and Networking operations:</para>
                 <table rules="all">
-                    <caption>Basic Compute/Networking
+                    <caption>Basic Compute and Networking
                         operations</caption>
                     <col width="40%"/>
                     <col width="60%"/>
@@ -1927,7 +1918,7 @@ enabled = True</programlisting>
                         logical router ID.</para>
                 </note>
                 <note xml:id="network_compute_note">
-                    <title>VM creation and deletion</title>
+                    <title>Create and delete VMs</title>
                     <itemizedlist>
                         <listitem>
                             <para>When you boot a Compute VM, a port
@@ -1949,9 +1940,9 @@ enabled = True</programlisting>
             </section>
             <section xml:id="advanced_vm_creation">
                 <title>Advanced VM creation operations</title>
-                <para>The following table shows example nova and
-                    neutron commands that enable you to complete
-                    advanced VM creation operations:</para>
+                <para>This table shows example nova and neutron
+                    commands that enable you to complete advanced VM
+                    creation operations:</para>
                 <table rules="all">
                     <caption>Advanced VM creation operations</caption>
                     <col width="40%"/>
@@ -1997,8 +1988,8 @@ enabled = True</programlisting>
                 </note>
             </section>
             <section xml:id="enabling_ping_and_ssh">
-                <title>Security groups (enabling ping and SSH on
-                    VMs)</title>
+                <title>Enable ping and SSH on VMs (security
+                    groups)</title>
                 <para>You must configure security group rules
                     depending on the type of plug-in you are using. If
                     you are using a plug-in that:</para>
@@ -2008,7 +1999,7 @@ enabled = True</programlisting>
                             you can configure security group rules
                             directly by using <command>neutron
                                 security-group-rule-create</command>.
-                            The following example allows
+                            This example enables
                                 <command>ping</command> and
                                 <command>ssh</command> access to your
                             VMs.</para>
@@ -2023,10 +2014,9 @@ enabled = True</programlisting>
                             rules by using the <command>nova
                                 secgroup-add-rule</command> or
                                 <command>euca-authorize</command>
-                            command. The following
-                                <command>nova</command> commands allow
-                                <command>ping</command> and
-                                <command>ssh</command> access to your
+                            command. These <command>nova</command>
+                            commands enable <command>ping</command>
+                            and <command>ssh</command> access to your
                             VMs.</para>
                         <screen><prompt>#</prompt> <userinput>nova secgroup-add-rule default icmp -1 -1 0.0.0.0/0</userinput>
 <prompt>#</prompt> <userinput>nova secgroup-add-rule default tcp 22 22 0.0.0.0/0</userinput></screen>
@@ -2166,9 +2156,8 @@ enabled = True</programlisting>
                     user submitting the request.</para>
             </listitem>
         </itemizedlist>
-        <para>The following is an extract from the default
+        <para>This extract is from the default
                 <filename>policy.json</filename> file:</para>
-
         <programlisting language="bash">{
 [1] "admin_or_owner": [["role:admin"], ["tenant_id:%(tenant_id)s"]],
     "admin_or_network_owner": [["role:admin"], ["tenant_id:%(network_tenant_id)s"]],
@@ -2209,11 +2198,11 @@ enabled = True</programlisting>
                 <emphasis role="italic">mac_address</emphasis>
             attribute for a port only to administrators and the owner
             of the network where the port is attached.</para>
-        <para>In some cases, some operations should be restricted to
-            administrators only. The following example shows you how
-            to modify a policy file to permit tenants to define
-            networks and see their resources and permit administrative
-            users to perform all other operations:</para>
+        <para>In some cases, some operations are restricted to
+            administrators only. This example shows you how to modify
+            a policy file to permit tenants to define networks and see
+            their resources and permit administrative users to perform
+            all other operations:</para>
         <programlisting language="bash">{
     "admin_or_owner": [["role:admin"], ["tenant_id:%(tenant_id)s"]],
     "admin_only": [["role:admin"]], "regular_user": [],

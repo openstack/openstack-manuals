@@ -2,53 +2,55 @@
 <section xml:id="volume-migration"
     xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xlink="http://www.w3.org/1999/xlink"
-    version="5.0">
-            <title>Migrate volumes</title>
-            <para>The Havana release of OpenStack introduces the ability to
-        migrate volumes between backends. Migrating a volume will transparently
-        move its data from the volume's current backend to a new one. This is an
-        administrator function, and can be used for functions including storage
-        evacuation (for maintenance or decommissioning), or manual optimizations
-        (for example, performance, reliability, or cost).</para>
-            <para>There are three possible flows for a migration:</para>
-            <orderedlist>
-                <listitem>
-                    <para>If the storage can migrate the volume on its
-                    own, it is given the opportunity to do so. This
-                    allows the Block Storage driver to enable
-                    optimizations that the storage may be able to
-                    perform. If the backend is not able to perform the
-                    migration, Block Storage will use one of two generic
-                    flows, as follows.</para>
-                </listitem>
-                <listitem>
-                    <para>If the volume is not attached, the Block Storage
-                service will create a new volume, and copy the data from the
-                original to the new volume. Note that while most backends
-                support this function, not all do. See driver documentation in
-                the <citetitle>OpenStack Configuration Reference</citetitle> for
-                more details.</para>
-                </listitem>
-                <listitem>
-                    <para>If the volume is attached to a VM instance,
-                    the Block Storage service will create a new volume,
-                    and call Compute to copy the data from the original
-                    to the new volume.  Currently this is supported only
-                    by the Compute libvirt driver.</para>
-                </listitem>
-            </orderedlist>
-            <para>As an example, we will show a scenario with two LVM
-            backends, and migrate an attached volume from one to the
-            other. This will use the 3rd migration flow.</para>
-            <para>First, we can list the available backends:
-                <screen><prompt>$</prompt> <userinput>cinder-manage host list</userinput>
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+    <title>Migrate volumes</title>
+    <para>The Havana release of OpenStack introduces the ability to
+        migrate volumes between back-ends. Migrating a volume
+        transparently moves its data from the current back-end for the
+        volume to a new one. This is an administrator function, and
+        can be used for functions including storage evacuation (for
+        maintenance or decommissioning), or manual optimizations (for
+        example, performance, reliability, or cost).</para>
+    <para>These workflows are possible for a migration:</para>
+    <orderedlist>
+        <listitem>
+            <para>If the storage can migrate the volume on its own, it
+                is given the opportunity to do so. This allows the
+                Block Storage driver to enable optimizations that the
+                storage might be able to perform. If the back-end is
+                not able to perform the migration, the Block Storage
+                Service uses one of two generic flows, as
+                follows.</para>
+        </listitem>
+        <listitem>
+            <para>If the volume is not attached, the Block Storage
+                Service creates a volume and copies the data from the
+                original to the new volume. Note that while most
+                back-ends support this function, not all do. See
+                driver documentation in the <link
+                    xlink:href="http://docs.openstack.org/havana/config-reference/content/"
+                        ><citetitle>OpenStack Configuration
+                        Reference</citetitle></link> for more
+                details.</para>
+        </listitem>
+        <listitem>
+            <para>If the volume is attached to a VM instance, the
+                Block Storage Service creates a volume, and calls
+                Compute to copy the data from the original to the new
+                volume. Currently this is supported only by the
+                Compute libvirt driver.</para>
+        </listitem>
+    </orderedlist>
+    <para>As an example, this scenario shows two LVM back-ends and
+        migrates an attached volume from one to the other. This
+        scenario uses the third migration flow.</para>
+    <para>First, list the available back-ends:</para>
+    <screen><prompt>$</prompt> <userinput>cinder-manage host list</userinput>
 <computeroutput>server1@lvmstorage-1    zone1
 server2@lvmstorage-2    zone1</computeroutput></screen>
-            </para>
-            <para>Next, as the admin user, we can see the current status
-            of the volume (replace the example ID with your own):</para>
-                <screen><prompt>$</prompt> <userinput>cinder show 6088f80a-f116-4331-ad48-9afb0dfb196c</userinput>
+    <para>Next, as the admin user, you can see the current status of
+        the volume (replace the example ID with your own):</para>
+    <screen><prompt>$</prompt> <userinput>cinder show 6088f80a-f116-4331-ad48-9afb0dfb196c</userinput>
 <computeroutput>+--------------------------------+--------------------------------------+
 |            Property            |                Value                 |
 +--------------------------------+--------------------------------------+
@@ -70,47 +72,47 @@ server2@lvmstorage-2    zone1</computeroutput></screen>
 |             status             |                in-use                |
 |          volume_type           |                 None                 |
 +--------------------------------+--------------------------------------+</computeroutput></screen>
-            <para>Of special note are the following attributes:</para>
-            <itemizedlist>
-                <listitem>
-                    <para><literal>os-vol-host-attr:host</literal> - the
-                    volume's current backend.</para>
-                </listitem>
-                <listitem>
-                    <para><literal>os-vol-mig-status-attr:migstat</literal>
-                    - the status of this volume's migration ('None'
-                    means that a migration is not currently in
-                    progress).</para>
-                </listitem>
-                <listitem>
-                    <para><literal>os-vol-mig-status-attr:name_id</literal>
-                    - the volume ID that this volume's name on the backend
-                    is based on.  Before a volume is ever migrated, its
-                    name on the backend storage may be based on the
-                    volume's ID (see the volume_name_template
-                    configuration parameter).  For example, if
-                    volume_name_template is kept at the default value
-                    (volume-%s), then our first LVM backend will have a
-                    logical volume named
+    <para>Note these attributes:</para>
+    <itemizedlist>
+        <listitem>
+            <para><literal>os-vol-host-attr:host</literal> - the
+                volume's current back-end.</para>
+        </listitem>
+        <listitem>
+            <para><literal>os-vol-mig-status-attr:migstat</literal> -
+                the status of this volume's migration ('None' means
+                that a migration is not currently in progress).</para>
+        </listitem>
+        <listitem>
+            <para><literal>os-vol-mig-status-attr:name_id</literal> -
+                the volume ID that this volume's name on the back-end
+                is based on. Before a volume is ever migrated, its
+                name on the back-end storage may be based on the
+                volume's ID (see the volume_name_template
+                configuration parameter). For example, if
+                volume_name_template is kept as the default value
+                (volume-%s), your first LVM back-end has a logical
+                volume named
                     <literal>volume-6088f80a-f116-4331-ad48-9afb0dfb196c</literal>.
-                    During the course of a migration, if we create a new
-                    volume and copy the data over, we will remain with
-                    the original volume's ID, but with the new volume's
-                    name. This is exposed by the
-                    <literal>name_id</literal> attribute.</para>
-                </listitem>
-            </itemizedlist>
-            <para>Now we will migrate this volume to the second LVM backend:
-                <screen><prompt>$</prompt> <userinput>cinder migrate 6088f80a-f116-4331-ad48-9afb0dfb196c server2@lvmstorage-2</userinput></screen>
-            </para>
-            <para>We can use the <command>cinder show</command> command to see
-        the status of the migration. While migrating, the
-            <literal>migstat</literal> attribute will show states such as
-            <literal>migrating</literal> or <literal>completing</literal>. On
-        error, <literal>migstat</literal> will be set to <literal>None</literal>
-        and the <literal>host</literal> attribute will show the original host.
-        On success, in our example, the output would look like:</para>
-        <screen><computeroutput>+--------------------------------+--------------------------------------+
+                During the course of a migration, if you create a
+                volume and copy over the data, the volume get the new name but keeps its
+                original ID. This is
+                exposed by the <literal>name_id</literal>
+                attribute.</para>
+        </listitem>
+    </itemizedlist>
+    <para>Migrate this volume to the second LVM back-end:</para>
+    <screen><prompt>$</prompt> <userinput>cinder migrate 6088f80a-f116-4331-ad48-9afb0dfb196c server2@lvmstorage-2</userinput></screen>
+    <para>You can use the <command>cinder show</command> command to
+        see the status of the migration. While migrating, the
+            <literal>migstat</literal> attribute shows states such as
+            <literal>migrating</literal> or
+            <literal>completing</literal>. On error,
+            <literal>migstat</literal> is set to
+            <literal>None</literal> and the <literal>host</literal>
+        attribute shows the original host. On success, in this
+        example, the output looks like:</para>
+    <screen><computeroutput>+--------------------------------+--------------------------------------+
 |            Property            |                Value                 |
 +--------------------------------+--------------------------------------+
 |          attachments           |                [...]                 |
@@ -132,23 +134,22 @@ server2@lvmstorage-2    zone1</computeroutput></screen>
 |          volume_type           |                 None                 |
 +--------------------------------+--------------------------------------+
                 </computeroutput></screen>
-            <para>Note that <literal>migstat</literal> is None,
+    <para>Note that <literal>migstat</literal> is None,
             <literal>host</literal> is the new host, and
             <literal>name_id</literal> holds the ID of the volume
-            created by the migration. If we were to look at the second
-            LVM backend, we would find the logical volume
+        created by the migration. If you look at the second LVM
+        back-end, you find the logical volume
             <literal>volume-133d1f56-9ffc-4f57-8798-d5217d851862</literal>.</para>
-            <note>
-                <para>The migration will not be visible to non-admin
-                users (for example, via the volume's
-                <literal>status</literal>).  However, some operations
-                are not be allowed while a migration is taking place,
-                such as attaching/detaching a volume and deleting a
-                volume. If a user performs such an action during a
-                migration, an error will be returned.</para>
-            </note>
-            <note>
-                <para>Migrating volumes that have snapshots is currently
-                not allowed.</para>
-            </note>
-        </section>
+    <note>
+        <para>The migration is not be visible to non-admin users (for
+            example, through the volume <literal>status</literal>).
+            However, some operations are not be allowed while a
+            migration is taking place, such as attaching/detaching a
+            volume and deleting a volume. If a user performs such an
+            action during a migration, an error is returned.</para>
+    </note>
+    <note>
+        <para>Migrating volumes that have snapshots is currently not
+            allowed.</para>
+    </note>
+</section>
