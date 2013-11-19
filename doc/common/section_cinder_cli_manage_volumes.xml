@@ -9,28 +9,29 @@
         USB hard drive. You can attach a volume to only one instance.
         To create and manage volumes, you use a combination of nova
         and cinder client commands.</para>
-    <para os="enduser">This example creates a volume named
-            <literal>my-new-volume</literal> based on an image.</para>
-    <section xml:id="cli_migrate_volumes" os="adminuser">
+    <para audience="enduser">This example creates a
+            <literal>my-new-volume</literal> volume based on an
+        image.</para>
+    <section xml:id="cli_migrate_volumes" audience="adminuser">
         <title>Migrate a volume</title>
         <para>As an administrator, you can migrate a volume with its
             data from one location to another in a manner that is
-            transparent to users and workloads. Only detached volumes
-            with no snapshots can be migrated.</para>
-        <para>Possible use cases for data migration: <itemizedlist>
-                <listitem>
-                    <para>Bring down a physical storage device for
-                        maintenance without disrupting
-                        workloads.</para>
-                </listitem>
-                <listitem>
-                    <para>Modify the properties of a volume.</para>
-                </listitem>
-                <listitem>
-                    <para>Free up space in a thinly-provisioned back
-                        end.</para>
-                </listitem>
-            </itemizedlist></para>
+            transparent to users and workloads. You can migrate only
+            detached volumes with no snapshots.</para>
+        <para>Possible use cases for data migration:</para>
+        <itemizedlist>
+            <listitem>
+                <para>Bring down a physical storage device for
+                    maintenance without disrupting workloads.</para>
+            </listitem>
+            <listitem>
+                <para>Modify the properties of a volume.</para>
+            </listitem>
+            <listitem>
+                <para>Free up space in a thinly-provisioned back
+                    end.</para>
+            </listitem>
+        </itemizedlist>
         <para>Migrate a volume, as follows:</para>
         <screen><prompt>$</prompt> <userinput>cinder migrate <replaceable>volumeID</replaceable> <replaceable>destinationHost</replaceable> --force-host-copy=<replaceable>True|False</replaceable></userinput></screen>
         <para>Where <literal>--force-host-copy=True</literal> forces
@@ -44,7 +45,7 @@
                 fails.</para>
         </note>
     </section>
-    <section xml:id="cli_list_volumes" os="enduser">
+    <section xml:id="cli_list_volumes" audience="enduser">
         <title>Create a volume</title>
         <procedure>
             <step>
@@ -121,7 +122,7 @@
             </step>
         </procedure>
     </section>
-    <section xml:id="cli_attach_volume" os="enduser">
+    <section xml:id="cli_attach_volume" audience="enduser">
         <title>Attach a volume to an instance</title>
         <procedure>
             <step>
@@ -168,7 +169,7 @@
             </step>
         </procedure>
     </section>
-    <section xml:id="cli_extend_volumes" os="enduser">
+    <section xml:id="cli_extend_volumes" audience="enduser">
         <title>Resize a volume</title>
         <procedure>
             <step>
@@ -201,7 +202,7 @@
             </step>
         </procedure>
     </section>
-    <section xml:id="cli_delete_volumes" os="enduser">
+    <section xml:id="cli_delete_volumes" audience="enduser">
         <title>Delete a volume</title>
         <procedure>
             <step>
@@ -240,7 +241,7 @@
             </step>
         </procedure>
     </section>
-    <section xml:id="cli_transfer_volumes" os="enduser">
+    <section xml:id="cli_transfer_volumes" audience="enduser">
         <title>Transfer a volume</title>
         <para>You can transfer a volume from one owner to another by
             using the <command>cinder transfer*</command> commands.
@@ -250,22 +251,19 @@
             recipient, or new owner, accepts the transfer by using the
             ID and key.</para>
         <para>Use cases include:</para>
-        <para>
-            <itemizedlist>
-                <listitem>
-                    <para>Create a custom bootable volume or a volume
-                        with a large data set and transfer it to the
-                        end customer.</para>
-                </listitem>
-                <listitem>
-                    <para>For bulk import of data to the cloud, the
-                        data ingress system creates a new Block
-                        Storage volume, copies data from the physical
-                        device, and transfers device ownership to the
-                        end user.</para>
-                </listitem>
-            </itemizedlist>
-        </para>
+        <itemizedlist>
+            <listitem>
+                <para>Create a custom bootable volume or a volume with
+                    a large data set and transfer it to the end
+                    customer.</para>
+            </listitem>
+            <listitem>
+                <para>For bulk import of data to the cloud, the data
+                    ingress system creates a new Block Storage volume,
+                    copies data from the physical device, and
+                    transfers device ownership to the end user.</para>
+            </listitem>
+        </itemizedlist>
         <section xml:id="create_volume_transfer">
             <title>Create a volume transfer request</title>
             <procedure>
