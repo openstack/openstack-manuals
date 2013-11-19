@@ -223,8 +223,8 @@ IDENTIFIED BY '<replaceable>NEUTRON_DBPASS</replaceable>';</userinput></screen>
       <step os="rhel;centos;fedora;opensuse;sles">
         <para>Configure basic Networking-related services to start at
           boot time:</para>
-        <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>for s in neutron-{dhcp,l3}-agent; do chkconfig $s on; done</userinput></screen>
-        <screen os="opensuse;sles"><prompt>#</prompt> <userinput>for s in openstack-neutron-{dhcp,l3}-agent; do chkconfig $s on; done</userinput></screen>
+        <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>for s in neutron-{dhcp,metadata,l3}-agent; do chkconfig $s on; done</userinput></screen>
+        <screen os="opensuse;sles"><prompt>#</prompt> <userinput>for s in openstack-neutron-{dhcp,metadata,l3}-agent; do chkconfig $s on; done</userinput></screen>
       </step>
       <step>
         <para>Enable packet forwarding and disable packet destination
@@ -320,10 +320,61 @@ admin_password=<replaceable>NEUTRON_PASS</replaceable></programlisting>
         <programlisting language="ini">dhcp_driver = neutron.agent.linux.dhcp.Dnsmasq</programlisting>
       </step>
       <step>
+        <para>To allow virtual machines to access the Compute metadata
+          information, the Networking metadata agent must be enabled and
+          configured. The agent will act as a proxy for the Compute metadata
+          service.</para>
+        <para>On the controller, edit the
+          <filename>/etc/nova/nova.conf</filename> file to define a secret key
+          that will be shared between the Compute Service and the Networking
+          metadata agent.</para>
+        <para os="debian;ubuntu">Add to the <literal>[DEFAULT]</literal> section:</para>
+        <programlisting os="ubuntu;debian" language="ini">[DEFAULT]
+neutron_metadata_proxy_shared_secret = <replaceable>METADATA_PASS</replaceable>
+service_neutron_metadata_proxy = true</programlisting>
+        <para os="opensuse;sles;rhel;centos;fedora">Set the <literal>neutron_metadata_proxy_shared_secret</literal> key:</para>
+        <screen os="opensuse;sles;rhel;centos;fedora"><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT \
+    neutron_metadata_proxy_shared_secret <replaceable>METADATA_PASS</replaceable></userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT \
+    service_neutron_metadata_proxy true</userinput></screen>
+        <para>Restart the <systemitem class="service">nova-api</systemitem>
+          service:</para>
+        <screen os="debian;ubuntu"><prompt>#</prompt> <userinput>service nova-api restart</userinput></screen>
+        <screen os="centos;rhel;fedora;opensuse;sles"><prompt>#</prompt> <userinput>service openstack-nova-api restart</userinput></screen>
+
+        <para>On the network node, modify the metadata agent configuration.</para>
+        <para os="debian;ubuntu">Edit the
+          <filename>/etc/neutron/metadata_agent.ini</filename> file and modify
+          the <literal>[DEFAULT]</literal> section:</para>
+        <programlisting os="debian;ubuntu" language="ini">[DEFAULT]
+auth_url = http://controller:5000/v2.0
+admin_tenant_name = service
+admin_user = neutron
+admin_password = <replaceable>NEUTRON_PASS</replaceable>
+nova_metadata_ip = controller
+metadata_proxy_shared_secret = <replaceable>METADATA_PASS</replaceable></programlisting>
+        <para os="opensuse;sles;rhel;centos;fedora">Set the required keys:</para>
+        <screen os="opensuse;sles;rhel;centos;fedora"><prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/metadata_agent.ini DEFAULT \
+    auth_url http://controller:5000/v2.0</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/metadata_agent.ini DEFAULT \
+    admin_tenant_name service</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/metadata_agent.ini DEFAULT \
+    admin_user neutron</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/metadata_agent.ini DEFAULT \
+    admin_password <replaceable>NEUTRON_PASS</replaceable></userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/metadata_agent.ini DEFAULT \
+    nova_metadata_ip = controller</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/metadata_agent.ini DEFAULT \
+    metadata_proxy_shared_secret <replaceable>METADATA_PASS</replaceable></userinput></screen>
+      </step>
+      <step>
         <para>Restart Networking:</para>
-        <screen><prompt>#</prompt> <userinput>service neutron-dhcp-agent restart</userinput>
-<prompt>#</prompt> <userinput>service neutron-l3-agent restart</userinput></screen>
-        <!-- TODO(sross): enable Neutron metadata as well? -->
+        <screen os="ubuntu;debian;rhel;centos;fedora"><prompt>#</prompt> <userinput>service neutron-dhcp-agent restart</userinput>
+<prompt>#</prompt> <userinput>service neutron-l3-agent restart</userinput>
+<prompt>#</prompt> <userinput>service neutron-metadata-agent restart</userinput></screen>
+        <screen os="sles;opensuse"><prompt>#</prompt> <userinput>service openstack-neutron-dhcp-agent restart</userinput>
+<prompt>#</prompt> <userinput>service openstack-neutron-l3-agent restart</userinput>
+<prompt>#</prompt> <userinput>service openstack-neutron-metadata-agent restart</userinput></screen>
       </step>
       <step>
         <para>After you configure the <link
