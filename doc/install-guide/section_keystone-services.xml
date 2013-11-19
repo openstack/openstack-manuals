@@ -1,24 +1,22 @@
 <section xmlns="http://docbook.org/ns/docbook"
-         xmlns:xlink="http://www.w3.org/1999/xlink"
-         xml:id="keystone-services"
-         os="rhel;centos;fedora;opensuse;sles;ubuntu">
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  xml:id="keystone-services"
+  os="rhel;centos;fedora;opensuse;sles;ubuntu">
   <title>Define services and API endpoints</title>
-
   <para>The Identity Service also tracks what OpenStack services are
-  installed and where to locate them on the network. For each service
-  on your OpenStack installation, you must call
-  <command>keystone service-create</command> to describe the service
-  and <command>keystone endpoint-create</command> to specify the API
-  endpoints associated with the service.</para>
-
-  <para>For now, create a service for the Identity Service itself.
-  This will allow you to stop using the authorization token and instead
-  use normal authentication when using the <command>keystone</command>
-  command in the future.</para>
-
-  <para>First, create a service entry for the Identity Service.</para>
-
-  <screen><prompt>#</prompt> <userinput>keystone service-create --name=keystone --type=identity \
+    installed and where to locate them on the network. For each
+    service on your OpenStack installation, you must call
+      <command>keystone service-create</command> to describe the
+    service and <command>keystone endpoint-create</command> to specify
+    the API endpoints associated with the service.</para>
+  <para>For now, create a service for the Identity Service itself that
+    uses normal authentication instead of the authorization token when
+    you run the <command>keystone</command> command in the
+    future.</para>
+  <procedure>
+    <step>
+      <para>Create a service entry for the Identity Service:</para>
+      <screen><prompt>#</prompt> <userinput>keystone service-create --name=keystone --type=identity \
   --description="Keystone Identity Service"</userinput>
 <computeroutput>+-------------+----------------------------------+
 |   Property  |              Value               |
@@ -28,17 +26,17 @@
 | name        | keystone                         |
 | type        | identity                         |
 +-------------+----------------------------------+</computeroutput></screen>
-
-  <para>The service id is randomly generated, and will be different
-  from the one shown above when you run the command. Next, specify
-  an API endpoint for the Identity Service using the service id you
-  received. When you specify an endpoint, you provide three URLs
-  for the public API, the internal API, and the admin API. In this
-  guide, we use the hostname <literal>controller</literal>. Note
-  that the Identity Service uses a different port for the admin
-  API.</para>
-
-  <screen><prompt>#</prompt> <userinput>keystone endpoint-create \
+      <para>The service ID is randomly generated and is different from
+        the one shown here.</para>
+    </step>
+    <step>
+      <para>Specify an API endpoint for the Identity Service by using
+        the returned service ID. When you specify an endpoint, you
+        provide URLs for the public API, internal API, and admin API.
+        In this guide, the <literal>controller</literal> host name is
+        used. Note that the Identity Service uses a different port for
+        the admin API.</para>
+      <screen><prompt>#</prompt> <userinput>keystone endpoint-create \
   --service-id=<replaceable>the_service_id_above</replaceable> \
   --publicurl=http://<replaceable>controller</replaceable>:5000/v2.0 \
   --internalurl=http://<replaceable>controller</replaceable>:5000/v2.0 \
@@ -52,12 +50,12 @@
 | publicurl   | http://controller:5000/v2.0       |
 | region      | regionOne                         |
 | service_id  | 15c11a23667e427e91bc31335b45f4bd  |
-+-------------+-----------------------------------+
-</computeroutput>
-</screen>
-
-  <para>As you add other services to your OpenStack installation, you
-  will call these commands again to register those services with the
-  Identity Service.</para>
-
++-------------+-----------------------------------+</computeroutput></screen>
+    </step>
+    <step>
+      <para>As you add other services to your OpenStack installation,
+        call these commands to register the services with the Identity
+        Service.</para>
+    </step>
+  </procedure>
 </section>

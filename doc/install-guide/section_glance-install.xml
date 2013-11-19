@@ -46,8 +46,8 @@
         database. The examples in this guide use the MySQL database
         that is used by other OpenStack services.</para>
       <para>Configure the location of the database. The Image Service
-        provides the <systemitem role="service"
-          >glance-api</systemitem> and <systemitem role="service"
+        provides the <systemitem class="service"
+          >glance-api</systemitem> and <systemitem class="service"
           >glance-registry</systemitem> services, each with its own
         configuration file. You must update both configuration files
         throughout this section. Replace
@@ -61,25 +61,21 @@
           <filename>/etc/glance/glance-api.conf</filename> and
           <filename>/etc/glance/glance-registry.conf</filename> and
         change the <literal>[DEFAULT]</literal> section.</para>
-      <programlisting os="ubuntu;debian" language="ini">
-...
+      <programlisting os="ubuntu;debian" language="ini">...
 [DEFAULT]
 ...
 # SQLAlchemy connection string for the reference implementation
 # registry server. Any valid SQLAlchemy connection string is fine.
 # See: http://www.sqlalchemy.org/docs/05/reference/sqlalchemy/connections.html#sqlalchemy.create_engine
 sql_connection = mysql://glance:GLANCE_DBPASS@<replaceable>controller</replaceable>/glance
-...
-      </programlisting>
+...</programlisting>
     </step>
-
     <step os="rhel;centos;fedora;opensuse;sles">
       <para>Use the <command>openstack-db</command> command to create
         the Image Service database and tables and a
           <literal>glance</literal> database user:</para>
       <screen><prompt>#</prompt> <userinput>openstack-db --init --service glance --password <replaceable>GLANCE_DBPASS</replaceable></userinput></screen>
     </step>
-
     <step os="ubuntu">
       <para>By default, the Ubuntu packages create an SQLite database.
         Delete the <filename>glance.sqlite</filename> file created in
@@ -96,12 +92,10 @@ IDENTIFIED BY '<replaceable>GLANCE_DBPASS</replaceable>';</userinput>
 <prompt>mysql></prompt> <userinput>GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'%' \
 IDENTIFIED BY '<replaceable>GLANCE_DBPASS</replaceable>';</userinput></screen>
     </step>
-
     <step os="ubuntu">
       <para>Create the database tables for the Image Service:</para>
       <screen><prompt>#</prompt> <userinput>glance-manage db_sync</userinput></screen>
     </step>
-
     <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
       <para>Create a <literal>glance</literal> user that the Image
         Service can use to authenticate with the Identity Service.
@@ -116,7 +110,6 @@ IDENTIFIED BY '<replaceable>GLANCE_DBPASS</replaceable>';</userinput></screen>
     <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
       <para>Add the credentials to the Image Service configuration
         files:</para>
-
       <screen os="centos;rhel;fedora;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf keystone_authtoken \
    auth_host <replaceable>controller</replaceable></userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf keystone_authtoken \
@@ -164,7 +157,6 @@ admin_password = GLANCE_PASS
 <prompt>#</prompt> <userinput>cp /usr/share/glance/glance-api-dist-paste.ini /etc/glance/glance-api-paste.ini</userinput>
 <prompt>#</prompt> <userinput>cp /usr/share/glance/glance-registry-dist-paste.ini /etc/glance/glance-registry-paste.ini</userinput>
 </screen>
-
       <para>Edit each file to set the following options in the
           <literal>[filter:authtoken]</literal> section:</para>
       <programlisting language="ini">[filter:authtoken]
@@ -174,7 +166,6 @@ admin_user=glance
 admin_tenant_name=service
 admin_password=<replaceable>GLANCE_PASS</replaceable></programlisting>
     </step>
-
     <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
       <para>Register the Image Service with the Identity Service so
         that other OpenStack services can locate it. Register the
@@ -191,17 +182,15 @@ admin_password=<replaceable>GLANCE_PASS</replaceable></programlisting>
   --internalurl=http://<replaceable>controller</replaceable>:9292 \
   --adminurl=http://<replaceable>controller</replaceable>:9292</userinput></screen>
     </step>
-
     <step os="ubuntu">
-      <para>Restart the <systemitem role="service">glance</systemitem>
+      <para>Restart the <systemitem class="service">glance</systemitem>
         service with its new settings.</para>
       <screen><prompt>#</prompt> <userinput>service glance-registry restart</userinput>
 <prompt>#</prompt> <userinput>service glance-api restart</userinput></screen>
     </step>
-
     <step os="rhel;fedora;centos;opensuse;sles">
-      <para>Start the <systemitem role="service"
-          >glance-api</systemitem> and <systemitem role="service"
+      <para>Start the <systemitem class="service"
+          >glance-api</systemitem> and <systemitem class="service"
           >glance-registry</systemitem> services and configure them to
         start when the system boots:</para>
       <screen os="rhel;fedora;centos;opensuse;sles"><prompt>#</prompt> <userinput>service openstack-glance-api start</userinput>

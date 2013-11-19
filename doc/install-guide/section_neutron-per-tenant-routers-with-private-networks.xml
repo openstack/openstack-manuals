@@ -52,7 +52,7 @@
                 <literal>True</literal> in the configuration file for
             each agent. The default is <literal>True</literal>.</para>
     </note>
-    <para>The following table describes the nodes:</para>
+    <para>This table describes the nodes:</para>
     <informaltable rules="all" width="100%">
         <col width="20%"/>
         <col width="80%"/>
@@ -128,7 +128,8 @@
         </listitem>
         <listitem>
             <para>Glance is installed, configured, and running. In
-                addition, an image named tty must be present.</para>
+                addition, an image named <literal>tty</literal> must
+                be present.</para>
         </listitem>
         <listitem>
             <para>Identity is installed, configured, and running. A
@@ -142,45 +143,41 @@
             <para>Additional services: <itemizedlist>
                     <listitem>
                         <para>RabbitMQ is running with default guest
-                            and its password</para>
+                            and its password.</para>
                     </listitem>
                     <listitem
                         os="rhel;centos;fedora;opensuse;sles;ubuntu">
                         <para>MySQL server (user is <emphasis
                                 role="bold">root</emphasis> and
                             password is <emphasis role="bold"
-                                >root</emphasis>)</para>
+                                >root</emphasis>).</para>
                     </listitem>
                 </itemizedlist></para>
         </listitem>
     </orderedlist>
     <para><emphasis role="bold">Compute node</emphasis></para>
-    <para>Compute is installed and configured.</para>
+    <para>Install and configure Compute.</para>
     <section xml:id="demo_routers_with_private_networks_installions">
         <title>Install</title>
-        <para>
-            <itemizedlist>
-                <listitem>
-                    <para><emphasis role="bold">Controller
-                            nodeNetworking server</emphasis></para>
-                    <orderedlist>
-                        <listitem>
-                            <para>Install the Networking
-                                server.</para>
-                        </listitem>
-                        <listitem
-                            os="rhel;centos;fedora;opensuse;sles;ubuntu">
-                            <para>Create database <emphasis
-                                   role="bold"
+        <itemizedlist>
+            <listitem>
+                <para><emphasis role="bold">Controller nodeNetworking
+                        server</emphasis></para>
+                <procedure>
+                    <step>
+                        <para>Install the Networking server.</para>
+                    </step>
+                    <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
+                        <para>Create database <emphasis role="bold"
                                 >ovs_neutron</emphasis>.</para>
-                        </listitem>
-                        <listitem>
-                            <para>Update the Networking configuration
-                                file, <filename>
-                                   /etc/neutron/neutron.conf</filename>,
-                                with plug-in choice and Identity
-                                Service user as necessary:</para>
-                            <programlisting language="ini" os="rhel;centos;fedora;opensuse;sles;ubuntu">[DEFAULT]
+                    </step>
+                    <step>
+                        <para>Update the Networking configuration
+                            file, <filename>
+                                /etc/neutron/neutron.conf</filename>,
+                            with plug-in choice and Identity Service
+                            user as necessary:</para>
+                        <programlisting language="ini" os="rhel;centos;fedora;opensuse;sles;ubuntu">[DEFAULT]
 core_plugin = neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2
 control_exchange = neutron
 rabbit_host = <replaceable>controller</replaceable>
@@ -193,55 +190,49 @@ connection = mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@<replacea
 [keystone_authtoken]
 admin_tenant_name=service
 admin_user=neutron
-admin_password=<replaceable>NEUTRON_PASS</replaceable>
-</programlisting>
-                            <programlisting language="ini" os="debian">[DEFAULT]
+admin_password=<replaceable>NEUTRON_PASS</replaceable></programlisting>
+                        <programlisting language="ini" os="debian">[DEFAULT]
 control_exchange = neutron
 rabbit_host = <replaceable>controller</replaceable>
 rabbit_password = <replaceable>RABBIT_PASS</replaceable>
 notification_driver = neutron.openstack.common.notifier.rabbit_notifier
 
 [database]
-connection = mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@<replaceable>controller</replaceable>:3306/neutron
-</programlisting>
-                        </listitem>
-                        <listitem
-                            os="rhel;centos;fedora;opensuse;sles;ubuntu">
-                            <para>Update the plug-in configuration
-                                file,
-                                   <filename>/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>:</para>
-                            <programlisting language="ini">[ovs]
+connection = mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@<replaceable>controller</replaceable>:3306/neutron</programlisting>
+                    </step>
+                    <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
+                        <para>Update the plug-in configuration file,
+                                <filename>/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>:</para>
+                        <programlisting language="ini">[ovs]
 tenant_network_type = gre
 tunnel_id_ranges = 1:1000
-enable_tunneling = True
-</programlisting>
-                        </listitem>
-                        <listitem
-                            os="rhel;centos;fedora;opensuse;sles;ubuntu">
-                            <para>Start the Networking server</para>
-                            <para>The Networking server can be a
-                                service of the operating system. The
-                                command to start the service depends
-                                on your operating system. The
-                                following command runs the Networking
-                                server directly:</para>
-                            <screen><prompt>#</prompt> <userinput>neutron-server --config-file /etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini \
+enable_tunneling = True</programlisting>
+                    </step>
+                    <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
+                        <para>Start the Networking server.</para>
+                        <para>The Networking server can be a service
+                            of the operating system. The command to
+                            start the service depends on your
+                            operating system. The following command
+                            runs the Networking server
+                            directly:</para>
+                        <screen><prompt>#</prompt> <userinput>neutron-server --config-file /etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini \
   --config-file /etc/neutron/neutron.conf</userinput></screen>
-                        </listitem>
-                    </orderedlist>
-                </listitem>
-                <listitem>
-                    <para><emphasis role="bold">Compute nodeCompute </emphasis><orderedlist>
-                            <listitem>
-                                <para>Install Compute services.</para>
-                            </listitem>
-                            <listitem>
-                                <para>Update the Compute <filename>
+                    </step>
+                </procedure>
+            </listitem>
+            <listitem>
+                <para><emphasis role="bold">Compute nodeCompute </emphasis><procedure>
+                        <step>
+                            <para>Install Compute services.</para>
+                        </step>
+                        <step>
+                            <para>Update the Compute <filename>
                                    /etc/nova/nova.conf</filename>
-                                   configuration file. Make sure the
-                                   following line appears at the end
-                                   of this file:</para>
-                                <programlisting language="ini">network_api_class=nova.network.neutronv2.api.API
+                                configuration file. Make sure the
+                                following line appears at the end of
+                                this file:</para>
+                            <programlisting language="ini">network_api_class=nova.network.neutronv2.api.API
 
 neutron_admin_username=neutron
 neutron_admin_password=<replaceable>NEUTRON_PASS</replaceable>
@@ -250,37 +241,35 @@ neutron_auth_strategy=keystone
 neutron_admin_tenant_name=service
 neutron_url=http://controlnode:9696/
 
-libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtHybridOVSBridgeDriver
-</programlisting>
-                            </listitem>
-                            <listitem>
-                                <para>Restart relevant Compute
-                                   services.</para>
-                            </listitem>
-                        </orderedlist></para>
-                </listitem>
-                <listitem>
-                    <para><emphasis role="bold">Compute and Networking
-                            nodeL2 agent</emphasis></para>
-                    <orderedlist>
-                        <listitem>
-                            <para>Install and start Open
-                                vSwitch.</para>
-                        </listitem>
-                        <listitem>
-                            <para>Install the L2 agent (Neutron Open
-                                vSwitch agent).</para>
-                        </listitem>
-                        <listitem>
-                            <para>Add the integration bridge to the
-                                Open vSwitch:</para>
-                            <screen><prompt>#</prompt> <userinput>ovs-vsctl add-br br-int</userinput></screen>
-                        </listitem>
-                        <listitem>
-                            <para>Update the Networking configuration
-                                file, <filename>
-                                   /etc/neutron/neutron.conf</filename>:</para>
-                            <programlisting language="ini">[DEFAULT]
+libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtHybridOVSBridgeDriver</programlisting>
+                        </step>
+                        <step>
+                            <para>Restart relevant Compute
+                                services.</para>
+                        </step>
+                    </procedure></para>
+            </listitem>
+            <listitem>
+                <para><emphasis role="bold">Compute and Networking
+                        nodeL2 agent</emphasis></para>
+                <procedure>
+                    <step>
+                        <para>Install and start Open vSwitch.</para>
+                    </step>
+                    <step>
+                        <para>Install the L2 agent (Neutron Open
+                            vSwitch agent).</para>
+                    </step>
+                    <step>
+                        <para>Add the integration bridge to the Open
+                            vSwitch:</para>
+                        <screen><prompt>#</prompt> <userinput>ovs-vsctl add-br br-int</userinput></screen>
+                    </step>
+                    <step>
+                        <para>Update the Networking configuration
+                            file, <filename>
+                                /etc/neutron/neutron.conf</filename>:</para>
+                        <programlisting language="ini">[DEFAULT]
 core_plugin = neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2
 control_exchange = neutron
 rabbit_host = <replaceable>controller</replaceable>
@@ -289,152 +278,143 @@ notification_driver = neutron.openstack.common.notifier.rabbit_notifier
 
 [database]
 connection = mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@<replaceable>controller</replaceable>:3306/neutron</programlisting>
-                        </listitem>
-                        <listitem>
-                            <para>Update the plug-in configuration
-                                file, <filename>
-                                   /etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>.</para>
-                            <para>Compute node:</para>
-                            <programlisting language="ini">[ovs]
+                    </step>
+                    <step>
+                        <para>Update the plug-in configuration file,
+                                <filename>
+                                /etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>.</para>
+                        <para>Compute node:</para>
+                        <programlisting language="ini">[ovs]
 tenant_network_type = gre
 tunnel_id_ranges = 1:1000
 enable_tunneling = True
-local_ip = 9.181.89.202
-</programlisting>
-                            <para>Network node:</para>
-                            <programlisting language="ini">[ovs]
+local_ip = 9.181.89.202</programlisting>
+                        <para>Network node:</para>
+                        <programlisting language="ini">[ovs]
 tenant_network_type = gre
 tunnel_id_ranges = 1:1000
 enable_tunneling = True
-local_ip = 9.181.89.203
-</programlisting>
-                        </listitem>
-                        <listitem>
-                            <para>Create the integration bridge
-                                   <emphasis role="bold"
-                                   >br-int</emphasis>:</para>
-                            <screen><prompt>#</prompt> <userinput>ovs-vsctl --may-exist add-br br-int</userinput></screen>
-                        </listitem>
-                        <listitem>
-                            <para>Start the Networking L2 agent</para>
-                            <para>The Networking Open vSwitch L2 agent
-                                can be a service of operating system.
-                                The command to start depends on your
-                                operating systems. The following
-                                command runs the service
-                                directly:</para>
-                            <screen><prompt>#</prompt> <userinput>neutron-openvswitch-agent --config-file /etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini \
+local_ip = 9.181.89.203</programlisting>
+                    </step>
+                    <step>
+                        <para>Create the integration bridge <emphasis
+                                role="bold">br-int</emphasis>:</para>
+                        <screen><prompt>#</prompt> <userinput>ovs-vsctl --may-exist add-br br-int</userinput></screen>
+                    </step>
+                    <step>
+                        <para>Start the Networking L2 agent</para>
+                        <para>The Networking Open vSwitch L2 agent can
+                            be a service of operating system. The
+                            command to start depends on your operating
+                            systems. The following command runs the
+                            service directly:</para>
+                        <screen><prompt>#</prompt> <userinput>neutron-openvswitch-agent --config-file /etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini \
   --config-file /etc/neutron/neutron.conf</userinput></screen>
-                        </listitem>
-                    </orderedlist>
-                </listitem>
-                <listitem>
-                    <para><emphasis role="bold">Network nodeDHCP
-                            agent</emphasis></para>
-                    <orderedlist>
-                        <listitem>
-                            <para>Install the DHCP agent.</para>
-                        </listitem>
-                        <listitem>
-                            <para>Update the Networking configuration
-                                file, <filename>
-                                   /etc/neutron/neutron.conf</filename></para>
-                            <programlisting language="ini">[DEFAULT]
+                    </step>
+                </procedure>
+            </listitem>
+            <listitem>
+                <para><emphasis role="bold">Network nodeDHCP
+                        agent</emphasis></para>
+                <procedure>
+                    <step>
+                        <para>Install the DHCP agent.</para>
+                    </step>
+                    <step>
+                        <para>Update the Networking configuration
+                            file, <filename>
+                                /etc/neutron/neutron.conf</filename></para>
+                        <programlisting language="ini">[DEFAULT]
 core_plugin = neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2
 control_exchange = neutron
 rabbit_host = <replaceable>controller</replaceable>
 rabbit_password = <replaceable>RABBIT_PASS</replaceable>
 notification_driver = neutron.openstack.common.notifier.rabbit_notifier
 allow_overlapping_ips = True</programlisting>
-                            <para><emphasis role="bold">Set
+                        <para><emphasis role="bold">Set
                                    <literal>allow_overlapping_ips</literal>
-                                   because TenantA and TenantC use
-                                   overlapping
-                                subnets.</emphasis></para>
-                        </listitem>
-                        <listitem>
-                            <para>Update the DHCP <filename>
-                                   /etc/neutron/dhcp_agent.ini</filename>
-                                configuration file:</para>
-                            <programlisting language="ini">interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver</programlisting>
-                        </listitem>
-                        <listitem>
-                            <para>Start the DHCP agent.</para>
-                            <para>The Networking DHCP agent can be a
-                                service of operating system. The
-                                command to start the service depends
-                                on your operating system. The
-                                following command runs the service
-                                directly:</para>
-                            <screen><prompt>#</prompt> <userinput>neutron-dhcp-agent --config-file /etc/neutron/neutron.conf \
+                                because TenantA and TenantC use
+                                overlapping subnets.</emphasis></para>
+                    </step>
+                    <step>
+                        <para>Update the DHCP <filename>
+                                /etc/neutron/dhcp_agent.ini</filename>
+                            configuration file:</para>
+                        <programlisting language="ini">interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver</programlisting>
+                    </step>
+                    <step>
+                        <para>Start the DHCP agent.</para>
+                        <para>The Networking DHCP agent can be a
+                            service of operating system. The command
+                            to start the service depends on your
+                            operating system. The following command
+                            runs the service directly:</para>
+                        <screen><prompt>#</prompt> <userinput>neutron-dhcp-agent --config-file /etc/neutron/neutron.conf \
   --config-file /etc/neutron/dhcp_agent.ini</userinput></screen>
-                        </listitem>
-                    </orderedlist>
-                </listitem>
-                <listitem>
-                    <para><emphasis role="bold">Network nodeL3
-                            agent</emphasis></para>
-                    <orderedlist>
-                        <listitem>
-                            <para>Install the L3 agent.</para>
-                        </listitem>
-                        <listitem>
-                            <para>Add the external network
-                                bridge</para>
-                            <screen><prompt>#</prompt> <userinput>ovs-vsctl add-br br-ex</userinput></screen>
-                        </listitem>
-                        <listitem>
-                            <para>Add the physical interface, for
-                                example eth0, that is connected to the
-                                outside network to this bridge:</para>
-                            <screen><prompt>#</prompt> <userinput>ovs-vsctl add-port br-ex eth0</userinput></screen>
-                        </listitem>
-                        <listitem>
-                            <para>Update the L3 configuration file
-                                   <filename>
-                                   /etc/neutron/l3_agent.ini</filename>:</para>
-                            <programlisting language="ini">[DEFAULT]
+                    </step>
+                </procedure>
+            </listitem>
+            <listitem>
+                <para><emphasis role="bold">Network nodeL3
+                        agent</emphasis></para>
+                <procedure>
+                    <step>
+                        <para>Install the L3 agent.</para>
+                    </step>
+                    <step>
+                        <para>Add the external network bridge</para>
+                        <screen><prompt>#</prompt> <userinput>ovs-vsctl add-br br-ex</userinput></screen>
+                    </step>
+                    <step>
+                        <para>Add the physical interface, for example
+                            eth0, that is connected to the outside
+                            network to this bridge:</para>
+                        <screen><prompt>#</prompt> <userinput>ovs-vsctl add-port br-ex eth0</userinput></screen>
+                    </step>
+                    <step>
+                        <para>Update the L3 configuration file
+                                <filename>
+                                /etc/neutron/l3_agent.ini</filename>:</para>
+                        <programlisting language="ini">[DEFAULT]
 interface_driver=neutron.agent.linux.interface.OVSInterfaceDriver
 use_namespaces=True</programlisting>
-                            <para><emphasis role="bold">Set the
+                        <para><emphasis role="bold">Set the
                                    <literal>use_namespaces</literal>
-                                   option (it is True by default)
-                                   because TenantA and TenantC have
-                                   overlapping subnets, and the
-                                   routers are hosted on one l3 agent
-                                   network node.</emphasis></para>
-                        </listitem>
-                        <listitem>
-                            <para>Start the L3 agent</para>
-                            <para>The Networking L3 agent can be a
-                                service of operating system. The
-                                command to start the service depends
-                                on your operating system. The
-                                following command starts the agent
-                                directly:</para>
-                            <screen><prompt>#</prompt> <userinput>neutron-l3-agent --config-file /etc/neutron/neutron.conf \
+                                option (it is True by default) because
+                                TenantA and TenantC have overlapping
+                                subnets, and the routers are hosted on
+                                one l3 agent network
+                            node.</emphasis></para>
+                    </step>
+                    <step>
+                        <para>Start the L3 agent</para>
+                        <para>The Networking L3 agent can be a service
+                            of operating system. The command to start
+                            the service depends on your operating
+                            system. The following command starts the
+                            agent directly:</para>
+                        <screen><prompt>#</prompt> <userinput>neutron-l3-agent --config-file /etc/neutron/neutron.conf \
 --config-file /etc/neutron/l3_agent.ini</userinput></screen>
-                        </listitem>
-                    </orderedlist>
-                </listitem>
-            </itemizedlist>
-        </para>
+                    </step>
+                </procedure>
+            </listitem>
+        </itemizedlist>
+
     </section>
     <section xml:id="demo_per_tenant_router_network_config">
         <title>Configure logical network</title>
-        <para>All of the commands below can be executed on the network
-            node.</para>
+        <para>You can run these commands on the network node.</para>
         <note>
             <para>Ensure that the following environment variables are
                 set. Various clients use these to access the Identity
                 Service.</para>
-        </note>
-        <programlisting language="bash">export OS_USERNAME=admin
+            <programlisting language="bash">export OS_USERNAME=admin
 export OS_PASSWORD=adminpassword
 export OS_TENANT_NAME=admin
 export OS_AUTH_URL=http://127.0.0.1:5000/v2.0/</programlisting>
-        <orderedlist>
-            <listitem>
+        </note>
+        <procedure>
+            <step>
                 <para>Get the tenant ID (Used as $TENANT_ID
                     later):</para>
                 <screen><prompt>#</prompt> <userinput>keystone tenant-list</userinput>
@@ -446,11 +426,10 @@ export OS_AUTH_URL=http://127.0.0.1:5000/v2.0/</programlisting>
 | 3719a4940bf24b5a8124b58c9b0a6ee6 | TenantB |   True  |
 | 5fcfbc3283a142a5bb6978b549a511ac |   demo  |   True  |
 | b7445f221cda4f4a8ac7db6b218b1339 |  admin  |   True  |
-+----------------------------------+---------+---------+
-                                </computeroutput></screen>
-            </listitem>
-            <listitem>
-                <para>Get the user information:</para>
++----------------------------------+---------+---------+</computeroutput></screen>
+            </step>
+            <step>
+                <para>Get user information:</para>
                 <screen><prompt>#</prompt> <userinput>keystone user-list</userinput>
 <computeroutput>+----------------------------------+-------+---------+-------------------+
 |                id                |  name | enabled |       email       |
@@ -460,10 +439,9 @@ export OS_AUTH_URL=http://127.0.0.1:5000/v2.0/</programlisting>
 | 8e37cb8193cb4873a35802d257348431 | UserC |   True  |                   |
 | c11f6b09ed3c45c09c21cbbc23e93066 | UserB |   True  |                   |
 | ca567c4f6c0942bdac0e011e97bddbe3 | UserA |   True  |                   |
-+----------------------------------+-------+---------+-------------------+
-                                </computeroutput></screen>
-            </listitem>
-            <listitem>
++----------------------------------+-------+---------+-------------------+</computeroutput></screen>
+            </step>
+            <step>
                 <para>Create the external network and its subnet by
                     admin user:</para>
                 <screen><prompt>#</prompt> <userinput>neutron net-create Ext-Net --provider:network_type local --router:external true</userinput>
@@ -482,8 +460,7 @@ export OS_AUTH_URL=http://127.0.0.1:5000/v2.0/</programlisting>
 | status                    | ACTIVE                               |
 | subnets                   |                                      |
 | tenant_id                 | b7445f221cda4f4a8ac7db6b218b1339     |
-+---------------------------+--------------------------------------+
-</computeroutput></screen>
++---------------------------+--------------------------------------+</computeroutput></screen>
 
                 <screen><prompt>#</prompt> <userinput>neutron subnet-create Ext-Net 30.0.0.0/24 --disable-dhcp</userinput>
 <computeroutput>Created a new subnet:
@@ -501,8 +478,7 @@ export OS_AUTH_URL=http://127.0.0.1:5000/v2.0/</programlisting>
 | name             |                                            |
 | network_id       | 2c757c9e-d3d6-4154-9a77-336eb99bd573       |
 | tenant_id        | b7445f221cda4f4a8ac7db6b218b1339           |
-+------------------+--------------------------------------------+
-</computeroutput></screen>
++------------------+--------------------------------------------+</computeroutput></screen>
                 <para><emphasis role="bold">
                         <literal>provider:network_type local</literal>
                         means that Networking does not have to realize
@@ -511,8 +487,8 @@ export OS_AUTH_URL=http://127.0.0.1:5000/v2.0/</programlisting>
                         means that an external network is created
                         where you can create floating IP and router
                         gateway port.</emphasis></para>
-            </listitem>
-            <listitem>
+            </step>
+            <step>
                 <para>Add an IP on external network to br-ex.</para>
                 <para>Because br-ex is the external network bridge,
                     add an IP 30.0.0.100/24 to br-ex and ping the
@@ -520,13 +496,13 @@ export OS_AUTH_URL=http://127.0.0.1:5000/v2.0/</programlisting>
                     node.</para>
                 <screen><prompt>#</prompt> <userinput>ip addr add 30.0.0.100/24 dev br-ex</userinput>
 <prompt>#</prompt> <userinput>ip link set br-ex up</userinput></screen>
-            </listitem>
-            <listitem>
+            </step>
+            <step>
                 <para>Serve TenantA.</para>
                 <para>For TenantA, create a private network, subnet,
                     server, router, and floating IP.</para>
-                <orderedlist>
-                    <listitem>
+                <substeps>
+                    <step>
                         <para>Create a network for TenantA:</para>
                         <screen><prompt>#</prompt> <userinput>neutron --os-tenant-name TenantA --os-username UserA --os-password password \
  --os-auth-url=http://localhost:5000/v2.0 net-create TenantA-Net</userinput>
@@ -561,17 +537,15 @@ export OS_AUTH_URL=http://127.0.0.1:5000/v2.0/</programlisting>
 | status                    | ACTIVE                               |
 | subnets                   |                                      |
 | tenant_id                 | 247e478c599f45b5bd297e8ddbbc9b6a     |
-+---------------------------+--------------------------------------+
-</computeroutput></screen>
++---------------------------+--------------------------------------+</computeroutput></screen>
                         <para>The network has GRE tunnel ID (for
                             example, provider:segmentation_id)
                             1.</para>
-                    </listitem>
-                    <listitem>
+                    </step>
+                    <step>
                         <para>Create a subnet on the network
                             TenantA-Net:</para>
-                        <screen><prompt>#</prompt> <userinput>
-neutron --os-tenant-name TenantA --os-username UserA --os-password password \
+                        <screen><prompt>#</prompt> <userinput>neutron --os-tenant-name TenantA --os-username UserA --os-password password \
   --os-auth-url=http://localhost:5000/v2.0 subnet-create TenantA-Net 10.0.0.0/24</userinput>
 <computeroutput>Created a new subnet:
 +------------------+--------------------------------------------+
@@ -588,23 +562,20 @@ neutron --os-tenant-name TenantA --os-username UserA --os-password password \
 | name             |                                            |
 | network_id       | 7d0e8d5d-c63c-4f13-a117-4dc4e33e7d68       |
 | tenant_id        | 247e478c599f45b5bd297e8ddbbc9b6a           |
-+------------------+--------------------------------------------+
-</computeroutput></screen>
-                    </listitem>
-                    <listitem>
++------------------+--------------------------------------------+</computeroutput></screen>
+                    </step>
+                    <step>
                         <para>Create a server for TenantA:</para>
                         <screen><prompt>$</prompt> <userinput>nova --os-tenant-name TenantA --os-username UserA --os-password password \
   --os-auth-url=http://localhost:5000/v2.0 boot --image tty --flavor 1 \
   --nic net-id=7d0e8d5d-c63c-4f13-a117-4dc4e33e7d68 TenantA_VM1</userinput></screen>
                         <screen><prompt>$</prompt> <userinput>nova --os-tenant-name TenantA --os-username UserA --os-password password \
    --os-auth-url=http://localhost:5000/v2.0 list</userinput>
-<computeroutput>
-+--------------------------------------+-------------+--------+----------------------+
+<computeroutput>+--------------------------------------+-------------+--------+----------------------+
 | ID                                   | Name        | Status | Networks             |
 +--------------------------------------+-------------+--------+----------------------+
 | 7c5e6499-7ef7-4e36-8216-62c2941d21ff | TenantA_VM1 | ACTIVE | TenantA-Net=10.0.0.3 |
-+--------------------------------------+-------------+--------+----------------------+
-</computeroutput></screen>
++--------------------------------------+-------------+--------+----------------------+</computeroutput></screen>
                         <note>
                             <para>It is important to understand that
                                 you should not attach the instance to
@@ -613,8 +584,8 @@ neutron --os-tenant-name TenantA --os-username UserA --os-password password \
                                 accessible from the external
                                 network.</para>
                         </note>
-                    </listitem>
-                    <listitem>
+                    </step>
+                    <step>
                         <para>Create and configure a router for
                             TenantA:</para>
                         <screen><prompt>#</prompt> <userinput>neutron --os-tenant-name TenantA --os-username UserA --os-password password \
@@ -629,8 +600,7 @@ neutron --os-tenant-name TenantA --os-username UserA --os-password password \
 | name                  | TenantA-R1                           |
 | status                | ACTIVE                               |
 | tenant_id             | 247e478c599f45b5bd297e8ddbbc9b6a     |
-+-----------------------+--------------------------------------+
-                        </computeroutput></screen>
++-----------------------+--------------------------------------+</computeroutput></screen>
                         <screen><prompt>#</prompt> <userinput>neutron --os-tenant-name TenantA --os-username UserA --os-password password \
   --os-auth-url=http://localhost:5000/v2.0 router-interface-add \
   TenantA-R1 51e2c223-0492-4385-b6e9-83d4e6d10657</userinput></screen>
@@ -639,11 +609,15 @@ neutron --os-tenant-name TenantA --os-username UserA --os-password password \
                         <screen><prompt>#</prompt> <userinput>neutron --os-tenant-name TenantA --os-username UserA --os-password password \
   --os-auth-url=http://localhost:5000/v2.0 \
   router-gateway-set TenantA-R1 Ext-Net</userinput></screen>
-                    </listitem>
-                    <listitem>
-                        <para>Associate a floating IP for
-                            TenantA_VM1.</para>
-                        <para>1. Create a floating IP:</para>
+                    </step>
+                </substeps>
+            </step>
+            <step>
+                <para>Associate a floating IP for TenantA_VM1.</para>
+                <substeps>
+
+                    <step>
+                        <para>Create a floating IP:</para>
                         <screen><prompt>#</prompt> <userinput>neutron --os-tenant-name TenantA --os-username UserA --os-password password \
   --os-auth-url=http://localhost:5000/v2.0 floatingip-create Ext-Net</userinput>
 <computeroutput>Created a new floatingip:
@@ -657,9 +631,10 @@ neutron --os-tenant-name TenantA --os-username UserA --os-password password \
 | port_id             |                                      |
 | router_id           |                                      |
 | tenant_id           | 247e478c599f45b5bd297e8ddbbc9b6a     |
-+---------------------+--------------------------------------+
-</computeroutput></screen>
-                        <para>2. Get the port ID of the VM with ID
++---------------------+--------------------------------------+</computeroutput></screen>
+                    </step>
+                    <step>
+                        <para>Get the port ID of the VM with ID
                             7c5e6499-7ef7-4e36-8216-62c2941d21ff:</para>
                         <screen><prompt>$</prompt> <userinput>neutron --os-tenant-name TenantA --os-username UserA --os-password password \
   --os-auth-url=http://localhost:5000/v2.0 port-list -- \
@@ -668,9 +643,10 @@ neutron --os-tenant-name TenantA --os-username UserA --os-password password \
 | id                                   | name | mac_address       | fixed_ips                                                                       |
 +--------------------------------------+------+-------------------+---------------------------------------------------------------------------------+
 | 6071d430-c66e-4125-b972-9a937c427520 |      | fa:16:3e:a0:73:0d | {"subnet_id": "51e2c223-0492-4385-b6e9-83d4e6d10657", "ip_address": "10.0.0.3"} |
-+--------------------------------------+------+-------------------+---------------------------------------------------------------------------------+
-</computeroutput></screen>
-                        <para>3. Associate the floating IP with the VM
++--------------------------------------+------+-------------------+---------------------------------------------------------------------------------+</computeroutput></screen>
+                    </step>
+                    <step>
+                        <para>Associate the floating IP with the VM
                             port:</para>
                         <screen><prompt>$</prompt> <userinput>neutron --os-tenant-name TenantA --os-username UserA --os-password password \
   --os-auth-url=http://localhost:5000/v2.0 floatingip-associate \
@@ -684,18 +660,19 @@ neutron --os-tenant-name TenantA --os-username UserA --os-password password \
 | 5a1f90ed-aa3c-4df3-82cb-116556e96bf1 | 10.0.0.3         | 30.0.0.2            | 6071d430-c66e-4125-b972-9a937c427520 |
 +--------------------------------------+------------------+---------------------+--------------------------------------+
 </computeroutput></screen>
-                    </listitem>
-                    <listitem>
-                        <para>Ping the public network from the server
-                            of TenantA.</para>
-                        <para>In my environment, 192.168.1.0/24 is my
-                            public network connected with my physical
-                            router, which also connects to the
-                            external network 30.0.0.0/24. With the
-                            floating IP and virtual router, we can
-                            ping the public network within the server
-                            of tenant A:</para>
-                        <screen><prompt>$</prompt> <userinput>ping 192.168.1.1</userinput>
+                    </step>
+                </substeps>
+            </step>
+            <step>
+                <para>Ping the public network from the server of
+                    TenantA.</para>
+                <para>In my environment, 192.168.1.0/24 is my public
+                    network connected with my physical router, which
+                    also connects to the external network 30.0.0.0/24.
+                    With the floating IP and virtual router, you can
+                    ping the public network within the server of
+                    tenant A:</para>
+                <screen><prompt>$</prompt> <userinput>ping 192.168.1.1</userinput>
 <computeroutput>PING 192.168.1.1 (192.168.1.1) 56(84) bytes of data.
 64 bytes from 192.168.1.1: icmp_req=1 ttl=64 time=1.74 ms
 64 bytes from 192.168.1.1: icmp_req=2 ttl=64 time=1.50 ms
@@ -705,11 +682,10 @@ neutron --os-tenant-name TenantA --os-username UserA --os-password password \
 3 packets transmitted, 3 received, 0% packet loss, time 2003ms
 rtt min/avg/max/mdev = 1.234/1.495/1.745/0.211 ms
 </computeroutput></screen>
-                    </listitem>
-                    <listitem>
-                        <para>Ping floating IP of the TenantA's
-                            server:</para>
-                        <screen><prompt>$</prompt> <userinput>ping 30.0.0.2</userinput>
+            </step>
+            <step>
+                <para>Ping floating IP of the TenantA's server:</para>
+                <screen><prompt>$</prompt> <userinput>ping 30.0.0.2</userinput>
 <computeroutput>PING 30.0.0.2 (30.0.0.2) 56(84) bytes of data.
 64 bytes from 30.0.0.2: icmp_req=1 ttl=63 time=45.0 ms
 64 bytes from 30.0.0.2: icmp_req=2 ttl=63 time=0.898 ms
@@ -719,22 +695,20 @@ rtt min/avg/max/mdev = 1.234/1.495/1.745/0.211 ms
 3 packets transmitted, 3 received, 0% packet loss, time 2002ms
 rtt min/avg/max/mdev = 0.898/15.621/45.027/20.793 ms
 </computeroutput></screen>
-                    </listitem>
-                    <listitem>
-                        <para>Create other servers for TenantA.</para>
-                        <para>We can create more servers for TenantA
-                            and add floating IPs for them.</para>
-                    </listitem>
-                </orderedlist>
-            </listitem>
-            <listitem>
+            </step>
+            <step>
+                <para>Create other servers for TenantA.</para>
+                <para>You can create more servers for TenantA and add
+                    floating IPs for them.</para>
+            </step>
+            <step>
                 <para>Serve TenantC.</para>
-                <para>For TenantC, we will create two private networks
+                <para>For TenantC, you create two private networks
                     with subnet 10.0.0.0/24 and subnet 10.0.1.0/24,
                     some servers, one router to connect to these two
                     subnets and some floating IPs.</para>
-                <orderedlist>
-                    <listitem>
+                <substeps>
+                    <step>
                         <para>Create networks and subnets for
                             TenantC:</para>
                         <screen><prompt>#</prompt> <userinput>neutron --os-tenant-name TenantC --os-username UserC --os-password password \
@@ -748,7 +722,7 @@ rtt min/avg/max/mdev = 0.898/15.621/45.027/20.793 ms
   --os-auth-url=http://localhost:5000/v2.0 subnet-create TenantC-Net2 \
   10.0.1.0/24 --name TenantC-Subnet2</userinput>
 </screen>
-                        <para>After that we can use admin user to
+                        <para>After that you can use admin user to
                             query the network's provider network
                             information:</para>
                         <screen><prompt>#</prompt> <userinput>neutron net-show TenantC-Net1</userinput>
@@ -789,22 +763,22 @@ rtt min/avg/max/mdev = 0.898/15.621/45.027/20.793 ms
                             also note the network IDs and subnet IDs
                             because you use them to create VMs and
                             router.</para>
-                    </listitem>
-                    <listitem>
+                    </step>
+                    <step>
                         <para>Create a server TenantC-VM1 for TenantC
                             on TenantC-Net1.</para>
                         <screen><prompt>#</prompt> <userinput>nova --os-tenant-name TenantC --os-username UserC --os-password password  \
   --os-auth-url=http://localhost:5000/v2.0 boot --image tty --flavor 1 \
   --nic net-id=91309738-c317-40a3-81bb-bed7a3917a85 TenantC_VM1</userinput></screen>
-                    </listitem>
-                    <listitem>
+                    </step>
+                    <step>
                         <para>Create a server TenantC-VM3 for TenantC
                             on TenantC-Net2.</para>
                         <screen><prompt>#</prompt> <userinput>nova --os-tenant-name TenantC --os-username UserC --os-password password \
   --os-auth-url=http://localhost:5000/v2.0 boot --image tty --flavor 1 \
   --nic net-id=5b373ad2-7866-44f4-8087-f87148abd623 TenantC_VM3</userinput></screen>
-                    </listitem>
-                    <listitem>
+                    </step>
+                    <step>
                         <para>List servers of TenantC.</para>
                         <screen><prompt>#</prompt> <userinput>nova --os-tenant-name TenantC --os-username UserC --os-password password \
   --os-auth-url=http://localhost:5000/v2.0 list</userinput>
@@ -816,16 +790,16 @@ rtt min/avg/max/mdev = 0.898/15.621/45.027/20.793 ms
 +--------------------------------------+-------------+--------+-----------------------+</computeroutput></screen>
                         <para>Note the server IDs because you use them
                             later.</para>
-                    </listitem>
-                    <listitem>
+                    </step>
+                    <step>
                         <para>Make sure servers get their IPs.</para>
                         <para>You can use VNC to log on the VMs to
                             check if they get IPs. If not, you must
                             make sure that the Networking components
                             are running correctly and the GRE tunnels
                             work.</para>
-                    </listitem>
-                    <listitem>
+                    </step>
+                    <step>
                         <para>Create and configure a router for
                             TenantC:</para>
                         <screen><prompt>#</prompt> <userinput>neutron --os-tenant-name TenantC --os-username UserC --os-password password \
@@ -839,8 +813,8 @@ rtt min/avg/max/mdev = 0.898/15.621/45.027/20.793 ms
                         <screen><prompt>#</prompt> <userinput>neutron --os-tenant-name TenantC --os-username UserC --os-password password \
   --os-auth-url=http://localhost:5000/v2.0 \
   router-gateway-set TenantC-R1 Ext-Net</userinput></screen>
-                    </listitem>
-                    <listitem>
+                    </step>
+                    <step>
                         <para>Checkpoint: ping from within TenantC's
                             servers.</para>
                         <para>Because a router connects to two
@@ -849,8 +823,8 @@ rtt min/avg/max/mdev = 0.898/15.621/45.027/20.793 ms
                             the router is set, TenantC's servers can
                             ping external network IPs, such as
                             192.168.1.1, 30.0.0.1, and so on.</para>
-                    </listitem>
-                    <listitem>
+                    </step>
+                    <step>
                         <para>Associate floating IPs for TenantC's
                             servers.</para>
                         <para>Because a router connects to two
@@ -860,16 +834,16 @@ rtt min/avg/max/mdev = 0.898/15.621/45.027/20.793 ms
                             servers can ping external network IPs,
                             such as 192.168.1.1, 30.0.0.1, and so
                             on.</para>
-                    </listitem>
-                    <listitem>
+                    </step>
+                    <step>
                         <para>Associate floating IPs for TenantC's
                             servers.</para>
                         <para>You can use similar commands to the ones
                             used in the section for TenantA.</para>
-                    </listitem>
-                </orderedlist>
-            </listitem>
-        </orderedlist>
+                    </step>
+                </substeps>
+            </step>
+        </procedure>
     </section>
     <section xml:id="section_use-cases-tenant-router">
         <title>Use case: per-tenant routers with private
@@ -881,20 +855,18 @@ rtt min/avg/max/mdev = 0.898/15.621/45.027/20.793 ms
             networks, potentially uplinking those networks to a
             router. This model enables tenant-defined, multi-tier
             applications, with each tier being a separate network
-            behind the router. Since there are multiple routers,
-            tenant subnets can overlap without conflicting, since
-            access to external networks all happens via SNAT or
-            Floating IPs. Each router uplink and floating IP is
+            behind the router. Because there are multiple routers,
+            tenant subnets can overlap without conflicting, because
+            access to external networks all happens through SNAT or
+            floating IPs. Each router uplink and floating IP is
             allocated from the external network subnet.</para>
-        <para>
-            <mediaobject>
-                <imageobject>
-                    <imagedata scale="55"
-                        fileref="../common/figures/UseCase-MultiRouter.png"
-                        align="left"/>
-                </imageobject>
-            </mediaobject>
-            <!--Image source link: https://docs.google.com/a/nicira.com/drawings/d/1mmQc8cBUoTEfEns-ehIyQSTvOrjUdl5xeGDv9suVyAY/edit -->
-        </para>
+        <mediaobject>
+            <imageobject>
+                <imagedata scale="55"
+                    fileref="../common/figures/UseCase-MultiRouter.png"
+                    align="left"/>
+            </imageobject>
+        </mediaobject>
+        <!--Image source link: https://docs.google.com/a/nicira.com/drawings/d/1mmQc8cBUoTEfEns-ehIyQSTvOrjUdl5xeGDv9suVyAY/edit -->
     </section>
 </section>

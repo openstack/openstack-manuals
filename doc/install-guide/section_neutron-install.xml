@@ -262,8 +262,9 @@ admin_password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
 
       <step os="opensuse;sles;ubuntu">
         <para>Configure the RabbitMQ access. Edit the
-        <filename>/etc/neutron/neutron.conf</filename> file to modify the
-        following parameters in the <literal>DEFAULT</literal> section.</para>
+            <filename>/etc/neutron/neutron.conf</filename> file to
+          modify the following parameters in the
+            <literal>DEFAULT</literal> section.</para>
         <programlisting language="ini">rabbit_host = controller
 rabbit_userid = guest
 rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
@@ -352,7 +353,8 @@ admin_password=<replaceable>NEUTRON_PASS</replaceable></programlisting>
             <screen os="debian;rhel;fedora;centos"><prompt>#</prompt> <userinput>service openvswitch start</userinput></screen>
             <screen os="opensuse;sles"><prompt>#</prompt> <userinput>service openvswitch-switch start</userinput></screen>
 
-            <para os="rhel;fedora;centos;opensuse;sles">And configure it to start when the system boots:</para>
+            <para os="rhel;fedora;centos;opensuse;sles">And configure
+              it to start when the system boots:</para>
             <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>chkconfig openvswitch on</userinput></screen>
             <screen os="opensuse;sles"><prompt>#</prompt> <userinput>chkconfig openvswitch-switch on</userinput></screen>
           </step>
@@ -401,81 +403,89 @@ GATEWAY=EXTERNAL_INTERFACE_GATEWAY</programlisting>
           <!-- TODO(sross): support other distros -->
           <step>
             <para>You must set some common configuration options no
-            matter which networking technology you choose to use with
-            Open vSwitch. Configure the L3 and DHCP agents to use
-            <acronym>OVS</acronym> and namespaces. Edit the
+              matter which networking technology you choose to use
+              with Open vSwitch. Configure the L3 and DHCP agents to
+              use <acronym>OVS</acronym> and namespaces. Edit the
                 <filename>/etc/neutron/l3_agent.ini</filename> and
                 <filename>/etc/neutron/dhcp_agent.ini</filename>
               files, respectively:</para>
             <programlisting language="ini">interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
 use_namespaces = True</programlisting>
             <para os="rhel;centos">You must enable veth support if you
-            use certain kernels. Some kernels, such as recent versions
-            of RHEL (not RHOS) and CentOS, only partially support
-            namespaces. Edit the previous
-              files, as follows:</para>
+              use certain kernels. Some kernels, such as recent
+              versions of RHEL (not RHOS) and CentOS, only partially
+              support namespaces. Edit the previous files, as
+              follows:</para>
             <programlisting language="ini" os="rhel;centos">ovs_use_veth = True</programlisting>
           </step>
           <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
             <para>Similarly, you must also tell Neutron core to use
                 <acronym>OVS</acronym>. Edit the
-                <filename>/etc/neutron/neutron.conf</filename> file:</para>
+                <filename>/etc/neutron/neutron.conf</filename>
+              file:</para>
             <programlisting language="ini">core_plugin = neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2</programlisting>
           </step>
           <step>
-            <para>Choose a networking technology to create the virtual networks.
-              Neutron supports GRE tunneling, VLANs, and VXLANs. This guide
-              shows how to configure GRE tunneling and VLANs.</para>
+            <para>Choose a networking technology to create the virtual
+              networks. Neutron supports GRE tunneling, VLANs, and
+              VXLANs. This guide shows how to configure GRE tunneling
+              and VLANs.</para>
             <para>
-              <link linkend="install-neutron.install-plug-in.ovs.gre">GRE
-                tunneling</link> is simpler to set up because it does not
-              require any special configuration from any physical network
-              hardware. However, its protocol makes it difficult to filter
-              traffic on the physical network. Additionally, this configuration
-              does not use namespaces. You can have only one router for each
-              network node. However, you can enable namespacing, and potentially
-              veth, as described in the section detailing how to use VLANs with
-                <acronym>OVS</acronym>).</para>
+              <link linkend="install-neutron.install-plug-in.ovs.gre"
+                >GRE tunneling</link> is simpler to set up because it
+              does not require any special configuration from any
+              physical network hardware. However, its protocol makes
+              it difficult to filter traffic on the physical network.
+              Additionally, this configuration does not use
+              namespaces. You can have only one router for each
+              network node. However, you can enable namespacing, and
+              potentially veth, as described in the section detailing
+              how to use VLANs with <acronym>OVS</acronym>).</para>
             <note os="ubuntu">
               <para>On Ubuntu 12.04 LTS with GRE you must install
-                openvswitch-datapath-dkms and restart the service to enable the
-                GRE flow so that OVS 1.10 and higher is used. Make sure you are
-                running the OVS 1.10 kernel module in addition to the OVS 1.10
-                userspace. Both the kernel module and userspace are required for
-                VXLAN support. The error you see in the
-                  <filename>/var/log/openvswitchovs-vswitchd.log</filename> log
-                file is "Stderr: 'ovs-ofctl: -1: negative values not supported
-                for in_port\n'". If you see this error, make sure
-                  <command>modinfo openvswitch</command> shows the right
-                version. Also check the output from <command>dmesg</command> for
-                the version of the OVS module being loaded.</para>
+                openvswitch-datapath-dkms and restart the service to
+                enable the GRE flow so that OVS 1.10 and higher is
+                used. Make sure you are running the OVS 1.10 kernel
+                module in addition to the OVS 1.10 userspace. Both the
+                kernel module and userspace are required for VXLAN
+                support. The error you see in the
+                  <filename>/var/log/openvswitchovs-vswitchd.log</filename>
+                log file is "Stderr: 'ovs-ofctl: -1: negative values
+                not supported for in_port\n'". If you see this error,
+                make sure <command>modinfo openvswitch</command> shows
+                the right version. Also check the output from
+                  <command>dmesg</command> for the version of the OVS
+                module being loaded.</para>
             </note>
             <para>On the other hand, <link
-                linkend="install-neutron.install-plug-in.ovs.vlan">VLAN
-                tagging</link> modifies the ethernet header of packets. You can
-              filter packets on the physical network through normal methods.
-              However, not all NICs handle the increased packet size of
-              VLAN-tagged packets well, and you might need to complete
-              additional configuration on physical network hardware to ensure
-              that your Neutron VLANs do not interfere with any other VLANs on
-              your network and that any physical network hardware between nodes
-              does not strip VLAN tags.</para>
+                linkend="install-neutron.install-plug-in.ovs.vlan"
+                >VLAN tagging</link> modifies the ethernet header of
+              packets. You can filter packets on the physical network
+              through normal methods. However, not all NICs handle the
+              increased packet size of VLAN-tagged packets well, and
+              you might need to complete additional configuration on
+              physical network hardware to ensure that your Neutron
+              VLANs do not interfere with any other VLANs on your
+              network and that any physical network hardware between
+              nodes does not strip VLAN tags.</para>
             <note>
-              <para>While the examples in this guide enable network namespaces
-                by default, you can disable them if issues occur or your kernel
-                does not support them. Edit the
+              <para>While the examples in this guide enable network
+                namespaces by default, you can disable them if issues
+                occur or your kernel does not support them. Edit the
                   <filename>/etc/neutron/l3_agent.ini</filename> and
-                  <filename>/etc/neutron/dhcp_agent.ini</filename> files,
-                respectively:</para>
+                  <filename>/etc/neutron/dhcp_agent.ini</filename>
+                files, respectively:</para>
               <programlisting language="ini">use_namespaces = False</programlisting>
-              <para>Edit the <filename>/etc/neutron/neutron.conf</filename> file
+              <para>Edit the
+                  <filename>/etc/neutron/neutron.conf</filename> file
                 to disable overlapping IP addresses:</para>
               <programlisting language="ini">allow_overlapping_ips = False</programlisting>
-              <para>Note that when network namespaces are disabled, you can have
-                only one router for each network node and overlapping IP
-                addresses are not supported.</para>
-              <para>You must complete additional steps after you create the
-                initial Neutron virtual networks and router.</para>
+              <para>Note that when network namespaces are disabled,
+                you can have only one router for each network node and
+                overlapping IP addresses are not supported.</para>
+              <para>You must complete additional steps after you
+                create the initial Neutron virtual networks and
+                router.</para>
             </note>
           </step>
           <!-- TODO(sross): support provider networks?  you need to modify things above for this to work -->
@@ -762,10 +772,12 @@ router_id = <replaceable>EXT_TO_INT_ID</replaceable></programlisting>
         <para>Disable packet destination filtering (route
           verification) to let the networking services route traffic
           to the VMs. Edit the <filename>/etc/sysctl.conf</filename>
-          file and run the following command to activate changes:</para>
+          file and run the following command to activate
+          changes:</para>
         <programlisting language="ini">net.ipv4.conf.all.rp_filter=0
 net.ipv4.conf.default.rp_filter=0</programlisting>
-      <screen><prompt>#</prompt> <userinput>sysctl -p</userinput></screen></step>
+        <screen><prompt>#</prompt> <userinput>sysctl -p</userinput></screen>
+      </step>
       <step>
         <para>Install and configure your networking plug-in
           components. To install and configure the network plug-in
@@ -915,8 +927,8 @@ firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewal
             <para>After you complete OVS configuration <emphasis>and
                 the core Neutron configuration after this
                 section</emphasis>, restart the Neutron Open vSwitch
-              agent<phrase os="opensuse;sles;fedora;centos;rhel">, and set it
-              to start at boot</phrase>:</para>
+                agent<phrase os="opensuse;sles;fedora;centos;rhel">,
+                and set it to start at boot</phrase>:</para>
             <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>service neutron-openvswitch-agent restart</userinput>
 <prompt>#</prompt> <userinput>chkconfig neutron-openvswitch-agent on</userinput></screen>
             <screen os="opensuse;sles"><prompt>#</prompt> <userinput>service openstack-neutron-openvswitch-agent restart</userinput>
@@ -1061,9 +1073,8 @@ admin_password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
       </step>
       <step>
         <para>Tell Nova about Neutron. Specifically, you must tell
-          Nova that Neutron will be handling networking and the
-          firewall. Edit the <filename>/etc/nova/nova.conf</filename>
-          file:</para>
+          Nova that Neutron handles networking and the firewall. Edit
+          the <filename>/etc/nova/nova.conf</filename> file:</para>
         <programlisting language="ini">network_api_class=nova.network.neutronv2.api.API
 neutron_url=http://<replaceable>controller</replaceable>:9696
 neutron_auth_strategy=keystone
@@ -1075,8 +1086,8 @@ firewall_driver=nova.virt.firewall.NoopFirewallDriver
 security_group_api=neutron</programlisting>
         <note>
           <para>Regardless of which firewall driver you chose when you
-            configure the network and compute nodes, set this driver
-            as the No-Op firewall. The difference is that this is a
+            configured the network and compute nodes, set this driver
+            as the No-Op firewall. This firewall is a
               <emphasis>Nova</emphasis> firewall, and because Neutron
             handles the Firewall, you must tell Nova not to use
             one.</para>

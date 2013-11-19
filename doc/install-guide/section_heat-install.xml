@@ -29,8 +29,8 @@
     </step>
     <step>
       <para>In the configuration file, specify the location of the
-        database where the Orchestration service stores data. The
-        examples in this guide use a MySQL database with a
+        database where the Orchestration service stores data. These
+        examples use a MySQL database with a
           <literal>heat</literal> user on the controller node. Replace
           <replaceable>HEAT_DBPASS</replaceable> with the password for
         the database user:</para>
@@ -46,12 +46,12 @@ connection = mysql://heat:<replaceable>HEAT_DBPASS</replaceable>@controller/heat
     </step>
     <step os="ubuntu">
       <para>By default, the Ubuntu packages create an SQLite database.
-        Delete the <filename>heat.sqlite</filename> file created in
+        Delete the <filename>heat.sqlite</filename> file that was created in
         the <filename>/var/lib/heat/</filename> directory so that it
         does not get used by mistake.</para>
     </step>
     <step>
-      <para>Use the password you set previously to log in as root and
+      <para>Use the password that you set previously to log in as <literal>root</literal> and
         create a <literal>heat</literal> database user:</para>
       <screen><prompt>#</prompt> <userinput>mysql -u root -p</userinput>
 <prompt>mysql></prompt> <userinput>CREATE DATABASE heat;</userinput>
@@ -83,14 +83,12 @@ verbose = True
 log_dir=/var/log/heat</programlisting>
     </step>
     <step os="opensuse;sles;ubuntu">
-      <para>Configure the Orchestration Service to use the RabbitMQ message
-      broker.</para>
-
-      <para os="ubuntu">Edit <filename>/etc/heat/heat.conf</filename> and
-      modify the <literal>[DEFAULT]</literal> section:</para>
+      <para>Configure the Orchestration Service to use the RabbitMQ
+        message broker.</para>
+      <para os="ubuntu">Edit <filename>/etc/heat/heat.conf</filename>
+        and modify the <literal>[DEFAULT]</literal> section:</para>
       <programlisting os="ubuntu" language="ini">rabbit_host = controller
 rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
-
       <para os="opensuse;sles">Run the following commands:</para>
       <screen os="opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/heat/heat.conf DEFAULT rabbit_host controller</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/heat/heat.conf DEFAULT rabbit_password <replaceable>RABBIT_PASS</replaceable></userinput></screen>
@@ -104,10 +102,10 @@ rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
 <prompt>#</prompt> <userinput>keystone user-role-add --user=heat --tenant=service --role=admin</userinput></screen>
     </step>
     <step>
-      <para>Edit the <filename>/etc/heat/heat.conf</filename> file
-      and change the <literal>[keystone_authtoken]</literal> and
-      <literal>[ec2_authtoken]</literal> sections to add credentials
-      to the Orchestration Service:</para>
+      <para>Edit the <filename>/etc/heat/heat.conf</filename> file to
+        change the <literal>[keystone_authtoken]</literal> and
+          <literal>[ec2_authtoken]</literal> sections to add
+        credentials to the Orchestration Service:</para>
       <programlisting language="ini">[keystone_authtoken]
 auth_host = controller
 auth_port = 35357
@@ -155,12 +153,11 @@ keystone_ec2_uri = http://<replaceable>controller</replaceable>:5000/v2.0/ec2tok
 <prompt>#</prompt> <userinput>service heat-engine restart</userinput></screen>
     </step>
     <step os="rhel;fedora;centos;opensuse;sles">
-      <para>Start the <systemitem role="service"
-        >heat-api</systemitem>, <systemitem role="service"
-          class="service">heat-api-cfn</systemitem> and <systemitem
-          role="service" class="service">heat-engine</systemitem>
-        services and configure them to start when the system
-        boots:</para>
+      <para>Start the <systemitem class="service"
+          >heat-api</systemitem>, <systemitem class="service"
+          >heat-api-cfn</systemitem> and <systemitem class="service"
+          >heat-engine</systemitem> services and configure them to
+        start when the system boots:</para>
       <screen os="rhel;fedora;centos;opensuse;sles"><prompt>#</prompt> <userinput>service openstack-heat-api start</userinput>
 <prompt>#</prompt> <userinput>service openstack-heat-api-cfn start</userinput>
 <prompt>#</prompt> <userinput>service openstack-heat-engine start</userinput>
