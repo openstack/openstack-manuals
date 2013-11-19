@@ -38,18 +38,19 @@ BOOK_EXCEPTIONS = []
 
 RESULTS_OF_BUILDS = []
 
-# List of recognized (allowable) os profiling directives, note the enduser
-# and adminuser values currently used for the user guides. These should be
-# changed in the future to use the audience profiling directive.
+# List of recognized (allowable) os profiling directives.
 KNOWN_OS_VALUES = ["debian",
                    "centos",
                    "fedora",
                    "opensuse",
                    "rhel",
                    "sles",
-                   "ubuntu",
-                   "enduser",
-                   "adminuser"]
+                   "ubuntu"]
+
+
+# List of recognized (allowable) audience profiling directives.
+KNOWN_AUDIENCE_VALUES = ["enduser",
+                         "adminuser"]
 
 
 # NOTE(berendt): check_output as provided in Python 2.7.5 to make script
@@ -103,34 +104,47 @@ def verify_section_tags_have_xmid(doc):
                              node.sourceline)
 
 
-def verify_profiling(doc):
-    """Check for elements with os profiling set that conflicts with the
-       os profiling of nodes below them in the DOM tree. This picks up cases
-       where content is accidentally ommitted via conflicting profiling."""
+def verify_attribute_profiling(doc, attribute, known_values):
+    """Check for elements with attribute profiling set that conflicts with
+       the attribute profiling of nodes below them in the DOM
+       tree. This picks up cases where content is accidentally
+       ommitted via conflicting profiling. Checks known_values also for
+       supported profiling values.
+    """
 
     ns = {"docbook": "http://docbook.org/ns/docbook"}
 
-    for parent in doc.xpath('//docbook:*[@os]', namespaces=ns):
+    path = '//docbook:*[@%s]' % attribute
+    for parent in doc.xpath(path, namespaces=ns):
         p_tag = parent.tag
         p_line = parent.sourceline
-        p_os_list = parent.attrib['os'].split(';')
+        p_att_list = parent.attrib[attribute].split(';')
 
-        for os in p_os_list:
-            if os not in KNOWN_OS_VALUES:
+        for att in p_att_list:
+            if att not in known_values:
                 raise ValueError(
-                    "'%s' is not a recognized os profile on line %d." %
-                    (os, p_line))
+                    "'%s' is not a recognized %s profile on line %d." %
+                    (att, attribute, p_line))
 
-        for child in parent.xpath('.//docbook:*[@os]', namespaces=ns):
+        cpath = './/docbook:*[@%s]' % attribute
+        for child in parent.xpath(cpath, namespaces=ns):
             c_tag = child.tag
             c_line = child.sourceline
-            c_os_list = child.attrib['os'].split(';')
-            for os in c_os_list:
-                if os not in p_os_list:
+            c_att_list = child.attrib[attribute].split(';')
+            for att in c_att_list:
+                if att not in p_att_list:
                     len_ns = len("{http://docbook.org/ns/docbook}")
                     raise ValueError(
-                        "%s os profiling (%s) conflicts with os profiling of %s on line %d." %
-                        (p_tag[len_ns:], p_os_list, c_tag[len_ns:], c_line))
+                        "%s %s profiling (%s) conflicts with %s "
+                        "profiling of %s on line %d." %
+                        (p_tag[len_ns:], attribute, p_att_list,
+                         attribute, c_tag[len_ns:], c_line))
+
+
+def verify_profiling(doc):
+    """"Check profiling information"""
+    verify_attribute_profiling(doc, "os", KNOWN_OS_VALUES)
+    verify_attribute_profiling(doc, "audience", KNOWN_AUDIENCE_VALUES)
 
 
 def verify_nice_usage_of_whitespaces(docfile):
@@ -413,7 +427,8 @@ def validate_individual_files(rootdir, exceptions, verbose,
         no_validated = no_validated + 1
 
     if no_failed > 0:
-        print("Check failed, validated %d xml files with %d failures.\n" % (no_validated, no_failed))
+        print("Check failed, validated %d xml files with %d failures.\n"
+              % (no_validated, no_failed))
         if not ignore_errors:
             sys.exit(1)
     else:
@@ -457,7 +472,8 @@ def validate_all_files(rootdir, exceptions, verbose,
                 no_validated = no_validated + 1
 
     if no_failed > 0:
-        print("Check failed, validated %d xml files with %d failures.\n" % (no_validated, no_failed))
+        print("Check failed, validated %d xml files with %d failures.\n"
+              % (no_validated, no_failed))
         if not ignore_errors:
             sys.exit(1)
     else:
