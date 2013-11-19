@@ -16,7 +16,7 @@
       <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-ceilometer-agent-compute</userinput></screen>
     </step>
     <step>
-      <para>Set the following options in the
+      <para os="fedora;rhel;centos;opensuse;sles">Set the following options in the
           <filename>/etc/nova/nova.conf</filename> file:</para>
       <screen os="fedora;rhel;centos;opensuse;sles">
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT instance_usage_audit True</userinput>
@@ -58,18 +58,11 @@ metering_secret = ADMIN_TOKEN
       <para>Restart the service with its new settings:</para>
       <screen><prompt>#</prompt> <userinput>service ceilometer-agent-compute restart</userinput></screen>
     </step>
-    <step os="opensuse;sles">
-      <para>Start the <systemitem class="service"
-          >ceilometer-agent-compute</systemitem> service and configure
-        it to start when the system boots:</para>
-      <screen><prompt>#</prompt> <userinput>service openstack-ceilometer-agent-compute start</userinput>
+    <step os="rhel;fedora;centos;opensuse;sles">
+      <para>Start the service and configure it to start when the system boots:</para>
+      <screen os="opensuse;sles"><prompt>#</prompt> <userinput>service openstack-ceilometer-agent-compute start</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-agent-compute on</userinput></screen>
-    </step>
-    <step os="rhel;fedora;centos">
-      <para>Start the <systemitem class="service"
-          >openstack-ceilometer-compute</systemitem> service and
-        configure to start when the system boots:</para>
-      <screen><prompt>#</prompt> <userinput>service openstack-ceilometer-compute start</userinput>
+      <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>service openstack-ceilometer-compute start</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-compute on</userinput></screen>
     </step>
   </procedure>
