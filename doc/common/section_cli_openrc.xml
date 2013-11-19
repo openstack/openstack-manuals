@@ -2,31 +2,35 @@
 <section xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
-    xml:id="cli_openrc">
+    xml:id="cli_openrc" audience="enduser">
+    <!-- create similar file for admin user -->
     <title>Create and source the OpenStack RC file</title>
     <para>To set the required environment variables for the OpenStack
-        command-line clients, you must either create or download an environment
-        file, and source it. It is project-specific and contains the
-        credentials used by all OpenStack services.</para>
-    <para>When you source the file, environment variables are set for your
-        current shell. They allow the commands to communicate to the OpenStack
-        services that run in the cloud.</para>
-
-    <para>If your OpenStack installation provides it, you can download the file
-        from the OpenStack dashboard as an administrative user or any other
-        user.</para>
+        command-line clients, you must either create or download an
+        environment file, and source it. It is project-specific and
+        contains the credentials used by all OpenStack
+        services.</para>
+    <para>When you source the file, environment variables are set for
+        your current shell. They allow the commands to communicate to
+        the OpenStack services that run in the cloud.</para>
+    <para>If your OpenStack installation provides it, you can download
+        the file from the OpenStack dashboard as an administrative
+        user or any other user.</para>
     <procedure>
         <step>
             <para>Log in to the OpenStack dashboard, choose the
                 project for which you want to download the OpenStack
-                RC file, and click <emphasis role="bold">Access &amp;
-                    Security</emphasis>.</para></step><step><para>Click
-                    <guibutton>Download OpenStack RC File</guibutton>
-                and save the file.</para>
+                RC file, and click <guibutton>Access &amp;
+                    Security</guibutton>.</para>
+        </step>
+        <step>
+            <para>Click <guibutton>Download OpenStack RC
+                    File</guibutton> and save the file.</para>
         </step>
         <step>
             <para>Copy the <filename>openrc.sh</filename> file to the
-                machine from where you want to run OpenStack commands.</para>
+                machine from where you want to run OpenStack
+                commands.</para>
             <para>For example, copy the file to the machine from where
                 you want to upload an image with a glance client
                 command.</para>
@@ -35,33 +39,37 @@
             <para>On any shell from where you want to run OpenStack
                 commands, source the <filename>openrc.sh</filename>
                 file for the respective project.</para>
-            <para>In this example, we source the
+            <para>In this example, you source the
                     <filename>demo-openrc.sh</filename> file for the
                 demo project:</para>
             <screen><prompt>$</prompt> <userinput>source demo-openrc.sh</userinput></screen>
         </step>
         <step>
             <para>When you are prompted for an OpenStack password,
-                enter the OpenStack password for the user who
-                downloaded the <filename>openrc.sh</filename>
-                file.</para>  </step> <step><para>When you run OpenStack client commands, you can override some
-                environment variable settings by using the options
-                that are listed at the end of the <command>nova
-                    help</command> output. For example, you can
-                override the <literal>OS_PASSWORD</literal> setting in
-                the <filename>openrc.sh</filename> file by specifying
-                a password on a nova command, as follows:</para>
+                enter the password for the user who downloaded the
+                    <filename>openrc.sh</filename> file.</para>
+        </step>
+        <step>
+            <para>When you run OpenStack client commands, you can
+                override some environment variable settings by using
+                the options that are listed at the end of the
+                    <command>nova help</command> output. For example,
+                you can override the <literal>OS_PASSWORD</literal>
+                setting in the <filename>openrc.sh</filename> file by
+                specifying a password on a nova command, as
+                follows:</para>
             <screen><prompt>$</prompt> <userinput>nova --password &lt;password> image-list</userinput></screen>
-                    <para>Where <parameter>password</parameter> is
-                your password.</para>
+            <para>Where <parameter>password</parameter> is your
+                password.</para>
         </step>
     </procedure>
 
-    <para>Alternatively, you can create the <filename>openrc.sh</filename> file from scratch.</para>
+    <para>Alternatively, you can create the
+            <filename>openrc.sh</filename> file from scratch.</para>
     <procedure>
         <step>
-            <para>Create the file <filename>openrc.sh</filename> containing the
-              authentication:</para>
+            <para>Create the <filename>openrc.sh</filename> file
+                containing the authentication:</para>
             <programlisting language="bash">export OS_USERNAME=<replaceable>USERNAME</replaceable>
 export OS_PASSWORD=<replaceable>PASSWORD</replaceable>
 export OS_TENANT_NAME=<replaceable>PROJECT_NAME</replaceable>
@@ -72,16 +80,19 @@ export OS_REGION_NAME=<replaceable>RegionOne</replaceable></programlisting>
         </step>
         <step>
             <para>On any shell from where you want to run OpenStack
-              commands, source the <filename>openrc.sh</filename>
-              file for the respective project.</para>
+                commands, source the <filename>openrc.sh</filename>
+                file for the respective project.</para>
             <screen><prompt>$</prompt> <userinput>source openrc.sh</userinput></screen>
         </step>
     </procedure>
     <note>
-        <para>The password will not be prompted with this method, but lives in
-        clear text in the <filename>openrc.sh</filename> file. Restrict the
-        permissions on this file to avoid security problems. You can also
-        remove the <literal>OS_PASSWORD</literal> variable from the file, and
-        use the <literal>--password</literal> option of OpenStack clients.</para>
+        <para>You are not prompted for the password with this method.
+            The password lives in clear text format in the
+                <filename>openrc.sh</filename> file. Restrict the
+            permissions on this file to avoid security problems. You
+            can also remove the <literal>OS_PASSWORD</literal>
+            variable from the file, and use the
+                <parameter>--password</parameter> parameter with
+            OpenStack client commands.</para>
     </note>
 </section>
