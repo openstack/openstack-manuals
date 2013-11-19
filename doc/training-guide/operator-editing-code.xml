@@ -10,8 +10,10 @@
         <para>
             <procedure>
                 <note>
-                    <para>Create a GitHub account at <link xlink:href="http://github.com">github.com.</link></para>
+                    <para>First create a GitHub account at <link xlink:href="http://github.com"
+                            >github.com.</link></para>
                 </note>
+                <note><para>Check out <link xlink:href="https://wiki.openstack.org/wiki/Documentation/HowTo">https://wiki.openstack.org/wiki/Documentation/HowTo</link> for more extentsive setup instructions</para></note>
                 <step>
                     <para>Download and install Git from <link
                         xlink:href="http://git-scm.com/downloads">http://git-scm.com/downloads</link></para>
@@ -45,7 +47,11 @@
                             <para>You can download a 30 day trial of Oxygen. The floating licenses donated by OxygenXML have all been handed out.<link
                                 xlink:href="http://www.oxygenxml.com/download_oxygenxml_editor.html"
                                 >http://www.oxygenxml.com/download_oxygenxml_editor.html</link></para>
-                            <para>You can use emacs or vi editors.</para>
+                         </step>
+                        <step><para>AND/OR PyCharm <link
+                                    xlink:href="http://download.jetbrains.com/python/pycharm-community-3.0.1.dmg"
+                                    >http://download.jetbrains.com/python/pycharm-community-3.0.1.dmg</link></para></step>
+                         <step><para>AND/OR You can use emacs or vi editors.</para>
                             <para>Here are some great resources on DocBook and Emacs' NXML mode:</para>
                             <itemizedlist><listitem><para><link xlink:href="http://paul.frields.org/2011/02/09/xml-editing-with-emacs/">http://paul.frields.org/2011/02/09/xml-editing-with-emacs/</link></para></listitem>
                             <listitem><para><link xlink:href="https://fedoraproject.org/wiki/How_to_use_Emacs_for_XML_editing">https://fedoraproject.org/wiki/How_to_use_Emacs_for_XML_editing</link></para></listitem>
@@ -59,24 +65,31 @@
                     <title>Install Maven</title>
                     <substeps>
                         <step>
-                            <screen><prompt>$</prompt><userinput>mkdir /usr/local/apache-maven</userinput></screen>
+                            <screen><prompt>$</prompt><userinput>sudo mkdir /usr/local/apache-maven</userinput></screen>
                         </step>
                         <step>
-                            <para>The latest stable binary from<link
+                            <para>Copy the latest stable binary from<link
                                 xlink:href="http://maven.apache.org/download.cgi"
                                 >http://maven.apache.org/download.cgi</link> into
                                 /usr/local/apache-maven</para>
                         </step>
                         <step>
+                            <para>Install maven with
+                                <screen><userinput>$</userinput> sudo /usr/local/apache-maven/XXXXX</screen></para>
+                        </step>
+                        <step>
+                            <para>Add the maven path</para>
+                            <screen><prompt>$</prompt> <userinput>sudo touch /etc/path.d/mvn.path</userinput>
+<prompt>$</prompt> <userinput>sudo vi /etc/path.d/mvn.path</userinput>
+<prompt>$</prompt> <userinput>/usr/local/apache-maven/apache-maven-3.0.5/bin</userinput></screen>
+                        </step>
+                        <step>
                             <para>Set your maven user profile settings</para>
-                            <screen><prompt>$</prompt> <userinput>export M2_HOME=/usr/local/apache-maven/apache-maven-3.0.5
-<prompt>$</prompt> export M2=$M2_HOME/bin
-<prompt>$</prompt> export PATH=$M2:$PATH
-<prompt>$</prompt> export MAVEN_OPTS='-Xms256m -XX:MaxPermSize=1024m -Xmx1024m'</userinput></screen>
+                            <screen><prompt>$</prompt> export MAVEN_OPTS='-Xms256m -XX:MaxPermSize=1024m -Xmx1024m'</screen>
                         </step>
                         <step>
                             <para>verify maven is setup with</para>
-                            <screen><prompt>$</prompt> <userinput>mvn --install</userinput></screen>
+                            <screen><prompt>$</prompt> <userinput>sudo mvn --install</userinput></screen>
                         </step>
                     </substeps>
                 </step>
@@ -457,9 +470,6 @@ blueprint training-manuals</programlisting></para>
                     <para>Move the card from Doing to Done</para>
                 </step>
             </procedure>
-        </para>
-        <para>
-            <link xlink:href="https://blueprints.launchpad.net/openstack-manuals/+filebug" xlink:show="new">Submit a bug. Enter the summary as "Training, " with a few words. Be descriptive as possible in the description field. Open the tag pull-down and enter training-manuals.</link>
         </para>
     </section>
 </section>
