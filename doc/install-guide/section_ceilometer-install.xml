@@ -169,15 +169,22 @@ admin_password = CEILOMETER_PASS
     </step>
     <step os="rhel;fedora;centos;opensuse;sles">
       <para>Start the <systemitem class="service"
-          >ceilometer-api</systemitem>, <systemitem class="service"
-          >ceilometer-agent-central</systemitem> and <systemitem
-          class="service">ceilometer-collector</systemitem> services
-        and configure them to start when the system boots:</para>
-      <screen os="rhel;fedora;centos;sles"><prompt>#</prompt> <userinput>service openstack-ceilometer-api start</userinput>
+          >openstack-ceilometer-api</systemitem>, <systemitem class="service"
+          os="opensuse;sles">openstack-ceilometer-agent-central</systemitem><systemitem
+          class="service" os="rhel;fedora;centos">openstack-ceilometer-central</systemitem>
+          and <systemitem class="service">openstack-ceilometer-collector</systemitem>
+          services and configure them to start when the system boots:</para>
+      <screen os="opensuse;sles"><prompt>#</prompt> <userinput>service openstack-ceilometer-api start</userinput>
 <prompt>#</prompt> <userinput>service openstack-ceilometer-agent-central start</userinput>
 <prompt>#</prompt> <userinput>service openstack-ceilometer-collector start</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-api on</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-agent-central on</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-collector on</userinput></screen>
+      <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>service openstack-ceilometer-api start</userinput>
+<prompt>#</prompt> <userinput>service openstack-ceilometer-central start</userinput>
+<prompt>#</prompt> <userinput>service openstack-ceilometer-collector start</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-api on</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-central on</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-collector on</userinput></screen>
     </step>
   </procedure>
