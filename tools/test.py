@@ -38,6 +38,19 @@ BOOK_EXCEPTIONS = []
 
 RESULTS_OF_BUILDS = []
 
+# List of recognized (allowable) os profiling directives, note the enduser
+# and adminuser values currently used for the user guides. These should be
+# changed in the future to use the audience profiling directive.
+KNOWN_OS_VALUES = ["debian",
+                   "centos",
+                   "fedora",
+                   "opensuse",
+                   "rhel",
+                   "sles",
+                   "ubuntu",
+                   "enduser",
+                   "adminuser"]
+
 
 # NOTE(berendt): check_output as provided in Python 2.7.5 to make script
 #                usable with Python < 2.7
@@ -90,7 +103,7 @@ def verify_section_tags_have_xmid(doc):
                              node.sourceline)
 
 
-def verify_no_conflicting_profiling(doc):
+def verify_profiling(doc):
     """Check for elements with os profiling set that conflicts with the
        os profiling of nodes below them in the DOM tree. This picks up cases
        where content is accidentally ommitted via conflicting profiling."""
@@ -101,6 +114,13 @@ def verify_no_conflicting_profiling(doc):
         p_tag = parent.tag
         p_line = parent.sourceline
         p_os_list = parent.attrib['os'].split(';')
+
+        for os in p_os_list:
+            if os not in KNOWN_OS_VALUES:
+                raise ValueError(
+                    "'%s' is not a recognized os profile on line %d." %
+                    (os, p_line))
+
         for child in parent.xpath('.//docbook:*[@os]', namespaces=ns):
             c_tag = child.tag
             c_line = child.sourceline
@@ -339,7 +359,7 @@ def validate_one_file(schema, rootdir, path, verbose,
                 any_failures = True
                 print(error_message(schema.error_log))
             verify_section_tags_have_xmid(doc)
-            verify_no_conflicting_profiling(doc)
+            verify_profiling(doc)
         if check_niceness:
             verify_nice_usage_of_whitespaces(path)
     except etree.XMLSyntaxError as e:
