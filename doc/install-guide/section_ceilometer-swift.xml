@@ -10,7 +10,7 @@
         needs access to Object Storage with the
           <literal>ResellerAdmin</literal> role. Give this role to
         your <literal>os_username</literal> user for the
-          <literal>os_tenant_name</literal>tenant:</para>
+          <literal>os_tenant_name</literal> tenant:</para>
       <screen><prompt>$</prompt> <userinput>keystone role-create --name=ResellerAdmin</userinput>
 <computeroutput>+----------+----------------------------------+
 | Property |              Value               |
@@ -19,9 +19,8 @@
 |   name   |          ResellerAdmin           |
 +----------+----------------------------------+
 </computeroutput></screen>
-      <screen><prompt>$</prompt> <userinput>keystone user-role-add --tenant_id $SERVICE_TENANT \
-      --user_id $CEILOMETER_USER \
-      --role_id 462fa46c13fd4798a95a3bfbe27b5e54</userinput></screen>
+      <screen><prompt>$</prompt> <userinput>keystone user-role-add --tenant service --user ceilometer \
+      --role <replaceable>462fa46c13fd4798a95a3bfbe27b5e54</replaceable></userinput></screen>
     </step>
     <step>
       <para>You must also add the Metering middleware to Object
@@ -34,15 +33,13 @@ use = egg:ceilometer#swift</programlisting>
     </step>
     <step>
       <para>Add <literal>ceilometer</literal> to the
-          <literal>pipeline</literal> parameter of that same file,
-        right before the entry <literal>proxy-server</literal>.</para>
+          <literal>pipeline</literal> parameter of that same file:</para>
+      <programlisting language="ini">[pipeline:main]
+pipeline = healthcheck cache authtoken keystoneauth ceilometer proxy-server</programlisting>
     </step>
-    <step os="ubuntu;debian">
-      <para>Restart the service with its new settings.</para>
-      <screen><prompt>#</prompt> <userinput>service swift-proxy-server restart</userinput></screen>
-    </step>
-    <step os="rhel;fedora;centos;opensuse;sles">
-      <para>Restart the service with its new settings.</para>
+    <step>
+      <para>Restart the service with its new settings:</para>
+      <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service swift-proxy-server restart</userinput></screen>
       <screen os="rhel;fedora;centos;sles;opensuse"><prompt>#</prompt> <userinput>service openstack-swift-proxy-server restart</userinput></screen>
     </step>
   </procedure>
