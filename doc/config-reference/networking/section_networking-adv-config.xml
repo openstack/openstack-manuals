@@ -288,6 +288,60 @@ gateway_external_network_id = e828e54c-850a-4e74-80a8-8b79c6a285d8
 external_network_bridge = br-ex-2</computeroutput></screen>
         </section>
     </section>
+    <section xml:id="section_adv_cfg_l3_metering_agent">
+        <title>L3 Metering Agent</title>
+        <para>There is an option to run a L3 metering agent that will enable layer 3 traffic
+            metering. In general case the metering agent should be launched on all nodes that run
+            the L3 agent:</para>
+        <screen><computeroutput>neutron-metering-agent --config-file &lt;neutron config&gt;
+--config-file &lt;l3 metering config&gt;</computeroutput></screen>
+        <para>A driver needs to be configured that matches the plug-in running on the service. The
+            driver is used to add metering to the routing interface.<table rules="all">
+                <caption>Basic settings</caption>
+                <col width="50%"/>
+                <col width="50%"/>
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><emphasis role="bold">Open vSwitch</emphasis></td>
+                        <td/>
+                    </tr>
+                    <tr>
+                        <td>interface_driver ($NEUTRON_CONF_DIR/metering_agent.ini)</td>
+                        <td>neutron.agent.linux.interface.OVSInterfaceDriver</td>
+                    </tr>
+                    <tr>
+                        <td><emphasis role="bold">Linux Bridge</emphasis></td>
+                        <td/>
+                    </tr>
+                    <tr>
+                        <td>interface_driver ($NEUTRON_CONF_DIR/metering_agent.ini)</td>
+                        <td>neutron.agent.linux.interface.BridgeInterfaceDriver</td>
+                    </tr>
+                </tbody>
+            </table></para>
+        <section xml:id="adv_cfg_l3_metering_agent_namespace">
+            <title>Namespace</title>
+            <para>The metering agent and the L3 agent have to have the same configuration
+                regarding to the network namespaces setting.</para>
+            <note><para>
+                If the Linux installation does not support network namespace,
+                    you must disable using network namespace in the L3 metering config
+                    file (The default value of <option>use_namespaces</option> is <code>True</code>).</para></note>
+            <para><programlisting language="ini">use_namespaces = False</programlisting></para>
+        </section>
+        <section xml:id="adv_cfg_l3_metering_agent_driver">
+            <title>L3 metering driver</title>
+            <para>A driver which implements the metering abstraction needs to be configured.
+                Currently there is only one implementation which is based on iptables.</para>
+            <para><programlisting language="ini">driver = neutron.services.metering.drivers.iptables.iptables_driver.IptablesMeteringDriver</programlisting></para>
+        </section>
+    </section>
     <section xml:id="section_limitations">
         <title>Limitations</title>
         <para>
