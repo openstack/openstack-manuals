@@ -592,6 +592,65 @@ nvp_controller_connection=10.0.0.4:443:admin:admin:30:10:2:2</programlisting>
                             SQL server, and whether all UUID values
                             are correct.</para>
                     </note>
+                    <section xml:id="LBaaS_and_FWaaS">
+                        <title>Loadbalancer-as-a-Service and Firewall-as-a-Service</title>
+                        <para>The NVP LBaaS and FWaaS services use the standard OpenStack API with the exception of requiring routed-insertion extension support.</para>
+                        <para>Below are the main differences between the NVP implementation and the community reference implementation of these services:</para>
+                        <orderedlist>
+                            <listitem>
+                                <para>The NVP LBaaS and FWaaS plugins require the routed-insertion extension, which adds the <code>router_id</code> attribute to the VIP (Virtual IP address) and firewall resources and binds these services to a logical router.</para>
+                            </listitem>
+                            <listitem>
+                                <para>The community reference implementation of LBaaS only supports a one-arm model, which restricts the VIP to be on the same subnet as the backend servers. The NVP LBaaS plugin only supports a two-arm model between north-south traffic, meaning that the VIP can only be created on the external (physical) network.</para>
+                            </listitem>
+                            <listitem>
+                                <para>The community reference implementation of FWaaS applies firewall rules to all logical routers in a tenant, while the NVP FWaaS plugin applies firewall rules only to one logical router according to the <code>router_id</code> of the firewall entity.</para>
+                            </listitem>
+                        </orderedlist>
+                        <procedure>
+                            <title>To configure Loadbalancer-as-a-Service and Firewall-as-a-Service with NVP:</title>
+                            <step>
+                                <para>Edit <filename>/etc/neutron/neutron.conf</filename> file:</para>
+                                <programlisting language="ini">core_plugin = neutron.plugins.nicira.NeutronServicePlugin.NvpAdvancedPlugin
+    # Note: comment out service_plugins. LBaaS &amp; FWaaS is supported by core_plugin NvpAdvancedPlugin
+    # service_plugins = </programlisting>
+                            </step>
+                            <step>
+                                <para>Edit <filename>/etc/neutron/plugins/nicira/nvp.ini</filename> file:</para>
+                                <para>In addition to the original NVP configuration, the <code>default_l3_gw_service_uuid</code>
+                                    is required for the NVP Advanced Plugin and a <code>vcns</code> section must be added as
+                                    shown below.</para>
+                                <programlisting language="ini">[DEFAULT]
+    nvp_password = <replaceable>admin</replaceable>
+    nvp_user = <replaceable>admin</replaceable>
+    nvp_controllers = <replaceable>10.37.1.137:443</replaceable>
+    default_l3_gw_service_uuid = <replaceable>aae63e9b-2e4e-4efe-81a1-92cf32e308bf</replaceable>
+    default_tz_uuid = <replaceable>2702f27a-869a-49d1-8781-09331a0f6b9e</replaceable>
+
+    [vcns]
+
+    # VSM management URL
+    manager_uri = <replaceable>https://10.24.106.219</replaceable>
+
+    # VSM admin user name
+    user = <replaceable>admin</replaceable>
+
+    # VSM admin password
+    password = <replaceable>default</replaceable>
+
+    # UUID of a logical switch on NVP which has physical network connectivity (currently using bridge transport type)
+    external_network = <replaceable>f2c023cf-76e2-4625-869b-d0dabcfcc638</replaceable>
+
+    # ID of deployment_container on VSM. Optional, if not specified, a default global deployment container will be used
+
+    # deployment_container_id =
+
+    # task_status_check_interval configures status check interval for vCNS asynchronous API. Default is 2000 msec.
+
+    # task_status_check_interval =</programlisting>
+                            </step>
+                        </procedure>
+                    </section>
                 </section>
                 <section xml:id="PLUMgridplugin">
                     <title>Configure PLUMgrid plug-in</title>
