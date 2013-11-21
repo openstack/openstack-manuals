@@ -3,83 +3,91 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="xapi-install-plugins">
-<?dbhtml stop-chunking?>
-<title>Installing the XenAPI Plugins</title>
-    <para>When using Xen as the hypervisor for OpenStack Compute, you
-        can install a Python script (usually, but it can be any
-        executable) on the host side, and then call that through the
-        XenAPI. These scripts are called plugins. The XenAPI plugins
-        live in the nova code repository. These plugins have to be
-        copied to the hypervisor's Dom0, to the appropriate directory,
-        where xapi can find them. There are several options for the
-        installation. The important thing is to ensure that the
-        version of the plugins are in line with the nova installation
-        by only installing plugins from a matching nova
-        repository.</para>
-   <section xml:id="manual_install"> <title>Manual Installation</title>
-        <procedure><title>To manually install</title>
-        <step><para>Create temporary files/directories:
+    <?dbhtml stop-chunking?>
+    <title>Install the XenAPI plug-ins</title>
+    <para>When you use Xen as the hypervisor for OpenStack Compute,
+        you can install a Python script (or any executable) on the
+        host side, and call that through the XenAPI. These scripts are
+        called plug-ins. The XenAPI plug-ins live in the nova code
+        repository. These plug-ins have to be copied to the Dom0 for
+        the hypervisor, to the appropriate directory, where xapi can
+        find them. There are several options for the installation. The
+        important thing is to ensure that the version of the plug-ins
+        are in line with the nova installation by only installing
+        plug-ins from a matching nova repository.</para>
+    <section xml:id="manual_install">
+        <title>Manually install the plug-in</title>
+        <procedure>
+            <step>
+                <para>Create temporary files/directories:</para>
                 <screen><prompt>$</prompt> <userinput>NOVA_ZIPBALL=$(mktemp)</userinput>
-<prompt>$</prompt> <userinput>NOVA_SOURCES=$(mktemp -d)</userinput></screen></para></step>
-        <step><para>Get the source from github. The example assumes the master
-                    branch is used. Amend the URL to match the version
-                    being used:
-                    <screen><prompt>$</prompt> <userinput>wget -qO "$NOVA_ZIPBALL" https://github.com/openstack/nova/archive/master.zip</userinput>
-<prompt>$</prompt> <userinput>unzip "$NOVA_ZIPBALL" -d "$NOVA_SOURCES"</userinput></screen>(Alternatively)
-                    Should you wish to use the official Ubuntu
+<prompt>$</prompt> <userinput>NOVA_SOURCES=$(mktemp -d)</userinput></screen>
+            </step>
+            <step>
+                <para>Get the source from github. The example assumes
+                    the master branch is used. Amend the URL to match
+                    the version being used:</para>
+                <screen><prompt>$</prompt> <userinput>wget -qO "$NOVA_ZIPBALL" https://github.com/openstack/nova/archive/master.zip</userinput>
+<prompt>$</prompt> <userinput>unzip "$NOVA_ZIPBALL" -d "$NOVA_SOURCES"</userinput></screen>
+                <para>(Alternatively) To use the official Ubuntu
                     packages, use the following commands to get the
-                    nova code base:
-                    <screen><prompt>$</prompt> <userinput>( cd $NOVA_SOURCES &amp;&amp; apt-get source python-nova --download-only )</userinput>
-<prompt>$</prompt> <userinput>( cd $NOVA_SOURCES &amp;&amp; for ARCHIVE in *.tar.gz; do tar -xzf $ARCHIVE; done )</userinput></screen></para></step>
-        <step><para>Copy the plugins to the hypervisor:
+                    nova code base:</para>
+                <screen><prompt>$</prompt> <userinput>( cd $NOVA_SOURCES &amp;&amp; apt-get source python-nova --download-only )</userinput>
+<prompt>$</prompt> <userinput>( cd $NOVA_SOURCES &amp;&amp; for ARCHIVE in *.tar.gz; do tar -xzf $ARCHIVE; done )</userinput></screen>
+            </step>
+            <step>
+                <para>Copy the plug-ins to the hypervisor:</para>
                 <screen><prompt>$</prompt> <userinput>PLUGINPATH=$(find $NOVA_SOURCES -path '*/xapi.d/plugins' -type d -print)</userinput>
-<prompt>$</prompt> <userinput>tar -czf - -C "$PLUGINPATH" ./ | ssh root@xenserver tar -xozf - -C /etc/xapi.d/plugins/</userinput></screen></para></step>
-        <step><para>Remove the temporary files/directories:
+<prompt>$</prompt> <userinput>tar -czf - -C "$PLUGINPATH" ./ | ssh root@xenserver tar -xozf - -C /etc/xapi.d/plugins/</userinput></screen>
+            </step>
+            <step>
+                <para>Remove the temporary files/directories:</para>
                 <screen><prompt>$</prompt> <userinput>rm "$NOVA_ZIPBALL"</userinput>
-<prompt>$</prompt> <userinput>rm -rf "$NOVA_SOURCES"</userinput> </screen></para></step>
+<prompt>$</prompt> <userinput>rm -rf "$NOVA_SOURCES"</userinput> </screen>
+            </step>
         </procedure>
-   </section>
-<section xml:id="packaged_install">
-
-                <title>Packaged Installation</title>
-
-                <para>Follow these steps to produce a supplemental
-            pack from the nova sources, and package it as a XenServer
+    </section>
+    <section xml:id="packaged_install">
+        <title>Package a XenServer supplemental pack</title>
+        <para>Follow these steps to produce a supplemental pack from
+            the nova sources, and package it as a XenServer
             supplemental pack.</para>
-        <procedure><title>To package a XenServer supplemental pack</title>
-                        <step>
-                            <para>Create RPM packages. Given you have
-                    the nova sources (use one of the methods mentioned
-                    at Manual Installation):
-                    <screen><prompt>$</prompt> <userinput>cd nova/plugins/xenserver/xenapi/contrib</userinput>
-<prompt>$</prompt> <userinput>./build-rpm.sh</userinput></screen>These
-                    commands leave an <literal>.rpm</literal> file in
-                    the <literal>rpmbuild/RPMS/noarch/</literal>
+        <procedure>
+            <step>
+                <para>Create RPM packages. Given you have the nova
+                    sources. Use one of the methods in <xref
+                        linkend="manual_install"/>:</para>
+                <screen><prompt>$</prompt> <userinput>cd nova/plugins/xenserver/xenapi/contrib</userinput>
+<prompt>$</prompt> <userinput>./build-rpm.sh</userinput></screen>
+                <para>These commands leave an
+                        <filename>.rpm</filename> file in the
+                        <filename>rpmbuild/RPMS/noarch/</filename>
                     directory.</para>
-                        </step>
-                        <step>
-                            <para>Pack the RPM packages to a
-                    Supplemental Pack, using the XenServer DDK (the
-                    following command should be issued on the
-                    XenServer DDK virtual appliance, after the
-                    produced rpm file has been copied over):
-                    <screen><prompt>$</prompt> <userinput>/usr/bin/build-supplemental-pack.sh \</userinput>
+            </step>
+            <step>
+                <para>Pack the RPM packages to a Supplemental Pack,
+                    using the XenServer DDK (the following command
+                    should be issued on the XenServer DDK virtual
+                    appliance, after the produced rpm file has been
+                    copied over):</para>
+                <screen><prompt>$</prompt> <userinput>/usr/bin/build-supplemental-pack.sh \</userinput>
 <prompt>&gt;</prompt> <userinput>--output=output_directory \</userinput>
 <prompt>&gt;</prompt> <userinput>--vendor-code=novaplugin \</userinput>
 <prompt>&gt;</prompt> <userinput>--vendor-name=openstack \</userinput>
 <prompt>&gt;</prompt> <userinput>--label=novaplugins \</userinput>
 <prompt>&gt;</prompt> <userinput>--text="nova plugins" \</userinput>
 <prompt>&gt;</prompt> <userinput>--version=0 \</userinput>
-<prompt>&gt;</prompt> <userinput>full_path_to_rpmfile</userinput></screen>This
-                    command produces an <literal>.iso</literal> file
-                    in the output directory specified. Copy that file
-                    to the hypervisor.</para>
-                        </step>
-                        <step>
-                            <para>Install the Supplemental Pack. Log
-                    in to the hypervisor, and issue:
-                    <screen><prompt>#</prompt> <userinput>xe-install-supplemental-pack path_to_isofile</userinput></screen></para>
-                        </step>
-                    </procedure>
-</section>
+<prompt>&gt;</prompt> <userinput>full_path_to_rpmfile</userinput></screen>
+                <para>This command produces an
+                        <filename>.iso</filename> file in the output
+                    directory specified. Copy that file to the
+                    hypervisor.</para>
+            </step>
+            <step>
+                <para>Install the Supplemental Pack. Log in to the
+                    hypervisor, and issue:</para>
+                <screen><prompt>#</prompt> <userinput>xe-install-supplemental-pack path_to_isofile</userinput></screen>
+            </step>
+        </procedure>
+    </section>
 </section>
