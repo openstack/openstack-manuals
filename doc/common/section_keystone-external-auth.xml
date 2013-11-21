@@ -1,32 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<section xml:id="keystone-external-auth" xmlns="http://docbook.org/ns/docbook"
-    xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/1999/xlink"
-    version="1.0">
-    <title>Using External Authentication with OpenStack Identity</title>
-   <para>When Keystone is executed in <literal>apache-httpd</literal>
-    it is possible to use external authentication methods different
-    from the authentication provided by the identity store backend.
-    For example, this makes possible to use a SQL identity backend
-    together with X.509 authentication, Kerberos, etc. instead of using
-    the username/password combination.</para>
-
+<section xml:id="keystone-external-auth"
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="1.0">
+    <title>External authentication with the Identity
+        Service</title>
+    <para>When Keystone runs in <literal>apache-httpd</literal>, you
+        can use external authentication methods that differ from the
+        authentication provided by the identity store back-end. For
+        example, you can use an SQL identity back-end together with
+        X.509 authentication, Kerberos, and so on instead of using the
+        user name and password combination.</para>
     <section xml:id="keystone-httpd-auth">
-    <title>Using HTTPD authentication</title>
-    <para>Webservers like Apache HTTP support many methods of
-     authentication. Keystone can profit from this feature and let the
-     authentication be done in the webserver, that will pass down the
-     authenticated user to Keystone using the <literal>REMOTE_USER</literal>
-     environment variable. This user must exist in advance in the identity
-     backend so as to get a token from the controller. To use this method,
-     OpenStack Identity should be running on <literal>apache-httpd</literal>.
-    </para>
+        <title>Use HTTPD authentication</title>
+        <para>Web servers, like Apache HTTP, support many methods of
+            authentication. Keystone can allow the web server to
+            perform the authentication. The web server then passes the
+            authenticated user to Keystone by using the
+                <literal>REMOTE_USER</literal> environment variable.
+            This user must already exist in the Identity Service
+            back-end so as to get a token from the controller. To use
+            this method, the Identity Service should run on
+                <literal>apache-httpd</literal>.</para>
     </section>
-
     <section xml:id="keystone-x509-auth">
-    <title>Using X.509</title>
-    <para>The following snippet for the Apache conf will authenticate
-    the user based on a valid X.509 certificate from a known CA:
-   <programlisting>    &lt;VirtualHost _default_:5000&gt;
+        <title>Use X.509</title>
+        <para>The following Apache configuration snippet authenticates
+            the user based on a valid X.509 certificate from a known
+            CA:</para>
+        <programlisting>    &lt;VirtualHost _default_:5000&gt;
         SSLEngine on
         SSLCertificateFile    /etc/ssl/certs/ssl.cert
         SSLCertificateKeyFile /etc/ssl/private/ssl.key
@@ -39,6 +41,5 @@
 
         (...)
     &lt;/VirtualHost&gt;</programlisting>
-    </para>
     </section>
 </section>

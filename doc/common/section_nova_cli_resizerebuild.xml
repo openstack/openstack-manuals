@@ -6,7 +6,6 @@
   <title>Change the size of your server</title>
   <para>You change the size of a server by changing its flavor.</para>
   <procedure>
-    <title>To change the size of your server</title>
     <step>
       <para>List the available flavors:</para>
       <screen><prompt>$</prompt> <userinput>nova flavor-list</userinput></screen>
@@ -23,7 +22,8 @@
 +----+-----------+-----------+------+-----------+------+-------+-------------+-----------+</computeroutput></screen>
     </step>
     <step>
-      <para>Show information about your server, including its size:</para>
+      <para>Show information about your server, including its
+        size:</para>
 
       <screen><prompt>$</prompt> <userinput>nova show myCirrosServer</userinput></screen>
       <screen><computeroutput>+-------------------------------------+----------------------------------------------------------------+
@@ -57,14 +57,15 @@
 | config_drive                        |                                                                |
 +-------------------------------------+----------------------------------------------------------------+</computeroutput></screen>
       <para>The size of the server is <literal>m1.small
-        (2)</literal>.</para></step>
+        (2)</literal>.</para>
+    </step>
     <step>
-      <para>To resize the server, pass the server ID and the desired flavor to the nova
-          <command>resize</command> command.
-        Include the <literal>--poll</literal> parameter to report the resize
+      <para>To resize the server, pass the server ID and the desired
+        flavor to the nova <command>resize</command> command. Include
+        the <literal>--poll</literal> parameter to report the resize
         progress.</para>
       <screen><prompt>$</prompt> <userinput>nova resize myCirrosServer 4 --poll</userinput></screen>
-<screen><computeroutput>Instance resizing... 100% complete
+      <screen><computeroutput>Instance resizing... 100% complete
 Finished</computeroutput>   </screen>
     </step>
     <step>
@@ -78,12 +79,14 @@ Finished</computeroutput>   </screen>
     </step>
     <step>
       <para>When the resize completes, the status becomes
-        <literal>VERIFY_RESIZE</literal>. To confirm the resize:</para>
+          <literal>VERIFY_RESIZE</literal>. To confirm the
+        resize:</para>
       <screen><prompt>$</prompt> <userinput>nova resize-confirm 6beefcf7-9de6-48b3-9ba9-e11b343189b3</userinput></screen>
-      <para>The server status becomes ACTIVE.</para> </step>
+      <para>The server status becomes ACTIVE.</para>
+    </step>
     <step>
-      <para>If the resize fails or does not work as expected, you
-        can revert the resize:</para>
+      <para>If the resize fails or does not work as expected, you can
+        revert the resize:</para>
       <screen><prompt>$</prompt> <userinput>nova resize-revert 6beefcf7-9de6-48b3-9ba9-e11b343189b3</userinput></screen>
       <para>The server status becomes ACTIVE.</para>
     </step>

@@ -1,24 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- moved to launch instances file -->
-<section
-    xmlns="http://docbook.org/ns/docbook"
-    xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xlink="http://www.w3.org/1999/xlink"
-    version="5.0"
-    xml:id="inserting_userdata">
-  <title>Providing User Data to Instances</title>
-  <para><literal>User Data</literal> is a special key in the metadata
-    service which holds a file that cloud aware applications within
-    the guest instance can access. For example the <link
+<section xmlns="http://docbook.org/ns/docbook"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+  xml:id="inserting_userdata">
+  <title>Provide user data to instances</title>
+  <para><firstterm>User data</firstterm> is a special key in the
+    metadata service that holds a file that cloud-aware applications
+    in the guest instance can access. For example the <link
       xlink:href="https://help.ubuntu.com/community/CloudInit"
-      >cloudinit</link> system is an open source package from Ubuntu
-    that handles early initialization of a cloud instance that makes
-    use of this <literal>user data</literal>.</para>
-
-  <para>This user-data can be put in a file on your local system and
-    then passed in at instance creation with the flag
-      <literal>--user-data &lt;user-data-file&gt;</literal> for
-    example:
-    <screen><prompt>$</prompt> <userinput>nova boot --image ubuntu-cloudimage --flavor 1 --user-data mydata.file</userinput></screen>
-  </para>
+        ><package>cloudinit</package></link> system is a Ubuntu open
+    source package that handles early initialization of a cloud
+    instance and that makes use of <literal>user
+    data</literal>.</para>
+  <para>You can place user data in a local file and pass it through
+    the <parameter>--user-data &lt;user-data-file&gt;</parameter>
+    parameter at instance creation:</para>
+  <screen><prompt>$</prompt> <userinput>nova boot --image ubuntu-cloudimage --flavor 1 --user-data mydata.file</userinput></screen>
 </section>

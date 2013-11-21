@@ -1,143 +1,180 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0" xml:id="section_compute-troubleshooting">
-<title>Troubleshooting Compute</title>
-        <para>Common problems for Compute typically involve misconfigured networking or credentials that are not sourced properly in the environment. Also, most flat networking configurations do not enable ping or ssh from a compute node to the instances running on that node. Another common problem is trying to run 32-bit images on a 64-bit compute node. This section offers more information about how to troubleshoot Compute.</para>
-        <section xml:id="log-files-for-openstack-compute"><title>Log files for Compute</title>
-
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="section_compute-troubleshooting">
+    <title>Troubleshoot Compute</title>
+    <para>Common problems for Compute typically involve misconfigured
+        networking or credentials that are not sourced properly in the
+        environment. Also, most flat networking configurations do not
+        enable <command>ping</command> or <command>ssh</command> from
+        a compute node to the instances that run on that node. Another
+        common problem is trying to run 32-bit images on a 64-bit
+        compute node. This section shows you how to troubleshoot
+        Compute.</para>
+    <section xml:id="log-files-for-openstack-compute">
+        <title>Compute log files</title>
         <para>Compute stores a log file for each service in
-        <filename>/var/log/nova</filename>. For example,
-        <filename>nova-compute.log</filename> is the log for the
-        <systemitem class="service">nova-compute</systemitem>
-        service. You can set the following options to format log
-        strings for the nova.log module in
-        <filename>nova.conf</filename>:
+                <filename>/var/log/nova</filename>. For example,
+                <filename>nova-compute.log</filename> is the log for
+            the <systemitem class="service">nova-compute</systemitem>
+            service. You can set the following options to format log
+            strings for the nova.log module in the
+                <filename>nova.conf</filename> file:</para>
         <itemizedlist>
-          <listitem>
-            <para><literal>logging_context_format_string</literal></para>
-          </listitem>
-          <listitem>
-            <para><literal>logging_default_format_string</literal></para>
-          </listitem>
+            <listitem>
+                <para><literal>logging_context_format_string</literal></para>
+            </listitem>
+            <listitem>
+                <para><literal>logging_default_format_string</literal></para>
+            </listitem>
         </itemizedlist>
-          If the log level is set to <literal>debug</literal>, you can
-          also specify <literal>logging_debug_format_suffix</literal>
-          to append extra formatting. For information about what
-          variables are available for the formatter see:
-            <link xlink:href="http://docs.python.org/library/logging.html#formatter">http://docs.python.org/library/logging.html#formatter</link>.
-        </para>
-        <para>You have two options for logging for OpenStack Compute based on configuration
-            settings. In <filename>nova.conf</filename>, include the
-            <literal>logfile</literal> option to enable logging. Alternatively
-            you can set <literal>use_syslog=1</literal>, and then the nova
-            daemon logs to syslog.</para>
+        <para>If the log level is set to <literal>debug</literal>, you
+            can also specify
+                <literal>logging_debug_format_suffix</literal> to
+            append extra formatting. For information about what
+            variables are available for the formatter see: <link
+                xlink:href="http://docs.python.org/library/logging.html#formatter"
+                >http://docs.python.org/library/logging.html#formatter</link>.</para>
+        <para>You have two options for logging for OpenStack Compute
+            based on configuration settings. In
+                <filename>nova.conf</filename>, include the
+                <literal>logfile</literal> option to enable logging.
+            Alternatively you can set <literal>use_syslog=1</literal>
+            so that the nova daemon logs to syslog.</para>
     </section>
-
     <section xml:id="section_compute-common-errors-and-fixes">
         <title>Common errors and fixes for Compute</title>
-        <para>The ask.openstack.org site offers a place to ask and
-            answer questions, and you can also mark questions as
+        <para>The <link xlink:href="ask.openstack.org"
+                >ask.openstack.org</link> site offers a place to ask
+            and answer questions, and you can also mark questions as
             frequently asked questions. This section describes some
-            errors people have posted previously. We
-            are constantly fixing bugs, so online resources are a
-            great way to get the most up-to-date errors and
-            fixes.</para>
+            errors people have posted previously. Bugs are constantly
+            being fixed, so online resources are a great way to get
+            the most up-to-date errors and fixes.</para>
         <section xml:id="section_credential-errors">
-        <title>Credential errors, 401, 403 forbidden errors</title>
-        <para>A 403 forbidden error is caused by missing credentials.
-            Through current installation methods, there are basically
-            two ways to get the <filename>novarc</filename> file. The manual method
-            requires getting it from within a project zipfile, and the
-            scripted method just generates <filename>novarc</filename> out of the project
-            zip file and sources it for you. If you use the manual
-            method through a zip file, before sourcing <filename>novarc</filename>
-            be sure to save any credentials that were created previously, as they
-            can be overridden.
-            </para>
-        <para>When you run <systemitem class="service">nova-api</systemitem> the
-            first time, it generates the certificate authority information,
-            including <filename>openssl.cnf</filename>. If the CA components are
-            started prior to this, you may not be able to create your zip file.
-            Restart the services, then once your CA information is available,
-            you should be able to create your zip file.</para>
-        <para>You may also need to check your http proxy settings to see if
-            they are causing problems with the <filename>novarc</filename>
-            creation.</para>
+            <title>Credential errors, 401, and 403 forbidden
+                errors</title>
+            <para>Missing credentials cause a
+                    <errorcode>403</errorcode>
+                <errortext>forbidden</errortext> error. To resolve
+                this issue, use one of these methods:<orderedlist>
+                    <listitem>
+                        <para><emphasis role="bold">Manual
+                                method</emphasis>. Get get the
+                                <filename>novarc</filename> file from
+                            the project ZIP file, save existing
+                            credentials in case of override. and
+                            manually source the
+                                <filename>novarc</filename>
+                            file.</para>
+                    </listitem>
+                    <listitem>
+                        <para><emphasis role="bold">Script
+                                method</emphasis>. Generates
+                                <filename>novarc</filename> from the
+                            project ZIP file and sources it for
+                            you.</para>
+                    </listitem>
+                </orderedlist></para>
+            <para>When you run <systemitem class="service"
+                    >nova-api</systemitem> the first time, it
+                generates the certificate authority information,
+                including <filename>openssl.cnf</filename>. If you
+                start the CA services before this, you might not be
+                able to create your ZIP file. Restart the services.
+                When your CA information is available, create your ZIP
+                file.</para>
+            <para>Also, check your HTTP proxy settings to see whether
+                they cause problems with <filename>novarc</filename>
+                creation.</para>
         </section>
         <section xml:id="section_instance-errors">
             <title>Instance errors</title>
-        <para>Sometimes a particular instance shows "pending" or you
-            cannot SSH to it. Sometimes the image itself is the
-            problem. For example, when using flat manager networking,
-            you do not have a dhcp server, and certain images
-            don't support interface injection so you cannot connect
-            to them. The fix for this type of problem is to use an
-            image that does support this method, such as Ubuntu,
-            which should obtain an IP address correctly
-            with FlatManager network settings. To troubleshoot other
-            possible problems with an instance, such as one that stays
-            in a spawning state, first check the directory for the particular
-            instance under <filename>/var/lib/nova/instances</filename>
-            on the <systemitem class="service">nova-compute</systemitem>
-            host and make sure it has the following files:</para>
-        <itemizedlist>
-            <listitem>
-                <para>libvirt.xml</para>
-            </listitem>
-            <listitem>
-                <para>disk</para>
-            </listitem>
-            <listitem>
-                <para>disk-raw</para>
-            </listitem>
-            <listitem>
-                <para>kernel</para>
-            </listitem>
-            <listitem>
-                <para>ramdisk</para>
-            </listitem>
-            <listitem>
-                <para>console.log (Once the instance actually starts you should
-                    see a <filename>console.log</filename>.)</para>
-            </listitem>
-        </itemizedlist>
-        <para>Check the file sizes to see if they are reasonable. If
-            any are missing/zero/very small then <systemitem class="service">nova-compute</systemitem> has
-            somehow not completed download of the images from
-            the Image service.</para>
-        <para>Also check <filename>nova-compute.log</filename> for exceptions.
-            Sometimes they don't show up in the console output.</para>
-        <para>Next, check the log file for the instance in the directory
-            <filename>/var/log/libvirt/qemu</filename>
-            to see if it exists and has any useful error messages
-            in it.</para>
-        <para>Finally, from the directory for the instance under
-                 <filename>/var/lib/nova/instances</filename>, try
-                <screen><prompt>#</prompt> <userinput>virsh create libvirt.xml</userinput></screen> and see if you
-            get an error when running this.</para>
+            <para>Sometimes a particular instance shows
+                    <literal>pending</literal> or you cannot SSH to
+                it. Sometimes the image itself is the problem. For
+                example, when you use flat manager networking, you do
+                not have a DHCP server and certain images do not
+                support interface injection; you cannot connect to
+                them. The fix for this problem is to use an image that
+                does support this method, such as Ubuntu, which
+                obtains an IP address correctly with FlatManager
+                network settings.</para>
+            <para>To troubleshoot other possible problems with an
+                instance, such as an instance that stays in a spawning
+                state, check the directory for the particular instance
+                under <filename>/var/lib/nova/instances</filename> on
+                the <systemitem class="service"
+                    >nova-compute</systemitem> host and make sure that
+                these files are present:</para>
+            <itemizedlist>
+                <listitem>
+                    <para><filename>libvirt.xml</filename></para>
+                </listitem>
+                <listitem>
+                    <para><filename>disk</filename></para>
+                </listitem>
+                <listitem>
+                    <para><filename>disk-raw</filename></para>
+                </listitem>
+                <listitem>
+                    <para><filename>kernel</filename></para>
+                </listitem>
+                <listitem>
+                    <para><filename>ramdisk</filename></para>
+                </listitem>
+                <listitem>
+                    <para>After the instance starts,
+                            <filename>console.log</filename></para>
+                </listitem>
+            </itemizedlist>
+            <para>If any files are missing, empty, or very small, the
+                    <systemitem class="service"
+                    >nova-compute</systemitem> service did not
+                successfully download the images from the Image
+                Service.</para>
+            <para>Also check <filename>nova-compute.log</filename> for
+                exceptions. Sometimes they do not appear in the
+                console output.</para>
+            <para>Next, check the log file for the instance in the
+                    <filename>/var/log/libvirt/qemu</filename>
+                directory to see if it exists and has any useful error
+                messages in it.</para>
+            <para>Finally, from the
+                    <filename>/var/lib/nova/instances</filename>
+                directory for the instance, see if this command
+                returns an error:</para>
+            <screen><prompt>#</prompt> <userinput>virsh create libvirt.xml</userinput></screen>
         </section>
     </section>
-        <section xml:id="reset-state">
-            <title>Manually reset the state of an instance</title>
-            <para>If an instance gets stuck in an intermediate state (e.g., "deleting"), you can
-                manually reset the state of an instance using the <command>nova
-                    reset-state</command> command. This will reset it to an error state, which you
-                can then delete. For
-                example:<screen><prompt>$</prompt> <userinput>nova reset-state c6bbbf26-b40a-47e7-8d5c-eb17bf65c485</userinput>
-<prompt>$</prompt> <userinput>nova delete c6bbbf26-b40a-47e7-8d5c-eb17bf65c485</userinput></screen></para>
-            <para>You can also use the <literal>--active</literal> to
-            force the instance back into an active state instead of an
-            error state, for
-            example:<screen><prompt>$</prompt> <userinput>nova reset-state --active c6bbbf26-b40a-47e7-8d5c-eb17bf65c485</userinput> </screen></para>
-        </section>
-       <section xml:id="problems-with-injection">
-       <title>Problems with injection</title>
-       <para>If you are diagnosing problems with instances not booting,
-       or booting slowly, consider investigating file injection as a
-       cause. Setting <literal>libvirt_inject_partition</literal>
-       to -2 disables injection in libvirt. This can be required if you want to make user
-       specified files available from the metadata server (and config drive is not enabled),
-       for performance reasons, and also to avoid boot failure if injection itself fails.</para>
-       </section>
- </section>
+    <section xml:id="reset-state">
+        <title>Reset the state of an instance</title>
+        <para>If an instance remains in an intermediate state, such as
+                <literal>deleting</literal>, you can use the
+                <command>nova reset-state</command> command to
+            manually reset the state of an instance to an error state.
+            You can then delete the instance. For example:</para>
+        <screen><prompt>$</prompt> <userinput>nova reset-state c6bbbf26-b40a-47e7-8d5c-eb17bf65c485</userinput>
+<prompt>$</prompt> <userinput>nova delete c6bbbf26-b40a-47e7-8d5c-eb17bf65c485</userinput></screen>
+        <para>You can also use the <parameter>--active</parameter>
+            parameter to force the instance back to an active state
+            instead of an error state. For example:</para>
+        <screen><prompt>$</prompt> <userinput>nova reset-state --active c6bbbf26-b40a-47e7-8d5c-eb17bf65c485</userinput></screen>
+    </section>
+    <section xml:id="problems-with-injection">
+        <title>Injection problems</title>
+        <para>If instances do not boot or boot slowly, investigate
+            file injection as a cause.</para>
+        <para>To disable injection in libvirt, set
+                <option>libvirt_inject_partition</option> to
+                <literal>-2</literal>.</para>
+        <note>
+            <para>If you have not enabled the configuration drive and
+                you want to make user-specified files available from
+                the metadata server for to improve performance and
+                avoid boot failure if injection fails, you must
+                disable injection.</para>
+        </note>
+    </section>
+</section>
