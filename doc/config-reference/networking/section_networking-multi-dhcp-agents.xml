@@ -34,11 +34,17 @@ format="PNG" />
 </imageobject>
 </inlinemediaobject>'>
 ]>
-<section xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0" xml:id="app_demo_multi_dhcp_agents">
-    <title>Scalable and Highly Available DHCP Agents</title>
-    <para>This section describes how to use the agent management (alias agent) and scheduler (alias agent_scheduler) extensions for DHCP agents scalability and HA</para>
-         <note><para>Use the <command>neutron ext-list</command> client command to check if these extensions are enabled:
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="app_demo_multi_dhcp_agents">
+    <title>Scalable and highly available DHCP agents</title>
+    <para>This section describes how to use the agent management
+        (alias agent) and scheduler (alias agent_scheduler) extensions
+        for DHCP agents scalability and HA.</para>
+    <note>
+        <para>Use the <command>neutron ext-list</command> client
+            command to check if these extensions are enabled:
             <screen><prompt>$</prompt> <userinput>neutron ext-list -c name -c alias</userinput>
 <computeroutput>+-----------------+--------------------------+
 | alias           | name                     |
@@ -52,14 +58,17 @@ format="PNG" />
 | lbaas           | LoadBalancing service    |
 | extraroute      | Neutron Extra Route      |
 +-----------------+--------------------------+
-         </computeroutput></screen></para></note>
-   <informalfigure>
-    <mediaobject>
-        <imageobject>
-            <imagedata fileref="../../common/figures/demo_multiple_dhcp_agents.png" contentwidth="6in"/>
-        </imageobject>
-    </mediaobject>
-   </informalfigure>
+         </computeroutput></screen></para>
+    </note>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata
+                    fileref="../../common/figures/demo_multiple_dhcp_agents.png"
+                    contentwidth="6in"/>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
     <para>There will be three hosts in the setup.<table rules="all">
             <caption>Hosts for Demo</caption>
             <thead>
@@ -71,17 +80,23 @@ format="PNG" />
             <tbody>
                 <tr>
                     <td>OpenStack Controller host - controlnode</td>
-                    <td>Runs the Neutron service, Keystone and all of the Nova services that are
-                        required to deploy VMs. The node must have at least one network interface,
-                        this should be connected to the "Management Network".
-                        <emphasis role="bold">Note</emphasis>
-                        <systemitem class="service">nova-network</systemitem>
-                        should not be running since it is replaced by
-                        Neutron.</td>
+                    <td><para>Runs the Neutron, Keystone, and Nova
+                            services that are required to deploy VMs.
+                            The node must have at least one network
+                            interface that is connected to the
+                            Management Network.</para>
+                        <note>
+                            <para>
+                                <systemitem class="service"
+                                   >nova-network</systemitem> should
+                                not be running because it is replaced
+                                by Neutron.</para>
+                        </note></td>
                 </tr>
                 <tr>
                     <td>HostA</td>
-                    <td>Runs Nova compute, the Neutron L2 agent and DCHP agent</td>
+                    <td>Runs Nova compute, the Neutron L2 agent and
+                        DCHP agent</td>
                 </tr>
                 <tr>
                     <td>HostB</td>
@@ -91,57 +106,25 @@ format="PNG" />
         </table></para>
     <section xml:id="multi_agent_demo_configuration">
         <title>Configuration</title>
-        <para>
-            <itemizedlist>
-                <listitem>
-                    <para><emphasis role="bold">controlnode - Neutron Server</emphasis></para><orderedlist>
-                            <listitem>
-                                <para>Neutron configuration file
-                                <filename>/etc/neutron/neutron.conf</filename>:
-                                </para>
-                                <programlisting language="ini">[DEFAULT]
+        <itemizedlist>
+            <listitem>
+                <para><emphasis role="bold">controlnode - Neutron
+                        Server</emphasis></para>
+                <orderedlist>
+                    <listitem>
+                        <para>Neutron configuration file
+                                <filename>/etc/neutron/neutron.conf</filename>:</para>
+                        <programlisting language="ini">[DEFAULT]
 core_plugin = neutron.plugins.linuxbridge.lb_neutron_plugin.LinuxBridgePluginV2
 rabbit_host = controlnode
 allow_overlapping_ips = True
 host = controlnode
-agent_down_time = 5
-</programlisting>
-                            </listitem>
-                            <listitem>
-                                <para>Update the plugin configuration file <filename
-                                    >/etc/neutron/plugins/linuxbridge/linuxbridge_conf.ini</filename>:
-                                </para>
-                                <programlisting language="ini">[vlans]
-tenant_network_type = vlan
-network_vlan_ranges = physnet1:1000:2999
-[database]
-connection = mysql://root:root@127.0.0.1:3306/neutron_linux_bridge
-retry_interval = 2
-[linux_bridge]
-physical_interface_mappings = physnet1:eth0
-</programlisting>
-                            </listitem>
-                        </orderedlist>
-                </listitem>
-                <listitem>
-                    <para><emphasis role="bold">HostA and HostB - L2 Agent</emphasis></para>
-                    <orderedlist>
-                            <listitem>
-                                <para>Neutron configuration file <filename
-                                    >/etc/neutron/neutron.conf</filename>:
-                                </para>
-                                <programlisting language="ini">[DEFAULT]
-rabbit_host = controlnode
-rabbit_password = openstack
-# host = HostB on hostb
-host = HostA
-</programlisting>
-                            </listitem>
-                            <listitem>
-                                <para>Update the plugin configuration file <filename
-                                    >/etc/neutron/plugins/linuxbridge/linuxbridge_conf.ini</filename>:
-                                </para>
-                                <programlisting language="ini">[vlans]
+agent_down_time = 5</programlisting>
+                    </listitem>
+                    <listitem>
+                        <para>Update the plug-in configuration file
+                                <filename>/etc/neutron/plugins/linuxbridge/linuxbridge_conf.ini</filename>:</para>
+                        <programlisting language="ini">[vlans]
 tenant_network_type = vlan
 network_vlan_ranges = physnet1:1000:2999
 [database]
@@ -149,13 +132,38 @@ connection = mysql://root:root@127.0.0.1:3306/neutron_linux_bridge
 retry_interval = 2
 [linux_bridge]
 physical_interface_mappings = physnet1:eth0</programlisting>
-                            </listitem>
-                            <listitem>
-                                <para>Update the nova configuration
-                                   file <filename
-                                   >/etc/nova/nova.conf</filename>:
-                                </para>
-                                <programlisting language="ini">[DEFAULT]
+                    </listitem>
+                </orderedlist>
+            </listitem>
+            <listitem>
+                <para><emphasis role="bold">HostA and HostB - L2
+                        Agent</emphasis></para>
+                <orderedlist>
+                    <listitem>
+                        <para>Neutron configuration file
+                                <filename>/etc/neutron/neutron.conf</filename>:</para>
+                        <programlisting language="ini">[DEFAULT]
+rabbit_host = controlnode
+rabbit_password = openstack
+# host = HostB on hostb
+host = HostA</programlisting>
+                    </listitem>
+                    <listitem>
+                        <para>Update the plug-in configuration file
+                                <filename>/etc/neutron/plugins/linuxbridge/linuxbridge_conf.ini</filename>:</para>
+                        <programlisting language="ini">[vlans]
+tenant_network_type = vlan
+network_vlan_ranges = physnet1:1000:2999
+[database]
+connection = mysql://root:root@127.0.0.1:3306/neutron_linux_bridge
+retry_interval = 2
+[linux_bridge]
+physical_interface_mappings = physnet1:eth0</programlisting>
+                    </listitem>
+                    <listitem>
+                        <para>Update the nova configuration file
+                                <filename>/etc/nova/nova.conf</filename>:</para>
+                        <programlisting language="ini">[DEFAULT]
 network_api_class=nova.network.neutronv2.api.API
 
 neutron_admin_username=neutron
@@ -164,45 +172,44 @@ neutron_admin_auth_url=http://controlnode:35357/v2.0/
 neutron_auth_strategy=keystone
 neutron_admin_tenant_name=servicetenant
 neutron_url=http://100.1.1.10:9696/
-firewall_driver=nova.virt.firewall.NoopFirewallDriver
-</programlisting>
-                            </listitem>
-                        </orderedlist>
-                </listitem>
-                <listitem>
-                    <para><emphasis role="bold">HostA and HostB - DHCP Agent</emphasis></para><orderedlist>
-                            <listitem>
-                                <para>Update the DHCP configuration file <filename
-                                    >/etc/neutron/dhcp_agent.ini</filename>:
-                                </para>
-                                <programlisting language="ini">[DEFAULT]
-interface_driver = neutron.agent.linux.interface.BridgeInterfaceDriver
-</programlisting>
-                            </listitem>
-
-                        </orderedlist>
-                </listitem></itemizedlist>
-        </para>
+firewall_driver=nova.virt.firewall.NoopFirewallDriver</programlisting>
+                    </listitem>
+                </orderedlist>
+            </listitem>
+            <listitem>
+                <para><emphasis role="bold">HostA and HostB - DHCP
+                        Agent</emphasis></para>
+                <orderedlist>
+                    <listitem>
+                        <para>Update the DHCP configuration file
+                                <filename>/etc/neutron/dhcp_agent.ini</filename>:</para>
+                        <programlisting language="ini">[DEFAULT]
+interface_driver = neutron.agent.linux.interface.BridgeInterfaceDriver</programlisting>
+                    </listitem>
+                </orderedlist>
+            </listitem>
+        </itemizedlist>
     </section>
     <section xml:id="demo_multiple_operation">
-        <title>Commands in agent management and scheduler extensions</title>
-        <para>The following commands require the tenant running the command to have an admin role.</para>
-        <note><para>Please ensure that the following environment variables are set.
-                These are used by the various clients to access
+        <title>Commands in agent management and scheduler
+            extensions</title>
+        <para>The following commands require the tenant running the
+            command to have an admin role.</para>
+        <note>
+            <para>Ensure that the following environment variables are
+                set. These are used by the various clients to access
                 Keystone.</para>
-        <para>
-          <programlisting language="bash">export OS_USERNAME=admin
+            <programlisting language="bash">export OS_USERNAME=admin
 export OS_PASSWORD=adminpassword
 export OS_TENANT_NAME=admin
 export OS_AUTH_URL=http://controlnode:5000/v2.0/</programlisting>
-        </para></note>
-        <para>
-            <itemizedlist>
-                   <listitem>
-                       <para><emphasis role="bold">Settings</emphasis></para>
-                       <para>We need some VMs and a neutron network to experiment. Here they
-                        are:</para>
-                                <screen><prompt>$</prompt> <userinput>nova list</userinput>
+        </note>
+        <itemizedlist>
+            <listitem>
+                <para><emphasis role="bold">Settings</emphasis></para>
+                <para>To experiment, you need VMs and a neutron
+                    network:</para>
+                <screen><prompt>$</prompt> <userinput>nova list</userinput>
 <computeroutput>+--------------------------------------+-----------+--------+---------------+
 | ID                                   | Name      | Status | Networks      |
 +--------------------------------------+-----------+--------+---------------+
@@ -217,17 +224,17 @@ export OS_AUTH_URL=http://controlnode:5000/v2.0/</programlisting>
 +--------------------------------------+------+--------------------------------------+
 | 89dca1c6-c7d4-4f7a-b730-549af0fb6e34 | net1 | f6c832e3-9968-46fd-8e45-d5cf646db9d1 |
 +--------------------------------------+------+--------------------------------------+</computeroutput></screen>
-                            </listitem>
-
-                <listitem>
-                    <para><emphasis role="bold">Manage agents in neutron
+            </listitem>
+            <listitem>
+                <para><emphasis role="bold">Manage agents in neutron
                         deployment</emphasis></para>
-                    <para>Every agent which supports these extensions will register itself with the
-                        neutron server when it starts up.</para>
-                    <orderedlist>
-                            <listitem>
-                                <para>List all agents:</para>
-                                <screen><prompt>$</prompt> <userinput>neutron agent-list</userinput>
+                <para>Every agent which supports these extensions will
+                    register itself with the neutron server when it
+                    starts up.</para>
+                <orderedlist>
+                    <listitem>
+                        <para>List all agents:</para>
+                        <screen><prompt>$</prompt> <userinput>neutron agent-list</userinput>
 <computeroutput>+--------------------------------------+--------------------+-------+-------+----------------+
 | id                                   | agent_type         | host  | alive | admin_state_up |
 +--------------------------------------+--------------------+-------+-------+----------------+
@@ -237,55 +244,56 @@ export OS_AUTH_URL=http://controlnode:5000/v2.0/</programlisting>
 | f28aa126-6edb-4ea5-a81e-8850876bc0a8 | DHCP agent         | HostB | :-)   | True           |
 +--------------------------------------+--------------------+-------+-------+----------------+
 </computeroutput></screen>
-                           <para>Just as shown, we have four agents now, and they have reported
-                                their state. The <literal>'alive'</literal> will be
-                                    <literal>':-)'</literal> if the agent reported its state within
-                                the period defined by the option
-                                    <literal>'agent_down_time'</literal> in neutron server's
-                                neutron.conf. Otherwise the <literal>'alive'</literal> is
-                                    <literal>'xxx'</literal>.</para>
-                            </listitem>
-                            <listitem>
-                                <para>List the DHCP agents hosting a given network</para>
-                                <para>In some deployments, one DHCP
-                                agent is not enough to hold all the
-                                network data. In addition, we should
-                                have backup for it even when the
-                                deployment is small one. The same
-                                network can be assigned to more than one
-                                DHCP agent and one DHCP agent can host
-                                more than one network. Let's first go
-                                with command that lists DHCP agents
-                                hosting a given network.</para>
-                                <screen><prompt>$</prompt> <userinput>neutron dhcp-agent-list-hosting-net net1</userinput>
+                        <para>The output shows information for four
+                            agents. The <literal>alive</literal> field
+                            shows <literal>:-)</literal> if the agent
+                            reported its state within the period
+                            defined by the
+                                <option>agent_down_time</option>
+                            option in the
+                                <filename>neutron.conf</filename>
+                            file. Otherwise the <option>alive</option>
+                            is <literal>xxx</literal>.</para>
+                    </listitem>
+                    <listitem>
+                        <para>List the DHCP agents that host a
+                            specified network</para>
+                        <para>In some deployments, one DHCP agent is
+                            not enough to hold all network data. In
+                            addition, you must have a backup for it
+                            even when the deployment is small. The
+                            same network can be assigned to more than
+                            one DHCP agent and one DHCP agent can host
+                            more than one network.</para>
+                        <para>List DHCP agents that a a specified
+                            network:</para>
+                        <screen><prompt>$</prompt> <userinput>neutron dhcp-agent-list-hosting-net net1</userinput>
 <computeroutput>+--------------------------------------+-------+----------------+-------+
 | id                                   | host  | admin_state_up | alive |
 +--------------------------------------+-------+----------------+-------+
 | a0c1c21c-d4f4-4577-9ec7-908f2d48622d | HostA | True           | :-)   |
 +--------------------------------------+-------+----------------+-------+
                                 </computeroutput></screen>
-                            </listitem>
-                            <listitem>
-                                <para>List the networks hosted by a
-                                given DHCP agent.</para>
-                                <para>This command is to show which networks a given dhcp agent is managing.</para>
-                                <screen><prompt>$</prompt> <userinput>neutron net-list-on-dhcp-agent a0c1c21c-d4f4-4577-9ec7-908f2d48622d</userinput>
+                    </listitem>
+                    <listitem>
+                        <para>List the networks hosted by a given DHCP
+                            agent.</para>
+                        <para>This command is to show which networks a
+                            given dhcp agent is managing.</para>
+                        <screen><prompt>$</prompt> <userinput>neutron net-list-on-dhcp-agent a0c1c21c-d4f4-4577-9ec7-908f2d48622d</userinput>
 <computeroutput>+--------------------------------------+------+---------------------------------------------------+
 | id                                   | name | subnets                                           |
 +--------------------------------------+------+---------------------------------------------------+
 | 89dca1c6-c7d4-4f7a-b730-549af0fb6e34 | net1 | f6c832e3-9968-46fd-8e45-d5cf646db9d1  10.0.1.0/24 |
 +--------------------------------------+------+---------------------------------------------------+
                                 </computeroutput></screen>
-                            </listitem>
-                            <listitem>
-                                <para>Show the agent detail
-                                information.</para>
-                            <para>The <command>agent-list</command> command
-                                gives very general information about
-                                agents. To obtain the detailed
-                                information of an agent, we can use
-                                <command>agent-show</command>.</para>
-                                <screen><prompt>$</prompt> <userinput>neutron agent-show  a0c1c21c-d4f4-4577-9ec7-908f2d48622d</userinput>
+                    </listitem>
+                    <listitem>
+                        <para>Show agent details.</para>
+                        <para>The <command>agent-list</command>
+                            command shows details for a specified
+                            agent:</para>
+                        <screen><prompt>$</prompt> <userinput>neutron agent-show  a0c1c21c-d4f4-4577-9ec7-908f2d48622d</userinput>
 <computeroutput>+---------------------+----------------------------------------------------------+
 | Field               | Value                                                    |
 +---------------------+----------------------------------------------------------+
@@ -310,15 +318,21 @@ export OS_AUTH_URL=http://controlnode:5000/v2.0/</programlisting>
 | topic               | dhcp_agent                                               |
 +---------------------+----------------------------------------------------------+
                                 </computeroutput></screen>
-                                <para>In the above output, <literal>'heartbeat_timestamp'</literal>
-                                is the time on neutron server. So we don't need all agents synced to
-                                neutron server's time for this extension to run well.
-                                    <literal>'configurations'</literal> is about the agent's static
-                                configuration or run time data. We can see that this agent is a DHCP
-                                agent, and it is hosting one network, one subnet and 3 ports.</para>
-                                <para>Different type of agents has different detail. Below is information for
-                                a <literal>'Linux bridge agent'</literal></para>
-                                <screen><prompt>$</prompt> <userinput>neutron agent-show ed96b856-ae0f-4d75-bb28-40a47ffd7695</userinput>
+                        <para>In this output,
+                                <literal>heartbeat_timestamp</literal>
+                            is the time on the neutron server. You do
+                            not need to synchronize all agents to this
+                            time for this extension to run correctly.
+                                <literal>configurations</literal>
+                            describes the static configuration for the
+                            agent or run time data. This agent is a
+                            DHCP agent and it hosts one network, one
+                            subnet, and three ports.</para>
+                        <para>Different types of agents show different
+                            details. The following output shows
+                            information for a Linux bridge
+                            agent:</para>
+                        <screen><prompt>$</prompt> <userinput>neutron agent-show ed96b856-ae0f-4d75-bb28-40a47ffd7695</userinput>
 <computeroutput>+---------------------+--------------------------------------+
 | Field               | Value                                |
 +---------------------+--------------------------------------+
@@ -338,32 +352,35 @@ export OS_AUTH_URL=http://controlnode:5000/v2.0/</programlisting>
 | topic               | N/A                                  |
 | started_at          | 2013-03-16T06:48:39.000000           |
 | type                | Linux bridge agent                   |
-+---------------------+--------------------------------------+
-                                </computeroutput></screen>
-                                <para>Just as shown, we can see bridge-mapping and the number of VM's virtual network devices on this L2 agent.</para>
-                            </listitem>
-                        </orderedlist>
-                </listitem>
-                <listitem>
-                    <para><emphasis role="bold">Manage assignment of networks to DHCP agent</emphasis>
-                    </para>
-                     <para>We have shown
-                       <command>net-list-on-dhcp-agent</command> and
-                       <command>dhcp-agent-list-hosting-net</command>
-                       commands.  Now let's look at how to add a network
-                       to a DHCP agent and remove one from it.
-                     </para>
-                         <orderedlist>
-                            <listitem>
-                                <para>Default scheduling.</para>
-                                <para>When a network is created and one port is created on it, we
-                                will try to schedule it to an active
-                                DHCP agent. If there are many active
-                                DHCP agents, we select one randomly.
-                                (We can design more sophisticated
-                                scheduling algorithm just like we do
-                                in nova-schedule later.)</para>
-                                <screen><prompt>$</prompt> <userinput>neutron net-create net2</userinput>
++---------------------+--------------------------------------+</computeroutput></screen>
+                        <para>The output shows
+                                <literal>bridge-mapping</literal> and
+                            the number of virtual network devices on
+                            this L2 agent.</para>
+                    </listitem>
+                </orderedlist>
+            </listitem>
+            <listitem>
+                <para><emphasis role="bold">Manage assignment of
+                        networks to DHCP agent</emphasis></para>
+                <para>Now that you have run the
+                        <command>net-list-on-dhcp-agent</command> and
+                        <command>dhcp-agent-list-hosting-net</command>
+                    commands, you can add a network to a DHCP agent
+                    and remove one from it.</para>
+                <orderedlist>
+                    <listitem>
+                        <para>Default scheduling.</para>
+                        <para>When you create a network with one port,
+                            you can schedule it to an active DHCP
+                            agent. If many active DHCP agents are
+                            running, select one randomly. You can
+                            design more sophisticated scheduling
+                            algorithms in the same way as <systemitem
+                                class="service"
+                                >nova-schedule</systemitem> later
+                            on.</para>
+                        <screen><prompt>$</prompt> <userinput>neutron net-create net2</userinput>
 <prompt>$</prompt> <userinput>neutron subnet-create net2 9.0.1.0/24 --name subnet2</userinput>
 <prompt>$</prompt> <userinput>neutron port-create net2</userinput>
 <prompt>$</prompt> <userinput>neutron dhcp-agent-list-hosting-net net2</userinput>
@@ -371,19 +388,22 @@ export OS_AUTH_URL=http://controlnode:5000/v2.0/</programlisting>
 | id                                   | host  | admin_state_up | alive |
 +--------------------------------------+-------+----------------+-------+
 | a0c1c21c-d4f4-4577-9ec7-908f2d48622d | HostA | True           | :-)   |
-+--------------------------------------+-------+----------------+-------+
-                                </computeroutput></screen>
-                                <para>We can see it is allocated to DHCP agent on HostA.
-                                If we want to validate the behavior via <command>dnsmasq</command>,
-                                don't forget to create a subnet for the network
-                                since DHCP agent starts the dnsmasq service only if
-                                there is a DHCP enabled subnet on it.</para>
-                            </listitem>
-                            <listitem>
-                                <para>Assign a network to a given DHCP
-                                agent.</para>
-                                <para>We have two DHCP agents, and we want another DHCP agent to host the network too.</para>
-                                <screen><prompt>$</prompt> <userinput>neutron dhcp-agent-network-add f28aa126-6edb-4ea5-a81e-8850876bc0a8 net2</userinput>
++--------------------------------------+-------+----------------+-------+</computeroutput></screen>
+                        <para>It is allocated to DHCP agent on HostA.
+                            If you want to validate the behavior
+                            through the <command>dnsmasq</command>
+                            command, you must create a subnet for the
+                            network because the DHCP agent starts the
+                                <systemitem class="service"
+                                >dnsmasq</systemitem> service only if
+                            there is a DHCP.</para>
+                    </listitem>
+                    <listitem>
+                        <para>Assign a network to a given DHCP
+                            agent.</para>
+                        <para>To add another DHCP agent to host the
+                            network, run this command:</para>
+                        <screen><prompt>$</prompt> <userinput>neutron dhcp-agent-network-add f28aa126-6edb-4ea5-a81e-8850876bc0a8 net2</userinput>
 <computeroutput>Added network net2 to dhcp agent</computeroutput>
 <prompt>$</prompt> <userinput>neutron dhcp-agent-list-hosting-net net2</userinput>
 <computeroutput>+--------------------------------------+-------+----------------+-------+
@@ -391,40 +411,44 @@ export OS_AUTH_URL=http://controlnode:5000/v2.0/</programlisting>
 +--------------------------------------+-------+----------------+-------+
 | a0c1c21c-d4f4-4577-9ec7-908f2d48622d | HostA | True           | :-)   |
 | f28aa126-6edb-4ea5-a81e-8850876bc0a8 | HostB | True           | :-)   |
-+--------------------------------------+-------+----------------+-------+
-                                </computeroutput></screen>
-                                <para>We can see both DHCP agents are hosting <literal>'net2'</literal> network.
-                                </para>
-                            </listitem>
-                            <listitem>
-                                <para>Remove a network from a given
-                                DHCP agent.</para>
-                                <para>This command is the sibling
-                                command for the previous one.
-                                Let's remove <literal>'net2'</literal> from HostA's DHCP
-                                agent.</para>
-                                <screen><prompt>$</prompt> <userinput>neutron dhcp-agent-network-remove a0c1c21c-d4f4-4577-9ec7-908f2d48622d net2</userinput>
++--------------------------------------+-------+----------------+-------+</computeroutput></screen>
+                        <para>Both DHCP agents host the
+                                <literal>net2</literal>
+                            network.</para>
+                    </listitem>
+                    <listitem>
+                        <para>Remove a network from a specified DHCP
+                            agent.</para>
+                        <para>This command is the sibling command for
+                            the previous one. Remove
+                                <literal>net2</literal> from the DHCP
+                            agent for HostA:</para>
+                        <screen><prompt>$</prompt> <userinput>neutron dhcp-agent-network-remove a0c1c21c-d4f4-4577-9ec7-908f2d48622d net2</userinput>
 <computeroutput>Removed network net2 to dhcp agent</computeroutput>
 <prompt>$</prompt> <userinput>neutron dhcp-agent-list-hosting-net net2</userinput>
 <computeroutput>+--------------------------------------+-------+----------------+-------+
 | id                                   | host  | admin_state_up | alive |
 +--------------------------------------+-------+----------------+-------+
 | f28aa126-6edb-4ea5-a81e-8850876bc0a8 | HostB | True           | :-)   |
-+--------------------------------------+-------+----------------+-------+
-                                </computeroutput></screen>
-                                <para>We can see now only HostB's DHCP agent is hosting <literal>'net2'</literal> network.</para>
-                            </listitem>
-                        </orderedlist>
-                </listitem>
-                <listitem>
-                    <para><emphasis role="bold">HA of DHCP agents</emphasis></para>
-                    <para>First we will boot a VM on net2, then we let both DHCP agents host <literal>'net2'</literal>.
-                    After that, we fail the agents in turn and to see if
-                    the VM can still get the wanted IP during that time.</para>
-                    <orderedlist>
-                            <listitem>
-                                <para>Boot a VM on net2.</para>
-                                <screen><prompt>$</prompt> <userinput>neutron net-list</userinput>
++--------------------------------------+-------+----------------+-------+</computeroutput></screen>
+                        <para>You can see that only the DHCP agent for
+                            HostB is hosting the
+                                <literal>net2</literal>
+                            network.</para>
+                    </listitem>
+                </orderedlist>
+            </listitem>
+            <listitem>
+                <para><emphasis role="bold">HA of DHCP
+                        agents</emphasis></para>
+                <para>Boot a VM on net2. Let both DHCP agents host
+                        <literal>net2</literal>. Fail the agents in
+                    turn to see if the VM can still get the desired
+                    IP.</para>
+                <orderedlist>
+                    <listitem>
+                        <para>Boot a VM on net2.</para>
+                        <screen><prompt>$</prompt> <userinput>neutron net-list</userinput>
 <computeroutput>+--------------------------------------+------+--------------------------------------------------+
 | id                                   | name | subnets                                          |
 +--------------------------------------+------+--------------------------------------------------+
@@ -441,75 +465,75 @@ export OS_AUTH_URL=http://controlnode:5000/v2.0/</programlisting>
 | 2d604e05-9a6c-4ddb-9082-8a1fbdcc797d | myserver2 | ACTIVE | net1=10.0.1.4 |
 | c7c0481c-3db8-4d7a-a948-60ce8211d585 | myserver3 | ACTIVE | net1=10.0.1.5 |
 | f62f4731-5591-46b1-9d74-f0c901de567f | myserver4 | ACTIVE | net2=9.0.1.2  |
-+--------------------------------------+-----------+--------+---------------+
-                                </computeroutput></screen>
-                            </listitem>
-                            <listitem>
-                                <para>Make sure both DHCP agents
-                                hosting 'net2'.</para>
-                                <para>We can use commands shown before to assign the network to agents.
-                                </para>
-                                <screen><prompt>$</prompt> <userinput>neutron dhcp-agent-list-hosting-net net2</userinput>
++--------------------------------------+-----------+--------+---------------+</computeroutput></screen>
+                    </listitem>
+                    <listitem>
+                        <para>Make sure both DHCP agents hosting
+                            'net2'.</para>
+                        <para>Use the previous commands to assign the
+                            network to agents.</para>
+                        <screen><prompt>$</prompt> <userinput>neutron dhcp-agent-list-hosting-net net2</userinput>
 <computeroutput>+--------------------------------------+-------+----------------+-------+
 | id                                   | host  | admin_state_up | alive |
 +--------------------------------------+-------+----------------+-------+
 | a0c1c21c-d4f4-4577-9ec7-908f2d48622d | HostA | True           | :-)   |
 | f28aa126-6edb-4ea5-a81e-8850876bc0a8 | HostB | True           | :-)   |
-+--------------------------------------+-------+----------------+-------+
-                                </computeroutput></screen>
-                            </listitem>
-                            <listitem>
-                              <procedure>
-                                <title>To test the HA</title>
-                                <step>
-                                  <para>Log in to the <literal>'myserver4'</literal>
-                                    VM, and run <literal>'udhcpc'</literal>, <literal>'dhclient'</literal> or other DHCP client.
-                                  </para>
-                                </step>
-                                <step>
-                                  <para>Stop the DHCP agent on HostA (Beside stopping the
-                                    <code>neutron-dhcp-agent</code> binary, we must make sure dnsmasq processes are
-                                    gone too.)
-                                  </para>
-                                </step>
-                                <step>
-                                  <para>Run a DHCP client in VM. We can see it can get the wanted IP.
-                                  </para>
-                                </step>
-                                <step>
-                                  <para>Stop the DHCP agent on HostB too.</para>
-                                </step>
-                                <step>
-                                  <para>Run
-                                    <literal>'udhcpc'</literal> in
-                                    VM. We can see it cannot get the
-                                    wanted IP.
-                                  </para>
-                                </step>
-                                <step>
-                                  <para>Start DHCP agent on HostB. We can see VM can get the wanted IP again.
-                                  </para>
-                                </step>
-                              </procedure>
-                            </listitem>
-                        </orderedlist>
-                </listitem>
-                           <listitem>
-                                <para>Disable and remove an agent</para>
-                                <para>An admin user wants to disable an
-                        agent if there is a system upgrade
-                        planned, whatever hardware or software. Some
-                        agents which support scheduling support
-                        disable or enable too, such as L3 agent and
-                        DHCP agent. Once the agent is disabled,
-                        the scheduler will not schedule new resources
-                        to the agent. After the agent is
-                        disabled, we can remove the agent safely.
-                        We should remove the resources on
-                        the agent before we delete the agent
-                        itself.</para>
-                        <para>To run the commands below, we need first stop the DHCP agent on HostA.</para>
-                        <screen><prompt>$</prompt> <userinput>neutron agent-update --admin-state-up False a0c1c21c-d4f4-4577-9ec7-908f2d48622d</userinput>
++--------------------------------------+-------+----------------+-------+</computeroutput></screen>
+                    </listitem>
+                    <listitem>
+                        <procedure>
+                            <title>To test the HA</title>
+                            <step>
+                                <para>Log in to the
+                                   <literal>myserver4</literal> VM,
+                                   and run <literal>udhcpc</literal>,
+                                   <literal>dhclient</literal> or
+                                   other DHCP client.</para>
+                            </step>
+                            <step>
+                                <para>Stop the DHCP agent on HostA.
+                                   Besides stopping the
+                                   <code>neutron-dhcp-agent</code>
+                                   binary, you must stop the
+                                   <command>dnsmasq</command>
+                                   processes.</para>
+                            </step>
+                            <step>
+                                <para>Run a DHCP client in VM to see
+                                   if it can get the wanted IP.
+                                </para>
+                            </step>
+                            <step>
+                                <para>Stop the DHCP agent on HostB
+                                   too.</para>
+                            </step>
+                            <step>
+                                <para>Run <command>udhcpc</command> in
+                                   the VM; it cannot get the wanted
+                                   IP.</para>
+                            </step>
+                            <step>
+                                <para>Start DHCP agent on HostB. The
+                                   VM gets the wanted IP again.</para>
+                            </step>
+                        </procedure>
+                    </listitem>
+                </orderedlist>
+            </listitem>
+            <listitem>
+                <para>Disable and remove an agent</para>
+                <para>An administrator might want to disable an agent
+                    if a system hardware or software upgrade is
+                    planned. Some agents that support scheduling also
+                    support disabling and enabling agents, such as L3
+                    and DHCP agents. After the agent is disabled, the
+                    scheduler does not schedule new resources to the
+                    agent. After the agent is disabled, you can safely
+                    remove the agent. Remove the resources on the
+                    agent before you delete the agent.</para>
+                <para>To run the following commands, you must stop the
+                    DHCP agent on HostA.</para>
+                <screen><prompt>$</prompt> <userinput>neutron agent-update --admin-state-up False a0c1c21c-d4f4-4577-9ec7-908f2d48622d</userinput>
 <prompt>$</prompt> <userinput>neutron agent-list</userinput>
 <computeroutput>+--------------------------------------+--------------------+-------+-------+----------------+
 | id                                   | agent_type         | host  | alive | admin_state_up |
@@ -518,8 +542,7 @@ export OS_AUTH_URL=http://controlnode:5000/v2.0/</programlisting>
 | a0c1c21c-d4f4-4577-9ec7-908f2d48622d | DHCP agent         | HostA | :-)   | False          |
 | ed96b856-ae0f-4d75-bb28-40a47ffd7695 | Linux bridge agent | HostB | :-)   | True           |
 | f28aa126-6edb-4ea5-a81e-8850876bc0a8 | DHCP agent         | HostB | :-)   | True           |
-+--------------------------------------+--------------------+-------+-------+----------------+
-</computeroutput>
++--------------------------------------+--------------------+-------+-------+----------------+</computeroutput>
 <prompt>$</prompt> <userinput>neutron agent-delete a0c1c21c-d4f4-4577-9ec7-908f2d48622d</userinput>
 <computeroutput>Deleted agent: a0c1c21c-d4f4-4577-9ec7-908f2d48622d</computeroutput>
 <prompt>$</prompt> <userinput>neutron agent-list</userinput>
@@ -529,13 +552,10 @@ export OS_AUTH_URL=http://controlnode:5000/v2.0/</programlisting>
 | 1b69828d-6a9b-4826-87cd-1757f0e27f31 | Linux bridge agent | HostA | :-)   | True           |
 | ed96b856-ae0f-4d75-bb28-40a47ffd7695 | Linux bridge agent | HostB | :-)   | True           |
 | f28aa126-6edb-4ea5-a81e-8850876bc0a8 | DHCP agent         | HostB | :-)   | True           |
-+--------------------------------------+--------------------+-------+-------+----------------+
-                                </computeroutput></screen>
-                                <para>After deletion, if we restart
-                        the DHCP agent, it will be on agent list
-                        again.</para>
-                        </listitem>
-            </itemizedlist>
-        </para>
++--------------------------------------+--------------------+-------+-------+----------------+</computeroutput></screen>
+                <para>After deletion, if you restart the DHCP agent,
+                    it appears on the agent list again.</para>
+            </listitem>
+        </itemizedlist>
     </section>
 </section>

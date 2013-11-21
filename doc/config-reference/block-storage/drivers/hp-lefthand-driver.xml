@@ -10,7 +10,7 @@
         instances.</para>
     <para>The HpSanISCSIDriver enables you to use a HP/Lefthand SAN
         that supports the Cliq interface. Every supported volume
-        operation translates into a cliq call in the backend.</para>
+        operation translates into a cliq call in the back-end.</para>
     <para>To use Cinder with HP/Lefthand SAN, you must set the
         following parameters in the <filename>cinder.conf</filename>
         file:</para>
@@ -47,7 +47,7 @@
         <listitem>
             <para><code>san_thin_provision=True</code>. To disable
                 thin provisioning, set to <literal>False</literal>.
-            </para>
+           </para>
         </listitem>
         <listitem>
             <para><code>san_is_local=False</code>. Typically, this
@@ -57,31 +57,25 @@
                     <literal>True</literal>.</para>
         </listitem>
     </itemizedlist>
-    <simplesect>
-        <title>Configuring the VSA</title>
-        <para>In addition to configuring the <systemitem
-                class="service">cinder-volume</systemitem> service,
-            you must configure the VSA to function in an OpenStack
-            environment.</para>
-        <para>
-            <orderedlist>
-                <listitem>
-                    <para>Configure Chap on each of the <systemitem
-                            class="service">nova-compute</systemitem>
-                        nodes.</para>
-                </listitem>
-                <listitem>
-                    <para>Add Server associations on the VSA with the
-                        associated Chap and initiator information. The
-                        name should correspond to the <emphasis
-                            role="italic">'hostname'</emphasis> of the
-                            <systemitem class="service"
-                            >nova-compute</systemitem> node. For Xen,
-                        this is the hypervisor host name. To do this,
-                        use either Cliq or the Centralized Management
-                        Console.</para>
-                </listitem>
-            </orderedlist>
-        </para>
-    </simplesect>
+    <para>In addition to configuring the <systemitem class="service"
+            >cinder-volume</systemitem> service, you must configure
+        the VSA to function in an OpenStack environment.</para>
+    <procedure>
+        <title>To configure the VSA</title>
+        <step>
+            <para>Configure Chap on each of the <systemitem
+                    class="service">nova-compute</systemitem>
+                nodes.</para>
+        </step>
+        <step>
+            <para>Add Server associations on the VSA with the
+                associated Chap and initiator information. The name
+                should correspond to the <emphasis role="italic"
+                    >'hostname'</emphasis> of the <systemitem
+                    class="service">nova-compute</systemitem> node.
+                For Xen, this is the hypervisor host name. To do this,
+                use either Cliq or the Centralized Management
+                Console.</para>
+        </step>
+    </procedure>
 </section>

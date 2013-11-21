@@ -2,100 +2,107 @@
 <section xml:id="configuring-object-storage-features"
     xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xlink="http://www.w3.org/1999/xlink"
-         version="5.0">
-    <title>Configuring OpenStack Object Storage Features</title>
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+    <title>Configure OpenStack Object Storage features</title>
     <section xml:id="swift-zones">
-        <title>OpenStack Object Storage Zones</title>
-        <para>In OpenStack Object Storage, data is placed across different tiers
-            of failure domains. First, data is spread across regions, then
-            zones, then servers, and finally across drives. Data is placed to
-            get the highest failure domain isolation. If you deploy multiple
-            regions, the Object Storage service places the data across the
-            regions. Within a region, each replica of the data is stored in
-            unique zones, if possible. If there is only one zone, data is placed
-            on different servers. And if there is only one server, data is
-            placed on different drives.</para>
-        <para>Regions are widely separated installations with a high-latency or
-            otherwise constrained network link between them. Zones are
-            arbitrarily assigned, and it is up to the administrator of the
-            Object Storage cluster to choose an isolation level and attempt to
-            maintain the isolation level through appropriate zone assignment.
-            For example, a zone may be defined as a rack with a single power
-            source. Or a zone may be a DC room with a common utility provider.
-            Servers are identified by a unique IP/port. Drives are locally
-            attached storage volumes identified by mount point.</para>
-        <para>In small clusters (five nodes or fewer), everything is normally in
-            a single zone. Larger Object Storage deployments may assign zone
-            designations differently; for example, an entire cabinet or rack of
-            servers may be designated as a single zone to maintain replica
-            availability if the cabinet becomes unavailable (for example, due to
-            failure of the top of rack switches or a dedicated circuit). In very
-            large deployments, such as service provider level deployments, each
-            zone might have an entirely autonomous switching and power
-            infrastructure, so that even the loss of an electrical circuit or
-            switching aggregator would result in the loss of a single replica at
-            most.</para>
+        <title>OpenStack Object Storage zones</title>
+        <para>In OpenStack Object Storage, data is placed across
+            different tiers of failure domains. First, data is spread
+            across regions, then zones, then servers, and finally
+            across drives. Data is placed to get the highest failure
+            domain isolation. If you deploy multiple regions, the
+            Object Storage service places the data across the regions.
+            Within a region, each replica of the data should be stored
+            in unique zones, if possible. If there is only one zone,
+            data should be placed on different servers. And if there
+            is only one server, data should be placed on different
+            drives.</para>
+        <para>Regions are widely separated installations with a
+            high-latency or otherwise constrained network link between
+            them. Zones are arbitrarily assigned, and it is up to the
+            administrator of the Object Storage cluster to choose an
+            isolation level and attempt to maintain the isolation
+            level through appropriate zone assignment. For example, a
+            zone may be defined as a rack with a single power source.
+            Or a zone may be a DC room with a common utility provider.
+            Servers are identified by a unique IP/port. Drives are
+            locally attached storage volumes identified by mount
+            point.</para>
+        <para>In small clusters (five nodes or fewer), everything is
+            normally in a single zone. Larger Object Storage
+            deployments may assign zone designations differently; for
+            example, an entire cabinet or rack of servers may be
+            designated as a single zone to maintain replica
+            availability if the cabinet becomes unavailable (for
+            example, due to failure of the top of rack switches or a
+            dedicated circuit). In very large deployments, such as
+            service provider level deployments, each zone might have
+            an entirely autonomous switching and power infrastructure,
+            so that even the loss of an electrical circuit or
+            switching aggregator would result in the loss of a single
+            replica at most.</para>
         <section xml:id="swift-zones-rackspacerecs">
-            <title>Rackspace Zone Recommendations</title>
-            <para>For ease of maintenance on OpenStack Object Storage, Rackspace
-                recommends that you set up at least five nodes. Each node will
-                be assigned its own zone (for a total of five zones), which will
-                give you host level redundancy. This allows you to take down a
-                single zone for maintenance and still guarantee object
-                availability in the event that another zone fails during your
-                maintenance.</para>
-            <para>You could keep each server in its own cabinet to achieve
-                cabinet level isolation, but you may wish to wait until your
-                swift service is better established before developing
-                cabinet-level isolation. OpenStack Object Storage is flexible;
-                if you later decide to change the isolation level, you can take
-                down one zone at a time and move them to appropriate new homes.
+            <title>Rackspace zone recommendations</title>
+            <para>For ease of maintenance on OpenStack Object Storage,
+                Rackspace recommends that you set up at least five
+                nodes. Each node will be assigned its own zone (for a
+                total of five zones), which will give you host level
+                redundancy. This allows you to take down a single zone
+                for maintenance and still guarantee object
+                availability in the event that another zone fails
+                during your maintenance.</para>
+            <para>You could keep each server in its own cabinet to
+                achieve cabinet level isolation, but you may wish to
+                wait until your swift service is better established
+                before developing cabinet-level isolation. OpenStack
+                Object Storage is flexible; if you later decide to
+                change the isolation level, you can take down one zone
+                at a time and move them to appropriate new homes.
             </para>
         </section>
     </section>
-    <section xml:id="swift-raid-controller"><title>RAID Controller Configuration</title>
+    <section xml:id="swift-raid-controller">
+        <title>RAID controller configuration</title>
         <para>OpenStack Object Storage does not require RAID. In fact,
             most RAID configurations cause significant performance
-            degradation. The main reason for using a RAID
-            controller is the battery backed cache. It is very
-            important for data integrity reasons that when the
-            operating system confirms a write has been committed
-            that the write has actually been committed to a
-            persistent location. Most disks lie about hardware
-            commits by default, instead writing to a faster write
-            cache for performance reasons. In most cases, that
-            write cache exists only in non-persistent memory. In
-            the case of a loss of power, this data may never
-            actually get committed to disk, resulting in
-            discrepancies that the underlying filesystem must
-            handle.</para>
+            degradation. The main reason for using a RAID controller
+            is the battery-backed cache. It is very important for data
+            integrity reasons that when the operating system confirms
+            a write has been committed that the write has actually
+            been committed to a persistent location. Most disks lie
+            about hardware commits by default, instead writing to a
+            faster write cache for performance reasons. In most cases,
+            that write cache exists only in non-persistent memory. In
+            the case of a loss of power, this data may never actually
+            get committed to disk, resulting in discrepancies that the
+            underlying file system must handle.</para>
         <para>OpenStack Object Storage works best on the XFS file
-            system, and this document assumes that the hardware
-            being used is configured appropriately to be mounted
-            with the <command>nobarriers</command> option.   For
-            more information, refer to the XFS FAQ: <link
+            system, and this document assumes that the hardware being
+            used is configured appropriately to be mounted with the
+                <command>nobarriers</command> option.   For more
+            information, refer to the XFS FAQ: <link
                 xlink:href="http://xfs.org/index.php/XFS_FAQ"
                 >http://xfs.org/index.php/XFS_FAQ</link>
         </para>
-        <para>To get the most out of your hardware, it is
-            essential that every disk used in OpenStack Object
-            Storage is configured as a standalone, individual RAID
-            0 disk; in the case of 6 disks, you would have six
-            RAID 0s or one JBOD. Some RAID controllers do not
-            support JBOD or do not support battery backed cache
-            with JBOD. To ensure the integrity of your data, you
-            must ensure that the individual drive caches are
-            disabled and the battery backed cache in your RAID
-            card is configured and used. Failure to configure the
-            controller properly in this case puts data at risk in
-            the case of sudden loss of power.</para>
-        <para>You can also use hybrid drives or similar options
-            for battery backed up cache configurations without a
-            RAID controller.</para></section>
+        <para>To get the most out of your hardware, it is essential
+            that every disk used in OpenStack Object Storage is
+            configured as a standalone, individual RAID 0 disk; in the
+            case of 6 disks, you would have six RAID 0s or one JBOD.
+            Some RAID controllers do not support JBOD or do not
+            support battery backed cache with JBOD. To ensure the
+            integrity of your data, you must ensure that the
+            individual drive caches are disabled and the battery
+            backed cache in your RAID card is configured and used.
+            Failure to configure the controller properly in this case
+            puts data at risk in the case of sudden loss of
+            power.</para>
+        <para>You can also use hybrid drives or similar options for
+            battery backed up cache configurations without a RAID
+            controller.</para>
+    </section>
     <section xml:id="object-storage-rate-limits">
         <?dbhtml stop-chunking?>
-        <title>Throttle resources by setting rate limits</title>
+        <title>Throttle resources through rate limits</title>
         <para>Rate limiting in OpenStack Object Storage is implemented
             as a pluggable middleware that you configure on the proxy
             server. Rate limiting is performed on requests that result
@@ -105,11 +112,13 @@
             are limited by the accuracy of the proxy server
             clocks.</para>
         <section xml:id="configuration-for-rate-limiting">
-            <title>Configure for rate limiting</title>
+            <title>Configure rate limiting</title>
             <para>All configuration is optional. If no account or
                 container limits are provided there will be no rate
-                limiting. Available configuration options include:</para>
-            <xi:include href="../../common/tables/swift-proxy-server-filter-ratelimit.xml"/>
+                limiting. Available configuration options
+                include:</para>
+            <xi:include
+                href="../../common/tables/swift-proxy-server-filter-ratelimit.xml"/>
             <para>The container rate limits are linearly interpolated
                 from the values given. A sample container rate
                 limiting could be:</para>
@@ -151,42 +160,52 @@
         </section>
     </section>
     <section xml:id="object-storage-healthcheck">
-            <title>Health Check</title>
-            <para>Health Check provides a simple way to monitor if the
-                swift proxy server is alive. If the proxy is access
-                with the path /healthcheck, it will respond with “OK”
-                in the body, which can be used by monitoring
-                tools.</para>
-            <xi:include href="../../common/tables/swift-account-server-filter-healthcheck.xml"/>
-        </section>
+        <title>Health check</title>
+        <para>Provides an easy way to monitor whether the swift proxy
+            server is alive. If you access the proxy with the path
+                <filename>/healthcheck</filename>, it respond
+                <literal>OK</literal> in the response body, which
+            monitoring tools can use.</para>
+        <xi:include
+            href="../../common/tables/swift-account-server-filter-healthcheck.xml"
+        />
+    </section>
     <section xml:id="object-storage-domain-remap">
-            <title>Domain Remap</title>
-            <para>Domain Remap is middleware that translates container
-                and account parts of a domain to path parameters that
-                the proxy server understands.</para>
-            <xi:include href="../../common/tables/swift-proxy-server-filter-domain_remap.xml"/>
-        </section>
+        <title>Domain remap</title>
+        <para>Middleware that translates container and account parts
+            of a domain to path parameters that the proxy server
+            understands.</para>
+        <xi:include
+            href="../../common/tables/swift-proxy-server-filter-domain_remap.xml"
+        />
+    </section>
     <section xml:id="object-storage-cname-lookup">
-            <title>CNAME Lookup</title>
-            <para>CNAME Lookup is middleware that translates an
-                unknown domain in the host header to something that
-                ends with the configured storage_domain by looking up
-                the given domain's CNAME record in DNS.</para>
-            <xi:include href="../../common/tables/swift-proxy-server-filter-cname_lookup.xml"/>
-        </section>
+        <title>CNAME lookup</title>
+        <para>Middleware that translates an unknown domain in the host
+            header to something that ends with the configured
+            storage_domain by looking up the given domain's CNAME
+            record in DNS.</para>
+        <xi:include
+            href="../../common/tables/swift-proxy-server-filter-cname_lookup.xml"
+        />
+    </section>
     <section xml:id="object-storage-tempurl">
-            <?dbhtml stop-chunking?>
-            <title>Temporary URL</title>
-            <para>Allows the creation of URLs to provide temporary access to objects. For example, a
-            website may wish to provide a link to download a large object in Swift, but the Swift
-            account has no public access. The website can generate a URL that will provide GET
-            access for a limited time to the resource. When the web browser user clicks on the link,
-            the browser will download the object directly from Swift, obviating the need for the
-            website to act as a proxy for the request. If the user were to share the link with all
-            his friends, or accidentally post it on a forum, the direct access would be limited to
-            the expiration time set when the website created the link.</para>
-        <para>A temporary URL is the typical URL associated with an object, with two additional
-            query parameters:<variablelist>
+        <?dbhtml stop-chunking?>
+        <title>Temporary URL</title>
+        <para>Allows the creation of URLs to provide temporary access
+            to objects. For example, a website may wish to provide a
+            link to download a large object in Swift, but the Swift
+            account has no public access. The website can generate a
+            URL that will provide GET access for a limited time to the
+            resource. When the web browser user clicks on the link,
+            the browser will download the object directly from Swift,
+            obviating the need for the website to act as a proxy for
+            the request. If the user were to share the link with all
+            his friends, or accidentally post it on a forum, the
+            direct access would be limited to the expiration time set
+            when the website created the link.</para>
+        <para>A temporary URL is the typical URL associated with an
+            object, with two additional query parameters:<variablelist>
                 <varlistentry>
                     <term><literal>temp_url_sig</literal></term>
                     <listitem>
@@ -206,27 +225,31 @@
     temp_url_sig=da39a3ee5e6b4b0d3255bfef95601890afd80709&amp;
     temp_url_expires=1323479485
 </programlisting></para>
-        <para>To create temporary URLs, first set the <literal>X-Account-Meta-Temp-URL-Key</literal>
-            header on your Swift account to an arbitrary string. This string will serve as a secret
-            key. For example, to set a key of <literal>b3968d0207b54ece87cccc06515a89d4</literal>
+        <para>To create temporary URLs, first set the
+                <literal>X-Account-Meta-Temp-URL-Key</literal> header
+            on your Swift account to an arbitrary string. This string
+            will serve as a secret key. For example, to set a key of
+                <literal>b3968d0207b54ece87cccc06515a89d4</literal>
             using the <command>swift</command> command-line
             tool:<screen><prompt>$</prompt> <userinput>swift post -m "Temp-URL-Key:<replaceable>b3968d0207b54ece87cccc06515a89d4</replaceable>"</userinput></screen></para>
         <para>Next, generate an HMAC-SHA1 (RFC 2104) signature to specify:<itemizedlist>
                 <listitem>
-                    <para>Which HTTP method to allow (typically <literal>GET</literal> or
+                    <para>Which HTTP method to allow (typically
+                            <literal>GET</literal> or
                             <literal>PUT</literal>)</para>
                 </listitem>
                 <listitem>
-                    <para>The expiry date as a a Unix timestamp</para>
+                    <para>The expiry date as a Unix timestamp</para>
                 </listitem>
                 <listitem>
                     <para>the full path to the object</para>
                 </listitem>
                 <listitem>
                     <para>The secret key set as the
-                        <literal>X-Account-Meta-Temp-URL-Key</literal></para>
+                            <literal>X-Account-Meta-Temp-URL-Key</literal></para>
                 </listitem>
-            </itemizedlist>Here is code generating the signature for a GET for 24 hours on
+            </itemizedlist>Here is code generating the signature for a
+            GET for 24 hours on
                 <code>/v1/AUTH_account/container/object</code>:
             <programlisting language="python">import hmac
 from hashlib import sha1
@@ -240,119 +263,140 @@ hmac_body = '%s\n%s\n%s' % (method, expires, path)
 sig = hmac.new(key, hmac_body, sha1).hexdigest()
 s = 'https://{host}/{path}?temp_url_sig={sig}&amp;temp_url_expires={expires}'
 url = s.format(host='swift-cluster.example.com', path=path, sig=sig, expires=expires)</programlisting></para>
-            <para>Any alteration of the resource path or query arguments would result in 401
-            Unauthorized. Similarly, a PUT where GET was the allowed method would 401. HEAD is
-            allowed if GET or PUT is allowed. Using this in combination with browser form post
-            translation middleware could also allow direct-from-browser uploads to specific
-            locations in Swift. Note that <note>
-                <para>Changing the <literal>X-Account-Meta-Temp-URL-Key</literal> will invalidate
-                    any previously generated temporary URLs within 60 seconds (the memcache time for
-                    the key). Swift supports up to two keys, specified by
-                        <literal>X-Account-Meta-Temp-URL-Key</literal> and
-                        <literal>X-Account-Meta-Temp-URL-Key-2</literal>. Signatures are checked
-                    against both keys, if present. This is to allow for key rotation without
+        <para>Any alteration of the resource path or query arguments
+            results in a <errorcode>401</errorcode>
+            <errortext>Unauthorized</errortext> error. Similarly, a
+            PUT where GET was the allowed method returns a
+                <errorcode>401</errorcode>. HEAD is allowed if GET or
+            PUT is allowed. Using this in combination with browser
+            form post translation middleware could also allow
+            direct-from-browser uploads to specific locations in
+            Swift. Note that <note>
+                <para>Changing the
+                        <literal>X-Account-Meta-Temp-URL-Key</literal>
+                    will invalidate any previously generated temporary
+                    URLs within 60 seconds (the memcache time for the
+                    key). Swift supports up to two keys, specified by
+                        <literal>X-Account-Meta-Temp-URL-Key</literal>
+                    and
+                        <literal>X-Account-Meta-Temp-URL-Key-2</literal>.
+                    Signatures are checked against both keys, if
+                    present. This is to allow for key rotation without
                     invalidating all existing temporary URLs.</para>
             </note></para>
-            <para>Swift includes a script called <command>swift-temp-url</command> that will
-            generate the query parameters
+        <para>Swift includes a script called
+                <command>swift-temp-url</command> that will generate
+            the query parameters
             automatically:<screen><prompt>$</prompt> <userinput>bin/swift-temp-url GET 3600 /v1/AUTH_account/container/object mykey</userinput>
 <computeroutput>/v1/AUTH_account/container/object?
 temp_url_sig=5c4cc8886f36a9d0919d708ade98bf0cc71c9e91&amp;
 temp_url_expires=1374497657</computeroutput>                </screen>Because
-            this command only returns the path, you must prepend the Swift storage hostname (for
-            example, <literal>https://swift-cluster.example.com</literal>).</para>
-        <para>With GET Temporary URLs, a <literal>Content-Disposition</literal> header will be set
-            on the response so that browsers will interpret this as a file attachment to be saved.
-            The filename chosen is based on the object name, but you can override this with a
-                <literal>filename</literal> query parameter. The following example specifies a
-            filename of <filename>My Test File.pdf</filename>:</para>
+            this command only returns the path, you must prefix the
+            Swift storage hostname (for example,
+                <literal>https://swift-cluster.example.com</literal>).</para>
+        <para>With GET Temporary URLs, a
+                <literal>Content-Disposition</literal> header will be
+            set on the response so that browsers will interpret this
+            as a file attachment to be saved. The filename chosen is
+            based on the object name, but you can override this with a
+                <literal>filename</literal> query parameter. The
+            following example specifies a filename of <filename>My
+                Test File.pdf</filename>:</para>
         <programlisting>https://swift-cluster.example.com/v1/AUTH_a422b2-91f3-2f46-74b7-d7c9e8958f5d30/container/object?
 temp_url_sig=da39a3ee5e6b4b0d3255bfef95601890afd80709&amp;
 temp_url_expires=1323479485&amp;
 filename=My+Test+File.pdf</programlisting>
-                <para>To enable Temporary URL functionality, edit
-                <filename>/etc/swift/proxy-server.conf</filename> to add <literal>tempurl</literal>
-            to the <literal>pipeline</literal> variable defined in the
-                <literal>[pipeline:main]</literal> section. The <literal>tempurl</literal> entry
-            should appear immediately before the authentication filters in the pipeline, such as
-                <literal>authtoken</literal>, <literal>tempauth</literal> or
+        <para>To enable Temporary URL functionality, edit
+                <filename>/etc/swift/proxy-server.conf</filename> to
+            add <literal>tempurl</literal> to the
+                <literal>pipeline</literal> variable defined in the
+                <literal>[pipeline:main]</literal> section. The
+                <literal>tempurl</literal> entry should appear
+            immediately before the authentication filters in the
+            pipeline, such as <literal>authtoken</literal>,
+                <literal>tempauth</literal> or
                 <literal>keystoneauth</literal>. For
             example:<programlisting>[pipeline:main]
 pipeline = pipeline = healthcheck cache <emphasis role="bold">tempurl</emphasis> authtoken keystoneauth proxy-server</programlisting></para>
 
-                <xi:include href="../../common/tables/swift-proxy-server-filter-tempurl.xml"/>
+        <xi:include
+            href="../../common/tables/swift-proxy-server-filter-tempurl.xml"
+        />
     </section>
     <section xml:id="object-storage-name-check">
-            <title>Name Check Filter</title>
-            <para>Name Check is a filter that disallows any paths that
-                contain defined forbidden characters or that exceed a
-                defined length.</para>
-            <xi:include href="../../common/tables/swift-proxy-server-filter-name_check.xml"/>
-        </section>
+        <title>Name check filter</title>
+        <para>Name Check is a filter that disallows any paths that
+            contain defined forbidden characters or that exceed a
+            defined length.</para>
+        <xi:include
+            href="../../common/tables/swift-proxy-server-filter-name_check.xml"
+        />
+    </section>
     <section xml:id="object-storage-constraints">
-            <title>Constraints</title>
-            <para>To change the OpenStack Object Storage internal
-            limits, update the values in the
-            <literal>swift-constraints</literal> section in the
-            <filename>swift.conf</filename> file. Use caution when you
-            update these values because they affect the performance in
-            the entire cluster.</para>
-            <xi:include href="../../common/tables/swift-swift-swift-constraints.xml"/>
-        </section>
+        <title>Constraints</title>
+        <para>To change the OpenStack Object Storage internal limits,
+            update the values in the
+                <literal>swift-constraints</literal> section in the
+                <filename>swift.conf</filename> file. Use caution when
+            you update these values because they affect the
+            performance in the entire cluster.</para>
+        <xi:include
+            href="../../common/tables/swift-swift-swift-constraints.xml"
+        />
+    </section>
     <section xml:id="object-storage-dispersion">
-            <title>Cluster Health</title>
-            <para>Use the
-                    <literal>swift-dispersion-report</literal> tool
-                to measure overall cluster health. This tool checks
-                if a set of deliberately
-                distributed containers and objects are currently in
-                their proper places within the cluster. For instance,
-                a common deployment has three replicas of each object.
-                The health of that object can be measured by checking
-                if each replica is in its proper place. If only 2 of
-                the 3 is in place the object’s heath can be said to be
-                at 66.66%, where 100% would be perfect. A single
-                object’s health, especially an older object, usually
-                reflects the health of that entire partition the
-                object is in. If we make enough objects on a distinct
-                percentage of the partitions in the cluster, we can
-                get a pretty valid estimate of the overall cluster
-                health. In practice, about 1% partition coverage seems
-                to balance well between accuracy and the amount of
-                time it takes to gather results. The first thing that
-                needs to be done to provide this health value is
-                create a new account solely for this usage. Next, we
-                need to place the containers and objects throughout
-                the system so that they are on distinct partitions.
-                The swift-dispersion-populate tool does this by making
-                up random container and object names until they fall
-                on distinct partitions. Last, and repeatedly for the
-                life of the cluster, we need to run the
-                swift-dispersion-report tool to check the health of
-                each of these containers and objects. These tools need
-                direct access to the entire cluster and to the ring
-                files (installing them on a proxy server will probably
-                do). Both <command>swift-dispersion-populate</command> and
-                <command>swift-dispersion-report</command> use the same configuration
-                file, <filename>/etc/swift/dispersion.conf</filename>.
-                Example dispersion.conf file:
-                <programlisting language="ini">
+        <title>Cluster health</title>
+        <para>Use the <command>swift-dispersion-report</command> tool
+            to measure overall cluster health. This tool checks if a
+            set of deliberately distributed containers and objects are
+            currently in their proper places within the cluster. For
+            instance, a common deployment has three replicas of each
+            object. The health of that object can be measured by
+            checking if each replica is in its proper place. If only 2
+            of the 3 is in place the object’s health can be said to be
+            at 66.66%, where 100% would be perfect. A single object’s
+            health, especially an older object, usually reflects the
+            health of that entire partition the object is in. If you
+            make enough objects on a distinct percentage of the
+            partitions in the cluster,you get a good estimate of the
+            overall cluster health. In practice, about 1% partition
+            coverage seems to balance well between accuracy and the
+            amount of time it takes to gather results. The first thing
+            that needs to be done to provide this health value is
+            create a new account solely for this usage. Next, you need
+            to place the containers and objects throughout the system
+            so that they are on distinct partitions. The
+            swift-dispersion-populate tool does this by making up
+            random container and object names until they fall on
+            distinct partitions. Last, and repeatedly for the life of
+            the cluster, you need to run the
+                <command>swift-dispersion-report</command> tool to
+            check the health of each of these containers and objects.
+            These tools need direct access to the entire cluster and
+            to the ring files (installing them on a proxy server will
+            probably do). Both
+                <command>swift-dispersion-populate</command> and
+                <command>swift-dispersion-report</command> use the
+            same configuration file,
+                <filename>/etc/swift/dispersion.conf</filename>.
+            Example dispersion.conf file:
+            <programlisting language="ini">
 [dispersion]
 auth_url = http://localhost:8080/auth/v1.0
 auth_user = test:tester
 auth_key = testing
 </programlisting>
-                There are also options for the conf file for
-                specifying the dispersion coverage (defaults to 1%),
-                retries, concurrency, etc. though usually the defaults
-                are fine. Once the configuration is in place, run
-                swift-dispersion-populate to populate the containers
-                and objects throughout the cluster. Now that those
-                containers and objects are in place, you can run
-                swift-dispersion-report to get a dispersion report, or
-                the overall health of the cluster. Here is an example
-                of a cluster in perfect health:
-                <screen><prompt>$</prompt> <userinput>swift-dispersion-report</userinput>
+            There are also options for the conf file for specifying
+            the dispersion coverage (defaults to 1%), retries,
+            concurrency, etc. though usually the defaults are fine.
+            Once the configuration is in place, run
+            swift-dispersion-populate to populate the containers and
+            objects throughout the cluster. Now that those containers
+            and objects are in place, you can run
+            swift-dispersion-report to get a dispersion report, or the
+            overall health of the cluster. Here is an example of a
+            cluster in perfect health:
+            <screen><prompt>$</prompt> <userinput>swift-dispersion-report</userinput>
 <computeroutput>Queried 2621 containers for dispersion reporting, 19s, 0 retries
 100.00% of container copies found (7863 of 7863)
 Sample represents 1.00% of the container partition space
@@ -361,10 +405,10 @@ Queried 2619 objects for dispersion reporting, 7s, 0 retries
 100.00% of object copies found (7857 of 7857)
 Sample represents 1.00% of the object partition space
 </computeroutput></screen>
-                Now, deliberately double the weight of a device in the
-                object ring (with replication turned off) and rerun
-                the dispersion report to show what impact that has:
-<screen><prompt>$</prompt> <userinput>swift-ring-builder object.builder set_weight d0 200</userinput>
+            Now, deliberately double the weight of a device in the
+            object ring (with replication turned off) and rerun the
+            dispersion report to show what impact that has:
+            <screen><prompt>$</prompt> <userinput>swift-ring-builder object.builder set_weight d0 200</userinput>
 <prompt>$</prompt> <userinput>swift-ring-builder object.builder rebalance</userinput>
 ...
 <prompt>$</prompt> <userinput>swift-dispersion-report</userinput>
@@ -377,14 +421,13 @@ There were 1763 partitions missing one copy.
 77.56% of object copies found (6094 of 7857)
 Sample represents 1.00% of the object partition space
 </computeroutput></screen>
-                You can see the health of the objects in the cluster
-                has gone down significantly. Of course, this test
-                environment has just four devices, in a production
-                environment with many devices the impact of one device
-                change is much less. Next, run the replicators to get
-                everything put back into place and then rerun the
-                dispersion report:
-                <programlisting>
+            You can see the health of the objects in the cluster has
+            gone down significantly. Of course, this test environment
+            has just four devices, in a production environment with
+            many devices the impact of one device change is much less.
+            Next, run the replicators to get everything put back into
+            place and then rerun the dispersion report:
+            <programlisting>
 ... start object replicators and monitor logs until they're caught up ...
 $ swift-dispersion-report
 Queried 2621 containers for dispersion reporting, 17s, 0 retries
@@ -395,82 +438,88 @@ Queried 2619 objects for dispersion reporting, 7s, 0 retries
 100.00% of object copies found (7857 of 7857)
 Sample represents 1.00% of the object partition space
 </programlisting>
-                Alternatively, the dispersion report can also be
-                output in json format. This allows it to be more
-                easily consumed by third party utilities:
-<screen><prompt>$</prompt> <userinput>swift-dispersion-report -j</userinput>
+            Alternatively, the dispersion report can also be output in
+            json format. This allows it to be more easily consumed by
+            third party utilities:
+            <screen><prompt>$</prompt> <userinput>swift-dispersion-report -j</userinput>
 <computeroutput>{"object": {"retries:": 0, "missing_two": 0, "copies_found": 7863, "missing_one": 0,
 "copies_expected": 7863, "pct_found": 100.0, "overlapping": 0, "missing_all": 0}, "container":
 {"retries:": 0, "missing_two": 0, "copies_found": 12534, "missing_one": 0, "copies_expected":
 12534, "pct_found": 100.0, "overlapping": 15, "missing_all": 0}}</computeroutput></screen>
-            </para>
-            <xi:include href="../../common/tables/swift-dispersion-dispersion.xml"/>
-        </section>
+        </para>
+        <xi:include
+            href="../../common/tables/swift-dispersion-dispersion.xml"
+        />
+    </section>
     <section xml:id="object-storage-slo">
-    <!-- Usage documented in http://docs.openstack.org/developer/swift/overview_large_objects.html -->
-            <title>Static Large Object (SLO) support</title>
-            <para>This feature is very similar to Dynamic Large Object
-                (DLO) support in that it allows the user to upload
-                many objects concurrently and afterwards download them
-                as a single object. It is different in that it does
-                not rely on eventually consistent container listings
-                to do so. Instead, a user defined manifest of the
-                object segments is used.</para>
-            <xi:include href="../../common/tables/swift-proxy-server-filter-slo.xml"/>
-        </section>
-        <section xml:id="object-storage-container-quotas">
-            <title>Container Quotas</title>
-            <para>The container_quotas middleware implements simple
-                quotas that can be imposed on swift containers by a
-                user with the ability to set container metadata, most
-                likely the account administrator. This can be useful
-                for limiting the scope of containers that are
-                delegated to non-admin users, exposed to formpost
-                uploads, or just as a self-imposed sanity
-                check.</para>
-            <para>Any object PUT operations that exceed these quotas
-                return a 413 response (request entity too large) with
-                a descriptive body.</para>
-            <para>Quotas are subject to several limitations: eventual
-                consistency, the timeliness of the cached
-                container_info (60 second ttl by default), and it's
-                unable to reject chunked transfer uploads that exceed
-                the quota (though once the quota is exceeded, new
-                chunked transfers will be refused).</para>
-            <para>Quotas are set by adding meta values to the
-                container, and are validated when set: <itemizedlist>
-                    <listitem>
-                        <para>X-Container-Meta-Quota-Bytes: Maximum
-                            size of the container, in bytes.</para>
-                    </listitem>
-                    <listitem>
-                        <para>X-Container-Meta-Quota-Count: Maximum
-                            object count of the container.</para>
-                    </listitem>
-                </itemizedlist>
-            </para>
-            <xi:include href="../../common/tables/swift-proxy-server-filter-container-quotas.xml"/>
-        </section>
-        <section xml:id="object-storage-account-quotas">
-            <title>Account Quotas</title>
-            <para>The account_quotas middleware aims to block write
-                requests (PUT, POST) if a given account quota (in bytes)
-                is exceeded while DELETE requests are still
-                allowed.</para>
-            <para>The x-account-meta-quota-bytes metadata entry must
-                be set to store and enable the quota. Write requests
-                to this metadata entry are only permitted for resellers.
-                There isn't any account quota limitation on a reseller
-                account even if x-account-meta-quota-bytes is set.</para>
-            <para>Any object PUT operations that exceed the quota
-                return a 413 response (request entity too large) with
-                a descriptive body.</para>
-            <para>The following command uses an admin account that own
-                the Reseller role to set a quota on the test account:
-                <screen><prompt>$</prompt> <userinput>swift -A http://127.0.0.1:8080/auth/v1.0 -U admin:admin -K admin \
+        <!-- Usage documented in http://docs.openstack.org/developer/swift/overview_large_objects.html -->
+        <title>Static Large Object (SLO) support</title>
+        <para>This feature is very similar to Dynamic Large Object
+            (DLO) support in that it allows the user to upload many
+            objects concurrently and afterwards download them as a
+            single object. It is different in that it does not rely on
+            eventually consistent container listings to do so.
+            Instead, a user defined manifest of the object segments is
+            used.</para>
+        <xi:include
+            href="../../common/tables/swift-proxy-server-filter-slo.xml"
+        />
+    </section>
+    <section xml:id="object-storage-container-quotas">
+        <title>Container quotas</title>
+        <para>The container_quotas middleware implements simple quotas
+            that can be imposed on swift containers by a user with the
+            ability to set container metadata, most likely the account
+            administrator. This can be useful for limiting the scope
+            of containers that are delegated to non-admin users,
+            exposed to formpost uploads, or just as a self-imposed
+            sanity check.</para>
+        <para>Any object PUT operations that exceed these quotas
+            return a 413 response (request entity too large) with a
+            descriptive body.</para>
+        <para>Quotas are subject to several limitations: eventual
+            consistency, the timeliness of the cached container_info
+            (60 second ttl by default), and it is unable to reject
+            chunked transfer uploads that exceed the quota (though
+            once the quota is exceeded, new chunked transfers will be
+            refused).</para>
+        <para>Quotas are set by adding meta values to the container,
+            and are validated when set: <itemizedlist>
+                <listitem>
+                    <para>X-Container-Meta-Quota-Bytes: Maximum size
+                        of the container, in bytes.</para>
+                </listitem>
+                <listitem>
+                    <para>X-Container-Meta-Quota-Count: Maximum object
+                        count of the container.</para>
+                </listitem>
+            </itemizedlist>
+        </para>
+        <xi:include
+            href="../../common/tables/swift-proxy-server-filter-container-quotas.xml"
+        />
+    </section>
+    <section xml:id="object-storage-account-quotas">
+        <title>Account quotas</title>
+        <para>The <parameter>x-account-meta-quota-bytes</parameter>
+            metadata entry must be requests (PUT, POST) if a given
+            account quota (in bytes) is exceeded while DELETE requests
+            are still allowed.</para>
+        <para>The x-account-meta-quota-bytes metadata entry must be
+            set to store and enable the quota. Write requests to this
+            metadata entry are only permitted for resellers. There is
+            no account quota limitation on a reseller account even if
+            x-account-meta-quota-bytes is set.</para>
+        <para>Any object PUT operations that exceed the quota return a
+            413 response (request entity too large) with a descriptive
+            body.</para>
+        <para>The following command uses an admin account that own the
+            Reseller role to set a quota on the test account:
+            <screen><prompt>$</prompt> <userinput>swift -A http://127.0.0.1:8080/auth/v1.0 -U admin:admin -K admin \
 --os-storage-url=http://127.0.0.1:8080/v1/AUTH_test post -m quota-bytes:10000</userinput></screen>
-                Here is the stat listing of an account where quota has been set:
-                <screen><prompt>$</prompt> <userinput>swift -A http://127.0.0.1:8080/auth/v1.0 -U test:tester -K testing stat</userinput>
+            Here is the stat listing of an account where quota has
+            been set:
+            <screen><prompt>$</prompt> <userinput>swift -A http://127.0.0.1:8080/auth/v1.0 -U test:tester -K testing stat</userinput>
 <computeroutput>Account: AUTH_test
 Containers: 0
 Objects: 0
@@ -478,12 +527,12 @@ Bytes: 0
 Meta Quota-Bytes: 10000
 X-Timestamp: 1374075958.37454
 X-Trans-Id: tx602634cf478546a39b1be-0051e6bc7a</computeroutput></screen>
-                The command below removes the account quota:
-                <screen><prompt>$</prompt> <userinput>swift -A http://127.0.0.1:8080/auth/v1.0 -U admin:admin -K admin --os-storage-url=http://127.0.0.1:8080/v1/AUTH_test post -m quota-bytes:</userinput></screen>
-            </para>
-        </section>
+            The command below removes the account quota:
+            <screen><prompt>$</prompt> <userinput>swift -A http://127.0.0.1:8080/auth/v1.0 -U admin:admin -K admin --os-storage-url=http://127.0.0.1:8080/v1/AUTH_test post -m quota-bytes:</userinput></screen>
+        </para>
+    </section>
     <section xml:id="object-storage-bulk-delete">
-        <title>Bulk Delete</title>
+        <title>Bulk delete</title>
         <para>Will delete multiple files from their account with a
             single request. Responds to DELETE requests with a header
             'X-Bulk-Delete: true_value'. The body of the DELETE
@@ -500,21 +549,29 @@ X-Trans-Id: tx602634cf478546a39b1be-0051e6bc7a</computeroutput></screen>
             response body is a json dictionary specifying in the
             number of files successfully deleted, not found, and a
             list of the files that failed.</para>
-    <xi:include href="../../common/tables/swift-proxy-server-filter-bulk.xml"/>
+        <xi:include
+            href="../../common/tables/swift-proxy-server-filter-bulk.xml"
+        />
     </section>
     <xi:include href="section_configure_s3.xml"/>
     <section xml:id="object-storage-drive-audit">
-      <title>Drive Audit</title>
-      <para>The swift-drive-audit configuration items reference a script that can be run via cron to watch for bad drives. If
-      errors are detected, it will unmount the bad drive, so that OpenStack Object Storage can work
-      around it. It takes the following options:</para>
-      <xi:include href="../../common/tables/swift-drive-audit-drive-audit.xml"/>
-  </section>
+        <title>Drive audit</title>
+        <para>The <option>swift-drive-audit</option> configuration
+            items reference a script that can be run by using
+                <command>cron</command> to watch for bad drives. If
+            errors are detected, it will unmount the bad drive, so
+            that OpenStack Object Storage can work around it. It takes
+            the following options:</para>
+        <xi:include
+            href="../../common/tables/swift-drive-audit-drive-audit.xml"
+        />
+    </section>
     <section xml:id="object-storage-form-post">
-      <title>Form Post</title>
-      <para>The Form Post middleware provides the ability to upload objects to
-      a cluster using an HTML form POST. The format of the form is:</para>
-<programlisting>&lt;![CDATA[
+        <title>Form post</title>
+        <para>Middleware that provides the ability to upload objects
+            to a cluster using an HTML form POST. The format of the
+            form is:</para>
+        <programlisting>&lt;![CDATA[
 &lt;form action="&lt;swift-url&gt;" method="POST"
       enctype="multipart/form-data"&gt;
   &lt;input type="hidden" name="redirect" value="&lt;redirect-url&gt;" /&gt;
@@ -526,35 +583,42 @@ X-Trans-Id: tx602634cf478546a39b1be-0051e6bc7a</computeroutput></screen>
   &lt;input type="submit" /&gt;
 &lt;/form&gt;]]&gt;
 </programlisting>
-  <para>The <literal>swift-url</literal> is the URL to the Swift destination, such as:
-  <uri>https://swift-cluster.example.com/v1/AUTH_account/container/object_prefix</uri>
-  The name of each file uploaded will be appended to the <literal>swift-url</literal> given. So, you can upload
-  directly to the root of container with a url like:
-  <uri>https://swift-cluster.example.com/v1/AUTH_account/container/</uri>
-  Optionally, you can include an object prefix to better separate different users’ uploads, such as:
-  <uri>https://swift-cluster.example.com/v1/AUTH_account/container/object_prefix</uri>
-  </para>
-  <para>Note the form method must be POST and the enctype must be set
-  as “multipart/form-data”.</para>
-  <para>The redirect attribute is the URL to redirect the browser to
-  after the upload completes. The URL will have status and message
-  query parameters added to it, indicating the HTTP status code for
-  the upload (2xx is success) and a possible message for further
-  information if there was an error (such as <literal>“max_file_size
-  exceeded”</literal>).</para>
-  <para>The <literal>max_file_size</literal> attribute must be
-  included and indicates the largest single file upload that can be
-  done, in bytes.</para>
-  <para>The <literal>max_file_count</literal> attribute must be
-  included and indicates the maximum number of files that can be
-  uploaded with the form. Include additional
-  <code>&lt;![CDATA[&lt;input type="file"
-  name="filexx"/&gt;]]&gt;</code> attributes if desired.</para>
-  <para>The expires attribute is the Unix timestamp before which the form must be submitted before it is
-  invalidated.</para>
- <para>The signature attribute is the HMAC-SHA1 signature of the form. Here is sample Python code
-            for computing the signature:</para>
-<programlisting language="python">
+        <para>The <literal>swift-url</literal> is the URL to the Swift
+            destination, such as:
+                <uri>https://swift-cluster.example.com/v1/AUTH_account/container/object_prefix</uri>
+            The name of each file uploaded is appended to the
+            specified <literal>swift-url</literal>. So, you can upload
+            directly to the root of container with a url like:
+                <uri>https://swift-cluster.example.com/v1/AUTH_account/container/</uri>
+            Optionally, you can include an object prefix to better
+            separate different users’ uploads, such as:
+                <uri>https://swift-cluster.example.com/v1/AUTH_account/container/object_prefix</uri>
+        </para>
+        <para>Note the form method must be POST and the enctype must
+            be set as <literal>multipart/form-data</literal>.</para>
+        <para>The redirect attribute is the URL to redirect the
+            browser to after the upload completes. The URL will have
+            status and message query parameters added to it,
+            indicating the HTTP status code for the upload (2xx is
+            success) and a possible message for further information if
+            there was an error (such as <literal>“max_file_size
+                exceeded”</literal>).</para>
+        <para>The <literal>max_file_size</literal> attribute must be
+            included and indicates the largest single file upload that
+            can be done, in bytes.</para>
+        <para>The <literal>max_file_count</literal> attribute must be
+            included and indicates the maximum number of files that
+            can be uploaded with the form. Include additional
+                <code>&lt;![CDATA[&lt;input type="file"
+                name="filexx"/&gt;]]&gt;</code> attributes if
+            desired.</para>
+        <para>The expires attribute is the Unix timestamp before which
+            the form must be submitted before it is
+            invalidated.</para>
+        <para>The signature attribute is the HMAC-SHA1 signature of
+            the form. This sample Python code shows how to compute the
+            signature:</para>
+        <programlisting language="python">
 import hmac
 from hashlib import sha1
 from time import time
@@ -568,28 +632,35 @@ hmac_body = '%s\n%s\n%s\n%s\n%s' % (path, redirect,
     max_file_size, max_file_count, expires)
 signature = hmac.new(key, hmac_body, sha1).hexdigest()
 </programlisting>
-  <para>The key is the value of the
-  <literal>X-Account-Meta-Temp-URL-Key</literal> header on the
-  account.</para>
-  <para>Be certain to use the full path, from the
-  <literal>/v1/</literal> onward.</para>
-  <para>The command line tool <command>swift-form-signature</command>
-  may be used (mostly just when testing) to compute expires and
-  signature.</para>
-  <para>
-  Also note that the file attributes must be after the other attributes in order to be processed
-  correctly. If attributes come after the file, they won’t be sent with the subrequest (there is no
-  way to parse all the attributes on the server-side without reading the whole thing into memory – to
-  service many requests, some with large files, there just isn’t enough memory on the server, so
-  attributes following the file are simply ignored).</para>
-      <xi:include href="../../common/tables/swift-proxy-server-filter-formpost.xml"/>
-  </section>
+        <para>The key is the value of the
+                <literal>X-Account-Meta-Temp-URL-Key</literal> header
+            on the account.</para>
+        <para>Be certain to use the full path, from the
+                <literal>/v1/</literal> onward.</para>
+        <para>The command line tool
+                <command>swift-form-signature</command> may be used
+            (mostly just when testing) to compute expires and
+            signature.</para>
+        <para>The file attributes must appear after the other
+            attributes to be processed correctly. If attributes come
+            after the file, they are not sent with the sub-request
+            because on the server side, all attributes in the file
+            cannot be parsed unless the whole file is read into memory
+            and the server does not have enough memory to service
+            these requests. So, attributes that follow the file are
+            ignored.</para>
+        <xi:include
+            href="../../common/tables/swift-proxy-server-filter-formpost.xml"
+        />
+    </section>
     <section xml:id="object-storage-static-web">
-      <title>Static Websites</title>
-      <para>When configured, the StaticWeb WSGI middleware serves container
-      data as a static web site with index file and error file resolution and
-      optional file listings. This mode is normally only active for anonymous
-      requests.</para>
-      <xi:include href="../../common/tables/swift-proxy-server-filter-staticweb.xml"/>
-  </section>
-  </section>
+        <title>Static web sites</title>
+        <para>When configured, this middleware serves container data
+            as a static web site with index file and error file
+            resolution and optional file listings. This mode is
+            normally only active for anonymous requests.</para>
+        <xi:include
+            href="../../common/tables/swift-proxy-server-filter-staticweb.xml"
+        />
+    </section>
+</section>

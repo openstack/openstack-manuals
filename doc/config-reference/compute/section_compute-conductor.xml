@@ -18,19 +18,25 @@
         horizontally. You can run multiple instances of <systemitem
             class="service">nova-conductor</systemitem> on different
         machines as needed for scaling purposes.</para>
-<para>
-In the Grizzly release, the methods exposed by <systemitem class="service">nova-conductor</systemitem> are relatively simple methods used by <systemitem class="service">nova-compute</systemitem> to offload its
- database operations.
-Places where <systemitem class="service">nova-compute</systemitem> previously performed database access are now
- talking to <systemitem class="service">nova-conductor</systemitem>. However, we have plans in the medium to
-long term to move more and more of what is currently in <systemitem class="service">nova-compute</systemitem>
-up to the <systemitem class="service">nova-conductor</systemitem> layer. The compute service will start to
-look like a less intelligent slave service to <systemitem class="service">nova-conductor</systemitem>. The
-conductor service will implement long running complex operations,
-ensuring forward progress and graceful error handling.
-This will be especially beneficial for operations that cross multiple
-compute nodes, such as migrations or resizes
-</para>
+<para> In the Grizzly release, the methods exposed by <systemitem
+            class="service">nova-conductor</systemitem> are relatively
+        simple methods used by <systemitem class="service"
+            >nova-compute</systemitem> to offload its database
+        operations. Places where <systemitem class="service"
+            >nova-compute</systemitem> previously performed database
+        access are now talking to <systemitem class="service"
+            >nova-conductor</systemitem>. However, we have plans in
+        the medium to long term to move more and more of what is
+        currently in <systemitem class="service"
+            >nova-compute</systemitem> up to the <systemitem
+            class="service">nova-conductor</systemitem> layer. The
+        compute service will start to look like a less intelligent
+        slave service to <systemitem class="service"
+            >nova-conductor</systemitem>. The conductor service will
+        implement long running complex operations, ensuring forward
+        progress and graceful error handling. This will be especially
+        beneficial for operations that cross multiple compute nodes,
+        such as migrations or resizes.</para>
 <xi:include href="../../common/tables/nova-conductor.xml"/>
 </section>
 
