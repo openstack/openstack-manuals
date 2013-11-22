@@ -93,7 +93,7 @@
       <screen><prompt>#</prompt> <userinput>chmod 0644 /boot/vmlinuz*</userinput></screen>
     </step>
     <step>
-      <para>Edit the <filename>/etc/nova/nova.conf</filename> configuration file:</para>
+      <para os="fedora;rhel;centos;opensuse;sles">Edit the <filename>/etc/nova/nova.conf</filename> configuration file:</para>
       <screen os="fedora;rhel;centos;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf database connection mysql://nova:<replaceable>NOVA_DBPASS</replaceable>@controller/nova</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT auth_strategy keystone</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT auth_host <replaceable>controller</replaceable></userinput>
@@ -125,10 +125,6 @@ rabbit_host = controller
 rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
     </step>
 
-    <step os="ubuntu">
-      <para>Remove the SQLite database created by the packages:</para>
-      <screen><prompt>#</prompt> <userinput>rm /var/lib/nova/nova.sqlite</userinput></screen>
-    </step>
     <step>
       <para>Set the <literal>my_ip</literal>,
           <literal>vncserver_listen</literal>, and
@@ -220,6 +216,10 @@ admin_password=<replaceable>NOVA_PASS</replaceable>
 <prompt>#</prompt> <userinput>chkconfig libvirtd on</userinput>
 <prompt>#</prompt> <userinput>service openstack-nova-compute start</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-nova-compute on</userinput></screen>
+    </step>
+    <step os="ubuntu">
+      <para>Remove the SQLite database created by the packages:</para>
+      <screen><prompt>#</prompt> <userinput>rm /var/lib/nova/nova.sqlite</userinput></screen>
     </step>
   </procedure>
 </section>
