@@ -9,11 +9,10 @@
         who can upload and manage images. The operator might restrict
         image upload and management to only cloud administrators or
         operators.</para>
-    <para>You can upload images through the glance client or the Image
-        Service API. You can also use the nova client to list images,
-        set and delete image metadata, delete images, and take a
-        snapshot of a running instance to create an image. After you
-        upload an image, you cannot change it.</para>
+    <para>You can upload images through the glance client or the Image Service API. You can also use
+        the nova client to list images, set, and delete image metadata, delete images, and take a
+        snapshot of a running instance to create an image. After you upload an image, you cannot
+        change it.</para>
     <para>For details about image creation, see the <link
             xlink:href="http://docs.openstack.org/image-guide/content/"
                 ><citetitle>Virtual Machine Image
@@ -257,19 +256,76 @@
                 </informaltable>
             </step>
             <step>
-                <para>To annotate an image with a property that
-                    describes the required VIF model:</para>
-                <screen><prompt>$</prompt> <userinput>glance image-update \
-  --property hw_vif_model=e1000 f16-x86_64-openstack-sda</userinput></screen>
-                <para>If you specify a VIF model that is not
-                    supported, the instance fails to launch. See <xref
-                        linkend="vif_models"/>.</para>
+                <para>To annotate an image with a property that describes the <literal>disk_bus</literal>, <literal>cdrom_bus</literal>,
+                    and <literal>vif_model</literal>:</para>
+                <screen><prompt>#</prompt> <userinput>glance image-update \
+    --property hw_disk_bus=scsi \
+    --property hw_cdrom_bus=ide \
+    --property hw_vif_model=e1000 \
+    f16-x86_64-openstack-sda</userinput></screen>
+                <para>Currently libvirt will determine the disk/cdrom/vif device models based on the
+                    configured hypervisor type (<literal>libvirt_type</literal> in
+                        <literal>/etc/nova/nova.conf</literal>). For the sake of optimal
+                    performance, it will default to using virtio for both disk and VIF (NIC) models.
+                    The downside of this approach is that it is not possible to run operating
+                    systems that lack virtio drivers, for example, BSD, Solaris, old Linux, and old
+                    Windows.</para>
+                <para>If you specify a disk or CD-ROM bus model that is not supported, see <xref
+                        linkend="bus_models"/>. If you specify a VIF model that is not supported,
+                    the instance fails to launch. See <xref linkend="vif_models"/>.</para>
             </step>
         </procedure>
         <?hard-pagebreak?>
         <para>The valid model values depend on the
                 <literal>libvirt_type</literal> setting, as shown in
-            the following table:</para>
+            the following tables:</para>
+        <table xml:id="bus_models" rules="all" width="50%">
+            <caption>Disk and CD-ROM bus model values</caption>
+            <col width="40%"/>
+            <col width="60%"/>
+            <thead>
+                <tr>
+                    <th>libvirt_type setting</th>
+                    <th>Supported model values</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>qemu or kvm</td>
+                    <td>
+                        <para>
+                            <itemizedlist>
+                                <listitem>
+                                    <para>virtio</para>
+                                </listitem>
+                                <listitem>
+                                    <para>scsi</para>
+                                </listitem>
+                                <listitem>
+                                    <para>ide</para>
+                                </listitem>
+                                <listitem>
+                                    <para>virtio</para>
+                                </listitem>
+                            </itemizedlist>
+                        </para>
+                    </td>
+                </tr>
+                <tr>
+                    <td>xen</td>
+                    <td>
+                        <itemizedlist>
+                            <listitem>
+                                <para>xen</para>
+                            </listitem>
+                            <listitem>
+                                <para>ide</para>
+                            </listitem>
+                        </itemizedlist>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
         <table xml:id="vif_models" rules="all" width="50%">
             <caption>VIF model values</caption>
             <col width="40%"/>
