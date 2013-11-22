@@ -1,32 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<section xml:id="section_ts_cinder_config" xmlns="http://docbook.org/ns/docbook"
-    xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/1999/xlink"
-    version="1.0" linkend="section_ts_cinder_config">
-    <title xml:id="ts_block_config">Troubleshooting your Block Storage Configuration</title>
-    <para>This section is intended to help solve some basic and common errors that are encountered
-        during setup and configuration of  the Cinder block storage service. The focus here is on
-        failed creation of volumes. The most important thing to know is where to look in case of a
-        failure.</para>
-    <para>There are two log files that are especially helpful for solving volume creation failures,
-        the <systemitem class="service">cinder-api</systemitem> log and the <systemitem
-            class="service">cinder-volume</systemitem> log. The <systemitem class="service"
-            >cinder-api</systemitem> log is useful for determining if you have endpoint or
-        connectivity issues. If you send a request to create a volume and it fails, it's a good idea
-        to look in the <systemitem class="service">cinder-api</systemitem> log first and see if the
-        request even made it to the Cinder service. If the request is logged and there are no errors
-        or trace-backs, then you can check the <systemitem class="service"
-            >cinder-volume</systemitem> log for errors or trace-backs.</para>
-    <para>
-        <note>
-            <para>Create commands are listed in the <systemitem class="service"
-                    >cinder-api</systemitem> log.</para>
-        </note>
-    </para>
-
-        <para>The following entries in the <filename>cinder.openstack.common.log</filename> file can
-            be used to assist in troubleshooting your block storage configuration.</para>
-        <para>
-            <programlisting language="ini">
+<section xml:id="section_ts_cinder_config"
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="1.0"
+    linkend="section_ts_cinder_config">
+    <title xml:id="ts_block_config">Troubleshoot the Block Storage
+        configuration</title>
+    <para>This section helps you solve some basic and common errors
+        that you might encounter during setup and configuration of the
+        Cinder Block Storage Service. The focus here is on failed
+        creation of volumes. The most important thing to know is where
+        to look in case of a failure.</para>
+    <para>Two log files are especially helpful for solving volume
+        creation failures, the <systemitem class="service"
+            >cinder-api</systemitem> log and the <systemitem
+            class="service">cinder-volume</systemitem> log. The
+            <systemitem class="service">cinder-api</systemitem> log is
+        useful for determining if you have endpoint or connectivity
+        issues. If you send a request to create a volume and it fails,
+       review the <systemitem class="service"
+            >cinder-api</systemitem> log to determine whether the request
+        made it to the Cinder service. If the request is logged
+        and you see no errors or trace-backs, check the
+            <systemitem class="service">cinder-volume</systemitem> log
+        for errors or trace-backs.</para>
+    <note>
+        <para>Create commands are listed in the <systemitem
+                class="service">cinder-api</systemitem> log.</para>
+    </note>
+    <para>These entries in the
+            <filename>cinder.openstack.common.log</filename> file can
+        be used to assist in troubleshooting your block storage
+        configuration.</para>
+    <programlisting language="ini">
 # Print debugging output (set logging level to DEBUG instead
 # of default WARNING level). (boolean value)
 #debug=false
@@ -94,75 +100,92 @@
 # syslog facility to receive log lines (string value)
 #syslog_log_facility=LOG_USER
 #log_config=&lt;None></programlisting>
-        </para>
-
-    <para>Here are some common issues discovered during configuration, and some suggested solutions
-        .</para>
-    <para>
-        <itemizedlist>
-            <listitem>
-                <para>Issues with <literal>state_path</literal> and <literal>volumes_dir</literal>
-                    settings.</para>
-                <para>Cinder uses <command>tgtd</command> as the default iscsi helper and implements
-                    persistent targets. This means that in the case of a tgt restart or even a node
-                    reboot your existing volumes on that node will be restored automatically with
-                    their original IQN.</para>
-                <para>In order to make this possible the iSCSI target information needs to be stored
-                    in a file on creation that can be queried in case of restart of the tgt daemon.
-                    By default, Cinder uses a <literal>state_path</literal> variable, which if
-                    installing with Yum or APT should be set to
-                        <filename>/var/lib/cinder/</filename>. The next part is the
-                        <literal>volumes_dir</literal> variable, by default this just simply appends
-                    a "<literal>volumes</literal>" directory to the <literal>state_path</literal>.
-                    The result is a file-tree <filename>/var/lib/cinder/volumes/</filename>.</para>
-                <para>While this should all be handled by the installer, it can go wrong. If you are
-                    having trouble creating volumes and this directory does not exist you should see
-                    an error message in the <systemitem class="service">cinder-volume</systemitem>
-                    log indicating that the <literal>volumes_dir</literal> doesn't exist, and it
-                    should give you information to specify what path exactly it was looking
-                    for.</para>
-            </listitem>
-            <listitem>
-                <para>The persistent tgt include file.</para>
-                <para>Along with the <literal>volumes_dir</literal> mentioned above, the iSCSI
-                    target driver also needs to be configured to look in the correct place for the
-                    persist files. This is a simple entry in <filename>/etc/tgt/conf.d</filename>,
-                    and you should have created this when you went through the install guide. If you
-                    haven't or you're running into issues, verify that you have a file
-                        <filename>/etc/tgt/conf.d/cinder.conf</filename>.</para>
-                <para>If the file is not there, you can create with the following
-                    command:
-<screen><prompt>$</prompt> <userinput>sudo sh -c "echo 'include /var/lib/cinder/volumes/*' >> /etc/tgt/conf.d/cinder.conf"</userinput></screen>
-                </para>
-            </listitem>
-            <listitem>
-                <para>No sign of attach call in the <systemitem class="service"
-                        >cinder-api</systemitem> log.</para>
-                <para>This is most likely going to be a minor adjustment to your
-                        <filename>nova.conf</filename> file. Make sure that your
-                        <filename>nova.conf</filename> has the following
-                    entry: <programlisting language="ini">volume_api_class=nova.volume.cinder.API</programlisting></para>
-                <caution>
-                    <para>Make certain that you explicitly set <filename>enabled_apis</filename>
-                        because the default will include
-                        <filename>osapi_volume</filename>: <programlisting language="ini">enabled_apis=ec2,osapi_compute,metadata</programlisting>
-                    </para>
-                </caution>
-            </listitem>
-            <listitem>
-                <para>Failed to create iscsi target error in the
-                        <filename>cinder-volume.log</filename> file.</para>
-                <programlisting language="bash">2013-03-12 01:35:43 1248 TRACE cinder.openstack.common.rpc.amqp ISCSITargetCreateFailed: Failed to create iscsi target for volume volume-137641b2-af72-4a2f-b243-65fdccd38780.</programlisting>
-                <para>You may see this error in <filename>cinder-volume.log</filename> after trying
-                    to create a volume that is 1 GB. To fix this issue:</para>
-                <para>Change content of the <filename>/etc/tgt/targets.conf</filename> from "include
-                    /etc/tgt/conf.d/*.conf" to: include /etc/tgt/conf.d/cinder_tgt.conf:</para>
-                <programlisting language="bash">            include /etc/tgt/conf.d/cinder_tgt.conf
-            include /etc/tgt/conf.d/cinder.conf
-            default-driver iscsi</programlisting>
-                <para>Then restart tgt and <literal>cinder-*</literal> services so they pick up the
-                    new configuration.</para>
-            </listitem>
-        </itemizedlist>
-    </para>
+    <para>These common issues might occur during configuration. To
+        correct, use these suggested solutions.</para>
+    <itemizedlist>
+        <listitem>
+            <para>Issues with <literal>state_path</literal> and
+                    <literal>volumes_dir</literal> settings.</para>
+            <para>Cinder uses <command>tgtd</command> as the default
+                iscsi helper and implements persistent targets. This
+                means that in the case of a tgt restart or even a node
+                reboot your existing volumes on that node will be
+                restored automatically with their original IQN.</para>
+            <para>In order to make this possible the iSCSI target
+                information needs to be stored in a file on creation
+                that can be queried in case of restart of the tgt
+                daemon. By default, Cinder uses a
+                    <literal>state_path</literal> variable, which if
+                installing with Yum or APT should be set to
+                    <filename>/var/lib/cinder/</filename>. The next
+                part is the <literal>volumes_dir</literal> variable,
+                by default this just simply appends a
+                    "<literal>volumes</literal>" directory to the
+                    <literal>state_path</literal>. The result is a
+                file-tree
+                    <filename>/var/lib/cinder/volumes/</filename>.</para>
+            <para>While this should all be handled by the installer,
+                it can go wrong. If you have trouble creating volumes
+                and this directory does not exist you should see an
+                error message in the <systemitem class="service"
+                    >cinder-volume</systemitem> log indicating that
+                the <literal>volumes_dir</literal> does not exist, and
+                it should provide information about which path it was
+                looking for.</para>
+        </listitem>
+        <listitem>
+            <para>The persistent tgt include file.</para>
+            <para>Along with the <option>volumes_dir</option> option,
+                the iSCSI target driver also needs to be configured to
+                look in the correct place for the persist files. This
+                is a simple entry in the
+                    <filename>/etc/tgt/conf.d</filename> file that you
+                should have set when you installed OpenStack. If
+                issues occur, verify that you have a
+                    <filename>/etc/tgt/conf.d/cinder.conf</filename>
+                file.</para>
+            <para>If the file is not present, create it with this
+                command:</para>
+            <screen><prompt>#</prompt> <userinput>echo 'include /var/lib/cinder/volumes/ *' >> /etc/tgt/conf.d/cinder.conf</userinput></screen>
+        </listitem>
+        <listitem>
+            <para>No sign of attach call in the <systemitem
+                    class="service">cinder-api</systemitem>
+                log.</para>
+            <para>This is most likely going to be a minor adjustment
+                to your <filename>nova.conf</filename> file. Make sure
+                that your <filename>nova.conf</filename> has this
+                entry:</para>
+            <programlisting language="ini">volume_api_class=nova.volume.cinder.API</programlisting>
+            <caution>
+                <para>Make certain that you explicitly set
+                        <filename>enabled_apis</filename> because the
+                    default includes
+                    <filename>osapi_volume</filename>:</para>
+                <programlisting language="ini">enabled_apis=ec2,osapi_compute,metadata</programlisting>
+            </caution>
+        </listitem>
+        <listitem>
+            <para>Failed to create iscsi target error in the
+                    <filename>cinder-volume.log</filename>
+                file.</para>
+            <programlisting language="bash">2013-03-12 01:35:43 1248 TRACE cinder.openstack.common.rpc.amqp ISCSITargetCreateFailed: Failed to create iscsi target for volume volume-137641b2-af72-4a2f-b243-65fdccd38780.</programlisting>
+            <para>You might see this error in
+                    <filename>cinder-volume.log</filename> after
+                trying to create a volume that is 1 GB. To fix this
+                issue:</para>
+            <para>Change content of the
+                    <filename>/etc/tgt/targets.conf</filename> from
+                    <literal>include /etc/tgt/conf.d/*.conf</literal>
+                to <literal>include
+                    /etc/tgt/conf.d/cinder_tgt.conf</literal>, as
+                follows:</para>
+            <programlisting language="bash">include /etc/tgt/conf.d/cinder_tgt.conf
+include /etc/tgt/conf.d/cinder.conf
+default-driver iscsi</programlisting>
+            <para>Restart <systemitem class="service">tgt</systemitem>
+                and <systemitem class="service">cinder-*</systemitem>
+                services so they pick up the new configuration.</para>
+        </listitem>
+    </itemizedlist>
 </section>

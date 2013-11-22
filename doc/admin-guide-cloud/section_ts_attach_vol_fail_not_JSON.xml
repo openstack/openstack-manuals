@@ -1,20 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<section xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
-    version="5.0" xml:id="section_ts_attach_vol_fail_not_JSON">
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="section_ts_attach_vol_fail_not_JSON">
     <title>Nova volume attach error, not JSON serializable</title>
     <section xml:id="section_ts_attach_vol_fail_not_JSON_problem">
         <title>Problem</title>
-        <para>When you attach a nova volume to a VM, you will see the error with stack trace in <filename>/var/log/nova/nova-volume.log</filename>. The JSON serializable issue is caused by an RPC response timeout.</para>
+        <para>When you attach a nova volume to a VM, you will see the
+            error with stack trace in
+                <filename>/var/log/nova/nova-volume.log</filename>.
+            The JSON serializable issue is caused by an RPC response
+            timeout.</para>
     </section>
     <section xml:id="section_ts_attach_vol_fail_not_JSON_solution">
         <title>Solution</title>
-        <para>Make sure your iptables allow port 3260 comunication on the ISC controller. Run the
-            following command.</para>
-        <para>
-            <screen><prompt>$</prompt> <userinput>iptables -I INPUT &lt;Last Rule No> -p tcp --dport 3260 -j ACCEPT</userinput></screen></para>
-        <para>If the port communication is properly configured, you can try running the following
-            command.<screen><prompt>$</prompt> <userinput>service iptables stop</userinput></screen></para>
-        <para>If you try these solutions and still get the RPC response time out, you probably have
-            an ISC controller and KVM host incompatibility issue. Make sure they are
-            compatible.</para></section></section>
-
+        <para>Make sure your iptables allow port 3260 communication on
+            the ISC controller. Run this command:</para>
+        <screen><prompt>#</prompt> <userinput>iptables -I INPUT &lt;Last Rule No> -p tcp --dport 3260 -j ACCEPT</userinput></screen>
+        <para>If the port communication is properly configured, you
+            can try running this command.</para>
+        <screen><prompt>#</prompt> <userinput>service iptables stop</userinput></screen>
+        <note os="debian;ubuntu">
+            <para>This service does not exist on Debian or
+                Ubuntu.</para>
+        </note>
+        <para>If you continue to get the RPC response time out, your
+            ISC controller and KVM host might be incompatible.</para>
+    </section>
+</section>

@@ -4,88 +4,100 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
     <title>Flavors</title>
-    <para>The <command>nova flavor-create</command> command allows
-        authorized users to create new flavors. Additional flavor
-        manipulation commands can be shown with the command
-            <command>nova help | grep flavor</command>. Note that the
-        OpenStack Dashboard simulates the ability to modify an
-        existing flavor by deleting an existing flavor and creating a
-        new one with the same name.</para>
-    <para>Flavors define a number of elements:</para>
-    <table rules="all">
-      <caption>Identity Service configuration file sections</caption>
-      <col width="15%"/>
-      <col width="85%"/>
-      <thead>
-        <tr>
-          <td>Element</td>
-          <td>Description</td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><literal>Name</literal></td>
-          <td>A descriptive name.
-          <replaceable>xx</replaceable>.<replaceable>size_name</replaceable>
-          is typically not required, though some third party tools may
-          rely on it.</td>
-        </tr>
-        <tr>
-          <td><literal>Memory_MB</literal></td>
-          <td>Virtual machine memory in megabytes.</td>
-        </tr>
-        <tr>
-          <td><literal>Disk</literal></td>
-          <td>Virtual root disk size in
-          gigabytes. This is an ephemeral disk that the base
-          image is copied into. When booting from a persistent
-          volume it is not used. The "0" size is a special case
-          which uses the native base image size as the size of
-          the ephemeral root volume.</td>
-        </tr>
-        <tr>
-          <td><literal>Ephemeral</literal></td>
-          <td>Specifies the size of
-          a secondary ephemeral data disk. This is an empty,
-          unformatted disk and exists only for the life of the
-          instance.</td>
-        </tr>
-        <tr>
-          <td><literal>Swap</literal></td>
-          <td>Optional swap space
-          allocation for the instance.</td>
-        </tr>
-        <tr>
-          <td><literal>VCPUs</literal></td>
-          <td>Number of virtual CPUs
-          presented to the instance.</td>
-        </tr>
-        <tr>
-          <td><literal>RXTX_Factor</literal></td>
-          <td>Optional property
-          allows created servers to have a different bandwidth
-          cap than that defined in the network they are attached
-          to. This factor is multiplied by the rxtx_base
-          property of the network. Default value is 1.0 (that
-          is, the same as attached network).</td>
-        </tr>
-        <tr>
-          <td><literal>Is_Public</literal></td>
-          <td>Boolean value, whether
-          flavor is available to all users or private to the
-          tenant it was created in. Defaults to True.</td>
-        </tr>
-        <tr>
-          <td><literal>extra_specs</literal></td>
-          <td>additional optional
-          restrictions on which compute nodes the flavor can run
-          on. This is implemented as key/value pairs that must
-          match against the corresponding key/value pairs on
-          compute nodes. Can be used to implement things like
-          special resources (e.g., flavors that can only run on
-          compute nodes with GPU hardware).</td>
-        </tr>
-      </tbody>
+    <para>Authorized users can use the <command>nova
+            flavor-create</command> command to create flavors. To see
+        the available flavor-related commands, run:</para>
+    <screen><prompt>$</prompt> <userinput>nova help | grep flavor</userinput>
+<computeroutput>flavor-access-add   Add flavor access for the given tenant.
+flavor-access-list  Print access information about the given flavor.
+flavor-access-remove
+                    Remove flavor access for the given tenant.
+flavor-create       Create a new flavor
+flavor-delete       Delete a specific flavor
+flavor-key          Set or unset extra_spec for a flavor.
+flavor-list         Print a list of available 'flavors' (sizes of
+flavor-show         Show details about the given flavor.
+volume-type-delete  Delete a specific flavor</computeroutput></screen>
+    <note>
+        <para>To modify an existing flavor in the dashboard, you must
+            delete the flavor and create a modified one with the same
+            name.</para>
+    </note>
+    <para>Flavors define these elements:</para>
+    <table rules="all" width="75%">
+        <caption>Identity Service configuration file
+            sections</caption>
+        <col width="15%"/>
+        <col width="85%"/>
+        <thead>
+            <tr>
+                <td>Element</td>
+                <td>Description</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><literal>Name</literal></td>
+                <td>A descriptive name.
+                        <replaceable>xx</replaceable>.<replaceable>size_name</replaceable>
+                    is typically not required, though some third party
+                    tools may rely on it.</td>
+            </tr>
+            <tr>
+                <td><literal>Memory_MB</literal></td>
+                <td>Virtual machine memory in megabytes.</td>
+            </tr>
+            <tr>
+                <td><literal>Disk</literal></td>
+                <td>Virtual root disk size in gigabytes. This is an
+                    ephemeral disk that the base image is copied into.
+                    When booting from a persistent volume it is not
+                    used. The "0" size is a special case which uses
+                    the native base image size as the size of the
+                    ephemeral root volume.</td>
+            </tr>
+            <tr>
+                <td><literal>Ephemeral</literal></td>
+                <td>Specifies the size of a secondary ephemeral data
+                    disk. This is an empty, unformatted disk and
+                    exists only for the life of the instance.</td>
+            </tr>
+            <tr>
+                <td><literal>Swap</literal></td>
+                <td>Optional swap space allocation for the
+                    instance.</td>
+            </tr>
+            <tr>
+                <td><literal>VCPUs</literal></td>
+                <td>Number of virtual CPUs presented to the
+                    instance.</td>
+            </tr>
+            <tr>
+                <td><literal>RXTX_Factor</literal></td>
+                <td>Optional property allows created servers to have a
+                    different bandwidth cap than that defined in the
+                    network they are attached to. This factor is
+                    multiplied by the rxtx_base property of the
+                    network. Default value is 1.0 (that is, the same
+                    as attached network).</td>
+            </tr>
+            <tr>
+                <td><literal>Is_Public</literal></td>
+                <td>Boolean value, whether flavor is available to all
+                    users or private to the tenant it was created in.
+                    Defaults to True.</td>
+            </tr>
+            <tr>
+                <td><literal>extra_specs</literal></td>
+                <td>additional optional restrictions on which compute
+                    nodes the flavor can run on. This is implemented
+                    as key/value pairs that must match against the
+                    corresponding key/value pairs on compute nodes.
+                    Can be used to implement things like special
+                    resources (e.g., flavors that can only run on
+                    compute nodes with GPU hardware).</td>
+            </tr>
+        </tbody>
     </table>
     <para>Flavor customization can be limited by the hypervisor in
         use, for example the libvirt driver enables quotas on CPUs
@@ -94,40 +106,41 @@
     <para>You can configure the CPU limits with three control
         parameters with the nova-manage tool. Here is an example of
         configuring the I/O limit:</para>
-    <screen><prompt>#</prompt> <userinput>nova-manage flavor set_key --name m1.small  --key quota:read_bytes_sec --value 10240000</userinput></screen>
-    <screen><prompt>#</prompt> <userinput>nova-manage flavor set_key --name m1.small  --key quota:read_bytes_sec --value 10240000</userinput></screen>
+<screen><prompt>#</prompt> <userinput>nova-manage flavor set_key --name m1.small  --key quota:read_bytes_sec --value 10240000</userinput>
+<prompt>#</prompt> <userinput>nova-manage flavor set_key --name m1.small  --key quota:read_bytes_sec --value 10240000</userinput></screen>
     <para>There are CPU control parameters for weight shares,
         enforcement intervals for runtime quotas, and a quota for
         maximum allowed bandwidth.</para>
-    <para>The optional cpu_shares element specifies the proportional
+    <para>The optional <literal>cpu_shares</literal> element specifies the proportional
         weighted share for the domain. If this element is omitted, the
         service defaults to the OS provided defaults. There is no unit
-        for the value, it's a relative measure based on the setting of
-        other VMs. For example, a VM configured with value 2048 will
-        get twice as much CPU time as a VM configured with value 1024.</para>
-    <para>The optional cpu_period element specifies the enforcement
-        interval(unit: microseconds) for QEMU and LXC hypervisors.
-        Within period, each VCPU of the domain will not be allowed to
-        consume more than quota worth of runtime. The value should be
-        in range [1000, 1000000]. A period with value 0 means no
+        for the value. It is a relative measure based on the setting of
+        other VMs. For example, a VM configured with value 2048
+        gets twice as much CPU time as a VM configured with value
+        1024.</para>
+    <para>The optional <literal>cpu_period</literal> element specifies the enforcement
+        interval (unit: microseconds) for QEMU and LXC hypervisors.
+        Within a period, each VCPU of the domain is not allowed to
+        consume more than the quota worth of runtime. The value should be
+        in range <literal>[1000, 1000000]</literal>. A period with value 0 means no
         value.</para>
-    <para>The optional cpu_quota element specifies the maximum allowed
-        bandwidth(unit: microseconds). A domain with quota as any
+    <para>The optional <literal>cpu_quota</literal> element specifies the maximum allowed
+        bandwidth (unit: microseconds). A domain with a quota with a
         negative value indicates that the domain has infinite
         bandwidth, which means that it is not bandwidth controlled.
-        The value should be in range [1000, 18446744073709551] or less
+        The value should be in range <literal>[1000, 18446744073709551]</literal> or less
         than 0. A quota with value 0 means no value. You can use this
-        feature to ensure that all vcpus run at the same speed. An
+        feature to ensure that all vcpus run at the same speed. For
         example:</para>
-    <screen><prompt>#</prompt> <userinput>nova flavor-key m1.low_cpu set quota:cpu_quota=10000</userinput></screen>
-    <screen><prompt>#</prompt> <userinput>nova flavor-key m1.low_cpu set quota:cpu_period=20000</userinput></screen>
-    <para>In that example, the instance of m1.low_cpu can only consume
+<screen><prompt>#</prompt> <userinput>nova flavor-key m1.low_cpu set quota:cpu_quota=10000</userinput>
+<prompt>#</prompt> <userinput>nova flavor-key m1.low_cpu set quota:cpu_period=20000</userinput></screen>
+    <para>In this example, the instance of <literal>m1.low_cpu</literal> can only consume
         a maximum of 50% CPU of a physical CPU computing
         capability.</para>
-    <para>Through quotas for disk I/O, you can set maximum disk write
-        to 10MB/sec for VM user for example:</para>
+    <para>Through disk I/O quotas, you can set maximum disk write to
+        10 MB per second for a VM user. For example:</para>
     <screen><prompt>#</prompt> <userinput>nova flavor-set m1.medium set disk_write_bytes_sec=10240000</userinput></screen>
-    <para>These are the options for disk I/O:</para>
+    <para>The disk I/O options are:</para>
     <itemizedlist>
         <listitem>
             <para>disk_read_bytes_sec</para>
@@ -148,46 +161,44 @@
             <para>disk_total_iops_sec</para>
         </listitem>
     </itemizedlist>
-    <para>These are the options for vif I/O:</para>
-    <para>
-        <itemizedlist>
-            <listitem>
-                <para>vif_inbound_ average</para>
-            </listitem>
-            <listitem>
-                <para>vif_inbound_burst</para>
-            </listitem>
-            <listitem>
-                <para>vif_inbound_peak</para>
-            </listitem>
-            <listitem>
-                <para>vif_outbound_ average</para>
-            </listitem>
-            <listitem>
-                <para>vif_outbound_burst</para>
-            </listitem>
-            <listitem>
-                <para>vif_outbound_peak</para>
-            </listitem>
-        </itemizedlist>
-  </para>
+    <para>The vif I/O options are:</para>
+    <itemizedlist>
+        <listitem>
+            <para>vif_inbound_ average</para>
+        </listitem>
+        <listitem>
+            <para>vif_inbound_burst</para>
+        </listitem>
+        <listitem>
+            <para>vif_inbound_peak</para>
+        </listitem>
+        <listitem>
+            <para>vif_outbound_ average</para>
+        </listitem>
+        <listitem>
+            <para>vif_outbound_burst</para>
+        </listitem>
+        <listitem>
+            <para>vif_outbound_peak</para>
+        </listitem>
+    </itemizedlist>
     <para>Incoming and outgoing traffic can be shaped independently.
         The bandwidth element can have at most one inbound and at most
         one outbound child element. Leaving any of these children
-        element out result in no QoS applied on that traffic
+        element out result in no quality of service (QoS) applied on that traffic
         direction. So, when you want to shape only the network's
         incoming traffic, use inbound only, and vice versa. Each of
-        these elements have one mandatory attribute average. It
-        specifies average bit rate on the interface being shaped. Then
-        there are two optional attributes: peak, which specifies
+        these elements have one mandatory attribute average.</para>
+    <para>It specifies average bit rate on the interface being shaped.
+        Then there are two optional attributes: peak, which specifies
         maximum rate at which bridge can send data, and burst, amount
         of bytes that can be burst at peak speed. Accepted values for
         attributes are integer numbers, The units for average and peak
         attributes are kilobytes per second, and for the burst just
         kilobytes. The rate is shared equally within domains connected
         to the network.</para>
-    <para>Here are some examples for configuring a bandwidth limit for
-        instance network traffic:</para>
-    <screen><prompt>#</prompt> <userinput>nova-manage flavor set_key --name m1.small --key quota:inbound_average --value 10240</userinput></screen>
-    <screen><prompt>#</prompt> <userinput>nova-manage flavor set_key --name m1.small --key quota:outbound_average --value 10240</userinput></screen>
+    <para>This example configures a bandwidth limit for instance
+        network traffic:</para>
+    <screen><prompt>#</prompt> <userinput>nova-manage flavor set_key --name m1.small --key quota:inbound_average --value 10240</userinput>
+<prompt>#</prompt> <userinput>nova-manage flavor set_key --name m1.small --key quota:outbound_average --value 10240</userinput></screen>
 </section>

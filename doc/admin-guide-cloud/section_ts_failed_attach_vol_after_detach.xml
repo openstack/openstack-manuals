@@ -1,18 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<section xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
-    version="5.0" xml:id="section_ts_failed_attach_vol_after_detach">
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="section_ts_failed_attach_vol_after_detach">
     <title>Failed to attach volume after detaching</title>
-    <section xml:id="section_ts_failed_attach_vol_after_detach_problem">
+    <section
+        xml:id="section_ts_failed_attach_vol_after_detach_problem">
         <title>Problem</title>
-        <para>Failed to attach a volume after detaching the same volume.</para>
+        <para>Failed to attach a volume after detaching the same
+            volume.</para>
     </section>
-    <section xml:id="section_ts_failed_attach_vol_after_detach_solution">
+    <section
+        xml:id="section_ts_failed_attach_vol_after_detach_solution">
         <title>Solution</title>
-        <para>You need to change the device name on the <code>nova-attach</code> call. The VM may
-            not clean-up after a <code>nova-detach</code> operation. In the following example from
-            the VM, the <code>nova-attach</code> call will fail if the device names
-            <code>vdb</code>, <code>vdc</code>, or <code>vdd</code> are
-            used.<screen><prompt>#</prompt> <userinput>ls -al /dev/disk/by-path/
+        <para>You must change the device name on the
+                <command>nova-attach</command> command. The VM might
+            not clean up after a <command>nova-detach</command>
+            command runs. This example shows how the
+                <command>nova-attach</command> command fails when you
+            use the <code>vdb</code>, <code>vdc</code>, or
+                <code>vdd</code> device names:</para>
+        <screen><prompt>#</prompt> <userinput>ls -al /dev/disk/by-path/
 total 0
 drwxr-xr-x 2 root root 200 2012-08-29 17:33 .
 drwxr-xr-x 5 root root 100 2012-08-29 17:33 ..
@@ -23,10 +30,10 @@ lrwxrwxrwx 1 root root 10 2012-08-29 17:33 pci-0000:00:04.0-virtio-pci-virtio0-p
 lrwxrwxrwx 1 root root 9 2012-08-29 17:33 pci-0000:00:06.0-virtio-pci-virtio2 -> ../../vdb
 lrwxrwxrwx 1 root root 9 2012-08-29 17:33 pci-0000:00:08.0-virtio-pci-virtio3 -> ../../vdc
 lrwxrwxrwx 1 root root 9 2012-08-29 17:33 pci-0000:00:09.0-virtio-pci-virtio4 -> ../../vdd
-lrwxrwxrwx 1 root root 10 2012-08-29 17:33 pci-0000:00:09.0-virtio-pci-virtio4-part1 -> ../../vdd1</userinput></screen></para>
-        <para>You may also have this problem after attaching and detaching the same volume from the
-            same VM with the same mount point multiple times. In this case, restarting the KVM host
-            may fix the problem.</para>
+lrwxrwxrwx 1 root root 10 2012-08-29 17:33 pci-0000:00:09.0-virtio-pci-virtio4-part1 -> ../../vdd1</userinput></screen>
+        <para>You might also have this problem after attaching and
+            detaching the same volume from the same VM with the same
+            mount point multiple times. In this case, restart the KVM
+            host.</para>
     </section>
 </section>
-

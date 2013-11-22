@@ -4,17 +4,25 @@
   xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
   xml:id="ch-identity-mgmt-config">
   <?dbhtml stop-chunking?>
-  <title>Identity Management</title>
-  <para>The default identity management system for OpenStack is the OpenStack Identity Service,
-    code-named Keystone. Once Identity is installed, it is configured via a primary configuration
-    file (<filename>etc/keystone.conf</filename>), possibly a separate logging configuration file,
-    and initializing data into Keystone using the command line client.</para>
+  <title>Identity management</title>
+  <para>The OpenStack Identity Service, code-named Keystone, is the
+    default identity management system for OpenStack. After you
+    install the Identity Service, you configure it through the
+      <filename>etc/keystone.conf</filename> configuration file and,
+    possibly, a separate logging configuration file. You initialize
+    data into the Identity Service by using the
+      <command>keystone</command> command-line client.</para>
   <section xml:id="keystone-admin-concepts">
-  <title>Identity Service Concepts</title>
-  <xi:include href="../common/section_keystone-concepts-user-management.xml"/>
-  <xi:include href="../common/section_keystone-concepts-service-management.xml"/>
-  <xi:include href="../common/section_keystone-concepts-group-management.xml"/>
-  <xi:include href="../common/section_keystone-concepts-domain-management.xml"/>
+    <title>Identity Service concepts</title>
+    <xi:include
+      href="../common/section_keystone-concepts-user-management.xml"/>
+    <xi:include
+      href="../common/section_keystone-concepts-service-management.xml"/>
+    <xi:include
+      href="../common/section_keystone-concepts-group-management.xml"/>
+    <xi:include
+      href="../common/section_keystone-concepts-domain-management.xml"
+    />
   </section>
   <section xml:id="user-crud">
     <title>User CRUD</title>
@@ -24,8 +32,9 @@
       extension you should define a
         <literal>user_crud_extension</literal> filter, insert it after
       the <literal>*_body</literal> middleware and before the
-        <literal>public_service</literal> app in the public_api WSGI
-      pipeline in <filename>keystone.conf</filename> e.g.:</para>
+        <literal>public_service</literal> application in the
+      public_api WSGI pipeline in <filename>keystone.conf</filename>
+      e.g.:</para>
     <programlisting language="ini"><?db-font-size 75%?>[filter:user_crud_extension]
 paste.filter_factory = keystone.contrib.user_crud:CrudExtension.factory
 
@@ -36,26 +45,56 @@ pipeline = stats_monitoring url_normalize token_auth admin_token_auth xml_body j
     <screen><prompt>$</prompt> <userinput>curl -X PATCH http://localhost:5000/v2.0/OS-KSCRUD/users/&lt;userid&gt; -H &quot;Content-type: application/json&quot;  \
   -H &quot;X_Auth_Token: &lt;authtokenid&gt;&quot; -d '{&quot;user&quot;: {&quot;password&quot;: &quot;ABCD&quot;, &quot;original_password&quot;: &quot;DCBA&quot;}}'</userinput></screen>
     <para>In addition to changing their password all of the users
-      current tokens are deleted (if the back end is kvs or
+      current tokens are deleted (if the back-end is kvs or
       sql).</para>
   </section>
   <section xml:id="keystone-logging">
     <title>Logging</title>
-    <para>You configure logging externally to the rest of Identity.
-      The file specifying the logging configuration is in the
+    <para>You configure logging externally to the rest of the Identity
+      Service. The file specifying the logging configuration is in the
         <literal>[DEFAULT]</literal> section of the
         <filename>keystone.conf</filename> file under
         <literal>log_config</literal>. To route logging through
       syslog, set <literal>use_syslog=true</literal> option in the
         <literal>[DEFAULT]</literal> section.</para>
     <para>A sample logging file is available with the project in the
-      directory <filename>etc/logging.conf.sample</filename>. Like
-      other OpenStack projects, Identity uses the python logging
-      module, which includes extensive configuration options for
-      choosing the output levels and formats.</para>
+        <filename>etc/logging.conf.sample</filename> directory. Like
+      other OpenStack projects, the Identity Service uses the Python
+      logging module, which includes extensive configuration options
+      that let you define the output levels and formats.</para>
     <para>Review the <filename>etc/keystone.conf</filename> sample
-      configuration files distributed with keystone for example
-      configuration files for each server application.</para>
+      configuration files that are distributed with the Identity
+      Service. For example, each server application has its own
+      configuration file.</para>
+    <para>For services that have separate paste-deploy
+        <filename>.ini</filename> files, you can configure
+        <literal>auth_token</literal> middleware in the
+        <literal>[keystone_authtoken]</literal> section in the main
+      configuration file, such as <filename>nova.conf</filename>. For
+      example in Compute, you can remove the middleware parameters
+      from <filename>api-paste.ini</filename>, as follows:</para>
+    <programlisting language="ini"><?db-font-size 75%?>[filter:authtoken]
+paste.filter_factory =
+keystoneclient.middleware.auth_token:filter_factory</programlisting>
+    <para>Set these values in the <filename>nova.conf</filename>
+      file:</para>
+    <programlisting language="ini"><?db-font-size 75%?>[DEFAULT]
+...
+auth_strategy=keystone
+
+[keystone_authtoken]
+auth_host = 127.0.0.1
+auth_port = 35357
+auth_protocol = http
+auth_uri = http://127.0.0.1:5000/
+admin_user = admin
+admin_password = SuperSekretPassword
+admin_tenant_name = service</programlisting>
+    <note>
+      <para>Middleware parameters in paste config take priority. You
+        must remove them to use values in the
+          <literal>[keystone_authtoken]</literal> section.</para>
+    </note>
   </section>
   <section xml:id="monitoring">
     <title>Monitoring</title>
@@ -129,20 +168,27 @@ keystone --username=admin --password=secrete --tenant_name=admin user-list
 keystone --username=admin --password=secrete --tenant_name=admin tenant-create --name=demo</programlisting>
   </section>
   <section xml:id="auth-token-middleware-with-username-and-password">
-    <title>Authentication middleware with user name and password</title>
-    <para>You can also configure the Identity Service authentication middleware using the
-        <option>admin_user</option> and <option>admin_password</option> options. When using the
-        <option>admin_user</option> and <option>admin_password</option> options the
-        <option>admin_token</option> parameter is optional. If <option>admin_token</option> is
-      specified, it is used only if the specified token is still valid.</para>
-    <para>For services that have a separate paste-deploy ini file, you can configure the
-      authentication middleware in the [keystone_authtoken] section of the main config file, such as
-        <filename>nova.conf</filename>. In Compute, for example, you can remove the middleware
-      parameters from <filename>api-paste.ini</filename> as follows:</para>
+    <title>Authentication middleware with user name and
+      password</title>
+    <para>You can also configure the Identity Service authentication
+      middleware using the <option>admin_user</option> and
+        <option>admin_password</option> options. When using the
+        <option>admin_user</option> and
+        <option>admin_password</option> options the
+        <option>admin_token</option> parameter is optional. If
+        <option>admin_token</option> is specified, it is used only if
+      the specified token is still valid.</para>
+    <para>For services that have a separate paste-deploy .ini file,
+      you can configure the authentication middleware in the
+        <literal>[keystone_authtoken]</literal> section of the main
+      configuration file, such as <filename>nova.conf</filename>. In
+      Compute, for example, you can remove the middleware parameters
+      from <filename>api-paste.ini</filename>, as follows:</para>
     <programlisting language="ini"><?db-font-size 75%?>[filter:authtoken]
 paste.filter_factory =
 keystoneclient.middleware.auth_token:filter_factory</programlisting>
-    <para>And set the following values in <filename>nova.conf</filename> as follows:</para>
+    <para>And set the following values in
+        <filename>nova.conf</filename> as follows:</para>
     <programlisting language="ini"><?db-font-size 75%?>[DEFAULT]
 ...
 auth_strategy=keystone
@@ -156,11 +202,13 @@ admin_user = admin
 admin_password = SuperSekretPassword
 admin_tenant_name = service</programlisting>
     <note>
-      <para>The middleware parameters in the paste config take priority. You must remove them to use
-        the values in the [keystone_authtoken] section.</para>
+      <para>The middleware parameters in the paste config take
+        priority. You must remove them to use the values in the
+        [keystone_authtoken] section.</para>
     </note>
-    <para>Here is a sample paste config filter that makes use of the <option>admin_user</option> and
-        <option>admin_password</option> parameters:</para>
+    <para>This sample paste config filter makes use of the
+        <option>admin_user</option> and
+        <option>admin_password</option> options:</para>
     <programlisting language="ini"><?db-font-size 75%?>[filter:authtoken]
 paste.filter_factory = keystoneclient.middleware.auth_token:filter_factory
 service_port = 5000
@@ -170,8 +218,11 @@ auth_host = 127.0.0.1
 auth_token = 012345SECRET99TOKEN012345
 admin_user = admin
 admin_password = keystone123</programlisting>
-    <para>Note that using this option requires an admin tenant/role relationship. The admin user is
-      granted access to the admin role on the admin tenant.</para>
+    <note>
+      <para>Using this option requires an admin tenant/role
+        relationship. The admin user is granted access to the admin
+        role on the admin tenant.</para>
+    </note>
   </section>
   <?hard-pagebreak?>
   <xi:include href="../common/section_identity-troubleshooting.xml"/>

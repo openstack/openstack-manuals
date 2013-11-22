@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<section xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
-    version="5.0" xml:id="section_ts_HTTP_bad_req_in_cinder_vol_log">
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="section_ts_HTTP_bad_req_in_cinder_vol_log">
     <title>Failed to attach volume after detaching</title>
-    <section xml:id="section_ts_HTTP_bad_req_in_cinder_vol_log_problem">
+    <section
+        xml:id="section_ts_HTTP_bad_req_in_cinder_vol_log_problem">
         <title>Problem</title>
-        <para>The following errors are in the <filename>cinder-volume.log</filename> file.</para>
-        <screen>2013-05-03 15:16:33 INFO [cinder.volume.manager] Updating volume status
+        <para>These errors appear in the
+                <filename>cinder-volume.log</filename> file.</para>
+        <screen><?db-font-size 75%?><computeroutput>2013-05-03 15:16:33 INFO [cinder.volume.manager] Updating volume status
 2013-05-03 15:16:33 DEBUG [hp3parclient.http]
 REQ: curl -i https://10.10.22.241:8080/api/v1/cpgs -X GET -H "X-Hp3Par-Wsapi-Sessionkey: 48dc-b69ed2e5
 f259c58e26df9a4c85df110c-8d1e8451" -H "Accept: application/json" -H "User-Agent: python-3parclient"
@@ -33,12 +36,13 @@ File "/usr/lib/python2.7/dist-packages/hp3parclient/http.py", line 255, in get r
 File "/usr/lib/python2.7/dist-packages/hp3parclient/http.py", line 224, in _cs_request **kwargs)
 File "/usr/lib/python2.7/dist-packages/hp3parclient/http.py", line 198, in _time_request resp, body = self.request(url, method, **kwargs)
 File "/usr/lib/python2.7/dist-packages/hp3parclient/http.py", line 192, in request raise exceptions.from_response(resp, body)
-HTTPBadRequest: Bad request (HTTP 400)</screen>
+HTTPBadRequest: Bad request (HTTP 400)</computeroutput></screen>
     </section>
-    <section xml:id="section_ts_HTTP_bad_req_in_cinder_vol_log_solution">
+    <section
+        xml:id="section_ts_HTTP_bad_req_in_cinder_vol_log_solution">
         <title>Solution</title>
-        <para>You need to update your copy of the <filename>hp_3par_fc.py</filename> driver which
+        <para>You need to update your copy of the
+                <filename>hp_3par_fc.py</filename> driver which
             contains the synchronization code.</para>
     </section>
 </section>
-
