@@ -398,8 +398,23 @@ metadata_proxy_shared_secret = <replaceable>METADATA_PASS</replaceable></program
             <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install neutron-plugin-openvswitch-agent openvswitch-switch</userinput></screen>
             <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>yum install openstack-neutron-openvswitch</userinput></screen>
             <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-neutron-openvswitch-agent</userinput></screen>
-          </step>
-          <step>
+          <note os="ubuntu">
+            <para>On Ubuntu 12.04 LTS with GRE you must install
+              openvswitch-datapath-dkms and restart the service to
+              enable the GRE flow so that OVS 1.10 and higher is
+              used. Make sure you are running the OVS 1.10 kernel
+              module in addition to the OVS 1.10 userspace. Both the
+              kernel module and userspace are required for VXLAN
+              support. The error you see in the
+              <filename>/var/log/openvswitchovs-vswitchd.log</filename>
+              log file is "Stderr: 'ovs-ofctl: -1: negative values
+              not supported for in_port\n'". If you see this error,
+              make sure <command>modinfo openvswitch</command> shows
+              the right version. Also check the output from
+              <command>dmesg</command> for the version of the OVS
+              module being loaded.</para>
+          </note>
+          </step><step>
             <para>Start Open vSwitch:</para>
             <screen os="debian;rhel;fedora;centos"><prompt>#</prompt> <userinput>service openvswitch start</userinput></screen>
             <screen os="opensuse;sles"><prompt>#</prompt> <userinput>service openvswitch-switch start</userinput></screen>
@@ -492,22 +507,6 @@ use_namespaces = True</programlisting>
               network node. However, you can enable namespacing, and
               potentially veth, as described in the section detailing
               how to use VLANs with <acronym>OVS</acronym>).</para>
-            <note os="ubuntu">
-              <para>On Ubuntu 12.04 LTS with GRE you must install
-                openvswitch-datapath-dkms and restart the service to
-                enable the GRE flow so that OVS 1.10 and higher is
-                used. Make sure you are running the OVS 1.10 kernel
-                module in addition to the OVS 1.10 userspace. Both the
-                kernel module and userspace are required for VXLAN
-                support. The error you see in the
-                  <filename>/var/log/openvswitchovs-vswitchd.log</filename>
-                log file is "Stderr: 'ovs-ofctl: -1: negative values
-                not supported for in_port\n'". If you see this error,
-                make sure <command>modinfo openvswitch</command> shows
-                the right version. Also check the output from
-                  <command>dmesg</command> for the version of the OVS
-                module being loaded.</para>
-            </note>
             <para>On the other hand, <link
                 linkend="install-neutron.install-plug-in.ovs.vlan"
                 >VLAN tagging</link> modifies the ethernet header of
