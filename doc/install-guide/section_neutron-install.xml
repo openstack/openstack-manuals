@@ -1141,6 +1141,20 @@ security_group_api=neutron</programlisting>
               <emphasis>Nova</emphasis> firewall, and because Neutron
             handles the Firewall, you must tell Nova not to use
             one.</para>
+        <para>When Networking handles the firewall, the option <code>firewall_driver</code>
+            should be set according to the specified plugin. For example with <acronym>OVS</acronym>, edit the
+              <filename>/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>
+              file:</para>
+            <programlisting language="ini">[securitygroup]
+# Firewall driver for realizing neutron security group function.
+firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver</programlisting>
+          <para>If you do not want to use a firewall in Compute or Networking, set
+              <code>firewall_driver=nova.virt.firewall.NoopFirewallDriver</code> in
+              both config files, and comment out or remove <code>security_group_api=neutron</code>
+              in the <filename>/etc/nova/nova.conf</filename> file, otherwise
+              you may encounter <errortext>ERROR: The server has either erred or is incapable of
+                  performing the requested operation. (HTTP 500)</errortext> when issuing
+              <command>nova list</command> commands.</para>
         </note>
       </step>
       <step os="fedora;rhel;centos;opensuse;sles">
