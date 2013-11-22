@@ -1,219 +1,245 @@
-<section xml:id="hp-3par-driver"
-    xmlns="http://docbook.org/ns/docbook"
+<section xml:id="hp-3par-driver" xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xlink="http://www.w3.org/1999/xlink"
-    version="5.0">
-    <title>HP 3PAR Fibre Channel and iSCSI Drivers</title>
-    <para>The <filename>HP3PARFCDriver</filename> and <filename>HP3PARISCSIDriver</filename> are
-        based on the Block Storage (Cinder) plug-in architecture. The drivers execute
-        the volume operations by communicating with the HP 3PAR storage system over
-        HTTP/HTTPS and SSH connections. The HTTP/HTTPS communications use the
-        <filename>hp3parclient</filename>, which is part of the Python standard library.</para>
-    <para>For information about managing HP 3PAR storage systems, refer to the HP 3PAR user
-        documentation.</para>
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+    <title>HP 3PAR Fibre Channel and iSCSI drivers</title>
+    <para>The <filename>HP3PARFCDriver</filename> and
+            <filename>HP3PARISCSIDriver</filename> drivers, which are
+        based on the Block Storage Service (Cinder) plug-in
+        architecture, run volume operations by communicating with the
+        HP 3PAR storage system over HTTP, HTTPS, and SSH connections.
+        The HTTP and HTTPS communications use
+            <package>hp3parclient</package>, which is part of the
+        Python standard library.</para>
+    <para>For information about how to manage HP 3PAR storage systems,
+        see the HP 3PAR user documentation.</para>
     <section xml:id="hp-3par-sys-reqs">
-        <title>System Requirements</title>
-        <para>To use the HP 3PAR drivers, install the following software and components on the
-            HP 3PAR storage system:</para>
-        <para>
-            <itemizedlist>
-                <listitem>
-                    <para>HP 3PAR Operating System software version 3.1.2 (MU2) or higher</para>
-                </listitem>
-                <listitem>
-                    <para>HP 3PAR Web Services API Server must be enabled and running</para>
-                </listitem>
-                <listitem>
-                    <para>One Common Provisioning Group (CPG)</para>
-                </listitem>
-                <listitem>
-                    <para>Additionally, you must install the
-                            <filename>hp3parclient</filename> version 2.0 or greater from the Python
-                        standard library on the system with the enabled Block
-                        Storage volume drivers.</para>
-                </listitem>
-            </itemizedlist>
-        </para>
+        <title>System requirements</title>
+        <para>To use the HP 3PAR drivers, install the following
+            software and components on the HP 3PAR storage
+            system:</para>
+        <itemizedlist>
+            <listitem>
+                <para>HP 3PAR Operating System software version 3.1.2
+                    (MU2) or higher</para>
+            </listitem>
+            <listitem>
+                <para>HP 3PAR Web Services API Server must be enabled
+                    and running</para>
+            </listitem>
+            <listitem>
+                <para>One Common Provisioning Group (CPG)</para>
+            </listitem>
+            <listitem>
+                <para>Additionally, you must install the
+                        <package>hp3parclient</package> version 2.0 or
+                    newer from the Python standard library on the
+                    system with the enabled Block Storage Service
+                    volume drivers.</para>
+            </listitem>
+        </itemizedlist>
     </section>
     <section xml:id="hp-3par-supported-ops">
-        <title>Supported Operations</title>
-        <para>
-            <itemizedlist>
-                <listitem>
-                    <para>Create volumes.</para>
-                </listitem>
-                <listitem>
-                    <para>Delete volumes.</para>
-                </listitem>
-                <listitem>
-                    <para>Extend volumes.</para>
-                </listitem>
-                <listitem>
-                    <para>Attach volumes.</para>
-                </listitem>
-                <listitem>
-                    <para>Detach volumes.</para>
-                </listitem>
-                <listitem>
-                    <para>Create snapshots.</para>
-                </listitem>
-                <listitem>
-                    <para>Delete snapshots.</para>
-                </listitem>
-                <listitem>
-                    <para>Create volumes from snapshots.</para>
-                </listitem>
-                <listitem>
-                    <para>Create cloned volumes.</para>
-                </listitem>
-                <listitem>
-                    <para>Copy images to volumes.</para>
-                </listitem>
-                <listitem>
-                    <para>Copy volumes to images.</para>
-                </listitem>
-            </itemizedlist>
-        </para>
-        <para>Volume type support for both HP 3PAR drivers includes the ability to set the following
-            capabilities in the OpenStack Cinder API
-            <filename>cinder.api.contrib.types_extra_specs</filename> volume type extra specs
-            extension module:</para>
-        <para>
-            <itemizedlist>
-                <listitem>
-                    <para><literal>hp3par:cpg</literal></para>
-                </listitem>
-                <listitem>
-                    <para><literal>hp3par:snap_cpg</literal></para>
-                </listitem>
-                <listitem>
-                    <para><literal>hp3par:provisioning</literal></para>
-                </listitem>
-                <listitem>
-                    <para><literal>hp3par:persona</literal></para>
-                </listitem>
-                <listitem>
-                    <para><literal>hp3par:vvs</literal></para>
-                </listitem>
-                <listitem>
-                    <para><literal>qos:maxBWS</literal></para>
-                </listitem>
-                <listitem>
-                    <para><literal>qos:maxIOPS</literal></para>
-                </listitem>
-            </itemizedlist>
-        </para>
-        <para>To work with the default filter scheduler, the key values are case sensitive
-            and scoped with <literal>hp3par:</literal> or <literal>qos:</literal>. For
-            information about how to set the key-value pairs and associate them with a
-            volume type, run the following command: <screen><prompt>$</prompt> <userinput>
+        <title>Supported operations</title>
+        <itemizedlist>
+            <listitem>
+                <para>Create volumes.</para>
+            </listitem>
+            <listitem>
+                <para>Delete volumes.</para>
+            </listitem>
+            <listitem>
+                <para>Extend volumes.</para>
+            </listitem>
+            <listitem>
+                <para>Attach volumes.</para>
+            </listitem>
+            <listitem>
+                <para>Detach volumes.</para>
+            </listitem>
+            <listitem>
+                <para>Create snapshots.</para>
+            </listitem>
+            <listitem>
+                <para>Delete snapshots.</para>
+            </listitem>
+            <listitem>
+                <para>Create volumes from snapshots.</para>
+            </listitem>
+            <listitem>
+                <para>Create cloned volumes.</para>
+            </listitem>
+            <listitem>
+                <para>Copy images to volumes.</para>
+            </listitem>
+            <listitem>
+                <para>Copy volumes to images.</para>
+            </listitem>
+        </itemizedlist>
+        <para>Volume type support for both HP 3PAR drivers includes
+            the ability to set the following capabilities in the
+            OpenStack Cinder API
+                <filename>cinder.api.contrib.types_extra_specs</filename>
+            volume type extra specs extension module:</para>
+        <itemizedlist>
+            <listitem>
+                <para><literal>hp3par:cpg</literal></para>
+            </listitem>
+            <listitem>
+                <para><literal>hp3par:snap_cpg</literal></para>
+            </listitem>
+            <listitem>
+                <para><literal>hp3par:provisioning</literal></para>
+            </listitem>
+            <listitem>
+                <para><literal>hp3par:persona</literal></para>
+            </listitem>
+            <listitem>
+                <para><literal>hp3par:vvs</literal></para>
+            </listitem>
+            <listitem>
+                <para><literal>qos:maxBWS</literal></para>
+            </listitem>
+            <listitem>
+                <para><literal>qos:maxIOPS</literal></para>
+            </listitem>
+        </itemizedlist>
+        <para>To work with the default filter scheduler, the key
+            values are case sensitive and scoped with
+                <literal>hp3par:</literal> or <literal>qos:</literal>.
+            For information about how to set the key-value pairs and
+            associate them with a volume type, run the following
+            command:
+            <screen><prompt>$</prompt> <userinput>
             cinder help type-key</userinput></screen>
         </para>
         <note>
-            <para>Volumes that are cloned only support extra specs keys
-                cpg, snap_cpg, provisioning and vvs. The others are ignored.
-                In addition the comments section of the cloned volume in the HP 3PAR
-                StoreServ storage array is not populated.
-            </para>
+            <para>Volumes that are cloned only support extra specs
+                keys cpg, snap_cpg, provisioning and vvs. The others
+                are ignored. In addition the comments section of the
+                cloned volume in the HP 3PAR StoreServ storage array
+                is not populated.</para>
         </note>
-        <para>The following keys require that the HP 3PAR StoreServ storage array has a
-            Priority Optimization license installed.
-        </para>
-        <para>
-            <itemizedlist>
-                <listitem>
-                    <para><literal>hp3par:vvs</literal> - The virtual volume set name that has been
-                        predefined by the Administrator with Quality of Service (QoS) rules associated
-                        to it. If you specify <literal>hp3par:vvs</literal>, the
-                        <literal>qos:maxIOPS</literal> and <literal>qos:maxBWS</literal> settings are
-                        ignored.</para>
-                </listitem>
-                <listitem>
-                    <para><literal>qos:maxBWS</literal> - The QoS I/O issue count rate limit in MBs.
-                        If not set, the I/O issue bandwidth rate has no limit.</para>
-                </listitem>
-                <listitem>
-                    <para><literal>qos:maxIOPS</literal> - The QoS I/O issue count rate limit. If not
-                        set, the I/O issue count rate has no limit.</para>
-                </listitem>
-            </itemizedlist>
-        </para>
-        <para>If volume types are not used or a particular key is not set for a volume type, the
-            following defaults are used.</para>
-        <para>
-            <itemizedlist>
-                <listitem>
-                    <para><literal>hp3par:cpg</literal> - Defaults to the <literal>hp3par_cpg</literal>
-                        setting in the <filename>cinder.conf</filename> file.</para>
-                </listitem>
-                <listitem>
-                    <para><literal>hp3par:snap_cpg</literal> - Defaults to the
-                        <literal>hp3par_snap</literal> setting in the
-                        <filename>cinder.conf</filename> file. If <literal>hp3par_snap</literal> is
-                        not set, it defaults to the <literal>hp3par_cpg</literal> setting.</para>
-                </listitem>
-                <listitem>
-                    <para><literal>hp3par:provisioning</literal> - Defaults to thin provisioning, the valid
-                        values are <literal>thin</literal> and <literal>full</literal>.</para>
-                </listitem>
-                <listitem>
-                    <para><literal>hp3par:persona</literal> - Defaults to the <literal>1 –
-                        Generic</literal> persona. The valid values are, <literal>1 –
-                            Generic</literal>, <literal>2 - Generic-ALUA</literal>, <literal>6 -
-                                Generic-legacy</literal>, <literal>7 - HPUX-legacy</literal>,
-                        <literal>8 - AIX-legacy</literal>, <literal>9 – EGENERA</literal>,
-                        <literal>10 - ONTAP-legacy</literal>, <literal>11 – VMware</literal>, and
-                        <literal>12 - OpenVMS</literal>.</para>
-                </listitem>
-            </itemizedlist>
-        </para>
+        <para>The following keys require that the HP 3PAR StoreServ
+            storage array has a Priority Optimization license
+            installed.</para>
+        <itemizedlist>
+            <listitem>
+                <para><literal>hp3par:vvs</literal> - The virtual
+                    volume set name that has been predefined by the
+                    Administrator with Quality of Service (QoS) rules
+                    associated to it. If you specify
+                        <literal>hp3par:vvs</literal>, the
+                        <literal>qos:maxIOPS</literal> and
+                        <literal>qos:maxBWS</literal> settings are
+                    ignored.</para>
+            </listitem>
+            <listitem>
+                <para><literal>qos:maxBWS</literal> - The QoS I/O
+                    issue count rate limit in MBs. If not set, the I/O
+                    issue bandwidth rate has no limit.</para>
+            </listitem>
+            <listitem>
+                <para><literal>qos:maxIOPS</literal> - The QoS I/O
+                    issue count rate limit. If not set, the I/O issue
+                    count rate has no limit.</para>
+            </listitem>
+        </itemizedlist>
+        <para>If volume types are not used or a particular key is not
+            set for a volume type, the following defaults are
+            used.</para>
+        <itemizedlist>
+            <listitem>
+                <para><literal>hp3par:cpg</literal> - Defaults to the
+                        <literal>hp3par_cpg</literal> setting in the
+                        <filename>cinder.conf</filename> file.</para>
+            </listitem>
+            <listitem>
+                <para><literal>hp3par:snap_cpg</literal> - Defaults to
+                    the <literal>hp3par_snap</literal> setting in the
+                        <filename>cinder.conf</filename> file. If
+                        <literal>hp3par_snap</literal> is not set, it
+                    defaults to the <literal>hp3par_cpg</literal>
+                    setting.</para>
+            </listitem>
+            <listitem>
+                <para><literal>hp3par:provisioning</literal> -
+                    Defaults to thin provisioning, the valid values
+                    are <literal>thin</literal> and
+                        <literal>full</literal>.</para>
+            </listitem>
+            <listitem>
+                <para><literal>hp3par:persona</literal> - Defaults to
+                    the <literal>1 – Generic</literal> persona. The
+                    valid values are, <literal>1 – Generic</literal>,
+                        <literal>2 - Generic-ALUA</literal>,
+                        <literal>6 - Generic-legacy</literal>,
+                        <literal>7 - HPUX-legacy</literal>, <literal>8
+                        - AIX-legacy</literal>, <literal>9 –
+                        EGENERA</literal>, <literal>10 -
+                        ONTAP-legacy</literal>, <literal>11 –
+                        VMware</literal>, and <literal>12 -
+                        OpenVMS</literal>.</para>
+            </listitem>
+        </itemizedlist>
     </section>
     <section xml:id="enable-hp-3par-fibre-channel">
-        <title>Enabling the HP 3PAR Fibre Channel and iSCSI Drivers</title>
-        <para>The <filename>HP3PARFCDriver</filename> and <filename>HP3PARISCSIDriver</filename> are
-            installed with the OpenStack software.</para>
-        <para>
-            <orderedlist>
-                <listitem>
-                    <para>Install the <filename>hp3parclient</filename> Python package on the
-                        OpenStack Block Storage system. <screen>$sudo pip install hp3parclient</screen>
-                    </para>
-                </listitem>
-                <listitem>
-                    <para>Verify that the HP 3PAR Web Services API server is enabled and running on
-                        the HP 3PAR storage system. <orderedlist>
-                            <listitem>
-                                <para>Log onto the HP 3PAR storage system with administrator
-                                    access.<screen>#ssh 3paradm@&lt;HP 3PAR IP Address></screen></para>
-                            </listitem>
-                            <listitem>
-                                <para>View the current state of the Web Services API Server.
-                                    <screen>#showwsapi</screen><screen><computeroutput>-Service- -State- -HTTP_State-
+        <title>Enable the HP 3PAR Fibre Channel and iSCSI
+            drivers</title>
+        <para>The <filename>HP3PARFCDriver</filename> and
+                <filename>HP3PARISCSIDriver</filename> are installed
+            with the OpenStack software.</para>
+        <procedure>
+            <step>
+                <para>Install the <filename>hp3parclient</filename>
+                    Python package on the OpenStack Block Storage
+                    system.
+                    <screen>$sudo pip install hp3parclient</screen>
+                </para>
+            </step>
+            <step>
+                <para>Verify that the HP 3PAR Web Services API server
+                    is enabled and running on the HP 3PAR storage
+                    system.</para>
+                <substeps>
+                    <step>
+                        <para>Log onto the HP 3PAR storage system with
+                            administrator
+                            access.<screen>#ssh 3paradm@&lt;HP 3PAR IP Address></screen></para>
+                    </step>
+                    <step>
+                        <para>View the current state of the Web
+                            Services API Server.
+                            <screen>#showwsapi</screen><screen><computeroutput>-Service- -State- -HTTP_State-
         HTTP_Port -HTTPS_State- HTTPS_Port -Version-</computeroutput></screen><screen><computeroutput>Enabled   Active Enabled       8008
         Enabled       8080         1.1</computeroutput></screen></para>
-                            </listitem>
-                            <listitem>
-                                <para>If the Web Services API Server is disabled, start
-                                    it.<screen>#startwsapi</screen></para>
-                            </listitem>
-                        </orderedlist>
-                    </para>
-                </listitem>
-                <listitem>
-                    <para>If the HTTP or HTTPS state is disabled, enable one of
-                        them.<screen>#setwsapi -http enable </screen> or <screen>#setwsapi -https enable </screen><note>
-                            <para>To stop the Web Services API Server, use the stopwsapi command. For
-                                other options run the <command>setwsapi –h</command> command.</para>
-                        </note></para>
-                </listitem>
-                <listitem>
-                    <para>If you are not using an existing CPG, create a CPG on the HP 3PAR storage system
-                        to be used as the default location for creating volumes.</para>
-                </listitem>
-                <listitem>
-                    <para>Make the following changes in the
-                        <filename>/etc/cinder/cinder.conf</filename> file.</para>
-                    <programlisting>
+                    </step>
+                    <step>
+                        <para>If the Web Services API Server is
+                            disabled, start
+                            it.<screen>#startwsapi</screen></para>
+                    </step>
+                </substeps>
+            </step>
+            <step>
+                <para>If the HTTP or HTTPS state is disabled, enable
+                    one of
+                    them.<screen>#setwsapi -http enable </screen> or <screen>#setwsapi -https enable </screen><note>
+                        <para>To stop the Web Services API Server, use
+                            the stopwsapi command. For other options
+                            run the <command>setwsapi –h</command>
+                            command.</para>
+                    </note></para>
+            </step>
+            <step>
+                <para>If you are not using an existing CPG, create a
+                    CPG on the HP 3PAR storage system to be used as
+                    the default location for creating volumes.</para>
+            </step>
+            <step>
+                <para>Make the following changes in the
+                        <filename>/etc/cinder/cinder.conf</filename>
+                    file.</para>
+                <programlisting>
                         <emphasis role="bold">## REQUIRED SETTINGS</emphasis>
 # 3PAR WS API Server URL
   hp3par_api_url=https://10.10.0.141:8080/api/v1
@@ -264,29 +290,42 @@
 # Time in hours when a snapshot expires and is deleted. This must be larger than retention.
   hp3par_snapshot_expiration=72
                     </programlisting>
-                    <note>
-                        <para>You can enable only one driver on each cinder instance unless you
-                            enable multiple backend support. See the Cinder multiple backend support
-                            instructions to enable this feature.</para>
-                    </note>
-                    <note>
-                        <para>One or more iSCSI addresses may be configured using hp3par_iscsi_ips.
-			When multiple addresses are configured, the driver selects the iSCSI
-			port with the fewest active volumes at attach time. The IP address may include
-			an IP port by using a colon ‘:’ to separate the address from port. If no IP
-			port is defined, the default port 3260 is used. IP addresses should be
-			separated using a comma ’,’. iscsi_ip_address/iscsi_port may still be used, as an
-			alternative to hp3par_iscsi_ips for single port iSCSI configuration.</para>
-                    </note>
-
-                </listitem>
-                <listitem>
-                    <para>Save the changes to the <filename>cinder.conf</filename> file and restart
-                        the <systemitem class="service">cinder-volume</systemitem> service.</para>
-                </listitem>
-            </orderedlist>
-        </para>
-        <para>The HP 3PAR Fibre Channel and iSCSI drivers should now be enabled on your OpenStack
-            system. If you experience any problems, check the Block Storage log files for errors.</para>
+                <note>
+                    <para>You can enable only one driver on each
+                        cinder instance unless you enable multiple
+                        back-end support. See the Cinder multiple
+                        back-end support instructions to enable this
+                        feature.</para>
+                </note>
+                <note>
+                    <para>You can configure one or more iSCSI
+                        addresses by using the
+                            <option>hp3par_iscsi_ips</option> option.
+                        When you configure multiple addresses, the
+                        driver selects the iSCSI port with the fewest
+                        active volumes at attach time. The IP address
+                        might include an IP port by using a colon
+                            (<literal>:</literal>) to separate the
+                        address from port. If you do not define an IP
+                        port, the default port 3260 is used. Separate
+                        IP addresses with a comma
+                            (<literal>,</literal>). The
+                            <option>iscsi_ip_address</option>/<option>iscsi_port</option>
+                        options might be used as an alternative to
+                            <option>hp3par_iscsi_ips</option> for
+                        single port iSCSI configuration.</para>
+                </note>
+            </step>
+            <step>
+                <para>Save the changes to the
+                        <filename>cinder.conf</filename> file and
+                    restart the <systemitem class="service"
+                        >cinder-volume</systemitem> service.</para>
+            </step>
+        </procedure>
+        <para>The HP 3PAR Fibre Channel and iSCSI drivers are now
+            enabled on your OpenStack system. If you experience
+            problems, review the Block Storage Service log files for
+            errors.</para>
     </section>
 </section>

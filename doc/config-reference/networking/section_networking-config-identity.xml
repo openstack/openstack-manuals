@@ -3,12 +3,12 @@
   xmlns="http://docbook.org/ns/docbook"
   xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
-  <title>OpenStack Identity</title>
+  <title>OpenStack Identity Service</title>
   <procedure>
-    <title>To configure the OpenStack Identity Service for use with
-      OpenStack Networking</title>
+    <title>To configure the Identity Service for use with
+      Networking</title>
     <step>
-      <title>Create the get_id() Function</title>
+      <title>Create the <function>get_id()</function> function</title>
       <para>The <function>get_id()</function> function stores the ID
         of created objects, and removes error-prone copying and
         pasting of object IDs in later steps:</para>
@@ -27,53 +27,50 @@ echo `"$@" | awk '/ id / { print $4 }'`
       </substeps>
     </step>
     <step>
-      <title>Create the OpenStack Networking Service Entry</title>
+      <title>Create the OpenStack Networking service entry</title>
       <para>OpenStack Networking must be available in the OpenStack
-        Compute service catalog. Create the service, as follows:</para>
+        Compute service catalog. Create the service:</para>
       <screen><prompt>$</prompt> <userinput>NEUTRON_SERVICE_ID=$(get_id keystone service-create --name neutron --type network --description 'OpenStack Networking Service')</userinput></screen>
     </step>
     <step>
-      <title>Create the OpenStack Networking Service Endpoint
-        Entry</title>
+      <title>Create the OpenStack Networking service endpoint
+        entry</title>
       <para>The way that you create an OpenStack Networking endpoint
         entry depends on whether you are using the SQL catalog driver
         or the template catalog driver:</para>
-      <para>
-        <itemizedlist>
-          <listitem>
-            <para>If you are using the <emphasis>SQL
-              driver</emphasis>, run the following using these
-              parameters: given region ($REGION), IP address of the
-              OpenStack Networking server ($IP), and service ID
-              ($NEUTRON_SERVICE_ID, obtained in the above
-              step).</para>
-            <screen><prompt>$</prompt> <userinput>keystone endpoint-create --region $REGION --service-id $NEUTRON_SERVICE_ID --publicurl 'http://$IP:9696/' --adminurl 'http://$IP:9696/' --internalurl 'http://$IP:9696/'</userinput></screen>
-            <para>For example:</para>
-            <screen><prompt>$</prompt> <userinput>keystone endpoint-create --region myregion --service-id $NEUTRON_SERVICE_ID \
+      <itemizedlist>
+        <listitem>
+          <para>If you use the <emphasis>SQL driver</emphasis>, run
+            these command with these parameters: specified region
+            ($REGION), IP address of the OpenStack Networking server
+            ($IP), and service ID ($NEUTRON_SERVICE_ID, obtained in
+            the previous step).</para>
+          <screen><prompt>$</prompt> <userinput>keystone endpoint-create --region $REGION --service-id $NEUTRON_SERVICE_ID --publicurl 'http://$IP:9696/' --adminurl 'http://$IP:9696/' --internalurl 'http://$IP:9696/'</userinput></screen>
+          <para>For example:</para>
+          <screen><prompt>$</prompt> <userinput>keystone endpoint-create --region myregion --service-id $NEUTRON_SERVICE_ID \
 --publicurl "http://10.211.55.17:9696/" --adminurl "http://10.211.55.17:9696/" --internalurl "http://10.211.55.17:9696/" </userinput></screen>
-          </listitem>
-          <listitem>
-            <para>If you are using the <emphasis>template
-                driver</emphasis>, add the following content to your
-              OpenStack Compute catalog template file
-              (default_catalog.templates), using these parameters:
-              given region ($REGION) and IP address of the OpenStack
-              Networking server ($IP).</para>
-            <programlisting language="bash">catalog.$REGION.network.publicURL = http://$IP:9696
+        </listitem>
+        <listitem>
+          <para>If you are using the <emphasis>template
+              driver</emphasis>, add the following content to your
+            OpenStack Compute catalog template file
+            (default_catalog.templates), using these parameters: given
+            region ($REGION) and IP address of the OpenStack
+            Networking server ($IP).</para>
+          <programlisting language="bash">catalog.$REGION.network.publicURL = http://$IP:9696
 catalog.$REGION.network.adminURL = http://$IP:9696
 catalog.$REGION.network.internalURL = http://$IP:9696
 catalog.$REGION.network.name = Network Service</programlisting>
-            <para>For example:</para>
-            <programlisting language="bash">catalog.$Region.network.publicURL = http://10.211.55.17:9696
+          <para>For example:</para>
+          <programlisting language="bash">catalog.$Region.network.publicURL = http://10.211.55.17:9696
 catalog.$Region.network.adminURL = http://10.211.55.17:9696
 catalog.$Region.network.internalURL = http://10.211.55.17:9696
   catalog.$Region.network.name = Network Service</programlisting>
-          </listitem>
-        </itemizedlist>
-      </para>
+        </listitem>
+      </itemizedlist>
     </step>
     <step>
-      <title>Create the OpenStack Networking Service User</title>
+      <title>Create the OpenStack Networking service user</title>
       <para>You must provide admin user credentials that OpenStack
         Compute and some internal components of OpenStack Networking
         can use to access the OpenStack Networking API. The suggested
@@ -104,33 +101,33 @@ catalog.$Region.network.internalURL = http://10.211.55.17:9696
       </substeps>
     </step>
   </procedure>
-  <para>See the OpenStack Installation Guides for more details about
-    creating service entries and service users.</para>
-
+  <para>For information about how to create service entries and users.
+    see the <citetitle>OpenStack Installation Guide</citetitle> for
+    your distribution (<link xlink:href="docs.openstack.org"
+      >docs.openstack.org</link>).</para>
   <section xml:id="nova_with_neutron">
     <title>OpenStack Compute</title>
-    <para>If you use OpenStack Networking, you must not run OpenStack
-      the Compute <systemitem class="service"
-        >nova-network</systemitem> (unlike traditional OpenStack
-      Compute deployments). Instead, OpenStack Compute delegates most
-      network-related decisions to OpenStack Networking. Tenant-facing
-      API calls to manage objects like security groups and floating
-      IPs are proxied by OpenStack Compute to OpenStack Network APIs.
-      However, operator-facing tools (for example, <systemitem
-        class="service">nova-manage</systemitem>) are not proxied and
-       should not be used.</para>
+    <para>If you use OpenStack Networking, do not run the OpenStack
+      Compute <systemitem class="service">nova-network</systemitem>
+      service (like you do in traditional OpenStack Compute
+      deployments). Instead, OpenStack Compute delegates most
+      network-related decisions to OpenStack Networking. OpenStack
+      Compute proxies tenant-facing API calls to manage security
+      groups and floating IPs to Networking APIs. However,
+      operator-facing tools such as <systemitem class="service"
+        >nova-manage</systemitem>, are not proxied and should not be
+      used.</para>
     <warning>
-      <para>When you
-        configure networking, you must use this guide. Do not rely on OpenStack
-        Compute networking documentation or past experience with
-        OpenStack Compute. If a Nova CLI command or configuration
-        option related to networking is not mentioned in this guide,
-        the command is probably not supported for use with OpenStack
+      <para>When you configure networking, you must use this guide. Do
+        not rely on OpenStack Compute networking documentation or past
+        experience with OpenStack Compute. If a
+          <command>nova</command> command or configuration option
+        related to networking is not mentioned in this guide, the
+        command is probably not supported for use with OpenStack
         Networking. In particular, you cannot use CLI tools like
-          <systemitem class="service">nova-manage</systemitem> and
-          <systemitem class="service">nova</systemitem> to manage
-        networks or IP addressing, including both fixed and floating
-        IPs, with OpenStack Networking.</para>
+          <command>nova-manage</command> and <command>nova</command>
+        to manage networks or IP addressing, including both fixed and
+        floating IPs, with OpenStack Networking.</para>
     </warning>
     <note>
       <para>It is strongly recommended that you uninstall <systemitem
@@ -151,16 +148,17 @@ catalog.$Region.network.internalURL = http://10.211.55.17:9696
       configuration file.</para>
   </section>
   <section xml:id="nova_with_neutron_api">
-    <title>Networking API &amp; and Credential Configuration</title>
-    <para>Each time a VM is provisioned or deprovisioned in OpenStack
+    <title>Networking API and credential configuration</title>
+    <para>Each time a VM is provisioned or de-provisioned in OpenStack
       Compute, <systemitem class="service">nova-*</systemitem>
       services communicate with OpenStack Networking using the
       standard API. For this to happen, you must configure the
       following items in the <filename>nova.conf</filename> file (used
       by each <systemitem class="service">nova-compute</systemitem>
-      and <systemitem class="service">nova-api</systemitem> instance).</para>
+      and <systemitem class="service">nova-api</systemitem>
+      instance).</para>
     <table rules="all">
-      <caption>nova.conf API and Credential Settings</caption>
+      <caption>nova.conf API and credential settings</caption>
       <col width="20%"/>
       <col width="80%"/>
       <thead>
@@ -220,7 +218,7 @@ catalog.$Region.network.internalURL = http://10.211.55.17:9696
     </table>
   </section>
   <section xml:id="nova_config_security_groups">
-    <title>Security Group Configuration</title>
+    <title>Configure security groups</title>
     <para>The OpenStack Networking Service provides security group
       functionality using a mechanism that is more flexible and
       powerful than the security group capabilities built into
@@ -233,7 +231,7 @@ catalog.$Region.network.internalURL = http://10.211.55.17:9696
       following configuration values in
       <filename>nova.conf</filename>:</para>
     <table rules="all">
-      <caption>nova.conf Security Group Settings</caption>
+      <caption>nova.conf security group settings</caption>
       <col width="20%"/>
       <col width="80%"/>
       <thead>
@@ -261,7 +259,7 @@ catalog.$Region.network.internalURL = http://10.211.55.17:9696
     </table>
   </section>
   <section xml:id="nova_config_metadata">
-    <title>Metadata Configuration</title>
+    <title>Configure metadata</title>
     <para>The OpenStack Compute service allows VMs to query metadata
       associated with a VM by making a web request to a special
       169.254.169.254 address. OpenStack Networking supports proxying
@@ -272,7 +270,7 @@ catalog.$Region.network.internalURL = http://10.211.55.17:9696
     <para>To enable proxying the requests, you must update the
       following fields in <filename>nova.conf</filename>.</para>
     <table rules="all">
-      <caption>nova.conf Metadata Settings</caption>
+      <caption>nova.conf metadata settings</caption>
       <col width="20%"/>
       <col width="80%"/>
       <thead>
@@ -322,42 +320,42 @@ catalog.$Region.network.internalURL = http://10.211.55.17:9696
     </note>
   </section>
   <section xml:id="nova_with_neutron_vifplugging">
-    <title>Vif-plugging Configuration</title>
+    <title>Configure Vif-plugging</title>
     <para>When nova-compute creates a VM, it "plugs" each of the VM's
       vNICs into an OpenStack Networking controlled virtual switch,
       and informs the virtual switch about the OpenStack Networking
       port ID associated with each vNIC. Different OpenStack
-      Networking plugins may require different types of vif-plugging.
+      Networking plug-ins may require different types of vif-plugging.
       You must specify the type of vif-plugging to be used for each
         <systemitem class="service">nova-compute</systemitem> instance
       in the <filename>nova.conf</filename> file.</para>
-    <para>The following plugins support the "port bindings" API
+    <para>The following plug-ins support the "port bindings" API
       extension that allows Nova to query for the type of vif-plugging
       required: <itemizedlist>
         <listitem>
-          <para>OVS plugin</para>
+          <para>OVS plug-in</para>
         </listitem>
         <listitem>
-          <para>Linux Bridge Plugin</para>
+          <para>Linux Bridge plug-in</para>
         </listitem>
         <listitem>
-          <para>NEC Plugin</para>
+          <para>NEC plug-in</para>
         </listitem>
         <listitem>
-          <para>Big Switch Plugin</para>
+          <para>Big Switch plug-in</para>
         </listitem>
         <listitem>
-          <para>Hyper-V Plugin</para>
+          <para>Hyper-V plug-in</para>
         </listitem>
         <listitem>
-          <para>Brocade Plugin</para>
+          <para>Brocade plug-in</para>
         </listitem>
       </itemizedlist>
     </para>
-    <para>For these plugins, the default values in
+    <para>For these plug-ins, the default values in
         <filename>nova.conf</filename> are sufficient. For other
-      plugins, see the sub-sections below for vif-plugging
-      configuration, or consult external plugin documentation.</para>
+      plug-ins, see the sub-sections below for vif-plugging
+      configuration, or consult external plug-in documentation.</para>
     <note>
       <para>The vif-plugging configuration required for <systemitem
           class="service">nova-compute</systemitem> might vary even
@@ -366,8 +364,8 @@ catalog.$Region.network.internalURL = http://10.211.55.17:9696
         hosts are KVM while others are ESX).</para>
     </note>
     <section xml:id="nova_with_neutron_vifplugging_nvp">
-      <title>Vif-plugging with Nicira NVP Plugin</title>
-      <para>The choice of vif-plugging for the NVP Plugin depends on
+      <title>Vif-plugging with Nicira NVP plug-in</title>
+      <para>The choice of vif-plugging for the NVP plug-in depends on
         which version of libvirt you use. To check your libvirt
         version, use:</para>
       <screen><prompt>$</prompt> <userinput>libvirtd version</userinput></screen>
@@ -375,7 +373,7 @@ catalog.$Region.network.internalURL = http://10.211.55.17:9696
           <literal>libvirt_vif_driver</literal> value, depending on
         your libvirt version.</para>
       <table rules="all">
-        <caption>nova.conf libvirt Settings</caption>
+        <caption>nova.conf libvirt settings</caption>
         <col width="20%"/>
         <col width="80%"/>
         <thead>
@@ -440,6 +438,6 @@ neutron_metadata_proxy_shared_secret=foo
 
 # needed only for nova-compute and only for some plugins
 libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtHybridOVSBridgeDriver
-</computeroutput> </screen>
+</computeroutput></screen>
   </section>
 </section>

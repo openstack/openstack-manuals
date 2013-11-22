@@ -96,7 +96,7 @@
             </variablelist></para>
     </section>
     <section xml:id="config-API-cell">
-        <title>Configuring the API (top-level) cell</title>
+        <title>Configure the API (top-level) cell</title>
         <para>The compute API class must be changed in the API cell so that requests can be proxied
             through nova-cells down to the correct cell properly. Add the following to
                 <filename>nova.conf</filename> in the API
@@ -109,7 +109,7 @@ enable=True
 name=api</programlisting></para>
     </section>
     <section xml:id="config-child-cell">
-        <title>Configuring the child cells</title>
+        <title>Configure the child cells</title>
         <para>Add the following to <filename>nova.conf</filename> in the child cells, replacing
                 <replaceable>cell1</replaceable> with the name of each
             cell:<programlisting language="ini">[DEFAULT]
@@ -121,7 +121,7 @@ enable=True
 name=<replaceable>cell1</replaceable></programlisting></para>
     </section>
     <section xml:id="config-cell-db">
-        <title>Configuring the database in each cell</title>
+        <title>Configure the database in each cell</title>
         <para>Before bringing the services online, the database in each cell needs to be configured
             with information about related cells. In particular, the API cell needs to know about
             its immediate children, and the child cells need to know about their immediate agents.
@@ -215,20 +215,20 @@ rabbit_virtual_host=cell1_vhost</programlisting></para>
                                 cell to be scheduled for launching an instance.</para></listitem></itemizedlist>
                 </listitem>
             </itemizedlist>
-        </para>
+       </para>
         <para>Additionally, the following options are available for the cell scheduler:</para>
         <para>
             <itemizedlist>
                 <listitem>
                     <para><code>scheduler_retries</code> - Specifies how many times the scheduler
-                        will try to launch a new instance when no cells are available (default=10).</para>
+                        tries to launch a new instance when no cells are available (default=10).</para>
                 </listitem>
                 <listitem>
                     <para><code>scheduler_retry_delay</code> - Specifies the delay (in seconds)
                         between retries (default=2).</para>
                 </listitem>
             </itemizedlist>
-        </para>
+       </para>
         <para>As an admin user, you can also add a filter that directs builds to
             a particular cell. The <filename>policy.json</filename> file must
             have a line with <literal>"cells_scheduler_filter:TargetCellFilter"
@@ -238,7 +238,7 @@ rabbit_virtual_host=cell1_vhost</programlisting></para>
     <section xml:id="cell-config-optional-json">
         <title>Optional cell configuration</title>
         <para>Cells currently keeps all inter-cell communication data, including
-            usernames and passwords, in the database. This is undesirable and
+            user names and passwords, in the database. This is undesirable and
             unnecessary since cells data isn't updated very frequently. Instead,
             create a JSON file to input cells data specified via a
                 <code>[cells]cells_config</code> option. When specified, the

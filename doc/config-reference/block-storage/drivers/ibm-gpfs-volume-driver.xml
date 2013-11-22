@@ -1,7 +1,7 @@
 <section xml:id="GPFS-driver" xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
-    <title>IBM GPFS Volume Driver</title>
+    <title>IBM GPFS volume driver</title>
     <para>IBM General Parallel File System (GPFS) is a cluster file
         system that provides concurrent access to file systems from
         multiple nodes. The storage provided by these nodes can be
@@ -11,7 +11,7 @@
         based storage management, and space efficient file snapshot
         and clone operations.</para>
     <section xml:id="GPFS-driver-background">
-        <title>How the GPFS Driver Works</title>
+        <title>How the GPFS driver works</title>
         <para>The GPFS driver enables the use of GPFS in a fashion
             similar to that of the NFS driver. With the GPFS driver, instances do not
             actually access a storage device at the block level.
@@ -21,18 +21,18 @@
         <para>
             <note>
                 <para>GPFS software must be installed and running on
-                    nodes where Block Storge and Compute
-                    services are running in the OpenStack environment.
+                    nodes where Block Storage and Compute
+                    services run in the OpenStack environment.
                     A GPFS file system must also be created and
                     mounted on these nodes before starting the
                         <literal>cinder-volume</literal> service. The
                     details of these GPFS specific steps are covered
                     in <citetitle>GPFS: Concepts, Planning, and Installation Guide</citetitle>
                     and <citetitle>GPFS: Administration and Programming Reference</citetitle>.
-                    </para>
+                   </para>
             </note>
-        </para>
-        <para>Optionally, the Image service can be configured to store images on
+       </para>
+        <para>Optionally, the Image Service can be configured to store images on
             a GPFS file system. When a Block Storage volume is created from
             an image, if both image data and volume data reside in the
             same GPFS file system, the data from image file is moved
@@ -40,8 +40,8 @@
             optimization strategy.</para>
     </section>
     <section xml:id="GPFS-driver-options">
-        <title>Enabling the GPFS Driver</title>
-        <para>To use the Block Storage service with the GPFS driver, first set the
+        <title>Enable the GPFS driver</title>
+        <para>To use the Block Storage Service with the GPFS driver, first set the
                 <literal>volume_driver</literal> in
                 <filename>cinder.conf</filename>:</para>
         <programlisting>volume_driver = cinder.volume.drivers.gpfs.GPFSDriver</programlisting>
@@ -51,7 +51,7 @@
             href="../../../common/tables/cinder-storage_gpfs.xml"/>
         <note>
             <para>The <literal>gpfs_images_share_mode</literal>
-                flag is only valid if the Image service is configured to
+                flag is only valid if the Image Service is configured to
                 use GPFS with the <literal>gpfs_images_dir</literal> flag.
                 When the value of this flag is
                     <literal>copy_on_write</literal>, the paths
@@ -63,7 +63,7 @@
         </note>
     </section>
     <section xml:id="GPFS-volume-options">
-        <title>Volume Creation Options</title>
+        <title>Volume creation options</title>
         <para>It is possible to specify additional volume
             configuration options on a per-volume basis by specifying
             volume metadata. The volume is created using the specified
@@ -159,18 +159,18 @@
     </tbody>
 </table>
 <simplesect>
-    <title>Example Using Volume Creation Options</title>
+    <title>Example: Volume creation options</title>
     <para>This example shows the creation of a 50GB volume
-        with an ext4 filesystem labeled
+        with an ext4 file system labeled
         <literal>newfs</literal>and direct IO
         enabled:</para>
     <screen><prompt>$</prompt><userinput>cinder create --metadata fstype=ext4 fslabel=newfs dio=yes --display-name volume_1 50</userinput> </screen>
 </simplesect>
 </section>
 <section xml:id="GPFS-operational-notes">
-<title>Operational Notes for GPFS Driver</title>
+<title>Operational notes for GPFS driver</title>
 <simplesect>
-    <title>Snapshots and Clones</title>
+    <title>Snapshots and clones</title>
     <para>Volume snapshots are implemented using the GPFS file
         clone feature. Whenever a new snapshot is created, the
         snapshot file is efficiently created as a read-only

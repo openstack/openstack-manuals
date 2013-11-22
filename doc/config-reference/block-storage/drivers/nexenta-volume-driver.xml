@@ -1,138 +1,113 @@
-<section xml:id="nexenta-driver"
-         xmlns="http://docbook.org/ns/docbook"
-         xmlns:xi="http://www.w3.org/2001/XInclude"
-         xmlns:xlink="http://www.w3.org/1999/xlink"
-         version="5.0">
-    <title>Nexenta Drivers</title>
-    <para>
-        NexentaStor Appliance is NAS/SAN software platform designed for
-        building reliable and fast network storage arrays. The Nexenta Storage
-        Appliance uses ZFS as a disk management system. NexentaStor can serve
-        as a storage node for the OpenStack and for the virtual servers through
-        iSCSI and NFS protocols.
-    </para>
-    <para>
-        With the NFS option, every Compute volume is represented by a directory
-        designated to be its own file system in the ZFS file system. These file
-        systems are exported using NFS.
-    </para>
-    <para>
-        With either option some minimal setup is required to tell OpenStack
-        which NexentaStor servers are being used, whether they are supporting
-        iSCSI and/or NFS and how to access each of the servers.
-    </para>
-    <para>
-        Typically the only operation required on the NexentaStor servers is to
-        create the containing directory for the iSCSI or NFS exports. For NFS
-        this containing directory must be explicitly exported via NFS. There is
-        no software that must be installed on the NexentaStor servers; they are
-        controlled using existing management plane interfaces.
-    </para>
+<section xml:id="nexenta-driver" xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+    <title>Nexenta drivers</title>
+    <para>NexentaStor Appliance is NAS/SAN software platform designed
+        for building reliable and fast network storage arrays. The
+        Nexenta Storage Appliance uses ZFS as a disk management
+        system. NexentaStor can serve as a storage node for the
+        OpenStack and for the virtual servers through iSCSI and NFS
+        protocols.</para>
+    <para>With the NFS option, every Compute volume is represented by
+        a directory designated to be its own file system in the ZFS
+        file system. These file systems are exported using NFS.</para>
+    <para>With either option some minimal setup is required to tell
+        OpenStack which NexentaStor servers are being used, whether
+        they are supporting iSCSI and/or NFS and how to access each of
+        the servers.</para>
+    <para>Typically the only operation required on the NexentaStor
+        servers is to create the containing directory for the iSCSI or
+        NFS exports. For NFS this containing directory must be
+        explicitly exported via NFS. There is no software that must be
+        installed on the NexentaStor servers; they are controlled
+        using existing management plane interfaces.</para>
     <!-- iSCSI driver section -->
     <section xml:id="nexenta-iscsi-driver">
         <title>Nexenta iSCSI driver</title>
-        <para>
-            The Nexenta iSCSI driver allows you to use NexentaStor appliance to
-            store Compute volumes. Every Compute volume is represented by a
-            single zvol in a predefined Nexenta namespace. For every new volume
-            the driver creates a iSCSI target and iSCSI target group that are
-            used to access it from compute hosts.
-        </para>
-        <para>
-            The Nexenta iSCSI volume driver should work with all versions of
-            NexentaStor. The NexentaStor appliance must be installed and
-            configured according to the relevant Nexenta documentation. A pool
-            and an enclosing namespace must be created for all iSCSI volumes to
-            be accessed through the volume driver. This should be done as
-            specified in the release specific NexentaStor documentation.
-        </para>
-        <para>
-            The NexentaStor Appliance iSCSI driver is selected using the normal
-            procedures for one or multiple backend volume drivers. The
-            following items will need to be configured for each NexentaStor
-            appliance that the iSCSI volume driver will control:
-        </para>
+        <para>The Nexenta iSCSI driver allows you to use NexentaStor
+            appliance to store Compute volumes. Every Compute volume
+            is represented by a single zvol in a predefined Nexenta
+            namespace. For every new volume the driver creates a iSCSI
+            target and iSCSI target group that are used to access it
+            from compute hosts.</para>
+        <para>The Nexenta iSCSI volume driver should work with all
+            versions of NexentaStor. The NexentaStor appliance must be
+            installed and configured according to the relevant Nexenta
+            documentation. A pool and an enclosing namespace must be
+            created for all iSCSI volumes to be accessed through the
+            volume driver. This should be done as specified in the
+            release specific NexentaStor documentation.</para>
+        <para>The NexentaStor Appliance iSCSI driver is selected using
+            the normal procedures for one or multiple back-end volume
+            drivers. The following items will need to be configured
+            for each NexentaStor appliance that the iSCSI volume
+            driver will control:</para>
         <section xml:id="nexenta-iscsi-driver-options">
-            <title>
-                Enabling the Nexenta iSCSI driver and related options
-            </title>
-            <para>
-                The following table contains the options supported by the
-                Nexenta iSCSI driver.
-            </para>
-            <xi:include href="../../../common/tables/cinder-storage_nexenta_iscsi.xml" />
-            <para>
-                To use Compute with the Nexenta iSCSI driver, first set the
-                <code>volume_driver</code>:
-            </para>
+            <title>Enable the Nexenta iSCSI driver and related
+                options</title>
+            <para>The following table contains the options supported
+                by the Nexenta iSCSI driver.</para>
+            <xi:include
+                href="../../../common/tables/cinder-storage_nexenta_iscsi.xml"/>
+            <para>To use Compute with the Nexenta iSCSI driver, first
+                set the <code>volume_driver</code>:</para>
             <programlisting language="ini">volume_driver=cinder.volume.drivers.nexenta.iscsi.NexentaISCSIDriver
 </programlisting>
-            <para>
-                Then set value for <code>nexenta_host</code> and other
-                parameters from table if needed.
-            </para>
+            <para>Then set value for <code>nexenta_host</code> and
+                other parameters from table if needed.</para>
         </section>
     </section>
     <!-- / iSCSI driver section -->
     <!-- NFS driver section -->
     <section xml:id="nexenta-nfs-driver">
         <title>Nexenta NFS driver</title>
-        <para>
-            The Nexenta NFS driver allows you to use NexentaStor appliance to
-            store Compute volumes via NFS. Every Compute volume is represented
-            by a single NFS file within a shared directory.
-        </para>
-        <para>
-            While the NFS protocols standardize file access for users, they do
-            not standardize administrative actions such as taking snapshots or
-            replicating file systems. The Openstack Volume Drivers bring a
-            common interface to these operations. The Nexenta NFS driver
-            implements these standard actions using the ZFS management plane
-            that already is deployed on NexentaStor appliances.
-        </para>
-        <para>
-            The Nexenta NFS volume driver should work with all versions of
-            NexentaStor. The NexentaStor appliance must be installed and
-            configured according to the relevant Nexenta documentation. A
-            single parent file system must be created for all virtual disk
-            directories supported for OpenStack. This directory must be created
-            and exported on each NexentaStor appliance. This should be done as
-            specified in the release specific NexentaStor documentation.
-        </para>
+        <para>The Nexenta NFS driver allows you to use NexentaStor
+            appliance to store Compute volumes via NFS. Every Compute
+            volume is represented by a single NFS file within a shared
+            directory.</para>
+        <para>While the NFS protocols standardize file access for
+            users, they do not standardize administrative actions such
+            as taking snapshots or replicating file systems. The
+            Openstack Volume Drivers bring a common interface to these
+            operations. The Nexenta NFS driver implements these
+            standard actions using the ZFS management plane that
+            already is deployed on NexentaStor appliances.</para>
+        <para>The Nexenta NFS volume driver should work with all
+            versions of NexentaStor. The NexentaStor appliance must be
+            installed and configured according to the relevant Nexenta
+            documentation. A single parent file system must be created
+            for all virtual disk directories supported for OpenStack.
+            This directory must be created and exported on each
+            NexentaStor appliance. This should be done as specified in
+            the release specific NexentaStor documentation.</para>
         <section xml:id="nexenta-nfs-driver-options">
-            <title>Enabling the Nexenta NFS driver and related options</title>
-            <para>
-                To use Compute with the Nexenta NFS driver, first set the
-                <code>volume_driver</code>:
-            </para>
+            <title>Enable the Nexenta NFS driver and related
+                options</title>
+            <para>To use Compute with the Nexenta NFS driver, first
+                set the <code>volume_driver</code>:</para>
             <programlisting language="ini">
 volume_driver = cinder.volume.drivers.nexenta.nfs.NexentaNfsDriver
 </programlisting>
-            <para>
-                The following table contains the options supported by the
-                Nexenta NFS driver.
-            </para>
-            <xi:include href="../../../common/tables/cinder-storage_nexenta_nfs.xml" />
-            <para>
-                Add your list of Nexenta NFS servers to the file you specified
-                with the <code>nexenta_shares_config</code> option. For
-                example, if the value of this option was set to
-                <filename>/etc/cinder/nfs_shares</filename>, then:
-            </para>
+            <para>The following table contains the options supported
+                by the Nexenta NFS driver.</para>
+            <xi:include
+                href="../../../common/tables/cinder-storage_nexenta_nfs.xml"/>
+            <para>Add your list of Nexenta NFS servers to the file you
+                specified with the <code>nexenta_shares_config</code>
+                option. For example, if the value of this option was
+                set to <filename>/etc/cinder/nfs_shares</filename>,
+                then:</para>
             <screen>
 <prompt>#</prompt> <userinput>cat /etc/cinder/nfs_shares</userinput>
 <computeroutput>192.168.1.200:/storage http://admin:nexenta@192.168.1.200:2000
 192.168.1.201:/storage http://admin:nexenta@192.168.1.201:2000
 192.168.1.202:/storage http://admin:nexenta@192.168.1.202:2000</computeroutput></screen>
-            <para>
-                Comments are allowed in this file. They begin with a
-                <code>#</code>.
-            </para>
-            <para>
-                Each line in this file represents a NFS share. The first part
-                of the line is the NFS share URL, the second is the connection
-                URL to the NexentaStor Appliance.
-            </para>
+            <para>Comments are allowed in this file. They begin with a
+                    <code>#</code>.</para>
+            <para>Each line in this file represents a NFS share. The
+                first part of the line is the NFS share URL, the
+                second is the connection URL to the NexentaStor
+                Appliance.</para>
         </section>
     </section>
     <!-- / NFS driver section -->
