@@ -55,11 +55,18 @@
   database connection mysql://nova:<replaceable>NOVA_DBPASS</replaceable>@controller/nova</userinput></screen>
       <para os="ubuntu;debian">Edit the
           <filename>/etc/nova/nova.conf</filename> file and add these
-        lines to the <literal>[database]</literal> section:</para>
+        lines to the <literal>[database]</literal> and <literal>[keystone_authtoken]</literal> sections:</para>
       <programlisting os="ubuntu;debian" language="ini">...
 [database]
 # The SQLAlchemy connection string used to connect to the database
-connection = mysql://nova:NOVA_DBPASS@controller/nova</programlisting>
+connection = mysql://nova:NOVA_DBPASS@controller/nova
+[keystone_authtoken]
+auth_host = controller
+auth_port = 35357
+auth_protocol = http
+admin_tenant_name = service
+admin_user = nova
+admin_password = <replaceable>NOVA_PASS</replaceable></programlisting>
     </step>
     <step os="fedora;rhel;centos;opensuse;sles">
       <para>Run the <command>openstack-db</command> command to create
