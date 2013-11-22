@@ -113,16 +113,26 @@ auth_strategy=keystone
 [database]
 # The SQLAlchemy connection string used to connect to the database
 connection = mysql://nova:NOVA_DBPASS@controller/nova</programlisting>
+    </step>
+    <step os="fedora;rhel;centos;ubuntu;opensuse;sles">
+      <para os="fedora;rhel;centos">Configure the Compute Service to use the
+        Qpid message broker by setting these configuration keys:</para>
       <screen os="fedora;rhel;centos"><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf \
   DEFAULT rpc_backend nova.openstack.common.rpc.impl_qpid</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT qpid_hostname <replaceable>controller</replaceable></userinput></screen>
       <para os="ubuntu">Configure the Compute Service to use
         the RabbitMQ message broker by setting these configuration
-        keys in the <literal>DEFAULT</literal> configuration group of
+        keys in the <literal>[DEFAULT]</literal> configuration group of
         the <filename>/etc/nova/nova.conf</filename> file:</para>
       <programlisting os="ubuntu" language="ini">rpc_backend = nova.rpc.impl_kombu
 rabbit_host = controller
 rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
+      <para os="opensuse;sles">Configure the Compute Service to use the RabbitMQ message broker
+        by setting these configuration keys:</para>
+      <screen os="opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf \
+  DEFAULT rpc_backend nova.rpc.impl_kombu</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT rabbit_host controller</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT rabbit_password <replaceable>RABBIT_PASS</replaceable></userinput></screen>
     </step>
 
     <step>
@@ -154,26 +164,6 @@ vncserver_proxyclient_address=192.168.0.11</programlisting>
 ...
 glance_host=<replaceable>controller</replaceable></programlisting>
     </step>
-
-    <step os="ubuntu">
-        <para>Configure the Compute Service to use the RabbitMQ message broker
-        by adding the following configuration keys in the
-        <literal>DEFAULT</literal> configuration group of the
-        <filename>/etc/nova/nova.conf</filename> file:</para>
-        <programlisting language="ini">[DEFAULT]
-...
-rpc_backend = nova.rpc.impl_kombu
-rabbit_host = controller
-rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
-    </step>
-    <step os="opensuse;sles">
-        <para>Configure the Compute Service to use the RabbitMQ message broker
-        by setting the following configuration keys.</para>
-       <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf \
-  DEFAULT rpc_backend nova.rpc.impl_kombu</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT rabbit_host controller</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT rabbit_password <replaceable>RABBIT_PASS</replaceable></userinput></screen>
-   </step>
 
     <step>
       <para>Edit the <filename>/etc/nova/api-paste.ini</filename>

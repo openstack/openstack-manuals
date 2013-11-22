@@ -68,6 +68,32 @@ admin_tenant_name = service
 admin_user = nova
 admin_password = <replaceable>NOVA_PASS</replaceable></programlisting>
     </step>
+
+    <step os="fedora;rhel;centos">
+      <para>Set these configuration keys to configure Compute to use
+        the Qpid message broker:</para>
+      <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf \
+  DEFAULT rpc_backend nova.openstack.common.rpc.impl_qpid</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT qpid_hostname <replaceable>controller</replaceable></userinput></screen>
+    </step>
+    <step os="ubuntu">
+      <para>Configure the Compute Service to use the RabbitMQ message broker by
+        setting these configuration keys in the <literal>[DEFAULT]</literal>
+        configuration group of the <filename>/etc/nova/nova.conf</filename>
+        file:</para>
+      <programlisting language="ini">rpc_backend = nova.rpc.impl_kombu
+rabbit_host = controller
+rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
+    </step>
+    <step os="opensuse;sles">
+      <para>Set these configuration keys to configure Compute to use
+        the RabbitMQ message broker:</para>
+      <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf \
+  DEFAULT rpc_backend nova.rpc.impl_kombu</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT rabbit_host controller</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT rabbit_password <replaceable>RABBIT_PASS</replaceable></userinput></screen>
+    </step>
+
     <step os="fedora;rhel;centos;opensuse;sles">
       <para>Run the <command>openstack-db</command> command to create
         the Compute service database and tables and a
@@ -188,31 +214,6 @@ admin_password=<replaceable>NOVA_PASS</replaceable></programlisting>
   --publicurl=http://<replaceable>controller</replaceable>:8774/v2/%\(tenant_id\)s \
   --internalurl=http://<replaceable>controller</replaceable>:8774/v2/%\(tenant_id\)s \
   --adminurl=http://<replaceable>controller</replaceable>:8774/v2/%\(tenant_id\)s</userinput></screen>
-    </step>
-    <step os="fedora;rhel;centos">
-      <para>Set these configuration keys to configure Compute to use
-        the Qpid message broker:</para>
-      <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf \
-  DEFAULT rpc_backend nova.openstack.common.rpc.impl_qpid</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT qpid_hostname <replaceable>controller</replaceable></userinput>
-      </screen>
-    </step>
-    <step os="ubuntu">
-      <para>Set these configuration keys to configure Compute to use
-        the RabbitMQ message broker. Add them to the
-          <literal>DEFAULT</literal> configuration group in the
-          <filename>/etc/nova/nova.conf</filename> file.</para>
-      <programlisting language="ini">rpc_backend = nova.rpc.impl_kombu
-rabbit_host = controller
-rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
-    </step>
-    <step os="opensuse;sles">
-      <para>Set these configuration keys to configure Compute to use
-        the RabbitMQ message broker:</para>
-      <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf \
-  DEFAULT rpc_backend nova.rpc.impl_kombu</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT rabbit_host controller</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT rabbit_password <replaceable>RABBIT_PASS</replaceable></userinput></screen>
     </step>
     <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
       <para os="centos;fedora;rhel;opensuse;sles">Start Compute
