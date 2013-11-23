@@ -49,7 +49,7 @@
             <title>Hostname</title>
             <para>The installer may ask you to choose a hostname. The default
                 (<literal>ubuntu</literal>) is fine. We will install the cloud-init
-            packge later, which will set the hostname on boot when a new instance is provisioned
+            package later, which will set the hostname on boot when a new instance is provisioned
             using this image.</para>
 
         </simplesect>
@@ -153,9 +153,29 @@
         </simplesect>
         <simplesect>
         <title>Install cloud-init</title>
-        <para>The cloud-init package will automatically fetch the public key from the metadata
-            server and place the key in an account.
-            <screen><prompt>#</prompt> <userinput>apt-get install cloud-init</userinput></screen></para>
+        <para>
+          The <command>cloud-init</command> script starts on instance boot and will
+          search for a metadata provider to fetch a public key
+          from. The public key will be placed in the default user
+          account for the image.
+        </para>
+        <para>
+          Install the <package>cloud-init</package> package:
+        </para>
+        <screen><prompt>#</prompt> <userinput>apt-get install cloud-init</userinput></screen>
+        <para>
+          When building Ubuntu images <command>cloud-init</command> must be
+          explicitly configured for the metadata source in use. The OpenStack
+          metadata server emulates the EC2 metadata service used by images in
+          Amazon EC2.
+        </para>
+        <para>
+          To set the metadata source to be used by the image run the
+          <command>dpkg-reconfigure</command> command against the
+          <package>cloud-init</package> package. When prompted select the
+          <literal>EC2</literal> datasource:
+          <screen><prompt>#</prompt> <userinput>dpkg-reconfigure cloud-init</userinput></screen>
+        </para>
         <para>The account varies by distribution. On Ubuntu-based virtual machines, the
             account is called "ubuntu". On Fedora-based virtual machines, the account is called
             "ec2-user".</para>
