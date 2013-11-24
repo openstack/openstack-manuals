@@ -1169,50 +1169,58 @@ enabled = True</programlisting>
                 processing. Typically, the plug-in requires access to
                 a database for persistent storage (also similar to
                 other OpenStack services).</para>
-            <para>If your deployment uses a controller host to run
-                centralized Compute components, you can deploy the
-                Networking server on that same host. However,
-                Networking is entirely standalone and can be deployed
-                on its own host as well. Depending on your deployment,
-                Networking can also include these agents.</para>
-            <table rules="all">
-                <caption>Networking agents</caption>
-                <col width="30%"/>
-                <col width="70%"/>
-                <thead>
-                    <tr>
-                        <th>Agent</th>
-                        <th>Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><emphasis role="bold">plug-in
-                                agent</emphasis>
-                                (<literal>neutron-*-agent</literal>)</td>
-                        <td>Runs on each hypervisor to perform local
-                            vswitch configuration. The agent that runs
-                            depends on the plug-in that you use, and
-                            some plug-ins do not require an
-                            agent.</td>
-                    </tr>
-                    <tr>
-                        <td><emphasis role="bold">dhcp
-                                agent</emphasis>
-                                (<literal>neutron-dhcp-agent</literal>)</td>
-                        <td>Provides DHCP services to tenant networks.
-                            Some plug-ins use this agent.</td>
-                    </tr>
-                    <tr>
-                        <td><emphasis role="bold">l3 agent</emphasis>
-                                (<literal>neutron-l3-agent</literal>)</td>
-                        <td>Provides L3/NAT forwarding to provide
-                            external network access for VMs on tenant
-                            networks. Some plug-ins use this
-                            agent.</td>
-                    </tr>
-                </tbody>
-            </table>
+            <para>If your deployment uses a controller host to run centralized
+                Compute components, you can deploy the Networking server on that
+                same host. However, Networking is entirely standalone and can be
+                deployed on its own host as well. Depending on your deployment,
+                Networking can also include the following agents.</para>
+            <para>
+                <table rules="all">
+                    <caption>Networking agents</caption>
+                    <col width="30%"/>
+                    <col width="70%"/>
+                    <thead>
+                        <tr>
+                            <th>Agent</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><emphasis role="bold">plug-in
+                                   agent</emphasis>
+                                   (<literal>neutron-*-agent</literal>)</td>
+                            <td>Runs on each hypervisor to perform
+                                local vswitch configuration. The agent
+                                that runs depends on the plug-in that
+                                you use, and some plug-ins do not
+                                require an agent.</td>
+                        </tr>
+                        <tr>
+                            <td><emphasis role="bold">dhcp
+                                   agent</emphasis>
+                                   (<literal>neutron-dhcp-agent</literal>)</td>
+                            <td>Provides DHCP services to tenant
+                                networks. Some plug-ins use this
+                                agent.</td>
+                        </tr>
+                        <tr>
+                            <td><emphasis role="bold">l3
+                                   agent</emphasis>
+                                   (<literal>neutron-l3-agent</literal>)</td>
+                            <td>Provides L3/NAT forwarding to provide
+                                external network access for VMs on
+                                tenant networks. Some plug-ins use
+                                this agent.</td>
+                        </tr>
+                        <tr>
+                            <td><emphasis role="bold">l3 metering agent</emphasis>
+                                    (<literal>neutron-metering-agent</literal>)</td>
+                            <td>Provides L3 traffic measurements for tenant networks.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </para>
             <para>These agents interact with the main neutron process
                 through RPC (for example, rabbitmq or qpid) or through
                 the standard Networking API. Further:</para>
