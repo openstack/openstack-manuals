@@ -35,7 +35,7 @@
         </note>
         <para>The options for a configuration group must be defined in
             the group (or default options are used). All the standard
-            Cinder configuration options
+            Block Storage configuration options
                 (<literal>volume_group</literal>,
                 <literal>volume_driver</literal>, and so on) might be
             used in a configuration group. Configuration values in the
@@ -69,7 +69,7 @@ volume_backend_name=LVM_iSCSI_b</programlisting>
                 <literal>lvmdriver-3</literal> back-end.</para>
     </simplesect>
     <simplesect>
-        <title>Configure Cinder scheduler multi back-end</title>
+        <title>Configure Block Storage scheduler multi back-end</title>
         <para>You must enable the <option>filter_scheduler</option>
             option to use multi back-end. Filter scheduler acts in two
             steps:</para>
@@ -100,7 +100,7 @@ volume_backend_name=LVM_iSCSI_b</programlisting>
                     <filename>cinder.conf</filename> configuration
                 file:</para>
             <programlisting language="ini">scheduler_driver=cinder.scheduler.filter_scheduler.FilterScheduler</programlisting>
-            <para>While the Cinder Scheduler defaults to
+            <para>While the Block Storage Scheduler defaults to
                     <option>filter_scheduler</option> in Grizzly, this
                 setting is not required.</para>
         </note>
@@ -109,7 +109,7 @@ volume_backend_name=LVM_iSCSI_b</programlisting>
     <simplesect>
         <title>Volume type</title>
         <para>Before using it, a volume type has to be declared to
-            Cinder. This can be done by the following command:</para>
+            Block Storage. This can be done by the following command:</para>
         <screen><prompt>$</prompt> <userinput>cinder --os-username admin --os-tenant-name admin type-create lvm</userinput></screen>
         <para>Then, an extra-specification have to be created to link
             the volume type to a back-end name. Run this
@@ -133,7 +133,7 @@ volume_backend_name=LVM_iSCSI_b</programlisting>
         <note>
             <para>If a volume type points to a
                     <literal>volume_backend_name</literal> that does
-                not exist in the Cinder configuration, the
+                not exist in the Block Storage configuration, the
                     <literal>filter_scheduler</literal> returns an
                 error that it cannot find a valid host with the
                 suitable back-end.</para>

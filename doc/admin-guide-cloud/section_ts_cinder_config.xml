@@ -8,7 +8,7 @@
         configuration</title>
     <para>This section helps you solve some basic and common errors
         that you might encounter during setup and configuration of the
-        Cinder Block Storage Service. The focus here is on failed
+        Block Storage Service. The focus here is on failed
         creation of volumes. The most important thing to know is where
         to look in case of a failure.</para>
     <para>Two log files are especially helpful for solving volume
@@ -20,7 +20,7 @@
         issues. If you send a request to create a volume and it fails,
        review the <systemitem class="service"
             >cinder-api</systemitem> log to determine whether the request
-        made it to the Cinder service. If the request is logged
+        made it to the Block Storage service. If the request is logged
         and you see no errors or trace-backs, check the
             <systemitem class="service">cinder-volume</systemitem> log
         for errors or trace-backs.</para>
@@ -106,15 +106,15 @@
         <listitem>
             <para>Issues with <literal>state_path</literal> and
                     <literal>volumes_dir</literal> settings.</para>
-            <para>Cinder uses <command>tgtd</command> as the default
-                iscsi helper and implements persistent targets. This
-                means that in the case of a tgt restart or even a node
-                reboot your existing volumes on that node will be
+            <para>The OpenStack Block Storage uses <command>tgtd</command>
+                as the default iscsi helper and implements persistent targets.
+                This means that in the case of a tgt restart or even a
+                node reboot your existing volumes on that node will be
                 restored automatically with their original IQN.</para>
             <para>In order to make this possible the iSCSI target
                 information needs to be stored in a file on creation
                 that can be queried in case of restart of the tgt
-                daemon. By default, Cinder uses a
+                daemon. By default, Block Storage uses a
                     <literal>state_path</literal> variable, which if
                 installing with Yum or APT should be set to
                     <filename>/var/lib/cinder/</filename>. The next
