@@ -446,6 +446,12 @@ metadata_proxy_shared_secret = <replaceable>METADATA_PASS</replaceable></program
               must set the newly created <literal>br-ex</literal>
               interface to have the IP address that formerly belonged
               to <replaceable>EXTERNAL_INTERFACE</replaceable>.</para>
+            <warning os="ubuntu">
+              <para>Generic Receive Offload (GRO) should not be enabled on
+                    this interface as it can cause severe performance problems.
+                    It can be disabled with the ethtool utility.
+              </para>
+            </warning>
             <para os="rhel;fedora;centos">Edit the
                 <filename>/etc/sysconfig/network-scripts/ifcfg-EXTERNAL_INTERFACE</filename>
               file:</para>
