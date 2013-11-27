@@ -51,8 +51,7 @@ def patternmatch(directory, docs_location, rstfile):
         infile = open(directory + docs_location + rstfile)
     except IOError:
         #if file is a directory then recurse
-        #print("in IOError")
-        #print("directory:" + directory + ", docs_location: " + docs_location + ", rstfile: " + rstfile)
+        print("patternmatch:in IOError:directory:" + directory + ", docs_location: " + docs_location + ", rstfile: " + rstfile)
         os.mkdir(os.path.expanduser("./openstack-manuals/doc/training-guide/sources/" + directory + rstfile))
         walkdirectories(directory + docs_location, rstfile +"/")
         #docs_location and rstfile are both directories in this case
@@ -62,7 +61,7 @@ def patternmatch(directory, docs_location, rstfile):
     matchslash = re.search(r'(.*/.*/.*/.*)', directory)
     if matchslash:
         #if recursion match is good
-        #print("directory:" + directory + ", docs_location: " + docs_location + ", rstfile: " + rstfile)
+        print("patternmatch:matchslash:directory:" + directory + ", docs_location: " + docs_location + ", rstfile: " + rstfile)
         try:
             if outfilenamepart[-1]:
                 #TODO if not rst file, then copy image files
@@ -83,7 +82,7 @@ def patternmatch(directory, docs_location, rstfile):
                        directory[0] + "/" + docs_location + outfilename[-1] + ".xml", "w+")
         print(directory[0] + "/" + docs_location + outfilename[-1] + ".xml")
     else:
-        #print("directory:" + directory + ", docs_location: " + docs_location + ", rstfile: " + rstfile)
+        print("patternmatch:not matchslash:directory:" + directory + ", docs_location: " + docs_location + ", rstfile: " + rstfile)
         try:
             if outfilenamepart[-1]:
                 #TODO if not rst file, then copy image files
@@ -183,8 +182,8 @@ def patternmatch(directory, docs_location, rstfile):
 
 def walkdirectories(projectdirectory, sourcedirectory):
     #print("walkdirectories: " + projectdirectory + sourcedirectory)
-    #print("current directory is ")
-    #os.system("pwd")
+    print("walkdirectories:current directory is ")
+    os.system("pwd")
     for rstfile in os.listdir(projectdirectory + sourcedirectory):
         #walk files in the directory
         if rstfile.startswith('.'):
@@ -195,7 +194,7 @@ def walkdirectories(projectdirectory, sourcedirectory):
 
 def convert_rst_docbook5(repository_hash):
     for item in repository_hash:
-        #print("start convert rst: " + item + repository_hash[item])
+        print("convert_rst_docbook5:start convert rst: " + item + repository_hash[item])
         os.system("rm -R ./openstack-manuals/doc/training-guide/sources/" + item)
         try:
             #use try for when the remove directory fails
@@ -204,7 +203,7 @@ def convert_rst_docbook5(repository_hash):
             pass
         walkdirectories(item, repository_hash[item])
         #os.chdir("../")
-        #print("completed convert rst: " + item + repository_hash[item])
+        print("convert_rst_docbook5:completed convert rst: " + item + repository_hash[item])
 
 
 repository_hash = {'cinder/':"/doc/source/devref/"}
