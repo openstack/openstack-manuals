@@ -932,6 +932,20 @@ password = "PLUMgrid-director-admin-password"</programlisting>
                             (see the sub-sections).</para>
                     </step>
                 </procedure>
+                <important>
+                    <para>If you reboot a node that runs the DHCP agent, you must
+                        run the <command>neutron-ovs-cleanup</command> command before the
+                        <systemitem class="service">neutron-dhcp-agent</systemitem>
+                        service starts.</para>
+                    <para>On Red Hat-based systems, the <systemitem class="service">
+                        neutron-ovs-cleanup</systemitem> service runs the
+                        <command>neutron-ovs-cleanup</command>command automatically.
+                        However, on Debian-based systems such as Ubuntu, you must
+                        manually run this command or write your own system script
+                        that runs on boot before the <systemitem class="service">
+                        neutron-dhcp-agent</systemitem> service starts.</para>
+                </important>
+
                 <section xml:id="dhcp_agent_ovs">
                     <title>DHCP agent setup: OVS plug-in</title>
                     <para>These DHCP agent options are required in the
@@ -1072,6 +1086,18 @@ interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver</programlist
                         </step>
                     </procedure>
                 </para>
+                <important>
+                    <para>If you reboot a node that runs the L3 agent, you must run the
+                            <command>neutron-ovs-cleanup</command> command before the <systemitem
+                            class="service">neutron-l3-agent</systemitem> service starts.</para>
+                    <para>On Red Hat-based systems, the <systemitem class="service"
+                            >neutron-ovs-cleanup</systemitem> service runs the
+                            <command>neutron-ovs-cleanup</command> command automatically. However,
+                        on Debian-based systems such as Ubuntu, you must manually run this command
+                        or write your own system script that runs on boot before the <systemitem
+                            class="service">neutron-l3-agent</systemitem> service starts.</para>
+                </important>
+
             </section>
             <section xml:id="install_neutron-lbaas-agent">
                 <title>Configure LBaaS agent</title>
