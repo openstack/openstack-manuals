@@ -767,12 +767,76 @@ header: Date: Thu, 13 Sep 2012 20:27:36 GMT
                 availability zone:
                 <screen><prompt>#</prompt> <userinput>nova boot --image aee1d242-730f-431f-88c1-87630c0f07ba --flavor 1 --availability-zone nova:nova-1 testhost</userinput></screen></para>
         </section>
+        <section xml:id="admin-password-injection">
+            <?dbhtml stop-chunking?>
+            <title>Admin password injection</title>
+
+            <para>You can configure Compute to generate a random administrator (root) password and
+                inject that password into the instance. If this feature is enabled, a user can ssh
+                to an instance without an ssh keypair. The random password appears in the output of
+                the <command>nova boot</command> command. You can also view and set the admin
+                password from the Dashboard.</para>
+
+                <simplesect>
+                    <title>Dashboard</title>
+                <para>The Dashboard is configured by default to display the admin password and allow
+                    the user to modify it.</para>
+                    <para>If you do not want to support password injection, we
+                    recommend disabling the password fields by editing your
+                    Dashboard <filename>local_settings</filename> file (file
+                        location will vary by Linux distribution, on Fedora/RHEL/CentOS: <filename>
+                            /etc/openstack-dashboard/local_settings</filename>, on Ubuntu and Debian:
+                        <filename>/etc/openstack-dashboard/local_settings.py</filename> and on openSUSE: <filename
+                            >/usr/share/openstack-dashboard/openstack_dashboard/local/local_settings.py</filename>)
+                    <programlisting>OPENSTACK_HYPERVISOR_FEATURE = {
+...
+    'can_set_password': False,
+}</programlisting></para>
+                </simplesect>
+            <simplesect>
+                <title>Libvirt-based hypervisors (KVM, QEMU, LXC)</title>
+                <para>For hypervisors such as KVM that use the libvirt backend, admin password
+                    injection is disabled by default. To enable it, set the following option in
+                        <filename>/etc/nova/nova.conf</filename>:</para>
+                <para>
+                    <programlisting>[libvirt]
+inject_password=true</programlisting>
+                </para>
+                <para>When enabled, Compute will modify the password of the root account by editing
+                    the <filename>/etc/shadow</filename> file inside of the virtual machine
+                    instance.</para>
+                <note><para>Users will only be able to ssh to the instance using the admin password if:<itemizedlist>
+                            <listitem>
+                                <para>The virtual machine image is a Linux distribution</para>
+                            </listitem>
+                            <listitem>
+                                <para>The virtual machine has been configured to allow users to ssh
+                                    as the root user. This is not the case for <link
+                                        xlink:href="http://cloud-images.ubuntu.com/">Ubuntu cloud
+                                        images</link>, which disallow ssh to the root account by
+                                    default.</para>
+                            </listitem>
+                        </itemizedlist></para></note>
+            </simplesect>
+            <simplesect>
+                <title>XenAPI (XenServer/XCP)</title>
+                <para>Compute uses the XenAPI agent to inject passwords into guests when using the
+                    XenAPI hypervisor backend. The virtual machine image must be configured with the
+                    agent for password injection to work.</para>
+            </simplesect>
+            <simplesect>
+                <title>Windows images (all hypervisors)</title>
+                <para>To support the admin password for Windows virtual machines, you must configure
+                    the Windows image to retrieve the admin password on boot by installing an agent
+                    such as <link xlink:href="https://github.com/cloudbase/cloudbase-init"
+                        >cloudbase-init</link>.</para>
+            </simplesect>
+        </section>
         <section xml:id="section_instance-data">
             <?dbhtml stop-chunking?>
             <title>Instance-specific data</title>
-            <para>For each instance, you can specify certain data
-                including authorized_keys key injection, user-data,
-                metadata service, and file injection.</para>
+            <para>For each instance, you can specify certain data including authorized_keys, key
+                injection, user-data, metadata service, and file injection.</para>
             <para>For information, see the <link
                     xlink:href="http://docs.openstack.org/user-guide/content/"
                         ><citetitle>OpenStack End User
