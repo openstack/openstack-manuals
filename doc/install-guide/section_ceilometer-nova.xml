@@ -4,13 +4,13 @@
   xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
   <?dbhtml-stop-chunking?>
-  <title>Install the Compute agent for the Metering service</title>
+  <title>Install the Compute agent for the Telemetry service</title>
   <procedure>
-    <para>The Metering service consists of an API service, collector
+    <para>The Telemetry service consists of an API service, collector
       and a range of disparate agents. This procedure details the
       installation of the agent that runs on compute nodes.</para>
     <step>
-      <para>Install the Metering service on the compute node:</para>
+      <para>Install the Telemetry service on the compute node:</para>
       <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install ceilometer-agent-compute</userinput></screen>
       <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-ceilometer-compute</userinput></screen>
       <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-ceilometer-agent-compute</userinput></screen>
@@ -39,7 +39,7 @@ notification_driver=ceilometer.compute.nova_notifier</programlisting>
     </step>
     <step>
       <para>You must set the secret key that you defined previously.
-        The Metering service nodes share this key as a shared
+        The Telemetry service nodes share this key as a shared
         secret:</para>
       <screen os="fedora;rhel;centos;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf publisher_rpc metering_secret $ADMIN_TOKEN</userinput></screen>
       <para os="ubuntu;debian">Edit the
