@@ -7,8 +7,8 @@
       <para>OpenStack provides both public facing and private API endpoints. By default, OpenStack components use the publicly defined endpoints. The recommendation is to configure these components to use the API endpoint within the proper security domain.</para>
       <para>Services select their respective API endpoints based on the OpenStack service catalog.  The issue here is these services may not obey the listed public or internal API end point values. This can lead to internal management traffic being routed to external API endpoints.</para>
       <section xml:id="ch021_paste-and-middleware-idp40496">
-        <title>Configure Internal URLs in Keystone Catalog</title>
-        <para>The keystone catalog should be aware of your internal URLs. While this feature is not utilized by default, it may be leveraged through configuration. Additionally, it should be forward-compatible with expectant changes once this behavior becomes the default.</para>
+        <title>Configure Internal URLs in Identity Service Catalog</title>
+        <para>The Identity Service catalog should be aware of your internal URLs. While this feature is not utilized by default, it may be leveraged through configuration. Additionally, it should be forward-compatible with expectant changes once this behavior becomes the default.</para>
         <para>To register an internal URL for an endpoint:</para>
         <screen> 
 $ keystone endpoint-create \
@@ -21,7 +21,7 @@ $ keystone endpoint-create \
       <section xml:id="ch021_paste-and-middleware-idp43360">
         <title>Configure Applications for Internal URLs</title>
         <para>Some services can be forced to use specific API endpoints.  Therefore, it is recommended that each OpenStack service communicating to the API of another service must be explicitly configured to access the proper internal API endpoint.</para>
-        <para>Each project may present an inconsistent way of defining target API endpoints. Future releases of OpenStack seek to resolve these inconsistencies through consistent use of the Keystone catalog.</para>
+        <para>Each project may present an inconsistent way of defining target API endpoints. Future releases of OpenStack seek to resolve these inconsistencies through consistent use of the Identity Service catalog.</para>
         <section xml:id="ch021_paste-and-middleware-idp45520">
           <title>Configuration Example #1: Nova</title>
           <screen> 
