@@ -1,19 +1,21 @@
-Openstack Manuals
+OpenStack Manuals
 +++++++++++++++++
 
-This repository contains the cloud administrator documentation for the
-OpenStack project. It includes documentation for:
+This repository contains documentation for the OpenStack project.
 
- * OpenStack Compute
- * OpenStack Identity Service
- * OpenStack Image Service
- * OpenStack Object Storage
- * OpenStack Dashboard
- * OpenStack Network Connectivity
- * OpenStack Volumes
+For more details, see the `OpenStack Documentation wiki page
+<http://wiki.openstack.org/Documentation>`_.
 
-For more details, see the `OpenStack Documentation HowTo wiki page
-<http://wiki.openstack.org/Documentation/HowTo>`_.
+It includes these manuals:
+
+ * Installation Guides
+ * Cloud Administrator Guide
+ * High Availability Guide
+ * Security Guide
+ * Virtual Machine Image Guide
+ * End User Guide
+ * Admin User Guide
+ * Training Guides
 
 In addition to the guides, this repository contains:
 
