@@ -11,7 +11,7 @@
       and enables access to advanced features such as vMotion, High
       Availability, and Dynamic Resource Scheduling (DRS). This
       section describes how to configure VMware-based virtual machine
-      images for launch. vSphere versions 4.1 and later are
+      images for launch. vSphere versions 4.1 and newer are
       supported.</para>
     <para>The VMware vCenter driver enables <systemitem
         class="service">nova-compute</systemitem> to communicate with
@@ -102,18 +102,18 @@
       runs with the VMware vCenter driver:</para>
     <orderedlist>
       <listitem>
-        <para><emphasis role="bold">vCenter inventory</emphasis>: Make
+        <para><emphasis role="bold">vCenter inventory</emphasis>. Make
           sure that any vCenter used by OpenStack contains a single
           data center. This temporary limitation will be removed in a
           future Havana stable release.</para>
       </listitem>
       <listitem>
-        <para><emphasis role="bold">DRS</emphasis>: For any cluster
+        <para><emphasis role="bold">DRS</emphasis>. For any cluster
           that contains multiple ESX hosts, enable DRS and enable
             <firstterm>fully automated</firstterm> placement.</para>
       </listitem>
       <listitem>
-        <para><emphasis role="bold">Shared storage</emphasis>: Only
+        <para><emphasis role="bold">Shared storage</emphasis>. Only
           shared storage is supported and data stores must be shared
           among all hosts in a cluster. It is recommended to remove
           data stores not intended for OpenStack from clusters being
@@ -123,17 +123,17 @@
       </listitem>
       <listitem>
         <para><emphasis role="bold">Clusters and data
-            stores</emphasis>: Do not use OpenStack clusters and data
+            stores</emphasis>. Do not use OpenStack clusters and data
           stores for other purposes. If you do, OpenStack displays
           incorrect usage information.</para>
       </listitem>
       <listitem>
-        <para><emphasis role="bold">Networking</emphasis>: The
+        <para><emphasis role="bold">Networking</emphasis>. The
           networking configuration depends on the desired networking
           model. See <xref linkend="VMWare_networking"/>.</para>
       </listitem>
       <listitem>
-        <para><emphasis role="bold">Security groups</emphasis>: If you
+        <para><emphasis role="bold">Security groups</emphasis>. If you
           use the VMware driver with the OpenStack Networking Service
           running the NSX plug-in, security groups are supported. If
           you use <systemitem class="service"
@@ -141,20 +141,20 @@
           supported. Note: The NSX plug-in is the only plug-in validated for vSphere.</para>
       </listitem>
       <listitem>
-        <para><emphasis role="bold">VNC</emphasis>: Enable port range
-          5900 - 6105 (inclusive) for VNC connections on every ESX host in all
-          clusters under OpenStack control. For details on enabling
-          VNC, see <link
+        <para><emphasis role="bold">VNC</emphasis>. Enable port range
+          5900 - 6105 (inclusive) for VNC connections on every ESX
+          host in all clusters under OpenStack control. For details on
+          enabling VNC, see <link
             xlink:href="http://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;cmd=displayKC&amp;externalId=1246"
             >http://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;cmd=displayKC&amp;externalId=1246</link>.
-          Note: In addition to the default VNC port numbers (5900 to 6000)
-          specified in the above document, the following ports are also used:
-          6101, 6102 and 6105.</para>
+          Note: In addition to the default VNC port numbers (5900 to
+          6000) specified in the above document, the following ports
+          are also used: 6101, 6102, and 6105.</para>
       </listitem>
       <listitem>
-        <para><emphasis role="bold">Ephemeral Disks</emphasis>:
-          Ephemeral disks are not supported. This temporary limitation
-          will be addressed in a future Havana stable release.</para>
+        <para><emphasis role="bold">Ephemeral Disks</emphasis>. Ephemeral disks
+          are not supported. This temporary limitation will be addressed in a
+          future stable release.</para>
       </listitem>
     </orderedlist>
   </section>
@@ -167,9 +167,9 @@
       (DRS).</para>
     <section xml:id="VMWareVCDriver_configuration_options">
       <title>VMwareVCDriver configuration options</title>
-      <para>When you use the VMwareVCDriver (vCenter) with OpenStack
-        Compute, add the following VMware-specific config options to
-        the <filename>nova.conf</filename> file:</para>
+      <para>When you use the VMwareVCDriver (vCenter) with OpenStack Compute,
+        add the following VMware-specific configuration options to the
+          <filename>nova.conf</filename> file:</para>
 
       <programlisting language="ini">[DEFAULT]
 compute_driver=vmwareapi.VMwareVCDriver
@@ -339,9 +339,7 @@ precise-server-cloudimg-amd64-disk1.vmdk</userinput></screen>
         determine the image adapter type from an image file, use the
         following command and look for the
           <code>ddb.adapterType=</code> line:</para>
-      <para>
-        <screen><prompt>$</prompt> <userinput>head -20 &lt;vmdk file name></userinput></screen>
-     </para>
+      <screen><prompt>$</prompt> <userinput>head -20 &lt;vmdk file name></userinput></screen>
       <para>Assuming a preallocated disk type and an iSCSI lsiLogic
         adapter type, the following command uploads the VMDK
         disk:</para>
@@ -453,43 +451,48 @@ container_format=bare is_public=true \
         Image Service.</para>
     </section>
   </section>
-
   <section xml:id="VMWare_networking">
     <title>Networking with VMware vSphere</title>
-    <para>The VMware driver supports networking with both <systemitem
-        class="service">nova-network</systemitem> and the OpenStack
-      Networking Service.</para>
+    <para>The VMware driver supports networking with the <systemitem
+        class="service">nova-network</systemitem> service or the
+      OpenStack Networking Service. Depending on your installation,
+      complete these configuration steps before you provision
+      VMs:</para>
     <itemizedlist>
       <listitem>
-        <para>If using <systemitem class="service"
-            >nova-network</systemitem> with the FlatManager or
-          FlatDHCPManager, before provisioning VMs, create a port
-          group with the same name as the
-            <literal>flat_network_bridge</literal> value in
-            <filename>nova.conf</filename> (default is
-            <literal>br100</literal>). All VM NICs will be attached to
-          this port group. Ensure the flat interface of the node
-          running <systemitem class="service"
-            >nova-network</systemitem> has a path to this
-          network.</para>
+        <para><emphasis role="bold">The <systemitem class="service"
+              >nova-network</systemitem> service with the FlatManager or
+            FlatDHCPManager</emphasis>. Create a port group with the same name
+          as the <literal>flat_network_bridge</literal> value in the
+            <filename>nova.conf</filename> file. The default value is
+            <literal>br100</literal>.</para>
+        <para>All VM NICs are attached to this port group.</para>
+        <para>Ensure that the flat interface of the node that runs the
+            <systemitem class="service">nova-network</systemitem> service has a
+          path to this network.</para>
       </listitem>
       <listitem>
-        <para>If using <systemitem class="service"
-            >nova-network</systemitem> with the VlanManager, before
-          provisioning VMs, make sure the
-            <literal>vlan_interface</literal> configuration option is
-          set to match the ESX host interface that will handle
-          VLAN-tagged VM traffic. OpenStack Compute will automatically
-          create the corresponding port groups.</para>
+        <para><emphasis role="bold">The <systemitem class="service"
+              >nova-network</systemitem> service with the
+            VlanManager</emphasis>. Set the
+            <literal>vlan_interface</literal> configuration option to
+          match the ESX host interface that handles VLAN-tagged VM
+          traffic.</para>
+        <para>OpenStack Compute automatically creates the corresponding port
+          groups.</para>
       </listitem>
       <listitem>
-        <para>If using the OpenStack Networking Service, before
-          provisioning VMs, create a port group with the same name as
-          the <literal>vmware.integration_bridge</literal> value in
-            <filename>nova.conf</filename> (default is
-            <literal>br-int</literal>). All VM NICs will be attached
-          to this port group for management by the OpenStack
-          Networking plug-in.</para>
+        <para><emphasis role="bold">The OpenStack Networking
+            Service</emphasis>. If you use <acronym>OVS</acronym> as
+          the l2 agent, create a port group with the same name as the
+            <literal>DEFAULT.neutron_ovs_bridge</literal> value in the
+            <filename>nova.conf</filename> file. Otherwise, create a
+          port group with the same name as the
+            <literal>vmware.integration_bridge</literal> value in the
+            <filename>nova.conf</filename> file. In both cases, the
+          default value is <literal>br-int</literal>.</para>
+        <para>All VM NICs are attached to this port group for management by the
+          OpenStack Networking plug-in.</para>
       </listitem>
     </itemizedlist>
   </section>
