@@ -41,15 +41,15 @@
         scanning devices used by virtual machines.</para>
       <note>
         <para>You must add required physical volumes for LVM on the
-          Cinder host. Run the <command>pvdisplay</command> command to
-          get a list or required volumes.</para>
+          Block Storage host. Run the <command>pvdisplay</command>
+          command to get a list or required volumes.</para>
       </note>
       <para>Each item in the filter array starts with either an
-          "<literal>a</literal>" for accept, or an
-          "<literal>r</literal>" for reject. Physical volumes that are
-        needed on the Cinder host begin with "<literal>a</literal>".
-        The array must end with "<literal>r/.*/</literal>" to reject
-        any device not listed.</para>
+          <literal>a</literal> for accept, or an
+          <literal>r</literal> for reject. The physical volumes that
+        are required on the Block Storage host have names that begin
+        with <literal>a</literal>. The array must end with
+        "<literal>r/.*/</literal>" to reject any device not listed.</para>
       <para>In this example, <literal>/dev/sda1</literal> is the
         volume where the volumes for the operating system for the node
         reside, while <literal>/dev/sdb</literal> is the volume
@@ -75,17 +75,17 @@ filter = [ "a/sda1/", "a/sdb/", "r/.*/"]
             ><literal>[keystone_authtoken]</literal> settings</link>,
         and <link linkend="debconf-rabbitqm">RabbitMQ
           credentials</link>. Make sure to enter the same details as
-        for your Block Storage Service controller node.</para>
+          your Block Storage Service controller node.</para>
       <para>Another screen prompts you for the <systemitem
           class="library">volume-group</systemitem> to use. The Debian
         package configuration script detects every active volume
         group, provided that the <systemitem class="library"
-          >lvm2</systemitem> package is installed before Cinder (this
-        should be the case if you configured the volume group first,
+          >lvm2</systemitem> package is installed before Block Storage
+        (this should be the case if you configured the volume group first,
         as this guide recommends), and tries to use the first one it
         sees. If you have only one active volume group on your Block
-        Storage Service node, you need not manually enter its name in
-        when you install the <systemitem class="service"
+        Storage Service node, you do not need to manually enter its
+        name in when you install the <systemitem class="service"
           >cinder-volume</systemitem> package because it is detected
         automatically. If no <systemitem class="library"
           >volume-group</systemitem> is available when you install
