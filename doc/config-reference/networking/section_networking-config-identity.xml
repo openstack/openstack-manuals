@@ -319,109 +319,13 @@ catalog.$Region.network.internalURL = http://10.211.55.17:9696
           <filename>nova.conf</filename>.</para>
     </note>
   </section>
-  <section xml:id="nova_with_neutron_vifplugging">
-    <title>Configure Vif-plugging</title>
-    <para>When nova-compute creates a VM, it "plugs" each of the VM's
-      vNICs into an OpenStack Networking controlled virtual switch,
-      and informs the virtual switch about the OpenStack Networking
-      port ID associated with each vNIC. Different OpenStack
-      Networking plug-ins may require different types of vif-plugging.
-      You must specify the type of vif-plugging to be used for each
-        <systemitem class="service">nova-compute</systemitem> instance
-      in the <filename>nova.conf</filename> file.</para>
-    <para>The following plug-ins support the "port bindings" API
-      extension that allows Nova to query for the type of vif-plugging
-      required: <itemizedlist>
-        <listitem>
-          <para>OVS plug-in</para>
-        </listitem>
-        <listitem>
-          <para>Linux Bridge plug-in</para>
-        </listitem>
-        <listitem>
-          <para>NEC plug-in</para>
-        </listitem>
-        <listitem>
-          <para>Big Switch plug-in</para>
-        </listitem>
-        <listitem>
-          <para>Hyper-V plug-in</para>
-        </listitem>
-        <listitem>
-          <para>Brocade plug-in</para>
-        </listitem>
-      </itemizedlist>
-    </para>
-    <para>For these plug-ins, the default values in
-        <filename>nova.conf</filename> are sufficient. For other
-      plug-ins, see the sub-sections below for vif-plugging
-      configuration, or consult external plug-in documentation.</para>
-    <note>
-      <para>The vif-plugging configuration required for <systemitem
-          class="service">nova-compute</systemitem> might vary even
-        within a single deployment if your deployment includes
-        heterogeneous compute platforms (for example, some Compute
-        hosts are KVM while others are ESX).</para>
-    </note>
-    <section xml:id="nova_with_neutron_vifplugging_nvp">
-      <title>Vif-plugging with Nicira NVP plug-in</title>
-      <para>The choice of vif-plugging for the NVP plug-in depends on
-        which version of libvirt you use. To check your libvirt
-        version, use:</para>
-      <screen><prompt>$</prompt> <userinput>libvirtd version</userinput></screen>
-      <para>In the <filename>nova.conf</filename> file, update the
-          <literal>libvirt_vif_driver</literal> value, depending on
-        your libvirt version.</para>
-      <table rules="all">
-        <caption>nova.conf libvirt settings</caption>
-        <col width="20%"/>
-        <col width="80%"/>
-        <thead>
-          <tr>
-            <th>Version</th>
-            <th>Required Value</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><para>libvirt (version &gt;= 0.9.11)</para></td>
-            <td><para><literal>nova.virt.libvirt.vif.LibvirtOpenVswitchVirtualPortDriver</literal></para></td>
-          </tr>
-          <tr>
-            <td><para>libvirt (version &lt; 0.9.11)</para></td>
-            <td><para><literal>nova.virt.libvirt.vif.LibvirtOpenVswitchDriver</literal></para></td>
-          </tr>
-          <tr>
-            <td><para>ESX</para></td>
-            <td><para>No vif-plugging configuration is
-              required</para></td>
-          </tr>
-          <tr>
-            <td><para>XenServer</para></td>
-            <td><para><literal>nova.virt.xenapi.vif.XenAPIOpenVswitchDriver</literal></para></td>
-          </tr>
-        </tbody>
-      </table>
-      <para>For example:
-          <literal>libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtOpenVswitchDriver</literal>
-      </para>
-      <note>
-        <para>When using libvirt &lt; 0.9.11, one must also edit
-            <filename>/etc/libvirt/qemu.conf</filename>, uncomment the
-          entry for 'cgroup_device_acl', add the value '/dev/net/tun'
-          to the list of items for the configuration entry, and then
-          restart libvirtd.</para>
-      </note>
-    </section>
-  </section>
   <section xml:id="nova_with_neutron_example">
     <title>Example nova.conf (for <systemitem class="service"
         >nova-compute</systemitem> and <systemitem class="service"
         >nova-api</systemitem>)</title>
     <para>Example values for the above settings, assuming a cloud
       controller node running OpenStack Compute and OpenStack
-      Networking with an IP address of 192.168.1.2 and vif-plugging
-      using the LibvirtHybridOVSBridgeDriver.</para>
+      Networking with an IP address of 192.168.1.2.</para>
     <screen><computeroutput>network_api_class=nova.network.neutronv2.api.API
 neutron_url=http://192.168.1.2:9696
 neutron_auth_strategy=keystone
@@ -435,9 +339,6 @@ firewall_driver=nova.virt.firewall.NoopFirewallDriver
 
 service_neutron_metadata_proxy=true
 neutron_metadata_proxy_shared_secret=foo
-
-# needed only for nova-compute and only for some plugins
-libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtHybridOVSBridgeDriver
 </computeroutput></screen>
   </section>
 </section>
