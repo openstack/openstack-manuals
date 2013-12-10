@@ -271,6 +271,18 @@ rabbit_userid = guest
 rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
       </step>
 
+      <step os="rhel;centos;fedora">
+        <para>Configure access to the message queue. Edit the
+           <literal>DEFAULT</literal> section in <filename>/etc/neutron/neutron.conf</filename>,
+           assuming you're using QPID:</para>
+        <programlisting language="ini">
+rpc_backend = neutron.openstack.common.rpc.<replaceable>impl_qpid</replaceable>
+qpid_hostname = <replaceable>controller</replaceable>
+qpid_port = <replaceable>5672</replaceable>
+qpid_username = <replaceable>guest</replaceable>
+qpid_password = <replaceable>guest</replaceable></programlisting>
+      </step>
+
       <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
         <para>Configure Networking to connect to the database. Edit
           the <literal>[database]</literal> section in the same file,
