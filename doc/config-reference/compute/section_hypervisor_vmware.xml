@@ -13,8 +13,8 @@
       section describes how to configure VMware-based virtual machine
       images for launch. vSphere versions 4.1 and newer are
       supported.</para>
-    <para>The VMware vCenter driver enables <systemitem
-        class="service">nova-compute</systemitem> to communicate with
+    <para>The VMware vCenter driver enables the <systemitem
+      class="service">nova-compute</systemitem> service to communicate with
       a VMware vCenter server that manages one or more ESX host
       clusters. The driver aggregates the ESX hosts in each cluster to
       present one large hypervisor entity for each cluster to the
@@ -104,8 +104,8 @@
       <listitem>
         <para><emphasis role="bold">vCenter inventory</emphasis>. Make
           sure that any vCenter used by OpenStack contains a single
-          data center. This temporary limitation will be removed in a
-          future Havana stable release.</para>
+          data center. A future Havana stable release will address
+          this temporary limitation.</para>
       </listitem>
       <listitem>
         <para><emphasis role="bold">DRS</emphasis>. For any cluster
@@ -118,8 +118,8 @@
           among all hosts in a cluster. It is recommended to remove
           data stores not intended for OpenStack from clusters being
           configured for OpenStack. Currently, a single data store can
-          be used per cluster. This temporary limitation will be
-          removed in a future Havana stable release.</para>
+          be used per cluster. A future Havana stable release will
+          address this temporary limitation.</para>
       </listitem>
       <listitem>
         <para><emphasis role="bold">Clusters and data
@@ -134,27 +134,40 @@
       </listitem>
       <listitem>
         <para><emphasis role="bold">Security groups</emphasis>. If you
-          use the VMware driver with the OpenStack Networking Service
-          running the NSX plug-in, security groups are supported. If
-          you use <systemitem class="service"
-            >nova-network</systemitem>, security groups are not
-          supported. Note: The NSX plug-in is the only plug-in validated for vSphere.</para>
+          use the VMware driver with OpenStack Networking and the NSX
+          plug-in, security groups are supported. If you use
+            <systemitem class="service">nova-network</systemitem>,
+          security groups are not supported.</para>
+        <note><para>The NSX plug-in is the only plug-in that is validated for
+            vSphere.</para></note>
       </listitem>
       <listitem>
-        <para><emphasis role="bold">VNC</emphasis>. Enable port range
-          5900 - 6105 (inclusive) for VNC connections on every ESX
-          host in all clusters under OpenStack control. For details on
-          enabling VNC, see <link
+        <para><emphasis role="bold">VNC</emphasis>. The port range
+          5900 - 6105 (inclusive) is automatically enabled for VNC
+          connections on every ESX host in all clusters under
+          OpenStack control. For more information about using a VNC
+          client to connect to virtual machine, see <link
             xlink:href="http://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;cmd=displayKC&amp;externalId=1246"
             >http://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;cmd=displayKC&amp;externalId=1246</link>.
-          Note: In addition to the default VNC port numbers (5900 to
+          </para><note><para>In addition to the default VNC port numbers (5900 to
           6000) specified in the above document, the following ports
-          are also used: 6101, 6102, and 6105.</para>
+          are also used: 6101, 6102, and 6105.</para></note>
+        <para>You must modify the ESXi firewall configuration to allow
+          the VNC ports. Additionally, for the firewall modifications
+          to persist after a reboot, you must create a custom vSphere
+          Installation Bundle (VIB) which is then installed onto the
+          running ESXi host or added to a custom image profile used to
+          install ESXi hosts. For details about how to create a VIB
+          for persisting the firewall configuration modifications, see
+            <link
+            xlink:href="http://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;cmd=displayKC&amp;externalId=2007381"
+            >
+            http://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;cmd=displayKC&amp;externalId=2007381</link>.</para>
       </listitem>
       <listitem>
-        <para><emphasis role="bold">Ephemeral Disks</emphasis>. Ephemeral disks
-          are not supported. This temporary limitation will be addressed in a
-          future stable release.</para>
+        <para><emphasis role="bold">Ephemeral Disks</emphasis>.
+          Ephemeral disks are not supported. A future stable release
+          will address this temporary limitation.</para>
       </listitem>
     </orderedlist>
   </section>
@@ -614,9 +627,9 @@ host_username=&lt;ESXi host username&gt;
 host_password=&lt;ESXi host password&gt;
 wsdl_location=http://127.0.0.1:8080/vmware/SDK/wsdl/vim25/vimService.wsdl</programlisting>
       <para>Remember that you will have one <systemitem
-          class="service">nova-compute</systemitem> service per ESXi
-        host. It is recommended that this host run as a VM on the same
-        ESXi host that it manages.</para>
+          class="service">nova-compute</systemitem> service for each
+        ESXi host. It is recommended that this host run as a VM on the
+        same ESXi host that it manages.</para>
       <note>
         <para>Many <filename>nova.conf</filename> options are relevant
           to libvirt but do not apply to this driver.</para>
