@@ -235,30 +235,47 @@ IDENTIFIED BY '<replaceable>NEUTRON_DBPASS</replaceable>';</userinput></screen>
         <programlisting language="ini">net.ipv4.ip_forward=1
 net.ipv4.conf.all.rp_filter=0
 net.ipv4.conf.default.rp_filter=0</programlisting>
+        <para>
+          Use the <command>sysctl</command> command to ensure the changes made
+          to the <filename>/etc/sysctl.conf</filename> file take effect:
+        </para>
+        <screen><prompt>#</prompt> <userinput>sysctl -p</userinput></screen>
         <note>
-          <para>With system network-related configurations, you might
-            need to restart the network service to activate
-            configurations, as follows:</para>
+          <para>
+            It is recommended that the networking service is restarted after
+            changing values related to the networking configuration. This
+            ensures that all modified values take effect immediately:
+          </para>
           <screen os="ubuntu"><prompt>#</prompt> <userinput>service networking restart</userinput></screen>
           <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>service network restart</userinput></screen>
         </note>
       </step>
       <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
-        <para>Configure the core networking components. Edit the
-            <filename>/etc/neutron/neutron.conf</filename> file and
-          add these lines to the <literal>keystone_authtoken</literal>
-          section:</para>
-        <programlisting language="ini">[keystone_authtoken]
-auth_host = <replaceable>controller</replaceable>
+        <para>Configure Neutron to use Keystone for authentication by editing
+            the <filename>/etc/neutron/neutron.conf</filename> file.
+        </para>
+        <substeps>
+          <step>
+            <para>
+              Set the <literal>auth_strategy</literal> configuration key to
+              <literal>keystone</literal> in the <literal>DEFAULT</literal>
+              section of the file:
+            </para>
+            <programlisting language="ini">auth_strategy = keystone</programlisting>
+          </step>
+          <step>
+            <para>
+              Add these lines to the <literal>keystone_authtoken</literal>
+              section of the file:
+            </para>
+            <programlisting language="ini">auth_host = <replaceable>controller</replaceable>
 auth_port = 35357
 auth_protocol = http
 admin_tenant_name = service
 admin_user = neutron
 admin_password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
-        <para>To activate changes in the
-            <filename>/etc/sysctl.conf</filename> file, run the
-          following command:</para>
-        <screen><prompt>#</prompt> <userinput>sysctl -p</userinput></screen>
+          </step>
+        </substeps>
       </step>
 
       <step os="opensuse;sles;ubuntu">
