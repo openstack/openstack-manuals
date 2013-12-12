@@ -60,11 +60,13 @@ The root of the generated HTML documentation is::
 
 Contributing
 ============
+
 Our community welcomes all people interested in open source cloud computing,
-and there are no formal membership requirements. The best way to join the
-community is to talk with others online or at a meetup and offer contributions
-through our processes, the `OpenStack wiki <http://wiki.openstack.org>`_, blogs,
-or on IRC at ``#openstack`` on ``irc.freenode.net``.
+and encourages you to join the `OpenStack Foundation <http://www.openstack.org/join>`_.
+The best way to get involved with the community is to talk with others online 
+or at a meetup and offer contributions through our processes, the `OpenStack 
+wiki <http://wiki.openstack.org>`_, blogs, or on IRC at ``#openstack`` 
+on ``irc.freenode.net``.
 
 We welcome all types of contributions, from blueprint designs to documentation
 to testing to deployment scripts.
