@@ -980,9 +980,21 @@ admin_tenant_name = service
 admin_user = neutron
 admin_password = <replaceable>NEUTRON_PASS</replaceable>
 auth_url = http://<replaceable>controller</replaceable>:35357/v2.0
-auth_strategy = keystone
-rpc_backend = <replaceable>YOUR_RPC_BACKEND</replaceable>
-<replaceable>PUT_YOUR_RPC_BACKEND_SETTINGS_HERE_TOO</replaceable></programlisting>
+auth_strategy = keystone</programlisting>
+        <programlisting os="rhel;fedora;centos" language="ini">
+rpc_backend = neutron.openstack.common.rpc.impl_qpid
+qpid_hostname = <replaceable>controller</replaceable>
+qpid_port = 5672
+qpid_username = guest
+qpid_password = guest</programlisting>
+       <programlisting os="ubuntu;debian;opensuse;sles" language="ini">
+rpc_backend = neutron.openstack.common.rpc.impl_kombu
+rabbit_host = <replaceable>controller</replaceable>
+rabbit_port = 5672
+rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
+       <programlisting os="ubuntu;debian" language="ini">
+# Change the following settings if you're not using the default RabbitMQ configuration
+#rabbit_userid = guest</programlisting>
       </step>
       <step>
         <para>Edit the database URL under the
