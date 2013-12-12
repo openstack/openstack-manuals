@@ -241,6 +241,112 @@ iface eth1 inet static
       and change the <code>server</code> directive to use the
       controller node as internet time source.</para>
   </section>
+
+  <section xml:id="basics-passwords" os="ubuntu;rhel;fedora;centos;opensuse;sles">
+    <title>Passwords</title>
+
+    <para>The various OpenStack services and the required software
+    like the database and the Messaging server have to be password
+    protected. These passwords are needed when configuring a service
+    and then again to access the service. You have to choose a random
+    password while configuring the service and later remember to use
+    the same password when accessing it. To generate a list of passwords, you
+    can use the <application>pwgen</application> program
+    to generate a list of passwords or take the output of:
+    <screen><prompt>$</prompt> <userinput>openssl rand -hex 10</userinput></screen>
+    </para>
+
+    <para>This guide uses the convention that
+    <literal><replaceable>SERVICE_PASS</replaceable></literal> is
+    password to access the service <literal>SERVICE</literal> and
+    <literal><replaceable>SERVICE_DBPASS</replaceable></literal> is
+    the database password used by the service SERVICE to access the
+    database.
+    </para>
+
+    <para>The complete list of passwords you need to define in this guide are:
+    <table rules="all">
+      <caption>Passwords</caption>
+      <thead>
+        <tr>
+          <th>Password name</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Database password (no variable used)</td>
+          <td>Root password for the database</td>
+        </tr>
+        <tr os="ubuntu;opensuse;sles">
+          <td><literal><replaceable>RABBIT_PASS</replaceable></literal></td>
+          <td>Password of user guest of RabbitMQ</td>
+        </tr>
+        <tr>
+          <td><literal><replaceable>KEYSTONE_DBPASS</replaceable></literal></td>
+          <td>Database password of Identity service</td>
+        </tr>
+        <tr>
+          <td><literal><replaceable>ADMIN_PASS</replaceable></literal></td>
+          <td>Password of user <literal>admin</literal></td>
+        </tr>
+        <tr>
+          <td><literal><replaceable>GLANCE_DBPASS</replaceable></literal></td>
+          <td>Database password for Image Service</td>
+        </tr>
+        <tr>
+          <td><literal><replaceable>GLANCE_PASS</replaceable></literal></td>
+          <td>Password of Image Service user <literal>glance</literal></td>
+        </tr>
+        <tr>
+          <td><literal><replaceable>NOVA_DBPASS</replaceable></literal></td>
+          <td>Database password for Compute service</td>
+        </tr>
+        <tr>
+          <td><literal><replaceable>NOVA_PASS</replaceable></literal></td>
+          <td>Password of Compute service user <literal>nova</literal></td>
+        </tr>
+        <tr>
+          <td><literal><replaceable>DASH_DBPASS</replaceable></literal></td>
+          <td>Database password for the dashboard</td>
+        </tr>
+        <tr>
+          <td><literal><replaceable>CINDER_DBPASS</replaceable></literal></td>
+          <td>Database password for the Block Storage Service</td>
+        </tr>
+        <tr>
+          <td><literal><replaceable>CINDER_PASS</replaceable></literal></td>
+          <td>Password of Block Storage Service user <literal>cinder</literal></td>
+        </tr>
+        <tr>
+          <td><literal><replaceable>NEUTRON_DBPASS</replaceable></literal></td>
+          <td>Database password for the Networking service</td>
+        </tr>
+        <tr>
+          <td><literal><replaceable>NEUTRON_PASS</replaceable></literal></td>
+          <td>Password of Networking service user <literal>neutron</literal></td>
+        </tr>
+        <tr>
+          <td><literal><replaceable>HEAT_DBPASS</replaceable></literal></td>
+          <td>Database password for the Orchestration service</td>
+        </tr>
+        <tr>
+          <td><literal><replaceable>HEAT_PASS</replaceable></literal></td>
+          <td>Password of Orchestration service user <literal>heat</literal></td>
+        </tr>
+        <tr>
+          <td><literal><replaceable>CEILOMETER_DBPASS</replaceable></literal></td>
+          <td>Database password for the Telemetry service</td>
+        </tr>
+        <tr>
+          <td><literal><replaceable>CEILOMETER_PASS</replaceable></literal></td>
+          <td>Password of Telemetry service user <literal>ceilometer</literal></td>
+        </tr>
+      </tbody>
+    </table>
+    </para>
+  </section>
+
   <section xml:id="basics-database">
     <title>MySQL database</title>
     <para os="ubuntu;debian;rhel;fedora;centos">Most OpenStack
