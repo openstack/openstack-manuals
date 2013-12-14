@@ -27,18 +27,24 @@
         </listitem>
       </itemizedlist>
     </step>
+    <step os="ubuntu">
+      <para>
+        Install the required LVM packages, if they are not already installed:
+        <screen><prompt>#</prompt> <userinput>apt-get install lvm2</userinput></screen>
+      </para>
+    </step>
     <step>
-      <para os="centos;rhel;fedora;opensuse;sles;ubuntu">Create the
+      <para>Create the
         LVM physical and logical volumes. This guide assumes a second
         disk <literal>/dev/sdb</literal> that is used for this
-        purpose.</para>
+        purpose:</para>
       <screen><prompt>#</prompt> <userinput>pvcreate /dev/sdb</userinput>
 <prompt>#</prompt> <userinput>vgcreate cinder-volumes /dev/sdb</userinput></screen>
     </step>
     <step>
       <para>Add a filter entry to the devices section
           <filename>/etc/lvm/lvm.conf</filename> to keep LVM from
-        scanning devices used by virtual machines.</para>
+        scanning devices used by virtual machines:</para>
       <note>
         <para>You must add required physical volumes for LVM on the
           Block Storage host. Run the <command>pvdisplay</command>
@@ -62,8 +68,8 @@ filter = [ "a/sda1/", "a/sdb/", "r/.*/"]
     </step>
     <step>
       <para>After you configure the operating system, install the
-        appropriate packages for the Block Storage Service.</para>
-      <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install cinder-volume lvm2</userinput></screen>
+        appropriate packages for the Block Storage Service:</para>
+      <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install cinder-volume</userinput></screen>
       <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>yum install openstack-cinder openstack-utils openstack-selinux</userinput></screen>
       <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-cinder-volume</userinput></screen>
     </step>
@@ -108,26 +114,26 @@ admin_tenant_name=service
 admin_user=cinder
 admin_password=<replaceable>CINDER_PASS</replaceable></programlisting>
     </step>
-    <step>
+    <step os="centos;rhel;fedora;opensuse;sles;ubuntu">
       <para os="ubuntu">Configure the Block Storage Service to use the
         RabbitMQ message broker by setting the following configuration
         keys. They are found in the <literal>DEFAULT</literal>
         configuration group of the
-          <filename>/etc/cinder/cinder.conf</filename> file.</para>
-      <programlisting os="ubuntu;debian" language="ini">rpc_backend = cinder.openstack.common.rpc.impl_kombu
+          <filename>/etc/cinder/cinder.conf</filename> file:</para>
+      <programlisting os="ubuntu" language="ini">rpc_backend = cinder.openstack.common.rpc.impl_kombu
 rabbit_host = controller
 rabbit_port = 5672
 rabbit_userid = guest
 rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
       <para os="rhel;centos;fedora">Configure the Block Storage
-        Service to use Qpid as the message broker.</para>
+        Service to use Qpid as the message broker:</para>
       <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>openstack-config --set /etc/cinder/cinder.conf \
   DEFAULT rpc_backend cinder.openstack.common.rpc.impl_qpid</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/cinder/cinder.conf \
   DEFAULT qpid_hostname controller</userinput></screen>
 
       <para os="opensuse;sles">Configure the Block Storage Service to
-        use the RabbitMQ message broker.</para>
+        use the RabbitMQ message broker:</para>
       <screen os="opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/cinder/cinder.conf \
   DEFAULT rpc_backend cinder.openstack.common.rpc.impl_kombu</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/cinder/cinder.conf \
@@ -140,12 +146,12 @@ rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
 
     <step>
       <para>Configure the Block Storage Service on this node to use
-        the cinder database on the controller node.</para>
+        the Cinder database on the controller node:</para>
       <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/cinder/cinder.conf \
   database connection mysql://cinder:<replaceable>CINDER_DBPASS</replaceable>@<replaceable>controller</replaceable>/cinder</userinput></screen>
       <para os="ubuntu;debian">Edit
           <filename>/etc/cinder/cinder.conf</filename> and change the
-          <literal>[database]</literal> section.</para>
+          <literal>[database]</literal> section:</para>
       <programlisting os="ubuntu;debian" language="ini">[database]
 ...
 # The SQLAlchemy connection string used to connect to the
@@ -157,7 +163,7 @@ connection = mysql://cinder:CINDER_DBPASS@controller/cinder
 
 
     <step os="ubuntu">
-      <para>Restart the cinder service with its new settings.</para>
+      <para>Restart the cinder service with its new settings:</para>
       <screen><prompt>#</prompt> <userinput>service cinder-volume restart</userinput>
 <prompt>#</prompt> <userinput>service tgt restart</userinput></screen>
     </step>
@@ -173,7 +179,7 @@ connection = mysql://cinder:CINDER_DBPASS@controller/cinder
 
     <step os="rhel;fedora;centos;opensuse;sles">
       <para>Start the cinder services and configure them to start when
-        the system boots.</para>
+        the system boots:</para>
       <screen>
 <prompt>#</prompt> <userinput>service openstack-cinder-volume start</userinput>
 <prompt>#</prompt> <userinput>service tgtd start</userinput>
