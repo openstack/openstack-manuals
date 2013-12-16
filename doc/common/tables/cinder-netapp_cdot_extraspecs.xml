@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+        <para xmlns="http://docbook.org/ns/docbook" version="5.0">
+        <table rules="all">
+          <caption>Description of extra specs options for NetApp Unified Driver with Clustered Data ONTAP</caption>
+           <col width="30%"/>
+           <col width="15%"/>
+           <col width="55%"/>
+           <thead>
+              <tr>
+                  <td>Extra spec</td>
+                  <td>Type</td>
+                  <td>Description</td>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                  <td><literal>netapp:raid_type</literal></td>
+                  <td>String</td>
+                  <td>Limit the candidate volume list based on one of the following raid types: <literal>raid4, raid_dp</literal>.</td>
+              </tr>
+              <tr>
+                  <td><literal>netapp:disk_type</literal></td>
+                  <td>String</td>
+                  <td>Limit the candidate volume list based on one of the following disk types: <literal>ATA, BSAS, EATA, FCAL, FSAS, LUN, MSATA,
+                      SAS, SATA, SCSI, XATA, XSAS, or SSD.</literal></td>
+              </tr>
+              <tr>
+                  <td><literal>netapp:qos_policy_group</literal></td>
+                  <td>String</td>
+                  <td>Limit the candidate volume list based on the name of a QoS policy group, which defines measurable Service Level Objectives
+                      that apply to the storage objects with which the policy group is associated.</td>
+              </tr>
+              <tr>
+                  <td><literal>netapp_mirrored</literal><footnote xml:id="netapp-conflict-extra-specs"><para>If both the positive and negative specs for a pair are specified (e.g. <literal>netapp_dedup</literal> and <literal>netapp_nodedup</literal>) and set to the same value within a single <literal>extra_specs</literal> list, then neither spec will be utilized by the driver.</para></footnote></td>
+                  <td>Boolean</td>
+                  <td>Limit the candidate volume list to only the ones that are mirrored on the storage controller.</td>
+              </tr>
+              <tr>
+                  <td><literal>netapp_unmirrored</literal><footnoteref linkend="netapp-conflict-extra-specs"/></td>
+                  <td>Boolean</td>
+                  <td>Limit the candidate volume list to only the ones that are not mirrored on the storage controller.</td>
+              </tr>
+              <tr>
+                  <td><literal>netapp_dedup</literal><footnoteref linkend="netapp-conflict-extra-specs"/></td>
+                  <td>Boolean</td>
+                  <td>Limit the candidate volume list to only the ones that have deduplication enabled on the storage controller.</td>
+              </tr>
+              <tr>
+                  <td><literal>netapp_nodedup</literal><footnoteref linkend="netapp-conflict-extra-specs"/></td>
+                  <td>Boolean</td>
+                  <td>Limit the candidate volume list to only the ones that have deduplication disabled on the storage controller.</td>
+              </tr>
+              <tr>
+                  <td><literal>netapp_compression</literal><footnoteref linkend="netapp-conflict-extra-specs"/></td>
+                  <td>Boolean</td>
+                  <td>Limit the candidate volume list to only the ones that have compression enabled on the storage controller.</td>
+              </tr>
+              <tr>
+                  <td><literal>netapp_nocompression</literal><footnoteref linkend="netapp-conflict-extra-specs"/></td>
+                  <td>Boolean</td>
+                  <td>Limit the candidate volume list to only the ones that have compression disabled on the storage controller.</td>
+              </tr>
+              <tr>
+                  <td><literal>netapp_thin_provisioned</literal><footnoteref linkend="netapp-conflict-extra-specs"/></td>
+                  <td>Boolean</td>
+                  <td>Limit the candidate volume list to only the ones that support thin provisioning on the storage controller.</td>
+              </tr>
+              <tr>
+                  <td><literal>netapp_thick_provisioned</literal><footnoteref linkend="netapp-conflict-extra-specs"/></td>
+                  <td>Boolean</td>
+                  <td>Limit the candidate volume list to only the ones that support thick provisioning on the storage controller.</td>
+              </tr>
+       </tbody>
+        </table>
+        </para>
