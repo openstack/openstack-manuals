@@ -1182,16 +1182,26 @@ network_vlan_ranges = physnet1:1:4094</programlisting>
   <replaceable>EXTERNAL_INTERFACE_CIDR</replaceable></userinput></screen>
       </step>
       <step>
-        <para>Create one or more initial tenants. The following steps
-          use the <replaceable>DEMO_TENANT</replaceable>
-          tenant.</para>
+        <para>Create one or more initial tenants, for example:</para>
+        <screen><prompt>#</prompt> <userinput>keystone tenant-create --name <replaceable>DEMO_TENANT</replaceable></userinput></screen>
+        <para os="rhel;centos;fedora;opensuse;sles;ubuntu">
+           See <xref linkend="keystone-users"/> for further details.
+        </para>
+        <para os="debian">
+           See <xref linkend="keystone-install"/> for further details.
+        </para>
+      </step>
+      <step>
         <para>Create the router attached to the external network. This
           router routes traffic to the internal subnets as
-          appropriate. You can create it under the a given tenant:
+          appropriate. You can create it under a given tenant:
           Append <literal>--tenant-id</literal> option with a value of
             <replaceable>DEMO_TENANT_ID</replaceable> to the
           command.</para>
-        <screen><prompt>#</prompt> <userinput>neutron router-create ext-to-int</userinput></screen>
+        <para>Use the following to quickly get the <replaceable>DEMO_TENANT</replaceable> tenant-id:</para>
+        <screen><prompt>#</prompt> <userinput>keystone tenant-list | grep <replaceable>DEMO_TENANT</replaceable> | awk '{print $2;}'</userinput></screen>
+        <para>Then create the router:</para>
+        <screen><prompt>#</prompt> <userinput>neutron router-create ext-to-int --tenant-id <replaceable>DEMO_TENANT_ID</replaceable></userinput></screen>
       </step>
       <step>
         <para>Connect the router to <literal>ext-net</literal> by
