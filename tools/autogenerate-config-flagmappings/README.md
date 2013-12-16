@@ -4,7 +4,8 @@ autogenerate-config-docs
 Automatically generate configuration tables to document OpenStack.
 
 
-Dependencies: python-git (at least version 0.3.2 RC1), oslo.config
+Dependencies: python-git (at least version 0.3.2 RC1), oslo.config,
+	      openstack-doc-tools
 
 Setting up your environment
 ---------------------------
@@ -31,7 +32,7 @@ then, checkout the repository you are working with:
 
 and the tool itself:
 
-    $ git clone https://github.com/openstack/openstack-manuals.git
+    $ git clone https://github.com/openstack/openstack-doc-tools.git
 
 
 and finally, the dependencies for the product you are working with:
@@ -49,7 +50,7 @@ This tool is divided into three parts:
 1) Extraction of flags names
 eg
 
-    $ ./autohelp.py --action create -i flagmappings/nova.flagmappings -o names --path /repos/nova
+    $ openstack-doc-tools/autogenerate-config-docs/autohelp.py --action create -i nova.flagmappings -o names --path /repos/nova
 
 2) Grouping of flags
 
@@ -69,7 +70,7 @@ eg
 
 eg
 
-    $ ./autohelp.py --action create -i flagmappings/nova.flagmappings -o docbook --path /repos/nova
+    $ openstack-doc-tools/autogenerate-config-docs/autohelp.py --action create -i nova.flagmappings -o docbook --path /repos/nova
 
 A worked example - updating the docs for H2
 ----------------------------------------------------
@@ -79,9 +80,10 @@ update automatically generated tables - from scratch
  $ sudo apt-get install git python-pip python-dev    
  $ sudo pip install git-review GitPython       
  $ git clone git://github.com/openstack/openstack-manuals.git    
+ $ git clone git://github.com/openstack/openstack-doc-tools.git    
  $ cd openstack-manuals/    
  $ git review -d 35726    
- $ cd tools/autogenerate-config-docs/    
+ $ cd tools/autogenerate-config-flagmappings
  
 Now, cloning and installing requirements for nova, glance, quantum
     
@@ -95,11 +97,11 @@ This missed some requirements for nova, which were fixed by:
 
 Making the flag names update
 
-  ./autohelp.py -vvv --action update -i flagmappings/nova.flagmappings -o names --path ~/nova | more    
+  ../../openstack-doc-tools/autogenerate-config/autohelp.py -vvv --action update -i nova.flagmappings -o names --path ~/nova | more    
 
-At this point, seach through flagmappings/nova.flagmappings.new for anything labelled Unknown and fix,
+At this point, seach through nova.flagmappings.new for anything labelled Unknown and fix,
 once that is done use:     
      
- ./autohelp.py -vvv --action create -i flagmappings/nova.flagmappings -o docbook --path ~/nova    
+ ../../openstack-doc-tools/autogenerate-config/autohelp.py -vvv --action create -i nova.flagmappings -o docbook --path ~/nova    
 
 to generate the XML files and move those into the appropriate part ofthe git repo
