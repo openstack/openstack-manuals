@@ -126,9 +126,9 @@
   <para os="rhel;centos;fedora;opensuse;sles;ubuntu">Before you
     configure individual nodes for Networking, you must create the
     required OpenStack components: user, service, database, and one or
-    more endpoints. After you complete these steps on the controller node,
-    follow the instructions in this guide to set up OpenStack Networking
-    nodes.</para>
+    more endpoints. After you complete these steps on the controller
+    node, follow the instructions in this guide to set up OpenStack
+    Networking nodes.</para>
   <procedure os="rhel;centos;fedora;opensuse;sles;ubuntu">
     <step>
       <!-- TODO(sross): change this to use `openstack-db` once it supports Neutron -->
@@ -235,39 +235,33 @@ IDENTIFIED BY '<replaceable>NEUTRON_DBPASS</replaceable>';</userinput></screen>
         <programlisting language="ini">net.ipv4.ip_forward=1
 net.ipv4.conf.all.rp_filter=0
 net.ipv4.conf.default.rp_filter=0</programlisting>
-        <para>
-          Use the <command>sysctl</command> command to ensure the changes made
-          to the <filename>/etc/sysctl.conf</filename> file take effect:
-        </para>
+        <para>Use the <command>sysctl</command> command to ensure the
+          changes made to the <filename>/etc/sysctl.conf</filename>
+          file take effect:</para>
         <screen><prompt>#</prompt> <userinput>sysctl -p</userinput></screen>
         <note>
-          <para>
-            It is recommended that the networking service is restarted after
-            changing values related to the networking configuration. This
-            ensures that all modified values take effect immediately:
-          </para>
+          <para>It is recommended that the networking service is
+            restarted after changing values related to the networking
+            configuration. This ensures that all modified values take
+            effect immediately:</para>
           <screen os="ubuntu"><prompt>#</prompt> <userinput>service networking restart</userinput></screen>
           <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>service network restart</userinput></screen>
         </note>
       </step>
       <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
-        <para>Configure Neutron to use Keystone for authentication by editing
-            the <filename>/etc/neutron/neutron.conf</filename> file.
-        </para>
+        <para>To configure Neutron to use Keystone for authentication, edit the <filename>/etc/neutron/neutron.conf</filename>
+          file.</para>
         <substeps>
           <step>
-            <para>
-              Set the <literal>auth_strategy</literal> configuration key to
-              <literal>keystone</literal> in the <literal>DEFAULT</literal>
-              section of the file:
-            </para>
+            <para>Set the <literal>auth_strategy</literal>
+              configuration key to <literal>keystone</literal> in the
+                <literal>DEFAULT</literal> section of the file:</para>
             <programlisting language="ini">auth_strategy = keystone</programlisting>
           </step>
           <step>
-            <para>
-              Add these lines to the <literal>keystone_authtoken</literal>
-              section of the file:
-            </para>
+            <para>Add these lines to the
+                <literal>keystone_authtoken</literal> section of the
+              file:</para>
             <programlisting language="ini">auth_host = <replaceable>controller</replaceable>
 auth_port = 35357
 auth_protocol = http
@@ -277,7 +271,6 @@ admin_password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
           </step>
         </substeps>
       </step>
-
       <step os="opensuse;sles;ubuntu">
         <para>Configure the RabbitMQ access. Edit the
             <filename>/etc/neutron/neutron.conf</filename> file to
@@ -287,11 +280,11 @@ admin_password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
 rabbit_userid = guest
 rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
       </step>
-
       <step os="rhel;centos;fedora">
         <para>Configure access to the message queue. Edit the
-           <literal>DEFAULT</literal> section in <filename>/etc/neutron/neutron.conf</filename>,
-           assuming you're using QPID:</para>
+            <literal>DEFAULT</literal> section in
+            <filename>/etc/neutron/neutron.conf</filename>, assuming
+          you're using QPID:</para>
         <programlisting language="ini">
 rpc_backend = neutron.openstack.common.rpc.<replaceable>impl_qpid</replaceable>
 qpid_hostname = <replaceable>controller</replaceable>
@@ -299,7 +292,6 @@ qpid_port = <replaceable>5672</replaceable>
 qpid_username = <replaceable>guest</replaceable>
 qpid_password = <replaceable>guest</replaceable></programlisting>
       </step>
-
       <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
         <para>Configure Networking to connect to the database. Edit
           the <literal>[database]</literal> section in the same file,
@@ -352,31 +344,34 @@ admin_password=<replaceable>NEUTRON_PASS</replaceable></programlisting>
       </step>
       <step>
         <para>To allow virtual machines to access the Compute metadata
-          information, the Networking metadata agent must be enabled and
-          configured. The agent will act as a proxy for the Compute metadata
-          service.</para>
+          information, the Networking metadata agent must be enabled
+          and configured. The agent will act as a proxy for the
+          Compute metadata service.</para>
         <para>On the controller, edit the
-          <filename>/etc/nova/nova.conf</filename> file to define a secret key
-          that will be shared between the Compute Service and the Networking
-          metadata agent.</para>
-        <para os="debian;ubuntu">Add to the <literal>[DEFAULT]</literal> section:</para>
+            <filename>/etc/nova/nova.conf</filename> file to define a
+          secret key that will be shared between the Compute Service
+          and the Networking metadata agent.</para>
+        <para os="debian;ubuntu">Add to the
+            <literal>[DEFAULT]</literal> section:</para>
         <programlisting os="ubuntu;debian" language="ini">[DEFAULT]
 neutron_metadata_proxy_shared_secret = <replaceable>METADATA_PASS</replaceable>
 service_neutron_metadata_proxy = true</programlisting>
-        <para os="opensuse;sles;rhel;centos;fedora">Set the <literal>neutron_metadata_proxy_shared_secret</literal> key:</para>
+        <para os="opensuse;sles;rhel;centos;fedora">Set the
+            <literal>neutron_metadata_proxy_shared_secret</literal>
+          key:</para>
         <screen os="opensuse;sles;rhel;centos;fedora"><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT \
     neutron_metadata_proxy_shared_secret <replaceable>METADATA_PASS</replaceable></userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT \
     service_neutron_metadata_proxy true</userinput></screen>
-        <para>Restart the <systemitem class="service">nova-api</systemitem>
-          service:</para>
+        <para>Restart the <systemitem class="service"
+            >nova-api</systemitem> service:</para>
         <screen os="debian;ubuntu"><prompt>#</prompt> <userinput>service nova-api restart</userinput></screen>
         <screen os="centos;rhel;fedora;opensuse;sles"><prompt>#</prompt> <userinput>service openstack-nova-api restart</userinput></screen>
-
-        <para>On the network node, modify the metadata agent configuration.</para>
+        <para>On the network node, modify the metadata agent
+          configuration.</para>
         <para os="debian;ubuntu">Edit the
-          <filename>/etc/neutron/metadata_agent.ini</filename> file and modify
-          the <literal>[DEFAULT]</literal> section:</para>
+            <filename>/etc/neutron/metadata_agent.ini</filename> file
+          and modify the <literal>[DEFAULT]</literal> section:</para>
         <programlisting os="debian;ubuntu" language="ini">[DEFAULT]
 auth_url = http://controller:5000/v2.0
 auth_region = regionOne
@@ -385,7 +380,8 @@ admin_user = neutron
 admin_password = <replaceable>NEUTRON_PASS</replaceable>
 nova_metadata_ip = controller
 metadata_proxy_shared_secret = <replaceable>METADATA_PASS</replaceable></programlisting>
-        <para os="opensuse;sles;rhel;centos;fedora">Set the required keys:</para>
+        <para os="opensuse;sles;rhel;centos;fedora">Set the required
+          keys:</para>
         <screen os="opensuse;sles;rhel;centos;fedora"><prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/metadata_agent.ini DEFAULT \
     auth_url http://controller:5000/v2.0</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/metadata_agent.ini DEFAULT \
@@ -400,7 +396,11 @@ metadata_proxy_shared_secret = <replaceable>METADATA_PASS</replaceable></program
     nova_metadata_ip = controller</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/metadata_agent.ini DEFAULT \
     metadata_proxy_shared_secret <replaceable>METADATA_PASS</replaceable></userinput></screen>
-        <note><para>The value of <literal>auth_region</literal> is case-sensitive and must match the endpoint region defined in Keystone.</para></note>
+        <note>
+          <para>The value of <literal>auth_region</literal> is
+            case-sensitive and must match the endpoint region defined
+            in Keystone.</para>
+        </note>
       </step>
       <step>
         <para>Restart Networking:</para>
@@ -432,23 +432,24 @@ metadata_proxy_shared_secret = <replaceable>METADATA_PASS</replaceable></program
             <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install neutron-plugin-openvswitch-agent openvswitch-switch</userinput></screen>
             <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>yum install openstack-neutron-openvswitch</userinput></screen>
             <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-neutron-openvswitch-agent</userinput></screen>
-          <note os="ubuntu">
-            <para>On Ubuntu 12.04 LTS with GRE you must install
-              openvswitch-datapath-dkms and restart the service to
-              enable the GRE flow so that OVS 1.10 and higher is
-              used. Make sure you are running the OVS 1.10 kernel
-              module in addition to the OVS 1.10 userspace. Both the
-              kernel module and userspace are required for VXLAN
-              support. The error you see in the
-              <filename>/var/log/openvswitchovs-vswitchd.log</filename>
-              log file is "Stderr: 'ovs-ofctl: -1: negative values
-              not supported for in_port\n'". If you see this error,
-              make sure <command>modinfo openvswitch</command> shows
-              the right version. Also check the output from
-              <command>dmesg</command> for the version of the OVS
-              module being loaded.</para>
-          </note>
-          </step><step>
+            <note os="ubuntu">
+              <para>On Ubuntu 12.04 LTS with GRE you must install
+                openvswitch-datapath-dkms and restart the service to
+                enable the GRE flow so that OVS 1.10 and higher is
+                used. Make sure you are running the OVS 1.10 kernel
+                module in addition to the OVS 1.10 user space. Both
+                the kernel module and user space are required for
+                VXLAN support. The error you see in the
+                  <filename>/var/log/openvswitchovs-vswitchd.log</filename>
+                log file is "Stderr: 'ovs-ofctl: -1: negative values
+                not supported for in_port\n'". If you see this error,
+                make sure <command>modinfo openvswitch</command> shows
+                the right version. Also check the output from
+                  <command>dmesg</command> for the version of the OVS
+                module being loaded.</para>
+            </note>
+          </step>
+          <step>
             <para>Start Open vSwitch:</para>
             <screen os="debian;rhel;fedora;centos"><prompt>#</prompt> <userinput>service openvswitch start</userinput></screen>
             <screen os="opensuse;sles"><prompt>#</prompt> <userinput>service openvswitch-switch start</userinput></screen>
@@ -481,10 +482,10 @@ metadata_proxy_shared_secret = <replaceable>METADATA_PASS</replaceable></program
               interface to have the IP address that formerly belonged
               to <replaceable>EXTERNAL_INTERFACE</replaceable>.</para>
             <warning os="ubuntu">
-              <para>Generic Receive Offload (GRO) should not be enabled on
-                    this interface as it can cause severe performance problems.
-                    It can be disabled with the ethtool utility.
-              </para>
+              <para>Generic Receive Offload (GRO) should not be
+                enabled on this interface as it can cause severe
+                performance problems. It can be disabled with the
+                ethtool utility.</para>
             </warning>
             <para os="rhel;fedora;centos">Edit the
                 <filename>/etc/sysconfig/network-scripts/ifcfg-EXTERNAL_INTERFACE</filename>
@@ -785,9 +786,66 @@ admin_tenant_name=service
 admin_password=<replaceable>NEUTRON_PASS</replaceable></programlisting>
       </step>
       <step>
-        <para>You must <link
-            linkend="install-neutron.install-plugin-compute">configure
-            the networking plug-in</link>.</para>
+        <para>Configure OpenStack Compute to use OpenStack Networking
+          services. Edit the <filename>/etc/nova/nova.conf</filename>
+          file:</para>
+        <programlisting language="ini">network_api_class=nova.network.neutronv2.api.API
+neutron_url=http://<replaceable>controller</replaceable>:9696
+neutron_auth_strategy=keystone
+neutron_admin_tenant_name=service
+neutron_admin_username=neutron
+neutron_admin_password=<replaceable>NEUTRON_PASS</replaceable>
+neutron_admin_auth_url=http://<replaceable>controller</replaceable>:35357/v2.0
+linuxnet_interface_driver = nova.network.linux_net.LinuxOVSInterfaceDriver
+firewall_driver=nova.virt.firewall.NoopFirewallDriver
+security_group_api=neutron</programlisting>
+        <note>
+          <itemizedlist>
+            <listitem>
+              <para>No matter which firewall driver you chose when you
+                configured the network and compute nodes, you must
+                edit the <filename>/etc/nova/nova.conf</filename> file
+                to set the firewall driver to
+                  <literal>nova.virt.firewall.NoopFirewallDriver</literal>.
+                Because OpenStack Networking handles the firewall,
+                this statement instructs Compute to not use a
+                firewall.</para>
+            </listitem>
+            <listitem>
+              <para>If you want Networking to handle the firewall,
+                edit the
+                  <filename>/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>
+                file to set the <code>firewall_driver</code> option to
+                the firewall for the plug-in. For example, with
+                  <acronym>OVS</acronym>, edit the file as
+                follows:</para>
+              <programlisting language="ini">[securitygroup]
+# Firewall driver for realizing neutron security group function.
+firewall_driver=neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver</programlisting>
+            </listitem>
+            <listitem>
+              <para>If you do not want to use a firewall in Compute or
+                Networking, edit both configuration files and set
+                  <code>firewall_driver=nova.virt.firewall.NoopFirewallDriver</code>.
+                Also, edit the
+                  <filename>/etc/nova/nova.conf</filename> file and
+                comment out or remove the
+                  <code>security_group_api=neutron</code>
+                statement.</para>
+              <para>Otherwise, when you issue <command>nova
+                  list</command> commands, the <errortext>ERROR: The
+                  server has either erred or is incapable of
+                  performing the requested operation. (HTTP
+                  500)</errortext> error might be returned.</para>
+            </listitem>
+          </itemizedlist>
+        </note>
+      </step>
+      <step>
+        <para>Restart the <literal>nova-compute</literal> service to
+          reflect changes:</para>
+        <screen os="debian;ubuntu"><prompt>#</prompt> <userinput>service nova-compute restart</userinput></screen>
+        <screen os="centos;rhel;fedora;opensuse;sles"><prompt>#</prompt> <userinput>service openstack-nova-compute restart</userinput></screen>
       </step>
     </procedure>
     <section xml:id="install-neutron.install-plugin-compute">
@@ -1041,19 +1099,24 @@ security_group_api=neutron</programlisting>
               <emphasis>Nova</emphasis> firewall, and because Neutron
             handles the Firewall, you must tell Nova not to use
             one.</para>
-        <para>When Networking handles the firewall, the option <code>firewall_driver</code>
-            should be set according to the specified plugin. For example with <acronym>OVS</acronym>, edit the
+          <para>When Networking handles the firewall, the option
+              <code>firewall_driver</code> should be set according to
+            the specified plugin. For example with
+              <acronym>OVS</acronym>, edit the
               <filename>/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>
-              file:</para>
-            <programlisting language="ini">[securitygroup]
+            file:</para>
+          <programlisting language="ini">[securitygroup]
 # Firewall driver for realizing neutron security group function.
 firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver</programlisting>
-          <para>If you do not want to use a firewall in Compute or Networking, set
-              <code>firewall_driver=nova.virt.firewall.NoopFirewallDriver</code> in
-              both config files, and comment out or remove <code>security_group_api=neutron</code>
-              in the <filename>/etc/nova/nova.conf</filename> file, otherwise
-              you may encounter <errortext>ERROR: The server has either erred or is incapable of
-                  performing the requested operation. (HTTP 500)</errortext> when issuing
+          <para>If you do not want to use a firewall in Compute or
+            Networking, set
+              <code>firewall_driver=nova.virt.firewall.NoopFirewallDriver</code>
+            in both config files, and comment out or remove
+              <code>security_group_api=neutron</code> in the
+              <filename>/etc/nova/nova.conf</filename> file, otherwise
+            you may encounter <errortext>ERROR: The server has either
+              erred or is incapable of performing the requested
+              operation. (HTTP 500)</errortext> when issuing
               <command>nova list</command> commands.</para>
         </note>
       </step>
@@ -1196,21 +1259,20 @@ network_vlan_ranges = physnet1:1:4094</programlisting>
       <step>
         <para>Create one or more initial tenants, for example:</para>
         <screen><prompt>#</prompt> <userinput>keystone tenant-create --name <replaceable>DEMO_TENANT</replaceable></userinput></screen>
-        <para os="rhel;centos;fedora;opensuse;sles;ubuntu">
-           See <xref linkend="keystone-users"/> for further details.
-        </para>
-        <para os="debian">
-           See <xref linkend="keystone-install"/> for further details.
-        </para>
+        <para os="rhel;centos;fedora;opensuse;sles;ubuntu"> See <xref
+            linkend="keystone-users"/> for further details.</para>
+        <para os="debian"> See <xref linkend="keystone-install"/> for
+          further details.</para>
       </step>
       <step>
         <para>Create the router attached to the external network. This
           router routes traffic to the internal subnets as
-          appropriate. You can create it under a given tenant:
-          Append <literal>--tenant-id</literal> option with a value of
+          appropriate. You can create it under a given tenant: Append
+            <literal>--tenant-id</literal> option with a value of
             <replaceable>DEMO_TENANT_ID</replaceable> to the
           command.</para>
-        <para>Use the following to quickly get the <replaceable>DEMO_TENANT</replaceable> tenant-id:</para>
+        <para>Use the following to quickly get the
+            <replaceable>DEMO_TENANT</replaceable> tenant-id:</para>
         <screen><prompt>#</prompt> <userinput>keystone tenant-list | grep <replaceable>DEMO_TENANT</replaceable> | awk '{print $2;}'</userinput></screen>
         <para>Then create the router:</para>
         <screen><prompt>#</prompt> <userinput>neutron router-create ext-to-int --tenant-id <replaceable>DEMO_TENANT_ID</replaceable></userinput></screen>
