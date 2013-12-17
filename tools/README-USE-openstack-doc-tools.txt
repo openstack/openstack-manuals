@@ -1,5 +1,6 @@
-The tools directory has been moved to a separate
-repository openstack-doc-tools:
+With the exception of the autogenerate-config-flagmappings directory,
+the tools directory has been moved to a separate repository
+openstack-doc-tools:
 
 https://github.com/openstack/openstack-doc-tools
 
@@ -8,3 +9,7 @@ unless you need those for gating jobs.
 
 This directory will be removed once all the gating jobs are setup
 correctly.
+
+Exception: the directory autogenerate-config-flagmappings contains
+data that will stay here.
+
