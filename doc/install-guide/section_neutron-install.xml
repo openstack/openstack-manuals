@@ -1073,10 +1073,12 @@ admin_user = neutron
 admin_password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
       </step>
       <step>
-        <para>Configure the plug-in you chose when you set up the
-          network node. Follow the <link
-            linkend="install-neutron.install-plug-in-controller"
-            >instructions</link> and return here.</para>
+        <para>Configure the plug-in that is configured on the network
+          node on this node also.</para>
+        <para>Although this node does not run any agents that provide
+          underlying functionality, the <systemitem class="service"
+            >neutron-server</systemitem> service must know which
+          plug-in is running because it interfaces with the plug-in.</para>
       </step>
       <step>
         <para>Tell Nova about Neutron. Specifically, you must tell
@@ -1101,7 +1103,7 @@ security_group_api=neutron</programlisting>
             one.</para>
           <para>When Networking handles the firewall, the option
               <code>firewall_driver</code> should be set according to
-            the specified plugin. For example with
+            the specified plug-in. For example with
               <acronym>OVS</acronym>, edit the
               <filename>/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>
             file:</para>
