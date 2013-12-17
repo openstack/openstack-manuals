@@ -134,17 +134,18 @@ rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
     </step>
 
     <step>
-      <para>Set the <literal>my_ip</literal>,
-          <literal>vncserver_listen</literal>, and
-          <literal>vncserver_proxyclient_address</literal>
-        configuration keys to the IP address of the compute node on
-        the internal network:</para>
+      <para>Configure Compute to provide remote console access to instances.</para>
       <screen os="fedora;rhel;centos;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT my_ip 192.168.0.11</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT vncserver_listen 192.168.0.11</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT vncserver_proxyclient_address 192.168.0.11</userinput></screen>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT vnc_enabled True</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT vncserver_listen 0.0.0.0</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT vncserver_proxyclient_address 192.168.0.11</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf \
+  DEFAULT novncproxy_base_url http://<replaceable>controller</replaceable>:6080/vnc_auto.html</userinput></screen>
       <para os="ubuntu;debian">Edit
-          <filename>/etc/nova/nova.conf</filename> and add to the
-          <literal>[DEFAULT]</literal> section.</para>
+        <filename>/etc/nova/nova.conf</filename> and add the following
+        keys under the
+        <literal>[DEFAULT]</literal>
+        section:</para>
       <programlisting os="ubuntu;debian" language="ini">[DEFAULT]
 ...
 my_ip=192.168.0.11
