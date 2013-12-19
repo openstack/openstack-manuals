@@ -155,18 +155,21 @@ vncserver_proxyclient_address=192.168.0.10</programlisting>
 <prompt>#</prompt> <userinput>keystone user-role-add --user=nova --tenant=service --role=admin</userinput></screen>
     </step>
     <step>
-      <para>For Compute to use these credentials, you must edit the
-          <filename>nova.conf</filename> configuration file:</para>
-      <!-- FIXME don't think this is necessary - now happens in api-paste.ini -->
+      <para>Configure Compute to use these credentials with the Identity
+        Service running on the controller. Replace
+        <replaceable>NOVA_PASS</replaceable> with your Compute password.</para>
       <screen os="fedora;rhel;centos;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT auth_strategy keystone</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT auth_host <replaceable>controller</replaceable></userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT admin_user nova</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT admin_tenant_name service</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT admin_password <replaceable>NOVA_PASS</replaceable></userinput></screen>
-      <para os="ubuntu;debian">Edit the
-          <filename>/etc/nova/nova.conf</filename> file and add these
-        lines to the <literal>[DEFAULT]</literal> section:</para>
-      <programlisting os="ubuntu;debian" language="ini">...
+<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf keystone_authtoken auth_host <replaceable>controller</replaceable></userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf keystone_authtoken auth_protocol http</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf keystone_authtoken auth_port 35357</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf keystone_authtoken admin_user nova</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf keystone_authtoken admin_tenant_name service</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf keystone_authtoken admin_password <replaceable>NOVA_PASS</replaceable></userinput></screen>
+      <para os="ubuntu;debian">Edit the <literal>[DEFAULT]</literal> section
+        in the <filename>/etc/nova/nova.conf</filename> file to add this
+        key:
+      </para>
+      <programlisting os="ubuntu;debian" language="ini">
 [DEFAULT]
 ...
 auth_strategy=keystone</programlisting>
