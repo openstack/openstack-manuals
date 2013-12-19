@@ -626,7 +626,7 @@ tunnel_types = <replaceable>gre</replaceable>,<replaceable>vxlan</replaceable>
 l2_population = True</programlisting></para>
         </section>
         <section xml:id="ml2_l2pop_lb_scenarios">
-            <title>Scenario 1: L2 population with <emphasis>Linux Bridge</emphasis> agent</title>
+            <title>Scenario 2: L2 population with <emphasis>Linux Bridge</emphasis> agent</title>
             <para>We have to enable the l2 population extension on the agent side and we also have
                 to set the local_ip parameter and enable VXLAN in
                 <filename>ml2_conf.ini</filename>.<programlisting language="ini">[vxlan]
@@ -634,5 +634,16 @@ enable_vxlan = True
 local_ip = <replaceable>192.168.1.10</replaceable>
 l2_population = True</programlisting></para>
         </section>
+        <section xml:id="ml2_l2_security_group">
+            <title>Enable security group API</title>
+            <para>Since the ML2 plugin can concurrently support different L2 agents (or other mechanisms) with different configuration files,
+              the actual <option>firewall_driver</option> value in the <filename>ml2_conf.ini</filename> file does not matter in the server, but
+              <option>firewall_driver</option> must be set to a non-default value in the ml2 configuration to enable the securitygroup extension.
+To enable securitygroup API, edit the <filename>ml2_conf.ini</filename> file:<programlisting language="ini">[securitygroup]
+  firewall_driver = dummy</programlisting>
+Each L2 agent configuration file (such as <filename>ovs_neutron_plugin.ini</filename> or <filename>linuxbridge_conf.ini</filename>) should contain the appropriate <option>firewall_driver</option> value for that agent.
+To disable securitygroup API, edit the <filename>ml2_conf.ini</filename> file:<programlisting language="ini">[securitygroup]
+firewall_driver = neutron.agent.firewall.NoopFirewallDriver</programlisting>
+Also, each L2 agent configuration file (such as <filename>ovs_neutron_plugin.ini</filename> or <filename>linuxbridge_conf.ini</filename>) should contain this value in <option>firewall_driver</option> parameter for that agent.</para></section>
     </section>
 </section>
