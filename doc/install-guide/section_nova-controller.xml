@@ -44,29 +44,21 @@
           >API endpoint</link> registration. The <command>nova-manage
           db sync</command> command runs automatically.</para>
     </step>
+
     <step>
-      <para>Compute stores information in a database. The examples in
-        this guide use the MySQL database that is used by other
-        OpenStack services.</para>
-      <para>Configure the location of the database. Replace
-          <replaceable>NOVA_DBPASS</replaceable> with your Compute
-        service password:</para>
+      <para>Compute stores information in a database. In this guide, we
+        use a MySQL database on the controller node. Configure Compute
+        with the database location and credentials. Replace
+        <replaceable>NOVA_DBPASS</replaceable> with the password for the
+        database that you will create in a later step.</para>
       <screen os="fedora;rhel;centos;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf \
-  database connection mysql://nova:<replaceable>NOVA_DBPASS</replaceable>@controller/nova</userinput></screen>
-      <para os="ubuntu;debian">Edit the
-          <filename>/etc/nova/nova.conf</filename> file and add these
-        lines to the <literal>[database]</literal> and <literal>[keystone_authtoken]</literal> sections:</para>
-      <programlisting os="ubuntu;debian" language="ini">...
+  database connection mysql://nova:<replaceable>NOVA_DBPASS</replaceable>@<replaceable>controller</replaceable>/nova</userinput></screen>
+      <para os="ubuntu;debian">Edit the <literal>[database]</literal> section
+        in the <filename>/etc/nova/nova.conf</filename> file to modify this
+        key:</para>
+      <programlisting os="ubuntu;debian" language="ini">
 [database]
-# The SQLAlchemy connection string used to connect to the database
-connection = mysql://nova:NOVA_DBPASS@controller/nova
-[keystone_authtoken]
-auth_host = controller
-auth_port = 35357
-auth_protocol = http
-admin_tenant_name = service
-admin_user = nova
-admin_password = <replaceable>NOVA_PASS</replaceable></programlisting>
+connection = mysql://nova:<replaceable>NOVA_DBPASS</replaceable>@controller/nova</programlisting>
     </step>
 
     <step os="fedora;rhel;centos">
@@ -155,22 +147,36 @@ vncserver_proxyclient_address=192.168.0.10</programlisting>
 <prompt>#</prompt> <userinput>keystone user-role-add --user=nova --tenant=service --role=admin</userinput></screen>
     </step>
     <step>
-      <para>For the Compute Service to use these credentials, you must edit the
-          <filename>nova.conf</filename> configuration file:</para>
+      <para>Configure Compute to use these credentials with the Identity
+        Service running on the controller. Replace
+        <replaceable>NOVA_PASS</replaceable> with your Compute password.</para>
       <!-- FIXME don't think this is necessary - now happens in api-paste.ini -->
       <screen os="fedora;rhel;centos;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT auth_strategy keystone</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT auth_host <replaceable>controller</replaceable></userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT admin_user nova</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT admin_tenant_name service</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT admin_password <replaceable>NOVA_PASS</replaceable></userinput></screen>
-      <para os="ubuntu;debian">Edit the
-          <filename>/etc/nova/nova.conf</filename> file and add these
-        lines to the <literal>[DEFAULT]</literal> section:</para>
-      <programlisting os="ubuntu;debian" language="ini">...
+      <para os="ubuntu;debian">Edit the <literal>[DEFAULT]</literal> section
+        in the <filename>/etc/nova/nova.conf</filename> file to add this
+        key:
+      </para>
+      <programlisting os="ubuntu;debian" language="ini">
 [DEFAULT]
 ...
 auth_strategy=keystone</programlisting>
+      <para os="ubuntu;debian">Add these keys to the
+        <literal>[keystone_authtoken]</literal> section:</para>
+      <programlisting os="ubuntu;debian" language="ini">
+[keystone_authtoken]
+...
+auth_host = controller
+auth_port = 35357
+auth_protocol = http
+admin_tenant_name = service
+admin_user = nova
+admin_password = <replaceable>NOVA_PASS</replaceable></programlisting>
     </step>
+
     <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
       <para>Add the credentials to the
           <filename>/etc/nova/api-paste.ini</filename> file. Add these
