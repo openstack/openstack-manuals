@@ -7,484 +7,455 @@
     xml:id="ch_introduction-to-openstack-compute">
     <?dbhtml stop-chunking?>
     <title>Compute</title>
-    <para>The Compute service, code-named Nova, provides a tool that
-        lets you orchestrate a cloud. By using Compute, you can run
-        instances, manage networks, and manage access to the cloud
-        through users and projects. Compute provides software that
-        enables you to control an Infrastructure as a Service (IaaS)
-        cloud computing platform.</para>
-    <section xml:id="section_compute-intro">
-        <title>Introduction to Compute</title>
-        <para>Compute does not include any virtualization software;
-            rather it defines drivers that interact with underlying
-            virtualization mechanisms that run on your host operating
-            system, and exposes functionality over a web-based
-            API.</para>
-        <section xml:id="section_hypervisors">
-            <title>Hypervisors</title>
-            <para>Compute requires a hypervisor. Compute controls
-                hypervisors through an API server. To select a
-                hypervisor, you must prioritize and make decisions
-                based on budget, resource constraints, supported
-                features, and required technical specifications. The
-                majority of development is done with the KVM and
-                Xen-based hypervisors. For a list of features and
-                support across the hypervisors, see <link
-                    xlink:href="http://wiki.openstack.org/HypervisorSupportMatrix"
-                    >http://wiki.openstack.org/HypervisorSupportMatrix</link>.</para>
-            <para>With Compute, you can orchestrate clouds by using
-                multiple hypervisors in different availability zones.
-                You can use these types of virtualization standards
-                with Compute:</para>
-            <itemizedlist>
-                <listitem>
-                    <para><link
-                            xlink:href="https://wiki.openstack.org/wiki/Baremetal"
-                            >Baremetal</link></para>
-                </listitem>
-                <listitem>
-                    <para><link
-                            xlink:href="http://www.microsoft.com/en-us/server-cloud/hyper-v-server/default.aspx"
-                            >Hyper-V</link></para>
-                </listitem>
-                <listitem>
-                    <para>Kernel-based Virtual Machine (<link
-                            xlink:href="http://www.linux-kvm.org/page/Main_Page"
-                            >KVM</link>)</para>
-                </listitem>
-                <listitem>
-                    <para>Linux Containers (<link
-                            xlink:href="http://lxc.sourceforge.net/"
-                            >LXC</link>)</para>
-                </listitem>
-                <listitem>
-                    <para>Quick EMUlator (<link
-                            xlink:href="http://wiki.qemu.org/Manual"
-                            >QEMU</link>)</para>
-                </listitem>
-                <listitem>
-                    <para>User Mode Linux (<link
-                            xlink:href="http://user-mode-linux.sourceforge.net/"
-                            >UML</link>)</para>
-                </listitem>
-                <listitem>
-                    <para><link
-                            xlink:href="http://www.vmware.com/products/vsphere-hypervisor/support.html"
-                            >VMWare vSphere</link></para>
-                </listitem>
-                <listitem>
-                    <para><link
-                            xlink:href="http://www.xen.org/support/documentation.html"
-                            >Xen</link></para>
-                </listitem>
-            </itemizedlist>
-            <para>For more information, see <link
-                    xlink:href="http://docs.openstack.org/havana/config-reference/content/section_compute-hypervisors.html"
-                    >Hypervisors</link> in <citetitle>OpenStack
-                    Configuration Reference</citetitle>.</para>
+   <para>
+      The OpenStack Compute service allows you to control an
+      Infrastructure-as-a-Service (IaaS) cloud computing platform. It gives
+      you control over instances and networks, and allows you to manage
+      access to the cloud through users and projects.
+    </para>
+    <para>
+      Compute does not include any virtualization software. Instead, it
+      defines drivers that interact with underlying virtualization mechanisms
+      that run on your host operating system, and exposes functionality over
+      a web-based API.
+    </para>
+  <section xml:id="section_hypervisors">
+    <title>Hypervisors</title>
+      <para>
+        Compute controls hypervisors through an API server. Selecting the
+        best hypervisor to use can be difficult, and you must take budget,
+        resource constraints, supported features, and required technical
+        specifications into account. However, the majority of OpenStack
+        development is done on systems using KVM and Xen-based hypervisors.
+        For a detailed list of features and support across different
+        hypervisors, see <link xlink:href="http://wiki.openstack.org/HypervisorSupportMatrix">http://wiki.openstack.org/HypervisorSupportMatrix</link>.
+       </para>
+       <para>
+         You can also orchestrate clouds using multiple hypervisors in
+         different availability zones. The types of virtualization standards
+         that can be used with Compute include:
+       </para>
+         <itemizedlist>
+           <listitem>
+             <para>
+               <link xlink:href="https://wiki.openstack.org/wiki/Baremetal">Baremetal</link>
+             </para>
+           </listitem>
+           <listitem>
+             <para>
+               <link xlink:href="http://www.microsoft.com/en-us/server-cloud/hyper-v-server/default.aspx">Hyper-V</link>
+             </para>
+           </listitem>
+           <listitem>
+             <para>
+               <link xlink:href="http://www.linux-kvm.org/page/Main_Page">Kernel-based Virtual Machine (KVM)</link>
+             </para>
+           </listitem>
+           <listitem>
+             <para>
+               <link xlink:href="http://lxc.sourceforge.net/">Linux Containers (LXC)</link>
+             </para>
+           </listitem>
+           <listitem>
+             <para>
+               <link xlink:href="http://wiki.qemu.org/Manual">Quick Emulator (QEMU)</link>
+             </para>
+           </listitem>
+           <listitem>
+             <para>
+               <link xlink:href="http://user-mode-linux.sourceforge.net/">User Mode Linux (UML)</link>
+             </para>
+           </listitem>
+           <listitem>
+             <para>
+               <link xlink:href="http://www.vmware.com/products/vsphere-hypervisor/support.html">VMWare vSphere</link>
+             </para>
+           </listitem>
+           <listitem>
+             <para>
+               <link xlink:href="http://www.xen.org/support/documentation.html">Xen</link>
+             </para>
+           </listitem>
+         </itemizedlist>
+         <para>
+           For more information about hypervisors, see the <link xlink:href="http://docs.openstack.org/trunk/config-reference/content/section_compute-hypervisors.html">Hypervisors</link>
+           section in the <citetitle>OpenStack Configuration Reference</citetitle>.
+         </para>
         </section>
-        <section xml:id="section_users-and-projects">
-            <title>Tenants, users, and roles</title>
-            <para>The Compute system is designed to be used by many
-                different cloud computing consumers or customers, in
-                native terms, tenants on a shared system, using
-                role-based access assignments. Roles control the
-                actions that a user is allowed to perform.</para>
-            <para>While the original EC2 API supports users, Compute
-                has the concept of tenants. Tenants are isolated
-                resource containers that form the principal
-                organizational structure within the Compute service.
-                They consist of a separate VLAN, volumes, instances,
-                images, keys, and users. To specify the tenant, append
-                    <literal>:project_id</literal> to the access key.
-                If no tenant is specified in the API request, Compute
-                attempts to use a tenant with the same ID as the
-                user.</para>
-            <para>For tenants, quota controls can limit:</para>
-            <itemizedlist>
-                <listitem>
-                    <para>The number of volumes that can be
-                        launched.</para>
-                </listitem>
-                <listitem>
-                    <para>The number of processor cores and the amount
-                        of RAM that can be allocated.</para>
-                </listitem>
-                <listitem>
-                    <para>The number of floating IP addresses
-                        (assigned to any instance when it launches so
-                        the instance has the same publicly accessible
-                        IP addresses).</para>
-                </listitem>
-                <listitem>
-                    <para>The number of fixed IP addresses that are
-                        assigned to the same instance each time it
-                        boots. Fixed IP addresses are public or
-                        private, but are typically private for
-                        management purposes.</para>
-                </listitem>
-            </itemizedlist>
-            <para>Roles control the actions a user is allowed to
-                perform. In the default configuration, most actions do
-                not require a particular role, but the system
-                administrator can configure them by editing the
-                appropriate <filename>policy.json</filename> file that
-                maintains the rules. For example, a rule can be
-                defined so that a user cannot allocate a public IP
-                without the admin role. A tenant limits the users'
-                access to particular images, but each user is assigned
-                the username and password. Key pairs granting access
-                to an instance are enabled for each user, but quotas
-                are set for each tenant to control resource
-                consumption across available hardware
-                resources.</para>
-            <note>
-                <para>Earlier versions of OpenStack used the term
-                    "project" instead of "tenant." Because of this
-                    legacy terminology, some command-line tools use
-                        <parameter>--project_id</parameter> when a
-                    tenant ID is expected.</para>
-            </note>
+      <section xml:id="section_users-and-projects">
+        <title>Tenants, users, and roles</title>
+        <para>
+          The Compute system is designed to be used by different consumers
+          in the form of tenants on a shared system, and role-based access
+          assignments. Roles control the actions that a user is allowed to
+          perform.
+        </para>
+        <para>
+          Tenants are isolated resource containers that form the principal
+          organizational structure within the Compute service. They
+          consist of an individual VLAN, and volumes, instances, images,
+          keys, and users. A user can specify the tenant by appending
+          <literal>:project_id</literal> to their access key. If no
+          tenant is specified in the API request, Compute attempts to
+          use a tenant with the same ID as the user.
+        </para>
+        <para>
+          For tenants, quota controls are available to limit the:
+        </para>
+        <itemizedlist>
+          <listitem>
+            <para>number of volumes that may be launched.</para>
+          </listitem>
+          <listitem>
+            <para>number of processor cores and the amount of RAM
+              that can be allocated.</para>
+          </listitem>
+          <listitem>
+            <para>floating IP addresses assigned to any instance
+              when it launches. This allows instances to have the
+              same publicly accessible IP addresses.</para>
+          </listitem>
+          <listitem>
+            <para>fixed IP addresses assigned to the same instance
+              when it launches. This allows instances to have the
+              same publicly or privately accessible IP addresses.
+            </para>
+          </listitem>
+        </itemizedlist>
+          <para>
+            Roles control the actions a user is allowed to perform. By
+            default, most actions do not require a particular role, but
+            you can configure them by editing the
+            <filename>policy.json</filename> file for user roles. For
+            example, a rule can be defined so that a user must have the
+            <parameter>admin</parameter> role in order to be able to
+            allocate a public IP address.
+          </para>
+          <para>
+            A tenant limits users' access to particular images. Each
+            user is assigned a username and password. Keypairs granting
+            access to an instance are enabled for each user, but quotas
+            are set, so that each tenant can control resource consumption
+            across available hardware resources.
+          </para>
+          <note>
+            <para>
+              Earlier versions of OpenStack used the term
+              <systemitem class="service">project</systemitem> instead
+              of <systemitem class="service">tenant</systemitem>.
+              Because of this legacy terminology, some command-line
+              tools use <parameter>--project_id</parameter> where you
+              would normally expect to enter a tenant ID.
+            </para>
+          </note>
         </section>
-        <?hard-pagebreak?>
-        <section xml:id="section_images-and-instances">
-            <title>Images and instances</title>
-            <para>Images are disk images which are templates for
-                virtual machine file systems. The Image Service,
-                Glance, is responsible for the storage and management
-                of images within OpenStack.</para>
-            <para>The <link
-                    xlink:href="http://docs.openstack.org/havana/config-reference/content/ch_configuring-openstack-image-service.html"
-                    >OpenStack Image Service</link> section in the
-                    <citetitle>OpenStack Configuration
-                    Reference</citetitle> explains image configuration
-                options, while the <link
-                    xlink:href="http://docs.openstack.org/user-guide-admin/content/cli_manage_images.html"
-                    >Manage images</link> section in the
-                    <citetitle>OpenStack Admin User Guide</citetitle>
-                describes how to create and troubleshoot
-                images.</para>
-            <para>Instances are the individual virtual machines
-                running on physical compute nodes. Compute manages
-                instances. Any number of instances may be started from
-                the same image. Each instance is run from a copy of
-                the base image so runtime changes made by an instance
-                do not change the image it is based on. Snapshots of
-                running instances may be taken, creating a new image
-                based on the current disk state of a particular
-                instance.</para>
-            <para>When starting an instance, a user must select a set
-                of virtual resources known as a flavor. Flavors define
-                how many virtual CPUs an instance has and the amount
-                of RAM and size of its ephemeral disks. OpenStack
-                provides a number of predefined flavors that cloud
-                administrators may edit or add to. Users must select
-                from the set of available flavors defined on their
-                cloud. For more information about flavors, see the
-                    <link
-                    xlink:href="http://docs.openstack.org/trunk/openstack-ops/content/flavors.html"
-                    >Flavors</link> section in <citetitle>OpenStack
-                    Operations Guide</citetitle>.</para>
-            <para>A user can add and remove additional resources from
-                running instances, such as persistent volume storage
-                and public IP address. This example shows the life
-                cycle of a typical virtual system within an OpenStack
-                cloud. It features the <systemitem class="service"
-                    >cinder-volume</systemitem> service, which
-                provides persistent block storage, as opposed to the
-                ephemeral storage provided by the instance
-                flavor.</para>
-            <simplesect xml:id="initial-instance-state">
-                <title>Initial state</title>
-                <para>This diagram shows the system state prior to
-                    launching an instance. The image store fronted by
-                    the Image Service, Glance, has a number of
-                    predefined images. Inside the cloud, a compute
-                    node contains available vCPU, memory, and local
-                    disk resources. Additionally, the <systemitem
-                        class="service">cinder-volume</systemitem>
-                    service provides a number of predefined
-                    volumes.</para>
-                <figure xml:id="initial-instance-state-figure">
-                    <title>Base image state with no running
-                        instances</title>
-                    <mediaobject>
-                        <imageobject>
-                            <imagedata
-                                fileref="../common/figures/instance-life-1.png"
-                            />
-                        </imageobject>
-                    </mediaobject>
-                </figure>
-            </simplesect>
-            <simplesect xml:id="running-instance-state">
-                <title>Launch an instance</title>
-                <para>To launch an instance, the user selects an
-                    image, a flavor, and other optional attributes. In
-                    this case, the selected flavor provides a root
-                    volume (as all flavors do) labeled
-                        <literal>vda</literal> in the diagram and
-                    additional ephemeral storage labeled
-                        <literal>vdb</literal> in the diagram. The
-                    user has also opted to map a volume from the
-                        <systemitem class="service"
-                        >cinder-volume</systemitem> store to the third
-                    virtual disk, <literal>vdc</literal>, on this
-                    instance.</para>
-                <figure xml:id="run-instance-state-figure">
-                    <title>Create instance from image and run time
-                        state</title>
-                    <mediaobject>
-                        <imageobject>
-                            <imagedata
-                                fileref="../common/figures/instance-life-2.png"
-                            />
-                        </imageobject>
-                    </mediaobject>
-                </figure>
-                <para>The OpenStack system copies the base image from
-                    the image store to the local disk. The local disk
-                    is the first disk (<literal>vda</literal>) that
-                    the instance accesses. Using small images results
-                    in a faster start up of your instances as less
-                    data is copied across the network. The system also
-                    creates a new empty disk image to present as the
-                    second disk (<literal>vdb</literal>). The second
-                    disk is an empty disk with an ephemeral life
-                    because it is destroyed when you delete an
-                    instance. The compute node attaches to the
-                    requested <systemitem class="service"
-                        >cinder-volume</systemitem> by using iSCSI and
-                    maps this to the third disk (vdc) as requested.
-                    The vCPU and memory resources are provisioned and
-                    the instance is booted from the first drive. The
-                    instance runs and changes data on the disks
-                    indicated in red in the diagram.</para>
-                <para>The details of this scenario can vary,
-                    particularly the type of back-end storage and the
-                    network protocols that are used. One variant worth
-                    mentioning here is that the ephemeral storage used
-                    for volumes vda and vdb in this example may be
-                    backed by network storage rather than local
-                    disk.</para>
-            </simplesect>
-            <simplesect xml:id="end-instance-state">
-                <title>End state</title>
-                <para>Once the instance has served its purpose and is
-                    deleted, all state is reclaimed, except the
-                    persistent volume. The ephemeral storage is
-                    purged. Memory and vCPU resources are released.
-                    The image remains unchanged throughout.</para>
-                <figure xml:id="end-instance-state-figure">
-                    <title>End state of image and volume after
-                        instance exits</title>
-                    <mediaobject>
-                        <imageobject>
-                            <imagedata
-                                fileref="../common/figures/instance-life-3.png"
-                            />
-                        </imageobject>
-                    </mediaobject>
-                </figure>
-            </simplesect>
-        </section>
+    <section xml:id="section_images-and-instances">
+        <title>Images and instances</title>
+        <para> Disk images provide templates for virtual machine file systems.
+            The Glance service manages storage and management of images. </para>
+        <para> Instances are the individual virtual machines that run on
+            physical compute nodes. Users can launch any number of instances
+            from the same image. Each launched instance runs from a copy of the
+            base image so that any changes made to the instance do not affect
+            the base image. You can take snapshots of running instances to
+            create an image based on the current disk state of a particular
+            instance. The Compute services manages instances.</para>
+        <para> For more information about creating and troubleshooting images,
+            see the <link
+                xlink:href="http://docs.openstack.org/user-guide-admin/content/cli_manage_images.html"
+                >Manage Images</link> section of the <citetitle>OpenStack Admin
+                User Guide</citetitle>. </para>
+        <para> For more information about image configuration options, see the
+                <link
+                xlink:href="http://docs.openstack.org/trunk/config-reference/content/ch_configuring-openstack-image-service.html"
+                >Image Services</link> section of the <citetitle>OpenStack
+                Configuration Reference</citetitle>. </para>
+        <para> When you launch an instance, you must choose a
+                <literal>flavor</literal>, which represents a set of virtual
+            resources. Flavors define how many virtual CPUs an instance has and
+            the amount of RAM and size of its ephemeral disks. OpenStack
+            provides a number of predefined flavors that you can edit or add to.
+            Users must select from the set of available flavors defined on their
+            cloud.</para>
+        <para> For more information about flavors, see the <link
+                xlink:href="http://docs.openstack.org/trunk/openstack-ops/content/flavors.html"
+                >Flavors</link> section in the <citetitle>OpenStack Operations
+                Guide</citetitle>. </para>
+        <para> You can add and remove additional resources from running
+            instances, such as persistent volume storage, or public IP
+            addresses. The example used in this chapter is of a typical virtual
+            system within an OpenStack cloud. It uses the <systemitem
+                class="service">cinder-volume</systemitem> service, which
+            provides persistent block storage, instead of the ephemeral storage
+            provided by the selected instance flavor.</para>
+        <para> This diagram shows the system state prior to launching an
+            instance. The image store, fronted by the image service, Glance, has
+            a number of predefined images. Inside the cloud, a compute node
+            contains the available vCPU, memory, and local disk resources.
+            Additionally, the <systemitem class="service"
+                >cinder-volume</systemitem> service provides a number of
+            predefined volumes.</para>
+        <figure xml:id="initial-instance-state-figure">
+            <title>Base image state with no running instances</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="../common/figures/instance-life-1.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        <para> To launch an instance, select an image, a flavor, and other
+            optional attributes. The selected flavor provides a root volume,
+            labeled <literal>vda</literal> in this diagram, and additional
+            ephemeral storage, labeled <literal>vdb</literal>. In this example,
+            the <systemitem class="service">cinder-volume</systemitem> store is
+            mapped to the third virtual disk on this instance,
+                <literal>vdc</literal>.</para>
+        <figure xml:id="run-instance-state-figure">
+            <title>Instance creation from image and runtime state</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="../common/figures/instance-life-2.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        <para>The base image is copied from the image store to the local disk.
+            The local disk is the first disk that the instance accesses, and is
+            labeled <literal>vda</literal>. By using smaller images, your
+            instances start up faster as less data needs to be copied across
+            the network.</para>
+        <para>A new empty disk, labeled <literal>vdb</literal> is also created.
+            This is an empty ephemeral disk, which is destroyed when you delete
+            the instance.</para>
+        <para>The compute node is attached to the <systemitem class="service"
+                >cinder-volume</systemitem> using iSCSI, and maps to the
+            third disk, <literal>vdc</literal>. The vCPU and memory resources
+            are provisioned and the instance is booted from
+                <literal>vda</literal>. The instance runs and changes data on
+            the disks as indicated in red in the diagram.
+            <!--This isn't very accessible, need to consider rewording to explain more fully. LKB  -->
+        </para>
+        <note>
+            <para>Some of the details in this example scenario might be
+                different in your environment. Specifically, you might use a
+                different type of back-end storage or different network
+                protocols. One common variant is that the ephemeral storage used
+                for volumes <literal>vda</literal> and <literal>vdb</literal>
+                could be backed by network storage rather than a local disk.</para>
+        </note>
+        <para> When the instance is deleted, the state is reclaimed with the
+            exception of the persistent volume. The ephemeral storage is purged,
+            memory and vCPU resources are released. The image remains unchanged
+            throughout. </para>
+        <figure xml:id="end-instance-state-figure">
+            <title>End state of image and volume after instance exits</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="../common/figures/instance-life-3.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+    </section>
         <section xml:id="section_system-architecture">
-            <title>System architecture</title>
-            <para>Compute consists of several main components. A
-                    <firstterm>cloud controller</firstterm> contains
-                many of these components, and it represents the global
-                state and interacts with all other components. An API
-                Server acts as the web services front end for the
-                cloud controller. The compute controller provides
-                compute server resources and typically contains the
-                Compute service.</para>
-            <para>The Object Store component optionally provides
-                storage services. An auth manager provides
-                authentication and authorization services when used
-                with the Compute system, or you can use the Identity
-                Service (Keystone) as a separate authentication
-                service. A volume controller provides fast and
-                permanent block-level storage for the compute servers.
-                A network controller provides virtual networks to
-                enable compute servers to interact with each other and
-                with the public network. A scheduler selects the most
-                suitable compute controller to host an
-                instance.</para>
-            <para>Compute is built on a shared-nothing,
-                messaging-based architecture. You can run all major
-                components on multiple servers including a compute
-                controller, volume controller, network controller, and
-                object store (or image service). A cloud controller
-                communicates with the internal object store through
-                Hyper Text Transfer Protocol (HTTP), but it
-                communicates with a scheduler, network controller, and
-                volume controller through Advanced Message Queue
-                Protocol (AMQP). To avoid blocking each component
-                while waiting for a response, Compute uses
-                asynchronous calls, with a callback that gets
-                triggered when a response is received.</para>
-            <para>To achieve the shared-nothing property with multiple
-                copies of the same component, Compute keeps all cloud
-                system state in a database.</para>
+          <title>System architecture</title>
+          <para>
+            OpenStack Compute contains several main components. The
+            <firstterm>cloud controller</firstterm> represents the global state
+            and interacts with the other components. The
+            <literal>API server</literal> acts as the web services
+            front end for the cloud controller. The
+            <literal>compute controller</literal> provides compute server
+            resources and usually also contains the Compute service.
+          </para>
+          <para>
+            The <literal>object store</literal> is an optional component
+            that provides storage services. An <literal>auth manager</literal>
+            provides authentication and authorization services when used
+            with the Compute system, or you can use the <literal>identity
+            service</literal> as a separate authentication service instead.
+            A <literal>volume controller</literal> provides fast and
+            permanent block-level storage for the compute servers. The
+            <literal>network controller</literal> provides virtual networks
+            to enable compute servers to interact with each other and with
+            the public network. The <literal>scheduler</literal> is used to
+            select the most suitable compute controller to host an instance.
+          </para>
+          <para>
+            Compute uses a messaging-based, <literal>shared nothing</literal>
+            architecture. All major components exist on multiple
+            servers, including the compute, volume, and network controllers,
+            and the object store or image service. The state of the entire
+            system is stored in a database. The cloud controller
+            communicates with the internal object store using HTTP, but it
+            communicates with the scheduler, network controller, and volume
+            controller using AMQP (advanced message queueing protocol). To
+            avoid blocking a component while waiting for a response,
+            Compute uses asynchronous calls, with a callback that is
+            triggered when a response is received.
+          </para>
         </section>
         <section xml:id="section_storage-and-openstack-compute">
-            <title>Block Storage and Compute</title>
-            <para>OpenStack provides two classes of block storage:
-                ephemeral storage and persistent volumes. Ephemeral
-                storage exists only for the life of an instance. It
-                persists across reboots of the guest operating system,
-                but when the instance is deleted so is the associated
-                storage. All instances have some ephemeral storage.
-                Volumes are persistent virtualized block devices
-                independent of any particular instance.</para>
-            <simplesect xml:id="section_about-ephemeral-storage">
-                <title>Ephemeral storage</title>
-                <para>Ephemeral storage is associated with a single
-                    unique instance. Its size is defined by the flavor
-                    of the instance.</para>
-                <para>Terminating the instance associated with
-                    ephemeral storage causes the loss of data from
-                    that ephemeral storage. Rebooting the VM or
-                    restarting the host server, however, does not
-                    destroy ephemeral data. In a typical use case, an
-                    instance's root file system is stored on ephemeral
-                    storage.</para>
-                <para>In addition to the ephemeral root volume, all
-                    flavors except the smallest, m1.tiny, provide an
-                    additional ephemeral block device whose size
-                    ranges from 20 GB for m1.small to 160 GB for
-                    m1.xlarge. You can configure these sizes. This is
-                    presented as a raw block device with no partition
-                    table or file system. Cloud-aware operating system
-                    images may discover, format, and mount this
-                    device. For example, the cloud-init package
-                    included in Ubuntu's stock cloud images format
-                    this space as an ext3 file system and mount it on
-                        <filename>/mnt</filename>. It is important to
-                    note this a feature of the guest operating system.
-                    OpenStack only provisions the raw storage.</para>
-            </simplesect>
-            <simplesect xml:id="section_about-persistent-storage">
-                <title>Volume storage</title>
-                <para>Volumes are created by users and their size may
-                    go up to the quota and availability limits. Upon
-                    initial creation, volumes are raw block devices
-                    without a partition table or a file system. To
-                    partition or format volumes, you must attach them
-                    to an instance. After you attach them to an
-                    instance, you may use volumes much like you would
-                    an external disk drive. You may attach volumes to
-                    one instance at a time. However, you may detach
-                    and reattach volumes to either the same or a
-                    different instance.</para>
-                <para>You can configure a volume so that it is
-                    bootable and provides a persistent virtual
-                    instance similar to traditional non-cloud-based
-                    virtualization systems. Typically, the resulting
-                    instance may still have ephemeral storage
-                    depending on the flavor selected, but the root
-                    file system (and possibly others) may be on the
-                    persistent volume and its state may be maintained
-                    even if the instance is shut down. The details of
-                    this configuration are discussed in the
-                        <citetitle>OpenStack Configuration
-                        Reference</citetitle> .</para>
-                <para>Volumes do not provide concurrent access from
-                    multiple instances. For that, you need either a
-                    traditional network file system like NFS or CIFS
-                    or a cluster file system such as GlusterFS. These
-                    systems may be built within an OpenStack cluster
-                    or provisioned outside of it, but OpenStack
-                    software does not provide such features.</para>
-            </simplesect>
-        </section>
+          <title>Block storage</title>
+          <para>
+            OpenStack provides two classes of block storage: ephemeral
+            storage and persistent volumes. Volumes are persistent virtualized block devices
+            independent of any particular instance.
+          </para>
+          <para>
+            Ephemeral storage is associated with a single unique instance,
+            and it exists only for the life of that instance. The amount
+            of ephemeral storage is defined by the flavor of the instance.
+            Generally, the root file system for an instance will be stored
+            on ephemeral storage. It persists across reboots of the guest
+            operating system, but when the instance is deleted, the
+            ephemeral storage is also removed.
+          </para>
+          <para>
+            In addition to the ephemeral root volume, all flavors except
+            the smallest, <filename>m1.tiny</filename>, also provide an
+            additional ephemeral block device of between 20 and 160GB.
+            These sizes can be configured to suit your environment. This is
+            presented as a raw block device with no partition table or
+            file system. Cloud-aware operating system images can discover,
+            format, and mount these storage devices. For example, the
+            <systemitem class="service">cloud-init</systemitem> package
+            included in Ubuntu's stock cloud images format this space as
+            an <filename>ext3</filename> file system and mount it on
+            <filename>/mnt</filename>. This is a feature of the guest
+            operating system you are using, and is not an OpenStack mechanism.
+            OpenStack only provisions the raw storage.
+          </para>
+          <para>
+            Persistent volumes are created by users and their size is
+            limited only by the user's quota and availability limits. Upon
+            initial creation, volumes are raw block devices without a
+            partition table or a file system. To partition or format
+            volumes, you must attach them to an instance. Once they are
+            attached to an instance, you can use persistent volumes in much
+            the same way as you would use external hard disk drive. You
+            can attach volumes to only one instance at a time, although you
+            can detach and reattach volumes to as many different instances
+            as you like.
+          </para>
+          <para>
+            Persistent volumes can be configured as bootable and used to
+            provide a persistent virtual instance similar to traditional
+            non-cloud-based virtualization systems. Typically, the
+            resulting instance can also still have ephemeral storage depending
+            on the flavor selected, but the root file system can be on the
+            persistent volume and its state maintained even if the instance
+            is shut down. For more information about this type of configuration,
+            see the <citetitle>OpenStack Configuration Reference</citetitle>.
+          </para>
+          <note>
+            <para>
+              Persistent volumes do not provide concurrent access from
+              multiple instances. That type of configuration requires a
+              traditional network file system like NFS or CIFS, or a cluster
+              file system such as GlusterFS. These systems can be built
+              within an OpenStack cluster or provisioned outside of it,
+              but OpenStack software does not provide these features.
+            </para>
+          </note>
     </section>
     <section xml:id="section_image-mgmt">
         <title>Image management</title>
-        <para>The Image Service, code-named Glance, discovers,
-            registers, and gets virtual machine images. The service
-            includes a <link
-                xlink:href="http://api.openstack.org/api-ref.html#os-images-2.0"
-                >RESTful API</link> that allows users to query VM
-            image metadata and get the actual image with HTTP
-            requests. You can also use the <link
-                xlink:href="http://docs.openstack.org/user-guide/content/cli_manage_images.html"
-                >glance command-line tool</link>, or the <link
-                xlink:href="http://docs.openstack.org/developer/python-glanceclient/"
-                >Python API</link> to accomplish the same
-            tasks.</para>
-        <para>VM images made available through the Image Service can
-            be stored in a variety of locations. The Image Service
-            supports these back-end stores:</para>
-        <itemizedlist>
+        <para>The OpenStack Image service discovers, registers, and retrieves
+          virtual machine images. The service also includes a RESTful API
+          that allows you to query VM image metadata and retrieve the actual
+          image with HTTP requests. For more information about the API, see
+          the <link xlink:href="http://api.openstack.org/api-ref.html#os-images-2.0">
+          OpenStack API</link> or the
+          <link xlink:href="http://docs.openstack.org/developer/python-glanceclient/">
+          Python API</link>.
+        </para>
+        <para>
+          The OpenStack Image service can be controlled using a command line
+          tool. For more information about the OpenStack Image command line
+          tool, see the <link xlink:href="http://docs.openstack.org/user-guide/content/cli_manage_images.html">
+          Image Management</link> section in the <citetitle>OpenStack User Guide</citetitle>.
+        </para>
+         <para>
+          Virtual images that have been made available through the Image
+          service can be stored in a variety of ways. In order to use these
+          services, you must have a working installation of the Image service,
+          with a working endpoint, and users that have been created in the
+          Identity service. Additionally, you must meet the environment
+          variables required by the Compute and Image clients.
+        </para>
+        <para>
+          The Image service supports these back end stores:
+        </para>
+        <variablelist>
+          <varlistentry>
+            <term>File system</term>
             <listitem>
-                <para>Object Storage service (code-named Swift)The
-                    highly-available object storage project in
-                    OpenStack.</para>
+                <para>The OpenStack Image service stores virtual machine
+                  images in the file system back-end by default. This simple
+                  back end writes image files to the local file system.</para>
             </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>Object Storage service</term>
             <listitem>
-                <para>File systemThe default back-end that OpenStack
-                    Image Service uses to store virtual machine images
-                    is the file system back-end. This simple back-end
-                    writes image files to the local file
-                    system.</para>
+                <para>OpenStack's highly-available object storage.</para>
             </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>S3</term>
             <listitem>
-                <para>S3This back-end enables the OpenStack Image
-                    Service to store virtual machine images in the
-                    Amazon S3 service.</para>
+                <para>Amazon’s S3 service.</para>
             </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>HTTP</term>
             <listitem>
-                <para>HTTPOpenStack Image Service can read virtual
-                    machine images that are available through HTTP
-                    somewhere on the Internet. This store is read
-                    only.</para>
+                <para>OpenStack Image Service can read virtual machine images
+                  that are available on the internet using HTTP. This store
+                  is read only.</para>
             </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>Rados block device (RBD)</term>
             <listitem>
-                <para>Rados Block Device (RBD)This back-end stores
-                    images inside of a Ceph storage cluster using
-                    Ceph's RBD interface.</para>
+                <para>Stores images inside of a Ceph storage cluster using
+                  Ceph's RBD interface.</para>
             </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>GridFS</term>
             <listitem>
-                <para>GridFSThis back-end stores images inside of
-                    MongoDB.</para>
+                <para>Stores images using MongoDB.</para>
             </listitem>
-        </itemizedlist>
-        <para>You must have a working installation of the Image
-            Service, with a working endpoint and users created in the
-            Identity Service. Also, you must source the environment
-            variables required by the Compute and Image
-            clients.</para>
+          </varlistentry>
+        </variablelist>
     </section>
     <section xml:id="section_instance-mgmt">
-        <title>Instance management</title>
-        <para>Instances are the running virtual machines within an
-            OpenStack cloud.</para>
-        <section xml:id="section_instance-mgmt-interfaces">
-            <?dbhtml stop-chunking?>
-            <title>Interfaces to instance management</title>
-            <para>OpenStack provides command line, web based, and API
-                based instance management. Additionally a number of
-                third party management tools are available for use
-                with OpenStack using either the native API or the
-                provided EC2 compatibility API.</para>
-            <simplesect xml:id="instance-mgmt-novaclient">
-                <title>nova command-line client</title>
-                <para>The <application>nova</application> command
-                    provided by the OpenStack
-                        <package>python-novaclient</package> package
-                    is the basic command line utility for users
-                    interacting with OpenStack. This is available as a
-                    native package for most modern Linux distributions
-                    or the latest version can be installed directly
-                    using <application>pip</application> python
-                    package installer:</para>
-                <screen><prompt>$</prompt> <userinput>sudo pip install python-novaclient</userinput></screen>
-                <para>Full details about <command>nova</command> and
-                    other clients, see <link
-                        xlink:href="http://docs.openstack.org/user-guide/content/index.html"
-                            ><citetitle>OpenStack End User
-                            Guide</citetitle></link>. What follows is
+        <title>Instance management tools</title>
+        <para>
+          OpenStack provides command line, web-based, and API-based
+          instance management tools. Additionally, a number of third party
+          management tools are available, using either the native API or the
+          provided EC2-compatible API.
+        </para>
+        <para>
+          The OpenStack <application>python-novaclient</application>
+          package provides a basic command line utility, which uses the
+          <command>nova</command> command. This is available as a native
+          package for most Linux distributions, or you can install the latest
+          version using the <application>pip</application> python package installer:
+<programlisting language="bash">sudo pip install python-novaclient</programlisting>
+        </para>
+        <para>
+          For more information about <application>python-novaclient</application>
+          and other available command line tools, see the
+          <link xlink:href="http://docs.openstack.org/user-guide/content/index.html">
+          <citetitle>OpenStack End User Guide</citetitle></link>.
+        </para>
+        <!--
+I've commented this section out as it merely repeats what's in the
+End User Guide, and isn't required here. Comments welcome. LKB
+
+                <para>What follows is
                     the minimal introduction required to follow the
                     CLI example in this chapter. In case of a conflict
                     in <link
@@ -499,7 +470,7 @@
                     <listitem>
                         <para><literal>Authentication URL</literal>:
                             This can be passed as the
-                                <parameter>--os_auth_url</parameter>
+                                <parameter>&ndash;&ndash;os_auth_url</parameter>
                             flag or using the OS_AUTH_URL environment
                             variable.</para>
                     </listitem>
@@ -507,21 +478,21 @@
                         <para><literal>Tenant (sometimes referred to
                                 as project) name</literal>: This can
                             be passed as the
-                                <parameter>--os_tenant_name</parameter>
+                                <parameter>&ndash;&ndash;os_tenant_name</parameter>
                             flag or using the OS_TENANT_NAME
                             environment variable.</para>
                     </listitem>
                     <listitem>
                         <para><literal>User name</literal>: This can
                             be passed as the
-                                <parameter>--os_username</parameter>
+                                <parameter>&ndash;&ndash;os_username</parameter>
                             flag or using the OS_USERNAME environment
                             variable.</para>
                     </listitem>
                     <listitem>
                         <para><literal>Password</literal>: This can be
                             passed as the
-                                <parameter>--os_password</parameter>
+                                <parameter>&ndash;&ndash;os_password</parameter>
                             flag or using the OS_PASSWORD environment
                             variable.</para>
                     </listitem>
@@ -544,33 +515,26 @@
                     web dashboard, you can download credential files
                     that contain the correct values for your
                     particular implementation.</para>
-            </simplesect>
-            <simplesect xml:id="instance-mgmt-horizon">
-                <title>Horizon web dashboard</title>
-                <para>Horizon is the highly customizable and
-                    extensible OpenStack web dashboard. The <link
-                        xlink:href="http://docs.openstack.org/developer/horizon"
-                        >Horizon: The OpenStack Dashboard
-                        Project</link> home page has detailed
-                    information on deploying horizon.</para>
-            </simplesect>
-            <simplesect xml:id="instance-mgmt-novaapi">
-                <title>Compute API</title>
-                <para>OpenStack provides a RESTful API for all
-                    functionality. Complete API documentation is
-                    available at <link
-                        xlink:href="http://api.openstack.org/api-ref.html"
-                        >OpenStack API Reference</link>. The <link
-                        xlink:href="http://docs.openstack.org/api/openstack-compute/2/content/"
-                            ><citetitle>OpenStack Compute API v2 and
-                            Extensions Reference</citetitle></link>
-                    documentation refers to instances as
-                        <firstterm>servers</firstterm>.</para>
-                <para>The <link linkend="instance-mgmt-novaclient"
-                        >nova cli</link> can be made to show the API
-                    calls it is making by passing it the
-                        <parameter>--debug</parameter>
-                    parameter:</para>
+            </simplesect>-->
+        <!-- Commented out because it repeats information earlier in this chapter. LKB
+        <simplesect xml:id="instance-mgmt-horizon">
+        <para>
+          Horizon is a highly customizable and extensible OpenStack web
+          dashboard. For more information on Horizon, see the
+          <link xlink:href="http://docs.openstack.org/developer/horizon">
+          Horizon project site</link>.
+        </para>
+            <para>OpenStack provides a RESTful API for all functionality. Complete
+            API documentation is available at <link
+                xlink:href="http://api.openstack.org/api-ref.html">OpenStack API
+                Reference</link>. The <link
+                xlink:href="http://docs.openstack.org/api/openstack-compute/2/content/"
+                    ><citetitle>OpenStack Compute API v2 and Extensions
+                    Reference</citetitle></link> documentation refers to
+            instances as <firstterm>servers</firstterm>.</para>
+        <para>The <link linkend="instance-mgmt-novaclient">nova cli</link> can
+            be made to show the API calls it is making by passing it the
+                <parameter>&ndash;&ndash;debug</parameter> parameter:</para>-->
                 <screen><prompt>#</prompt> <userinput>nova --debug list</userinput>
  <?db-font-size 75%?><computeroutput>connect: (10.0.0.15, 5000)
 send: 'POST /v2.0/tokens HTTP/1.1\r\nHost: 10.0.0.15:5000\r\nContent-Length: 116\r\ncontent-type: application/json\r\naccept-encoding: gzip, deflate\r\naccept: application/json\r\nuser-agent: python-novaclient\r\n\r\n{"auth": {"tenantName": "demoproject", "passwordCredentials": {"username": "demouser", "password": "demopassword"}}}'
@@ -586,146 +550,150 @@ header: X-Compute-Request-Id: req-bf313e7d-771a-4c0b-ad08-c5da8161b30f
 header: Content-Type: application/json
 header: Content-Length: 15
 header: Date: Thu, 13 Sep 2012 20:27:36 GMT
-+----+------+--------+----------+
-| ID | Name | Status | Networks |
-+----+------+--------+----------+
-+----+------+--------+----------+</computeroutput></screen>
-            </simplesect>
-            <simplesect xml:id="instance-mgmt-ec2compat">
-                <title>EC2 compatibility API</title>
-                <para>In addition to the native compute API OpenStack
-                    provides an EC2 compatible API. This allows legacy
-                    workflows built for EC2 to work with
-                    OpenStack.</para>
-                <!--<para><link linkend="configuring-ec2-API">Configuring the
-                                        EC2 API</link> lists configuration options for
-                                customizing this compatibility API on your OpenStack
-                                cloud.</para> -->
-            </simplesect>
-            <simplesect xml:id="instance-mgmt-3rdparty">
-                <title>Third-party tools</title>
-                <para>Numerous third party tools and language-specific
-                    SDKs interact with OpenStack clouds, both through
-                    native and compatibility APIs. Though not
-                    OpenStack projects, these links show some popular
-                    projects:</para>
-                <itemizedlist>
-                    <listitem>
-                        <para><link
-                                xlink:href="http://open.eucalyptus.com/wiki/Euca2oolsGuide"
-                                >euca2ools </link> is a popular open
-                            source CLI for interacting with the EC2
-                            API. This is convenient for multi cloud
-                            environments where EC2 is the common API,
-                            or for transitioning from EC2 API based
-                            clouds to OpenStack.</para>
-                    </listitem>
-                    <listitem>
-                        <para><link
-                                xlink:href="http://code.google.com/p/hybridfox/"
-                                >hybridfox</link> is a Firefox browser
-                            add-on that provides a graphical interface
-                            to many popular public and private cloud
-                            technologies.</para>
-                    </listitem>
-                    <listitem>
-                        <para><link
-                                xlink:href="https://github.com/boto/boto"
-                                >boto</link> is a Python library for
-                            interacting with Amazon Web Services. It
-                            can be used to access OpenStack through
-                            the EC2 compatibility API</para>
-                    </listitem>
-                    <listitem>
-                        <para><link
-                                xlink:href="https://rubygems.org/gems/fog"
-                                >fog</link> is the Ruby cloud services
-                            library and provides methods for
-                            interacting with a large number of cloud
-                            and virtualization platforms.</para>
-                    </listitem>
-                    <listitem>
-                        <para><link
-                                xlink:href="http://www.php-opencloud.com"
-                                >php-opencloud</link> is a PHP SDK
-                            that should work with most OpenStack-based
-                            cloud deployments and the Rackspace public
-                            cloud.</para>
-                    </listitem>
-                </itemizedlist>
-            </simplesect>
-        </section>
-        <section xml:id="section_instance-building-blocks">
-            <?dbhtml stop-chunking?>
-            <title>Building blocks</title>
-
-            <para>There are two fundamental requirements for a
+  !!removed matrix for validation!! </computeroutput></screen>
+            </section>
+    <section xml:id="instance-mgmt-ec2compat">
+        <title>EC2 compatibility API</title>
+        <para>In addition to the native compute API, OpenStack provides an
+            EC2-compatible API. This API allows EC2 legacy workflows built for
+            EC2 to work with OpenStack.</para>
+        <para>The <citetitle>OpenStack Configuration Reference</citetitle> lists
+            configuration options for customizing this compatibility API on your
+            OpenStack cloud.</para>
+        <para>Numerous third party tools and language-specific SDKs can be used
+            to interact with OpenStack clouds, using both native and
+            compatibility APIs. Some of the more popular third-party tools are:</para>
+        <variablelist>
+            <varlistentry>
+                <term>Euca2ools</term>
+                <listitem>
+                    <para>A popular open source command line tool for
+                        interacting with the EC2 API. This is convenient for
+                        multi-cloud environments where EC2 is the common API, or
+                        for transitioning from EC2-based clouds to OpenStack.
+                        For more information, see the <link
+                            xlink:href="http://open.eucalyptus.com/wiki/Euca2oolsGuide"
+                            >euca2ools site</link>.</para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term>Hybridfox</term>
+                <listitem>
+                    <para>A Firefox browser add-on that provides a graphical
+                        interface to many popular public and private cloud
+                        technologies, including OpenStack. For more information,
+                        see the <link
+                            xlink:href="http://code.google.com/p/hybridfox/">
+                            hybridfox site</link>.</para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term>boto</term>
+                <listitem>
+                    <para>A Python library for interacting with Amazon Web
+                        Services. It can be used to access OpenStack through the
+                        EC2 compatibility API. For more information, see the
+                            <link xlink:href="https://github.com/boto/boto">
+                            boto project page on GitHub</link>.</para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term>fog</term>
+                <listitem>
+                    <para>A Ruby cloud services library. It provides methods for
+                        interacting with a large number of cloud and
+                        virtualization platforms, including OpenStack. For more
+                        information, see the <link
+                            xlink:href="https://rubygems.org/gems/fog"> fog
+                            site</link>.</para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term>php-opencloud</term>
+                <listitem>
+                    <para>A PHP SDK designed to work with most OpenStack- based
+                        cloud deployments, as well as Rackspace public cloud.
+                        For more information, see the <link
+                            xlink:href="http://www.php-opencloud.com">
+                            php-opencloud site</link>.</para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </section>
+      <section xml:id="section_instance-building-blocks">
+      <title>Building blocks</title>
+           <!-- <para>There are two fundamental requirements for a
                 computing system, software and hardware.
                 Virtualization and cloud frameworks tend to blur these
                 lines and some of your "hardware" might actually be
                 "software" but conceptually you still need an
-                operating system and something to run it on.</para>
-            <simplesect xml:id="instance-building-blocks-images">
-                <title>Images</title>
-                <para>In OpenStack the base operating system is
-                    usually copied from an image stored in the
-                    OpenStack Image Service. This is the most common
-                    case and results in an ephemeral instance that
-                    starts from a known template state and loses all
-                    accumulated states on shutdown. It is also
-                    possible in special cases to put an operating
-                    system on a persistent "volume" in the Block
-                    Storage volume system. This gives a more
-                    traditional persistent system that accumulates
-                    states, which are preserved across restarts. To
-                    get a list of available images on your system
-                    run:</para>
-                <screen><prompt>$</prompt> <userinput>nova image-list</userinput>
- <?db-font-size 50%?><computeroutput>+--------------------------------------+-------------------------------+--------+--------------------------------------+
+                operating system and something to run it on.</para>-->
+        <para>
+          In OpenStack the base operating system is usually copied from
+          an image stored in the OpenStack Image service. This is the
+          most common case and results in an ephemeral instance that
+          starts from a known template state and loses all accumulated
+          states on shutdown. It is also possible to put an operating
+          system on a persistent volume in the Nova-Volume or Cinder
+          volume system. This gives a more traditional persistent
+          system that accumulates states, which are preserved across
+          restarts. To get a list of available images on your system run:
+<screen><prompt>$</prompt> <userinput>nova image-list</userinput>
+<?db-font-size 50%?><computeroutput>+--------------------------------------+-------------------------------+--------+--------------------------------------+
 | ID                                   | Name                          | Status | Server                               |
 +--------------------------------------+-------------------------------+--------+--------------------------------------+
 | aee1d242-730f-431f-88c1-87630c0f07ba | Ubuntu 12.04 cloudimg amd64   | ACTIVE |                                      |
 | 0b27baa1-0ca6-49a7-b3f4-48388e440245 | Ubuntu 12.10 cloudimg amd64   | ACTIVE |                                      |
 | df8d56fc-9cea-4dfd-a8d3-28764de3cb08 | jenkins                       | ACTIVE |                                      |
 +--------------------------------------+-------------------------------+--------+--------------------------------------+</computeroutput></screen>
-                <para>The displayed image attributes are:</para>
-                <itemizedlist>
-                    <listitem>
-                        <para><literal>ID</literal>: the automatically
-                            generate UUID of the image</para>
-                    </listitem>
-                    <listitem>
-                        <para><literal>Name</literal>: a free form
-                            human readable name given to the
-                            image</para>
-                    </listitem>
-                    <listitem>
-                        <para><literal>Status</literal>: shows the
-                            status of the image ACTIVE images are
-                            available for use.</para>
-                    </listitem>
-                    <listitem>
-                        <para><literal>Server</literal>: for images
-                            that are created as snapshots of running
-                            instance this is the UUID of the instance
-                            the snapshot derives from, for uploaded
-                            images it is blank</para>
-                    </listitem>
-                </itemizedlist>
-            </simplesect>
-            <simplesect xml:id="instance-building-blocks-flavors">
-                <title>Flavors</title>
-                <para>Virtual hardware templates are called "flavors"
-                    in OpenStack. The default install provides a range
-                    of five flavors. These are configurable by admin
-                    users (this too is configurable and may be
-                    delegated by redefining the access controls for
-                    "compute_extension:flavormanage" in
-                        <filename>/etc/nova/policy.json</filename> on
-                    the compute-api server). To get a list of
-                    available flavors on your system run:</para>
-                <screen><prompt>$</prompt> <userinput>nova flavor-list</userinput>
- <computeroutput>+----+-----------+-----------+------+-----------+------+-------+-------------+
+          </para>
+          <para>
+            The displayed image attributes are:
+          </para>
+            <variablelist>
+              <varlistentry>
+                <term><literal>ID</literal></term>
+                <listitem>
+                  <para>Automatically generated UUID of the image</para>
+                </listitem>
+              </varlistentry>
+              <varlistentry>
+                <term><literal>Name</literal></term>
+                <listitem>
+                  <para>Free form, human-readable name for image</para>
+                </listitem>
+              </varlistentry>
+              <varlistentry>
+                <term><literal>Status</literal></term>
+                <listitem>
+                  <para>The status of the image. Images marked
+                  <literal>ACTIVE</literal> are available for use.</para>
+                </listitem>
+              </varlistentry>
+              <varlistentry>
+                <term><literal>Server</literal></term>
+                <listitem>
+                  <para>For images that are created as snapshots of running
+                  instances, this is the UUID of the instance the snapshot
+                  derives from. For uploaded images, this field is blank.</para>
+                 </listitem>
+               </varlistentry>
+             </variablelist>
+
+             <para>
+               Virtual hardware templates are called <literal>flavors</literal>.
+               The default installation provides five flavors. By default,
+               these are configurable by admin users, however that behavior
+               can be changed by redefining the access controls for
+               <parameter>compute_extension:flavormanage</parameter> in
+               <filename>/etc/nova/policy.json</filename> on the
+               <filename>compute-api</filename> server.
+             </para>
+             <para>
+               For a list of flavors that are available on your system:
+             </para>
+<screen><prompt>$</prompt> <userinput>nova flavor-list</userinput>
+<computeroutput>+----+-----------+-----------+------+-----------+------+-------+-------------+
 | ID |    Name   | Memory_MB | Disk | Ephemeral | Swap | VCPUs | RXTX_Factor |
 +----+-----------+-----------+------+-----------+------+-------+-------------+
 | 1  | m1.tiny   | 512       | 1    | N/A       | 0    | 1     |             |
@@ -735,10 +703,9 @@ header: Date: Thu, 13 Sep 2012 20:27:36 GMT
 | 5  | m1.xlarge | 16384     | 160  | N/A       | 0    | 8     |             |
 +----+-----------+-----------+------+-----------+------+-------+-------------+
 </computeroutput></screen>
-            </simplesect>
         </section>
         <xi:include href="../common/section_customize_flavors.xml"/>
-        <section xml:id="section_instance-creation">
+       <!-- <section xml:id="section_instance-creation">
             <?dbhtml stop-chunking?>
             <title>Instances</title>
             <para>For information about launching instances through
@@ -746,26 +713,22 @@ header: Date: Thu, 13 Sep 2012 20:27:36 GMT
                     xlink:href="http://docs.openstack.org/user-guide/content/index.html"
                         ><citetitle>OpenStack End User
                         Guide</citetitle></link>.</para>
-        </section>
+        </section>-->
         <section xml:id="section_instance-scheduling-constraints">
             <title>Control where instances run</title>
-            <para>The <!--<xref linkend="ch_scheduling"/>-->
-                <citetitle>OpenStack Configuration
-                    Reference</citetitle> provides detailed
-                information on controlling where your instances run,
-                including ensuring a set of instances run on different
-                compute nodes for service resiliency or on the same
-                node for high performance inter-instance
-                communications</para>
-            <para>Additionally admin users can specify an exact
-                compute node to run on by specifying
-                    <literal>--availability-zone
-                    &lt;availability-zone&gt;:&lt;compute-host&gt;</literal>
-                on the command line, for example to force an instance
-                to launch on the <literal>nova-1</literal> compute
-                node in the default <literal>nova</literal>
-                availability zone:
-                <screen><prompt>#</prompt> <userinput>nova boot --image aee1d242-730f-431f-88c1-87630c0f07ba --flavor 1 --availability-zone nova:nova-1 testhost</userinput></screen></para>
+            <para>
+              The <!--<xref linkend="ch_scheduling"/>-->
+              <citetitle>OpenStack Configuration Reference</citetitle>
+              provides detailed information on controlling where your
+              instances run, including ensuring a set of instances run on
+              different compute nodes for service resiliency or on the same
+              node for high performance inter-instance communications.
+            </para>
+            <para>
+              Admin users can specify an exact compute node to
+              run on using the command
+<command>--availability-zone <replaceable>availability-zone</replaceable>:<replaceable>compute-host</replaceable></command>
+            </para>
         </section>
         <section xml:id="admin-password-injection">
             <?dbhtml stop-chunking?>
@@ -775,18 +738,18 @@ header: Date: Thu, 13 Sep 2012 20:27:36 GMT
                 inject that password into the instance. If this feature is enabled, a user can ssh
                 to an instance without an ssh keypair. The random password appears in the output of
                 the <command>nova boot</command> command. You can also view and set the admin
-                password from the Dashboard.</para>
+                password from the dashboard.</para>
 
                 <simplesect>
                     <title>Dashboard</title>
-                <para>The Dashboard is configured by default to display the admin password and allow
+                <para>The dashboard is configured by default to display the admin password and allow
                     the user to modify it.</para>
                     <para>If you do not want to support password injection, we
                     recommend disabling the password fields by editing your
                     Dashboard <filename>local_settings</filename> file (file
                         location will vary by Linux distribution, on Fedora/RHEL/CentOS: <filename>
                             /etc/openstack-dashboard/local_settings</filename>, on Ubuntu and Debian:
-                        <filename>/etc/openstack-dashboard/local_settings.py</filename> and on openSUSE: <filename
+                        <filename>/etc/openstack-dashboard/local_settings.py</filename> and on openSUSE and SUSE Linux Enterprise Server: <filename
                             >/usr/share/openstack-dashboard/openstack_dashboard/local/local_settings.py</filename>)
                     <programlisting>OPENSTACK_HYPERVISOR_FEATURE = {
 ...
@@ -832,7 +795,7 @@ inject_password=true</programlisting>
                         >cloudbase-init</link>.</para>
             </simplesect>
         </section>
-        <section xml:id="section_instance-data">
+     <!--   <section xml:id="section_instance-data">
             <?dbhtml stop-chunking?>
             <title>Instance-specific data</title>
             <para>For each instance, you can specify certain data including authorized_keys, key
@@ -849,9 +812,8 @@ inject_password=true</programlisting>
                     xlink:href="http://docs.openstack.org/user-guide/content/index.html"
                         ><citetitle>OpenStack End User
                         Guide</citetitle></link>.</para>
-        </section>
+        </section>-->
         <xi:include href="../common/section_nova_cli_volumes.xml"/>
-    </section>
     <section xml:id="section_networking-nova">
         <title>Networking with nova-network</title>
         <para>Understanding the networking configuration options helps
@@ -859,30 +821,25 @@ inject_password=true</programlisting>
             instances.</para>
         <section xml:id="section_networking-options">
             <title>Networking options</title>
-            <para>This section offers a brief overview of each concept
-                in networking for Compute. With the Grizzly release,
-                you can choose to either install and configure
-                    <systemitem class="service"
-                    >nova-network</systemitem> for networking between
-                VMs or use the Networking service (neutron) for
-                networking. To configure Compute networking options
-                with Neutron, see the <xref linkend="ch_networking"
-                />.</para>
-            <para>For each VM instance, Compute assigns to it a
-                private IP address. (Currently, Compute with
-                    <systemitem class="service"
-                    >nova-network</systemitem> only supports Linux
-                bridge networking that enables the virtual interfaces
-                to connect to the outside network through the physical
-                interface.)</para>
-            <para>The network controller with <systemitem
-                    class="service">nova-network</systemitem> provides
-                virtual networks to enable compute servers to interact
-                with each other and with the public network.</para>
+            <para>This section offers a brief overview of each concept in
+                networking for Compute. With the Grizzly release, you can choose
+                to either install and configure <systemitem class="service"
+                    >nova-network</systemitem> for networking between VMs or use
+                the Networking service (neutron) for networking. To configure
+                Compute networking options with Neutron, see the <xref
+                    linkend="ch_networking"/>.</para>
+            <para>For each VM instance, Compute assigns to it a private IP
+                address. (Currently, Compute with <systemitem class="service"
+                    >nova-network</systemitem> only supports Linux bridge
+                networking that enables the virtual interfaces to connect to the
+                outside network through the physical interface.)</para>
+            <para>The network controller with <systemitem class="service"
+                    >nova-network</systemitem> provides virtual networks to
+                enable compute servers to interact with each other and with the
+                public network.</para>
             <para>Currently, Compute with <systemitem class="service"
-                    >nova-network</systemitem> supports these kinds of
-                networks, implemented in different “Network Manager”
-                types: <itemizedlist>
+                    >nova-network</systemitem> supports these kinds of networks,
+                implemented in different “Network Manager” types: <itemizedlist>
                     <listitem>
                         <para>Flat Network Manager</para>
                     </listitem>
@@ -893,177 +850,151 @@ inject_password=true</programlisting>
                         <para>VLAN Network Manager</para>
                     </listitem>
                 </itemizedlist></para>
-            <para>These networks can co-exist in a cloud system.
-                However, because you can't yet select the type of
-                network for a given project, you cannot configure more
-                than one type of network in a given Compute
-                installation.</para>
+            <para>These networks can co-exist in a cloud system. However,
+                because you can't yet select the type of network for a given
+                project, you cannot configure more than one type of network in a
+                given Compute installation.</para>
             <note>
-                <para>All networking options require network
-                    connectivity to be already set up between
-                    OpenStack physical nodes. OpenStack does not
-                    configure any physical network interfaces.
-                    OpenStack automatically creates all network
-                    bridges (for example, br100) and VM virtual
-                    interfaces.</para>
+                <para>All networking options require network connectivity to be
+                    already set up between OpenStack physical nodes. OpenStack
+                    does not configure any physical network interfaces.
+                    OpenStack automatically creates all network bridges (for
+                    example, br100) and VM virtual interfaces.</para>
                 <para>All machines must have a <emphasis role="italic"
                         >public</emphasis> and <emphasis role="italic"
-                        >internal</emphasis> network interface
-                    (controlled by the options:
-                        <literal>public_interface</literal> for the
-                    public interface, and
-                        <literal>flat_interface</literal> and
-                        <literal>vlan_interface</literal> for the
-                    internal interface with flat / VLAN
-                    managers).</para>
-                <para>The internal network interface is used for
-                    communication with VMs, it shouldn't have an IP
-                    address attached to it before OpenStack
-                    installation (it serves merely as a fabric where
-                    the actual endpoints are VMs and dnsmasq). Also,
-                    the internal network interface must be put in
-                        <emphasis role="italic">promiscuous
-                        mode</emphasis>, because it must receive
-                    packets whose target MAC address is of the guest
-                    VM, not of the host.</para>
+                        >internal</emphasis> network interface (controlled by
+                    the options: <literal>public_interface</literal> for the
+                    public interface, and <literal>flat_interface</literal> and
+                        <literal>vlan_interface</literal> for the internal
+                    interface with flat / VLAN managers).</para>
+                <para>The internal network interface is used for communication
+                    with VMs, it shouldn't have an IP address attached to it
+                    before OpenStack installation (it serves merely as a fabric
+                    where the actual endpoints are VMs and dnsmasq). Also, the
+                    internal network interface must be put in <emphasis
+                        role="italic">promiscuous mode</emphasis>, because it
+                    must receive packets whose target MAC address is of the
+                    guest VM, not of the host.</para>
             </note>
-            <para>All the network managers configure the network using
-                    <emphasis role="italic">network
-                drivers</emphasis>. For example, the Linux L3 driver
-                    (<literal>l3.py</literal> and
-                    <literal>linux_net.py</literal>), which makes use
-                of <literal>iptables</literal>,
-                    <literal>route</literal> and other network
-                management facilities, and libvirt's <link
-                    xlink:href="http://libvirt.org/formatnwfilter.html"
-                    >network filtering facilities</link>. The driver
-                isn't tied to any particular network manager; all
-                network managers use the same driver. The driver
-                usually initializes (creates bridges and so on) only
-                when the first VM lands on this host node.</para>
-            <para>All network managers operate in either <emphasis
-                    role="italic">single-host</emphasis> or <emphasis
-                    role="italic">multi-host</emphasis> mode. This
-                choice greatly influences the network configuration.
-                In single-host mode, there is just 1 instance of
-                    <literal>nova-network</literal> which is used as a
-                default gateway for VMs and hosts a single DHCP server
-                (dnsmasq), whereas in multi-host mode every compute
-                node has its own <literal>nova-network</literal>. In
-                any case, all traffic between VMs and the outer world
-                flows through <literal>nova-network</literal>. There
-                are pros and cons to both modes, read more in the
-                    <citetitle>OpenStack Configuration
-                    Reference</citetitle>.</para>
-            <para>Compute makes a distinction between <emphasis
-                    role="italic">fixed IPs</emphasis> and <emphasis
-                    role="italic">floating IPs</emphasis> for VM
-                instances. Fixed IPs are IP addresses that are
-                assigned to an instance on creation and stay the same
-                until the instance is explicitly terminated. By
-                contrast, floating IPs are addresses that can be
-                dynamically associated with an instance. A floating IP
-                address can be disassociated and associated with
-                another instance at any time. A user can reserve a
-                floating IP for their project.</para>
-            <para>In <emphasis role="bold">Flat Mode</emphasis>, a
-                network administrator specifies a subnet. The IP
-                addresses for VM instances are grabbed from the
-                subnet, and then injected into the image on launch.
-                Each instance receives a fixed IP address from the
-                pool of available addresses. A system administrator
-                may create the Linux networking bridge (typically
-                named <literal>br100</literal>, although this
-                configurable) on the systems running the <systemitem
-                    class="service">nova-network</systemitem> service.
-                All instances of the system are attached to the same
-                bridge, configured manually by the network
-                administrator.</para>
+            <para>All the network managers configure the network using <emphasis
+                    role="italic">network drivers</emphasis>. For example, the
+                Linux L3 driver (<literal>l3.py</literal> and
+                    <literal>linux_net.py</literal>), which makes use of
+                    <literal>iptables</literal>, <literal>route</literal> and
+                other network management facilities, and libvirt's <link
+                    xlink:href="http://libvirt.org/formatnwfilter.html">network
+                    filtering facilities</link>. The driver isn't tied to any
+                particular network manager; all network managers use the same
+                driver. The driver usually initializes (creates bridges and so
+                on) only when the first VM lands on this host node.</para>
+            <para>All network managers operate in either <emphasis role="italic"
+                    >single-host</emphasis> or <emphasis role="italic"
+                    >multi-host</emphasis> mode. This choice greatly influences
+                the network configuration. In single-host mode, a single
+                    <systemitem role="service">nova-network</systemitem> service
+                provides a default gateway for VMs and hosts a single DHCP
+                server (dnsmasq). In multi-host mode, each compute node runs its
+                own <systemitem role="service">nova-network</systemitem>
+                service. In both cases, all traffic between VMs and the outer
+                world flows through <systemitem role="service"
+                    >nova-network</systemitem>. Each mode has its pros and cons.
+                Read more in the <link
+                    xlink:href="http://docs.openstack.org/havana/config-reference/content/"
+                        ><citetitle>OpenStack Configuration
+                        Reference</citetitle></link>.</para>
+            <para>Compute makes a distinction between <emphasis role="italic"
+                    >fixed IPs</emphasis> and <emphasis role="italic">floating
+                    IPs</emphasis> for VM instances. Fixed IPs are IP addresses
+                that are assigned to an instance on creation and stay the same
+                until the instance is explicitly terminated. By contrast,
+                floating IPs are addresses that can be dynamically associated
+                with an instance. A floating IP address can be disassociated and
+                associated with another instance at any time. A user can reserve
+                a floating IP for their project.</para>
+            <para>In <emphasis role="bold">Flat Mode</emphasis>, a network
+                administrator specifies a subnet. The IP addresses for VM
+                instances are grabbed from the subnet, and then injected into
+                the image on launch. Each instance receives a fixed IP address
+                from the pool of available addresses. A system administrator may
+                create the Linux networking bridge (typically named
+                    <literal>br100</literal>, although this configurable) on the
+                systems running the <systemitem class="service"
+                    >nova-network</systemitem> service. All instances of the
+                system are attached to the same bridge, configured manually by
+                the network administrator.</para>
             <para>
                 <note>
-                    <para>The configuration injection currently only
-                        works on Linux-style systems that keep
-                        networking configuration in
-                            <filename>/etc/network/interfaces</filename>.</para>
+                    <para>The configuration injection currently only works on
+                        Linux-style systems that keep networking configuration
+                        in <filename>/etc/network/interfaces</filename>.</para>
                 </note>
             </para>
-            <para>In <emphasis role="bold">Flat DHCP Mode</emphasis>,
-                OpenStack starts a DHCP server (dnsmasq) to pass out
-                IP addresses to VM instances from the specified subnet
-                in addition to manually configuring the networking
-                bridge. IP addresses for VM instances are grabbed from
-                a subnet specified by the network
+            <para>In <emphasis role="bold">Flat DHCP Mode</emphasis>, OpenStack
+                starts a DHCP server (dnsmasq) to pass out IP addresses to VM
+                instances from the specified subnet in addition to manually
+                configuring the networking bridge. IP addresses for VM instances
+                are grabbed from a subnet specified by the network
                 administrator.</para>
-            <para>Like Flat Mode, all instances are attached to a
-                single bridge on the compute node. In addition a DHCP
-                server is running to configure instances (depending on
-                single-/multi-host mode, alongside each <systemitem
-                    class="service">nova-network</systemitem>). In
-                this mode, Compute does a bit more configuration in
-                that it attempts to bridge into an ethernet device
-                    (<literal>flat_interface</literal>, eth0 by
-                default). It also runs and configures dnsmasq as a
-                DHCP server listening on this bridge, usually on IP
-                address 10.0.0.1 (see <link linkend="section_dnsmasq"
-                    >DHCP server: dnsmasq</link>). For every instance,
-                nova allocates a fixed IP address and configure
-                dnsmasq with the MAC/IP pair for the VM. For example,
-                dnsmasq doesn't take part in the IP address allocation
-                process, it only hands out IPs according to the
-                mapping done by nova. Instances receive their fixed
-                IPs by doing a dhcpdiscover. These IPs are <emphasis
-                    role="italic">not</emphasis> assigned to any of
-                the host's network interfaces, only to the VM's
-                guest-side interface.</para>
+            <para>Like Flat Mode, all instances are attached to a single bridge
+                on the compute node. In addition a DHCP server is running to
+                configure instances (depending on single-/multi-host mode,
+                alongside each <systemitem class="service"
+                    >nova-network</systemitem>). In this mode, Compute does a
+                bit more configuration in that it attempts to bridge into an
+                ethernet device (<literal>flat_interface</literal>, eth0 by
+                default). It also runs and configures dnsmasq as a DHCP server
+                listening on this bridge, usually on IP address 10.0.0.1 (see
+                    <link linkend="section_dnsmasq">DHCP server:
+                dnsmasq</link>). For every instance, nova allocates a fixed IP
+                address and configure dnsmasq with the MAC/IP pair for the VM.
+                For example, dnsmasq doesn't take part in the IP address
+                allocation process, it only hands out IPs according to the
+                mapping done by nova. Instances receive their fixed IPs by doing
+                a dhcpdiscover. These IPs are <emphasis role="italic"
+                    >not</emphasis> assigned to any of the host's network
+                interfaces, only to the VM's guest-side interface.</para>
             <para>In any setup with flat networking, the host(-s) with
-                nova-network on it is (are) responsible for forwarding
-                traffic from the private network. Compute can
-                determine the NAT entries for each network, though
-                sometimes NAT is not used, such as when configured
-                with all public IPs or a hardware router is used (one
+                nova-network on it is (are) responsible for forwarding traffic
+                from the private network. Compute can determine the NAT entries
+                for each network, though sometimes NAT is not used, such as when
+                configured with all public IPs or a hardware router is used (one
                 of the HA options). Such host(-s) needs to have
-                    <literal>br100</literal> configured and physically
-                connected to any other nodes that are hosting VMs. You
-                must set the <literal>flat_network_bridge</literal>
-                option or create networks with the bridge parameter in
-                order to avoid raising an error. Compute nodes have
-                iptables/ebtables entries created for each project and
-                instance to protect against IP/MAC address spoofing
-                and ARP poisoning.</para>
+                    <literal>br100</literal> configured and physically connected
+                to any other nodes that are hosting VMs. You must set the
+                    <literal>flat_network_bridge</literal> option or create
+                networks with the bridge parameter in order to avoid raising an
+                error. Compute nodes have iptables/ebtables entries created for
+                each project and instance to protect against IP/MAC address
+                spoofing and ARP poisoning.</para>
             <note>
-                <para>In single-host Flat DHCP mode you <emphasis
-                        role="italic">will</emphasis> be able to ping
-                    VMs through their fixed IP from the nova-network
-                    node, but you <emphasis role="italic"
-                        >cannot</emphasis> ping them from the compute
-                    nodes. This is expected behavior.</para>
+                <para>In single-host Flat DHCP mode you <emphasis role="italic"
+                        >will</emphasis> be able to ping VMs through their fixed
+                    IP from the nova-network node, but you <emphasis
+                        role="italic">cannot</emphasis> ping them from the
+                    compute nodes. This is expected behavior.</para>
             </note>
-            <para><emphasis role="bold">VLAN Network Mode is the
-                    default mode</emphasis> for OpenStack Compute. In
-                this mode, Compute creates a VLAN and bridge for each
-                project. For multiple machine installation, the VLAN
-                Network Mode requires a switch that supports VLAN
-                tagging (IEEE 802.1Q). The project gets a range of
-                private IPs that are only accessible from inside the
-                VLAN. In order for a user to access the instances in
-                their project, a special VPN instance (code named
-                cloudpipe) needs to be created. Compute generates a
-                certificate and key for the user to access the VPN and
-                starts the VPN automatically. It provides a private
-                network segment for each project's instances that can
-                be accessed through a dedicated VPN connection from
-                the Internet. In this mode, each project gets its own
-                VLAN, Linux networking bridge, and subnet.</para>
+            <para><emphasis role="bold">VLAN Network Mode is the default
+                    mode</emphasis> for OpenStack Compute. In this mode, Compute
+                creates a VLAN and bridge for each project. For multiple machine
+                installation, the VLAN Network Mode requires a switch that
+                supports VLAN tagging (IEEE 802.1Q). The project gets a range of
+                private IPs that are only accessible from inside the VLAN. In
+                order for a user to access the instances in their project, a
+                special VPN instance (code named cloudpipe) needs to be created.
+                Compute generates a certificate and key for the user to access
+                the VPN and starts the VPN automatically. It provides a private
+                network segment for each project's instances that can be
+                accessed through a dedicated VPN connection from the Internet.
+                In this mode, each project gets its own VLAN, Linux networking
+                bridge, and subnet.</para>
 
-            <para>The subnets are specified by the network
-                administrator, and are assigned dynamically to a
-                project when required. A DHCP Server is started for
-                each VLAN to pass out IP addresses to VM instances
-                from the subnet assigned to the project. All instances
-                belonging to one project are bridged into the same
-                VLAN for that project. OpenStack Compute creates the
-                Linux networking bridges and VLANs when
-                required.</para>
+            <para>The subnets are specified by the network administrator, and
+                are assigned dynamically to a project when required. A DHCP
+                Server is started for each VLAN to pass out IP addresses to VM
+                instances from the subnet assigned to the project. All instances
+                belonging to one project are bridged into the same VLAN for that
+                project. OpenStack Compute creates the Linux networking bridges
+                and VLANs when required.</para>
         </section>
         <section xml:id="section_dnsmasq">
             <title>DHCP server: dnsmasq</title>
