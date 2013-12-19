@@ -4,27 +4,31 @@
   xml:id="nova-network">
   <title>Enable Networking</title>
   <para>Configuring Networking can be a bewildering experience. The
-    following example shows the simplest production-ready configuration
-    that is available: the legacy networking in OpenStack Compute, with
-    a flat network, that takes care of DHCP.</para>
+    following example shows the simplest production-ready
+    configuration that is available: the legacy networking in
+    OpenStack Compute, with a flat network, that takes care of
+    DHCP.</para>
   <para>This set up uses multi-host functionality. Networking is
     configured to be highly available by distributing networking
     functionality across multiple hosts. As a result, no single
-    network controller acts as a single point of failure. This
-    process configures each compute node for networking.</para>
+    network controller acts as a single point of failure. This process
+    configures each compute node for networking.</para>
   <note>
     <para>If you need the full software-defined networking stack, see
         <xref linkend="ch_neutron"/>.</para>
   </note>
   <procedure>
     <step>
-      <para>Install the appropriate packages for compute
-        networking:</para>
+      <para>Install the appropriate packages for compute networking on
+        the compute node:</para>
       <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install nova-network</userinput></screen>
       <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>yum install openstack-nova-network</userinput></screen>
       <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-nova-network</userinput></screen>
+      <note>
+        <para>As noted previously, you do not need to install these
+          packages on the controller node.</para>
+      </note>
     </step>
-
     <step>
       <para>Edit the <filename>nova.conf</filename> file to define the
         networking mode:</para>
@@ -86,7 +90,8 @@ public_interface=eth1</programlisting>
 
   <para>Create a network that virtual machines can use. Do this once
     for the entire installation and not on each compute node. Run the
-      <command>nova network-create</command> command on the controller:</para>
+      <command>nova network-create</command> command on the
+    controller:</para>
   <screen><prompt>#</prompt> <userinput>source keystonerc</userinput></screen>
   <screen><prompt>#</prompt> <userinput>nova network-create vmnet --fixed-range-v4=10.0.0.0/24 \
   --bridge-interface=br100 --multi-host=T</userinput></screen>
