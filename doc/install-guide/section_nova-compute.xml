@@ -93,13 +93,17 @@
       <screen><prompt>#</prompt> <userinput>chmod 0644 /boot/vmlinuz*</userinput></screen>
     </step>
     <step>
-      <para os="fedora;rhel;centos;opensuse;sles">Edit the <filename>/etc/nova/nova.conf</filename> configuration file:</para>
+      <para os="fedora;rhel;centos;opensuse;sles">Edit the
+        <filename>/etc/nova/nova.conf</filename> configuration file:
+      </para>
       <screen os="fedora;rhel;centos;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf database connection mysql://nova:<replaceable>NOVA_DBPASS</replaceable>@controller/nova</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT auth_strategy keystone</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT auth_host <replaceable>controller</replaceable></userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT admin_user nova</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT admin_tenant_name service</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT admin_password <replaceable>NOVA_PASS</replaceable></userinput></screen>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf keystone_authtoken auth_host <replaceable>controller</replaceable></userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf keystone_authtoken auth_protocol http</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf keystone_authtoken auth_port 35357</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf keystone_authtoken admin_user nova</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf keystone_authtoken admin_tenant_name service</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf keystone_authtoken admin_password <replaceable>NOVA_PASS</replaceable></userinput></screen>
     <para os="ubuntu;debian">Edit the
           <filename>/etc/nova/nova.conf</filename> configuration file and add these
         lines to the appropriate sections:</para>
