@@ -136,20 +136,30 @@
         <para><emphasis role="bold">Security groups</emphasis>. If you
           use the VMware driver with the OpenStack Networking Service
           running the NSX plug-in, security groups are supported. If
-          you use <systemitem class="service"
-            >nova-network</systemitem>, security groups are not
-          supported. Note: The NSX plug-in is the only plug-in validated for vSphere.</para>
+          you use <systemitem class="service">nova-network
+          </systemitem>, security groups are not supported. Note: The
+           NSX plug-in is the only plug-in validated for vSphere.</para>
       </listitem>
       <listitem>
-        <para><emphasis role="bold">VNC</emphasis>. Enable port range
-          5900 - 6105 (inclusive) for VNC connections on every ESX
-          host in all clusters under OpenStack control. For details on
-          enabling VNC, see <link
+        <para><emphasis role="bold">VNC</emphasis>. The port range 
+          5900 - 6105 (inclusive) is automatically enabled for VNC 
+          connections on every ESX host in all clusters under 
+          OpenStack control. For more information about using a VNC 
+          client to connect to virtual machine, see <link
             xlink:href="http://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;cmd=displayKC&amp;externalId=1246"
             >http://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;cmd=displayKC&amp;externalId=1246</link>.
           Note: In addition to the default VNC port numbers (5900 to
           6000) specified in the above document, the following ports
           are also used: 6101, 6102, and 6105.</para>
+        <para>The ESXi firewall configuration must be modified to
+          allow the VNC ports. Additionally, for the firewall
+          modifications to persist after a reboot, you must create a
+          custom vSphere Installation Bundle (VIB) which is then
+          installed onto the running ESXi host or added to a custom
+          image profile used to install ESXi hosts. For details on
+          creating a VIB for persisting the firewall configuration
+          modifications, see <link xlink:href="http://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;cmd=displayKC&amp;externalId=2007381">
+          http://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;cmd=displayKC&amp;externalId=2007381</link>.</para>
       </listitem>
       <listitem>
         <para><emphasis role="bold">Ephemeral Disks</emphasis>. Ephemeral disks
