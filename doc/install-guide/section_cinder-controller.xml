@@ -37,17 +37,17 @@
       <para>Configure the Block Storage Service to use the database.
         Replace
           <literal><replaceable>CINDER_DBPASS</replaceable></literal>
-        with a password of your choosing.</para>
+        with a password of your choice.</para>
       <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/cinder/cinder.conf \
         database connection mysql://cinder:<replaceable>CINDER_DBPASS</replaceable>@<replaceable>controller</replaceable>/cinder</userinput></screen>
       <para os="ubuntu;debian">Edit
           <filename>/etc/cinder/cinder.conf</filename> and change the
-          <literal>[database]</literal> section.</para>
+          <literal>[DEFAULT]</literal> section.</para>
       <programlisting os="ubuntu;debian" language="ini">[database]
 ...
 # The SQLAlchemy connection string used to connect to the
 # database (string value)
-connection = mysql://cinder:CINDER_DBPASS@localhost/cinder
+sql_connection = mysql://cinder:CINDER_DBPASS@localhost/cinder
 ...</programlisting>
     </step>
     <step os="rhel;centos;fedora;opensuse;sles">
