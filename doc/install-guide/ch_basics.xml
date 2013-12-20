@@ -362,9 +362,10 @@ iface eth1 inet static
       database for openSUSE is MariaDB. You must install the MariaDB
       database on the controller node. You must install the MariaDB
       client software on any nodes that access the MariaDB
-      database:</para>
-    <itemizedlist>
-      <listitem>
+      database.</para>
+
+      <section xml:id="basics-database-controller">
+        <title>Controller setup</title>
         <para><phrase os="sles">For SUSE Linux Enterprise Server:
           </phrase> On the controller node, install the MySQL client and
           server packages, and the Python library.</para>
@@ -393,55 +394,56 @@ bind-address            = 192.168.0.10</programlisting>
         <para os="ubuntu;debian">Restart the MySQL service to apply
           the changes:</para>
         <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service mysql restart</userinput></screen>
-      </listitem>
-      <listitem>
-        <para>On nodes other than the controller node, install the
+        <para os="rhel;centos;fedora;opensuse;sles">Start the <phrase
+        os="rhel;fedora;centos">MySQL</phrase>
+        <phrase os="opensuse;sles">MariaDB or MySQL</phrase> database
+        server and set it to start automatically when the system
+        boots.</para>
+        <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>service mysqld start</userinput>
+<prompt>#</prompt> <userinput>chkconfig mysqld on</userinput></screen>
+        <screen os="opensuse;sles"><prompt>#</prompt> <userinput>service mysql start</userinput>
+<prompt>#</prompt> <userinput>chkconfig mysql on</userinput></screen>
+        <para os="rhel;centos;fedora;opensuse;sles">Finally, you should
+        set a root password for your <phrase os="rhel;fedora;centos"
+        >MySQL</phrase>
+        <phrase os="opensuse;sles">MariaDB or MySQL</phrase> database.
+        The OpenStack programs that set up databases and tables prompt
+        you for this password if it is set.</para>
+        <para os="ubuntu;debian;rhel;centos;fedora;opensuse;sles">You must
+        delete the anonymous users that are created when the database is
+        first started. Otherwise, database connection problems occur
+        when you follow the instructions in this guide. To do this, use
+        the <command>mysql_secure_installation</command> command.
+        Note that if <command>mysql_secure_installation</command> fails
+        you might need to use <command>mysql_install_db</command> first:</para>
+        <screen os="ubuntu;debian;rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>mysql_install_db</userinput>
+<prompt>#</prompt> <userinput>mysql_secure_installation</userinput></screen>
+        <para><phrase os="rhel;centos;fedora;opensuse;sles">If you have
+        not already set a root database password, press
+        <keycap>ENTER</keycap> when you are prompted for the
+        password.</phrase> This command presents a number of options
+        for you to secure your database installation. Respond
+        <userinput>yes</userinput> to all prompts unless you have a
+        good reason to do otherwise.</para>
+      </section>
+
+      <section xml:id="basics-database-node">
+        <title>Node setup</title>
+        <para>On all nodes other than the controller node, install the
             <phrase os="ubuntu;debian;rhel;fedora;centos"
             >MySQL</phrase>
           <phrase os="opensuse">MariaDB (on openSUSE)</phrase> client
           and the MySQL Python library on any system that does not
-          host a MySQL database.</para>
+          host a MySQL database:</para>
         <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install python-mysqldb</userinput></screen>
         <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>yum install mysql MySQL-python</userinput></screen>
         <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install mariadb-client python-mysql</userinput></screen>
         <para os="sles">For SUSE Linux Enterprise, install
           MySQL:</para>
         <screen os="sles"><prompt>#</prompt> <userinput>zypper install mysql-client python-mysql</userinput></screen>
-      </listitem>
-    </itemizedlist>
-    <para os="rhel;centos;fedora;opensuse;sles">Start the <phrase
-        os="rhel;fedora;centos">MySQL</phrase>
-      <phrase os="opensuse;sles">MariaDB or MySQL</phrase> database
-      server and set it to start automatically when the system
-      boots.</para>
-    <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>service mysqld start</userinput>
-<prompt>#</prompt> <userinput>chkconfig mysqld on</userinput></screen>
-    <screen os="opensuse;sles"><prompt>#</prompt> <userinput>service mysql start</userinput>
-<prompt>#</prompt> <userinput>chkconfig mysql on</userinput></screen>
-    <para os="rhel;centos;fedora;opensuse;sles">Finally, you should
-      set a root password for your <phrase os="rhel;fedora;centos"
-        >MySQL</phrase>
-      <phrase os="opensuse;sles">MariaDB or MySQL</phrase> database.
-      The OpenStack programs that set up databases and tables prompt
-      you for this password if it is set.</para>
-    <para os="ubuntu;debian;rhel;centos;fedora;opensuse;sles">You must
-      delete the anonymous users that are created when the database is
-      first started. Otherwise, database connection problems occur
-      when you follow the instructions in this guide. To do this, use
-      the <command>mysql_secure_installation</command> command.
-      Note that if <command>mysql_secure_installation</command> fails
-      you might need to use <command>mysql_install_db</command> first:</para>
-    <screen os="ubuntu;debian;rhel;centos;fedora;opensuse;sles">
-       <prompt>#</prompt> <userinput>mysql_install_db</userinput>
-       <prompt>#</prompt> <userinput>mysql_secure_installation</userinput></screen>
-    <para><phrase os="rhel;centos;fedora;opensuse;sles">If you have
-        not already set a root database password, press
-          <keycap>ENTER</keycap> when you are prompted for the
-        password.</phrase> This command presents a number of options
-      for you to secure your database installation. Respond
-        <userinput>yes</userinput> to all prompts unless you have a
-      good reason to do otherwise.</para>
+      </section>
   </section>
+
   <section xml:id="basics-packages">
     <title>OpenStack packages</title>
     <para>Distributions might release OpenStack packages as part of
