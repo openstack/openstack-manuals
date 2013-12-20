@@ -463,7 +463,7 @@ bind-address            = 192.168.0.10</programlisting>
       be installed on Red Hat Enterprise Linux and CentOS, not Fedora.
       Install the latest <package>epel-release</package> package (see
         <link
-        xlink:href="http://download.fedoraproject.org/pub/epel/6/i386/repoview/epel-release.html"
+        xlink:href="http://download.fedoraproject.org/pub/epel/6/x86_64/repoview/epel-release.html"
         >http://download.fedoraproject.org/pub/epel/6/x86_64/repoview/epel-release.html</link>).
       For example:</para>
     <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>yum install http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm</userinput></screen>
@@ -474,6 +474,10 @@ bind-address            = 192.168.0.10</programlisting>
         <package>openstack-utils</package>. This verifies that you can
       access the RDO repository.</para>
     <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>yum install openstack-utils</userinput></screen>
+    <para os="fedora;centos;rhel">Upgrade your system and reboot for all
+      changes to take effect:</para>
+    <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>yum upgrade</userinput>
+<prompt>#</prompt> <userinput>reboot</userinput></screen>
     <para os="opensuse;sles">Use the Open Build Service repositories
       for Havana based on your openSUSE or SUSE Linux Enterprise
       Server version, for example if you run openSUSE 12.3 use:</para>
@@ -490,6 +494,11 @@ bind-address            = 192.168.0.10</programlisting>
       guide. Install <package>openstack-utils</package>. This verifies
       that you can access the Open Build Service repository:</para>
     <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-utils</userinput></screen>
+    <para os="opensuse;sles">Upgrade your system and reboot for all changes to
+      take effect:</para>
+    <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper refresh</userinput>
+<prompt>#</prompt> <userinput>zypper update</userinput>
+<prompt>#</prompt> <userinput>reboot</userinput></screen>
     <procedure xml:id="ubuntu-cloud-archive" os="ubuntu">
       <title>To use the Ubuntu Cloud Archive for Havana</title>
       <para>The <link
@@ -503,8 +512,10 @@ bind-address            = 192.168.0.10</programlisting>
 <prompt>#</prompt> <userinput>add-apt-repository cloud-archive:havana</userinput></screen></para>
       </step>
       <step>
-        <para>Upgrade the system (and reboot if you need):
-          <screen><prompt>#</prompt> <userinput>apt-get update &amp;&amp; apt-get dist-upgrade</userinput> </screen></para>
+        <para>Update the package database, upgrade your system, and reboot
+          for all changes to take effect:
+          <screen><prompt>#</prompt> <userinput>apt-get update &amp;&amp; apt-get dist-upgrade</userinput>
+<prompt>#</prompt> <userinput>reboot</userinput> </screen></para>
       </step>
     </procedure>
     <procedure xml:id="debian-cloud-archive" os="debian">
@@ -525,9 +536,14 @@ bind-address            = 192.168.0.10</programlisting>
         <screen><prompt>#</prompt> <userinput>echo "deb http://archive.gplhost.com/debian havana main" >>/etc/apt/sources.list</userinput></screen>
       </step>
       <step>
-        <para>Upgrade the system and install the repository
-          key:</para>
-        <screen><prompt>#</prompt> <userinput>apt-get update &amp;&amp; apt-get install gplhost-archive-keyring &amp;&amp; apt-get update &amp;&amp; apt-get dist-upgrade</userinput></screen>
+        <para>Update the repository database and install the key:</para>
+        <screen><prompt>#</prompt> <userinput>apt-get update &amp;&amp; apt-get install gplhost-archive-keyring</userinput></screen>
+      </step>
+      <step>
+        <para>Update the package database, upgrade your system, and reboot
+          for all changes to take effect:</para>
+        <screen><prompt>#</prompt> <userinput>apt-get update &amp;&amp; apt-get dist-upgrade</userinput>
+<prompt>#</prompt> <userinput>reboot</userinput></screen>
       </step>
     </procedure>
     <para os="debian">Numerous archive.gplhost.com mirrors are
