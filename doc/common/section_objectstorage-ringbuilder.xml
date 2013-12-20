@@ -1,26 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <section xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xlink="http://www.w3.org/1999/xlink"
-    version="5.0"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="section_objectstorage-ringbuilder">
     <!-- ... Old module003-ch005-the-ring edited, renamed, and stored in doc/common for use by both Cloud Admin and Operator Training Guides... -->
     <title>Ring-builder</title>
-    <para>Rings are built and managed manually by a utility called the ring-builder. The
-        ring-builder assigns partitions to devices and writes an optimized Python structure to a
-        gzipped, serialized file on disk for shipping out to the servers. The server processes just
-        check the modification time of the file occasionally and reload their in-memory copies of
-        the ring structure as needed. Because of how the ring-builder manages changes to the ring,
-        using a slightly older ring usually just means one of the three replicas for a subset of the
-        partitions will be incorrect, which can be easily worked around.</para>
-    <para>The ring-builder also keeps its own builder file with the ring information and additional
-        data required to build future rings. It is very important to keep multiple backup copies of
-        these builder files. One option is to copy the builder files out to every server while
-        copying the ring files themselves. Another is to upload the builder files into the cluster
-        itself. If you lose the builder file, you have to create a new ring from scratch. Nearly all
-        partitions would be assigned to different devices and, therefore, nearly all of the stored
-        data would have to be replicated to new locations. So, recovery from a builder file loss is
-        possible, but data would be unreachable for an extended time.</para>
+    <para>Use the swift-ring-builder utility to build and manage rings. This
+        utility assigns partitions to devices and writes an optimized
+        Python structure to a gzipped, serialized file on disk for
+        transmission to the servers. The server processes occasionally
+        check the modification time of the file and reload in-memory
+        copies of the ring structure as needed. If you use a slightly
+        older version of the ring, one of the three replicas for a
+        partition subset will be incorrect because of the way the
+        ring-builder manages changes to the ring. You can work around
+        this issue.</para>
+    <para>The ring-builder also keeps its own builder file with the
+        ring information and additional data required to build future
+        rings. It is very important to keep multiple backup copies of
+        these builder files. One option is to copy the builder files
+        out to every server while copying the ring files themselves.
+        Another is to upload the builder files into the cluster
+        itself. If you lose the builder file, you have to create a new
+        ring from scratch. Nearly all partitions would be assigned to
+        different devices and, therefore, nearly all of the stored
+        data would have to be replicated to new locations. So,
+        recovery from a builder file loss is possible, but data would
+        be unreachable for an extended time.</para>
     <section xml:id="section_ring-data-structure">
         <title>Ring data structure</title>
         <para>The ring data structure consists of three top level
@@ -30,100 +36,192 @@
             MD5 hash to calculate the partition for the hash.</para>
     </section>
     <section xml:id="section_partition-assignment">
-            <title>Partition assignment list</title>
-        <para>This is a list of <literal>array(‘H’)</literal> of devices ids. The
-            outermost list contains an <literal>array(‘H’)</literal> for each
-            replica. Each <literal>array(‘H’)</literal> has a length equal to the
-                partition count for the ring. Each integer in the
-                <literal>array(‘H’)</literal> is an index into the above list of devices.
-                The partition list is known internally to the Ring
-                class as <literal>_replica2part2dev_id</literal>.</para>
-            <para>So, to create a list of device dictionaries assigned to a partition, the Python
-            code would look like:
+        <title>Partition assignment list</title>
+        <para>This is a list of <literal>array(‘H’)</literal> of
+            devices ids. The outermost list contains an
+                <literal>array(‘H’)</literal> for each replica. Each
+                <literal>array(‘H’)</literal> has a length equal to
+            the partition count for the ring. Each integer in the
+                <literal>array(‘H’)</literal> is an index into the
+            above list of devices. The partition list is known
+            internally to the Ring class as
+                <literal>_replica2part2dev_id</literal>.</para>
+        <para>So, to create a list of device dictionaries assigned to
+            a partition, the Python code would look like:
             <programlisting>devices = [self.devs[part2dev_id[partition]] for
 part2dev_id in self._replica2part2dev_id]</programlisting></para>
-            <para>That code is a little simplistic, as it does not account for the removal of
-            duplicate devices. If a ring has more replicas than devices, then a partition will have
-            more than one replica on one device.</para>
-        <para><literal>array(‘H’)</literal> is used for memory conservation as there
-                may be millions of partitions.</para>
+        <para>That code is a little simplistic because it does not
+            account for the removal of duplicate devices. If a ring
+            has more replicas than devices, a partition will have more
+            than one replica on a device.</para>
+        <para><literal>array(‘H’)</literal> is used for memory
+            conservation as there may be millions of
+            partitions.</para>
     </section>
     <section xml:id="section_fractional-replicas">
-            <title>Fractional replicas</title>
-            <para>A ring is not restricted to having an integer number
-                of replicas. In order to support the gradual changing
-                of replica counts, the ring is able to have a real
-                number of replicas.</para>
-            <para>When the number of replicas is not an integer, then the last element of
-                <literal>_replica2part2dev_id</literal> will have a length that is less than the
-            partition count for the ring. This means that some partitions will have more replicas
-            than others. For example, if a ring has 3.25 replicas, then 25 percent of its partitions
-            will have four replicas, while the remaining 75 percent will have just three.</para>
+        <title>Replica counts</title>
+        <para>To support the gradual change in replica counts, a ring
+            can have a real number of replicas and is not restricted
+            to an integer number of replicas.</para>
+        <para>A fractional replica count is for the whole ring and not
+            for individual partitions. It indicates the average number
+            of replicas for each partition. For example, a replica
+            count of 3.2 means that 20 percent of partitions have four
+            replicas and 80 percent have three replicas.</para>
+        <para>The replica count is adjustable.</para>
+        <para>Example:</para>
+        <screen><prompt>$</prompt> <userinput>swift-ring-builder account.builder set_replicas 4</userinput>
+<prompt>$</prompt> <userinput>swift-ring-builder rebalance</userinput></screen>
+        <para>You must rebalance the replica ring in globally
+            distributed clusters. Operators of these clusters
+            generally want an equal number of replicas and regions.
+            Therefore, when an operator adds or removes a region, the
+            operator adds or removes a replica. Removing unneeded
+            replicas saves on the cost of disks.</para>
+        <para>You can gradually increase the replica count at a rate
+            that does not adversely affect cluster performance.</para>
+        <para>For example:</para>
+        <screen><prompt>$</prompt> <userinput>swift-ring-builder object.builder set_replicas 3.01</userinput>
+<prompt>$</prompt> <userinput>swift-ring-builder object.builder rebalance</userinput>
+<computeroutput>&lt;distribute rings and wait&gt;...</computeroutput>
+
+<prompt>$</prompt> <userinput>swift-ring-builder object.builder set_replicas 3.02</userinput>
+<prompt>$</prompt> <userinput>swift-ring-builder object.builder rebalance</userinput>
+<computeroutput>&lt;creatdistribute rings and wait&gt;...</computeroutput>
+        </screen>
+        <para>Changes take effect after the ring is rebalanced.
+            Therefore, if you intend to change from 3 replicas to 3.01
+            but you accidentally type <literal>2.01</literal>, no data
+            is lost.</para>
+        <para>Additionally, <command>swift-ring-builder
+                    <replaceable>X.builder</replaceable>
+                create</command> can now take a decimal argument for
+            the number of replicas.</para>
     </section>
-<section xml:id="section_partition-shift-value">
-            <title>Partition shift value</title>
-            <para>The partition shift value is known internally to the
-                Ring class as <literal>_part_shift</literal>. This value used to shift an
-                MD5 hash to calculate the partition on which the data
-                for that hash should reside. Only the top four bytes
-                of the hash is used in this process. For example, to
-                compute the partition for the path
-                /account/container/object the Python code might look
-                like:
-<programlisting>partition = unpack_from('&gt;I',
+    <section xml:id="section_partition-shift-value">
+        <title>Partition shift value</title>
+        <para>The partition shift value is known internally to the
+            Ring class as <literal>_part_shift</literal>. This value
+            is used to shift an MD5 hash to calculate the partition
+            where the data for that hash should reside. Only the top
+            four bytes of the hash is used in this process. For
+            example, to compute the partition for the
+                <literal>/account/container/object</literal> path, the
+            Python code might look like the following code:
+            <programlisting>partition = unpack_from('&gt;I',
 md5('/account/container/object').digest())[0] &gt;&gt;
 self._part_shift</programlisting></para>
-            <para>For a ring generated with part_power P, the
-                partition shift value is <literal>32 - P</literal>.</para>
-</section>
+        <para>For a ring generated with part_power P, the partition
+            shift value is <literal>32 - P</literal>.</para>
+    </section>
     <section xml:id="section_build-ring">
         <title>Build the ring</title>
-        <para>The initial building of the ring first calculates the
-            number of partitions that should ideally be assigned to
-            each device based the device’s weight. For example, given
-            a partition power of 20, the ring will have 1,048,576
-            partitions. If there are 1,000 devices of equal weight
-            they will each desire 1,048.576 partitions. The devices
-            are then sorted by the number of partitions they desire
-            and kept in order throughout the initialization
-            process.</para>
-        <note><para>Each device is also assigned a random tiebreaker
-            value that is used when two devices desire the same number
-            of partitions. This tiebreaker is not stored on disk
-            anywhere, and so two different rings created with the same
-            parameters will have different partition assignments. For
-            repeatable partition assignments, <literal>RingBuilder.rebalance()</literal>
-            takes an optional seed value that will be used to seed
-            Python’s pseudo-random number generator.</para></note>
-        <para>Then, the ring builder assigns each replica of each partition to the device that
-            requires most partitions at that point while keeping it as far away as possible from
-            other replicas. The ring builder prefers to assign a replica to a device in a region
-            does not already have a replica. If no such region is available, the ring builder tries
-            to find a device in a different zone. If that's not possible, it will look on a
-            different server. If it doesn't find one there, it will just look for a device that has
-            no replicas. Finally, if all of the other options are exhausted, the ring builder
-            assigns the replica to the device that has the fewest replicas already assigned. Note
-            that assignment of multiple replicas to one device will only happen if the ring has
-            fewer devices than it has replicas.</para>
-        <para>When building a new ring based on an old ring, the desired number of partitions each
-            device wants is recalculated. Next, the partitions to be reassigned are gathered up. Any
-            removed devices have all their assigned partitions unassigned and added to the gathered
-            list. Any partition replicas that (due to the addition of new devices) can be spread out
-            for better durability are unassigned and added to the gathered list. Any devices that
-            have more partitions than they now need have random partitions unassigned from them and
-            added to the gathered list. Lastly, the gathered partitions are then reassigned to
-            devices using a similar method as in the initial assignment described above.</para>
-        <para>Whenever a partition has a replica reassigned, the time of the reassignment is
-            recorded. This is taken into account when gathering partitions to reassign so that no
-            partition is moved twice in a configurable amount of time. This configurable amount of
-            time is known internally to the RingBuilder class as <literal>min_part_hours</literal>.
-            This restriction is ignored for replicas of partitions on devices that have been removed
-            since removing a device only happens on device failure and reasssignment is the only
-            choice.</para>
-        <para>The above processes don’t always perfectly rebalance a ring due to the random nature
-            of gathering partitions for reassignment. To help reach a more balanced ring, the
-            rebalance process is repeated until near perfect (less than 1 percent off) or when the
-            balance doesn’t improve by at least 1 percent (indicating we probably can’t get perfect
-            balance due to wildly imbalanced zones or too many partitions recently moved).</para>
+        <para>The ring builder process includes these high-level
+            steps:</para>
+        <orderedlist>
+            <listitem>
+                <para>The utility calculates the number of partitions to
+                    assign to each device based on the weight of the
+                    device. For example, for a partition at the power
+                    of 20, the ring has 1,048,576 partitions. One
+                    thousand devices of equal weight will each want
+                    1,048.576 partitions. The devices are sorted by
+                    the number of partitions they desire and kept in
+                    order throughout the initialization
+                    process.</para>
+                <note>
+                    <para>Each device is also assigned a random
+                        tiebreaker value that is used when two devices
+                        desire the same number of partitions. This
+                        tiebreaker is not stored on disk anywhere, and
+                        so two different rings created with the same
+                        parameters will have different partition
+                        assignments. For repeatable partition
+                        assignments,
+                            <literal>RingBuilder.rebalance()</literal>
+                        takes an optional seed value that seeds the
+                        Python pseudo-random number generator.</para>
+                </note>
+            </listitem>
+            <listitem>
+                <para>The ring builder assigns each partition replica
+                    to the device that requires most partitions at
+                    that point while keeping it as far away as
+                    possible from other replicas. The ring builder
+                    prefers to assign a replica to a device in a
+                    region that does not already have a replica. If no
+                    such region is available, the ring builder
+                    searches for a device in a different zone, or on a
+                    different server. If it does not find one, it
+                    looks for a device with no replicas. Finally, if
+                    all options are exhausted, the ring builder
+                    assigns the replica to the device that has the
+                    fewest replicas already assigned.</para>
+                <note>
+                    <para>The ring builder assigns multiple replicas
+                        to one device only if the ring has fewer
+                        devices than it has replicas.</para>
+                </note>
+            </listitem>
+            <listitem>
+                <para>When building a new ring from an old ring, the
+                    ring builder recalculates the desired number of
+                    partitions that each device wants. </para>
+            </listitem>
+            <listitem>
+                <para>The ring builder unassigns partitions and
+                    gathers these partitions for reassignment, as
+                    follows: <itemizedlist>
+                        <listitem>
+                            <para>The ring builder unassigns any
+                                assigned partitions from any removed
+                                devices and adds these partitions to
+                                the gathered list. </para>
+                        </listitem>
+                        <listitem>
+                            <para>The ring builder unassigns any
+                                partition replicas that can be spread
+                                out for better durability and adds
+                                these partitions to the gathered list.
+                            </para>
+                        </listitem>
+                        <listitem>
+                            <para>The ring builder unassigns random
+                                partitions from any devices that have
+                                more partitions than they need and
+                                adds these partitions to the gathered
+                                list. </para>
+                        </listitem>
+
+                    </itemizedlist></para>
+            </listitem>
+            <listitem>
+                <para>The ring builder reassigns the gathered
+                    partitions to devices by using a similar method to
+                    the one described previously.</para>
+            </listitem>
+            <listitem>
+                <para>When the ring builder reassigns a replica to a
+                    partition, the ring builder records the time of
+                    the reassignment. The ring builder uses this value
+                    when it gathers partitions for reassignment so
+                    that no partition is moved twice in a configurable
+                    amount of time. The RingBuilder class knows this
+                    configurable amount of time as
+                        <literal>min_part_hours</literal>. The ring
+                    builder ignores this restriction for replicas of
+                    partitions on removed devices because removal of a
+                    device happens on device failure only, and
+                    reassignment is the only choice.</para>
+            </listitem>
+        </orderedlist>
+        <para>Theses steps do not always perfectly rebalance a ring
+            due to the random nature of gathering partitions for
+            reassignment. To help reach a more balanced ring, the
+            rebalance process is repeated until near perfect (less
+            than 1 percent off) or when the balance does not improve
+            by at least 1 percent (indicating we probably cannot get
+            perfect balance due to wildly imbalanced zones or too many
+            partitions recently moved).</para>
     </section>
 </section>
