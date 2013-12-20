@@ -103,40 +103,40 @@ volume-type-delete  Delete a specific flavor</computeroutput></screen>
         use, for example the libvirt driver enables quotas on CPUs
         available to a VM, disk tuning, bandwidth I/O, and instance
         VIF traffic control.</para>
-    <para>You can configure the CPU limits with three control
-        parameters with the nova-manage tool. Here is an example of
-        configuring the I/O limit:</para>
-<screen><prompt>#</prompt> <userinput>nova-manage flavor set_key --name m1.small  --key quota:read_bytes_sec --value 10240000</userinput>
+    <para>You can configure the CPU limits with control parameters
+        with the nova-manage tool. For example, to configure the I/O
+        limit:</para>
+    <screen><prompt>#</prompt> <userinput>nova-manage flavor set_key --name m1.small  --key quota:read_bytes_sec --value 10240000</userinput>
 <prompt>#</prompt> <userinput>nova-manage flavor set_key --name m1.small  --key quota:read_bytes_sec --value 10240000</userinput></screen>
     <para>There are CPU control parameters for weight shares,
         enforcement intervals for runtime quotas, and a quota for
         maximum allowed bandwidth.</para>
-    <para>The optional <literal>cpu_shares</literal> element specifies the proportional
-        weighted share for the domain. If this element is omitted, the
-        service defaults to the OS provided defaults. There is no unit
-        for the value. It is a relative measure based on the setting of
-        other VMs. For example, a VM configured with value 2048
-        gets twice as much CPU time as a VM configured with value
-        1024.</para>
-    <para>The optional <literal>cpu_period</literal> element specifies the enforcement
-        interval (unit: microseconds) for QEMU and LXC hypervisors.
-        Within a period, each VCPU of the domain is not allowed to
-        consume more than the quota worth of runtime. The value should be
-        in range <literal>[1000, 1000000]</literal>. A period with value 0 means no
-        value.</para>
-    <para>The optional <literal>cpu_quota</literal> element specifies the maximum allowed
-        bandwidth (unit: microseconds). A domain with a quota with a
-        negative value indicates that the domain has infinite
-        bandwidth, which means that it is not bandwidth controlled.
-        The value should be in range <literal>[1000, 18446744073709551]</literal> or less
-        than 0. A quota with value 0 means no value. You can use this
-        feature to ensure that all vcpus run at the same speed. For
-        example:</para>
-<screen><prompt>#</prompt> <userinput>nova flavor-key m1.low_cpu set quota:cpu_quota=10000</userinput>
+    <para>The optional <literal>cpu_shares</literal> element specifies
+        the proportional weighted share for the domain. If this
+        element is omitted, the service defaults to the OS provided
+        defaults. There is no unit for the value. It is a relative
+        measure based on the setting of other VMs. For example, a VM
+        configured with value 2048 gets twice as much CPU time as a VM
+        configured with value 1024.</para>
+    <para>The optional <literal>cpu_period</literal> element specifies
+        the enforcement interval (unit: microseconds) for QEMU and LXC
+        hypervisors. Within a period, each VCPU of the domain is not
+        allowed to consume more than the quota worth of runtime. The
+        value should be in range <literal>[1000, 1000000]</literal>. A
+        period with value 0 means no value.</para>
+    <para>The optional <literal>cpu_quota</literal> element specifies
+        the maximum allowed bandwidth (unit: microseconds). A domain
+        with a quota with a negative value indicates that the domain
+        has infinite bandwidth, which means that it is not bandwidth
+        controlled. The value should be in range <literal>[1000,
+            18446744073709551]</literal> or less than 0. A quota with
+        value 0 means no value. You can use this feature to ensure
+        that all vcpus run at the same speed. For example:</para>
+    <screen><prompt>#</prompt> <userinput>nova flavor-key m1.low_cpu set quota:cpu_quota=10000</userinput>
 <prompt>#</prompt> <userinput>nova flavor-key m1.low_cpu set quota:cpu_period=20000</userinput></screen>
-    <para>In this example, the instance of <literal>m1.low_cpu</literal> can only consume
-        a maximum of 50% CPU of a physical CPU computing
-        capability.</para>
+    <para>In this example, the instance of
+            <literal>m1.low_cpu</literal> can only consume a maximum
+        of 50% CPU of a physical CPU computing capability.</para>
     <para>Through disk I/O quotas, you can set maximum disk write to
         10 MB per second for a VM user. For example:</para>
     <screen><prompt>#</prompt> <userinput>nova flavor-set m1.medium set disk_write_bytes_sec=10240000</userinput></screen>
@@ -185,10 +185,11 @@ volume-type-delete  Delete a specific flavor</computeroutput></screen>
     <para>Incoming and outgoing traffic can be shaped independently.
         The bandwidth element can have at most one inbound and at most
         one outbound child element. Leaving any of these children
-        element out result in no quality of service (QoS) applied on that traffic
-        direction. So, when you want to shape only the network's
-        incoming traffic, use inbound only, and vice versa. Each of
-        these elements have one mandatory attribute average.</para>
+        element out result in no quality of service (QoS) applied on
+        that traffic direction. So, when you want to shape only the
+        network's incoming traffic, use inbound only, and vice versa.
+        Each of these elements have one mandatory attribute
+        average.</para>
     <para>It specifies average bit rate on the interface being shaped.
         Then there are two optional attributes: peak, which specifies
         maximum rate at which bridge can send data, and burst, amount
@@ -201,4 +202,12 @@ volume-type-delete  Delete a specific flavor</computeroutput></screen>
         network traffic:</para>
     <screen><prompt>#</prompt> <userinput>nova-manage flavor set_key --name m1.small --key quota:inbound_average --value 10240</userinput>
 <prompt>#</prompt> <userinput>nova-manage flavor set_key --name m1.small --key quota:outbound_average --value 10240</userinput></screen>
+    <para>Flavors can also be assigned to particular projects. By
+        default, a flavor is public and available to all projects.
+        Private flavors are only accessible to those on the access
+        list and are invisible to other projects. To
+        create and assign a private flavor to a project, run these
+        commands:</para>
+    <screen><prompt>#</prompt> <userinput>nova flavor-create --is-public false p1.medium auto 512 40 4</userinput>
+<prompt>#</prompt> <userinput>nova flavor-access-add 259d06a0-ba6d-4e60-b42d-ab3144411d58 86f94150ed744e08be565c2ff608eef9</userinput></screen>
 </section>
