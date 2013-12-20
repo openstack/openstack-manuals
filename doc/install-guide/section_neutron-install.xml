@@ -305,11 +305,11 @@ connection = mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@<replacea
             <literal>[filter:authtoken]</literal> section:</para>
         <programlisting language="ini">[filter:authtoken]
 paste.filter_factory = keystoneclient.middleware.auth_token:filter_factory
-auth_host=<replaceable>controller</replaceable>
-auth_uri=http://<replaceable>controller</replaceable>:5000
-admin_user=neutron
-admin_tenant_name=service
-admin_password=<replaceable>NEUTRON_PASS</replaceable></programlisting>
+auth_host = <replaceable>controller</replaceable>
+auth_uri = http://<replaceable>controller</replaceable>:5000
+admin_tenant_name = service
+admin_user = neutron
+admin_password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
         <warning>
           <para><literal>keystoneclient.middleware.auth_token</literal>:
             You must configure <literal>auth_uri</literal> to point to
@@ -782,10 +782,10 @@ connection = mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@<replacea
             <literal>[filter:authtoken]</literal> section:</para>
         <programlisting language="ini">[filter:authtoken]
 paste.filter_factory = keystoneclient.middleware.auth_token:filter_factory
-auth_host=<replaceable>controller</replaceable>
-admin_user=neutron
-admin_tenant_name=service
-admin_password=<replaceable>NEUTRON_PASS</replaceable></programlisting>
+auth_host = <replaceable>controller</replaceable>
+admin_tenant_name = service
+admin_user = neutron
+admin_password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
       </step>
       <step>
         <para>Configure OpenStack Compute to use OpenStack Networking
@@ -1069,7 +1069,7 @@ connection = mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@<replacea
             <filename>/etc/neutron/api-paste.ini</filename>
           file:</para>
         <programlisting language="ini">[filter:authtoken]
-EXISTING_STUFF_HERE
+paste.filter_factory = keystoneclient.middleware.auth_token:filter_factory
 admin_tenant_name = service
 admin_user = neutron
 admin_password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
