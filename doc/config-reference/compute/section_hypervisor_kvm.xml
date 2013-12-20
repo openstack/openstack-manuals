@@ -1,30 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<section xmlns="http://docbook.org/ns/docbook"
-    xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
-    xml:id="kvm">
+<section xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0" xml:id="kvm">
     <?dbhtml stop-chunking?>
     <title>KVM</title>
-    <para>KVM is configured as the default hypervisor for
-        Compute.</para>
+    <para>KVM is configured as the default hypervisor for Compute.</para>
     <note>
-        <para>This document contains several sections about hypervisor
-            selection. If you are reading this document linearly, you
-            do not want to load the KVM module before you install
-                <systemitem class="service">nova-compute</systemitem>.
-            The <systemitem class="service">nova-compute</systemitem>
-            service depends on qemu-kvm, which installs
-                <filename>/lib/udev/rules.d/45-qemu-kvm.rules</filename>,
-            which sets the correct permissions on the /dev/kvm device
-            node.</para>
+        <para>This document contains several sections about hypervisor selection. If you are reading
+            this document linearly, you do not want to load the KVM module before you install
+                <systemitem class="service">nova-compute</systemitem>. The <systemitem
+                class="service">nova-compute</systemitem> service depends on qemu-kvm, which
+            installs <filename>/lib/udev/rules.d/45-qemu-kvm.rules</filename>, which sets the
+            correct permissions on the /dev/kvm device node.</para>
     </note>
-    <para>To enable KVM explicitly, add the following configuration
-        options to the <filename>/etc/nova/nova.conf</filename>
-        file:</para>
+    <para>To enable KVM explicitly, add the following configuration options to the
+            <filename>/etc/nova/nova.conf</filename> file:</para>
     <programlisting language="ini">compute_driver=libvirt.LibvirtDriver
 libvirt_type=kvm</programlisting>
-    <para>The KVM hypervisor supports the following virtual machine
-        image formats:</para>
+    <para>The KVM hypervisor supports the following virtual machine image formats:</para>
     <itemizedlist>
         <listitem>
             <para>Raw</para>
@@ -39,50 +31,42 @@ libvirt_type=kvm</programlisting>
             <para>VMWare virtual machine disk format (vmdk)</para>
         </listitem>
     </itemizedlist>
-    <para>This section describes how to enable KVM on your system. For
-        more information, see the following distribution-specific
-        documentation:</para>
+    <para>This section describes how to enable KVM on your system. For more information, see the
+        following distribution-specific documentation:</para>
     <itemizedlist>
         <listitem>
             <para><link
                     xlink:href="http://fedoraproject.org/wiki/Getting_started_with_virtualization"
-                    >Fedora: Getting started with
-                    virtualization</link> from the Fedora project
+                    >Fedora: Getting started with virtualization</link> from the Fedora project
                 wiki.</para>
         </listitem>
         <listitem>
-            <para><link
-                    xlink:href="https://help.ubuntu.com/community/KVM/Installation"
-                    >Ubuntu: KVM/Installation</link> from the
-                Community Ubuntu documentation.</para>
+            <para><link xlink:href="https://help.ubuntu.com/community/KVM/Installation">Ubuntu:
+                    KVM/Installation</link> from the Community Ubuntu documentation.</para>
         </listitem>
         <listitem>
             <para><link
                     xlink:href="http://static.debian-handbook.info/browse/stable/sect.virtualization.html#idp11279352"
-                    >Debian: Virtualization with KVM</link> from the
-                Debian handbook.</para>
+                    >Debian: Virtualization with KVM</link> from the Debian handbook.</para>
         </listitem>
         <listitem>
             <para><link
                     xlink:href="http://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Linux/6/html/Virtualization_Host_Configuration_and_Guest_Installation_Guide/sect-Virtualization_Host_Configuration_and_Guest_Installation_Guide-Host_Installation-Installing_KVM_packages_on_an_existing_Red_Hat_Enterprise_Linux_system.html"
-                    >RHEL: Installing virtualization packages on an
-                    existing Red Hat Enterprise Linux system</link>
-                from the <citetitle>Red Hat Enterprise Linux
-                    Virtualization Host Configuration and Guest
-                    Installation Guide</citetitle>.</para>
+                    >RHEL: Installing virtualization packages on an existing Red Hat Enterprise
+                    Linux system</link> from the <citetitle>Red Hat Enterprise Linux Virtualization
+                    Host Configuration and Guest Installation Guide</citetitle>.</para>
         </listitem>
         <listitem>
             <para><link
                     xlink:href="http://doc.opensuse.org/documentation/html/openSUSE/opensuse-kvm/cha.kvm.requires.html#sec.kvm.requires.install"
-                    >openSUSE: Installing KVM</link> from the openSUSE
-                Virtualization with KVM manual.</para>
+                    >openSUSE: Installing KVM</link> from the openSUSE Virtualization with KVM
+                manual.</para>
         </listitem>
         <listitem>
             <para><link
                     xlink:href="http://doc.opensuse.org/products/draft/SLES/SLES-kvm_sd_draft/cha.kvm.requires.html#sec.kvm.requires.install"
-                    >SLES: Installing KVM</link> from the SUSE Linux
-                Enterprise Server Virtualization with KVM
-                manual.</para>
+                    >SLES: Installing KVM</link> from the SUSE Linux Enterprise Server
+                Virtualization with KVM manual.</para>
         </listitem>
     </itemizedlist>
 
@@ -90,112 +74,96 @@ libvirt_type=kvm</programlisting>
 
     <section xml:id="libvirt-xml-cpu-model">
         <title>Specify the CPU model of KVM guests</title>
-        <para>The Compute service enables you to control the guest CPU
-            model that is exposed to KVM virtual machines. Use cases
-            include:</para>
+        <para>The Compute service enables you to control the guest CPU model that is exposed to KVM
+            virtual machines. Use cases include:</para>
         <itemizedlist>
             <listitem>
-                <para>To maximize performance of virtual machines by
-                    exposing new host CPU features to the guest</para>
+                <para>To maximize performance of virtual machines by exposing new host CPU features
+                    to the guest</para>
             </listitem>
             <listitem>
-                <para>To ensure a consistent default CPU across all
-                    machines, removing reliance of variable QEMU
-                    defaults</para>
+                <para>To ensure a consistent default CPU across all machines, removing reliance of
+                    variable QEMU defaults</para>
             </listitem>
         </itemizedlist>
-        <para>In libvirt, the CPU is specified by providing a base CPU
-            model name (which is a shorthand for a set of feature
-            flags), a set of additional feature flags, and the
-            topology (sockets/cores/threads). The libvirt KVM driver
-            provides a number of standard CPU model names. These
-            models are defined in the
-                <filename>/usr/share/libvirt/cpu_map.xml</filename>
-            file. Check this file to determine which models are
-            supported by your local installation.</para>
-        <para>Two Compute configuration options define which type of
-            CPU model is exposed to the hypervisor when using KVM:
-                <literal>libvirt_cpu_mode</literal> and
+        <para>In libvirt, the CPU is specified by providing a base CPU model name (which is a
+            shorthand for a set of feature flags), a set of additional feature flags, and the
+            topology (sockets/cores/threads). The libvirt KVM driver provides a number of standard
+            CPU model names. These models are defined in the
+                <filename>/usr/share/libvirt/cpu_map.xml</filename> file. Check this file to
+            determine which models are supported by your local installation.</para>
+        <para>Two Compute configuration options define which type of CPU model is exposed to the
+            hypervisor when using KVM: <literal>libvirt_cpu_mode</literal> and
                 <literal>libvirt_cpu_model</literal>.</para>
-        <para>The <literal>libvirt_cpu_mode</literal> option can take
-            one of the following values: <literal>none</literal>,
-                <literal>host-passthrough</literal>,
-                <literal>host-model</literal>, and
-                <literal>custom</literal>.</para>
+        <para>The <literal>libvirt_cpu_mode</literal> option can take one of the following values:
+                <literal>none</literal>, <literal>host-passthrough</literal>,
+                <literal>host-model</literal>, and <literal>custom</literal>.</para>
         <simplesect>
             <title>Host model (default for KVM &amp; QEMU)</title>
             <para>If your <filename>nova.conf</filename> file contains
-                    <literal>libvirt_cpu_mode=host-model</literal>,
-                libvirt identifies the CPU model in
-                    <filename>/usr/share/libvirt/cpu_map.xml</filename>
-                file that most closely matches the host, and requests
-                additional CPU flags to complete the match. This
-                configuration provides the maximum functionality and
-                performance and maintains good reliability and
-                compatibility if the guest is migrated to another host
-                with slightly different host CPUs.</para>
+                    <literal>libvirt_cpu_mode=host-model</literal>, libvirt identifies the CPU model
+                in <filename>/usr/share/libvirt/cpu_map.xml</filename> file that most closely
+                matches the host, and requests additional CPU flags to complete the match. This
+                configuration provides the maximum functionality and performance and maintains good
+                reliability and compatibility if the guest is migrated to another host with slightly
+                different host CPUs.</para>
         </simplesect>
         <simplesect>
             <title>Host pass through</title>
             <para>If your <filename>nova.conf</filename> file contains
-                    <literal>libvirt_cpu_mode=host-passthrough</literal>,
-                libvirt tells KVM to pass through the host CPU with no
-                modifications. The difference to host-model, instead
-                of just matching feature flags, every last detail of
-                the host CPU is matched. This gives absolutely best
-                performance, and can be important to some apps which
-                check low level CPU details, but it comes at a cost
-                with respect to migration: the guest can only be
-                migrated to an exactly matching host CPU.</para>
+                    <literal>libvirt_cpu_mode=host-passthrough</literal>, libvirt tells KVM to pass
+                through the host CPU with no modifications. The difference to host-model, instead of
+                just matching feature flags, every last detail of the host CPU is matched. This
+                gives absolutely best performance, and can be important to some apps which check low
+                level CPU details, but it comes at a cost with respect to migration: the guest can
+                only be migrated to an exactly matching host CPU.</para>
         </simplesect>
         <simplesect>
             <title>Custom</title>
             <para>If your <filename>nova.conf</filename> file contains
-                    <literal>libvirt_cpu_mode=custom</literal>, you
-                can explicitly specify one of the supported named
-                model using the libvirt_cpu_model configuration
-                option. For example, to configure the KVM guests to
-                expose Nehalem CPUs, your
-                    <filename>nova.conf</filename> file should
-                contain:</para>
+                    <literal>libvirt_cpu_mode=custom</literal>, you can explicitly specify one of
+                the supported named model using the libvirt_cpu_model configuration option. For
+                example, to configure the KVM guests to expose Nehalem CPUs, your
+                    <filename>nova.conf</filename> file should contain:</para>
             <programlisting language="ini">libvirt_cpu_mode=custom
 libvirt_cpu_model=Nehalem</programlisting>
         </simplesect>
         <simplesect>
-            <title>None (default for all libvirt-driven hypervisors
-                other than KVM &amp; QEMU)</title>
+            <title>None (default for all libvirt-driven hypervisors other than KVM &amp;
+                QEMU)</title>
             <para>If your <filename>nova.conf</filename> file contains
-                    <literal>libvirt_cpu_mode=none</literal>, libvirt
-                does not specify a CPU model. Instead, the hypervisor
-                chooses the default model. This setting is equivalent
-                to the Compute service behavior prior to the Folsom
-                release.</para>
+                    <literal>libvirt_cpu_mode=none</literal>, libvirt does not specify a CPU model.
+                Instead, the hypervisor chooses the default model. This setting is equivalent to the
+                Compute service behavior prior to the Folsom release.</para>
         </simplesect>
+    </section>
+    <section xml:id="kvm-guest-agent-support">
+        <title>Guest agent support</title>
+        <para>With the Havana release, support for guest agents was added, allowing optional access
+            between compute nods and guests through a socket, using the qmp protocol.</para>
+        <para>To enable this feature, you must set <literal>hw_qemu_guest_agent=yes</literal> as a
+            metadata parameter on the image you wish to use to create guest-agent-capable instances
+            from. You can explicitly disable the feature by setting
+                <literal>hw_qemu_guest_agent=no</literal> in the image metadata.</para>
     </section>
     <section xml:id="kvm-performance">
         <title>KVM performance tweaks</title>
-        <para>The <link
-                xlink:href="http://www.linux-kvm.org/page/VhostNet"
-                >VHostNet</link> kernel module improves network
-            performance. To load the kernel module, run the following
+        <para>The <link xlink:href="http://www.linux-kvm.org/page/VhostNet">VHostNet</link> kernel
+            module improves network performance. To load the kernel module, run the following
             command as root:</para>
         <screen><prompt>#</prompt> <userinput>modprobe vhost_net</userinput></screen>
     </section>
     <section xml:id="kvm-troubleshooting">
         <title>Troubleshoot KVM</title>
-        <para>Trying to launch a new virtual machine instance fails
-            with the <literal>ERROR</literal>state, and the following
-            error appears in the
-                <filename>/var/log/nova/nova-compute.log</filename>
-            file:</para>
+        <para>Trying to launch a new virtual machine instance fails with the
+                <literal>ERROR</literal>state, and the following error appears in the
+                <filename>/var/log/nova/nova-compute.log</filename> file:</para>
         <screen><computeroutput>libvirtError: internal error no supported architecture for os type 'hvm'</computeroutput></screen>
-        <para>This message indicates that the KVM kernel modules were
-            not loaded.</para>
-        <para>If you cannot start VMs after installation without
-            rebooting, the permissions might not be correct. This can
-            happen if you load the KVM module before you install
-                <systemitem class="service">nova-compute</systemitem>.
-            To check whether the group is set to kvm, run:</para>
+        <para>This message indicates that the KVM kernel modules were not loaded.</para>
+        <para>If you cannot start VMs after installation without rebooting, the permissions might
+            not be correct. This can happen if you load the KVM module before you install
+                <systemitem class="service">nova-compute</systemitem>. To check whether the group is
+            set to kvm, run:</para>
         <screen><prompt>#</prompt> <userinput>ls -l /dev/kvm</userinput></screen>
         <para>If it is not set to kvm, run:</para>
         <screen><prompt>#</prompt> <userinput>sudo udevadm trigger</userinput></screen>
