@@ -891,6 +891,11 @@ firewall_driver=neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallD
                 <filename>/etc/neutron/neutron.conf</filename>
               file:</para>
             <programlisting language="ini">core_plugin = neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2</programlisting>
+            <programlisting language="ini" os="rhel;centos;fedora">core_plugin = neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2
+#for RHEL6.5
+root_helper = sudo neutron-rootwrap /etc/neutron/rootwrap.conf
+api_paste_config = /etc/neutron/api-paste.ini
+rpc_backend = neutron.openstack.common.rpc.impl_qpid</programlisting>
           </step>
           <step>
             <para>Configure the networking type that you chose when
