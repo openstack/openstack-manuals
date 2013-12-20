@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="keystone-token-binding">
+    <title>Configure the Identity Service for token binding</title>
+    <para>Token binding refers to the practice of embedding
+    information from external authentication providers (like a
+    company's Kerberos server) inside the token such that a client may
+    enforce that the token only be used in conjunction with that
+    specified authentication. This is an additional security mechanism
+    as it means that if a token is stolen it will not be usable
+    without also providing the external authentication. </para>
+  <para> To activate token binding you must specify the types of
+    authentication that token binding should be used for in
+      <filename>keystone.conf</filename>:
+    <programlisting language="ini">[token]
+    bind = kerberos</programlisting>
+    Currently only <literal>kerberos</literal> is supported.</para>
+   <para>
+To enforce checking of token binding the <literal>enforce_token_bind</literal> parameter
+should be set to one of the following modes:
+<itemizedlist>
+<listitem><para><literal>disabled</literal> disable token bind checking</para>
+</listitem>
+<listitem><para><literal>permissive</literal> enable bind checking, if a token is bound to a mechanism that
+  is unknown to the server then ignore it. This is the default.</para>
+</listitem>
+<listitem><para><literal>strict</literal> enable bind checking, if a token is bound to a mechanism that is
+  unknown to the server then this token should be rejected.</para>
+</listitem>
+<listitem><para><literal>required</literal> enable bind checking and require that at least 1 bind mechanism
+  is used for tokens.</para>
+</listitem>
+<listitem><para><literal>named</literal> enable bind checking and require that the specified authentication
+  mechanism is used:
+<programlisting language="ini">[token]
+    enforce_token_bind = kerberos</programlisting></para>
+</listitem>
+</itemizedlist>
+  <note><para>Do not set <literal>enforce_token_bind = named</literal> as there is not an authentication
+  mechanism called <literal>named</literal>.</para></note>
+</para>
+</section>
