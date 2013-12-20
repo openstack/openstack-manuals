@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="troubleshooting-openstack-object-storage">
+    <title>Troubleshoot Object Storage</title>
+    <para>For Object Storage, everything is logged in <filename>/var/log/syslog</filename> (or messages on some distros).
+        Several settings enable further customization of logging, such as <literal>log_name</literal>, <literal>log_facility</literal>,
+        and <literal>log_level</literal>, within the object server configuration files.</para>
+    <section xml:id="drive-failure">
+        <title>Drive failure</title>
+        <para>In the event that a drive has failed, the first step is to make sure the drive is
+            unmounted. This will make it easier for Object Storage to work around the failure until
+            it has been resolved. If the drive is going to be replaced immediately, then it is just
+            best to replace the drive, format it, remount it, and let replication fill it up.</para>
+        <para>If the drive can’t be replaced immediately, then it is best to leave it
+            unmounted, and remove the drive from the ring. This will allow all the replicas
+            that were on that drive to be replicated elsewhere until the drive is replaced.
+            Once the drive is replaced, it can be re-added to the ring.</para>
+        <para>You can look at error messages in <filename>/var/log/kern.log</filename> for hints of drive failure.</para>
+    </section>
+    <section xml:id="server-failure">
+        <title>Server failure</title>
+        <para>If a server is having hardware issues, it is a good idea to make sure the
+            Object Storage services are not running. This will allow Object Storage to
+            work around the failure while you troubleshoot.</para>
+        <para>If the server just needs a reboot, or a small amount of work that should only
+            last a couple of hours, then it is probably best to let Object Storage work
+            around the failure and get the machine fixed and back online. When the machine
+            comes back online, replication will make sure that anything that is missing
+            during the downtime will get updated.</para>
+        <para>If the server has more serious issues, then it is probably best to remove all
+            of the server’s devices from the ring. Once the server has been repaired and is
+            back online, the server’s devices can be added back into the ring. It is
+            important that the devices are reformatted before putting them back into the
+            ring as it is likely to be responsible for a different set of partitions than
+            before.</para>
+    </section>
+    <section xml:id="detect-failed-drives">
+        <title>Detect failed drives</title>
+        <para>It has been our experience that when a drive is about to fail, error messages will spew into
+            /var/log/kern.log. There is a script called swift-drive-audit that can be run via cron
+            to watch for bad drives. If errors are detected, it will unmount the bad drive, so that
+            Object Storage can work around it. The script takes a configuration file with the
+            following settings:</para>
+        <xi:include href="tables/swift-drive-audit-drive-audit.xml"/>
+        <para>This script has only been tested on Ubuntu 10.04, so if you are using a
+            different distro or OS, some care should be taken before using in production.
+        </para>
+    </section>
+    <section xml:id="recover-ring-builder-file">
+        <title>Emergency recovery of ring builder files</title>
+        <para>You should always keep a backup of Swift ring builder files. However, if an
+            emergency occurs, this procedure may assist in returning your cluster to an
+            operational state.</para>
+        <para>Using existing Swift tools, there is no way to recover a builder file from a
+            <filename>ring.gz</filename> file. However, if you have a knowledge of Python, it is possible to
+            construct a builder file that is pretty close to the one you have lost. The
+            following is what you will need to do.</para>
+        <warning>
+            <para>This procedure is a last-resort for emergency circumstances&#151;it
+                requires knowledge of the swift python code and may not succeed.</para>
+        </warning>
+        <para>First, load the ring and a new ringbuilder object in a Python REPL:</para>
+        <programlisting language="python">>>> from swift.common.ring import RingData, RingBuilder
+>>> ring = RingData.load('/path/to/account.ring.gz')</programlisting>
+        <para>Now, start copying the data we have in the ring into the builder.</para>
+        <programlisting language="python">
+>>> import math
+>>> partitions = len(ring._replica2part2dev_id[0])
+>>> replicas = len(ring._replica2part2dev_id)
+
+>>> builder = RingBuilder(int(Math.log(partitions, 2)), replicas, 1)
+>>> builder.devs = ring.devs
+>>> builder._replica2part2dev = ring.replica2part2dev_id
+>>> builder._last_part_moves_epoch = 0
+>>> builder._last_part_moves = array('B', (0 for _ in xrange(self.parts)))
+>>> builder._set_parts_wanted()
+>>> for d in builder._iter_devs():
+            d['parts'] = 0
+>>> for p2d in builder._replica2part2dev:
+            for dev_id in p2d:
+                builder.devs[dev_id]['parts'] += 1</programlisting>
+        <para>This is the extent of the recoverable fields. For
+            <literal>min_part_hours</literal>  you'll either have to remember what the
+            value you used was, or just make up a new one.</para>
+        <programlisting language="python">
+>>> builder.change_min_part_hours(24) # or whatever you want it to be</programlisting>
+        <para>Try some validation: if this doesn't raise an exception, you may feel some
+            hope. Not too much, though.</para>
+        <programlisting language="python">>>> builder.validate()</programlisting>
+        <para>Save the builder.</para>
+        <programlisting language="python">
+>>> import pickle
+>>> pickle.dump(builder.to_dict(), open('account.builder', 'wb'), protocol=2)</programlisting>
+        <para>You should now have a file called 'account.builder' in the current working
+            directory. Next, run <literal>swift-ring-builder account.builder write_ring</literal>
+            and compare the new account.ring.gz to the account.ring.gz that you started
+            from. They probably won't be byte-for-byte identical, but if you load them up
+            in a REPL and their <literal>_replica2part2dev_id</literal> and
+            <literal>devs</literal> attributes are the same (or nearly so), then you're
+            in good shape.</para>
+        <para>Next, repeat the procedure for <filename>container.ring.gz</filename>
+            and <filename>object.ring.gz</filename>, and you might get usable builder files.</para>
+    </section>
+</section>
