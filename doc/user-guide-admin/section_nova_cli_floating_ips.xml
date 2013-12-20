@@ -16,9 +16,9 @@
         private IP address that stays the same until you explicitly
         terminate the instance. Rebooting an instance has no effect on
         its private IP address.</para>
-    <para>A pool of floating IP addresses, configured by the cloud
-        operator, is available in OpenStack Compute. You can allocate
-        a certain number of these to a project. A project quota
+    <para>The cloud operator must configure a pool of floating IP
+        addresses. Then, you can allocate a certain number of floating
+        IP addresses from this pool to a project. A project quota
         defines the maximum number of floating IP addresses for the
         project.</para>
     <para>You can add a floating IP address from this pool to an
@@ -31,7 +31,7 @@
         you allocate floating IP addresses to the current project, you
         can assign them to running instances.</para>
     <para>You can assign one floating IP address to only one instance
-        at a time. Use the  <command>nova *floating-ip-*</command>
+        at a time. Use the <command>nova *floating-ip-*</command>
         commands to manage floating IP addresses.</para>
     <procedure>
         <title>To manage floating IP addresses</title>
@@ -44,6 +44,10 @@
 | public |
 | test   |
 +--------+</computeroutput></screen>
+            <note>
+                <para>If this list is empty, the cloud operator must configure a pool of floating IP
+                    addresses.</para>
+            </note>
         </step>
         <step>
             <para>To allocate a floating IP address to the current
