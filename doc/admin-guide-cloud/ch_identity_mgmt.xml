@@ -40,13 +40,12 @@ paste.filter_factory = keystone.contrib.user_crud:CrudExtension.factory
 
 [pipeline:public_api]
 pipeline = stats_monitoring url_normalize token_auth admin_token_auth xml_body json_body debug ec2_extension user_crud_extension public_service</programlisting>
-    <para>Each user can then change their own password with a HTTP
-      PATCH</para>
+    <para>Each user can then change their own password with a HTTP PATCH:</para>
     <screen><prompt>$</prompt> <userinput>curl -X PATCH http://localhost:5000/v2.0/OS-KSCRUD/users/&lt;userid&gt; -H &quot;Content-type: application/json&quot;  \
   -H &quot;X_Auth_Token: &lt;authtokenid&gt;&quot; -d '{&quot;user&quot;: {&quot;password&quot;: &quot;ABCD&quot;, &quot;original_password&quot;: &quot;DCBA&quot;}}'</userinput></screen>
-    <para>In addition to changing their password all of the users
-      current tokens are deleted (if the back-end is kvs or
-      sql).</para>
+    <para>In addition to changing their password, all of the user's current
+      tokens are deleted (if the back-end is KVS or sql).</para>
+    <note><para>Only use a KVS backend for tokens when testing.</para></note>
   </section>
   <section xml:id="keystone-logging">
     <title>Logging</title>
