@@ -271,6 +271,15 @@ admin_password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
           </step>
         </substeps>
       </step>
+      <step os="rhel;centos;fedora">
+        <para>Edit the <literal>[agent]</literal> section in the
+          <filename>/etc/neutron/neutron.conf</filename> file and modify
+          the <literal>root_helper</literal> key:</para>
+        <programlisting language="ini">[agent]
+...
+root_helper = sudo neutron-rootwrap /etc/neutron/rootwrap.conf
+</programlisting>
+      </step>
       <step os="opensuse;sles;ubuntu">
         <para>Configure the RabbitMQ access. Edit the
             <filename>/etc/neutron/neutron.conf</filename> file to
@@ -769,6 +778,15 @@ rabbit_port = 5672
 #rabbit_userid = guest
 rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
       </step>
+      <step os="rhel;centos;fedora">
+        <para>Edit the <literal>[agent]</literal> section in the
+          <filename>/etc/neutron/neutron.conf</filename> file and modify
+          the <literal>root_helper</literal> key:</para>
+        <programlisting language="ini">[agent]
+...
+root_helper = sudo neutron-rootwrap /etc/neutron/rootwrap.conf
+</programlisting>
+      </step>
       <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
         <para>Edit the database URL under the
             <literal>[database]</literal> section in the above file,
@@ -890,10 +908,8 @@ firewall_driver=neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallD
                 <acronym>OVS</acronym>. Edit the
                 <filename>/etc/neutron/neutron.conf</filename>
               file:</para>
-            <programlisting language="ini">core_plugin = neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2</programlisting>
+            <programlisting language="ini" os="ubuntu;opensuse;sles">core_plugin = neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2</programlisting>
             <programlisting language="ini" os="rhel;centos;fedora">core_plugin = neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2
-#for RHEL6.5
-root_helper = sudo neutron-rootwrap /etc/neutron/rootwrap.conf
 api_paste_config = /etc/neutron/api-paste.ini
 rpc_backend = neutron.openstack.common.rpc.impl_qpid</programlisting>
           </step>
@@ -1060,6 +1076,15 @@ rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
        <programlisting os="ubuntu;debian" language="ini">
 # Change the following settings if you're not using the default RabbitMQ configuration
 #rabbit_userid = guest</programlisting>
+      </step>
+      <step os="rhel;centos;fedora">
+        <para>Edit the <literal>[agent]</literal> section in the
+          <filename>/etc/neutron/neutron.conf</filename> file and modify
+          the <literal>root_helper</literal> key:</para>
+        <programlisting language="ini">[agent]
+...
+root_helper = sudo neutron-rootwrap /etc/neutron/rootwrap.conf
+</programlisting>
       </step>
       <step>
         <para>Edit the database URL under the
