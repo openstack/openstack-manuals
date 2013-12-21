@@ -135,9 +135,7 @@
                     <tr>
                         <td><emphasis role="bold">Brocade
                                 Plug-in</emphasis></td>
-                        <td><link
-                                xlink:href="https://github.com/brocade/brocade"
-                                >https://github.com/brocade/brocade</link></td>
+                        <td>Documentation included in this guide</td>
                     </tr>
                     <tr>
                         <td><emphasis role="bold"
@@ -429,6 +427,60 @@
                         </step>
                     </procedure>
                 </section>
+
+                <section xml:id="brocade_plugin">
+                    <title>Configure Brocade plug-in</title>
+                    <procedure>
+                        <title>To use the Brocade plug-in with
+                            OpenStack Networking</title>
+                        <step>
+                          <para>Install the Brocade modified Python
+                          netconf client (ncclient) library which is available
+                          at <link
+                          xlink:href="https://github.com/brocade/ncclient">https://github.com/brocade/ncclient</link>:
+                          <screen><prompt>$</prompt> <userinput>git clone https://www.github.com/brocade/ncclient</userinput>
+<prompt>$</prompt> <userinput>cd ncclient; sudo python ./setup.py install</userinput></screen>
+                          </para>
+                        </step>
+                        <step>
+                            <para>Edit the
+                                   <filename>/etc/neutron/neutron.conf</filename>
+                                file and set the following option:</para>
+                            <programlisting language="ini">core_plugin = neutron.plugins.brocade.NeutronPlugin.BrocadePluginV2</programlisting>
+                        </step>
+                        <step>
+                          <para>Edit the
+                          <filename>/etc/neutron/plugins/brocade/brocade.ini</filename>
+                          configuration file for the Brocade plug-in
+                          and specify the admin user name, password,
+                          and IP address of the Brocade switch:
+                          </para>
+                                <programlisting language="ini">[SWITCH]
+username = <replaceable>admin</replaceable>
+password = <replaceable>password</replaceable>
+address  = <replaceable>switch mgmt ip address</replaceable>
+ostype   = NOS</programlisting>
+                          <para>
+                                For database configuration, see <link
+                                   xlink:href="http://docs.openstack.org/havana/install-guide/install/apt/content/neutron-install-network-node.html"
+                                   >Install Networking Services</link>
+                                in any of the <citetitle>Installation
+                                   Guides</citetitle> in the <link
+                                   xlink:href="http://docs.openstack.org"
+                                   >OpenStack Documentation
+                                   index</link>. (The link defaults to
+                                the Ubuntu version.)</para>
+                        </step>
+                        <step>
+                            <para>To apply the new settings, restart the
+                                   <systemitem class="service"
+                                   >neutron-server</systemitem> service:
+                            </para>
+                            <screen><prompt>#</prompt> <userinput>service neutron-server restart</userinput></screen>
+                        </step>
+                    </procedure>
+                </section>
+
                 <section xml:id="openvswitch_plugin">
                     <title>Configure OVS plug-in</title>
                     <para>If you use the Open vSwitch (OVS) plug-in in
