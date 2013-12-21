@@ -3,22 +3,21 @@
   xmlns="http://docbook.org/ns/docbook"
   xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
-  <title>Identity Service</title>
+  <title>Configure Identity Service for Networking</title>
   <procedure>
     <title>To configure the Identity Service for use with
       Networking</title>
     <step>
       <title>Create the <function>get_id()</function> function</title>
-      <para>The <function>get_id()</function> function stores the ID
-        of created objects, and removes error-prone copying and
-        pasting of object IDs in later steps:</para>
+      <para>The <function>get_id()</function> function stores the ID of created objects, and removes
+        the need to copy and paste object IDs in later steps:</para>
       <substeps>
         <step>
           <para>Add the following function to your
               <filename>.bashrc</filename> file:</para>
-          <screen><prompt>$</prompt> <userinput>function get_id () {
+<programlisting>function get_id () {
 echo `"$@" | awk '/ id / { print $4 }'`
-}</userinput></screen>
+}</programlisting>
         </step>
         <step>
           <para>Source the <filename>.bashrc</filename> file:</para>
@@ -28,35 +27,33 @@ echo `"$@" | awk '/ id / { print $4 }'`
     </step>
     <step>
       <title>Create the Networking service entry</title>
-      <para>OpenStack Networking must be available in the OpenStack
-        Compute service catalog. Create the service:</para>
+      <para>Networking must be available in the Compute service catalog. Create the service:</para>
       <screen><prompt>$</prompt> <userinput>NEUTRON_SERVICE_ID=$(get_id keystone service-create --name neutron --type network --description 'OpenStack Networking Service')</userinput></screen>
     </step>
     <step>
       <title>Create the Networking service endpoint
         entry</title>
-      <para>The way that you create an OpenStack Networking endpoint
-        entry depends on whether you are using the SQL catalog driver
-        or the template catalog driver:</para>
+      <para>The way that you create a Networking endpoint entry depends on whether you are using the
+        SQL or the template catalog driver:</para>
       <itemizedlist>
         <listitem>
-          <para>If you use the <emphasis>SQL driver</emphasis>, run
-            these command with these parameters: specified region
-            ($REGION), IP address of the OpenStack Networking server
-            ($IP), and service ID ($NEUTRON_SERVICE_ID, obtained in
-            the previous step).</para>
-          <screen><prompt>$</prompt> <userinput>keystone endpoint-create --region $REGION --service-id $NEUTRON_SERVICE_ID --publicurl 'http://$IP:9696/' --adminurl 'http://$IP:9696/' --internalurl 'http://$IP:9696/'</userinput></screen>
+          <para>If you use the <emphasis>SQL driver</emphasis>, run the following command with the
+            specified region (<literal>$REGION</literal>), IP address of the Networking server
+              (<literal>$IP</literal>), and service ID (<literal>$NEUTRON_SERVICE_ID</literal>,
+            obtained in the previous step).</para>
+
+          <screen><prompt>$</prompt> <userinput>keystone endpoint-create --region $REGION --service-id $NEUTRON_SERVICE_ID \
+   --publicurl 'http://$IP:9696/' --adminurl 'http://$IP:9696/' --internalurl 'http://$IP:9696/'</userinput></screen>
           <para>For example:</para>
           <screen><prompt>$</prompt> <userinput>keystone endpoint-create --region myregion --service-id $NEUTRON_SERVICE_ID \
---publicurl "http://10.211.55.17:9696/" --adminurl "http://10.211.55.17:9696/" --internalurl "http://10.211.55.17:9696/" </userinput></screen>
+   --publicurl "http://10.211.55.17:9696/" --adminurl "http://10.211.55.17:9696/" --internalurl "http://10.211.55.17:9696/" </userinput></screen>
         </listitem>
         <listitem>
-          <para>If you are using the <emphasis>template
-              driver</emphasis>, add the following content to your
-            OpenStack Compute catalog template file
-            (default_catalog.templates), using these parameters: given
-            region ($REGION) and IP address of the OpenStack
-            Networking server ($IP).</para>
+          <para>If you are using the <emphasis>template driver</emphasis>, specify the following
+            parameters in your Compute catalog template file
+              (<filename>default_catalog.templates</filename>), along with the region
+              (<literal>$REGION</literal>) and IP address of the Networking server
+              (<literal>$IP</literal>).</para>
           <programlisting language="bash">catalog.$REGION.network.publicURL = http://$IP:9696
 catalog.$REGION.network.adminURL = http://$IP:9696
 catalog.$REGION.network.internalURL = http://$IP:9696
@@ -65,19 +62,16 @@ catalog.$REGION.network.name = Network Service</programlisting>
           <programlisting language="bash">catalog.$Region.network.publicURL = http://10.211.55.17:9696
 catalog.$Region.network.adminURL = http://10.211.55.17:9696
 catalog.$Region.network.internalURL = http://10.211.55.17:9696
-  catalog.$Region.network.name = Network Service</programlisting>
+catalog.$Region.network.name = Network Service</programlisting>
         </listitem>
       </itemizedlist>
     </step>
     <step>
       <title>Create the Networking service user</title>
-      <para>You must provide admin user credentials that OpenStack
-        Compute and some internal components of OpenStack Networking
-        can use to access the OpenStack Networking API. The suggested
-        approach is to create a special <literal>service</literal>
-        tenant, create a <literal>neutron</literal> user within this
-        tenant, and to assign this user an <literal>admin</literal>
-        role.</para>
+      <para>You must provide admin user credentials that Compute and some internal Networking
+        components can use to access the Networking API. Create a special <literal>service</literal>
+        tenant and a <literal>neutron</literal> user within this tenant, and assign an
+          <literal>admin</literal> role to this role.</para>
       <substeps>
         <step>
           <para>Create the <literal>admin</literal> role:</para>
@@ -101,62 +95,47 @@ catalog.$Region.network.internalURL = http://10.211.55.17:9696
       </substeps>
     </step>
   </procedure>
-  <para>For information about how to create service entries and users.
-    see the <citetitle>OpenStack Installation Guide</citetitle> for
-    your distribution (<link xlink:href="docs.openstack.org"
+  <para>For information about how to create service entries and users, see the <citetitle>OpenStack
+      Installation Guide</citetitle> for your distribution (<link xlink:href="docs.openstack.org"
       >docs.openstack.org</link>).</para>
   <section xml:id="nova_with_neutron">
     <title>Compute</title>
-    <para>If you use OpenStack Networking, do not run the OpenStack
-      Compute <systemitem class="service">nova-network</systemitem>
-      service (like you do in traditional OpenStack Compute
-      deployments). Instead, OpenStack Compute delegates most
-      network-related decisions to OpenStack Networking. OpenStack
-      Compute proxies tenant-facing API calls to manage security
-      groups and floating IPs to Networking APIs. However,
-      operator-facing tools such as <systemitem class="service"
-        >nova-manage</systemitem>, are not proxied and should not be
-      used.</para>
+    <para>If you use Networking, do not run the Compute <systemitem class="service"
+        >nova-network</systemitem> service (like you do in traditional Compute deployments).
+      Instead, Compute delegates most network-related decisions to Networking. Compute proxies
+      tenant-facing API calls to manage security groups and floating IPs to Networking APIs.
+      However, operator-facing tools such as <systemitem class="service">nova-manage</systemitem>,
+      are not proxied and should not be used.</para>
     <warning>
-      <para>When you configure networking, you must use this guide. Do
-        not rely on OpenStack Compute networking documentation or past
-        experience with OpenStack Compute. If a
-          <command>nova</command> command or configuration option
-        related to networking is not mentioned in this guide, the
-        command is probably not supported for use with OpenStack
-        Networking. In particular, you cannot use CLI tools like
-          <command>nova-manage</command> and <command>nova</command>
-        to manage networks or IP addressing, including both fixed and
-        floating IPs, with OpenStack Networking.</para>
+      <para>When you configure networking, you must use this guide. Do not rely on Compute
+        networking documentation or past experience with Compute. If a <command>nova</command>
+        command or configuration option related to networking is not mentioned in this guide, the
+        command is probably not supported for use with Networking. In particular, you cannot use CLI
+        tools like <command>nova-manage</command> and <command>nova</command> to manage networks or
+        IP addressing, including both fixed and floating IPs, with Networking.</para>
     </warning>
     <note>
-      <para>It is strongly recommended that you uninstall <systemitem
-          class="service">nova-network</systemitem> and reboot any
-        physical nodes that have been running <systemitem
-          class="service">nova-network</systemitem> before using them
-        to run OpenStack Networking. Inadvertently running the
-          <systemitem class="service">nova-network</systemitem>
-        process while using OpenStack Networking can cause problems,
-        as can stale iptables rules pushed down by previously running
-          <systemitem class="service">nova-network</systemitem>.
-      </para>
+      <para>Uninstall <systemitem class="service">nova-network</systemitem> and reboot any physical
+        nodes that have been running <systemitem class="service">nova-network</systemitem> before
+        using them to run Networking. Inadvertently running the <systemitem class="service"
+          >nova-network</systemitem> process while using Networking can cause problems, as can stale
+        iptables rules pushed down by previously running <systemitem class="service"
+          >nova-network</systemitem>.</para>
+
     </note>
-    <para>To ensure that OpenStack Compute works properly with
-      OpenStack Networking (rather than the legacy <systemitem
-        class="service">nova-network</systemitem> mechanism), you must
-      adjust settings in the <filename>nova.conf</filename>
-      configuration file.</para>
+    <para>To ensure that Compute works properly with Networking
+    (rather than the legacy <systemitem
+    class="service">nova-network</systemitem> mechanism), you must
+    adjust settings in the <filename>nova.conf</filename>
+    configuration file.</para>
   </section>
   <section xml:id="nova_with_neutron_api">
     <title>Networking API and credential configuration</title>
-    <para>Each time a VM is provisioned or de-provisioned in OpenStack
-      Compute, <systemitem class="service">nova-*</systemitem>
-      services communicate with OpenStack Networking using the
-      standard API. For this to happen, you must configure the
-      following items in the <filename>nova.conf</filename> file (used
-      by each <systemitem class="service">nova-compute</systemitem>
-      and <systemitem class="service">nova-api</systemitem>
-      instance).</para>
+    <para>Each time you provision or de-provision a VM in Compute, <systemitem class="service"
+        >nova-*</systemitem> services communicate with Networking using the standard API. For this
+      to happen, you must configure the following items in the <filename>nova.conf</filename> file
+      (used by each <systemitem class="service">nova-compute</systemitem> and <systemitem
+        class="service">nova-api</systemitem> instance).</para>
     <table rules="all">
       <caption>nova.conf API and credential settings</caption>
       <col width="20%"/>
@@ -170,12 +149,13 @@ catalog.$Region.network.internalURL = http://10.211.55.17:9696
       <tbody>
         <tr>
           <td><para><literal>network_api_class</literal></para></td>
-          <td><para>Modify from the default to
-                <literal>nova.network.neutronv2.api.API</literal>, to
-              indicate that OpenStack Networking should be used rather
-              than the traditional <systemitem class="service"
-                >nova-network </systemitem> networking model.
-            </para></td>
+          <td>
+            <para>Modify from the default to
+            <literal>nova.network.neutronv2.api.API</literal>, to
+            indicate that Networking should be used rather than the
+            traditional <systemitem class="service" >nova-network
+            </systemitem> networking model.</para>
+          </td>
         </tr>
         <tr>
           <td><para><literal>neutron_url</literal></para></td>
@@ -191,45 +171,46 @@ catalog.$Region.network.internalURL = http://10.211.55.17:9696
         </tr>
         <tr>
           <td><para><literal>neutron_admin_tenant_name</literal></para></td>
-          <td><para>Update to the name of the service tenant created
-              in the above section on OpenStack Identity
-              configuration.</para></td>
+          <td>
+            <para>Update to the name of the service tenant created in
+            the above section on Identity configuration.</para>
+          </td>
         </tr>
         <tr>
           <td><para><literal>neutron_admin_username</literal></para></td>
-          <td><para>Update to the name of the user created in the
-              above section on OpenStack Identity configuration.
-            </para></td>
+          <td>
+          <para>Update to the name of the user created in the above
+          section on Identity configuration.</para>
+          </td>
         </tr>
         <tr>
           <td><para><literal>neutron_admin_password</literal></para></td>
-          <td><para>Update to the password of the user created in the
-              above section on OpenStack Identity configuration.
-            </para></td>
+          <td>
+          <para>Update to the password of the user created in the
+          above section on Identity configuration.</para>
+          </td>
         </tr>
         <tr>
           <td><para><literal>neutron_admin_auth_url</literal></para></td>
-          <td><para>Update to the OpenStack Identity server IP and
-              port. This is the Identity (keystone) admin API server
-              IP and port value, and not the Identity service API IP
-              and port.</para></td>
+          <td>
+            <para>Update to the Identity server IP and port. This is
+            the Identity (keystone) admin API server IP and port
+            value, and not the Identity service API IP and
+            port.</para>
+          </td>
         </tr>
       </tbody>
     </table>
   </section>
   <section xml:id="nova_config_security_groups">
     <title>Configure security groups</title>
-    <para>The OpenStack Networking Service provides security group
-      functionality using a mechanism that is more flexible and
-      powerful than the security group capabilities built into
-      OpenStack Compute. Therefore, if you use OpenStack Networking,
-      you should always disable built-in security groups and proxy all
-      security group calls to the OpenStack Networking API . If you do
-      not, security policies will conflict by being simultaneously
-      applied by both services.</para>
-    <para>To proxy security groups to OpenStack Networking, use the
-      following configuration values in
-      <filename>nova.conf</filename>:</para>
+    <para>The Networking Service provides security group functionality using a mechanism that is
+      more flexible and powerful than the security group capabilities built into Compute. Therefore,
+      if you use Networking, you should always disable built-in security groups and proxy all
+      security group calls to the Networking API . If you do not, security policies will conflict by
+      being simultaneously applied by both services.</para>
+    <para>To proxy security groups to Networking, use the following configuration values in
+        <filename>nova.conf</filename>:</para>
     <table rules="all">
       <caption>nova.conf security group settings</caption>
       <col width="20%"/>
@@ -251,8 +232,7 @@ catalog.$Region.network.internalURL = http://10.211.55.17:9696
         </tr>
         <tr>
           <td><para><literal>security_group_api</literal></para></td>
-          <td><para>Update to <literal>neutron</literal>, so that all
-              security group requests are proxied to the OpenStack
+          <td><para>Update to <literal>neutron</literal>, so that all security group requests are proxied to the
               Network Service.</para></td>
         </tr>
       </tbody>
@@ -260,13 +240,10 @@ catalog.$Region.network.internalURL = http://10.211.55.17:9696
   </section>
   <section xml:id="nova_config_metadata">
     <title>Configure metadata</title>
-    <para>The OpenStack Compute service allows VMs to query metadata
-      associated with a VM by making a web request to a special
-      169.254.169.254 address. OpenStack Networking supports proxying
-      those requests to <systemitem class="service"
-        >nova-api</systemitem>, even when the requests are made from
-      isolated networks, or from multiple networks that use
-      overlapping IP addresses.</para>
+    <para>The Compute service allows VMs to query metadata associated with a VM by making a web
+      request to a special 169.254.169.254 address. Networking supports proxying those requests to
+        <systemitem class="service">nova-api</systemitem>, even when the requests are made from
+      isolated networks, or from multiple networks that use overlapping IP addresses.</para>
     <para>To enable proxying the requests, you must update the
       following fields in <filename>nova.conf</filename>.</para>
     <table rules="all">
@@ -323,10 +300,9 @@ catalog.$Region.network.internalURL = http://10.211.55.17:9696
     <title>Example nova.conf (for <systemitem class="service"
         >nova-compute</systemitem> and <systemitem class="service"
         >nova-api</systemitem>)</title>
-    <para>Example values for the above settings, assuming a cloud
-      controller node running OpenStack Compute and OpenStack
-      Networking with an IP address of 192.168.1.2.</para>
-    <screen><computeroutput>network_api_class=nova.network.neutronv2.api.API
+    <para>Example values for the above settings, assuming a cloud controller node running Compute
+      and Networking with an IP address of 192.168.1.2:</para>
+<programlisting language="ini">network_api_class=nova.network.neutronv2.api.API
 neutron_url=http://192.168.1.2:9696
 neutron_auth_strategy=keystone
 neutron_admin_tenant_name=service
@@ -339,6 +315,6 @@ firewall_driver=nova.virt.firewall.NoopFirewallDriver
 
 service_neutron_metadata_proxy=true
 neutron_metadata_proxy_shared_secret=foo
-</computeroutput></screen>
+</programlisting>
   </section>
 </section>

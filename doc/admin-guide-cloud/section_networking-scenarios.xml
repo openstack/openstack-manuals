@@ -9,8 +9,8 @@
     <section xml:id="under_the_hood_openvswitch">
       <?dbhtml stop-chunking?>
         <title>Open vSwitch</title>
-        <para>This section describes how the Open vSwitch plug-in implements the OpenStack
-            Networking abstractions.</para>
+        <para>This section describes how the Open vSwitch plug-in implements the Networking
+            abstractions.</para>
         <section xml:id="under_the_hood_openvswitch_configuration">
             <title>Configuration</title>
             <para>This example uses VLAN isolation on the switches to isolate tenant networks. This
@@ -35,7 +35,7 @@ bridge_mappings = physnet2:br-eth1</programlisting></para>
 
      <mediaobject>
         <imageobject>
-            <imagedata fileref="../../common/figures/under-the-hood-scenario-1.png" contentwidth="6in"/>
+            <imagedata fileref="../common/figures/under-the-hood-scenario-1.png" contentwidth="6in"/>
         </imageobject>
     </mediaobject>
             <para>Under the <literal>service</literal> tenant, create the shared router, define the
@@ -76,7 +76,7 @@ bridge_mappings = physnet2:br-eth1</programlisting></para>
            </para>
             <mediaobject>
                 <imageobject>
-                    <imagedata fileref="../../common/figures/under-the-hood-scenario-1-ovs-compute.png" contentwidth="6in"/>
+                    <imagedata fileref="../common/figures/under-the-hood-scenario-1-ovs-compute.png" contentwidth="6in"/>
                 </imageobject>
             </mediaobject>
 
@@ -97,11 +97,10 @@ bridge_mappings = physnet2:br-eth1</programlisting></para>
                 is how hypervisors such as KVM and Xen implement a virtual network interface card
                 (typically called a VIF or vNIC). An ethernet frame sent to a TAP device is received
                 by the guest operating system.</para>
-            <para>A <emphasis role="italic">veth pair</emphasis> is a pair of virtual network
-                interfaces correctly directly together. An ethernet frame sent to one end of a veth
-                pair is received by the other end of a veth pair. OpenStack networking makes use of
-                veth pairs as virtual patch cables in order to make connections between virtual
-                bridges.</para>
+            <para>A <emphasis role="italic">veth pair</emphasis> is a pair of directly connected
+                        virtual network interfaces. An ethernet frame sent to one end of a veth pair
+                        is received by the other end of a veth pair. Networking uses veth pairs as
+                        virtual patch cables to make connections between virtual bridges.</para>
             <para>A <emphasis role="italic">Linux bridge</emphasis> behaves like a hub: you can
                 connect multiple (physical or virtual) network interfaces devices to a Linux bridge.
                 Any ethernet frames that come in from one interface attached to the bridge is
@@ -113,10 +112,10 @@ bridge_mappings = physnet2:br-eth1</programlisting></para>
         </simplesect>
         <simplesect>
             <title>Integration bridge</title>
-            <para>The <literal>br-int</literal> OpenvSwitch bridge is the integration bridge: all of
-                the guests running on the compute host connect to this bridge. OpenStack Networking
-                implements isolation across these guests by configuring the
-                    <literal>br-int</literal> ports.</para>
+            <para>The <literal>br-int</literal> OpenvSwitch bridge is the integration bridge: all
+                        guests running on the compute host connect to this bridge. Networking
+                        implements isolation across these guests by configuring the
+                            <literal>br-int</literal> ports.</para>
         </simplesect>
         <simplesect>
             <title>Physical connectivity bridge</title>
@@ -139,19 +138,19 @@ bridge_mappings = physnet2:br-eth1</programlisting></para>
         <simplesect>
             <title>Security groups: iptables and Linux bridges</title>
             <para>Ideally, the TAP device <literal>vnet0</literal> would be connected directly to
-                the integration bridge, <literal>br-int</literal>. Unfortunately, this isn't
-                possible because of how OpenStack security groups are currently implemented.
-                OpenStack uses iptables rules on the TAP devices such as <literal>vnet0</literal> to
-                implement security groups, and Open vSwitch is not compatible with iptables rules
-                that are applied directly on TAP devices that are connected to an Open vSwitch
-                port.</para>
-            <para>OpenStack Networking uses an extra Linux bridge and a veth pair as a workaround for
-                this issue. Instead of connecting <literal>vnet0</literal> to an Open vSwitch
-                bridge, it is connected to a Linux bridge,
-                        <literal>qbr<replaceable>XXX</replaceable></literal>. This bridge is
-                connected to the integration bridge, <literal>br-int</literal>, through the
-                        <literal>(qvb<replaceable>XXX</replaceable>,
-                        qvo<replaceable>XXX</replaceable>)</literal> veth pair.</para>
+                        the integration bridge, <literal>br-int</literal>. Unfortunately, this isn't
+                        possible because of how OpenStack security groups are currently implemented.
+                        OpenStack uses iptables rules on the TAP devices such as
+                            <literal>vnet0</literal> to implement security groups, and Open vSwitch
+                        is not compatible with iptables rules that are applied directly on TAP
+                        devices that are connected to an Open vSwitch port.</para>
+            <para>Networking uses an extra Linux bridge and a veth pair as a workaround for this
+                        issue. Instead of connecting <literal>vnet0</literal> to an Open vSwitch
+                        bridge, it is connected to a Linux bridge,
+                                <literal>qbr<replaceable>XXX</replaceable></literal>. This bridge is
+                        connected to the integration bridge, <literal>br-int</literal>, through the
+                                <literal>(qvb<replaceable>XXX</replaceable>,
+                                qvo<replaceable>XXX</replaceable>)</literal> veth pair.</para>
         </simplesect>
       </section>
       <section xml:id="under_the_hood_openvswitch_scenario1_network">
@@ -170,7 +169,7 @@ bridge_mappings = physnet1:br-ex,physnet2:br-eth1</programlisting>
                 The following figure shows the network devices on the network host:</para>
             <mediaobject>
                 <imageobject>
-                    <imagedata fileref="../../common/figures/under-the-hood-scenario-1-ovs-network.png" contentwidth="6in"/>
+                    <imagedata fileref="../common/figures/under-the-hood-scenario-1-ovs-network.png" contentwidth="6in"/>
                 </imageobject>
             </mediaobject>
             <para>As on the compute host, there is an Open vSwitch integration bridge
@@ -187,99 +186,103 @@ bridge_mappings = physnet1:br-ex,physnet2:br-eth1</programlisting>
                 packets traverse that veth pair in this example.</para></note>
         <simplesect><title>Open vSwitch internal ports</title>
             <para>The network host uses Open vSwitch <emphasis role="italic">internal
-                ports</emphasis>. Internal ports enable you to assign one
-                or more IP addresses to an Open vSwitch bridge. In previous example, the
-                    <literal>br-int</literal> bridge has four internal
-                        ports: <literal>tap<replaceable>XXX</replaceable></literal>,
-                        <literal>qr-<replaceable>YYY</replaceable></literal>,
-                        <literal>qr-<replaceable>ZZZ</replaceable></literal>,
-                        <literal>tap<replaceable>WWW</replaceable></literal>. Each internal port has
-                a separate IP address associated with it. An internal port,
-                    <literal>qg-VVV</literal>, is on the <literal>br-ex</literal> bridge.</para>
+                            ports</emphasis>. Internal ports enable you to assign one or more IP
+                        addresses to an Open vSwitch bridge. In previous example, the
+                            <literal>br-int</literal> bridge has four internal ports:
+                                <literal>tap<replaceable>XXX</replaceable></literal>,
+                                <literal>qr-<replaceable>YYY</replaceable></literal>,
+                                <literal>qr-<replaceable>ZZZ</replaceable></literal>, and
+                                <literal>tap<replaceable>WWW</replaceable></literal>. Each internal
+                        port has a separate IP address associated with it. An internal port,
+                            <literal>qg-VVV</literal>, is on the <literal>br-ex</literal>
+                        bridge.</para>
             </simplesect>
             <simplesect><title>DHCP agent</title>
-                <para>By default, The OpenStack Networking DHCP agent uses a program called dnsmasq
-                to provide DHCP services to guests.  OpenStack Networking must create an internal
-                port for each network that requires DHCP services and attach a dnsmasq process to
-                that port. In the previous example, the interface
-                        <literal>tap<replaceable>XXX</replaceable></literal> is on subnet
-                    <literal>net01_subnet01</literal>, and the interface
-                        <literal>tap<replaceable>WWW</replaceable></literal> is on
-                    <literal>net02_subnet01</literal>.</para>
+                <para>By default, The Networking DHCP agent uses a process called dnsmasq to provide
+                        DHCP services to guests. Networking must create an internal port for each
+                        network that requires DHCP services and attach a dnsmasq process to that
+                        port. In the previous example, the
+                                <literal>tap<replaceable>XXX</replaceable></literal> interface is on
+                            <literal>net01_subnet01</literal>, and the
+                                <literal>tap<replaceable>WWW</replaceable></literal> interface is on
+                            <literal>net02_subnet01</literal>.</para>
                 </simplesect>
         <simplesect>
             <title>L3 agent (routing)</title>
-            <para>The OpenStack Networking L3 agent implements routing through the use of Open
-                vSwitch internal ports and relies on the network host to route the packets across
-                the interfaces. In this example: interface<literal>qr-YYY</literal>, which is on
-                subnet <literal>net01_subnet01</literal>, has an IP address of 192.168.101.1/24,
-                interface <literal>qr-<replaceable>ZZZ</replaceable></literal>, which is on subnet
-                    <literal>net02_subnet01</literal>, has an IP address of
-                    <literal>192.168.102.1/24</literal>, and interface
-                        <literal>qg-<replaceable>VVV</replaceable></literal>, which has an IP
-                address of <literal>10.64.201.254/24</literal>.  Because of each of these interfaces
-                is visible to the network host operating system, it will route the packets
-                appropriately across the interfaces, as long as an administrator has enabled IP
-                forwarding.</para>
+            <para>The Networking L3 agent uses Open vSwitch internal ports to implement routing and
+                        relies on the network host to route the packets across the interfaces. In
+                        this example, the <literal>qr-YYY</literal> interface is on
+                            <literal>net01_subnet01</literal> and has the IP address
+                        192.168.101.1/24. The  <literal>qr-<replaceable>ZZZ</replaceable></literal>,
+                        interface is on <literal>net02_subnet01</literal> and has the IP address
+                            <literal>192.168.102.1/24</literal>. The
+                                <literal>qg-<replaceable>VVV</replaceable></literal> interface has
+                        the IP address <literal>10.64.201.254/24</literal>. Because each of these
+                        interfaces is visible to the network host operating system, the network host
+                        routes the packets across the interfaces, as long as an administrator has
+                        enabled IP forwarding.</para>
             <para>The L3 agent uses iptables to implement floating IPs to do the network address
                 translation (NAT).</para>
         </simplesect>
             <simplesect>
                 <title>Overlapping subnets and network namespaces</title>
-                <para>One problem with using the host to implement routing is that there is a chance
-                that one of the OpenStack Networking subnets might overlap with one of the physical
-                networks that the host uses. For example, if the management network is implemented
-                on <literal>eth2</literal> (not shown in the previous example), by coincidence happens
-                to also be on the <literal>192.168.101.0/24</literal> subnet, then this will cause
-                routing problems because it is impossible ot determine whether a packet on this
-                subnet should be sent to <literal>qr-YYY</literal> or <literal>eth2</literal>. In
-                general, if end-users are permitted to create their own logical networks and
-                subnets, then the system must be designed to avoid the possibility of such
-                collisions.</para>
-            <para>OpenStack Networking uses Linux <emphasis role="italic">network namespaces
-                </emphasis>to prevent collisions between the physical networks on the network host,
-                and the logical networks used by the virtual machines. It also prevents collisions
-                across different logical networks that are not routed to each other, as you will see
-                in the next scenario.</para>
-            <para>A network namespace can be thought of as an isolated environment that has its own
-                networking stack. A network namespace has its own network interfaces, routes, and
-                iptables rules. You can think of like a chroot jail, except for networking instead
-                of a file system. As an aside, LXC (Linux containers) use network namespaces to
-                implement networking virtualization.</para>
-            <para>OpenStack Networking creates network namespaces on the network host in order
-                to avoid subnet collisions.</para>
-            <para>Tn this example, there are three network namespaces, as depicted in the following figure.<itemizedlist>
-                    <listitem>
-                        <para><literal>qdhcp-<replaceable>aaa</replaceable></literal>: contains the
-                                    <literal>tap<replaceable>XXX</replaceable></literal> interface
-                            and the dnsmasq process that listens on that interface, to provide DHCP
-                            services for <literal>net01_subnet01</literal>. This allows overlapping
-                            IPs between <literal>net01_subnet01</literal> and any other subnets on
-                            the network host.</para>
-                    </listitem>
-                    <listitem>
-                        <para><literal>qrouter-<replaceable>bbbb</replaceable></literal>: contains
-                            the <literal>qr-<replaceable>YYY</replaceable></literal>,
-                                    <literal>qr-<replaceable>ZZZ</replaceable></literal>, and
-                                    <literal>qg-<replaceable>VVV</replaceable></literal> interfaces,
-                            and the corresponding routes. This namespace implements
-                                <literal>router01</literal> in our example.</para>
-                    </listitem>
-                    <listitem>
-                        <para><literal>qdhcp-<replaceable>ccc</replaceable></literal>: contains the
-                                    <literal>tap<replaceable>WWW</replaceable></literal> interface
-                            and the dnsmasq process that listens on that interface, to provide DHCP
-                            services for <literal>net02_subnet01</literal>. This allows overlapping
-                            IPs between <literal>net02_subnet01</literal> and any other subnets on
-                            the network host.</para>
-                    </listitem>
-                </itemizedlist></para>
-            <mediaobject>
-                <imageobject>
-                    <imagedata fileref="../../common/figures/under-the-hood-scenario-1-ovs-netns.png" contentwidth="6in"/>
-                </imageobject>
-            </mediaobject>
-
+                <para>One problem with using the host to implement routing is that one of the
+                        Networking subnets might overlap with one of the physical networks that the
+                        host uses. For example, if the management network is implemented on
+                            <literal>eth2</literal> and also happens to be on the
+                            <literal>192.168.101.0/24</literal> subnet, routing problems will occur
+                        because the host can't determine whether to send a packet on this subnet to
+                            <literal>qr-YYY</literal> or <literal>eth2</literal>. If end users are
+                        permitted to create their own logical networks and subnets, you must design
+                        the system so that such collisions do not occur.</para>
+            <para>Networking uses Linux <emphasis role="italic">network namespaces </emphasis>to
+                        prevent collisions between the physical networks on the network host, and
+                        the logical networks used by the virtual machines. It also prevents
+                        collisions across different logical networks that are not routed to each
+                        other, as the following scenario shows.</para>
+            <para>A network namespace is an isolated environment with its own networking stack. A
+                        network namespace has its own network interfaces, routes, and iptables
+                        rules. Consider it a chroot jail, except for networking instead of for a
+                        file system. LXC (Linux containers) use network namespaces to implement
+                        networking virtualization.</para>
+            <para>Networking creates network namespaces on the network host to avoid subnet
+                        collisions.</para>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="../common/figures/under-the-hood-scenario-1-ovs-netns.png" contentwidth="6in"/>
+                    </imageobject>
+                </mediaobject>
+            <para>In this example, there are three network namespaces, as shown in the figure above:<itemizedlist>
+                            <listitem>
+                                <para><literal>qdhcp-<replaceable>aaa</replaceable></literal>:
+                                    contains the
+                                        <literal>tap<replaceable>XXX</replaceable></literal>
+                                    interface and the dnsmasq process that listens on that interface
+                                    to provide DHCP services for <literal>net01_subnet01</literal>.
+                                    This allows overlapping IPs between
+                                        <literal>net01_subnet01</literal> and any other subnets on
+                                    the network host.</para>
+                            </listitem>
+                            <listitem>
+                                <para><literal>qrouter-<replaceable>bbbb</replaceable></literal>:
+                                    contains the
+                                        <literal>qr-<replaceable>YYY</replaceable></literal>,
+                                            <literal>qr-<replaceable>ZZZ</replaceable></literal>,
+                                    and <literal>qg-<replaceable>VVV</replaceable></literal>
+                                    interfaces, and the corresponding routes. This namespace
+                                    implements <literal>router01</literal> in our example.</para>
+                            </listitem>
+                            <listitem>
+                                <para><literal>qdhcp-<replaceable>ccc</replaceable></literal>:
+                                    contains the
+                                        <literal>tap<replaceable>WWW</replaceable></literal>
+                                    interface and the dnsmasq process that listens on that
+                                    interface, to provide DHCP services for
+                                        <literal>net02_subnet01</literal>. This allows overlapping
+                                    IPs between <literal>net02_subnet01</literal> and any other
+                                    subnets on the network host.</para>
+                            </listitem>
+                        </itemizedlist></para>
         </simplesect>
        </section>
         </section>
@@ -292,7 +295,7 @@ bridge_mappings = physnet1:br-ex,physnet2:br-eth1</programlisting>
            </para>
             <mediaobject>
                 <imageobject>
-                    <imagedata fileref="../../common/figures/under-the-hood-scenario-2.png" contentwidth="6in"/>
+                    <imagedata fileref="../common/figures/under-the-hood-scenario-2.png" contentwidth="6in"/>
                 </imageobject>
             </mediaobject>
             <para>Under the <literal>service</literal> tenant, define the public
@@ -334,7 +337,7 @@ bridge_mappings = physnet1:br-ex,physnet2:br-eth1</programlisting>
            </para>
             <mediaobject>
                 <imageobject>
-                    <imagedata fileref="../../common/figures/under-the-hood-scenario-2-ovs-compute.png" contentwidth="6in"/>
+                    <imagedata fileref="../common/figures/under-the-hood-scenario-2-ovs-compute.png" contentwidth="6in"/>
                 </imageobject>
             </mediaobject>
             <note><para>The Compute host configuration resembles the
@@ -349,7 +352,7 @@ bridge_mappings = physnet1:br-ex,physnet2:br-eth1</programlisting>
                 scenario.</para>
             <mediaobject>
                 <imageobject>
-                    <imagedata fileref="../../common/figures/under-the-hood-scenario-2-ovs-network.png" contentwidth="6in"/>
+                    <imagedata fileref="../common/figures/under-the-hood-scenario-2-ovs-network.png" contentwidth="6in"/>
                 </imageobject>
             </mediaobject>
             <para>In this configuration, the network namespaces are
@@ -358,7 +361,7 @@ bridge_mappings = physnet1:br-ex,physnet2:br-eth1</programlisting>
            </para>
             <mediaobject>
                 <imageobject>
-                    <imagedata fileref="../../common/figures/under-the-hood-scenario-2-ovs-netns.png" contentwidth="6in"/>
+                    <imagedata fileref="../common/figures/under-the-hood-scenario-2-ovs-netns.png" contentwidth="6in"/>
                 </imageobject>
             </mediaobject>
             <para>In this scenario, there are four network namespaces
@@ -373,8 +376,8 @@ bridge_mappings = physnet1:br-ex,physnet2:br-eth1</programlisting>
     </section>
     <section xml:id="under_the_hood_linuxbridge">
         <title>Linux Bridge</title>
-        <para>This section describes how the Linux Bridge plug-in implements the OpenStack
-            Networking abstractions. For information about DHCP and L3 agents, see <xref
+        <para>This section describes how the Linux Bridge plug-in implements the Networking
+            abstractions. For information about DHCP and L3 agents, see <xref
                 linkend="under_the_hood_openvswitch_scenario1"/>.</para>
         <section  xml:id="under_the_hood_linuxbridge_configuration">
             <title>Configuration</title>
@@ -400,7 +403,7 @@ physical_interface_mappings = physnet2:eth1</programlisting></para>
 
             <mediaobject>
                 <imageobject>
-                    <imagedata fileref="../../common/figures/under-the-hood-scenario-1.png" contentwidth="6in"/>
+                    <imagedata fileref="../common/figures/under-the-hood-scenario-1.png" contentwidth="6in"/>
                 </imageobject>
             </mediaobject>
             <para>Under the <literal>service</literal> tenant, create the shared router, define the
@@ -440,7 +443,7 @@ physical_interface_mappings = physnet2:eth1</programlisting></para>
            </para>
             <mediaobject>
                 <imageobject>
-                    <imagedata fileref="../../common/figures/under-the-hood-scenario-1-linuxbridge-compute.png" contentwidth="6in"/>
+                    <imagedata fileref="../common/figures/under-the-hood-scenario-1-linuxbridge-compute.png" contentwidth="6in"/>
                 </imageobject>
             </mediaobject>
 
@@ -478,14 +481,14 @@ physical_interface_mappings = physnet2:eth1</programlisting></para>
             <para>The following figure shows the network devices on the network host.</para>
             <mediaobject>
                 <imageobject>
-                    <imagedata fileref="../../common/figures/under-the-hood-scenario-1-linuxbridge-network.png" contentwidth="6in"/>
+                    <imagedata fileref="../common/figures/under-the-hood-scenario-1-linuxbridge-network.png" contentwidth="6in"/>
                 </imageobject>
             </mediaobject>
             <para>The following figure shows how the Linux Bridge plug-in uses network namespaces to
                     provide isolation.</para><note><para>veth pairs form connections between the
                 Linux bridges and the network namespaces.</para></note><mediaobject>
                     <imageobject>
-                        <imagedata fileref="../../common/figures/under-the-hood-scenario-1-linuxbridge-netns.png" contentwidth="6in"/>
+                        <imagedata fileref="../common/figures/under-the-hood-scenario-1-linuxbridge-netns.png" contentwidth="6in"/>
                     </imageobject>
                 </mediaobject>
         </section>
@@ -497,7 +500,7 @@ physical_interface_mappings = physnet2:eth1</programlisting></para>
                 Internet.</para>
             <mediaobject>
                 <imageobject>
-                    <imagedata fileref="../../common/figures/under-the-hood-scenario-2.png" contentwidth="6in"/>
+                    <imagedata fileref="../common/figures/under-the-hood-scenario-2.png" contentwidth="6in"/>
                 </imageobject>
             </mediaobject>
             <para>Under the <literal>service</literal> tenant, define the public
@@ -540,7 +543,7 @@ physical_interface_mappings = physnet2:eth1</programlisting></para>
            </para>
             <mediaobject>
                 <imageobject>
-                    <imagedata fileref="../../common/figures/under-the-hood-scenario-2-linuxbridge-compute.png" contentwidth="6in"/>
+                    <imagedata fileref="../common/figures/under-the-hood-scenario-2-linuxbridge-compute.png" contentwidth="6in"/>
                 </imageobject>
             </mediaobject>
             <note><para>The configuration on the compute host is very similar to the configuration in scenario 1. The
@@ -553,7 +556,7 @@ physical_interface_mappings = physnet2:eth1</programlisting></para>
                 scenario.</para>
             <mediaobject>
                 <imageobject>
-                    <imagedata fileref="../../common/figures/under-the-hood-scenario-2-linuxbridge-network.png" contentwidth="6in"/>
+                    <imagedata fileref="../common/figures/under-the-hood-scenario-2-linuxbridge-network.png" contentwidth="6in"/>
                 </imageobject>
             </mediaobject>
             <para>The main difference between the configuration in this scenario and the previous one
@@ -561,7 +564,7 @@ physical_interface_mappings = physnet2:eth1</programlisting></para>
                 across the two subnets, as shown in the following figure.</para>
             <mediaobject>
                 <imageobject>
-                    <imagedata fileref="../../common/figures/under-the-hood-scenario-2-linuxbridge-netns.png" contentwidth="6in"/>
+                    <imagedata fileref="../common/figures/under-the-hood-scenario-2-linuxbridge-netns.png" contentwidth="6in"/>
                 </imageobject>
             </mediaobject>
             <para>In this scenario, there are four network namespaces
@@ -592,7 +595,7 @@ physical_interface_mappings = physnet2:eth1</programlisting></para>
                 illustrated below.</para>
              <mediaobject>
                  <imageobject>
-                    <imagedata fileref="../../common/figures/ml2_without_l2pop_full_mesh.png"
+                    <imagedata fileref="../common/figures/ml2_without_l2pop_full_mesh.png"
                         contentwidth="6in"/>
                  </imageobject>
              </mediaobject>
@@ -602,7 +605,7 @@ physical_interface_mappings = physnet2:eth1</programlisting></para>
                 This is achieved by sending broadcasts packets over unicasts only to the relevant
                 agents as illustrated below.<mediaobject>
                     <imageobject>
-                        <imagedata fileref="../../common/figures/ml2_without_l2pop_partial_mesh.png"
+                        <imagedata fileref="../common/figures/ml2_without_l2pop_partial_mesh.png"
                             contentwidth="6in"/>
                     </imageobject>
                 </mediaobject>The partial-mesh is available with the <emphasis>Open vSwitch</emphasis> and
