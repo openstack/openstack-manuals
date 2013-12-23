@@ -47,24 +47,32 @@
                     <para><package>setuptools</package> package</para>
                 </td>
                 <td>
-                    <para>Installed by default on Mac OS X. Many Linux
-                        distributions provide packages to make
-                            <package>setuptools</package> easy to
-                        install. Search your package manager for
-                            <package>setuptools</package> to find an
-                        installation package. If you cannot find one,
-                        download the <package>setuptools</package>
-                        package directly from <link
-                            xlink:href="http://pypi.python.org/pypi/setuptools"
-                            >http://pypi.python.org/pypi/setuptools</link>.
+                    <para>Installed by default on Mac OS X.</para>
+                    <para>Many Linux distributions provide packages to make
+                        <package>setuptools</package> easy to install. Search
+                        your package manager for <package>setuptools</package>
+                        to find an installation package. If you cannot find
+                        one, download the <package>setuptools</package> package
+                        directly from <link
+                        xlink:href="http://pypi.python.org/pypi/setuptools"
+                        >http://pypi.python.org/pypi/setuptools</link>.</para>
+                    <para>The recommended way to install
+                        <package>setuptools</package> on Microsoft Windows is
+                        to follow the documentation provided <link
+                        xlink:href="https://pypi.python.org/pypi/setuptools#windows"
+                        >on the setuptools website</link>. Another option is
+                        to use the unofficial binary installer maintained by
+                        Christoph Gohlke (<link
+                        xlink:href="http://www.lfd.uci.edu/~gohlke/pythonlibs/#setuptools"
+                        >http://www.lfd.uci.edu/~gohlke/pythonlibs/#setuptools</link>).
                    </para>
                 </td>
             </tr>
             <tr>
                 <td valign="top"><package>pip</package> package</td>
                 <td>
-                    <para>To install the clients on a Mac OS X or
-                        Linux system, use <package>pip</package>. It
+                    <para>To install the clients on a Linux, Mac OS X or Microsoft
+                        Windows system, use <package>pip</package>. It
                         is easy to use, ensures that you get the
                         latest version of the clients from the <link
                             xlink:href="http://pypi.python.org/pypi/python-novaclient/"
@@ -76,6 +84,20 @@
                         <title>Mac OS X</title>
                         <para>
                             <screen><prompt>$</prompt> <userinput>sudo easy_install pip</userinput></screen></para>
+                    </formalpara>
+                    <formalpara>
+                        <title>Microsoft Windows</title>
+                        <para>Make sure that the
+                            <filename>C:\Python27\Scripts</filename> directory
+                            is defined in the <literal>PATH</literal>
+                            environment variable, and use the
+                            <command>easy_install</command> command from the
+                            <package>setuptools</package> package:
+                            <screen><prompt>C:\></prompt><userinput>easy_install pip</userinput></screen>
+                            Another option is to use the unofficial binary
+                            installer provided by Christoph Gohlke (<link
+                            xlink:href="http://www.lfd.uci.edu/~gohlke/pythonlibs/#pip"
+                            >http://www.lfd.uci.edu/~gohlke/pythonlibs/#pip</link>).</para>
                     </formalpara>
                     <formalpara>
                         <title>Ubuntu 12.04</title>
@@ -131,9 +153,9 @@
     <section xml:id="cli_clients_install">
         <title>Install the clients</title>
         <para>Use <package>pip</package> to install the OpenStack
-            clients on a Mac OS X or Linux system. It is easy and
-            ensures that you get the latest version of the client from
-            the <link xlink:href="http://pypi.python.org/pypi">Python
+            clients on a Linux, Mac OS X or Microsoft Windows system. It is
+            easy and ensures that you get the latest version of the client
+            from the <link xlink:href="http://pypi.python.org/pypi">Python
                 Package Index</link>. Also, <package>pip</package>
             lets you update or remove a package. After you install the
             clients, you must source an <filename
@@ -144,9 +166,11 @@
         <procedure>
             <step>
                 <para>You must install each client separately.</para>
-                <para>Run this command to install or update a client
-                    package:</para>
-                <screen><prompt>$</prompt> <userinput>sudo pip install [--upgrade] python-<replaceable>PROJECT</replaceable>client</userinput></screen>
+                <para>Run this command to install a client package.</para>
+                <para>For Mac OS X or Linux:</para>
+                <screen><prompt>$</prompt> <userinput>sudo pip install python-<replaceable>PROJECT</replaceable>client</userinput></screen>
+                <para>For Microsoft Windows:</para>
+                <screen><prompt>C:\></prompt><userinput>pip install python-<replaceable>PROJECT</replaceable>client</userinput></screen>
                 <para>Where <replaceable>PROJECT</replaceable> is the
                     project name and has one of the following
                     values:</para>
@@ -187,12 +211,15 @@
                 <para>For example, to install the nova client, run
                     this command:</para>
                 <screen><prompt>$</prompt> <userinput>sudo pip install python-novaclient</userinput></screen>
-                <para>To update the nova client, run this
-                    command:</para>
-                <screen><prompt>$</prompt> <userinput>sudo pip install --upgrade python-novaclient</userinput></screen>
                 <para>To remove the nova client, run this
                     command:</para>
                 <screen><prompt>$</prompt> <userinput>sudo pip uninstall python-novaclient</userinput></screen>
+                <para>To upgrade a package, add the
+                <literal>--upgrade</literal> option to the
+                <command>pip</command> command.</para>
+                <para>To update the nova client, run this
+                    command:</para>
+                <screen><prompt>$</prompt> <userinput>sudo pip install --upgrade python-novaclient</userinput></screen>
             </step>
             <step audience="enduser">
                 <para>Before you can run client commands, you must
