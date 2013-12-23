@@ -30,7 +30,7 @@
         and <link linkend="debconf-api-endpoints">API endpoint</link>
         registration.</para>
     </step>
-    <step>
+    <step os="ubuntu;rhel;centos;fedora;opensuse;sles">
       <para>The Block Storage Service stores volume information in a
         database. The examples in this section use the MySQL database
         that is used by other OpenStack services.</para>
@@ -39,11 +39,11 @@
           <literal><replaceable>CINDER_DBPASS</replaceable></literal>
         with a password of your choice.</para>
       <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/cinder/cinder.conf \
-        database connection mysql://cinder:<replaceable>CINDER_DBPASS</replaceable>@<replaceable>controller</replaceable>/cinder</userinput></screen>
-      <para os="ubuntu;debian">Edit
+  database connection mysql://cinder:<replaceable>CINDER_DBPASS</replaceable>@<replaceable>controller</replaceable>/cinder</userinput></screen>
+      <para os="ubuntu">Edit
           <filename>/etc/cinder/cinder.conf</filename> and change the
           <literal>[DEFAULT]</literal> section.</para>
-      <programlisting os="ubuntu;debian" language="ini">[database]
+      <programlisting os="ubuntu" language="ini">[database]
 ...
 # The SQLAlchemy connection string used to connect to the
 # database (string value)
@@ -94,28 +94,33 @@ admin_tenant_name=service
 admin_user=cinder
 admin_password=<replaceable>CINDER_PASS</replaceable></programlisting>
     </step>
-
-    <step>
-      <para os="ubuntu">Configure the Block Storage Service to use the
-        RabbitMQ message broker by setting the following configuration
-        keys. They are found in the <literal>DEFAULT</literal>
-        configuration group of the
-          <filename>/etc/cinder/cinder.conf</filename> file.</para>
-      <programlisting os="ubuntu;debian" language="ini">rpc_backend = cinder.openstack.common.rpc.impl_kombu
-rabbit_host = controller
+    <step os="ubuntu">
+      <para>Configure Block Storage to use the RabbitMQ message
+        broker by setting these configuration keys in the
+        <literal>[DEFAULT]</literal> configuration group of the
+        <filename>/etc/cinder/cinder.conf</filename> file. Replace
+        <replaceable>RABBIT_PASS</replaceable> with the password you
+        chose for RabbitMQ.</para>
+      <programlisting language="ini">[DEFAULT]
+...
+rpc_backend = cinder.openstack.common.rpc.impl_kombu
+rabbit_host = <replaceable>controller</replaceable>
 rabbit_port = 5672
 rabbit_userid = guest
 rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
-      <para os="rhel;centos;fedora">Configure the Block Storage
-        Service to use Qpid as the message broker.</para>
-      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>openstack-config --set /etc/cinder/cinder.conf \
+    </step>
+    <step os="rhel;centos;fedora">
+      <para>Configure Block Storage to use the Qpid message broker.</para>
+      <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/cinder/cinder.conf \
   DEFAULT rpc_backend cinder.openstack.common.rpc.impl_qpid</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/cinder/cinder.conf \
   DEFAULT qpid_hostname controller</userinput></screen>
-
-      <para os="opensuse;sles">Configure the Block Storage Service to
-        use the RabbitMQ message broker.</para>
-      <screen os="opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/cinder/cinder.conf \
+    </step>
+    <step os="sles;opensuse">
+      <para>Configure Block Storage to use the RabbitMQ message broker.
+        Replace <replaceable>RABBIT_PASS</replaceable> with the password
+        you chose for RabbitMQ.</para>
+      <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/cinder/cinder.conf \
   DEFAULT rpc_backend cinder.openstack.common.rpc.impl_kombu</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/cinder/cinder.conf \
   DEFAULT rabbit_host controller</userinput>
@@ -124,6 +129,7 @@ rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/cinder/cinder.conf \
   DEFAULT rabbit_password <replaceable>RABBIT_PASS</replaceable></userinput></screen>
     </step>
+
     <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
       <para>Register the Block Storage Service with the Identity
         Service so that other OpenStack services can locate it.
