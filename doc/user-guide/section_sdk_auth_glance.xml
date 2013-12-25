@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+  xml:id="sdk_auth_glance">
+  <title>Authenticate against an Image Service endpoint</title>
+  <para>To authenticate against an Image Service endpoint, instantiate
+    a <link
+      xlink:href="http://docs.openstack.org/developer/python-glanceclient/api/glanceclient.v2.client.html#glanceclient.v2.client.Client"
+      > glanceclient.v2.client.Client</link> object:</para>
+  <programlisting language="python">from os import environ as env
+import glanceclient.v2.client as glclient
+import keystoneclient.v2_0.client as ksclient
+
+keystone = ksclient.Client(auth_url=env['OS_AUTH_URL'],
+                           username=env['OS_USERNAME'],
+                           password=env['OS_PASSWORD'],
+                           tenant_name=env['OS_TENANT_NAME'],
+                           region_name=env['OS_REGION_NAME'])
+glance_endpoint = keystone.service_catalog.url_for(service_type='image')
+glance = glclient.Client(glance_endpoint, token=keystone.auth_token)</programlisting>
+</section>
