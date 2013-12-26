@@ -5,454 +5,447 @@
 <!ENTITY hellip "&#x2026;">
 ]>
 <section xml:id="hds-volume-driver"
-	xmlns="http://docbook.org/ns/docbook"
-	xmlns:xi="http://www.w3.org/2001/XInclude"
-	xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
-	<title>HDS iSCSI volume driver</title>
-	<para>This Cinder volume driver provides iSCSI support for <link
-			xlink:href="http://www.hds.com/products/storage-systems/hitachi-unified-storage-100-family.html"
-			>HUS (Hitachi Unified Storage) </link> arrays such as,
-		HUS-110, HUS-130, and HUS-150.</para>
-	<section xml:id="hds-reqs">
-		<title>System requirements</title>
-		<para>Use the HDS <command>hus-cmd</command> command to
-			communicate with an HUS array. You can download this
-			utility package from the HDS support site (<link
-				xlink:href="https://HDSSupport.hds.com"
-				>https://HDSSupport.hds.com</link>.</para>
-		<para>Platform: Ubuntu 12.04LTS or newer.</para>
-	</section>
-	<section xml:id="hds-supported-operations">
-		<title>Supported Cinder operations</title>
-		<para>These operations are supported:</para>
-		<itemizedlist>
-			<listitem>
-				<para>Create volume</para>
-			</listitem>
-			<listitem>
-				<para>Delete volume</para>
-			</listitem>
-			<listitem>
-				<para>Attach volume</para>
-			</listitem>
-			<listitem>
-				<para>Detach volume</para>
-			</listitem>
-			<listitem>
-				<para>Clone volume</para>
-			</listitem>
-			<listitem>
-				<para>Extend volume</para>
-			</listitem>
-			<listitem>
-				<para>Create snapshot</para>
-			</listitem>
-			<listitem>
-				<para>Delete snapshot</para>
-			</listitem>
-			<listitem>
-				<para>Copy image to volume</para>
-			</listitem>
-			<listitem>
-				<para>Copy volume to image</para>
-			</listitem>
-			<listitem>
-				<para>Create volume from snapshot</para>
-			</listitem>
-			<listitem>
-				<para>get_volume_stats</para>
-			</listitem>
-		</itemizedlist>
-		<para>Thin provisioning, also known as Hitachi Dynamic Pool
-			(HDP), is supported for volume or snapshot creation.
-			Cinder volumes and snapshots do not have to reside in the
-			same pool.</para>
-	</section>
-	<section xml:id="hds-config">
-		<title>Configuration</title>
-		<para>The HDS driver supports the concept of differentiated
-			services, where volume type can be associated with the
-			fine-tuned performance characteristics of HDP&mdash;the
-			the dynamic pool where volumes shall be created<footnote
-				xml:id="hds-fn-svc-1">
-				<para>Do not confuse differentiated services with the
-					Cinder volume service.</para>
-			</footnote>. For instance, an HDP can consist of fast SSDs
-			to provide speed. HDP can provide a certain reliability
-			based on things like its RAID level characteristics. HDS
-			driver maps volume type to the
-				<option>volume_type</option> option in its
-			configuration file.</para>
-		<para>Configuration is read from an XML-format file. Examples
-			are shown for single and multi back-end cases.</para>
-		<note>
-			<itemizedlist>
-				<listitem>
-					<para>Configuration is read from an XML file. This
-						example shows the configuration for single
-						back-end and for multi-back-end cases.</para>
-				</listitem>
-				<listitem>
-					<para>It is not recommended to manage a HUS array
-						simultaneously from multiple Cinder instances
-						or servers. <footnote
-							xml:id="hds-one-instance-only">
-							<para>It is okay to manage multiple HUS
-								arrays by using multiple Cinder
-								instances (or servers).</para>
-						</footnote></para>
-				</listitem>
-			</itemizedlist>
-		</note>
-		<xi:include href="../../../common/tables/cinder-hds.xml"/>
-		<simplesect>
-			<title>Single back-end</title>
-			<para>In a single back-end deployment, only one Cinder
-				instance runs on the Cinder server and controls one
-				HUS array: this setup requires these configuration
-				files:</para>
-			<orderedlist>
-				<listitem>
-					<para>Set the
-							<option>hds_cinder_config_file</option>
-						option in the
-							<filename>/etc/cinder/cinder.conf</filename>
-						file to use the HDS volume driver. This option
-						points to a configuration file.<footnote
-							xml:id="hds-no-fixed-location-1">
-							<para>The configuration file location is
-								not fixed.</para>
-						</footnote></para>
-					<programlisting>volume_driver = cinder.volume.drivers.hds.hds.HUSDriver
+         xmlns="http://docbook.org/ns/docbook"
+         xmlns:xi="http://www.w3.org/2001/XInclude"
+         xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+        <title>HDS iSCSI volume driver</title>
+        <para>This Cinder volume driver provides iSCSI support for <link
+                        xlink:href="http://www.hds.com/products/storage-systems/hitachi-unified-storage-100-family.html"
+                        >HUS (Hitachi Unified Storage) </link> arrays such as,
+                HUS-110, HUS-130, and HUS-150.</para>
+        <section xml:id="hds-reqs">
+                <title>System requirements</title>
+                <para>Use the HDS <command>hus-cmd</command> command to
+                        communicate with an HUS array. You can download this
+                        utility package from the HDS support site (<link
+                                xlink:href="https://HDSSupport.hds.com"
+                                >https://HDSSupport.hds.com</link>.</para>
+                <para>Platform: Ubuntu 12.04LTS or newer.</para>
+        </section>
+        <section xml:id="hds-supported-operations">
+                <title>Supported Cinder operations</title>
+                <para>These operations are supported:</para>
+                <itemizedlist>
+                        <listitem>
+                                <para>Create volume</para>
+                        </listitem>
+                        <listitem>
+                                <para>Delete volume</para>
+                        </listitem>
+                        <listitem>
+                                <para>Attach volume</para>
+                        </listitem>
+                        <listitem>
+                                <para>Detach volume</para>
+                        </listitem>
+                        <listitem>
+                                <para>Clone volume</para>
+                        </listitem>
+                        <listitem>
+                                <para>Extend volume</para>
+                        </listitem>
+                        <listitem>
+                                <para>Create snapshot</para>
+                        </listitem>
+                        <listitem>
+                                <para>Delete snapshot</para>
+                        </listitem>
+                        <listitem>
+                                <para>Copy image to volume</para>
+                        </listitem>
+                        <listitem>
+                                <para>Copy volume to image</para>
+                        </listitem>
+                        <listitem>
+                                <para>Create volume from snapshot</para>
+                        </listitem>
+                        <listitem>
+                                <para>get_volume_stats</para>
+                        </listitem>
+                </itemizedlist>
+                <para>Thin provisioning, also known as Hitachi Dynamic Pool
+                        (HDP), is supported for volume or snapshot creation.
+                        Cinder volumes and snapshots do not have to reside in the
+                        same pool.</para>
+        </section>
+        <section xml:id="hds-config">
+                <title>Configuration</title>
+                <para>The HDS driver supports the concept of differentiated
+                        services, where volume type can be associated with the
+                        fine-tuned performance characteristics of HDP&mdash;the
+                        the dynamic pool where volumes shall be created<footnote
+                                xml:id="hds-fn-svc-1">
+                                <para>Do not confuse differentiated services with the
+                                        Cinder volume service.</para>
+                        </footnote>. For instance, an HDP can consist of fast SSDs
+                        to provide speed. HDP can provide a certain reliability
+                        based on things like its RAID level characteristics. HDS
+                        driver maps volume type to the
+                                <option>volume_type</option> option in its
+                        configuration file.</para>
+                <para>Configuration is read from an XML-format file. Examples
+                        are shown for single and multi back-end cases.</para>
+                <note>
+                        <itemizedlist>
+                                <listitem>
+                                        <para>Configuration is read from an XML file. This
+                                                example shows the configuration for single
+                                                back-end and for multi-back-end cases.</para>
+                                </listitem>
+                                <listitem>
+                                        <para>It is not recommended to manage a HUS array
+                                                simultaneously from multiple Cinder instances
+                                                or servers. <footnote
+                                                        xml:id="hds-one-instance-only">
+                                                        <para>It is okay to manage multiple HUS
+                                                                arrays by using multiple Cinder
+                                                                instances (or servers).</para>
+                                                </footnote></para>
+                                </listitem>
+                        </itemizedlist>
+                </note>
+                <xi:include href="../../../common/tables/cinder-hds.xml"/>
+                <simplesect>
+                        <title>Single back-end</title>
+                        <para>In a single back-end deployment, only one Cinder
+                                instance runs on the Cinder server and controls one
+                                HUS array: this setup requires these configuration
+                                files:</para>
+                        <orderedlist>
+                                <listitem>
+                                        <para>Set the
+                                                        <option>hds_cinder_config_file</option>
+                                                option in the
+                                                        <filename>/etc/cinder/cinder.conf</filename>
+                                                file to use the HDS volume driver. This option
+                                                points to a configuration file.<footnote
+                                                        xml:id="hds-no-fixed-location-1">
+                                                        <para>The configuration file location is
+                                                                not fixed.</para>
+                                                </footnote></para>
+                                        <programlisting language="ini">volume_driver = cinder.volume.drivers.hds.hds.HUSDriver
 hds_cinder_config_file = /opt/hds/hus/cinder_hds_conf.xml</programlisting>
-				</listitem>
-				<listitem>
-					<para>Configure
-							<option>hds_cinder_config_file</option> at
-						the location specified previously. For
-						example,
-							<filename>/opt/hds/hus/cinder_hds_conf.xml</filename>:</para>
-					<programlisting>
-						&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
-	      &lt;config&gt;
-	      &lt;mgmt_ip0&gt;172.17.44.16&lt;/mgmt_ip0&gt;
-	      &lt;mgmt_ip1&gt;172.17.44.17&lt;/mgmt_ip1&gt;
-	      &lt;username&gt;system&lt;/username&gt;
-	      &lt;password&gt;manager&lt;/password&gt;
-	      &lt;svc_0&gt;
-	      &lt;volume_type&gt;default&lt;/volume_type&gt;
-	      &lt;iscsi_ip&gt;172.17.39.132&lt;/iscsi_ip&gt;
-	      &lt;hdp&gt;9&lt;/hdp&gt;
-	      &lt;/svc_0&gt;
-	      &lt;snapshot&gt;
-	      &lt;hdp&gt;13&lt;/hdp&gt;
-	      &lt;/snapshot&gt;
-	      &lt;lun_start&gt;
-	      3000
-	      &lt;/lun_start&gt;
-	      &lt;lun_end&gt;
-	      4000
-	      &lt;/lun_end&gt;
-	      &lt;/config&gt;</programlisting>
-				</listitem>
-			</orderedlist>
-		</simplesect>
-		<simplesect>
-			<title>Multi back-end</title>
-			<para>In a multi back-end deployment, more than one Cinder
-				instance runs on the same server. In this example, two
-				HUS arrays are used, possibly providing different
-				storage performance:</para>
-			<procedure>
-				<step>
-					<para>Configure
-							<filename>/etc/cinder/cinder.conf</filename>:
-						the <literal>hus1</literal>
-						<option>hus2</option> configuration blocks are
-						created. Set the
-							<option>hds_cinder_config_file</option>
-						option to point to an unique configuration
-						file for each block. Set the
-							<option>volume_driver</option> option for
-						each back-end to
-							<literal>cinder.volume.drivers.hds.hds.HUSDriver</literal></para>
-					<programlisting>
-	      enabled_backends=hus1,hus2
-	      [hus1]
-	      volume_driver = cinder.volume.drivers.hds.hds.HUSDriver
-	      hds_cinder_config_file = /opt/hds/hus/cinder_hus1_conf.xml
-	      volume_backend_name=hus-1
-	      [hus2]
-	      volume_driver = cinder.volume.drivers.hds.hds.HUSDriver
-	      hds_cinder_config_file = /opt/hds/hus/cinder_hus2_conf.xml
-	      volume_backend_name=hus-2
-	    </programlisting>
-				</step>
-				<step>
-					<para>Configure
-							<filename>/opt/hds/hus/cinder_hus1_conf.xml</filename>:</para>
-					<programlisting>
-	      &lt;?xml version="1.0" encoding="UTF-8" ?&gt;
-	      &lt;config&gt;
-	      &lt;mgmt_ip0&gt;172.17.44.16&lt;/mgmt_ip0&gt;
-	      &lt;mgmt_ip1&gt;172.17.44.17&lt;/mgmt_ip1&gt;
-	      &lt;username&gt;system&lt;/username&gt;
-	      &lt;password&gt;manager&lt;/password&gt;
-	      &lt;svc_0&gt;
-	      &lt;volume_type&gt;regular&lt;/volume_type&gt;
-	      &lt;iscsi_ip&gt;172.17.39.132&lt;/iscsi_ip&gt;
-	      &lt;hdp&gt;9&lt;/hdp&gt;
-	      &lt;/svc_0&gt;
-	      &lt;snapshot&gt;
-	      &lt;hdp&gt;13&lt;/hdp&gt;
-	      &lt;/snapshot&gt;
-	      &lt;lun_start&gt;
-	      3000
-	      &lt;/lun_start&gt;
-	      &lt;lun_end&gt;
-	      4000
-	      &lt;/lun_end&gt;
-	      &lt;/config&gt;
-	    </programlisting>
-				</step>
-				<step>
-					<para>Configure the
-							<filename>/opt/hds/hus/cinder_hus2_conf.xml</filename>
-						file:</para>
-					<programlisting>
-	      &lt;?xml version="1.0" encoding="UTF-8" ?&gt;
-	      &lt;config&gt;
-	      &lt;mgmt_ip0&gt;172.17.44.20&lt;/mgmt_ip0&gt;
-	      &lt;mgmt_ip1&gt;172.17.44.21&lt;/mgmt_ip1&gt;
-	      &lt;username&gt;system&lt;/username&gt;
-	      &lt;password&gt;manager&lt;/password&gt;
-	      &lt;svc_0&gt;
-	      &lt;volume_type&gt;platinum&lt;/volume_type&gt;
-	      &lt;iscsi_ip&gt;172.17.30.130&lt;/iscsi_ip&gt;
-	      &lt;hdp&gt;2&lt;/hdp&gt;
-	      &lt;/svc_0&gt;
-	      &lt;snapshot&gt;
-	      &lt;hdp&gt;3&lt;/hdp&gt;
-	      &lt;/snapshot&gt;
-	      &lt;lun_start&gt;
-	      2000
-	      &lt;/lun_start&gt;
-	      &lt;lun_end&gt;
-	      3000
-	      &lt;/lun_end&gt;
-	      &lt;/config&gt;
-	    </programlisting>
-				</step>
-			</procedure>
-		</simplesect>
-		<simplesect>
-			<title>Type extra specs: <option>volume_backend</option>
-				and volume type</title>
-			<para>If you use volume types, you must configure them in
-				the configuration file and set the
-					<option>volume_backend_name</option> option to the
-				appropriate back-end. In the previous multi back-end
-				example, the <literal>platinum</literal> volume type
-				is served by hus-2, and the <literal>regular</literal>
-				volume type is served by hus-1.</para>
-			<programlisting>cinder type-key regular set volume_backend_name=hus-1
+                                </listitem>
+                                <listitem>
+                                        <para>Configure
+                                                        <option>hds_cinder_config_file</option> at
+                                                the location specified previously. For
+                                                example,
+                                                        <filename>/opt/hds/hus/cinder_hds_conf.xml</filename>:</para>
+                                        <programlisting language="xml">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
+&lt;config&gt;
+&lt;mgmt_ip0&gt;172.17.44.16&lt;/mgmt_ip0&gt;
+&lt;mgmt_ip1&gt;172.17.44.17&lt;/mgmt_ip1&gt;
+&lt;username&gt;system&lt;/username&gt;
+&lt;password&gt;manager&lt;/password&gt;
+&lt;svc_0&gt;
+&lt;volume_type&gt;default&lt;/volume_type&gt;
+&lt;iscsi_ip&gt;172.17.39.132&lt;/iscsi_ip&gt;
+&lt;hdp&gt;9&lt;/hdp&gt;
+&lt;/svc_0&gt;
+&lt;snapshot&gt;
+&lt;hdp&gt;13&lt;/hdp&gt;
+&lt;/snapshot&gt;
+&lt;lun_start&gt;
+3000
+&lt;/lun_start&gt;
+&lt;lun_end&gt;
+4000
+&lt;/lun_end&gt;
+&lt;/config&gt;</programlisting>
+                                </listitem>
+                        </orderedlist>
+                </simplesect>
+                <simplesect>
+                        <title>Multi back-end</title>
+                        <para>In a multi back-end deployment, more than one Cinder
+                                instance runs on the same server. In this example, two
+                                HUS arrays are used, possibly providing different
+                                storage performance:</para>
+                        <procedure>
+                                <step>
+                                        <para>Configure
+                                                        <filename>/etc/cinder/cinder.conf</filename>:
+                                                the <literal>hus1</literal>
+                                                <option>hus2</option> configuration blocks are
+                                                created. Set the
+                                                        <option>hds_cinder_config_file</option>
+                                                option to point to an unique configuration
+                                                file for each block. Set the
+                                                        <option>volume_driver</option> option for
+                                                each back-end to
+                                                        <literal>cinder.volume.drivers.hds.hds.HUSDriver</literal></para>
+                                        <programlisting language="ini">enabled_backends=hus1,hus2
+[hus1]
+volume_driver = cinder.volume.drivers.hds.hds.HUSDriver
+hds_cinder_config_file = /opt/hds/hus/cinder_hus1_conf.xml
+volume_backend_name=hus-1
+[hus2]
+volume_driver = cinder.volume.drivers.hds.hds.HUSDriver
+hds_cinder_config_file = /opt/hds/hus/cinder_hus2_conf.xml
+volume_backend_name=hus-2</programlisting>
+                                </step>
+                                <step>
+                                        <para>Configure
+                                                        <filename>/opt/hds/hus/cinder_hus1_conf.xml</filename>:</para>
+                                        <programlisting language="xml">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
+&lt;config&gt;
+&lt;mgmt_ip0&gt;172.17.44.16&lt;/mgmt_ip0&gt;
+&lt;mgmt_ip1&gt;172.17.44.17&lt;/mgmt_ip1&gt;
+&lt;username&gt;system&lt;/username&gt;
+&lt;password&gt;manager&lt;/password&gt;
+&lt;svc_0&gt;
+&lt;volume_type&gt;regular&lt;/volume_type&gt;
+&lt;iscsi_ip&gt;172.17.39.132&lt;/iscsi_ip&gt;
+&lt;hdp&gt;9&lt;/hdp&gt;
+&lt;/svc_0&gt;
+&lt;snapshot&gt;
+&lt;hdp&gt;13&lt;/hdp&gt;
+&lt;/snapshot&gt;
+&lt;lun_start&gt;
+3000
+&lt;/lun_start&gt;
+&lt;lun_end&gt;
+4000
+&lt;/lun_end&gt;
+&lt;/config&gt;</programlisting>
+                                </step>
+                                <step>
+                                        <para>Configure the
+                                                        <filename>/opt/hds/hus/cinder_hus2_conf.xml</filename>
+                                                file:</para>
+                                        <programlisting language="xml">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
+&lt;config&gt;
+&lt;mgmt_ip0&gt;172.17.44.20&lt;/mgmt_ip0&gt;
+&lt;mgmt_ip1&gt;172.17.44.21&lt;/mgmt_ip1&gt;
+&lt;username&gt;system&lt;/username&gt;
+&lt;password&gt;manager&lt;/password&gt;
+&lt;svc_0&gt;
+&lt;volume_type&gt;platinum&lt;/volume_type&gt;
+&lt;iscsi_ip&gt;172.17.30.130&lt;/iscsi_ip&gt;
+&lt;hdp&gt;2&lt;/hdp&gt;
+&lt;/svc_0&gt;
+&lt;snapshot&gt;
+&lt;hdp&gt;3&lt;/hdp&gt;
+&lt;/snapshot&gt;
+&lt;lun_start&gt;
+2000
+&lt;/lun_start&gt;
+&lt;lun_end&gt;
+3000
+&lt;/lun_end&gt;
+&lt;/config&gt;</programlisting>
+                                </step>
+                        </procedure>
+                </simplesect>
+                <simplesect>
+                        <title>Type extra specs: <option>volume_backend</option>
+                                and volume type</title>
+                        <para>If you use volume types, you must configure them in
+                                the configuration file and set the
+                                        <option>volume_backend_name</option> option to the
+                                appropriate back-end. In the previous multi back-end
+                                example, the <literal>platinum</literal> volume type
+                                is served by hus-2, and the <literal>regular</literal>
+                                volume type is served by hus-1.</para>
+                        <programlisting>cinder type-key regular set volume_backend_name=hus-1
 cinder type-key platinum set volume_backend_name=hus-2</programlisting>
-		</simplesect>
-		<simplesect>
-			<title>Non differentiated deployment of HUS arrays</title>
-			<para>You can deploy multiple Cinder instances that each
-				control a separate HUS array. Each instance has no
-				volume type associated with it. The Cinder filtering
-				algorithm selects the HUS array with the largest
-				available free space. In each configuration file, you
-				must define the <literal>default</literal>
-				<option>volume_type</option> in the service
-				labels.</para>
-		</simplesect>
-	</section>
-	<simplesect>
-		<title>HDS iSCSI volume driver configuration options</title>
-		<para>These details apply to the XML format configuration file
-			that is read by HDS volume driver. These differentiated
-			service labels are predefined: <literal>svc_0</literal>,
-				<literal>svc_1</literal>, <literal>svc_2</literal>,
-			and <literal>svc_3</literal><footnote
-				xml:id="hds-no-weight">
-				<para>There is no relative precedence or weight among
-					these four labels.</para>
-			</footnote>. Each respective service label associates with
-			these parameters and tags:</para>
-		<orderedlist>
-			<listitem>
-				<para><option>volume-types</option>: A create_volume
-					call with a certain volume type shall be matched
-					up with this tag. <literal>default</literal> is
-					special in that any service associated with this
-					type is used to create volume when no other labels
-					match. Other labels are case sensitive and should
-					exactly match. If no configured volume_types match
-					the incoming requested type, an error occurs in
-					volume creation.</para>
-			</listitem>
-			<listitem>
-				<para><option>HDP</option>, the pool ID associated
-					with the service.</para>
-			</listitem>
-			<listitem>
-				<para>An iSCSI port dedicated to the service.</para>
-			</listitem>
-		</orderedlist>
-		<para>Typically a Cinder volume instance has only one such
-			service label. For example, any <literal>svc_0</literal>,
-				<literal>svc_1</literal>, <literal>svc_2</literal>, or
-				<literal>svc_3</literal> can be associated with it.
-			But any mix of these service labels can be used in the
-			same instance <footnote xml:id="hds-stats-all-hdp">
-				<para>get_volume_stats() always provides the available
-					capacity based on the combined sum of all the HDPs
-					that are used in these services labels.</para>
-			</footnote>.</para>
-		<table rules="all">
-			<caption>Configuration options</caption>
-			<col width="25%"/>
-			<col width="10%"/>
-			<col width="15%"/>
-			<col width="50%"/>
-			<thead>
-				<tr>
-					<td>Option</td>
-					<td>Type</td>
-					<td>Default</td>
-					<td>Description</td>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td><para><option>mgmt_ip0</option></para>
-					</td>
-					<td><para>Required</para></td>
-					<td><para/></td>
-					<td><para>Management Port 0 IP address</para>
-					</td>
-				</tr>
-				<tr>
-					<td><para><option>mgmt_ip1</option></para>
-					</td>
-					<td><para>Required</para></td>
-					<td><para/></td>
-					<td><para>Management Port 1 IP address</para>
-					</td>
-				</tr>
-				<tr>
-					<td><para><option>username</option></para>
-					</td>
-					<td><para>Optional</para></td>
-					<td><para/></td>
-					<td>
-						<para>Username is required only if secure mode
-							is used</para>
-					</td>
-				</tr>
-				<tr>
-					<td><para><option>password</option></para>
-					</td>
-					<td><para>Optional</para></td>
-					<td><para/></td>
-					<td>
-						<para>Password is required only if secure mode
-							is used</para>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<para><option>svc_0, svc_1, svc_2, svc_3
-							</option></para>
-					</td>
-					<td><para>Optional</para></td>
-					<td><para>(at least one label has to be
-							defined)</para></td>
-					<td>
-						<para>Service labels: these four predefined
-							names help four different sets of
-							configuration options -- each can specify
-							iSCSI port address, HDP and an unique
-							volume type.</para>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<para><option>snapshot</option></para>
-					</td>
-					<td><para>Required</para></td>
-					<td><para/></td>
-					<td>
-						<para>A service label which helps specify
-							configuration for snapshots, such as,
-							HDP.</para>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<para><option>volume_type</option></para>
-					</td>
-					<td><para>Required</para></td>
-					<td><para/></td>
-					<td>
-						<para><option>volume_type</option> tag is used
-							to match volume type.
-								<literal>Default</literal> meets any
-							type of <option>volume_type</option>, or
-							if it is not specified. Any other
-							volume_type is selected if exactly matched
-							during
-							<literal>create_volume</literal>.</para>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<para><option>iscsi_ip</option></para>
-					</td>
-					<td><para>Required</para></td>
-					<td><para/></td>
-					<td>
-						<para>iSCSI port IP address where volume
-							attaches for this volume type.</para>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<para><option>hdp</option></para>
-					</td>
-					<td><para>Required</para></td>
-					<td><para/></td>
-					<td>
-						<para>HDP, the pool number where volume, or
-							snapshot should be created.</para>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<para><option>lun_start</option></para>
-					</td>
-					<td><para>Optional</para></td>
-					<td><para>0</para></td>
-					<td>
-						<para>LUN allocation starts at this
-							number.</para>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<para><option>lun_end</option></para>
-					</td>
-					<td><para>Optional</para></td>
-					<td><para>4096</para></td>
-					<td>
-						<para>LUN allocation is up to, but not
-							including, this number.</para>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	</simplesect>
+                </simplesect>
+                <simplesect>
+                        <title>Non differentiated deployment of HUS arrays</title>
+                        <para>You can deploy multiple Cinder instances that each
+                                control a separate HUS array. Each instance has no
+                                volume type associated with it. The Cinder filtering
+                                algorithm selects the HUS array with the largest
+                                available free space. In each configuration file, you
+                                must define the <literal>default</literal>
+                                <option>volume_type</option> in the service
+                                labels.</para>
+                </simplesect>
+        </section>
+        <simplesect>
+                <title>HDS iSCSI volume driver configuration options</title>
+                <para>These details apply to the XML format configuration file
+                        that is read by HDS volume driver. These differentiated
+                        service labels are predefined: <literal>svc_0</literal>,
+                                <literal>svc_1</literal>, <literal>svc_2</literal>,
+                        and <literal>svc_3</literal><footnote
+                                xml:id="hds-no-weight">
+                                <para>There is no relative precedence or weight among
+                                        these four labels.</para>
+                        </footnote>. Each respective service label associates with
+                        these parameters and tags:</para>
+                <orderedlist>
+                        <listitem>
+                                <para><option>volume-types</option>: A create_volume
+                                        call with a certain volume type shall be matched
+                                        up with this tag. <literal>default</literal> is
+                                        special in that any service associated with this
+                                        type is used to create volume when no other labels
+                                        match. Other labels are case sensitive and should
+                                        exactly match. If no configured volume_types match
+                                        the incoming requested type, an error occurs in
+                                        volume creation.</para>
+                        </listitem>
+                        <listitem>
+                                <para><option>HDP</option>, the pool ID associated
+                                        with the service.</para>
+                        </listitem>
+                        <listitem>
+                                <para>An iSCSI port dedicated to the service.</para>
+                        </listitem>
+                </orderedlist>
+                <para>Typically a Cinder volume instance has only one such
+                        service label. For example, any <literal>svc_0</literal>,
+                                <literal>svc_1</literal>, <literal>svc_2</literal>, or
+                                <literal>svc_3</literal> can be associated with it.
+                        But any mix of these service labels can be used in the
+                        same instance <footnote xml:id="hds-stats-all-hdp">
+                                <para>get_volume_stats() always provides the available
+                                        capacity based on the combined sum of all the HDPs
+                                        that are used in these services labels.</para>
+                        </footnote>.</para>
+                <table rules="all">
+                        <caption>Configuration options</caption>
+                        <col width="25%"/>
+                        <col width="10%"/>
+                        <col width="15%"/>
+                        <col width="50%"/>
+                        <thead>
+                                <tr>
+                                        <td>Option</td>
+                                        <td>Type</td>
+                                        <td>Default</td>
+                                        <td>Description</td>
+                                </tr>
+                        </thead>
+                        <tbody>
+                                <tr>
+                                        <td><para><option>mgmt_ip0</option></para>
+                                        </td>
+                                        <td><para>Required</para></td>
+                                        <td><para/></td>
+                                        <td><para>Management Port 0 IP address</para>
+                                        </td>
+                                </tr>
+                                <tr>
+                                        <td><para><option>mgmt_ip1</option></para>
+                                        </td>
+                                        <td><para>Required</para></td>
+                                        <td><para/></td>
+                                        <td><para>Management Port 1 IP address</para>
+                                        </td>
+                                </tr>
+                                <tr>
+                                        <td><para><option>username</option></para>
+                                        </td>
+                                        <td><para>Optional</para></td>
+                                        <td><para/></td>
+                                        <td>
+                                                <para>Username is required only if secure mode
+                                                        is used</para>
+                                        </td>
+                                </tr>
+                                <tr>
+                                        <td><para><option>password</option></para>
+                                        </td>
+                                        <td><para>Optional</para></td>
+                                        <td><para/></td>
+                                        <td>
+                                                <para>Password is required only if secure mode
+                                                        is used</para>
+                                        </td>
+                                </tr>
+                                <tr>
+                                        <td>
+                                                <para><option>svc_0, svc_1, svc_2, svc_3
+                                                        </option></para>
+                                        </td>
+                                        <td><para>Optional</para></td>
+                                        <td><para>(at least one label has to be
+                                                        defined)</para></td>
+                                        <td>
+                                                <para>Service labels: these four predefined
+                                                        names help four different sets of
+                                                        configuration options -- each can specify
+                                                        iSCSI port address, HDP and an unique
+                                                        volume type.</para>
+                                        </td>
+                                </tr>
+                                <tr>
+                                        <td>
+                                                <para><option>snapshot</option></para>
+                                        </td>
+                                        <td><para>Required</para></td>
+                                        <td><para/></td>
+                                        <td>
+                                                <para>A service label which helps specify
+                                                        configuration for snapshots, such as,
+                                                        HDP.</para>
+                                        </td>
+                                </tr>
+                                <tr>
+                                        <td>
+                                                <para><option>volume_type</option></para>
+                                        </td>
+                                        <td><para>Required</para></td>
+                                        <td><para/></td>
+                                        <td>
+                                                <para><option>volume_type</option> tag is used
+                                                        to match volume type.
+                                                                <literal>Default</literal> meets any
+                                                        type of <option>volume_type</option>, or
+                                                        if it is not specified. Any other
+                                                        volume_type is selected if exactly matched
+                                                        during
+                                                        <literal>create_volume</literal>.</para>
+                                        </td>
+                                </tr>
+                                <tr>
+                                        <td>
+                                                <para><option>iscsi_ip</option></para>
+                                        </td>
+                                        <td><para>Required</para></td>
+                                        <td><para/></td>
+                                        <td>
+                                                <para>iSCSI port IP address where volume
+                                                        attaches for this volume type.</para>
+                                        </td>
+                                </tr>
+                                <tr>
+                                        <td>
+                                                <para><option>hdp</option></para>
+                                        </td>
+                                        <td><para>Required</para></td>
+                                        <td><para/></td>
+                                        <td>
+                                                <para>HDP, the pool number where volume, or
+                                                        snapshot should be created.</para>
+                                        </td>
+                                </tr>
+                                <tr>
+                                        <td>
+                                                <para><option>lun_start</option></para>
+                                        </td>
+                                        <td><para>Optional</para></td>
+                                        <td><para>0</para></td>
+                                        <td>
+                                                <para>LUN allocation starts at this
+                                                        number.</para>
+                                        </td>
+                                </tr>
+                                <tr>
+                                        <td>
+                                                <para><option>lun_end</option></para>
+                                        </td>
+                                        <td><para>Optional</para></td>
+                                        <td><para>4096</para></td>
+                                        <td>
+                                                <para>LUN allocation is up to, but not
+                                                        including, this number.</para>
+                                        </td>
+                                </tr>
+                        </tbody>
+                </table>
+        </simplesect>
 </section>
