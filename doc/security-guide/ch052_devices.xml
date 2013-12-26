@@ -14,7 +14,7 @@
         </listitem>
 </itemizedlist>
       <note>
-	<para>The IOMMU feature is marketed as VT-d by Intel and AMD-Vi by AMD.</para>
+        <para>The IOMMU feature is marketed as VT-d by Intel and AMD-Vi by AMD.</para>
       </note>
       <para>A hardware infection occurs when an instance makes a malicious modification to the firmware or some other part of a device. As this device is used by other instances, or even the host OS, the malicious code can spread into these systems. The end result is that one instance can run code outside of its security domain. This is a potential problem in any hardware sharing scenario. The problem is specific to this scenario because it is harder to reset the state of physical hardware than virtual hardware.</para>
       <para>Solutions to the hardware infection problem are domain specific. The strategy is to identify how an instance can modify hardware state then determine how to reset any modifications when the instance is done using the hardware. For example, one option could be to re-flash the firmware after use. Clearly there is a need to balance hardware longevity with security as some firmwares will fail after a large number of writes. TPM technology, described in <literal>link:Management/Node Bootstrapping</literal>, provides a solution for detecting unauthorized firmware changes. Regardless of the strategy selected, it is important to understand the risks associated with this kind of hardware sharing so that they can be properly mitigated for a given deployment scenario.</para>
@@ -42,7 +42,7 @@
       <section xml:id="ch052_devices-idp490976">
         <title>Minimizing the Qemu Codebase</title>
         <para>One classic security principle is to remove any unused components from your system. QEMU provides support for many different virtual hardware devices. However, only a small number of devices are needed for a given instance. Most instances will use the virtio devices. However, some legacy instances will need access to specific hardware, which can be specified using glance metadata:</para>
-        <screen> 
+        <screen>
 glance image-update \
     --property hw_disk_bus=ide \
     --property hw_cdrom_bus=ide \
@@ -71,7 +71,7 @@ glance image-update \
           </listitem>
 </itemizedlist>
         <para>Putting this all together, and adding in some additional useful protections, we recommend the following compiler options for gcc when compiling QEMU:</para>
-        <screen> 
+        <screen>
 CFLAGS="-arch x86_64 -fstack-protector-all -Wstack-protector --param ssp-buffer-size=4 -pie -fPIE -ftrapv -­D_FORTIFY_SOURCE=2 ­O2 -Wl,-z,relro,-z,now"</screen>
         <para>We recommend testing your QEMU executable file after it is compiled to ensure that the compiler hardening worked properly.</para>
         <para>Most cloud deployments will not want to build software such as QEMU by hand. It is better to use packaging to ensure that the process is repeatable and to ensure that the end result can be easily deployed throughout the cloud. The references below provide some additional details on applying compiler hardening options to existing packages.</para>
@@ -120,7 +120,7 @@ CFLAGS="-arch x86_64 -fstack-protector-all -Wstack-protector --param ssp-buffer-
       <section xml:id="ch052_devices-idp523744">
         <title>Labels and Categories</title>
         <para>KVM-based virtual machine instances are labelled with their own SELinux data type, known as svirt_image_t. Kernel level protections prevent unauthorized system processes, such as malware, from manipulating the virtual machine image files on disk. When virtual machines are powered off, images are stored as svirt_image_t as shown below:</para>
-        <screen> 
+        <screen>
 system_u:object_r:svirt_image_t:SystemLow image1
 system_u:object_r:svirt_image_t:SystemLow image2
 system_u:object_r:svirt_image_t:SystemLow image3

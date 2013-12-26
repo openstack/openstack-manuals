@@ -28,10 +28,10 @@
         <para>Authentication and authorization policy in OpenStack may be delegated to an external LDAP server. A typical use case is an organization that seeks to deploy a private cloud and already has a database of employees, the users. This may be in an LDAP system. Using LDAP as a source of authority authentication, requests to Identity Service are delegated to the LDAP service, which will authorize or deny requests based on locally set policies. A token is generated on successful authentication.</para>
         <para>Note that if the LDAP system has attributes defined for the user such as admin, finance, HR etc, these must be mapped into roles and groups within Identity for use by the various OpenStack services. The <emphasis>etc/keystone.conf</emphasis> file provides the mapping from the LDAP attributes to Identity attributes.</para>
         <para>The Identity Service <emphasis role="bold">MUST NOT</emphasis> be allowed to write to LDAP services used for authentication outside of the OpenStack deployment as this would allow a sufficiently privileged keystone user to make changes to the LDAP directory. This would allow privilege escalation within the wider organization or facilitate unauthorized access to other information and resources. In such a deployment, user provisioning would be out of the realm of the OpenStack deployment.</para>
-	<note>
+        <note>
           <para>There is an <link xlink:href="https://bugs.launchpad.net/ossn/+bug/1168252">OpenStack Security Note (OSSN) regarding keystone.conf permissions</link>.</para>
           <para>There is an <link xlink:href="https://bugs.launchpad.net/ossn/+bug/1155566">OpenStack Security Note (OSSN) regarding potential DoS attacks</link>.</para>
-	</note>
+        </note>
       </section>
       <section xml:id="ch024_authentication-idp251520">
         <title>External Authentication Methods</title>
@@ -79,7 +79,7 @@
       <para>Each OpenStack service has a policy file in json format, called <emphasis role="bold">policy.json</emphasis>. The policy file specifies rules, and the rule that governs each resource. A resource could be API access, the ability to attach to a volume, or to fire up instances.</para>
       <para>The policies can be updated by the cloud administrator to further control access to the various resources. The middleware could also be further customized. Note that your users must be assigned to groups/roles that you refer to in your policies.</para>
       <para>Below is a snippet of the Block Storage service policy.json file.</para>
-      <screen> 
+      <screen>
 {
     "context_is_admin": [["role:admin"]],
     "admin_or_owner":  [["is_admin:True"], ["project_id:%(project_id)s"]],
