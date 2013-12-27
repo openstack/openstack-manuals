@@ -412,8 +412,12 @@ metadata_proxy_shared_secret = <replaceable>METADATA_PASS</replaceable></program
         </note>
       </step>
       <step>
-        <para>Restart Networking services:</para>
-        <screen os="ubuntu;debian;rhel;centos;fedora"><prompt>#</prompt> <userinput>service neutron-server restart</userinput>
+        <para>Restart Networking services.</para>
+        <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service neutron-server restart</userinput>
+<prompt>#</prompt> <userinput>service neutron-dhcp-agent restart</userinput>
+<prompt>#</prompt> <userinput>service neutron-l3-agent restart</userinput>
+<prompt>#</prompt> <userinput>service neutron-metadata-agent restart</userinput></screen>
+        <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>service neutron-server restart</userinput>
 <prompt>#</prompt> <userinput>service neutron-dhcp-agent restart</userinput>
 <prompt>#</prompt> <userinput>service neutron-l3-agent restart</userinput>
 <prompt>#</prompt> <userinput>service neutron-metadata-agent restart</userinput></screen>
@@ -421,6 +425,10 @@ metadata_proxy_shared_secret = <replaceable>METADATA_PASS</replaceable></program
 <prompt>#</prompt> <userinput>service openstack-neutron-dhcp-agent restart</userinput>
 <prompt>#</prompt> <userinput>service openstack-neutron-l3-agent restart</userinput>
 <prompt>#</prompt> <userinput>service openstack-neutron-metadata-agent restart</userinput></screen>
+        <para>Also restart your chosen Networking plug-in agent, for example, Open vSwitch.</para>
+        <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service neutron-plugin-openvswitch-agent restart</userinput></screen>
+        <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>service neutron-openvswitch-agent restart</userinput></screen>
+        <screen os="sles;opensuse"><prompt>#</prompt> <userinput>service openstack-neutron-openvswitch-agent restart</userinput></screen>
       </step>
       <step>
         <para>After you configure the <link
@@ -612,14 +620,11 @@ firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewal
             </warning>
           </step>
           <!-- TODO(sross): document other firewall options -->
-          <step>
-            <para>Restart the <acronym>OVS</acronym> plug-in and make
-              sure it starts on boot:</para>
-            <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>service neutron-openvswitch-agent restart</userinput>
-<prompt>#</prompt> <userinput>chkconfig neutron-openvswitch-agent on</userinput></screen>
-            <screen os="opensuse;sles"><prompt>#</prompt> <userinput>service openstack-neutron-openvswitch-agent restart</userinput>
-<prompt>#</prompt> <userinput>chkconfig openstack-neutron-openvswitch-agent on</userinput></screen>
-            <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service neutron-plugin-openvswitch-agent restart</userinput></screen>
+          <step os="rhel;centos;fedora;sles;opensuse">
+            <para>Configure the <acronym>OVS</acronym> plug-in to start
+              on boot.</para>
+            <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>chkconfig neutron-openvswitch-agent on</userinput></screen>
+            <screen os="sles;opensuse"><prompt>#</prompt> <userinput>chkconfig openstack-neutron-openvswitch-agent on</userinput></screen>
           </step>
           <step>
             <para>Now, return to the general <acronym>OVS</acronym>
@@ -862,10 +867,14 @@ firewall_driver=neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallD
         </note>
       </step>
       <step>
-        <para>Restart the <literal>nova-compute</literal> service to
-          reflect changes:</para>
+        <para>Restart the Compute service.</para>
         <screen os="debian;ubuntu"><prompt>#</prompt> <userinput>service nova-compute restart</userinput></screen>
-        <screen os="centos;rhel;fedora;opensuse;sles"><prompt>#</prompt> <userinput>service openstack-nova-compute restart</userinput></screen>
+        <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>service openstack-nova-compute restart</userinput></screen>
+        <screen os="sles;opensuse"><prompt>#</prompt> <userinput>service openstack-nova-compute restart</userinput></screen>
+        <para>Also restart your chosen Networking plug-in agent, for example, Open vSwitch.</para>
+        <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service neutron-plugin-openvswitch-agent restart</userinput></screen>
+        <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>service neutron-openvswitch-agent restart</userinput></screen>
+        <screen os="sles;opensuse"><prompt>#</prompt> <userinput>service openstack-neutron-openvswitch-agent restart</userinput></screen>
       </step>
     </procedure>
     <section xml:id="install-neutron.install-plugin-compute">
@@ -941,17 +950,11 @@ firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewal
                 get and set required VM boot options.</para>
             </warning>
           </step>
-          <step>
-            <para>After you complete OVS configuration <emphasis>and
-                the core Neutron configuration after this
-                section</emphasis>, restart the Neutron Open vSwitch
-                agent<phrase os="opensuse;sles;fedora;centos;rhel">,
-                and set it to start at boot</phrase>:</para>
-            <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>service neutron-openvswitch-agent restart</userinput>
-<prompt>#</prompt> <userinput>chkconfig neutron-openvswitch-agent on</userinput></screen>
-            <screen os="opensuse;sles"><prompt>#</prompt> <userinput>service openstack-neutron-openvswitch-agent restart</userinput>
-<prompt>#</prompt> <userinput>chkconfig openstack-neutron-openvswitch-agent on</userinput></screen>
-            <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service neutron-plugin-openvswitch-agent restart</userinput></screen>
+          <step os="rhel;centos;fedora;sles;opensuse">
+            <para>Configure the <acronym>OVS</acronym> plug-in to start
+              on boot.</para>
+            <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>chkconfig neutron-openvswitch-agent on</userinput></screen>
+            <screen os="sles;opensuse"><prompt>#</prompt> <userinput>chkconfig openstack-neutron-openvswitch-agent on</userinput></screen>
           </step>
           <step>
             <para>Now, return to the general <acronym>OVS</acronym>
