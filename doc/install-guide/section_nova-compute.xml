@@ -91,14 +91,14 @@
           xlink:href="https://bugs.launchpad.net/ubuntu/+source/linux/+bug/759725"
           >this bug</link>. To make the current kernel readable, run:
 
-<screen><prompt>#</prompt> <userinput>dpkg-statoverride --add root root 0644 /boot/vmlinuz-$(uname -r) --update</userinput></screen>
+<screen><prompt>#</prompt> <userinput>dpkg-statoverride  --update --add root root 0644 /boot/vmlinuz-$(uname -r)</userinput></screen>
       To also enable this override for all future kernel updates, create the
       file <filename>/etc/kernel/postinst.d/statoverride</filename>
       containing:<programlisting language="bash">#!/bin/sh
 version="$1"
 # passing the kernel version is required
 [ -z "${version}" ] &amp;&amp; exit 0
-dpkg-statoverride --add root root 0644 /boot/vmlinuz-${version} --update</programlisting>
+dpkg-statoverride --update --add root root 0644 /boot/vmlinuz-${version}</programlisting>
       Remember to make the file executable:
 <screen><prompt>#</prompt> <userinput>chmod +x /etc/kernel/postinst.d/statoverride</userinput></screen>
       </para>
