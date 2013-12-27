@@ -180,7 +180,33 @@ novncproxy_base_url=http://<replaceable>controller</replaceable>:6080/vnc_auto.h
 ...
 glance_host=<replaceable>controller</replaceable></programlisting>
     </step>
-
+    <step>
+      <para>If you install Compute on a virtual machine for testing
+        purposes, you must determine whether your hypervisor and/or CPU
+        support nested hardware acceleration using the following
+        command:</para>
+      <screen><prompt>#</prompt> <userinput>egrep -c '(vmx|svm)' /proc/cpuinfo</userinput></screen>
+      <para>If this command returns a value of
+        <emphasis>one or greater</emphasis>, your hypervisor and/or CPU
+        support nested hardware acceleration which requires no
+        additional configuration.</para>
+      <para os="ubuntu;debian">If this command returns a value of
+        <emphasis>zero</emphasis>, your hypervisor and/or CPU do not
+        support nested hardware acceleration and
+        <literal>libvirt</literal> must use QEMU instead of KVM. Edit
+        the <literal>[DEFAULT]</literal> section in the
+        <filename>/etc/nova/nova-compute.conf</filename> file to modify
+        this key:</para>
+      <programlisting os="ubuntu;debian" language="ini">[DEFAULT]
+...
+libvirt_type = qemu</programlisting>
+      <para os="rhel;centos;fedora;sles;opensuse">If this command returns
+        a value of <emphasis>zero</emphasis>, your hypervisor and/or CPU
+        do not support nested hardware acceleration and
+        <literal>libvirt</literal> must use QEMU instead of KVM.
+        Configure <literal>libvirt</literal> to use QEMU:</para>
+      <screen os="rhel;centos;fedora;sles;opensuse"><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT libvirt_type qemu</userinput></screen>
+    </step>
     <step>
       <para>Edit the <filename>/etc/nova/api-paste.ini</filename>
       file to add the credentials to the
