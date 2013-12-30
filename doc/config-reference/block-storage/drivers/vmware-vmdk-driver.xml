@@ -4,34 +4,38 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
     <title>VMware VMDK driver</title>
-    <para>The VMware VMDK driver enables management of OpenStack Block
-        Storage volumes on vCenter-managed datastores. Volumes are
-        backed by VMDK files on datastores using any VMware
-        compatible storage technology (such as, NFS, iSCSI,
-        FiberChannel, and vSAN).</para>
+    <para>Use the VMware VMDK driver to enable management of the
+        OpenStack Block Storage volumes on vCenter-managed data
+        stores. Volumes are backed by VMDK files on datastores using
+        any VMware-compatible storage technology such as NFS, iSCSI,
+        FiberChannel, and vSAN.</para>
     <simplesect>
         <title>Configuration</title>
         <para>The recommended OpenStack Block Storage volume driver is
-            the VMware vCenter VMDK driver. When configuring the driver, you must match it with the
-            appropriate OpenStack Compute driver from VMware and both
-            drivers must point to the same server.</para>
-        <para>For example, in the <filename>nova.conf</filename> file, the compute driver setting is:</para>
+            the VMware vCenter VMDK driver. When you configure the
+            driver, you must match it with the appropriate OpenStack
+            Compute driver from VMware and both drivers must point to
+            the same server.</para>
+        <para>For example, in the <filename>nova.conf</filename> file,
+            use this option to define the Compute driver:</para>
         <programlisting>compute_driver=vmwareapi.VMwareVCDriver</programlisting>
-        <para>In the <filename>cinder.conf</filename> file, the volume driver setting is:</para>
+        <para>In the <filename>cinder.conf</filename> file, use this
+            option to define the volume driver:</para>
         <programlisting>volume_driver=cinder.volume.drivers.vmware.vmdk.VMwareVcVmdkDriver</programlisting>
         <para>The following table lists various options that the
-            drivers support for the OpenStack Block Storage configuration (<filename>cinder.conf</filename>):</para>
+            drivers support for the OpenStack Block Storage
+            configuration (<filename>cinder.conf</filename>):</para>
         <xi:include href="../../../common/tables/cinder-vmware.xml"/>
     </simplesect>
     <simplesect>
         <title>VMDK disk type</title>
-        <para>The VMware VMDK drivers support creating VMDK disk files
-            of type: <literal>thin</literal>, <literal>thick</literal>
-            and <literal>eagerZeroedThick</literal>. The VMDK disk
-            file type is specified using the <code>vmware:vmdk_type</code> extra spec key with the
-            appropriate value. The following table captures the
-            mapping between the extra spec entry and the VMDK disk
-            file type:</para>
+        <para>The VMware VMDK drivers support the creation of VMDK
+            disk files of type <literal>thin</literal>, <literal>thick</literal>,
+            or <literal>eagerZeroedThick</literal>. Use the
+            <code>vmware:vmdk_type</code> extra spec key with the
+            appropriate value to specify the VMDK disk file type.
+            The following table captures the mapping between the extra
+            spec entry and the VMDK disk file type:</para>
         <table rules="all">
             <caption>Extra spec entry to VMDK disk file type
                 mapping</caption>
