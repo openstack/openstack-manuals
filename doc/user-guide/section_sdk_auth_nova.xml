@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+  xml:id="sdk_auth_nova">
+  <title>Authenticate against a Compute endpoint</title>
+  <para>To authenticate against a Compute endpoint, instantiate a
+      <link
+      xlink:href="http://docs.openstack.org/developer/python-novaclient/api/novaclient.v1_1.client.html#novaclient.v1_1.client.Client"
+      > novaclient.v_1_1.client.Client</link> object:</para>
+  <programlisting language="python">from os import environ as env
+import novaclient.v1_1.client as nvclient
+nova = nvclient.Client(auth_url=env['OS_AUTH_URL'],
+                       username=env['OS_USERNAME'],
+                       api_key=env['OS_PASSWORD'],
+                       project_id=env['OS_TENANT_NAME'],
+                       region_name=env['OS_REGION_NAME'])</programlisting>
+  <para>Alternatively, you can instantiate a
+      <classname>novaclient.client.Client</classname> object and pass
+    the version number:</para>
+  <programlisting language="python">from os import environ as env
+import novaclient
+nova = novaclient.client.Client("1.1", auth_url=env['OS_AUTH_URL'],
+                                username=env['OS_USERNAME'],
+                                api_key=env['OS_PASSWORD'],
+                                project_id=env['OS_TENANT_NAME'],
+                                region_name=env['OS_REGION_NAME'])</programlisting>
+  <para>If you authenticate against an endpoint that uses a custom
+    authentication back-end, you must load the authentication plug-in
+    and pass it to the constructor.</para>
+  <para>The Rackspace Public Cloud is an OpenStack deployment that
+    uses a custom authentication back-end. To authenticate against
+    this cloud, you must install the <link
+      xlink:href="https://pypi.python.org/pypi/rackspace-novaclient/">
+      rackspace-novaclient</link> library that contains the Rackspace
+    authentication plug-in, called <literal>rackspace</literal>. The
+    following Python code shows the additional modifications required
+    to instantiate a <classname>Client</classname> object that can
+    authenticate against the Rackspace custom authentication
+    back-end.</para>
+  <programlisting language="python">import novaclient.auth_plugin
+import novaclient.v1_1.client as nvclient
+from os import environ as env
+auth_system = 'rackspace'
+auth_plugin = novaclient.auth_plugin.load_plugin('rackspace')
+nova = nvclient.Client(auth_url=env['OS_AUTH_URL'],
+                       username=env['OS_USERNAME'],
+                       api_key=env['OS_PASSWORD'],
+                       project_id=env['OS_TENANT_NAME'],
+                       region_name=env['OS_REGION_NAME'],
+                       auth_system='rackspace',
+                       auth_plugin=auth_plugin)</programlisting>
+  <para>If you set the <literal>OS_AUTH_SYSTEM</literal> environment
+    variable, check for this variable in your Python script to
+    determine whether you need to load a custom authentication
+    back-end:</para>
+  <programlisting language="python">import novaclient.auth_plugin
+import novaclient.v1_1.client as nvclient
+from os import environ as env
+auth_system = os.get('OS_AUTH_SYSTEM')
+if auth_system and auth_system != "keystone":
+  auth_plugin = novaclient.auth_plugin.load_plugin(auth_system)
+else:
+  auth_plugin = None
+nova = nvclient.Client(auth_url=env['OS_AUTH_URL'],
+                       username=env['OS_USERNAME'],
+                       api_key=env['OS_PASSWORD'],
+                       project_id=env['OS_TENANT_NAME'],
+                       region_name=env['OS_REGION_NAME'],
+                       auth_system=auth_system,
+                       auth_plugin=auth_plugin)</programlisting>
+</section>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+  xml:id="sdk_manage_images">
+  <?dbhtml stop-chunking?>
+  <title>Manage images</title>
+  <section xml:id="sdk-glance-image-list">
+    <title>List images</title>
+    <para>To list the available images, call the <methodname>
+        glanceclient.v2.images.Controller.list</methodname>
+      method:</para>
+    <programlisting language="python">import glanceclient.v2.client as glclient
+glance = glclient.Client(...)
+images = glance.images.list()</programlisting>
+    <para>The <methodname>images</methodname> method returns a Python
+      generator, as shown in the following interaction with the Python
+      interpreter:</para>
+    <screen>
+<prompt>&gt;&gt;&gt;</prompt> <userinput>images = glance.images.list()</userinput>
+<prompt>&gt;&gt;&gt;</prompt> <userinput>images</userinput>
+<computeroutput>&lt;generator object list at 0x105e9c2d0&gt;</computeroutput>
+<prompt>&gt;&gt;&gt;</prompt> <userinput>list(images)</userinput>
+<computeroutput>[{u'checksum': u'f8a2eeee2dc65b3d9b6e63678955bd83',
+  u'container_format': u'ami',
+  u'created_at': u'2013-10-20T14:28:10Z',
+  u'disk_format': u'ami',
+  u'file': u'/v2/images/dbc9b2db-51d7-403d-b680-3f576380b00c/file',
+  u'id': u'dbc9b2db-51d7-403d-b680-3f576380b00c',
+  u'kernel_id': u'c002c82e-2cfa-4952-8461-2095b69c18a6',
+  u'min_disk': 0,
+  u'min_ram': 0,
+  u'name': u'cirros-0.3.1-x86_64-uec',
+  u'protected': False,
+  u'ramdisk_id': u'4c1c9b4f-3fe9-425a-a1ec-1d8fd90b4db3',
+  u'schema': u'/v2/schemas/image',
+  u'size': 25165824,
+  u'status': u'active',
+  u'tags': [],
+  u'updated_at': u'2013-10-20T14:28:11Z',
+  u'visibility': u'public'},
+ {u'checksum': u'69c33642f44ca552ba4bb8b66ad97e85',
+  u'container_format': u'ari',
+  u'created_at': u'2013-10-20T14:28:09Z',
+  u'disk_format': u'ari',
+  u'file': u'/v2/images/4c1c9b4f-3fe9-425a-a1ec-1d8fd90b4db3/file',
+  u'id': u'4c1c9b4f-3fe9-425a-a1ec-1d8fd90b4db3',
+  u'min_disk': 0,
+  u'min_ram': 0,
+  u'name': u'cirros-0.3.1-x86_64-uec-ramdisk',
+  u'protected': False,
+  u'schema': u'/v2/schemas/image',
+  u'size': 3714968,
+  u'status': u'active',
+  u'tags': [],
+  u'updated_at': u'2013-10-20T14:28:10Z',
+  u'visibility': u'public'},
+ {u'checksum': u'c352f4e7121c6eae958bc1570324f17e',
+  u'container_format': u'aki',
+  u'created_at': u'2013-10-20T14:28:08Z',
+  u'disk_format': u'aki',
+  u'file': u'/v2/images/c002c82e-2cfa-4952-8461-2095b69c18a6/file',
+  u'id': u'c002c82e-2cfa-4952-8461-2095b69c18a6',
+  u'min_disk': 0,
+  u'min_ram': 0,
+  u'name': u'cirros-0.3.1-x86_64-uec-kernel',
+  u'protected': False,
+  u'schema': u'/v2/schemas/image',
+  u'size': 4955792,
+  u'status': u'active',
+  u'tags': [],
+  u'updated_at': u'2013-10-20T14:28:09Z',
+  u'visibility': u'public'}]</computeroutput></screen>
+  </section>
+  <section xml:id="sdk-glance-image-get">
+    <title>Get image by ID</title>
+    <para>To retrieve an image object from its ID, call the
+        <methodname>
+        glanceclient.v2.images.Controller.get</methodname>
+      method:</para>
+    <programlisting language="python">import glanceclient.v2.client as glclient
+image_id = 'c002c82e-2cfa-4952-8461-2095b69c18a6'
+glance = glclient.Client(...)
+image = glance.images.get(image_id)</programlisting>
+  </section>
+  <section xml:id="sdk-nova-image-find">
+    <title>Get image by name</title>
+    <para>The Image Service Python bindings do not support the
+      retrieval of an image object by name. However, the Compute
+      Python bindings enable you to get an image object by name. To
+      get an image object by name, call the <methodname>
+        novaclient.v1_1.images.ImageManager.find</methodname>
+      method:</para>
+    <programlisting language="python">import novaclient.v1_1.client as nvclient
+name = "cirros"
+nova = nvclient.Client(...)
+image = nova.images.find(name=name)</programlisting>
+  </section>
+  <section xml:id="sdk-glance-image-upload">
+    <title>Upload an image</title>
+    <para>To upload an image, call the <methodname>
+        glanceclient.v2.images.ImageManager.create</methodname>
+      method:</para>
+    <programlisting language="python">import glanceclient.v2.client as glclient
+imagefile = "/tmp/myimage.img"
+glance = glclient.Client(...)
+with open(imagefile) as fimage:
+  glance.images.create(name="myimage", is_public=True, disk_format="qcow2",
+                       container_format="bare", data=fimage)</programlisting>
+  </section>
+</section>
