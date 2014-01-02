@@ -514,7 +514,21 @@ metadata_proxy_shared_secret = <replaceable>METADATA_PASS</replaceable></program
             <para>Add a <firstterm>port</firstterm> (connection) from
               the <replaceable>EXTERNAL_INTERFACE</replaceable>
               interface to <literal>br-ex</literal> interface:</para>
-            <screen><prompt>#</prompt> <userinput>ovs-vsctl add-port br-ex EXTERNAL_INTERFACE</userinput></screen>
+            <screen><prompt>#</prompt> <userinput>ovs-vsctl add-port br-ex <replaceable>EXTERNAL_INTERFACE</replaceable></userinput></screen>
+                    <warning>
+                    <para>The host must have an IP address associated
+                      with an interface other than <replaceable>EXTERNAL_INTERFACE</replaceable>,
+                      and your remote terminal session must be associated with this other
+                      IP address.</para>
+                      <para>If you associate an IP address with <replaceable>EXTERNAL_INTERFACE</replaceable>,
+                    that IP address stops working after you issue the <command>ovs-vsctl add-port br-ex <replaceable>EXTERNAL_INTERFACE</replaceable></command> command.
+                    If you associate a remote terminal session with that
+                    IP address, you lose connectivity with the host.</para>
+                    <para>For more details about this behavior, see the
+                      <emphasis>Configuration Problems</emphasis> section of the
+                      <link xlink:href="http://git.openvswitch.org/cgi-bin/gitweb.cgi?p=openvswitch;a=blob_plain;f=FAQ;hb=HEAD">Open vSwitch FAQ</link>.
+                    </para>
+                    </warning>
           </step>
           <step>
             <para>Configure the
