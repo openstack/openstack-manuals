@@ -6,14 +6,119 @@
     xmlns:html="http://www.w3.org/1999/xhtml" version="5.0"
     xml:id="ceilometer_cli_commands">
     <title>Measure cloud resources</title>
-    <para>The OpenStack Telemetry service measures cloud resources within
+    <para>The OpenStack Telemetry service measures cloud resources in
         OpenStack.</para>
     <para>It collects information about how much, who, what, and when
-        with regards to billing. For Havana, metering is available
-        through only the <command>ceilometer</command> command-line interface
-        (CLI).</para>
-    <para>The following example uses the <command>heat</command> client to create an
-        auto-scaling stack and the <command>ceilometer</command> client to measure
+        with regards to billing. Currently, metering is available
+        through only the <command>ceilometer</command> command-line
+        client.</para>
+    <para>To model data, the Telemetry service uses these
+        abstractions:</para>
+    <variablelist wordsize="10">
+        <varlistentry>
+            <term><emphasis role="bold">Meter</emphasis></term>
+            <listitem>
+                <para>Measures a specific aspect of resource usage,
+                    such as the existence of a running instance, or
+                    ongoing performance, such as the CPU utilization
+                    for an instance. Meters exist for each type of
+                    resource. For example, a separate
+                        <literal>cpu_util</literal> meter exists for
+                    each instance. The life cycle of a meter is
+                    decoupled from the existence of its related
+                    resource. The meter persists after the resource
+                    goes away.</para>
+                <para>A meter has the following attributes:</para>
+                <itemizedlist>
+                    <listitem>
+                        <para>String name.</para>
+                    </listitem>
+                    <listitem>
+                        <para>A unit of measurement.</para>
+                    </listitem>
+                    <listitem>
+                        <para>A type. Indicates whether values
+                            increase monotonically (cumulative), are
+                            interpreted as a change from the previous
+                            value (delta), or are standalone and
+                            relate only to the current duration
+                            (gauge).</para>
+                    </listitem>
+                </itemizedlist>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><emphasis role="bold">Sample</emphasis></term>
+            <listitem>
+                <para>An individual data point that is associated with
+                    a specific meter. Has the same attributes as the
+                    meter, with the addition of timestamp and value
+                    attributes. The value attribute is also known as
+                    the sample <emphasis role="italic"
+                        >volume</emphasis>.</para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><emphasis role="bold">Statistic</emphasis></term>
+            <listitem>
+                <para>A set of data point aggregates over a time
+                    duration. (In contrast, a sample represents a
+                    single data point.) The Telemetry service employs
+                    these aggregation functions:</para>
+                <itemizedlist>
+                    <listitem>
+                        <para><emphasis role="bold">count</emphasis>.
+                            The number of samples in each
+                            period.</para>
+                    </listitem>
+                    <listitem>
+                        <para><emphasis role="bold">max</emphasis>.
+                            The maximum number of sample volumes in
+                            each period.</para>
+                    </listitem>
+                    <listitem>
+                        <para><emphasis role="bold">min</emphasis>.
+                            The minimum number of sample volumes in
+                            each period.</para>
+                    </listitem>
+                    <listitem>
+                        <para><emphasis role="bold">avg</emphasis>.
+                            The average of sample volumes over each
+                            period.</para>
+                    </listitem>
+                    <listitem>
+                        <para><emphasis role="bold">sum</emphasis>.
+                            The sum of sample volumes over each
+                            period.</para>
+                    </listitem>
+                </itemizedlist>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><emphasis role="bold">Alarm</emphasis></term>
+            <listitem>
+                <para>A set of rules that define a monitor and a
+                    current state, with edge-triggered actions
+                    associated with target states. Provides
+                    user-oriented Monitoring-as-a-Service and a
+                    general purpose utility for Openstack.
+                    Orchestration auto scaling is a typical use-case.
+                    Alarms follow a tristate model of
+                        <literal>ok</literal>,
+                        <literal>alarm</literal>, and
+                        <literal>insufficient data</literal>. For
+                    conventional threshold-oriented alarms, a static
+                    threshold value and comparison operator govern
+                    state transitions. The comparison operator
+                    compares a selected meter statistic against an
+                    evaluation window of configurable length into the
+                    recent past.</para>
+            </listitem>
+        </varlistentry>
+    </variablelist>
+    <para>This example uses the <command>heat</command> client to
+        create an auto-scaling stack and the
+            <command>ceilometer</command> client to measure
         resources.</para>
     <procedure>
         <step>
