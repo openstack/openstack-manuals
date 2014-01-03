@@ -444,7 +444,7 @@ metadata_proxy_shared_secret = <replaceable>METADATA_PASS</replaceable></program
 <prompt>#</prompt> <userinput>service neutron-dhcp-agent restart</userinput>
 <prompt>#</prompt> <userinput>service neutron-l3-agent restart</userinput>
 <prompt>#</prompt> <userinput>service neutron-metadata-agent restart</userinput></screen>
-        <screen os="sles;opensuse"><prompt>#</prompt> <userinput>service openstack-neutron-server restart</userinput>
+        <screen os="sles;opensuse"><prompt>#</prompt> <userinput>service openstack-neutron restart</userinput>
 <prompt>#</prompt> <userinput>service openstack-neutron-dhcp-agent restart</userinput>
 <prompt>#</prompt> <userinput>service openstack-neutron-l3-agent restart</userinput>
 <prompt>#</prompt> <userinput>service openstack-neutron-metadata-agent restart</userinput></screen>
@@ -1206,9 +1206,13 @@ firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewal
         <programlisting>NEUTRON_PLUGIN_CONF="/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini"</programlisting>
       </step>
       <step os="fedora;rhel;centos;opensuse;sles">
-        <para>Start neutron-server and set it to start at boot:</para>
-        <screen><prompt>#</prompt> <userinput>service neutron-server start</userinput>
+        <para>Start <systemitem
+        class="service">neutron-server</systemitem> and set it to
+        start at boot:</para>
+        <screen os="fedora;rhel;centos"><prompt>#</prompt> <userinput>service neutron-server start</userinput>
 <prompt>#</prompt> <userinput>chkconfig neutron-server on</userinput></screen>
+        <screen os="opensuse;sles"><prompt>#</prompt> <userinput>service openstack-neutron start</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-neutron on</userinput></screen>
       </step>
       <step os="ubuntu;debian">
         <para>Restart neutron-server:</para>
