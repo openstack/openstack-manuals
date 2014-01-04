@@ -62,9 +62,24 @@
         <para>As described in the <link xlink:href="http://docs.openstack.org/admin-guide-cloud/content/index.html"><citetitle>OpenStack Cloud Administrator Guide</citetitle></link>, cloud administrators must define a user for each service, with a role of Admin. This service user account provides the service with the authorization to authenticate users.</para>
         <para>The Compute and Object Storage services can be configured to use either the "tempAuth" file or Identity Service to store authentication information. The "tempAuth" solution MUST NOT be deployed in a production environment since it stores passwords in plain text.</para>
         <para>The Identity Service supports client authentication for SSL which may be enabled. SSL client authentication provides an additional authentication factor, in addition to the username / password, that provides greater reliability on user identification. It reduces the risk of unauthorized access when usernames and passwords may be compromised.  However, there is additional administrative overhead and cost to issue certificates to users that may not be feasible in every deployment.</para>
-        <para>NOTE: We recommend using client authentication using SSL for the authentication of services to Identity.</para>
+        <note>
+          <para>We recommend that you use client authentication with SSL for the authentication of services to the Identity Service.</para>
+        </note>
         <para>The cloud administrator should protect sensitive configuration files for unauthorized modification. This can be achieved with mandatory access control frameworks such as SELinux, including <literal>/etc/keystone.conf</literal> and X.509 certificates.</para>
-      </section>
+
+        <para>For client authentication with SSL, you need to issue
+        certificates. These certificates can be signed by an external
+        authority or by the cloud adminstrator. OpenStack services by
+        default check the signatures of certificates and connections
+        fail if the signature cannot be checked. If the administrator
+        uses self-signed certificates, the check might need to be
+        disabled.  To disable these certificates, set
+        <code>insecure=False</code> in the
+        <code>[filter:authtoken]</code> section in the
+        <filename>/etc/nova/api.paste.ini</filename> file. This
+        setting also disables certificates for other
+        components.</para>
+     </section>
       <section xml:id="ch024_authentication-idp267040">
         <title>Administrative Users</title>
         <para>We recommend that admin users authenticate using Identity Service and an external authentication service that supports 2-factor authentication, such as a certificate.  This reduces the risk from passwords that may be compromised. This recommendation is in compliance with NIST 800-53 IA-2(1) guidance in the use of multifactor authentication for network access to privileged accounts.</para>
