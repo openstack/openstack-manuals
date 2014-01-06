@@ -1087,78 +1087,108 @@ bridge_mappings = physnet1:br-<replaceable>DATA_INTERFACE</replaceable></program
     </warning>
     <procedure>
       <step>
-        <para>Install the main Neutron server, Neutron libraries for
-          Python, and the Neutron command-line interface (CLI):</para>
+        <para>Install the server component of Networking and any dependencies.</para>
         <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install neutron-server</userinput></screen>
         <screen os="fedora;rhel;centos"><prompt>#</prompt> <userinput>yum install openstack-neutron python-neutron python-neutronclient</userinput></screen>
         <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-neutron python-neutron python-neutronclient</userinput></screen>
       </step>
       <step>
-        <para>Configure the core components of Neutron. Edit the
-            <filename>/etc/neutron/neutron.conf</filename>
-          file:</para>
-        <programlisting language="ini">auth_host = <replaceable>controller</replaceable>
+        <para>Configure Networking to use your MySQL database. Edit the
+          <filename>/etc/neutron/neutron.conf</filename> file and add the
+          following key under the <literal>[database]</literal> section. Replace
+          <replaceable>NEUTRON_DBPASS</replaceable> with the password you
+          chose for the Neutron database.</para>
+        <programlisting language="ini">[database]
+...
+connection = mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@<replaceable>controller</replaceable>/neutron</programlisting>
+      </step>
+      <step>
+        <para>Configure Networking to use Keystone as the Identity Service
+          for authentication.</para>
+        <substeps>
+          <step>
+            <para>Edit the
+              <filename>/etc/neutron/neutron.conf</filename> file and add the
+              following key under the <literal>[DEFAULT]</literal>
+              section.</para>
+            <programlisting language="ini">[DEFAULT]
+...
+auth_strategy = keystone</programlisting>
+            <para>Add the following keys under the
+              <literal>[keystone_authtoken]</literal> section. Replace
+              <replaceable>NEUTRON_PASS</replaceable> with the password you
+              chose for the Neutron user in Keystone.</para>
+            <programlisting language="ini">[keystone_authtoken]
+...
+auth_host = <replaceable>controller</replaceable>
+auth_port = 35357
+auth_protocol = http
 admin_tenant_name = service
 admin_user = neutron
 admin_password = <replaceable>NEUTRON_PASS</replaceable>
 auth_uri = http://<replaceable>controller</replaceable>:5000
 auth_url = http://<replaceable>controller</replaceable>:35357/v2.0
-auth_strategy = keystone</programlisting>
-        <programlisting os="rhel;fedora;centos" language="ini">
+            </programlisting>
+          </step>
+          <step>
+            <para>Edit the <filename>/etc/neutron/api-paste.ini</filename> file
+              and add the following keys under the
+              <literal>[filter:authtoken]</literal> section. Replace
+              <replaceable>NEUTRON_PASS</replaceable> with the password you
+              chose for the Neutron user in Keystone.</para>
+            <programlisting language="ini">[filter:authtoken]
+...
+paste.filter_factory = keystoneclient.middleware.auth_token:filter_factory
+admin_tenant_name = service
+admin_user = neutron
+admin_password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
+          </step>
+        </substeps>
+      </step>
+      <step>
+        <para>Configure Networking to use your message broker. Edit the
+          <filename>/etc/neutron/neutron.conf</filename> file and add
+          the following keys under the <literal>[DEFAULT]</literal>
+          section.</para>
+        <para os="ubuntu;debian;sles;opensuse">Replace
+          <replaceable>RABBIT_PASS</replaceable> with the password you chose
+          for RabbitMQ.</para>
+        <programlisting os="rhel;centos;fedora" language="ini">[DEFAULT]
+...
 rpc_backend = neutron.openstack.common.rpc.impl_qpid
-qpid_hostname = <replaceable>controller</replaceable>
-qpid_port = 5672
-qpid_username = guest
-qpid_password = guest</programlisting>
-       <programlisting os="ubuntu;debian;opensuse;sles" language="ini">
+qpid_hostname = <replaceable>controller</replaceable></programlisting>
+       <programlisting os="ubuntu;debian;opensuse;sles" language="ini">[DEFAULT]
+...
 rpc_backend = neutron.openstack.common.rpc.impl_kombu
 rabbit_host = <replaceable>controller</replaceable>
-rabbit_port = 5672
 rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
-       <programlisting os="ubuntu;debian" language="ini">
-# Change the following settings if you're not using the default RabbitMQ configuration
-#rabbit_userid = guest</programlisting>
       </step>
       <step os="rhel;centos;fedora">
-        <para>Edit the <literal>[agent]</literal> section in the
-          <filename>/etc/neutron/neutron.conf</filename> file and modify
-          the <literal>root_helper</literal> key:</para>
+        <para>Edit the <filename>/etc/neutron/neutron.conf</filename> file
+          and modify the following key under the <literal>[agent]</literal>
+          section.</para>
         <programlisting language="ini">[agent]
 ...
 root_helper = sudo neutron-rootwrap /etc/neutron/rootwrap.conf
 </programlisting>
       </step>
       <step>
-        <para>Edit the database URL under the
-            <literal>[database]</literal> section in the above file,
-          to tell Neutron how to connect to the database:</para>
-        <programlisting language="ini">[database]
-connection = mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@<replaceable>controller</replaceable>/neutron</programlisting>
+        <para>Although the controller node does not run any Networking agents,
+          you must install and configure the same plug-in that you configured
+          on the network node.</para>
+        <para><link linkend="install-neutron.install-plug-in-controller">
+          Install and configure the Networking plug-ins on a dedicated
+          controller node</link></para>
       </step>
       <step>
-        <para>Configure the Neutron copy of the
-            <filename>api-paste.ini</filename> at
-            <filename>/etc/neutron/api-paste.ini</filename>
-          file:</para>
-        <programlisting language="ini">[filter:authtoken]
-paste.filter_factory = keystoneclient.middleware.auth_token:filter_factory
-admin_tenant_name = service
-admin_user = neutron
-admin_password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
-      </step>
-      <step>
-        <para>Configure the plug-in that is configured on the network
-          node on this node also.</para>
-        <para>Although this node does not run any agents that provide
-          underlying functionality, the <systemitem class="service"
-            >neutron-server</systemitem> service must know which
-          plug-in is running because it interfaces with the plug-in.</para>
-      </step>
-      <step>
-        <para>Tell Nova about Neutron. Specifically, you must tell
-          Nova that Neutron handles networking and the firewall. Edit
-          the <filename>/etc/nova/nova.conf</filename> file:</para>
-        <programlisting language="ini">network_api_class=nova.network.neutronv2.api.API
+        <para>Configure Compute to use Networking. Edit the
+          <filename>/etc/nova/nova.conf</filename> file and add the following
+          keys under the <literal>[DEFAULT]</literal> section. Replace
+          <replaceable>NEUTRON_PASS</replaceable> with the password you chose
+          for the Neutron user in the Identity Service.</para>
+        <programlisting language="ini">[DEFAULT]
+...
+network_api_class=nova.network.neutronv2.api.API
 neutron_url=http://<replaceable>controller</replaceable>:9696
 neutron_auth_strategy=keystone
 neutron_admin_tenant_name=service
@@ -1229,7 +1259,8 @@ firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewal
 <prompt>#</prompt> <userinput>chkconfig openstack-neutron on</userinput></screen>
       </step>
       <step os="ubuntu;debian">
-        <para>Restart neutron-server:</para>
+        <para>Restart
+          <systemitem class="service">neutron-server</systemitem>:</para>
         <screen><prompt>#</prompt> <userinput>service neutron-server restart</userinput></screen>
       </step>
     </procedure>
