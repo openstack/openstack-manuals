@@ -2,29 +2,40 @@
   xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
   xml:id="nova-network">
-  <title>Enable Networking</title>
-  <para>Configuring Networking can be a bewildering experience. The
-    following example shows the simplest production-ready configuration
-    that is available: the legacy networking in OpenStack Compute, with
-    a flat network, that takes care of DHCP.</para>
+  <title>Configure networking</title>
+  <para>Configuring networking in OpenStack can be a bewildering experience. The
+    following example shows the simplest production-ready
+    configuration that is available: the legacy networking in
+    OpenStack Compute, with a flat network, that takes care of
+    DHCP.</para>
   <para>This set up uses multi-host functionality. Networking is
     configured to be highly available by distributing networking
     functionality across multiple hosts. As a result, no single
-    network controller acts as a single point of failure. This
-    process configures each compute node for networking.</para>
+    network controller acts as a single point of failure. This process
+    configures each compute node for networking.</para>
   <note>
-    <para>If you need the full software-defined networking stack, see
-        <xref linkend="ch_neutron"/>.</para>
+    <para>Choose one of these options to configure networking in OpenStack:</para>
+    <itemizedlist>
+      <listitem>
+        <para>Legacy networking in OpenStack Compute, which is
+          described here.</para>
+      </listitem>
+      <listitem>
+        <para>The full software-defined networking stack. See <xref
+            linkend="ch_neutron"/>.</para>
+      </listitem>
+    </itemizedlist>
   </note>
   <procedure>
     <step>
-      <para>Install the appropriate packages for compute
-        networking (on the compute node only, as above these are not needed on the controller):</para>
+      <para>Install the following packages for compute networking on
+        the compute node only. As described above, these packages are
+        not necessary on the controller node:
+      </para>
       <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install nova-network</userinput></screen>
       <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>yum install openstack-nova-network</userinput></screen>
       <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-nova-network</userinput></screen>
     </step>
-
     <step>
       <para>Edit the <filename>nova.conf</filename> file to define the
         networking mode:</para>
@@ -44,7 +55,6 @@
       <screen os="opensuse;sles">
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT network_api_class nova.network.api.API</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT security_group_api nova</userinput></screen>
-
       <para os="ubuntu;debian">Edit the
           <filename>/etc/nova/nova.conf</filename> file and add these
         lines to the <literal>[DEFAULT]</literal> section:</para>
@@ -75,7 +85,6 @@ public_interface=eth1</programlisting>
     <step>
       <para os="ubuntu;debian">Restart the network service:</para>
       <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service nova-network restart</userinput></screen>
-
       <para os="fedora;rhel;centos;opensuse;sles">Start the network
         service and configure it to start when the system
         boots:</para>
@@ -83,10 +92,10 @@ public_interface=eth1</programlisting>
 <prompt>#</prompt> <userinput>chkconfig openstack-nova-network on</userinput></screen>
     </step>
   </procedure>
-
   <para>Create a network that virtual machines can use. Do this once
     for the entire installation and not on each compute node. Run the
-      <command>nova network-create</command> command on the controller:</para>
+      <command>nova network-create</command> command on the
+    controller:</para>
   <screen><prompt>#</prompt> <userinput>source openrc.sh</userinput></screen>
   <screen><prompt>#</prompt> <userinput>nova network-create vmnet --fixed-range-v4=10.0.0.0/24 \
   --bridge-interface=br100 --multi-host=T</userinput></screen>
