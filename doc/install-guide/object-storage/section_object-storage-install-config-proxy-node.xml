@@ -67,8 +67,55 @@
         <step>
             <para>Create
                     <filename>/etc/swift/proxy-server.conf</filename>:</para>
-            <programlisting os="rhel;centos;fedora;ubuntu;debian" language="ini"><xi:include parse="text" href="../samples/proxy-server.conf.txt"/></programlisting>
-            <programlisting os="opensuse;sles" language="ini"><xi:include parse="text" href="../samples/proxy-server.conf.txt-openSUSE"/></programlisting>
+            <programlisting language="ini">[DEFAULT]
+bind_port = 8888
+<phrase os="rhel;centos;fedora;ubuntu;debian">user = swift</phrase>
+<phrase os="opensuse;sles">user = openstack-swift</phrase>
+
+[pipeline:main]
+pipeline = healthcheck cache authtoken keystoneauth proxy-server
+
+[app:proxy-server]
+use = egg:swift#proxy
+allow_account_management = true
+account_autocreate = true
+
+[filter:keystoneauth]
+use = egg:swift#keystoneauth
+operator_roles = Member,admin,swiftoperator
+
+[filter:authtoken]
+paste.filter_factory = keystoneclient.middleware.auth_token:filter_factory
+
+# Delaying the auth decision is required to support token-less
+# usage for anonymous referrers ('.r:*').
+delay_auth_decision = true
+
+# cache directory for signing certificate
+signing_dir = /home/swift/keystone-signing
+
+# auth_* settings refer to the Keystone server
+auth_protocol = http
+auth_host = <replaceable>controller</replaceable>
+auth_port = 35357
+
+# the same admin_token as provided in keystone.conf
+admin_token = ADMIN_TOKEN
+
+# the service tenant and swift userid and password created in Keystone
+admin_tenant_name = service
+admin_user = swift
+admin_password = SWIFT_PASS
+
+[filter:cache]
+use = egg:swift#memcache
+
+[filter:catch_errors]
+use = egg:swift#catch_errors
+
+[filter:healthcheck]
+use = egg:swift#healthcheck
+</programlisting>
             <note>
                 <para>If you run multiple memcache servers, put the
                     multiple IP:port listings in the [filter:cache]
