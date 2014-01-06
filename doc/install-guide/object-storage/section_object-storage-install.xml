@@ -64,6 +64,57 @@
   openstack-swift-account openstack-swift-container \
   openstack-swift-object memcached</userinput></screen>
             </step>
+            <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
+                <para>Create a <literal>swift</literal> user that the Object
+                    Storage
+                    Service can use to authenticate with the Identity Service.
+                    Choose a password and specify an email address for the
+                    <literal>swift</literal> user. Use the
+                    <literal>service</literal> tenant and give the user the
+                    <literal>admin</literal> role.</para>
+                <screen><prompt>#</prompt> <userinput>keystone user-create --name=swift --pass=<replaceable>SWIFT_PASS</replaceable> \
+   --email=<replaceable>swift@example.com</replaceable></userinput>
+<prompt>#</prompt> <userinput>keystone user-role-add --user=swift --tenant=service --role=admin</userinput></screen>
+            </step>
+            <step>
+                <para>Create a service entry for the Object Storage Service:</para>
+                <screen><prompt>#</prompt> <userinput>keystone service-create --name=swift --type=object-store \
+  --description="Object Storage Service"</userinput>
+<computeroutput>+-------------+----------------------------------+
+|   Property  |              Value               |
++-------------+----------------------------------+
+| description |      Object Storage Service      |
+|             |                                  |
+|             |                                  |
+|      id     | eede9296683e4b5ebfa13f5166375ef6 |
+|     name    |              swift               |
+|     type    |           object-store           |
++-------------+----------------------------------+</computeroutput></screen>
+                <para>The service ID is randomly generated and is different from
+                    the one shown here.</para>
+            </step>
+            <step>
+                <para>Specify an API endpoint for the Object Storage Service by using
+                    the returned service ID. When you specify an endpoint, you
+                    provide URLs for the public API, internal API, and admin API.
+                    In this guide, the <literal>controller</literal> host name is
+                    used.</para>
+                <screen><prompt>#</prompt> <userinput>keystone endpoint-create \
+  --service-id=<replaceable>the_service_id_above</replaceable> \
+  --publicurl='http://<replaceable>controller</replaceable>:8080/v1/AUTH_%(tenant_id)s' \
+  --internalurl='http://<replaceable>controller</replaceable>:8080/v1/AUTH_%(tenant_id)s' \
+  --adminurl=http://<replaceable>controller</replaceable>:8080</userinput>
+<computeroutput>+-------------+---------------------------------------------------+
+|   Property  |                       Value                       |
++-------------+---------------------------------------------------+
+|   adminurl  |            http://controller:8080/                |
+|      id     |          9e3ce428f82b40d38922f242c095982e         |
+| internalurl | http://controller:8080/v1/AUTH_%(tenant_id)s      |
+|  publicurl  | http://controller:8080/v1/AUTH_%(tenant_id)s      |
+|    region   |                     regionOne                     |
+|  service_id |          eede9296683e4b5ebfa13f5166375ef6         |
++-------------+---------------------------------------------------+</computeroutput></screen>
+            </step>
             <step>
                 <para>Create and populate configuration directories on
                     all nodes:</para>
