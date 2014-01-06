@@ -8,25 +8,12 @@
         server that has access to the Identity Service.</para>
     <procedure>
         <step>
-            <para>Export the swift admin password, which you set up as
-                an Identity Service admin and added to the
-                    <filename>proxy-server.conf</filename> file to a
-                variable. You can also set up an openrc file as
-                described in the <citetitle><link
-                    xlink:href="http://docs.openstack.org/user-guide/content/"
-                    >OpenStack User Guide</link></citetitle> where the variable is
-                <literal>OS_USERNAME</literal>.</para>
-            <screen><prompt>$</prompt> <userinput>export OS_PASSWORD=<replaceable>ADMIN_PASS</replaceable></userinput></screen>
-            <screen><prompt>$</prompt> <userinput>export OS_AUTH_URL=<replaceable>http://controller:5000/v2.0</replaceable></userinput></screen>
-            <note>
-                <para>The sample <filename>proxy-server.conf</filename> file uses "swift" for <replaceable>ADMIN_PASS</replaceable>. If you do not wish to have the swift admin
-                    password stored in your shell's history, you can
-                    run the following command:</para>
-                <screen><prompt>$</prompt> <userinput>export SWIFT_PROXY_CONF=/etc/swift/proxy-server.conf export OS_PASSWORD=$( grep admin_password ${SWIFT_PROXY_CONF} | awk '{ print $NF }' )</userinput></screen>
-            </note>
+            <para>Make sure that your credentials are set up correctly in the
+            <filename>openrc.sh</filename> file and source it:</para>
+            <screen><prompt>$</prompt> <userinput>source openrc.sh</userinput></screen>
         </step>
-        <step><para>Run the following swift command with the correct Identity
-                Service URL:</para><screen><prompt>$</prompt> <userinput>swift -V 2.0 -A $OS_AUTH_URL -U demo:admin -K $ADMINPASS stat</userinput>
+        <step><para>Run the following <command>swift</command> command:</para>
+        <screen><prompt>$</prompt> <userinput>swift stat</userinput>
 <computeroutput>Account: AUTH_11b9758b7049476d9b48f7a91ea11493
 Containers: 0
    Objects: 0
@@ -37,16 +24,18 @@ X-Trans-Id: txdcdd594565214fb4a2d33-0052570383
 X-Put-Timestamp: 1381434243.83760</computeroutput></screen>
         </step>
         <step>
-            <para>Run the following swift commands to upload files to
-                a container (create a test text files if needed):</para>
-            <screen><prompt>$</prompt> <userinput>swift -V 2.0 -A $OS_AUTH_URL -U demo:admin -K $OS_PASSWORD upload myfiles test.txt</userinput>
-<prompt>$</prompt> <userinput>swift -V 2.0 -A $OS_AUTH_URL -U demo:admin -K $ADMINPASS upload myfiles test2.txt</userinput></screen>
+            <para>Run the following <command>swift</command> commands to upload
+            files to a container. Create the <filename>test.txt</filename> and
+            <filename>test2.txt</filename> test files locally if needed.</para>
+            <screen><prompt>$</prompt> <userinput>swift upload myfiles test.txt</userinput>
+<prompt>$</prompt> <userinput>swift upload myfiles test2.txt</userinput></screen>
         </step>
         <step>
-            <para>Run the following swift command to download all
-                files from the &#8216;myfiles&#8217; container:</para>
-            <screen><prompt>$</prompt> <userinput>swift -V 2.0 -A $OS_AUTH_URL -U demo:admin -K $ADMINPASS download myfiles</userinput></screen>
-            <screen><computeroutput>test2.txt [headers 0.267s, total 0.267s, 0.000s MB/s]
+            <para>Run the following <command>swift</command> command to
+            download all files from the <literal>myfiles</literal>
+            container:</para>
+            <screen><prompt>$</prompt> <userinput>swift download myfiles</userinput>
+<computeroutput>test2.txt [headers 0.267s, total 0.267s, 0.000s MB/s]
 test.txt [headers 0.271s, total 0.271s, 0.000s MB/s]</computeroutput></screen>
         </step>
     </procedure>
