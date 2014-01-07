@@ -28,11 +28,15 @@
   </note>
   <procedure>
     <step>
-      <para>Install the following packages for compute networking on
-        the compute node only. As described above, these packages are
-        not necessary on the controller node:
-      </para>
-      <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install nova-network</userinput></screen>
+      <para>Install the appropriate packages for compute networking on the
+        compute node only. These packages are not required on the controller
+        node.</para>
+      <para os="ubuntu;debian">So that the <systemitem class="service"
+          >nova-network</systemitem> service can forward metadata requests on
+        each compute node, each compute node must install the <systemitem
+          class="service">nova-api-metadata</systemitem> service, as
+        follows:</para>
+      <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install nova-network nova-api-metadata</userinput></screen>
       <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>yum install openstack-nova-network</userinput></screen>
       <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-nova-network</userinput></screen>
     </step>
