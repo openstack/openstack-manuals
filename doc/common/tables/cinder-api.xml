@@ -25,15 +25,15 @@
               </tr>
               <tr>
                        <td>backdoor_port = None</td>
-                       <td>(IntOpt) port for eventlet backdoor to listen</td>
+                       <td>(StrOpt) Enable eventlet backdoor.  Acceptable values are 0, &lt;port&gt;, and &lt;start&gt;:&lt;end&gt;, where 0 results in listening on a random tcp port number; &lt;port&gt; results in listening on the specified port number (and not enabling backdoor if that port is in use); and &lt;start&gt;:&lt;end&gt; results in listening on the smallest unused port number within the specified range of port numbers.  The chosen port is displayed in the service's log file.</td>
               </tr>
               <tr>
                        <td>enable_v1_api = True</td>
-                       <td>(BoolOpt) Deploy v1 of the Cinder API. </td>
+                       <td>(BoolOpt) Deploy v1 of the Cinder API.</td>
               </tr>
               <tr>
                        <td>enable_v2_api = True</td>
-                       <td>(BoolOpt) Deploy v2 of the Cinder API. </td>
+                       <td>(BoolOpt) Deploy v2 of the Cinder API.</td>
               </tr>
               <tr>
                        <td>osapi_max_limit = 1000</td>
@@ -48,12 +48,20 @@
                        <td>(StrOpt) Base URL that will be presented to users in links to the OpenStack Volume API</td>
               </tr>
               <tr>
+                       <td>osapi_volume_ext_list = </td>
+                       <td>(ListOpt) Specify list of extensions to load when using osapi_volume_extension option with cinder.api.contrib.select_extensions</td>
+              </tr>
+              <tr>
                        <td>osapi_volume_extension = ['cinder.api.contrib.standard_extensions']</td>
                        <td>(MultiStrOpt) osapi volume extension to load</td>
               </tr>
               <tr>
-                       <td>osapi_volume_ext_list = </td>
-                       <td>(ListOpt) Specify list of extensions to load when using osapi_volume_extension option with cinder.api.contrib.select_extensions</td>
+                       <td>osapi_volume_listen = 0.0.0.0</td>
+                       <td>(StrOpt) IP address for OpenStack Volume API to listen</td>
+              </tr>
+              <tr>
+                       <td>osapi_volume_listen_port = 8776</td>
+                       <td>(IntOpt) port for os volume api to listen</td>
               </tr>
               <tr>
                        <td>transfer_api_class = cinder.transfer.api.API</td>

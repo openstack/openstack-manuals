@@ -28,8 +28,8 @@
                        <td>(StrOpt) default availability zone to use when creating a new volume. If this is not set then we use the value from the storage_availability_zone option as the default availability_zone for new volumes.</td>
               </tr>
               <tr>
-                       <td>default_log_levels = amqplib=WARN, sqlalchemy=WARN, boto=WARN, suds=INFO, keystone=INFO, eventlet.wsgi.server=WARN</td>
-                       <td>(ListOpt) list of logger = LEVEL pairs</td>
+                       <td>default_log_levels = amqp=WARN, amqplib=WARN, boto=WARN, keystone=INFO, qpid=WARN, sqlalchemy=WARN, suds=INFO, iso8601=WARN</td>
+                       <td>(ListOpt) list of logger=LEVEL pairs</td>
               </tr>
               <tr>
                        <td>default_notification_level = INFO</td>
@@ -92,8 +92,8 @@
                        <td>(StrOpt) Directory to use for lock files. Default to a temp directory</td>
               </tr>
               <tr>
-                       <td>log_config = None</td>
-                       <td>(StrOpt) If this option is specified, the logging configuration file specified is used and overrides any other logging options specified. Please see the Python logging module documentation for details on logging configuration files.</td>
+                       <td>log_config_append = None</td>
+                       <td>(StrOpt) The name of logging configuration file. It does not disable existing loggers, but just appends specified logging configuration to any other existing logging options. Please see the Python logging module documentation for details on logging configuration files.</td>
               </tr>
               <tr>
                        <td>log_date_format = %Y-%m-%d %H:%M:%S</td>
@@ -109,7 +109,7 @@
               </tr>
               <tr>
                        <td>log_format = None</td>
-                       <td>(StrOpt) A logging.Formatter log message format string which may use any of the available logging.LogRecord attributes. This option is deprecated.  Please use logging_context_format_string and logging_default_format_string instead.</td>
+                       <td>(StrOpt) DEPRECATED. A logging.Formatter log message format string which may use any of the available logging.LogRecord attributes. This option is deprecated.  Please use logging_context_format_string and logging_default_format_string instead.</td>
               </tr>
               <tr>
                        <td>logging_context_format_string = %(asctime)s.%(msecs)03d %(process)d %(levelname)s %(name)s [%(request_id)s %(user)s %(tenant)s] %(instance)s%(message)s</td>
@@ -136,7 +136,7 @@
                        <td>(ListOpt) List of modules/decorators to monkey patch</td>
               </tr>
               <tr>
-                       <td>my_ip = 115.146.84.189</td>
+                       <td>my_ip = 192.168.0.8</td>
                        <td>(StrOpt) ip address of this host</td>
               </tr>
               <tr>
@@ -152,6 +152,14 @@
                        <td>(StrOpt) Password for Redis server. (optional)</td>
               </tr>
               <tr>
+                       <td>periodic_fuzzy_delay = 60</td>
+                       <td>(IntOpt) range of seconds to randomly delay when starting the periodic task scheduler to reduce stampeding. (Disable by setting to 0)</td>
+              </tr>
+              <tr>
+                       <td>periodic_interval = 60</td>
+                       <td>(IntOpt) seconds between running periodic tasks</td>
+              </tr>
+              <tr>
                        <td>policy_default_rule = default</td>
                        <td>(StrOpt) Rule checked when requested rule is not found</td>
               </tr>
@@ -164,8 +172,12 @@
                        <td>(IntOpt) Use this port to connect to redis host.</td>
               </tr>
               <tr>
-                       <td>pybasedir = /home/ubuntu/cinder</td>
+                       <td>pybasedir = /usr/lib/python2.7/site-packages</td>
                        <td>(StrOpt) Directory where the cinder python module is installed</td>
+              </tr>
+              <tr>
+                       <td>report_interval = 10</td>
+                       <td>(IntOpt) seconds between nodes reporting state to datastore</td>
               </tr>
               <tr>
                        <td>reserved_percentage = 0</td>

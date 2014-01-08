@@ -16,6 +16,10 @@
           </thead>
           <tbody>
               <tr>
+                       <td>allocated_capacity_weight_multiplier = -1.0</td>
+                       <td>(FloatOpt) Multiplier used for weighing volume capacity. Negative numbers mean to stack vs spread.</td>
+              </tr>
+              <tr>
                        <td>backend = sqlalchemy</td>
                        <td>(StrOpt) The backend to use for db</td>
               </tr>
@@ -116,12 +120,12 @@
                        <td>(StrOpt) The backend name for a given driver implementation</td>
               </tr>
               <tr>
-                       <td>volume_clear_size = 0</td>
-                       <td>(IntOpt) Size in MiB to wipe at start of old volumes. 0  = &gt; all</td>
-              </tr>
-              <tr>
                        <td>volume_clear = zero</td>
                        <td>(StrOpt) Method used to wipe old voumes (valid options are: none, zero, shred)</td>
+              </tr>
+              <tr>
+                       <td>volume_clear_size = 0</td>
+                       <td>(IntOpt) Size in MiB to wipe at start of old volumes. 0 =&gt; all</td>
               </tr>
               <tr>
                        <td>volume_dd_blocksize = 1M</td>
@@ -136,12 +140,16 @@
                        <td>(StrOpt) full class name for the Manager for volume</td>
               </tr>
               <tr>
-                       <td>volumes_dir = $state_path/volumes</td>
-                       <td>(StrOpt) Volume configuration file storage directory</td>
+                       <td>volume_service_inithost_offload = False</td>
+                       <td>(BoolOpt) Offload pending volume delete during volume service startup</td>
               </tr>
               <tr>
                        <td>volume_usage_audit_period = month</td>
                        <td>(StrOpt) time period to generate volume usages for.  Time period must be hour, day, month or year</td>
+              </tr>
+              <tr>
+                       <td>volumes_dir = $state_path/volumes</td>
+                       <td>(StrOpt) Volume configuration file storage directory</td>
               </tr>
               <tr>
                        <td>zadara_default_stripesize = 64</td>
