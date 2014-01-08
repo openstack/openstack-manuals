@@ -40,7 +40,7 @@
                        <td>(ListOpt) a list of additional capabilities corresponding to flavor_extra_specs for this compute host to advertise. Valid entries are name=value, pairs For example, "key1:val1, key2:val2"</td>
               </tr>
               <tr>
-                       <td>ipmi_power_retry = 5</td>
+                       <td>ipmi_power_retry = 10</td>
                        <td>(IntOpt) maximal number of retries for IPMI operations</td>
               </tr>
               <tr>
@@ -52,7 +52,7 @@
                        <td>(StrOpt) Baremetal power management method</td>
               </tr>
               <tr>
-                       <td>pxe_append_params = None</td>
+                       <td>pxe_append_params = nofb nomodeset vga=normal</td>
                        <td>(StrOpt) additional append parameters for baremetal PXE boot</td>
               </tr>
               <tr>
@@ -92,8 +92,20 @@
                        <td>(StrOpt) Baremetal compute node's tftp root path</td>
               </tr>
               <tr>
+                       <td>use_file_injection = True</td>
+                       <td>(BoolOpt) If True, enable file injection for network info, files and admin password</td>
+              </tr>
+              <tr>
                        <td>use_unsafe_iscsi = False</td>
                        <td>(BoolOpt) Do not set this out of dev/test environments. If a node does not have a fixed PXE IP address, volumes are exported with globally opened ACL</td>
+              </tr>
+              <tr>
+                       <td>vif_driver = nova.virt.xenapi.vif.XenAPIBridgeDriver</td>
+                       <td>(StrOpt) The XenAPI VIF driver using XenServer Network APIs.</td>
+              </tr>
+              <tr>
+                       <td>vif_driver = nova.virt.libvirt.vif.LibvirtGenericVIFDriver</td>
+                       <td>(StrOpt) The libvirt VIF driver to configure the VIFs.</td>
               </tr>
               <tr>
                        <td>vif_driver = nova.virt.baremetal.vif_driver.BareMetalVIFDriver</td>
