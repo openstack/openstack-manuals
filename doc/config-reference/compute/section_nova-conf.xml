@@ -1,34 +1,40 @@
 <?xml version= "1.0" encoding= "UTF-8"?>
-<section xml:id="compute-options"
+<section xml:id="compute-nova-conf"
     xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
-    <title>File format for nova.conf</title>
-    <simplesect>
-        <title>Overview</title>
-        <para>The Compute service supports a large number of
-            configuration options. These options are specified in the
-                <filename>/etc/nova/nova.conf</filename> configuration
-            file.</para>
-        <para>The configuration file is in <link
-                xlink:href="https://en.wikipedia.org/wiki/INI_file"
-                >INI file format</link>, with options specified as
-                <literal>key=value</literal> pairs, grouped into
-            sections. Almost all configuration options are in the
-                <literal>DEFAULT</literal> section. For
-            example:</para>
+    <title>Overview of nova.conf</title>
+        <para>The <filename>nova.conf</filename> configuration file is
+        an <link xlink:href="https://en.wikipedia.org/wiki/INI_file"
+            >INI file format</link> file that specifies options as
+            <literal>key=value</literal> pairs, which are grouped into
+        sections. The <literal>DEFAULT</literal> section contains most
+        of the configuration options. For example:</para>
         <programlisting language="ini">[DEFAULT]
 debug=true
 verbose=true
 
 [trusted_computing]
 server=10.3.4.2</programlisting>
-    </simplesect>
+    <para>You can use a particular configuration option file by using
+        the <literal>option</literal> (<filename>nova.conf</filename>)
+        parameter when you run one of the <literal>nova-*</literal>
+        services. This parameter inserts configuration option
+        definitions from the specified configuration file name, which
+        might be useful for debugging or performance tuning.</para>
+    <para>To place comments in the <filename>nova.conf</filename>
+        file, start a new line that begins with the pound
+            (<literal>#</literal>) character. For a list of
+        configuration options, see the tables in this guide.</para>
+    <para>To learn more about the <filename>nova.conf</filename>
+        configuration file, review these general purpose configuration
+        options.</para>
+    <xi:include href="../../common/tables/nova-common.xml"/>
     <simplesect>
         <title>Types of configuration options</title>
-        <para>Each configuration option has an associated type that
-            indicates which values can be set. The supported option
-            types are:</para>
+        <para>Each configuration option has an associated data type.
+            The supported data types for configuration options
+            are:</para>
         <variablelist>
             <varlistentry>
                 <term>BoolOpt</term>
@@ -88,7 +94,7 @@ ldap_dns_servers=dns2.example.org</programlisting>
     <simplesect>
         <title>Sections</title>
         <para>Configuration options are grouped by section. The
-            Compute configuration file supports the following sections.<variablelist>
+            Compute configuration file supports the following sections:<variablelist>
                 <varlistentry>
                     <term><literal>[DEFAULT]</literal></term>
                     <listitem>
@@ -102,26 +108,24 @@ ldap_dns_servers=dns2.example.org</programlisting>
                 <varlistentry>
                     <term><literal>[cells]</literal></term>
                     <listitem>
-                        <para>Use options in this section to configure
+                        <para>Configures
                             cells functionality. For details, see the
                             Cells section (<link
                                 xlink:href="../config-reference/content/section_compute-cells.html"
-                            />) in the <citetitle>OpenStack
-                                Configuration
-                            Reference</citetitle>.</para>
+                            />).</para>
                     </listitem>
                 </varlistentry>
                 <varlistentry>
                     <term><literal>[baremetal]</literal></term>
                     <listitem>
-                        <para>Use options in this section to configure
+                        <para>Configures
                             the baremetal hypervisor driver.</para>
                     </listitem>
                 </varlistentry>
                 <varlistentry>
                     <term><literal>[conductor]</literal></term>
                     <listitem>
-                        <para>Use options in this section to configure
+                        <para>Configures
                             the <systemitem class="service"
                                 >nova-conductor</systemitem>
                             service.</para>
@@ -130,7 +134,7 @@ ldap_dns_servers=dns2.example.org</programlisting>
                 <varlistentry>
                     <term><literal>[trusted_computing]</literal></term>
                     <listitem>
-                        <para>Use options in this section to configure
+                        <para>Configures
                             the trusted computing pools functionality
                             and how to connect to a remote attestation
                             service.</para>
@@ -149,10 +153,10 @@ ldap_dns_servers=dns2.example.org</programlisting>
             variable:<programlisting language="ini">my_ip=10.2.3.4
 glance_host=$my_ip
 metadata_host=$my_ip</programlisting></para>
-        <para>If you need a value to contain the <literal>$</literal>
-            symbol, escape it with <literal>$$</literal>. For example,
-            if your LDAP DNS password was <literal>$xkj432</literal>,
-            specify it, as
+        <para>If a value must contain the <literal>$</literal>
+            character, escape it with <literal>$$</literal>. For
+            example, if your LDAP DNS password is
+                <literal>$xkj432</literal>, specify it, as
             follows:<programlisting language="ini">ldap_dns_password=$$xkj432</programlisting></para>
         <para>The Compute code uses the Python
                 <literal>string.Template.safe_substitute()</literal>
