@@ -16,6 +16,10 @@
           </thead>
           <tbody>
               <tr>
+                       <td>agent_path = usr/sbin/xe-update-networking</td>
+                       <td>(StrOpt) Specifies the path in which the xenapi guest agent should be located. If the agent is present, network configuration is not injected into the image. Used if compute_driver=xenapi.XenAPIDriver and  flat_injected=True</td>
+              </tr>
+              <tr>
                        <td>agent_resetnetwork_timeout = 60</td>
                        <td>(IntOpt) number of seconds to wait for agent reply to resetnetwork request</td>
               </tr>
@@ -30,6 +34,26 @@
               <tr>
                        <td>cache_images = all</td>
                        <td>(StrOpt) Cache glance images locally. `all` will cache all images, `some` will only cache images that have the image_property `cache_in_nova=True`, and `none` turns off caching entirely</td>
+              </tr>
+              <tr>
+                       <td>check_host = True</td>
+                       <td>(BoolOpt) Ensure compute service is running on host XenAPI connects to.</td>
+              </tr>
+              <tr>
+                       <td>connection_concurrent = 5</td>
+                       <td>(IntOpt) Maximum number of concurrent XenAPI connections. Used only if compute_driver=xenapi.XenAPIDriver</td>
+              </tr>
+              <tr>
+                       <td>connection_password = None</td>
+                       <td>(StrOpt) Password for connection to XenServer/Xen Cloud Platform. Used only if compute_driver=xenapi.XenAPIDriver</td>
+              </tr>
+              <tr>
+                       <td>connection_url = None</td>
+                       <td>(StrOpt) URL for connection to XenServer/Xen Cloud Platform. A special value of unix://local can be used to connect to the local unix socket.  Required if compute_driver=xenapi.XenAPIDriver</td>
+              </tr>
+              <tr>
+                       <td>connection_username = root</td>
+                       <td>(StrOpt) Username for connection to XenServer/Xen Cloud Platform. Used only if compute_driver=xenapi.XenAPIDriver</td>
               </tr>
               <tr>
                        <td>console_driver = nova.console.xvp.XVPConsoleProxy</td>
@@ -68,12 +92,68 @@
                        <td>(StrOpt) Default OS type</td>
               </tr>
               <tr>
+                       <td>disable_agent = False</td>
+                       <td>(BoolOpt) Disables the use of the XenAPI agent in any image regardless of what image properties are present.</td>
+              </tr>
+              <tr>
+                       <td>image_compression_level = None</td>
+                       <td>(IntOpt) Compression level for images, e.g., 9 for gzip -9. Range is 1-9, 9 being most compressed but most CPU intensive on dom0.</td>
+              </tr>
+              <tr>
+                       <td>image_upload_handler = nova.virt.xenapi.image.glance.GlanceStore</td>
+                       <td>(StrOpt) Dom0 plugin driver used to handle image uploads.</td>
+              </tr>
+              <tr>
+                       <td>ipxe_boot_menu_url = None</td>
+                       <td>(StrOpt) URL to the iPXE boot menu</td>
+              </tr>
+              <tr>
+                       <td>ipxe_mkisofs_cmd = mkisofs</td>
+                       <td>(StrOpt) Name and optionally path of the tool used for ISO image creation</td>
+              </tr>
+              <tr>
+                       <td>ipxe_network_name = None</td>
+                       <td>(StrOpt) Name of network to use for booting iPXE ISOs</td>
+              </tr>
+              <tr>
                        <td>iqn_prefix = iqn.2010-10.org.openstack</td>
                        <td>(StrOpt) IQN Prefix</td>
               </tr>
               <tr>
+                       <td>login_timeout = 10</td>
+                       <td>(IntOpt) Timeout in seconds for XenAPI login.</td>
+              </tr>
+              <tr>
                        <td>max_kernel_ramdisk_size = 16777216</td>
                        <td>(IntOpt) Maximum size in bytes of kernel or ramdisk images</td>
+              </tr>
+              <tr>
+                       <td>num_vbd_unplug_retries = 10</td>
+                       <td>(IntOpt) Maximum number of retries to unplug VBD</td>
+              </tr>
+              <tr>
+                       <td>ovs_integration_bridge = xapi1</td>
+                       <td>(StrOpt) Name of Integration Bridge used by Open vSwitch</td>
+              </tr>
+              <tr>
+                       <td>remap_vbd_dev = False</td>
+                       <td>(BoolOpt) Used to enable the remapping of VBD dev (Works around an issue in Ubuntu Maverick)</td>
+              </tr>
+              <tr>
+                       <td>remap_vbd_dev_prefix = sd</td>
+                       <td>(StrOpt) Specify prefix to remap VBD dev to (ex. /dev/xvdb -&gt; /dev/sdb)</td>
+              </tr>
+              <tr>
+                       <td>running_timeout = 60</td>
+                       <td>(IntOpt) number of seconds to wait for instance to go to running state</td>
+              </tr>
+              <tr>
+                       <td>sparse_copy = True</td>
+                       <td>(BoolOpt) Whether to use sparse_copy for copying data on a resize down (False will use standard dd). This speeds up resizes down considerably since large runs of zeros won't have to be rsynced</td>
+              </tr>
+              <tr>
+                       <td>sr_base_path = /var/run/sr-mount</td>
+                       <td>(StrOpt) Base path to the storage repository</td>
               </tr>
               <tr>
                        <td>sr_matching_filter = default-sr:true</td>
@@ -92,144 +172,60 @@
                        <td>(StrOpt) iSCSI Target Port, 3260 Default</td>
               </tr>
               <tr>
+                       <td>torrent_base_url = None</td>
+                       <td>(StrOpt) Base URL for torrent files.</td>
+              </tr>
+              <tr>
+                       <td>torrent_download_stall_cutoff = 600</td>
+                       <td>(IntOpt) Number of seconds a download can remain at the same progress percentage w/o being considered a stall</td>
+              </tr>
+              <tr>
+                       <td>torrent_images = none</td>
+                       <td>(StrOpt) Whether or not to download images via Bit Torrent (all|some|none).</td>
+              </tr>
+              <tr>
+                       <td>torrent_listen_port_end = 6891</td>
+                       <td>(IntOpt) End of port range to listen on</td>
+              </tr>
+              <tr>
+                       <td>torrent_listen_port_start = 6881</td>
+                       <td>(IntOpt) Beginning of port range to listen on</td>
+              </tr>
+              <tr>
+                       <td>torrent_max_last_accessed = 86400</td>
+                       <td>(IntOpt) Cached torrent files not accessed within this number of seconds can be reaped</td>
+              </tr>
+              <tr>
+                       <td>torrent_max_seeder_processes_per_host = 1</td>
+                       <td>(IntOpt) Maximum number of seeder processes to run concurrently within a given dom0. (-1 = no limit)</td>
+              </tr>
+              <tr>
+                       <td>torrent_seed_chance = 1.0</td>
+                       <td>(FloatOpt) Probability that peer will become a seeder. (1.0 = 100%)</td>
+              </tr>
+              <tr>
+                       <td>torrent_seed_duration = 3600</td>
+                       <td>(IntOpt) Number of seconds after downloading an image via BitTorrent that it should be seeded for other peers.</td>
+              </tr>
+              <tr>
+                       <td>use_agent_default = False</td>
+                       <td>(BoolOpt) Determines if the xenapi agent should be used when the image used does not contain a hint to declare if the agent is present or not. The hint is a glance property "xenapi_use_agent" that has the value "true" or "false". Note that waiting for the agent when it is not present will significantly increase server boot times.</td>
+              </tr>
+              <tr>
                        <td>use_join_force = True</td>
                        <td>(BoolOpt) To use for hosts with different CPUs</td>
               </tr>
               <tr>
-                       <td>xen_hvmloader_path = /usr/lib/xen/boot/hvmloader</td>
-                       <td>(StrOpt) Location where the Xen hvmloader is kept</td>
-              </tr>
-              <tr>
-                       <td>xenapi_agent_path = usr/sbin/xe-update-networking</td>
-                       <td>(StrOpt) Specifies the path in which the xenapi guest agent should be located. If the agent is present, network configuration is not injected into the image. Used if compute_driver=xenapi.XenAPIDriver and  flat_injected=True</td>
-              </tr>
-              <tr>
-                       <td>xenapi_check_host = True</td>
-                       <td>(BoolOpt) Ensure compute service is running on host XenAPI connects to.</td>
-              </tr>
-              <tr>
-                       <td>xenapi_connection_concurrent = 5</td>
-                       <td>(IntOpt) Maximum number of concurrent XenAPI connections. Used only if compute_driver=xenapi.XenAPIDriver</td>
-              </tr>
-              <tr>
-                       <td>xenapi_connection_password = None</td>
-                       <td>(StrOpt) Password for connection to XenServer/Xen Cloud Platform. Used only if compute_driver=xenapi.XenAPIDriver</td>
-              </tr>
-              <tr>
-                       <td>xenapi_connection_url = None</td>
-                       <td>(StrOpt) URL for connection to XenServer/Xen Cloud Platform. A special value of unix://local can be used to connect to the local unix socket.  Required if compute_driver=xenapi.XenAPIDriver</td>
-              </tr>
-              <tr>
-                       <td>xenapi_connection_username = root</td>
-                       <td>(StrOpt) Username for connection to XenServer/Xen Cloud Platform. Used only if compute_driver=xenapi.XenAPIDriver</td>
-              </tr>
-              <tr>
-                       <td>xenapi_disable_agent = False</td>
-                       <td>(BoolOpt) Disables the use of the XenAPI agent in any image regardless of what image properties are present. </td>
-              </tr>
-              <tr>
-                       <td>xenapi_image_compression_level = None</td>
-                       <td>(IntOpt) Compression level for images, e.g., 9 for gzip -9. Range is 1-9, 9 being most compressed but most CPU intensive on dom0.</td>
-              </tr>
-              <tr>
-                       <td>xenapi_image_upload_handler = nova.virt.xenapi.image.glance.GlanceStore</td>
-                       <td>(StrOpt) Dom0 plugin driver used to handle image uploads.</td>
-              </tr>
-              <tr>
-                       <td>xenapi_ipxe_boot_menu_url = None</td>
-                       <td>(StrOpt) URL to the iPXE boot menu</td>
-              </tr>
-              <tr>
-                       <td>xenapi_login_timeout = 10</td>
-                       <td>(IntOpt) Timeout in seconds for XenAPI login.</td>
-              </tr>
-              <tr>
-                       <td>xenapi_ipxe_mkisofs_cmd = mkisofs</td>
-                       <td>(StrOpt) Name and optionally path of the tool used for ISO image creation</td>
-              </tr>
-              <tr>
-                       <td>xenapi_num_vbd_unplug_retries = 10</td>
-                       <td>(IntOpt) Maximum number of retries to unplug VBD</td>
-              </tr>
-              <tr>
-                       <td>xenapi_ipxe_network_name = None</td>
-                       <td>(StrOpt) Name of network to use for booting iPXE ISOs</td>
-              </tr>
-              <tr>
-                       <td>xenapi_ovs_integration_bridge = xapi1</td>
-                       <td>(StrOpt) Name of Integration Bridge used by Open vSwitch</td>
-              </tr>
-              <tr>
-                       <td>xenapi_remap_vbd_dev = False</td>
-                       <td>(BoolOpt) Used to enable the remapping of VBD dev (Works around an issue in Ubuntu Maverick)</td>
-              </tr>
-              <tr>
-                       <td>xenapi_remap_vbd_dev_prefix = sd</td>
-                       <td>(StrOpt) Specify prefix to remap VBD dev to (ex. /dev/xvdb -&gt; /dev/sdb)</td>
-              </tr>
-              <tr>
-                       <td>xenapi_running_timeout = 60</td>
-                       <td>(IntOpt) number of seconds to wait for instance to go to running state</td>
-              </tr>
-              <tr>
-                       <td>xenapi_sparse_copy = True</td>
-                       <td>(BoolOpt) Whether to use sparse_copy for copying data on a resize down (False will use standard dd). This speeds up resizes down considerably since large runs of zeros won't have to be rsynced</td>
-              </tr>
-              <tr>
-                       <td>xenapi_sr_base_path = /var/run/sr-mount</td>
-                       <td>(StrOpt) Base path to the storage repository</td>
-              </tr>
-              <tr>
-                       <td>xenapi_torrent_base_url = None</td>
-                       <td>(StrOpt) Base URL for torrent files.</td>
-              </tr>
-              <tr>
-                       <td>xenapi_torrent_download_stall_cutoff = 600</td>
-                       <td>(IntOpt) Number of seconds a download can remain at the same progress percentage w/o being considered a stall</td>
-              </tr>
-              <tr>
-                       <td>xenapi_torrent_images = none</td>
-                       <td>(StrOpt) Whether or not to download images via Bit Torrent (all|some|none).</td>
-              </tr>
-              <tr>
-                       <td>xenapi_torrent_listen_port_end = 6891</td>
-                       <td>(IntOpt) End of port range to listen on</td>
-              </tr>
-              <tr>
-                       <td>xenapi_torrent_listen_port_start = 6881</td>
-                       <td>(IntOpt) Beginning of port range to listen on</td>
-              </tr>
-              <tr>
-                       <td>xenapi_torrent_max_last_accessed = 86400</td>
-                       <td>(IntOpt) Cached torrent files not accessed within this number of seconds can be reaped</td>
-              </tr>
-              <tr>
-                       <td>xenapi_torrent_max_seeder_processes_per_host = 1</td>
-                       <td>(IntOpt) Maximum number of seeder processes to run concurrently within a given dom0. (-1 = no limit)</td>
-              </tr>
-              <tr>
-                       <td>xenapi_torrent_seed_chance = 1.0</td>
-                       <td>(FloatOpt) Probability that peer will become a seeder. (1.0 = 100%)</td>
-              </tr>
-              <tr>
-                       <td>xenapi_torrent_seed_duration = 3600</td>
-                       <td>(IntOpt) Number of seconds after downloading an image via BitTorrent that it should be seeded for other peers.</td>
-              </tr>
-              <tr>
-                       <td>xenapi_use_agent_default = False</td>
-                       <td>(BoolOpt) Determines if the xenapi agent should be used when the image used does not contain a hint to declare if the agent is present or not. The hint is a glance property "xenapi_use_agent" that has the value "true" or "false". Note that waiting for the agent when it is not present will significantly increase server boot times.</td>
-              </tr>
-              <tr>
-                       <td>xenapi_vhd_coalesce_max_attempts = 5</td>
+                       <td>vhd_coalesce_max_attempts = 5</td>
                        <td>(IntOpt) Max number of times to poll for VHD to coalesce. Used only if compute_driver=xenapi.XenAPIDriver</td>
               </tr>
               <tr>
-                       <td>xenapi_vhd_coalesce_poll_interval = 5.0</td>
+                       <td>vhd_coalesce_poll_interval = 5.0</td>
                        <td>(FloatOpt) The interval used for polling of coalescing vhds. Used only if compute_driver=xenapi.XenAPIDriver</td>
               </tr>
               <tr>
-                       <td>xenapi_vif_driver = nova.virt.xenapi.vif.XenAPIBridgeDriver</td>
-                       <td>(StrOpt) The XenAPI VIF driver using XenServer Network APIs.</td>
+                       <td>xen_hvmloader_path = /usr/lib/xen/boot/hvmloader</td>
+                       <td>(StrOpt) Location where the Xen hvmloader is kept</td>
               </tr>
        </tbody>
         </table>

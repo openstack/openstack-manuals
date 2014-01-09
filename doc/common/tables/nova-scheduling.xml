@@ -16,6 +16,14 @@
           </thead>
           <tbody>
               <tr>
+                       <td>aggregate_image_properties_isolation_namespace = None</td>
+                       <td>(StrOpt) Force the filter to consider only keys matching the given namespace.</td>
+              </tr>
+              <tr>
+                       <td>aggregate_image_properties_isolation_separator = .</td>
+                       <td>(StrOpt) The separator used between the namespace and keys</td>
+              </tr>
+              <tr>
                        <td>cpu_allocation_ratio = 16.0</td>
                        <td>(FloatOpt) Virtual CPU to physical CPU allocation ratio which affects all CPU filters. This configuration specifies a global ratio for CoreFilter. For AggregateCoreFilter, it will fall back to this configuration value if no per-aggregate setting found.</td>
               </tr>
@@ -118,6 +126,14 @@
               <tr>
                        <td>scheduler_weight_classes = nova.scheduler.weights.all_weighers</td>
                        <td>(ListOpt) Which weight class names to use for weighing hosts</td>
+              </tr>
+              <tr>
+                       <td>weight_multiplier = 1.0</td>
+                       <td>(FloatOpt) Multiplier used for weighing metrics.</td>
+              </tr>
+              <tr>
+                       <td>weight_setting = </td>
+                       <td>(ListOpt) How the metrics are going to be weighed. This should be in the form of "&lt;name1&gt;=&lt;ratio1&gt;, &lt;name2&gt;=&lt;ratio2&gt;, ...", where &lt;nameX&gt; is one of the metric to be weighed, and &lt;ratioX&gt; is the corresponding ratio. So for "name1=1.0, name2=-1.0" The final weight would be name1.value * 1.0 + name2.value * -1.0.</td>
               </tr>
        </tbody>
         </table>

@@ -16,16 +16,8 @@
           </thead>
           <tbody>
               <tr>
-                       <td>base_dir_name = _base</td>
-                       <td>(StrOpt) Where cached images are stored under $instances_path.This is NOT the full path - just a folder name.For per-compute-host cached images, set to _base_$my_ip</td>
-              </tr>
-              <tr>
-                       <td>checksum_interval_seconds = 3600</td>
-                       <td>(IntOpt) How frequently to checksum base images</td>
-              </tr>
-              <tr>
-                       <td>compute_api_class = nova.compute.api.API</td>
-                       <td>(StrOpt) The full class name of the compute API class to use (deprecated)</td>
+                       <td>compute_available_monitors = ['nova.compute.monitors.all_monitors']</td>
+                       <td>(MultiStrOpt) Monitor classes available to the compute which may be specified more than once.</td>
               </tr>
               <tr>
                        <td>compute_driver = None</td>
@@ -34,6 +26,10 @@
               <tr>
                        <td>compute_manager = nova.compute.manager.ComputeManager</td>
                        <td>(StrOpt) full class name for the Manager for compute</td>
+              </tr>
+              <tr>
+                       <td>compute_monitors = </td>
+                       <td>(ListOpt) A list of monitors that can be used for getting compute metrics.</td>
               </tr>
               <tr>
                        <td>compute_stats_class = nova.compute.stats.Stats</td>
@@ -61,7 +57,7 @@
               </tr>
               <tr>
                        <td>enable_instance_password = True</td>
-                       <td>(BoolOpt) Allows use of instance password during server creation</td>
+                       <td>(BoolOpt) Enables returning of the instance password by the relevant server API calls such as create, rebuild or rescue, If the hypervisor does not support password injection then the password returned will not be correct</td>
               </tr>
               <tr>
                        <td>heal_instance_info_cache_interval = 60</td>
@@ -76,8 +72,8 @@
                        <td>(IntOpt) Number of seconds to wait between runs of the image cache manager</td>
               </tr>
               <tr>
-                       <td>image_info_filename_pattern = $instances_path/$base_dir_name/%(image)s.info</td>
-                       <td>(StrOpt) Allows image information files to be stored in non-standard locations</td>
+                       <td>image_cache_subdirectory_name = _base</td>
+                       <td>(StrOpt) Where cached images are stored under $instances_path. This is NOT the full path - just a folder name. For per-compute-host cached images, set to _base_$my_ip</td>
               </tr>
               <tr>
                        <td>instance_build_timeout = 0</td>
@@ -120,8 +116,8 @@
                        <td>(BoolOpt) Whether to start guests that were running before the host rebooted</td>
               </tr>
               <tr>
-                       <td>running_deleted_instance_action = log</td>
-                       <td>(StrOpt) Action to take if a running deleted instance is detected.Valid options are 'noop', 'log' and 'reap'. Set to 'noop' to disable.</td>
+                       <td>running_deleted_instance_action = reap</td>
+                       <td>(StrOpt) Action to take if a running deleted instance is detected.Valid options are 'noop', 'log', 'shutdown', or 'reap'. Set to 'noop' to take no action.</td>
               </tr>
               <tr>
                        <td>running_deleted_instance_poll_interval = 1800</td>
