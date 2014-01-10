@@ -5,8 +5,8 @@
     xml:id="adding-users-tenants-and-roles-with-python-keystoneclient">
     <?dbhtml stop-chunking?>
     <title>Create and manage services and service users</title>
-    <para>The Identity Service enables you to define services in the
-        following ways:</para>
+    <para>The Identity Service enables you to define services, as
+        follows:</para>
     <itemizedlist>
         <listitem>
             <para>Service catalog template. The Identity Service acts
@@ -14,16 +14,16 @@
                 services. The
                     <literal>etc/default_catalog.templates</literal>
                 template file defines the endpoints for services. When
-                the Identity Service uses a template file back-end,
+                the Identity Service uses a template file back end,
                 any changes that are made to the endpoints are cached.
                 These changes do not persist when you restart the
                 service or reboot the machine.</para>
         </listitem>
         <listitem>
-            <para>A SQL back-end for the catalog service. When the
+            <para>A SQL back end for the catalog service. When the
                 Identity Service is online, you must add the services
                 to the catalog. When you deploy a system for
-                production, use the SQL back-end.</para>
+                production, use the SQL back end.</para>
         </listitem>
     </itemizedlist>
     <para>The <literal>auth_token</literal> middleware supports the
@@ -32,11 +32,11 @@
     <para>To authenticate users against the Identity Service, you must
         create a service user for each OpenStack service. For example,
         create a service user for the Compute, Block Storage, and
-        Network services.</para>
+        Networking services.</para>
     <para>To configure the OpenStack services with service users,
         create a project for all services and create users for each
-        service. Assign the admin role to each service user-project
-        pair. This role enables users to validate tokens and
+        service. Assign the admin role to each service user and
+        project pair. This role enables users to validate tokens and
         authenticate and authorize other user requests.</para>
     <section xml:id="cli_service-create">
         <title>Create a service</title>
@@ -56,16 +56,33 @@
 +----------------------------------+----------+----------+---------------------------+</computeroutput></screen>
             </step>
             <step>
-                <para>To create a service, use the following command:</para>
+                <para>To create a service, run this command:</para>
                 <screen><prompt>$</prompt> <userinput>keystone service-create --name <replaceable>service_name</replaceable> --type <replaceable>service_type</replaceable> --description <replaceable>service_description</replaceable></userinput></screen>
-                <screen>Where:
-  -<replaceable>service_name</replaceable> = Name of new service (must be unique)
-  -<replaceable>service_type</replaceable> = Service type (one of: identity, compute, network, image, or object-store)
-  -<replaceable>service_description</replaceable> = Description of service</screen>
-                <para>For example, to create a service named
-                        <literal>swift</literal> of type
-                        <literal>object-store</literal>, run the
-                    following command:</para>
+                <para>The arguments are:</para>
+                <itemizedlist>
+                    <listitem>
+                        <para><code><replaceable>service_name</replaceable></code>.
+                            The unique name of the new service.</para>
+                    </listitem>
+                    <listitem>
+                        <para><code><replaceable>service_type</replaceable></code>.
+                            The service type, such as
+                                <code>identity</code>,
+                                <code>compute</code>,
+                                <code>network</code>,
+                                <code>image</code>,
+                                <code>object-store</code> or any other
+                            service identifier string.</para>
+                    </listitem>
+                    <listitem>
+                        <para><code><replaceable>service_description</replaceable></code>.
+                            The description of the service.</para>
+                    </listitem>
+                </itemizedlist>
+                <para>For example, to create a
+                        <literal>swift</literal>  service of type
+                        <literal>object-store</literal>, run this
+                    command:</para>
                 <screen><prompt>$</prompt> <userinput>keystone service-create --name swift --type object-store --description "object store service"</userinput></screen>
                 <screen><computeroutput>+-------------+----------------------------------+
 |   Property  |              Value               |
@@ -77,7 +94,8 @@
 +-------------+----------------------------------+</computeroutput></screen>
             </step>
             <step>
-                <para>To get details for a specific service, run the following:</para>
+                <para>To get details for a service, run this
+                    command:</para>
                 <screen><prompt>$</prompt> <userinput>keystone service-get <replaceable>service_ID</replaceable></userinput></screen>
                 <para>For example:</para>
                 <screen><prompt>$</prompt> <userinput>keystone service-get 84c23f4b942c44c38b9c42c5e517cd9a</userinput></screen>
@@ -98,12 +116,12 @@
             <step>
                 <para>Create a project for the service users.
                     Typically, this project is named
-                        <literal>service</literal>, but you can choose
-                    any name you like:</para>
+                        <literal>service</literal>, but choose any
+                    name you like:</para>
                 <screen><prompt>$</prompt> <userinput>keystone tenant-create --name service</userinput></screen>
-                <para>The output shows the ID for the project. Note
-                    this ID; you need it to create service users and
-                    assign roles.</para>
+                <para>The output shows the ID for the project.</para>
+                <para>Make a note of this ID. You need it to create
+                    service users and assign roles.</para>
                 <screen><computeroutput>+-------------+----------------------------------+
 |   Property  |              Value               |
 +-------------+----------------------------------+
@@ -119,8 +137,8 @@
             </step>
             <step>
                 <para>To assign the admin role to the service
-                    user-project pairs, get the ID of the admin
-                    role:</para>
+                    user-project pairs, run this command to get the ID
+                    of the admin role:</para>
                 <screen><prompt>$</prompt> <userinput>keystone role-list</userinput></screen>
                 <screen><computeroutput>+----------------------------------+---------------+
 |                id                |      name     |
@@ -134,20 +152,17 @@
 +----------------------------------+---------------+</computeroutput></screen>
             </step>
             <step>
-                <para>Assign the admin role to the user-project pair,
-                    as follows:</para>
+                <para>Assign the admin role to the user-project
+                    pair:</para>
                 <screen><prompt>$</prompt> <userinput>keystone user-role-add --user <replaceable>SERVICE_USER_ID</replaceable> --role <replaceable>ADMIN_ROLE_ID</replaceable> --tenant <replaceable>SERVICE_PROJECT_ID</replaceable></userinput></screen>
             </step>
         </procedure>
     </section>
     <section xml:id="cli_delete_service">
         <title>Delete a service</title>
-        <procedure xml:id="service-delete">
-            <step>
-                <para>To delete a specified service, specify its ID,
-                    as follows:</para>
-                <screen><prompt>$</prompt> <userinput>keystone service-delete <replaceable>SERVICE_ID</replaceable></userinput></screen>
-                <screen><computeroutput>+-------------+----------------------------------+
+        <para>To delete a specified service, specify its ID:</para>
+        <screen><prompt>$</prompt> <userinput>keystone service-delete <replaceable>SERVICE_ID</replaceable></userinput></screen>
+        <screen><computeroutput>+-------------+----------------------------------+
 |   Property  |              Value               |
 +-------------+----------------------------------+
 | description |       object store service       |
@@ -155,7 +170,5 @@
 |     name    |              swift               |
 |     type    |           object-store           |
 +-------------+----------------------------------+</computeroutput></screen>
-            </step>
-        </procedure>
     </section>
 </section>
