@@ -45,12 +45,12 @@
             <title>Rackspace zone recommendations</title>
             <para>For ease of maintenance on OpenStack Object Storage,
                 Rackspace recommends that you set up at least five
-                nodes. Each node will be assigned its own zone (for a
-                total of five zones), which will give you host level
-                redundancy. This allows you to take down a single zone
-                for maintenance and still guarantee object
-                availability in the event that another zone fails
-                during your maintenance.</para>
+                nodes. Each node is assigned its own zone (for a total
+                of five zones), which gives you host level redundancy.
+                This enables you to take down a single zone for
+                maintenance and still guarantee object availability in
+                the event that another zone fails during your
+                maintenance.</para>
             <para>You could keep each server in its own cabinet to
                 achieve cabinet level isolation, but you may wish to
                 wait until your swift service is better established
@@ -114,8 +114,8 @@
         <section xml:id="configuration-for-rate-limiting">
             <title>Configure rate limiting</title>
             <para>All configuration is optional. If no account or
-                container limits are provided there will be no rate
-                limiting. Available configuration options
+                container limits are provided, no rate limiting
+                occurs. Available configuration options
                 include:</para>
             <xi:include
                 href="../../common/tables/swift-proxy-server-filter-ratelimit.xml"/>
@@ -196,14 +196,14 @@
             to objects. For example, a website may wish to provide a
             link to download a large object in Swift, but the Swift
             account has no public access. The website can generate a
-            URL that will provide GET access for a limited time to the
+            URL that provides GET access for a limited time to the
             resource. When the web browser user clicks on the link,
-            the browser will download the object directly from Swift,
-            obviating the need for the website to act as a proxy for
-            the request. If the user were to share the link with all
-            his friends, or accidentally post it on a forum, the
-            direct access would be limited to the expiration time set
-            when the website created the link.</para>
+            the browser downloads the object directly from Swift,
+            eliminating the need for the website to act as a proxy for
+            the request. If the user shares the link with all his
+            friends, or accidentally posts it on a forum, the direct
+            access is limited to the expiration time set when the
+            website created the link.</para>
         <para>A temporary URL is the typical URL associated with an
             object, with two additional query parameters:<variablelist>
                 <varlistentry>
@@ -228,30 +228,34 @@
         <para>To create temporary URLs, first set the
                 <literal>X-Account-Meta-Temp-URL-Key</literal> header
             on your Swift account to an arbitrary string. This string
-            will serve as a secret key. For example, to set a key of
+            serves as a secret key. For example, to set a key of
                 <literal>b3968d0207b54ece87cccc06515a89d4</literal>
             using the <command>swift</command> command-line
-            tool:<screen><prompt>$</prompt> <userinput>swift post -m "Temp-URL-Key:<replaceable>b3968d0207b54ece87cccc06515a89d4</replaceable>"</userinput></screen></para>
-        <para>Next, generate an HMAC-SHA1 (RFC 2104) signature to specify:<itemizedlist>
-                <listitem>
-                    <para>Which HTTP method to allow (typically
-                            <literal>GET</literal> or
-                            <literal>PUT</literal>)</para>
-                </listitem>
-                <listitem>
-                    <para>The expiry date as a Unix timestamp</para>
-                </listitem>
-                <listitem>
-                    <para>the full path to the object</para>
-                </listitem>
-                <listitem>
-                    <para>The secret key set as the
-                            <literal>X-Account-Meta-Temp-URL-Key</literal></para>
-                </listitem>
-            </itemizedlist>Here is code generating the signature for a
-            GET for 24 hours on
-                <code>/v1/AUTH_account/container/object</code>:
-            <programlisting language="python">import hmac
+            tool:</para>
+        <screen><prompt>$</prompt> <userinput>swift post -m "Temp-URL-Key:<replaceable>b3968d0207b54ece87cccc06515a89d4</replaceable>"</userinput></screen>
+        <para>Next, generate an HMAC-SHA1 (RFC 2104) signature to
+            specify:</para>
+        <itemizedlist>
+            <listitem>
+                <para>Which HTTP method to allow (typically
+                        <literal>GET</literal> or
+                        <literal>PUT</literal>)</para>
+            </listitem>
+            <listitem>
+                <para>The expiry date as a Unix timestamp</para>
+            </listitem>
+            <listitem>
+                <para>the full path to the object</para>
+            </listitem>
+            <listitem>
+                <para>The secret key set as the
+                        <literal>X-Account-Meta-Temp-URL-Key</literal></para>
+            </listitem>
+        </itemizedlist>
+        <para>Here is code generating the signature for a GET for 24
+            hours on
+            <code>/v1/AUTH_account/container/object</code>:</para>
+        <programlisting language="python">import hmac
 from hashlib import sha1
 from time import time
 method = 'GET'
@@ -262,7 +266,7 @@ key = 'mykey'
 hmac_body = '%s\n%s\n%s' % (method, expires, path)
 sig = hmac.new(key, hmac_body, sha1).hexdigest()
 s = 'https://{host}/{path}?temp_url_sig={sig}&amp;temp_url_expires={expires}'
-url = s.format(host='swift-cluster.example.com', path=path, sig=sig, expires=expires)</programlisting></para>
+url = s.format(host='swift-cluster.example.com', path=path, sig=sig, expires=expires)</programlisting>
         <para>Any alteration of the resource path or query arguments
             results in a <errorcode>401</errorcode>
             <errortext>Unauthorized</errortext> error. Similarly, a
@@ -274,7 +278,7 @@ url = s.format(host='swift-cluster.example.com', path=path, sig=sig, expires=exp
             Swift. Note that <note>
                 <para>Changing the
                         <literal>X-Account-Meta-Temp-URL-Key</literal>
-                    will invalidate any previously generated temporary
+                    invalidates any previously generated temporary
                     URLs within 60 seconds (the memcache time for the
                     key). Swift supports up to two keys, specified by
                         <literal>X-Account-Meta-Temp-URL-Key</literal>
@@ -285,20 +289,20 @@ url = s.format(host='swift-cluster.example.com', path=path, sig=sig, expires=exp
                     invalidating all existing temporary URLs.</para>
             </note></para>
         <para>Swift includes a script called
-                <command>swift-temp-url</command> that will generate
-            the query parameters
-            automatically:<screen><prompt>$</prompt> <userinput>bin/swift-temp-url GET 3600 /v1/AUTH_account/container/object mykey</userinput>
+                <command>swift-temp-url</command> that generates the
+            query parameters automatically:</para>
+        <screen><prompt>$</prompt> <userinput>bin/swift-temp-url GET 3600 /v1/AUTH_account/container/object mykey</userinput>
 <computeroutput>/v1/AUTH_account/container/object?
 temp_url_sig=5c4cc8886f36a9d0919d708ade98bf0cc71c9e91&amp;
-temp_url_expires=1374497657</computeroutput>                </screen>Because
-            this command only returns the path, you must prefix the
-            Swift storage hostname (for example,
+temp_url_expires=1374497657</computeroutput></screen>
+        <para>Because this command only returns the path, you must
+            prefix the Swift storage host name (for example,
                 <literal>https://swift-cluster.example.com</literal>).</para>
         <para>With GET Temporary URLs, a
-                <literal>Content-Disposition</literal> header will be
-            set on the response so that browsers will interpret this
-            as a file attachment to be saved. The filename chosen is
-            based on the object name, but you can override this with a
+                <literal>Content-Disposition</literal> header is set
+            on the response so that browsers interpret this as a file
+            attachment to be saved. The file name chosen is based on
+            the object name, but you can override this with a
                 <literal>filename</literal> query parameter. The
             following example specifies a filename of <filename>My
                 Test File.pdf</filename>:</para>
@@ -369,34 +373,35 @@ pipeline = pipeline = healthcheck cache <emphasis role="bold">tempurl</emphasis>
             swift-dispersion-populate tool does this by making up
             random container and object names until they fall on
             distinct partitions. Last, and repeatedly for the life of
-            the cluster, you need to run the
+            the cluster, you must run the
                 <command>swift-dispersion-report</command> tool to
             check the health of each of these containers and objects.
             These tools need direct access to the entire cluster and
-            to the ring files (installing them on a proxy server will
-            probably do). Both
+            to the ring files (installing them on a proxy server
+            suffices). The
                 <command>swift-dispersion-populate</command> and
-                <command>swift-dispersion-report</command> use the
-            same configuration file,
+                <command>swift-dispersion-report</command> commands
+            both use the same configuration file,
                 <filename>/etc/swift/dispersion.conf</filename>.
-            Example dispersion.conf file:
-            <programlisting language="ini">
+            Example <filename>dispersion.conf</filename> file:</para>
+        <programlisting language="ini">
 [dispersion]
 auth_url = http://localhost:8080/auth/v1.0
 auth_user = test:tester
 auth_key = testing
 </programlisting>
-            There are also options for the conf file for specifying
-            the dispersion coverage (defaults to 1%), retries,
-            concurrency, etc. though usually the defaults are fine.
-            Once the configuration is in place, run
-            swift-dispersion-populate to populate the containers and
-            objects throughout the cluster. Now that those containers
-            and objects are in place, you can run
-            swift-dispersion-report to get a dispersion report, or the
-            overall health of the cluster. Here is an example of a
-            cluster in perfect health:
-            <screen><prompt>$</prompt> <userinput>swift-dispersion-report</userinput>
+        <para>There are also configuration options for specifying the
+            dispersion coverage, which defaults to 1%, retries,
+            concurrency, and so on. However, the defaults are usually
+            fine. Once the configuration is in place, run
+                <command>swift-dispersion-populate</command> to
+            populate the containers and objects throughout the
+            cluster. Now that those containers and objects are in
+            place, you can run
+                <command>swift-dispersion-report</command> to get a
+            dispersion report, or the overall health of the cluster.
+            Here is an example of a cluster in perfect health:</para>
+        <screen><prompt>$</prompt> <userinput>swift-dispersion-report</userinput>
 <computeroutput>Queried 2621 containers for dispersion reporting, 19s, 0 retries
 100.00% of container copies found (7863 of 7863)
 Sample represents 1.00% of the container partition space
@@ -405,10 +410,10 @@ Queried 2619 objects for dispersion reporting, 7s, 0 retries
 100.00% of object copies found (7857 of 7857)
 Sample represents 1.00% of the object partition space
 </computeroutput></screen>
-            Now, deliberately double the weight of a device in the
-            object ring (with replication turned off) and rerun the
-            dispersion report to show what impact that has:
-            <screen><prompt>$</prompt> <userinput>swift-ring-builder object.builder set_weight d0 200</userinput>
+        <para>Now, deliberately double the weight of a device in the
+            object ring (with replication turned off) and re-run the
+            dispersion report to show what impact that has:</para>
+        <screen><prompt>$</prompt> <userinput>swift-ring-builder object.builder set_weight d0 200</userinput>
 <prompt>$</prompt> <userinput>swift-ring-builder object.builder rebalance</userinput>
 ...
 <prompt>$</prompt> <userinput>swift-dispersion-report</userinput>
@@ -421,13 +426,13 @@ There were 1763 partitions missing one copy.
 77.56% of object copies found (6094 of 7857)
 Sample represents 1.00% of the object partition space
 </computeroutput></screen>
-            You can see the health of the objects in the cluster has
+        <para>You can see the health of the objects in the cluster has
             gone down significantly. Of course, this test environment
             has just four devices, in a production environment with
             many devices the impact of one device change is much less.
             Next, run the replicators to get everything put back into
-            place and then rerun the dispersion report:
-            <programlisting>
+            place and then rerun the dispersion report:</para>
+        <programlisting>
 ... start object replicators and monitor logs until they're caught up ...
 $ swift-dispersion-report
 Queried 2621 containers for dispersion reporting, 17s, 0 retries
@@ -438,15 +443,14 @@ Queried 2619 objects for dispersion reporting, 7s, 0 retries
 100.00% of object copies found (7857 of 7857)
 Sample represents 1.00% of the object partition space
 </programlisting>
-            Alternatively, the dispersion report can also be output in
-            json format. This allows it to be more easily consumed by
-            third party utilities:
-            <screen><prompt>$</prompt> <userinput>swift-dispersion-report -j</userinput>
+        <para>Alternatively, the dispersion report can also be output
+            in json format. This allows it to be more easily consumed
+            by third party utilities:</para>
+        <screen><prompt>$</prompt> <userinput>swift-dispersion-report -j</userinput>
 <computeroutput>{"object": {"retries:": 0, "missing_two": 0, "copies_found": 7863, "missing_one": 0,
 "copies_expected": 7863, "pct_found": 100.0, "overlapping": 0, "missing_all": 0}, "container":
 {"retries:": 0, "missing_two": 0, "copies_found": 12534, "missing_one": 0, "copies_expected":
 12534, "pct_found": 100.0, "overlapping": 15, "missing_all": 0}}</computeroutput></screen>
-        </para>
         <xi:include
             href="../../common/tables/swift-dispersion-dispersion.xml"
         />
@@ -455,7 +459,7 @@ Sample represents 1.00% of the object partition space
         <!-- Usage documented in http://docs.openstack.org/developer/swift/overview_large_objects.html -->
         <title>Static Large Object (SLO) support</title>
         <para>This feature is very similar to Dynamic Large Object
-            (DLO) support in that it allows the user to upload many
+            (DLO) support in that it enables the user to upload many
             objects concurrently and afterwards download them as a
             single object. It is different in that it does not rely on
             eventually consistent container listings to do so.
@@ -481,20 +485,20 @@ Sample represents 1.00% of the object partition space
             consistency, the timeliness of the cached container_info
             (60 second ttl by default), and it is unable to reject
             chunked transfer uploads that exceed the quota (though
-            once the quota is exceeded, new chunked transfers will be
+            once the quota is exceeded, new chunked transfers are
             refused).</para>
-        <para>Quotas are set by adding meta values to the container,
-            and are validated when set: <itemizedlist>
-                <listitem>
-                    <para>X-Container-Meta-Quota-Bytes: Maximum size
-                        of the container, in bytes.</para>
-                </listitem>
-                <listitem>
-                    <para>X-Container-Meta-Quota-Count: Maximum object
-                        count of the container.</para>
-                </listitem>
-            </itemizedlist>
-        </para>
+        <para>Set quotas by adding meta values to the container. These
+            values are validated when you set them:</para>
+        <itemizedlist>
+            <listitem>
+                <para>X-Container-Meta-Quota-Bytes: Maximum size of
+                    the container, in bytes.</para>
+            </listitem>
+            <listitem>
+                <para>X-Container-Meta-Quota-Count: Maximum object
+                    count of the container.</para>
+            </listitem>
+        </itemizedlist>
         <xi:include
             href="../../common/tables/swift-proxy-server-filter-container-quotas.xml"
         />
@@ -514,12 +518,12 @@ Sample represents 1.00% of the object partition space
             413 response (request entity too large) with a descriptive
             body.</para>
         <para>The following command uses an admin account that own the
-            Reseller role to set a quota on the test account:
-            <screen><prompt>$</prompt> <userinput>swift -A http://127.0.0.1:8080/auth/v1.0 -U admin:admin -K admin \
+            Reseller role to set a quota on the test account:</para>
+        <screen><prompt>$</prompt> <userinput>swift -A http://127.0.0.1:8080/auth/v1.0 -U admin:admin -K admin \
 --os-storage-url=http://127.0.0.1:8080/v1/AUTH_test post -m quota-bytes:10000</userinput></screen>
-            Here is the stat listing of an account where quota has
-            been set:
-            <screen><prompt>$</prompt> <userinput>swift -A http://127.0.0.1:8080/auth/v1.0 -U test:tester -K testing stat</userinput>
+        <para>Here is the stat listing of an account where quota has
+            been set:</para>
+        <screen><prompt>$</prompt> <userinput>swift -A http://127.0.0.1:8080/auth/v1.0 -U test:tester -K testing stat</userinput>
 <computeroutput>Account: AUTH_test
 Containers: 0
 Objects: 0
@@ -527,28 +531,26 @@ Bytes: 0
 Meta Quota-Bytes: 10000
 X-Timestamp: 1374075958.37454
 X-Trans-Id: tx602634cf478546a39b1be-0051e6bc7a</computeroutput></screen>
-            The command below removes the account quota:
-            <screen><prompt>$</prompt> <userinput>swift -A http://127.0.0.1:8080/auth/v1.0 -U admin:admin -K admin --os-storage-url=http://127.0.0.1:8080/v1/AUTH_test post -m quota-bytes:</userinput></screen>
-        </para>
+        <para>This command removes the account quota:</para>
+        <screen><prompt>$</prompt> <userinput>swift -A http://127.0.0.1:8080/auth/v1.0 -U admin:admin -K admin --os-storage-url=http://127.0.0.1:8080/v1/AUTH_test post -m quota-bytes:</userinput></screen>
     </section>
     <section xml:id="object-storage-bulk-delete">
         <title>Bulk delete</title>
-        <para>Will delete multiple files from their account with a
-            single request. Responds to DELETE requests with a header
-            'X-Bulk-Delete: true_value'. The body of the DELETE
-            request will be a newline separated list of files to
-            delete. The files listed must be URL encoded and in the
-            form:
-            <programlisting>
+        <para>Use bulk-delete to delete multiple files from an account
+            with a single request. Responds to DELETE requests with a
+            header 'X-Bulk-Delete: true_value'. The body of the DELETE
+            request is a new line separated list of files to delete.
+            The files listed must be URL encoded and in the
+            form:</para>
+        <programlisting>
     /container_name/obj_name
     </programlisting>
-        </para>
-        <para>If all files were successfully deleted (or did not
-            exist) will return an HTTPOk. If any files failed to
-            delete will return an HTTPBadGateway. In both cases the
-            response body is a json dictionary specifying in the
-            number of files successfully deleted, not found, and a
-            list of the files that failed.</para>
+        <para>If all files are successfully deleted (or did not
+            exist), the operation returns HTTPOk. If any files failed
+            to delete, the operation returns HTTPBadGateway. In both
+            cases the response body is a JSON dictionary that shows
+            the number of files that were successfully deleted or not
+            found. The files that failed are listed.</para>
         <xi:include
             href="../../common/tables/swift-proxy-server-filter-bulk.xml"
         />
@@ -559,9 +561,9 @@ X-Trans-Id: tx602634cf478546a39b1be-0051e6bc7a</computeroutput></screen>
         <para>The <option>swift-drive-audit</option> configuration
             items reference a script that can be run by using
                 <command>cron</command> to watch for bad drives. If
-            errors are detected, it will unmount the bad drive, so
-            that OpenStack Object Storage can work around it. It takes
-            the following options:</para>
+            errors are detected, it unmounts the bad drive, so that
+            OpenStack Object Storage can work around it. It takes the
+            following options:</para>
         <xi:include
             href="../../common/tables/swift-drive-audit-drive-audit.xml"
         />
@@ -594,15 +596,17 @@ X-Trans-Id: tx602634cf478546a39b1be-0051e6bc7a</computeroutput></screen>
             separate different users’ uploads, such as:
                 <uri>https://swift-cluster.example.com/v1/AUTH_account/container/object_prefix</uri>
         </para>
-        <para>Note the form method must be POST and the enctype must
-            be set as <literal>multipart/form-data</literal>.</para>
+        <note>
+            <para>The form method must be POST and the enctype must be
+                set as <literal>multipart/form-data</literal>.</para>
+        </note>
         <para>The redirect attribute is the URL to redirect the
-            browser to after the upload completes. The URL will have
-            status and message query parameters added to it,
-            indicating the HTTP status code for the upload (2xx is
-            success) and a possible message for further information if
-            there was an error (such as <literal>“max_file_size
-                exceeded”</literal>).</para>
+            browser to after the upload completes. The URL has status
+            and message query parameters added to it, indicating the
+            HTTP status code for the upload (2xx is success) and a
+            possible message for further information if there was an
+            error (such as <literal>“max_file_size
+            exceeded”</literal>).</para>
         <para>The <literal>max_file_size</literal> attribute must be
             included and indicates the largest single file upload that
             can be done, in bytes.</para>

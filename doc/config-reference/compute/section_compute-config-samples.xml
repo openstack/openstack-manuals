@@ -1,0 +1,88 @@
+<section xml:id="section_compute-config-samples"
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:ns5="http://www.w3.org/1999/xhtml"
+    xmlns:ns4="http://www.w3.org/2000/svg"
+    xmlns:ns3="http://www.w3.org/1998/Math/MathML"
+    xmlns:ns="http://docbook.org/ns/docbook" version="5.0">
+    <title>Example <filename>nova.conf</filename> configuration
+        files</title>
+    <para>The following sections describe the configuration options in
+        the <filename>nova.conf</filename> file. You must copy the
+            <filename>nova.conf</filename> file to each compute node.
+        The sample <filename>nova.conf</filename> files show examples
+        of specific configurations.</para>
+    <simplesect>
+        <title>Small, private cloud</title>
+        <para>This example <filename>nova.conf</filename> file
+            configures a small private cloud with cloud controller
+            services, database server, and messaging server on the
+            same server. In this case, CONTROLLER_IP represents the IP
+            address of a central server, BRIDGE_INTERFACE represents
+            the bridge such as br100, the NETWORK_INTERFACE represents
+            an interface to your VLAN setup, and passwords are
+            represented as DB_PASSWORD_COMPUTE for your Compute (nova)
+            database password, and RABBIT PASSWORD represents the
+            password to your message queue installation.</para>
+        <programlisting language="ini"><xi:include parse="text" href="../../common/samples/nova.conf"/></programlisting>
+    </simplesect>
+    <simplesect>
+        <title>KVM, Flat, MySQL, and Glance, OpenStack or EC2
+            API</title>
+        <para>This example <filename>nova.conf</filename> file, from
+            an internal Rackspace test system, is used for
+            demonstrations.</para>
+        <programlisting language="ini"><xi:include parse="text" href="../../common/samples/nova.conf"/></programlisting>
+        <figure xml:id="Nova_conf_KVM_Flat">
+            <title>KVM, Flat, MySQL, and Glance, OpenStack or EC2
+                API</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata
+                        fileref="../../common/figures/SCH_5004_V00_NUAC-Network_mode_KVM_Flat_OpenStack.png"
+                        contentwidth="6in"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+    </simplesect>
+    <simplesect>
+        <title>XenServer, Flat networking, MySQL, and Glance,
+            OpenStack API</title>
+        <para>This example <filename>nova.conf</filename> file is from
+            an internal Rackspace test system.</para>
+        <programlisting language="ini">verbose
+nodaemon
+network_manager=nova.network.manager.FlatManager
+image_service=nova.image.glance.GlanceImageService
+flat_network_bridge=xenbr0
+compute_driver=xenapi.XenAPIDriver
+xenapi_connection_url=https://&lt;XenServer IP&gt;
+xenapi_connection_username=root
+xenapi_connection_password=supersecret
+xenapi_image_upload_handler=nova.virt.xenapi.image.glance.GlanceStore
+rescue_timeout=86400
+use_ipv6=true
+
+# To enable flat_injected, currently only works on Debian-based systems
+flat_injected=true
+ipv6_backend=account_identifier
+ca_path=./nova/CA
+
+# Add the following to your conf file if you're running on Ubuntu Maverick
+xenapi_remap_vbd_dev=true
+[database]
+connection=mysql://root:&lt;password&gt;@127.0.0.1/nova</programlisting>
+        <figure xml:id="Nova_conf_XEN_Flat">
+            <title>KVM, Flat, MySQL, and Glance, OpenStack or EC2
+                API</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata
+                        fileref="../../common/figures/SCH_5005_V00_NUAC-Network_mode_XEN_Flat_OpenStack.png"
+                        scale="60"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+    </simplesect>
+</section>

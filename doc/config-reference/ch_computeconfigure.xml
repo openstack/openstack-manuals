@@ -4,64 +4,41 @@
   xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
   xml:id="ch_configuring-openstack-compute">
   <title>Compute</title>
-  <para>The OpenStack Compute service is a cloud computing
-  fabric controller, the main part of an IaaS system. It can
-  be used for hosting and manging cloud computing systems.
-  This section describes the OpenStack Compute configuration
-  options.</para>
-  <section xml:id="configuring-openstack-compute-basics">
-    <?dbhtml stop-chunking?>
-    <title>Post-installation configuration</title>
-
-    <para>Configuring your Compute installation involves many
-      configuration files: the <filename>nova.conf</filename> file,
-      the <filename>api-paste.ini</filename> file, and related Image
-      and Identity management configuration files. This section
-      contains the basics for a simple multi-node installation, but
-      Compute can be configured many ways. You can find networking
-      options and hypervisor options described in separate
-      chapters.</para>
-
-    <section xml:id="setting-flags-in-nova-conf-file">
-      <title>Set configuration options in the
-          <filename>nova.conf</filename> file</title>
-
-      <para>The configuration file <filename>nova.conf</filename> is
-        installed in <filename>/etc/nova</filename> by default. A
-        default set of options are already configured in
-          <filename>nova.conf</filename> when you install
-        manually.</para>
-       <para>Create a <literal>nova</literal> group, so you can set
-        permissions on the configuration file:</para>
-
-      <screen><prompt>$</prompt> <userinput>sudo addgroup nova</userinput></screen>
-
-      <para>The <filename>nova.conf</filename> file should have its
-        owner set to <literal>root:nova</literal>, and mode set to
-          <literal>0640</literal>, since the file could contain your
-        MySQL server’s username and password. You also want to ensure
-        that the <literal>nova</literal> user belongs to the
-          <literal>nova</literal> group.</para>
-      <screen><prompt>$</prompt> <userinput>sudo usermod -g nova nova</userinput>
-<prompt>$</prompt> <userinput>chown -R <option>username</option>:nova /etc/nova</userinput>
-<prompt>$</prompt> <userinput>chmod 640 /etc/nova/nova.conf</userinput></screen>
-    </section>
-
-  <xi:include href="compute/section_compute-config-overview.xml"/>
+  <para>The OpenStack Compute service is a cloud computing fabric
+    controller, which is the main part of an IaaS system. You can use
+    OpenStack Compute to host and manage cloud computing systems. This
+    section describes the OpenStack Compute configuration
+    options.</para>
+  <para>To configure your Compute installation, you must define
+    configuration options in these files:</para>
+  <itemizedlist>
+    <listitem>
+      <para><filename>nova.conf</filename>. Contains most of the
+        Compute configuration options. Resides in the
+          <filename>/etc/nova</filename> directory.</para>
+    </listitem>
+    <listitem>
+      <para><filename>api-paste.ini</filename>. Defines Compute
+        limits. Resides in the <filename>/etc/nova</filename>
+        directory.</para>
+    </listitem>
+    <listitem>
+      <para>Related Image Service and Identity Service management
+        configuration files.</para>
+    </listitem>
+  </itemizedlist>
+  <xi:include href="compute/section_nova-conf.xml"/>
   <section xml:id="configuring-logging">
-    <title>Configuring Logging</title>
-    <para>You can use <filename>nova.conf</filename> file to configure where Compute logs events, the level of
-      logging, and log formats.</para>
+    <title>Configure logging</title>
+    <para>You can use <filename>nova.conf</filename> file to configure
+      where Compute logs events, the level of logging, and log
+      formats.</para>
     <para>To customize log formats for OpenStack Compute, use these
       configuration option settings.</para>
     <xi:include href="../common/tables/nova-logging.xml"/>
   </section>
-  <section xml:id="configuring-hypervisors">
-    <title>Configuring Hypervisors</title>
-    <para>See <xref linkend="section_compute-hypervisors"/> for details.</para>
-  </section>
   <section xml:id="configuring-authentication-authorization">
-    <title>Configuring Authentication and Authorization</title>
+    <title>Configure authentication and authorization</title>
     <para>There are different methods of authentication for the
       OpenStack Compute project, including no authentication. The
       preferred system is the OpenStack Identity Service, code-named
@@ -82,40 +59,47 @@
   <xi:include href="compute/section_compute-configure-migrations.xml"/>
   <section xml:id="configuring-resize">
     <?dbhtml stop-chunking?>
-    <title>Configuring Resize</title>
+    <title>Configure resize</title>
     <para>Resize (or Server resize) is the ability to change the
       flavor of a server, thus allowing it to upscale or downscale
-      according to user needs. For this feature to work
-      properly, some underlying virt layers may need further
-      configuration; this section describes the required configuration
-      steps for each hypervisor layer provided by OpenStack.</para>
+      according to user needs. For this feature to work properly, you
+      might need to configure some underlying virt layers.</para>
+    <section xml:id="kvm-resize">
+      <title>KVM</title>
+      <para>Resize on KVM is implemented currently by transferring the
+        images between compute nodes over ssh. For KVM you need
+        hostnames to resolve properly and passwordless ssh access
+        between your compute hosts. Direct access from one compute
+        host to another is needed to copy the VM file across.</para>
+      <para>Cloud end users can find out how to resize a server by
+        reading the <link
+          xlink:href="http://docs.openstack.org/user-guide/content/nova_cli_resize.html"
+          >OpenStack End User Guide</link>.</para>
+    </section>
     <section xml:id="xenserver-resize">
       <title>XenServer</title>
-      <para>To get resize to work with XenServer (and XCP), please
-        refer to the Dom0 Modifications for Resize/Migration Support
-        section in the OpenStack Compute Administration Guide.</para>
+      <para>To get resize to work with XenServer (and XCP), you need
+        to establish a root trust between all hypervisor nodes and
+        provide an /image mount point to your hypervisors dom0.</para>
     </section>
     <!-- End of XenServer/Resize -->
-  </section>
   </section>
   <!-- End of configuring resize -->
   <xi:include href="compute/section_compute-configure-db.xml"/>
   <!-- Oslo rpc mechanism (such as, Rabbit, Qpid, ZeroMQ) -->
-  <section xml:id="section_compute-components">
-    <title>Components Configuration</title>
-    <xi:include href="../common/section_rpc.xml"/>
-    <xi:include href="../common/section_compute_config-api.xml"/>
-    <xi:include href="../common/section_compute-configure-ec2.xml"/>
-    <xi:include href="../common/section_compute-configure-quotas.xml"/>
-    <xi:include href="../common/section_compute-configure-console.xml"/>
-    <xi:include href="compute/section_compute-configure-service-groups.xml"/>
-    <xi:include href="../common/section_fibrechannel.xml"/>
-    <xi:include href="../common/section_multiple-compute-nodes.xml"/>
-    <xi:include href="compute/section_compute-hypervisors.xml"/>
-    <xi:include href="compute/section_compute-scheduler.xml"/>
-    <xi:include href="compute/section_compute-cells.xml"/>
-    <xi:include href="compute/section_compute-conductor.xml"/>
-    <xi:include href="compute/section_compute-security.xml"/>
-  </section>
+  <xi:include href="../common/section_rpc.xml"/>
+  <xi:include href="../common/section_compute_config-api.xml"/>
+  <xi:include href="../common/section_compute-configure-ec2.xml"/>
+  <xi:include href="../common/section_compute-configure-quotas.xml"/>
+  <xi:include href="../common/section_compute-configure-console.xml"/>
+  <xi:include
+    href="compute/section_compute-configure-service-groups.xml"/>
+  <xi:include href="../common/section_fibrechannel.xml"/>
+  <xi:include href="compute/section_compute-hypervisors.xml"/>
+  <xi:include href="compute/section_compute-scheduler.xml"/>
+  <xi:include href="compute/section_compute-cells.xml"/>
+  <xi:include href="compute/section_compute-conductor.xml"/>
+  <xi:include href="compute/section_compute-security.xml"/>
+  <xi:include href="compute/section_compute-config-samples.xml"/>
   <xi:include href="compute/section_compute-options-reference.xml"/>
 </chapter>

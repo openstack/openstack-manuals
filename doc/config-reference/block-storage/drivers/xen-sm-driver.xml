@@ -7,18 +7,17 @@
         basic storage functionality, including volume creation and
         destruction, on a number of different storage back-ends. It
         also enables the capability of using more sophisticated
-        storage back-ends for operations like cloning/snapshots, etc.
-        The list below shows some of the storage plug-ins already
-        supported in Citrix XenServer and Xen Cloud Platform
-        (XCP):</para>
+        storage back-ends for operations like cloning/snapshots, and
+        so on. Some of the storage plug-ins that are already supported
+        in Citrix XenServer and Xen Cloud Platform (XCP) are:</para>
     <orderedlist>
         <listitem>
-            <para>NFS VHD: Storage repository (SR) plug-in that
-                stores disks as Virtual Hard Disk (VHD) files on a
-                remote Network File System (NFS).</para>
+            <para>NFS VHD: Storage repository (SR) plug-in that stores
+                disks as Virtual Hard Disk (VHD) files on a remote
+                Network File System (NFS).</para>
         </listitem>
         <listitem>
-            <para>Local VHD on LVM: SR plug-in tjat represents disks
+            <para>Local VHD on LVM: SR plug-in that represents disks
                 as VHD disks on Logical Volumes (LVM) within a
                 locally-attached Volume Group.</para>
         </listitem>
@@ -45,8 +44,8 @@
                 existing LUNs on a target.</para>
         </listitem>
         <listitem>
-            <para>LVHD over iSCSI: SR plug-in that represents disks
-                as Logical Volumes within a Volume Group created on an
+            <para>LVHD over iSCSI: SR plug-in that represents disks as
+                Logical Volumes within a Volume Group created on an
                 iSCSI LUN.</para>
         </listitem>
         <listitem>
@@ -63,7 +62,7 @@
                 <listitem>
                     <para><emphasis role="bold">Back-end:</emphasis> A
                         term for a particular storage back-end. This
-                        could be iSCSI, NFS, NetApp etc.</para>
+                        could be iSCSI, NFS, NetApp, and so on.</para>
                 </listitem>
                 <listitem>
                     <para><emphasis role="bold"
@@ -84,8 +83,9 @@
                         decides which back-end is used to create a
                         volume of a particular flavor. Currently, the
                         driver uses a simple "first-fit" policy, where
-                        the first back-end that can successfully create
-                        this volume is the one that is used.</para>
+                        the first back-end that can successfully
+                        create this volume is the one that is
+                        used.</para>
                 </listitem>
             </itemizedlist>
         </simplesect>
@@ -141,7 +141,7 @@
                                 >nova-compute</systemitem> also
                             requires the volume_driver configuration
                             option.)</emphasis>
-                   </para>
+                    </para>
                     <programlisting>
 --volume_driver="nova.volume.xensm.XenSMDriver"
 --use_local_volumes=False
@@ -149,34 +149,28 @@
                 </listitem>
                 <listitem>
                     <para>
-                        <emphasis role="bold">The back-end
-                            configurations that the volume driver uses
-                            need to be created before starting the
-                            volume service.</emphasis>
-                   </para>
-                    <programlisting>
-<prompt>$</prompt> nova-manage sm flavor_create &lt;label> &lt;description>
-
-<prompt>$</prompt> nova-manage sm flavor_delete &lt;label>
-
-<prompt>$</prompt> nova-manage sm backend_add &lt;flavor label> &lt;SR type> [config connection parameters]
-
-Note: SR type and config connection parameters are in keeping with the XenAPI Command Line Interface. http://support.citrix.com/article/CTX124887
-
-<prompt>$</prompt> nova-manage sm backend_delete &lt;back-end-id>
-
-</programlisting>
+                        <emphasis role="bold">You must create the
+                            back-end configurations that the volume
+                            driver uses before you start the volume
+                            service.</emphasis>
+                    </para>
+                    <screen><prompt>$</prompt> <userinput>nova-manage sm flavor_create &lt;label> &lt;description></userinput>  
+<prompt>$</prompt> <userinput>nova-manage sm flavor_delete &lt;label></userinput>
+<prompt>$</prompt> <userinput>nova-manage sm backend_add &lt;flavor label> &lt;SR type> [config connection parameters]</userinput></screen>
+                    <note>
+                        <para>SR type and configuration connection
+                            parameters are in keeping with the <link
+                                xlink:href="http://support.citrix.com/article/CTX124887"
+                                >XenAPI Command Line
+                            Interface</link>.</para>
+                    </note>
+                    <screen><prompt>$</prompt> <userinput>nova-manage sm backend_delete &lt;back-end-id></userinput></screen>
                     <para>Example: For the NFS storage manager
-                        plug-in, the steps below may be used.</para>
-                    <programlisting>
-<prompt>$</prompt> nova-manage sm flavor_create gold "Not all that glitters"
-
-<prompt>$</prompt> nova-manage sm flavor_delete gold
-
-<prompt>$</prompt> nova-manage sm backend_add gold nfs name_label=myback-end server=myserver serverpath=/local/scratch/myname
-
-<prompt>$</prompt> nova-manage sm backend_remove 1
-</programlisting>
+                        plug-in, run these commands:</para>
+                    <screen><prompt>$</prompt> <userinput>nova-manage sm flavor_create gold "Not all that glitters"</userinput>
+<prompt>$</prompt> <userinput>nova-manage sm flavor_delete gold</userinput>
+<prompt>$</prompt> <userinput>nova-manage sm backend_add gold nfs name_label=myback-end server=myserver serverpath=/local/scratch/myname</userinput>
+<prompt>$</prompt> <userinput>nova-manage sm backend_remove 1</userinput></screen>
                 </listitem>
                 <listitem>
                     <para>
@@ -186,7 +180,7 @@ Note: SR type and config connection parameters are in keeping with the XenAPI Co
                                 <systemitem class="service"
                                 >nova-compute</systemitem> with the
                             new configuration options.</emphasis>
-                   </para>
+                    </para>
                 </listitem>
             </itemizedlist>
         </simplesect>
@@ -196,9 +190,9 @@ Note: SR type and config connection parameters are in keeping with the XenAPI Co
                 volume types API. As a result, we simply end up
                 creating volumes in a "first fit" order on the given
                 back-ends.</para>
-            <para>The standard euca-* or OpenStack API commands (such
-                as volume extensions) should be used for creating,
-                destroying, attaching, or detaching volumes.</para>
+            <para>Use the standard <command>euca-*</command> or
+                OpenStack API commands (such as volume extensions) to
+                create, destroy, attach, or detach volumes.</para>
         </simplesect>
     </section>
 </section>
