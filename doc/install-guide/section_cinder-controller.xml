@@ -4,12 +4,12 @@
   xml:id="cinder-controller">
   <title>Configure a Block Storage Service controller</title>
   <note>
-    <para>This section describes how to configure OpenStack Block
-      Storage services on the <firstterm>Controller</firstterm> node and assumes that a
-      second node provides storage through the <systemitem
-        class="service">cinder-volume</systemitem> service. For
-      instructions on how to configure the second node, see <xref
-        linkend="cinder-node"/>.</para>
+     <para>This section describes how to configure OpenStack Block Storage
+         services on the <firstterm>Controller</firstterm> node and assumes that a
+         second node provides storage through the <systemitem
+          class="service">cinder-volume</systemitem> service. For
+         instructions on how to configure the second node, see <xref
+          linkend="cinder-node"/>.</para>
   </note>
   <para>You can configure OpenStack to use various storage systems.
     The examples in this guide show you how to configure LVM.</para>
@@ -31,24 +31,22 @@
         registration.</para>
     </step>
     <step os="ubuntu;rhel;centos;fedora;opensuse;sles">
-      <para>The Block Storage Service stores volume information in a
-        database. The examples in this section use the MySQL database
-        that is used by other OpenStack services.</para>
-      <para>Configure the Block Storage Service to use the database.
-        Replace
-          <literal><replaceable>CINDER_DBPASS</replaceable></literal>
-        with a password of your choice.</para>
+      <para>Configure Block Storage to use your MySQL database. Edit the
+        <filename>/etc/cinder/cinder.conf</filename> file and add the
+        following key under the <literal>[database]</literal> section.
+        Replace <replaceable>CINDER_DBPASS</replaceable> with the password
+        for the Block Storage database that you will create in a later step.
+      </para>
+      <note os="ubuntu"><para>The <filename>/etc/cinder/cinder.conf</filename>
+        file packaged with some distributions does not include the
+        <literal>[database]</literal> section header. You must add this
+        section header to the end of the file before proceeding further.</para>
+      </note>
       <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/cinder/cinder.conf \
   database connection mysql://cinder:<replaceable>CINDER_DBPASS</replaceable>@<replaceable>controller</replaceable>/cinder</userinput></screen>
-      <para os="ubuntu">Edit
-          <filename>/etc/cinder/cinder.conf</filename> and change the
-          <literal>[DEFAULT]</literal> section.</para>
       <programlisting os="ubuntu" language="ini">[database]
 ...
-# The SQLAlchemy connection string used to connect to the
-# database (string value)
-sql_connection = mysql://cinder:CINDER_DBPASS@localhost/cinder
-...</programlisting>
+connection = mysql://cinder:<replaceable>CINDER_DBPASS</replaceable>@<replaceable>controller</replaceable>/cinder</programlisting>
     </step>
     <step os="rhel;centos;fedora;opensuse;sles">
       <para>To create the Block Storage Service database and tables
@@ -92,7 +90,8 @@ auth_port = 35357
 auth_protocol = http
 admin_tenant_name=service
 admin_user=cinder
-admin_password=<replaceable>CINDER_PASS</replaceable></programlisting>
+admin_password=<replaceable>CINDER_PASS</replaceable>
+</programlisting>
     </step>
     <step os="ubuntu">
       <para>Configure Block Storage to use the RabbitMQ message
