@@ -623,6 +623,24 @@ bind-address            = 192.168.0.10</programlisting>
       the <literal>auth</literal> option to
       <literal>no</literal>.</para>
     <screen os="fedora;centos;rhel"> <userinput>auth=no</userinput></screen>
+    <note os="fedora;centos;rhel">
+      <para>
+        To simplify configuration, the Qpid examples in this guide do not use
+        authentication. However, we strongly advise enabling authentication
+        for production deployments. For more information on securing Qpid
+        refer to the
+        <link xlink:href=
+            "http://qpid.apache.org/books/trunk/AMQP-Messaging-Broker-CPP-Book/html/chap-Messaging_User_Guide-Security.html"
+        >Qpid Documentation</link>.
+      </para>
+      <para>
+        After enabling Qpid authenticaton, you must update the configuration
+        file of each OpenStack service to ensure that the
+        <literal>qpid_username</literal> and <literal>qpid_password</literal>
+        configuration keys refer to a valid Qpid username and password,
+        respectively.
+      </para>
+    </note>
     <para os="fedora;centos;rhel">Start Qpid and set it to start
       automatically when the system boots.</para>
     <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>service qpidd start</userinput>
