@@ -149,21 +149,22 @@ rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/cinder/cinder.conf \
   DEFAULT rabbit_password <replaceable>RABBIT_PASS</replaceable></userinput></screen>
     </step>
-
     <step os="ubuntu;rhel;centos;fedora;opensuse;sles">
-      <para>Configure the Block Storage Service on this node to use
-        the Cinder database on the controller node:</para>
+      <para>Configure Block Storage to use your MySQL database. Edit the
+        <filename>/etc/cinder/cinder.conf</filename> file and add the following
+        key under the <literal>[database]</literal> section. Replace
+        <replaceable>CINDER_DBPASS</replaceable> with the password you chose
+        for the Block Storage database.</para>
+      <note os="ubuntu"><para>The <filename>/etc/cinder/cinder.conf</filename>
+        file packaged with some distributions does not include the
+        <literal>[database]</literal> section header. You must add this
+        section header to the end of the file before proceeding further.</para>
+      </note>
       <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/cinder/cinder.conf \
   database connection mysql://cinder:<replaceable>CINDER_DBPASS</replaceable>@<replaceable>controller</replaceable>/cinder</userinput></screen>
-      <para os="ubuntu">Edit
-          <filename>/etc/cinder/cinder.conf</filename> and change the
-          <literal>[database]</literal> section:</para>
       <programlisting os="ubuntu" language="ini">[database]
 ...
-# The SQLAlchemy connection string used to connect to the
-# database (string value)
-connection = mysql://cinder:CINDER_DBPASS@controller/cinder
-...</programlisting>
+connection = mysql://cinder:<replaceable>CINDER_DBPASS</replaceable>@<replaceable>controller</replaceable>/cinder</programlisting>
     </step>
 
 
