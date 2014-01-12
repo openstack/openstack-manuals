@@ -22,21 +22,35 @@
   <xi:include href="../common/section_getstart_conceptual_arch.xml"/>
   <xi:include href="../common/section_getstart_logical_arch.xml"/>
   <section xml:id="overview-architecture">
-    <title>Sample architectures</title>
+    <title>Example architectures</title>
     <para>This guide enables you to choose your own OpenStack
       adventure. OpenStack is highly configurable to meet different
-      needs with various storage and networking options.</para>
-    <para>This guide offers the following sample architecture
-      examples:</para>
+      needs with various compute, networking, and storage options.</para>
+    <para>This guide uses the following example architectures:</para>
     <itemizedlist>
       <listitem>
-        <para>Example basic architecture. This architecture has two
-          nodes. A cloud controller node runs the control services,
-          such as database, message queue, and API services for the
-          Identity Service, Image Service, and Compute. A compute node
-          runs the hypervisor where virtual machines live.</para>
-        <figure xml:id="basic-architecture">
-          <title>Basic architecture</title>
+        <para>Basic architecture with legacy networking</para>
+        <itemizedlist>
+          <listitem>
+            <para>The controller node runs the Identity Service, Image Service,
+              Dashboard, and management portion of Compute. It also contains
+              the associated API services, MySQL databases, and messaging
+              system.</para>
+          </listitem>
+          <listitem>
+            <para>The compute node runs the hypervisor portion of Compute,
+              which operates tenant virtual machines. By default, Compute uses
+              KVM as the hypervisor. Compute also provisions and operates
+              tenant networks and implements security groups. You may run more
+              than one compute node.</para>
+          </listitem>
+          <listitem>
+            <para>When implementing this architecture, skip
+              <xref linkend="ch_neutron" />.</para>
+          </listitem>
+        </itemizedlist>
+        <figure xml:id="basic-architecture-with-legacy-networking">
+          <title>Basic Architecture with Legacy Networking</title>
           <mediaobject>
             <imageobject>
               <imagedata contentwidth="6in"
@@ -44,35 +58,47 @@
             </imageobject>
           </mediaobject>
         </figure>
-        <para>Technical details: Compute with KVM, local ephemeral
-          storage, <systemitem class="service">nova-network</systemitem> in multi-host flatDHCP mode, MySQL,
-          nova-api, default scheduler, <phrase os="fedora;rhel;centos"
-            >Qpid for messaging,</phrase><phrase
-            os="ubuntu;debian;opensuse">RabbitMQ for
-            messaging,</phrase> Identity Service  with SQL back end, Image Service with
-          local storage, Dashboard (optional extra). Uses as many
-          default options as possible.</para>
       </listitem>
       <listitem>
-        <para>Example architecture from the <link
-            xlink:href="http://docs.openstack.org/trunk/openstack-ops/content/"
-              ><citetitle>OpenStack Operations
-            Guide</citetitle></link>. Same as the basic architecture
-          but with the Block Storage Service LVM/iSCSI back end, <systemitem class="service">nova-network</systemitem> in
-          multi-host with FlatDHCP, Live Migration back end, shared
-          storage with NFS, and Object Storage. One controller node
-          and multiple compute nodes.</para>
-      </listitem>
-      <listitem>
-        <para>Example architecture with Identity Service and Object
-          Storage: Four-node installation with Identity Service on the
-          proxy node and three replications of object servers.
-          Dashboard does not support this configuration so examples
-          are with CLI.</para>
-      </listitem>
-      <listitem>
-        <para>Example architecture with OpenStack Networking.</para>
+        <para>Basic architecture with OpenStack Networking (Neutron)</para>
+        <itemizedlist>
+          <listitem>
+            <para>The controller node runs the Identity Service, Image Service,
+              Dashboard, and management portions of Compute and Networking.
+              It also contains the associated API services, MySQL databases,
+              and messaging system.</para>
+          </listitem>
+          <listitem>
+            <para>The network node runs the Networking plug-in agent and
+              several layer 3 agents that provision tenant networks and
+              provide services to them, including routing, NAT, and DHCP.
+              It also handles external (internet) connectivity for tenant
+              virtual machines.</para>
+          </listitem>
+          <listitem>
+            <para>The compute node runs the hypervisor portion of Compute,
+              which operates tenant virtual machines. By default, Compute uses
+              KVM as the hypervisor. The compute node also runs the Networking
+              plug-in agent, which operates tenant networks and implements
+              security groups. You may run more than one compute node.</para>
+          </listitem>
+          <listitem>
+            <para>When implementing this architecture, skip
+              <xref linkend="nova-network" />.</para>
+          </listitem>
+        </itemizedlist>
+        <figure xml:id="basic-architecture-with-virtual-networking">
+          <title>Basic Architecture with OpenStack Networking (Neutron)</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata contentwidth="5in"
+                fileref="../common/figures/Neutron-PhysNet-Diagram.png"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
       </listitem>
     </itemizedlist>
+    <para>You may add nodes that run Block Storage or Object Storage to
+      either of these architectures.</para>
   </section>
 </chapter>
