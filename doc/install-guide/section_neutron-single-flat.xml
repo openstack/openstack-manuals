@@ -122,7 +122,8 @@
             <itemizedlist>
                 <listitem os="ubuntu;debian;opensuse;sles">
                     <para>RabbitMQ is running with the default guest user
-                        and password.</para>
+                        and password <replaceable>RABBIT_PASS</replaceable>.
+                    </para>
                 </listitem>
                 <listitem os="rhel;centos;fedora">
                     <para>Qpid is running with the default guest user
@@ -130,8 +131,7 @@
                 </listitem>
                 <listitem os="rhel;centos;fedora;opensuse;sles;ubuntu">
                     <para>MySQL server (user is <emphasis role="bold"
-                            >root</emphasis> and password is <emphasis
-                            role="bold">root</emphasis>).</para>
+                            >root</emphasis>).</para>
                 </listitem>
             </itemizedlist>
         </listitem>
@@ -342,7 +342,7 @@ connection = mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@<replacea
                                    /etc/neutron/neutron.conf</filename>
                                 configuration file to use the plug-in, message queue,
                                 and database configuration:</para>
-                            <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf DATABASE sql_connection \
+                            <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf DATABASE connection \
    mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@controller/neutron</userinput></screen>
                             <para>Configure Networking to use your chosen plug-in:</para>
                             <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf DEFAULT \
@@ -536,7 +536,7 @@ export OS_AUTH_URL=http://<replaceable>controller</replaceable>:5000/v2.0/</prog
             </listitem>
             <listitem>
                 <para>Create a subnet on the network:</para>
-                <screen><prompt>#</prompt> <userinput>neutron subnet-create --tenant-id $TENANT_ID sharednet1 30.0.0.0/24</userinput>
+                <screen><prompt>$</prompt> <userinput>neutron subnet-create --tenant-id $TENANT_ID sharednet1 30.0.0.0/24</userinput>
 <computeroutput>Created a new subnet:
 +------------------+--------------------------------------------+
 | Field            | Value                                      |
@@ -556,10 +556,10 @@ export OS_AUTH_URL=http://<replaceable>controller</replaceable>:5000/v2.0/</prog
             </listitem>
             <listitem>
                 <para>Create a server for tenant A:</para>
-                <screen><prompt>#</prompt> <userinput>nova --os-tenant-name TenantA --os-username UserA --os-password password \
+                <screen><prompt>$</prompt> <userinput>nova --os-tenant-name TenantA --os-username UserA --os-password password \
   --os-auth-url=http://localhost:5000/v2.0 boot --image tty --flavor 1 \
   --nic net-id=04457b44-e22a-4a5c-be54-a53a9b2818e7 TenantA_VM1</userinput></screen>
-                <screen><prompt>#</prompt> <userinput>nova --os-tenant-name TenantA --os-username UserA --os-password password \
+                <screen><prompt>$</prompt> <userinput>nova --os-tenant-name TenantA --os-username UserA --os-password password \
 --os-auth-url=http://localhost:5000/v2.0  list</userinput>
 <computeroutput>+--------------------------------------+-------------+--------+---------------------+
 | ID                                   | Name        | Status | Networks            |
@@ -576,7 +576,7 @@ export OS_AUTH_URL=http://<replaceable>controller</replaceable>:5000/v2.0/</prog
             <listitem>
                 <para>Ping the public network within the server of
                     tenant A:</para>
-                <screen><prompt>#</prompt> <userinput>ping 192.168.1.1</userinput>
+                <screen><prompt>$</prompt> <userinput>ping 192.168.1.1</userinput>
 <computeroutput>PING 192.168.1.1 (192.168.1.1) 56(84) bytes of data.
 64 bytes from 192.168.1.1: icmp_req=1 ttl=64 time=1.74 ms
 64 bytes from 192.168.1.1: icmp_req=2 ttl=64 time=1.50 ms
