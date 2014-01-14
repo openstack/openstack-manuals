@@ -170,6 +170,16 @@ admin_password = <replaceable>CEILOMETER_PASS</replaceable></programlisting>
       <screen><prompt>#</prompt> <userinput>service ceilometer-agent-central restart</userinput>
 <prompt>#</prompt> <userinput>service ceilometer-api restart</userinput>
 <prompt>#</prompt> <userinput>service ceilometer-collector restart</userinput></screen>
+      <note>
+        <para>
+          If log files are not generated for each service automatically, you
+          should edit the <filename>/etc/ceilometer/ceilometer.conf</filename>
+          and change the <literal>[DEFAULT]</literal> section:
+        </para>
+        <programlisting os="ubuntu;debian" language="ini">[DEFAULT]
+...
+log_dir = /var/log/ceilometer</programlisting>
+      </note>
     </step>
     <step os="rhel;fedora;centos;opensuse;sles">
       <para>Start the <systemitem class="service"
