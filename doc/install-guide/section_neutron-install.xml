@@ -199,9 +199,9 @@ IDENTIFIED BY '<replaceable>NEUTRON_DBPASS</replaceable>';</userinput></screen>
     </warning>
     <procedure>
       <step>
-        <para>Install the OpenStack Networking service on the network
-          node:</para>
-        <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install neutron-server neutron-dhcp-agent neutron-plugin-openvswitch-agent neutron-l3-agent</userinput></screen>
+        <para>Install the Networking packages and any dependencies.
+          </para>
+        <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install neutron-dhcp-agent neutron-l3-agent</userinput></screen>
         <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-neutron</userinput></screen>
         <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-neutron openstack-neutron-l3-agent \
    openstack-neutron-dhcp-agent openstack-neutron-metadata-agent</userinput></screen>
@@ -488,16 +488,13 @@ metadata_proxy_shared_secret = <replaceable>METADATA_PASS</replaceable></program
       </step>
       <step>
         <para>Restart Networking services.</para>
-        <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service neutron-server restart</userinput>
-<prompt>#</prompt> <userinput>service neutron-dhcp-agent restart</userinput>
+        <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service neutron-dhcp-agent restart</userinput>
 <prompt>#</prompt> <userinput>service neutron-l3-agent restart</userinput>
 <prompt>#</prompt> <userinput>service neutron-metadata-agent restart</userinput></screen>
-        <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>service neutron-server restart</userinput>
-<prompt>#</prompt> <userinput>service neutron-dhcp-agent restart</userinput>
+        <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>service neutron-dhcp-agent restart</userinput>
 <prompt>#</prompt> <userinput>service neutron-l3-agent restart</userinput>
 <prompt>#</prompt> <userinput>service neutron-metadata-agent restart</userinput></screen>
-        <screen os="sles;opensuse"><prompt>#</prompt> <userinput>service openstack-neutron restart</userinput>
-<prompt>#</prompt> <userinput>service openstack-neutron-dhcp-agent restart</userinput>
+        <screen os="sles;opensuse"><prompt>#</prompt> <userinput>service openstack-neutron-dhcp-agent restart</userinput>
 <prompt>#</prompt> <userinput>service openstack-neutron-l3-agent restart</userinput>
 <prompt>#</prompt> <userinput>service openstack-neutron-metadata-agent restart</userinput></screen>
         <para>Also restart your chosen Networking plug-in agent, for example, Open vSwitch.</para>
