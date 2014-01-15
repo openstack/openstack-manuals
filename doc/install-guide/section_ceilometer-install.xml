@@ -11,7 +11,7 @@
       node, you must use this procedure to install the core
       components on the controller node.</para>
     <step>
-      <para>Install the Telemetry Service on the controller
+      <para>Install the Telemetry service on the controller
         node:</para>
       <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install ceilometer-api ceilometer-collector ceilometer-agent-central python-ceilometerclient</userinput></screen>
       <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-ceilometer-api openstack-ceilometer-collector openstack-ceilometer-central python-ceilometerclient</userinput></screen>
@@ -26,7 +26,7 @@
         registration.</para>
     </step>
     <step>
-      <para>The Telemetry Service uses a database to store information.
+      <para>The Telemetry service uses a database to store information.
         Specify the location of the database in the configuration
         file. The examples use a MongoDB database on the controller
         node:</para>
@@ -65,7 +65,7 @@
             } )</userinput></screen>
     </step>
     <step>
-      <para>Configure the Telemetry Service to use the database:</para>
+      <para>Configure the Telemetry service to use the database:</para>
       <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf \
   database connection mongodb://ceilometer:<replaceable>CEILOMETER_DBPASS</replaceable>@<replaceable>controller</replaceable>:27017/ceilometer</userinput></screen>
       <para os="ubuntu;debian">Edit the
@@ -82,7 +82,7 @@ connection = mongodb://ceilometer:<replaceable>CEILOMETER_DBPASS</replaceable>@<
     </step>
     <step>
       <para>You must define an secret key that is used as a shared
-        secret among Telemetry Service nodes. Use
+        secret among Telemetry service nodes. Use
           <command>openssl</command> to generate a random token and
         store it in the configuration file:</para>
       <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>ADMIN_TOKEN=$(openssl rand -hex 10)</userinput>
@@ -122,7 +122,7 @@ rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
 
     <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
       <para>Create a <literal>ceilometer</literal> user that the
-        Telemetry Service uses to authenticate with the Identity
+        Telemetry service uses to authenticate with the Identity
         Service. Use the <literal>service</literal> tenant and give
         the user the <literal>admin</literal> role:</para>
       <screen><prompt>#</prompt> <userinput>keystone user-create --name=ceilometer --pass=<replaceable>CEILOMETER_PASS</replaceable> --email=<replaceable>ceilometer@example.com</replaceable></userinput>
@@ -130,7 +130,7 @@ rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
     </step>
     <step>
       <para>Add the credentials to the configuration files for the
-        Telemetry Service:</para>
+        Telemetry service:</para>
       <screen os="centos;rhel;fedora;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf \
   keystone_authtoken auth_host <replaceable>controller</replaceable></userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf \
@@ -166,7 +166,7 @@ os_tenant_name = service
 os_password = <replaceable>CEILOMETER_PASS</replaceable></programlisting>
     </step>
     <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
-      <para>Register the Telemetry Service with the Identity Service so
+      <para>Register the Telemetry service with the Identity Service so
         that other OpenStack services can locate it. Use the
           <command>keystone</command> command to register the service
         and specify the endpoint:</para>
