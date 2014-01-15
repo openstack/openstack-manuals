@@ -131,11 +131,22 @@ rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
     <step>
       <para>Add the credentials to the configuration files for the
         Telemetry Service:</para>
-      <screen os="centos;rhel;fedora;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf keystone_authtoken auth_host <replaceable>controller</replaceable></userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf keystone_authtoken admin_user ceilometer</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf keystone_authtoken admin_tenant_name service</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf keystone_authtoken auth_protocol http</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf keystone_authtoken admin_password <replaceable>CEILOMETER_PASS</replaceable></userinput></screen>
+      <screen os="centos;rhel;fedora;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf \
+  keystone_authtoken auth_host <replaceable>controller</replaceable></userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf \
+  keystone_authtoken admin_user ceilometer</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf \
+  keystone_authtoken admin_tenant_name service</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf \
+  keystone_authtoken auth_protocol http</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf \
+  keystone_authtoken admin_password <replaceable>CEILOMETER_PASS</replaceable></userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf \
+  service_credentials os_username ceilometer</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf \
+  service_credentials os_tenant_name service</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf \
+  service_credentials os_password <replaceable>CEILOMETER_PASS</replaceable></userinput></screen>
       <para os="ubuntu;debian">Edit the
           <filename>/etc/ceilometer/ceilometer.conf</filename> file
         and change the <literal>[keystone_authtoken]</literal>
@@ -147,6 +158,12 @@ auth_protocol = http
 admin_tenant_name = service
 admin_user = ceilometer
 admin_password = <replaceable>CEILOMETER_PASS</replaceable></programlisting>
+      <para os="ubuntu;debian">Also set the
+        <literal>[service_credentials]</literal> section:</para>
+      <programlisting os="ubuntu;debian" language="ini">[service_credentials]
+os_username = ceilometer
+os_tenant_name = service
+os_password = <replaceable>CEILOMETER_PASS</replaceable></programlisting>
     </step>
     <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
       <para>Register the Telemetry Service with the Identity Service so
