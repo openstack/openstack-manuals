@@ -52,7 +52,8 @@
     <para>For simple test cases, you can use machines with a single
       network interface card.</para>
     <para>The following example configures Networking on two networks
-      with static IP addresses and manually manages a list of host
+      with <glossterm baseform="static IP address">static IP addresses</glossterm>
+      and manually manages a list of host
       names on each machine. If you manage a large network, you might
       already have systems in place to manage this. If so, you can
       skip this section but note that the rest of this guide assumes
@@ -88,7 +89,8 @@
     </note>
     <warning os="centos;rhel"><para>
     RHEL and derivatives including CentOS and Scientific Linux enable a
-    restrictive firewall by default. During this installation, certain steps
+    restrictive <glossterm>firewall</glossterm> by default. During this
+    installation, certain steps
     will fail unless you alter this setting or disable the firewall. For
     further information about securing your installation, refer to the
     <link xlink:href="http://docs.openstack.org/sec/">OpenStack Security Guide</link>.</para>
@@ -225,7 +227,8 @@ iface eth1 inet static
   <section xml:id="basics-ntp">
     <title>Network Time Protocol (NTP)</title>
     <para>To synchronize services across multiple machines, you must
-      install NTP. The examples in this guide configure the controller
+      install <glossterm baseform="Network Time Protocol (NTP)">NTP</glossterm>.
+      The examples in this guide configure the controller
       node as the reference server and any additional nodes to set
       their time from the controller node.</para>
     <para>Install the <literal>ntp</literal> package on each system
@@ -484,7 +487,8 @@ bind-address            = 192.168.0.10</programlisting>
       access the RDO repository.</para>
     <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>yum install openstack-utils</userinput></screen>
     <para os="opensuse;sles">Use the Open Build Service repositories
-      for Havana based on your openSUSE or SUSE Linux Enterprise
+      for <glossterm>Havana</glossterm> based on your openSUSE or
+      SUSE Linux Enterprise
       Server version, for example if you run openSUSE 12.3 use:</para>
     <screen os="opensuse"><prompt>#</prompt> <userinput>zypper addrepo -f obs://Cloud:OpenStack:Havana/openSUSE_12.3 Havana</userinput></screen>
     <para os="sles"> If you use SUSE Linux Enterprise Server 11 SP3,
@@ -533,7 +537,8 @@ bind-address            = 192.168.0.10</programlisting>
         allows you to install newer releases of OpenStack on the
         stable supported version of Ubuntu.</para>
       <step>
-        <para>Install the Ubuntu Cloud Archive for Havana:
+        <para>Install the Ubuntu Cloud Archive for
+          <glossterm>Havana</glossterm>:
           <screen><prompt>#</prompt> <userinput>apt-get install python-software-properties</userinput>
 <prompt>#</prompt> <userinput>add-apt-repository cloud-archive:havana</userinput></screen></para>
       </step>
@@ -547,7 +552,8 @@ bind-address            = 192.168.0.10</programlisting>
     <procedure xml:id="debian-cloud-archive" os="debian">
       <title>To use the Debian Wheezy backports archive for
         Havana</title>
-      <para>The Havana release is available only in Debian Sid
+      <para>The <glossterm>Havana</glossterm> release is available
+        only in Debian Sid
         (otherwise called Unstable). However, the Debian maintainers
         of OpenStack also maintain a non-official Debian repository
         for OpenStack containing Wheezy backports.</para>
@@ -609,10 +615,12 @@ bind-address            = 192.168.0.10</programlisting>
     <title>Messaging server</title>
     <para>On the controller node, install the messaging queue server.
       Typically this is <phrase os="ubuntu;debian;opensuse;sles"
-        >RabbitMQ</phrase><phrase os="centos;rhel;fedora"
-        >Qpid</phrase> but <phrase os="ubuntu;debian;opensuse;sles"
-        >Qpid</phrase><phrase os="centos;rhel;fedora"
-        >RabbitMQ</phrase> and ZeroMQ (0MQ) are also available.</para>
+        ><glossterm>RabbitMQ</glossterm></phrase>
+      <phrase os="centos;rhel;fedora">
+        <glossterm>Qpid</glossterm></phrase> but
+      <phrase os="ubuntu;debian;opensuse;sles"><glossterm>Qpid</glossterm></phrase>
+        <phrase os="centos;rhel;fedora"><glossterm>RabbitMQ</glossterm></phrase>
+    and <glossterm>ZeroMQ</glossterm> (0MQ) are also available.</para>
     <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install rabbitmq-server</userinput></screen>
     <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install rabbitmq-server</userinput></screen>
     <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>yum install qpid-cpp-server memcached</userinput></screen>
