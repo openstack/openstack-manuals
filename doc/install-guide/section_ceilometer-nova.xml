@@ -25,21 +25,27 @@
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT \
   instance_usage_audit_period hour</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT \
-  notify_on_state_change vm_and_task_state</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT \
-  notification_driver nova.openstack.common.notifier.rpc_notifier</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT \
-  notification_driver ceilometer.compute.nova_notifier</userinput></screen>
-      <para os="ubuntu;debian">Edit the
+  notify_on_state_change vm_and_task_state</userinput></screen>
+      <note os="fedora;rhel;centos;opensuse;sles">
+        <para>The <option>notification_driver</option> option is a multi
+          valued option, which
+          <application>openstack-config</application> cannot set
+          properly. See <xref linkend="basics-packages"/>.
+        </para>
+      </note>
+      <para>Edit the
           <filename>/etc/nova/nova.conf</filename> file and add the
         following lines to the <literal>[DEFAULT]</literal>
         section:</para>
-      <programlisting os="ubuntu;debian" language="ini">...
-[DEFAULT]
+      <programlisting os="ubuntu;debian" language="ini">[DEFAULT]
 ...
 instance_usage_audit=True
 instance_usage_audit_period=hour
 notify_on_state_change=vm_and_task_state
+notification_driver=nova.openstack.common.notifier.rpc_notifier
+notification_driver=ceilometer.compute.nova_notifier</programlisting>
+      <programlisting os="fedora;rhel;centos;opensuse;sles" language="ini">[DEFAULT]
+...
 notification_driver=nova.openstack.common.notifier.rpc_notifier
 notification_driver=ceilometer.compute.nova_notifier</programlisting>
     </step>
