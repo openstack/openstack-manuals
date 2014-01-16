@@ -85,23 +85,23 @@ connection = mongodb://ceilometer:<replaceable>CEILOMETER_DBPASS</replaceable>@<
         secret among Telemetry service nodes. Use
           <command>openssl</command> to generate a random token and
         store it in the configuration file:</para>
-      <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>ADMIN_TOKEN=$(openssl rand -hex 10)</userinput>
-<prompt>#</prompt> <userinput>echo $ADMIN_TOKEN</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf publisher_rpc metering_secret $ADMIN_TOKEN</userinput></screen>
+      <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>CEILOMETER_TOKEN=$(openssl rand -hex 10)</userinput>
+<prompt>#</prompt> <userinput>echo $CEILOMETER_TOKEN</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf publisher_rpc metering_secret $CEILOMETER_TOKEN</userinput></screen>
       <para os="sles;opensuse">For SUSE Linux Enterprise, run the
         following command:</para>
-      <screen os="opensuse;sles"><prompt>#</prompt> <userinput>ADMIN_TOKEN=$(openssl rand 10|hexdump  -e '1/1 "%.2x"')</userinput></screen>
+      <screen os="opensuse;sles"><prompt>#</prompt> <userinput>CEILOMETER_TOKEN=$(openssl rand 10|hexdump  -e '1/1 "%.2x"')</userinput></screen>
       <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>openssl rand -hex 10</userinput></screen>
       <para os="ubuntu;debian">Edit the
           <filename>/etc/ceilometer/ceilometer.conf</filename> file
         and change the <literal>[publisher_rpc]</literal> section. Replace
-          <replaceable>ADMIN_TOKEN</replaceable> with the results of
+          <replaceable>CEILOMETER_TOKEN</replaceable> with the results of
         the <literal>openssl</literal> command:</para>
       <programlisting os="ubuntu;debian" language="ini">...
 [publisher_rpc]
 ...
 # Secret value for signing metering messages (string value)
-metering_secret = <replaceable>ADMIN_TOKEN</replaceable>
+metering_secret = <replaceable>CEILOMETER_TOKEN</replaceable>
 ...</programlisting>
     </step>
 
