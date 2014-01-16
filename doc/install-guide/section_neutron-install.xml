@@ -462,6 +462,18 @@ metadata_proxy_shared_secret = <replaceable>METADATA_PASS</replaceable></program
             case-sensitive and must match the endpoint region defined
             in Keystone.</para>
         </note>
+        <note>
+          <para>If you serve the OpenStack Networking API over HTTPS with
+            self-signed certificates, you must perform additional configuration
+            for the metadata agent because Networking cannot validate the SSL
+            certificates from the service catalog.</para>
+          <para os="debian;ubuntu">Add this statement to the <literal>[DEFAULT]</literal> section:</para>
+          <programlisting os="debian;ubuntu" language="ini">
+neutron_insecure = True
+          </programlisting>
+          <para os="opensuse;sles;rhel;centos;fedora">Set the required keys:</para>
+          <screen os="opensuse;sles;rhel;centos;fedora"><prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/metadata_agent.ini DEFAULT neutron_insecure True</userinput></screen>
+        </note>
       </step>
       <step os="rhel;centos;fedora">
         <para>The <systemitem class="service">neutron-server</systemitem>
