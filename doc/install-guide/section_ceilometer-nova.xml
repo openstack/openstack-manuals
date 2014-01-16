@@ -39,15 +39,15 @@
         section:</para>
       <programlisting os="ubuntu;debian" language="ini">[DEFAULT]
 ...
-instance_usage_audit=True
-instance_usage_audit_period=hour
-notify_on_state_change=vm_and_task_state
-notification_driver=nova.openstack.common.notifier.rpc_notifier
-notification_driver=ceilometer.compute.nova_notifier</programlisting>
-      <programlisting os="fedora;rhel;centos;opensuse;sles" language="ini">[DEFAULT]
+instance_usage_audit = True
+instance_usage_audit_period = hour
+notify_on_state_change = vm_and_task_state
+notification_driver = nova.openstack.common.notifier.rpc_notifier
+notification_driver = ceilometer.compute.nova_notifier</programlisting>
+      <programlisting os = "fedora;rhel;centos;opensuse;sles" language="ini">[DEFAULT]
 ...
-notification_driver=nova.openstack.common.notifier.rpc_notifier
-notification_driver=ceilometer.compute.nova_notifier</programlisting>
+notification_driver = nova.openstack.common.notifier.rpc_notifier
+notification_driver = ceilometer.compute.nova_notifier</programlisting>
     </step>
     <step>
       <para>You must set the secret key that you defined previously.
@@ -65,6 +65,70 @@ notification_driver=ceilometer.compute.nova_notifier</programlisting>
 metering_secret = ADMIN_TOKEN
 ...</programlisting>
     </step>
+
+    <step os="opensuse;sles;ubuntu">
+      <para>Configure the RabbitMQ access:</para>
+      <screen os="opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf DEFAULT rabbit_host controller</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf DEFAULT rabbit_password <replaceable>RABBIT_PASS</replaceable></userinput></screen>
+      <para os="ubuntu">Edit the <filename>/etc/ceilometer/ceilometer.conf</filename> file and update the <literal>[DEFAULT]</literal> section:</para>
+      <programlisting os="ubuntu" language="ini">[DEFAULT]
+rabbit_host = <replaceable>controller</replaceable>
+rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
+    </step>
+
+    <step os="rhel;centos;fedora">
+      <para>Configure the QPid access:</para>
+      <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf DEFAULT qpid_hostname <replaceable>controller</replaceable></userinput></screen>
+    </step>
+
+    <step>
+      <para>Add the Identity service credentials:</para>
+      <screen os="centos;rhel;fedora;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf \
+  keystone_authtoken auth_host <replaceable>controller</replaceable></userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf \
+  keystone_authtoken admin_user ceilometer</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf \
+  keystone_authtoken admin_tenant_name service</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf \
+  keystone_authtoken auth_protocol http</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf \
+  keystone_authtoken admin_password <replaceable>CEILOMETER_PASS</replaceable></userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf \
+  service_credentials os_username ceilometer</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf \
+  service_credentials os_tenant_name service</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf \
+  service_credentials os_password <replaceable>CEILOMETER_PASS</replaceable></userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf \
+  service_credentials os_auth_url http://<replaceable>controller</replaceable>:5000/v2.0</userinput></screen>
+      <para os="ubuntu;debian">Edit the
+          <filename>/etc/ceilometer/ceilometer.conf</filename> file
+        and change the <literal>[keystone_authtoken]</literal>
+        section:</para>
+      <programlisting os="ubuntu;debian" language="ini">[keystone_authtoken]
+auth_host = controller
+auth_port = 35357
+auth_protocol = http
+admin_tenant_name = service
+admin_user = ceilometer
+admin_password = <replaceable>CEILOMETER_PASS</replaceable></programlisting>
+      <para os="ubuntu;debian">Also set the
+        <literal>[service_credentials]</literal> section:</para>
+      <programlisting os="ubuntu;debian" language="ini">[service_credentials]
+os_auth_url = http://<replaceable>controller</replaceable>:5000/v2.0
+os_username = ceilometer
+os_tenant_name = service
+os_password = <replaceable>CEILOMETER_PASS</replaceable></programlisting>
+    </step>
+
+    <step os="ubuntu">
+      <para>Configure the log directory.</para>
+      <para>Edit the <filename>/etc/ceilometer/ceilometer.conf</filename> file
+      and update the <literal>[DEFAULT]</literal> section:</para>
+       <programlisting os="ubuntu" language="ini">[DEFAULT]
+log_dir = /var/log/ceilometer</programlisting>
+    </step>
+
     <step os="ubuntu;debian">
       <para>Restart the service with its new settings:</para>
       <screen><prompt>#</prompt> <userinput>service ceilometer-agent-compute restart</userinput></screen>
