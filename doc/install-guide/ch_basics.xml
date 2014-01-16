@@ -476,14 +476,6 @@ bind-address            = 192.168.0.10</programlisting>
         <package>openstack-utils</package>. This verifies that you can
       access the RDO repository.</para>
     <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>yum install openstack-utils</userinput></screen>
-    <para os="fedora;centos;rhel">The
-        <package>openstack-selinux</package> package includes the policy files that are required to configure SELinux during OpenStack installation.
-      Install <package>openstack-selinux</package>.</para>
-    <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>yum install openstack-selinux</userinput></screen>
-    <para os="fedora;centos;rhel">Upgrade your system and reboot for all
-      changes to take effect:</para>
-    <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>yum upgrade</userinput>
-<prompt>#</prompt> <userinput>reboot</userinput></screen>
     <para os="opensuse;sles">Use the Open Build Service repositories
       for Havana based on your openSUSE or SUSE Linux Enterprise
       Server version, for example if you run openSUSE 12.3 use:</para>
@@ -500,8 +492,29 @@ bind-address            = 192.168.0.10</programlisting>
       guide. Install <package>openstack-utils</package>. This verifies
       that you can access the Open Build Service repository:</para>
     <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-utils</userinput></screen>
-    <para os="opensuse;sles">Upgrade your system and reboot for all changes to
-      take effect:</para>
+    <warning os="fedora;centos;rhel;opensuse;sles">
+      <para>The <application>openstack-config</application> program
+        in the <package>openstack-utils</package> package uses
+        <application>crudini</application> to manipulate configuration
+        files. However, <application>crudini</application> version 0.3
+        does not support multi valued options. See
+          <link
+          xlink:href="https://bugs.launchpad.net/openstack-manuals/+bug/1269271"
+          >https://bugs.launchpad.net/openstack-manuals/+bug/1269271</link>.
+        As a work around, you must manually set any multi valued
+        options or the new value overwrites the previous value instead
+        of creating a new option.</para>
+    </warning>
+    <para os="fedora;centos;rhel">The
+        <package>openstack-selinux</package> package includes the
+      policy files that are required to configure SELinux during
+      OpenStack installation.
+      Install <package>openstack-selinux</package>.</para>
+    <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>yum install openstack-selinux</userinput></screen>
+    <para os="fedora;centos;rhel;opensuse;sles">Upgrade your system
+      and reboot for all changes to take effect:</para>
+    <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>yum upgrade</userinput>
+<prompt>#</prompt> <userinput>reboot</userinput></screen>
     <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper refresh</userinput>
 <prompt>#</prompt> <userinput>zypper update</userinput>
 <prompt>#</prompt> <userinput>reboot</userinput></screen>
