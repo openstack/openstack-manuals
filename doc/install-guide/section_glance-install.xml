@@ -107,47 +107,72 @@ IDENTIFIED BY '<replaceable>GLANCE_DBPASS</replaceable>';</userinput></screen>
    --email=<replaceable>glance@example.com</replaceable></userinput>
 <prompt>#</prompt> <userinput>keystone user-role-add --user=glance --tenant=service --role=admin</userinput></screen>
     </step>
-    <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
-      <para>Add the credentials to the Image Service configuration
-        files:</para>
-      <screen os="centos;rhel;fedora;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf keystone_authtoken \
-   auth_host <replaceable>controller</replaceable></userinput>
+    <step>
+      <para>Configure the Image Service to use the Identity
+        Service for authentication.</para>
+      <para os="rhel;centos;fedora;sles;opensuse">Run the following commands
+        and replace <replaceable>GLANCE_PASS</replaceable> with the password
+        you chose for the <literal>glance</literal> user in the Identity
+        Service:</para>
+      <screen os="rhel;centos;fedora;sles;opensuse"><prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf keystone_authtoken \
+   auth_uri http://<replaceable>controller</replaceable>:5000</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf keystone_authtoken \
-   admin_user glance</userinput>
+   auth_host <replaceable>controller</replaceable></userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf keystone_authtoken \
    admin_tenant_name service</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf keystone_authtoken \
+   admin_user glance</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf keystone_authtoken \
    admin_password <replaceable>GLANCE_PASS</replaceable></userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-registry.conf keystone_authtoken auth_host <replaceable>controller</replaceable></userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-registry.conf \
-   keystone_authtoken admin_user glance</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-registry.conf \
-   keystone_authtoken admin_tenant_name service</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-registry.conf \
-   keystone_authtoken admin_password <replaceable>GLANCE_PASS</replaceable></userinput></screen>
-      <para os="ubuntu">Edit
-          <filename>/etc/glance/glance-api.conf</filename> and
-          <filename>/etc/glance/glance-registry.conf</filename> and
-        change the <literal>[keystone_authtoken]</literal>
-        section.</para>
-      <programlisting os="ubuntu" language="ini">...
-[keystone_authtoken]
+<prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf paste_deploy \
+   flavor keystone</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-registry.conf keystone_authtoken \
+   auth_uri http://<replaceable>controller</replaceable>:5000</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-registry.conf keystone_authtoken \
+   auth_host <replaceable>controller</replaceable></userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-registry.conf keystone_authtoken \
+   admin_tenant_name service</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-registry.conf keystone_authtoken \
+   admin_user glance</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-registry.conf keystone_authtoken \
+   admin_password <replaceable>GLANCE_PASS</replaceable></userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-registry.conf paste_deploy \
+   flavor keystone</userinput></screen>
+      <para os="ubuntu">Edit the
+        <filename>/etc/glance/glance-api.conf</filename> and
+        <filename>/etc/glance/glance-registry.conf</filename> files. Replace
+        <replaceable>GLANCE_PASS</replaceable> with the password you chose
+        for the <literal>glance</literal> user in the Identity Service.</para>
+      <substeps os="ubuntu">
+        <step>
+          <para>Add the following keys under the
+            <literal>[keystone_authtoken]</literal> section:</para>
+          <programlisting language="ini">[keystone_authtoken]
+...
+auth_uri = http://<replaceable>controller</replaceable>:5000
 auth_host = <replaceable>controller</replaceable>
 auth_port = 35357
 auth_protocol = http
 admin_tenant_name = service
 admin_user = glance
-admin_password = GLANCE_PASS
-...</programlisting>
+admin_password = <replaceable>GLANCE_PASS</replaceable></programlisting>
+        </step>
+        <step>
+          <para>Add the following key under the
+            <literal>[paste_deploy]</literal> section:</para>
+          <programlisting language="ini">[paste_deploy]
+...
+flavor = keystone</programlisting>
+        </step>
+      </substeps>
     </step>
     <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
       <para>Add the credentials to the
           <filename>/etc/glance/glance-api-paste.ini</filename> and
           <filename>/etc/glance/glance-registry-paste.ini</filename>
         files.</para>
-      <para os="centos">On CentOS, the package installation does not
-        create these files created correctly. Copy the files to the
-        correct location:</para>
+      <para os="centos">On CentOS, you may need to copy these files to the
+        correct location.</para>
       <screen os="centos">
 <prompt>#</prompt> <userinput>cp /usr/share/glance/glance-api-dist-paste.ini /etc/glance/glance-api-paste.ini</userinput>
 <prompt>#</prompt> <userinput>cp /usr/share/glance/glance-registry-dist-paste.ini /etc/glance/glance-registry-paste.ini</userinput>
@@ -160,8 +185,7 @@ paste.filter_factory=keystoneclient.middleware.auth_token:filter_factory
 auth_host=controller
 admin_user=glance
 admin_tenant_name=service
-admin_password=<replaceable>GLANCE_PASS</replaceable>
-flavor=keystone</programlisting>
+admin_password=<replaceable>GLANCE_PASS</replaceable></programlisting>
     </step>
     <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
       <para>Register the Image Service with the Identity Service so
