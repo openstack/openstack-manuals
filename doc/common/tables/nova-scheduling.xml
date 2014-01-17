@@ -52,10 +52,6 @@
                        <td>(FloatOpt) Virtual ram to physical ram allocation ratio which affects all ram filters. This configuration specifies a global ratio for RamFilter. For AggregateRamFilter, it will fall back to this configuration value if no per-aggregate setting found.</td>
               </tr>
               <tr>
-                       <td>ram_weight_multiplier = 10.0</td>
-                       <td>(FloatOpt) Multiplier used for weighing ram.  Negative numbers mean to stack vs spread.</td>
-              </tr>
-              <tr>
                        <td>ram_weight_multiplier = 1.0</td>
                        <td>(FloatOpt) Multiplier used for weighing ram.  Negative numbers mean to stack vs spread.</td>
               </tr>
@@ -84,10 +80,6 @@
                        <td>(StrOpt) Default driver to use for the scheduler</td>
               </tr>
               <tr>
-                       <td>scheduler_filter_classes = nova.cells.filters.all_filters</td>
-                       <td>(ListOpt) Filter classes the cells scheduler should use.  An entry of "nova.cells.filters.all_filters"maps to all cells filters included with nova.</td>
-              </tr>
-              <tr>
                        <td>scheduler_host_manager = nova.scheduler.host_manager.HostManager</td>
                        <td>(StrOpt) The scheduler host manager class to use</td>
               </tr>
@@ -108,6 +100,22 @@
                        <td>(IntOpt) Maximum number of attempts to schedule an instance</td>
               </tr>
               <tr>
+                       <td>scheduler_topic = scheduler</td>
+                       <td>(StrOpt) the topic scheduler nodes listen on</td>
+              </tr>
+              <tr>
+                       <td>scheduler_weight_classes = nova.scheduler.weights.all_weighers</td>
+                       <td>(ListOpt) Which weight class names to use for weighing hosts</td>
+              </tr>
+              <tr>
+                       <td>ram_weight_multiplier = 10.0</td>
+                       <td>(FloatOpt) Multiplier used for weighing ram.  Negative numbers mean to stack vs spread.</td>
+              </tr>
+              <tr>
+                       <td>scheduler_filter_classes = nova.cells.filters.all_filters</td>
+                       <td>(ListOpt) Filter classes the cells scheduler should use.  An entry of "nova.cells.filters.all_filters"maps to all cells filters included with nova.</td>
+              </tr>
+              <tr>
                        <td>scheduler_retries = 10</td>
                        <td>(IntOpt) How many retries when no cells are available.</td>
               </tr>
@@ -116,16 +124,8 @@
                        <td>(IntOpt) How often to retry in seconds when no cells are available.</td>
               </tr>
               <tr>
-                       <td>scheduler_topic = scheduler</td>
-                       <td>(StrOpt) the topic scheduler nodes listen on</td>
-              </tr>
-              <tr>
                        <td>scheduler_weight_classes = nova.cells.weights.all_weighers</td>
                        <td>(ListOpt) Weigher classes the cells scheduler should use.  An entry of "nova.cells.weights.all_weighers"maps to all cell weighers included with nova.</td>
-              </tr>
-              <tr>
-                       <td>scheduler_weight_classes = nova.scheduler.weights.all_weighers</td>
-                       <td>(ListOpt) Which weight class names to use for weighing hosts</td>
               </tr>
               <tr>
                        <td>weight_multiplier = 1.0</td>
