@@ -1203,18 +1203,26 @@ firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewal
           following:</para>
         <programlisting>NEUTRON_PLUGIN_CONF="/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini"</programlisting>
       </step>
+      <step os="ubuntu;debian">
+        <para>Restart the Compute and Networking services:</para>
+        <screen><prompt>#</prompt> <userinput>service nova-api restart</userinput>
+<prompt>#</prompt> <userinput>service nova-scheduler restart</userinput>
+<prompt>#</prompt> <userinput>service nova-conductor restart</userinput>
+<prompt>#</prompt> <userinput>service neutron-server restart</userinput></screen>
+      </step>
       <step os="fedora;rhel;centos;opensuse;sles">
-        <para>Start <systemitem
-        class="service">neutron-server</systemitem> and set it to
-        start at boot:</para>
+        <para>Restart the Compute services:</para>
+        <screen><prompt>#</prompt> <userinput>service openstack-nova-api restart</userinput>
+<prompt>#</prompt> <userinput>service openstack-nova-scheduler restart</userinput>
+<prompt>#</prompt> <userinput>service openstack-nova-conductor restart</userinput></screen>
+      </step>
+      <step os="fedora;rhel;centos;opensuse;sles">
+        <para>Start the Networking service and configure it to start when the
+          system boots:</para>
         <screen os="fedora;rhel;centos"><prompt>#</prompt> <userinput>service neutron-server start</userinput>
 <prompt>#</prompt> <userinput>chkconfig neutron-server on</userinput></screen>
         <screen os="opensuse;sles"><prompt>#</prompt> <userinput>service openstack-neutron start</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-neutron on</userinput></screen>
-      </step>
-      <step os="ubuntu;debian">
-        <para>Restart neutron-server:</para>
-        <screen><prompt>#</prompt> <userinput>service neutron-server restart</userinput></screen>
       </step>
     </procedure>
     <section xml:id="install-neutron.install-plug-in-controller">
