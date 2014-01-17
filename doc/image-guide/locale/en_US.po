@@ -1,0 +1,3439 @@
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenStack Manuals\n"
+"POT-Creation-Date: 2014-01-17 07:14+0000\n"
+"PO-Revision-Date: 2014-01-16 20:25+0000\n"
+"Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
+"Language-Team: English (United States) (http://www.transifex.com/projects/p/openstack/language/en_US/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en_US\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ./doc/image-guide/ch_modifying_images.xml4(title)
+msgid "Modify images"
+msgstr ""
+
+#: ./doc/image-guide/ch_modifying_images.xml9(para)
+msgid ""
+"Do not attempt to use these tools to modify an image that is attached to a "
+"running virtual machine. These tools are designed to only modify images that"
+" are not currently running."
+msgstr ""
+
+#: ./doc/image-guide/ch_modifying_images.xml6(para)
+msgid ""
+"Once you have obtained a virtual machine image, you may want to make some "
+"changes to it before uploading it to the OpenStack Image service. Here we "
+"describe several tools available that allow you to modify "
+"images.<placeholder-1/>"
+msgstr ""
+
+#: ./doc/image-guide/ch_modifying_images.xml14(title)
+msgid "guestfish"
+msgstr ""
+
+#: ./doc/image-guide/ch_modifying_images.xml15(para)
+msgid ""
+"The <placeholder-1/> program is a tool from the <link "
+"href=\"http://libguestfs.org/\">libguestfs</link> project that allows you to"
+" modify the files inside of a virtual machine image."
+msgstr ""
+
+#: ./doc/image-guide/ch_modifying_images.xml18(para)
+msgid ""
+"Note that guestfish doesn't mount the image directly into the local "
+"filesystem. Instead, it provides you with a shell interface that allows you "
+"to view, edit, and delete files. Many of the guestfish commands (e.g., "
+"<placeholder-1/>, <placeholder-2/>, <placeholder-3/>) are similar to "
+"traditional bash commands."
+msgstr ""
+
+#: ./doc/image-guide/ch_modifying_images.xml24(title)
+msgid "Example guestfish session"
+msgstr ""
+
+#: ./doc/image-guide/ch_modifying_images.xml25(para)
+msgid ""
+"We often need to modify a virtual machine image to remove any traces of the "
+"MAC address that was assigned to the virtual network interface card when the"
+" image was first created, since the MAC address will be different when it "
+"boots the next time. In this example, we show how we can use guestfish to "
+"remove references to the old MAC address by deleting the "
+"<filename>/etc/udev/rules.d/70-persistent-net.rules</filename> file and "
+"removing the <literal>HWADDR</literal> line from the "
+"<filename>/etc/sysconfig/network-scripts/ifcfg-eth0</filename> file."
+msgstr ""
+
+#: ./doc/image-guide/ch_modifying_images.xml33(para)
+msgid ""
+"Assume we have a CentOS qcow2 image called "
+"<filename>centos63_desktop.img</filename>. We would mount the image in read-"
+"write mode by doing, as root: <placeholder-1/>This starts a guestfish "
+"session. Note that the guestfish prompt looks like a fish: <literal>&gt; "
+"&lt;fs&gt;</literal>."
+msgstr ""
+
+#: ./doc/image-guide/ch_modifying_images.xml48(para)
+msgid ""
+"We must first use the <placeholder-1/> command at the guestfish prompt "
+"before we can do anything else. This will launch a virtual machine, which "
+"will be used to perform all of the file manipulations.<placeholder-2/> We "
+"can now view the filesystems in the image using the <placeholder-3/> "
+"command:<placeholder-4/>We need to mount the logical volume that contains "
+"the root partition: <placeholder-5/>"
+msgstr ""
+
+#: ./doc/image-guide/ch_modifying_images.xml60(para)
+msgid ""
+"Next, we want to delete a file. We can use the <placeholder-1/> guestfish "
+"command, which works the same way it does in a traditional shell."
+msgstr ""
+
+#: ./doc/image-guide/ch_modifying_images.xml62(para)
+msgid ""
+"<placeholder-1/>We want to edit the <filename>ifcfg-eth0</filename> file to "
+"remove the <literal>HWADDR</literal> line. The <placeholder-2/> command will"
+" copy the file to the host, invoke your editor, and then copy the file back."
+" <placeholder-3/>"
+msgstr ""
+
+#: ./doc/image-guide/ch_modifying_images.xml67(para)
+msgid ""
+"If you want to modify this image to load the 8021q kernel at boot time, you "
+"must create an executable script in the "
+"<filename>/etc/sysconfig/modules/</filename> directory. You can use the "
+"<placeholder-1/> guestfish command to create an empty file, the "
+"<placeholder-2/> command to edit it, and the <placeholder-3/> command to "
+"make it executable.<placeholder-4/> We add the following line to the file "
+"and save it:<placeholder-5/>Then we set to executable: <placeholder-6/>"
+msgstr ""
+
+#: ./doc/image-guide/ch_modifying_images.xml81(para)
+msgid ""
+"We're done, so we can exit using the <placeholder-1/> "
+"command:<placeholder-2/>"
+msgstr ""
+
+#: ./doc/image-guide/ch_modifying_images.xml85(title)
+msgid "Go further with guestfish"
+msgstr ""
+
+#: ./doc/image-guide/ch_modifying_images.xml86(para)
+msgid ""
+"There is an enormous amount of functionality in guestfish and a full "
+"treatment is beyond the scope of this document. Instead, we recommend that "
+"you read the <link href=\"http://libguestfs.org/guestfs-recipes.1.html"
+"\">guestfs-recipes</link> documentation page for a sense of what is possible"
+" with these tools."
+msgstr ""
+
+#: ./doc/image-guide/ch_modifying_images.xml93(title)
+msgid "guestmount"
+msgstr ""
+
+#: ./doc/image-guide/ch_modifying_images.xml94(para)
+msgid ""
+"For some types of changes, you may find it easier to mount the image's "
+"filesystem directly in the guest. The <placeholder-1/> program, also from "
+"the libguestfs project, allows you to do so."
+msgstr ""
+
+#: ./doc/image-guide/ch_modifying_images.xml97(para)
+msgid ""
+"For example, to mount the root partition from our "
+"<filename>centos63_desktop.qcow2</filename> image to "
+"<filename>/mnt</filename>, we can do:"
+msgstr ""
+
+#: ./doc/image-guide/ch_modifying_images.xml103(para)
+msgid ""
+"If we didn't know in advance what the mountpoint is in the guest, we could "
+"use the <literal>-i</literal>(inspect) flag to tell guestmount to "
+"automatically determine what mount point to use:<placeholder-1/>Once "
+"mounted, we could do things like list the installed packages using "
+"rpm:<placeholder-2/> Once done, we unmount:<placeholder-3/>"
+msgstr ""
+
+#: ./doc/image-guide/ch_modifying_images.xml113(title)
+msgid "virt-* tools"
+msgstr ""
+
+#: ./doc/image-guide/ch_modifying_images.xml117(para)
+msgid ""
+"<link href=\"http://libguestfs.org/virt-edit.1.html\">virt-edit</link> for "
+"editing a file inside of an image."
+msgstr ""
+
+#: ./doc/image-guide/ch_modifying_images.xml121(para)
+msgid ""
+"<link href=\"http://libguestfs.org/virt-df.1.html\">virt-df</link> for "
+"displaying free space inside of an image."
+msgstr ""
+
+#: ./doc/image-guide/ch_modifying_images.xml125(para)
+msgid ""
+"<link href=\"http://libguestfs.org/virt-resize.1.html\">virt-resize</link> "
+"for resizing an image."
+msgstr ""
+
+#: ./doc/image-guide/ch_modifying_images.xml129(para)
+msgid ""
+"<link href=\"http://libguestfs.org/virt-sysprep.1.html\">virt-sysprep</link>"
+" for preparing an image for distribution (e.g., delete SSH host keys, remove"
+" MAC address info, remove user accounts)."
+msgstr ""
+
+#: ./doc/image-guide/ch_modifying_images.xml134(para)
+msgid ""
+"<link href=\"http://libguestfs.org/virt-sparsify.1.html\">virt-"
+"sparsify</link> for making an image sparse"
+msgstr ""
+
+#: ./doc/image-guide/ch_modifying_images.xml138(para)
+msgid ""
+"<link href=\"http://libguestfs.org/virt-v2v/\">virt-p2v</link> for "
+"converting a physical machine to an image that runs on KVM"
+msgstr ""
+
+#: ./doc/image-guide/ch_modifying_images.xml142(para)
+msgid ""
+"<link href=\"http://libguestfs.org/virt-v2v/\">virt-v2v</link> for "
+"converting Xen and VMWare images to KVM images"
+msgstr ""
+
+#: ./doc/image-guide/ch_modifying_images.xml114(para)
+msgid ""
+"The <link href=\"http://libguestfs.org/\">libguestfs</link> project has a "
+"number of other useful tools, including:<placeholder-1/>"
+msgstr ""
+
+#: ./doc/image-guide/ch_modifying_images.xml147(title)
+msgid "Modify a single file inside of an image"
+msgstr ""
+
+#: ./doc/image-guide/ch_modifying_images.xml148(para)
+msgid ""
+"This example shows how to use <placeholder-1/> to modify a file. The command"
+" can take either a filename as an argument with the <literal>-a</literal> "
+"flag, or a domain name as an argument with the <literal>-d</literal> flag. "
+"The following examples shows how to use this to modify the "
+"<filename>/etc/shadow</filename> file in instance with libvirt domain name "
+"<literal>instance-000000e1</literal> that is currently running:"
+msgstr ""
+
+#: ./doc/image-guide/ch_modifying_images.xml161(title)
+msgid "Resize an image"
+msgstr ""
+
+#: ./doc/image-guide/ch_modifying_images.xml162(para)
+msgid ""
+"Here's a simple of example of how to use <placeholder-1/> to resize an "
+"image. Assume we have a 16GB Windows image in qcow2 format that we want to "
+"resize to 50GB. First, we use <placeholder-2/> to identify the "
+"partitions:<placeholder-3/>"
+msgstr ""
+
+#: ./doc/image-guide/ch_modifying_images.xml171(para)
+msgid ""
+"In this case, it's the <filename>/dev/sda2</filename> partition that we want"
+" to resize. We create a new qcow2 image and use the <placeholder-1/> command"
+" to write a resized copy of the original into the new image<placeholder-2/>"
+msgstr ""
+
+#: ./doc/image-guide/ch_modifying_images.xml201(title)
+msgid "Loop devices, kpartx, network block devices"
+msgstr ""
+
+#: ./doc/image-guide/ch_modifying_images.xml204(para)
+msgid ""
+"Mounting untrusted guest images using the tools described in this section is"
+" a security risk, always use libguestfs tools such as guestfish and "
+"guestmount if you have access to them. See <link "
+"href=\"https://www.berrange.com/posts/2013/02/20/a-reminder-why-you-should-"
+"never-mount-guest-disk-images-on-the-host-os/\">A reminder why you should "
+"never mount guest disk images on the host OS</link> by Daniel Berrangé for "
+"more details."
+msgstr ""
+
+#: ./doc/image-guide/ch_modifying_images.xml202(para)
+msgid ""
+"If you don't have access to libguestfs, you can mount image file systems "
+"directly in the host using loop devices, kpartx, and network block "
+"devices.<placeholder-1/>"
+msgstr ""
+
+#: ./doc/image-guide/ch_modifying_images.xml212(title)
+msgid "Mount a raw image (without LVM)"
+msgstr ""
+
+#: ./doc/image-guide/ch_modifying_images.xml213(para)
+msgid ""
+"If you have a raw virtual machine image that is not using LVM to manage its "
+"partitions. First, use the <placeholder-1/> command to find an unused loop "
+"device. <placeholder-2/>"
+msgstr ""
+
+#: ./doc/image-guide/ch_modifying_images.xml218(para)
+msgid ""
+"In this example, <filename>/dev/loop0</filename> is free. Associate a loop "
+"device with the raw image:<placeholder-1/>"
+msgstr ""
+
+#: ./doc/image-guide/ch_modifying_images.xml221(para)
+msgid ""
+"If the image only has a single partition, you can mount the loop device "
+"directly:<placeholder-1/>"
+msgstr ""
+
+#: ./doc/image-guide/ch_modifying_images.xml223(para)
+msgid ""
+"If the image has multiple partitions, use <placeholder-1/> to expose the "
+"partitions as separate devices (e.g., "
+"<filename>/dev/mapper/loop0p1</filename>), then mount the partition that "
+"corresponds to the root file system:<placeholder-2/>"
+msgstr ""
+
+#: ./doc/image-guide/ch_modifying_images.xml227(para)
+msgid ""
+"If the image has, say three partitions (/boot, /, /swap), there should be "
+"one new device created per partition:<placeholder-1/>To mount the second "
+"partition, as root:<placeholder-2/>Once you're done, to clean "
+"up:<placeholder-3/>"
+msgstr ""
+
+#: ./doc/image-guide/ch_modifying_images.xml242(title)
+msgid "Mount a raw image (with LVM)"
+msgstr ""
+
+#: ./doc/image-guide/ch_modifying_images.xml243(para)
+msgid ""
+"If your partitions are managed with LVM, use losetup and kpartx as in the "
+"previous example to expose the partitions to the host:"
+msgstr ""
+
+#: ./doc/image-guide/ch_modifying_images.xml249(para)
+msgid ""
+"Next, you need to use the <placeholder-1/> command to identify the LVM "
+"volume groups and then <placeholder-2/> to expose the volumes as devices:"
+msgstr ""
+
+#: ./doc/image-guide/ch_modifying_images.xml257(para)
+msgid "Clean up when you're done:"
+msgstr ""
+
+#: ./doc/image-guide/ch_modifying_images.xml264(title)
+msgid "Mount a qcow2 image (without LVM)"
+msgstr ""
+
+#: ./doc/image-guide/ch_modifying_images.xml265(para)
+msgid ""
+"You need the <literal>nbd</literal> (network block device) kernel module "
+"loaded to mount qcow2 images. This will load it with support for 16 block "
+"devices, which is fine for our purposes. As root:<placeholder-1/>"
+msgstr ""
+
+#: ./doc/image-guide/ch_modifying_images.xml269(para)
+msgid ""
+"Assuming the first block device (<filename>/dev/nbd0</filename>) is not "
+"currently in use, we can expose the disk partitions using the "
+"<placeholder-1/> and <placeholder-2/> commands. As root:<placeholder-3/>"
+msgstr ""
+
+#: ./doc/image-guide/ch_modifying_images.xml274(para)
+msgid ""
+"If the image has, say three partitions (/boot, /, /swap), there should be "
+"one new device created for each partition:"
+msgstr ""
+
+#: ./doc/image-guide/ch_modifying_images.xml281(para)
+msgid ""
+"If the network block device you selected was already in use, the initial "
+"<placeholder-1/> command will fail silently, and the "
+"<filename>/dev/nbd3p{1,2,3}</filename> device files will not be created."
+msgstr ""
+
+#: ./doc/image-guide/ch_modifying_images.xml285(para)
+msgid ""
+"If the image partitions are not managed with LVM, they can be mounted "
+"directly:"
+msgstr ""
+
+#: ./doc/image-guide/ch_modifying_images.xml288(para)
+msgid "When you're done, clean up:"
+msgstr ""
+
+#: ./doc/image-guide/ch_modifying_images.xml293(title)
+msgid "Mount a qcow2 image (with LVM)"
+msgstr ""
+
+#: ./doc/image-guide/ch_modifying_images.xml294(para)
+msgid ""
+"If the image partitions are managed with LVM, after you use <placeholder-1/>"
+" and <placeholder-2/>, you must use <placeholder-3/> and <placeholder-4/> in"
+" order to expose the LVM partitions as devices that can be "
+"mounted:<placeholder-5/>"
+msgstr ""
+
+#: ./doc/image-guide/ch_modifying_images.xml306(para)
+msgid "When you're done, clean up:<placeholder-1/>"
+msgstr ""
+
+#. When image changes, this message will be marked fuzzy or untranslated for
+#. you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: ./doc/image-guide/section_centos-example.xml68(None)
+#: ./doc/image-guide/section_centos-example.xml71(None)
+msgid ""
+"@@image: 'figures/centos-install.png'; md5=013b5be9e167ee27e674859ba4869d89"
+msgstr ""
+
+#. When image changes, this message will be marked fuzzy or untranslated for
+#. you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: ./doc/image-guide/section_centos-example.xml81(None)
+msgid ""
+"@@image: 'figures/centos-tcpip.png'; md5=fe0324d0d74368d1920c243fd72747fd"
+msgstr ""
+
+#. When image changes, this message will be marked fuzzy or untranslated for
+#. you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: ./doc/image-guide/section_centos-example.xml91(None)
+msgid ""
+"@@image: 'figures/install-method.png'; md5=1d60286d52f6b385a5d15ae042858893"
+msgstr ""
+
+#. When image changes, this message will be marked fuzzy or untranslated for
+#. you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: ./doc/image-guide/section_centos-example.xml102(None)
+msgid "@@image: 'figures/url-setup.png'; md5=b2f3b4a3552ad175575f5eb78e63dfd8"
+msgstr ""
+
+#. When image changes, this message will be marked fuzzy or untranslated for
+#. you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: ./doc/image-guide/section_centos-example.xml157(None)
+msgid ""
+"@@image: 'figures/centos-complete.png'; md5=1b2c6a2e45a9ae52a5f6338ae74b1e54"
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml8(title)
+msgid "Example: CentOS image"
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml9(para)
+msgid ""
+"We'll run through an example of installing a CentOS image. This will focus "
+"mainly on CentOS 6.4. Because the CentOS installation process may change "
+"across versions, if you are using a different version of CentOS the "
+"installer steps may differ."
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml13(title)
+msgid "Download a CentOS install ISO"
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml17(para)
+msgid ""
+"Navigate to the <link "
+"href=\"http://www.centos.org/modules/tinycontent/index.php?id=30\">CentOS "
+"mirrors</link> page."
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml22(para)
+msgid ""
+"Click one of the <literal>HTTP</literal> links in the right-hand column next"
+" to one of the mirrors."
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml26(para)
+msgid ""
+"Click the folder link of the CentOS version you want to use (e.g., "
+"<literal>6.4/</literal>)."
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml30(para)
+msgid "Click the <literal>isos/</literal> folder link."
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml33(para)
+msgid "Click the <literal>x86_64/</literal> folder link for 64-bit images."
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml36(para)
+msgid ""
+"Click the ISO image you want to download. The netinstall ISO (e.g., "
+"<filename>CentOS-6.4-x86_64-netinstall.iso</filename>) is a good choice "
+"since it's a smaller image that will download missing packages from the "
+"Internet during the install process."
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml45(title)
+#: ./doc/image-guide/section_ubuntu-example.xml21(title)
+msgid "Start the install process"
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml46(para)
+#: ./doc/image-guide/section_ubuntu-example.xml22(para)
+msgid ""
+"Start the installation process using either <placeholder-1/> or "
+"<placeholder-2/> as described in the previous section. If using "
+"<placeholder-3/>, don't forget to connect your VNC client to the virtual "
+"machine."
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml50(para)
+msgid ""
+"We will assume the name of your virtual machine image is "
+"<literal>centos-6.4</literal>, which we need to know when using "
+"<placeholder-1/> commands to manipulate the state of the image."
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml53(para)
+#: ./doc/image-guide/section_ubuntu-example.xml29(para)
+msgid ""
+"If you're using virt-manager, the commands should look something like "
+"this:<placeholder-1/>"
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml63(title)
+#: ./doc/image-guide/section_centos-example.xml146(title)
+#: ./doc/image-guide/section_ubuntu-example.xml39(title)
+#: ./doc/image-guide/section_ubuntu-example.xml61(title)
+msgid "Step through the install"
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml64(para)
+msgid ""
+"At the initial Installer boot menu, choose the \"Install or upgrade an "
+"existing system\" option. Step through the install prompts, the defaults "
+"should be fine."
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml76(title)
+msgid "Configure TCP/IP"
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml77(para)
+msgid ""
+"The default TCP/IP settings are fine. In particular, ensure that Enable IPv4"
+" support is enabled with DHCP, which is the default."
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml87(title)
+msgid "Point the installer to a CentOS web server"
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml88(para)
+msgid "Choose URL as the installation method."
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml98(para)
+msgid "Consider using other mirrors as an alternative to mirror.umd.edu."
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml94(para)
+msgid ""
+"Depending on the version of CentOS, the net installer requires that the user"
+" specify either a URL, or the web site and a CentOS directory that "
+"corresponds to one of the CentOS mirrors. If the installer asks for a single"
+" URL, an example of a valid URL would be: "
+"<literal>http://mirror.umd/centos/6/os/x86_64</literal>.<placeholder-1/>"
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml106(para)
+msgid ""
+"If the installer asks for web site name and CentOS directory separately, an "
+"example would be:"
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml111(para)
+msgid "Web site name: <literal>mirror.umd.edu</literal>"
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml115(para)
+msgid "CentOS directory: <literal>centos/6/os/x86_64</literal>"
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml119(para)
+msgid ""
+"See <link "
+"href=\"http://www.centos.org/modules/tinycontent/index.php?id=30\">CentOS "
+"mirror page</link> to get a full list of mirrors, click on the \"HTTP\" link"
+" of a mirror to retrieve the web site name of a mirror."
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml124(title)
+msgid "Storage devices"
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml125(para)
+msgid ""
+"If asked about what type of devices your installation involves, choose "
+"\"Basic Storage Devices\"."
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml129(title)
+#: ./doc/image-guide/section_ubuntu-example.xml49(title)
+msgid "Hostname"
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml130(para)
+msgid ""
+"The installer may ask you to choose a hostname. The default "
+"(<literal>localhost.localdomain</literal>) is fine. We will install the "
+"cloud-init packge later, which will set the hostname on boot when a new "
+"instance is provisioned using this image."
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml136(title)
+#: ./doc/image-guide/section_ubuntu-example.xml66(title)
+msgid "Partition the disks"
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml137(para)
+#: ./doc/image-guide/section_ubuntu-example.xml67(para)
+msgid ""
+"There are different options for partitioning the disks. The default "
+"installation will use LVM partitions, and will create three partitions "
+"(<filename>/boot</filename>, <filename>/</filename>, swap), and this will "
+"work fine. Alternatively, you may wish to create a single ext4 partition, "
+"mounted to \"<literal>/</literal>\", should also work fine."
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml142(para)
+#: ./doc/image-guide/section_ubuntu-example.xml72(para)
+msgid ""
+"If unsure, we recommend you use the installer's default partition scheme, "
+"since there is no clear advantage to one scheme of another."
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml147(para)
+msgid ""
+"Step through the install, using the default options. The simplest thing to "
+"do is to choose the \"Basic Server\" install (may be called \"Server\" "
+"install on older versions of CentOS), which will install an SSH server."
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml152(title)
+#: ./doc/image-guide/section_ubuntu-example.xml103(title)
+msgid "Detach the CD-ROM and reboot"
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml153(para)
+msgid ""
+"Once the install completes, you will see the screen \"Congratulations, your "
+"CentOS installation is complete\"."
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml164(replaceable)
+#: ./doc/image-guide/section_centos-example.xml309(replaceable)
+#: ./doc/image-guide/section_ubuntu-example.xml122(replaceable)
+#: ./doc/image-guide/section_ubuntu-example.xml209(replaceable)
+msgid "vm-image"
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml161(para)
+#: ./doc/image-guide/section_ubuntu-example.xml119(para)
+msgid ""
+"To eject a disk using <placeholder-1/>, libvirt requires that you attach an "
+"empty disk at the same target that the CDROM was previously attached, which "
+"should be <literal>hdc</literal>. You can confirm the appropriate target "
+"using the <placeholder-2/> command."
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml178(para)
+msgid ""
+"Run the following commands from the host to eject the disk and reboot using "
+"virsh, as root. If you are using virt-manager, the commands below will work,"
+" but you can also use the GUI to the detach and reboot it by manually "
+"stopping and starting.<placeholder-1/>"
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml185(para)
+msgid ""
+"In theory, the <placeholder-1/> command can be used instead of using destroy"
+" and start commands. However, in our testing we were unable to reboot "
+"successfully using the <placeholder-2/> command."
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml191(title)
+#: ./doc/image-guide/section_ubuntu-example.xml149(title)
+msgid "Log in to newly created image"
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml192(para)
+msgid ""
+"When you boot the first time after install, it may ask you about "
+"authentication tools, you can just choose \"Exit\". Then, log in as root "
+"using the root password you specified."
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml197(title)
+msgid "Configure to fetch metadata"
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml203(para)
+msgid ""
+"Install a cloud-init RPM, which is a port of the Ubuntu <link "
+"href=\"https://launchpad.net/cloud-init\">cloud-init</link> package. This is"
+" the recommended approach."
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml210(para)
+msgid ""
+"Modify <filename>/etc/rc.local</filename> to fetch desired information from "
+"the metadata service, as described below."
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml198(para)
+msgid ""
+"An instance must perform several steps on start up by interacting with the "
+"metadata service (e.g., retrieve ssh public key, execute user data script). "
+"There are several ways to implement this functionality, "
+"including:<placeholder-1/>"
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml217(title)
+#: ./doc/image-guide/ch_openstack_images.xml218(title)
+msgid "Use cloud-init to fetch the public key"
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml218(para)
+msgid ""
+"The cloud-init package will automatically fetch the public key from the "
+"metadata server and place the key in an account. You can install cloud-init "
+"inside the CentOS guest by adding the EPEL repo:<placeholder-1/>"
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml223(para)
+#: ./doc/image-guide/section_ubuntu-example.xml179(para)
+msgid ""
+"The account varies by distribution. On Ubuntu-based virtual machines, the "
+"account is called \"ubuntu\". On Fedora-based virtual machines, the account "
+"is called \"ec2-user\"."
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml226(para)
+#: ./doc/image-guide/section_ubuntu-example.xml182(para)
+#: ./doc/image-guide/ch_openstack_images.xml223(para)
+msgid ""
+"You can change the name of the account used by cloud-init by editing the "
+"<filename>/etc/cloud/cloud.cfg</filename> file and adding a line with a "
+"different user. For example, to configure cloud-init to put the key in an "
+"account named \"admin\", edit the config file so it has the "
+"line:<placeholder-1/>"
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml233(title)
+msgid "Write a script to fetch the public key (if no cloud-init)"
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml234(para)
+msgid ""
+"If you are not able to install the cloud-init package in your image, to "
+"fetch the ssh public key and add it to the root account, edit the "
+"<filename>/etc/rc.local</filename> file and add the following lines before "
+"the line “<literal>touch /var/lock/subsys/local</literal>”"
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml261(para)
+msgid ""
+"Some VNC clients replace : (colon) with ; (semicolon) and _ (underscore) "
+"with - (hyphen). Make sure it's http: not http; and authorized_keys not "
+"authorized-keys."
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml266(para)
+msgid ""
+"The above script only retrieves the ssh public key from the metadata server."
+" It does not retrieve <emphasis role=\"italic\">user data</emphasis>, which "
+"is optional data that can be passed by the user when requesting a new "
+"instance. User data is often used for running a custom script when an "
+"instance comes up."
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml271(para)
+msgid ""
+"As the OpenStack metadata service is compatible with version 2009-04-04 of "
+"the Amazon EC2 metadata service, consult the Amazon EC2 documentation on "
+"<link href=\"http://docs.amazonwebservices.com/AWSEC2/2009-04-04/UserGuide"
+"/AESDG-chapter-instancedata.html\">Using Instance Metadata</link> for "
+"details on how to retrieve user data."
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml279(title)
+msgid "Configure console"
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml285(replaceable)
+msgid "..."
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml280(para)
+msgid ""
+"In order for <placeholder-1/> to work properly on CentOS 6.x, guests you may"
+" need to add the following lines to "
+"<filename>/boot/grub/menu.lst</filename><placeholder-2/>"
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml288(title)
+#: ./doc/image-guide/section_ubuntu-example.xml189(title)
+msgid "Shut down the instance"
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml289(para)
+#: ./doc/image-guide/section_ubuntu-example.xml190(para)
+msgid "From inside the instance, as root:<placeholder-1/>"
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml293(title)
+#: ./doc/image-guide/section_ubuntu-example.xml194(title)
+msgid "Clean up (remove MAC address details)"
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml294(para)
+msgid ""
+"The operating system records the MAC address of the virtual ethernet card in"
+" locations such as <filename>/etc/sysconfig/network-scripts/ifcfg-"
+"eth0</filename> and <filename>/etc/udev/rules.d/70-persistent-"
+"net.rules</filename> during the instance process. However, each time the "
+"image boots up, the virtual ethernet card will have a different MAC address,"
+" so this information must be deleted from the configuration file."
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml299(para)
+#: ./doc/image-guide/section_ubuntu-example.xml200(para)
+msgid ""
+"There is a utility called <placeholder-1/>, that performs various cleanup "
+"tasks such as removing the MAC address references. It will clean up a "
+"virtual machine image in place:<placeholder-2/>"
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml305(title)
+#: ./doc/image-guide/section_ubuntu-example.xml206(title)
+msgid "Undefine the libvirt domain"
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml306(para)
+msgid ""
+"Now that the image is ready to be uploaded to the Image service, you no "
+"longer need to have this virtual machine image managed by libvirt. Use the "
+"<placeholder-1/> command to inform libvirt.<placeholder-2/>"
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml314(title)
+#: ./doc/image-guide/section_ubuntu-example.xml213(title)
+msgid "Image is complete"
+msgstr ""
+
+#: ./doc/image-guide/section_centos-example.xml315(para)
+msgid ""
+"The underlying image file you created with <placeholder-1/> (e.g. "
+"<filename>/tmp/centos-6.4.qcow2</filename>) is now ready for uploading to "
+"the OpenStack Image service."
+msgstr ""
+
+#: ./doc/image-guide/bk-imageguide.xml10(title)
+msgid "OpenStack Virtual Machine Image Guide"
+msgstr ""
+
+#: ./doc/image-guide/bk-imageguide.xml12(titleabbrev)
+msgid "VM Image Guide"
+msgstr ""
+
+#: ./doc/image-guide/bk-imageguide.xml20(orgname)
+#: ./doc/image-guide/bk-imageguide.xml25(holder)
+msgid "OpenStack Foundation"
+msgstr ""
+
+#: ./doc/image-guide/bk-imageguide.xml24(year)
+msgid "2013"
+msgstr ""
+
+#: ./doc/image-guide/bk-imageguide.xml27(releaseinfo)
+msgid "havana"
+msgstr ""
+
+#: ./doc/image-guide/bk-imageguide.xml28(productname)
+msgid "OpenStack"
+msgstr ""
+
+#: ./doc/image-guide/bk-imageguide.xml32(remark)
+msgid "Remaining licensing details are filled in by the template."
+msgstr ""
+
+#: ./doc/image-guide/bk-imageguide.xml37(para)
+msgid ""
+"This guide describes how to obtain, create, and modify virtual machine "
+"images that are compatible with OpenStack."
+msgstr ""
+
+#: ./doc/image-guide/bk-imageguide.xml44(date)
+msgid "2013-10-25"
+msgstr ""
+
+#: ./doc/image-guide/bk-imageguide.xml48(para)
+msgid "Adds information about image formats, properties."
+msgstr ""
+
+#: ./doc/image-guide/bk-imageguide.xml54(date)
+msgid "2013-10-17"
+msgstr ""
+
+#: ./doc/image-guide/bk-imageguide.xml58(para)
+msgid "Havana release."
+msgstr ""
+
+#: ./doc/image-guide/bk-imageguide.xml64(date)
+msgid "2013-06-04"
+msgstr ""
+
+#: ./doc/image-guide/bk-imageguide.xml68(para)
+msgid "Updated title for consistency."
+msgstr ""
+
+#: ./doc/image-guide/bk-imageguide.xml74(date)
+msgid "2013-05-28"
+msgstr ""
+
+#: ./doc/image-guide/bk-imageguide.xml78(para)
+msgid "Initial release of this guide."
+msgstr ""
+
+#. When image changes, this message will be marked fuzzy or untranslated for
+#. you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: ./doc/image-guide/section_ubuntu-example.xml44(None)
+msgid ""
+"@@image: 'figures/ubuntu-install.png'; md5=a1f2ab707b7bc3122e20e6e0e4580887"
+msgstr ""
+
+#. When image changes, this message will be marked fuzzy or untranslated for
+#. you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: ./doc/image-guide/section_ubuntu-example.xml88(None)
+msgid ""
+"@@image: 'figures/ubuntu-software-selection.png'; "
+"md5=423be828f701345f7d20551a39f24271"
+msgstr ""
+
+#. When image changes, this message will be marked fuzzy or untranslated for
+#. you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: ./doc/image-guide/section_ubuntu-example.xml98(None)
+msgid ""
+"@@image: 'figures/ubuntu-grub.png'; md5=e46a46bd4044483da7cd07de2ff1ddbc"
+msgstr ""
+
+#. When image changes, this message will be marked fuzzy or untranslated for
+#. you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: ./doc/image-guide/section_ubuntu-example.xml109(None)
+msgid ""
+"@@image: 'figures/ubuntu-finished.png'; md5=750be1d6a71b4186be563c049043e3a4"
+msgstr ""
+
+#: ./doc/image-guide/section_ubuntu-example.xml8(title)
+msgid "Example: Ubuntu image"
+msgstr ""
+
+#: ./doc/image-guide/section_ubuntu-example.xml9(para)
+msgid ""
+"We'll run through an example of installing an Ubuntu image. This will focus "
+"mainly on Ubuntu 12.04 (Precise Pangolin) server. Because the Ubuntu "
+"installation process may change across versions, if you are using a "
+"different version of Ubuntu the installer steps may differ."
+msgstr ""
+
+#: ./doc/image-guide/section_ubuntu-example.xml14(title)
+msgid "Download an Ubuntu install ISO"
+msgstr ""
+
+#: ./doc/image-guide/section_ubuntu-example.xml15(para)
+msgid ""
+"In this example, we'll use the network installation ISO, since it's a "
+"smaller image. The 64-bit 12.04 network installer ISO is at <link "
+"href=\"http://archive.ubuntu.com/ubuntu/dists/precise/main/installer-"
+"amd64/current/images/netboot/mini.iso\">http://archive.ubuntu.com/ubuntu/dists/precise/main"
+"/installer-amd64/current/images/netboot/mini.iso</link>"
+msgstr ""
+
+#: ./doc/image-guide/section_ubuntu-example.xml26(para)
+msgid ""
+"We will assume the name of your virtual machine image is "
+"<literal>ubuntu-12.04</literal>, which we need to know when using "
+"<placeholder-1/> commands to manipulate the state of the image."
+msgstr ""
+
+#: ./doc/image-guide/section_ubuntu-example.xml40(para)
+msgid ""
+"At the initial Installer boot menu, choose the \"Install\" option. Step "
+"through the install prompts, the defaults should be fine."
+msgstr ""
+
+#: ./doc/image-guide/section_ubuntu-example.xml50(para)
+msgid ""
+"The installer may ask you to choose a hostname. The default "
+"(<literal>ubuntu</literal>) is fine. We will install the cloud-init package "
+"later, which will set the hostname on boot when a new instance is "
+"provisioned using this image."
+msgstr ""
+
+#: ./doc/image-guide/section_ubuntu-example.xml57(title)
+msgid "Select a mirror"
+msgstr ""
+
+#: ./doc/image-guide/section_ubuntu-example.xml58(para)
+msgid "The default mirror proposed by the installer should be fine."
+msgstr ""
+
+#: ./doc/image-guide/section_ubuntu-example.xml62(para)
+msgid ""
+"Step through the install, using the default options. When prompted for a "
+"username, the default (<literal>ubuntu</literal>) is fine."
+msgstr ""
+
+#: ./doc/image-guide/section_ubuntu-example.xml76(title)
+msgid "Automatic updates"
+msgstr ""
+
+#: ./doc/image-guide/section_ubuntu-example.xml77(para)
+msgid ""
+"The Ubuntu installer will ask how you want to manage upgrades on your "
+"system. This option depends upon your specific use case. If your virtual "
+"machine instances will be able to connect to the internet, we recommend "
+"\"Install security updates automatically\"."
+msgstr ""
+
+#: ./doc/image-guide/section_ubuntu-example.xml83(title)
+msgid "Software selection: OpenSSH server"
+msgstr ""
+
+#: ./doc/image-guide/section_ubuntu-example.xml84(para)
+msgid ""
+"Choose \"OpenSSH server\"so that you will be able to SSH into the virtual "
+"machine when it launches inside of an OpenStack cloud."
+msgstr ""
+
+#: ./doc/image-guide/section_ubuntu-example.xml93(title)
+msgid "Install GRUB boot loader"
+msgstr ""
+
+#: ./doc/image-guide/section_ubuntu-example.xml94(para)
+msgid ""
+"Select \"Yes\" when asked about installing the GRUB boot loader to the "
+"master boot record."
+msgstr ""
+
+#: ./doc/image-guide/section_ubuntu-example.xml104(para)
+msgid ""
+"Select the defaults for all of the remaining options. When the installation "
+"is complete, you will be prompted to remove the CD-ROM."
+msgstr ""
+
+#: ./doc/image-guide/section_ubuntu-example.xml114(para)
+msgid ""
+"When you hit \"Continue\" the virtual machine will shut down, even though it"
+" says it will reboot."
+msgstr ""
+
+#: ./doc/image-guide/section_ubuntu-example.xml137(para)
+msgid ""
+"Run the following commands in the host as root to start up the machine again"
+" as paused, eject the disk and resume. If you are using virt-manager, you "
+"may instead use the GUI.<placeholder-1/>"
+msgstr ""
+
+#: ./doc/image-guide/section_ubuntu-example.xml143(para)
+msgid ""
+"In the example above, we start the instance paused, eject the disk, and then"
+" unpause. In theory, we could have ejected the disk at the \"Installation "
+"complete\" screen. However, our testing indicates that the Ubuntu installer "
+"locks the drive so that it cannot be ejected at that point."
+msgstr ""
+
+#: ./doc/image-guide/section_ubuntu-example.xml150(para)
+msgid ""
+"When you boot the first time after install, it may ask you about "
+"authentication tools, you can just choose 'Exit'. Then, log in as root using"
+" the root password you specified."
+msgstr ""
+
+#: ./doc/image-guide/section_ubuntu-example.xml155(title)
+msgid "Install cloud-init"
+msgstr ""
+
+#: ./doc/image-guide/section_ubuntu-example.xml156(para)
+msgid ""
+"The <placeholder-1/> script starts on instance boot and will search for a "
+"metadata provider to fetch a public key from. The public key will be placed "
+"in the default user account for the image."
+msgstr ""
+
+#: ./doc/image-guide/section_ubuntu-example.xml162(para)
+msgid "Install the <package>cloud-init</package> package:"
+msgstr ""
+
+#: ./doc/image-guide/section_ubuntu-example.xml166(para)
+msgid ""
+"When building Ubuntu images <placeholder-1/> must be explicitly configured "
+"for the metadata source in use. The OpenStack metadata server emulates the "
+"EC2 metadata service used by images in Amazon EC2."
+msgstr ""
+
+#: ./doc/image-guide/section_ubuntu-example.xml172(para)
+msgid ""
+"To set the metadata source to be used by the image run the <placeholder-1/> "
+"command against the <package>cloud-init</package> package. When prompted "
+"select the <literal>EC2</literal> datasource: <placeholder-2/>"
+msgstr ""
+
+#: ./doc/image-guide/section_ubuntu-example.xml195(para)
+msgid ""
+"The operating system records the MAC address of the virtual ethernet card in"
+" locations such as <filename>/etc/udev/rules.d/70-persistent-"
+"net.rules</filename> during the instance process. However, each time the "
+"image boots up, the virtual ethernet card will have a different MAC address,"
+" so this information must be deleted from the configuration file."
+msgstr ""
+
+#: ./doc/image-guide/section_ubuntu-example.xml207(para)
+msgid ""
+"Now that the image is ready to be uploaded to the Image service, we know "
+"longer need to have this virtual machine image managed by libvirt. Use the "
+"<placeholder-1/> command to inform libvirt<placeholder-2/>"
+msgstr ""
+
+#: ./doc/image-guide/section_ubuntu-example.xml214(para)
+msgid ""
+"The underlying image file you created with <placeholder-1/> (e.g. "
+"<filename>/tmp/precise.qcow2</filename>) is now ready for uploading to the "
+"OpenStack Image service."
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml6(title)
+msgid "Introduction"
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml7(para)
+msgid ""
+"An OpenStack Compute cloud is not very useful unless you have virtual "
+"machine images (which some people call \"virtual appliances\"). This guide "
+"describes how to obtain, create, and modify virtual machine images that are "
+"compatible with OpenStack."
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml10(para)
+msgid ""
+"To keep things brief, we'll sometimes use the term \"image\" instead of "
+"\"virtual machine image\"."
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml12(para)
+msgid "What is a virtual machine image?"
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml13(para)
+msgid ""
+"A virtual machine image is a single file which contains a virtual disk that "
+"has a bootable operating system installed on it."
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml15(para)
+msgid ""
+"Virtual machine images come in different formats, some of which are "
+"described below. In a later chapter, we'll describe how to convert between "
+"formats."
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml19(term)
+msgid "Raw"
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml26(para)
+msgid ""
+"We don't recommend creating raw images by dd'ing block device files, we "
+"discuss how to create raw images later."
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml20(para)
+msgid ""
+"The \"raw\" image format is the simplest one, and is natively supported by "
+"both KVM and Xen hypervisors. You can think of a raw image as being the bit-"
+"equivalent of a block device file, created as if somebody had copied, say, "
+"<filename>/dev/sda</filename> to a file using the <placeholder-1/> command. "
+"<placeholder-2/>"
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml32(term)
+#: ./doc/image-guide/ch_converting.xml26(td)
+#: ./doc/image-guide/ch_converting.xml27(literal)
+msgid "qcow2"
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml37(para)
+msgid "Using sparse representation, so the image size is smaller"
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml40(para)
+msgid "Support for snapshots"
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml33(para)
+msgid ""
+"The <link href=\"http://en.wikibooks.org/wiki/QEMU/Images\">qcow2</link> "
+"(QEMU copy-on-write version 2) format is commonly used with the KVM "
+"hypervisor. It has some additional features over the raw format, such "
+"as:<placeholder-1/>"
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml43(para)
+msgid ""
+"Because qcow2 is sparse, it's often faster to convert a raw image to qcow2 "
+"and upload it then to upload the raw file."
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml47(para)
+msgid ""
+"Because raw images don't support snapshots, OpenStack Compute will "
+"automatically convert raw image files to qcow2 as needed."
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml53(term)
+msgid "AMI/AKI/ARI"
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml59(para)
+msgid "AMI (Amazon Machine Image):"
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml60(para)
+msgid "This is a virtual machine image in raw format, as described above."
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml64(para)
+msgid "AKI (Amazon Kernel Image)"
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml65(para)
+msgid ""
+"A kernel file that the hypervisor will load initially to boot the image. For"
+" a Linux machine, this would be a <emphasis>vmlinuz</emphasis> file."
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml72(para)
+msgid "ARI (Amazon Ramdisk Image)"
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml73(para)
+msgid ""
+"An optional ramdisk file mounted at boot time. For a Linux machine, this "
+"would be an <emphasis>initrd</emphasis> file."
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml54(para)
+msgid ""
+"The <link "
+"href=\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html\">AMI/AKI/ARI"
+" </link>format was the initial image format supported by Amazon EC2. The "
+"image consists of three files:<placeholder-1/>"
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml81(term)
+msgid "UEC tarball"
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml84(para)
+msgid ""
+"Ubuntu Enterprise Cloud refers to a discontinued Eucalyptus-based Ubuntu "
+"cloud solution that has been replaced by the OpenStack-based Ubuntu Cloud "
+"Infrastructure."
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml82(para)
+msgid ""
+"A UEC (Ubuntu Enterprise Cloud) tarball is a gzipped tarfile that contains "
+"an AMI file, AKI file, and ARI file.<placeholder-1/>"
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml90(term)
+msgid "VMDK"
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml91(para)
+msgid ""
+"VMWare's ESXi hypervisor uses the <link href=\"http://www.vmware.com"
+"/technical-resources/interfaces/vmdk.html\">VMDK</link> (Virtual Machine "
+"Disk) format for images."
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml96(term)
+msgid "VDI"
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml97(para)
+msgid ""
+"VirtualBox uses the <link "
+"href=\"https://forums.virtualbox.org/viewtopic.php?t=8046\">VDI</link> "
+"(Virtual Disk Image) format for image files. None of the OpenStack Compute "
+"hypervisors support VDI directly, so you will need to convert these files to"
+" a different format to use them with OpenStack."
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml104(term)
+msgid "VHD"
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml105(para)
+msgid "Microsoft Hyper-V uses the VHD (Virtual Hard Disk) format for images."
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml108(term)
+msgid "VHDX"
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml109(para)
+msgid ""
+"The version of Hyper-V that ships with Microsoft Server 2012 uses the newer "
+"<link href=\"http://technet.microsoft.com/en-"
+"us/library/hh831446.aspx\">VHDX</link> format, which has some additional "
+"features over VHD such as support for larger disk sizes and protection "
+"against data corruption during power failures."
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml115(term)
+msgid "OVF"
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml116(para)
+msgid ""
+"<link href=\"http://www.dmtf.org/standards/ovf\">OVF</link> (Open "
+"Virtualization Format) is a packaging format for virtual machines, defined "
+"by the Distributed Management Task Force (DMTF) standards group. An OVF "
+"package contains one or more image files, a .ovf XML metadata file that "
+"contains information about the virtual machine, and possibly other files as "
+"well."
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml121(para)
+msgid ""
+"An OVF package can be distributed in different ways. For example, it could "
+"be distributed as a set of discrete files, or as a tar archive file with an "
+".ova (open virtual appliance/application) extension."
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml124(para)
+msgid ""
+"OpenStack Compute does not currently have support for OVF packages, so you "
+"will need to extract the image file(s) from an OVF package if you wish to "
+"use it with OpenStack."
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml129(term)
+msgid "ISO"
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml130(para)
+msgid ""
+"The <link href=\"http://www.ecma-"
+"international.org/publications/standards/Ecma-119.htm\">ISO</link> format is"
+" a disk image formatted with the read-only ISO 9660 (also known as ECMA-119)"
+" filesystem commonly used for CDs and DVDs. While we don't normally think of"
+" ISO a virtual machine image format, since ISOs contain bootable filesystems"
+" with an installed operating system, you can treat them the same you treat "
+"other virtual machine image files."
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_automatically.xml6(title)
+msgid "Tool support for image creation"
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_automatically.xml8(para)
+msgid "There are several tools that are designed to automate image creation."
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_automatically.xml11(title)
+msgid "Oz"
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_automatically.xml22(para)
+msgid ""
+"As of this writing, there are no Oz packages for Ubuntu, so you will need to"
+" either install from source or build your own .deb file."
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_automatically.xml12(para)
+msgid ""
+"<link href=\"https://github.com/clalancette/oz/wiki\">Oz</link> is a "
+"command-line tool that automates the process of creating a virtual machine "
+"image file. Oz is a Python app that interacts with KVM to step through the "
+"process of installing a virtual machine. It uses a predefined set of "
+"kickstart (Red Hat-based systems) and preseed files (Debian-based systems) "
+"for operating systems that it supports, and it can also be used to create "
+"Microsoft Windows images. On Fedora, install Oz with "
+"yum:<placeholder-1/><placeholder-2/>"
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_automatically.xml26(para)
+msgid ""
+"A full treatment of Oz is beyond the scope of this document, but we will "
+"provide an example. You can find additional examples of Oz template files on"
+" github at <link href=\"https://github.com/rackerjoe/oz-image-"
+"build/tree/master/templates\">rackerjoe/oz-image-build/templates</link>. "
+"Here's how you would create a CentOS 6.4 image with Oz."
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_automatically.xml33(para)
+msgid ""
+"Create a template file (we'll call it <filename>centos64.tdl</filename>) "
+"with the following contents. The only entry you will need to change is the "
+"<literal>&lt;rootpw&gt;</literal> contents.<placeholder-1/>"
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_automatically.xml71(para)
+msgid ""
+"This Oz template specifies where to download the Centos 6.4 install ISO. Oz "
+"will use the version information to identify which kickstart file to use. In"
+" this case, it will be <link "
+"href=\"https://github.com/clalancette/oz/blob/master/oz/auto/RHEL6.auto\">RHEL6.auto</link>."
+" It adds EPEL as a repository and install the <literal>epel-"
+"release</literal>, <literal>cloud-utils</literal>, and <literal>cloud-"
+"init</literal> packages, as specified in the <literal>packages</literal> "
+"section of the file."
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_automatically.xml82(para)
+msgid ""
+"After Oz does the initial OS install using the kickstart file, it customizes"
+" the image by doing an update. It also removes any reference to the eth0 "
+"device that libvirt creates while Oz does the customizing, as specified in "
+"the <literal>command</literal> section of the XML file."
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_automatically.xml88(para)
+msgid "To run this, do, as root:"
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_automatically.xml91(para)
+msgid ""
+"The <literal>-d3</literal> flag tells Oz to show status information as it "
+"runs."
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_automatically.xml95(para)
+msgid ""
+"The <literal>-u</literal> tells Oz to do the customization (install extra "
+"packages, run the commands) once it does the initial install."
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_automatically.xml101(para)
+msgid ""
+"The <literal>-x &lt;filename&gt;</literal> flag tells Oz what filename to "
+"use to write out a libvirt XML file (otherwise it will default to something "
+"like <filename>centos64Apr_03_2013-12:39:42</filename>."
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_automatically.xml89(para)
+msgid ""
+"<placeholder-1/><placeholder-2/>If you leave out the <literal>-u</literal> "
+"flag, or you want to edit the file to do additional customizations, you can "
+"use the <placeholder-3/> command, using the libvirt XML file that "
+"<placeholder-4/> creates. For example: <placeholder-5/> Oz will invoke "
+"libvirt to boot the image inside of KVM, then Oz will ssh into the instance "
+"and perform the customizations."
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_automatically.xml119(title)
+msgid "VMBuilder"
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_automatically.xml120(para)
+msgid ""
+"<link href=\"https://launchpad.net/vmbuilder\">VMBuilder</link> (Virtual "
+"Machine Builder) is a command-line tool that creates virtual machine images "
+"for different hypervisors. The version of VMBuilder that ships with Ubuntu "
+"can only create Ubuntu virtual machine guests. The version of VMBuilder that"
+" ships with Debian can create Ubuntu and Debian virtual machine guests."
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_automatically.xml127(para)
+msgid ""
+"The <link href=\"https://help.ubuntu.com/12.04/serverguide/jeos-and-"
+"vmbuilder.html\"><citetitle>Ubuntu Server Guide</citetitle></link> has "
+"documentation on how to use VMBuilder to create an Ubuntu image."
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_automatically.xml134(title)
+msgid "BoxGrinder"
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_automatically.xml135(para)
+msgid ""
+"<link href=\"http://boxgrinder.org/\">BoxGrinder</link>  is another tool for"
+" creating virtual machine images, which it calls appliances. BoxGrinder can "
+"create Fedora, Red Hat Enterprise Linux, or CentOS images. BoxGrinder is "
+"currently only supported on Fedora."
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_automatically.xml144(title)
+msgid "VeeWee"
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_automatically.xml145(para)
+msgid ""
+"<link href=\"https://github.com/jedi4ever/veewee\"> VeeWee</link> is often "
+"used to build <link href=\"http://vagrantup.com\">Vagrant</link> boxes, but "
+"it can also be used to build KVM images."
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_automatically.xml151(title)
+msgid "imagefactory"
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_automatically.xml152(para)
+msgid ""
+"<link href=\"http://imgfac.org/\">imagefactory</link> is a newer tool "
+"designed to automate the building, converting, and uploading images to "
+"different cloud providers. It uses Oz as its back-end and includes support "
+"for OpenStack-based clouds."
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_automatically.xml159(title)
+msgid "SUSE Studio"
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_automatically.xml160(para)
+msgid ""
+"<link href=\"http://susestudio.com\">SUSE Studio</link> is a web application"
+" for building and testing software applications in a web browser. It "
+"supports the creation of physical, virtual or cloud-based applications and "
+"includes support for building images for OpenStack based clouds using SUSE "
+"Linux Enterprise and openSUSE as distributions."
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml6(title)
+msgid "OpenStack Linux image requirements"
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml14(para)
+#: ./doc/image-guide/ch_openstack_images.xml37(title)
+msgid "Disk partitions and resize root partition on boot (cloud-init)"
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml17(para)
+#: ./doc/image-guide/ch_openstack_images.xml169(title)
+msgid "No hard-coded MAC address information"
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml20(para)
+msgid "SSH server running"
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml23(para)
+#: ./doc/image-guide/ch_openstack_images.xml205(title)
+msgid "Disable firewall"
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml26(para)
+#: ./doc/image-guide/ch_openstack_images.xml212(title)
+msgid "Access instance using ssh public key (cloud-init)"
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml29(para)
+#: ./doc/image-guide/ch_openstack_images.xml282(title)
+msgid "Process user data and other metadata (cloud-init)"
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml32(para)
+msgid ""
+"Paravirtualized Xen support in Linux kernel (Xen hypervisor only with Linux "
+"kernel version &lt; 3.0)"
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml8(para)
+msgid ""
+"For a Linux-based image to have full functionality in an OpenStack Compute "
+"cloud, there are a few requirements. For some of these, the requirement can "
+"be fulfilled by installing the <link "
+"href=\"https://cloudinit.readthedocs.org/en/latest/\">cloud-init</link> "
+"package. You should read this section before creating your own image to be "
+"sure that the image supports the OpenStack features you plan on "
+"using.<placeholder-1/>"
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml38(para)
+msgid ""
+"When you create a new Linux image, the first decision you will need to make "
+"is how to partition the disks. The choice of partition method can affect the"
+" resizing functionality, as described below."
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml41(para)
+msgid ""
+"The size of the disk in a virtual machine image is determined when you "
+"initially create the image. However, OpenStack lets you launch instances "
+"with different size drives by specifying different flavors. For example, if "
+"your image was created with a 5 GB disk, and you launch an instance with a "
+"flavor of <literal>m1.small</literal>, the resulting virtual machine "
+"instance will have (by default) a primary disk of 10GB. When an instance's "
+"disk is resized up, zeros are just added to the end."
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml47(para)
+msgid ""
+"Your image needs to be able to resize its partitions on boot to match the "
+"size requested by the user. Otherwise, after the instance boots, you will "
+"need to manually resize the partitions if you want to access the additional "
+"storage you have access to when the disk size associated with the flavor "
+"exceeds the disk size your image was created with."
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml53(title)
+msgid "Xen: 1 ext3/ext4 partition (no LVM, no /boot, no swap)"
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml58(para)
+msgid ""
+"<literal>auto_disk_config=True</literal> is set as a property on the image "
+"in the Image Registry."
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml62(para)
+msgid "The disk on the image has only one partition."
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml65(para)
+msgid "The file system on the one partition is ext3 or ext4."
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml54(para)
+msgid ""
+"If you are using the OpenStack XenAPI driver, the Compute service will "
+"automatically adjust the partition and filesystem for your instance on boot."
+" Automatic resize will occur if the following are all true:<placeholder-1/>"
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml68(para)
+msgid ""
+"Therefore, if you are using Xen, we recommend that when you create your "
+"images, you create a single ext3 or ext4 partition (not managed by LVM). "
+"Otherwise, read on."
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml73(title)
+msgid ""
+"Non-Xen with cloud-init/cloud-tools: 1 ext3/ext4 partition (no LVM, no "
+"/boot, no swap)"
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml77(para)
+msgid "The image's partition table describes the original size of the image"
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml81(para)
+msgid "The image's filesystem fills the original size of the image"
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml75(para)
+msgid "Your image must be configured to deal with two issues:<placeholder-1/>"
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml89(para)
+msgid ""
+"If you are not using LVM, you must modify the table to extend the existing "
+"root partition to encompass this additional space"
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml94(para)
+msgid ""
+"If you are using LVM, you can create add a new LVM entry to the partition "
+"table, create a new LVM physical volume, add it to the volume group, and "
+"extend the logical partition with the root volume"
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml86(para)
+msgid ""
+"the partition table must be modified to be made aware of the additional "
+"space<placeholder-1/>"
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml102(para)
+msgid "the root volume filesystem must be resized"
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml84(para)
+msgid "Then, during the boot process:<placeholder-1/>"
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml105(para)
+msgid ""
+"The simplest way to support this in your image is to install the <link "
+"href=\"https://launchpad.net/cloud-utils\">cloud-utils</link> package "
+"(contains the <placeholder-1/> tool for extending partitions), the <link "
+"href=\"https://launchpad.net/cloud-initramfs-tools\">cloud-initramfs-"
+"tools</link> package (which will support resizing root partition on the "
+"first boot), and the <link href=\"https://launchpad.net/cloud-init\">cloud-"
+"init</link> package into your image. With these installed, the image will "
+"perform the root partition resize on boot (for example in "
+"<filename>/etc/rc.local</filename>). These packages are in the Ubuntu and "
+"Debian package repository, as well as the EPEL repository (for "
+"Fedora/RHEL/CentOS/Scientific Linux guests)."
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml116(para)
+msgid ""
+"If you are not able to install <literal>cloud-initramfs-tools</literal>, "
+"Robert Plestenjak has a github project called <link "
+"href=\"https://github.com/flegmatik/linux-rootfs-resize\">linux-rootfs-"
+"resize</link> that contains scripts that will update a ramdisk using "
+"<placeholder-1/> so that the image will resize properly on boot."
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml122(para)
+msgid ""
+"If you are able to install the cloud-utils and cloud-init packages, we "
+"recommend that when you create your images, you create a single ext3 or ext4"
+" partition (not managed by LVM)."
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml127(title)
+msgid "Non-Xen without cloud-init/cloud-tools: LVM"
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml128(para)
+msgid ""
+"If you cannot install cloud-init and cloud-tools inside of your guest, and "
+"you want to support resize, you will need to write a script that your image "
+"will run on boot to modify the partition table. In this case, we recommend "
+"using LVM to manage your partitions. Due to a limitation in the Linux kernel"
+" (as of this writing), you cannot modify a partition table of a raw disk "
+"that has partition currently mounted, but you can do this for LVM."
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml136(para)
+msgid ""
+"Detect if there is any additional space on the disk (e.g., parsing output of"
+" <placeholder-1/>)"
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml141(para)
+msgid ""
+"Create a new LVM partition with the additional space (e.g., "
+"<placeholder-1/>)"
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml146(replaceable)
+#: ./doc/image-guide/ch_openstack_images.xml151(replaceable)
+#: ./doc/image-guide/ch_openstack_images.xml157(replaceable)
+msgid "sda6"
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml145(para)
+msgid "Create a new physical volume (e.g., <placeholder-1/> )"
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml150(replaceable)
+msgid "vg00"
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml149(para)
+msgid ""
+"Extend the volume group with this physical partition (e.g., "
+"<placeholder-1/>)"
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml156(replaceable)
+#: ./doc/image-guide/ch_openstack_images.xml161(replaceable)
+msgid "node-root"
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml154(para)
+msgid ""
+"Extend the logical volume contained the root partition by the amount of "
+"space (e.g., <placeholder-1/>)"
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml160(para)
+msgid "Resize the root file system (e.g., <placeholder-1/>)."
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml134(para)
+msgid ""
+"Your script will need to do something like the following:<placeholder-1/>"
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml164(para)
+msgid ""
+"You do not need to have a <filename>/boot</filename> partition, unless your "
+"image is an older Linux distribution that requires that "
+"<filename>/boot</filename> is not managed by LVM. You may elect to use a "
+"swap per"
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml176(para)
+msgid ""
+"Replace <filename>/etc/udev/rules.d/70-persistent-net.rules</filename> with "
+"an empty file (contains network persistence rules, including MAC address)"
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml181(para)
+msgid ""
+"Replace <filename>/lib/udev/rules.d/75-persistent-net-"
+"generator.rules</filename> with an empty file (this generates the file "
+"above)"
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml186(para)
+msgid ""
+"Remove the HWADDR line from <filename>/etc/sysconfig/network-scripts/ifcfg-"
+"eth0</filename> on Fedora-based images"
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml191(para)
+msgid ""
+"If you delete the network persistent rules files, you may get a udev kernel "
+"warning at boot time, which is why we recommend replacing them with empty "
+"files instead."
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml170(para)
+msgid ""
+"You must remove the network persistence rules in the image as their presence"
+" will result in the network interface in the instance coming up as an "
+"interface other than eth0. This is because your image has a record of the "
+"MAC address of the network interface card when it was first installed, and "
+"this MAC address will be different each time the instance boots up. You "
+"should alter the following files:<placeholder-1/><placeholder-2/>"
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml198(title)
+msgid "Ensure ssh server runs"
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml199(para)
+msgid ""
+"You must install an ssh server into the image and ensure that it starts up "
+"on boot, or you will not be able to connect to your instance using ssh when "
+"it boots inside of OpenStack. This package is typically called <literal"
+">openssh-server</literal>."
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml206(para)
+msgid ""
+"In general, we recommend that you disable any firewalls inside of your image"
+" and use OpenStack security groups to restrict access to instances. The "
+"reason is that having a firewall installed on your instance can make it more"
+" difficult to troubleshoot networking issues if you cannot connect to your "
+"instance."
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml213(para)
+msgid ""
+"The typical way that users access virtual machines running on OpenStack is "
+"to ssh using public key authentication. For this to work, your virtual "
+"machine image must be configured to download the ssh public key from the "
+"OpenStack metadata service or config drive, at boot time."
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml219(para)
+msgid ""
+"The cloud-init package will automatically fetch the public key from the "
+"metadata server and place the key in an account. The account varies by "
+"distribution. On Ubuntu-based virtual machines, the account is called "
+"\"ubuntu\". On Fedora-based virtual machines, the account is called "
+"\"ec2-user\"."
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml232(title)
+msgid "Write a custom script to fetch the public key"
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml233(para)
+msgid ""
+"If you are unable or unwilling to install cloud-init inside the guest, you "
+"can write a custom script to fetch the public and add it to a user account."
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml235(para)
+msgid ""
+"To fetch the ssh public key and add it to the root account, edit the "
+"<filename>/etc/rc.local</filename> file and add the following lines before "
+"the line “touch /var/lock/subsys/local”. This code fragment is taken from "
+"the <link href=\"https://github.com/rackerjoe/oz-image-"
+"build/blob/master/templates/centos60_x86_64.tdl\">rackerjoe oz-image-build "
+"CentOS 6 template</link>."
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml272(para)
+msgid ""
+"Some VNC clients replace : (colon) with ; (semicolon) and _ (underscore) "
+"with - (hyphen). If editing a file over a VNC session, make sure it's http: "
+"not http; and authorized_keys not authorized-keys."
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml283(para)
+msgid ""
+"In additional the ssh public key, an image may need to retrieve additional "
+"information from OpenStack, such as <link href=\"http://docs.openstack.org"
+"/user-guide/content/user-data.html\">user data</link> that the user "
+"submitted when requesting the image. For example, you may wish to set the "
+"host name of the instance to name given to the instance when it is booted. "
+"Or, you may wish to configure your image so that it executes user data "
+"content as a script on boot."
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml290(para)
+msgid ""
+"This information is accessible via the metadata service or the <link "
+"href=\"http://docs.openstack.org/user-guide/content/config-"
+"drive.html\">config drive</link>. As the OpenStack metadata service is "
+"compatible with version 2009-04-04 of the Amazon EC2 metadata service, "
+"consult the Amazon EC2 documentation on <link "
+"href=\"http://docs.amazonwebservices.com/AWSEC2/2009-04-04/UserGuide/AESDG-"
+"chapter-instancedata.html\">Using Instance Metadata</link> for details on "
+"how to retrieve user data."
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml298(para)
+msgid ""
+"The easiest way to support this type of functionality is to install the "
+"cloud-init package into your image, which is configured by default to treat "
+"user data as an executable script, and will set the host name."
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml303(title)
+msgid "Ensure image writes boot log to console"
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml304(para)
+msgid ""
+"You must configure the image so that the kernel writes the boot log to the "
+"<literal>ttyS0</literal> device. In particular, the "
+"<literal>console=ttyS0</literal> argument must be passed to the kernel on "
+"boot."
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml307(para)
+msgid ""
+"If your image uses grub2 as the boot loader, there should be a line in the "
+"grub configuration file (for example, "
+"<filename>/boot/grub/grub.cfg</filename>) that looks something like "
+"this:<placeholder-1/>"
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml311(para)
+msgid ""
+"If <literal>console=ttyS0</literal> does not appear, you will need to modify"
+" your grub configuration. In general, you should not update the grub.cfg "
+"directly, since it is automatically generated. Instead, you should edit "
+"<filename>/etc/default/grub</filename> and modify the value of the "
+"<literal>GRUB_CMDLINE_LINUX_DEFAULT</literal> variable: <placeholder-1/>"
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml316(para)
+msgid ""
+"Next, update the grub configuration. On Debian-based operating-systems such "
+"as Ubuntu, do:<placeholder-1/>"
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml318(para)
+msgid "On Fedora-based systems such as RHEL and CentOS, do:<placeholder-1/>"
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml322(title)
+msgid "Paravirtualized Xen support in the kernel (Xen hypervisor only)"
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml323(para)
+msgid ""
+"Prior to Linux kernel version 3.0, the mainline branch of the Linux kernel "
+"did not have support paravirtualized Xen virtual machine instances (what Xen"
+" calls DomU guests). If you are running the Xen hypervisor with "
+"paravirtualization, and you want to create an image for an older Linux "
+"distribution that has a pre 3.0 kernel, you will need to ensure that the "
+"image boots a kernel that has been compiled with Xen support."
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml330(title)
+msgid "Manage the image cache"
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml331(para)
+msgid ""
+"Use options in <filename>nova.conf</filename> to control whether, and for "
+"how long, unused base images are stored in "
+"<filename>/var/lib/nova/instances/_base/</filename>. If you have configured "
+"live migration of instances, all your compute nodes share one common "
+"<filename>/var/lib/nova/instances/</filename> directory."
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml335(para)
+msgid ""
+"For information about libvirt images in OpenStack, refer to <link "
+"href=\"http://www.pixelbeat.org/docs/openstack_libvirt_images/\">The life of"
+" an OpenStack libvirt image from Pádraig Brady</link>."
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml337(caption)
+msgid "Image cache management configuration options"
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml342(td)
+msgid "Configuration option=Default value"
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml343(td)
+msgid "(Type) Description"
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml348(td)
+msgid "preallocate_images=none"
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml353(link)
+msgid "fallocate"
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml349(td)
+msgid ""
+"(StrOpt) VM image preallocation mode: \"none\" =&gt; no storage provisioning"
+" is done up front, \"space\" =&gt; storage is fully allocated at instance "
+"start. If this is set to 'space', the $instance_dir/ images will be  "
+"<placeholder-1/>d to immediately determine if enough space is available, and"
+" to possibly improve VM I/O performance due to ongoing allocation avoidance,"
+" and better locality of block allocations."
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml358(td)
+msgid "remove_unused_base_images=True"
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml359(td)
+msgid ""
+"(BoolOpt) Should unused base images be removed? When set to True, the "
+"interval at which base images are removed are set with the following two "
+"settings. If set to False base images are never removed by Compute."
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml364(td)
+msgid "remove_unused_original_minimum_age_seconds=86400"
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml365(td)
+msgid ""
+"(IntOpt) Unused unresized base images younger than this will not be removed."
+" Default is 86400 seconds, or 24 hours."
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml368(td)
+msgid "remove_unused_resized_minimum_age_seconds=3600"
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml369(td)
+msgid ""
+"(IntOpt) Unused resized base images younger than this will not be removed. "
+"Default is 3600 seconds, or one hour."
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml373(para)
+msgid ""
+"To see how the settings affect the deletion of a running instance, check the"
+" directory where the images are stored:"
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml375(para)
+msgid ""
+"Then look for the identifier in "
+"<filename>/var/log/compute/compute.log</filename>:"
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml382(para)
+msgid ""
+"Since 86400 seconds (24 hours) is the default time for "
+"<literal>remove_unused_original_minimum_age_seconds</literal>, you can "
+"either wait for that time interval to see the base image removed, or set the"
+" value to a shorter time period in <filename>nova.conf</filename>. Restart "
+"all nova services after changing a setting in "
+"<filename>nova.conf</filename>."
+msgstr ""
+
+#: ./doc/image-guide/section_windows-example.xml8(title)
+msgid "Example: Microsoft Windows image"
+msgstr ""
+
+#: ./doc/image-guide/section_windows-example.xml9(para)
+msgid ""
+"We do not yet have a fully documented example of how to create a Microsoft "
+"Windows image. You can use libvirt to install Windows from an installation "
+"DVD using the same approach as with the CentOS and Ubuntu examples. Once the"
+" initial install is done, you will need to perform some Windows-specific "
+"customizations."
+msgstr ""
+
+#: ./doc/image-guide/section_windows-example.xml14(title)
+msgid "Install VirtIO drivers"
+msgstr ""
+
+#: ./doc/image-guide/section_windows-example.xml15(para)
+msgid ""
+"Installing the <link href=\"http://www.linux-"
+"kvm.org/page/WindowsGuestDrivers/Download_Drivers\">VirtIO paravirtualizaion"
+" drivers for Windows</link> will improve virtual machine performance when "
+"using KVM as the hypervisor to run Windows."
+msgstr ""
+
+#: ./doc/image-guide/section_windows-example.xml20(title)
+msgid "Sysprep"
+msgstr ""
+
+#: ./doc/image-guide/section_windows-example.xml21(para)
+msgid ""
+"Microsoft has a special tool called <link "
+"href=\"http://technet.microsoft.com/en-"
+"us/library/cc766049(v=ws.10).aspx\">Sysprep</link> that must be run inside "
+"of a Windows guest to prepare it for use as a virtual machine image. On "
+"Windows 2012 server, invoke sysprep, as follows: <placeholder-1/>"
+msgstr ""
+
+#: ./doc/image-guide/section_windows-example.xml28(title)
+msgid "cloudbase-init"
+msgstr ""
+
+#: ./doc/image-guide/section_windows-example.xml29(para)
+msgid ""
+"<link href=\"http://www.cloudbase.it/cloud-init-for-windows-instances"
+"/\">cloudbase-init</link> is a Windows port of cloud-init that should be "
+"installed inside of the guest. The <link href=\"https://github.com/cloudbase"
+"/cloudbase-init\">source code</link> is available on github."
+msgstr ""
+
+#: ./doc/image-guide/section_windows-example.xml35(title)
+msgid "Jordan Rinke's OpenStack Windows resources"
+msgstr ""
+
+#: ./doc/image-guide/section_windows-example.xml36(para)
+msgid ""
+"Jordan Rinke maintains <link "
+"href=\"https://github.com/jordanrinke/openstack\">a collection of "
+"resources</link> for managing OpenStack Windows virtual machine guests."
+msgstr ""
+
+#: ./doc/image-guide/section_windows-example.xml41(title)
+msgid "Windows instances require the timezone to be \"localtime\""
+msgstr ""
+
+#: ./doc/image-guide/section_windows-example.xml42(para)
+msgid ""
+"When uploading Windows images, you must set the <literal>os_type</literal> "
+"parameter to <literal>windows</literal>, which causes instances to use the "
+"local time zone. Failing to set this will cause the clock timezone to be "
+"UTC, which has unexpected side effects in Windows."
+msgstr ""
+
+#: ./doc/image-guide/section_freebsd-example.xml8(title)
+msgid "Example: FreeBSD image"
+msgstr ""
+
+#: ./doc/image-guide/section_freebsd-example.xml9(para)
+msgid ""
+"We do not yet have a fully documented example of how to create a FreeBSD "
+"image."
+msgstr ""
+
+#: ./doc/image-guide/section_freebsd-example.xml11(para)
+msgid ""
+"See the <link href=\"http://pellaeon.github.io/bsd-cloudinit/\">bsd-"
+"cloudinit</link> project for information on how to build a FreeBSD VM image "
+"that works with OpenStack."
+msgstr ""
+
+#. When image changes, this message will be marked fuzzy or untranslated for
+#. you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: ./doc/image-guide/ch_creating_images_manually.xml78(None)
+msgid ""
+"@@image: 'figures/virt-manager-new.png'; "
+"md5=3528ebfc1b945b7dd80a34897b8fe98e"
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_manually.xml6(title)
+msgid "Create images manually"
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_manually.xml7(para)
+msgid ""
+"Creating a new image is a step done outside of your OpenStack installation. "
+"You create the new image manually on your own system and then upload the "
+"image to your cloud."
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_manually.xml11(para)
+msgid ""
+"To create a new image, you will need the installation CD or DVD ISO file for"
+" the guest operating system. You'll also need access to a virtualization "
+"tool. You can use KVM for this. Or, if you have a GUI desktop virtualization"
+" tool (such as, VMWare Fusion and VirtualBox), you can use that instead and "
+"just convert the file to raw once you're done."
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_manually.xml17(para)
+msgid ""
+"When you create a new virtual machine image, you will need to connect to the"
+" graphical console of the hypervisor, which acts as the virtual machine's "
+"display and allows you to interact with the guest operating system's "
+"installer using your keyboard and mouse. KVM can expose the graphical "
+"console using the <link "
+"href=\"https://en.wikipedia.org/wiki/Virtual_Network_Computing\">VNC</link> "
+"(Virtual Network Computing) protocol or the newer <link href=\"http://spice-"
+"space.org\">SPICE</link> protocol. We'll use the VNC protocol here, since "
+"you're more likely to be able to find a VNC client that works on your local "
+"desktop."
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_manually.xml30(title)
+msgid "Verify the libvirt default network is running"
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_manually.xml31(para)
+msgid ""
+"Before starting a virtual machine with libvirt, verify that the libvirt "
+"\"default\" network has been started. This network must be active for your "
+"virtual machine to be able to connect out to the network. Starting this "
+"network will create a Linux bridge (usually called "
+"<literal>virbr0</literal>), iptables rules, and a dnsmasq process that will "
+"serve as a DHCP server."
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_manually.xml38(para)
+msgid ""
+"To verify that the libvirt \"default\" network is enabled, use the "
+"<placeholder-1/> command and verify that the \"default\" network is active:"
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_manually.xml45(para)
+msgid "If the network is not active, start it by doing:"
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_manually.xml49(title)
+msgid "Use the virt-manager X11 GUI"
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_manually.xml50(para)
+msgid ""
+"If you plan to create a virtual machine image on a machine that can run X11 "
+"applications, the simplest way to do so is to use the <placeholder-1/> GUI, "
+"which is installable as the <literal>virt-manager</literal> package on both "
+"Fedora-based and Debian-based systems. This GUI has an embedded VNC client "
+"in it that will let you view and interact with the guest's graphical "
+"console."
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_manually.xml58(para)
+msgid ""
+"If you are building the image on a headless server, and you have an X server"
+" on your local machine, you can launch <placeholder-1/>  using ssh X11 "
+"forwarding to access the GUI. Since virt-manager interacts directly with "
+"libvirt, you typically need to be root to access it. If you can ssh directly"
+" in as root (or with a user that has permissions to interact with libvirt), "
+"do:<placeholder-2/>"
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_manually.xml69(para)
+msgid ""
+"The <literal>-X</literal> flag passed to ssh will enable X11 forwarding over"
+" ssh. If this does not work, try replacing it with the <literal>-Y</literal>"
+" flag."
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_manually.xml66(para)
+msgid ""
+"If the account you use to ssh into your server does not have permissions to "
+"run libvirt, but has sudo privileges, do:<placeholder-1/><placeholder-2/>"
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_manually.xml74(para)
+msgid ""
+"Click the \"New\" button at the top-left and step through the instructions. "
+"<placeholder-1/>You will be shown a series of dialog boxes that will allow "
+"you to specify information about the virtual machine."
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_manually.xml83(para)
+msgid ""
+"When using qcow2 format images you should check the option 'customize before"
+" install', go to disk properties and explicitly select the qcow2 format. The"
+" ensures the virtual machine disk size will be correct."
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_manually.xml91(title)
+msgid "Use virt-install and connect by using a local VNC client"
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_manually.xml93(para)
+msgid ""
+"If you do not wish to use virt-manager (for example, you do not want to "
+"install the dependencies on your server, you don't have an X server running "
+"locally, the X11 forwarding over SSH isn't working), you can use the "
+"<placeholder-1/> tool to boot the virtual machine through libvirt and "
+"connect to the graphical console from a VNC client installed on your local "
+"machine."
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_manually.xml101(para)
+msgid ""
+"Because VNC is a standard protocol, there are multiple clients available "
+"that implement the VNC spec, including <link "
+"href=\"http://sourceforge.net/apps/mediawiki/tigervnc/index.php?title=Welcome_to_TigerVNC\">TigerVNC</link>"
+" (multiple platforms), <link href=\"http://tightvnc.com/\">TightVNC</link> "
+"(multiple platforms), <link href=\"http://realvnc.com/\">RealVNC</link> "
+"(multiple platforms), <link "
+"href=\"http://sourceforge.net/projects/chicken/\">Chicken</link> (Mac OS X),"
+" <link href=\"http://userbase.kde.org/Krdc\">Krde</link> (KDE), and <link "
+"href=\"http://projects.gnome.org/vinagre/\">Vinagre</link> (GNOME)."
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_manually.xml116(para)
+msgid ""
+"The following example shows how to use the <placeholder-1/> command to "
+"create an empty image file <placeholder-2/> command to start up a virtual "
+"machine using that image file. As root:"
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_manually.xml148(para)
+msgid ""
+"When using the libvirt <literal>default</literal> network, libvirt will "
+"connect the virtual machine's interface to a bridge called "
+"<literal>virbr0</literal>. There is a dnsmasq process managed by libvirt "
+"that will hand out an IP address on the 192.168.122.0/24 subnet, and libvirt"
+" has iptables rules for doing NAT for IP addresses on this subnet."
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_manually.xml133(para)
+msgid ""
+"This uses the KVM hypervisor to start up a virtual machine with the libvirt "
+"name of <literal>centos-6.4</literal> with 1024MB of RAM, with a virtual CD-"
+"ROM drive associated with the "
+"<filename>/data/CentOS-6.4-x86_64-netinstall.iso</filename> file, and a "
+"local hard disk which is stored in the host at "
+"<filename>/data/centos-6.4.qcow2</filename> that is 10GB in size in qcow2 "
+"format. It configures networking to use libvirt's default network. There is "
+"a VNC server that is listening on all interfaces, and libvirt will not "
+"attempt to launch a VNC client automatically nor try to display the text "
+"console (<literal>--no-autoconsole</literal>). Finally, libvirt will attempt"
+" to optimize the configuration for a Linux guest running a RHEL 6.x "
+"distribution.<placeholder-1/>"
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_manually.xml157(para)
+msgid ""
+"Run the <placeholder-1/> command to see a range of allowed <literal>--os-"
+"variant</literal> options."
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_manually.xml161(replaceable)
+msgid "vm-name"
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_manually.xml160(para)
+msgid "Use the <placeholder-1/> command to get the VNC port number."
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_manually.xml165(para)
+msgid ""
+"In the example above, the guest <literal>centos-6.4</literal> uses VNC "
+"display <literal>:1</literal>, which corresponds to tcp port "
+"<literal>5901</literal>. You should be able to connect to a VNC client "
+"running on your local machine to display :1 on the remote machine and step "
+"through the installation process."
+msgstr ""
+
+#: ./doc/image-guide/ch_preface.xml10(title)
+msgid "Preface"
+msgstr ""
+
+#: ./doc/image-guide/section_glance_image-formats.xml6(title)
+msgid "Disk and container formats for images"
+msgstr ""
+
+#: ./doc/image-guide/section_glance_image-formats.xml8(para)
+msgid ""
+"When you add an image to the Image Service, you can specify its disk and "
+"container formats."
+msgstr ""
+
+#: ./doc/image-guide/section_glance_image-formats.xml11(title)
+msgid "Disk formats"
+msgstr ""
+
+#: ./doc/image-guide/section_glance_image-formats.xml12(para)
+msgid ""
+"The disk format of a virtual machine image is the format of the underlying "
+"disk image. Virtual appliance vendors have different formats for laying out "
+"the information contained in a virtual machine disk image."
+msgstr ""
+
+#: ./doc/image-guide/section_glance_image-formats.xml16(para)
+msgid "Set the disk format for your image to one of the following values:"
+msgstr ""
+
+#: ./doc/image-guide/section_glance_image-formats.xml20(para)
+msgid ""
+"<literal>raw</literal>. An unstructured disk image format; if you have a "
+"file without an extension it is possibly a raw format"
+msgstr ""
+
+#: ./doc/image-guide/section_glance_image-formats.xml25(para)
+msgid ""
+"<literal>vhd</literal>. The VHD disk format, a common disk format used by "
+"virtual machine monitors from VMWare, Xen, Microsoft, VirtualBox, and others"
+msgstr ""
+
+#: ./doc/image-guide/section_glance_image-formats.xml31(para)
+msgid ""
+"<literal>vmdk</literal>. Common disk format supported by many common virtual"
+" machine monitors"
+msgstr ""
+
+#: ./doc/image-guide/section_glance_image-formats.xml36(para)
+msgid ""
+"<literal>vdi</literal>. Supported by VirtualBox virtual machine monitor and "
+"the QEMU emulator"
+msgstr ""
+
+#: ./doc/image-guide/section_glance_image-formats.xml41(para)
+msgid ""
+"<literal>iso</literal>. An archive format for the data contents of an "
+"optical disc, such as CD-ROM."
+msgstr ""
+
+#: ./doc/image-guide/section_glance_image-formats.xml46(para)
+msgid ""
+"<literal>qcow2</literal>. Supported by the QEMU emulator that can expand "
+"dynamically and supports Copy on Write"
+msgstr ""
+
+#: ./doc/image-guide/section_glance_image-formats.xml51(para)
+#: ./doc/image-guide/section_glance_image-formats.xml87(para)
+msgid "<literal>aki</literal>. An Amazon kernel image."
+msgstr ""
+
+#: ./doc/image-guide/section_glance_image-formats.xml55(para)
+#: ./doc/image-guide/section_glance_image-formats.xml91(para)
+msgid "<literal>ari</literal>. An Amazon ramdisk image."
+msgstr ""
+
+#: ./doc/image-guide/section_glance_image-formats.xml59(para)
+#: ./doc/image-guide/section_glance_image-formats.xml95(para)
+msgid "<literal>ami</literal>. An Amazon machine image."
+msgstr ""
+
+#: ./doc/image-guide/section_glance_image-formats.xml65(title)
+msgid "Container formats"
+msgstr ""
+
+#: ./doc/image-guide/section_glance_image-formats.xml66(para)
+msgid ""
+"The container format indicates whether the virtual machine image is in a "
+"file format that also contains metadata about the actual virtual machine."
+msgstr ""
+
+#: ./doc/image-guide/section_glance_image-formats.xml70(para)
+msgid ""
+"The Image Service and other OpenStack projects do not currently support the "
+"container format. It is safe to specify <literal>bare</literal> as the "
+"container format if you are unsure."
+msgstr ""
+
+#: ./doc/image-guide/section_glance_image-formats.xml75(para)
+msgid ""
+"You can set the container format for your image to one of the following "
+"values:"
+msgstr ""
+
+#: ./doc/image-guide/section_glance_image-formats.xml79(para)
+msgid ""
+"<literal>bare</literal>. The image does not have a container or metadata "
+"envelope."
+msgstr ""
+
+#: ./doc/image-guide/section_glance_image-formats.xml83(para)
+msgid "<literal>ovf</literal>. The OVF container format."
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml7(title)
+msgid "Image metadata"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml13(replaceable)
+msgid "img-uuid"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml19(term)
+msgid "architecture"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml29(literal)
+msgid "alpha"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml33(link)
+msgid "DEC 64-bit RISC"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml38(literal)
+msgid "armv7l"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml42(link)
+msgid "ARM Cortex-A7 MPCore"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml47(literal)
+msgid "cris"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml51(link)
+msgid "Ethernet, Token Ring, AXis - Code Reduced Instruction Set"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml56(literal)
+msgid "i686"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml58(para)
+msgid ""
+"<link href=\"http://en.wikipedia.org/wiki/X86\">Intel sixth-generation "
+"x86</link> (P6 microarchitecture)"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml66(literal)
+msgid "ia64"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml70(link)
+msgid "Itanium"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml75(literal)
+msgid "lm32"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml79(link)
+msgid "Lattice Micro32"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml84(literal)
+msgid "m68k"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml88(link)
+msgid "Motorola 68000"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml93(literal)
+msgid "microblaze"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml97(link)
+msgid "Xilinx 32-bit FPGA (Big Endian)"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml102(literal)
+msgid "microblazeel"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml106(link)
+msgid "Xilinx 32-bit FPGA (Little Endian)"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml111(literal)
+msgid "mips"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml115(link)
+msgid "MIPS 32-bit RISC (Big Endian)"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml120(literal)
+msgid "mipsel"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml124(link)
+msgid "MIPS 32-bit RISC (Little Endian)"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml129(literal)
+msgid "mips64"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml133(link)
+msgid "MIPS 64-bit RISC (Big Endian)"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml138(literal)
+msgid "mips64el"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml142(link)
+msgid "MIPS 64-bit RISC (Little Endian)"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml147(literal)
+msgid "openrisc"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml151(link)
+msgid "OpenCores RISC"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml156(literal)
+msgid "parisc"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml160(link)
+msgid "HP Precision Architecture RISC"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml165(literal)
+msgid "parisc64"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml169(link)
+msgid "HP Precision Architecture 64-bit RISC"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml174(literal)
+msgid "ppc"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml178(link)
+msgid "PowerPC 32-bit"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml183(literal)
+msgid "ppc64"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml187(link)
+msgid "PowerPC 64-bit"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml192(literal)
+msgid "ppcemb"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml196(link)
+msgid "PowerPC (Embedded 32-bit)"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml201(literal)
+msgid "s390"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml205(link)
+msgid "IBM Enterprise Systems Architecture/390"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml210(literal)
+msgid "s390x"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml214(link)
+msgid "S/390 64-bit"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml219(literal)
+msgid "sh4"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml223(link)
+msgid "SuperH SH-4 (Little Endian)"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml228(literal)
+msgid "sh4eb"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml232(link)
+msgid "SuperH SH-4 (Big Endian)"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml237(literal)
+msgid "sparc"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml241(link)
+msgid "Scalable Processor Architecture, 32-bit"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml246(literal)
+msgid "sparc64"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml250(link)
+msgid "Scalable Processor Architecture, 64-bit"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml255(literal)
+msgid "unicore32"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml259(link)
+msgid "Microprocessor Research and Development Center RISC Unicore32"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml265(literal)
+msgid "x86_64"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml269(link)
+msgid "64-bit extension of IA-32"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml274(literal)
+msgid "xtensa"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml278(link)
+msgid "Tensilica Xtensa configurable microprocessor core"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml283(literal)
+msgid "xtensaeb"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml287(link)
+msgid "Tensilica Xtensa configurable microprocessor core (Big Endian)"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml21(para)
+msgid ""
+"The CPU architecture that must be supported by the hypervisor, e.g. "
+"<literal>x86_64</literal>, <literal>arm</literal>, <literal>ppc64</literal>."
+" Run <placeholder-1/> to get the architecture of a machine. We strongly "
+"recommend using the architecture data vocabulary defined by the <link "
+"href=\"http://libosinfo.org\">libosinfo project</link> for this purpose. "
+"Recognized values for this field are: <placeholder-2/>"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml297(term)
+msgid "hypervisor_type"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml299(para)
+msgid ""
+"The hypervisor type. Allowed values include: <literal>xen</literal>, "
+"<literal>qemu</literal>, <literal>kvm</literal>, <literal>lxc</literal>, "
+"<literal>uml</literal>, <literal>vmware</literal>, "
+"<literal>hyperv</literal>."
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml306(term)
+msgid "vm_mode"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml312(literal)
+msgid "hvm"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml314(para)
+msgid "Fully virtualized. This is the mode used by QEMU and KVM."
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml319(literal)
+msgid "xen"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml321(para)
+msgid "Xen 3.0 paravirtualized."
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml325(literal)
+msgid "uml"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml327(para)
+msgid "User Mode Linux paravirtualized."
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml331(literal)
+msgid "exe"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml333(para)
+msgid "Executables in containers. This is the mode used by LXC."
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml308(para)
+msgid ""
+"The virtual machine mode. This represents the host/guest ABI (application "
+"binary interface) used for the virtual machine. Allowed values "
+"are:<placeholder-1/>"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml342(term)
+msgid "auto_disk_config"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml344(para)
+msgid ""
+"A boolean option. If true, the root partition on the disk will be "
+"automatically resized before the instance boots. This value is only taken "
+"into account by the Compute service when using a Xen-based hypervisor with "
+"the XenAPI driver. The Compute service will only attempt to resize if there "
+"is a single partition on the image, and only if the partition is in ext3 or "
+"ext4 format."
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml353(term)
+msgid "os_type"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml355(para)
+msgid ""
+"The operating system installed on the image, e.g. <literal>linux</literal>, "
+"<literal>windows</literal>. The XenAPI driver contains logic that will take "
+"different actions depending on the value of the os_type parameter of the "
+"image. For example, for images where <literal>os_type=windows</literal>, it "
+"will create a FAT32-based swap partition instead of a Linux swap partition, "
+"and it will limit the injected hostname to less than 16 characters."
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml9(para)
+msgid ""
+"You can associate metadata with an image using the <literal>--property "
+"<replaceable>key</replaceable>=<replaceable>value</replaceable></literal> "
+"argument to <placeholder-1/> or <placeholder-2/>. For "
+"example:<placeholder-3/> If the following properties are set on an image, "
+"and the ImagePropertiesFilter scheduler filter is enabled (which it is by "
+"default), then the scheduler will only consider compute hosts that satisfy "
+"these properties: <placeholder-4/>The following metadata properties are "
+"specific to the XenAPI driver:<placeholder-5/>"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml370(term)
+msgid "hw_video_model"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml372(para)
+msgid ""
+"The video image driver used. Allowed values include: <literal>vga</literal>,"
+" <literal>cirrus</literal>, <literal>vmvga</literal>, <literal>xen</literal>"
+" and <literal>qxl</literal>."
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml366(para)
+msgid ""
+"The following metadata properties are specific to the libvirt API driver: "
+"<placeholder-1/>"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml384(term)
+msgid "vmware_adaptertype"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml386(para)
+msgid ""
+"Indicates the virtual SCSI or IDE controller used by the hypervisor. Allowed"
+" values: <literal>lsiLogic</literal>, <literal>busLogic</literal>, "
+"<literal>ide</literal>"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml392(term)
+msgid "vmware_ostype"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml394(para)
+msgid ""
+"A VMware GuestID which describes the operating system installed in the "
+"image. This will be passed to the hypervisor when creating a virtual "
+"machine. See <link "
+"href=\"http://www.thinkvirt.com/?q=node/181\">thinkvirt.com</link> for a "
+"list of valid values. If this is not specified, it will default to "
+"<literal>otherGuest</literal>."
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml403(term)
+msgid "vmware_image_version"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml405(para)
+msgid "Currently unused, set it to <literal>1</literal>."
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml381(para)
+msgid ""
+"The following metadata properties are specific to the VMware API driver: "
+"<placeholder-1/><placeholder-2/>"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml415(term)
+msgid "instance_uuid"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml417(para)
+msgid ""
+"For snapshot images, this is the UUID of the server used to create this "
+"image."
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml423(term)
+msgid "kernel_id"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml425(para)
+msgid ""
+"The ID of image stored in Glance that should be used as the kernel when "
+"booting an AMI-style image."
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml432(term)
+msgid "ramdisk_id"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml434(para)
+msgid ""
+"The ID of image stored in Glance that should be used as the ramdisk when "
+"booting an AMI-style image."
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml441(term)
+msgid "os_version"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml443(para)
+msgid "The operating system version as specified by the distributor."
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml449(term)
+msgid "os_distro"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml462(literal)
+msgid "arch"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml464(para)
+msgid "This is: Arch Linux"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml467(para)
+msgid ""
+"Do not use: <literal>archlinux</literal>, or "
+"<literal>org.archlinux</literal>"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml475(literal)
+msgid "centos"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml477(para)
+msgid "This is: Community Enterprise Operating System"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml480(para)
+msgid ""
+"Do not use: <literal>org.centos</literal>, or <literal>CentOS</literal>"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml488(literal)
+msgid "debian"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml490(para)
+msgid "This is: Debian"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml493(para)
+msgid ""
+"Do not use: <literal>Debian</literal>, or <literal>org.debian</literal>"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml501(literal)
+msgid "fedora"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml503(para)
+msgid "This is: Fedora"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml506(para)
+msgid ""
+"Do not use: <literal>Fedora</literal>, <literal>org.fedora</literal>, or "
+"<literal>org.fedoraproject</literal>"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml515(literal)
+msgid "freebsd"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml517(para)
+msgid "This is: FreeBSD"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml520(para)
+msgid ""
+"Do not use: <literal>org.freebsd</literal>, <literal>freeBSD</literal>, or "
+"<literal>FreeBSD</literal>"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml529(literal)
+msgid "gentoo"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml531(para)
+msgid "This is: Gentoo Linux"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml534(para)
+msgid ""
+"Do not use: <literal>Gentoo</literal>, or <literal>org.gentoo</literal>"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml542(literal)
+msgid "mandrake"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml544(para)
+msgid "This is: Mandrakelinux (MandrakeSoft)"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml547(para)
+msgid ""
+"Do not use: <literal>mandrakelinux</literal>, or "
+"<literal>MandrakeLinux</literal>"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml555(literal)
+msgid "mandriva"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml557(para)
+msgid "This is: Mandriva Linux"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml560(para)
+msgid "Do not use: <literal>mandrivalinux</literal>"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml567(literal)
+msgid "mes"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml569(para)
+msgid "This is: Mandriva Enterprise Server"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml572(para)
+msgid ""
+"Do not use: <literal>mandrivaent</literal>, or <literal>mandrivaES</literal>"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml580(literal)
+msgid "msdos"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml582(para)
+msgid "This is: Microsoft Disc Operating System"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml585(para)
+msgid "Do not use: <literal>ms-dos</literal>"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml592(literal)
+msgid "netbsd"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml594(para)
+msgid "This is: NetBSD"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml597(para)
+msgid ""
+"Do not use: <literal>NetBSD</literal>, or <literal>org.netbsd</literal>"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml605(literal)
+msgid "netware"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml607(para)
+msgid "This is: Novell NetWare"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml610(para)
+msgid "Do not use: <literal>novell</literal>, or <literal>NetWare</literal>"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml618(literal)
+msgid "openbsd"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml620(para)
+msgid "This is: OpenBSD"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml623(para)
+msgid ""
+"Do not use: <literal>OpenBSD</literal>, or <literal>org.openbsd</literal>"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml631(literal)
+msgid "opensolaris"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml633(para)
+msgid ""
+"Do not use: <literal>OpenSolaris</literal>,or "
+"<literal>org.opensolaris</literal>"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml641(literal)
+msgid "opensuse"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml643(para)
+msgid "This is: openSUSE"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml646(para)
+msgid ""
+"Do not use: <literal>suse</literal>, <literal>SuSE</literal>, or "
+"<literal>org.opensuse</literal>"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml655(literal)
+msgid "rhel"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml657(para)
+msgid "This is: Red Hat Enterprise Linux"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml660(para)
+msgid ""
+"Do not use: <literal>redhat</literal>, <literal>RedHat</literal>, or "
+"<literal>com.redhat</literal>"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml669(literal)
+msgid "sled"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml671(para)
+msgid "This is: SUSE Linux Enterprise Desktop"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml674(para)
+msgid "Do not use: <literal>com.suse</literal>"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml681(literal)
+msgid "ubuntu"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml683(para)
+msgid "This is: Ubuntu"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml686(para)
+msgid ""
+"Do not use: <literal>Ubuntu</literal>, <literal>com.ubuntu</literal>, "
+"<literal>org.ubuntu</literal>, or <literal>canonical</literal>"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml696(literal)
+msgid "windows"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml698(para)
+msgid "This is: Microsoft Windows"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml701(para)
+msgid ""
+"Do not use: <literal>com.microsoft.server</literal>, or "
+"<literal>windoze</literal>"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml451(para)
+msgid ""
+"The value of this property is the common name of the operating system "
+"distribution in all-lowercase. For this purpose, we use the same data "
+"vocabulary as the <link href=\"http://libosinfo.org\">libosinfo "
+"project</link>. Following are the recognized values for this property. In "
+"the interest of interoperability, please use only a recognized value for "
+"this field. The deprecated values are listed to assist you in searching for "
+"the recognized value. Allowed values are: <placeholder-1/>"
+msgstr ""
+
+#: ./doc/image-guide/section_glance-image-metadata.xml409(para)
+msgid ""
+"In order to assist end-users in utilizing images, you may wish to put "
+"additional common metadata on Glance images. By community agreement, the "
+"following metadata keys may be used across Glance installations for the "
+"purposes described below. <placeholder-1/>"
+msgstr ""
+
+#: ./doc/image-guide/ch_converting.xml4(title)
+msgid "Converting between image formats"
+msgstr ""
+
+#: ./doc/image-guide/ch_converting.xml5(para)
+msgid ""
+"Converting images from one format to another is generally straightforward."
+msgstr ""
+
+#: ./doc/image-guide/ch_converting.xml7(title)
+msgid "qemu-img convert: raw, qcow2, VDI, VMDK"
+msgstr ""
+
+#: ./doc/image-guide/ch_converting.xml8(para)
+msgid ""
+"The <placeholder-1/> command can do conversion between multiple formats, "
+"including raw, qcow2, VDI (VirtualBox), VMDK (VMWare) and VHD (Hyper-V)."
+msgstr ""
+
+#: ./doc/image-guide/ch_converting.xml12(caption)
+msgid "qemu-img format strings"
+msgstr ""
+
+#: ./doc/image-guide/ch_converting.xml16(th)
+msgid "Image format"
+msgstr ""
+
+#: ./doc/image-guide/ch_converting.xml17(th)
+msgid "Argument to qemu-img"
+msgstr ""
+
+#: ./doc/image-guide/ch_converting.xml22(td)
+#: ./doc/image-guide/ch_converting.xml23(literal)
+msgid "raw"
+msgstr ""
+
+#: ./doc/image-guide/ch_converting.xml30(td)
+msgid "VDI (VirtualBox)"
+msgstr ""
+
+#: ./doc/image-guide/ch_converting.xml31(literal)
+msgid "vdi"
+msgstr ""
+
+#: ./doc/image-guide/ch_converting.xml34(td)
+msgid "VMDK (VMWare)"
+msgstr ""
+
+#: ./doc/image-guide/ch_converting.xml35(literal)
+msgid "vmdk"
+msgstr ""
+
+#: ./doc/image-guide/ch_converting.xml38(td)
+msgid "VHD (Hyper-V)"
+msgstr ""
+
+#: ./doc/image-guide/ch_converting.xml39(literal)
+msgid "vpc"
+msgstr ""
+
+#: ./doc/image-guide/ch_converting.xml43(para)
+msgid ""
+"This example will convert a raw image file named centos63.dsk to a qcow2 "
+"image file."
+msgstr ""
+
+#: ./doc/image-guide/ch_converting.xml47(para)
+msgid "To convert from vmdk to raw, you would do: <placeholder-1/>"
+msgstr ""
+
+#: ./doc/image-guide/ch_converting.xml51(para)
+msgid ""
+"The <literal>-f <replaceable>format</replaceable></literal> flag is "
+"optional. If omitted, qemu-img will try to infer the image format."
+msgstr ""
+
+#: ./doc/image-guide/ch_converting.xml57(title)
+msgid "VBoxManage: VDI (VirtualBox) to raw"
+msgstr ""
+
+#: ./doc/image-guide/ch_converting.xml58(para)
+msgid ""
+"If you've created a VDI image using VirtualBox, you can convert it to raw "
+"format using the <placeholder-1/> command-line tool that ships with "
+"VirtualBox. On Mac OS X, VirtualBox stores images by default in the "
+"<filename>~/VirtualBox VMs/</filename> directory. The following example "
+"creates a raw image in the current directory from a VirtualBox VDI "
+"image.<placeholder-2/>"
+msgstr ""
+
+#: ./doc/image-guide/ch_obtaining_images.xml6(title)
+msgid "Get images"
+msgstr ""
+
+#: ./doc/image-guide/ch_obtaining_images.xml8(para)
+msgid ""
+"The simplest way to obtain a virtual machine image that works with OpenStack"
+" is to download one that someone else has already created."
+msgstr ""
+
+#: ./doc/image-guide/ch_obtaining_images.xml11(title)
+msgid "CirrOS (test) images"
+msgstr ""
+
+#: ./doc/image-guide/ch_obtaining_images.xml12(para)
+msgid ""
+"CirrOS is a minimal Linux distribution that was designed for use as a test "
+"image on clouds such as OpenStack Compute. You can download a CirrOS image "
+"in various formats from the <link "
+"href=\"https://launchpad.net/cirros/+download\">CirrOS Launchpad download "
+"page</link>."
+msgstr ""
+
+#: ./doc/image-guide/ch_obtaining_images.xml21(para)
+msgid ""
+"In a CirrOS image, the login account is <literal>cirros</literal>. The "
+"password is <literal>cubswin:)</literal>"
+msgstr ""
+
+#: ./doc/image-guide/ch_obtaining_images.xml16(para)
+msgid ""
+"If your deployment uses QEMU or KVM, we recommend using the images in qcow2 "
+"format. The most recent 64-bit qcow2 image as of this writing is <link "
+"href=\"http://download.cirros-"
+"cloud.net/0.3.1/cirros-0.3.1-x86_64-disk.img\">cirros-0.3.1-x86_64-disk.img</link><placeholder-1/>"
+msgstr ""
+
+#: ./doc/image-guide/ch_obtaining_images.xml27(title)
+msgid "Official Ubuntu images"
+msgstr ""
+
+#: ./doc/image-guide/ch_obtaining_images.xml28(para)
+msgid ""
+"Canonical maintains an <link href=\"http://cloud-"
+"images.ubuntu.com/\">official set of Ubuntu-based images</link>."
+msgstr ""
+
+#: ./doc/image-guide/ch_obtaining_images.xml30(para)
+msgid ""
+"Images are arranged by Ubuntu release, and by image release date, with "
+"\"current\" being the most recent. For example, the page that contains the "
+"most recently built image for Ubuntu 12.04 \"Precise Pangolin\" is <link "
+"href=\"http://cloud-images.ubuntu.com/precise/current/\">http://cloud-"
+"images.ubuntu.com/precise/current/</link>. Scroll to the bottom of the page "
+"for links to images that can be downloaded directly."
+msgstr ""
+
+#: ./doc/image-guide/ch_obtaining_images.xml40(para)
+msgid ""
+"In an Ubuntu cloud image, the login account is <literal>ubuntu</literal>."
+msgstr ""
+
+#: ./doc/image-guide/ch_obtaining_images.xml36(para)
+msgid ""
+"If your deployment uses QEMU or KVM, we recommend using the images in qcow2 "
+"format. The most recent version of the 64-bit QCOW2 image for Ubuntu 12.04 "
+"is <link href=\"http://uec-images.ubuntu.com/precise/current/precise-server-"
+"cloudimg-amd64-disk1.img\">precise-server-cloudimg-"
+"amd64-disk1.img</link>.<placeholder-1/>"
+msgstr ""
+
+#: ./doc/image-guide/ch_obtaining_images.xml45(title)
+msgid "Official Red Hat Enterprise Linux images"
+msgstr ""
+
+#: ./doc/image-guide/ch_obtaining_images.xml46(para)
+msgid ""
+"Red Hat maintains an official Red Hat Enterprise Linux 6 cloud image. A "
+"valid Red Hat Enterprise Linux 6 subscription is required to download the "
+"<link "
+"href=\"https://rhn.redhat.com/rhn/software/channel/downloads/Download.do?cid=16952\">KVM"
+" Guest Image</link>."
+msgstr ""
+
+#: ./doc/image-guide/ch_obtaining_images.xml53(para)
+msgid ""
+"A <link "
+"href=\"https://rhn.redhat.com/rhn/software/channel/downloads/Download.do?cid=10486\">boot.iso</link>"
+" image is also available. This is the same as the "
+"<literal>boot.iso</literal> file provided on the Red Hat Enterprise Linux "
+"installation DVD. It is a minimal image suitable for kickstarting operating "
+"system installation over a network."
+msgstr ""
+
+#: ./doc/image-guide/ch_obtaining_images.xml63(title)
+msgid "Official Fedora images"
+msgstr ""
+
+#: ./doc/image-guide/ch_obtaining_images.xml64(para)
+msgid ""
+"The Fedora project maintains a list of official cloud images at <link "
+"href=\"http://cloud.fedoraproject.org/\"/>. The images include the "
+"<systemitem class=\"process\">cloud-init</systemitem> utility to support key"
+" and user data injection. The default user name is <systemitem "
+"class=\"username\">fedora</systemitem>."
+msgstr ""
+
+#: ./doc/image-guide/ch_obtaining_images.xml72(title)
+msgid "Official openSUSE and SLES images"
+msgstr ""
+
+#: ./doc/image-guide/ch_obtaining_images.xml73(para)
+msgid ""
+"SUSE does not provide openSUSE or SUSE Linux Enterprise Server (SLES) images"
+" for direct download. Instead, they provide a web-based tool called <link "
+"href=\"http://susestudio.com\">SUSE Studio</link> that you can use to build "
+"openSUSE and SLES images."
+msgstr ""
+
+#: ./doc/image-guide/ch_obtaining_images.xml79(para)
+msgid ""
+"For example, Christian Berendt used <link "
+"href=\"http://www.oensuse.org\">openSUSE</link> to create <link "
+"href=\"http://susestudio.com/a/YRUrwO/testing-instance-for-openstack-"
+"opensuse-12-3\"> a test openSUSE 12.3 image</link>."
+msgstr ""
+
+#: ./doc/image-guide/ch_obtaining_images.xml84(title)
+msgid "Official images from other Linux distributions"
+msgstr ""
+
+#: ./doc/image-guide/ch_obtaining_images.xml85(para)
+msgid ""
+"As of this writing, we are not aware of other distributions that provide "
+"images for download."
+msgstr ""
+
+#: ./doc/image-guide/ch_obtaining_images.xml88(title)
+msgid "Rackspace Cloud Builders (multiple distros) images"
+msgstr ""
+
+#: ./doc/image-guide/ch_obtaining_images.xml90(para)
+msgid ""
+"Rackspace Cloud Builders maintains a list of pre-built images from various "
+"distributions (Red Hat, CentOS, Fedora, Ubuntu). Links to these images can "
+"be found at <link href=\"https://github.com/rackerjoe/oz-image-"
+"build\">rackerjoe/oz-image-build on Github</link>."
+msgstr ""
+
+#: ./doc/image-guide/ch_obtaining_images.xml96(title)
+msgid "Microsoft Windows images"
+msgstr ""
+
+#: ./doc/image-guide/ch_obtaining_images.xml97(para)
+msgid ""
+"Cloudbase Solutions hosts an <link "
+"href=\"http://www.cloudbase.it/ws2012/\">OpenStack Windows Server 2012 "
+"Standard Evaluation image</link> that runs on Hyper-V, KVM, and "
+"XenServer/XCP."
+msgstr ""
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#: ./doc/image-guide/ch_obtaining_images.xml0(None)
+msgid "translator-credits"
+msgstr ""
