@@ -52,16 +52,16 @@ notification_driver=ceilometer.compute.nova_notifier</programlisting>
       <para>You must set the secret key that you defined previously.
         The Telemetry service nodes share this key as a shared
         secret:</para>
-      <screen os="fedora;rhel;centos;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf publisher_rpc metering_secret $ADMIN_TOKEN</userinput></screen>
+      <screen os="fedora;rhel;centos;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf publisher_rpc metering_secret $CEILOMETER_TOKEN</userinput></screen>
       <para os="ubuntu;debian">Edit the
           <filename>/etc/ceilometer/ceilometer.conf</filename> file
         and change these lines in the <literal>[DEFAULT]</literal>
-        section. Replace <replaceable>ADMIN_TOKEN</replaceable> with
-        the admin token that you created previously:</para>
+        section. Replace <replaceable>CEILOMETER_TOKEN</replaceable> with
+        the ceilometer token that you created previously:</para>
       <programlisting os="ubuntu;debian" language="ini">...
 [publisher_rpc]
 # Secret value for signing metering messages (string value)
-metering_secret = ADMIN_TOKEN
+metering_secret = <replaceable>CEILOMETER_TOKEN</replaceable>
 ...</programlisting>
     </step>
     <step os="ubuntu;debian">
