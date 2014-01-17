@@ -35,10 +35,9 @@
         <tbody>
             <tr>
                 <td><para>Controller</para></td>
-                <td><para>Runs the Networking service,
-                        Identity Service, and all Compute
-                        services that are required to deploy a
-                        VM.</para>
+                <td><para>Runs the Networking service, Identity
+                        Service, and all Compute services that are
+                        required to deploy a VM.</para>
                     <para>The service must have at least two network
                         interfaces. The first should be connected to
                         the Management Network to communicate with the
@@ -48,8 +47,8 @@
             </tr>
             <tr>
                 <td><para>Compute</para></td>
-                <td><para>Runs Compute and the
-                        Networking L2 agent.</para>
+                <td><para>Runs Compute and the Networking L2
+                        agent.</para>
                     <para>This node does not have access the public
                         network.</para>
                     <para>The node must have a network interface that
@@ -60,8 +59,8 @@
             </tr>
             <tr>
                 <td><para>Network</para></td>
-                <td><para>Runs Networking L2 agent, DHCP
-                        agent, and L3 agent.</para>
+                <td><para>Runs Networking L2 agent, DHCP agent, and L3
+                        agent.</para>
                     <para>This node has access to the public network.
                         The DHCP agent allocates IP addresses to the
                         VMs on the network. The L3 agent performs NAT
@@ -144,8 +143,7 @@ admin_password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
             xml:id="network-node-install-plugin-openvswitch-agent">
             <title>Network node</title>
             <procedure>
-                <title>To install and configure the network
-                    node</title>
+                <title>Install and configure the network node</title>
                 <step>
                     <para>Install the packages:</para>
                     <screen os="debian;ubuntu"><prompt>#</prompt> <userinput>apt-get install neutron-plugin-openvswitch-agent \
@@ -172,8 +170,8 @@ openstack-neutron openstack-neutron-dhcp-agent openstack-neutron-l3-agent</useri
                     <screen><prompt>#</prompt> <userinput>ovs-vsctl add-br br-int</userinput></screen>
                 </step>
                 <step>
-                    <para>Update the OpenStack Networking <filename>
-                            /etc/neutron/neutron.conf</filename>
+                    <para>Update the OpenStack Networking
+                            <filename>/etc/neutron/neutron.conf</filename>
                         configuration file:</para>
                     <programlisting language="ini" os="debian;ubuntu">rabbit_password = guest
 rabbit_host = <replaceable>controller</replaceable>
@@ -193,19 +191,20 @@ connection = mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@<replacea
    database connection mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@<replaceable>controller</replaceable>:3306/neutron</userinput></screen>
                 </step>
                 <step>
-                    <para>Update the plug-in <filename>
-                            /etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini
-                        </filename> configuration file:</para>
+                    <para>Update the plug-in
+                            <filename>/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>
+                        configuration file:</para>
                     <programlisting language="ini">[ovs]
 tenant_network_type=vlan
 network_vlan_ranges = physnet1:1:4094
 bridge_mappings = physnet1:br-eth1</programlisting>
                 </step>
                 <step>
+                    <para>All VM communication between the nodes
+                        occurs through the <literal>br-eth1</literal>
+                        bridge.</para>
                     <para>Create the <literal>br-eth1</literal>
-                        network bridge. All VM communication between
-                        the nodes occurs through
-                            <literal>br-eth1</literal>:</para>
+                        network bridge:</para>
                     <screen><prompt>#</prompt> <userinput>ovs-vsctl add-br br-eth1</userinput>
 <prompt>#</prompt> <userinput>ovs-vsctl add-port br-eth1 eth1</userinput></screen>
                 </step>
@@ -216,9 +215,9 @@ bridge_mappings = physnet1:br-eth1</programlisting>
 <prompt>#</prompt> <userinput>ovs-vsctl add-port br-ex eth2</userinput></screen>
                 </step>
                 <step>
-                    <para>Edit the <filename>
-                            /etc/neutron/l3_agent.ini</filename> file
-                        and add these lines:</para>
+                    <para>Edit the
+                            <filename>/etc/neutron/l3_agent.ini</filename>
+                        file and add these lines:</para>
                     <programlisting language="ini">[DEFAULT]
 auth_url = http://<replaceable>controller</replaceable>:35357/v2.0
 admin_tenant_name = service
@@ -228,9 +227,9 @@ metadata_ip = <replaceable>controller</replaceable>
 use_namespaces = True</programlisting>
                 </step>
                 <step>
-                    <para>Edit the <filename>
-                            /etc/neutron/api-paste.ini</filename> file
-                        and add these lines:</para>
+                    <para>Edit the
+                            <filename>/etc/neutron/api-paste.ini</filename>
+                        file and add these lines:</para>
                     <programlisting language="ini">[DEFAULT]
 auth_host = <replaceable>controller</replaceable>
 admin_tenant_name = service
@@ -238,8 +237,8 @@ admin_user = neutron
 admin_password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
                 </step>
                 <step>
-                    <para>Edit the <filename>
-                            /etc/neutron/dhcp_agent.ini</filename>
+                    <para>Edit the
+                            <filename>/etc/neutron/dhcp_agent.ini</filename>
                         file and add this line:</para>
                     <programlisting language="ini">use_namespaces = True</programlisting>
                 </step>
@@ -282,8 +281,7 @@ admin_password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
             <title>Compute Node</title>
 
             <procedure>
-                <title>To install and configure the compute
-                    node</title>
+                <title>Install and configure the compute node</title>
                 <step>
                     <!-- FIXME Review Fedora instructions -->
                     <para>Install the packages:</para>
@@ -307,16 +305,17 @@ admin_password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
                     <screen><prompt>#</prompt> <userinput>ovs-vsctl add-br br-int</userinput></screen>
                 </step>
                 <step>
+                    <para>All VM communication between the nodes
+                        occurs through the <literal>br-eth1</literal>
+                        bridge.</para>
                     <para>Create the <literal>br-eth1</literal>
-                        network bridge. All VM communication between
-                        the nodes occurs through
-                            <literal>br-eth1</literal>:</para>
+                        network bridge:</para>
                     <screen><prompt>#</prompt> <userinput>ovs-vsctl add-br br-eth1</userinput>
 <prompt>#</prompt> <userinput>ovs-vsctl add-port br-eth1 eth1</userinput></screen>
                 </step>
                 <step>
-                    <para>Edit the OpenStack Networking <filename>
-                            /etc/neutron/neutron.conf</filename>
+                    <para>Edit the OpenStack Networking
+                            <filename>/etc/neutron/neutron.conf</filename>
                         configuration file and add this line:</para>
                     <programlisting language="ini" os="debian;ubuntu">rabbit_password = guest
 rabbit_host = <replaceable>controller</replaceable>
@@ -370,46 +369,39 @@ bridge_mappings = physnet1:br-eth1</programlisting>
         </note>
         <itemizedlist>
             <listitem>
-                <para>Create a <filename>novarc</filename>
-                    file:</para>
-                <programlisting language="bash">export OS_TENANT_NAME=provider_tenant
+                <para>Create an <filename>adminrc</filename> file that
+                    contains these lines:</para>
+                <programlisting language="bash">export OS_TENANT_NAME=admin
 export OS_USERNAME=admin
 export OS_PASSWORD=<replaceable>ADMIN_PASS</replaceable>
-export OS_AUTH_URL="http://<replaceable>controller</replaceable>:5000/v2.0/"
-export OS_SERVICE_ENDPOINT="http://<replaceable>controller</replaceable>:35357/v2.0"
-export OS_SERVICE_TOKEN=password</programlisting>
+export OS_AUTH_URL="http://<replaceable>controller</replaceable>:5000/v2.0/"</programlisting>
             </listitem>
-        </itemizedlist>
 
-        <itemizedlist>
             <listitem>
-                <para>Export the variables:</para>
-                <screen><prompt>#</prompt> <userinput>source novarc echo "source novarc">>.bashrc</userinput></screen>
+                <para>Export the environment variables in the
+                        <filename>adminrc</filename> file:</para>
+                <screen><prompt>#</prompt> <userinput>source adminrc</userinput></screen>
             </listitem>
         </itemizedlist>
-        <para>The admin user creates a network and subnet on behalf of
-            tenant_A. A tenant_A user can also complete these
-            steps.</para>
+        <para>The <literal>admin</literal> tenant can define resources
+            that other tenants can use but cannot modify. These
+            resources are a provider network and its associated
+            router.</para>
+        <para>The <literal>admin</literal> user creates a network and
+            subnet on behalf of <literal>tenant_A</literal>.</para>
+        <para>A <literal>tenant_A</literal> user can also complete
+            these steps.</para>
         <procedure>
-            <title>To configure internal networking</title>
+            <title>Configure internal networking</title>
             <step>
-                <para>Get the tenant ID (Used as $TENANT_ID
-                    later).</para>
-                <screen><prompt>#</prompt> <userinput>keystone tenant-list</userinput>
-<computeroutput>+----------------------------------+--------------------+---------+
-|                id                |        name        | enabled |
-+----------------------------------+--------------------+---------+
-| 48fb81ab2f6b409bafac8961a594980f |  provider_tenant   |   True  |
-| cbb574ac1e654a0a992bfc0554237abf |      service       |   True  |
-| e371436fe2854ed89cca6c33ae7a83cd | invisible_to_admin |   True  |
-| e40fa60181524f9f9ee7aa1038748f08 |      tenant_A      |   True  |
-+----------------------------------+--------------------+---------+</computeroutput></screen>
+                <para>Get the <literal>tenant_A</literal> tenant
+                    ID:</para>
+                <screen><prompt>#</prompt> <userinput>TENANT_ID=$(keystone tenant-list | awk '/ tenant_A / { print $2 }')</userinput></screen>
             </step>
             <step>
-                <para>Create an internal network named <emphasis
-                        role="bold">net1</emphasis> for tenant_A
-                    ($TENANT_ID will be
-                    e40fa60181524f9f9ee7aa1038748f08):</para>
+                <para>Create the <literal>net1</literal> internal
+                    network for the <literal>tenant_A</literal>
+                    tenant:</para>
                 <screen><prompt>#</prompt> <userinput>neutron net-create --tenant-id $TENANT_ID net1</userinput>
 <computeroutput>+---------------------------+--------------------------------------+
 | Field                     | Value                                |
@@ -428,16 +420,17 @@ export OS_SERVICE_TOKEN=password</programlisting>
 +---------------------------+--------------------------------------+</computeroutput></screen>
             </step>
             <step>
-                <para>Create a subnet on the network <emphasis
-                        role="bold">net1</emphasis> (ID field below is
-                    used as $SUBNET_ID later):</para>
-                <screen><prompt>#</prompt> <userinput>neutron subnet-create --tenant-id $TENANT_ID net1 10.5.5.0/24</userinput>
+                <para>Create a subnet on the <literal>net1</literal>
+                    network and store its ID in a variable:</para>
+                <screen><prompt>#</prompt> <userinput>neutron subnet-create --tenant-id $TENANT_ID net1 10.5.5.0/24 \
+    --dns_nameservers list=true 8.8.8.7 8.8.8.8</userinput>
 <computeroutput>+------------------+--------------------------------------------+
 | Field            | Value                                      |
 +------------------+--------------------------------------------+
 | allocation_pools | {"start": "10.5.5.2", "end": "10.5.5.254"} |
 | cidr             | 10.5.5.0/24                                |
-| dns_nameservers  |                                            |
+| dns_nameservers  | 8.8.8.7                                    |
+|                  | 8.8.8.8                                    |
 | enable_dhcp      | True                                       |
 | gateway_ip       | 10.5.5.1                                   |
 | host_routes      |                                            |
@@ -446,19 +439,24 @@ export OS_SERVICE_TOKEN=password</programlisting>
 | name             |                                            |
 | network_id       | e99a361c-0af8-4163-9feb-8554d4c37e4f       |
 | tenant_id        | e40fa60181524f9f9ee7aa1038748f08           |
-+------------------+--------------------------------------------+</computeroutput></screen>
++------------------+--------------------------------------------+</computeroutput>
+<prompt>#</prompt> <userinput>SUBNET_ID=<replaceable>c395cb5d-ba03-41ee-8a12-7e792d51a167</replaceable></userinput></screen>
+                <note>
+                    <para>The <literal>id</literal> value will be
+                        different on your system.</para>
+                </note>
             </step>
         </procedure>
-        <para>A user with the admin role must complete these steps. In
-            this procedure, the user is admin from
-            provider_tenant.</para>
+        <para>A user with the <literal>admin</literal> role in the
+                <literal>admin</literal> tenant must complete these
+            steps.</para>
         <procedure>
-            <title>To configure the router and external
+            <title>Configure the router and external
                 networking</title>
             <step>
-                <para>Create a <emphasis role="bold"
-                        >router1</emphasis> route. The ID is used as
-                    $ROUTER_ID later:</para>
+                <para>Create a <literal>router1</literal> router and
+                    store its ID in the <literal>ROUTER_ID</literal>
+                    variable:</para>
                 <screen><prompt>#</prompt> <userinput>neutron router-create router1</userinput>
 <computeroutput>+-----------------------+--------------------------------------+
 | Field                 | Value                                |
@@ -469,11 +467,17 @@ export OS_SERVICE_TOKEN=password</programlisting>
 | name                  | router1                              |
 | status                | ACTIVE                               |
 | tenant_id             | 48fb81ab2f6b409bafac8961a594980f     |
-+-----------------------+--------------------------------------+</computeroutput></screen>
++-----------------------+--------------------------------------+</computeroutput>
+<prompt>#</prompt> <userinput>ROUTER_ID=<replaceable>685f64e7-a020-4fdf-a8ad-e41194ae124b</replaceable></userinput></screen>
+                <note>
+                    <para>The <literal>id</literal> value will be
+                        different on your system.</para>
+                </note>
                 <note>
                     <para>The <parameter>--tenant-id</parameter>
                         parameter is not specified, so this router is
-                        assigned to the provider_tenant tenant.</para>
+                        assigned to the <literal>admin</literal>
+                        tenant.</para>
                 </note>
             </step>
             <step>
@@ -484,15 +488,19 @@ export OS_SERVICE_TOKEN=password</programlisting>
                 <screen><prompt>#</prompt> <userinput>neutron router-interface-add $ROUTER_ID $SUBNET_ID</userinput>
 <computeroutput>Added interface to router 685f64e7-a020-4fdf-a8ad-e41194ae124b</computeroutput></screen>
                 <note>
-                    <para>You can repeat this step to add more
-                        interfaces for other networks that belong to
-                        other tenants.</para>
+                    <para>You can repeat this step to add interfaces
+                        for networks that belong to other
+                        tenants.</para>
                 </note>
             </step>
             <step>
                 <para>Create the <literal>ext_net</literal> external
-                    network:</para>
-                <screen><prompt>#</prompt> <userinput>neutron net-create ext_net --router:external=True</userinput>
+                    network and store its ID in a the
+                        <literal>EXTERNAL_NETWORK_ID</literal>
+                    variable:</para>
+                <screen><prompt>#</prompt> <userinput>neutron net-create ext_net \
+    --router:external=True --provider:network_type=vlan \
+    --provider:physical_network=physnet1 --provider:segmentation_id=1</userinput>
 <computeroutput>+---------------------------+--------------------------------------+
 | Field                     | Value                                |
 +---------------------------+--------------------------------------+
@@ -507,7 +515,8 @@ export OS_SERVICE_TOKEN=password</programlisting>
 | status                    | ACTIVE                               |
 | subnets                   |                                      |
 | tenant_id                 | 48fb81ab2f6b409bafac8961a594980f     |
-+---------------------------+--------------------------------------+</computeroutput></screen>
++---------------------------+--------------------------------------+</computeroutput>
+<prompt>#</prompt> <userinput>EXTERNAL_NETWORK_ID=<replaceable>8858732b-0400-41f6-8e5c-25590e67ffeb</replaceable></userinput></screen>
             </step>
             <step>
                 <para>Create the subnet for floating IPs.</para>
@@ -516,8 +525,8 @@ export OS_SERVICE_TOKEN=password</programlisting>
                         subnet.</para>
                 </note>
                 <screen><prompt>#</prompt> <userinput>neutron subnet-create ext_net \
---allocation-pool start=7.7.7.130,end=7.7.7.150 \
---gateway 7.7.7.1 7.7.7.0/24 --disable-dhcp</userinput>
+    --allocation-pool start=7.7.7.130,end=7.7.7.150 \
+    --gateway 7.7.7.1 7.7.7.0/24 --disable-dhcp</userinput>
 <computeroutput>+------------------+--------------------------------------------------+
 | Field            | Value                                            |
 +------------------+--------------------------------------------------+
@@ -541,33 +550,34 @@ export OS_SERVICE_TOKEN=password</programlisting>
 <computeroutput>Set gateway for router 685f64e7-a020-4fdf-a8ad-e41194ae124b</computeroutput></screen>
             </step>
         </procedure>
-        <para>A user from tenant_A completes these steps, so the
-            credentials in the environment variables are different
-            than those in the previous procedure.</para>
+        <para>A user from <literal>tenant_A</literal> completes these
+            steps, so the credentials in the environment variables are
+            different than those in the previous procedure.</para>
         <procedure>
-            <title>To allocate floating IP addresses</title>
+            <title>Allocate floating IP addresses</title>
             <step>
                 <para>You can associate a floating IP address with a
-                    VM after it starts. Find the ID of the port
-                    ($PORT_ID) that was allocated for the VM, as
-                    follows:</para>
+                    VM after it starts. Store the port ID that was
+                    allocated for the VM in the
+                        <literal>PORT_ID</literal> variable:</para>
                 <screen><prompt>#</prompt> <userinput>nova list</userinput>
 <computeroutput>+--------------------------------------+--------+--------+---------------+
 |                  ID                  |  Name  | Status |    Networks   |
 +--------------------------------------+--------+--------+---------------+
 | 1cdc671d-a296-4476-9a75-f9ca1d92fd26 | testvm | ACTIVE | net1=10.5.5.3 |
-+--------------------------------------+--------+--------+---------------+
-</computeroutput>
-<userinput>neutron port-list -- --device_id 1cdc671d-a296-4476-9a75-f9ca1d92fd26</userinput>
++--------------------------------------+--------+--------+---------------+</computeroutput>
+<prompt>#</prompt> <userinput>neutron port-list -- --device_id <replaceable>1cdc671d-a296-4476-9a75-f9ca1d92fd26</replaceable></userinput>
 <computeroutput>+--------------------------------------+------+-------------------+---------------------------------------------------------------------------------+
 | id                                   | name | mac_address       | fixed_ips                                                                       |
 +--------------------------------------+------+-------------------+---------------------------------------------------------------------------------+
 | 9aa47099-b87b-488c-8c1d-32f993626a30 |      | fa:16:3e:b4:d6:6c | {"subnet_id": "c395cb5d-ba03-41ee-8a12-7e792d51a167", "ip_address": "10.5.5.3"} |
-+--------------------------------------+------+-------------------+---------------------------------------------------------------------------------+</computeroutput></screen>
++--------------------------------------+------+-------------------+---------------------------------------------------------------------------------+</computeroutput>
+<prompt>#</prompt> <userinput>PORT_ID=<replaceable>9aa47099-b87b-488c-8c1d-32f993626a30</replaceable></userinput></screen>
             </step>
             <step>
-                <para>Allocate a floating IP (Used as
-                    $FLOATING_ID):</para>
+                <para>Allocate a floating IP and store its ID in the
+                        <literal>FLOATING_ID</literal>
+                    variable:</para>
                 <screen><prompt>#</prompt> <userinput>neutron floatingip-create ext_net</userinput>
 <computeroutput>+---------------------+--------------------------------------+
 | Field               | Value                                |
@@ -579,7 +589,8 @@ export OS_SERVICE_TOKEN=password</programlisting>
 | port_id             |                                      |
 | router_id           |                                      |
 | tenant_id           | e40fa60181524f9f9ee7aa1038748f08     |
-+---------------------+--------------------------------------+</computeroutput></screen>
++---------------------+--------------------------------------+</computeroutput>
+<prompt>#</prompt> <userinput>FLOATING_ID=<replaceable>7.7.7.131</replaceable></userinput></screen>
             </step>
             <step>
                 <para>Associate the floating IP with the port for the
@@ -607,8 +618,7 @@ export OS_SERVICE_TOKEN=password</programlisting>
                 <screen><prompt>#</prompt> <userinput>ping 7.7.7.131</userinput>
 <computeroutput>PING 7.7.7.131 (7.7.7.131) 56(84) bytes of data.
 64 bytes from 7.7.7.131: icmp_req=2 ttl=64 time=0.152 ms
-64 bytes from 7.7.7.131: icmp_req=3 ttl=64 time=0.049 ms
-</computeroutput></screen>
+64 bytes from 7.7.7.131: icmp_req=3 ttl=64 time=0.049 ms</computeroutput></screen>
             </step>
         </procedure>
     </section>
@@ -618,23 +628,23 @@ export OS_SERVICE_TOKEN=password</programlisting>
             private networks that connect to the outside world through
             an OpenStack Networking router. When each tenant gets
             exactly one network, this architecture maps to the same
-            logical topology as the VlanManager in Compute
-            (although of course, Networking does not require
-            VLANs). Using the Networking API, the tenant can
-            only see a network for each private network assigned to
-            that tenant. The router object in the API is created and
-            owned by the cloud administrator.</para>
+            logical topology as the VlanManager in Compute (although
+            of course, Networking does not require VLANs). Using the
+            Networking API, the tenant can only see a network for each
+            private network assigned to that tenant. The router object
+            in the API is created and owned by the cloud
+            administrator.</para>
         <para>This model supports assigning public addresses to VMs by
-            using <firstterm baseform="floating IP">floating IPs</firstterm>;
-            the router maps
-            public addresses from the external network to fixed IPs on
-            private networks. Hosts without floating IPs can still
-            create outbound connections to the external network
-            because the provider router performs SNAT to the router's
-            external IP. The IP address of the physical router is used
-            as the <literal>gateway_ip</literal> of the external
-            network subnet, so the provider has a default router for
-            Internet traffic.</para>
+            using <firstterm baseform="floating IP">floating
+                IPs</firstterm>; the router maps public addresses from
+            the external network to fixed IPs on private networks.
+            Hosts without floating IPs can still create outbound
+            connections to the external network because the provider
+            router performs SNAT to the router's external IP. The IP
+            address of the physical router is used as the
+                <literal>gateway_ip</literal> of the external network
+            subnet, so the provider has a default router for Internet
+            traffic.</para>
         <para>The router provides L3 connectivity among private
             networks. Tenants can reach instances for other tenants
             unless you use additional filtering, such as, security
@@ -642,16 +652,15 @@ export OS_SERVICE_TOKEN=password</programlisting>
             overlapping IPs. To resolve this issue, the administrator
             can create private networks on behalf of the
             tenants.</para>
-        <para>
-            <informalfigure>
-                <mediaobject>
-                    <imageobject>
-                        <imagedata scale="55"
-                            fileref="../common/figures/UseCase-SingleRouter.png"
-                        />
-                    </imageobject>
-                </mediaobject>
-            </informalfigure>
-            <!--Image source link: https://docs.google.com/a/nicira.com/drawings/d/1DKxeZZXml_fNZHRoGPKkC7sGdkPJZCtWytYZqHIp_ZE/edit --></para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject>
+                    <imagedata scale="55"
+                        fileref="../common/figures/UseCase-SingleRouter.png"
+                    />
+                </imageobject>
+            </mediaobject>
+        </informalfigure>
+        <!--Image source link: https://docs.google.com/a/nicira.com/drawings/d/1DKxeZZXml_fNZHRoGPKkC7sGdkPJZCtWytYZqHIp_ZE/edit -->
     </section>
 </section>
