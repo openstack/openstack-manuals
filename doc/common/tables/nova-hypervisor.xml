@@ -16,20 +16,44 @@
           </thead>
           <tbody>
               <tr>
-                       <td>block_migration_flag = VIR_MIGRATE_UNDEFINE_SOURCE, VIR_MIGRATE_PEER2PEER, VIR_MIGRATE_NON_SHARED_INC</td>
-                       <td>(StrOpt) Migration flags to be set for block migration</td>
-              </tr>
-              <tr>
                        <td>default_ephemeral_format = None</td>
                        <td>(StrOpt) The default format an ephemeral_volume will be formatted with on creation.</td>
               </tr>
               <tr>
-                       <td>disk_cachemodes = </td>
-                       <td>(ListOpt) Specific cachemodes to use for different disk types e.g: file=directsync,block=none</td>
-              </tr>
-              <tr>
                        <td>force_raw_images = True</td>
                        <td>(BoolOpt) Force backing images to raw format</td>
+              </tr>
+              <tr>
+                       <td>preallocate_images = none</td>
+                       <td>(StrOpt) VM image preallocation mode: "none" =&gt; no storage provisioning is done up front, "space" =&gt; storage is fully allocated at instance start</td>
+              </tr>
+              <tr>
+                       <td>rescue_timeout = 0</td>
+                       <td>(IntOpt) Automatically unrescue an instance after N seconds. Set to 0 to disable.</td>
+              </tr>
+              <tr>
+                       <td>timeout_nbd = 10</td>
+                       <td>(IntOpt) time to wait for a NBD device coming up</td>
+              </tr>
+              <tr>
+                       <td>use_cow_images = True</td>
+                       <td>(BoolOpt) Whether to use cow images</td>
+              </tr>
+              <tr>
+                       <td>vcpu_pin_set = None</td>
+                       <td>(StrOpt) Which pcpus can be used by vcpus of instance e.g: "4-12,^8,15"</td>
+              </tr>
+              <tr>
+                       <td>virt_mkfs = []</td>
+                       <td>(MultiStrOpt) mkfs commands for ephemeral device. The format is &lt;os_type&gt;=&lt;mkfs command&gt;</td>
+              </tr>
+              <tr>
+                       <td>block_migration_flag = VIR_MIGRATE_UNDEFINE_SOURCE, VIR_MIGRATE_PEER2PEER, VIR_MIGRATE_NON_SHARED_INC</td>
+                       <td>(StrOpt) Migration flags to be set for block migration</td>
+              </tr>
+              <tr>
+                       <td>disk_cachemodes = </td>
+                       <td>(ListOpt) Specific cachemodes to use for different disk types e.g: file=directsync,block=none</td>
               </tr>
               <tr>
                        <td>images_rbd_ceph_conf = </td>
@@ -72,10 +96,6 @@
                        <td>(IntOpt) The amount of storage (in megabytes) to allocate for LVM snapshot copy-on-write blocks.</td>
               </tr>
               <tr>
-                       <td>preallocate_images = none</td>
-                       <td>(StrOpt) VM image preallocation mode: "none" =&gt; no storage provisioning is done up front, "space" =&gt; storage is fully allocated at instance start</td>
-              </tr>
-              <tr>
                        <td>rescue_image_id = None</td>
                        <td>(StrOpt) Rescue ami image</td>
               </tr>
@@ -86,10 +106,6 @@
               <tr>
                        <td>rescue_ramdisk_id = None</td>
                        <td>(StrOpt) Rescue ari image</td>
-              </tr>
-              <tr>
-                       <td>rescue_timeout = 0</td>
-                       <td>(IntOpt) Automatically unrescue an instance after N seconds. Set to 0 to disable.</td>
               </tr>
               <tr>
                        <td>snapshot_compression = False</td>
@@ -104,28 +120,12 @@
                        <td>(BoolOpt) Create sparse logical volumes (with virtualsize) if this flag is set to True.</td>
               </tr>
               <tr>
-                       <td>timeout_nbd = 10</td>
-                       <td>(IntOpt) time to wait for a NBD device coming up</td>
-              </tr>
-              <tr>
-                       <td>use_cow_images = True</td>
-                       <td>(BoolOpt) Whether to use cow images</td>
-              </tr>
-              <tr>
                        <td>use_usb_tablet = True</td>
                        <td>(BoolOpt) Sync virtual and real mouse cursors in Windows VMs</td>
               </tr>
               <tr>
                        <td>use_virtio_for_bridges = True</td>
                        <td>(BoolOpt) Use virtio for bridge interfaces with KVM/QEMU</td>
-              </tr>
-              <tr>
-                       <td>vcpu_pin_set = None</td>
-                       <td>(StrOpt) Which pcpus can be used by vcpus of instance e.g: "4-12,^8,15"</td>
-              </tr>
-              <tr>
-                       <td>virt_mkfs = []</td>
-                       <td>(MultiStrOpt) mkfs commands for ephemeral device. The format is &lt;os_type&gt;=&lt;mkfs command&gt;</td>
               </tr>
        </tbody>
         </table>

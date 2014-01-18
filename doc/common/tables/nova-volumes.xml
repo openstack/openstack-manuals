@@ -16,10 +16,6 @@
           </thead>
           <tbody>
               <tr>
-                       <td>block_device_creation_timeout = 10</td>
-                       <td>(IntOpt) Time to wait for a block device to be created</td>
-              </tr>
-              <tr>
                        <td>cinder_api_insecure = False</td>
                        <td>(BoolOpt) Allow to perform insecure SSL requests to cinder</td>
               </tr>
@@ -44,16 +40,40 @@
                        <td>(IntOpt) Number of cinderclient retries on failed http calls</td>
               </tr>
               <tr>
-                       <td>force_volumeutils_v1 = False</td>
-                       <td>(BoolOpt) Force V1 volume utility class</td>
+                       <td>os_region_name = None</td>
+                       <td>(StrOpt) region name of this node</td>
               </tr>
               <tr>
-                       <td>glusterfs_mount_point_base = $state_path/mnt</td>
-                       <td>(StrOpt) Dir where the glusterfs volume is mounted on the compute node</td>
+                       <td>volume_api_class = nova.volume.cinder.API</td>
+                       <td>(StrOpt) The full class name of the volume API class to use</td>
+              </tr>
+              <tr>
+                       <td>volume_usage_poll_interval = 0</td>
+                       <td>(IntOpt) Interval in seconds for gathering volume usages</td>
               </tr>
               <tr>
                        <td>iscsi_iqn_prefix = iqn.2010-10.org.openstack.baremetal</td>
                        <td>(StrOpt) iSCSI IQN prefix used in baremetal volume connections.</td>
+              </tr>
+              <tr>
+                       <td>volume_driver = nova.virt.baremetal.volume_driver.LibvirtVolumeDriver</td>
+                       <td>(StrOpt) Baremetal volume driver.</td>
+              </tr>
+              <tr>
+                       <td>force_volumeutils_v1 = False</td>
+                       <td>(BoolOpt) Force V1 volume utility class</td>
+              </tr>
+              <tr>
+                       <td>volume_attach_retry_count = 10</td>
+                       <td>(IntOpt) The number of times to retry to attach a volume</td>
+              </tr>
+              <tr>
+                       <td>volume_attach_retry_interval = 5</td>
+                       <td>(IntOpt) Interval between volume attachment attempts, in seconds</td>
+              </tr>
+              <tr>
+                       <td>glusterfs_mount_point_base = $state_path/mnt</td>
+                       <td>(StrOpt) Dir where the glusterfs volume is mounted on the compute node</td>
               </tr>
               <tr>
                        <td>nfs_mount_options = None</td>
@@ -76,10 +96,6 @@
                        <td>(IntOpt) number of times to rescan iSER target to find volume</td>
               </tr>
               <tr>
-                       <td>os_region_name = None</td>
-                       <td>(StrOpt) region name of this node</td>
-              </tr>
-              <tr>
                        <td>qemu_allowed_storage_drivers = </td>
                        <td>(ListOpt) Protocols listed here will be accessed directly from QEMU. Currently supported protocols: [gluster]</td>
               </tr>
@@ -100,24 +116,8 @@
                        <td>(StrOpt) Base dir where Scality SOFS shall be mounted</td>
               </tr>
               <tr>
-                       <td>volume_api_class = nova.volume.cinder.API</td>
-                       <td>(StrOpt) The full class name of the volume API class to use</td>
-              </tr>
-              <tr>
-                       <td>volume_attach_retry_count = 10</td>
-                       <td>(IntOpt) The number of times to retry to attach a volume</td>
-              </tr>
-              <tr>
-                       <td>volume_attach_retry_interval = 5</td>
-                       <td>(IntOpt) Interval between volume attachment attempts, in seconds</td>
-              </tr>
-              <tr>
-                       <td>volume_driver = nova.virt.baremetal.volume_driver.LibvirtVolumeDriver</td>
-                       <td>(StrOpt) Baremetal volume driver.</td>
-              </tr>
-              <tr>
-                       <td>volume_usage_poll_interval = 0</td>
-                       <td>(IntOpt) Interval in seconds for gathering volume usages</td>
+                       <td>block_device_creation_timeout = 10</td>
+                       <td>(IntOpt) Time to wait for a block device to be created</td>
               </tr>
        </tbody>
         </table>
