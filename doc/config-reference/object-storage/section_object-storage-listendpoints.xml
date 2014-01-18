@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="object-storage-listendpoints">
+    <title>Endpoint listing middleware</title>
+    <para>The endpoint listing middleware enables third-party services
+        that use data locality information to integrate with swift.
+        This middleware reduces network overhead and is designed for
+        third-party services that run inside the firewall. Deploy this
+        middleware on a proxy server because usage of this middleware
+        is not authenticated.</para>
+    <para>Format requests for endpoints, as follows:</para>
+    <screen><userinput>/endpoints/<replaceable>{account}</replaceable>/<replaceable>{container}</replaceable>/<replaceable>{object}</replaceable>
+/endpoints/<replaceable>{account}</replaceable>/<replaceable>{container}</replaceable>
+/endpoints/<replaceable>{account}</replaceable></userinput></screen>
+    <para>Use the <option>list_endpoints_path</option> configuration
+        option in the <filename>proxy_server.conf</filename> file to
+        customize the <literal>/endpoints/</literal> path.</para>
+    <para>Responses are JSON-encoded lists of endpoints, as
+        follows:</para>
+    <screen><computeroutput>http://<replaceable>{server}</replaceable>:<replaceable>{port}</replaceable>/<replaceable>{dev}</replaceable>/<replaceable>{part}</replaceable>/<replaceable>{acc}</replaceable>/<replaceable>{cont}</replaceable>/<replaceable>{obj}</replaceable>
+http://<replaceable>{server}</replaceable>:<replaceable>{port}</replaceable>/<replaceable>{dev}</replaceable>/<replaceable>{part}</replaceable>/<replaceable>{acc}</replaceable>/<replaceable>{cont}</replaceable>
+http://<replaceable>{server}</replaceable>:<replaceable>{port}</replaceable>/<replaceable>{dev}</replaceable>/<replaceable>{part}</replaceable>/<replaceable>{acc}</replaceable></computeroutput></screen>
+    <para>An example response is:</para>
+    <screen><computeroutput>http://10.1.1.1:6000/sda1/2/a/c2/o1
+http://10.1.1.1:6000/sda1/2/a/c2
+http://10.1.1.1:6000/sda1/2/a </computeroutput></screen>
+</section>
