@@ -45,9 +45,17 @@ service, and its dependent resources, on one of your nodes.
 
 ===== Configuring OpenStack Identity service
 
-You need to edit your OpenStack Identity configuration file (+keystone.conf+) and change the bind parameter :
+You need to edit your OpenStack Identity configuration file (+keystone.conf+) and change the bind parameters :
+
+On Havana:
 ----
 bind_host = 192.168.42.103
+----
+
+On Icehouse, the +admin_bind_host+ option lets you use a private network for the admin access.
+----
+public_bind_host = 192.168.42.103
+admin_bind_host = 192.168.42.103
 ----
 
 To be sure all data will be high available, you should be sure that you store everything in the MySQL database (which is also high available) :
