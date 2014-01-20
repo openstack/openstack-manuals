@@ -16,12 +16,11 @@
           </thead>
           <tbody>
               <tr>
-                       <td>allocated_capacity_weight_multiplier = -1.0</td>
-                       <td>(FloatOpt) Multiplier used for weighing volume capacity. Negative numbers mean to stack vs spread.</td>
+                  <th colspan="2">[DEFAULT]</th>
               </tr>
               <tr>
-                       <td>backend = sqlalchemy</td>
-                       <td>(StrOpt) The backend to use for db</td>
+                       <td>allocated_capacity_weight_multiplier = -1.0</td>
+                       <td>(FloatOpt) Multiplier used for weighing volume capacity. Negative numbers mean to stack vs spread.</td>
               </tr>
               <tr>
                        <td>bindir = $pybasedir/bin</td>
@@ -81,31 +80,11 @@
               </tr>
               <tr>
                        <td>max_gigabytes = 10000</td>
-                       <td>(IntOpt) maximum number of volume gigabytes to allow per host</td>
-              </tr>
-              <tr>
-                       <td>max_overflow = None</td>
-                       <td>(IntOpt) If set, use this value for max_overflow with sqlalchemy</td>
-              </tr>
-              <tr>
-                       <td>max_pool_size = 5</td>
-                       <td>(IntOpt) Maximum number of SQL connections to keep open in a pool</td>
-              </tr>
-              <tr>
-                       <td>max_retries = 10</td>
-                       <td>(IntOpt) maximum db connection retries during startup. (setting -1 implies an infinite retry count)</td>
-              </tr>
-              <tr>
-                       <td>memcached_servers = None</td>
-                       <td>(ListOpt) Memcached servers or None for in process cache.</td>
+                       <td>(IntOpt) This configure option has been deprecated along with the SimpleScheduler.  New scheduler is able to gather capacity information for each host, thus setting the maximum number of volume gigabytes for host is no longer needed.  It's safe to remove this configure from cinder.conf.</td>
               </tr>
               <tr>
                        <td>migration_create_volume_timeout_secs = 300</td>
                        <td>(IntOpt) Timeout for creating the volume to migrate to when performing volume migration (seconds)</td>
-              </tr>
-              <tr>
-                       <td>min_pool_size = 1</td>
-                       <td>(IntOpt) Minimum number of SQL connections to keep open in a pool</td>
               </tr>
               <tr>
                        <td>num_iser_scan_tries = 3</td>
@@ -154,6 +133,29 @@
               <tr>
                        <td>zadara_default_stripesize = 64</td>
                        <td>(StrOpt) Default stripe size for volumes</td>
+              </tr>
+              <tr>
+                  <th colspan="2">[database]</th>
+              </tr>
+              <tr>
+                       <td>backend = sqlalchemy</td>
+                       <td>(StrOpt) The backend to use for db</td>
+              </tr>
+              <tr>
+                       <td>max_overflow = None</td>
+                       <td>(IntOpt) If set, use this value for max_overflow with sqlalchemy</td>
+              </tr>
+              <tr>
+                       <td>max_pool_size = 5</td>
+                       <td>(IntOpt) Maximum number of SQL connections to keep open in a pool</td>
+              </tr>
+              <tr>
+                       <td>max_retries = 10</td>
+                       <td>(IntOpt) maximum db connection retries during startup. (setting -1 implies an infinite retry count)</td>
+              </tr>
+              <tr>
+                       <td>min_pool_size = 1</td>
+                       <td>(IntOpt) Minimum number of SQL connections to keep open in a pool</td>
               </tr>
        </tbody>
         </table>

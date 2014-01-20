@@ -16,6 +16,9 @@
           </thead>
           <tbody>
               <tr>
+                  <th colspan="2">[DEFAULT]</th>
+              </tr>
+              <tr>
                        <td>compute_api_class = cinder.compute.nova.API</td>
                        <td>(StrOpt) The full class name of the compute API class to use</td>
               </tr>
@@ -60,24 +63,8 @@
                        <td>(BoolOpt) make exception message format errors fatal</td>
               </tr>
               <tr>
-                       <td>host = docwork</td>
+                       <td>host = oslo</td>
                        <td>(StrOpt) Name of this node.  This can be an opaque identifier.  It is not necessarily a hostname, FQDN, or IP address.</td>
-              </tr>
-              <tr>
-                       <td>host = 127.0.0.1</td>
-                       <td>(StrOpt) Host to locate redis</td>
-              </tr>
-              <tr>
-                       <td>host = docwork</td>
-                       <td>(StrOpt) Name of this node.  This can be an opaque identifier.  It is not necessarily a hostname, FQDN, or IP address.</td>
-              </tr>
-              <tr>
-                       <td>host = 127.0.0.1</td>
-                       <td>(StrOpt) Host to locate redis</td>
-              </tr>
-              <tr>
-                       <td>idle_timeout = 3600</td>
-                       <td>(IntOpt) timeout before idle sql connections are reaped</td>
               </tr>
               <tr>
                        <td>iet_conf = /etc/iet/ietd.conf</td>
@@ -92,23 +79,23 @@
                        <td>(StrOpt) Directory to use for lock files. Default to a temp directory</td>
               </tr>
               <tr>
-                       <td>log_config_append = None</td>
+                       <td>log-config-append = None</td>
                        <td>(StrOpt) The name of logging configuration file. It does not disable existing loggers, but just appends specified logging configuration to any other existing logging options. Please see the Python logging module documentation for details on logging configuration files.</td>
               </tr>
               <tr>
-                       <td>log_date_format = %Y-%m-%d %H:%M:%S</td>
+                       <td>log-date-format = %Y-%m-%d %H:%M:%S</td>
                        <td>(StrOpt) Format string for %%(asctime)s in log records. Default: %(default)s</td>
               </tr>
               <tr>
-                       <td>log_dir = None</td>
+                       <td>log-dir = None</td>
                        <td>(StrOpt) (Optional) The base directory used for relative --log-file paths</td>
               </tr>
               <tr>
-                       <td>log_file = None</td>
+                       <td>log-file = None</td>
                        <td>(StrOpt) (Optional) Name of log file to output to. If no default is set, logging will go to stdout.</td>
               </tr>
               <tr>
-                       <td>log_format = None</td>
+                       <td>log-format = None</td>
                        <td>(StrOpt) DEPRECATED. A logging.Formatter log message format string which may use any of the available logging.LogRecord attributes. This option is deprecated.  Please use logging_context_format_string and logging_default_format_string instead.</td>
               </tr>
               <tr>
@@ -136,7 +123,7 @@
                        <td>(ListOpt) List of modules/decorators to monkey patch</td>
               </tr>
               <tr>
-                       <td>my_ip = 192.168.0.8</td>
+                       <td>my_ip = 10.0.0.1</td>
                        <td>(StrOpt) ip address of this host</td>
               </tr>
               <tr>
@@ -146,10 +133,6 @@
               <tr>
                        <td>num_shell_tries = 3</td>
                        <td>(IntOpt) number of times to attempt to run flakey shell commands</td>
-              </tr>
-              <tr>
-                       <td>password = None</td>
-                       <td>(StrOpt) Password for Redis server. (optional)</td>
               </tr>
               <tr>
                        <td>periodic_fuzzy_delay = 60</td>
@@ -168,11 +151,7 @@
                        <td>(StrOpt) JSON file representing policy</td>
               </tr>
               <tr>
-                       <td>port = 6379</td>
-                       <td>(IntOpt) Use this port to connect to redis host.</td>
-              </tr>
-              <tr>
-                       <td>pybasedir = /usr/lib/python2.7/site-packages</td>
+                       <td>pybasedir = /usr/lib/python/site-packages</td>
                        <td>(StrOpt) Directory where the cinder python module is installed</td>
               </tr>
               <tr>
@@ -182,10 +161,6 @@
               <tr>
                        <td>reserved_percentage = 0</td>
                        <td>(IntOpt) The percentage of backend capacity is reserved</td>
-              </tr>
-              <tr>
-                       <td>retry_interval = 10</td>
-                       <td>(IntOpt) interval between retries of opening a sql connection</td>
               </tr>
               <tr>
                        <td>root_helper = sudo</td>
@@ -232,7 +207,7 @@
                        <td>(StrOpt) availability zone of this node</td>
               </tr>
               <tr>
-                       <td>syslog_log_facility = LOG_USER</td>
+                       <td>syslog-log-facility = LOG_USER</td>
                        <td>(StrOpt) syslog facility to receive log lines</td>
               </tr>
               <tr>
@@ -240,12 +215,12 @@
                        <td>(IntOpt) Sets the value of TCP_KEEPIDLE in seconds for each server socket. Not supported on OS X.</td>
               </tr>
               <tr>
-                       <td>topics = notifications</td>
-                       <td>(ListOpt) AMQP topic(s) used for OpenStack notifications</td>
-              </tr>
-              <tr>
                        <td>until_refresh = 0</td>
                        <td>(IntOpt) count of reservations until usage is refreshed</td>
+              </tr>
+              <tr>
+                       <td>use-syslog = False</td>
+                       <td>(BoolOpt) Use syslog for logging.</td>
               </tr>
               <tr>
                        <td>use_forwarded_for = False</td>
@@ -256,16 +231,45 @@
                        <td>(BoolOpt) Log output to standard error</td>
               </tr>
               <tr>
-                       <td>use_syslog = False</td>
-                       <td>(BoolOpt) Use syslog for logging.</td>
+                       <td>verbose = False</td>
+                       <td>(BoolOpt) Print more verbose output (set logging level to INFO instead of default WARNING level).</td>
+              </tr>
+              <tr>
+                  <th colspan="2">[database]</th>
+              </tr>
+              <tr>
+                       <td>idle_timeout = 3600</td>
+                       <td>(IntOpt) timeout before idle sql connections are reaped</td>
+              </tr>
+              <tr>
+                       <td>retry_interval = 10</td>
+                       <td>(IntOpt) interval between retries of opening a sql connection</td>
               </tr>
               <tr>
                        <td>use_tpool = False</td>
                        <td>(BoolOpt) Enable the experimental use of thread pooling for all DB API calls</td>
               </tr>
               <tr>
-                       <td>verbose = False</td>
-                       <td>(BoolOpt) Print more verbose output (set logging level to INFO instead of default WARNING level).</td>
+                  <th colspan="2">[matchmaker_redis]</th>
+              </tr>
+              <tr>
+                       <td>host = 127.0.0.1</td>
+                       <td>(StrOpt) Host to locate redis</td>
+              </tr>
+              <tr>
+                       <td>password = None</td>
+                       <td>(StrOpt) Password for Redis server. (optional)</td>
+              </tr>
+              <tr>
+                       <td>port = 6379</td>
+                       <td>(IntOpt) Use this port to connect to redis host.</td>
+              </tr>
+              <tr>
+                  <th colspan="2">[rpc_notifier2]</th>
+              </tr>
+              <tr>
+                       <td>topics = notifications</td>
+                       <td>(ListOpt) AMQP topic(s) used for OpenStack notifications</td>
               </tr>
        </tbody>
         </table>
