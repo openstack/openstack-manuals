@@ -17,7 +17,8 @@
         the top level Identity Service configuration file
             <filename>keystone.conf</filename> as specified in the
         above section. Additionally, the private key should only be
-        readable by the system user that will run the Identity Service.</para>
+        readable by the system user that will run the Identity
+        Service.</para>
     <warning>
         <para>The certificates can be world readable, but the private
             key cannot be. The private key should only be readable by
@@ -135,7 +136,7 @@ SrWY8lF3HrTcJT23sZIleg==</screen>
         <orderedlist numeration="arabic">
             <listitem>
                 <para>Request Signing Certificate from External CA
-               </para>
+                </para>
             </listitem>
             <listitem>
                 <para>Convert certificate and private key to PEM if
@@ -152,8 +153,9 @@ SrWY8lF3HrTcJT23sZIleg==</screen>
         <para>One way to request a signing certificate from an
             external CA is to first generate a PKCS #10 Certificate
             Request Syntax (CRS) using OpenSSL CLI.</para>
-        <para>First create a certificate request configuration file
-            (e.g. <filename>cert_req.conf</filename>):</para>
+        <para>Create a certificate request configuration file. For
+            example, create the <filename>cert_req.conf</filename>
+            file, as follows:</para>
         <programlisting language="ini">[ req ]
 default_bits            = 1024
 default_keyfile         = keystonekey.pem
@@ -174,7 +176,7 @@ emailAddress            = keystone@openstack.org
         <para>Then generate a CRS with OpenSSL CLI. <emphasis
                 role="strong">Do not encrypt the generated private
                 key. Must use the -nodes option.</emphasis>
-       </para>
+        </para>
         <para>For example:</para>
         <screen><prompt>$</prompt> <userinput>openssl req -newkey rsa:1024 -keyout signing_key.pem -keyform PEM \
   -out signing_cert_req.pem -outform PEM -config cert_req.conf -nodes</userinput></screen>
@@ -185,7 +187,7 @@ emailAddress            = keystone@openstack.org
             to request a token signing certificate and make sure to
             ask the certificate to be in PEM format. Also, make sure
             your trusted CA certificate chain is also in PEM format.
-       </para>
+        </para>
     </section>
     <section xml:id="install-external-signing-certificate">
         <title>Install an external signing certificate</title>

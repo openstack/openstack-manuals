@@ -41,7 +41,11 @@
             <para>Password Policy Enforcement: Requires user passwords to conform to minimum standards for length, diversity of characters, expiration, or failed login attempts.</para>
           </listitem>
 <listitem>
-            <para>Multi-factor authentication: The authentication service requires the user to provide information based on something they have (e.g., a one-time password token or X.509 certificate) and something they know (e.g., a password).</para>
+            <para>Multi-factor authentication: The authentication
+            service requires the user to provide information based on
+            something they have, such as a one-time password token or
+            X.509 certificate, and something they know, such as a
+            password.</para>
           </listitem>
 <listitem>
             <para>Kerberos</para>
@@ -61,7 +65,15 @@
         <title>Service Authorization</title>
         <para>As described in the <link xlink:href="http://docs.openstack.org/admin-guide-cloud/content/index.html"><citetitle>OpenStack Cloud Administrator Guide</citetitle></link>, cloud administrators must define a user for each service, with a role of Admin. This service user account provides the service with the authorization to authenticate users.</para>
         <para>The Compute and Object Storage services can be configured to use either the "tempAuth" file or Identity Service to store authentication information. The "tempAuth" solution MUST NOT be deployed in a production environment since it stores passwords in plain text.</para>
-        <para>The Identity Service supports client authentication for SSL which may be enabled. SSL client authentication provides an additional authentication factor, in addition to the username / password, that provides greater reliability on user identification. It reduces the risk of unauthorized access when usernames and passwords may be compromised.  However, there is additional administrative overhead and cost to issue certificates to users that may not be feasible in every deployment.</para>
+        <para>The Identity Service supports client authentication for
+        SSL which may be enabled. SSL client authentication provides
+        an additional authentication factor, in addition to the
+        username / password, that provides greater reliability on user
+        identification. It reduces the risk of unauthorized access
+        when user names and passwords may be compromised.  However,
+        there is additional administrative overhead and cost to issue
+        certificates to users that may not be feasible in every
+        deployment.</para>
         <note>
           <para>We recommend that you use client authentication with SSL for the authentication of services to the Identity Service.</para>
         </note>
@@ -82,7 +94,13 @@
      </section>
       <section xml:id="ch024_authentication-idp267040">
         <title>Administrative Users</title>
-        <para>We recommend that admin users authenticate using Identity Service and an external authentication service that supports 2-factor authentication, such as a certificate.  This reduces the risk from passwords that may be compromised. This recommendation is in compliance with NIST 800-53 IA-2(1) guidance in the use of multifactor authentication for network access to privileged accounts.</para>
+        <para>We recommend that admin users authenticate using
+        Identity Service and an external authentication service that
+        supports 2-factor authentication, such as a certificate.  This
+        reduces the risk from passwords that may be compromised. This
+        recommendation is in compliance with NIST 800-53 IA-2(1)
+        guidance in the use of multi factor authentication for network
+        access to privileged accounts.</para>
       </section>
       <section xml:id="ch024_authentication-idp268960">
         <title>End Users</title>
@@ -117,7 +135,9 @@
     <section xml:id="ch024_authentication-idp276176">
       <title>Tokens</title>
       <para>Once a user is authenticated, a token is generated and used internally in OpenStack for authorization and access. The default token <emphasis role="bold">lifespan</emphasis> is<emphasis role="bold"> 24 hours</emphasis>. It is recommended that this value be set lower but caution needs to be taken as some internal services will need sufficient time to complete their work. The cloud may not provide services if tokens expire too early. An example of this would be the time needed by the Compute Service to transfer a disk image onto the hypervisor for local caching.</para>
-      <para>Below is an example of a PKI token. Note that, in practice, the token id value is very long (e.g., around 3500 bytes), but for brevity we shorten it in this example.</para>
+      <para>The following example shows a PKI token. Note that, in
+      practice, the token id value is about 3500 bytes. We shorten it
+      in this example.</para>
       <screen> 
         "token": {
             "expires": "2013-06-26T16:52:50Z",

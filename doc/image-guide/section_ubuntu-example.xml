@@ -1,32 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
-    <section
-        xmlns="http://docbook.org/ns/docbook"
-        xmlns:xi="http://www.w3.org/2001/XInclude"
-        xmlns:xlink="http://www.w3.org/1999/xlink"
-        version="5.0"
-        xml:id="ubuntu-image">
-        <title>Example: Ubuntu image</title>
-        <para>We'll run through an example of installing an Ubuntu image. This will focus mainly on
-        Ubuntu 12.04 (Precise Pangolin) server. Because the Ubuntu installation process may change
-        across versions, if you are using a different version of Ubuntu the installer steps may
-        differ.</para>
-        <simplesect>
-            <title>Download an Ubuntu install ISO</title>
-            <para>In this example, we'll use the network installation ISO, since it's a smaller
-            image. The 64-bit 12.04 network installer ISO is at <link
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="ubuntu-image">
+    <title>Example: Ubuntu image</title>
+    <para>We'll run through an example of installing an Ubuntu image.
+        This will focus mainly on Ubuntu 12.04 (Precise Pangolin)
+        server. Because the Ubuntu installation process may change
+        across versions, if you are using a different version of
+        Ubuntu the installer steps may differ.</para>
+    <simplesect>
+        <title>Download an Ubuntu install ISO</title>
+        <para>In this example, we'll use the network installation ISO,
+            since it's a smaller image. The 64-bit 12.04 network
+            installer ISO is at <link
                 xlink:href="http://archive.ubuntu.com/ubuntu/dists/precise/main/installer-amd64/current/images/netboot/mini.iso"
                 >http://archive.ubuntu.com/ubuntu/dists/precise/main/installer-amd64/current/images/netboot/mini.iso</link></para>
-        </simplesect>
+    </simplesect>
     <simplesect>
         <title>Start the install process</title>
-        <para>Start the installation process using either <command>virt-manager</command> or
-                <command>virt-install</command> as described in the previous section. If using
-                <command>virt-install</command>, don't forget to connect your VNC client to the
-            virtual machine.</para>
+        <para>Start the installation process using either
+                <command>virt-manager</command> or
+                <command>virt-install</command> as described in the
+            previous section. If using
+            <command>virt-install</command>, don't forget to connect
+            your VNC client to the virtual machine.</para>
         <para>We will assume the name of your virtual machine image is
-                <literal>ubuntu-12.04</literal>, which we need to know when using
-                <command>virsh</command> commands to manipulate the state of the image.</para>
-        <para>If you're using virt-manager, the commands should look something like
+                <literal>ubuntu-12.04</literal>, which we need to know
+            when using <command>virsh</command> commands to manipulate
+            the state of the image.</para>
+        <para>If you're using virt-manager, the commands should look
+            something like
             this:<screen><prompt>#</prompt> <userinput>qemu-img create -f qcow2 /tmp/precise.qcow2 10G</userinput>
 <prompt>#</prompt> <userinput>virt-install --virt-type kvm --name precise --ram 1024 \
 --cdrom=/data/isos/precise-64-mini.iso \
@@ -35,92 +39,111 @@
 --graphics vnc,listen=0.0.0.0 --noautoconsole \
 --os-type=linux --os-variant=ubuntuprecise</userinput></screen></para>
     </simplesect>
-        <simplesect>
-            <title>Step through the install</title>
-        <para>At the initial Installer boot menu, choose the "Install" option. Step through the
-            install prompts, the defaults should be fine.</para>
-            <mediaobject>
-                <imageobject>
-                    <imagedata fileref="figures/ubuntu-install.png" format="PNG" contentwidth="6in"/>
-                </imageobject>
-            </mediaobject>
-        </simplesect>
-        <simplesect>
-            <title>Hostname</title>
-            <para>The installer may ask you to choose a hostname. The default
-                (<literal>ubuntu</literal>) is fine. We will install the cloud-init
-            package later, which will set the hostname on boot when a new instance is provisioned
-            using this image.</para>
+    <simplesect>
+        <title>Step through the install</title>
+        <para>At the initial Installer boot menu, choose the "Install"
+            option. Step through the install prompts, the defaults
+            should be fine.</para>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="figures/ubuntu-install.png"
+                    format="PNG" contentwidth="6in"/>
+            </imageobject>
+        </mediaobject>
+    </simplesect>
+    <simplesect>
+        <title>Hostname</title>
+        <para>The installer may ask you to choose a hostname. The
+            default (<literal>ubuntu</literal>) is fine. We will
+            install the cloud-init package later, which will set the
+            hostname on boot when a new instance is provisioned using
+            this image.</para>
 
-        </simplesect>
+    </simplesect>
     <simplesect>
         <title>Select a mirror</title>
-        <para>The default mirror proposed by the installer should be fine.</para>
+        <para>The default mirror proposed by the installer should be
+            fine.</para>
     </simplesect>
-        <simplesect>
-            <title>Step through the install</title>
-            <para>Step through the install, using the default options.  When prompted for a
-            username, the default (<literal>ubuntu</literal>) is fine.</para>
-        </simplesect>
-        <simplesect>
-            <title>Partition the disks</title>
-            <para>There are different options for partitioning the disks. The default installation
-                will use LVM partitions, and will create three partitions (<filename>/boot</filename>,
-                <filename>/</filename>, swap), and this will work fine. Alternatively, you may wish
-                to create a single ext4 partition, mounted to "<literal>/</literal>", should also work
-                fine.</para>
-            <para>If unsure, we recommend you use the installer's default partition scheme, since there
-                is no clear advantage to one scheme of another.</para>
-        </simplesect>
+    <simplesect>
+        <title>Step through the install</title>
+        <para>Step through the install, using the default options.
+            When prompted for a username, the default
+                (<literal>ubuntu</literal>) is fine.</para>
+    </simplesect>
+    <simplesect>
+        <title>Partition the disks</title>
+        <para>There are different options for partitioning the disks.
+            The default installation will use LVM partitions, and will
+            create three partitions (<filename>/boot</filename>,
+                <filename>/</filename>, swap), and this will work
+            fine. Alternatively, you may wish to create a single ext4
+            partition, mounted to "<literal>/</literal>", should also
+            work fine.</para>
+        <para>If unsure, we recommend you use the installer's default
+            partition scheme, since there is no clear advantage to one
+            scheme of another.</para>
+    </simplesect>
     <simplesect>
         <title>Automatic updates</title>
-        <para>The Ubuntu installer will ask how you want to manage upgrades on your system. This
-            option depends upon your specific use case. If your virtual machine instances will be
-            able to connect to the internet, we recommend "Install security updates
-            automatically".</para>
+        <para>The Ubuntu installer will ask how you want to manage
+            upgrades on your system. This option depends upon your
+            specific use case. If your virtual machine instances will
+            be able to connect to the internet, we recommend "Install
+            security updates automatically".</para>
     </simplesect>
-        <simplesect>
-            <title>Software selection: OpenSSH server</title>
-            <para>Choose "OpenSSH server"so that you will be able to SSH into the virtual machine
-            when it launches inside of an OpenStack cloud.</para>
-            <mediaobject>
-                <imageobject>
-                    <imagedata fileref="figures/ubuntu-software-selection.png" format="PNG" contentwidth="6in"/>
-                </imageobject>
-            </mediaobject>
-        </simplesect>
-        <simplesect>
-            <title>Install GRUB boot loader</title>
-            <para>Select "Yes" when asked about installing the GRUB boot loader to the master boot
-            record.</para>
-            <mediaobject>
-                <imageobject>
-                    <imagedata fileref="figures/ubuntu-grub.png" format="PNG" contentwidth="6in"/>
-                </imageobject>
-            </mediaobject>
-        </simplesect>
-        <simplesect>
-            <title>Detach the CD-ROM and reboot</title>
-            <para>Select the defaults for all of the remaining options. When the installation is
-            complete, you will be prompted to remove the CD-ROM.</para>
+    <simplesect>
+        <title>Software selection: OpenSSH server</title>
+        <para>Choose "OpenSSH server"so that you will be able to SSH
+            into the virtual machine when it launches inside of an
+            OpenStack cloud.</para>
+        <mediaobject>
+            <imageobject>
+                <imagedata
+                    fileref="figures/ubuntu-software-selection.png"
+                    format="PNG" contentwidth="6in"/>
+            </imageobject>
+        </mediaobject>
+    </simplesect>
+    <simplesect>
+        <title>Install GRUB boot loader</title>
+        <para>Select "Yes" when asked about installing the GRUB boot
+            loader to the master boot record.</para>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="figures/ubuntu-grub.png"
+                    format="PNG" contentwidth="6in"/>
+            </imageobject>
+        </mediaobject>
+    </simplesect>
+    <simplesect>
+        <title>Detach the CD-ROM and reboot</title>
+        <para>Select the defaults for all of the remaining options.
+            When the installation is complete, you will be prompted to
+            remove the CD-ROM.</para>
 
-            <mediaobject>
-                <imageobject>
-                    <imagedata fileref="figures/ubuntu-finished.png" format="PNG" contentwidth="6in"/>
-                </imageobject>
-            </mediaobject>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="figures/ubuntu-finished.png"
+                    format="PNG" contentwidth="6in"/>
+            </imageobject>
+        </mediaobject>
         <para>
             <note>
-                <para>When you hit "Continue" the virtual machine will shut down, even though it
-                    says it will reboot.</para>
+                <para>When you hit "Continue" the virtual machine will
+                    shut down, even though it says it will
+                    reboot.</para>
             </note>
         </para>
 
-            <para>To eject a disk using <command>virsh</command>, libvirt requires that you attach an
-                empty disk at the same target that the CDROM was previously attached, which should be
-                <literal>hdc</literal>. You can confirm the appropriate target using the
-                <command>dom dumpxml <replaceable>vm-image</replaceable></command> command.</para>
-            <screen><prompt>#</prompt> <userinput>virsh dumpxml precise</userinput>
+        <para>To eject a disk using <command>virsh</command>, libvirt
+            requires that you attach an empty disk at the same target
+            that the CDROM was previously attached, which should be
+                <literal>hdc</literal>. You can confirm the
+            appropriate target using the <command>dom dumpxml
+                    <replaceable>vm-image</replaceable></command>
+            command.</para>
+        <screen><prompt>#</prompt> <userinput>virsh dumpxml precise</userinput>
 <computeroutput>&lt;domain type='kvm'>
   &lt;name>precise&lt;/name>
 ...
@@ -134,85 +157,93 @@
 &lt;/domain>
 </computeroutput></screen>
 
-            <para>Run the following commands in the host as root to start up the machine again as
-            paused, eject the disk and resume. If you are using virt-manager, you may instead use
-            the
+        <para>Run the following commands in the host as root to start
+            up the machine again as paused, eject the disk and resume.
+            If you are using virt-manager, you may instead use the
             GUI.<screen><prompt>#</prompt> <userinput>virsh start precise --paused</userinput>
 <prompt>#</prompt> <userinput>virsh attach-disk --type cdrom --mode readonly precise "" hdc</userinput>
 <prompt>#</prompt> <userinput>virsh resume precise</userinput></screen></para>
-            <note><para>In the example above, we start the instance paused, eject the disk, and then unpause. In
-                theory, we could have ejected the disk at the "Installation complete" screen.
-                However, our testing indicates that the Ubuntu installer locks the drive so that it
-                cannot be ejected at that point.</para></note>
-        </simplesect>
-        <simplesect>
-            <title>Log in to newly created image</title>
-            <para>When you boot the first time after install, it may ask you about authentication
-            tools, you can just choose 'Exit'. Then, log in as root using the root password you
+        <note>
+            <para>In the example above, we start the instance paused,
+                eject the disk, and then unpause. In theory, we could
+                have ejected the disk at the "Installation complete"
+                screen. However, our testing indicates that the Ubuntu
+                installer locks the drive so that it cannot be ejected
+                at that point.</para>
+        </note>
+    </simplesect>
+    <simplesect>
+        <title>Log in to newly created image</title>
+        <para>When you boot the first time after install, it may ask
+            you about authentication tools, you can just choose
+            'Exit'. Then, log in as root using the root password you
             specified.</para>
-        </simplesect>
-        <simplesect>
+    </simplesect>
+    <simplesect>
         <title>Install cloud-init</title>
-        <para>
-          The <command>cloud-init</command> script starts on instance boot and will
-          search for a metadata provider to fetch a public key
-          from. The public key will be placed in the default user
-          account for the image.
-        </para>
-        <para>
-          Install the <package>cloud-init</package> package:
-        </para>
+        <para>The <command>cloud-init</command> script starts on
+            instance boot and will search for a metadata provider to
+            fetch a public key from. The public key will be placed in
+            the default user account for the image.</para>
+        <para>Install the <package>cloud-init</package> package:</para>
         <screen><prompt>#</prompt> <userinput>apt-get install cloud-init</userinput></screen>
-        <para>
-          When building Ubuntu images <command>cloud-init</command> must be
-          explicitly configured for the metadata source in use. The OpenStack
-          metadata server emulates the EC2 metadata service used by images in
-          Amazon EC2.
+        <para>When building Ubuntu images
+                <command>cloud-init</command> must be explicitly
+            configured for the metadata source in use. The OpenStack
+            metadata server emulates the EC2 metadata service used by
+            images in Amazon EC2.</para>
+        <para>To set the metadata source to be used by the image run
+            the <command>dpkg-reconfigure</command> command against
+            the <package>cloud-init</package> package. When prompted
+            select the <literal>EC2</literal> data source:
+            <screen><prompt>#</prompt> <userinput>dpkg-reconfigure cloud-init</userinput></screen>
         </para>
-        <para>
-          To set the metadata source to be used by the image run the
-          <command>dpkg-reconfigure</command> command against the
-          <package>cloud-init</package> package. When prompted select the
-          <literal>EC2</literal> datasource:
-          <screen><prompt>#</prompt> <userinput>dpkg-reconfigure cloud-init</userinput></screen>
-        </para>
-        <para>The account varies by distribution. On Ubuntu-based virtual machines, the
-            account is called "ubuntu". On Fedora-based virtual machines, the account is called
+        <para>The account varies by distribution. On Ubuntu-based
+            virtual machines, the account is called "ubuntu". On
+            Fedora-based virtual machines, the account is called
             "ec2-user".</para>
-        <para>You can change the name of the account used by cloud-init by editing the
-                <filename>/etc/cloud/cloud.cfg</filename> file and adding a line with a different
-            user. For example, to configure cloud-init to put the key in an account named "admin",
-            edit the config file so it has the
+        <para>You can change the name of the account used by
+            cloud-init by editing the
+                <filename>/etc/cloud/cloud.cfg</filename> file and
+            adding a line with a different user. For example, to
+            configure cloud-init to put the key in an account named
+            "admin", edit the config file so it has the
             line:<programlisting>user: admin</programlisting></para>
     </simplesect>
-        <simplesect>
-            <title>Shut down the instance</title>
-            <para>From inside the instance, as
-                root:<screen><prompt>#</prompt> <userinput>/sbin/shutdown -h now</userinput></screen></para>
-        </simplesect>
+    <simplesect>
+        <title>Shut down the instance</title>
+        <para>From inside the instance, as
+            root:<screen><prompt>#</prompt> <userinput>/sbin/shutdown -h now</userinput></screen></para>
+    </simplesect>
     <simplesect>
         <title>Clean up (remove MAC address details)</title>
-        <para>The operating system records the MAC address of the virtual ethernet card in locations
-            such as <filename>/etc/udev/rules.d/70-persistent-net.rules</filename> during the
-            instance process. However, each time the image boots up, the virtual ethernet card will
-            have a different MAC address, so this information must be deleted from the configuration
-            file.</para>
-        <para>There is a utility called <command>virt-sysprep</command>, that performs various
-            cleanup tasks such as removing the MAC address references. It will clean up a virtual
-            machine image in
+        <para>The operating system records the MAC address of the
+            virtual ethernet card in locations such as
+                <filename>/etc/udev/rules.d/70-persistent-net.rules</filename>
+            during the instance process. However, each time the image
+            boots up, the virtual ethernet card will have a different
+            MAC address, so this information must be deleted from the
+            configuration file.</para>
+        <para>There is a utility called
+                <command>virt-sysprep</command>, that performs various
+            cleanup tasks such as removing the MAC address references.
+            It will clean up a virtual machine image in
             place:<screen><prompt>#</prompt> <userinput>virt-sysprep -d precise</userinput></screen></para>
     </simplesect>
     <simplesect>
         <title>Undefine the libvirt domain</title>
-        <para>Now that the image is ready to be uploaded to the Image service, we know longer need
-            to have this virtual machine image managed by libvirt. Use the <command>virsh undefine
-                    <replaceable>vm-image</replaceable></command> command to inform
+        <para>Now that the image is ready to be uploaded to the Image
+            service, we know longer need to have this virtual machine
+            image managed by libvirt. Use the <command>virsh undefine
+                    <replaceable>vm-image</replaceable></command>
+            command to inform
             libvirt<screen><prompt>#</prompt> <userinput>virsh undefine precise</userinput></screen></para>
     </simplesect>
-     <simplesect>
-         <title>Image is complete</title>
-         <para>The underlying image file you created with <command>qemu-img create</command> (e.g.
-                <filename>/tmp/precise.qcow2</filename>) is now ready for uploading to the OpenStack
-            Image service.</para>
-     </simplesect>
-    </section>
+    <simplesect>
+        <title>Image is complete</title>
+        <para>The underlying image file that you created with
+                <command>qemu-img create</command>, such as
+                <filename>/tmp/precise.qcow2</filename>, is now ready
+            for uploading to the OpenStack Image service.</para>
+    </simplesect>
+</section>

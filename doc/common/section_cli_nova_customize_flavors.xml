@@ -78,8 +78,8 @@ volume-type-delete  Delete a specific flavor</computeroutput></screen>
                     different bandwidth cap than that defined in the
                     network they are attached to. This factor is
                     multiplied by the rxtx_base property of the
-                    network. Default value is 1.0 (that is, the same
-                    as attached network).</td>
+                    network. Default value is 1.0. That is, the same
+                    as attached network.</td>
             </tr>
             <tr>
                 <td><literal>Is_Public</literal></td>
@@ -89,13 +89,11 @@ volume-type-delete  Delete a specific flavor</computeroutput></screen>
             </tr>
             <tr>
                 <td><literal>extra_specs</literal></td>
-                <td>additional optional restrictions on which compute
-                    nodes the flavor can run on. This is implemented
-                    as key/value pairs that must match against the
-                    corresponding key/value pairs on compute nodes.
-                    Can be used to implement things like special
-                    resources (e.g., flavors that can only run on
-                    compute nodes with GPU hardware).</td>
+                <td>Key and value pairs that define on which compute
+                    nodes a flavor can run. These pairs must match
+                    corresponding pairs on the compute nodes. Use to
+                    implement special resources, such as flavors that
+                    run on only compute nodes with GPU hardware.</td>
             </tr>
         </tbody>
     </table>
@@ -205,9 +203,8 @@ volume-type-delete  Delete a specific flavor</computeroutput></screen>
     <para>Flavors can also be assigned to particular projects. By
         default, a flavor is public and available to all projects.
         Private flavors are only accessible to those on the access
-        list and are invisible to other projects. To
-        create and assign a private flavor to a project, run these
-        commands:</para>
+        list and are invisible to other projects. To create and assign
+        a private flavor to a project, run these commands:</para>
     <screen><prompt>#</prompt> <userinput>nova flavor-create --is-public false p1.medium auto 512 40 4</userinput>
 <prompt>#</prompt> <userinput>nova flavor-access-add 259d06a0-ba6d-4e60-b42d-ab3144411d58 86f94150ed744e08be565c2ff608eef9</userinput></screen>
 </section>
