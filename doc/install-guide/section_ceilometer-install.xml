@@ -71,13 +71,10 @@
       <para os="ubuntu;debian">Edit the
           <filename>/etc/ceilometer/ceilometer.conf</filename> file
         and change the <literal>[database]</literal> section:</para>
-      <programlisting os="ubuntu;debian" language="ini">...
-[database]
-...
+      <programlisting os="ubuntu;debian" language="ini">[database]
 # The SQLAlchemy connection string used to connect to the
 # database (string value)
-connection = mongodb://ceilometer:<replaceable>CEILOMETER_DBPASS</replaceable>@<replaceable>controller</replaceable>:27017/ceilometer
-...</programlisting>
+connection = mongodb://ceilometer:<replaceable>CEILOMETER_DBPASS</replaceable>@<replaceable>controller</replaceable>:27017/ceilometer</programlisting>
 
     </step>
     <step>
@@ -97,27 +94,32 @@ connection = mongodb://ceilometer:<replaceable>CEILOMETER_DBPASS</replaceable>@<
         and change the <literal>[publisher_rpc]</literal> section. Replace
           <replaceable>CEILOMETER_TOKEN</replaceable> with the results of
         the <literal>openssl</literal> command:</para>
-      <programlisting os="ubuntu;debian" language="ini">...
-[publisher_rpc]
-...
+      <programlisting os="ubuntu;debian" language="ini">[publisher_rpc]
 # Secret value for signing metering messages (string value)
-metering_secret = <replaceable>CEILOMETER_TOKEN</replaceable>
-...</programlisting>
+metering_secret = <replaceable>CEILOMETER_TOKEN</replaceable></programlisting>
     </step>
 
     <step os="opensuse;sles;ubuntu">
       <para>Configure the RabbitMQ access:</para>
-      <screen os="opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf DEFAULT rabbit_host controller</userinput>
+      <screen os="opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf DEFAULT rabbit_host <replaceable>controller</replaceable></userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf DEFAULT rabbit_password <replaceable>RABBIT_PASS</replaceable></userinput></screen>
-      <para os="ubuntu">Edit the <filename>/etc/ceilometer/ceilometer.conf</filename> file and update the <literal>[DEFAULT]</literal> section.</para>
+      <para os="ubuntu">Edit the <filename>/etc/ceilometer/ceilometer.conf</filename> file and update the <literal>[DEFAULT]</literal> section:</para>
       <programlisting os="ubuntu" language="ini">rabbit_host = <replaceable>controller</replaceable>
 rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
     </step>
 
     <step os="opensuse;sles">
-        <para>Configure collector dispatcher</para>
+        <para>Configure collector dispatcher:</para>
         <screen os="opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf \
   collector dispatcher database</userinput></screen>
+    </step>
+
+    <step os="ubuntu">
+      <para>Configure the log directory.</para>
+      <para>Edit the <filename>/etc/ceilometer/ceilometer.conf</filename> file
+      and update the <literal>[DEFAULT]</literal> section:</para>
+       <programlisting os="ubuntu" language="ini">[DEFAULT]
+log_dir = /var/log/ceilometer</programlisting>
     </step>
 
     <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
@@ -187,16 +189,6 @@ os_password = <replaceable>CEILOMETER_PASS</replaceable></programlisting>
       <screen><prompt>#</prompt> <userinput>service ceilometer-agent-central restart</userinput>
 <prompt>#</prompt> <userinput>service ceilometer-api restart</userinput>
 <prompt>#</prompt> <userinput>service ceilometer-collector restart</userinput></screen>
-      <note>
-        <para>
-          If log files are not generated for each service automatically, you
-          should edit the <filename>/etc/ceilometer/ceilometer.conf</filename>
-          and change the <literal>[DEFAULT]</literal> section:
-        </para>
-        <programlisting os="ubuntu;debian" language="ini">[DEFAULT]
-...
-log_dir = /var/log/ceilometer</programlisting>
-      </note>
     </step>
     <step os="rhel;fedora;centos;opensuse;sles">
       <para>Start the <systemitem class="service"
