@@ -33,6 +33,40 @@
       <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install mongodb-server mongodb</userinput></screen>
       <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install mongodb</userinput></screen>
       <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install mongodb</userinput></screen>
+      <note>
+        <para>
+          By default MongoDB is configured to create several 1 GB files
+          in the <filename>/var/lib/mongodb/journal/</filename> directory
+          to support database journaling.
+        </para>
+        <para>
+          If you need to minimize the space allocated to support database
+          journaling then set the <option>smallfiles</option> configuration
+          key to <literal>true</literal> in the <filename>/etc/mongodb.conf</filename>
+          configuration file. This will reduce the size of each journaling file
+          to 512 MB.
+        </para>
+        <para os="ubuntu;debian">
+          As the files are created the first time the MongoDB service starts
+          you must stop the service and remove the files for this change to
+          take effect:
+        </para>
+        <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service mongodb stop</userinput>
+<prompt>#</prompt> <userinput>rm /var/lib/mongodb/journal/j._0</userinput>
+<prompt>#</prompt> <userinput>rm /var/lib/mongodb/journal/prealloc.1</userinput>
+<prompt>#</prompt> <userinput>rm /var/lib/mongodb/journal/prealloc,2</userinput>
+<prompt>#</prompt> <userinput>service mongodb start</userinput></screen>
+        <para>
+          For more information on the <option>smallfiles</option>
+          configuration key refer to the MongoDB documentation at
+          <link xlink:href="http://docs.mongodb.org/manual/reference/configuration-options/#smallfiles"/>.
+        </para>
+        <para>
+          For instructions detailing the steps to disable database journaling
+          entirely refer to
+          <link xlink:href="http://docs.mongodb.org/manual/tutorial/manage-journaling/"/>.
+        </para>
+      </note>
     </step>
     <step os="ubuntu;debian;sles;opensuse">
       <para>Configure MongoDB to make it listen on the controller public IP
