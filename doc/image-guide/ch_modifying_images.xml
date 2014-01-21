@@ -1,39 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0" xml:id="ch_modifying_images">
+<chapter xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="ch_modifying_images">
     <title>Modify images</title>
     <?dbhtml stop-chunking?>
-    <para>Once you have obtained a virtual machine image, you may want to make some changes to it
-        before uploading it to the OpenStack Image service. Here we describe several tools available
-        that allow you to modify images.<warning>
-            <para>Do not attempt to use these tools to modify an image that is attached to a running
-                virtual machine. These tools are designed to only modify images that are not
+    <para>Once you have obtained a virtual machine image, you may want
+        to make some changes to it before uploading it to the
+        OpenStack Image service. Here we describe several tools
+        available that allow you to modify images.<warning>
+            <para>Do not attempt to use these tools to modify an image
+                that is attached to a running virtual machine. These
+                tools are designed to only modify images that are not
                 currently running.</para>
         </warning></para>
     <section xml:id="guestfish">
         <title>guestfish</title>
-        <para>The <command>guestfish</command> program is a tool from the <link
-                xlink:href="http://libguestfs.org/">libguestfs</link> project that allows you to
-            modify the files inside of a virtual machine image.</para>
-        <para>Note that guestfish doesn't mount the image directly into the local filesystem.
-            Instead, it provides you with a shell interface that allows you to view, edit, and
-            delete files. Many of the guestfish commands (e.g., <command>touch</command>,
-                <command>chmod</command>, <command>rm</command>) are similar to traditional bash
-            commands.</para>
+        <para>The <command>guestfish</command> program is a tool from
+            the <link xlink:href="http://libguestfs.org/"
+                >libguestfs</link> project that allows you to modify
+            the files inside of a virtual machine image.</para>
+        <note>
+            <para><command>guestfish</command> does not mount the
+                image directly into the local file system. Instead, it
+                provides you with a shell interface that enables you
+                to view, edit, and delete files. Many of
+                    <command>guestfish</command> commands, such as
+                    <command>touch</command>,
+                <command>chmod</command>, and <command>rm</command>,
+                resemble traditional bash commands.</para>
+        </note>
         <simplesect>
             <title>Example guestfish session</title>
-            <para>We often need to modify a virtual machine image to remove any traces of the MAC
-                address that was assigned to the virtual network interface card when the image was
-                first created, since the MAC address will be different when it boots the next time.
-                In this example, we show how we can use guestfish to remove references to the old
-                MAC address by deleting the
-                    <filename>/etc/udev/rules.d/70-persistent-net.rules</filename> file and removing
-                the <literal>HWADDR</literal> line from the
-                    <filename>/etc/sysconfig/network-scripts/ifcfg-eth0</filename> file.</para>
-            <para>Assume we have a CentOS qcow2 image called
-                    <filename>centos63_desktop.img</filename>. We would mount the image in
-                read-write mode by doing, as root:
-                <screen><prompt>#</prompt> <userinput>guestfish --rw -a centos63_desktop.img</userinput>
+            <para>Sometimes, you must modify a virtual machine image
+                to remove any traces of the MAC address that was
+                assigned to the virtual network interface card when
+                the image was first created, because the MAC address
+                will be different when it boots the next time. This
+                example shows how to use guestfish to remove
+                references to the old MAC address by deleting the
+                    <filename>/etc/udev/rules.d/70-persistent-net.rules</filename>
+                file and removing the <literal>HWADDR</literal> line
+                from the
+                    <filename>/etc/sysconfig/network-scripts/ifcfg-eth0</filename>
+                file.</para>
+            <para>Assume that you have a CentOS qcow2 image called
+                    <filename>centos63_desktop.img</filename>. Mount
+                the image in read-write mode as root, as
+                follows:</para>
+            <screen><prompt>#</prompt> <userinput>guestfish --rw -a centos63_desktop.img</userinput>
 <computeroutput>
 Welcome to guestfish, the libguestfs filesystem interactive shell for
 editing virtual machine filesystems.
@@ -42,27 +57,34 @@ Type: 'help' for help on commands
       'man' to read the manual
       'quit' to quit the shell
 
->&lt;fs></computeroutput></screen>This
-                starts a guestfish session. Note that the guestfish prompt looks like a fish:
-                    <literal>> &lt;fs></literal>.</para>
-            <para>We must first use the <command>run</command> command at the guestfish prompt
-                before we can do anything else. This will launch a virtual machine, which will be
-                used to perform all of the file
+>&lt;fs></computeroutput></screen>
+            <para>This starts a guestfish session. Note that the
+                guestfish prompt looks like a fish: <literal>>
+                    &lt;fs></literal>.</para>
+            <para>We must first use the <command>run</command> command
+                at the guestfish prompt before we can do anything
+                else. This will launch a virtual machine, which will
+                be used to perform all of the file
                 manipulations.<screen><prompt>>&lt;fs></prompt> <userinput>run</userinput></screen>
-                We can now view the filesystems in the image using the
+                We can now view the file systems in the image using the
                     <command>list-filesystems</command>
                 command:<screen><prompt>>&lt;fs></prompt> <userinput>list-filesystems</userinput>
 <computeroutput>/dev/vda1: ext4
 /dev/vg_centosbase/lv_root: ext4
 /dev/vg_centosbase/lv_swap: swap</computeroutput></screen>We
-                need to mount the logical volume that contains the root partition:
+                need to mount the logical volume that contains the
+                root partition:
                 <screen><prompt>>&lt;fs></prompt> <userinput>mount /dev/vg_centosbase/lv_root /</userinput></screen></para>
-            <para>Next, we want to delete a file. We can use the <command>rm</command> guestfish
-                command, which works the same way it does in a traditional shell.</para>
+            <para>Next, we want to delete a file. We can use the
+                    <command>rm</command> guestfish command, which
+                works the same way it does in a traditional
+                shell.</para>
             <para><screen><prompt>>&lt;fs></prompt> <userinput>rm /etc/udev/rules.d/70-persistent-net.rules</userinput></screen>We
-                want to edit the <filename>ifcfg-eth0</filename> file to remove the
-                    <literal>HWADDR</literal> line. The <command>edit</command> command will copy
-                the file to the host, invoke your editor, and then copy the file back.
+                want to edit the <filename>ifcfg-eth0</filename> file
+                to remove the <literal>HWADDR</literal> line. The
+                    <command>edit</command> command will copy the file
+                to the host, invoke your editor, and then copy the
+                file back.
                 <screen><prompt>>&lt;fs></prompt> <userinput>edit /etc/sysconfig/network-scripts/ifcfg-eth0</userinput></screen></para>
             <para>If you want to modify this image to load the 8021q
                 kernel at boot time, you must create an executable
@@ -78,79 +100,106 @@ Type: 'help' for help on commands
                 it:<programlisting>modprobe 8021q</programlisting>Then
                 we set to executable:
                 <screen>>&lt;fs> <userinput>chmod 0755 /etc/sysconfig/modules/8021q.modules</userinput></screen></para>
-            <para>We're done, so we can exit using the <command>exit</command>
+            <para>We're done, so we can exit using the
+                    <command>exit</command>
                 command:<screen><prompt>>&lt;fs></prompt> <userinput>exit</userinput></screen></para>
         </simplesect>
         <simplesect>
             <title>Go further with guestfish</title>
-            <para>There is an enormous amount of functionality in guestfish and a full treatment is
-                beyond the scope of this document. Instead, we recommend that you read the <link
-                    xlink:href="http://libguestfs.org/guestfs-recipes.1.html">guestfs-recipes</link>
-                documentation page for a sense of what is possible with these tools.</para>
+            <para>There is an enormous amount of functionality in
+                guestfish and a full treatment is beyond the scope of
+                this document. Instead, we recommend that you read the
+                    <link
+                    xlink:href="http://libguestfs.org/guestfs-recipes.1.html"
+                    >guestfs-recipes</link> documentation page for a
+                sense of what is possible with these tools.</para>
         </simplesect>
     </section>
     <section xml:id="guestmount">
         <title>guestmount</title>
-        <para>For some types of changes, you may find it easier to mount the image's filesystem
-            directly in the guest. The <command>guestmount</command> program, also from the
+        <para>For some types of changes, you may find it easier to
+            mount the image's file system directly in the guest. The
+                <command>guestmount</command> program, also from the
             libguestfs project, allows you to do so.</para>
         <para>For example, to mount the root partition from our
-                <filename>centos63_desktop.qcow2</filename> image to <filename>/mnt</filename>, we
-            can do:</para>
+                <filename>centos63_desktop.qcow2</filename> image to
+                <filename>/mnt</filename>, we can do:</para>
         <para>
             <screen><prompt>#</prompt> <userinput>guestmount -a centos63_desktop.qcow2 -m /dev/vg_centosbase/lv_root --rw /mnt</userinput></screen>
         </para>
-        <para>If we didn't know in advance what the mountpoint is in the guest, we could use the
-                <literal>-i</literal>(inspect) flag to tell guestmount to automatically determine
-            what mount point to
+        <para>If we didn't know in advance what the mount point is in
+            the guest, we could use the <literal>-i</literal>(inspect)
+            flag to tell guestmount to automatically determine what
+            mount point to
             use:<screen><prompt>#</prompt> <userinput>guestmount -a centos63_desktop.qcow2 -i --rw /mnt</userinput></screen>Once
-            mounted, we could do things like list the installed packages using
+            mounted, we could do things like list the installed
+            packages using
             rpm:<screen><prompt>#</prompt> <userinput>rpm -qa --dbpath /mnt/var/lib/rpm</userinput></screen>
             Once done, we
             unmount:<screen><prompt>#</prompt> <userinput>umount /mnt</userinput></screen></para>
     </section>
     <section xml:id="virt-tools">
         <title>virt-* tools</title>
-        <para>The <link xlink:href="http://libguestfs.org/">libguestfs</link> project has a number
-            of other useful tools, including:<itemizedlist>
+        <para>The <link xlink:href="http://libguestfs.org/"
+                >libguestfs</link> project has a number of other
+            useful tools, including:<itemizedlist>
                 <listitem>
-                    <para><link xlink:href="http://libguestfs.org/virt-edit.1.html">virt-edit</link> for
-                        editing a file inside of an image.</para>
+                    <para><link
+                            xlink:href="http://libguestfs.org/virt-edit.1.html"
+                            >virt-edit</link> for editing a file
+                        inside of an image.</para>
                 </listitem>
                 <listitem>
-                    <para><link xlink:href="http://libguestfs.org/virt-df.1.html">virt-df</link> for
-                        displaying free space inside of an image.</para>
+                    <para><link
+                            xlink:href="http://libguestfs.org/virt-df.1.html"
+                            >virt-df</link> for displaying free space
+                        inside of an image.</para>
                 </listitem>
                 <listitem>
-                    <para><link xlink:href="http://libguestfs.org/virt-resize.1.html"
-                            >virt-resize</link> for resizing an image.</para>
+                    <para><link
+                            xlink:href="http://libguestfs.org/virt-resize.1.html"
+                            >virt-resize</link> for resizing an
+                        image.</para>
                 </listitem>
                 <listitem>
-                    <para><link xlink:href="http://libguestfs.org/virt-sysprep.1.html"
-                            >virt-sysprep</link> for preparing an image for distribution (e.g.,
-                        delete SSH host keys, remove MAC address info, remove user accounts).</para>
+                    <para><link
+                            xlink:href="http://libguestfs.org/virt-sysprep.1.html"
+                            >virt-sysprep</link> for preparing an
+                        image for distribution (for example, delete
+                        SSH host keys, remove MAC address info, or
+                        remove user accounts).</para>
                 </listitem>
                 <listitem>
-                    <para><link xlink:href="http://libguestfs.org/virt-sparsify.1.html"
-                            >virt-sparsify</link> for making an image sparse</para>
+                    <para><link
+                            xlink:href="http://libguestfs.org/virt-sparsify.1.html"
+                            >virt-sparsify</link> for making an image
+                        sparse</para>
                 </listitem>
                 <listitem>
-                    <para><link xlink:href="http://libguestfs.org/virt-v2v/">virt-p2v</link> for
-                        converting a physical machine to an image that runs on KVM</para>
+                    <para><link
+                            xlink:href="http://libguestfs.org/virt-v2v/"
+                            >virt-p2v</link> for converting a physical
+                        machine to an image that runs on KVM</para>
                 </listitem>
                 <listitem>
-                    <para><link xlink:href="http://libguestfs.org/virt-v2v/">virt-v2v</link> for
-                        converting Xen and VMWare images to KVM images</para>
+                    <para><link
+                            xlink:href="http://libguestfs.org/virt-v2v/"
+                            >virt-v2v</link> for converting Xen and
+                        VMWare images to KVM images</para>
                 </listitem>
             </itemizedlist></para>
         <simplesect>
             <title>Modify a single file inside of an image</title>
-            <para>This example shows how to use <command>virt-edit</command> to modify a file.  The
-                command can take either a filename as an argument with the <literal>-a</literal>
-                flag, or a domain name as an argument with the <literal>-d</literal> flag. The
+            <para>This example shows how to use
+                    <command>virt-edit</command> to modify a file. The
+                command can take either a filename as an argument with
+                the <literal>-a</literal> flag, or a domain name as an
+                argument with the <literal>-d</literal> flag. The
                 following examples shows how to use this to modify the
-                    <filename>/etc/shadow</filename> file in instance with libvirt domain name
-                    <literal>instance-000000e1</literal> that is currently running:</para>
+                    <filename>/etc/shadow</filename> file in instance
+                with libvirt domain name
+                    <literal>instance-000000e1</literal> that is
+                currently running:</para>
             <para>
                 <screen><prompt>#</prompt> <userinput>virsh shutdown instance-000000e1</userinput>
 <prompt>#</prompt> <userinput>virt-edit -d instance-000000e1 /etc/shadow</userinput>
@@ -159,18 +208,23 @@ Type: 'help' for help on commands
         </simplesect>
         <simplesect>
             <title>Resize an image</title>
-            <para>Here's a simple of example of how to use <command>virt-resize</command> to resize
-                an image. Assume we have a 16GB Windows image in qcow2 format that we want to resize
-                to 50GB. First, we use <command>virt-filesystems</command> to identify the
+            <para>Here's a simple of example of how to use
+                    <command>virt-resize</command> to resize an image.
+                Assume we have a 16GB Windows image in qcow2 format
+                that we want to resize to 50GB. First, we use
+                    <command>virt-filesystems</command> to identify
+                the
                 partitions:<screen><prompt>#</prompt> <userinput>virt-filesystems --long --parts --blkdevs -h -a /data/images/win2012.qcow2</userinput>
 <computeroutput>Name       Type       MBR  Size  Parent
 /dev/sda1  partition  07   350M  /dev/sda
 /dev/sda2  partition  07   16G   /dev/sda
 /dev/sda   device     -    16G   -
 </computeroutput></screen></para>
-            <para>In this case, it's the <filename>/dev/sda2</filename> partition that we want to
-                resize. We create a new qcow2 image and use the <command>virt-resize</command>
-                command to write a resized copy of the original into the new
+            <para>In this case, it's the
+                    <filename>/dev/sda2</filename> partition that we
+                want to resize. We create a new qcow2 image and use
+                the <command>virt-resize</command> command to write a
+                resized copy of the original into the new
                 image<screen><prompt>#</prompt> <userinput>qemu-img create -f qcow2 /data/images/win2012-50gb.qcw2 50G</userinput>
 <prompt>#</prompt> <userinput>virt-resize --expand /dev/sda2 /data/images/win2012.qcow2 /data/images/win2012-50gb.qcow2</userinput>
 <computeroutput>Examining /data/images/win2012.qcow2 ...
@@ -199,33 +253,40 @@ disk, carefully check that the resized disk boots and works correctly.
     </section>
     <section xml:id="losetup-kpartx-nbd">
         <title>Loop devices, kpartx, network block devices</title>
-        <para>If you don't have access to libguestfs, you can mount image file systems directly in
-            the host using loop devices, kpartx, and network block devices.<warning>
-                <para>Mounting untrusted guest images using the tools described in this section is a
-                    security risk, always use libguestfs tools such as guestfish and guestmount if
-                    you have access to them. See <link
+        <para>If you don't have access to libguestfs, you can mount
+            image file systems directly in the host using loop
+            devices, kpartx, and network block devices.<warning>
+                <para>Mounting untrusted guest images using the tools
+                    described in this section is a security risk,
+                    always use libguestfs tools such as guestfish and
+                    guestmount if you have access to them. See <link
                         xlink:href="https://www.berrange.com/posts/2013/02/20/a-reminder-why-you-should-never-mount-guest-disk-images-on-the-host-os/"
-                        >A reminder why you should never mount guest disk images on the host
-                        OS</link> by Daniel Berrangé for more details.</para>
+                        >A reminder why you should never mount guest
+                        disk images on the host OS</link> by Daniel
+                    Berrangé for more details.</para>
             </warning></para>
         <simplesect>
             <title>Mount a raw image (without LVM)</title>
-            <para>If you have a raw virtual machine image that is not using LVM to manage its
-                partitions. First, use the <command>losetup</command> command to find an unused loop
-                device.
+            <para>If you have a raw virtual machine image that is not
+                using LVM to manage its partitions. First, use the
+                    <command>losetup</command> command to find an
+                unused loop device.
                 <screen><prompt>#</prompt> <userinput>losetup -f</userinput>
 <computeroutput>/dev/loop0</computeroutput></screen></para>
-            <para>In this example, <filename>/dev/loop0</filename> is free. Associate a loop device
-                with the raw
+            <para>In this example, <filename>/dev/loop0</filename> is
+                free. Associate a loop device with the raw
                 image:<screen><prompt>#</prompt> <userinput>losetup /dev/loop0 fedora17.img</userinput></screen></para>
-            <para>If the image only has a single partition, you can mount the loop device
+            <para>If the image only has a single partition, you can
+                mount the loop device
                 directly:<screen><prompt>#</prompt> <userinput>mount /dev/loop0 /mnt</userinput></screen></para>
-            <para>If the image has multiple partitions, use <command>kpartx</command> to expose the
-                partitions as separate devices (e.g., <filename>/dev/mapper/loop0p1</filename>),
-                then mount the partition that corresponds to the root file
+            <para>If the image has multiple partitions, use
+                    <command>kpartx</command> to expose the partitions
+                as separate devices (for example,
+                    <filename>/dev/mapper/loop0p1</filename>), then
+                mount the partition that corresponds to the root file
                 system:<screen><prompt>#</prompt> <userinput>kpartx -av /dev/loop0</userinput></screen></para>
-            <para>If the image has, say three partitions (/boot, /, /swap), there should be one new
-                device created per
+            <para>If the image has, say three partitions (/boot, /,
+                /swap), there should be one new device created per
                 partition:<screen><prompt>$</prompt> <userinput>ls -l /dev/mapper/loop0p*</userinput>
 <computeroutput>brw-rw---- 1 root disk 43, 49 2012-03-05 15:32 /dev/mapper/loop0p1
 brw-rw---- 1 root disk 43, 50 2012-03-05 15:32 /dev/mapper/loop0p2
@@ -240,61 +301,75 @@ brw-rw---- 1 root disk 43, 51 2012-03-05 15:32 /dev/mapper/loop0p3</computeroutp
         </simplesect>
         <simplesect>
             <title>Mount a raw image (with LVM)</title>
-            <para>If your partitions are managed with LVM, use losetup and kpartx as in the previous
-                example to expose the partitions to the
-                host:</para><screen><prompt>#</prompt> <userinput>losetup -f</userinput>
+            <para>If your partitions are managed with LVM, use losetup
+                and kpartx as in the previous example to expose the
+                partitions to the host:</para>
+            <screen><prompt>#</prompt> <userinput>losetup -f</userinput>
 <computeroutput>/dev/loop0</computeroutput>
 <prompt>#</prompt> <userinput>losetup /dev/loop0 rhel62.img</userinput>
 <prompt>#</prompt> <userinput>kpartx -av /dev/loop0</userinput></screen>
-            <para>Next, you need to use the <command>vgscan</command> command to identify the LVM
-                volume groups and then <command>vgchange</command> to expose the volumes as
-                devices:</para><screen><prompt>#</prompt> <userinput>vgscan</userinput>
+            <para>Next, you need to use the <command>vgscan</command>
+                command to identify the LVM volume groups and then
+                    <command>vgchange</command> to expose the volumes
+                as devices:</para>
+            <screen><prompt>#</prompt> <userinput>vgscan</userinput>
 <computeroutput>Reading all physical volumes.  This may take a while...
   Found volume group "vg_rhel62x8664" using metadata type lvm2</computeroutput>
 <prompt>#</prompt> <userinput>vgchange -ay</userinput>
 <computeroutput>   2 logical volume(s) in volume group "vg_rhel62x8664" now active</computeroutput>
 <prompt>#</prompt> <userinput>mount /dev/vg_rhel62x8664/lv_root /mnt</userinput></screen>
-            <para>Clean up when you're
-                done:</para><screen><prompt>#</prompt> <userinput>umount /mnt</userinput>
+            <para>Clean up when you're done:</para>
+            <screen><prompt>#</prompt> <userinput>umount /mnt</userinput>
 <prompt>#</prompt> <userinput>vgchange -an vg_rhel62x8664</userinput>
 <prompt>#</prompt> <userinput>kpartx -d /dev/loop0</userinput>
 <prompt>#</prompt> <userinput>losetup -d /dev/loop0</userinput></screen>
         </simplesect>
         <simplesect>
             <title>Mount a qcow2 image (without LVM)</title>
-            <para>You need the <literal>nbd</literal> (network block device) kernel module loaded to
-                mount qcow2 images. This will load it with support for 16 block devices, which is
-                fine for our purposes. As
+            <para>You need the <literal>nbd</literal> (network block
+                device) kernel module loaded to mount qcow2 images.
+                This will load it with support for 16 block devices,
+                which is fine for our purposes. As
                 root:<screen><prompt>#</prompt> <userinput>modprobe nbd max_part=16</userinput></screen></para>
-            <para>Assuming the first block device (<filename>/dev/nbd0</filename>) is not currently
-                in use, we can expose the disk partitions using the <command>qemu-nbd</command> and
+            <para>Assuming the first block device
+                    (<filename>/dev/nbd0</filename>) is not currently
+                in use, we can expose the disk partitions using the
+                    <command>qemu-nbd</command> and
                     <command>partprobe</command> commands. As
                 root:<screen><prompt>#</prompt> <userinput>qemu-nbd -c /dev/nbd0 image.qcow2</userinput>
 <prompt>#</prompt> <userinput>partprobe /dev/nbd0</userinput></screen></para>
-            <para>If the image has, say three partitions (/boot, /, /swap), there should be one new
-                device created for each partition:</para>
-<screen><prompt>$</prompt> <userinput>ls -l /dev/nbd3*</userinput>
+            <para>If the image has, say three partitions (/boot, /,
+                /swap), there should be one new device created for
+                each partition:</para>
+            <screen><prompt>$</prompt> <userinput>ls -l /dev/nbd3*</userinput>
 <computeroutput>brw-rw---- 1 root disk 43, 48 2012-03-05 15:32 /dev/nbd0
 brw-rw---- 1 root disk 43, 49 2012-03-05 15:32 /dev/nbd0p1
 brw-rw---- 1 root disk 43, 50 2012-03-05 15:32 /dev/nbd0p2
 brw-rw---- 1 root disk 43, 51 2012-03-05 15:32 /dev/nbd0p3</computeroutput></screen>
-<note><para>If the network block device you selected was already in use, the initial
-                            <command>qemu-nbd</command> command will fail silently, and the
-                            <filename>/dev/nbd3p{1,2,3}</filename> device files will not be
-                        created.</para></note>
-            <para>If the image partitions are not managed with LVM, they can be mounted
-                directly:</para><screen><prompt>#</prompt> <userinput>mkdir /mnt/image</userinput>
+            <note>
+                <para>If the network block device you selected was
+                    already in use, the initial
+                        <command>qemu-nbd</command> command will fail
+                    silently, and the
+                        <filename>/dev/nbd3p{1,2,3}</filename> device
+                    files will not be created.</para>
+            </note>
+            <para>If the image partitions are not managed with LVM,
+                they can be mounted directly:</para>
+            <screen><prompt>#</prompt> <userinput>mkdir /mnt/image</userinput>
 <prompt>#</prompt> <userinput>mount /dev/nbd3p2 /mnt</userinput></screen>
-            <para>When you're done, clean
-                up:</para><screen><prompt>#</prompt> <userinput>umount /mnt</userinput>
+            <para>When you're done, clean up:</para>
+            <screen><prompt>#</prompt> <userinput>umount /mnt</userinput>
 <prompt>#</prompt> <userinput>qemu-nbd -d /dev/g nbd0</userinput></screen>
         </simplesect>
         <simplesect>
             <title>Mount a qcow2 image (with LVM)</title>
-            <para>If the image partitions are managed with LVM, after you use
-                    <command>qemu-nbd</command> and <command>partprobe</command>, you must use
-                    <command>vgscan</command> and <command>vgchange -ay</command> in order to expose
-                the LVM partitions as devices that can be
+            <para>If the image partitions are managed with LVM, after
+                you use <command>qemu-nbd</command> and
+                    <command>partprobe</command>, you must use
+                    <command>vgscan</command> and <command>vgchange
+                    -ay</command> in order to expose the LVM
+                partitions as devices that can be
                 mounted:<screen><prompt>#</prompt> <userinput>modprobe nbd max_part=16</userinput>
 <prompt>#</prompt> <userinput>qemu-nbd -c /dev/nbd0 image.qcow2</userinput>
 <prompt>#</prompt> <userinput>partprobe /dev/nbd0</userinput><prompt>#</prompt> <userinput>vgscan</userinput>
@@ -303,7 +378,7 @@ brw-rw---- 1 root disk 43, 51 2012-03-05 15:32 /dev/nbd0p3</computeroutput></scr
 <prompt>#</prompt> <userinput>vgchange -ay</userinput>
 <computeroutput>   2 logical volume(s) in volume group "vg_rhel62x8664" now active</computeroutput>
 <prompt>#</prompt> <userinput>mount /dev/vg_rhel62x8664/lv_root /mnt</userinput></screen></para>
-           <para>When you're done, clean
+            <para>When you're done, clean
                 up:<screen><prompt>#</prompt> <userinput>umount /mnt</userinput>
 <prompt>#</prompt> <userinput>vgchange -an vg_rhel62x8664</userinput>
 <prompt>#</prompt> <userinput>qemu-nbd -d /dev/nbd0</userinput></screen></para>

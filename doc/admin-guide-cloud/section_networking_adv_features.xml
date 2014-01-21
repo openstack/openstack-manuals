@@ -233,8 +233,8 @@
                 actions for users with the admin role. An authorized
                 client or an administrative user can view and set the
                 provider extended attributes through Networking API
-                calls. See <xref linkend="section_networking_auth"/> for details
-                on policy configuration.</para>
+                calls. See <xref linkend="section_networking_auth"/>
+                for details on policy configuration.</para>
         </section>
         <section xml:id="provider_api_workflow">
             <title>Provider extension API operations</title>
@@ -1733,8 +1733,8 @@
                 <para>The back-end is polled periodically, and the
                     status for every resource is retrieved; then the
                     status in the Networking database is updated only
-                    for the resources for which a status change occurred.
-                    As operational status is now retrieved
+                    for the resources for which a status change
+                    occurred. As operational status is now retrieved
                     asynchronously, performance for
                         <literal>GET</literal> operations is
                     consistently improved.</para>
@@ -1848,22 +1848,21 @@
                         </tr>
                     </tbody>
                 </table>
-                <para>When running multiple OpenStack Networking server
-                    instances, the status synchronization task should
-                    not run on every node; doing so sends unnecessary
-                    traffic to the NVP back-end and performs unnecessary
-                    DB operations. Set the
+                <para>When running multiple OpenStack Networking
+                    server instances, the status synchronization task
+                    should not run on every node; doing so sends
+                    unnecessary traffic to the NVP back-end and
+                    performs unnecessary DB operations. Set the
                         <option>state_sync_interval</option>
                     configuration option to a non-zero value
                     exclusively on a node designated for back-end
                     status synchronization.</para>
-                <para>Explicitly specifying the <emphasis
-                        role="italic">status</emphasis> attribute in
-                    Neutron API requests (e.g.: <literal>GET
-                        /v2.0/networks/&lt;net-id>?fields=status&amp;fields=name</literal>)
-                    always triggers an explicit query to the NVP
-                    back-end, even when asynchronous state
-                    synchronization is enabled.</para>
+                <para>The <parameter>fields=status</parameter>
+                    parameter in Networking API requests always
+                    triggers an explicit query to the NVP back end,
+                    even when you enable asynchronous state
+                    synchronization. For example, <code>GET
+                        /v2.0/networks/&lt;net-id>?fields=status&amp;fields=name</code>.</para>
             </section>
         </section>
         <section xml:id="section_bigswitch_extensions">
@@ -1934,8 +1933,8 @@
                                 <td>nexthop</td>
                                 <td>No</td>
                                 <td>A plus-separated (+) list of
-                                   next-hop IP addresses (e.g.
-                                   '1.1.1.1+1.1.1.2')</td>
+                                   next-hop IP addresses. For example,
+                                   <literal>1.1.1.1+1.1.1.2</literal>.</td>
                                 <td>Overrides the default virtual
                                    router used to handle traffic for
                                    packets that match the rule</td>
@@ -1962,7 +1961,8 @@
                     <para>Router rules are configured with a router
                         update operation in OpenStack Networking. The
                         update overrides any previous rules so all
-                        rules must be provided at the same time.</para>
+                        rules must be provided at the same
+                        time.</para>
                     <para>Update a router with rules to permit traffic
                         by default but block traffic from external
                         networks to the 10.10.10.0/24 subnet:</para>
@@ -2083,9 +2083,9 @@ source=10.10.10.0/24,destination=10.20.20.20/24,action=deny</userinput></screen>
                         <td>False</td>
                         <td>Specify whether the remote_ip_prefix will
                             be excluded or not from traffic counters
-                            of the metering label, For example to not
+                            of the metering label (for example, to not
                             count the traffic of a specific IP address
-                            of a range.</td>
+                            of a range).</td>
                     </tr>
                     <tr>
                         <td>remote_ip_prefix</td>
@@ -2100,10 +2100,10 @@ source=10.10.10.0/24,destination=10.20.20.20/24,action=deny</userinput></screen>
         <?hard-pagebreak?>
         <section xml:id="metering_operations">
             <title>Basic L3 metering operations</title>
-            <para>Only administrators can manage the L3
-                metering labels and rules.</para>
-            <para>This table shows example <command>neutron</command> commands
-                that enable you to complete basic L3 metering
+            <para>Only administrators can manage the L3 metering
+                labels and rules.</para>
+            <para>This table shows example <command>neutron</command>
+                commands that enable you to complete basic L3 metering
                 operations:</para>
             <table rules="all">
                 <caption>Basic L3 operations</caption>

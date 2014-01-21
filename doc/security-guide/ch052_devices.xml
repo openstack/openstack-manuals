@@ -38,12 +38,15 @@
       legacy devices that have their own set of quirks. Putting all of
       this together, QEMU has been the source of many security
       problems, including hypervisor breakout attacks.</para>
-      <para>For the reasons stated above, it is important to take proactive steps to harden QEMU. We recommend three specific steps: minimizing the codebase, using compiler hardening, and using mandatory access controls, for example: sVirt, SELinux, or AppArmor.</para>
+      <para>For the reasons stated above, it is important to take
+      proactive steps to harden QEMU. We recommend three specific
+      steps: minimizing the code base, using compiler hardening, and
+      using mandatory access controls, such as sVirt, SELinux, or
+      AppArmor.</para>
       <section xml:id="ch052_devices-idp490976">
-        <title>Minimizing the Qemu Codebase</title>
+        <title>Minimizing the Qemu Code base</title>
         <para>One classic security principle is to remove any unused components from your system. QEMU provides support for many different virtual hardware devices. However, only a small number of devices are needed for a given instance. Most instances will use the virtio devices. However, some legacy instances will need access to specific hardware, which can be specified using glance metadata:</para>
-        <screen>
-glance image-update \
+        <screen>glance image-update \
     --property hw_disk_bus=ide \
     --property hw_cdrom_bus=ide \
     --property hw_vif_model=e1000 \
@@ -90,10 +93,25 @@ CFLAGS="-arch x86_64 -fstack-protector-all -Wstack-protector --param ssp-buffer-
     </section>
     <section xml:id="ch052_devices-idp510512">
       <title>sVirt: SELinux + Virtualization</title>
-      <para>With unique kernel-level architecture and National Security Agency (NSA) developed security mechanisms, KVM provides foundational isolation technologies for multitenancy. With developmental origins dating back to 2002, the Secure Virtualization (sVirt) technology is the application of SELinux against modern day virtualization. SELinux, which was designed to apply separation control based upon labels, has been extended to provide isolation between virtual machine processes, devices, data files and system processes acting upon their behalf.</para>
+      <para>With unique kernel-level architecture and National
+      Security Agency (NSA) developed security mechanisms, KVM
+      provides foundational isolation technologies for multi tenancy.
+      With developmental origins dating back to 2002, the Secure
+      Virtualization (sVirt) technology is the application of SELinux
+      against modern day virtualization. SELinux, which was designed
+      to apply separation control based upon labels, has been extended
+      to provide isolation between virtual machine processes, devices,
+      data files and system processes acting upon their behalf.</para>
       <para>OpenStack's sVirt implementation aspires to protect hypervisor hosts and virtual machines against two primary threat vectors:</para>
       <itemizedlist><listitem>
-          <para><emphasis role="bold">Hypervisor threats</emphasis> A compromised application running within a virtual machine attacks the hypervisor to access underlying resources (e.g. the host OS, applications, or devices within the physical machine). This is a threat vector unique to virtualization and represents considerable risk as the underlying real machine can be compromised due to vulnerability in a single virtual application.</para>
+          <para><emphasis role="bold">Hypervisor threats</emphasis> A
+          compromised application running within a virtual machine
+          attacks the hypervisor to access underlying resources. For
+          example, the host OS, applications, or devices within the
+          physical machine. This is a threat vector unique to
+          virtualization and represents considerable risk as the
+          underlying real machine can be compromised due to
+          vulnerability in a single virtual application.</para>
         </listitem>
 <listitem>
           <para><emphasis role="bold">Virtual Machine (multi-tenant)
@@ -126,9 +144,8 @@ system_u:object_r:svirt_image_t:SystemLow image2
 system_u:object_r:svirt_image_t:SystemLow image3
 system_u:object_r:svirt_image_t:SystemLow image4</screen>
         <para>The svirt_image_t label uniquely identifies image files on disk, allowing for the SELinux policy to restrict access. When a KVM-based Compute image is powered on, sVirt appends a random numerical identifier to the image. sVirt is technically capable of assigning numerical identifiers to 524,288 virtual machines per hypervisor node, however OpenStack deployments are highly unlikely to encounter this limitation.</para>
-        <para>An example of the sVirt category identifier is shown below:</para>
-        <screen>
-system_u:object_r:svirt_image_t:s0:c87,c520 image1
+        <para>This example shows the sVirt category identifier:</para>
+        <screen>system_u:object_r:svirt_image_t:s0:c87,c520 image1
 system_u:object_r:svirt_image_t:s0:419,c172 image2</screen>
       </section>
       <section xml:id="ch052_devices-idp527632">

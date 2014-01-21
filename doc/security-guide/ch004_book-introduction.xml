@@ -1,21 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://docbook.org/ns/docbook" xmlns:db="http://docbook.org/ns/docbook" version="5.0" xml:id="ch004_book-introduction"><?dbhtml stop-chunking?>
-    <title>Introduction to OpenStack</title>
-    <para>This guide provides security insight into OpenStack
+<chapter xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  xmlns="http://docbook.org/ns/docbook"
+  xmlns:db="http://docbook.org/ns/docbook" version="5.0"
+  xml:id="ch004_book-introduction">
+  <?dbhtml stop-chunking?>
+  <title>Introduction to OpenStack</title>
+  <para>This guide provides security insight into OpenStack
     deployments. The intended audience is cloud architects, deployers,
     and administrators. In addition, cloud users will find the guide
     both educational and helpful in provider selection, while auditors
     will find it useful as a reference document to support their
     compliance certification efforts. This guide is also recommended
     for anyone interested in cloud security.</para>
-    <para>Each OpenStack deployment embraces a wide variety of technologies, spanning Linux distributions, database systems, messaging queues, OpenStack components themselves, access control policies, logging services, security monitoring tools, and much more. It should come as no surprise that the security issues involved are equally diverse, and their in-depth analysis would require several guides. We strive to find a balance, providing enough context to understand OpenStack security issues and their handling, and provide external references for further information. The guide could be read from start to finish or sampled as necessary like a reference.</para>
-    <para>We briefly introduce the kinds of clouds: private, public, and hybrid before presenting an overview of the OpenStack components and their related security concerns in the remainder of the chapter.</para>
-    <section xml:id="ch004_book-introduction-idp117824">
-      <title>Cloud types</title>
-      <para>OpenStack is a key enabler in adoption of cloud technology and has several common deployment use cases. These are commonly known as Public, Private, and Hybrid models. The following sections use the National Institute of Standards and Technology (NIST) <link xlink:href="http://csrc.nist.gov/publications/nistpubs/800-145/SP800-145.pdf">definition of cloud</link> to introduce these different types of cloud as they apply to OpenStack.</para>
-      <section xml:id="ch004_book-introduction-idp119328">
-        <title>Public cloud</title>
-        <para>According to NIST, a public cloud is one in which the
+  <para>Each OpenStack deployment embraces a wide variety of
+    technologies, spanning Linux distributions, database systems,
+    messaging queues, OpenStack components themselves, access control
+    policies, logging services, security monitoring tools, and much
+    more. It should come as no surprise that the security issues
+    involved are equally diverse, and their in-depth analysis would
+    require several guides. We strive to find a balance, providing
+    enough context to understand OpenStack security issues and their
+    handling, and provide external references for further information.
+    The guide could be read from start to finish or sampled as
+    necessary like a reference.</para>
+  <para>We briefly introduce the kinds of clouds: private, public, and
+    hybrid before presenting an overview of the OpenStack components
+    and their related security concerns in the remainder of the
+    chapter.</para>
+  <section xml:id="ch004_book-introduction-idp117824">
+    <title>Cloud types</title>
+    <para>OpenStack is a key enabler in adoption of cloud technology
+      and has several common deployment use cases. These are commonly
+      known as Public, Private, and Hybrid models. The following
+      sections use the National Institute of Standards and Technology
+      (NIST) <link
+        xlink:href="http://csrc.nist.gov/publications/nistpubs/800-145/SP800-145.pdf"
+        >definition of cloud</link> to introduce these different types
+      of cloud as they apply to OpenStack.</para>
+    <section xml:id="ch004_book-introduction-idp119328">
+      <title>Public cloud</title>
+      <para>According to NIST, a public cloud is one in which the
         infrastructure is open to the general public for consumption.
         OpenStack public clouds are typically run by a service
         provider and can be consumed by individuals, corporations, or
@@ -31,93 +56,182 @@
         required to meet regulatory requirements, a provider should
         ensure tenant isolation as well as protecting management
         infrastructure from external attacks.</para>
-      </section>
-      <section xml:id="ch004_book-introduction-idp121488">
-        <title>Private cloud</title>
-        <para>At the opposite end of the spectrum is the private
-        cloud. As NIST defines it, a private cloud is provisioned for
+    </section>
+    <section xml:id="ch004_book-introduction-idp121488">
+      <title>Private cloud</title>
+      <para>At the opposite end of the spectrum is the private cloud.
+        As NIST defines it, a private cloud is provisioned for
         exclusive use by a single organization comprising multiple
-        consumers (e.g. business units). It may be owned, managed, and
-        operated by the organization, a third-party, or some
+        consumers, such as business units. It may be owned, managed,
+        and operated by the organization, a third-party, or some
         combination of them, and it may exist on or off premises.
         Private cloud use cases are diverse, as such, their individual
         security concerns vary.</para>
-      </section>
-      <section xml:id="ch004_book-introduction-idp123456">
-        <title>Community cloud</title>
-        <para>NIST defines a community cloud as one whose  infrastructure is provisioned for the exclusive use by a specific community of consumers from organizations that have shared concerns (e.g., mission, security requirements, policy, and compliance considerations). It may be owned, managed, and operated by one or more of the organizations in the community, a third-party, or some combination of them, and it may exist on or off premises.</para>
-      </section>
-      <section xml:id="ch004_book-introduction-idp125312">
-        <title>Hybrid cloud</title>
-        <para>A hybrid cloud is defined by NIST as a composition of two or more distinct cloud infrastructures (private, community, or public) that remain unique entities, but are bound together by standardized or proprietary technology that enables data and application portability (e.g., cloud bursting for load balancing between clouds). For example an online retailer may have their advertising and catalogue presented on a public cloud that allows for elastic provisioning. This would enable them to handle seasonal loads in a flexible, cost-effective fashion. Once a customer begins to process their order, they are transferred to the more secure private cloud backend that is PCI compliant.</para>
-        <para>For the purposes of this document, we treat Community
-        and Hybrid similarly, dealing explicitly only with the
-        extremes of Public and Private clouds from a security
-        perspective. Your security measures depend where your
-        deployment falls upon the private public continuum.</para>
-      </section>
     </section>
-    <section xml:id="ch004_book-introduction-idp128528">
-      <title>OpenStack service overview</title>
-      <para>OpenStack embraces a modular architecture to provide a set of core services that facilitates scalability and elasticity as core design tenets. This chapter briefly reviews OpenStack components, their use cases and security considerations.</para>
-      <para><inlinemediaobject><imageobject role="html">
-            <imagedata contentdepth="374" contentwidth="976" fileref="static/marketecture-diagram.png" format="PNG" scalefit="1"/>
-          </imageobject>
-<imageobject role="fo">
-            <imagedata contentdepth="100%" fileref="static/marketecture-diagram.png" format="PNG" scalefit="1" width="100%"/>
-          </imageobject>
-</inlinemediaobject></para>
-      <section xml:id="ch004_book-introduction-idp134736">
-        <title>Compute</title>
-        <para>OpenStack Compute Service (Nova) provides services to support the management of virtual machine instances at scale, instances that host multi-tiered applications, dev/test environments, "Big Data" crunching Hadoop clusters, and/or high performance computing.</para>
-        <para>The Compute Service facilitates this management through an abstraction layer that interfaces with supported hypervisors, which we address later on in more detail.</para>
-        <para>Later in the guide, we focus generically on the
+    <section xml:id="ch004_book-introduction-idp123456">
+      <title>Community cloud</title>
+      <para>NIST defines a community cloud as one whose
+         infrastructure is provisioned for the exclusive use by a
+        specific community of consumers from organizations that have
+        shared concerns. For example, mission, security requirements,
+        policy, and compliance considerations. It may be owned,
+        managed, and operated by one or more of the organizations in
+        the community, a third-party, or some combination of them, and
+        it may exist on or off premises.</para>
+    </section>
+    <section xml:id="ch004_book-introduction-idp125312">
+      <title>Hybrid cloud</title>
+      <para>A hybrid cloud is defined by NIST as a composition of two
+        or more distinct cloud infrastructures, such as private, community, or
+        public, that remain unique entities, but are bound together by
+        standardized or proprietary technology that enables data and
+        application portability, such as cloud bursting for load
+        balancing between clouds. For example an online retailer may
+        have their advertising and catalogue presented on a public
+        cloud that allows for elastic provisioning. This would enable
+        them to handle seasonal loads in a flexible, cost-effective
+        fashion. Once a customer begins to process their order, they
+        are transferred to the more secure private cloud backend that
+        is PCI compliant.</para>
+      <para>For the purposes of this document, we treat Community and
+        Hybrid similarly, dealing explicitly only with the extremes of
+        Public and Private clouds from a security perspective. Your
+        security measures depend where your deployment falls upon the
+        private public continuum.</para>
+    </section>
+  </section>
+  <section xml:id="ch004_book-introduction-idp128528">
+    <title>OpenStack service overview</title>
+    <para>OpenStack embraces a modular architecture to provide a set
+      of core services that facilitates scalability and elasticity as
+      core design tenets. This chapter briefly reviews OpenStack
+      components, their use cases and security considerations.</para>
+    <para><inlinemediaobject>
+        <imageobject role="html">
+          <imagedata contentdepth="374" contentwidth="976"
+            fileref="static/marketecture-diagram.png" format="PNG"
+            scalefit="1"/>
+        </imageobject>
+        <imageobject role="fo">
+          <imagedata contentdepth="100%"
+            fileref="static/marketecture-diagram.png" format="PNG"
+            scalefit="1" width="100%"/>
+        </imageobject>
+      </inlinemediaobject></para>
+    <section xml:id="ch004_book-introduction-idp134736">
+      <title>Compute</title>
+      <para>OpenStack Compute Service (Nova) provides services to
+        support the management of virtual machine instances at scale,
+        instances that host multi-tiered applications, dev/test
+        environments, "Big Data" crunching Hadoop clusters, and/or
+        high performance computing.</para>
+      <para>The Compute Service facilitates this management through an
+        abstraction layer that interfaces with supported hypervisors,
+        which we address later on in more detail.</para>
+      <para>Later in the guide, we focus generically on the
         virtualization stack as it relates to hypervisors.</para>
-        <para>For information about the current state of feature support, see
-          <link
+      <para>For information about the current state of feature
+        support, see <link
           xlink:href="https://wiki.openstack.org/wiki/HypervisorSupportMatrix"
           >OpenStack Hypervisor Support Matrix</link>.</para>
-        <para>The security of Compute is critical for an OpenStack deployment. Hardening techniques should include support for strong instance isolation, secure communication between Compute sub-components, and resiliency of public-facing <glossterm>API</glossterm> endpoints.</para>
-      </section>
-      <section xml:id="ch004_book-introduction-idp138800">
-        <title>Object Storage</title>
-        <para>The OpenStack Object Storage Service (Swift) provides support for storing and retrieving arbitrary data in the cloud. The Object Storage Service  provides both a native API and an Amazon Web Services S3 compatible API. The service provides a high degree of resiliency through data replication and can handle petabytes of data.</para>
-        <para>It is important to understand that object storage differs from traditional file system storage. It is best used for static data such as media files (MP3s, images, videos), virtual machine images, and backup files.</para>
-        <para>Object security should focus on access control and encryption of data in transit and at rest. Other concerns may relate to system abuse, illegal or malicious content storage, and cross authentication attack vectors.</para>
-      </section>
-      <section xml:id="ch004_book-introduction-idp141536">
-        <title>Block Storage</title>
-        <para>The OpenStack Block Storage service (Cinder) provides
-        persistent block storage for compute instances. The Block Storage
-        Service is responsible for managing the life-cycle of block devices,
-        from the creation and attachment of volumes to instances, to their
-        release.</para>
-        <para>Security considerations for block storage are similar to that of object storage.</para>
-      </section>
-      <section xml:id="ch004_book-introduction-idp143424">
-        <title>OpenStack Networking</title>
-        <para>The OpenStack Networking Service (Neutron, previously called Quantum) provides various networking services to cloud users (tenants) such as IP address management, <glossterm>DNS</glossterm>, <glossterm>DHCP</glossterm>, load balancing, and security groups (network access rules, like firewall policies). It provides a framework for software defined networking (SDN) that allows for pluggable integration with various networking solutions.</para>
-        <para>OpenStack Networking allows cloud tenants to manage their guest network configurations. Security concerns with the networking service include network traffic isolation, availability, integrity and confidentiality.</para>
-      </section>
-      <section xml:id="ch004_book-introduction-idp145600">
-        <title>Dashboard</title>
-        <para>The OpenStack Dashboard Service (Horizon) provides a web-based interface for both cloud administrators and cloud tenants. Through this interface administrators and tenants can provision, manage, and monitor cloud resources. Horizon is commonly deployed in a public facing manner with all the usual security concerns of public web portals.</para>
-      </section>
-      <section xml:id="ch004_book-introduction-idp147104">
-        <title>Identity Service</title>
-        <para>The OpenStack Identity Service (Keystone) is a <emphasis role="bold">shared service</emphasis> that provides authentication and authorization services throughout the entire cloud infrastructure. The Identity Service has pluggable support for multiple forms of authentication.</para>
-        <para>Security concerns here pertain to trust in authentication, management of authorization tokens, and secure communication.</para>
-      </section>
-      <section xml:id="ch004_book-introduction-idp149712">
-        <title>Image Service</title>
-        <para>The OpenStack Image Service (Glance) provides disk image management services. The Image Service provides image discovery, registration, and delivery services to Compute, the compute service, as needed.</para>
-        <para>Trusted processes for managing the life cycle of disk images are required, as are all the previously mentioned issues with respect to data security.</para>
-      </section>
-      <section xml:id="ch004_book-introduction-idp152400">
-        <title>Other supporting technology</title>
-        <para>OpenStack relies on messaging for internal communication between several of its services. By default, OpenStack uses message queues based on the Advanced Message Queue Protocol (<glossterm>AMQP</glossterm>). Similar to most OpenStack services, it supports pluggable components. Today the implementation backend could be <glossterm>RabbitMQ</glossterm>, <glossterm>Qpid</glossterm>, or <glossterm>ZeroMQ</glossterm>.</para>
-        <para>As most management commands flow through the message queueing system, it is a primary security concern for any OpenStack deployment. Message queueing security is discussed in detail later in this guide.</para>
-        <para>Several of the components use databases though it is not explicitly called out. Securing the access to the databases and their contents is yet another security concern, and consequently discussed in more detail later in this guide.</para>
-      </section>
+      <para>The security of Compute is critical for an OpenStack
+        deployment. Hardening techniques should include support for
+        strong instance isolation, secure communication between
+        Compute sub-components, and resiliency of public-facing
+          <glossterm>API</glossterm> endpoints.</para>
     </section>
-  </chapter>
+    <section xml:id="ch004_book-introduction-idp138800">
+      <title>Object Storage</title>
+      <para>The OpenStack Object Storage Service (Swift) provides
+        support for storing and retrieving arbitrary data in the
+        cloud. The Object Storage Service provides both a native API
+        and an Amazon Web Services S3 compatible API. The service
+        provides a high degree of resiliency through data replication
+        and can handle petabytes of data.</para>
+      <para>It is important to understand that object storage differs
+        from traditional file system storage. It is best used for
+        static data such as media files (MP3s, images, videos),
+        virtual machine images, and backup files.</para>
+      <para>Object security should focus on access control and
+        encryption of data in transit and at rest. Other concerns may
+        relate to system abuse, illegal or malicious content storage,
+        and cross authentication attack vectors.</para>
+    </section>
+    <section xml:id="ch004_book-introduction-idp141536">
+      <title>Block Storage</title>
+      <para>The OpenStack Block Storage service (Cinder) provides
+        persistent block storage for compute instances. The Block
+        Storage Service is responsible for managing the life-cycle of
+        block devices, from the creation and attachment of volumes to
+        instances, to their release.</para>
+      <para>Security considerations for block storage are similar to
+        that of object storage.</para>
+    </section>
+    <section xml:id="ch004_book-introduction-idp143424">
+      <title>OpenStack Networking</title>
+      <para>The OpenStack Networking Service (Neutron, previously
+        called Quantum) provides various networking services to cloud
+        users (tenants) such as IP address management,
+          <glossterm>DNS</glossterm>, <glossterm>DHCP</glossterm>,
+        load balancing, and security groups (network access rules,
+        like firewall policies). It provides a framework for software
+        defined networking (SDN) that allows for pluggable integration
+        with various networking solutions.</para>
+      <para>OpenStack Networking allows cloud tenants to manage their
+        guest network configurations. Security concerns with the
+        networking service include network traffic isolation,
+        availability, integrity and confidentiality.</para>
+    </section>
+    <section xml:id="ch004_book-introduction-idp145600">
+      <title>Dashboard</title>
+      <para>The OpenStack Dashboard Service (Horizon) provides a
+        web-based interface for both cloud administrators and cloud
+        tenants. Through this interface administrators and tenants can
+        provision, manage, and monitor cloud resources. Horizon is
+        commonly deployed in a public facing manner with all the usual
+        security concerns of public web portals.</para>
+    </section>
+    <section xml:id="ch004_book-introduction-idp147104">
+      <title>Identity Service</title>
+      <para>The OpenStack Identity Service (Keystone) is a <emphasis
+          role="bold">shared service</emphasis> that provides
+        authentication and authorization services throughout the
+        entire cloud infrastructure. The Identity Service has
+        pluggable support for multiple forms of authentication.</para>
+      <para>Security concerns here pertain to trust in authentication,
+        management of authorization tokens, and secure
+        communication.</para>
+    </section>
+    <section xml:id="ch004_book-introduction-idp149712">
+      <title>Image Service</title>
+      <para>The OpenStack Image Service (Glance) provides disk image
+        management services. The Image Service provides image
+        discovery, registration, and delivery services to Compute, the
+        compute service, as needed.</para>
+      <para>Trusted processes for managing the life cycle of disk
+        images are required, as are all the previously mentioned
+        issues with respect to data security.</para>
+    </section>
+    <section xml:id="ch004_book-introduction-idp152400">
+      <title>Other supporting technology</title>
+      <para>OpenStack relies on messaging for internal communication
+        between several of its services. By default, OpenStack uses
+        message queues based on the Advanced Message Queue Protocol
+          (<glossterm>AMQP</glossterm>). Similar to most OpenStack
+        services, it supports pluggable components. Today the
+        implementation backend could be
+          <glossterm>RabbitMQ</glossterm>,
+        <glossterm>Qpid</glossterm>, or
+        <glossterm>ZeroMQ</glossterm>.</para>
+      <para>As most management commands flow through the message
+        queueing system, it is a primary security concern for any
+        OpenStack deployment. Message queueing security is discussed
+        in detail later in this guide.</para>
+      <para>Several of the components use databases though it is not
+        explicitly called out. Securing the access to the databases
+        and their contents is yet another security concern, and
+        consequently discussed in more detail later in this
+        guide.</para>
+    </section>
+  </section>
+</chapter>

@@ -10,18 +10,20 @@
                     <replaceable>key</replaceable>=<replaceable>value</replaceable></literal>
             argument to <command>glance image-create</command> or <command>glance
                 image-update</command>. For
-            example:<screen><prompt>$</prompt> <userinput>glance image-update <replaceable>img-uuid</replaceable> --property architecture=arm --property hypervisor_type=qemu</userinput></screen>
-            If the following properties are set on an image, and the ImagePropertiesFilter scheduler
+            example:</para>
+  <screen><prompt>$</prompt> <userinput>glance image-update <replaceable>img-uuid</replaceable> --property architecture=arm --property hypervisor_type=qemu</userinput></screen>
+            <para>If the following properties are set on an image, and the ImagePropertiesFilter scheduler
             filter is enabled (which it is by default), then the scheduler will only consider
-            compute hosts that satisfy these properties:
+            compute hosts that satisfy these properties:</para>
             <variablelist xml:id="image-metadata-properties">
                 <varlistentry>
                     <term>architecture</term>
                     <listitem>
-                        <para>The CPU architecture that must be supported by the hypervisor, e.g.
-                                <literal>x86_64</literal>, <literal>arm</literal>,  <literal>ppc64</literal>. Run
+                        <para>The CPU architecture that must be supported by
+                        the hypervisor. For example,
+                        <literal>x86_64</literal>, <literal>arm</literal>, or <literal>ppc64</literal>. Run
                                 <command>uname -m</command> to get the architecture of a
-                                machine.  We strongly recommend using the architecture data vocabulary
+                                machine. We strongly recommend using the architecture data vocabulary
                                 defined by the <link xlink:href="http://libosinfo.org">libosinfo project</link>
                                 for this purpose.  Recognized values for this field are:
                                 <variablelist xml:id="image-architecture" spacing="compact">
@@ -58,7 +60,7 @@
                                     <para>
                                       <link xlink:href="http://en.wikipedia.org/wiki/X86"
                                             >Intel sixth-generation x86</link>
-                                      (P6 microarchitecture)
+                                      (P6 micro architecture)
                                     </para>
                                     </listitem>
                                   </varlistentry>
@@ -337,7 +339,7 @@
                             </variablelist></para>
                     </listitem>
                 </varlistentry>
-            </variablelist>The following metadata properties are specific to the XenAPI driver:<variablelist>
+            </variablelist><para>The following metadata properties are specific to the XenAPI driver:</para><variablelist>
                 <varlistentry>
                     <term>auto_disk_config</term>
                     <listitem>
@@ -352,16 +354,17 @@
                 <varlistentry>
                     <term>os_type</term>
                     <listitem>
-                        <para>The operating system installed on the image, e.g.
-                                <literal>linux</literal>, <literal>windows</literal>. The XenAPI
+                        <para>The operating system installed on the image. For
+                        example,
+                        <literal>linux</literal> or <literal>windows</literal>. The XenAPI
                             driver contains logic that will take different actions depending on the
                             value of the os_type parameter of the image. For example, for images
-                            where <literal>os_type=windows</literal>, it will create a FAT32-based
-                            swap partition instead of a Linux swap partition, and it will limit the
-                            injected hostname to less than 16 characters.</para>
+                            where <literal>os_type=windows</literal>, it creates a FAT32-based
+                            swap partition instead of a Linux swap partition, and it limits the
+                            injected host name to less than 16 characters.</para>
                     </listitem>
                 </varlistentry>
-            </variablelist></para>
+            </variablelist>
 
             <para>The following metadata properties are specific to
             the libvirt API driver:
@@ -378,7 +381,7 @@
                 </varlistentry>
             </variablelist></para>
 
-            <para>The following metadata properties are specific to the VMware API driver:
+            <para>The following metadata properties are specific to the VMware API driver:</para>
             <variablelist>
                 <varlistentry>
                     <term>vmware_adaptertype</term>
@@ -405,11 +408,10 @@
                         <para>Currently unused, set it to <literal>1</literal>.</para>
                     </listitem>
                 </varlistentry>
-            </variablelist></para>
-            <para>
-              In order to assist end-users in utilizing images, you may wish to put additional
+            </variablelist>
+            <para>To assist end-users in utilizing images, you may wish to put additional
               common metadata on Glance images.  By community agreement, the following metadata
-              keys may be used across Glance installations for the purposes described below.
+              keys may be used across Glance installations for the purposes described, as follows.</para>
               <variablelist>
                 <varlistentry>
                   <term>instance_uuid</term>
@@ -710,5 +712,4 @@
                   </listitem>
                 </varlistentry>
               </variablelist>
-            </para>
           </section>
