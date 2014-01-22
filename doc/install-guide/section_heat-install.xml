@@ -124,24 +124,16 @@ keystone_ec2_uri = http://<replaceable>controller</replaceable>:5000/v2.0/ec2tok
         these APIs. Register the service and specify the
         endpoint:</para>
       <screen><prompt>#</prompt> <userinput>keystone service-create --name=heat --type=orchestration \
-  --description="Heat Orchestration API"</userinput></screen>
-    </step>
-    <step>
-      <para>Use the <literal>id</literal> property that is returned
-        for the service to create the endpoint:</para>
-      <screen><prompt>#</prompt> <userinput>keystone endpoint-create \
-  --service-id=<replaceable>the_service_id_above</replaceable> \
+  --description="Heat Orchestration API"</userinput>
+<prompt>#</prompt> <userinput>keystone endpoint-create \
+  --service-id=$(keystone service-list | awk '/ orchestration / {print $2}') \
   --publicurl=http://<replaceable>controller</replaceable>:8004/v1/%\(tenant_id\)s \
   --internalurl=http://<replaceable>controller</replaceable>:8004/v1/%\(tenant_id\)s \
-  --adminurl=http://<replaceable>controller</replaceable>:8004/v1/%\(tenant_id\)s</userinput></screen>
-      <screen><prompt>#</prompt> <userinput>keystone service-create --name=heat-cfn --type=cloudformation \
-  --description="Heat CloudFormation API"</userinput></screen>
-    </step>
-    <step>
-      <para>Use the <literal>id</literal> property that is returned
-        for the service to create the endpoint:</para>
-      <screen><prompt>#</prompt> <userinput>keystone endpoint-create \
-  --service-id=<replaceable>the_service_id_above</replaceable> \
+  --adminurl=http://<replaceable>controller</replaceable>:8004/v1/%\(tenant_id\)s</userinput>
+<prompt>#</prompt> <userinput>keystone service-create --name=heat-cfn --type=cloudformation \
+  --description="Heat CloudFormation API"</userinput>
+<prompt>#</prompt> <userinput>keystone endpoint-create \
+  --service-id=$(keystone service-list | awk '/ cloudformation / {print $2}') \
   --publicurl=http://<replaceable>controller</replaceable>:8000/v1 \
   --internalurl=http://<replaceable>controller</replaceable>:8000/v1 \
   --adminurl=http://<replaceable>controller</replaceable>:8000/v1</userinput></screen>

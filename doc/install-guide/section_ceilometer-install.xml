@@ -207,13 +207,9 @@ os_password = <replaceable>CEILOMETER_PASS</replaceable></programlisting>
           <command>keystone</command> command to register the service
         and specify the endpoint:</para>
       <screen><prompt>#</prompt> <userinput>keystone service-create --name=ceilometer --type=metering \
-  --description="Ceilometer Telemetry Service"</userinput></screen>
-    </step>
-    <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
-      <para>Note the <literal>id</literal> property that is returned
-        for the service. Use it when you create the endpoint:</para>
-      <screen><prompt>#</prompt> <userinput>keystone endpoint-create \
-  --service-id=<replaceable>the_service_id_above</replaceable> \
+  --description="Ceilometer Telemetry Service"</userinput>
+<prompt>#</prompt> <userinput>keystone endpoint-create \
+  --service-id=$(keystone service-list | awk '/ metering / {print $2}') \
   --publicurl=http://<replaceable>controller</replaceable>:8777 \
   --internalurl=http://<replaceable>controller</replaceable>:8777 \
   --adminurl=http://<replaceable>controller</replaceable>:8777</userinput></screen>

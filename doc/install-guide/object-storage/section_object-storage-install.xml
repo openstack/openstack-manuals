@@ -84,8 +84,6 @@
 |   Property  |              Value               |
 +-------------+----------------------------------+
 | description |      Object Storage Service      |
-|             |                                  |
-|             |                                  |
 |      id     | eede9296683e4b5ebfa13f5166375ef6 |
 |     name    |              swift               |
 |     type    |           object-store           |
@@ -100,7 +98,7 @@
                     In this guide, the <literal>controller</literal> host name is
                     used.</para>
                 <screen><prompt>#</prompt> <userinput>keystone endpoint-create \
-  --service-id=<replaceable>the_service_id_above</replaceable> \
+  --service-id=$(keystone service-list | awk '/ object-store / {print $2}') \
   --publicurl='http://<replaceable>controller</replaceable>:8080/v1/AUTH_%(tenant_id)s' \
   --internalurl='http://<replaceable>controller</replaceable>:8080/v1/AUTH_%(tenant_id)s' \
   --adminurl=http://<replaceable>controller</replaceable>:8080</userinput>
