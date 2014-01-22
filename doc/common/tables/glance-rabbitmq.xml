@@ -16,52 +16,71 @@
           </thead>
           <tbody>
               <tr>
-                       <td>rabbit_durable_queues = False</td>
-                       <td>(BoolOpt) A boolean to determine if the queues used for messaging should be retained after a restart.</td>
+                  <th colspan="2">[DEFAULT]</th>
+              </tr>
+              <tr>
+                       <td>fake_rabbit = False</td>
+                       <td>(BoolOpt) If passed, use a fake RabbitMQ provider</td>
+              </tr>
+              <tr>
+                       <td>kombu_ssl_ca_certs = </td>
+                       <td>(StrOpt) SSL certification authority file (valid only if SSL enabled)</td>
+              </tr>
+              <tr>
+                       <td>kombu_ssl_certfile = </td>
+                       <td>(StrOpt) SSL cert file (valid only if SSL enabled)</td>
+              </tr>
+              <tr>
+                       <td>kombu_ssl_keyfile = </td>
+                       <td>(StrOpt) SSL key file (valid only if SSL enabled)</td>
+              </tr>
+              <tr>
+                       <td>kombu_ssl_version = </td>
+                       <td>(StrOpt) SSL version to use (valid only if SSL enabled). valid values are TLSv1, SSLv23 and SSLv3. SSLv2 may be available on some distributions</td>
+              </tr>
+              <tr>
+                       <td>rabbit_ha_queues = False</td>
+                       <td>(BoolOpt) use H/A queues in RabbitMQ (x-ha-policy: all).You need to wipe RabbitMQ database when changing this option.</td>
               </tr>
               <tr>
                        <td>rabbit_host = localhost</td>
-                       <td>(StrOpt) The host name of the rabbitmq server</td>
+                       <td>(StrOpt) The RabbitMQ broker address where a single node is used</td>
+              </tr>
+              <tr>
+                       <td>rabbit_hosts = $rabbit_host:$rabbit_port</td>
+                       <td>(ListOpt) RabbitMQ HA cluster host:port pairs</td>
               </tr>
               <tr>
                        <td>rabbit_max_retries = 0</td>
-                       <td>(IntOpt) The maximum number of times to attempt to connect to the AMQP server.</td>
-              </tr>
-              <tr>
-                       <td>rabbit_notification_exchange = glance</td>
-                       <td>(StrOpt) Exchange name to use for connection when using rabbit strategy.</td>
-              </tr>
-              <tr>
-                       <td>rabbit_notification_topic = notifications</td>
-                       <td>(StrOpt) Topic to use for connection when using rabbit strategy.</td>
+                       <td>(IntOpt) maximum retries with trying to connect to RabbitMQ (the default of 0 implies an infinite retry count)</td>
               </tr>
               <tr>
                        <td>rabbit_password = guest</td>
-                       <td>(StrOpt) The password that will be used for authentication with the rabbitmq server.</td>
+                       <td>(StrOpt) the RabbitMQ password</td>
               </tr>
               <tr>
                        <td>rabbit_port = 5672</td>
-                       <td>(IntOpt) The port on which the rabbitmq server is listening</td>
+                       <td>(IntOpt) The RabbitMQ broker port where a single node is used</td>
               </tr>
               <tr>
                        <td>rabbit_retry_backoff = 2</td>
-                       <td>(IntOpt) This value multiplied by the number of connection attempts gives the amount of time in seconds to sleep between connection attempts to the AMQP server.</td>
+                       <td>(IntOpt) how long to backoff for between retries when connecting to RabbitMQ</td>
               </tr>
               <tr>
-                       <td>rabbit_retry_max_backoff = 30</td>
-                       <td>(IntOpt) The maximum amount of time to wait between connection attempts.  The delay time will be the smaller of this value and the value of &lt;rabbit_retry_backoff&gt; * &lt;the number of failed connection attempts so far&gt;.</td>
+                       <td>rabbit_retry_interval = 1</td>
+                       <td>(IntOpt) how frequently to retry connecting with RabbitMQ</td>
               </tr>
               <tr>
                        <td>rabbit_use_ssl = False</td>
-                       <td>(BoolOpt) A boolean value indicating if the selected rabbitmq server uses SSL.</td>
+                       <td>(BoolOpt) connect over SSL for RabbitMQ</td>
               </tr>
               <tr>
                        <td>rabbit_userid = guest</td>
-                       <td>(StrOpt) The user ID for authentication with rabbitmq.</td>
+                       <td>(StrOpt) the RabbitMQ userid</td>
               </tr>
               <tr>
                        <td>rabbit_virtual_host = /</td>
-                       <td>(StrOpt) The virtual host used in the rabbitmq connection.</td>
+                       <td>(StrOpt) the RabbitMQ virtual host</td>
               </tr>
        </tbody>
         </table>

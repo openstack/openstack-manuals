@@ -16,6 +16,9 @@
           </thead>
           <tbody>
               <tr>
+                  <th colspan="2">[DEFAULT]</th>
+              </tr>
+              <tr>
                        <td>allow_additional_image_properties = True</td>
                        <td>(BoolOpt) Whether to allow users to specify image properties beyond what the image schema provides</td>
               </tr>
@@ -44,6 +47,10 @@
                        <td>(BoolOpt) Whether to disable inter-process locks</td>
               </tr>
               <tr>
+                       <td>image_location_quota = 10</td>
+                       <td>(IntOpt) Maximum number of locations allowed on an image. Negative values evaluate to unlimited.</td>
+              </tr>
+              <tr>
                        <td>image_member_quota = 128</td>
                        <td>(IntOpt) Maximum number of image members per image. Negative values evaluate to unlimited.</td>
               </tr>
@@ -69,7 +76,7 @@
               </tr>
               <tr>
                        <td>notifier_strategy = default</td>
-                       <td>(StrOpt) Notifications can be sent when images are create, updated or deleted. There are three methods of sending notifications, logging (via the log_file directive), rabbit (via a rabbitmq queue), qpid (via a Qpid message queue), or noop (no notifications sent, the default).</td>
+                       <td>(StrOpt) Notifications can be sent when images are create, updated or deleted. There are three methods of sending notifications, logging (via the log_file directive), rabbit (via a rabbitmq queue), qpid (via a Qpid message queue), or noop (no notifications sent, the default). (DEPRECATED)</td>
               </tr>
               <tr>
                        <td>os_region_name = None</td>
@@ -80,12 +87,12 @@
                        <td>(StrOpt) The location of the property protection file.</td>
               </tr>
               <tr>
-                       <td>show_image_direct_url = False</td>
-                       <td>(BoolOpt) Whether to include the backend image storage location in image properties. Revealing storage location can be a security risk, so use this setting with caution!</td>
+                       <td>property_protection_rule_format = roles</td>
+                       <td>(StrOpt) This config value indicates whether "roles" or "policies" are used in the property protection file.</td>
               </tr>
               <tr>
-                       <td>use_tpool = False</td>
-                       <td>(BoolOpt) Enable the experimental use of thread pooling for all DB API calls</td>
+                       <td>show_image_direct_url = False</td>
+                       <td>(BoolOpt) Whether to include the backend image storage location in image properties. Revealing storage location can be a security risk, so use this setting with caution!</td>
               </tr>
               <tr>
                        <td>user_storage_quota = 0</td>
@@ -94,6 +101,31 @@
               <tr>
                        <td>workers = 1</td>
                        <td>(IntOpt) The number of child process workers that will be created to service API requests.</td>
+              </tr>
+              <tr>
+                  <th colspan="2">[database]</th>
+              </tr>
+              <tr>
+                       <td>use_tpool = False</td>
+                       <td>(BoolOpt) Enable the experimental use of thread pooling for all DB API calls</td>
+              </tr>
+              <tr>
+                  <th colspan="2">[image_format]</th>
+              </tr>
+              <tr>
+                       <td>container_formats = ami, ari, aki, bare, ovf</td>
+                       <td>(ListOpt) Supported values for the 'container_format' image attribute</td>
+              </tr>
+              <tr>
+                       <td>disk_formats = ami, ari, aki, vhd, vmdk, raw, qcow2, vdi, iso</td>
+                       <td>(ListOpt) Supported values for the 'disk_format' image attribute</td>
+              </tr>
+              <tr>
+                  <th colspan="2">[task]</th>
+              </tr>
+              <tr>
+                       <td>task_time_to_live = 48</td>
+                       <td>(IntOpt) Time in hours for which a task lives after, either succeeding or failing</td>
               </tr>
        </tbody>
         </table>
