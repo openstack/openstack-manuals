@@ -12,16 +12,19 @@
         <para os="debian;ubuntu">Edit
         <filename>/etc/glance/glance-api.conf</filename> and modify the
         <literal>[DEFAULT]</literal> section:</para>
-        <programlisting language="ini" os="debian;ubuntu">notifier_strategy = rabbit
+        <programlisting language="ini" os="debian;ubuntu">notification_driver = messaging
+rpc_backend = rabbit
 rabbit_host = <replaceable>controller</replaceable>
 rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
 
         <para os="opensuse;sles;fedora;rhel;centos">Run the following commands:</para>
-        <screen os="opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf DEFAULT notifier_strategy rabbit</userinput>
-            <prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf DEFAULT rabbit_host <replaceable>controller</replaceable></userinput>
+        <screen os="opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf DEFAULT notification_driver messaging</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf DEFAULT rpc_backend rabbit</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf DEFAULT rabbit_host <replaceable>controller</replaceable></userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf DEFAULT rabbit_password <replaceable>RABBIT_PASS</replaceable></userinput></screen>
 
-        <screen os="fedora;rhel;centos"><prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf DEFAULT notifier_strategy qpid</userinput></screen>
+        <screen os="fedora;rhel;centos"><prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf DEFAULT notification_driver messaging</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf DEFAULT rpc_backend qpid</userinput></screen>
 
     </step>
     <step>
