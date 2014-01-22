@@ -170,15 +170,6 @@
                             >http://wiki.openstack.org/Quantum-NEC-OpenFlow-Plugin</link></td>
                 </tr>
                 <tr>
-                    <td><emphasis role="bold">Nicira NVP
-                            Plug-in</emphasis></td>
-                    <td>This guide and <link
-                            xlink:href="http://www.vmware.com/products/datacenter-virtualization/nicira.html"
-                            >NVP Product Overview</link>, <link
-                            xlink:href="http://www.nicira.com/support"
-                            >NVP Product Support</link></td>
-                </tr>
-                <tr>
                     <td><emphasis role="bold">Open vSwitch
                             Plug-in</emphasis></td>
                     <td>This guide.</td>
@@ -195,6 +186,16 @@
                     <td>This guide and <link
                             xlink:href="https://github.com/osrg/ryu/wiki/OpenStack"
                             >https://github.com/osrg/ryu/wiki/OpenStack</link></td>
+                </tr>
+                <tr>
+                    <!-- TODO: update support link, when available -->
+                    <td><emphasis role="bold">VMware NSX
+                            Plug-in</emphasis></td>
+                    <td>This guide and <link
+                            xlink:href="http://www.vmware.com/nsx"
+                            >NSX Product Overview</link>, <link
+                            xlink:href="http://www.nicira.com/support"
+                            >NSX Product Support</link></td>
                 </tr>
             </tbody>
         </table>
@@ -313,14 +314,6 @@
                     <td/>
                 </tr>
                 <tr>
-                    <td>Nicira NVP</td>
-                    <td>Yes</td>
-                    <td>Yes</td>
-                    <td>Yes</td>
-                    <td/>
-                    <td/>
-                </tr>
-                <tr>
                     <td>Open vSwitch</td>
                     <td>Yes</td>
                     <td/>
@@ -341,6 +334,14 @@
                     <td>Yes</td>
                     <td/>
                     <td/>
+                    <td/>
+                    <td/>
+                </tr>
+                <tr>
+                    <td>VMware NSX</td>
+                    <td>Yes</td>
+                    <td>Yes</td>
+                    <td>Yes</td>
                     <td/>
                     <td/>
                 </tr>
@@ -491,37 +492,37 @@ local_ip=&lt;data-net-IP-address-of-node&gt;</programlisting>
                     </step>
                 </procedure>
             </section>
-            <section xml:id="nvp_plugin">
-                <title>Configure Nicira NVP plug-in</title>
+            <section xml:id="nsx_plugin">
+                <title>Configure NSX plug-in</title>
                 <procedure>
                     <title>To configure OpenStack Networking to use
-                        the NVP plug-in</title>
+                        the NSX plug-in</title>
                     <para>While the instructions in this section refer
-                        to the Nicira NVP platform, they also apply to
-                        VMware NSX.</para>
+                        to the VMware NSX platform, this is formerly
+                        known as Nicira NVP.</para>
                     <step>
-                        <para>Install the NVP plug-in, as
+                        <para>Install the NSX plug-in, as
                             follows:</para>
-                        <screen><prompt>#</prompt> <userinput>sudo apt-get install neutron-plugin-nicira</userinput></screen>
+                        <screen><prompt>#</prompt> <userinput>sudo apt-get install neutron-plugin-vmware</userinput></screen>
                     </step>
                     <step>
                         <para>Edit
                                 <filename>/etc/neutron/neutron.conf</filename>
                             and set:</para>
-                        <programlisting language="ini">core_plugin = neutron.plugins.nicira.NeutronPlugin.NvpPluginV2</programlisting>
+                        <programlisting language="ini">core_plugin = neutron.plugins.vmware.NsxPlugin</programlisting>
                         <para>Example
                                 <filename>neutron.conf</filename> file
-                            for NVP:</para>
-                        <programlisting language="ini">core_plugin = neutron.plugins.nicira.NeutronPlugin.NvpPluginV2
+                            for NSX:</para>
+                        <programlisting language="ini">core_plugin = neutron.plugins.vmware.NsxPlugin
 rabbit_host = 192.168.203.10
 allow_overlapping_ips = True</programlisting>
                     </step>
                     <step>
-                        <para>To configure the NVP controller cluster
+                        <para>To configure the NSX controller cluster
                             for the Openstack Networking Service,
                             locate the <literal>[default]</literal>
                             section in the
-                                <filename>/etc/neutron/plugins/nicira/nvp.ini</filename>
+                                <filename>/etc/neutron/plugins/vmware/nsx.ini</filename>
                             file, and add the following entries (for
                             database configuration, see <link
                                 xlink:href="http://docs.openstack.org/havana/install-guide/install/apt/content/neutron-install-network-node.html"
@@ -533,22 +534,22 @@ allow_overlapping_ips = True</programlisting>
                                 <para>To establish and configure the
                                    connection with the controller
                                    cluster you must set some
-                                   parameters, including NVP API
+                                   parameters, including NSX API
                                    endpoints, access credentials, and
                                    settings for HTTP redirects and
                                    retries in case of connection
                                    failures:</para>
-                                <programlisting language="ini">nvp_user = &lt;admin user name>
-nvp_password = &lt;password for nvp_user>
-req_timeout = &lt;timeout in seconds for NVP_requests> # default 30 seconds
+                                <programlisting language="ini">nsx_user = &lt;admin user name>
+nsx_password = &lt;password for nsx_user>
+req_timeout = &lt;timeout in seconds for NSX_requests> # default 30 seconds
 http_timeout = &lt;tiemout in seconds for single HTTP request> # default 10 seconds
 retries = &lt;number of HTTP request retries> # default 2
 redirects = &lt;maximum allowed redirects for a HTTP request> # default 3
-nvp_controllers = &lt;comma separated list of API endpoints></programlisting>
+nsx_controllers = &lt;comma separated list of API endpoints></programlisting>
                                 <para>To ensure correct operations,
-                                   the <literal>nvp_user</literal>
+                                   the <literal>nsx_user</literal>
                                    user must have administrator
-                                   credentials on the NVP
+                                   credentials on the NSX
                                    platform.</para>
                                 <para>A controller API endpoint
                                    consists of the IP address and port
@@ -558,7 +559,7 @@ nvp_controllers = &lt;comma separated list of API endpoints></programlisting>
                                    up to the user to ensure that all
                                    these endpoints belong to the same
                                    controller cluster. The Openstack
-                                   Networking Nicira NVP plug-in does
+                                   Networking VMware NSX plug-in does
                                    not perform this check, and results
                                    might be unpredictable.</para>
                                 <para>When you specify multiple API
@@ -567,10 +568,10 @@ nvp_controllers = &lt;comma separated list of API endpoints></programlisting>
                                    various API endpoints.</para>
                             </listitem>
                             <listitem>
-                                <para>The UUID of the NVP Transport
+                                <para>The UUID of the NSX Transport
                                    Zone that should be used by default
                                    when a tenant creates a network.
-                                   You can get this value from the NVP
+                                   You can get this value from the NSX
                                    Manager's Transport Zones
                                    page:</para>
                                 <programlisting language="ini">default_tz_uuid = &lt;uuid_of_the_transport_zone&gt;</programlisting>
@@ -580,12 +581,12 @@ nvp_controllers = &lt;comma separated list of API endpoints></programlisting>
                                 <warning>
                                    <para>Ubuntu packaging currently
                                    does not update the Neutron init
-                                   script to point to the NVP
+                                   script to point to the NSX
                                    configuration file. Instead, you
                                    must manually update
                                    <filename>/etc/default/neutron-server</filename>
                                    to add this line:</para>
-                                   <programlisting language="ini">NEUTRON_PLUGIN_CONFIG = /etc/neutron/plugins/nicira/nvp.ini</programlisting>
+                                   <programlisting language="ini">NEUTRON_PLUGIN_CONFIG = /etc/neutron/plugins/vmware/nsx.ini</programlisting>
                                 </warning>
                             </listitem>
                         </itemizedlist>
@@ -597,40 +598,40 @@ nvp_controllers = &lt;comma separated list of API endpoints></programlisting>
                         <screen><prompt>#</prompt> <userinput>sudo service neutron-server restart</userinput></screen>
                     </step>
                 </procedure>
-                <para>Example <filename>nvp.ini</filename>
+                <para>Example <filename>nsx.ini</filename>
                     file:</para>
                 <programlisting language="ini">[DEFAULT]
 default_tz_uuid = d3afb164-b263-4aaa-a3e4-48e0e09bb33c
 default_l3_gw_service_uuid=5c8622cc-240a-40a1-9693-e6a5fca4e3cf
-nvp_user=admin
-nvp_password=changeme
-nvp_controllers=10.127.0.100,10.127.0.200:8888</programlisting>
+nsx_user=admin
+nsx_password=changeme
+nsx_controllers=10.127.0.100,10.127.0.200:8888</programlisting>
                 <note>
-                    <para>To debug <filename>nvp.ini</filename>
+                    <para>To debug <filename>nsx.ini</filename>
                         configuration issues, run this command from
                         the host that runs <systemitem class="service"
                             >neutron-server</systemitem>:</para>
-                    <screen><prompt>#</prompt> <userinput>check-nvp-config &lt;path/to/nvp.ini&gt;</userinput></screen>
+                    <screen><prompt>#</prompt> <userinput>neutron-check-nsx-config &lt;path/to/nsx.ini&gt;</userinput></screen>
                     <para>This command tests whether <systemitem
                             class="service"
                             >neutron-server</systemitem> can log into
-                        all of the NVP Controllers and the SQL server,
+                        all of the NSX Controllers and the SQL server,
                         and whether all UUID values are
                         correct.</para>
                 </note>
                 <section xml:id="LBaaS_and_FWaaS">
                     <title>Load Balancer-as-a-Service and
                         Firewall-as-a-Service</title>
-                    <para>The NVP LBaaS and FWaaS services use the
+                    <para>The NSX LBaaS and FWaaS services use the
                         standard OpenStack API with the exception of
                         requiring routed-insertion extension
                         support.</para>
-                    <para>The main differences between the NVP
+                    <para>The main differences between the NSX
                         implementation and the community reference
                         implementation of these services are:</para>
                     <orderedlist>
                         <listitem>
-                            <para>The NVP LBaaS and FWaaS plug-ins
+                            <para>The NSX LBaaS and FWaaS plug-ins
                                 require the routed-insertion
                                 extension, which adds the
                                    <code>router_id</code> attribute to
@@ -643,7 +644,7 @@ nvp_controllers=10.127.0.100,10.127.0.200:8888</programlisting>
                                 implementation of LBaaS only supports
                                 a one-arm model, which restricts the
                                 VIP to be on the same subnet as the
-                                back-end servers. The NVP LBaaS
+                                back-end servers. The NSX LBaaS
                                 plug-in only supports a two-arm model
                                 between north-south traffic, which
                                 means that you can create the VIP on
@@ -654,7 +655,7 @@ nvp_controllers=10.127.0.100,10.127.0.200:8888</programlisting>
                             <para>The community reference
                                 implementation of FWaaS applies
                                 firewall rules to all logical routers
-                                in a tenant, while the NVP FWaaS
+                                in a tenant, while the NSX FWaaS
                                 plug-in applies firewall rules only to
                                 one logical router according to the
                                    <code>router_id</code> of the
@@ -664,29 +665,29 @@ nvp_controllers=10.127.0.100,10.127.0.200:8888</programlisting>
                     <procedure>
                         <title>To configure Load Balancer-as-a-Service
                             and Firewall-as-a-Service with
-                            NVP:</title>
+                            NSX:</title>
                         <step>
                             <para>Edit
                                    <filename>/etc/neutron/neutron.conf</filename>
                                 file:</para>
-                            <programlisting language="ini">core_plugin = neutron.plugins.nicira.NeutronServicePlugin.NvpAdvancedPlugin
-# Note: comment out service_plug-ins. LBaaS &amp; FWaaS is supported by core_plugin NvpAdvancedPlugin
+                            <programlisting language="ini">core_plugin = neutron.plugins.vmware.NsxServicePlugin
+# Note: comment out service_plug-ins. LBaaS &amp; FWaaS is supported by core_plugin NsxServicePlugin
 # service_plugins = </programlisting>
                         </step>
                         <step>
                             <para>Edit
-                                   <filename>/etc/neutron/plugins/nicira/nvp.ini</filename>
+                                   <filename>/etc/neutron/plugins/vmware/nsx.ini</filename>
                                 file:</para>
-                            <para>In addition to the original NVP
+                            <para>In addition to the original NSX
                                 configuration, the
                                    <code>default_l3_gw_service_uuid</code>
-                                is required for the NVP Advanced
+                                is required for the NSX Advanced
                                 plug-in and you must add a <code>vcns</code>
                                 section:</para>
                             <programlisting language="ini">[DEFAULT]
-    nvp_password = <replaceable>admin</replaceable>
-    nvp_user = <replaceable>admin</replaceable>
-    nvp_controllers = <replaceable>10.37.1.137:443</replaceable>
+    nsx_password = <replaceable>admin</replaceable>
+    nsx_user = <replaceable>admin</replaceable>
+    nsx_controllers = <replaceable>10.37.1.137:443</replaceable>
     default_l3_gw_service_uuid = <replaceable>aae63e9b-2e4e-4efe-81a1-92cf32e308bf</replaceable>
     default_tz_uuid = <replaceable>2702f27a-869a-49d1-8781-09331a0f6b9e</replaceable>
 
@@ -701,7 +702,7 @@ nvp_controllers=10.127.0.100,10.127.0.200:8888</programlisting>
     # VSM admin password
     password = <replaceable>default</replaceable>
 
-    # UUID of a logical switch on NVP which has physical network connectivity (currently using bridge transport type)
+    # UUID of a logical switch on NSX which has physical network connectivity (currently using bridge transport type)
     external_network = <replaceable>f2c023cf-76e2-4625-869b-d0dabcfcc638</replaceable>
 
     # ID of deployment_container on VSM. Optional, if not specified, a default global deployment container is used
@@ -920,24 +921,24 @@ password = "PLUMgrid-director-admin-password"</programlisting>
                     </step>
                 </procedure>
             </section>
-            <section xml:id="install_neutron_agent_nvp">
-                <title>Node set up: Nicira NVP plug-in</title>
-                <para>If you use the Nicira NVP plug-in, you must also
+            <section xml:id="install_neutron_agent_nsx">
+                <title>Node set up: NSX plug-in</title>
+                <para>If you use the NSX plug-in, you must also
                     install Open vSwitch on each data-forwarding node.
                     However, you do not need to install an additional
                     agent on each node.</para>
                 <warning>
                     <para>It is critical that you are running an Open
                         vSwitch version that is compatible with the
-                        current version of the NVP Controller
+                        current version of the NSX Controller
                         software. Do not use the Open vSwitch version
                         that is installed by default on Ubuntu.
                         Instead, use the Open Vswitch version that is
-                        provided on the Nicira support portal for your
-                        NVP Controller version.</para>
+                        provided on the VMware support portal for your
+                        NSX Controller version.</para>
                 </warning>
                 <procedure>
-                    <title>To set up each node for the Nicira NVP
+                    <title>To set up each node for the NSX
                         plug-in</title>
                     <step>
                         <para>Ensure that each data-forwarding node has an
@@ -945,29 +946,29 @@ password = "PLUMgrid-director-admin-password"</programlisting>
                             and an IP address on the "data network"
                             that is used for tunneling data traffic.
                             For full details on configuring your
-                            forwarding node, see the <citetitle>NVP
+                            forwarding node, see the <citetitle>NSX
                                 Administrator
                             Guide</citetitle>.</para>
                     </step>
                     <step>
-                        <para>Use the <citetitle>NVP Administrator
+                        <para>Use the <citetitle>NSX Administrator
                                 Guide</citetitle> to add the node as a
-                            Hypervisor by using the NVP Manager GUI.
+                            Hypervisor by using the NSX Manager GUI.
                             Even if your forwarding node has no VMs
                             and is only used for services agents like
                                 <systemitem>neutron-dhcp-agent</systemitem>
                             or
                                 <systemitem>neutron-lbaas-agent</systemitem>,
-                            it should still be added to NVP as a
+                            it should still be added to NSX as a
                             Hypervisor.</para>
                     </step>
                     <step>
-                        <para>After following the <citetitle>NVP
+                        <para>After following the <citetitle>NSX
                                 Administrator Guide</citetitle>, use
-                            the page for this Hypervisor in the NVP
+                            the page for this Hypervisor in the NSX
                             Manager GUI to confirm that the node is
-                            properly connected to the NVP Controller
-                            Cluster and that the NVP Controller
+                            properly connected to the NSX Controller
+                            Cluster and that the NSX Controller
                             Cluster can see the
                                 <literal>br-int</literal> integration
                             bridge.</para>
@@ -1075,11 +1076,11 @@ enable_isolated_metadata = True
 use_namespaces = True
 interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver</programlisting>
             </section>
-            <section xml:id="dhcp_agent_nvp">
-                <title>DHCP agent setup: NVP plug-in</title>
+            <section xml:id="dhcp_agent_nsx">
+                <title>DHCP agent setup: NSX plug-in</title>
                 <para>These DHCP agent options are required in the
                         <filename>/etc/neutron/dhcp_agent.ini</filename>
-                    file for the NVP plug-in:</para>
+                    file for the NSX plug-in:</para>
                 <programlisting language="bash">[DEFAULT]
 ovs_use_veth = True
 enable_metadata_network = True
@@ -1110,7 +1111,7 @@ interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver</programlist
                 plug-ins already have built-in L3 capabilities:</para>
             <itemizedlist>
                 <listitem>
-                    <para>Nicira NVP plug-in</para>
+                    <para>NSX plug-in</para>
                 </listitem>
                 <listitem>
                     <para>Big Switch/Floodlight plug-in, which
@@ -1231,7 +1232,7 @@ interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver</programlist
                     <itemizedlist>
                         <listitem>
                             <para>An OVS-based plug-in such as OVS,
-                                NVP, Ryu, NEC,
+                                NSX, Ryu, NEC,
                                 BigSwitch/Floodlight:</para>
                             <programlisting language="ini">interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver</programlisting>
                         </listitem>
