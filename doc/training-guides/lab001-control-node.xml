@@ -22,28 +22,683 @@
     used by virtual box VM’s for OpenStack networks, so that
     OpenStack’s services can communicate with each other.</para>
   <para><guilabel>Controller Node</guilabel></para>
-  <para>Start your Controller Node the one you setup in previous
-    section.</para>
+  <para>Start your Controller Node the one you setup in previous section.</para>
   <para><emphasis role="bold">Preparing Ubuntu
     13.04/12.04</emphasis></para>
     <itemizedlist>
       <listitem>
         <para>After you install Ubuntu Server, go in sudo mode</para>
         <para>
-          <programlisting>$sudo su</programlisting>
+          <screen><prompt>$</prompt> <userinput>sudo su</userinput></screen>
         </para>
       </listitem>
       <listitem>
-        <para>Add Grizzly repositories:</para>
-        <para><programlisting>#apt-get install ubuntu-cloud-keyring python-software-properties software-properties-common python-keyring
-# echo deb http://ubuntu-cloud.archive.canonical.com/ubuntu precise-updates/grizzly main >> /etc/apt/sources.list.d/grizzly.list</programlisting></para>
+        <para>Add Havana repositories:</para>
+        <screen><prompt>#</prompt> <userinput>apt-get install ubuntu-cloud-keyring python-software-properties software-properties-common python-keyring</userinput></screen>
+<screen><prompt>#</prompt> <userinput>echo deb http://ubuntu-cloud.archive.canonical.com/ubuntuprecise-updates/havana main >> /etc/apt/sources.list.d/havana.list</userinput></screen>
       </listitem>
       <listitem>
         <para>Update your system:</para>
-        <para><programlisting>#apt-get update
-#apt-get upgrade
-#apt-get dist-upgrade</programlisting></para>
+        <screen><prompt>#</prompt> <userinput>apt-get update</userinput></screen>
+        <screen><prompt>#</prompt> <userinput>apt-get upgrade</userinput></screen>
+        <screen><prompt>#</prompt> <userinput>apt-get dist-update</userinput></screen>
       </listitem>
     </itemizedlist>
-  <para>More Content To be Added soon.</para>
+  <para><emphasis role="bold">Networking :</emphasis></para>
+  <para>Configure your network by editing <filename>/etc/network/interfaces</filename> file</para>
+  <itemizedlist>
+    <listitem><para>Open <filename>/etc/network/interfaces</filename> and edit file as mentioned:</para>
+      <para>
+      <programlisting># This file describes the network interfaces available on your system
+# and how to activate them. For more information, see interfaces(5).
+# This file is configured for OpenStack Control Node by dguitarbite.
+# Note: Selection of the IP addresses is important, changing them may break some of OpenStack Related services,
+# As these IP addresses are essential for communication between them.
+
+# The loopback network interface - for Host-Onlyroot
+auto lo
+iface lo inet loopback
+
+# Virtual Box vboxnet0 - OpenStack Management Network
+# (Virtual Box Network Adapter 1)
+auto eth0
+iface eth0 inet static
+address 10.10.10.51
+netmask 255.255.255.0
+gateway 10.10.10.1
+
+# Virtual Box vboxnet2 - for exposing OpenStack API over external network
+# (Virtual Box Network Adapter 2)
+auto eth1
+iface eth1 inet static
+address 192.168.100.51
+netmask 255.255.255.0
+gateway 192.168.100.1
+
+# The primary network interface - Virtual Box NAT connection
+# (Virtual Box Network Adapter 3)
+auto eth2
+iface eth2 inet dhcp</programlisting>
+    </para> </listitem>
+    <listitem>
+      <para>After saving the interfaces file, restart the networking service</para>
+    <para>
+      <screen><prompt>#</prompt> <userinput>service networking restart</userinput></screen>
+      <screen><prompt>#</prompt> <userinput>ifconfig</userinput></screen>
+    </para>  </listitem>
+    <listitem>
+      <para>You should see the expected network interface cards having the required IP Addresses.</para>
+    </listitem>
+    </itemizedlist>
+  <para><emphasis role="bold">SSH from HOST</emphasis></para>
+  <itemizedlist>
+      <listitem>
+      <para>Create a SSH key pair for your Control Node. Follow the same steps as you did in the starting section of the article for your host machine.</para>
+      </listitem>
+      <listitem>
+        <para>To SSH into Control Node from the Host Machine type the below command.</para>
+        <para>
+          <screen><prompt>$</prompt> <userinput>ssh control@10.10.10.51</userinput></screen>
+          <screen><prompt>$</prompt> <userinput>sudo su</userinput></screen>
+          </para>
+            </listitem>
+    <listitem>
+      <para>Now you can have access to your host clipboard.</para>
+    </listitem>
+  </itemizedlist>
+  <para><emphasis role="bold">My SQL</emphasis></para>
+  <itemizedlist>
+    <listitem>
+    <para>Install MySQL:</para>
+    <para>
+      <screen><prompt>#</prompt> <userinput>apt-get install -y mysql-server python-mysqldb</userinput></screen>
+    </para>
+    </listitem>
+  <listitem>
+    <para>Configure mysql to accept all incoming requests:</para>
+    <para>
+      <screen><prompt>#</prompt> <userinput>sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mysql/my.cnf</userinput></screen>
+      <screen><prompt>#</prompt> <userinput>service mysql restart</userinput></screen>
+    </para>
+      </listitem>
+</itemizedlist>
+  <para><emphasis role="bold">RabbitMQ</emphasis></para>
+  <itemizedlist>
+    <listitem>
+      <para>Install RabbitMQ:</para>
+      <para>
+        <screen><prompt>#</prompt> <userinput>apt-get install -y rabbitmq-server</userinput></screen>
+      </para>
+    </listitem>
+    <listitem>
+      <para>Install NTP service:</para>
+      <para>
+        <screen><prompt>#</prompt> <userinput>apt-get install -y ntp</userinput></screen>
+        </para>
+    </listitem>
+    <listitem>
+      <para>Create these databases:</para>
+      <para>
+          <screen><prompt>#</prompt> <userinput>mysql -u root -p</userinput></screen>
+          <screen><prompt>mysql></prompt><userinput>CREATE DATABASE keystone;</userinput></screen>
+          <screen><prompt>mysql></prompt><userinput>GRANT ALL ON keystone.* TO 'keystoneUser'@'%' IDENTIFIED BY 'keystonePass';</userinput></screen>
+          <screen><prompt>mysql></prompt><userinput>CREATE DATABASE glance;</userinput></screen>
+          <screen><prompt>mysql></prompt><userinput>mysql>GRANT ALL ON glance.* TO 'glanceUser'@'%' IDENTIFIED BY 'glancePass';</userinput></screen>
+          <screen><prompt>mysql></prompt><userinput>CREATE DATABASE neutron;</userinput></screen>
+          <screen><prompt>mysql></prompt><userinput>GRANT ALL ON neutron.* TO 'neutronUser'@'%' IDENTIFIED BY 'neutronPass';</userinput></screen>
+          <screen><prompt>mysql></prompt><userinput>CREATE DATABASE nova;</userinput></screen>
+          <screen><prompt>mysql></prompt><userinput>GRANT ALL ON nova.* TO 'novaUser'@'%' IDENTIFIED BY 'novaPass';</userinput></screen>
+          <screen><prompt>mysql></prompt><userinput>CREATE DATABASE cinder;</userinput></screen>
+          <screen><prompt>mysql></prompt><userinput>GRANT ALL ON cinder.* TO 'cinderUser'@'%' IDENTIFIED BY 'cinderPass';</userinput></screen>
+          <screen><prompt>mysql></prompt><userinput>quit;</userinput></screen>
+      </para>
+    </listitem>
+    </itemizedlist>
+  <para><emphasis role="bold">Other</emphasis></para>
+  <itemizedlist>
+    <listitem>
+      <para>Install other services:</para>
+      <para>
+        <screen><prompt>#</prompt> <userinput>apt-get install -y vlan bridge-utils</userinput></screen>
+        </para>
+    </listitem>
+    <listitem>
+      <para>Enable IP_Forwarding:</para>
+      <para>
+        <screen><prompt>#</prompt> <userinput>sed -i 's/net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/' /etc/sysctl.conf</userinput></screen>
+      </para>
+    </listitem>
+    <listitem>
+      <para>Also add the following two lines into<filename>/etc/sysctl.conf</filename>:</para>
+      <para>
+        <programlisting>net.ipv4.conf.all.rp_filter=0</programlisting>
+        <programlisting>net.ipv4.conf.default.rp_filter=0</programlisting>
+      </para>
+    </listitem>
+    <listitem>
+      <para>To save you from reboot, perform the following</para>
+      <para>
+        <screen><prompt>#</prompt> <userinput>sysctl net.ipv4.ip_forward=1</userinput></screen>
+        <screen><prompt>#</prompt> <userinput>sysctl net.ipv4.conf.all.rp_filter=0</userinput></screen>
+        <screen><prompt>#</prompt> <userinput>sysctl net.ipv4.conf.default.rp_filter=0</userinput></screen>
+        <screen><prompt>#</prompt> <userinput>sysctl -p</userinput></screen>
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para><emphasis role="bold">Keystone</emphasis></para>
+  <para>Keystone is an OpenStack project that provides Identity, Token, Catalog and Policy services for use specifically by projects in the OpenStack family.It implements OpenStack’s Identity API.</para>
+  <itemizedlist>
+    <listitem>
+      <para>Install Keystone packages:</para>
+      <para>
+        <screen><prompt>#</prompt> <userinput>apt-get install -y keystone</userinput></screen>
+      </para>
+    </listitem>
+    <listitem>
+      <para>Adapt the connection attribute in the <filename>/etc/keystone/keystone.conf</filename> to the new database:</para>
+      <para>
+        <programlisting>connection = mysql://keystoneUser:keystonePass@10.10.10.51/keystone</programlisting>
+      </para>
+    </listitem>
+    <listitem>
+      <para>Restart the identity service then synchronize the database:</para>
+      <para>
+        <screen><prompt>#</prompt> <userinput>service keystone restart</userinput></screen>
+        <screen><prompt>#</prompt> <userinput>keystone-manage db_sync</userinput></screen>
+      </para>
+    </listitem>
+    <listitem>
+      <para>Fill up the keystone database using the below two scripts:</para>
+      <para>
+        <programlisting><link xlink:href="training-labs/Scripts/Keystone/Scripts/keystone_basic.sh"><filename>keystone_basic.sh</filename></link>
+<link xlink:href="training-labs/Scripts/Keystone/Scripts/keystone_endpoints_basic.sh"><filename>keystone_endpoints_basic.sh</filename></link></programlisting>
+      </para>
+    </listitem>
+<listitem>
+  <para>Run Scripts:</para>
+  <para>
+    <screen><prompt>#</prompt> <userinput>chmod +x keystone_basic.sh</userinput></screen>
+    <screen><prompt>#</prompt> <userinput>chmod +x keystone_endpoints_basic.sh</userinput></screen>
+    <screen><prompt>#</prompt> <userinput>./keystone_basic.sh</userinput></screen>
+    <screen><prompt>#</prompt> <userinput>./keystone_endpoints_basic.sh</userinput></screen>
+  </para>
+</listitem>
+      <listitem>
+      <para>Create a simple credentials file</para>
+      <para>
+        <programlisting>nano Crediantials.sh</programlisting>
+      </para>
+    </listitem>
+    <listitem>
+      <para>Paste the following:</para>
+      <para>
+        <screen><prompt>#</prompt> <userinput>export OS_TENANT_NAME=admin</userinput></screen>
+        <screen><prompt>#</prompt> <userinput>export OS_USERNAME=admin</userinput></screen>
+        <screen><prompt>#</prompt> <userinput>export OS_PASSWORD=admin_pass</userinput></screen>
+        <screen><prompt>#</prompt> <userinput>export OS_AUTH_URL="http://192.168.100.51:5000/v2.0/"</userinput></screen>
+      </para>
+    </listitem>
+    <listitem>
+      <para>Load the above credentials:</para>
+      <para>
+        <screen><prompt>#</prompt> <userinput>source Crediantials.sh</userinput></screen>
+        </para>
+    </listitem>
+    <listitem>
+      <para>To test Keystone, we use a simple CLI command:</para>
+      <para>
+        <screen><prompt>#</prompt> <userinput>keystone user-list</userinput></screen>
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para><emphasis role="bold">Glance</emphasis></para>
+  <para>OpenStack Glance project provides services for discovering, registering, and retrieving virtual machine images.
+    Glance has a RESTful API that allows querying of VM image metadata as well as retrieval of the actual image.</para>
+  <para>VM images made available through Glance can be stored in a variety of locations from simple file systems to object-storage systems like the OpenStack Swift project.</para>
+  <para>Glance, as with all OpenStack projects, is written with the following design guidelines in mind:</para>
+  <itemizedlist>
+    <listitem>
+      <para>Component based architecture: Quickly add new behaviors</para>
+    </listitem>
+    <listitem>
+      <para>Highly available: Scale to very serious workloads</para>
+    </listitem>
+    <listitem>
+      <para>Fault tolerant: Isolated processes avoid cascading failures</para>
+    </listitem>
+    <listitem>
+      <para>Recoverable: Failures should be easy to diagnose, debug, and rectify</para>
+    </listitem>
+    <listitem>
+      <para>Open standards: Be a reference implementation for a community-driven api
+      </para>
+    </listitem>
+    <listitem>
+      <para>Install Glance</para>
+      <para>
+        <screen><prompt>#</prompt> <userinput>apt-get install -y glance</userinput></screen>
+      </para>
+    </listitem>
+    <listitem>
+      <para>Update <filename>/etc/glance/glance-api-paste.ini</filename></para>
+      <para>
+        <programlisting>[filter:authtoken]
+paste.filter_factory = keystoneclient.middleware.auth_token:filter_factory
+delay_auth_decision = true
+auth_host = 10.10.10.51
+auth_port = 35357
+auth_protocol = http
+admin_tenant_name = service
+admin_user = glance
+admin_password = service_pass</programlisting>
+      </para>
+    </listitem>
+    <listitem>
+      <para>Update the <filename>/etc/glance/glance-registry-paste.ini</filename></para>
+      <para>
+        <programlisting>[filter:authtoken]
+paste.filter_factory = keystoneclient.middleware.auth_token:filter_factory
+auth_host = 10.10.10.51
+auth_port = 35357
+auth_protocol = http
+admin_tenant_name = service
+admin_user = glance
+admin_password = service_pass</programlisting>
+      </para>
+    </listitem>
+    <listitem>
+      <para>Update the <filename>/etc/glance/glance-api.conf</filename></para>
+      <para>
+        <programlisting>sql_connection = mysql://glanceUser:glancePass@10.10.10.51/glance
+[keystone_authtoken]
+auth_host = 10.10.10.51
+auth_port = 35357
+auth_protocol = http
+admin_tenant_name = service
+admin_user = glance
+admin_password = service_pass
+
+[paste_deploy]
+flavor = keystone</programlisting>
+      </para>
+    </listitem>
+    <listitem>
+      <para>Update the <filename>/etc/glance/glance-registry.conf</filename></para>
+      <para>
+        <programlisting>sql_connection = mysql://glanceUser:glancePass@10.10.10.51/glance
+[keystone_authtoken]
+auth_host = 10.10.10.51
+auth_port = 35357
+auth_protocol = http
+admin_tenant_name = service
+admin_user = glance
+admin_password = service_pass
+
+[paste_deploy]
+flavor = keystone</programlisting>
+      </para>
+    </listitem>
+    <listitem>
+      <para>Restart the glance-api and glance-registry services:</para>
+      <para>
+        <screen><prompt>#</prompt> <userinput>service glance-api restart; service glance-registry restart</userinput></screen>
+         </para>
+    </listitem>
+    <listitem>
+      <para>Synchronize the Glance database:</para>
+      <para>
+        <screen><prompt>#</prompt> <userinput>glance-manage db_sync</userinput></screen>
+      </para>
+    </listitem>
+    <listitem>
+      <para>To test Glance, upload the “cirros cloud image” directly from the internet:</para>
+      <para>
+        <screen><prompt>#</prompt> <userinput>glance image-create --name OS4Y_Cirros --is-public true --container-format bare --disk-format qcow2 --location https://launchpad.net/cirros/trunk/0.3.0/+download/cirros-0.3.0-x86_64-disk.img</userinput></screen>
+      </para>
+    </listitem>
+    <listitem>
+      <para>Check if the image is successfully uploaded:</para>
+      <para>
+        <screen><prompt>#</prompt> <userinput>glance image-list</userinput></screen>
+      </para>
+    </listitem>
+  </itemizedlist>
+<para><emphasis role="bold">Neutron</emphasis></para>
+  <para>Neutron is an OpenStack project to provide “network connectivity as a service" between interface devices (e.g., vNICs) managed by other Openstack services (e.g., nova).</para>
+  <itemizedlist>
+    <listitem>
+      <para>Install Neutron Server and the OpenVSwitch package collection:</para>
+      <para>
+        <screen><prompt>#</prompt> <userinput>apt-get install -y neutron-server</userinput></screen>
+      </para>
+    </listitem>
+     <listitem>
+      <para>Edit the <filename>/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>:</para>
+      <para>
+        <programlisting>[database]
+connection = mysql://neutronUser:neutronPass@10.10.10.51/neutron
+
+#Under the OVS section
+[ovs]
+tenant_network_type = gre
+tunnel_id_ranges = 1:1000
+enable_tunneling = True
+[agent]
+tunnel_types = gre
+
+#Firewall driver for realizing neutron security group function
+[securitygroup]
+firewall_driver =
+neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver</programlisting>
+      </para>
+    </listitem>
+       <listitem>
+      <para>Edit the <filename>/etc/neutron/api-paste.ini</filename>:</para>
+      <para>
+        <programlisting>[filter:authtoken]
+firewall_driver =
+neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriverpaste.
+filter_factory = keystoneclient.middleware.auth_token:filter_factory
+auth_host = 10.10.10.51
+auth_port = 35357
+auth_protocol = http
+admin_tenant_name = service
+admin_user = neutron
+admin_password = service_pass</programlisting>
+      </para>
+    </listitem>
+<listitem>
+      <para>Edit the <filename>/etc/neutron/neutron.conf</filename>:</para>
+      <para>
+        <programlisting>rabbit_host = 10.10.10.51
+[keystone_authtoken]
+auth_host = 10.10.10.51
+auth_port = 35357
+auth_protocol = http
+admin_tenant_name = service
+admin_user = neutron
+admin_password = service_pass
+signing_dir = /var/lib/neutron/keystone-signing
+
+[database]
+connection = mysql://neutronUser:neutronPass@10.10.10.51/neutron</programlisting>
+      </para>
+    </listitem>
+    <listitem>
+      <para>Restart Neutron services:</para>
+      <para>
+        <screen><prompt>#</prompt> <userinput>service neutron-server restart</userinput></screen>
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para><emphasis role="bold">Nova</emphasis></para>
+  <para>Nova is the project name for OpenStack Compute, a cloud computing fabric controller, the main part of an IaaS system.
+    Individuals and organizations can use Nova to host and manage their own cloud computing systems. Nova originated as a project out of NASA Ames Research
+    Laboratory.</para>
+  <para>Nova is written with the following design guidelines in mind</para>
+  <itemizedlist>
+    <listitem>
+      <para>Component based architecture: Quickly add new behaviors</para>
+    </listitem>
+    <listitem>
+      <para>Highly available: Scale to very serious workloads</para>
+    </listitem>
+    <listitem>
+      <para>Fault-Tolerant: Isolated processes avoid cascading failures</para>
+    </listitem>
+    <listitem>
+      <para>Recoverable: Failures should be easy to diagnose, debug, and rectify</para>
+    </listitem>
+    <listitem>
+      <para>Open standards: Be a reference implementation for a community-driven api
+      </para>
+    </listitem>
+    <listitem>
+      <para>API Compatibility: Nova strives to provide API-compatible with popular systems like Amazon EC2
+      </para>
+    </listitem>
+    <listitem>
+      <para>Install nova components:</para>
+      <para>
+        <screen><prompt>#</prompt> <userinput>apt-get install -y nova-novncproxy novnc nova-api nova-ajax-console-proxy nova-cert nova-conductor nova-consoleauth nova-doc nova-scheduler python-novaclient</userinput></screen>
+      </para>
+    </listitem>
+    <listitem>
+      <para>Edit <filename>/etc/nova/api-paste.ini</filename></para>
+      <para>
+        <programlisting>[filter:authtoken]
+paste.filter_factory = keystoneclient.middleware.auth_token:filter_factory
+auth_host = 10.10.10.51
+auth_port = 35357
+auth_protocol = http
+admin_tenant_name = service
+admin_user = nova
+admin_password = service_pass
+signing_dir = /tmp/keystone-signing-nova
+
+# Workaround for https://bugs.launchpad.net/nova/+bug/1154809
+auth_version = v2.0</programlisting>
+      </para>
+    </listitem>
+    <listitem>
+      <para>Edit <filename>/etc/nova/nova.conf</filename></para>
+      <para>
+        <programlisting>[DEFAULT]
+logdir=/var/log/nova
+state_path=/var/lib/nova
+lock_path=/run/lock/nova
+verbose=True
+api_paste_config=/etc/nova/api-paste.ini
+compute_scheduler_driver=nova.scheduler.simple.SimpleScheduler
+rabbit_host=10.10.10.51
+nova_url=http://10.10.10.51:8774/v1.1/
+sql_connection=mysql://novaUser:novaPass@10.10.10.51/nova
+root_helper=sudo nova-rootwrap /etc/nova/rootwrap.conf
+
+# Auth
+use_deprecated_auth=false
+auth_strategy=keystone
+
+# Imaging service
+glance_api_servers=10.10.10.51:9292
+image_service=nova.image.glance.GlanceImageService
+
+# Vnc configuration
+novnc_enabled=true
+novncproxy_base_url=http://192.168.1.51:6080/vnc_auto.html
+novncproxy_port=6080
+vncserver_proxyclient_address=10.10.10.51
+vncserver_listen=0.0.0.0
+
+# Network settings
+network_api_class=nova.network.neutronv2.api.API
+neutron_url=http://10.10.10.51:9696
+neutron_auth_strategy=keystone
+neutron_admin_tenant_name=service
+neutron_admin_username=neutron
+neutron_admin_password=service_pass
+neutron_admin_auth_url=http://10.10.10.51:35357/v2.0
+libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtHybridOVSBridgeDriver
+linuxnet_interface_driver=nova.network.linux_net.LinuxOVSInterfaceDriver
+
+#If you want Neutron + Nova Security groups
+firewall_driver=nova.virt.firewall.NoopFirewallDriver
+security_group_api=neutron
+#If you want Nova Security groups only, comment the two lines above and
+uncomment line -1-.
+#-1-firewall_driver=nova.virt.libvirt.firewall.IptablesFirewallDriver
+
+#Metadata
+service_neutron_metadata_proxy = True
+neutron_metadata_proxy_shared_secret = helloOpenStack
+
+# Compute #
+compute_driver=libvirt.LibvirtDriver
+
+# Cinder #
+volume_api_class=nova.volume.cinder.API
+osapi_volume_listen_port=5900</programlisting>
+      </para>
+    </listitem>
+    <listitem>
+      <para>Synchronize your database:</para>
+      <para>
+        <screen><prompt>#</prompt> <userinput>nova-manage db sync</userinput></screen>
+      </para>
+    </listitem>
+    <listitem>
+      <para>Restart nova-* services (all nova services):</para>
+      <para>
+        <screen><prompt>#</prompt> <userinput>cd /etc/init.d/; for i in $( ls nova-* ); do sudo service $i restart; done</userinput></screen>
+      </para>
+    </listitem>
+    <listitem>
+      <para>Check for the smiling faces on nova-* services to confirm your installation::</para>
+      <para>
+        <screen><prompt>#</prompt> <userinput>nova-manage service list</userinput></screen>
+      </para>
+    </listitem>
+    </itemizedlist>
+  <para><emphasis role="bold">Cinder</emphasis></para>
+  <para>Cinder is an OpenStack project to provide “block storage as a service”.</para>
+    <itemizedlist>
+    <listitem>
+      <para>Component based architecture: Quickly add new behaviors</para>
+    </listitem>
+    <listitem>
+      <para>Highly available: Scale to very serious workloads</para>
+    </listitem>
+    <listitem>
+      <para>Fault-Tolerant: Isolated processes avoid cascading failures</para>
+    </listitem>
+    <listitem>
+      <para>Recoverable: Failures should be easy to diagnose, debug, and rectify</para>
+    </listitem>
+    <listitem>
+      <para>Open Standards: Be a reference implementation for a community-driven api
+      </para>
+    </listitem>
+    <listitem>
+      <para>API Compatibility: Cinder strives to provide API-compatible with popular systems like Amazon EC2
+      </para>
+    </listitem>
+    <listitem>
+      <para>Install Cinder components:</para>
+      <para>
+        <screen><prompt>#</prompt> <userinput>apt-get install -y cinder-api cinder-scheduler cinder-volume iscsitarget open-iscsi iscsitarget-dkms</userinput></screen>
+      </para>
+    </listitem>
+      <listitem>
+        <para>Configure the iscsi services:</para>
+        <para>
+          <screen><prompt>#</prompt> <userinput>sed -i 's/false/true/g' /etc/default/iscsitarget</userinput></screen>
+        </para>
+      </listitem>
+      <listitem>
+        <para>Restart the services:</para>
+        <para>
+          <screen><prompt>#</prompt> <userinput>service iscsitarget start</userinput></screen>
+          <screen><prompt>#</prompt> <userinput>service open-iscsi start</userinput></screen>
+        </para>
+      </listitem>
+      <listitem>
+        <para>Edit <filename>/etc/cinder/api-paste.ini</filename>:</para>
+        <para>
+          <programlisting>[filter:authtoken]
+paste.filter_factory = keystoneclient.middleware.auth_token:filter_factory
+service_protocol = http
+service_host = 192.168.100.51
+service_port = 5000
+auth_host = 10.10.10.51
+auth_port = 35357
+auth_protocol = http
+admin_tenant_name = service
+admin_user = cinder
+admin_password = service_pass
+signing_dir = /var/lib/cinder</programlisting>
+        </para>
+      </listitem>
+      <listitem>
+        <para>Edit <filename>/etc/cinder/cinder.conf</filename>:</para>
+        <para>
+          <programlisting>[DEFAULT]
+rootwrap_config=/etc/cinder/rootwrap.conf
+sql_connection = mysql://cinderUser:cinderPass@10.10.10.51/cinder
+api_paste_config = /etc/cinder/api-paste.ini
+iscsi_helper=ietadm
+volume_name_template = volume-%s
+volume_group = cinder-volumes
+verbose = True
+auth_strategy = keystone
+iscsi_ip_address=10.10.10.51
+rpc_backend = cinder.openstack.common.rpc.impl_kombu
+rabbit_host = 10.10.10.51
+rabbit_port = 5672</programlisting>
+        </para>
+      </listitem>
+      <listitem>
+        <para>Then, synchronize Cinder database:</para>
+        <para>
+          <screen><prompt>#</prompt> <userinput>cinder-manage db sync</userinput></screen>
+        </para>
+      </listitem>
+      <listitem>
+        <para>Finally, create a volumegroup and name it cinder-volumes:</para>
+        <para>
+          <screen><prompt>#</prompt> <userinput>dd if=/dev/zero of=cinder-volumes bs=1 count=0 seek=2G</userinput></screen>
+          <screen><prompt>#</prompt> <userinput>losetup /dev/loop2 cinder-volumes</userinput></screen>
+          <screen><prompt>#</prompt> <userinput>fdisk /dev/loop2</userinput></screen>
+          <screen><prompt>Command (m for help):</prompt> <userinput>n</userinput></screen>
+          <screen><prompt>Command (m for help):</prompt> <userinput>p</userinput></screen>
+          <screen><prompt>Command (m for help):</prompt> <userinput>1</userinput></screen>
+          <screen><prompt>Command (m for help):</prompt> <userinput>t</userinput></screen>
+          <screen><prompt>Command (m for help):</prompt> <userinput>8e</userinput></screen>
+          <screen><prompt>Command (m for help):</prompt> <userinput>w</userinput></screen>
+        </para>
+      </listitem>
+      <listitem>
+        <para>Proceed to create the physical volume then the volume group:</para>
+        <para>
+          <screen><prompt>#</prompt> <userinput>pvcreate /dev/loop2</userinput></screen>
+          <screen><prompt>#</prompt> <userinput>vgcreate cinder-volumes /dev/loop2</userinput></screen>
+        </para>
+      </listitem>
+    <listitem>
+ <para>Note: Beware that this volume group gets lost after a system reboot. If you dont want to do this step again ... make sure that you save the machine state and not shut it down.
+ </para></listitem>
+      <listitem>
+        <para>Restart the Cinder services:</para>
+        <para>
+          <screen><prompt>#</prompt> <userinput>cd /etc/init.d/; for i in $( ls cinder-* ); do sudo service $i restart; done</userinput></screen>
+        </para>
+      </listitem>
+      <listitem>
+        <para>Verify if Cinder services are running:</para>
+        <para>
+          <screen><prompt>#</prompt> <userinput>cd /etc/init.d/; for i in $( ls cinder-* ); do sudo service $i status; done</userinput></screen>
+        </para>
+      </listitem>
+     </itemizedlist>
+  <para><emphasis role="bold">Horizon</emphasis></para>
+  <para>Horizon is the canonical implementation of Openstack’s Dashboard, which provides a web based user interface to OpenStack services including Nova, Swift, Keystone, etc.</para>
+  <itemizedlist>
+    <listitem>
+      <para>To install Horizon, proceed like this</para>
+      <para>
+        <screen><prompt>#</prompt> <userinput>apt-get install -y openstack-dashboard memcached</userinput></screen>
+      </para>
+    </listitem>
+    <listitem>
+      <para>If you don't like the OpenStack Ubuntu Theme, you can remove it with help of the below command:</para>
+      <para>
+        <screen><prompt>#</prompt> <userinput>dpkg --purge openstack-dashboard-ubuntu-theme</userinput></screen>
+      </para>
+    </listitem>
+    <listitem>
+      <para>Reload Apache and memcached:</para>
+      <para>
+        <screen><prompt>#</prompt> <userinput>service apache2 restart; service memcached restart</userinput></screen>
+      </para>
+    </listitem>
+    </itemizedlist>
 </chapter>
