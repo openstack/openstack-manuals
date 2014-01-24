@@ -993,8 +993,7 @@ inject_password=true</programlisting>
                 IP addresses to VM instances from the specified subnet
                 in addition to manually configuring the networking
                 bridge. IP addresses for VM instances are grabbed from
-                a subnet specified by the network
-                administrator.</para>
+                a subnet specified by the network administrator.</para>
             <para>Like Flat Mode, all instances are attached to a
                 single bridge on the compute node. In addition a DHCP
                 server is running to configure instances (depending on
@@ -1003,29 +1002,29 @@ inject_password=true</programlisting>
                 this mode, Compute does a bit more configuration in
                 that it attempts to bridge into an ethernet device
                     (<literal>flat_interface</literal>, eth0 by
-                default). It also runs and configures dnsmasq as a
-                DHCP server listening on this bridge, usually on IP
-                address 10.0.0.1 (see <link linkend="section_dnsmasq"
-                    >DHCP server: dnsmasq</link>). For every instance,
-                nova allocates a fixed IP address and configure
-                dnsmasq with the MAC/IP pair for the VM. For example,
-                dnsmasq doesn't take part in the IP address allocation
-                process, it only hands out IPs according to the
-                mapping done by nova. Instances receive their fixed
-                IPs by doing a dhcpdiscover. These IPs are <emphasis
-                    role="italic">not</emphasis> assigned to any of
-                the host's network interfaces, only to the VM's
-                guest-side interface.</para>
-            <para>In any setup with flat networking, the host(-s) with
-                nova-network on it is (are) responsible for forwarding
-                traffic from the private network. Compute can
-                determine the NAT entries for each network, though
-                sometimes NAT is not used, such as when configured
-                with all public IPs or a hardware router is used (one
-                of the HA options). Such host(-s) needs to have
-                    <literal>br100</literal> configured and physically
-                connected to any other nodes that are hosting VMs. You
-                must set the <literal>flat_network_bridge</literal>
+                default). For every instance, nova allocates a fixed
+                IP address and configure dnsmasq with the MAC/IP pair
+                for the VM. Dnsmasq doesn't take part in
+                the IP address allocation process, it only hands out
+                IPs according to the mapping done by nova. Instances
+                receive their fixed IPs by doing a dhcpdiscover.
+                These IPs are <emphasis role="italic">not</emphasis>
+                assigned to any of the host's network interfaces,
+                only to the VM's guest-side interface.</para>
+            <para>In any setup with flat networking, the hosts providing
+                the <systemitem class="service">nova-network</systemitem>
+                service are responsible for forwarding
+                traffic from the private network. They also run and
+                configure dnsmasq as a DHCP server listening on
+                this bridge, usually on IP address 10.0.0.1 (see
+                <link linkend="section_dnsmasq">DHCP server: dnsmasq
+                </link>). Compute can determine the NAT entries for
+                each network, though sometimes NAT is not used, such
+                as when configured with all public IPs or a hardware
+                router is used (one of the HA options). Such hosts
+                need to have <literal>br100</literal> configured and
+                physically connected to any other nodes that are hosting
+                VMs. You must set the <literal>flat_network_bridge</literal>
                 option or create networks with the bridge parameter in
                 order to avoid raising an error. Compute nodes have
                 iptables/ebtables entries created for each project and
