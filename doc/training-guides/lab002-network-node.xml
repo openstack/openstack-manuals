@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<chapter xmlns="http://docbook.org/ns/docbook"
-  xmlns:xi="http://www.w3.org/2001/XInclude"
-  xmlns:xlink="http://www.w3.org/1999/xlink"
- version="5.0"
-  xml:id="lab002-network-node.xml">
+<chapter xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0" xml:id="lab002-network-node.xml">
   <title>Network Node</title>
   <orderedlist>
     <listitem>
@@ -18,36 +15,215 @@
       </imageobject>
     </mediaobject>
   </figure>
-  <para><emphasis role="bold">Vboxnet0</emphasis>, <emphasis
-      role="bold">Vboxnet1</emphasis>, <emphasis role="bold"
-      >Vboxnet2</emphasis> - are virtual networks setup up by virtual
-    box with your host machine. This is the way your host can
-    communicate with the virtual machines. These networks are in turn
-    used by virtual box VM’s for OpenStack networks, so that
-    OpenStack’s services can communicate with each other.</para>
+  <para><emphasis role="bold">Vboxnet0</emphasis>, <emphasis role="bold">Vboxnet1</emphasis>,
+      <emphasis role="bold">Vboxnet2</emphasis> - are virtual networks setup up by virtual box with
+    your host machine. This is the way your host can communicate with the virtual machines. These
+    networks are in turn used by virtual box VM’s for OpenStack networks, so that OpenStack’s
+    services can communicate with each other.</para>
   <para><guilabel>Network Node</guilabel></para>
-  <para>Start your Controller Node the one you setup in previous
-    section.</para>
-  <para><emphasis role="bold">Preparing Ubuntu
-    13.04/12.04</emphasis></para>
+  <para>Start your Controller Node the one you setup in previous section.</para>
+  <para><emphasis role="bold">Preparing Ubuntu 12.04</emphasis></para>
   <itemizedlist>
     <listitem>
       <para>After you install Ubuntu Server, go in sudo mode</para>
       <para>
-        <programlisting>$sudo su</programlisting>
+        <screen><prompt>$</prompt> <userinput>sudo su</userinput></screen>
       </para>
     </listitem>
     <listitem>
-      <para>Add Grizzly repositories:</para>
-      <para><programlisting>#apt-get install ubuntu-cloud-keyring python-software-properties software-properties-common python-keyring
-# echo deb http://ubuntu-cloud.archive.canonical.com/ubuntu precise-updates/grizzly main >> /etc/apt/sources.list.d/grizzly.list</programlisting></para>
+      <para>Add Havana repositories:</para>
+      <para>
+        <screen><prompt>#</prompt> <userinput>apt-get install ubuntu-cloud-keyring python-software-properties software-properties-common python-keyring</userinput></screen>
+        <screen><prompt>#</prompt> <userinput>echo deb http://ubuntu-cloud.archive.canonical.com/ubuntu precise-updates/havana main >> /etc/apt/sources.list.d/havana.list</userinput></screen>
+      </para>
     </listitem>
     <listitem>
       <para>Update your system:</para>
-      <para><programlisting>#apt-get update
-#apt-get upgrade
-#apt-get dist-upgrade</programlisting></para>
+      <para>
+        <screen><prompt>#</prompt> <userinput>apt-get update</userinput></screen>
+        <screen><prompt>#</prompt> <userinput>apt-get upgrade</userinput></screen>
+        <screen><prompt>#</prompt> <userinput>apt-get dist-upgrade</userinput></screen>
+      </para>
+    </listitem>
+    <listitem>
+      <para>Install NTP and other services:</para>
+      <para>
+          <screen><prompt>#</prompt> <userinput>apt-get install ntp vlan bridge-utils</userinput></screen>
+      </para>
+    </listitem>
+    <listitem>
+      <para>Configure NTP Server to Controller Node:</para>
+      <para>
+        <screen><prompt>#</prompt> <userinput>sed -i 's/server 0.ubuntu.pool.ntp.org/#server0.ubuntu.pool.ntp.org/g' /etc/ntp.conf</userinput></screen>
+        <screen><prompt>#</prompt> <userinput>sed -i 's/server 1.ubuntu.pool.ntp.org/#server1.ubuntu.pool.ntp.org/g' /etc/ntp.conf</userinput></screen>
+        <screen><prompt>#</prompt> <userinput>sed -i 's/server 2.ubuntu.pool.ntp.org/#server2.ubuntu.pool.ntp.org/g' /etc/ntp.conf</userinput></screen>
+        <screen><prompt>#</prompt> <userinput>sed -i 's/server 3.ubuntu.pool.ntp.org/#server3.ubuntu.pool.ntp.org/g' /etc/ntp.conf</userinput></screen>
+      </para>
+    </listitem>
+    <listitem>
+      <para>Enable IP Forwarding by adding the following to <filename>/etc/sysctl.conf</filename>:</para>
+      <para>
+        <programlisting>net.ipv4.ip_forward=1
+net.ipv4.conf.all.rp_filter=0
+net.ipv4.conf.default.rp_filter=0</programlisting>
+      </para>
+    </listitem>
+    <listitem>
+      <para>Run the following commands:</para>
+      <para>
+        <screen><prompt>#</prompt> <userinput>sysctl net.ipv4.ip_forward=1</userinput></screen>
+        <screen><prompt>#</prompt> <userinput>sysctl net.ipv4.conf.all.rp_filter=0</userinput></screen>
+        <screen><prompt>#</prompt> <userinput>sysctl net.ipv4.conf.default.rp_filter=0</userinput></screen>
+        <screen><prompt>#</prompt> <userinput>sysctl -p</userinput></screen>
+      </para>
     </listitem>
   </itemizedlist>
-  <para>More Content To be Added soon.</para>
+  <para><emphasis role="bold">OpenVSwitch</emphasis></para>
+  <itemizedlist>
+    <listitem>
+      <para>Install OpenVSwitch Packages:</para>
+      <para>
+        <screen><prompt>#</prompt> <userinput>apt-get install -y openvswitch-switch openvswitch-datapath-dkms</userinput></screen>
+      </para>
+    </listitem>
+    <listitem>
+      <para>Create the bridges:</para>
+      <para>
+        <screen><prompt>#</prompt> <userinput>ovs-vsctl add-br br-int</userinput></screen>
+        <screen><prompt>#</prompt> <userinput>ovs-vsctl add-br br-ex</userinput></screen>
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para><emphasis role="bold">Neutron</emphasis></para>
+  <itemizedlist>
+    <listitem>
+      <para>Neutron:</para>
+      <para>
+        <screen><prompt>#</prompt> <userinput>apt-get install neutron-server neutron-dhcp-agent neutron-plugin-openvswitch-agent neutron-l3-agent</userinput></screen>
+      </para>
+    </listitem>
+    <listitem>
+      <para>Edit <filename>/etc/neutron/api-paste.ini</filename>:</para>
+      <para>
+        <programlisting>[filter:authtoken]
+paste.filter_factory = keystoneclient.middleware.auth_token:filter_factory
+auth_host = 10.10.10.51
+auth_port = 35357
+auth_protocol = http
+admin_tenant_name = service
+admin_user = neutron
+admin_password = service_pass</programlisting>
+      </para>
+    </listitem>
+    <listitem>
+      <para>Edit
+        <filename>/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>:</para>
+      <para>
+        <programlisting>#Under the database section
+[DATABASE]
+connection = mysql://neutronUser:neutronPass@10.10.10.51/neutron
+#Under the OVS section
+[OVS]
+tenant_network_type = gre
+tunnel_id_ranges = 1:1000
+integration_bridge = br-int
+tunnel_bridge = br-tun
+local_ip = 10.10.10.51
+enable_tunneling = True
+tunnel_type = gre
+[agent]
+tunnel_types = gre
+#Firewall driver for realizing quantum security group function
+[SECURITYGROUP]
+firewall_driver =
+neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver</programlisting>
+      </para>
+    </listitem>
+    <listitem>
+      <para>Edit <filename>/etc/neutron/metadata_agent.ini</filename>:</para>
+      <para>
+        <programlisting># The Neutron user information for accessing the Neutron API.
+auth_url = http://10.10.10.51:35357/v2.0
+auth_region = RegionOne
+admin_tenant_name = service
+admin_user = neutron
+admin_password = service_pass
+# IP address used by Nova metadata server
+nova_metadata_ip = 10.10.10.51
+# TCP Port used by Nova metadata server
+nova_metadata_port = 8775
+metadata_proxy_shared_secret = helloOpenStack</programlisting>
+      </para>
+    </listitem>
+    <listitem>
+      <para>Edit <filename>/etc/neutron/dhcp_agent.ini</filename>:</para>
+      <para>
+        <programlisting>interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver</programlisting>
+      </para>
+    </listitem>
+    <listitem>
+      <para>Edit <filename>/etc/neutron/l3_agent.ini</filename>:</para>
+      <para>
+        <programlisting>[DEFAULT]
+interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
+external_network_bridge = br-ex</programlisting>
+      </para>
+    </listitem>
+    <listitem>
+      <para>Edit <filename>/etc/neutron/neutron.conf</filename>:</para>
+      <para>
+        <programlisting>rabbit_host = 10.10.10.51
+#And update the keystone_authtoken section
+[keystone_authtoken]
+auth_host = 10.10.10.51
+auth_port = 35357
+auth_protocol = http
+admin_tenant_name = service
+admin_user = neutron
+admin_password = service_pass
+signing_dir = /var/lib/neutron/keystone-signing
+[database]
+connection = mysql://neutronUser:neutronPass@10.10.10.51/neutron</programlisting>
+      </para>
+    </listitem>
+    <listitem>
+      <para>Edit <filename>/etc/sudoers.d/neutron_sudoers:</filename>:</para>
+      <para>
+        <programlisting>#Modify the neutron user
+neutron ALL=NOPASSWD: ALL</programlisting>
+      </para>
+    </listitem>
+    <listitem>
+      <para>Restart Services:</para>
+      <para>
+        <screen><prompt>#</prompt> <userinput>for i in neutron-dhcp-agent neutron-metadata-agent neutron-
+plugin-agent neutron-l3-agent neutron-server; do service $i
+restart; done</userinput></screen>
+      </para>
+    </listitem>
+    <listitem>
+      <para>Edit Network Interfaces file <filename>/etc/network/interfaces</filename>:</para>
+      <para>
+        <programlisting>auto eth2
+iface eth2 inet manual
+up ifconfig $IFACE 0.0.0.0 up
+up ip link set $IFACE promisc on
+down ip link set $IFACE promisc off
+down ifconfig $IFACE down
+
+auto br-ex
+iface br-ex inet static
+address 192.168.100.52
+netmask 255.255.255.0
+gateway 192.168.100.1
+dns-nameservers 8.8.8.8</programlisting>
+      </para>
+    </listitem>
+    <listitem>
+      <para>Update your system:</para>
+      <para>
+        <screen><prompt>#</prompt> <userinput>ovs-vsctl add-port br-ex eth2</userinput></screen>
+      </para>
+    </listitem>
+  </itemizedlist>
 </chapter>
