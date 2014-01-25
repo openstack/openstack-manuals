@@ -30,17 +30,11 @@
                         </goals>
                         <phase>generate-sources</phase>
                         <configuration>
-                          <preProcess>
-                            <mkdir dir="${project.build.directory}/mvn/com.rackspace.cloud.api/glossary"/>
-                            <copy todir="${project.build.directory}/mvn/com.rackspace.cloud.api/glossary">
-                              <fileset dir="../glossary"/>
-                            </copy>
-                            <move file="${project.build.directory}/mvn/com.rackspace.cloud.api/glossary/glossary-terms.xml" tofile="${project.build.directory}/mvn/com.rackspace.cloud.api/glossary/glossary.xml"/>
-                          </preProcess>
                             <includes>bk_openstack-sec-guide.xml</includes>
                             <sourceDirectory>.</sourceDirectory>
                             <canonicalUrlBase>http://docs.openstack.org/security-guide/content/</canonicalUrlBase>
                             <targetDirectory>${basedir}/target/docbkx/webhelp</targetDirectory>
+                            <glossaryCollection>${basedir}/../glossary/glossary-terms.xml</glossaryCollection>
                             <webhelpDirname>security-guide</webhelpDirname>
                             <pdfFilenameBase>security-guide</pdfFilenameBase>
                             <enableDisqus>${comments.enabled}</enableDisqus>
