@@ -292,7 +292,8 @@ fi
 ATTEMPTS=30
 FAILED=0
 while [ ! -f /root/.ssh/authorized_keys ]; do
-  curl -f http://169.254.169.254/latest/meta-data/public-keys/0/openssh-key > /tmp/metadata-key 2>/dev/null
+  curl -f http://169.254.169.254/latest/meta-data/public-keys/0/openssh-key \
+    > /tmp/metadata-key 2>/dev/null
   if [ \$? -eq 0 ]; then
     cat /tmp/metadata-key >> /root/.ssh/authorized_keys
     chmod 0600 /root/.ssh/authorized_keys
