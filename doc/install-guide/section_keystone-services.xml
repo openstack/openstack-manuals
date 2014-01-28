@@ -43,7 +43,7 @@
           <literal>controller</literal> host name is used. Note that the
         Identity Service uses a different port for the admin API.</para>
       <screen><prompt>#</prompt> <userinput>keystone endpoint-create \
-  --service-id=<replaceable>the_service_id_above</replaceable> \
+  --service-id=$(keystone service-list | awk '/ identity / {print $2}') \
   --publicurl=http://<replaceable>controller</replaceable>:5000/v2.0 \
   --internalurl=http://<replaceable>controller</replaceable>:5000/v2.0 \
   --adminurl=http://<replaceable>controller</replaceable>:35357/v2.0</userinput>
