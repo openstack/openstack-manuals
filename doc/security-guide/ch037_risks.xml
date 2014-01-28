@@ -1,19 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://docbook.org/ns/docbook" xmlns:db="http://docbook.org/ns/docbook" version="5.0" xml:id="ch037_risks"><?dbhtml stop-chunking?>
-    <title>Message Queuing Architecture</title>
-    <para>Inter-process communication within OpenStack is facilitated via message queueing services. Today, three messaging service backends are supported:</para>
-    <itemizedlist><listitem>
-        <para>RabbitMQ</para>
-      </listitem>
-<listitem>
-        <para>Qpid</para>
-      </listitem>
-<listitem>
-        <para>ZeroMQ</para>
-      </listitem>
-</itemizedlist>
-    <para>Both RabbitMQ and Qpid are Advanced Message Queuing Protocol (AMQP) frameworks which provide message queues for peer-to-peer communication. Queue implementations are typically deployed as centralized or decentralized pool of queue servers. ZeroMQ differs by communicating directly using TCP sockets between peers.</para>
-    <para>Message queues effectively facilitate command and control functions across OpenStack deployments. Once access to the queue is permitted no further authorization checks are performed. Services accessible via the queue do validate the contexts and tokens within the actual message payload. However, awareness of the token's expiration value should be noted as these tokens are potentially replayable and may provide authorization for other services within the infrastructure.</para>
-    <para>OpenStack does not support message-level confidence (i.e., message signing). Because of this, the message transport itself must be secured and authentication to the queue server must be performed. For HA configurations, queue to queue authentication and encryption should to be performed as well.</para>
-    <para>With ZeroMQ messaging, IPC sockets are used on individual machines. These sockets may be vulnerable to attack for local message injection and snooping unless secured by an operator.</para>
-  </chapter>
+<chapter xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  xmlns="http://docbook.org/ns/docbook"
+  xmlns:db="http://docbook.org/ns/docbook" version="5.0"
+  xml:id="ch037_risks">
+  <?dbhtml stop-chunking?>
+  <title>Message Queuing Architecture</title>
+  <para>Message queuing services facilitate inter-process
+    communication in OpenStack. OpenStack supports these message
+    queuing service back ends:</para>
+  <itemizedlist>
+    <listitem>
+      <para>RabbitMQ</para>
+    </listitem>
+    <listitem>
+      <para>Qpid</para>
+    </listitem>
+    <listitem>
+      <para>ZeroMQ or 0MQ</para>
+    </listitem>
+  </itemizedlist>
+  <para>Both RabbitMQ and Qpid are Advanced Message Queuing Protocol
+    (AMQP) frameworks, which provide message queues for peer-to-peer
+    communication. Queue implementations are typically deployed as a
+    centralized or decentralized pool of queue servers. ZeroMQ
+    provides direct peer-to-peer communication through TCP
+    sockets.</para>
+  <para>Message queues effectively facilitate command and control
+    functions across OpenStack deployments. Once access to the queue
+    is permitted no further authorization checks are performed.
+    Services accessible through the queue do validate the contexts and
+    tokens within the actual message payload. However, you must note
+    the expiration date of the token because tokens are potentially
+    re-playable and can authorize other services in the
+    infrastructure.</para>
+  <para>OpenStack does not support message-level confidence, such as
+    message signing. Consequently, you must secure and authenticate
+    the message transport itself. For high-availability (HA)
+    configurations, you must perform queue-to-queue authentication and
+    encryption.</para>
+  <para>With ZeroMQ messaging, IPC sockets are used on individual
+    machines. Because these sockets are vulnerable to attack, ensure
+    that the cloud operator has secured them.</para>
+</chapter>
