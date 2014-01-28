@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="section_high_avail">
+        <title>High availability</title>
+        <para>The use of high-availability in a Networking deployment
+            helps prevent individual node failures. In general, you
+            can run <systemitem class="service"
+                >neutron-server</systemitem> and <systemitem
+                class="service">neutron-dhcp-agent</systemitem> in an
+            active-active fashion. You can run the <systemitem
+                class="service">neutron-l3-agent</systemitem> service
+            as active/passive, which avoids IP conflicts with respect
+            to gateway IP addresses.</para>
+        <section xml:id="ha_pacemaker">
+            <title>Networking high availability with Pacemaker</title>
+            <para>You can run some Networking services into a cluster
+                (Active / Passive or Active / Active for Networking
+                Server only) with Pacemaker.</para>
+            <para>Download the latest resources agents:</para>
+            <itemizedlist>
+                <listitem>
+                    <para>neutron-server: <link
+                            xlink:href="https://github.com/madkiss/openstack-resource-agents/blob/master/ocf/neutron-server"
+                            >https://github.com/madkiss/openstack-resource-agents</link></para>
+                </listitem>
+                <listitem>
+                    <para>neutron-dhcp-agent : <link
+                            xlink:href="https://github.com/madkiss/openstack-resource-agents/blob/master/ocf/neutron-agent-dhcp"
+                            >https://github.com/madkiss/openstack-resource-agents</link></para>
+                </listitem>
+                <listitem>
+                    <para>neutron-l3-agent : <link
+                            xlink:href="https://github.com/madkiss/openstack-resource-agents/blob/master/ocf/neutron-agent-l3"
+                            >https://github.com/madkiss/openstack-resource-agents</link></para>
+                </listitem>
+            </itemizedlist>
+            <note xmlns:db="http://docbook.org/ns/docbook">
+                <para>For information about how to build a cluster,
+                    see <link
+                        xlink:href="http://www.clusterlabs.org/wiki/Documentation"
+                        >Pacemaker documentation</link>.</para>
+            </note>
+        </section>
+    </section>

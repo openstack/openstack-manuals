@@ -1,0 +1,197 @@
+    <section xml:id="section_networking-arch" xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+        <title>Networking architecture</title>
+        <para>Before you deploy Networking, it helps to understand the
+            Networking components and how these components interact
+            with each other and other OpenStack services.</para>
+        <section xml:id="arch_overview">
+            <title>Overview</title>
+            <para>Networking is a standalone service, just like other
+                OpenStack services such as Compute, Image service,
+                Identity service, or the Dashboard. Like those
+                services, a deployment of Networking often involves
+                deploying several processes on a variety of
+                hosts.</para>
+            <para>The Networking server uses the <systemitem
+                    class="service">neutron-server</systemitem> daemon
+                to expose the Networking API and to pass user requests
+                to the configured Networking plug-in for additional
+                processing. Typically, the plug-in requires access to
+                a database for persistent storage (also similar to
+                other OpenStack services).</para>
+            <para>If your deployment uses a controller host to run centralized
+                Compute components, you can deploy the Networking server on that
+                same host. However, Networking is entirely standalone and can be
+                deployed on its own host as well. Depending on your deployment,
+                Networking can also include the following agents.</para>
+            <para>
+                <table rules="all">
+                    <caption>Networking agents</caption>
+                    <col width="30%"/>
+                    <col width="70%"/>
+                    <thead>
+                        <tr>
+                            <th>Agent</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><emphasis role="bold">plug-in
+                                   agent</emphasis>
+                                   (<literal>neutron-*-agent</literal>)</td>
+                            <td>Runs on each hypervisor to perform
+                                local vswitch configuration. The agent
+                                that runs depends on the plug-in that
+                                you use, and some plug-ins do not
+                                require an agent.</td>
+                        </tr>
+                        <tr>
+                            <td><emphasis role="bold">dhcp
+                                   agent</emphasis>
+                                   (<literal>neutron-dhcp-agent</literal>)</td>
+                            <td>Provides DHCP services to tenant
+                                networks. Some plug-ins use this
+                                agent.</td>
+                        </tr>
+                        <tr>
+                            <td><emphasis role="bold">l3
+                                   agent</emphasis>
+                                   (<literal>neutron-l3-agent</literal>)</td>
+                            <td>Provides L3/NAT forwarding to provide
+                                external network access for VMs on
+                                tenant networks. Some plug-ins use
+                                this agent.</td>
+                        </tr>
+                        <tr>
+                            <td><emphasis role="bold">l3 metering agent</emphasis>
+                                    (<literal>neutron-metering-agent</literal>)</td>
+                            <td>Provides L3 traffic measurements for tenant networks.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </para>
+            <para>These agents interact with the main neutron process
+                through RPC (for example, rabbitmq or qpid) or through
+                the standard Networking API. Further:</para>
+            <itemizedlist>
+                <listitem>
+                    <para>Networking relies on the Identity service
+                        (Keystone) for the authentication and
+                        authorization of all API requests.</para>
+                </listitem>
+                <listitem>
+                    <para>Compute (Nova) interacts with Networking
+                        through calls to its standard API.  As part of
+                        creating a VM, the <systemitem class="service"
+                            >nova-compute</systemitem> service
+                        communicates with the Networking API to plug
+                        each virtual NIC on the VM into a particular
+                        network. </para>
+                </listitem>
+                <listitem>
+                    <para>The Dashboard (Horizon) integrates with the
+                        Networking API, enabling administrators and
+                        tenant users to create and manage network
+                        services through a web-based GUI.</para>
+                </listitem>
+            </itemizedlist>
+        </section>
+        <section xml:id="networking-services">
+            <title>Place services on physical hosts</title>
+            <para>Like other OpenStack services, Networking enables
+                cloud administrators to run one or more services on
+                one or more physical devices. At one extreme, the
+                cloud administrator can run all service daemons on a
+                single physical host for evaluation purposes.
+                Alternatively the cloud administrator can run each
+                service on its own physical host and, in some cases,
+                can replicate services across multiple hosts for
+                redundancy. For more information, see the <citetitle
+                    xmlns:svg="http://www.w3.org/2000/svg"
+                    xmlns:html="http://www.w3.org/1999/xhtml"
+                    >OpenStack Configuration
+                Reference</citetitle>.</para>
+            <para>A standard architecture includes a cloud controller
+                host, a network gateway host, and a set of hypervisors
+                that run virtual machines. The cloud controller and
+                network gateway can be on the same host. However, if
+                you expect VMs to send significant traffic to or from
+                the Internet, a dedicated network gateway host helps
+                avoid CPU contention between the <systemitem
+                    class="service">neutron-l3-agent</systemitem> and
+                other OpenStack services that forward packets.</para>
+        </section>
+        <section xml:id="network-connectivity">
+            <title>Network connectivity for physical hosts</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata scale="50"
+                        fileref="../common/figures/Neutron-PhysNet-Diagram.png"
+                    />
+                </imageobject>
+            </mediaobject>
+            <para>A standard Networking set up has one or more of the
+                following distinct physical data center
+                networks.</para>
+
+            <para>
+                <table rules="all">
+                    <caption>General distinct physical data center
+                        networks</caption>
+                    <col width="20%"/>
+                    <col width="80%"/>
+                    <thead>
+                        <tr>
+                            <th>Network</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><emphasis role="bold">Management
+                                   network</emphasis></td>
+                            <td>Provides internal communication
+                                between OpenStack Components. IP
+                                addresses on this network should be
+                                reachable only within the data
+                                center.</td>
+                        </tr>
+                        <tr>
+                            <td><emphasis role="bold">Data
+                                   network</emphasis></td>
+                            <td>Provides VM data communication within
+                                the cloud deployment. The IP
+                                addressing requirements of this
+                                network depend on the Networking
+                                plug-in that is used.</td>
+                        </tr>
+                        <tr>
+                            <td><emphasis role="bold">External
+                                   network</emphasis></td>
+                            <td>Provides VMs with Internet access in
+                                some deployment scenarios. Anyone on
+                                the Internet can reach IP addresses on
+                                this network.</td>
+                        </tr>
+                        <tr>
+                            <td><emphasis role="bold">API
+                                   network</emphasis></td>
+                            <td>Exposes all OpenStack APIs, including
+                                the Networking API, to tenants. IP
+                                addresses on this network should be
+                                reachable by anyone on the
+                                Internet. The API network might be the
+                                same as the external network, because
+                                it is possible to create an
+                                external-network subnet that is
+                                allocated IP ranges that use less than
+                                the full range of IP addresses in an
+                                IP block.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </para>
+        </section>
+    </section>
