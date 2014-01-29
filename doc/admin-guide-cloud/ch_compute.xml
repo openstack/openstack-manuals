@@ -167,11 +167,9 @@
             the current disk state of a particular instance. The
             Compute services manages instances.</para>
         <para>For more information about creating and troubleshooting
-            images, see the <link
-                xlink:href="http://docs.openstack.org/user-guide-admin/content/cli_manage_images.html"
-                >Manage Images</link> section of the
-                <citetitle>OpenStack Admin User
-            Guide</citetitle>.</para>
+            images, see the <citetitle><link
+                xlink:href="http://docs.openstack.org/image-guide/content/"
+                >OpenStack Virtual Machine Image Guide</link></citetitle>.</para>
         <para>For more information about image configuration options,
             see the <link
                 xlink:href="http://docs.openstack.org/trunk/config-reference/content/ch_configuring-openstack-image-service.html"
@@ -446,6 +444,7 @@
             </varlistentry>
         </variablelist>
     </section>
+    <xi:include href="image/section_glance-property-protection.xml"/>
     <section xml:id="section_instance-mgmt">
         <title>Instance management tools</title>
         <para>OpenStack provides command line, web-based, and
@@ -469,90 +468,6 @@
                 xlink:href="http://docs.openstack.org/user-guide/content/index.html">
                 <citetitle>OpenStack End User
             Guide</citetitle></link>.</para>
-        <!--
-I've commented this section out as it merely repeats what's in the
-End User Guide, and isn't required here. Comments welcome. LKB
-
-                <para>What follows is
-                    the minimal introduction required to follow the
-                    CLI example in this chapter. In case of a conflict
-                    in <link
-                        xlink:href="http://docs.openstack.org/user-guide/content/index.html"
-                            ><citetitle>OpenStack End User
-                            Guide</citetitle></link> should be
-                    considered authoritative (and a bug filed against
-                    this section).</para>
-                <para>To function, the <application>nova</application>
-                    CLI needs this information:</para>
-                <itemizedlist>
-                    <listitem>
-                        <para><literal>Authentication URL</literal>:
-                            This can be passed as the
-                                <parameter>&ndash;&ndash;os_auth_url</parameter>
-                            flag or using the OS_AUTH_URL environment
-                            variable.</para>
-                    </listitem>
-                    <listitem>
-                        <para><literal>Tenant (sometimes referred to
-                                as project) name</literal>: This can
-                            be passed as the
-                                <parameter>&ndash;&ndash;os_tenant_name</parameter>
-                            flag or using the OS_TENANT_NAME
-                            environment variable.</para>
-                    </listitem>
-                    <listitem>
-                        <para><literal>User name</literal>: This can
-                            be passed as the
-                                <parameter>&ndash;&ndash;os_username</parameter>
-                            flag or using the OS_USERNAME environment
-                            variable.</para>
-                    </listitem>
-                    <listitem>
-                        <para><literal>Password</literal>: This can be
-                            passed as the
-                                <parameter>&ndash;&ndash;os_password</parameter>
-                            flag or using the OS_PASSWORD environment
-                            variable.</para>
-                    </listitem>
-                </itemizedlist>
-                <para>For example if you have your Identity Service
-                    running on the default port (5000) on host
-                    keystone.example.com and want to use the
-                        <application>nova</application> cli as the
-                    user "demouser" with the password "demopassword"
-                    in the "demoproject" tenant you can export the
-                    following values in your shell environment or pass
-                    the equivalent command line args (presuming these
-                    identities already exist):</para>
-                <screen><prompt>$</prompt> <userinput>export OS_AUTH_URL="http://keystone.example.com:5000/v2.0/"</userinput>
-<prompt>$</prompt> <userinput>export OS_USERNAME=demouser</userinput>
-<prompt>$</prompt> <userinput>export OS_PASSWORD=demopassword</userinput>
-<prompt>$</prompt> <userinput>export OS_TENANT_NAME=demoproject</userinput></screen>
-                <para>If you use the <link
-                        linkend="instance-mgmt-horizon">Horizon</link>
-                    web dashboard, you can download credential files
-                    that contain the correct values for your
-                    particular implementation.</para>
-            </simplesect>-->
-        <!-- Commented out because it repeats information earlier in this chapter. LKB
-        <simplesect xml:id="instance-mgmt-horizon">
-        <para>
-          Horizon is a highly customizable and extensible OpenStack web
-          dashboard. For more information on Horizon, see the
-          <link xlink:href="http://docs.openstack.org/developer/horizon">
-          Horizon project site</link>.
-</para>
-            <para>OpenStack provides a RESTful API for all functionality. Complete
-            API documentation is available at <link
-                xlink:href="http://api.openstack.org/api-ref.html">OpenStack API
-                Reference</link>. The <link
-                xlink:href="http://docs.openstack.org/api/openstack-compute/2/content/"
-                    ><citetitle>OpenStack Compute API v2 and Extensions
-                    Reference</citetitle></link> documentation refers to
-            instances as <glossterm baseform="servers">servers</glossterm>.</para>
-        <para>The <link linkend="instance-mgmt-novaclient">nova cli</link> can
-            be made to show the API calls it is making by passing it the
-                <parameter>&ndash;&ndash;debug</parameter> parameter:</para>-->
         <screen><prompt>#</prompt> <userinput>nova --debug list</userinput>
  <?db-font-size 75%?><computeroutput>connect: (10.0.0.15, 5000)
 send: 'POST /v2.0/tokens HTTP/1.1\r\nHost: 10.0.0.15:5000\r\nContent-Length: 116\r\ncontent-type: application/json\r\naccept-encoding: gzip, deflate\r\naccept: application/json\r\nuser-agent: python-novaclient\r\n\r\n{"auth": {"tenantName": "demoproject", "passwordCredentials": {"username": "demouser", "password": "demopassword"}}}'
@@ -645,12 +560,6 @@ header: Date: Thu, 13 Sep 2012 20:27:36 GMT
     </section>
     <section xml:id="section_instance-building-blocks">
         <title>Building blocks</title>
-        <!-- <para>There are two fundamental requirements for a
-                computing system, software and hardware.
-                Virtualization and cloud frameworks tend to blur these
-                lines and some of your "hardware" might actually be
-                "software" but conceptually you still need an
-                operating system and something to run it on.</para>-->
         <para>In OpenStack the base operating system is usually copied
             from an image stored in the OpenStack Image service. This
             is the most common case and results in an ephemeral
@@ -729,15 +638,6 @@ header: Date: Thu, 13 Sep 2012 20:27:36 GMT
     </section>
     <xi:include
         href="../common/section_cli_nova_customize_flavors.xml"/>
-    <!-- <section xml:id="section_instance-creation">
-            <?dbhtml stop-chunking?>
-            <title>Instances</title>
-            <para>For information about launching instances through
-                the nova command-line client, see the <link
-                    xlink:href="http://docs.openstack.org/user-guide/content/index.html"
-                        ><citetitle>OpenStack End User
-                        Guide</citetitle></link>.</para>
-        </section>-->
     <section xml:id="section_instance-scheduling-constraints">
         <title>Control where instances run</title>
         <para>The <!--<xref linkend="ch_scheduling"/>-->
@@ -833,24 +733,6 @@ inject_password=true</programlisting>
                     >cloudbase-init</link>.</para>
         </simplesect>
     </section>
-    <!--   <section xml:id="section_instance-data">
-            <?dbhtml stop-chunking?>
-            <title>Instance-specific data</title>
-            <para>For each instance, you can specify certain data including authorized_keys, key
-                injection, user-data, metadata service, and file injection.</para>
-            <para>For information, see the <link
-                    xlink:href="http://docs.openstack.org/user-guide/content/"
-                        ><citetitle>OpenStack End User
-                        Guide</citetitle></link>.</para>
-        </section>
-        <section xml:id="section_instance-networking">
-            <?dbhtml stop-chunking?>
-            <title>Instance networking</title>
-            <para>For information, see the <link
-                    xlink:href="http://docs.openstack.org/user-guide/content/index.html"
-                        ><citetitle>OpenStack End User
-                        Guide</citetitle></link>.</para>
-        </section>-->
     <xi:include href="../common/section_cli_nova_volumes.xml"/>
     <section xml:id="section_networking-nova">
         <title>Networking with nova-network</title>
