@@ -1,0 +1,80 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <parent>
+        <groupId>org.openstack.docs</groupId>
+        <artifactId>parent-pom</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>openstack-cli-reference</artifactId>
+    <packaging>jar</packaging>
+    <name>OpenStack Command Line Interface Reference</name>
+    <properties>
+        <!-- This is set by Jenkins according to the branch. -->
+        <release.path.name>local</release.path.name>
+        <comments.enabled>0</comments.enabled>
+    </properties>
+    <!-- ################################################ -->
+    <!-- USE "mvn clean generate-sources" to run this POM -->
+    <!-- ################################################ -->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.rackspace.cloud.api</groupId>
+                <artifactId>clouddocs-maven-plugin</artifactId>
+                <!-- version is set in ../pom.xml file -->
+                <executions>
+                    <execution>
+                        <id>generate-webhelp</id>
+                        <goals>
+                            <goal>generate-webhelp</goal>
+                        </goals>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <!-- These parameters only apply to webhelp -->
+                            <enableDisqus>0</enableDisqus>
+                            <disqusShortname>os-image-guide</disqusShortname>
+                            <enableGoogleAnalytics>1</enableGoogleAnalytics>
+                            <googleAnalyticsId>UA-17511903-1</googleAnalyticsId>
+                            <generateToc>
+                                appendix  toc,title
+                                article/appendix  nop
+                                article   toc,title
+                                book      toc,title,figure,table,example,equation
+                                chapter   toc
+                                section   toc
+                                part      toc
+                                preface   toc
+                                qandadiv  toc
+                                qandaset  toc
+                                reference toc,title
+                                set       toc,title
+                            </generateToc>
+                            <!-- The following elements sets the autonumbering of sections in output for chapter numbers but no numbered sections-->
+                            <sectionAutolabel>0</sectionAutolabel>
+                            <formalProcedures>0</formalProcedures>
+                            <tocSectionDepth>1</tocSectionDepth>
+                            <tocChapterDepth>1</tocChapterDepth>
+                            <sectionLabelIncludesComponentLabel>0</sectionLabelIncludesComponentLabel>
+                            <webhelpDirname>cli-reference</webhelpDirname>
+                            <pdfFilenameBase>cli-reference</pdfFilenameBase>
+                        </configuration>
+                    </execution>
+                </executions>
+                <configuration>
+                    <!-- These parameters apply to pdf and webhelp -->
+                    <profileAudience>enduser</profileAudience>
+                    <xincludeSupported>true</xincludeSupported>
+                    <sourceDirectory>.</sourceDirectory>
+                    <includes>
+                        bk-cli-reference.xml
+                    </includes>
+                    <branding>openstack</branding>
+                    <canonicalUrlBase>http://docs.openstack.org/cli-reference/content/</canonicalUrlBase>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
