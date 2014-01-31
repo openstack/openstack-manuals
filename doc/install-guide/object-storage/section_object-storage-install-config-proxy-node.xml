@@ -8,69 +8,57 @@
         for the account, container, or object and routes the requests
         correctly. The proxy server also handles API requests. You
         enable account management by configuring it in the
-            <filename>proxy-server.conf</filename> file.</para>
+            <filename>/etc/swift/proxy-server.conf</filename> file.</para>
     <note>
         <para>The Object Storage processes run under a separate user
-            and group, set by configuration options, and referred to as <phrase
-                os="ubuntu;debian;rhel;centos;fedora"
-                >swift:swift</phrase><phrase os="opensuse;sles"
-                >openstack-swift:openstack-swift</phrase>. The default
-            user is <phrase os="ubuntu;debian;rhel;centos;fedora"
-                >swift, which may not exist on your
-                system.</phrase><phrase os="opensuse;sles"
-                >openstack-swift.</phrase></para>
+            and group, set by configuration options, and referred to as
+            <literal> <phrase os="ubuntu;debian;rhel;centos;fedora"
+            >swift:swift</phrase><phrase os="opensuse;sles"
+            >openstack-swift:openstack-swift</phrase></literal>. The default
+            user is <literal><phrase os="ubuntu;debian;rhel;centos;fedora"
+            >swift</phrase><phrase os="opensuse;sles"
+            >openstack-swift</phrase></literal>.</para>
     </note>
     <procedure>
         <step>
             <para>Install swift-proxy service:</para>
             <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install swift-proxy memcached python-keystoneclient python-swiftclient python-webob</userinput></screen>
-            <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-swift-proxy memcached openstack-utils python-swiftclient python-keystone-auth-token</userinput></screen>
-            <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-swift-proxy memcached openstack-utils python-swiftclient python-keystoneclient</userinput></screen>
+            <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-swift-proxy memcached python-swiftclient python-keystone-auth-token</userinput></screen>
+            <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-swift-proxy memcached python-swiftclient python-keystoneclient python-xml</userinput></screen>
         </step>
-        <step>
-            <para>Create self-signed cert for SSL:</para>
-            <screen><prompt>#</prompt> <userinput>cd /etc/swift</userinput>
-<prompt>#</prompt> <userinput>openssl req -new -x509 -nodes -out cert.crt -keyout cert.key</userinput></screen>
-        </step>
-        <step>
-            <para>Modify memcached to listen on the default interfaces
+        <step os="ubuntu;debian">
+            <para>Modify memcached to listen on the default interface
                 on a local, non-public network. Edit this line in
                     the <filename>/etc/memcached.conf</filename> file:</para>
-            <literallayout class="monospaced">-l 127.0.0.1</literallayout>
+            <programlisting>-l 127.0.0.1</programlisting>
             <para>Change it to:</para>
-            <literallayout class="monospaced">-l &lt;PROXY_LOCAL_NET_IP&gt;</literallayout>
+            <programlisting>-l <replaceable>PROXY_LOCAL_NET_IP</replaceable></programlisting>
         </step>
-        <step>
-            <para>Restart the memcached server:</para>
+        <step os="rhel;centos;fedora;opensuse;sles">
+            <para>Modify memcached to listen on the default interface
+                on a local, non-public network. Edit
+                    the <filename>/etc/sysconfig/memcached</filename> file:</para>
+            <programlisting os="rhel;centos;fedora">OPTIONS="-l <replaceable>PROXY_LOCAL_NET_IP</replaceable>"</programlisting>
+            <programlisting os="opensuse;sles">MEMCACHED_PARAMS="-l <replaceable>PROXY_LOCAL_NET_IP</replaceable>"</programlisting>
+        </step>
+        <step os="ubuntu;debian">
+            <para>Restart the memcached service:</para>
             <screen><prompt>#</prompt> <userinput>service memcached restart</userinput></screen>
         </step>
-        <step os="rhel;centos;fedora">
-            <para>RHEL/CentOS/Fedora only: To set up Object Storage to
-                authenticate tokens, set the Identity Service Admin
-                token in the swift proxy file with the
-                <command>openstack-config</command> command.</para>
-            <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/swift/proxy-server.conf \
-  filter:authtoken admin_token $ADMIN_TOKEN</userinput>
-<prompt>#</prompt> sudo <userinput>openstack-config --set /etc/swift/proxy-server.conf \
-  filter:authtoken auth_token $ADMIN_TOKEN</userinput></screen>
-        </step>
-        <step os="ubuntu">
-            <para>Ubuntu only: Because the distribution packages do
-                not include a copy of the keystoneauth middleware,
-                ensure that the proxy server includes
-                them:</para>
-            <screen><prompt>$</prompt> <userinput>git clone https://github.com/openstack/swift.git</userinput>
-<prompt>$</prompt> <userinput>cd swift</userinput>
-<prompt>$</prompt> <userinput>python setup.py install</userinput>
-<prompt>$</prompt> <userinput>swift-init proxy start</userinput></screen>
+        <step os="rhel;centos;fedora;opensuse;sles">
+            <para>Start the memcached service and configure it to start when
+                the system boots:</para>
+            <screen><prompt>#</prompt> <userinput>service memcached start</userinput>
+<prompt>#</prompt> <userinput>chkconfig memcached on</userinput></screen>
         </step>
         <step>
-            <para>Create
+            <para><phrase os="ubuntu;debian">Create</phrase>
+                <phrase os="rhel;centos;fedora;opensuse;sles">Edit</phrase>
                     <filename>/etc/swift/proxy-server.conf</filename>:</para>
             <programlisting language="ini">[DEFAULT]
 bind_port = 8080
-<phrase os="rhel;centos;fedora;ubuntu;debian">user = swift</phrase>
-<phrase os="opensuse;sles">user = openstack-swift</phrase>
+<phrase os="rhel;centos;fedora;ubuntu;debian">user = swift</phrase><phrase
+os="opensuse;sles">user = openstack-swift</phrase>
 
 [pipeline:main]
 pipeline = healthcheck cache authtoken keystoneauth proxy-server
@@ -99,13 +87,10 @@ auth_protocol = http
 auth_host = <replaceable>controller</replaceable>
 auth_port = 35357
 
-# the same admin_token as provided in keystone.conf
-admin_token = ADMIN_TOKEN
-
-# the service tenant and swift userid and password created in Keystone
+# the service tenant and swift username and password created in Keystone
 admin_tenant_name = service
 admin_user = swift
-admin_password = SWIFT_PASS
+admin_password = <replaceable>SWIFT_PASS</replaceable>
 
 [filter:cache]
 use = egg:swift#memcache
@@ -120,19 +105,10 @@ use = egg:swift#healthcheck
                 <para>If you run multiple memcache servers, put the
                     multiple IP:port listings in the [filter:cache]
                     section of the
-                        <filename>proxy-server.conf</filename> file:</para>
+                        <filename>/etc/swift/proxy-server.conf</filename> file:</para>
                     <literallayout class="monospaced">10.1.2.3:11211,10.1.2.4:11211</literallayout>
                 <para>Only the proxy server uses memcache.</para>
             </note>
-        </step>
-        <step>
-            <para>Create the <parameter class="option"
-                    >signing_dir</parameter> and set its permissions
-                accordingly.</para>
-            <screen os="ubuntu;debian;rhel;centos;fedora"><prompt>#</prompt> <userinput>mkdir -p /home/swift/keystone-signing</userinput>
-<prompt>#</prompt> <userinput>chown -R swift:swift /home/swift/keystone-signing</userinput></screen>
-            <screen os="opensuse;sles"><prompt>#</prompt> <userinput>mkdir -p /home/swift/keystone-signing</userinput>
-<prompt>#</prompt> <userinput>chown -R openstack-swift:openstack-swift /home/swift/keystone-signing</userinput></screen>
         </step>
         <step>
             <para>Create the account, container, and object rings. The
@@ -153,21 +129,21 @@ use = egg:swift#healthcheck
         <step>
             <para>For every storage device on each node add entries to
                 each ring:</para>
-            <screen><prompt>#</prompt> <userinput>swift-ring-builder account.builder add z&lt;ZONE&gt;-&lt;STORAGE_LOCAL_NET_IP&gt;:6002[R&lt;STORAGE_REPLICATION_NET_IP&gt;:6005]/&lt;DEVICE&gt; 100</userinput>
-<prompt>#</prompt> <userinput>swift-ring-builder container.builder add z&lt;ZONE&gt;-&lt;STORAGE_LOCAL_NET_IP_1&gt;:6001[R&lt;STORAGE_REPLICATION_NET_IP&gt;:6004]/&lt;DEVICE&gt; 100</userinput>
-<prompt>#</prompt> <userinput>swift-ring-builder object.builder add z&lt;ZONE&gt;-&lt;STORAGE_LOCAL_NET_IP_1&gt;:6000[R&lt;STORAGE_REPLICATION_NET_IP&gt;:6003]/&lt;DEVICE&gt; 100</userinput></screen>
+            <screen><prompt>#</prompt> <userinput>swift-ring-builder account.builder add z<replaceable>ZONE</replaceable>-<replaceable>STORAGE_LOCAL_NET_IP</replaceable>:6002[R<replaceable>STORAGE_REPLICATION_NET_IP</replaceable>:6005]/<replaceable>DEVICE</replaceable> 100</userinput>
+<prompt>#</prompt> <userinput>swift-ring-builder container.builder add z<replaceable>ZONE</replaceable>-<replaceable>STORAGE_LOCAL_NET_IP_1</replaceable>:6001[R<replaceable>STORAGE_REPLICATION_NET_IP</replaceable>:6004]/<replaceable>DEVICE</replaceable> 100</userinput>
+<prompt>#</prompt> <userinput>swift-ring-builder object.builder add z<replaceable>ZONE</replaceable>-<replaceable>STORAGE_LOCAL_NET_IP_1</replaceable>:6000[R<replaceable>STORAGE_REPLICATION_NET_IP</replaceable>:6003]/<replaceable>DEVICE</replaceable> 100</userinput></screen>
             <note>
                 <para>You must omit the optional <parameter>STORAGE_REPLICATION_NET_IP</parameter> parameter if you
                     do not want to use dedicated network for
                     replication.</para>
             </note>
             <para>For example, if a storage node
-                has a partition in Zone 1 on IP 10.0.0.1, the storage
-                node has address 10.0.1.1 from replication network.
-                The mount point of this partition is /srv/node/sdb1,
-                and the path in <filename>rsyncd.conf</filename> is
-                /srv/node/, the DEVICE would be sdb1 and the commands
-                are:</para>
+                has a partition in Zone 1 on IP 10.0.0.1, the storage node has
+                address 10.0.1.1 from replication network.  The mount point of
+                this partition is <filename>/srv/node/sdb1</filename>, and the
+                path in <filename>/etc/rsyncd.conf</filename> is
+                <filename>/srv/node/</filename>, the DEVICE would be sdb1 and
+                the commands are:</para>
             <screen><prompt>#</prompt> <userinput>swift-ring-builder account.builder add z1-10.0.0.1:6002R10.0.1.1:6005/sdb1 100</userinput>
 <prompt>#</prompt> <userinput>swift-ring-builder container.builder add z1-10.0.0.1:6001R10.0.1.1:6005/sdb1 100</userinput>
 <prompt>#</prompt> <userinput>swift-ring-builder object.builder add z1-10.0.0.1:6000R10.0.1.1:6005/sdb1 100</userinput></screen>
@@ -196,16 +172,22 @@ use = egg:swift#healthcheck
             <para>Copy the <filename>account.ring.gz</filename>,
                     <filename>container.ring.gz</filename>, and
                     <filename>object.ring.gz</filename> files to each
-                of the Proxy and Storage nodes in /etc/swift.</para>
+                of the Proxy and Storage nodes in <filename>/etc/swift</filename>.</para>
         </step>
         <step>
             <para>Make sure the swift user owns all configuration files:</para>
             <screen os="ubuntu;debian;rhel;centos;fedora"><prompt>#</prompt> <userinput>chown -R swift:swift /etc/swift</userinput></screen>
             <screen os="opensuse;sles"><prompt>#</prompt> <userinput>chown -R openstack-swift:openstack-swift /etc/swift</userinput></screen>
         </step>
-        <step>
-            <para>Start Proxy services:</para>
-            <screen><prompt>#</prompt> <userinput>service proxy-server start</userinput></screen>
+        <step os="ubuntu;debian">
+            <para>Restart the Proxy service:</para>
+            <screen><prompt>#</prompt> <userinput>service proxy-server restart</userinput></screen>
+        </step>
+        <step os="rhel;centos;fedora;sles;opensuse">
+            <para>Start the Proxy service and configure it to start when the
+                system boots:</para>
+            <screen><prompt>#</prompt> <userinput>service openstack-swift-proxy start</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-swift-proxy on</userinput></screen>
         </step>
     </procedure>
 </section>
