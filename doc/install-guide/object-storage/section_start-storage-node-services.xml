@@ -7,41 +7,21 @@
     <title>Start services on the storage nodes</title>
     <para>Now that the ring files are on each storage node, you can
         start the services. On each storage node, run the following
-        commands:</para>
-    <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service swift-object start</userinput>
-<prompt>#</prompt> <userinput>service swift-object-replicator start</userinput>
-<prompt>#</prompt> <userinput>service swift-object-updater start</userinput>
-<prompt>#</prompt> <userinput>service swift-object-auditor start</userinput>
-<prompt>#</prompt> <userinput>service swift-container start</userinput>
-<prompt>#</prompt> <userinput>service swift-container-replicator start</userinput>
-<prompt>#</prompt> <userinput>service swift-container-updater start</userinput>
-<prompt>#</prompt> <userinput>service swift-container-auditor start</userinput>
-<prompt>#</prompt> <userinput>service swift-account start</userinput>
-<prompt>#</prompt> <userinput>service swift-account-replicator start</userinput>
-<prompt>#</prompt> <userinput>service swift-account-reaper start</userinput>
-<prompt>#</prompt> <userinput>service swift-account-auditor start</userinput></screen>
-    <screen os="fedora;rhel;centos;opensuse;sles"><prompt>#</prompt> <userinput>service openstack-swift-object start</userinput>
-<prompt>#</prompt> <userinput>service openstack-swift-object-replicator start</userinput>
-<prompt>#</prompt> <userinput>service openstack-swift-object-updater start</userinput>
-<prompt>#</prompt> <userinput>service openstack-swift-object-auditor start</userinput>
-<prompt>#</prompt> <userinput>service openstack-swift-container start</userinput>
-<prompt>#</prompt> <userinput>service openstack-swift-container-replicator start</userinput>
-<prompt>#</prompt> <userinput>service openstack-swift-container-updater start</userinput>
-<prompt>#</prompt> <userinput>service openstack-swift-container-auditor start</userinput>
-<prompt>#</prompt> <userinput>service openstack-swift-account start</userinput>
-<prompt>#</prompt> <userinput>service openstack-swift-account-replicator start</userinput>
-<prompt>#</prompt> <userinput>service openstack-swift-account-reaper start</userinput>
-<prompt>#</prompt> <userinput>service openstack-swift-account-auditor start</userinput></screen>
+        command:</para>
+    <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>for service in \
+  swift-object swift-object-replicator swift-object-updater swift-object-auditor \
+  swift-container swift-container-replicator swift-container-updater swift-container-auditor \
+  swift-account swift-account-replicator swift-account-reaper swift-account-auditor; do \
+      service $service start; done</userinput></screen>
+    <screen os="fedora;rhel;centos;opensuse;sles"><prompt>#</prompt> <userinput>for service in \
+  openstack-swift-object openstack-swift-object-replicator openstack-swift-object-updater openstack-swift-object-auditor \
+  openstack-swift-container openstack-swift-container-replicator openstack-swift-container-updater openstack-swift-container-auditor \
+  openstack-swift-account openstack-swift-account-replicator openstack-swift-account-reaper openstack-swift-account-auditor; do \
+    service $service start; chkconfig $service on; done</userinput></screen>
     <note>
         <para>To start all swift services at once, run the command:</para>
-        <screen><prompt>#</prompt> <userinput>swift-init main start</userinput></screen>
+        <screen><prompt>#</prompt> <userinput>swift-init all start</userinput></screen>
         <para>To know more about <literal>swift-init</literal> command, run:</para>
         <screen><prompt>#</prompt> <userinput>man swift-init</userinput></screen>
-    </note>
-<screen><prompt>#</prompt> <userinput>service rsyslog restart</userinput>
-<prompt>#</prompt> <userinput>service memcached restart</userinput></screen>
-    <note os="fedora;rhel;centos">
-        <para>On Fedora, you might need to use <command>systemctl restart
-        <replaceable>service</replaceable></command>.</para>
     </note>
 </section>

@@ -53,27 +53,15 @@
     <section xml:id="general-installation-steps-swift">
         <title>General installation steps</title>
         <procedure>
-            <step>
-                <para>Install core Swift files and openSSH.</para>
-                <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install swift openssh-server rsync memcached python-netifaces \
-  python-xattr python-memcache</userinput></screen>
-                <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-swift openstack-swift-proxy \
-  openstack-swift-account openstack-swift-container \
-  openstack-swift-object memcached</userinput></screen>
-                <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-swift openstack-swift-proxy \
-  openstack-swift-account openstack-swift-container \
-  openstack-swift-object memcached</userinput></screen>
-            </step>
             <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
                 <para>Create a <literal>swift</literal> user that the Object
-                    Storage
-                    Service can use to authenticate with the Identity Service.
+                    Storage Service can use to authenticate with the Identity Service.
                     Choose a password and specify an email address for the
                     <literal>swift</literal> user. Use the
                     <literal>service</literal> tenant and give the user the
-                    <literal>admin</literal> role.</para>
+                    <literal>admin</literal> role:</para>
                 <screen><prompt>#</prompt> <userinput>keystone user-create --name=swift --pass=<replaceable>SWIFT_PASS</replaceable> \
-   --email=<replaceable>swift@example.com</replaceable></userinput>
+  --email=<replaceable>swift@example.com</replaceable></userinput>
 <prompt>#</prompt> <userinput>keystone user-role-add --user=swift --tenant=service --role=admin</userinput></screen>
             </step>
             <step>
@@ -88,15 +76,15 @@
 |     name    |              swift               |
 |     type    |           object-store           |
 +-------------+----------------------------------+</computeroutput></screen>
-                <para>The service ID is randomly generated and is different from
-                    the one shown here.</para>
+                <note><para>The service ID is randomly generated and is different from
+                    the one shown here.</para></note>
             </step>
             <step>
                 <para>Specify an API endpoint for the Object Storage Service by using
                     the returned service ID. When you specify an endpoint, you
                     provide URLs for the public API, internal API, and admin API.
                     In this guide, the <literal>controller</literal> host name is
-                    used.</para>
+                    used:</para>
                 <screen><prompt>#</prompt> <userinput>keystone endpoint-create \
   --service-id=$(keystone service-list | awk '/ object-store / {print $2}') \
   --publicurl='http://<replaceable>controller</replaceable>:8080/v1/AUTH_%(tenant_id)s' \
@@ -114,12 +102,9 @@
 +-------------+---------------------------------------------------+</computeroutput></screen>
             </step>
             <step>
-                <para>Create and populate configuration directories on
+                <para>Create the configuration directory on
                     all nodes:</para>
-                <screen os="ubuntu;debian;rhel;centos;fedora"><prompt>#</prompt> <userinput>mkdir -p /etc/swift</userinput>
-<prompt>#</prompt> <userinput>chown -R swift:swift /etc/swift/</userinput></screen>
-                <screen os="opensuse;sles"><prompt>#</prompt> <userinput>mkdir -p /etc/swift</userinput>
-<prompt>#</prompt> <userinput>chown -R openstack-swift:openstack-swift /etc/swift/</userinput></screen>
+                <screen><prompt>#</prompt> <userinput>mkdir -p /etc/swift</userinput></screen>
             </step>
             <step>
                 <para>Create
@@ -133,7 +118,7 @@
                     <filename>/etc/swift/swift.conf</filename> should
                 be set to some random string of text to be used as a
                 salt when hashing to determine mappings in the ring.
-                This file should be the same on every node in the
+                This file must be the same on every node in the
                 cluster!</para>
         </note>
         <para>Next, set up your storage nodes and proxy node. This
