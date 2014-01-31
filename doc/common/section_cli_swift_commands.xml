@@ -18,33 +18,74 @@
 
     <section xml:id="swiftclient_command_usage">
        <title>swift usage</title>
-        <screen><computeroutput>             [--debug] [--info] [--quiet] [--auth &lt;auth_url>]
-             [--auth-version &lt;auth_version>] [--user &lt;username>]
-             [--key &lt;api_key>] [--retries &lt;num_retries>]
-             [--os-username &lt;auth-user-name>] [--os-password &lt;auth-password>]
-             [--os-tenant-id &lt;auth-tenant-id>]
-             [--os-tenant-name &lt;auth-tenant-name>]
-             [--os-auth-url &lt;auth-url>] [--os-auth-token &lt;auth-token>]
-             [--os-storage-url &lt;storage-url>] [--os-region-name &lt;region-name>]
-             [--os-service-type &lt;service-type>]
-             [--os-endpoint-type &lt;endpoint-type>]
-             [--os-cacert &lt;ca-certificate>] [--insecure]
+        <screen><computeroutput>             [--debug] [--info] [--quiet] [--auth &lt;auth_url&gt;]
+             [--auth-version &lt;auth_version&gt;] [--user &lt;username&gt;]
+             [--key &lt;api_key&gt;] [--retries &lt;num_retries&gt;]
+             [--os-username &lt;auth-user-name&gt;] [--os-password &lt;auth-password&gt;]
+             [--os-tenant-id &lt;auth-tenant-id&gt;]
+             [--os-tenant-name &lt;auth-tenant-name&gt;]
+             [--os-auth-url &lt;auth-url&gt;] [--os-auth-token &lt;auth-token&gt;]
+             [--os-storage-url &lt;storage-url&gt;] [--os-region-name &lt;region-name&gt;]
+             [--os-service-type &lt;service-type&gt;]
+             [--os-endpoint-type &lt;endpoint-type&gt;]
+             [--os-cacert &lt;ca-certificate&gt;] [--insecure]
              [--no-ssl-compression]
-             &lt;subcommand> ...</computeroutput></screen>
-    </section>
-    <section xml:id="swiftclient_command_pos">
-        <title>swift positional arguments</title>
-        <screen><computeroutput>  &lt;subcommand>
-    delete               Delete a container or objects within a container
-    download             Download objects from containers
-    list                 Lists the containers for the account or the objects
-                         for a container
-    post                 Updates meta information for the account, container,
-                         or object; creates containers if not present
-    stat                 Displays information for the account, container,
-                         or object
-    upload               Uploads files or directories to the given container
+             &lt;subcommand&gt; ...
 </computeroutput></screen>
+  <variablelist wordsize="10">
+    <title>Subcommands</title>
+  <varlistentry>
+    <term><command>delete</command></term>
+    <listitem>
+      <para>
+        Delete a container or objects within a container
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>download</command></term>
+    <listitem>
+      <para>
+        Download objects from containers
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>list</command></term>
+    <listitem>
+      <para>
+        Lists the containers for the account or the objects
+      for a container
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>post</command></term>
+    <listitem>
+      <para>
+        Updates meta information for the account, container,
+      or object; creates containers if not present
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>stat</command></term>
+    <listitem>
+      <para>
+        Displays information for the account, container,
+      or object
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>upload</command></term>
+    <listitem>
+      <para>
+        Uploads files or directories to the given container
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
     </section>
     <section xml:id="swiftclient_command_examples">
         <title>swift examples</title>
@@ -59,624 +100,683 @@
     </section>
     <section xml:id="swiftclient_command_optional">
         <title>swift optional arguments</title>
-        <screen><computeroutput>  --version             show program's version number and exit
-  -h, --help            show this help message and exit
-  -s, --snet            Use SERVICENET internal network
-  -v, --verbose         Print more info
-  --debug               Show the curl commands and results of all http queries
-                        regardless of result status.
-  --info                Show the curl commands and results  of all http
-                        queries which return an error.
-  -q, --quiet           Suppress status output
-  -A AUTH, --auth=AUTH  URL for obtaining an auth token
-  -V AUTH_VERSION, --auth-version=AUTH_VERSION
-                        Specify a version for authentication. Defaults to 1.0.
-  -U USER, --user=USER  User name for obtaining an auth token.
-  -K KEY, --key=KEY     Key for obtaining an auth token.
-  -R RETRIES, --retries=RETRIES
-                        The number of times to retry a failed connection.
-  --os-username=&lt;auth-user-name>
-                        Openstack username. Defaults to env[OS_USERNAME].
-  --os-password=&lt;auth-password>
-                        Openstack password. Defaults to env[OS_PASSWORD].
-  --os-tenant-id=&lt;auth-tenant-id>
-                        OpenStack tenant ID. Defaults to env[OS_TENANT_ID]
-  --os-tenant-name=&lt;auth-tenant-name>
-                        Openstack tenant name. Defaults to
-                        env[OS_TENANT_NAME].
-  --os-auth-url=&lt;auth-url>
-                        Openstack auth URL. Defaults to env[OS_AUTH_URL].
-  --os-auth-token=&lt;auth-token>
-                        Openstack token. Defaults to env[OS_AUTH_TOKEN]. Used
-                        with --os-storage-url to bypass the usual
-                        username/password authentication.
-  --os-storage-url=&lt;storage-url>
-                        Openstack storage URL. Defaults to
-                        env[OS_STORAGE_URL]. Overrides the storage url
-                        returned during auth. Will bypass authentication when
-                        used with --os-auth-token.
-  --os-region-name=&lt;region-name>
-                        Openstack region name. Defaults to env[OS_REGION_NAME]
-  --os-service-type=&lt;service-type>
-                        Openstack Service type. Defaults to
-                        env[OS_SERVICE_TYPE]
-  --os-endpoint-type=&lt;endpoint-type>
-                        Openstack Endpoint type. Defaults to
-                        env[OS_ENDPOINT_TYPE]
-  --os-cacert=&lt;ca-certificate>
-                        Specify a CA bundle file to use in verifying a TLS
-                        (https) server certificate. Defaults to env[OS_CACERT]
-  --insecure            Allow swiftclient to access insecure keystone server.
-                        The keystone's certificate will not be verified.
-                        Defaults to env[SWIFTCLIENT_INSECURE] (set to 'true'
-                        to enable).
-  --no-ssl-compression  Disable SSL compression when using https. This may
-                        increase performance.
-</computeroutput></screen>
+  <variablelist wordsize="10">
+  <varlistentry>
+    <term><command>--version</command></term>
+    <listitem>
+      <para>
+        show program's version number and exit
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>-s, --snet</command></term>
+    <listitem>
+      <para>
+        Use SERVICENET internal network
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>-v, --verbose</command></term>
+    <listitem>
+      <para>
+        Print more info
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--debug</command></term>
+    <listitem>
+      <para>
+        Show the curl commands and results of all http queries
+      regardless of result status.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--info</command></term>
+    <listitem>
+      <para>
+        Show the curl commands and results  of all http
+      queries which return an error.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>-q, --quiet</command></term>
+    <listitem>
+      <para>
+        Suppress status output
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>-A AUTH, --auth=AUTH URL</command></term>
+    <listitem>
+      <para>
+        for obtaining an auth token
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>-V AUTH_VERSION, --auth-version=AUTH_VERSION</command></term>
+    <listitem>
+      <para>
+      Specify a version for authentication. Defaults to 1.0.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>-U USER, --user=USER</command></term>
+    <listitem>
+      <para>
+        User name for obtaining an auth token.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>-K KEY, --key=KEY</command></term>
+    <listitem>
+      <para>
+        Key for obtaining an auth token.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>-R RETRIES, --retries=RETRIES</command></term>
+    <listitem>
+      <para>
+      The number of times to retry a failed connection.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-username=&lt;auth-user-name&gt;</command></term>
+    <listitem>
+      <para>
+      Openstack username. Defaults to <code>env[OS_USERNAME]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-password=&lt;auth-password&gt;</command></term>
+    <listitem>
+      <para>
+      Openstack password. Defaults to <code>env[OS_PASSWORD]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-tenant-id=&lt;auth-tenant-id&gt;</command></term>
+    <listitem>
+      <para>
+      OpenStack tenant ID. Defaults to <code>env[OS_TENANT_ID]</code>
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-tenant-name=&lt;auth-tenant-name&gt;</command></term>
+    <listitem>
+      <para>
+      Openstack tenant name. Defaults to
+      <code>env[OS_TENANT_NAME]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-auth-url=&lt;auth-url&gt;</command></term>
+    <listitem>
+      <para>
+      Openstack auth URL. Defaults to <code>env[OS_AUTH_URL]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-auth-token=&lt;auth-token&gt;</command></term>
+    <listitem>
+      <para>
+      Openstack token. Defaults to <code>env[OS_AUTH_TOKEN]</code>. Used
+      with --os-storage-url to bypass the usual
+      username/password authentication.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-storage-url=&lt;storage-url&gt;</command></term>
+    <listitem>
+      <para>
+      Openstack storage URL. Defaults to
+      <code>env[OS_STORAGE_URL]</code>. Overrides the storage url
+      returned during auth. Will bypass authentication when
+      used with --os-auth-token.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-region-name=&lt;region-name&gt;</command></term>
+    <listitem>
+      <para>
+      Openstack region name. Defaults to <code>env[OS_REGION_NAME]</code>
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-service-type=&lt;service-type&gt;</command></term>
+    <listitem>
+      <para>
+      Openstack Service type. Defaults to
+      <code>env[OS_SERVICE_TYPE]</code>
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-endpoint-type=&lt;endpoint-type&gt;</command></term>
+    <listitem>
+      <para>
+      Openstack Endpoint type. Defaults to
+      <code>env[OS_ENDPOINT_TYPE]</code>
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-cacert=&lt;ca-certificate&gt;</command></term>
+    <listitem>
+      <para>
+      Specify a CA bundle file to use in verifying a TLS
+      (https) server certificate. Defaults to <code>env[OS_CACERT]</code>
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--insecure</command></term>
+    <listitem>
+      <para>
+        Allow swiftclient to access insecure keystone server.
+      The keystone's certificate will not be verified.
+      Defaults to <code>env[SWIFTCLIENT_INSECURE]</code> (set to 'true'
+      to enable).
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--no-ssl-compression</command></term>
+    <listitem>
+      <para>
+        Disable SSL compression when using https. This may
+      increase performance.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
     </section>
     <section xml:id="swiftclient_subcommand_delete">
         <title>swift delete command</title>
         <screen><computeroutput>Usage: Delete a container or objects within a container
-
-Positional arguments:
-  &lt;container>           Name of container to delete from
-  [object]              Name of object to delete. Specify multiple times
-                        for multiple objects
-
-Optional arguments:
-  --all                 Delete all containers and objects
-  --leave-segments      Do not delete segments of manifest objects
-  --object-threads &lt;threads>
-                        Number of threads to use for deleting objects
-  --container-threads &lt;threads>
-                        Number of threads to use for deleting containers
-
-Options:
-  --version             show program's version number and exit
-  -h, --help            show this help message and exit
-  -s, --snet            Use SERVICENET internal network
-  -v, --verbose         Print more info
-  --debug               Show the curl commands and results of all http queries
-                        regardless of result status.
-  --info                Show the curl commands and results  of all http
-                        queries which return an error.
-  -q, --quiet           Suppress status output
-  -A AUTH, --auth=AUTH  URL for obtaining an auth token
-  -V AUTH_VERSION, --auth-version=AUTH_VERSION
-                        Specify a version for authentication. Defaults to 1.0.
-  -U USER, --user=USER  User name for obtaining an auth token.
-  -K KEY, --key=KEY     Key for obtaining an auth token.
-  -R RETRIES, --retries=RETRIES
-                        The number of times to retry a failed connection.
-  --os-username=&lt;auth-user-name>
-                        Openstack username. Defaults to env[OS_USERNAME].
-  --os-password=&lt;auth-password>
-                        Openstack password. Defaults to env[OS_PASSWORD].
-  --os-tenant-id=&lt;auth-tenant-id>
-                        OpenStack tenant ID. Defaults to env[OS_TENANT_ID]
-  --os-tenant-name=&lt;auth-tenant-name>
-                        Openstack tenant name. Defaults to
-                        env[OS_TENANT_NAME].
-  --os-auth-url=&lt;auth-url>
-                        Openstack auth URL. Defaults to env[OS_AUTH_URL].
-  --os-auth-token=&lt;auth-token>
-                        Openstack token. Defaults to env[OS_AUTH_TOKEN]. Used
-                        with --os-storage-url to bypass the usual
-                        username/password authentication.
-  --os-storage-url=&lt;storage-url>
-                        Openstack storage URL. Defaults to
-                        env[OS_STORAGE_URL]. Overrides the storage url
-                        returned during auth. Will bypass authentication when
-                        used with --os-auth-token.
-  --os-region-name=&lt;region-name>
-                        Openstack region name. Defaults to env[OS_REGION_NAME]
-  --os-service-type=&lt;service-type>
-                        Openstack Service type. Defaults to
-                        env[OS_SERVICE_TYPE]
-  --os-endpoint-type=&lt;endpoint-type>
-                        Openstack Endpoint type. Defaults to
-                        env[OS_ENDPOINT_TYPE]
-  --os-cacert=&lt;ca-certificate>
-                        Specify a CA bundle file to use in verifying a TLS
-                        (https) server certificate. Defaults to env[OS_CACERT]
-  --insecure            Allow swiftclient to access insecure keystone server.
-                        The keystone's certificate will not be verified.
-                        Defaults to env[SWIFTCLIENT_INSECURE] (set to 'true'
-                        to enable).
-  --no-ssl-compression  Disable SSL compression when using https. This may
-                        increase performance.
-  -a, --all             Indicates that you really want to delete everything in
-                        the account
-  --leave-segments      Indicates that you want the segments of
-                        manifestobjects left alone
-  --object-threads=OBJECT_THREADS
-                        Number of threads to use for deleting objects
-  --container-threads=CONTAINER_THREADS
-                        Number of threads to use for deleting containers
-
-</computeroutput></screen>
+        </computeroutput></screen>
+        <para>
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;container&gt;</command></term>
+    <listitem>
+      <para>
+        Name of container to delete from
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>[object]</command></term>
+    <listitem>
+      <para>
+        Name of object to delete. Specify multiple times
+      for multiple objects
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--all</command></term>
+    <listitem>
+      <para>
+        Delete all containers and objects
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--leave-segments</command></term>
+    <listitem>
+      <para>
+        Do not delete segments of manifest objects
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--object-threads &lt;threads&gt;</command></term>
+    <listitem>
+      <para>
+      Number of threads to use for deleting objects
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--container-threads &lt;threads&gt;</command></term>
+    <listitem>
+      <para>
+      Number of threads to use for deleting containers
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
     </section>
     <section xml:id="swiftclient_subcommand_download">
         <title>swift download command</title>
         <screen><computeroutput>Usage: Download objects from containers
-
-Positional arguments:
-  &lt;container>           Name of container to download from. To download a
-                        whole account, omit this and specify --all.
-  &lt;object>              Name of object to download. Specify multiple times
-                        for multiple objects. Omit this to download all
-                        objects from the container.
-
-Optional arguments:
-  --all                 Indicates that you really want to download
-                        everything in the account
-  --marker              Marker to use when starting a container or account
-                        download
-  --prefix &lt;prefix>     Only download items beginning with &lt;prefix>
-  --output &lt;out_file>   For a single file download, stream the output to
-                        &lt;out_file>. Specifying "-" as &lt;out_file> will
-                        redirect to stdout
-  --object-threads &lt;threads>
-                        Number of threads to use for downloading objects
-  --container-threads &lt;threads>
-                        Number of threads to use for deleting containers
-  --no-download         Perform download(s), but don't actually write anything
-                        to disk
-  --header &lt;header_name:header_value>
-                        Adds a customized request header to the query, like
-                        "Range" or "If-Match". This argument is repeatable.
-                        Example --header "content-type:text/plain"
-
-Options:
-  --version             show program's version number and exit
-  -h, --help            show this help message and exit
-  -s, --snet            Use SERVICENET internal network
-  -v, --verbose         Print more info
-  --debug               Show the curl commands and results of all http queries
-                        regardless of result status.
-  --info                Show the curl commands and results  of all http
-                        queries which return an error.
-  -q, --quiet           Suppress status output
-  -A AUTH, --auth=AUTH  URL for obtaining an auth token
-  -V AUTH_VERSION, --auth-version=AUTH_VERSION
-                        Specify a version for authentication. Defaults to 1.0.
-  -U USER, --user=USER  User name for obtaining an auth token.
-  -K KEY, --key=KEY     Key for obtaining an auth token.
-  -R RETRIES, --retries=RETRIES
-                        The number of times to retry a failed connection.
-  --os-username=&lt;auth-user-name>
-                        Openstack username. Defaults to env[OS_USERNAME].
-  --os-password=&lt;auth-password>
-                        Openstack password. Defaults to env[OS_PASSWORD].
-  --os-tenant-id=&lt;auth-tenant-id>
-                        OpenStack tenant ID. Defaults to env[OS_TENANT_ID]
-  --os-tenant-name=&lt;auth-tenant-name>
-                        Openstack tenant name. Defaults to
-                        env[OS_TENANT_NAME].
-  --os-auth-url=&lt;auth-url>
-                        Openstack auth URL. Defaults to env[OS_AUTH_URL].
-  --os-auth-token=&lt;auth-token>
-                        Openstack token. Defaults to env[OS_AUTH_TOKEN]. Used
-                        with --os-storage-url to bypass the usual
-                        username/password authentication.
-  --os-storage-url=&lt;storage-url>
-                        Openstack storage URL. Defaults to
-                        env[OS_STORAGE_URL]. Overrides the storage url
-                        returned during auth. Will bypass authentication when
-                        used with --os-auth-token.
-  --os-region-name=&lt;region-name>
-                        Openstack region name. Defaults to env[OS_REGION_NAME]
-  --os-service-type=&lt;service-type>
-                        Openstack Service type. Defaults to
-                        env[OS_SERVICE_TYPE]
-  --os-endpoint-type=&lt;endpoint-type>
-                        Openstack Endpoint type. Defaults to
-                        env[OS_ENDPOINT_TYPE]
-  --os-cacert=&lt;ca-certificate>
-                        Specify a CA bundle file to use in verifying a TLS
-                        (https) server certificate. Defaults to env[OS_CACERT]
-  --insecure            Allow swiftclient to access insecure keystone server.
-                        The keystone's certificate will not be verified.
-                        Defaults to env[SWIFTCLIENT_INSECURE] (set to 'true'
-                        to enable).
-  --no-ssl-compression  Disable SSL compression when using https. This may
-                        increase performance.
-  -a, --all             Indicates that you really want to download everything
-                        in the account
-  -m MARKER, --marker=MARKER
-                        Marker to use when starting a container or account
-                        download
-  -p PREFIX, --prefix=PREFIX
-                        Will only download items beginning with the prefix
-  -o OUT_FILE, --output=OUT_FILE
-                        For a single file download, stream the output to an
-                        alternate location
-  --object-threads=OBJECT_THREADS
-                        Number of threads to use for downloading objects
-  --container-threads=CONTAINER_THREADS
-                        Number of threads to use for listing containers
-  --no-download         Perform download(s), but don't actually write anything
-                        to disk
-  -H HEADER, --header=HEADER
-                        Specify a request header, as --header NAME:VALUE. Adds
-                        a customized request header to the query, like "Range"
-                        or "If-Match". This argument is repeatable. Example
-                        --header "content-type:text/plain"
-
-</computeroutput></screen>
+        </computeroutput></screen>
+        <para>
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;container&gt;</command></term>
+    <listitem>
+      <para>
+        Name of container to download from. To download a
+      whole account, omit this and specify --all.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;object&gt;</command></term>
+    <listitem>
+      <para>
+        Name of object to download. Specify multiple times
+      for multiple objects. Omit this to download all
+      objects from the container.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--all</command></term>
+    <listitem>
+      <para>
+        Indicates that you really want to download
+      everything in the account
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--marker</command></term>
+    <listitem>
+      <para>
+        Marker to use when starting a container or account
+      download
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--prefix &lt;prefix&gt;</command></term>
+    <listitem>
+      <para>
+        Only download items beginning with &lt;prefix&gt;
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--output &lt;out_file&gt;</command></term>
+    <listitem>
+      <para>
+        For a single file download, stream the output to
+      &lt;out_file&gt;. Specifying "-" as &lt;out_file&gt; will
+      redirect to stdout
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--object-threads &lt;threads&gt;</command></term>
+    <listitem>
+      <para>
+      Number of threads to use for downloading objects
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--container-threads &lt;threads&gt;</command></term>
+    <listitem>
+      <para>
+      Number of threads to use for deleting containers
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--no-download</command></term>
+    <listitem>
+      <para>
+        Perform download(s), but don't actually write anything
+      to disk
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--header &lt;header_name:header_value&gt;</command></term>
+    <listitem>
+      <para>
+      Adds a customized request header to the query, like
+      "Range" or "If-Match". This argument is repeatable.
+      Example --header "content-type:text/plain"
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
     </section>
     <section xml:id="swiftclient_subcommand_list">
         <title>swift list command</title>
         <screen><computeroutput>Usage: Lists the containers for the account or the objects for a container
-
-Positional arguments:
-  [container]           Name of container to list object in
-
-Optional arguments:
-  --long                Long listing format, similar to ls -l
-  --lh                  Report sizes in human readable format similar to ls -lh
-  --totals              Used with -l or --ls, only report totals
-  --prefix              Only list items beginning with the prefix
-  --delimiter           Roll up items with the given delimiter. For containers
-                        only. See OpenStack Swift API documentation for what
-                        this means.
-
-Options:
-  --version             show program's version number and exit
-  -h, --help            show this help message and exit
-  -s, --snet            Use SERVICENET internal network
-  -v, --verbose         Print more info
-  --debug               Show the curl commands and results of all http queries
-                        regardless of result status.
-  --info                Show the curl commands and results  of all http
-                        queries which return an error.
-  -q, --quiet           Suppress status output
-  -A AUTH, --auth=AUTH  URL for obtaining an auth token
-  -V AUTH_VERSION, --auth-version=AUTH_VERSION
-                        Specify a version for authentication. Defaults to 1.0.
-  -U USER, --user=USER  User name for obtaining an auth token.
-  -K KEY, --key=KEY     Key for obtaining an auth token.
-  -R RETRIES, --retries=RETRIES
-                        The number of times to retry a failed connection.
-  --os-username=&lt;auth-user-name>
-                        Openstack username. Defaults to env[OS_USERNAME].
-  --os-password=&lt;auth-password>
-                        Openstack password. Defaults to env[OS_PASSWORD].
-  --os-tenant-id=&lt;auth-tenant-id>
-                        OpenStack tenant ID. Defaults to env[OS_TENANT_ID]
-  --os-tenant-name=&lt;auth-tenant-name>
-                        Openstack tenant name. Defaults to
-                        env[OS_TENANT_NAME].
-  --os-auth-url=&lt;auth-url>
-                        Openstack auth URL. Defaults to env[OS_AUTH_URL].
-  --os-auth-token=&lt;auth-token>
-                        Openstack token. Defaults to env[OS_AUTH_TOKEN]. Used
-                        with --os-storage-url to bypass the usual
-                        username/password authentication.
-  --os-storage-url=&lt;storage-url>
-                        Openstack storage URL. Defaults to
-                        env[OS_STORAGE_URL]. Overrides the storage url
-                        returned during auth. Will bypass authentication when
-                        used with --os-auth-token.
-  --os-region-name=&lt;region-name>
-                        Openstack region name. Defaults to env[OS_REGION_NAME]
-  --os-service-type=&lt;service-type>
-                        Openstack Service type. Defaults to
-                        env[OS_SERVICE_TYPE]
-  --os-endpoint-type=&lt;endpoint-type>
-                        Openstack Endpoint type. Defaults to
-                        env[OS_ENDPOINT_TYPE]
-  --os-cacert=&lt;ca-certificate>
-                        Specify a CA bundle file to use in verifying a TLS
-                        (https) server certificate. Defaults to env[OS_CACERT]
-  --insecure            Allow swiftclient to access insecure keystone server.
-                        The keystone's certificate will not be verified.
-                        Defaults to env[SWIFTCLIENT_INSECURE] (set to 'true'
-                        to enable).
-  --no-ssl-compression  Disable SSL compression when using https. This may
-                        increase performance.
-  -l, --long            Long listing similar to ls -l command
-  --lh                  report sizes as human similar to ls -lh switch, but -h
-                        taken
-  -t, --totals          used with -l or --ls, only report totals
-  -p PREFIX, --prefix=PREFIX
-                        Will only list items beginning with the prefix
-  -d DELIMITER, --delimiter=DELIMITER
-                        Will roll up items with the given delimiter (see
-                        OpenStack Swift API documentation for what this means)
-
-</computeroutput></screen>
+        </computeroutput></screen>
+        <para>
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>[container]</command></term>
+    <listitem>
+      <para>
+        Name of container to list object in
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--long</command></term>
+    <listitem>
+      <para>
+        Long listing format, similar to ls -l
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--lh</command></term>
+    <listitem>
+      <para>
+        Report sizes in human readable format similar to ls -lh
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--totals</command></term>
+    <listitem>
+      <para>
+        Used with -l or --ls, only report totals
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--prefix</command></term>
+    <listitem>
+      <para>
+        Only list items beginning with the prefix
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--delimiter</command></term>
+    <listitem>
+      <para>
+        Roll up items with the given delimiter. For containers
+      only. See OpenStack Swift API documentation for what
+      this means.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
     </section>
     <section xml:id="swiftclient_subcommand_post">
         <title>swift post command</title>
         <screen><computeroutput>Usage: Updates meta information for the account, container, or object.
 If the container is not found, it will be created automatically.
-
-Positional arguments:
-  &lt;container>           Name of container to post to
-  [object]              Name of object to post. Specify multiple times
-                        for multiple objects
-
-Optional arguments:
-  --read-acl &lt;acl>      Read ACL for containers. Quick summary of ACL syntax:
-                        .r:*, .r:-.example.com, .r:www.example.com, account1,
-                        account2:user2
-  --write-acl &lt;acl>     Write ACL for containers. Quick summary of ACL syntax:
-                        account1 account2:user2
-  --sync-to &lt;sync-to>   Sync To for containers, for multi-cluster replication
-  --sync-key &lt;sync-key> Sync Key for containers, for multi-cluster replication
-  --meta &lt;name:value>   Sets a meta data item. This option may be repeated.
-                        Example: -m Color:Blue -m Size:Large
-  --header &lt;header>     Set request headers. This option may be repeated.
-                        Example -H "content-type:text/plain"
-
-Options:
-  --version             show program's version number and exit
-  -h, --help            show this help message and exit
-  -s, --snet            Use SERVICENET internal network
-  -v, --verbose         Print more info
-  --debug               Show the curl commands and results of all http queries
-                        regardless of result status.
-  --info                Show the curl commands and results  of all http
-                        queries which return an error.
-  -q, --quiet           Suppress status output
-  -A AUTH, --auth=AUTH  URL for obtaining an auth token
-  -V AUTH_VERSION, --auth-version=AUTH_VERSION
-                        Specify a version for authentication. Defaults to 1.0.
-  -U USER, --user=USER  User name for obtaining an auth token.
-  -K KEY, --key=KEY     Key for obtaining an auth token.
-  -R RETRIES, --retries=RETRIES
-                        The number of times to retry a failed connection.
-  --os-username=&lt;auth-user-name>
-                        Openstack username. Defaults to env[OS_USERNAME].
-  --os-password=&lt;auth-password>
-                        Openstack password. Defaults to env[OS_PASSWORD].
-  --os-tenant-id=&lt;auth-tenant-id>
-                        OpenStack tenant ID. Defaults to env[OS_TENANT_ID]
-  --os-tenant-name=&lt;auth-tenant-name>
-                        Openstack tenant name. Defaults to
-                        env[OS_TENANT_NAME].
-  --os-auth-url=&lt;auth-url>
-                        Openstack auth URL. Defaults to env[OS_AUTH_URL].
-  --os-auth-token=&lt;auth-token>
-                        Openstack token. Defaults to env[OS_AUTH_TOKEN]. Used
-                        with --os-storage-url to bypass the usual
-                        username/password authentication.
-  --os-storage-url=&lt;storage-url>
-                        Openstack storage URL. Defaults to
-                        env[OS_STORAGE_URL]. Overrides the storage url
-                        returned during auth. Will bypass authentication when
-                        used with --os-auth-token.
-  --os-region-name=&lt;region-name>
-                        Openstack region name. Defaults to env[OS_REGION_NAME]
-  --os-service-type=&lt;service-type>
-                        Openstack Service type. Defaults to
-                        env[OS_SERVICE_TYPE]
-  --os-endpoint-type=&lt;endpoint-type>
-                        Openstack Endpoint type. Defaults to
-                        env[OS_ENDPOINT_TYPE]
-  --os-cacert=&lt;ca-certificate>
-                        Specify a CA bundle file to use in verifying a TLS
-                        (https) server certificate. Defaults to env[OS_CACERT]
-  --insecure            Allow swiftclient to access insecure keystone server.
-                        The keystone's certificate will not be verified.
-                        Defaults to env[SWIFTCLIENT_INSECURE] (set to 'true'
-                        to enable).
-  --no-ssl-compression  Disable SSL compression when using https. This may
-                        increase performance.
-  -r READ_ACL, --read-acl=READ_ACL
-                        Sets the Read ACL for containers. Quick summary of ACL
-                        syntax: .r:*, .r:-.example.com, .r:www.example.com,
-                        account1, account2:user2
-  -w WRITE_ACL, --write-acl=WRITE_ACL
-                        Sets the Write ACL for containers. Quick summary of
-                        ACL syntax: account1, account2:user2
-  -t SYNC_TO, --sync-to=SYNC_TO
-                        Sets the Sync To for containers, for multi-cluster
-                        replication.
-  -k SYNC_KEY, --sync-key=SYNC_KEY
-                        Sets the Sync Key for containers, for multi-cluster
-                        replication.
-  -m META, --meta=META  Sets a meta data item with the syntax name:value. This
-                        option may be repeated. Example: -m Color:Blue -m
-                        Size:Large
-  -H HEADER, --header=HEADER
-                        Set request headers with the syntax header:value.
-                        This option may be repeated. Example -H "content-
-                        type:text/plain" -H "Content-Length: 4000"
-
-</computeroutput></screen>
+        </computeroutput></screen>
+        <para>
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;container&gt;</command></term>
+    <listitem>
+      <para>
+        Name of container to post to
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>[object]</command></term>
+    <listitem>
+      <para>
+        Name of object to post. Specify multiple times
+      for multiple objects
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--read-acl &lt;acl&gt;</command></term>
+    <listitem>
+      <para>
+        Read ACL for containers. Quick summary of ACL syntax:
+      .r:*, .r:-.example.com, .r:www.example.com, account1,
+      account2:user2
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--write-acl &lt;acl&gt;</command></term>
+    <listitem>
+      <para>
+        Write ACL for containers. Quick summary of ACL syntax:
+      account1 account2:user2
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--sync-to &lt;sync-to&gt;</command></term>
+    <listitem>
+      <para>
+        Sync To for containers, for multi-cluster replication
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--sync-key &lt;sync-key&gt;</command></term>
+    <listitem>
+      <para>
+        Sync Key for containers, for multi-cluster replication
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--meta &lt;name:value&gt;</command></term>
+    <listitem>
+      <para>
+        Sets a meta data item. This option may be repeated.
+      Example: -m Color:Blue -m Size:Large
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--header &lt;header&gt;</command></term>
+    <listitem>
+      <para>
+        Set request headers. This option may be repeated.
+      Example -H "content-type:text/plain"
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
     </section>
     <section xml:id="swiftclient_subcommand_stat">
         <title>swift stat command</title>
         <screen><computeroutput>Usage: Displays information for the account, container, or object
-
-Positional arguments:
-  &lt;container>           Name of container to stat from
-  &lt;object>              Name of object to stat. Specify multiple times
-                        for multiple objects
-
-Optional arguments:
-  --lh                  Report sizes in human readable format similar to ls -lh
-
-Options:
-  --version             show program's version number and exit
-  -h, --help            show this help message and exit
-  -s, --snet            Use SERVICENET internal network
-  -v, --verbose         Print more info
-  --debug               Show the curl commands and results of all http queries
-                        regardless of result status.
-  --info                Show the curl commands and results  of all http
-                        queries which return an error.
-  -q, --quiet           Suppress status output
-  -A AUTH, --auth=AUTH  URL for obtaining an auth token
-  -V AUTH_VERSION, --auth-version=AUTH_VERSION
-                        Specify a version for authentication. Defaults to 1.0.
-  -U USER, --user=USER  User name for obtaining an auth token.
-  -K KEY, --key=KEY     Key for obtaining an auth token.
-  -R RETRIES, --retries=RETRIES
-                        The number of times to retry a failed connection.
-  --os-username=&lt;auth-user-name>
-                        Openstack username. Defaults to env[OS_USERNAME].
-  --os-password=&lt;auth-password>
-                        Openstack password. Defaults to env[OS_PASSWORD].
-  --os-tenant-id=&lt;auth-tenant-id>
-                        OpenStack tenant ID. Defaults to env[OS_TENANT_ID]
-  --os-tenant-name=&lt;auth-tenant-name>
-                        Openstack tenant name. Defaults to
-                        env[OS_TENANT_NAME].
-  --os-auth-url=&lt;auth-url>
-                        Openstack auth URL. Defaults to env[OS_AUTH_URL].
-  --os-auth-token=&lt;auth-token>
-                        Openstack token. Defaults to env[OS_AUTH_TOKEN]. Used
-                        with --os-storage-url to bypass the usual
-                        username/password authentication.
-  --os-storage-url=&lt;storage-url>
-                        Openstack storage URL. Defaults to
-                        env[OS_STORAGE_URL]. Overrides the storage url
-                        returned during auth. Will bypass authentication when
-                        used with --os-auth-token.
-  --os-region-name=&lt;region-name>
-                        Openstack region name. Defaults to env[OS_REGION_NAME]
-  --os-service-type=&lt;service-type>
-                        Openstack Service type. Defaults to
-                        env[OS_SERVICE_TYPE]
-  --os-endpoint-type=&lt;endpoint-type>
-                        Openstack Endpoint type. Defaults to
-                        env[OS_ENDPOINT_TYPE]
-  --os-cacert=&lt;ca-certificate>
-                        Specify a CA bundle file to use in verifying a TLS
-                        (https) server certificate. Defaults to env[OS_CACERT]
-  --insecure            Allow swiftclient to access insecure keystone server.
-                        The keystone's certificate will not be verified.
-                        Defaults to env[SWIFTCLIENT_INSECURE] (set to 'true'
-                        to enable).
-  --no-ssl-compression  Disable SSL compression when using https. This may
-                        increase performance.
-  --lh                  report totals like 'list --lh'
-
-</computeroutput></screen>
+        </computeroutput></screen>
+        <para>
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;container&gt;</command></term>
+    <listitem>
+      <para>
+        Name of container to stat from
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;object&gt;</command></term>
+    <listitem>
+      <para>
+        Name of object to stat. Specify multiple times
+      for multiple objects
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--lh</command></term>
+    <listitem>
+      <para>
+        Report sizes in human readable format similar to ls -lh
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
     </section>
     <section xml:id="swiftclient_subcommand_upload">
         <title>swift upload command</title>
         <screen><computeroutput>Usage: Uploads specified files and directories to the given container
-
-Positional arguments:
-  &lt;container>           Name of container to upload to
-  &lt;file_or_directory>   Name of file or directory to upload. Specify multiple
-                        times for multiple uploads
-
-Optional arguments:
-  --changed             Only upload files that have changed since the last
-                        upload
-  --segment-size &lt;size> Upload files in segments no larger than &lt;size> and
-                        then create a "manifest" file that will download all
-                        the segments as if it were the original file
-  --segment-container &lt;container>
-                        Upload the segments into the specified container. If
-                        not specified, the segments will be uploaded to a
-                        &lt;container>_segments container so as to not pollute the
-                        main &lt;container> listings.
-  --leave-segments      Indicates that you want the older segments of manifest
-                        objects left alone (in the case of overwrites)
-  --object-threads &lt;threads>
-                        Number of threads to use for uploading full objects.
-                        Default is 10.
-  --segment-threads &lt;threads>
-                        Number of threads to use for uploading object segments.
-                        Default is 10.
-  --header &lt;header>     Set request headers with the syntax header:value.
-                        This option may be repeated.
-                        Example -H "content-type:text/plain".
-  --use-slo             When used in conjunction with --segment-size will
-                        create a Static Large Object instead of the default
-                        Dynamic Large Object.
-  --object-name &lt;object-name>
-                        Upload file and name object to &lt;object-name> or upload
-                        dir and use &lt;object-name> as object prefix instead of
-                        folder name
-
-Options:
-  --version             show program's version number and exit
-  -h, --help            show this help message and exit
-  -s, --snet            Use SERVICENET internal network
-  -v, --verbose         Print more info
-  --debug               Show the curl commands and results of all http queries
-                        regardless of result status.
-  --info                Show the curl commands and results  of all http
-                        queries which return an error.
-  -q, --quiet           Suppress status output
-  -A AUTH, --auth=AUTH  URL for obtaining an auth token
-  -V AUTH_VERSION, --auth-version=AUTH_VERSION
-                        Specify a version for authentication. Defaults to 1.0.
-  -U USER, --user=USER  User name for obtaining an auth token.
-  -K KEY, --key=KEY     Key for obtaining an auth token.
-  -R RETRIES, --retries=RETRIES
-                        The number of times to retry a failed connection.
-  --os-username=&lt;auth-user-name>
-                        Openstack username. Defaults to env[OS_USERNAME].
-  --os-password=&lt;auth-password>
-                        Openstack password. Defaults to env[OS_PASSWORD].
-  --os-tenant-id=&lt;auth-tenant-id>
-                        OpenStack tenant ID. Defaults to env[OS_TENANT_ID]
-  --os-tenant-name=&lt;auth-tenant-name>
-                        Openstack tenant name. Defaults to
-                        env[OS_TENANT_NAME].
-  --os-auth-url=&lt;auth-url>
-                        Openstack auth URL. Defaults to env[OS_AUTH_URL].
-  --os-auth-token=&lt;auth-token>
-                        Openstack token. Defaults to env[OS_AUTH_TOKEN]. Used
-                        with --os-storage-url to bypass the usual
-                        username/password authentication.
-  --os-storage-url=&lt;storage-url>
-                        Openstack storage URL. Defaults to
-                        env[OS_STORAGE_URL]. Overrides the storage url
-                        returned during auth. Will bypass authentication when
-                        used with --os-auth-token.
-  --os-region-name=&lt;region-name>
-                        Openstack region name. Defaults to env[OS_REGION_NAME]
-  --os-service-type=&lt;service-type>
-                        Openstack Service type. Defaults to
-                        env[OS_SERVICE_TYPE]
-  --os-endpoint-type=&lt;endpoint-type>
-                        Openstack Endpoint type. Defaults to
-                        env[OS_ENDPOINT_TYPE]
-  --os-cacert=&lt;ca-certificate>
-                        Specify a CA bundle file to use in verifying a TLS
-                        (https) server certificate. Defaults to env[OS_CACERT]
-  --insecure            Allow swiftclient to access insecure keystone server.
-                        The keystone's certificate will not be verified.
-                        Defaults to env[SWIFTCLIENT_INSECURE] (set to 'true'
-                        to enable).
-  --no-ssl-compression  Disable SSL compression when using https. This may
-                        increase performance.
-  -c, --changed         Will only upload files that have changed since the
-                        last upload
-  -S SEGMENT_SIZE, --segment-size=SEGMENT_SIZE
-                        Will upload files in segments no larger than &lt;size>
-                        and then create a "manifest" file that will download
-                        all the segments as if it were the original file.
-  -C SEGMENT_CONTAINER, --segment-container=SEGMENT_CONTAINER
-                        Will upload the segments into the specified
-                        container.If not specified, the segments will be
-                        uploaded to &lt;container>_segments container so as to
-                        not pollute the main &lt;container> listings.
-  --leave-segments      Indicates that you want the older segments of manifest
-                        objects left alone (in the case of overwrites)
-  --object-threads=OBJECT_THREADS
-                        Number of threads to use for uploading full objects
-  --segment-threads=SEGMENT_THREADS
-                        Number of threads to use for uploading object segments
-  -H HEADER, --header=HEADER
-                        Set request headers with the syntax header:value.
-                        This option may be repeated. Example -H "content-
-                        type:text/plain" -H "Content-Length: 4000"
-  --use-slo             When used in conjunction with --segment-size will
-                        create a Static Large Object instead of the default
-                        Dynamic Large Object.
-  --object-name=OBJECT_NAME
-                        Upload file and name object to the name specified
-
-</computeroutput></screen>
+        </computeroutput></screen>
+        <para>
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;container&gt;</command></term>
+    <listitem>
+      <para>
+        Name of container to upload to
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;file_or_directory&gt;</command></term>
+    <listitem>
+      <para>
+        Name of file or directory to upload. Specify multiple
+      times for multiple uploads
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--changed</command></term>
+    <listitem>
+      <para>
+        Only upload files that have changed since the last
+      upload
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--segment-size &lt;size&gt;</command></term>
+    <listitem>
+      <para>
+        Upload files in segments no larger than &lt;size&gt; and
+      then create a "manifest" file that will download all
+      the segments as if it were the original file
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--segment-container &lt;container&gt;</command></term>
+    <listitem>
+      <para>
+      Upload the segments into the specified container. If
+      not specified, the segments will be uploaded to a
+      &lt;container&gt;_segments container so as to not pollute the
+      main &lt;container&gt; listings.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--leave-segments</command></term>
+    <listitem>
+      <para>
+        Indicates that you want the older segments of manifest
+      objects left alone (in the case of overwrites)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--object-threads &lt;threads&gt;</command></term>
+    <listitem>
+      <para>
+      Number of threads to use for uploading full objects.
+      Default is 10.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--segment-threads &lt;threads&gt;</command></term>
+    <listitem>
+      <para>
+      Number of threads to use for uploading object segments.
+      Default is 10.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--header &lt;header&gt;</command></term>
+    <listitem>
+      <para>
+        Set request headers with the syntax header:value.
+      This option may be repeated.
+      Example -H "content-type:text/plain".
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--use-slo</command></term>
+    <listitem>
+      <para>
+        When used in conjunction with --segment-size will
+      create a Static Large Object instead of the default
+      Dynamic Large Object.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--object-name &lt;object-name&gt;</command></term>
+    <listitem>
+      <para>
+      Upload file and name object to &lt;object-name&gt; or upload
+      dir and use &lt;object-name&gt; as object prefix instead of
+      folder name
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
     </section>
 </section>
