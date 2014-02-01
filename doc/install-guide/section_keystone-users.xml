@@ -48,11 +48,17 @@
 
   <screen><prompt>#</prompt> <userinput>keystone role-create --name=admin</userinput></screen>
 
-  <para>Finally, you have to add roles to users. Users always log in with
+  <para>Now, you have to add roles to users. Users always log in with
   a tenant, and roles are assigned to users within tenants. Add the
   <literal>admin</literal> role to the <literal>admin</literal> user when
   logging in with the <literal>admin</literal> tenant.</para>
 
   <screen><prompt>#</prompt> <userinput>keystone user-role-add --user=admin --tenant=admin --role=admin</userinput></screen>
+
+  <para>
+    Add the <literal>_member_</literal> role to the <literal>admin</literal>
+    user. This is a special role that grants access to the OpenStack Dashboard.
+  </para>
+  <screen><prompt>#</prompt> <userinput>keystone user-role-add --user=admin --tenant=admin --role=_member_</userinput></screen>
 
 </section>
