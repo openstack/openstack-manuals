@@ -65,10 +65,11 @@ directory to use the same tests that are done as part of our Jenkins
 gating jobs.
 
 If you like to run individual tests, run:
-* ``tox -e checkniceness`` - to run the niceness tests
-* ``tox -e checksyntax`` - to run syntax checks
-* ``tox -e checkdeletions`` - to check that no deleted files are referenced
-* ``tox -e checkbuild`` - to actually build the manual
+
+ * ``tox -e checkniceness`` - to run the niceness tests
+ * ``tox -e checksyntax`` - to run syntax checks
+ * ``tox -e checkdeletions`` - to check that no deleted files are referenced
+ * ``tox -e checkbuild`` - to actually build the manual
 
 tox will use the openstack-doc-tools package for execution of these
 tests.
