@@ -23,7 +23,7 @@
                 <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-swift-account openstack-swift-container \
   openstack-swift-object xfsprogs xinetd</userinput></screen>
                 <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-swift-account openstack-swift-container \
-  openstack-swift-object xfsprogs xinetd</userinput></screen></para>
+  openstack-swift-object python-xml xfsprogs xinetd</userinput></screen></para>
         </step>
         <step>
             <para>For each device on the node that you want to use for
@@ -35,26 +35,24 @@
                 touched in this step. The other 10 or 11 disks should
                 be partitioned with a single partition, then formatted
                 in XFS.</para>
-            <screen os="ubuntu;debian;rhel;centos;fedora"><prompt>#</prompt> <userinput>fdisk /dev/sdb</userinput>
+            <screen><prompt>#</prompt> <userinput>fdisk /dev/sdb</userinput>
 <prompt>#</prompt> <userinput>mkfs.xfs /dev/sdb1</userinput>
 <prompt>#</prompt> <userinput>echo "/dev/sdb1 /srv/node/sdb1 xfs noatime,nodiratime,nobarrier,logbufs=8 0 0" &gt;&gt; /etc/fstab</userinput>
 <prompt>#</prompt> <userinput>mkdir -p /srv/node/sdb1</userinput>
 <prompt>#</prompt> <userinput>mount /srv/node/sdb1</userinput>
-<prompt>#</prompt> <userinput>chown -R swift:swift /srv/node</userinput></screen>
-            <screen os="opensuse;sles"><prompt>#</prompt> <userinput>fdisk /dev/sdb</userinput>
-<prompt>#</prompt> <userinput>mkfs.xfs /dev/sdb1</userinput>
-<prompt>#</prompt> <userinput>echo "/dev/sdb1 /srv/node/sdb1 xfs noatime,nodiratime,nobarrier,logbufs=8 0 0" &gt;&gt; /etc/fstab</userinput>
-<prompt>#</prompt> <userinput>mkdir -p /srv/node/sdb1</userinput>
-<prompt>#</prompt> <userinput>mount /srv/node/sdb1</userinput>
-<prompt>#</prompt> <userinput>chown -R openstack-swift:openstack-swift /srv/node</userinput></screen>
+<phrase os="ubuntu;debian;rhel;centos;fedora"><prompt>#</prompt> <userinput>chown -R swift:swift /srv/node</userinput></phrase>
+<phrase os="opensuse;sles"><prompt>#</prompt> <userinput>chown -R openstack-swift:openstack-swift /srv/node</userinput></phrase></screen>
         </step>
         <step>
-            <para>Create <filename>/etc/rsyncd.conf</filename>:</para>
+            <para os="ubuntu;debian;rhel;centos;fedora">Create
+                <filename>/etc/rsyncd.conf</filename>:</para>
+            <para os="sles;opensuse">Replace the content of
+                <filename>/etc/rsyncd.conf</filename> with:</para>
             <programlisting language="ini" os="ubuntu;debian;rhel;centos;fedora">uid = swift
 gid = swift
 log file = /var/log/rsyncd.log
 pid file = /var/run/rsyncd.pid
-address = &lt;STORAGE_LOCAL_NET_IP&gt;
+address = <replaceable>STORAGE_LOCAL_NET_IP</replaceable>
 
 [account]
 max connections = 2
@@ -77,7 +75,7 @@ lock file = /var/lock/object.lock</programlisting>
 gid = openstack-swift
 log file = /var/log/rsyncd.log
 pid file = /var/run/rsyncd.pid
-address = &lt;STORAGE_LOCAL_NET_IP&gt;
+address = <replaceable>STORAGE_LOCAL_NET_IP</replaceable>
 
 [account]
 max connections = 2
@@ -103,7 +101,7 @@ lock file = /var/lock/object.lock</programlisting>
                     <literal>STORAGE_REPLICATION_NET_IP</literal>
                 instead of
                 <literal>STORAGE_LOCAL_NET_IP</literal>:</para>
-            <programlisting language="ini">address = &lt;STORAGE_REPLICATION_NET_IP&gt;</programlisting>
+            <programlisting language="ini">address = <replaceable>STORAGE_REPLICATION_NET_IP</replaceable></programlisting>
         </step>
         <step os="ubuntu;debian">
             <para>Edit the following line in
@@ -119,9 +117,14 @@ lock file = /var/lock/object.lock</programlisting>
             <para os="ubuntu;debian">Start the <systemitem
                 class="service">rsync</systemitem> service:</para>
             <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service rsync start</userinput></screen>
-            <para os="rhel;centos;fedora;sles;opensuse">Start the <systemitem
+            <para os="rhel;centos;fedora">Start the <systemitem
                 class="service">xinetd</systemitem> service:</para>
-            <screen os="rhel;centos;fedora;sles;opensuse"><prompt>#</prompt> <userinput>service xinetd start</userinput></screen>
+            <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>service xinetd start</userinput></screen>
+            <para os="sles;opensuse">Start the <systemitem
+                class="service">xinetd</systemitem> service and configure it to
+                start when the system boots:</para>
+            <screen os="sles;opensuse"><prompt>#</prompt> <userinput>service xinetd start</userinput>
+<prompt>#</prompt> <userinput>chkconfig xinetd on</userinput></screen>
             <note>
                 <para>The rsync service requires no authentication, so
                     run it on a local, private network.</para>
@@ -129,7 +132,7 @@ lock file = /var/lock/object.lock</programlisting>
         </step>
         <step>
             <para>Create the swift recon cache directory and set its
-                permissions.</para>
+                permissions:</para>
             <screen os="ubuntu;debian;rhel;centos;fedora"><prompt>#</prompt> <userinput>mkdir -p /var/swift/recon</userinput>
 <prompt>#</prompt> <userinput>chown -R swift:swift /var/swift/recon</userinput></screen>
             <screen os="opensuse;sles"><prompt>#</prompt> <userinput>mkdir -p /var/swift/recon</userinput>
