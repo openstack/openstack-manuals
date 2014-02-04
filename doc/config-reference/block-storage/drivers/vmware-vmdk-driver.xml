@@ -171,12 +171,13 @@
     <simplesect>
         <title>Data store selection</title>
         <para>When creating a volume, the driver chooses a data store
-            that has sufficient free space and has the highest
-                <literal>freespace/totalspace</literal> metric
-            value.</para>
-        <para>When a volume is attached to an instance, the driver
-            attempts to place the volume under the instance's ESX host
-            on a data store that is selected using the strategy
-            above.</para>
+            which is connected to maximum number of hosts. This is
+            meant to reduce the number of volume migrations while
+            attaching the volume to instances. The volume needs to be
+            migrated if the instance's ESX host cannot access the
+            data store containing the volume. In case of ties, the
+            data store with lowest space utilization is selected, where
+            space utilization is defined by the metric
+            <literal>(1 - freespace/totalspace)</literal>.</para>
     </simplesect>
 </section>
