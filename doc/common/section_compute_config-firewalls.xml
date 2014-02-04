@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="default_ports">
+    <title>Compute service node firewall requirements</title>
+    <para>
+        Virtual machine console connections, whether direct or
+        through a proxy, are received on ports <literal>5900</literal>
+        to <literal>5999</literal>.
+    </para>
+    <para>
+        You must configure the firewall on the service node to enable
+        network traffic on these ports. On the server that hosts the
+        Compute service, log in as <systemitem>root</systemitem> and
+        complete the following procedure:
+    </para>
+    <procedure>
+        <step>
+            <para>
+                Edit the <filename>/etc/sysconfig/iptables</filename>
+                file.
+            </para>
+        </step>
+        <step>
+            <para>
+                Add an INPUT rule that allows TCP traffic on ports
+                that range from <literal>5900</literal> to
+                <literal>5999</literal>:
+            </para>
+            <programlisting language="ini">-A INPUT -p tcp -m multiport --dports 5900:5999 -j ACCEPT</programlisting>
+            <para>
+                The new rule must appear before any INPUT rules that
+                REJECT traffic.
+            </para>
+        </step>
+        <step>
+            <para>
+                Save the changes to the
+                <filename>/etc/sysconfig/iptables</filename> file.
+            </para>
+        </step>
+        <step>
+            <para>
+                Restart the <systemitem>iptables</systemitem> service
+                to ensure that the change takes effect.
+            </para>
+<screen><prompt>$</prompt> <userinput>service iptables restart</userinput></screen>
+        </step>
+    </procedure>
+    <para>
+        The <systemitem>iptables</systemitem> firewall
+        now enables incoming connections to the Compute
+        services. Repeat this process for each Compute node.
+    </para>
+    </section>
