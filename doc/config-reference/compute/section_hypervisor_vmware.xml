@@ -178,7 +178,7 @@
       (DRS).</para>
     <section xml:id="VMWareVCDriver_configuration_options">
       <title>VMwareVCDriver configuration options</title>
-      <para>When you use the VMwareVCDriver (vCenter) with OpenStack Compute,
+      <para>When you use the VMwareVCDriver (vCenter versions 5.1 and later) with OpenStack Compute,
         add the following VMware-specific configuration options to the
           <filename>nova.conf</filename> file:</para>
 
@@ -190,11 +190,17 @@ host_ip=&lt;vCenter host IP&gt;
 host_username=&lt;vCenter username&gt;
 host_password=&lt;vCenter password&gt;
 cluster_name=&lt;vCenter cluster name&gt;
-datastore_regex=&lt;optional datastore regex&gt;
-wsdl_location=http://127.0.0.1:8080/vmware/SDK/wsdl/vim25/vimService.wsdl</programlisting>
+datastore_regex=&lt;optional datastore regex&gt;</programlisting>
       <note>
         <itemizedlist>
           <listitem>
+            <para>vSphere vCenter versions 5.0 and earlier: You must
+              specify the location of the WSDL files by adding the
+            <code>wsdl_location=http://127.0.0.1:8080/vmware/SDK/wsdl/vim25/vimService.wsdl</code>
+              setting to the above configuration. For more
+              information, see
+              <link linkend="VMWare_additional_config">vSphere 5.0 and
+              earlier additional set up</link>.</para>
             <para>Clusters: The vCenter driver can support multiple
               clusters. To use more than one cluster, simply add
               multiple <code>cluster_name</code> lines in
@@ -528,6 +534,11 @@ container_format=bare is_public=true \
         xlink:href="http://kb.vmware.com/selfservice/microsites/search.do?cmd=displayKC&amp;externalId=2010507"
         >known issue</link> with the WSDL that was resolved in later
       versions.</para>
+    <para>When setting the VMwareVCDriver configuration options, you
+      must include the <code>wsdl_location</code> option. For more
+      information, see
+      <link linkend="VMWareVCDriver_configuration_options">VMwareVCDriver
+      configuration options</link> above.</para>
     <procedure>
       <title>Mirror WSDL from vCenter (or ESXi)</title>
       <step>
