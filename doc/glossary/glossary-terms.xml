@@ -28,7 +28,7 @@
         <glossentry>
             <glossterm>absolute limit</glossterm>
             <glossdef>
-                <para>Impassable limits for nova VMs. Settings include
+                <para>Impassable limits for guest VMs. Settings include
                     total RAM size, maximum number of vCPUs, and
                     maximum disk size.</para>
             </glossdef>
@@ -52,9 +52,9 @@ Each entry in a typical ACL specifies a subject and an operation. For instance, 
             <glossterm>account</glossterm>
             <glossdef>
                 <para>The swift context of an account. Do not confuse
-                    with a user account from an identity service such
+                    with a user account from an authentication service such
                     as Active Directory, /etc/passwd, OpenLDAP,
-                    keystone, and so on.</para>
+                    OpenStack Identity Service, and so on.</para>
             </glossdef>
         </glossentry>
         <glossentry>
@@ -94,8 +94,8 @@ Each entry in a typical ACL specifies a subject and an operation. For instance, 
             <glossdef>
                 <para>A swift component that provides account services
                     such as list, create, modify, and audit. Do not
-                    confuse with keystone, OpenLDAP, or similar user
-                    account services.</para>
+                    confuse with OpenStack Identity Service, OpenLDAP, or
+                    similar user account services.</para>
             </glossdef>
         </glossentry>
         <glossentry>
@@ -144,7 +144,7 @@ Each entry in a typical ACL specifies a subject and an operation. For instance, 
             <glossterm>address pool</glossterm>
             <glossdef>
                 <para>A group of fixed and/or floating IP addresses
-                    that are assigned to a nova project and can be
+                    that are assigned to a project and can be
                     used by or assigned to the VM instances in a
                     project.</para>
             </glossdef>
@@ -162,8 +162,8 @@ Each entry in a typical ACL specifies a subject and an operation. For instance, 
         <glossentry>
             <glossterm>admin server</glossterm>
             <glossdef>
-                <para>In the context of keystone, the worker process
-                    that provides access to the admin API.</para>
+                <para>In the context of the Identity Service, the worker
+                    process that provides access to the admin API.</para>
             </glossdef>
         </glossentry>
         <glossentry>
@@ -171,8 +171,9 @@ Each entry in a typical ACL specifies a subject and an operation. For instance, 
                 (AMQP)</glossterm>
             <glossdef>
                 <para>The open standard messaging protocol used by
-                    nova for intra-service communications, provided by
-                    RabbitMQ (the default), Qpid, or ZeroMQ.</para>
+                OpenStack components for intra-service communications,
+                provided by RabbitMQ, Qpid, or
+                ZeroMQ.</para>
             </glossdef>
         </glossentry>
         <glossentry>
@@ -197,28 +198,28 @@ Each entry in a typical ACL specifies a subject and an operation. For instance, 
             <glossdef>
                 <para>The process of taking floating IP address from
                     the address pool so it can be associated with a
-                    fixed IP on a nova VM instance.</para>
+                    fixed IP on a guest VM instance.</para>
             </glossdef>
         </glossentry>
         <glossentry>
             <glossterm>Amazon Kernel Image (AKI)</glossterm>
             <glossdef>
                 <para>Both a VM container format and disk format.
-                    Supported by glance.</para>
+                    Supported by Image Service.</para>
             </glossdef>
         </glossentry>
         <glossentry>
             <glossterm>Amazon Machine Image (AMI)</glossterm>
             <glossdef>
                 <para>Both a VM container format and disk format.
-                    Supported by glance.</para>
+                    Supported by Image Service.</para>
             </glossdef>
         </glossentry>
         <glossentry>
             <glossterm>Amazon Ramdisk Image (ARI)</glossterm>
             <glossdef>
                 <para>Both a VM container format and disk format.
-                    Supported by glance.</para>
+                    Supported by Image Service.</para>
             </glossdef>
         </glossentry>
         <glossentry>
@@ -273,16 +274,17 @@ Each entry in a typical ACL specifies a subject and an operation. For instance, 
                 <para>The daemon, worker, or service that a client
                     communicates with to access an API. API endpoints
                     can provide any number of services such as
-                    keystone authentication, sales data, performance
-                    metrics, nova VM commands, census data, and so
+                    authentication, sales data, performance
+                    metrics, Compute VM commands, census data, and so
                     on.</para>
             </glossdef>
         </glossentry>
         <glossentry>
             <glossterm>API extension</glossterm>
             <glossdef>
-                <para>A nova and neutron feature that enables custom
-                    modules to extend the core APIs.</para>
+                <para>
+                  Custom modules that extend some OpenStack core APIs.
+                </para>
             </glossdef>
         </glossentry>
         <glossentry>
@@ -316,7 +318,7 @@ Each entry in a typical ACL specifies a subject and an operation. For instance, 
         <glossentry>
             <glossterm>API version</glossterm>
             <glossdef>
-                <para>In OpenStack, a the API version for a project is
+                <para>In OpenStack, the API version for a project is
                     part of the URL. For example,
                         <filename>example.com/nova/v1/foobar</filename>.</para>
             </glossdef>
@@ -358,15 +360,15 @@ Each entry in a typical ACL specifies a subject and an operation. For instance, 
             <glossdef>
                 <para>Tool used for maintaining Address Resolution Protocol
                     packet filter rules in the Linux kernel firewall modules.
-                    Used along with iptables, ebtables, and ip6tables in nova to
-                    provide firewall services for VMs.</para>
+                    Used along with iptables, ebtables, and ip6tables in
+                    Compute to provide firewall services for VMs.</para>
             </glossdef>
         </glossentry>
         <glossentry>
             <glossterm>associate</glossterm>
             <glossdef>
-                <para>The process associating a nova floating IP
-                    address to a fixed IP address.</para>
+                <para>The process associating a Compute floating IP
+                    address with a fixed IP address.</para>
             </glossdef>
         </glossentry>
         <glossentry>
@@ -383,14 +385,14 @@ Each entry in a typical ACL specifies a subject and an operation. For instance, 
             <glossterm>ATA over Ethernet (AoE)</glossterm>
             <glossdef>
                 <para>A disk storage protocol tunneled within
-                    Ethernet. Currently not supported in nova.</para>
+                    Ethernet.</para>
             </glossdef>
         </glossentry>
         <glossentry>
             <glossterm>attach</glossterm>
             <glossdef>
                 <para>The process of connecting a VIF or vNIC to a L2
-                    network in neutron. In the context of nova, this
+                    network in neutron. In the context of Compute, this
                     process connects a storage volume to an
                     instance.</para>
             </glossdef>
@@ -405,7 +407,7 @@ Each entry in a typical ACL specifies a subject and an operation. For instance, 
         <glossentry>
             <glossterm>auditing</glossterm>
             <glossdef>
-                <para>Provided in nova through the system usage data
+                <para>Provided in Compute through the system usage data
                     facility.</para>
             </glossdef>
         </glossentry>
@@ -454,7 +456,7 @@ Each entry in a typical ACL specifies a subject and an operation. For instance, 
         <glossentry>
             <glossterm>AuthN</glossterm>
             <glossdef>
-                <para>The keystone component that provides
+                <para>The Identity Service component that provides
                     authentication services.</para>
             </glossdef>
         </glossentry>
@@ -464,7 +466,7 @@ Each entry in a typical ACL specifies a subject and an operation. For instance, 
                 <para>The act of verifying that a user, process, or
                     client is authorized to perform an action, such as
                     delete a swift object, list a swift container,
-                    start a nova VM, reset a password, and so
+                    start a guest VM, reset a password, and so
                     on.</para>
             </glossdef>
         </glossentry>
@@ -478,7 +480,7 @@ Each entry in a typical ACL specifies a subject and an operation. For instance, 
         <glossentry>
             <glossterm>AuthZ</glossterm>
             <glossdef>
-                <para>The keystone component that provides high-level
+                <para>The Identity Service component that provides high-level
                     authorization services.</para>
             </glossdef>
         </glossentry>
@@ -493,7 +495,7 @@ Each entry in a typical ACL specifies a subject and an operation. For instance, 
         <glossentry>
             <glossterm>auto declare</glossterm>
             <glossdef>
-                <para>A nova RabbitMQ setting that determines if a
+                <para>A Compute RabbitMQ setting that determines if a
                     message exchange is automatically created when the
                     program starts.</para>
             </glossdef>
@@ -503,7 +505,7 @@ Each entry in a typical ACL specifies a subject and an operation. For instance, 
             <glossdef>
                 <para>An Amazon EC2 concept of an isolated area that
                     is used for fault tolerance. Do not confuse with
-                    an OpenStack nova zone or cell.</para>
+                    an OpenStack Compute zone or cell.</para>
             </glossdef>
         </glossentry>
         <glossentry>
@@ -520,29 +522,30 @@ Each entry in a typical ACL specifies a subject and an operation. For instance, 
             <glossterm>back-end</glossterm>
             <glossdef>
                 <para>Interactions and processes that are obfuscated
-                    from the user, such as nova mounting a volume, a
-                    daemon sending data to an iSCSI target, or swift
-                    checking the integrity of an object.</para>
+                    from the user, such as Compute volume mount, data
+                    transmission to an isCSI target by a daemon, or
+                    Object Storage object integrity checks.
+                </para>
             </glossdef>
         </glossentry>
         <glossentry>
             <glossterm>back-end catalog</glossterm>
             <glossdef>
-                <para>The storage method used by the keystone catalog
+                <para>The storage method used by the Identity Service catalog
                     service to store and retrieve information about
                     API endpoints that are available to the client.
                     Examples include a SQL database, LDAP database, or
-                    KVS back-end.</para>
+                    KVS back end.</para>
             </glossdef>
         </glossentry>
         <glossentry>
             <glossterm>back-end store</glossterm>
             <glossdef>
                 <para>The persistent data store used to save and
-                    retrieve a information for a service, such as a
-                    listing of swift objects, the current state of a
-                    nova VM, a list of user names, and so on. Method
-                    that glance uses to retrieve and store VM images.
+                    retrieve a information for a service, such as lists of
+                    Object Storage objects, current state of guest VMs, lists
+                    of user names, and so on. Also, the method that the
+                    Image Service uses to get and store VM images.
                     Options include swift, local file system, S3, and
                     HTTP.</para>
             </glossdef>
@@ -560,7 +563,7 @@ Each entry in a typical ACL specifies a subject and an operation. For instance, 
         <glossentry>
             <glossterm>bare</glossterm>
             <glossdef>
-                <para>A glance container format that indicates that no
+                <para>A Image Service container format that indicates that no
                     container exists for the VM image.</para>
             </glossdef>
         </glossentry>
@@ -617,7 +620,7 @@ Each entry in a typical ACL specifies a subject and an operation. For instance, 
                     evacuate instances from one host to another with
                     very little downtime during a user-initiated
                     switch-over. Does not require shared storage.
-                    Supported by nova.</para>
+                    Supported by Compute.</para>
             </glossdef>
         </glossentry>
         <glossentry>
@@ -643,7 +646,7 @@ Each entry in a typical ACL specifies a subject and an operation. For instance, 
             <glossdef>
                 <para>A network protocol used by a network client to
                     obtain an IP address from a configuration server.
-                    Provided in nova through the dnsmasq daemon when
+                    Provided in Compute through the dnsmasq daemon when
                     using either the FlatDHCP manager or VLAN manager
                     network manager.</para>
             </glossdef>
@@ -712,9 +715,8 @@ Each entry in a typical ACL specifies a subject and an operation. For instance, 
         <glossentry>
             <glossterm>cache pruner</glossterm>
             <glossdef>
-                <para>An executable program that is used to keep a
-                    glance VM image cache at or below its configured
-                    maximum size.</para>
+                <para>A program that keeps the Image Service VM image
+                cache at or below its configured maximum size.</para>
             </glossdef>
         </glossentry>
         <glossentry>
@@ -745,8 +747,8 @@ Each entry in a typical ACL specifies a subject and an operation. For instance, 
         <glossentry>
             <glossterm>capacity cache</glossterm>
             <glossdef>
-                <para>A table within the nova back-end database that
-                    contains the current workload, amount of free RAM,
+                <para>A Compute back end database table that contains
+                    the current workload, amount of free RAM,
                     number of VMs running on each host. Used to
                     determine on which VM a host starts.</para>
             </glossdef>
@@ -769,16 +771,20 @@ Each entry in a typical ACL specifies a subject and an operation. For instance, 
         <glossentry>
             <glossterm>catalog</glossterm>
             <glossdef>
-                <para>Contains a list of available API endpoints to a
-                    user after they authenticate to keystone.</para>
+                <para>
+                  A list of API endpoints that are available to a user
+                  after authentication with the Identity Service.
+                </para>
             </glossdef>
         </glossentry>
         <glossentry>
             <glossterm>catalog service</glossterm>
             <glossdef>
-                <para>A keystone service that provides a list of
-                    available API endpoints to a user after they
-                    authenticate to keystone.</para>
+                <para>
+                  An Identity Service service that lists API endpoints
+                  that are available to a user after authentication
+                  with the Identity Service.
+                </para>
             </glossdef>
         </glossentry>
         <glossentry>
@@ -791,7 +797,7 @@ Each entry in a typical ACL specifies a subject and an operation. For instance, 
         <glossentry>
             <glossterm>cell</glossterm>
             <glossdef>
-                <para>Provides logical partitioning of nova resources
+                <para>Provides logical partitioning of Compute resources
                     in a child and parent relationship. Requests are
                     passed from parent cells to child cells if the
                     parent cannot provide the requested
@@ -801,7 +807,7 @@ Each entry in a typical ACL specifies a subject and an operation. For instance, 
         <glossentry>
             <glossterm>cell forwarding</glossterm>
             <glossdef>
-                <para>A nova option that enables parent cells to pass
+                <para>A Compute option that enables parent cells to pass
                     resource requests to child cells if the parent
                     cannot provide the requested resource.</para>
             </glossdef>
@@ -809,7 +815,7 @@ Each entry in a typical ACL specifies a subject and an operation. For instance, 
         <glossentry>
             <glossterm>cell manager</glossterm>
             <glossdef>
-                <para>The nova component that contains a list of the
+                <para>The Compute component that contains a list of the
                     current capabilities of each host within the cell
                     and routes requests as appropriate.</para>
             </glossdef>
@@ -840,7 +846,7 @@ Each entry in a typical ACL specifies a subject and an operation. For instance, 
         <glossentry>
             <glossterm>certificate authority</glossterm>
             <glossdef>
-                <para>A simple certificate authority provided by nova
+                <para>A simple certificate authority provided by Compute
                     for cloudpipe VPNs and VM image decryption.</para>
             </glossdef>
         </glossentry>
@@ -849,20 +855,20 @@ Each entry in a typical ACL specifies a subject and an operation. For instance, 
                 (CHAP)</glossterm>
             <glossdef>
                 <para>An iSCSI authentication method supported by
-                    nova.</para>
+                    Compute.</para>
             </glossdef>
         </glossentry>
         <glossentry>
             <glossterm>chance scheduler</glossterm>
             <glossdef>
-                <para>A scheduling method used by nova that randomly
+                <para>A scheduling method used by Compute that randomly
                     chooses an available host from the pool.</para>
             </glossdef>
         </glossentry>
         <glossentry>
             <glossterm>changes since</glossterm>
             <glossdef>
-                <para>A nova API parameter that downloads
+                <para>A Compute API parameter that downloads
                     changes to the requested item since your last
                     request, instead of downloading a new, fresh set
                     of data and comparing it against the old
@@ -922,9 +928,9 @@ Each entry in a typical ACL specifies a subject and an operation. For instance, 
         <glossentry>
             <glossterm>cloud controller</glossterm>
             <glossdef>
-                <para>Collection of nova components that represent the
+                <para>Collection of Compute components that represent the
                     global state of the cloud, talks to services such
-                    as keystone authentication, swift object storage,
+                    as Identity Service authentication, Object Storage,
                     and node/storage workers through a queue.</para>
             </glossdef>
         </glossentry>
@@ -968,14 +974,14 @@ Each entry in a typical ACL specifies a subject and an operation. For instance, 
         <glossentry>
             <glossterm>cloudadmin</glossterm>
             <glossdef>
-                <para>One of the default roles in the nova RBAC
+                <para>One of the default roles in the Compute RBAC
                     system. Grants complete system access.</para>
             </glossdef>
         </glossentry>
         <glossentry>
             <glossterm>cloudpipe</glossterm>
             <glossdef>
-                <para>A service in nova used to create VPNs on a
+                <para>A Compute service that creates VPNs on a
                     per-project basis.</para>
             </glossdef>
         </glossentry>
@@ -996,7 +1002,7 @@ Each entry in a typical ACL specifies a subject and an operation. For instance, 
         <glossentry>
             <glossterm>command filter</glossterm>
             <glossdef>
-                <para>Lists allowed commands within the nova rootwrap
+                <para>Lists allowed commands within the Compute rootwrap
                     facility.</para>
             </glossdef>
         </glossentry>
@@ -1015,7 +1021,7 @@ Each entry in a typical ACL specifies a subject and an operation. For instance, 
             <glossdef>
                 <para>OpenStack supports compression at the Linux file
                     system level but does not support compression for
-                    things such as swift objects or glance VM
+                    things such as swift objects or Image Service VM
                     images.</para>
             </glossdef>
         </glossentry>
@@ -1023,22 +1029,15 @@ Each entry in a typical ACL specifies a subject and an operation. For instance, 
             <glossterm>Compute API</glossterm>
             <glossdef>
                 <para>The <systemitem class="service">nova-api</systemitem>
-daemon that provides
+                    daemon provides
                     access to nova services. Can communicate with
                     other APIs, such as the Amazon EC2 API.</para>
             </glossdef>
         </glossentry>
         <glossentry>
-            <glossterm>Compute API extension</glossterm>
-            <glossdef>
-                <para>Alternative term for a nova API
-                    extension.</para>
-            </glossdef>
-        </glossentry>
-        <glossentry>
             <glossterm>compute controller</glossterm>
             <glossdef>
-                <para>The nova component that chooses suitable hosts
+                <para>The Compute component that chooses suitable hosts
                     on which to start VM instances.</para>
             </glossdef>
         </glossentry>
@@ -1060,17 +1059,18 @@ daemon that provides
         <glossentry>
             <glossterm>compute service</glossterm>
             <glossdef>
-                <para>Alternative term for the nova component that
+                <para>Name for the Compute component that
                     manages VMs.</para>
             </glossdef>
         </glossentry>
         <glossentry>
             <glossterm>compute worker</glossterm>
             <glossdef>
-                <para>The nova component that runs on each compute
+                <para>The Compute component that runs on each compute
                     node and manages the VM instance life cycle,
                     including run, reboot, terminate, attach/detach
-                    volumes, and so on. Provided by the <systemitem class="service">nova-compute</systemitem>
+                    volumes, and so on. Provided by the
+                    <systemitem class="service">nova-compute</systemitem>
                     daemon.</para>
             </glossdef>
         </glossentry>
@@ -1085,9 +1085,9 @@ daemon that provides
          <glossentry>
             <glossterm>conductor</glossterm>
             <glossdef>
-                <para>In nova, conductor is the process that proxies
+                <para>In Compute, conductor is the process that proxies
                     database requests from the compute process. Using
-                    conductor improves security as compute nodes don't
+                    conductor improves security as compute nodes do not
                     need direct access to the database.</para>
             </glossdef>
         </glossentry>
@@ -1102,7 +1102,7 @@ daemon that provides
             <glossterm>console log</glossterm>
             <glossdef>
                 <para>Contains the output from a Linux VM console in
-                    nova.</para>
+                    Compute.</para>
             </glossdef>
         </glossentry>
         <glossentry>
@@ -1110,7 +1110,7 @@ daemon that provides
             <glossdef>
                 <para>Used to organize and store objects within swift,
                     similar to the concept as a Linux directory but
-                    cannot be nested. Alternative term for a glance
+                    cannot be nested. Alternative term for a Image Service
                     container format.</para>
             </glossdef>
         </glossentry>
@@ -1133,9 +1133,11 @@ daemon that provides
         <glossentry>
             <glossterm>container format</glossterm>
             <glossdef>
-                <para>The "envelope" used by glance to store a VM
-                    image and its associated metadata, such as machine
-                    state, OS disk size, and so on.</para>
+                <para>
+                  A wrapper used by the Image Service that contains a
+                  VM image and its associated metadata, such as
+                  machine state, OS disk size, and so on.
+                </para>
             </glossdef>
         </glossentry>
         <glossentry>
@@ -1164,8 +1166,8 @@ daemon that provides
             <glossdef>
                 <para>Depending on context, the core API is either the
                     OpenStack API or the main API of a specific core
-                    project, such as nova, neutron, glance, and so
-                    on.</para>
+                    project, such as Compute, Networking, Image Service,
+                    and so on.</para>
             </glossdef>
         </glossentry>
         <glossentry>
@@ -1182,7 +1184,7 @@ daemon that provides
         <glossentry>
             <glossterm>cost</glossterm>
             <glossdef>
-                <para>Under the nova distributed scheduler this is
+                <para>Under the Compute distributed scheduler this is
                     calculated by looking at the capabilities of each
                     host relative to the flavor of the VM instance
                     being requested.</para>
@@ -1210,7 +1212,7 @@ daemon that provides
         <glossentry>
             <glossterm>current workload</glossterm>
             <glossdef>
-                <para>An element of the nova capacity cache that is
+                <para>An element of the Compute capacity cache that is
                     calculated based on the number of build, snapshot,
                     migrate, and resize operations currently in
                     progress on a given host.</para>
@@ -1269,19 +1271,19 @@ daemon that provides
         <glossentry>
             <glossterm>data encryption</glossterm>
             <glossdef>
-                <para>Both glance and nova support encrypted virtual
+                <para>Both Image Service and Compute support encrypted virtual
                     machine (VM) images (but not instances).
                     In-transit data encryption is supported in
                     OpenStack using technologies such as HTTPS, SSL,
-                    TLS, SSH. swift does not support object encryption
-                    at the application level but may support storage
+                    TLS, and SSH. Object Storage does not support object
+                    encryption at the application level but may support storage
                     that uses disk encryption.</para>
             </glossdef>
         </glossentry>
         <glossentry>
             <glossterm>database ID</glossterm>
             <glossdef>
-                <para>A unique ID given to each replica of a swift
+                <para>A unique ID given to each replica of an Object Storage
                     database.</para>
             </glossdef>
         </glossentry>
@@ -1328,7 +1330,7 @@ daemon that provides
         <glossentry>
             <glossterm>default tenant</glossterm>
             <glossdef>
-                <para>New users are assigned to this keystone tenant
+                <para>New users are assigned to this tenant
                     if no tenant is specified when a user is
                     created.</para>
             </glossdef>
@@ -1336,7 +1338,7 @@ daemon that provides
         <glossentry>
             <glossterm>default token</glossterm>
             <glossdef>
-                <para>A keystone token that is not associated with a
+                <para>An Identity Service token that is not associated with a
                     specific tenant and is exchanged for a scoped
                     token.</para>
             </glossdef>
@@ -1344,7 +1346,7 @@ daemon that provides
         <glossentry>
             <glossterm>delayed delete</glossterm>
             <glossdef>
-                <para>An option within glance so that rather than
+                <para>An option within Image Service so that rather than
                     immediately delete an image, it is deleted after a
                     pre-defined number of seconds.</para>
             </glossdef>
@@ -1352,7 +1354,7 @@ daemon that provides
         <glossentry>
             <glossterm>delivery mode</glossterm>
             <glossdef>
-                <para>Setting for the nova RabbitMQ message delivery
+                <para>Setting for the Compute RabbitMQ message delivery
                     mode, can be set to either transient or
                     persistent.</para>
             </glossdef>
@@ -1360,15 +1362,16 @@ daemon that provides
         <glossentry>
             <glossterm>deprecated auth</glossterm>
             <glossdef>
-                <para>An option within nova that enables administrators
-                    to create and manage users through the nova-manage
-                    command as opposed to using keystone.</para>
+                <para>An option within Compute that enables administrators
+                    to create and manage users through the
+                    <command>nova-manage</command>
+                    command as opposed to using the Identity Service.</para>
             </glossdef>
         </glossentry>
         <glossentry>
             <glossterm>developer</glossterm>
             <glossdef>
-                <para>One of the default roles in the nova RBAC system
+                <para>One of the default roles in the Compute RBAC system
                     and is the default role assigned to a new
                     user.</para>
             </glossdef>
@@ -1430,7 +1433,7 @@ daemon that provides
         <glossentry>
             <glossterm>direct consumer</glossterm>
             <glossdef>
-                <para>An element of the nova RabbitMQ that comes to
+                <para>An element of the Compute RabbitMQ that comes to
                     life when a RPC call is executed. It connects to a
                     direct exchange through a unique exclusive queue,
                     sends the message, and terminates.</para>
@@ -1439,7 +1442,7 @@ daemon that provides
         <glossentry>
             <glossterm>direct exchange</glossterm>
             <glossdef>
-                <para>A routing table that is created within the nova
+                <para>A routing table that is created within the Compute
                     RabbitMQ during RPC calls, one is created for each
                     RPC call that is invoked.</para>
             </glossdef>
@@ -1465,14 +1468,14 @@ daemon that provides
             <glossdef>
                 <para>The ability to encrypt data at the file system,
                     disk partition or whole disk level. Supported
-                    within nova VMs.</para>
+                    within Compute VMs.</para>
             </glossdef>
         </glossentry>
         <glossentry>
             <glossterm>disk format</glossterm>
             <glossdef>
                 <para>The underlying format that a disk image for a VM
-                    is stored as within the glance back-end store. For
+                    is stored as within the Image Service back-end store. For
                     example, AMI, ISO, QCOW2, VMDK, and so on.</para>
             </glossdef>
         </glossentry>
@@ -1513,7 +1516,7 @@ daemon that provides
             <glossterm>dnsmasq</glossterm>
             <glossdef>
                 <para>Daemon that provides DNS, DHCP, BOOTP, and TFTP
-                    services, used by the nova VLAN manager and
+                    services, used by the Compute VLAN manager and
                     FlatDHCP manager.</para>
             </glossdef>
         </glossentry>
@@ -1532,7 +1535,7 @@ daemon that provides
         <glossentry>
             <glossterm>Domain Name Service (DNS)</glossterm>
             <glossdef>
-                <para>In nova, the support that enables associating
+                <para>In Compute, the support that enables associating
                     DNS entries with floating IP addresses, nodes, or
                     cells so host names are consistent across
                     reboots.</para>
@@ -1574,14 +1577,14 @@ daemon that provides
         <glossentry>
             <glossterm>durable exchange</glossterm>
             <glossdef>
-                <para>The nova RabbitMQ message exchange that remains
+                <para>The Compute RabbitMQ message exchange that remains
                     active when the server restarts.</para>
             </glossdef>
         </glossentry>
         <glossentry>
             <glossterm>durable queue</glossterm>
             <glossdef>
-                <para>A nova RabbitMQ message queue that remains
+                <para>A Compute RabbitMQ message queue that remains
                     active when the server restarts.</para>
             </glossdef>
         </glossentry>
@@ -1590,8 +1593,8 @@ daemon that provides
                 (DHCP)</glossterm>
             <glossdef>
                 <para>A method to automatically configure networking
-                    for a host at boot time. Provided by both neutron
-                    and nova.</para>
+                    for a host at boot time. Provided by both Networking
+                    and Compute.</para>
             </glossdef>
         </glossentry>
         <glossentry>
@@ -1618,7 +1621,7 @@ daemon that provides
         <glossentry>
             <glossterm>ebtables</glossterm>
             <glossdef>
-                <para>Used in nova along with arptables, iptables, and
+                <para>Used in Compute along with arptables, iptables, and
                     ip6tables to create firewalls and to ensure
                     isolation of network communications.</para>
             </glossdef>
@@ -1627,27 +1630,27 @@ daemon that provides
             <glossterm>EC2</glossterm>
             <glossdef>
                 <para>The Amazon commercial compute product, similar
-                    to nova.</para>
+                    to Compute.</para>
             </glossdef>
         </glossentry>
         <glossentry>
             <glossterm>EC2 access key</glossterm>
             <glossdef>
                 <para>Used along with an EC2 secret key to access the
-                    nova EC2 API.</para>
+                    Compute EC2 API.</para>
             </glossdef>
         </glossentry>
         <glossentry>
             <glossterm>EC2 API</glossterm>
             <glossdef>
                 <para>OpenStack supports accessing the Amazon EC2 API
-                    through nova.</para>
+                    through Compute.</para>
             </glossdef>
         </glossentry>
         <glossentry>
             <glossterm>EC2 Compatibility API</glossterm>
             <glossdef>
-                <para>A nova component that enables OpenStack to
+                <para>A Compute component that enables OpenStack to
                     communicate with Amazon EC2.</para>
             </glossdef>
         </glossentry>
@@ -1655,7 +1658,7 @@ daemon that provides
             <glossterm>EC2 secret key</glossterm>
             <glossdef>
                 <para>Used along with an EC2 access key when
-                    communicating with the nova EC2 API, is used to
+                    communicating with the Compute EC2 API, is used to
                     digitally sign each request.</para>
             </glossdef>
         </glossentry>
@@ -1683,7 +1686,7 @@ daemon that provides
         <glossentry>
             <glossterm>endpoint registry</glossterm>
             <glossdef>
-                <para>Alternative term for a keystone catalog.</para>
+                <para>Alternative term for an Identity Service catalog.</para>
             </glossdef>
         </glossentry>
         <glossentry>
@@ -1779,7 +1782,7 @@ daemon that provides
             <glossterm>Eucalyptus Machine Image (EMI)</glossterm>
             <glossdef>
                 <para>VM image container format supported by
-                    glance.</para>
+                    Image Service.</para>
             </glossdef>
         </glossentry>
         <glossentry>
@@ -1807,14 +1810,14 @@ daemon that provides
         <glossentry>
             <glossterm>exchange type</glossterm>
             <glossdef>
-                <para>A routing algorithm in the nova RabbitMQ.</para>
+                <para>A routing algorithm in the Compute RabbitMQ.</para>
             </glossdef>
         </glossentry>
         <glossentry>
             <glossterm>exclusive queue</glossterm>
             <glossdef>
                 <para>Connected to by a direct consumer in RabbitMQ /
-                    nova, the message can only be consumed by the
+                    Compute, the message can only be consumed by the
                     current connection.</para>
             </glossdef>
         </glossentry>
@@ -1831,8 +1834,8 @@ daemon that provides
         <glossentry>
             <glossterm>extension</glossterm>
             <glossdef>
-                <para>Alternative term for a nova API extension or
-                    plug-in. In the context of keystone this is a call
+                <para>Alternative term for a Compute API extension or
+                    plug-in. In the context of Identity Service this is a call
                     that is specific to the implementation, such as
                     adding support for OpenID.</para>
             </glossdef>
@@ -1841,7 +1844,7 @@ daemon that provides
             <glossterm>extra specs</glossterm>
             <glossdef>
                 <para>Specifies additional requirements
-                    when nova determines where to start a new
+                    when Compute determines where to start a new
                     instance. Examples include a minimum amount of
                     network bandwidth or a GPU.</para>
             </glossdef>
@@ -1854,14 +1857,14 @@ daemon that provides
             <glossterm>FakeLDAP</glossterm>
             <glossdef>
                 <para>An easy method to create a local LDAP directory
-                    for testing keystone and nova. Requires
+                    for testing Identity Service and Compute. Requires
                     Redis.</para>
             </glossdef>
         </glossentry>
         <glossentry>
             <glossterm>fan-out exchange</glossterm>
             <glossdef>
-                <para>Within RabbitMQ and nova it is the messaging
+                <para>Within RabbitMQ and Compute it is the messaging
                     interface that is used by the scheduler service to
                     receive capability messages from the compute,
                     volume, and network nodes.</para>
@@ -1891,7 +1894,7 @@ daemon that provides
         <glossentry>
             <glossterm>fill-first scheduler</glossterm>
             <glossdef>
-                <para>The nova scheduling method that attempts to fill
+                <para>The Compute scheduling method that attempts to fill
                     a host with VMs rather than starting new VMs on a
                     variety of hosts.</para>
             </glossdef>
@@ -1899,7 +1902,7 @@ daemon that provides
         <glossentry>
             <glossterm>filter</glossterm>
             <glossdef>
-                <para>The step in the nova scheduling process when
+                <para>The step in the Compute scheduling process when
                     hosts that cannot run VMs are eliminated and not
                     chosen.</para>
             </glossdef>
@@ -1908,7 +1911,7 @@ daemon that provides
             <glossterm>firewall</glossterm>
             <glossdef>
                 <para>Used to restrict communications between hosts
-                    and/or nodes, implemented in nova using iptables,
+                    and/or nodes, implemented in Compute using iptables,
                     arptables, ip6tables and etables.</para>
             </glossdef>
         </glossentry>
@@ -1925,7 +1928,7 @@ daemon that provides
         <glossentry>
             <glossterm>Flat Manager</glossterm>
             <glossdef>
-                <para>The nova component that gives IP addresses to
+                <para>The Compute component that gives IP addresses to
                     authorized nodes and assumes DHCP, DNS, and
                     routing configuration and services are provided by
                     something else.</para>
@@ -1934,7 +1937,7 @@ daemon that provides
         <glossentry>
             <glossterm>flat mode injection</glossterm>
             <glossdef>
-                <para>A nova networking method where the OS network
+                <para>A Compute networking method where the OS network
                     configuration information is injected into the VM
                     image before the instance starts.</para>
             </glossdef>
@@ -1954,7 +1957,7 @@ daemon that provides
         <glossentry>
             <glossterm>FlatDHCP Manager</glossterm>
             <glossdef>
-                <para>The nova component that provides dnsmasq (DHCP,
+                <para>The Compute component that provides dnsmasq (DHCP,
                     DNS, BOOTP, TFTP) and radvd (routing)
                     services.</para>
             </glossdef>
@@ -1968,14 +1971,14 @@ daemon that provides
         <glossentry>
             <glossterm>flavor ID</glossterm>
             <glossdef>
-                <para>UUID for each nova or glance VM flavor or
+                <para>UUID for each Compute or Image Service VM flavor or
                     instance type.</para>
             </glossdef>
         </glossentry>
         <glossentry>
             <glossterm>floating IP address</glossterm>
             <glossdef>
-                <para>An IP address that a nova project can associate
+                <para>An IP address that a project can associate
                     with a VM so the instance has the same public IP
                     address each time that it boots. You create a pool
                     of floating IP addresses and assign them to
@@ -2040,7 +2043,7 @@ daemon that provides
             <glossterm>glance API server</glossterm>
             <glossdef>
                 <para>Processes client requests for VMs, updates
-                    glance metadata on the registry server, and
+                    Image Service metadata on the registry server, and
                     communicates with the store adapter to upload VM
                     images from the back-end store.</para>
             </glossdef>
@@ -2048,14 +2051,14 @@ daemon that provides
         <glossentry>
             <glossterm>glance registry</glossterm>
             <glossdef>
-                <para>Alternative term for the glance image
+                <para>Alternative term for the Image Service image
                     registry.</para>
             </glossdef>
         </glossentry>
         <glossentry>
             <glossterm>global endpoint template</glossterm>
             <glossdef>
-                <para>The keystone endpoint template that contains
+                <para>The Identity Service endpoint template that contains
                     services available to all tenants.</para>
             </glossdef>
         </glossentry>
@@ -2298,7 +2301,7 @@ daemon that provides
             <glossterm>ID number</glossterm>
             <glossdef>
                 <para>Unique numeric ID associated with each user in
-                    keystone, conceptually similar to a Linux or LDAP
+                    Identity Service, conceptually similar to a Linux or LDAP
                     UID.</para>
             </glossdef>
         </glossentry>
@@ -2312,7 +2315,7 @@ daemon that provides
         <glossentry>
             <glossterm>Identity back-end</glossterm>
             <glossdef>
-                <para>The source used by keystone to retrieve user
+                <para>The source used by Identity Service to retrieve user
                     information an OpenLDAP server for example.</para>
             </glossdef>
         </glossentry>
@@ -2352,14 +2355,14 @@ daemon that provides
         <glossentry>
             <glossterm>Image API</glossterm>
             <glossdef>
-                <para>The glance API endpoint for management of VM
+                <para>The Image Service API endpoint for management of VM
                     images.</para>
             </glossdef>
         </glossentry>
         <glossentry>
             <glossterm>image cache</glossterm>
             <glossdef>
-                <para>Used by glance to obtain images on the local host
+                <para>Used by Image Service to obtain images on the local host
                     rather than re-downloading them from
                     the image server each time one is
                     requested.</para>
@@ -2369,20 +2372,20 @@ daemon that provides
             <glossterm>image ID</glossterm>
             <glossdef>
                 <para>Combination of URI and UUID used to access
-                    glance VM images through the image API.</para>
+                    Image Service VM images through the image API.</para>
             </glossdef>
         </glossentry>
         <glossentry>
             <glossterm>image membership</glossterm>
             <glossdef>
                 <para>A list of tenants that can access a given VM
-                    image within glance.</para>
+                    image within Image Service.</para>
             </glossdef>
         </glossentry>
         <glossentry>
             <glossterm>image owner</glossterm>
             <glossdef>
-                <para>The keystone tenant who owns a glance virtual
+                <para>The tenant who owns an Image Service virtual
                     machine image.</para>
             </glossdef>
         </glossentry>
@@ -2390,7 +2393,7 @@ daemon that provides
             <glossterm>image registry</glossterm>
             <glossdef>
                 <para>A list of VM images that are available through
-                    glance.</para>
+                    Image Service.</para>
             </glossdef>
         </glossentry>
         <glossentry>
@@ -2403,7 +2406,7 @@ daemon that provides
         <glossentry>
             <glossterm>image status</glossterm>
             <glossdef>
-                <para>The current status of a VM image in glance, not
+                <para>The current status of a VM image in Image Service, not
                     to be confused with the status of a running
                     instance.</para>
             </glossdef>
@@ -2411,7 +2414,7 @@ daemon that provides
         <glossentry>
             <glossterm>image store</glossterm>
             <glossdef>
-                <para>The back-end store used by glance to store VM
+                <para>The back-end store used by Image Service to store VM
                     images, options include swift, local file system,
                     S3, or HTTP.</para>
             </glossdef>
@@ -2419,7 +2422,7 @@ daemon that provides
         <glossentry>
             <glossterm>image UUID</glossterm>
             <glossdef>
-                <para>UUID used by glance to uniquely identify each VM
+                <para>UUID used by Image Service to uniquely identify each VM
                     image.</para>
             </glossdef>
         </glossentry>
@@ -2435,7 +2438,7 @@ daemon that provides
             <glossterm>ingress filtering</glossterm>
             <glossdef>
                 <para>The process of filtering incoming network
-                    traffic. Supported by nova.</para>
+                    traffic. Supported by Compute.</para>
             </glossdef>
         </glossentry>
         <glossentry>
@@ -2463,7 +2466,7 @@ daemon that provides
         <glossentry>
             <glossterm>instance state</glossterm>
             <glossdef>
-                <para>The current state of a nova VM image.</para>
+                <para>The current state of a guest VM image.</para>
             </glossdef>
         </glossentry>
         <glossentry>
@@ -2484,7 +2487,7 @@ daemon that provides
         <glossentry>
             <glossterm>instance UUID</glossterm>
             <glossdef>
-                <para>Unique ID assigned to each nova VM
+                <para>Unique ID assigned to each guest VM
                     instance.</para>
             </glossdef>
         </glossentry>
@@ -2523,7 +2526,7 @@ daemon that provides
             <glossdef>
                 <para>The process of automating IP address allocation,
                     deallocation, and management. Currently provided
-                    by nova, melange, and neutron.</para>
+                    by Compute, melange, and Networking.</para>
             </glossdef>
         </glossentry>
         <glossentry>
@@ -2560,7 +2563,7 @@ daemon that provides
             <glossterm>iptables</glossterm>
             <glossdef>
                 <para>Used along with arptables and ebtables, iptables
-                    create firewalls in nova. iptables are the tables
+                    create firewalls in Compute. iptables are the tables
                     provided by the Linux kernel firewall (implemented
                     as different Netfilter modules) and the chains and
                     rules it stores. Different kernel modules and
@@ -2575,20 +2578,21 @@ daemon that provides
             <glossterm>iSCSI</glossterm>
             <glossdef>
                 <para>The SCSI disk protocol tunneled within Ethernet,
-                    supported by nova, swift, and glance.</para>
+                    supported by Compute, Object Storage, and Image Service.
+                </para>
             </glossdef>
         </glossentry>
         <glossentry>
             <glossterm>ISO9960</glossterm>
             <glossdef>
                 <para>One of the VM image disk formats supported by
-                    glance.</para>
+                    Image Service.</para>
             </glossdef>
         </glossentry>
         <glossentry>
             <glossterm>itsec</glossterm>
             <glossdef>
-                <para>A default role in the nova RBAC system that
+                <para>A default role in the Compute RBAC system that
                     can quarantine an instance in any
                     project.</para>
             </glossdef>
@@ -2705,7 +2709,7 @@ daemon that provides
             <glossterm>Linux bridge</glossterm>
             <glossdef>
                 <para>Software that enables multiple VMs to share a
-                    single physical NIC within nova.</para>
+                    single physical NIC within Compute.</para>
             </glossdef>
         </glossentry>
         <glossentry>
@@ -2725,7 +2729,7 @@ daemon that provides
         <glossentry>
             <glossterm>live migration</glossterm>
             <glossdef>
-                <para>The ability within nova to move running virtual
+                <para>The ability within Compute to move running virtual
                     machine instances from one host to another with
                     only a small service interruption during
                     switch-over.</para>
@@ -2776,7 +2780,7 @@ daemon that provides
             <glossterm>manager</glossterm>
             <glossdef>
                 <para>Logical groupings of related code such as the
-                    nova volume manager or network manager.</para>
+                    Block Storage volume manager or network manager.</para>
             </glossdef>
         </glossentry>
         <glossentry>
@@ -2810,7 +2814,7 @@ daemon that provides
         <glossentry>
             <glossterm>membership</glossterm>
             <glossdef>
-                <para>The association between a glance VM image and a
+                <para>The association between an Image Service VM image and a
                     tenant. Enables images to be shared with specified
                     tenants.</para>
             </glossdef>
@@ -2819,7 +2823,7 @@ daemon that provides
             <glossterm>membership list</glossterm>
             <glossdef>
                 <para>A list of tenants that can access a given VM
-                    image within glance.</para>
+                    image within Image Service.</para>
             </glossdef>
         </glossentry>
         <glossentry>
@@ -2843,7 +2847,7 @@ daemon that provides
             <glossterm>message broker</glossterm>
             <glossdef>
                 <para>The software package used to provide AMQP
-                    messaging capabilities within nova. Default
+                    messaging capabilities within Compute. Default
                     package is RabbitMQ.</para>
             </glossdef>
         </glossentry>
@@ -2852,7 +2856,7 @@ daemon that provides
             <glossdef>
                 <para>The main virtual communication line used by all
                     AMQP messages for inter-cloud communications
-                    within nova.</para>
+                    within Compute.</para>
             </glossdef>
         </glossentry>
         <glossentry>
@@ -2879,7 +2883,7 @@ daemon that provides
         <glossentry>
             <glossterm>multinic</glossterm>
             <glossdef>
-                 <para>Facility in nova that allows each virtual
+                 <para>Facility in Compute that allows each virtual
                      machine instance to have more than one VIF
                      connected to it.</para>
             </glossdef>
@@ -2905,13 +2909,13 @@ daemon that provides
             <glossdef>
                 <para>Authentication method that uses two or more
                     credentials, such as a password and a private key.
-                    Currently not supported in keystone.</para>
+                    Currently not supported in Identity Service.</para>
             </glossdef>
         </glossentry>
         <glossentry>
             <glossterm>MultiNic</glossterm>
             <glossdef>
-                <para>Facility in nova that enables a virtual
+                <para>Facility in Compute that enables a virtual
                     machine instance to have more than one VIF
                     connected to it.</para>
             </glossdef>
@@ -2930,13 +2934,13 @@ daemon that provides
             <glossterm>Nebula</glossterm>
             <glossdef>
                 <para>Released as open source by NASA in 2010 and is
-                    the basis for nova.</para>
+                    the basis for Compute.</para>
             </glossdef>
         </glossentry>
         <glossentry>
             <glossterm>netadmin</glossterm>
             <glossdef>
-                <para>One of the default roles in the nova RBAC
+                <para>One of the default roles in the Compute RBAC
                     system. Enables the user to allocate publicly
                     accessible IP addresses to instances and change
                     firewall rules.</para>
@@ -2945,7 +2949,7 @@ daemon that provides
         <glossentry>
             <glossterm>NetApp volume driver</glossterm>
             <glossdef>
-                <para>Enables nova to communicate with NetApp storage
+                <para>Enables Compute to communicate with NetApp storage
                     devices through the NetApp OnCommand Provisioning
                     Manager.</para>
             </glossdef>
@@ -2964,14 +2968,14 @@ daemon that provides
             <glossterm>Network Address Translation (NAT)</glossterm>
             <glossdef>
                 <para>The process of modifying IP address information
-                    while in-transit. Supported by nova and
-                    neutron.</para>
+                    while in-transit. Supported by Compute and
+                    Networking.</para>
             </glossdef>
         </glossentry>
         <glossentry>
             <glossterm>network controller</glossterm>
             <glossdef>
-                <para>A nova daemon that orchestrates the network
+                <para>A Compute daemon that orchestrates the network
                     configuration of nodes including includes IP
                     addresses, VLANs, bridging, and manages routing
                     for both public and private networks.</para>
@@ -2994,7 +2998,7 @@ daemon that provides
         <glossentry>
             <glossterm>network manager</glossterm>
             <glossdef>
-                <para>The nova component that manages various network
+                <para>The Compute component that manages various network
                     components, such as firewall rules, IP address
                     allocation, and so on.</para>
             </glossdef>
@@ -3002,7 +3006,7 @@ daemon that provides
         <glossentry>
             <glossterm>network node</glossterm>
             <glossdef>
-                <para>Any nova node that runs the network worker
+                <para>Any Compute node that runs the network worker
                     daemon.</para>
             </glossdef>
         </glossentry>
@@ -3054,9 +3058,9 @@ daemon that provides
         <glossentry>
             <glossterm>neutron manager</glossterm>
             <glossdef>
-                <para>Enables nova and neutron integration, which
-                    enables neutron to perform network management for
-                    nova VMs.</para>
+                <para>Enables Compute and Networking integration, which
+                    enables Networking to perform network management for
+                    guest VMs.</para>
             </glossdef>
         </glossentry>
         <glossentry>
@@ -3072,7 +3076,7 @@ daemon that provides
             <glossterm>Nexenta volume driver</glossterm>
             <glossdef>
                 <para>Provides support for NexentaStor devices in
-                    nova.</para>
+                    Compute.</para>
             </glossdef>
         </glossentry>
         <glossentry>
@@ -3086,7 +3090,7 @@ daemon that provides
             <glossterm>No ACK</glossterm>
             <glossdef>
                 <para>Disables server-side message acknowledgment in
-                    the nova RabbitMQ. Increases performance but
+                    the Compute RabbitMQ. Increases performance but
                     decreases reliability.</para>
             </glossdef>
         </glossentry>
@@ -3126,26 +3130,20 @@ daemon that provides
             </glossdef>
         </glossentry>
         <glossentry>
-            <glossterm>nova API</glossterm>
+            <glossterm>Nova API</glossterm>
             <glossdef>
-                <para>Alternative term for the nova Compute
+                <para>Alternative term for the Compute
                     API.</para>
             </glossdef>
         </glossentry>
         <glossentry>
             <glossterm>nova network</glossterm>
             <glossdef>
-                <para>A nova component that manages IP address
+                <para>A Compute component that manages IP address
                     allocation, firewalls, and other network-related
-                    tasks.</para>
-            </glossdef>
-        </glossentry>
-        <glossentry>
-            <glossterm>nova volume</glossterm>
-            <glossdef>
-                <para>The nova component that manages storage volumes,
-                    currently being split off into a separate project
-                    named cinder.</para>
+                    tasks. This is the legacy networking option and an
+                    alternative to Networking.
+                </para>
             </glossdef>
         </glossentry>
     </glossdiv>
@@ -3275,7 +3273,7 @@ daemon that provides
             <glossterm>OpenLDAP</glossterm>
             <glossdef>
                 <para>An open source LDAP server. Supported by both
-                    nova and keystone.</para>
+                    Compute and Identity Service.</para>
             </glossdef>
         </glossentry>
         <glossentry>
@@ -3375,7 +3373,7 @@ daemon that provides
         <glossentry>
             <glossterm>personality file</glossterm>
             <glossdef>
-                <para>A file used to customize a nova instance, can be
+                <para>A file used to customize a Compute instance, can be
                     used to inject SSH keys or a specific network
                     configuration.</para>
             </glossdef>
@@ -3391,7 +3389,7 @@ daemon that provides
         <glossentry>
             <glossterm>policy service</glossterm>
             <glossdef>
-                <para>Component of keystone that provides a rule
+                <para>Component of Identity Service that provides a rule
                     management interface and a rule based
                     authorization engine.</para>
             </glossdef>
@@ -3420,7 +3418,7 @@ daemon that provides
         <glossentry>
             <glossterm>private image</glossterm>
             <glossdef>
-                <para>A glance VM image that is only available to
+                <para>An Image Service VM image that is only available to
                     specified tenants.</para>
             </glossdef>
         </glossentry>
@@ -3450,14 +3448,14 @@ daemon that provides
         <glossentry>
             <glossterm>project</glossterm>
             <glossdef>
-                <para>A logical grouping of users within nova, used to
+                <para>A logical grouping of users within Compute, used to
                     define quotas and access to VM images.</para>
             </glossdef>
         </glossentry>
         <glossentry>
             <glossterm>project ID</glossterm>
             <glossdef>
-                <para>User defined alpha-numeric string in nova, the
+                <para>User defined alpha-numeric string in Compute, the
                     name of a project.</para>
             </glossdef>
         </glossentry>
@@ -3500,7 +3498,7 @@ daemon that provides
         <glossentry>
             <glossterm>public image</glossterm>
             <glossdef>
-                <para>A glance VM image that is available to all
+                <para>An Image Service VM image that is available to all
                     tenants.</para>
             </glossdef>
         </glossentry>
@@ -3544,7 +3542,7 @@ daemon that provides
             <glossterm>QEMU Copy On Write 2 (QCOW2)</glossterm>
             <glossdef>
                 <para>One of the VM image disk formats supported by
-                    glance.</para>
+                    Image Service.</para>
             </glossdef>
         </glossentry>
         <glossentry>
@@ -3575,8 +3573,9 @@ daemon that provides
         <glossentry>
             <glossterm>quota</glossterm>
             <glossdef>
-                <para>In nova, the ability to set resource limits on a
-                    per-project basis.</para>
+                <para>In Compute and Block Storage, the ability to set
+                    resource limits on a per-project basis.
+                </para>
             </glossdef>
         </glossentry>
     </glossdiv>
@@ -3609,14 +3608,14 @@ daemon that provides
             <glossterm>radvd</glossterm>
             <glossdef>
                 <para>The router advertisement daemon, used by the
-                    nova VLAN manager and FlatDHCP manager to provide
+                    Compute VLAN manager and FlatDHCP manager to provide
                     routing services for VM instances.</para>
             </glossdef>
         </glossentry>
         <glossentry>
             <glossterm>RAM filter</glossterm>
             <glossdef>
-                <para>The nova setting that enables or disables RAM
+                <para>The Compute setting that enables or disables RAM
                     overcommitment.</para>
             </glossdef>
         </glossentry>
@@ -3642,7 +3641,7 @@ daemon that provides
             <glossterm>raw</glossterm>
             <glossdef>
                 <para>One of the VM image disk formats supported by
-                    glance, an unstructured disk image.</para>
+                    Image Service, an unstructured disk image.</para>
             </glossdef>
         </glossentry>
         <glossentry>
@@ -3736,14 +3735,14 @@ daemon that provides
         <glossentry>
             <glossterm>registry</glossterm>
             <glossdef>
-                <para>Alternative term for the glance image
+                <para>Alternative term for the Image Service
                     registry.</para>
             </glossdef>
         </glossentry>
         <glossentry>
             <glossterm>registry server</glossterm>
             <glossdef>
-                <para>A glance service that provides VM image metadata
+                <para>An Image Service that provides VM image metadata
                     information to clients.</para>
             </glossdef>
         </glossentry>
@@ -3758,7 +3757,7 @@ daemon that provides
         <glossentry>
             <glossterm>Remote Procedure Call (RPC)</glossterm>
             <glossdef>
-                <para>The method used by the nova RabbitMQ for
+                <para>The method used by the Compute RabbitMQ for
                     intra-service communications.</para>
             </glossdef>
         </glossentry>
@@ -3797,7 +3796,7 @@ daemon that provides
             <glossterm>request ID</glossterm>
             <glossdef>
                 <para>Unique ID assigned to each request sent to
-                    nova.</para>
+                    Compute.</para>
             </glossdef>
         </glossentry>
         <glossentry>
@@ -3850,22 +3849,22 @@ daemon that provides
             <glossdef>
                 <para>Provides a predefined list of actions that the
                     user can perform such as start or stop VMs, reset
-                    passwords, and so on. Supported in both keystone
-                    and nova and can be configured using the horizon
+                    passwords, and so on. Supported in both Identity Service
+                    and Compute and can be configured using the horizon
                     dashboard.</para>
             </glossdef>
         </glossentry>
         <glossentry>
             <glossterm>role ID</glossterm>
             <glossdef>
-                <para>Alpha-numeric ID assigned to each keystone
+                <para>Alpha-numeric ID assigned to each Identity Service
                     role.</para>
             </glossdef>
         </glossentry>
         <glossentry>
             <glossterm>rootwrap</glossterm>
             <glossdef>
-                <para>A feature of nova that allows the unprivileged
+                <para>A feature of Compute that allows the unprivileged
                     "nova" user to run a specified list of commands as
                     the Linux root user.</para>
             </glossdef>
@@ -3873,14 +3872,14 @@ daemon that provides
         <glossentry>
             <glossterm>round-robin scheduler</glossterm>
             <glossdef>
-                <para>Type of nova scheduler that evenly distributes
+                <para>Type of Compute scheduler that evenly distributes
                     instances among available hosts.</para>
             </glossdef>
         </glossentry>
         <glossentry>
             <glossterm>routing key</glossterm>
             <glossdef>
-                <para>the nova direct exchanges, fanout exchanges, and
+                <para>The Compute direct exchanges, fanout exchanges, and
                     topic exchanges use this to determine how to
                     process a message, processing varies depending on
                     exchange type.</para>
@@ -3889,29 +3888,30 @@ daemon that provides
         <glossentry>
             <glossterm>RPC driver</glossterm>
             <glossdef>
-                <para>Modular system that allows the nova underlying
-                    message queue software to be changed. For example,
-                    from RabbitMQ to ZeroMQ or Qpid.</para>
+                <para>Modular system that allows the  underlying
+                    message queue software of Compute to be changed. For
+                    example, from RabbitMQ to ZeroMQ or Qpid.
+                </para>
             </glossdef>
         </glossentry>
         <glossentry>
             <glossterm>rsync</glossterm>
             <glossdef>
-                <para>Used by swift to push object replicas.</para>
+                <para>Used by Object Storage to push object replicas.</para>
             </glossdef>
         </glossentry>
         <glossentry>
             <glossterm>RXTX cap</glossterm>
             <glossdef>
                 <para>Absolute limit on the amount of network traffic
-                    a nova VM instance can send and receive.</para>
+                    a Compute VM instance can send and receive.</para>
             </glossdef>
         </glossentry>
         <glossentry>
             <glossterm>RXTX quota</glossterm>
             <glossdef>
                 <para>Soft limit on the amount of network traffic a
-                    nova VM instance can send and receive.</para>
+                    Compute VM instance can send and receive.</para>
             </glossdef>
         </glossentry>
         <glossentry>
@@ -3930,7 +3930,7 @@ daemon that provides
             <glossdef>
                 <para>Object storage service by Amazon, similar in
                     function to swift, can act as a back-end store for
-                    glance VM images.</para>
+                    Image Service VM images.</para>
             </glossdef>
         </glossentry>
         <glossentry>
@@ -3944,7 +3944,7 @@ daemon that provides
         <glossentry>
             <glossterm>scheduler manager</glossterm>
             <glossdef>
-                <para>A nova component that determines where VM
+                <para>A Compute component that determines where VM
                     instances should start. Uses modular design to
                     support a variety of scheduler types.</para>
             </glossdef>
@@ -3952,7 +3952,7 @@ daemon that provides
         <glossentry>
             <glossterm>scoped token</glossterm>
             <glossdef>
-                <para>A keystone API access token that is associated
+                <para>An Identity Service API access token that is associated
                     with a specific tenant.</para>
             </glossdef>
         </glossentry>
@@ -3960,7 +3960,7 @@ daemon that provides
             <glossterm>scrubber</glossterm>
             <glossdef>
                 <para>Checks for and deletes unused VM, the component
-                    of glance that implements delayed delete.</para>
+                    of Image Service that implements delayed delete.</para>
             </glossdef>
         </glossentry>
         <glossentry>
@@ -3968,7 +3968,7 @@ daemon that provides
             <glossdef>
                 <para>String of text only known by the user, used
                     along with an access key to make requests to the
-                    nova API.</para>
+                    Compute API.</para>
             </glossdef>
         </glossentry>
         <glossentry>
@@ -3976,14 +3976,14 @@ daemon that provides
             <glossdef>
                 <para>Open source tool used to access remote hosts
                     through an encrypted communications channel, SSH
-                    key injection is supported by nova.</para>
+                    key injection is supported by Compute.</para>
             </glossdef>
         </glossentry>
         <glossentry>
             <glossterm>security group</glossterm>
             <glossdef>
                 <para>A set of network traffic filtering rules that
-                    are applied to a nova instance.</para>
+                    are applied to a Compute instance.</para>
             </glossdef>
         </glossentry>
         <glossentry>
@@ -4014,14 +4014,14 @@ daemon that provides
         <glossentry>
             <glossterm>server UUID</glossterm>
             <glossdef>
-                <para>Unique ID assigned to each nova VM
+                <para>Unique ID assigned to each guest VM
                     instance.</para>
             </glossdef>
         </glossentry>
         <glossentry>
             <glossterm>service catalog</glossterm>
             <glossdef>
-                <para>Alternative term for the keystone
+                <para>Alternative term for the Identity Service
                     catalog.</para>
             </glossdef>
         </glossentry>
@@ -4029,28 +4029,30 @@ daemon that provides
             <glossterm>service ID</glossterm>
             <glossdef>
                 <para>Unique ID assigned to each service that is
-                    available in the keystone catalog.</para>
+                    available in the Identity Service catalog.</para>
             </glossdef>
         </glossentry>
         <glossentry>
             <glossterm>service registration</glossterm>
             <glossdef>
-                <para>A keystone feature that enables services, such as nova, to automatically register with the
+                <para>An Identity Service feature that enables services,
+                    such as Compute,
+                    to automatically register with the
                     catalog.</para>
             </glossdef>
         </glossentry>
         <glossentry>
             <glossterm>service tenant</glossterm>
             <glossdef>
-                <para>Special keystone tenant that contains all
+                <para>Special tenant that contains all
                     services that are listed in the catalog.</para>
             </glossdef>
         </glossentry>
         <glossentry>
             <glossterm>service token</glossterm>
             <glossdef>
-                <para>An administrator defined token used by nova to
-                    communicate securely with keystone.</para>
+                <para>An administrator defined token used by Compute to
+                    communicate securely with the Identity Service.</para>
             </glossdef>
         </glossentry>
         <glossentry>
@@ -4171,14 +4173,14 @@ daemon that provides
         <glossentry>
             <glossterm>SolidFire Volume Driver</glossterm>
             <glossdef>
-                <para>The nova volume driver for the SolidFire iSCSI
+                <para>The Block Storage driver for the SolidFire iSCSI
                     storage appliance.</para>
             </glossdef>
         </glossentry>
         <glossentry>
             <glossterm>spread-first scheduler</glossterm>
             <glossdef>
-                <para>The nova VM scheduling algorithm that attempts
+                <para>The Compute VM scheduling algorithm that attempts
                     to start new VM on the host with the least amount
                     of load.</para>
             </glossdef>
@@ -4201,7 +4203,7 @@ daemon that provides
         <glossentry>
             <glossterm>StackTach</glossterm>
             <glossdef>
-                <para>Community project that captures nova AMQP
+                <para>Community project that captures Compute AMQP
                     communications, useful for debugging.</para>
             </glossdef>
         </glossentry>
@@ -4260,7 +4262,7 @@ daemon that provides
             <glossterm>strategy</glossterm>
             <glossdef>
                 <para>Specifies the authentication source used by
-                    glance or keystone.</para>
+                    Image Service or Identity Service.</para>
             </glossdef>
         </glossentry>
         <glossentry>
@@ -4351,8 +4353,9 @@ daemon that provides
         <glossentry>
             <glossterm>sysadmin</glossterm>
             <glossdef>
-                <para>One of the default roles in the nova RBAC
-                    system. Enables a user to add other users to a project, interact with VM images that are
+                <para>One of the default roles in the Compute RBAC
+                    system. Enables a user to add other users to a project,
+                    interact with VM images that are
                     associated with the project, and start and stop VM
                     (VM) instances.</para>
             </glossdef>
@@ -4360,7 +4363,7 @@ daemon that provides
         <glossentry>
             <glossterm>system usage</glossterm>
             <glossdef>
-                <para>A nova component that, along with the
+                <para>A Compute component that, along with the
                     notification system, collects metrics and usage
                     information. Can be used for billing.</para>
             </glossdef>
@@ -4395,8 +4398,8 @@ daemon that provides
         <glossentry>
             <glossterm>tenant</glossterm>
             <glossdef>
-                <para>A group of users, used to isolate access to nova
-                    resources. An alternative term for a nova
+                <para>A group of users, used to isolate access to Compute
+                    resources. An alternative term for a
                     project.</para>
             </glossdef>
         </glossentry>
@@ -4409,7 +4412,7 @@ daemon that provides
         <glossentry>
             <glossterm>tenant endpoint</glossterm>
             <glossdef>
-                <para>A keystone API endpoint that is associated with
+                <para>An Identity Service API endpoint that is associated with
                     one or more tenants.</para>
             </glossdef>
         </glossentry>
@@ -4417,7 +4420,7 @@ daemon that provides
             <glossterm>tenant ID</glossterm>
             <glossdef>
                 <para>Unique ID assigned to each tenant within
-                    keystone, the nova project IDs map to the keystone
+                    the Identity Service, the project IDs map to the
                     tenant IDs.</para>
             </glossdef>
         </glossentry>
@@ -4431,7 +4434,7 @@ daemon that provides
         <glossentry>
             <glossterm>token services</glossterm>
             <glossdef>
-                <para>A keystone component that manages and validates
+                <para>An Identity Service component that manages and validates
                     tokens after a user or tenant has been
                     authenticated.</para>
             </glossdef>
@@ -4519,7 +4522,7 @@ daemon that provides
        <glossentry>
             <glossterm>unscoped token</glossterm>
             <glossdef>
-                <para>Alternative term for a keystone default
+                <para>Alternative term for a Identity Service default
                     token.</para>
             </glossdef>
         </glossentry>
@@ -4534,8 +4537,8 @@ daemon that provides
         <glossentry>
             <glossterm>user</glossterm>
             <glossdef>
-                <para>In keystone each user is associated with one or
-                    more tenants, and in nova they can be associated
+                <para>In Identity Service each user is associated with one or
+                    more tenants, and in Compute they can be associated
                     with roles, projects, or both.</para>
             </glossdef>
         </glossentry>
@@ -4584,14 +4587,14 @@ daemon that provides
             <glossterm>Virtual Disk Image (VDI)</glossterm>
             <glossdef>
                 <para>One of the VM image disk formats supported by
-                    glance.</para>
+                    Image Service.</para>
             </glossdef>
         </glossentry>
         <glossentry>
             <glossterm>Virtual Hard Disk (VHD)</glossterm>
             <glossdef>
                 <para>One of the VM image disk formats supported by
-                    glance.</para>
+                    Image Service.</para>
             </glossdef>
         </glossentry>
         <glossentry>
@@ -4623,7 +4626,7 @@ daemon that provides
             <glossterm>Virtual Network Computing (VNC)</glossterm>
             <glossdef>
                 <para>Open source GUI and CLI tools used for remote
-                    console access to VMs. Supported by nova.</para>
+                    console access to VMs. Supported by Compute.</para>
             </glossdef>
         </glossentry>
         <glossentry>
@@ -4644,7 +4647,7 @@ daemon that provides
         <glossentry>
             <glossterm>virtual private network (VPN)</glossterm>
             <glossdef>
-                <para>Provided by nova in the form of cloudpipes,
+                <para>Provided by Compute in the form of cloudpipes,
                     specialized instances that are used to create VPNs
                     on a per-project basis.</para>
             </glossdef>
@@ -4678,7 +4681,7 @@ daemon that provides
         <glossentry>
             <glossterm>VLAN manager</glossterm>
             <glossdef>
-                <para>A nova component that provides dnsmasq, radvd,
+                <para>A Compute component that provides dnsmasq, radvd,
                     and sets up forwarding to and from cloudpipe
                     instances.</para>
             </glossdef>
@@ -4699,7 +4702,7 @@ daemon that provides
             <glossterm>VM disk (VMDK)</glossterm>
             <glossdef>
                 <para>One of the VM image disk formats supported by
-                    glance.</para>
+                    Image Service.</para>
             </glossdef>
         </glossentry>
         <glossentry>
@@ -4712,20 +4715,20 @@ daemon that provides
             <glossterm>VM Remote Control (VMRC)</glossterm>
             <glossdef>
                 <para>Method to access VM instance consoles using a
-                    web browser. Supported by nova.</para>
+                    web browser. Supported by Compute.</para>
             </glossdef>
         </glossentry>
         <glossentry>
             <glossterm>VMware API</glossterm>
             <glossdef>
                 <para>Supports interaction with VMware products in
-                    nova.</para>
+                    Compute.</para>
             </glossdef>
         </glossentry>
         <glossentry>
             <glossterm>VNC proxy</glossterm>
             <glossdef>
-                <para>A nova component that provides users access to
+                <para>A Compute component that provides users access to
                     the consoles of their VM instances through VNC or
                     VMRC.</para>
             </glossdef>
@@ -4750,7 +4753,7 @@ daemon that provides
         <glossentry>
             <glossterm>volume controller</glossterm>
             <glossdef>
-                <para>A nova component that oversees and coordinates
+                <para>A Block Storage component that oversees and coordinates
                     storage volume actions.</para>
             </glossdef>
         </glossentry>
@@ -4764,20 +4767,21 @@ daemon that provides
             <glossterm>volume ID</glossterm>
             <glossdef>
                 <para>Unique ID applied to each storage volume under
-                    the nova control.</para>
+                    the Block Storage control.</para>
             </glossdef>
         </glossentry>
         <glossentry>
             <glossterm>volume manager</glossterm>
             <glossdef>
-                <para>A nova component that creates, attaches, and
+                <para>A Block Storage component that creates, attaches, and
                     detaches persistent storage volumes.</para>
             </glossdef>
         </glossentry>
         <glossentry>
             <glossterm>volume node</glossterm>
             <glossdef>
-                <para>A nova node that runs the <systemitem class="service">cinder-volume</systemitem>
+                <para>A Block Storage node that runs the
+                    <systemitem class="service">cinder-volume</systemitem>
                     daemon.</para>
             </glossdef>
         </glossentry>
@@ -4786,13 +4790,14 @@ daemon that provides
             <glossdef>
                 <para>Provides
                     support for new and specialized types of
-                    back-end storage for the nova volume manager.</para>
+                    back-end storage for the Block Storage
+                    volume manager.</para>
             </glossdef>
         </glossentry>
         <glossentry>
             <glossterm>Volume Service API</glossterm>
             <glossdef>
-                <para>Alternative term for the nova volume API.</para>
+                <para>Alternative term for the Compute volume API.</para>
             </glossdef>
         </glossentry>
         <glossentry>
@@ -4823,7 +4828,7 @@ daemon that provides
         <glossentry>
             <glossterm>weighing</glossterm>
             <glossdef>
-                <para>A nova process that determines the suitability
+                <para>A Compute process that determines the suitability
                     of the VM instances for a job for a particular
                     host. For example, not enough RAM on the host, too
                     many CPUs on the host, and so on.</para>
@@ -4841,7 +4846,7 @@ daemon that provides
             <glossterm>weighted cost</glossterm>
             <glossdef>
                 <para>The sum of each cost used when deciding where to
-                    start a new VM instance in nova.</para>
+                    start a new VM instance in Compute.</para>
             </glossdef>
         </glossentry>
         <glossentry>
@@ -4866,7 +4871,7 @@ daemon that provides
             <glossterm>Xen API</glossterm>
             <glossdef>
                 <para>The Xen administrative API, which is supported
-                    by nova.</para>
+                    by Compute.</para>
             </glossdef>
         </glossentry>
         <glossentry>
@@ -4878,7 +4883,7 @@ daemon that provides
         <glossentry>
             <glossterm>Xen Storage Manager Volume Driver</glossterm>
             <glossdef>
-                <para>A nova volume plug-in that enables
+                <para>A Block Storage volume plug-in that enables
                     communication with the Xen Storage Manager
                     API.</para>
             </glossdef>
