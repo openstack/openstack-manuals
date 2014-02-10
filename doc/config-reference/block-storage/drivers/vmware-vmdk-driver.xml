@@ -10,6 +10,21 @@
         any VMware-compatible storage technology such as NFS, iSCSI,
         FiberChannel, and vSAN.</para>
     <simplesect>
+        <title>Functional context</title>
+        <para>The VMware VMDK driver connects to vCenter, through
+            which it can dynamically access all the datastores visible
+            from the ESX hosts in the managed cluster.</para>
+        <para>When you create a volume, the VMDK driver creates a VMDK
+            file on demand. The creation of this VMDK file is
+            completed only when the volume is subsequently attached to
+            an instance, because the set of datastores visible to the
+            instance determines where to place the volume.</para>
+        <para>The running vSphere VM is then automatically
+            reconfigured to attach the VMDK file as an extra disk.
+            Once attached, you can log in to the running vSphere VM to
+            rescan and discover this extra disk.</para>
+    </simplesect>
+    <simplesect>
         <title>Configuration</title>
         <para>The recommended volume driver for OpenStack Block Storage is
             the VMware vCenter VMDK driver. When you configure the
