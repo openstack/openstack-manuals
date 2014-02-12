@@ -722,8 +722,8 @@
                         Networking, the Networking plug-in must
                         implement the security group API. The
                         following plug-ins currently implement this:
-                        ML2, Nicira NVP, Open vSwitch, Linux Bridge,
-                        NEC, and Ryu.</para>
+                        ML2, Open vSwitch, Linux Bridge,
+                        NEC, Ryu, and VMware NSX.</para>
                 </listitem>
                 <listitem>
                     <para>You must configure the correct firewall
@@ -1428,8 +1428,8 @@
             two instances to enable fast data plane failover.</para>
         <note>
             <para>The allowed-address-pairs extension is currently
-                only supported by these plug-ins: ML2, Nicira NVP, and
-                Open vSwitch.</para>
+                only supported by these plug-ins: ML2, Open vSwitch,
+                and VMware NSX.</para>
         </note>
         <section xml:id="section_allowed_address_pairs_workflow">
             <title>Basic allowed address pairs operations</title>
@@ -1471,13 +1471,13 @@
         <para>Each vendor can choose to implement additional API
             extensions to the core API. This section describes the
             extensions for each plug-in.</para>
-        <section xml:id="section_nicira_extensions">
-            <title>Nicira NVP extensions</title>
-            <para>These sections explain Nicira NVP plug-in
+        <section xml:id="section_vmware_extensions">
+            <title>VMware NSX extensions</title>
+            <para>These sections explain NSX plug-in
                 extensions.</para>
-            <section xml:id="section_nicira_nvp_plugin_qos_extension">
-                <title>Nicira NVP QoS extension</title>
-                <para>The Nicira NVP QoS extension rate-limits network
+            <section xml:id="section_vmware_nsx_plugin_qos_extension">
+                <title>VMware NSX QoS extension</title>
+                <para>The VMware NSX QoS extension rate-limits network
                     ports to guarantee a specific amount of bandwidth
                     for each port. This extension, by default, is only
                     accessible by a tenant with an admin role but is
@@ -1508,10 +1508,10 @@
                     subsequently created but are not added to existing
                     ports.</para>
                 <section
-                    xml:id="section_nicira_nvp_qos_api_abstractions">
-                    <title>Nicira NVP QoS API abstractions</title>
+                    xml:id="section_vmware_nsx_qos_api_abstractions">
+                    <title>VMware NSX QoS API abstractions</title>
                     <table rules="all">
-                        <caption>Nicira NVP QoS attributes</caption>
+                        <caption>VMware NSX QoS attributes</caption>
                         <col width="20%"/>
                         <col width="20%"/>
                         <col width="20%"/>
@@ -1582,13 +1582,13 @@
                         </tbody>
                     </table>
                 </section>
-                <section xml:id="nicira_nvp_qos_walk_through">
-                    <title>Basic Nicira NVP QoS operations</title>
+                <section xml:id="vmware_nsx_qos_walk_through">
+                    <title>Basic VMware NSX QoS operations</title>
                     <para>This table shows example neutron commands
                         that enable you to complete basic queue
                         operations:</para>
                     <table rules="all">
-                        <caption>Basic Nicira NVP QoS
+                        <caption>Basic VMware NSX QoS
                             operations</caption>
                         <col width="40%"/>
                         <col width="60%"/>
@@ -1640,25 +1640,25 @@
                     </table>
                 </section>
             </section>
-            <section xml:id="section_nicira_nvp_provider_extension">
-                <title>Nicira NVP provider networks extension</title>
+            <section xml:id="section_vmware_nsx_provider_extension">
+                <title>VMware NSX provider networks extension</title>
                 <para>Provider networks can be implemented in
-                    different ways by the underlying NVP
+                    different ways by the underlying NSX
                     platform.</para>
                 <para>The <emphasis>FLAT</emphasis> and
                         <emphasis>VLAN</emphasis> network types use
                     bridged transport connectors. These network types
                     enable the attachment of large number of ports. To
-                    handle the increased scale, the NVP plug-in can
+                    handle the increased scale, the NSX plug-in can
                     back a single Openstack Network with a chain of
-                    NVP logical switches. You can specify the maximum
+                    NSX logical switches. You can specify the maximum
                     number of ports on each logical switch in this
                     chain on the
                         <literal>max_lp_per_bridged_ls</literal>
                     parameter, which has a default value of
                     5,000.</para>
                 <para>The recommended value for this parameter varies
-                    with the NVP version running in the back-end, as
+                    with the NSX version running in the back-end, as
                     shown in the following table.</para>
                 <table rules="all">
                     <caption>Recommended values for
@@ -1667,7 +1667,7 @@
                     <col width="50%"/>
                     <thead>
                         <tr>
-                            <td>NVP version</td>
+                            <td>NSX version</td>
                             <td>Recommended Value</td>
                         </tr>
                     </thead>
@@ -1690,43 +1690,43 @@
                         </tr>
                     </tbody>
                 </table>
-                <para>In addition to these network types, the NVP
+                <para>In addition to these network types, the NSX
                     plug-in also supports a special
                         <emphasis>l3_ext</emphasis> network type,
-                    which maps external networks to specific NVP
+                    which maps external networks to specific NSX
                     gateway services as discussed in the next
                     section.</para>
             </section>
-            <section xml:id="section_nicira_nvp_plugin_l3_extension">
-                <title>Nicira NVP L3 extension</title>
-                <para>NVP exposes its L3 capabilities through gateway
+            <section xml:id="section_vmware_nsx_plugin_l3_extension">
+                <title>VMware NSX L3 extension</title>
+                <para>NSX exposes its L3 capabilities through gateway
                     services which are usually configured out of band
-                    from OpenStack. To use NVP with L3 capabilities,
-                    first create a L3 gateway service in the NVP
+                    from OpenStack. To use NSX with L3 capabilities,
+                    first create a L3 gateway service in the NSX
                     Manager. Next, in <filename>
-                        /etc/neutron/plugins/nicira/nvp.ini</filename>
+                        /etc/neutron/plugins/vmware/nsx.ini</filename>
                     set <literal>default_l3_gw_service_uuid</literal>
                     to this value. By default, routers are mapped to
                     this gateway service.</para>
-                <section xml:id="section_nicira_l3_walk_through">
-                    <title>Nicira NVP L3 extension operations</title>
+                <section xml:id="section_vmware_l3_walk_through">
+                    <title>VMware NSX L3 extension operations</title>
                     <para>Create external network and map it to a
-                        specific NVP gateway service:</para>
+                        specific NSX gateway service:</para>
                     <screen><prompt>#</prompt> <userinput>neutron net-create public --router:external=True --provider:network_type l3_ext \
 --provider:physical_network &lt;L3-Gateway-Service-UUID&gt;</userinput></screen>
                     <para>Terminate traffic on a specific VLAN from a
-                        NVP gateway service:</para>
+                        NSX gateway service:</para>
                     <screen><prompt>#</prompt> <userinput>neutron net-create public --router:external=True --provider:network_type l3_ext \
 --provider:physical_network &lt;L3-Gateway-Service-UUID&gt; -provider:segmentation_id &lt;VLAN_ID&gt;</userinput></screen>
                 </section>
             </section>
-            <section xml:id="section_nicira_nvp_plugin_status_sync">
+            <section xml:id="section_vmware_nsx_plugin_status_sync">
                 <title>Operational status synchronization in the
-                    Nicira NVP plug-in</title>
-                <para>Starting with the Havana release, the Nicira NVP
+                    VMware NSX plug-in</title>
+                <para>Starting with the Havana release, the VMware NSX
                     plug-in provides an asynchronous mechanism for
                     retrieving the operational status for neutron
-                    resources from the NVP back-end; this applies to
+                    resources from the NSX back-end; this applies to
                         <emphasis>network</emphasis>,
                         <emphasis>port</emphasis>, and
                         <emphasis>router</emphasis> resources.</para>
@@ -1740,14 +1740,14 @@
                     consistently improved.</para>
                 <para>Data to retrieve from the back-end are divided
                     in chunks in order to avoid expensive API
-                    requests; this is achieved leveraging NVP APIs
+                    requests; this is achieved leveraging NSX APIs
                     response paging capabilities. The minimum chunk
                     size can be specified using a configuration
                     option; the actual chunk size is then determined
                     dynamically according to: total number of
                     resources to retrieve, interval between two
                     synchronization task runs, minimum delay between
-                    two subsequent requests to the NVP
+                    two subsequent requests to the NSX
                     back-end.</para>
                 <para>The operational status synchronization can be
                     tuned or disabled using the configuration options
@@ -1756,7 +1756,7 @@
                     cases.</para>
                 <table rules="all">
                     <caption>Configuration options for tuning
-                        operational status synchronization in the NVP
+                        operational status synchronization in the NSX
                         plug-in</caption>
                     <col width="12%"/>
                     <col width="8%"/>
@@ -1775,7 +1775,7 @@
                     <tbody>
                         <tr>
                             <td><literal>state_sync_interval</literal></td>
-                            <td><literal>nvp_sync</literal></td>
+                            <td><literal>nsx_sync</literal></td>
                             <td>120 seconds</td>
                             <td>Integer; no constraint.</td>
                             <td>Interval in seconds between two run of
@@ -1790,7 +1790,7 @@
                         </tr>
                         <tr>
                             <td><literal>max_random_sync_delay</literal></td>
-                            <td><literal>nvp_sync</literal></td>
+                            <td><literal>nsx_sync</literal></td>
                             <td>0 seconds</td>
                             <td>Integer. Must not exceed
                                    <literal>min_sync_req_delay</literal></td>
@@ -1802,20 +1802,20 @@
                         </tr>
                         <tr>
                             <td><literal>min_sync_req_delay</literal></td>
-                            <td><literal>nvp_sync</literal></td>
+                            <td><literal>nsx_sync</literal></td>
                             <td>10 seconds</td>
                             <td>Integer. Must not exceed
                                    <literal>state_sync_interval</literal>.</td>
                             <td>The value of this option can be tuned
                                 according to the observed load on the
-                                NVP controllers. Lower values will
+                                NSX controllers. Lower values will
                                 result in faster synchronization, but
                                 might increase the load on the
                                 controller cluster.</td>
                         </tr>
                         <tr>
                             <td><literal>min_chunk_size</literal></td>
-                            <td><literal>nvp_sync</literal></td>
+                            <td><literal>nsx_sync</literal></td>
                             <td>500 resources</td>
                             <td>Integer; no constraint.</td>
                             <td>Minimum number of resources to
@@ -1836,12 +1836,12 @@
                         </tr>
                         <tr>
                             <td><literal>always_read_status</literal></td>
-                            <td><literal>nvp_sync</literal></td>
+                            <td><literal>nsx_sync</literal></td>
                             <td>False</td>
                             <td>Boolean; no constraint.</td>
                             <td>When this option is enabled, the
                                 operational status will always be
-                                retrieved from the NVP back-end ad
+                                retrieved from the NSX back-end ad
                                 every <literal>GET</literal> request.
                                 In this case it is advisable to
                                 disable the synchronization task.</td>
@@ -1851,7 +1851,7 @@
                 <para>When running multiple OpenStack Networking
                     server instances, the status synchronization task
                     should not run on every node; doing so sends
-                    unnecessary traffic to the NVP back-end and
+                    unnecessary traffic to the NSX back-end and
                     performs unnecessary DB operations. Set the
                         <option>state_sync_interval</option>
                     configuration option to a non-zero value
@@ -1859,7 +1859,7 @@
                     status synchronization.</para>
                 <para>The <parameter>fields=status</parameter>
                     parameter in Networking API requests always
-                    triggers an explicit query to the NVP back end,
+                    triggers an explicit query to the NSX back end,
                     even when you enable asynchronous state
                     synchronization. For example, <code>GET
                         /v2.0/networks/&lt;net-id>?fields=status&amp;fields=name</code>.</para>
