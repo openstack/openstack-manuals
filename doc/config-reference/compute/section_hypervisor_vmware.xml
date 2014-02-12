@@ -102,6 +102,14 @@
       runs with the VMware vCenter driver:</para>
     <orderedlist>
       <listitem>
+        <para><emphasis role="bold">Copying VMDK files (vSphere 5.1
+          only).</emphasis> In vSphere 5.1, copying large image files
+          (for example, 12 GB and greater) from Glance can take a long
+          time. To improve performance, VMware recommends that you
+          upgrade to VMware vCenter Server 5.1 Update 1 or later. For
+          more information, see the <link xlink:href="https://www.vmware.com/support/vsphere5/doc/vsphere-vcenter-server-51u1-release-notes.html#resolvedissuescimapi">Release Notes</link>.</para>
+      </listitem>
+      <listitem>
         <para><emphasis role="bold">vCenter inventory</emphasis>. Make
           sure that any vCenter used by OpenStack contains a single
           data center. A future Havana stable release will address
@@ -136,8 +144,8 @@
           plug-in, security groups are supported. If you use
             <systemitem class="service">nova-network</systemitem>,
           security groups are not supported.</para>
-        <note><para>The NSX plug-in is the only plug-in that is validated for
-            vSphere.</para></note>
+        <note><para>The NSX plug-in is the only plug-in that is
+          validated for vSphere.</para></note>
       </listitem>
       <listitem>
         <para><emphasis role="bold">VNC</emphasis>. The port range
@@ -147,9 +155,10 @@
           client to connect to virtual machine, see <link
             xlink:href="http://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;cmd=displayKC&amp;externalId=1246"
             >http://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;cmd=displayKC&amp;externalId=1246</link>.
-          </para><note><para>In addition to the default VNC port numbers (5900 to
-          6000) specified in the above document, the following ports
-          are also used: 6101, 6102, and 6105.</para></note>
+        </para>
+        <note><para>In addition to the default VNC port
+          numbers (5900 to 6000) specified in the above document, the
+          following ports are also used: 6101, 6102, and 6105.</para></note>
         <para>You must modify the ESXi firewall configuration to allow
           the VNC ports. Additionally, for the firewall modifications
           to persist after a reboot, you must create a custom vSphere
@@ -178,10 +187,10 @@
       (DRS).</para>
     <section xml:id="VMWareVCDriver_configuration_options">
       <title>VMwareVCDriver configuration options</title>
-      <para>When you use the VMwareVCDriver (vCenter versions 5.1 and later) with OpenStack Compute,
-        add the following VMware-specific configuration options to the
-          <filename>nova.conf</filename> file:</para>
-
+      <para>When you use the VMwareVCDriver (vCenter versions 5.1 and
+        later) with OpenStack Compute, add the following
+        VMware-specific configuration options to the
+        <filename>nova.conf</filename> file:</para>
       <programlisting language="ini">[DEFAULT]
 compute_driver=vmwareapi.VMwareVCDriver
 
