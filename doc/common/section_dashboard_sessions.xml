@@ -13,7 +13,7 @@
             (on Fedora/RHEL/CentOS: <filename>
             /etc/openstack-dashboard/local_settings</filename>, on Ubuntu and Debian:
             <filename>/etc/openstack-dashboard/local_settings.py</filename> and on openSUSE: <filename
-        >/usr/share/openstack-dashboard/openstack_dashboard/local/local_settings.py</filename>).
+        >/srv/www/openstack-dashboard/openstack_dashboard/local/local_settings.py</filename>).
    </para>
     <para>The following sections describe the pros and cons of each
         option as it pertains to deploying the dashboard.</para>
@@ -135,7 +135,7 @@ CACHES = {
                 (on Fedora/RHEL/CentOS: <filename>
                 /etc/openstack-dashboard/local_settings</filename>, on Ubuntu/Debian:
                 <filename>/etc/openstack-dashboard/local_settings.py</filename> and on openSUSE: <filename
-                >/usr/share/openstack-dashboard/openstack_dashboard/local/local_settings.py</filename>),
+                >/srv/www/openstack-dashboard/openstack_dashboard/local/local_settings.py</filename>),
                     change these options:</para>
                 <programlisting language="python"><?db-font-size 75%?>SESSION_ENGINE = 'django.core.cache.backends.db.DatabaseCache'
 DATABASES = {
@@ -155,7 +155,9 @@ DATABASES = {
                     as shown, you can run the <command>manage.py
                         syncdb</command> command to populate this
                     newly-created database.</para>
-                <screen><prompt>$</prompt> /usr/share/openstack-dashboard/manage.py syncdb </screen>
+                <screen><prompt>$</prompt> <userinput>/usr/share/openstack-dashboard/manage.py syncdb</userinput></screen>
+                <para>Note on openSUSE the path is <filename>/srv/www/openstack-dashboard/manage.py</filename>.
+                </para>
                 <para>As a result, the following output is
                     returned:</para>
                 <screen><computeroutput>Installing custom SQL ...
