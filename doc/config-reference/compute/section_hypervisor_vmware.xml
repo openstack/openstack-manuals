@@ -201,23 +201,32 @@ datastore_regex=&lt;optional datastore regex&gt;</programlisting>
               information, see
               <link linkend="VMWare_additional_config">vSphere 5.0 and
               earlier additional set up</link>.</para>
+          </listitem>
+          <listitem>
             <para>Clusters: The vCenter driver can support multiple
               clusters. To use more than one cluster, simply add
-              multiple <code>cluster_name</code> lines in
+              multiple <option>cluster_name</option> lines in
                 <filename>nova.conf</filename> with the appropriate
               cluster name. Clusters and data stores used by the
               vCenter driver should not contain any VMs other than
               those created by the driver.</para>
           </listitem>
           <listitem>
-            <para>Data stores: The <code>datastore_regex</code> field
-              specifies the data stores to use with Compute. For
-              example, <code>datastore_regex="nas.*"</code> selects
-              all the data stores that have a name starting with
-              "nas". If this line is omitted, Compute uses the first
-              data store returned by the vSphere API. It is
+            <para>Data stores: The <option>datastore_regex</option>
+              setting specifies the data stores to use with Compute.
+              For example, <option>datastore_regex="nas.*"</option>
+              selects all the data stores that have a name starting
+              with "nas". If this line is omitted, Compute uses the
+              first data store returned by the vSphere API. It is
               recommended not to use this field and instead remove
               data stores that are not intended for OpenStack.</para>
+          </listitem>
+          <listitem>
+            <para>Reserved host memory:
+              The <option>reserved_host_memory_mb</option> setting is set
+              to 512 MB by default. However, VMware recommends setting
+              this value to 0 MB because the vCenter driver reports
+              the effective memory available to the virtual machines.</para>
           </listitem>
         </itemizedlist>
       </note>
@@ -244,7 +253,7 @@ datastore_regex=&lt;optional datastore regex&gt;</programlisting>
     <para>The vCenter driver supports images in the VMDK format. Disks
       in this format can be obtained from VMware Fusion or from an ESX
       environment. It is also possible to convert other formats, such
-      as qcow2, to the VMDK format using the <code>qemu-img</code>
+      as qcow2, to the VMDK format using the <option>qemu-img</option>
       utility. After a VMDK disk is available, load it into the
       OpenStack Image Service. Then, you can use it with the VMware
       vCenter driver. The following sections provide additional
@@ -275,7 +284,7 @@ datastore_regex=&lt;optional datastore regex&gt;</programlisting>
             utility.</para>
         </listitem>
       </itemizedlist>
-      <para>The following table shows the <code>vmware_disktype</code>
+      <para>The following table shows the <option>vmware_disktype</option>
         property that applies to each of the supported VMDK disk
         types:</para>
       <table rules="all">
@@ -309,10 +318,10 @@ datastore_regex=&lt;optional datastore regex&gt;</programlisting>
         </tbody>
       </table>
 
-      <para>The <code>vmware_disktype</code> property is set when an
+      <para>The <option>vmware_disktype</option> property is set when an
         image is loaded into the OpenStack Image Service. For example,
         the following command creates a Monolithic Sparse image by
-        setting <code>vmware_disktype</code> to
+        setting <option>vmware_disktype</option> to
           <literal>sparse</literal>:</para>
       <screen><prompt>$</prompt> <userinput>glance image-create name="ubuntu-sparse" disk_format=vmdk \
 container_format=bare is_public=true \
@@ -346,7 +355,7 @@ container_format=bare is_public=true \
 --property vmware_disktype="sparse" \
 --property vmware_adaptertype="ide" &lt; \
 precise-server-cloudimg-amd64-disk1.vmdk</userinput></screen>
-      <para>Note that the <code>vmware_disktype</code> is set to
+      <para>Note that the <option>vmware_disktype</option> is set to
           <emphasis role="italic">sparse</emphasis> and the
           <code>vmware_adaptertype</code> is set to <emphasis
           role="italic">ide</emphasis> in the previous command.</para>
@@ -355,7 +364,7 @@ precise-server-cloudimg-amd64-disk1.vmdk</userinput></screen>
           <code>vmware_adaptertype</code> might be different. To
         determine the image adapter type from an image file, use the
         following command and look for the
-          <code>ddb.adapterType=</code> line:</para>
+          <option>ddb.adapterType=</option> line:</para>
       <screen><prompt>$</prompt> <userinput>head -20 &lt;vmdk file name></userinput></screen>
       <para>Assuming a preallocated disk type and an iSCSI lsiLogic
         adapter type, the following command uploads the VMDK
@@ -370,7 +379,7 @@ container_format=bare is_public=true \
         disks with one of the SCSI adapter types (such as, busLogic,
         lsiLogic) cannot be attached to the IDE controller. Therefore,
         as the previous examples show, it is important to set the
-          <code>vmware_adaptertype</code> property correctly. The
+          <option>vmware_adaptertype</option> property correctly. The
         default adapter type is lsiLogic, which is SCSI, so you can
         omit the <parameter>vmware_adaptertype</parameter> property if
         you are certain that the image adapter type is
@@ -379,7 +388,7 @@ container_format=bare is_public=true \
     <section xml:id="VMware_tagging_images">
       <title>Tag VMware images</title>
       <para>In a mixed hypervisor environment, OpenStack Compute uses
-        the <code>hypervisor_type</code> tag to match images to the
+        the <option>hypervisor_type</option> tag to match images to the
         correct hypervisor type. For VMware images, set the hypervisor
         type to <literal>vmware</literal>. Other valid hypervisor
         types include: xen, qemu, kvm, lxc, uml, and hyperv.</para>
