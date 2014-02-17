@@ -841,8 +841,9 @@ password = "PLUMgrid-director-admin-password"</programlisting>
                 class="service">nova-compute</systemitem> and nodes
             that run dedicated OpenStack Networking service agents
             such as <systemitem>neutron-dhcp-agent</systemitem>,
-                <systemitem>neutron-l3-agent</systemitem>, or
-                <systemitem>neutron-lbaas-agent</systemitem>.</para>
+            <systemitem>neutron-l3-agent</systemitem>,
+            <systemitem>neutron-metering-agent</systemitem> or
+            <systemitem>neutron-lbaas-agent</systemitem>.</para>
         <para>A data-forwarding node typically has a network interface
             with an IP address on the “management network” and another
             interface on the “data network”.</para>
@@ -1212,6 +1213,45 @@ interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver</programlist
                         >neutron-l3-agent</systemitem> service
                     starts.</para>
             </important>
+        </section>
+        <section xml:id="install_neutron-metering-agent">
+            <title>Configure metering agent</title>
+            <para>Starting with the Havana release, the Neutron Metering resides beside
+                    <systemitem>neutron-l3-agent</systemitem>.</para>
+            <procedure>
+                <title>To install the metering agent and configure the
+                    node</title>
+                <step>
+                    <para>Install the agent by running:</para>
+                    <screen><prompt>#</prompt> <userinput>sudo apt-get install neutron-metering-agent</userinput></screen>
+                </step>
+                <step>
+                    <para>If you use one of the following plugins, you need to configure the metering agent with these lines as well:</para>
+                    <itemizedlist>
+                        <listitem>
+                            <para>An OVS-based plug-in such as OVS,
+                                NSX, Ryu, NEC,
+                                BigSwitch/Floodlight:</para>
+                            <programlisting language="ini">interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver</programlisting>
+                        </listitem>
+                        <listitem>
+                            <para>A plug-in that uses LinuxBridge:</para>
+                            <programlisting language="ini">interface_driver = neutron.agent.linux.interface.BridgeInterfaceDriver</programlisting>
+                        </listitem>
+                    </itemizedlist>
+                </step>
+                <step>
+                    <para>To use the reference implementation, you
+                        must set:</para>
+                    <programlisting language="ini">driver = neutron.services.metering.drivers.iptables.iptables_driver.IptablesMeteringDriver</programlisting>
+                </step>
+                <step>
+                    <para>Set this parameter in the
+                            <filename>neutron.conf</filename> file on
+                        the host that runs <systemitem class="service">neutron-server</systemitem>:</para>
+                    <programlisting language="ini">service_plugins = neutron.services.metering.metering_plugin.MeteringPlugin</programlisting>
+                </step>
+            </procedure>
         </section>
         <section xml:id="install_neutron-lbaas-agent">
             <title>Configure LBaaS agent</title>
