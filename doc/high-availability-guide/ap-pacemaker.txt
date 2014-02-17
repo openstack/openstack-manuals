@@ -4,12 +4,12 @@
 OpenStack infrastructure high availability relies on the
 http://www.clusterlabs.org[Pacemaker] cluster stack, the
 state-of-the-art high availability and load balancing stack for the
-Linux platform. Pacemaker is storage- and application-agnostic, and is
+Linux platform. Pacemaker is storage and application-agnostic, and is
 in no way specific to OpenStack.
 
 Pacemaker relies on the http://www.corosync.org[Corosync] messaging
 layer for reliable cluster communications. Corosync implements the
-Totem single-ring ordering and membership protocol and provides UDP
+Totem single-ring ordering and membership protocol. It also provides UDP
 and InfiniBand based messaging, quorum, and cluster membership to
 Pacemaker.
 
@@ -107,7 +107,7 @@ usually named +corosync+:
 * +start corosync+ (upstart)
 * +systemctl start corosync+ (systemd)
 
-You can now check Corosync connectivity with two tools.
+You can now check the Corosync connectivity with two tools.
 
 The +corosync-cfgtool+ utility, when invoked with the +-s+ option,
 gives a summary of the health of the communication rings:
@@ -151,7 +151,7 @@ that the cluster is communicating properly, it is safe to start
 * +start pacemaker+ (upstart)
 * +systemctl start pacemaker+ (systemd)
 
-Once Pacemaker services have started, Pacemaker will create an default
+Once Pacemaker services have started, Pacemaker will create a default
 empty cluster configuration with no resources. You may observe
 Pacemaker's status with the +crm_mon+ utility:
 
