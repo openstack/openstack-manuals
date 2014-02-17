@@ -13,7 +13,7 @@ NOTE: Here is the http://docs.openstack.org/trunk/install-guide/install/apt/cont
 
 ===== Adding OpenStack Identity resource to Pacemaker
 
-First of all, you need to download the resource agent to your system :
+First of all, you need to download the resource agent to your system:
 
 ----
 cd /usr/lib/ocf/resource.d
@@ -31,7 +31,7 @@ configure+, and add the following cluster resources:
 include::includes/pacemaker-keystone.crm[]
 ----
 
-This configuration creates +p_keystone+, a resource for manage OpenStack Identity service.
+This configuration creates +p_keystone+, a resource for managing the OpenStack Identity service.
 
 +crm configure+ supports batch input, so you may copy and paste the
 above into your live pacemaker configuration, and then make changes as
@@ -45,7 +45,7 @@ service, and its dependent resources, on one of your nodes.
 
 ===== Configuring OpenStack Identity service
 
-You need to edit your OpenStack Identity configuration file (+keystone.conf+) and change the bind parameters :
+You need to edit your OpenStack Identity configuration file (+keystone.conf+) and change the bind parameters:
 
 On Havana:
 ----
@@ -58,7 +58,7 @@ public_bind_host = 192.168.42.103
 admin_bind_host = 192.168.42.103
 ----
 
-To be sure all data will be high available, you should be sure that you store everything in the MySQL database (which is also high available) :
+To be sure all data will be highly available, you should be sure that you store everything in the MySQL database (which is also highly available):
 ----
 [catalog]
 driver = keystone.catalog.backends.sql.Catalog
@@ -69,7 +69,7 @@ driver = keystone.identity.backends.sql.Identity
 ----
 
 
-===== Configuring OpenStack Services to use High Available OpenStack Identity
+===== Configuring OpenStack Services to use the Highly Available OpenStack Identity
 
 Your OpenStack services must now point their OpenStack Identity configuration to
 the highly available, virtual cluster IP address -- rather than a
@@ -84,14 +84,14 @@ the following line in your API configuration file
 auth_host = 192.168.42.103
 ----
 
-You need also to create the OpenStack Identity Endpoint with this IP.
+You also need to create the OpenStack Identity Endpoint with this IP.
 
-NOTE : If you are using both private and public IP addresses, you should create two Virtual IP addresses and define your endpoint like this :
+NOTE : If you are using both private and public IP addresses, you should create two Virtual IP addresses and define your endpoint like this:
 ----
 keystone endpoint-create --region $KEYSTONE_REGION --service-id $service-id --publicurl 'http://PUBLIC_VIP:5000/v2.0' --adminurl 'http://192.168.42.103:35357/v2.0' --internalurl 'http://192.168.42.103:5000/v2.0'
 ----
 
-If you are using the Horizon Dashboard, you should edit +local_settings.py+ file :
+If you are using the Horizon Dashboard, you should edit the +local_settings.py+ file:
 ----
 OPENSTACK_HOST = 192.168.42.103
 ----
