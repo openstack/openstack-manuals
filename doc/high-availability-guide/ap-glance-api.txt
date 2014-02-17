@@ -13,7 +13,7 @@ NOTE: Here is the http://docs.openstack.org/trunk/install-guide/install/apt/cont
 
 ===== Adding OpenStack Image API resource to Pacemaker
 
-First of all, you need to download the resource agent to your system :
+First of all, you need to download the resource agent to your system:
   
 ----
 cd /usr/lib/ocf/resource.d/openstack
@@ -45,18 +45,18 @@ service, and its dependent resources, on one of your nodes.
 
 ===== Configuring OpenStack Image API service
 
-Edit +/etc/glance/glance-api.conf+ :
+Edit +/etc/glance/glance-api.conf+:
 ----
-# We have to use MySQL connection to store datas :
+# We have to use MySQL connection to store data:
 sql_connection=mysql://glance:password@192.168.42.101/glance
 
-# We bind OpenStack Image API to the VIP :
+# We bind OpenStack Image API to the VIP:
 bind_host = 192.168.42.103
 
-# Connect to OpenStack Image Registry service :
+# Connect to OpenStack Image Registry service:
 registry_host = 192.168.42.103
 
-# We send notifications to High Available RabbitMQ :
+# We send notifications to High Available RabbitMQ:
 notifier_strategy = rabbit
 rabbit_host = 192.168.42.102
 ----
@@ -65,12 +65,12 @@ rabbit_host = 192.168.42.102
 ===== Configuring OpenStack Services to use High Available OpenStack Image API
 
 Your OpenStack services must now point their OpenStack Image API configuration to
-the highly available, virtual cluster IP address -- rather than a
+the highly available, virtual cluster IP address -- rather than an
 OpenStack Image API server's physical IP address as you normally would.
 
 For OpenStack Compute, for example, if your OpenStack Image API service IP address is
 192.168.42.104 as in the configuration explained here, you would use
-the following line in your +nova.conf+ file :
+the following line in your +nova.conf+ file:
 
 ----
 glance_api_servers = 192.168.42.103
@@ -78,7 +78,7 @@ glance_api_servers = 192.168.42.103
 
 You need also to create the OpenStack Image API Endpoint with this IP.
 
-NOTE : If you are using both private and public IP addresses, you should create two Virtual IP addresses and define your endpoint like this:
+NOTE: If you are using both private and public IP addresses, you should create two Virtual IP addresses and define your endpoint like this:
 ----
 keystone endpoint-create --region $KEYSTONE_REGION --service-id $service-id --publicurl 'http://PUBLIC_VIP:9292' --adminurl 'http://192.168.42.103:9292' --internalurl 'http://192.168.42.103:9292'
 ----
