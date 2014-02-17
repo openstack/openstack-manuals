@@ -13,7 +13,7 @@ NOTE: Here is the http://docs.openstack.org/trunk/install-guide/install/apt/cont
 
 ===== Adding OpenStack Networking Server resource to Pacemaker
 
-First of all, you need to download the resource agent to your system :
+First of all, you need to download the resource agent to your system:
 ----
 cd /usr/lib/ocf/resource.d/openstack
 wget https://raw.github.com/madkiss/openstack-resource-agents/master/ocf/neutron-server
@@ -43,18 +43,18 @@ service, and its dependent resources, on one of your nodes.
 
 Edit +/etc/neutron/neutron.conf+ :
 ----
-# We bind the service to the VIP :
+# We bind the service to the VIP:
 bind_host = 192.168.42.103
 
-# We bind OpenStack Networking Server to the VIP :
+# We bind OpenStack Networking Server to the VIP:
 bind_host = 192.168.42.103
 
-# We send notifications to Highly available RabbitMQ :
+# We send notifications to Highly available RabbitMQ:
 notifier_strategy = rabbit
 rabbit_host = 192.168.42.102
 
 [database]
-# We have to use MySQL connection to store datas :
+# We have to use MySQL connection to store data:
 connection = mysql://neutron:password@192.168.42.101/neutron
 ----
 
@@ -65,7 +65,7 @@ Your OpenStack services must now point their OpenStack Networking Server configu
 the highly available, virtual cluster IP address -- rather than an
 OpenStack Networking server's physical IP address as you normally would.
 
-For example, you should configure OpenStack Compute for using Highly Available OpenStack Networking Server in editing +nova.conf+ file :
+For example, you should configure OpenStack Compute for using Highly Available OpenStack Networking Server in editing +nova.conf+ file:
 ----
 neutron_url = http://192.168.42.103:9696
 ----
