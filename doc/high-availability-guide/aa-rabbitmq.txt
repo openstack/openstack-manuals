@@ -2,7 +2,7 @@
 === RabbitMQ
 
 RabbitMQ is the default AMQP server used by many OpenStack services. Making the RabbitMQ service
-highly available involves:
+highly available involves the following steps:
 
 * Install RabbitMQ
 * Configure RabbitMQ for HA queues
@@ -35,9 +35,9 @@ http://www.rabbitmq.com/install-rpm.html[Official manual for installing RabbitMQ
 ==== Configure RabbitMQ
 
 Here we are building a cluster of RabbitMQ nodes to construct a RabbitMQ broker.
-Mirrored queues in RabbitMQ improve the availability of service since it will be resilient to failures,
-but we have to consider that while exchanges and bindings will survive the loss of individual nodes, queues
-and their messages will no because a queue and its contents is located on one node. So if we lose this node,
+Mirrored queues in RabbitMQ improve the availability of service since it will be resilient to failures.
+We have to consider that while exchanges and bindings will survive the loss of individual nodes, queues
+and their messages will not because a queue and its contents is located on one node. If we lose this node,
 we also lose the queue.
 
 We consider that we run (at least) two RabbitMQ servers. To build a broker, we need to ensure that all nodes
@@ -66,14 +66,14 @@ Cluster status of node rabbit@rabbit2 ...
 [{nodes,[{disc,[rabbit@rabbit1]},{ram,[rabbit@rabbit2]}]},{running_nodes,[rabbit@rabbit2,rabbit@rabbit1]}]
 ----
 
-If the cluster is working, you can now proceed to creating users and password for queues.
+If the cluster is working, you can now proceed to creating users and passwords for queues.
 
 
 *Note for RabbitMQ version 3*
 
 Queue mirroring is no longer controlled by the _x-ha-policy_ argument when declaring a queue. OpenStack can
 continue to declare this argument, but it won't cause queues to be mirrored.
-We need to make sure that all queues (except those with auto-generated names) are mirrored across all nodes in running:
+We need to make sure that all queues (except those with auto-generated names) are mirrored across all running nodes:
 ----
 rabbitmqctl set_policy HA '^(?!amq\.).*' '{"ha-mode": "all"}'
 ----
@@ -83,8 +83,8 @@ http://www.rabbitmq.com/ha.html[More informations about High availability in Rab
 
 ==== Configure OpenStack Services to use RabbitMQ
 
-Since Grizzly Release, most of OpenStack components using queuing has been supported the feature,
-we have to configure them to use at least two RabbitMQ nodes.
+Since the Grizzly Release, most of the OpenStack components using queuing have supported the feature.
+We have to configure them to use at least two RabbitMQ nodes.
 
 Do this configuration on all services using RabbitMQ:
 
@@ -118,11 +118,11 @@ Use H/A queues in RabbitMQ (x-ha-policy: all):
 rabbit_ha_queues=true
 ----
 
-If you change the configuration from an old setup which did not use HA queues, you should interrupt the service :
+If you change the configuration from an old setup which did not use HA queues, you should interrupt the service:
 ----
 rabbitmqctl stop_app
 rabbitmqctl reset
 rabbitmqctl start_app
 ----
 
-Services currently working with HA queues : OpenStack Compute, Cinder, OpenStack Networking, Ceilometer.
+Services currently working with HA queues: OpenStack Compute, OpenStack Block Storage, OpenStack Networking, Telemetry.
