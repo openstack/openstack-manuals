@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="neutron-initial-networks"
+  xmlns="http://docbook.org/ns/docbook"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  xmlns:svg="http://www.w3.org/2000/svg"
+  xmlns:html="http://www.w3.org/1999/xhtml" version="5.0">
+    <title>Create initial networks</title>
+    <note>
+      <para>In these sections, replace
+          <replaceable>SPECIAL_OPTIONS</replaceable> with any options
+        specific to your Networking plug-in choices. See <link
+          linkend="install-neutron.configure-networks.plug-in-specific"
+          >here</link> to check if your plug-in requires any special
+        options.</para>
+    </note>
+    <procedure>
+      <step>
+        <para>Create the <literal>ext-net</literal> external network.
+          This network represents a slice of the outside world. VMs
+          are not directly linked to this network; instead, they
+          connect to internal networks. Outgoing traffic is routed by
+          Neutron to the external network. Additionally, floating IP
+          addresses from the subnet for <literal>ext-net</literal>
+          might be assigned to VMs so that the external network can
+          contact them. Neutron routes the traffic
+          appropriately.</para>
+        <screen><prompt>#</prompt> <userinput>neutron net-create ext-net --router:external=True <replaceable>SPECIAL_OPTIONS</replaceable></userinput></screen>
+      </step>
+      <step>
+        <para>Create the associated subnet with the same gateway and
+          CIDR as <replaceable>EXTERNAL_INTERFACE</replaceable>. It
+          does not have DHCP because it represents a slice of the
+          external world:</para>
+        <screen><prompt>#</prompt> <userinput>neutron subnet-create ext-net \
+  --allocation-pool start=<replaceable>FLOATING_IP_START</replaceable>,end=<replaceable>FLOATING_IP_END</replaceable> \
+  --gateway=<replaceable>EXTERNAL_INTERFACE_GATEWAY</replaceable> --enable_dhcp=False \
+  <replaceable>EXTERNAL_INTERFACE_CIDR</replaceable></userinput></screen>
+      </step>
+      <step>
+        <para>Create one or more initial tenants, for example:</para>
+        <screen><prompt>#</prompt> <userinput>keystone tenant-create --name <replaceable>DEMO_TENANT</replaceable></userinput></screen>
+        <para os="rhel;centos;fedora;opensuse;sles;ubuntu"> See <xref
+            linkend="keystone-users"/> for further details.</para>
+        <para os="debian"> See <xref linkend="keystone-install"/> for
+          further details.</para>
+      </step>
+      <step>
+        <para>Create the router attached to the external network. This
+          router routes traffic to the internal subnets as
+          appropriate. You can create it under a given tenant: Append
+            <literal>--tenant-id</literal> option with a value of
+            <replaceable>DEMO_TENANT_ID</replaceable> to the
+          command.</para>
+        <para>Use the following to quickly get the
+            <replaceable>DEMO_TENANT</replaceable> tenant-id:</para>
+        <screen><prompt>#</prompt> <userinput>keystone tenant-list | grep <replaceable>DEMO_TENANT</replaceable> | awk '{print $2;}'</userinput></screen>
+        <para>Then create the router:</para>
+        <screen><prompt>#</prompt> <userinput>neutron router-create ext-to-int --tenant-id <replaceable>DEMO_TENANT_ID</replaceable></userinput></screen>
+      </step>
+      <step>
+        <para>Connect the router to <literal>ext-net</literal> by
+          setting the gateway for the router as
+            <literal>ext-net</literal>:</para>
+        <screen><prompt>#</prompt> <userinput>neutron router-gateway-set <replaceable>EXT_TO_INT_ID</replaceable> <replaceable>EXT_NET_ID</replaceable></userinput></screen>
+      </step>
+      <step>
+        <para>Create an internal network for
+            <replaceable>DEMO_TENANT</replaceable> (and associated
+          subnet over an arbitrary internal IP range, such as,
+            <literal>10.5.5.0/24</literal>), and connect it to the
+          router by setting it as a port:</para>
+        <screen><prompt>#</prompt> <userinput>neutron net-create --tenant-id <replaceable>DEMO_TENANT_ID</replaceable> demo-net <replaceable>SPECIAL_OPTIONS</replaceable></userinput>
+<prompt>#</prompt> <userinput>neutron subnet-create --tenant-id <replaceable>DEMO_TENANT_ID</replaceable> demo-net 10.5.5.0/24 --gateway 10.5.5.1</userinput>
+<prompt>#</prompt> <userinput>neutron router-interface-add <replaceable>EXT_TO_INT_ID</replaceable> <replaceable>DEMO_NET_SUBNET_ID</replaceable></userinput></screen>
+      </step>
+      <step>
+        <para>Check the special options page for your plug-in for
+          remaining steps. Now, return to the general
+            <acronym>OVS</acronym> instructions.</para>
+      </step>
+    </procedure>
+    <section
+      xml:id="install-neutron.configure-networks.plug-in-specific">
+      <title>Plug-in-specific Neutron network options</title>
+      <section
+        xml:id="install-neutron.configure-networks.plug-in-specific.ovs">
+        <title>Open vSwitch Network configuration options</title>
+        <section
+          xml:id="install-neutron.configure-networks.plug-in-specific.ovs.gre">
+          <title>GRE tunneling network options</title>
+          <note>
+            <para>While this guide currently enables network
+              namespaces by default, you can disable them if you have
+              issues or your kernel does not support them. If you
+              disabled namespaces, you must perform some additional
+              configuration for the L3 agent.</para>
+            <para>After you create all the networks, tell the L3 agent
+              what the external network ID is, as well as the ID of
+              the router associated with this machine (because you are
+              not using namespaces, there can be only one router for
+              each machine). To do this, edit the
+                <filename>/etc/neutron/l3_agent.ini</filename>
+              file:</para>
+            <programlisting language="ini">gateway_external_network_id = <replaceable>EXT_NET_ID</replaceable>
+router_id = <replaceable>EXT_TO_INT_ID</replaceable></programlisting>
+            <para>Then, restart the L3 agent:</para>
+            <screen><prompt>#</prompt> <userinput>service neutron-l3-agent restart</userinput></screen>
+          </note>
+          <para>When creating networks, you should use the
+            options:</para>
+          <screen><userinput>--provider:network_type gre --provider:segmentation_id SEG_ID</userinput></screen>
+          <para><replaceable>SEG_ID</replaceable> should be
+              <literal>2</literal> for the external network, and just
+            any unique number inside the tunnel range specified before
+            for any other network.</para>
+          <note>
+            <para>These options are not needed beyond the first
+              network, as Neutron automatically increments the
+              segmentation id and copy the network type option for any
+              additional networks.</para>
+          </note>
+          <para>Now, return to the general <acronym>OVS</acronym>
+            instructions.</para>
+        </section>
+        <section
+          xml:id="install-neutron.configure-networks.plug-in-specific.ovs.vlan">
+          <title>VLAN network options</title>
+          <para>When creating networks, use these options:</para>
+          <screen><userinput>--provider:network_type vlan --provider:physical_network physnet1 --provider:segmentation_id SEG_ID</userinput>         </screen>
+          <para><replaceable>SEG_ID</replaceable> should be
+              <literal>2</literal> for the external network, and just
+            any unique number inside the vlan range specified above
+            for any other network.</para>
+          <note>
+            <para>These options are not needed beyond the first
+              network, as Neutron automatically increments the
+              segmentation ID and copies the network type and physical
+              network options for any additional networks. They are
+              only needed if you wish to modify those values in any
+              way.</para>
+          </note>
+          <warning>
+            <para>Some NICs have Linux drivers that do not handle
+              VLANs properly. See the
+                <literal>ovs-vlan-bug-workaround</literal> and
+                <literal>ovs-vlan-test</literal> man pages for more
+              information. Additionally, you might try turning off
+                <literal>rx-vlan-offload</literal> and
+                <literal>tx-vlan-offload</literal> by using
+                <literal>ethtool</literal> on the
+                <replaceable>DATA_INTERFACE</replaceable>. Another
+              potential caveat to VLAN functionality is that VLAN tags
+              add an additional 4 bytes to the packet size. If your
+              NICs cannot handle large packets, make sure to set the
+              MTU to a value that is 4 bytes less than the normal
+              value on the
+              <replaceable>DATA_INTERFACE</replaceable>.</para>
+            <para>If you run OpenStack inside a virtualized
+              environment (for testing purposes), switching to the
+                <literal>virtio</literal> NIC type (or a similar
+              technology if you are not using KVM/QEMU to run your
+              host VMs) might solve the issue.</para>
+          </warning>
+        </section>
+      </section>
+    </section>
+  </section>
