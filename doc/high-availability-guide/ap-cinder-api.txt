@@ -13,7 +13,7 @@ NOTE: Here is the http://docs.openstack.org/trunk/install-guide/install/apt/cont
 
 ===== Adding Cinder API resource to Pacemaker
 
-First of all, you need to download the resource agent to your system :
+First of all, you need to download the resource agent to your system:
   
 ----
 cd /usr/lib/ocf/resource.d/openstack
@@ -45,15 +45,15 @@ service, and its dependent resources, on one of your nodes.
 
 ===== Configuring Cinder API service
 
-Edit +/etc/cinder/cinder.conf+ :
+Edit +/etc/cinder/cinder.conf+:
 ----
-# We have to use MySQL connection to store datas :
+# We have to use MySQL connection to store data:
 sql_connection=mysql://cinder:password@192.168.42.101/cinder
 
 # We bind Cinder API to the VIP :
 osapi_volume_listen = 192.168.42.103
 
-# We send notifications to High Available RabbitMQ :
+# We send notifications to High Available RabbitMQ:
 notifier_strategy = rabbit
 rabbit_host = 192.168.42.102
 ----
@@ -67,7 +67,7 @@ Cinder API server's physical IP address as you normally would.
 
 You need to create the Cinder API Endpoint with this IP.
 
-NOTE : If you are using both private and public IP, you should create two Virtual IP and define your endpoint like this :
+NOTE: If you are using both private and public IP, you should create two Virtual IPs and define your endpoint like this:
 ----
 keystone endpoint-create --region $KEYSTONE_REGION --service-id $service-id --publicurl 'http://PUBLIC_VIP:8776/v1/%(tenant_id)s' --adminurl 'http://192.168.42.103:8776/v1/%(tenant_id)s' --internalurl 'http://192.168.42.103:8776/v1/%(tenant_id)s'
 ----
