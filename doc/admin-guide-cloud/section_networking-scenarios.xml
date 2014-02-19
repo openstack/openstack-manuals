@@ -4,21 +4,24 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
     <title>Networking scenarios</title>
-    <para>This chapter describes two networking scenarios and how the Open vSwitch plug-in and the
-        Linux bridging plug-in implement these scenarios.</para>
+    <para>This chapter describes two networking scenarios and how the
+    Open vSwitch plug-in and the Linux Bridge plug-in implement these
+    scenarios.</para>
     <section xml:id="under_the_hood_openvswitch">
       <?dbhtml stop-chunking?>
         <title>Open vSwitch</title>
-        <para>This section describes how the Open vSwitch plug-in implements the Networking
-            abstractions.</para>
+        <para>This section describes how the Open vSwitch plug-in
+        implements the Networking abstractions.</para>
         <section xml:id="under_the_hood_openvswitch_configuration">
             <title>Configuration</title>
-            <para>This example uses VLAN isolation on the switches to isolate tenant networks. This
-                configuration labels the physical network associated with the public network as
-                    <literal>physnet1</literal>, and the physical network associated with the data
-                network as <literal>physnet2</literal>, which leads to the following configuration
-                options in
-                <filename>ovs_neutron_plugin.ini</filename>:<programlisting language="bash">[ovs]
+            <para>This example uses VLAN segmentation on the switches
+            to isolate tenant networks. This configuration labels the
+            physical network associated with the public network as
+            <literal>physnet1</literal>, and the physical network
+            associated with the data network as
+            <literal>physnet2</literal>, which leads to the following
+            configuration options in <filename>ovs_neutron_plugin.ini</filename>:
+            <programlisting language="ini">[ovs]
 tenant_network_type = vlan
 network_vlan_ranges = physnet2:100:110
 integration_bridge = br-int
@@ -71,9 +74,7 @@ bridge_mappings = physnet2:br-eth1</programlisting></para>
          <section xml:id="under_the_hood_openvswitch_scenario1_compute">
 
             <title>Scenario 1: Compute host config</title>
-            <para>The following figure shows how to configure various Linux networking devices on the compute host:
-
-           </para>
+            <para>The following figure shows how to configure various Linux networking devices on the Compute host:</para>
             <mediaobject>
                 <imageobject>
                     <imagedata fileref="../common/figures/under-the-hood-scenario-1-ovs-compute.png" contentwidth="6in"/>
@@ -112,10 +113,10 @@ bridge_mappings = physnet2:br-eth1</programlisting></para>
         </simplesect>
         <simplesect>
             <title>Integration bridge</title>
-            <para>The <literal>br-int</literal> OpenvSwitch bridge is the integration bridge: all
-                        guests running on the compute host connect to this bridge. Networking
-                        implements isolation across these guests by configuring the
-                            <literal>br-int</literal> ports.</para>
+            <para>The <literal>br-int</literal> Open vSwitch bridge is the integration bridge: all
+                guests running on the compute host connect to this bridge. Networking implements
+                isolation across these guests by configuring the
+                <literal>br-int</literal> ports.</para>
         </simplesect>
         <simplesect>
             <title>Physical connectivity bridge</title>
@@ -376,16 +377,20 @@ bridge_mappings = physnet1:br-ex,physnet2:br-eth1</programlisting>
     </section>
     <section xml:id="under_the_hood_linuxbridge">
         <title>Linux Bridge</title>
-        <para>This section describes how the Linux Bridge plug-in implements the Networking
-            abstractions. For information about DHCP and L3 agents, see <xref
+        <para>This section describes how the Linux Bridge plug-in
+        implements the Networking abstractions. For information about
+        DHCP and L3 agents, see <xref
                 linkend="under_the_hood_openvswitch_scenario1"/>.</para>
         <section  xml:id="under_the_hood_linuxbridge_configuration">
             <title>Configuration</title>
-            <para>This example uses VLAN isolation on the switches to isolate tenant networks. This configuration labels the physical
-                network associated with the public network as <literal>physnet1</literal>, and the
-                physical network associated with the data network as <literal>physnet2</literal>,
-                which leads to the following configuration options in
-                    <filename>linuxbridge_conf.ini</filename>:<programlisting language="bash">[vlans]
+            <para>This example uses VLAN isolation on the switches to
+            isolate tenant networks. This configuration labels the
+            physical network associated with the public network as
+            <literal>physnet1</literal>, and the physical network
+            associated with the data network as <literal>physnet2</literal>,
+            which leads to the following configuration options in
+            <filename>linuxbridge_conf.ini</filename>:
+            <programlisting language="ini">[vlans]
 tenant_network_type = vlan
 network_vlan_ranges = physnet2:100:110
 
@@ -398,8 +403,9 @@ physical_interface_mappings = physnet2:eth1</programlisting></para>
             <para>The first scenario has two private networks (<literal>net01</literal>, and
                 <literal>net02</literal>), each with one subnet
                 (<literal>net01_subnet01</literal>: 192.168.101.0/24,
-                <literal>net02_subnet01</literal>, 192.168.102.0/24). Both private networks are
-                attached to a router that contains them to the public network (10.64.201.0/24).</para>
+                <literal>net02_subnet01</literal>, 192.168.102.0/24).
+                Both private networks are attached to a router that
+                contains them to the public network (10.64.201.0/24).</para>
 
             <mediaobject>
                 <imageobject>
@@ -503,8 +509,8 @@ physical_interface_mappings = physnet2:eth1</programlisting></para>
                     <imagedata fileref="../common/figures/under-the-hood-scenario-2.png" contentwidth="6in"/>
                 </imageobject>
             </mediaobject>
-            <para>Under the <literal>service</literal> tenant, define the public
-                network:<screen><prompt>$</prompt> <userinput>tenant=$(keystone tenant-list | awk '/service/ {print $2}')</userinput>
+            <para>Under the <literal>service</literal> tenant, define
+            the public network:<screen><prompt>$</prompt> <userinput>tenant=$(keystone tenant-list | awk '/service/ {print $2}')</userinput>
 <prompt>$</prompt> <userinput>neutron net-create --tenant-id $tenant public01 \
           --provider:network_type flat \
           --provider:physical_network physnet1 \
@@ -538,22 +544,24 @@ physical_interface_mappings = physnet2:eth1</programlisting></para>
 
         <section xml:id="under_the_hood_linuxbridge_scenario2_compute">
             <title>Scenario 2: Compute host config</title>
-            <para>The following figure shows how the various Linux networking devices would be configured on the
-                compute host under this scenario.
-           </para>
+            <para>The following figure shows how the various Linux
+            networking devices would be configured on the Compute host
+            under this scenario.</para>
             <mediaobject>
                 <imageobject>
                     <imagedata fileref="../common/figures/under-the-hood-scenario-2-linuxbridge-compute.png" contentwidth="6in"/>
                 </imageobject>
             </mediaobject>
-            <note><para>The configuration on the compute host is very similar to the configuration in scenario 1. The
-                only real difference is that scenario 1 had a guest that was connected to two
-                subnets, and in this scenario, the subnets belong to different tenants.</para></note>
+            <note><para>The configuration on the Compute host is very
+            similar to the configuration in scenario 1. The only real
+            difference is that scenario 1 had a guest connected to two
+            subnets, and in this scenario the subnets belong to
+            different tenants.</para></note>
         </section>
         <section xml:id="under_the_hood_linuxbridge_scenario2_network">
             <title>Scenario 2: Network host config</title>
-            <para>The following figure shows the network devices on the network host for the second
-                scenario.</para>
+            <para>The following figure shows the network devices on the
+            network host for the second scenario.</para>
             <mediaobject>
                 <imageobject>
                     <imagedata fileref="../common/figures/under-the-hood-scenario-2-linuxbridge-network.png" contentwidth="6in"/>
@@ -572,56 +580,72 @@ physical_interface_mappings = physnet2:eth1</programlisting></para>
                 <literal>qrouter-<replaceable>bbbb</replaceable></literal>,
                 <literal>qrouter-<replaceable>cccc</replaceable></literal>, and
                 <literal>qhdcp-<replaceable>dddd</replaceable></literal>), instead of three.
-                Since there is no connectivity between the two networks, and so each router is
-                implemented by a separate namespace.</para>
+                Each router is implemented by a separate namespace,
+                since there is no connectivity between the two networks.</para>
         </section>
         </section>
     </section>
     <section xml:id="ml2_scenarios">
         <title>ML2</title>
-        <para>The Modular Layer 2 plugin allows OpenStack
-            Networking to simultaneously utilize the variety of layer 2 networking
+        <para>The Modular Layer 2 plugin allows OpenStack Networking
+            to simultaneously utilize the variety of layer 2 networking
             technologies found in complex real-world data centers.
-            It currently includes drivers for the local, flat, vlan, gre and vxlan network types
-            and works with the existing <emphasis>Open vSwitch</emphasis>, <emphasis>Linux Bridge</emphasis>,
-            and <emphasis>HyperV</emphasis> L2 agents. The <emphasis>ML2</emphasis> plug-in can be extended
-            through mechanism drivers, multiple mechanisms can be used simultaneously.
-            This section describes different <emphasis>ML2</emphasis> plug-in / agents configurations with different
-            type drivers and mechanism drivers.</para>
+            It currently includes drivers for the local, flat, VLAN,
+            GRE and VXLAN network types and works with the existing
+            <emphasis>Open vSwitch</emphasis>, <emphasis>Linux Bridge
+            </emphasis>, and <emphasis>HyperV</emphasis> L2 agents. The
+            <emphasis>ML2</emphasis> plug-in can be extended through
+            mechanism drivers, allowing multiple mechanisms to be used
+            simultaneously. This section describes different
+            <emphasis>ML2</emphasis> plug-in and agent configurations with
+            different type drivers and mechanism drivers.</para>
         <section xml:id="ml2_l2pop_scenarios">
             <title>ML2 with L2 population mechanism driver</title>
-            <para>Current <emphasis>Open vSwitch</emphasis> and <emphasis>Linux Bridge</emphasis> tunneling implementations
-                broadcast to every agent, even if they don’t host the corresponding network as
-                illustrated below.</para>
+            <para>Current <emphasis>Open vSwitch</emphasis> and
+            <emphasis>Linux Bridge</emphasis> tunneling implementations
+                broadcast to every agent, even if they don’t host the
+                corresponding network as illustrated below.</para>
              <mediaobject>
                  <imageobject>
                     <imagedata fileref="../common/figures/ml2_without_l2pop_full_mesh.png"
                         contentwidth="6in"/>
                  </imageobject>
              </mediaobject>
-            <para>As broadcast emulation on overlay is costly, it may be better to avoid its use for
-                mac learning and ARP resolution. This supposes the use of proxy ARP on the agent to
-                answer VM requests, and to populate forwarding table. Currently only the <emphasis>Linux Bridge</emphasis> Agent implements an ARP proxy. The prepopulation limits L2 broadcasts in overlay, however it may anyway be necessary to provide broadcast emulation.
-                This is achieved by sending broadcasts packets over unicasts only to the relevant
-                agents as illustrated below.<mediaobject>
+            <para>As broadcast emulation on overlay is costly, it may
+            be better to avoid its use for MAC learning and ARP
+            resolution. This supposes the use of proxy ARP on the agent
+            to answer VM requests, and to populate forwarding table.
+            Currently only the <emphasis>Linux Bridge</emphasis> Agent
+            implements an ARP proxy. The prepopulation limits L2
+            broadcasts in overlay, however it may anyway be necessary
+            to provide broadcast emulation. This is achieved by
+            broadcasting packets via unicast only to the relevant agents
+            as illustrated below.<mediaobject>
                     <imageobject>
                         <imagedata fileref="../common/figures/ml2_without_l2pop_partial_mesh.png"
                             contentwidth="6in"/>
                     </imageobject>
-                </mediaobject>The partial-mesh is available with the <emphasis>Open vSwitch</emphasis> and
-                the <emphasis>Linux Bridge</emphasis> agent. The following scenarios will use the L2
-                population mechanism driver with an <emphasis>Open vSwitch</emphasis> agent and a <emphasis>Linux Bridge</emphasis> agent. To enable the l2 population driver we have to add it in the list of mechanism drivers. We also need to have at least one tunneling
-                type driver enabled, either GRE, VXLAN or both. Below configuration options that we
-                have to set in
+                </mediaobject>The partial-mesh is available with the
+                <emphasis>Open vSwitch</emphasis> and <emphasis>Linux
+                Bridge</emphasis> agents. The following scenarios will
+                use the L2 population mechanism driver with an
+                <emphasis>Open vSwitch</emphasis> agent and a
+                <emphasis>Linux Bridge</emphasis> agent. Enable the
+                l2 population driver by adding it to the list of
+                mechanism drivers. In addition, a tunneling driver must
+                be selected. Supported options are GRE, VXLAN, or a
+                combination of both. Configuration settings are enabled in
                 <filename>ml2_conf.ini</filename>:<programlisting language="ini">[ml2]
 type_drivers = local,flat,vlan,gre,vxlan
 mechanism_drivers = openvswitch,linuxbridge,l2population</programlisting></para>
         </section>
         <section xml:id="ml2_l2pop_ovs_scenarios">
             <title>Scenario 1: L2 population with Open vSwitch agent</title>
-            <para>We have to enable the l2 population extension on the <emphasis>Open vSwitch</emphasis> agent side and
-                we also have to set the <option>local_ip</option> parameter and the <option>tunnel_types</option>
-                <filename>ml2_conf.ini</filename>.<programlisting language="ini">[ovs]
+            <para>Enable the l2 population extension in the
+            <emphasis>Open vSwitch</emphasis> agent, and configure the
+            <option>local_ip</option> and <option>tunnel_types</option>
+            parameters in the <filename>ml2_conf.ini</filename> file:
+            <programlisting language="ini">[ovs]
 local_ip = <replaceable>192.168.1.10</replaceable>
 
 [agent]
@@ -630,23 +654,37 @@ l2_population = True</programlisting></para>
         </section>
         <section xml:id="ml2_l2pop_lb_scenarios">
             <title>Scenario 2: L2 population with <emphasis>Linux Bridge</emphasis> agent</title>
-            <para>We have to enable the l2 population extension on the agent side and we also have
-                to set the local_ip parameter and enable VXLAN in
-                <filename>ml2_conf.ini</filename>.<programlisting language="ini">[vxlan]
+            <para>Enable the l2 population extension on the
+            <emphasis>Linux Bridge</emphasis> agent. Enable VXLAN and
+            configure the local_ip parameter in
+            <filename>ml2_conf.ini</filename>.
+            <programlisting language="ini">[vxlan]
 enable_vxlan = True
 local_ip = <replaceable>192.168.1.10</replaceable>
 l2_population = True</programlisting></para>
         </section>
         <section xml:id="ml2_l2_security_group">
             <title>Enable security group API</title>
-            <para>Since the ML2 plugin can concurrently support different L2 agents (or other mechanisms) with different configuration files,
-              the actual <option>firewall_driver</option> value in the <filename>ml2_conf.ini</filename> file does not matter in the server, but
-              <option>firewall_driver</option> must be set to a non-default value in the ml2 configuration to enable the securitygroup extension.
-To enable securitygroup API, edit the <filename>ml2_conf.ini</filename> file:<programlisting language="ini">[securitygroup]
-  firewall_driver = dummy</programlisting>
-Each L2 agent configuration file (such as <filename>ovs_neutron_plugin.ini</filename> or <filename>linuxbridge_conf.ini</filename>) should contain the appropriate <option>firewall_driver</option> value for that agent.
-To disable securitygroup API, edit the <filename>ml2_conf.ini</filename> file:<programlisting language="ini">[securitygroup]
+            <para>Since the ML2 plugin can concurrently support
+            different L2 agents (or other mechanisms) with different
+            configuration files, the actual <option>firewall_driver
+            </option> value in the <filename>ml2_conf.ini</filename>
+            file does not matter in the server, but
+            <option>firewall_driver</option> must be set to a
+            non-default value in the ml2 configuration to enable the
+            securitygroup extension. To enable securitygroup API, edit
+            the <filename>ml2_conf.ini</filename>
+            file:<programlisting language="ini">[securitygroup]
+firewall_driver = dummy</programlisting>
+            Each L2 agent configuration file (such as <filename>ovs_neutron_plugin.ini</filename> or
+            <filename>linuxbridge_conf.ini</filename>) should contain the appropriate
+            <option>firewall_driver</option> value for that agent. To disable
+            securitygroup API, edit the<filename>ml2_conf.ini</filename>
+            file:<programlisting language="ini">[securitygroup]
 firewall_driver = neutron.agent.firewall.NoopFirewallDriver</programlisting>
-Also, each L2 agent configuration file (such as <filename>ovs_neutron_plugin.ini</filename> or <filename>linuxbridge_conf.ini</filename>) should contain this value in <option>firewall_driver</option> parameter for that agent.</para></section>
+            Also, each L2 agent configuration file (such as <filename>ovs_neutron_plugin.ini</filename> or
+            <filename>linuxbridge_conf.ini</filename>) should contain this value in
+            <option>firewall_driver</option> parameter for that
+            agent.</para></section>
     </section>
 </section>
