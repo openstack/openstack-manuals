@@ -27,7 +27,7 @@ Prerequisites
 `Apache Maven <http://maven.apache.org/>`_ must be installed to build the
 documentation.
 
-To install Maven 3 for Ubuntu 12.04 and later,and Debian wheezy and later::
+To install Maven 3 for Ubuntu 12.04 and later, and Debian wheezy and later::
 
     apt-get install maven
 
@@ -83,7 +83,7 @@ computing, and encourages you to join the `OpenStack Foundation
 <http://www.openstack.org/join>`_.
 
 The best way to get involved with the community is to talk with others
-online or at a meetup and offer contributions through our processes,
+online or at a meet up and offer contributions through our processes,
 the `OpenStack wiki <http://wiki.openstack.org>`_, blogs, or on IRC at
 ``#openstack`` on ``irc.freenode.net``.
 
