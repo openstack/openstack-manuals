@@ -5,26 +5,25 @@
   xmlns:xlink="http://www.w3.org/1999/xlink"
   xmlns:svg="http://www.w3.org/2000/svg"
   xmlns:html="http://www.w3.org/1999/xhtml" version="5.0">
-    <title>Configure compute node</title>
+    <title>Configure compute node with neutron services</title>
     <note>
       <para>This section details set up for any node that runs the
           <literal>nova-compute</literal> component but does not run
         the full network stack.</para>
     </note>
     <warning os="rhel;centos">
-      <para>By default, the <literal>system-config-firewall</literal>
-        automated firewall configuration tool is in place on RHEL.
-        This graphical interface (and a curses-style interface with
-          <literal>-tui</literal> on the end of the name) enables you
-        to configure IP tables as a basic firewall. You should disable
-        it when you work with Neutron unless you are familiar with the
-        underlying network technologies, as, by default, it blocks
-        various types of network traffic that are important to
-        Neutron. To disable it, simple launch the program and clear
-        the <guilabel>Enabled</guilabel> check box.</para>
-      <para>After you successfully set up OpenStack with Neutron, you
-        can re-enable and configure the tool. However, during Neutron
-        set up, disable the tool to make it easier to debug network
+    <para>By default, the <literal>system-config-firewall</literal> automated
+      firewall configuration tool is in place on RHEL. This graphical interface
+      (and a curses-style interface with <literal>-tui</literal> on the end of
+      the name) enables you to configure IP tables as a basic firewall. You
+      should disable it when you work with OpenStack Networking unless you are
+      familiar with the underlying network technologies, as, by default, it
+      blocks various types of network traffic that are important to neutron
+      services. To disable it, launch the program and clear the
+      <guilabel>Enabled</guilabel> check box.</para>
+      <para>After you successfully set up OpenStack Networking with Neutron, you
+        can re-enable and configure the tool. However, during OpenStack
+        Networking setup, disable the tool to make it easier to debug network
         issues.</para>
     </warning>
     <procedure>
@@ -246,7 +245,7 @@ firewall_driver=neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallD
       </step>
     </procedure>
     <section xml:id="install-neutron.install-plugin-compute">
-      <title>Install and configure Neutron plug-ins on a dedicated
+      <title>Install and configure OpenStack Networking plug-ins on a dedicated
         compute node</title>
       <section xml:id="install-neutron.install-plugin-compute.ovs">
         <title>Install the Open vSwitch (OVS) plug-in on a dedicated

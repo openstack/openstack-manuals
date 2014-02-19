@@ -7,24 +7,20 @@
   xmlns:html="http://www.w3.org/1999/xhtml" version="5.0">
     <title>Create initial networks</title>
     <note>
-      <para>In these sections, replace
-          <replaceable>SPECIAL_OPTIONS</replaceable> with any options
-        specific to your Networking plug-in choices. See <link
-          linkend="install-neutron.configure-networks.plug-in-specific"
-          >here</link> to check if your plug-in requires any special
-        options.</para>
+      <para>In these sections, replace <replaceable>SPECIAL_OPTIONS</replaceable> with any options specific to your OpenStack Networking plug-in choices. See <link
+        linkend="install-neutron.configure-networks.plug-in-specific"
+      >here</link> to check if your plug-in requires any special options.</para>
     </note>
     <procedure>
       <step>
-        <para>Create the <literal>ext-net</literal> external network.
-          This network represents a slice of the outside world. VMs
-          are not directly linked to this network; instead, they
-          connect to internal networks. Outgoing traffic is routed by
-          Neutron to the external network. Additionally, floating IP
-          addresses from the subnet for <literal>ext-net</literal>
-          might be assigned to VMs so that the external network can
-          contact them. Neutron routes the traffic
-          appropriately.</para>
+        <para>Create the <literal>ext-net</literal> external network. This
+          network represents a slice of the outside world. VMs are not directly
+          linked to this network; instead, they connect to internal networks.
+          Outgoing traffic is routed by OpenStack Networking to the external
+          network. Additionally, floating IP addresses from the subnet for
+          <literal>ext-net</literal> might be assigned to VMs so that the
+          external network can contact them. Neutron-based services route the
+          traffic appropriately.</para>
         <screen><prompt>#</prompt> <userinput>neutron net-create ext-net --router:external=True <replaceable>SPECIAL_OPTIONS</replaceable></userinput></screen>
       </step>
       <step>
@@ -116,16 +112,38 @@ router_id = <replaceable>EXT_TO_INT_ID</replaceable></programlisting>
             for any other network.</para>
           <note>
             <para>These options are not needed beyond the first
-              network, as Neutron automatically increments the
-              segmentation id and copy the network type option for any
-              additional networks.</para>
+              network, as OpenStack Networking services automatically
+              increment the segmentation ID and copy the network type
+              option for any additional networks.</para>
           </note>
-          <para>Now, return to the general <acronym>OVS</acronym>
+          <para>Now, return to the general <link linkend="install-neutron.install-plugin-compute.ovs"></link><acronym>OVS</acronym>
             instructions.</para>
         </section>
         <section
           xml:id="install-neutron.configure-networks.plug-in-specific.ovs.vlan">
           <title>VLAN network options</title>
+          <warning>
+            <para>Some NICs have Linux drivers that do not handle
+              VLANs properly. See the
+              <literal>ovs-vlan-bug-workaround</literal> and
+              <literal>ovs-vlan-test</literal> man pages for more
+              information. Additionally, you might try turning off
+              <literal>rx-vlan-offload</literal> and
+              <literal>tx-vlan-offload</literal> by using
+              <command>ethtool</command> on the
+              <replaceable>DATA_INTERFACE</replaceable>. Another
+              potential caveat to VLAN functionality is that VLAN tags
+              add an additional 4 bytes to the packet size. If your
+              NICs cannot handle large packets, make sure to set the
+              MTU to a value that is 4 bytes less than the normal
+              value on the
+              <replaceable>DATA_INTERFACE</replaceable>.</para>
+            <para>If you run OpenStack inside a virtualized
+              environment (for testing purposes), switching to the
+              <literal>virtio</literal> NIC type (or a similar
+              technology if you are not using KVM/QEMU to run your
+              host VMs) might solve the issue.</para>
+          </warning>
           <para>When creating networks, use these options:</para>
           <screen><userinput>--provider:network_type vlan --provider:physical_network physnet1 --provider:segmentation_id SEG_ID</userinput>         </screen>
           <para><replaceable>SEG_ID</replaceable> should be
@@ -140,28 +158,6 @@ router_id = <replaceable>EXT_TO_INT_ID</replaceable></programlisting>
               only needed if you wish to modify those values in any
               way.</para>
           </note>
-          <warning>
-            <para>Some NICs have Linux drivers that do not handle
-              VLANs properly. See the
-                <literal>ovs-vlan-bug-workaround</literal> and
-                <literal>ovs-vlan-test</literal> man pages for more
-              information. Additionally, you might try turning off
-                <literal>rx-vlan-offload</literal> and
-                <literal>tx-vlan-offload</literal> by using
-                <literal>ethtool</literal> on the
-                <replaceable>DATA_INTERFACE</replaceable>. Another
-              potential caveat to VLAN functionality is that VLAN tags
-              add an additional 4 bytes to the packet size. If your
-              NICs cannot handle large packets, make sure to set the
-              MTU to a value that is 4 bytes less than the normal
-              value on the
-              <replaceable>DATA_INTERFACE</replaceable>.</para>
-            <para>If you run OpenStack inside a virtualized
-              environment (for testing purposes), switching to the
-                <literal>virtio</literal> NIC type (or a similar
-              technology if you are not using KVM/QEMU to run your
-              host VMs) might solve the issue.</para>
-          </warning>
         </section>
       </section>
     </section>
