@@ -8,9 +8,10 @@
 
     <?dbhtml stop-chunking?>
 
-    <title>ceilometer commands</title>
-    <para>The ceilometer client is the command-line interface (CLI) for the
-         Telemetry API and its extensions.</para>
+    <title>Telemetry command-line client</title>
+    <para>The <command>ceilometer</command> client is the command-line interface
+         (CLI) for the Telemetry API and its extensions.
+    </para>
     <para>For help on a specific <command>ceilometer</command>
        command, enter:
     </para>
@@ -507,8 +508,9 @@ Create a new alarm based on state of other alarms.
     <term><command>--insufficient-data-action &lt;Webhook URL&gt;</command></term>
     <listitem>
       <para>
-      URL to invoke when state transitions to unkown. May be
-      used multiple times. Defaults to None.
+      URL to invoke when state transitions to
+      insufficient_data. May be used multiple times.
+      Defaults to None.
       </para>
     </listitem>
   </varlistentry>
@@ -639,8 +641,9 @@ Update an existing alarm based on state of other alarms.
     <term><command>--insufficient-data-action &lt;Webhook URL&gt;</command></term>
     <listitem>
       <para>
-      URL to invoke when state transitions to unkown. May be
-      used multiple times. Defaults to None.
+      URL to invoke when state transitions to
+      insufficient_data. May be used multiple times.
+      Defaults to None.
       </para>
     </listitem>
   </varlistentry>
@@ -811,8 +814,7 @@ Set the state of an alarm.
                                          [--alarm-action &lt;Webhook URL&gt;]
                                          [--ok-action &lt;Webhook URL&gt;]
                                          [--insufficient-data-action &lt;Webhook URL&gt;]
-                                         --meter-name &lt;METRIC&gt;
-                                         [--period &lt;PERIOD&gt;]
+                                         -m &lt;METRIC&gt; [--period &lt;PERIOD&gt;]
                                          [--evaluation-periods &lt;COUNT&gt;]
                                          [--statistic &lt;STATISTIC&gt;]
                                          [--comparison-operator &lt;OPERATOR&gt;]
@@ -897,13 +899,14 @@ Create a new alarm based on computed statistics.
     <term><command>--insufficient-data-action &lt;Webhook URL&gt;</command></term>
     <listitem>
       <para>
-      URL to invoke when state transitions to unkown. May be
-      used multiple times. Defaults to None.
+      URL to invoke when state transitions to
+      insufficient_data. May be used multiple times.
+      Defaults to None.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--meter-name &lt;METRIC&gt;</command></term>
+    <term><command>-m &lt;METRIC&gt;, --meter-name &lt;METRIC&gt;</command></term>
     <listitem>
       <para>
       Metric to evaluate against Required.
@@ -984,8 +987,7 @@ Create a new alarm based on computed statistics.
                                          [--alarm-action &lt;Webhook URL&gt;]
                                          [--ok-action &lt;Webhook URL&gt;]
                                          [--insufficient-data-action &lt;Webhook URL&gt;]
-                                         [--meter-name &lt;METRIC&gt;]
-                                         [--period &lt;PERIOD&gt;]
+                                         [-m &lt;METRIC&gt;] [--period &lt;PERIOD&gt;]
                                          [--evaluation-periods &lt;COUNT&gt;]
                                          [--statistic &lt;STATISTIC&gt;]
                                          [--comparison-operator &lt;OPERATOR&gt;]
@@ -1078,13 +1080,14 @@ Update an existing alarm based on computed statistics.
     <term><command>--insufficient-data-action &lt;Webhook URL&gt;</command></term>
     <listitem>
       <para>
-      URL to invoke when state transitions to unkown. May be
-      used multiple times. Defaults to None.
+      URL to invoke when state transitions to
+      insufficient_data. May be used multiple times.
+      Defaults to None.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--meter-name &lt;METRIC&gt;</command></term>
+    <term><command>-m &lt;METRIC&gt;, --meter-name &lt;METRIC&gt;</command></term>
     <listitem>
       <para>
       Metric to evaluate against
@@ -1165,8 +1168,7 @@ Update an existing alarm based on computed statistics.
                                [--ok-action &lt;Webhook URL&gt;]
                                [--insufficient-data-action &lt;Webhook URL&gt;]
                                [--period &lt;PERIOD&gt;]
-                               [--evaluation-periods &lt;COUNT&gt;]
-                               [--meter-name &lt;METRIC&gt;]
+                               [--evaluation-periods &lt;COUNT&gt;] [-m &lt;METRIC&gt;]
                                [--statistic &lt;STATISTIC&gt;]
                                [--comparison-operator &lt;OPERATOR&gt;]
                                [--threshold &lt;THRESHOLD&gt;]
@@ -1258,8 +1260,9 @@ Update an existing alarm.
     <term><command>--insufficient-data-action &lt;Webhook URL&gt;</command></term>
     <listitem>
       <para>
-      URL to invoke when state transitions to unkown. May be
-      used multiple times. Defaults to None.
+      URL to invoke when state transitions to
+      insufficient_data. May be used multiple times.
+      Defaults to None.
       </para>
     </listitem>
   </varlistentry>
@@ -1280,7 +1283,7 @@ Update an existing alarm.
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--meter-name &lt;METRIC&gt;</command></term>
+    <term><command>-m &lt;METRIC&gt;, --meter-name &lt;METRIC&gt;</command></term>
     <listitem>
       <para>
       Metric to evaluate against
@@ -1565,7 +1568,7 @@ List the samples for a meter.
     </section>
     <section xml:id="ceilometerclient_subcommand_statistics">
         <title>ceilometer statistics command</title>
-        <screen><computeroutput>usage: ceilometer statistics [-q &lt;QUERY&gt;] -m &lt;NAME&gt; [-p &lt;PERIOD&gt;]
+        <screen><computeroutput>usage: ceilometer statistics [-q &lt;QUERY&gt;] -m &lt;NAME&gt; [-p &lt;PERIOD&gt;] [-g &lt;FIELD&gt;]
         </computeroutput></screen>
         <para>
 List the statistics for a meter.
@@ -1594,6 +1597,14 @@ List the statistics for a meter.
     <listitem>
       <para>
       Period in seconds over which to group samples.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>-g &lt;FIELD&gt;, --groupby &lt;FIELD&gt;</command></term>
+    <listitem>
+      <para>
+      Field for group aggregation.
       </para>
     </listitem>
   </varlistentry>

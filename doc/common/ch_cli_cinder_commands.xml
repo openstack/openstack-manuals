@@ -8,9 +8,10 @@
 
     <?dbhtml stop-chunking?>
 
-    <title>cinder commands</title>
-    <para>The cinder client is the command-line interface (CLI) for the
-         OpenStack Block Storage API and its extensions.</para>
+    <title>Block Storage command-line client</title>
+    <para>The <command>cinder</command> client is the command-line interface
+         (CLI) for the OpenStack Block Storage API and its extensions.
+    </para>
     <para>For help on a specific <command>cinder</command>
        command, enter:
     </para>
@@ -116,6 +117,15 @@
     <listitem>
       <para>
       Create a new encryption type for a volume type (Admin
+      Only).
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>encryption-type-delete</command></term>
+    <listitem>
+      <para>
+      Delete the encryption type for a volume type (Admin
       Only).
       </para>
     </listitem>
@@ -921,10 +931,9 @@ Add a new volume.
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--metadata [&lt;key=value&gt; [&lt;key=value&gt;</command></term>
+    <term><command>--metadata [&lt;key=value&gt; [&lt;key=value&gt; ...]]</command></term>
     <listitem>
       <para>
-        ...]]
       Metadata key=value pairs (Optional, Default=None)
       </para>
     </listitem>
@@ -1010,8 +1019,26 @@ Create a new encryption type for a volume type (Admin Only).
     <listitem>
       <para>
       Notional service where encryption is performed (e.g.,
-      front-end=Nova). Values: 'front-end', 'back-end'
-      (Optional, Default=None)
+      front-end=Nova) Values: 'front-end', 'back-end'
+      (Default='front-end')
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_encryption-type-delete">
+        <title>cinder encryption-type-delete command</title>
+        <screen><computeroutput>usage: cinder encryption-type-delete &lt;volume_type&gt;
+        </computeroutput></screen>
+        <para>
+Delete the encryption type for a volume type (Admin Only).
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;volume_type&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of the volume type
       </para>
     </listitem>
   </varlistentry>
@@ -1135,10 +1162,9 @@ List all the volumes.
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--metadata [&lt;key=value&gt; [&lt;key=value&gt;</command></term>
+    <term><command>--metadata [&lt;key=value&gt; [&lt;key=value&gt; ...]]</command></term>
     <listitem>
       <para>
-        ...]]
       Filter results by metadata
       </para>
     </listitem>

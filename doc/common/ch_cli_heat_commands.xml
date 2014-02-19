@@ -8,9 +8,10 @@
 
     <?dbhtml stop-chunking?>
 
-    <title>heat commands</title>
-    <para>The heat client is the command-line interface (CLI) for the
-         Orchestration API and its extensions.</para>
+    <title>Orchestration command-line client</title>
+    <para>The <command>heat</command> client is the command-line interface
+         (CLI) for the Orchestration API and its extensions.
+    </para>
     <para>For help on a specific <command>heat</command>
        command, enter:
     </para>
@@ -43,6 +44,14 @@
     <listitem>
       <para>
         Suspend the stack.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>build-info</command></term>
+    <listitem>
+      <para>
+        Retrieve build information.
       </para>
     </listitem>
   </varlistentry>
@@ -163,6 +172,14 @@
     <listitem>
       <para>
         Show the resource type.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>stack-abandon</command></term>
+    <listitem>
+      <para>
+        Abandon the stack.
       </para>
     </listitem>
   </varlistentry>
@@ -476,6 +493,13 @@ Suspend the stack.
   </varlistentry>
  </variablelist>
     </section>
+    <section xml:id="heatclient_subcommand_build-info">
+        <title>heat build-info command</title>
+        <screen><computeroutput>usage: heat build-info
+        </computeroutput></screen>
+        <para>
+Retrieve build information.
+        </para>    </section>
     <section xml:id="heatclient_subcommand_event-list">
         <title>heat event-list command</title>
         <screen><computeroutput>usage: heat event-list [-r &lt;RESOURCE&gt;] &lt;NAME or ID&gt;
@@ -663,9 +687,27 @@ Show the resource type.
   </varlistentry>
  </variablelist>
     </section>
+    <section xml:id="heatclient_subcommand_stack-abandon">
+        <title>heat stack-abandon command</title>
+        <screen><computeroutput>usage: heat stack-abandon &lt;NAME or ID&gt;
+        </computeroutput></screen>
+        <para>
+Abandon the stack.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;NAME or ID&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of stack to abandon.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
     <section xml:id="heatclient_subcommand_stack-create">
         <title>heat stack-create command</title>
-        <screen><computeroutput>usage: heat stack-create [-f &lt;FILE&gt;] [-e &lt;FILE&gt;] [-u &lt;URL&gt;] [-o &lt;URL&gt;]
+        <screen><computeroutput>usage: heat stack-create [-f &lt;FILE&gt;] [-e &lt;FILE or URL&gt;] [-u &lt;URL&gt;] [-o &lt;URL&gt;]
                          [-c &lt;TIMEOUT&gt;] [-r] [-P &lt;KEY1=VALUE1;KEY2=VALUE2...&gt;]
                          &lt;STACK_NAME&gt;
         </computeroutput></screen>
@@ -693,7 +735,7 @@ Create the stack.
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>-e &lt;FILE&gt;, --environment-file &lt;FILE&gt;</command></term>
+    <term><command>-e &lt;FILE or URL&gt;, --environment-file &lt;FILE or URL&gt;</command></term>
     <listitem>
       <para>
       Path to the environment.
@@ -764,11 +806,42 @@ Delete the stack(s).
     </section>
     <section xml:id="heatclient_subcommand_stack-list">
         <title>heat stack-list command</title>
-        <screen><computeroutput>usage: heat stack-list
+        <screen><computeroutput>usage: heat stack-list [-f &lt;KEY1=VALUE1;KEY2=VALUE2...&gt;] [-l &lt;LIMIT&gt;]
+                       [-m &lt;ID&gt;]
         </computeroutput></screen>
         <para>
 List the user's stacks.
-        </para>    </section>
+        </para>  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-f &lt;KEY1=VALUE1;KEY2=VALUE2...&gt;, --filters &lt;KEY1=VALUE1;KEY2=VALUE2...&gt;</command></term>
+    <listitem>
+      <para>
+      Filter parameters to apply on returned stacks. This
+      can be specified multiple times, or once with
+      parameters separated by semicolon.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>-l &lt;LIMIT&gt;, --limit &lt;LIMIT&gt;</command></term>
+    <listitem>
+      <para>
+      Limit the number of stacks returned
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>-m &lt;ID&gt;, --marker &lt;ID&gt;</command></term>
+    <listitem>
+      <para>
+      Only return stacks that appear after the given stack
+      ID
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
     <section xml:id="heatclient_subcommand_stack-show">
         <title>heat stack-show command</title>
         <screen><computeroutput>usage: heat stack-show &lt;NAME or ID&gt;
@@ -789,7 +862,7 @@ Describe the stack.
     </section>
     <section xml:id="heatclient_subcommand_stack-update">
         <title>heat stack-update command</title>
-        <screen><computeroutput>usage: heat stack-update [-f &lt;FILE&gt;] [-e &lt;FILE&gt;] [-u &lt;URL&gt;] [-o &lt;URL&gt;]
+        <screen><computeroutput>usage: heat stack-update [-f &lt;FILE&gt;] [-e &lt;FILE or URL&gt;] [-u &lt;URL&gt;] [-o &lt;URL&gt;]
                          [-P &lt;KEY1=VALUE1;KEY2=VALUE2...&gt;]
                          &lt;NAME or ID&gt;
         </computeroutput></screen>
@@ -817,7 +890,7 @@ Update the stack.
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>-e &lt;FILE&gt;, --environment-file &lt;FILE&gt;</command></term>
+    <term><command>-e &lt;FILE or URL&gt;, --environment-file &lt;FILE or URL&gt;</command></term>
     <listitem>
       <para>
       Path to the environment.
@@ -872,8 +945,8 @@ Get the template for the specified stack.
     </section>
     <section xml:id="heatclient_subcommand_template-validate">
         <title>heat template-validate command</title>
-        <screen><computeroutput>usage: heat template-validate [-u &lt;URL&gt;] [-f &lt;FILE&gt;] [-e &lt;FILE&gt;] [-o &lt;URL&gt;]
-                              [-P &lt;KEY1=VALUE1;KEY2=VALUE2...&gt;]
+        <screen><computeroutput>usage: heat template-validate [-u &lt;URL&gt;] [-f &lt;FILE&gt;] [-e &lt;FILE or URL&gt;]
+                              [-o &lt;URL&gt;] [-P &lt;KEY1=VALUE1;KEY2=VALUE2...&gt;]
         </computeroutput></screen>
         <para>
 Validate a template with parameters.
@@ -896,7 +969,7 @@ Validate a template with parameters.
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>-e &lt;FILE&gt;, --environment-file &lt;FILE&gt;</command></term>
+    <term><command>-e &lt;FILE or URL&gt;, --environment-file &lt;FILE or URL&gt;</command></term>
     <listitem>
       <para>
       Path to the environment.
