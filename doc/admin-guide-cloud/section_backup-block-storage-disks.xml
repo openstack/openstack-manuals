@@ -15,6 +15,11 @@
         volume creation process. Remember that the volumes created
         through a <command>nova volume-create</command> command exist
         in an LVM logical volume.</para>
+    <para>You must also make sure that the operating system is not using the
+        volume, and that all data has been flushed on the guest filesystems.
+        This usually means that those filesystems have to be unmounted during
+        the snapshot creation. They can be mounted again as soon as the logical
+        volume snapshot has been created.</para>
     <para>Before you create the snapshot, you must have enough space
         to save it. As a precaution, you should have at least twice as
         much space as the potential snapshot size. If insufficient
@@ -55,7 +60,7 @@
                 <step>
                     <para>Create the snapshot; you can do this while
                         the volume is attached to an instance:</para>
-                    <screen><prompt>$</prompt> <userinput>lvcreate --size 10G --snapshot --name volume-00000001-snapshot /dev/nova-volumes/volume-00000001</userinput></screen>
+                    <screen><prompt>$</prompt> <userinput>lvcreate --size 10G --snapshot --name volume-00000001-snapshot /dev/cinder-volumes/volume-00000001</userinput></screen>
                     <para>Use the <option>--snapshot</option>
                         configuration option to tell LVM that you want
                         a snapshot of an already existing volume. The
@@ -63,7 +68,7 @@
                         reserved for the snapshot volume, the name of
                         the snapshot, and the path of an already
                         existing volume. Generally, this path is
-                                <filename>/dev/nova-volumes/<replaceable>$volume_name</replaceable></filename>.</para>
+                                <filename>/dev/cinder-volumes/<replaceable>$volume_name</replaceable></filename>.</para>
                     <para>The size does not have to be the same as the
                         volume of the snapshot. The
                             <parameter>size</parameter> parameter
@@ -78,12 +83,12 @@
                     <para>Run the <command>lvdisplay</command> command
                         again to verify the snapshot:</para>
                     <programlisting>--- Logical volume ---
-LV Name                /dev/nova-volumes/volume-00000001
-VG Name                nova-volumes
+LV Name                /dev/cinder-volumes/volume-00000001
+VG Name                cinder-volumes
 LV UUID                gI8hta-p21U-IW2q-hRN1-nTzN-UC2G-dKbdKr
 LV Write Access        read/write
 LV snapshot status     source of
-                       /dev/nova-volumes/volume-00000026-snap [active]
+                       /dev/cinder-volumes/volume-00000026-snap [active]
 LV Status              available
 # open                 1
 LV Size                15,00 GiB
@@ -95,11 +100,11 @@ Read ahead sectors     auto
 Block device           251:13
 
 --- Logical volume ---
-LV Name                /dev/nova-volumes/volume-00000001-snap
-VG Name                nova-volumes
+LV Name                /dev/cinder-volumes/volume-00000001-snap
+VG Name                cinder-volumes
 LV UUID                HlW3Ep-g5I8-KGQb-IRvi-IRYU-lIKe-wE9zYr
 LV Write Access        read/write
-LV snapshot status     active destination for /dev/nova-volumes/volume-00000026
+LV snapshot status     active destination for /dev/cinder-volumes/volume-00000026
 LV Status              available
 # open                 0
 LV Size                15,00 GiB
@@ -131,11 +136,12 @@ Block device           251:14</programlisting>
                         partitions created inside instances, you
                         cannot see its content and create efficient
                         backups.</para>
-                    <screen><prompt>$</prompt> <userinput>kpartx -av /dev/nova-volumes/volume-00000001-snapshot</userinput></screen>
+                    <screen><prompt>$</prompt> <userinput>kpartx -av /dev/cinder-volumes/volume-00000001-snapshot</userinput></screen>
                     <note os="debian">
                         <para>On a Debian-based distribution, you can
-                            also use the <command>apt-get install
-                                kpartx</command> command.</para>
+                            use the <command>apt-get install kpartx</command>
+                            command to install
+                            <command>kpartx</command>.</para>
                     </note>
                     <para>If the tools successfully find and map the
                         partition table, no errors are
@@ -146,18 +152,18 @@ Block device           251:14</programlisting>
                         command:</para>
                     <screen><prompt>$</prompt> <userinput>ls /dev/mapper/nova*</userinput></screen>
                     <para>You can see the
-                            <literal>nova--volumes-volume--00000001--snapshot1</literal>
+                            <literal>cinder--volumes-volume--00000001--snapshot1</literal>
                         partition.</para>
                     <para>If you created more than one partition on
                         that volume, you see several partitions; for
                         example:
-                            <literal>nova--volumes-volume--00000001--snapshot2</literal>,
-                            <literal>nova--volumes-volume--00000001--snapshot3</literal>,
+                            <literal>cinder--volumes-volume--00000001--snapshot2</literal>,
+                            <literal>cinder--volumes-volume--00000001--snapshot3</literal>,
                         and so on.</para>
                 </step>
                 <step>
                     <para>Mount your partition:</para>
-                    <screen><prompt>$</prompt> <userinput>mount /dev/mapper/nova--volumes-volume--volume--00000001--snapshot1 /mnt</userinput></screen>
+                    <screen><prompt>$</prompt> <userinput>mount /dev/mapper/cinder--volumes-volume--volume--00000001--snapshot1 /mnt</userinput></screen>
                     <para>If the partition mounts successfully, no
                         errors are returned.</para>
                     <para>You can directly access the data inside the
@@ -176,7 +182,7 @@ Block device           251:14</programlisting>
             <title>Use the <command>tar</command> command to create
                 archives</title>
             <para>Create a backup of the volume:</para>
-            <screen><prompt>$</prompt> <userinput>tar --exclude={"lost+found","some/data/to/exclude"} -czf volume-00000001.tar.gz -C /mnt/ /backup/destination</userinput></screen>
+            <screen><prompt>$</prompt> <userinput>tar --exclude="lost+found" --exclude="some/data/to/exclude" -czf volume-00000001.tar.gz -C /mnt/ /backup/destination</userinput></screen>
             <para>This command creates a <filename>tar.gz</filename>
                 file that contains the data, <emphasis role="italic"
                     >and data only</emphasis>. This ensures that you
@@ -215,11 +221,11 @@ Block device           251:14</programlisting>
                 </step>
                 <step>
                     <para>Delete the partition table:</para>
-                    <screen><userinput>kpartx -dv /dev/nova-volumes/volume-00000001-snapshot</userinput></screen>
+                    <screen><userinput>kpartx -dv /dev/cinder-volumes/volume-00000001-snapshot</userinput></screen>
                 </step>
                 <step>
                     <para>Remove the snapshot:</para>
-                    <screen><userinput>lvremove -f /dev/nova-volumes/volume-00000001-snapshot</userinput></screen>
+                    <screen><userinput>lvremove -f /dev/cinder-volumes/volume-00000001-snapshot</userinput></screen>
                 </step>
             </substeps>
             <para>Repeat these steps for all your volumes.</para>
