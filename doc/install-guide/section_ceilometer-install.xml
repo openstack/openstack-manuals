@@ -15,7 +15,9 @@
         node:</para>
       <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install ceilometer-api ceilometer-collector ceilometer-agent-central python-ceilometerclient</userinput></screen>
       <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-ceilometer-api openstack-ceilometer-collector openstack-ceilometer-central python-ceilometerclient</userinput></screen>
-      <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-ceilometer-api openstack-ceilometer-collector openstack-ceilometer-agent-central python-ceilometerclient</userinput></screen>
+      <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-ceilometer-api openstack-ceilometer-collector \
+  openstack-ceilometer-agent-central python-ceilometerclient \
+  openstack-ceilometer-alarm-evaluator openstack-ceilometer-alarm-notifier</userinput></screen>
     </step>
     <step os="debian">
       <para>Respond to the prompts for <link
@@ -226,15 +228,21 @@ os_password = <replaceable>CEILOMETER_PASS</replaceable></programlisting>
       <para>Start the <systemitem class="service"
           >openstack-ceilometer-api</systemitem>, <systemitem class="service"
           os="opensuse;sles">openstack-ceilometer-agent-central</systemitem><systemitem
-          class="service" os="rhel;fedora;centos">openstack-ceilometer-central</systemitem>
-          and <systemitem class="service">openstack-ceilometer-collector</systemitem>
+          class="service" os="rhel;fedora;centos">openstack-ceilometer-central</systemitem>,
+          <systemitem class="service">openstack-ceilometer-collector</systemitem>,
+          <systemitem class="service" os="opensuse;sles">openstack-ceilometer-alarm-evaluator</systemitem>,
+          and <systemitem class="service" os="opensuse;sles">openstack-ceilometer-alarm-notifier</systemitem>
           services and configure them to start when the system boots:</para>
       <screen os="opensuse;sles"><prompt>#</prompt> <userinput>service openstack-ceilometer-api start</userinput>
 <prompt>#</prompt> <userinput>service openstack-ceilometer-agent-central start</userinput>
 <prompt>#</prompt> <userinput>service openstack-ceilometer-collector start</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-api on</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-agent-central on</userinput>
-<prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-collector on</userinput></screen>
+<prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-collector on</userinput>
+<prompt>#</prompt> <userinput>service openstack-ceilometer-alarm-evaluator start</userinput>
+<prompt>#</prompt> <userinput>service openstack-ceilometer-alarm-notifier start</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-alarm-evaluator on</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-alarm-notifier on</userinput></screen>
       <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>service openstack-ceilometer-api start</userinput>
 <prompt>#</prompt> <userinput>service openstack-ceilometer-central start</userinput>
 <prompt>#</prompt> <userinput>service openstack-ceilometer-collector start</userinput>
