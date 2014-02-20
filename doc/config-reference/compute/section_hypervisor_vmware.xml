@@ -494,16 +494,19 @@ container_format=bare is_public=true \
       VMs:</para>
     <itemizedlist>
       <listitem>
-        <para><emphasis role="bold">The <systemitem class="service"
-              >nova-network</systemitem> service with the FlatManager or
-            FlatDHCPManager</emphasis>. Create a port group with the same name
-          as the <literal>flat_network_bridge</literal> value in the
-            <filename>nova.conf</filename> file. The default value is
-            <literal>br100</literal>.</para>
-        <para>All VM NICs are attached to this port group.</para>
-        <para>Ensure that the flat interface of the node that runs the
-            <systemitem class="service">nova-network</systemitem> service has a
-          path to this network.</para>
+        <para><emphasis role="bold">
+          The <systemitem class="service">nova-network</systemitem>
+          service with the FlatManager or FlatDHCPManager</emphasis>.
+          Create a port group with the same name as the
+          <literal>flat_network_bridge</literal> value in the
+          <filename>nova.conf</filename> file. The default value is
+          <literal>br100</literal>. If you specify another value,
+          the new value must be a valid linux bridge identifier that
+          adheres to linux bridge naming conventions.</para>
+         <para>All VM NICs are attached to this port group.</para>
+         <para>Ensure that the flat interface of the node that runs
+          the <systemitem class="service">nova-network</systemitem>
+          service has a path to this network.</para>
       </listitem>
       <listitem>
         <para><emphasis role="bold">The <systemitem class="service"
