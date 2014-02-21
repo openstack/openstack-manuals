@@ -25,13 +25,15 @@
         <listitem>
             <para>If the volume is not attached, the Block Storage
                 Service creates a volume and copies the data from the
-                original to the new volume. Note: While most
-                back-ends support this function, not all do. See
-                driver documentation in the <link
-                    xlink:href="http://docs.openstack.org/havana/config-reference/content/"
+                original to the new volume.</para>
+            <note>
+                <para>While most back-ends support this function, not all do.
+                    See the driver documentation in the <link
+                        xlink:href="http://docs.openstack.org/havana/config-reference/content/"
                         ><citetitle>OpenStack Configuration
-                        Reference</citetitle></link> for more
-                details.</para>
+                            Reference</citetitle></link> for more
+                    details.</para>
+            </note>
         </listitem>
         <listitem>
             <para>If the volume is attached to a VM instance, the
@@ -45,7 +47,7 @@
         migrates an attached volume from one to the other. This
         scenario uses the third migration flow.</para>
     <para>First, list the available back-ends:</para>
-    <screen><prompt>$</prompt> <userinput>cinder-manage host list</userinput>
+    <screen><prompt>#</prompt> <userinput>cinder-manage host list</userinput>
 <computeroutput>server1@lvmstorage-1    zone1
 server2@lvmstorage-2    zone1</computeroutput></screen>
     <para>Next, as the admin user, you can see the current status of
@@ -80,19 +82,19 @@ server2@lvmstorage-2    zone1</computeroutput></screen>
         </listitem>
         <listitem>
             <para><literal>os-vol-mig-status-attr:migstat</literal> -
-                the status of this volume's migration ('None' means
-                that a migration is not currently in progress).</para>
+                the status of this volume's migration (<literal>None</literal>
+                means that a migration is not currently in progress).</para>
         </listitem>
         <listitem>
             <para><literal>os-vol-mig-status-attr:name_id</literal> -
                 the volume ID that this volume's name on the back-end
                 is based on. Before a volume is ever migrated, its
                 name on the back-end storage may be based on the
-                volume's ID (see the volume_name_template
+                volume's ID (see the <option>volume_name_template</option>
                 configuration parameter). For example, if
-                volume_name_template is kept as the default value
-                (volume-%s), your first LVM back-end has a logical
-                volume named
+                <option>volume_name_template</option> is kept as the default
+                value (<literal>volume-%s</literal>), your first LVM back-end
+                has a logical volume named
                     <literal>volume-6088f80a-f116-4331-ad48-9afb0dfb196c</literal>.
                 During the course of a migration, if you create a
                 volume and copy over the data, the volume get the new name but keeps its
