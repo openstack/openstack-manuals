@@ -2,29 +2,27 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
         <title>Networking architecture</title>
-        <para>Before you deploy Networking, it helps to understand the
-            Networking components and how these components interact
-            with each other and other OpenStack services.</para>
+        <para>Before you deploy Networking, it's useful to understand the
+        Networking services and how they interact with the OpenStack
+        components.</para>
         <section xml:id="arch_overview">
             <title>Overview</title>
-            <para>Networking is a standalone service, just like other
-                OpenStack services such as Compute, Image service,
-                Identity service, or the Dashboard. Like those
-                services, a deployment of Networking often involves
-                deploying several processes on a variety of
-                hosts.</para>
-            <para>The Networking server uses the <systemitem
-                    class="service">neutron-server</systemitem> daemon
-                to expose the Networking API and to pass user requests
-                to the configured Networking plug-in for additional
-                processing. Typically, the plug-in requires access to
-                a database for persistent storage (also similar to
-                other OpenStack services).</para>
+            <para>Networking is a standalone component in the OpenStack modular
+            architecture. It's positioned alongside OpenStack components such
+            as Compute, Image service, Identity service, or the Dashboard. Like
+            those components, a deployment of Networking often involves
+            deploying several services to a variety of hosts.</para>
+            <para>The Networking server uses the <systemitem class="service"
+                >neutron-server</systemitem> daemon to expose the Networking
+                API and enable administration of the configured Networking
+                plug-in. Typically, the plug-in requires access to a database
+                for persistent storage (also similar to other OpenStack
+                services).</para>
             <para>If your deployment uses a controller host to run centralized
-                Compute components, you can deploy the Networking server on that
-                same host. However, Networking is entirely standalone and can be
-                deployed on its own host as well. Depending on your deployment,
-                Networking can also include the following agents.</para>
+            Compute components, you can deploy the Networking server to that
+            same host. However, Networking is entirely standalone and can be
+            deployed to a dedicated host. Depending on your configuration,
+            Networking can also include the following agents:</para>
             <para>
                 <table rules="all">
                     <caption>Networking agents</caption>
@@ -41,40 +39,38 @@
                             <td><emphasis role="bold">plug-in
                                    agent</emphasis>
                                    (<literal>neutron-*-agent</literal>)</td>
-                            <td>Runs on each hypervisor to perform
-                                local vSwitch configuration. The agent
-                                that runs depends on the plug-in that
-                                you use, and some plug-ins do not
-                                require an agent.</td>
+                            <td>Runs on each hypervisor to perform local
+                            vSwitch configuration. The agent that runs depends
+                            on the plug-in that you use. Certain plug-ins do not
+                            require an agent.</td>
                         </tr>
                         <tr>
                             <td><emphasis role="bold">dhcp
                                    agent</emphasis>
                                    (<literal>neutron-dhcp-agent</literal>)</td>
-                            <td>Provides DHCP services to tenant
-                                networks. Some plug-ins use this
-                                agent.</td>
+                            <td>Provides DHCP services to tenant networks.
+                            Required by certain plug-ins.</td>
                         </tr>
                         <tr>
                             <td><emphasis role="bold">l3
                                    agent</emphasis>
                                    (<literal>neutron-l3-agent</literal>)</td>
-                            <td>Provides L3/NAT forwarding to provide
-                                external network access for VMs on
-                                tenant networks. Some plug-ins use
-                                this agent.</td>
+                            <td>Provides L3/NAT forwarding to provide external
+                            network access for VMs on tenant networks. Required
+                            by certain plug-ins.</td>
                         </tr>
                         <tr>
                             <td><emphasis role="bold">metering agent</emphasis>
                                     (<literal>neutron-metering-agent</literal>)</td>
-                            <td>Provides L3 traffic measurements for tenant networks.</td>
+                            <td>Provides L3 traffic metering for tenant networks.</td>
                         </tr>
                     </tbody>
                 </table>
             </para>
-            <para>These agents interact with the main neutron process
-                through RPC (for example, rabbitmq or qpid) or through
-                the standard Networking API. Further:</para>
+            <para>These agents interact with the main neutron process through
+            RPC (for example, RabbitMQ or Qpid) or through the standard
+            Networking API. In addition, Networking integrates with OpenStack
+            components in a number of ways:</para>
             <itemizedlist>
                 <listitem>
                     <para>Networking relies on the Identity service
@@ -100,22 +96,17 @@
         </section>
         <section xml:id="networking-services">
             <title>Place services on physical hosts</title>
-            <para>Like other OpenStack services, Networking enables
-                cloud administrators to run one or more services on
-                one or more physical devices. At one extreme, the
-                cloud administrator can run all service daemons on a
-                single physical host for evaluation purposes.
-                Alternatively the cloud administrator can run each
-                service on its own physical host and, in some cases,
-                can replicate services across multiple hosts for
-                redundancy. For more information, see the <citetitle
-                    xmlns:svg="http://www.w3.org/2000/svg"
-                    xmlns:html="http://www.w3.org/1999/xhtml"
-                    >OpenStack Configuration
-                Reference</citetitle>.</para>
-            <para>A standard architecture includes a cloud controller
-                host, a network gateway host, and a set of hypervisors
-                that run virtual machines. The cloud controller and
+            <para>Like other OpenStack services, Networking enables you to run
+            services across multiple physical devices. It is also possible to
+            run all service daemons on a single physical host for evaluation
+            purposes. Alternatively, you can run each service on a dedicated
+            physical host and replicate certain services across multiple hosts
+            for redundancy purposes. For more information, see the <citetitle
+                xmlns:svg="http://www.w3.org/2000/svg" xmlns:html="http://www.w3.org/1999/xhtml"
+                >OpenStack Configuration Reference</citetitle>.</para>
+            <para>A standard architectural design includes a cloud controller
+                host, a network gateway host, and a number of hypervisors
+                for hosting virtual machines. The cloud controller and
                 network gateway can be on the same host. However, if
                 you expect VMs to send significant traffic to or from
                 the Internet, a dedicated network gateway host helps
@@ -132,9 +123,8 @@
                     />
                 </imageobject>
             </mediaobject>
-            <para>A standard Networking set up has one or more of the
-                following distinct physical data center
-                networks.</para>
+            <para>A standard Networking deployment includes one or more of the
+            following physical networks:</para>
 
             <para>
                 <table rules="all">
@@ -152,11 +142,10 @@
                         <tr>
                             <td><emphasis role="bold">Management
                                    network</emphasis></td>
-                            <td>Provides internal communication
-                                between OpenStack Components. IP
-                                addresses on this network should be
-                                reachable only within the data
-                                center.</td>
+                            <td>Provides internal communication between
+                            OpenStack components. IP addresses on this network
+                            should be reachable only within the data
+                            center.</td>
                         </tr>
                         <tr>
                             <td><emphasis role="bold">Data
