@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter [
+<!-- Some useful entities borrowed from HTML -->
+<!ENTITY nbsp "&#160;">
+]>
 <chapter xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
@@ -10,125 +14,131 @@
         some of these, the requirement can be fulfilled by installing
         the <link
             xlink:href="https://cloudinit.readthedocs.org/en/latest/"
-            >cloud-init</link> package. You should read this section
-        before creating your own image to be sure that the image
-        supports the OpenStack features you plan on using.<itemizedlist>
-            <listitem>
-                <para>Disk partitions and resize root partition on
-                    boot (cloud-init)</para>
-            </listitem>
-            <listitem>
-                <para>No hard-coded MAC address information</para>
-            </listitem>
-            <listitem>
-                <para>SSH server running</para>
-            </listitem>
-            <listitem>
-                <para>Disable firewall</para>
-            </listitem>
-            <listitem>
-                <para>Access instance using ssh public key
-                    (cloud-init)</para>
-            </listitem>
-            <listitem>
-                <para>Process user data and other metadata
-                    (cloud-init)</para>
-            </listitem>
-            <listitem>
-                <para>Paravirtualized Xen support in Linux kernel (Xen
-                    hypervisor only with Linux kernel version &lt;
-                    3.0)</para>
-            </listitem>
-        </itemizedlist></para>
+                ><package>cloud-init</package></link> package. Read
+        this section before you create your own image to be sure that
+        the image supports the OpenStack features that you plan on
+        using.</para>
+    <itemizedlist>
+        <listitem>
+            <para>Disk partitions and resize root partition on boot
+                    (<package>cloud-init</package>)</para>
+        </listitem>
+        <listitem>
+            <para>No hard-coded MAC address information</para>
+        </listitem>
+        <listitem>
+            <para>SSH server running</para>
+        </listitem>
+        <listitem>
+            <para>Disable firewall</para>
+        </listitem>
+        <listitem>
+            <para>Access instance using ssh public key
+                    (<package>cloud-init</package>)</para>
+        </listitem>
+        <listitem>
+            <para>Process user data and other metadata
+                    (<package>cloud-init</package>)</para>
+        </listitem>
+        <listitem>
+            <para>Paravirtualized Xen support in Linux kernel (Xen
+                hypervisor only with Linux kernel version &lt;
+                3.0)</para>
+        </listitem>
+    </itemizedlist>
     <section xml:id="support-resizing">
         <title>Disk partitions and resize root partition on boot
             (cloud-init)</title>
-        <para>When you create a new Linux image, the first decision
-            you will need to make is how to partition the disks. The
-            choice of partition method can affect the resizing
-            functionality, as described below.</para>
+        <para>When you create a Linux image, you must decide how to
+            partition the disks. The choice of partition method can
+            affect the resizing functionality, as described in the
+            following sections.</para>
         <para>The size of the disk in a virtual machine image is
             determined when you initially create the image. However,
             OpenStack lets you launch instances with different size
             drives by specifying different flavors. For example, if
-            your image was created with a 5 GB disk, and you launch an
-            instance with a flavor of <literal>m1.small</literal>. The
-            resulting virtual machine instance has, by default,
-            a primary disk size of 10 GB. When an instance's disk is resized
-            up, zeros are just added to the end.</para>
-        <para>Your image needs to be able to resize its partitions on
-            boot to match the size requested by the user. Otherwise,
-            after the instance boots, you will need to manually resize
-            the partitions if you want to access the additional
-            storage you have access to when the disk size associated
-            with the flavor exceeds the disk size your image was
-            created with.</para>
+            your image was created with a 5&nbsp;GB disk, and you
+            launch an instance with a flavor of
+                <literal>m1.small</literal>. The resulting virtual
+            machine instance has, by default, a primary disk size of
+            10&nbsp;GB. When the disk for an instance is resized up,
+            zeros are just added to the end.</para>
+        <para>Your image must be able to resize its partitions on boot
+            to match the size requested by the user. Otherwise, after
+            the instance boots, you must manually resize the
+            partitions to access the additional storage to which you
+            have access when the disk size associated with the flavor
+            exceeds the disk size with which your image was
+            created.</para>
         <simplesect>
             <title>Xen: 1 ext3/ext4 partition (no LVM, no /boot, no
                 swap)</title>
-            <para>If you are using the OpenStack XenAPI driver, the
-                Compute service will automatically adjust the
-                partition and filesystem for your instance on boot.
-                Automatic resize will occur if the following are all true:<itemizedlist>
-                    <listitem>
-                        <para><literal>auto_disk_config=True</literal>
-                            is set as a property on the image in the
-                            Image Registry.</para>
-                    </listitem>
-                    <listitem>
-                        <para>The disk on the image has only one
-                            partition.</para>
-                    </listitem>
-                    <listitem>
-                        <para>The file system on the one partition is
-                            ext3 or ext4.</para>
-                    </listitem>
-                </itemizedlist></para>
-            <para>Therefore, if you are using Xen, we recommend that
-                when you create your images, you create a single ext3
-                or ext4 partition (not managed by LVM). Otherwise,
-                read on.</para>
+            <para>If you use the OpenStack XenAPI driver, the Compute
+                service automatically adjusts the partition and file
+                system for your instance on boot. Automatic resize
+                occurs if the following conditions are all
+                true:</para>
+            <itemizedlist>
+                <listitem>
+                    <para><literal>auto_disk_config=True</literal> is
+                        set as a property on the image in the image
+                        registry.</para>
+                </listitem>
+                <listitem>
+                    <para>The disk on the image has only one
+                        partition.</para>
+                </listitem>
+                <listitem>
+                    <para>The file system on the one partition is ext3
+                        or ext4.</para>
+                </listitem>
+            </itemizedlist>
+            <para>Therefore, if you use Xen, we recommend that when
+                you create your images, you create a single ext3 or
+                ext4 partition (not managed by LVM). Otherwise, read
+                on.</para>
         </simplesect>
         <simplesect>
-            <title>Non-Xen with cloud-init/cloud-tools: 1 ext3/ext4
+            <title>Non-Xen with cloud-init/cloud-tools: One ext3/ext4
                 partition (no LVM, no /boot, no swap)</title>
-            <para>Your image must be configured to deal with two issues:<itemizedlist>
-                    <listitem>
-                        <para>The image's partition table describes
-                            the original size of the image</para>
-                    </listitem>
-                    <listitem>
-                        <para>The image's filesystem fills the
-                            original size of the image</para>
-                    </listitem>
-                </itemizedlist></para>
-            <para>Then, during the boot process:<itemizedlist>
-                    <listitem>
-                        <para>the partition table must be modified to
-                            be made aware of the additional space<itemizedlist>
-                                <listitem>
-                                   <para>If you are not using LVM, you
-                                   must modify the table to extend the
-                                   existing root partition to
-                                   encompass this additional
-                                   space</para>
-                                </listitem>
-                                <listitem>
-                                   <para>If you are using LVM, you can
-                                   create add a new LVM entry to the
-                                   partition table, create a new LVM
-                                   physical volume, add it to the
-                                   volume group, and extend the
-                                   logical partition with the root
-                                   volume</para>
-                                </listitem>
-                            </itemizedlist></para>
-                    </listitem>
-                    <listitem>
-                        <para>the root volume filesystem must be
-                            resized</para>
-                    </listitem>
-                </itemizedlist></para>
+            <para>You must configure these items for your
+                image:</para>
+            <itemizedlist>
+                <listitem>
+                    <para>The partition table for the image describes
+                        the original size of the image</para>
+                </listitem>
+                <listitem>
+                    <para>The file system for the image fills the
+                        original size of the image</para>
+                </listitem>
+            </itemizedlist>
+            <para>Then, during the boot process, you must:</para>
+            <itemizedlist>
+                <listitem>
+                    <para>Modify the partition table to make it aware
+                        of the additional space:</para>
+                    <itemizedlist>
+                        <listitem>
+                            <para>If you do not use LVM, you must
+                                modify the table to extend the
+                                existing root partition to encompass
+                                this additional space.</para>
+                        </listitem>
+                        <listitem>
+                            <para>If you use LVM, you can add a new
+                                LVM entry to the partition table,
+                                create a new LVM physical volume, add
+                                it to the volume group, and extend the
+                                logical partition with the root
+                                volume.</para>
+                        </listitem>
+                    </itemizedlist>
+                </listitem>
+                <listitem>
+                    <para>Resize the root volume file system.</para>
+                </listitem>
+            </itemizedlist>
             <para>The simplest way to support this in your image is to
                 install the <link
                     xlink:href="https://launchpad.net/cloud-utils"
@@ -136,42 +146,46 @@
                     <command>growpart</command> tool for extending
                 partitions), the <link
                     xlink:href="https://launchpad.net/cloud-initramfs-tools"
-                    >cloud-initramfs-tools</link> package (which will
-                support resizing root partition on the first boot),
+                    >cloud-initramfs-tools</link> package (which
+                supports resizing root partition on the first boot),
                 and the <link
                     xlink:href="https://launchpad.net/cloud-init"
-                    >cloud-init</link> package into your image. With
-                these installed, the image will perform the root
-                partition resize on boot. For example, in the
-                    <filename>/etc/rc.local</filename> file. These
-                packages are in the Ubuntu and Debian package
-                repository, as well as the EPEL repository (for
-                Fedora/RHEL/CentOS/Scientific Linux guests).</para>
-            <para>If you are not able to install
+                        ><package>cloud-init</package></link> package
+                into your image. With these installed, the image
+                performs the root partition resize on boot. For
+                example, in the <filename>/etc/rc.local</filename>
+                file. These packages are in the Ubuntu and Debian
+                package repository, as well as the EPEL repository
+                (for Fedora/RHEL/CentOS/Scientific Linux
+                guests).</para>
+            <para>If you cannot install
                     <literal>cloud-initramfs-tools</literal>, Robert
                 Plestenjak has a github project called <link
                     xlink:href="https://github.com/flegmatik/linux-rootfs-resize"
                     >linux-rootfs-resize</link> that contains scripts
-                that will update a ramdisk using
-                    <command>growpart</command> so that the image will
-                resize properly on boot.</para>
-            <para>If you are able to install the cloud-utils and
-                cloud-init packages, we recommend that when you create
-                your images, you create a single ext3 or ext4
-                partition (not managed by LVM).</para>
+                that update a ramdisk by using
+                    <command>growpart</command> so that the image
+                resizes properly on boot.</para>
+            <para>If you can install the cloud-utils and
+                    <package>cloud-init</package> packages, we
+                recommend that when you create your images, you create
+                a single ext3 or ext4 partition (not managed by
+                LVM).</para>
         </simplesect>
         <simplesect>
-            <title>Non-Xen without cloud-init/cloud-tools: LVM</title>
-            <para>If you cannot install cloud-init and cloud-tools
-                inside of your guest, and you want to support resize,
-                you will need to write a script that your image will
-                run on boot to modify the partition table. In this
-                case, we recommend using LVM to manage your
-                partitions. Due to a limitation in the Linux kernel
-                (as of this writing), you cannot modify a partition
-                table of a raw disk that has partition currently
-                mounted, but you can do this for LVM.</para>
-            <para>Your script will need to do something like the following:<orderedlist>
+            <title>Non-Xen without
+                    <package>cloud-init</package>/<package>cloud-tools</package>:
+                LVM</title>
+            <para>If you cannot install <package>cloud-init</package>
+                and <package>cloud-tools</package> inside of your
+                guest, and you want to support resize, you must write
+                a script that your image runs on boot to modify the
+                partition table. In this case, we recommend using LVM
+                to manage your partitions. Due to a limitation in the
+                Linux kernel (as of this writing), you cannot modify a
+                partition table of a raw disk that has partitions
+                currently mounted, but you can do this for LVM.</para>
+            <para>Your script must do something like the following:<orderedlist>
                     <listitem>
                         <para>Detect if any additional space is
                             available on the disk. For example, parse
@@ -210,58 +224,56 @@
                                    /dev/mapper/<replaceable>node-root</replaceable></command>.</para>
                     </listitem>
                 </orderedlist></para>
-            <para>You do not need to have a <filename>/boot</filename>
-                partition, unless your image is an older Linux
+            <para>You do not need a <filename>/boot</filename>
+                partition unless your image is an older Linux
                 distribution that requires that
-                    <filename>/boot</filename> is not managed by LVM.
-                You may elect to use a swap per</para>
+                    <filename>/boot</filename> is not managed by LVM.</para>
         </simplesect>
     </section>
     <section xml:id="mac-adddress">
         <title>No hard-coded MAC address information</title>
         <para>You must remove the network persistence rules in the
-            image as their presence will result in the network
-            interface in the instance coming up as an interface other
-            than eth0. This is because your image has a record of the
-            MAC address of the network interface card when it was
-            first installed, and this MAC address will be different
-            each time the instance boots up. You should alter the
-            following files:<itemizedlist>
-                <listitem>
-                    <para>Replace
-                            <filename>/etc/udev/rules.d/70-persistent-net.rules</filename>
-                        with an empty file (contains network
-                        persistence rules, including MAC
-                        address)</para>
-                </listitem>
-                <listitem>
-                    <para>Replace
-                            <filename>/lib/udev/rules.d/75-persistent-net-generator.rules</filename>
-                        with an empty file (this generates the file
-                        above)</para>
-                </listitem>
-                <listitem>
-                    <para>Remove the HWADDR line from
-                            <filename>/etc/sysconfig/network-scripts/ifcfg-eth0</filename>
-                        on Fedora-based images</para>
-                </listitem>
-            </itemizedlist><note>
-                <para>If you delete the network persistent rules
-                    files, you may get a udev kernel warning at boot
-                    time, which is why we recommend replacing them
-                    with empty files instead.</para>
-            </note></para>
-
+            image because they cause the network interface in the
+            instance to come up as an interface other than eth0. This
+            is because your image has a record of the MAC address of
+            the network interface card when it was first installed,
+            and this MAC address is different each time that the
+            instance boots. You should alter the following
+            files:</para>
+        <itemizedlist>
+            <listitem>
+                <para>Replace
+                        <filename>/etc/udev/rules.d/70-persistent-net.rules</filename>
+                    with an empty file (contains network persistence
+                    rules, including MAC address)</para>
+            </listitem>
+            <listitem>
+                <para>Replace
+                        <filename>/lib/udev/rules.d/75-persistent-net-generator.rules</filename>
+                    with an empty file (this generates the file
+                    above)</para>
+            </listitem>
+            <listitem>
+                <para>Remove the HWADDR line from
+                        <filename>/etc/sysconfig/network-scripts/ifcfg-eth0</filename>
+                    on Fedora-based images</para>
+            </listitem>
+        </itemizedlist>
+        <note>
+            <para>If you delete the network persistent rules files,
+                you may get a udev kernel warning at boot time, which
+                is why we recommend replacing them with empty files
+                instead.</para>
+        </note>
     </section>
     <section xml:id="ensure-ssh-server">
         <title>Ensure ssh server runs</title>
         <para>You must install an ssh server into the image and ensure
-            that it starts up on boot, or you will not be able to
-            connect to your instance using ssh when it boots inside of
-            OpenStack. This package is typically called
+            that it starts up on boot, or you cannot connect to your
+            instance by using ssh when it boots inside of OpenStack.
+            This package is typically called
                 <literal>openssh-server</literal>.</para>
     </section>
-
     <section xml:id="disable-firewall">
         <title>Disable firewall</title>
         <para>In general, we recommend that you disable any firewalls
@@ -272,7 +284,7 @@
             connect to your instance.</para>
     </section>
     <section xml:id="ssh-public-key">
-        <title>Access instance using ssh public key
+        <title>Access instance by using ssh public key
             (cloud-init)</title>
         <para>The typical way that users access virtual machines
             running on OpenStack is to ssh using public key
@@ -281,28 +293,32 @@
             from the OpenStack metadata service or config drive, at
             boot time.</para>
         <simplesect>
-            <title>Use cloud-init to fetch the public key</title>
-            <para>The cloud-init package will automatically fetch the
-                public key from the metadata server and place the key
-                in an account. The account varies by distribution. On
-                Ubuntu-based virtual machines, the account is called
-                "ubuntu". On Fedora-based virtual machines, the
-                account is called "ec2-user".</para>
+            <title>Use <package>cloud-init</package> to fetch the
+                public key</title>
+            <para>The <package>cloud-init</package> package
+                automatically fetches the public key from the metadata
+                server and places the key in an account. The account
+                varies by distribution. On Ubuntu-based virtual
+                machines, the account is called
+                    <literal>ubuntu</literal>. On Fedora-based virtual
+                machines, the account is called
+                    <literal>ec2-user</literal>.</para>
             <para>You can change the name of the account used by
-                cloud-init by editing the
+                    <package>cloud-init</package> by editing the
                     <filename>/etc/cloud/cloud.cfg</filename> file and
                 adding a line with a different user. For example, to
-                configure cloud-init to put the key in an account
-                named <literal>admin</literal>, edit the configuration
-                file so it has the line:</para>
+                configure <package>cloud-init</package> to put the key
+                in an account named <literal>admin</literal>, edit the
+                configuration file so it has the line:</para>
             <programlisting>user: admin</programlisting>
         </simplesect>
         <simplesect>
             <title>Write a custom script to fetch the public
                 key</title>
-            <para>If you are unable or unwilling to install cloud-init
-                inside the guest, you can write a custom script to
-                fetch the public key and add it to a user account.</para>
+            <para>If you are unable or unwilling to install
+                    <package>cloud-init</package> inside the guest,
+                you can write a custom script to fetch the public key
+                and add it to a user account.</para>
             <para>To fetch the ssh public key and add it to the root
                 account, edit the <filename>/etc/rc.local</filename>
                 file and add the following lines before the line
@@ -357,17 +373,16 @@ done</programlisting>
     <section xml:id="metadata">
         <title>Process user data and other metadata
             (cloud-init)</title>
-        <para>In addition to the ssh public key, an image may need to
-            retrieve additional information from OpenStack, such as
-                <link
+        <para>In addition to the ssh public key, an image might need
+            additional information from OpenStack, such as <link
                 xlink:href="http://docs.openstack.org/user-guide/content/user-data.html"
                 >user data</link> that the user submitted when
-            requesting the image. For example, you might want to set the
-            host name of the instance when it is booted. Or, you might
-            wish to configure your image so that it executes user data
-            content as a script on boot.</para>
-        <para>This information is accessible through the metadata service
-            or the <link
+            requesting the image. For example, you might want to set
+            the host name of the instance when it is booted. Or, you
+            might wish to configure your image so that it executes
+            user data content as a script on boot.</para>
+        <para>This information is accessible through the metadata
+            service or the <link
                 xlink:href="http://docs.openstack.org/user-guide/content/config-drive.html"
                 >config drive</link>. As the OpenStack metadata
             service is compatible with version 2009-04-04 of the
@@ -378,9 +393,10 @@ done</programlisting>
             retrieve user data.</para>
 
         <para>The easiest way to support this type of functionality is
-            to install the cloud-init package into your image, which
-            is configured by default to treat user data as an
-            executable script, and will set the host name.</para>
+            to install the <package>cloud-init</package> package into
+            your image, which is configured by default to treat user
+            data as an executable script, and sets the host
+            name.</para>
     </section>
     <section xml:id="write-to-console">
         <title>Ensure image writes boot log to console</title>
@@ -394,11 +410,12 @@ done</programlisting>
             looks something like this:</para>
         <programlisting>linux /boot/vmlinuz-3.2.0-49-virtual root=UUID=6d2231e4-0975-4f35-a94f-56738c1a8150 ro console=ttyS0</programlisting>
         <para>If <literal>console=ttyS0</literal> does not appear, you
-            will need to modify your grub configuration. In general,
-            you should not update the grub.cfg directly, since it is
-            automatically generated. Instead, you should edit
-                <filename>/etc/default/grub</filename> and modify the
-            value of the <literal>GRUB_CMDLINE_LINUX_DEFAULT</literal>
+            must modify your grub configuration. In general, you
+            should not update the <filename>grub.cfg</filename>
+            directly, since it is automatically generated. Instead,
+            you should edit <filename>/etc/default/grub</filename> and
+            modify the value of the
+                <literal>GRUB_CMDLINE_LINUX_DEFAULT</literal>
             variable:
             <programlisting language="bash">GRUB_CMDLINE_LINUX_DEFAULT="console=ttyS0"</programlisting></para>
         <para>Next, update the grub configuration. On Debian-based
@@ -417,8 +434,8 @@ done</programlisting>
             guests). If you are running the Xen hypervisor with
             paravirtualization, and you want to create an image for an
             older Linux distribution that has a pre 3.0 kernel, you
-            will need to ensure that the image boots a kernel that has
-            been compiled with Xen support.</para>
+            must ensure that the image boots a kernel that has been
+            compiled with Xen support.</para>
     </section>
     <section xml:id="image-cache-management">
         <title>Manage the image cache</title>
@@ -429,8 +446,8 @@ done</programlisting>
             compute nodes share one common
                 <filename>/var/lib/nova/instances/</filename>
             directory.</para>
-        <para>For information about libvirt images in OpenStack, refer
-            to <link
+        <para>For information about libvirt images in OpenStack, see
+                <link
                 xlink:href="http://www.pixelbeat.org/docs/openstack_libvirt_images/"
                 >The life of an OpenStack libvirt image from Pádraig
                 Brady</link>.</para>
@@ -448,18 +465,29 @@ done</programlisting>
             <tbody>
                 <tr>
                     <td>preallocate_images=none</td>
-                    <td>(StrOpt) VM image preallocation mode: "none"
-                        =&gt; no storage provisioning is done up
-                        front, "space" =&gt; storage is fully
-                        allocated at instance start. If this is set to
-                        'space', the $instance_dir/ images will be 
-                            <link
-                            xlink:href="http://www.kernel.org/doc/man-pages/online/pages/man2/fallocate.2.html"
-                            >fallocate</link>d to immediately
-                        determine if enough space is available, and to
-                        possibly improve VM I/O performance due to
-                        ongoing allocation avoidance, and better
-                        locality of block allocations.</td>
+                    <td><para>(StrOpt) VM image preallocation
+                            mode:</para><itemizedlist>
+                            <listitem>
+                                <para><literal>none</literal>. No
+                                   storage provisioning occurs up
+                                   front.</para>
+                            </listitem>
+                            <listitem>
+                                <para><literal>space</literal>.
+                                   Storage is fully allocated at
+                                   instance start. The
+                                   <literal>$instance_dir/</literal>
+                                   images are <link
+                                   xlink:href="http://www.kernel.org/doc/man-pages/online/pages/man2/fallocate.2.html"
+                                   >fallocate</link>d to immediately
+                                   determine if enough space is
+                                   available, and to possibly improve
+                                   VM I/O performance due to ongoing
+                                   allocation avoidance, and better
+                                   locality of block
+                                   allocations.</para>
+                            </listitem>
+                        </itemizedlist></td>
                 </tr>
                 <tr>
                     <td>remove_unused_base_images=True</td>
@@ -472,13 +500,13 @@ done</programlisting>
                 <tr>
                     <td>remove_unused_original_minimum_age_seconds=86400</td>
                     <td>(IntOpt) Unused unresized base images younger
-                        than this will not be removed. Default is
-                        86400 seconds, or 24 hours.</td>
+                        than this are not removed. Default is 86400
+                        seconds, or 24 hours.</td>
                 </tr>
                 <tr>
                     <td>remove_unused_resized_minimum_age_seconds=3600</td>
                     <td>(IntOpt) Unused resized base images younger
-                        than this will not be removed. Default is 3600
+                        than this are not removed. Default is 3600
                         seconds, or one hour.</td>
                 </tr>
             </tbody>
@@ -494,7 +522,7 @@ a0d1d5d3_20
 2012-02-18 04:24:17 41389 INFO nova.virt.libvirt.imagecache [-] Removable base files: /var/lib/nova/instances/_base/06a057b9c7b0b27e3b496f53d1e88810
 a0d1d5d3 /var/lib/nova/instances/_base/06a057b9c7b0b27e3b496f53d1e88810a0d1d5d3_20
 2012-02-18 04:24:17 41389 INFO nova.virt.libvirt.imagecache [-] Removing base file: /var/lib/nova/instances/_base/06a057b9c7b0b27e3b496f53d1e88810a0d1d5d3</computeroutput></screen>
-        <para>Since 86400 seconds (24 hours) is the default time for
+        <para>Because 86400 seconds (24 hours) is the default time for
                 <literal>remove_unused_original_minimum_age_seconds</literal>,
             you can either wait for that time interval to see the base
             image removed, or set the value to a shorter time period
