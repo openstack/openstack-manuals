@@ -1,480 +1,588 @@
 <?xml version="1.0" encoding="utf-8"?>
 <section xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xlink="http://www.w3.org/1999/xlink"
-    version="5.0"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="operator-editing-code">
     <title>Editing Code</title>
     <section xml:id="getting-tools-and-accounts">
         <title>Get Tools and Accounts</title>
-        <para>
-            <procedure>
-                <note>
-                    <para>First create a GitHub account at <link xlink:href="http://github.com"
-                            >github.com.</link></para>
-                </note>
-                <note><para>Check out <link xlink:href="https://wiki.openstack.org/wiki/Documentation/HowTo">https://wiki.openstack.org/wiki/Documentation/HowTo</link> for more extensive setup instructions</para></note>
-                <step>
-                    <para>Download and install Git from <link
-                        xlink:href="http://git-scm.com/downloads">http://git-scm.com/downloads</link></para>
-                </step>
-                <step>
-                    <para>Create your local repository directory</para>
-                    <screen><prompt>$</prompt> <userinput>mkdir /Users/<replaceable>username</replaceable>/code/</userinput></screen>
-                </step>
-                <step>
-                    <title>Install SourceTree</title>
-                    <substeps>
-                        <step>
-                            <para><link xlink:href="http://www.sourcetreeapp.com/download/">http://www.sourcetreeapp.com/download/</link></para>
-                        </step>
-                        <step>
-                            <para>Ignore the Atlassian Bitbucket and Stack
-                                setup</para>
-                        </step>
-                        <step>
-                            <para>Add your GitHub username and password</para>
-                        </step>
-                        <step>
-                            <para>Set your local repository location</para>
-                        </step>
-                    </substeps>
-                </step>
-                <step>
-                    <title>Install an XML editor</title>
-                    <substeps>
-                        <step>
-                            <para>You can download a 30 day trial of Oxygen. The floating licenses donated by OxygenXML have all been handed out.<link
+        <procedure>
+            <note>
+                <para>First create a GitHub account at <link
+                        xlink:href="http://github.com"
+                        >github.com.</link></para>
+            </note>
+            <note>
+                <para>Check out <link
+                        xlink:href="https://wiki.openstack.org/wiki/Documentation/HowTo"
+                        >https://wiki.openstack.org/wiki/Documentation/HowTo</link>
+                    for more extensive setup instructions</para>
+            </note>
+            <step>
+                <para>Download and install Git from <link
+                        xlink:href="http://git-scm.com/downloads"
+                        >http://git-scm.com/downloads</link></para>
+            </step>
+            <step>
+                <para>Create your local repository directory</para>
+                <screen><prompt>$</prompt> <userinput>mkdir /Users/<replaceable>username</replaceable>/code/</userinput></screen>
+            </step>
+            <step>
+                <title>Install SourceTree</title>
+                <substeps>
+                    <step>
+                        <para><link
+                                xlink:href="http://www.sourcetreeapp.com/download/"
+                                >http://www.sourcetreeapp.com/download/</link></para>
+                    </step>
+                    <step>
+                        <para>Ignore the Atlassian Bitbucket and Stack
+                            setup</para>
+                    </step>
+                    <step>
+                        <para>Add your GitHub username and
+                            password</para>
+                    </step>
+                    <step>
+                        <para>Set your local repository
+                            location</para>
+                    </step>
+                </substeps>
+            </step>
+            <step>
+                <title>Install an XML editor</title>
+                <substeps>
+                    <step>
+                        <para>You can download a 30 day trial of
+                            Oxygen. The floating licenses donated by
+                            OxygenXML have all been handed out.<link
                                 xlink:href="http://www.oxygenxml.com/download_oxygenxml_editor.html"
                                 >http://www.oxygenxml.com/download_oxygenxml_editor.html</link></para>
-                         </step>
-                        <step><para>AND/OR PyCharm <link
-                                    xlink:href="http://download.jetbrains.com/python/pycharm-community-3.0.1.dmg"
-                                    >http://download.jetbrains.com/python/pycharm-community-3.0.1.dmg</link></para></step>
-                         <step><para>AND/OR You can use emacs or vi editors.</para>
-                            <para>Here are some great resources on DocBook and Emacs' NXML mode:</para>
-                            <itemizedlist><listitem><para><link xlink:href="http://paul.frields.org/2011/02/09/xml-editing-with-emacs/">http://paul.frields.org/2011/02/09/xml-editing-with-emacs/</link></para></listitem>
-                            <listitem><para><link xlink:href="https://fedoraproject.org/wiki/How_to_use_Emacs_for_XML_editing">https://fedoraproject.org/wiki/How_to_use_Emacs_for_XML_editing</link></para></listitem>
-                            <listitem><para><link xlink:href="http://infohost.nmt.edu/tcc/help/pubs/nxml/">http://infohost.nmt.edu/tcc/help/pubs/nxml/</link></para></listitem></itemizedlist>
-                                <para>If you prefer vi, there are ways to make DocBook editing easier:</para>
-                            <itemizedlist><listitem><para><link xlink:href="https://fedoraproject.org/wiki/Editing_DocBook_with_Vi">https://fedoraproject.org/wiki/Editing_DocBook_with_Vi</link></para></listitem></itemizedlist>
-                        </step>
-                    </substeps>
-                </step>
-                <step>
-                    <title>Install Maven</title>
-                    <substeps>
-                        <step>
-                            <para>Create the <filename>apache-maven</filename> directory</para>
-                            <screen><prompt>$</prompt> <userinput>sudo mkdir /usr/local/apache-maven</userinput></screen>
+                    </step>
+                    <step>
+                        <para>AND/OR PyCharm <link
+                                xlink:href="http://download.jetbrains.com/python/pycharm-community-3.0.1.dmg"
+                                >http://download.jetbrains.com/python/pycharm-community-3.0.1.dmg</link></para>
+                    </step>
+                    <step>
+                        <para>AND/OR You can use emacs or vi
+                            editors.</para>
+                        <para>Here are some great resources on DocBook
+                            and Emacs' NXML mode:</para>
+                        <itemizedlist>
+                            <listitem>
+                                <para><link
+                                   xlink:href="http://paul.frields.org/2011/02/09/xml-editing-with-emacs/"
+                                   >http://paul.frields.org/2011/02/09/xml-editing-with-emacs/</link></para>
+                            </listitem>
+                            <listitem>
+                                <para><link
+                                   xlink:href="https://fedoraproject.org/wiki/How_to_use_Emacs_for_XML_editing"
+                                   >https://fedoraproject.org/wiki/How_to_use_Emacs_for_XML_editing</link></para>
+                            </listitem>
+                            <listitem>
+                                <para><link
+                                   xlink:href="http://infohost.nmt.edu/tcc/help/pubs/nxml/"
+                                   >http://infohost.nmt.edu/tcc/help/pubs/nxml/</link></para>
+                            </listitem>
+                        </itemizedlist>
+                        <para>If you prefer vi, there are ways to make
+                            DocBook editing easier:</para>
+                        <itemizedlist>
+                            <listitem>
+                                <para><link
+                                   xlink:href="https://fedoraproject.org/wiki/Editing_DocBook_with_Vi"
+                                   >https://fedoraproject.org/wiki/Editing_DocBook_with_Vi</link></para>
+                            </listitem>
+                        </itemizedlist>
+                    </step>
+                </substeps>
+            </step>
+            <step>
+                <title>Install Maven</title>
+                <substeps>
+                    <step>
+                        <para>Create the
+                                <filename>apache-maven</filename>
+                            directory</para>
+                        <screen><prompt>$</prompt> <userinput>sudo mkdir /usr/local/apache-maven</userinput></screen>
 
-                        </step>
-                        <step>
-                            <para>Copy the latest stable binary from <link
+                    </step>
+                    <step>
+                        <para>Copy the latest stable binary from <link
                                 xlink:href="http://maven.apache.org/download.cgi"
-                                >http://maven.apache.org/download.cgi</link> into
+                                >http://maven.apache.org/download.cgi</link>
+                            into
                                 <filename>/usr/local/apache-maven</filename>.</para>
-                        </step>
-                        <step>
-                            <para>Install maven with
-                                <screen><prompt>$</prompt> <userinput>sudo /usr/local/apache-maven/XXXXX</userinput></screen>
-                            </para>
-                        </step>
-                        <step>
-                            <para>Add the maven path</para>
-                            <screen><prompt>$</prompt> <userinput>sudo touch /etc/path.d/mvn.path</userinput>
+                    </step>
+                    <step>
+                        <para>Install maven:</para>
+                        <screen><prompt>$</prompt> <userinput>sudo /usr/local/apache-maven/XXXXX</userinput></screen>
+                    </step>
+                    <step>
+                        <para>Add the maven path:</para>
+                        <screen><prompt>$</prompt> <userinput>sudo touch /etc/path.d/mvn.path</userinput>
 <prompt>$</prompt> <userinput>sudo vi /etc/path.d/mvn.path</userinput>
 <prompt>$</prompt> <userinput>/usr/local/apache-maven/apache-maven-3.0.5/bin</userinput></screen>
-                        </step>
-                        <step>
-                            <para>Set your maven user profile settings</para>
-                            <screen><prompt>$</prompt> export MAVEN_OPTS='-Xms256m -XX:MaxPermSize=1024m -Xmx1024m'</screen>
-                        </step>
-                        <step>
-                            <para>Verify that maven is setup with</para>
-                            <screen><prompt>$</prompt> <userinput>sudo mvn --install</userinput></screen>
-                        </step>
-                    </substeps>
-                </step>
-                <!-- the next five paragraphs were lifted from https://wiki.openstack.org/wiki/Documentation/HowTo#First-time_Contributors, we should figure out how to embed instead -->
-                <step>
-                    <para>Create a Launchpad account: Visit
-                        <link xlink:href="https://login.launchpad.net/+new_account">
-                        https://login.launchpad.net/+new_account</link>After you create
-                        this account, the follow-up page is slightly confusing. It
-                        doesn't tell you that you are done. (It gives you the
-                        opportunity to change your -password, but you do not have
-                        to.)</para>
-                </step>
-                <step>
-                    <para>Add at least one SSH key to your account profile. To
-                        do this, follow the instructions
-                        on <link xlink:href="https://help.launchpad.net/YourAccount/CreatingAnSSHKeyPair">
+                    </step>
+                    <step>
+                        <para>Define your maven user profile
+                            settings:</para>
+                        <screen><prompt>$</prompt> export MAVEN_OPTS='-Xms256m -XX:MaxPermSize=1024m -Xmx1024m'</screen>
+                    </step>
+                    <step>
+                        <para>Verify that maven is set up
+                            correctly:</para>
+                        <screen><prompt>$</prompt> <userinput>sudo mvn --install</userinput></screen>
+                    </step>
+                </substeps>
+            </step>
+            <!-- the next five paragraphs were lifted from https://wiki.openstack.org/wiki/Documentation/HowTo#First-time_Contributors, we should figure out how to embed instead -->
+            <step>
+                <para>Create a Launchpad account: Visit <link
+                        xlink:href="https://login.launchpad.net/+new_account"
+                        >
+                        https://login.launchpad.net/+new_account</link>.
+                    After you create this account, the follow-up page
+                    is slightly confusing. It does not tell you that
+                    you are done. (It gives you the opportunity to
+                    change your -password, but you do not have
+                    to.)</para>
+            </step>
+            <step>
+                <para>Add at least one SSH key to your account
+                    profile. To do this, follow the instructions on
+                        <link
+                        xlink:href="https://help.launchpad.net/YourAccount/CreatingAnSSHKeyPair"
+                        >
                         https://help.launchpad.net/YourAccount/CreatingAnSSHKeyPair"</link>.</para>
-                </step>
-                <step>
-                    <para>Join The OpenStack Foundation: Visit
-                        <link xlink:href="https://www.openstack.org/join">https://www.openstack.org/join</link>.
-                        Among other privileges, this also allows you to vote in elections and
-                        run for elected positions within The OpenStack Project. When signing up
-                        for the Foundation Membership, make sure to give the same E-mail address
-                        you'll use for code contributions, since the Primary Email Address in
-                        you Foundation Profile will need to match the Preferred Email you set
-                        later in your Gerrit contact information.</para>
-                </step>
-                <step>
-                    <para>Validate your gerrit identity:
-                        Add your public key to your gerrit identity by going to
-                        <link xlink:href="https://review.openstack.org">https://review.openstack.org</link>,
-                        click the Sign In link, if you are not already logged in.  At the top-right corner
-                        of the page select settings, pick your username, then add your public ssh key under
-                        "SSH Public Keys".</para>
-                    <para>Also every developer and contributor needs to sign the
-                        Individual Contributor License agreement (CLA). Review the agreement
-                        under "Agreements", and sign to continue.</para>
-                </step>
-                <step>
-                    <para>Add your SSH keys to your GitHub account profile (same one as used in
-                        Launchpad, they must match). When you copy and paste the SSH key, include
-                        the ssh-rsa algorithm and computer identifier. If this is your first time
-                        setting up git and Github, be sure to run these steps in a Terminal
-                        window:</para>
-                    <screen><prompt>$</prompt> <userinput>git config --global user.name "Firstname Lastname"
-$ git config --global user.email "your_email@youremail.com" </userinput></screen>
-                </step>
-                <step>
-                    <para>Install git-review. If pip is not already installed, use <code
-                            >sudo easy_install pip</code> to install it on a Mac or
-                        Ubuntu</para>
-                    <screen><prompt>$</prompt> <userinput>sudo pip install git-review</userinput></screen>
-                </step>
-                <step>
-                    <para>Change to the directory</para>
-                    <screen><prompt>$</prompt> <userinput>cd /Users/<replaceable>username</replaceable>/code</userinput></screen>
-                </step>
-                <step>
-                    <para>Clone the openstack-manuals repository with</para>
-                    <screen><prompt>$</prompt> <userinput>git clone http://github.com/openstack/openstack-manuals.git</userinput></screen>
-                </step>
-                <step>
-                    <para>Change directory to the pulled repository</para>
-                    <screen><prompt>$</prompt> <userinput>cd openstack-manuals</userinput></screen>
-                </step>
-                <step>
-                    <para>Enter your Launchpad account information after testing
-                        for ssh key setup with</para>
-                    <screen><prompt>$</prompt> <userinput>git review -s</userinput></screen>
-                </step>
-            </procedure>
-        </para>
+            </step>
+            <step>
+                <para>Join The OpenStack Foundation: Visit <link
+                        xlink:href="https://www.openstack.org/join"
+                        >https://www.openstack.org/join</link>. Among
+                    other privileges, this membership enables you to
+                    vote in elections and run for elected positions in
+                    The OpenStack Project. When you sign up for
+                    membership, make sure to give the same e-mail
+                    address you will use for code contributions
+                    because the primary e-mail address in your
+                    foundation profile must match the preferred e-mail
+                    that you set later in your Gerrit contact
+                    information.</para>
+            </step>
+            <step>
+                <para>Validate your Gerrit identity: Add your public
+                    key to your gerrit identity by going to <link
+                        xlink:href="https://review.openstack.org"
+                        >https://review.openstack.org</link>, click
+                    the <guibutton>Sign In</guibutton> link, if you
+                    are not already logged in. At the top-right corner
+                    of the page select settings, then add your public
+                    ssh key under <guibutton> SSH Public
+                        Keys</guibutton>.</para>
+                <para>The CLA: Every developer and contributor needs
+                    to sign the Individual Contributor License
+                    agreement. Visit <link
+                        xlink:href="https://review.openstack.org/"
+                        >https://review.openstack.org/</link> and
+                    click the <guibutton>Sign In</guibutton> link at
+                    the top-right corner of the page. Log in with your
+                    Launchpad ID. You can preview the text of the
+                    Individual CLA.</para>
+            </step>
+            <step>
+                <para>Add your SSH keys to your GitHub account profile
+                    (the same one that was used in Launchpad). When
+                    you copy and paste the SSH key, include the
+                    ssh-rsa algorithm and computer identifier. If this
+                    is your first time setting up git and Github, be
+                    sure to run these steps in a Terminal
+                    window:</para>
+                <screen><prompt>$</prompt> <userinput>git config --global user.name "Firstname Lastname"</userinput>
+<prompt>$</prompt> <userinput>git config --global user.email "your_email@youremail.com"</userinput></screen>
+            </step>
+            <step>
+                <para>Install git-review. If pip is not already
+                    installed, use <code>sudo easy_install pip</code>
+                    to install it on a Mac or Ubuntu</para>
+                <screen><prompt>$</prompt> <userinput>sudo pip install git-review</userinput></screen>
+            </step>
+            <step>
+                <para>Change to the directory</para>
+                <screen><prompt>$</prompt> <userinput>cd /Users/<replaceable>username</replaceable>/code</userinput></screen>
+            </step>
+            <step>
+                <para>Clone the openstack-manuals repository
+                    with</para>
+                <screen><prompt>$</prompt> <userinput>git clone http://github.com/openstack/openstack-manuals.git</userinput></screen>
+            </step>
+            <step>
+                <para>Change directory to the pulled repository</para>
+                <screen><prompt>$</prompt> <userinput>cd openstack-manuals</userinput></screen>
+            </step>
+            <step>
+                <para>Enter your Launchpad account information after
+                    testing for ssh key setup with</para>
+                <screen><prompt>$</prompt> <userinput>git review -s</userinput></screen>
+            </step>
+        </procedure>
     </section>
     <section xml:id="fix-doc-bug">
         <title>Fix a Documentation Bug</title>
-        <para>
-            <procedure>
-                <step>
-                    <para>Note: For this example, we are going to assume bug
-                        1188522 and change 33713</para>
-                </step>
-                <step>
-                    <para>Bring up <link
+        <procedure>
+            <step>
+                <para>Note: For this example, we are going to assume
+                    bug 1188522 and change 33713</para>
+            </step>
+            <step>
+                <para>Bring up <link
                         xlink:href="https://bugs.launchpad.net/openstack-manuals"
                         >https://bugs.launchpad.net/openstack-manuals</link></para>
-                </step>
-                <step>
-                    <para>Select a bug that is unassigned and that you can fix.
-                        Syntax errors are the best ones to start off with.</para>
-                </step>
-                <step>
-                    <para>Using oXygen, open the
-                    <filename>
-                        /Users/<replaceable>username</replaceable>/code/openstack-manuals/doc/admin-guide-cloud/bk-admin-guide-cloud.xml
-                    </filename>
-                        master page for this example. It links together the rest
-                        of the material. Find the page with the bug. Open the page
-                        that is referenced in the bug description by selecting the
-                        content in the author view. Verify you have the correct
-                        page by visually inspecting the html page and the xml
-                        page.</para>
-                </step>
-                <step>
-                    <para>In the shell,</para>
-                    <screen><prompt>$</prompt> <userinput>cd /Users/<replaceable>username</replaceable>/code/openstack-manuals/doc/admin-guide-cloud/</userinput></screen>
-                </step>
-                <step>
-                    <para>Verify that you are on master with</para>
-                    <screen><prompt>$</prompt> <userinput>git checkout master</userinput></screen>
-                </step>
-                <step>
-                    <para>Create your working branch off master with</para>
-                    <screen><prompt>$</prompt> <userinput>git checkout -b bug/1188522</userinput></screen>
-                </step>
-                <step>
-                    <para>Verify that you have the branch open through
-                        SourceTree</para>
-                </step>
-                <step>
-                    <para>Correct the bug through oXygen. Toggle back and forth
-                        through the different views at the bottom of the
-                        editor.</para>
-                </step>
-                <step>
-                    <para>Once the bug is fixed, verify that the documentation
-                        can be built without errors by running</para>
-                    <screen><prompt>$</prompt> <userinput>mvn clean generate-sources</userinput></screen>
-                </step>
-                <step>
-                    <para>Verify that the HTML page reflects your changes
-                       properly. You can open the file from the command line by
-                       using the "open" command</para>
-                    <screen><prompt>$</prompt> <userinput>open target/docbkx/webhelp/local/openstack-training/index.html</userinput></screen>
-                </step>
-                <step>
-                    <para>Add the changes</para>
-                    <screen><prompt>$</prompt> <userinput>git add .</userinput></screen>
-                </step>
-                <step>
-                    <para>Commit the changes</para>
-                    <screen><prompt>$</prompt> <userinput>git commit -a -m "Removed reference to volume scheduler in the computer scheduler config and admin pages, bug 1188522"</userinput></screen>
-                </step>
-                <step>
-                    <para>Submit the bug fix to Gerrit</para>
-                    <screen><prompt>$</prompt> <userinput>git review</userinput></screen>
-                </step>
-                <step>
-                    <para>Track the Gerrit review process at<link
+            </step>
+            <step>
+                <para>Select a bug that is unassigned and that you can
+                    fix. Syntax errors are the best ones to start off
+                    with.</para>
+            </step>
+            <step>
+                <para>Using oXygen, open the <filename>
+                            /Users/<replaceable>username</replaceable>/code/openstack-manuals/doc/admin-guide-cloud/bk-admin-guide-cloud.xml
+                    </filename> master page for this example. It links
+                    together the rest of the material. Find the page
+                    with the bug. Open the page that is referenced in
+                    the bug description by selecting the content in
+                    the author view. Verify you have the correct page
+                    by visually inspecting the html page and the xml
+                    page.</para>
+            </step>
+            <step>
+                <para>In the shell,</para>
+                <screen><prompt>$</prompt> <userinput>cd /Users/<replaceable>username</replaceable>/code/openstack-manuals/doc/admin-guide-cloud/</userinput></screen>
+            </step>
+            <step>
+                <para>Verify that you are on master with</para>
+                <screen><prompt>$</prompt> <userinput>git checkout master</userinput></screen>
+            </step>
+            <step>
+                <para>Create your working branch off master
+                    with</para>
+                <screen><prompt>$</prompt> <userinput>git checkout -b bug/1188522</userinput></screen>
+            </step>
+            <step>
+                <para>Verify that you have the branch open through
+                    SourceTree</para>
+            </step>
+            <step>
+                <para>Correct the bug through oXygen. Toggle back and
+                    forth through the different views at the bottom of
+                    the editor.</para>
+            </step>
+            <step>
+                <para>Once the bug is fixed, verify that the
+                    documentation can be built without errors by
+                    running</para>
+                <screen><prompt>$</prompt> <userinput>mvn clean generate-sources</userinput></screen>
+            </step>
+            <step>
+                <para>Verify that the HTML page reflects your changes
+                    properly. You can open the file from the command
+                    line by using the "open" command</para>
+                <screen><prompt>$</prompt> <userinput>open target/docbkx/webhelp/local/openstack-training/index.html</userinput></screen>
+            </step>
+            <step>
+                <para>Add the changes</para>
+                <screen><prompt>$</prompt> <userinput>git add .</userinput></screen>
+            </step>
+            <step>
+                <para>Commit the changes</para>
+                <screen><prompt>$</prompt> <userinput>git commit -a -m "Removed reference to volume scheduler in the computer scheduler config and admin pages, bug 1188522"</userinput></screen>
+            </step>
+            <step>
+                <para>Submit the bug fix to Gerrit</para>
+                <screen><prompt>$</prompt> <userinput>git review</userinput></screen>
+            </step>
+            <step>
+                <para>Track the Gerrit review process at<link
                         xlink:href="https://review.openstack.org/#/c/33713"
-                        >https://review.openstack.org/#/c/33713</link>. Follow
-                        and respond inline to the Code Review requests and
-                        comments.</para>
-                </step>
-                <step>
-                    <para>Your change will be tested, track the Jenkins testing
-                        process at <link xlink:href="https://jenkins.openstack.org">
-                      https://jenkins.openstack.org</link></para>
-                </step>
-                <step>
-                    <para>If your change is rejected, complete the following steps:</para>
-                    <substeps>
-                        <step>
-                            <para>Respond to the inline comments if any</para>
-                        </step>
-                        <step>
-                            <para>Update the status to work in progress</para>
-                        </step>
-                        <step>
-                            <para>Checkout the patch from the Gerrit change review</para>
-                            <screen><prompt>$</prompt> <userinput>git review -d 33713</userinput></screen>
-                        </step>
-                        <step>
-                            <para>Follow the recommended tweaks to the files</para>
-                        </step>
-                        <step>
-                            <para>Rerun</para>
-                            <screen><prompt>$</prompt> <userinput>mvn clean generate-sources</userinput></screen>
-                        </step>
-                        <step>
-                            <para>Add your additional changes to the change log</para>
-                            <screen><prompt>$</prompt> <userinput>git commit -a --amend</userinput></screen>
-                        </step>
-                        <step>
-                            <para>Final commit</para>
-                            <screen><prompt>$</prompt> <userinput>git review</userinput></screen>
-                        </step>
-                        <step>
-                            <para>Update the Jenkins status to change completed</para>
-                        </step>
-                    </substeps>
-                </step>
-                <step>
-                    <para>Follow the jenkins build progress at
-                        <link xlink:href="https://jenkins.openstack.org/view/Openstack-manuals/">
-                          https://jenkins.openstack.org/view/Openstack-manuals/
-                        </link>.
-                        Note if the build process fails, the online documentation
-                        will not reflect your bug fix.</para>
-                </step>
-            </procedure>
-        </para>
+                        >https://review.openstack.org/#/c/33713</link>.
+                    Follow and respond inline to the Code Review
+                    requests and comments.</para>
+            </step>
+            <step>
+                <para>Your change will be tested, track the Jenkins
+                    testing process at <link
+                        xlink:href="https://jenkins.openstack.org">
+                        https://jenkins.openstack.org</link></para>
+            </step>
+            <step>
+                <para>If your change is rejected, complete the
+                    following steps:</para>
+                <substeps>
+                    <step>
+                        <para>Respond to the inline comments if
+                            any</para>
+                    </step>
+                    <step>
+                        <para>Update the status to work in
+                            progress</para>
+                    </step>
+                    <step>
+                        <para>Checkout the patch from the Gerrit
+                            change review</para>
+                        <screen><prompt>$</prompt> <userinput>git review -d 33713</userinput></screen>
+                    </step>
+                    <step>
+                        <para>Follow the recommended tweaks to the
+                            files</para>
+                    </step>
+                    <step>
+                        <para>Rerun</para>
+                        <screen><prompt>$</prompt> <userinput>mvn clean generate-sources</userinput></screen>
+                    </step>
+                    <step>
+                        <para>Add your additional changes to the
+                            change log</para>
+                        <screen><prompt>$</prompt> <userinput>git commit -a --amend</userinput></screen>
+                    </step>
+                    <step>
+                        <para>Final commit</para>
+                        <screen><prompt>$</prompt> <userinput>git review</userinput></screen>
+                    </step>
+                    <step>
+                        <para>Update the Jenkins status to change
+                            completed</para>
+                    </step>
+                </substeps>
+            </step>
+            <step>
+                <para>Follow the jenkins build progress at <link
+                        xlink:href="https://jenkins.openstack.org/view/Openstack-manuals/"
+                        >
+                        https://jenkins.openstack.org/view/Openstack-manuals/
+                    </link>. Note if the build process fails, the
+                    online documentation will not reflect your bug
+                    fix.</para>
+            </step>
+        </procedure>
     </section>
     <section xml:id="submit-doc-bug">
         <title>Submit a Documentation Bug Fix</title>
-        <para>
-            <procedure>
-                <step>
-                    <para>Bring up <link
+        <procedure>
+            <step>
+                <para>Bring up <link
                         xlink:href="https://bugs.launchpad.net/openstack-manuals/+filebug"
                         >https://bugs.launchpad.net/openstack-manuals/+filebug</link></para>
-                </step>
-                <step>
-                    <para>Give your bug a descriptive name</para>
-                </step>
-                <step>
-                    <para>Verify if asked that it is not a duplicate</para>
-                </step>
-                <step>
-                    <para>Add some more detail into the description field</para>
-                </step>
-                <step>
-                    <para>Once submitted, select the assigned to pane and select
-                        "assign to me" or "sarob"</para>
-                </step>
-                <step>
-                    <para>Follow the instructions for fixing a bug in the Fix a
-                        Documentation Bug section.</para>
-                </step>
-            </procedure>
-        </para>
+            </step>
+            <step>
+                <para>Give your bug a descriptive name</para>
+            </step>
+            <step>
+                <para>Verify if asked that it is not a
+                    duplicate</para>
+            </step>
+            <step>
+                <para>Add some more detail into the description
+                    field</para>
+            </step>
+            <step>
+                <para>Once submitted, select the assigned to pane and
+                    select "assign to me" or "sarob"</para>
+            </step>
+            <step>
+                <para>Follow the instructions for fixing a bug in the
+                    Fix a Documentation Bug section.</para>
+            </step>
+        </procedure>
     </section>
     <section xml:id="create-branch">
         <title>Create a Branch</title>
-        <para>
-            <note><para>This section is using the submission of this training material as the example</para></note>
-            <procedure>
-                <step>
-                    <para>Create a bp/training-manuals
-                        branch<programlisting>$ git checkout -b bp/training-manuals</programlisting></para>
-                </step>
-                <step>
-                    <para>From the openstack-manuals repository, use
-                    the template <filename
-                    >user-story-includes-template.xml</filename> as
-                    the starting point for your user story. File
-                    <filename>bk001-ch003-associate-general.xml</filename>
+        <note>
+            <para>This section uses the submission of this training
+                material as the example.</para>
+        </note>
+        <procedure>
+            <step>
+                <para>Create a bp/training-manuals branch:</para>
+                <screen><prompt>$</prompt> <userinput>git checkout -b bp/training-manuals</userinput></screen>
+            </step>
+            <step>
+                <para>From the openstack-manuals repository, use the
+                    template
+                        <filename>user-story-includes-template.xml</filename>
+                    as the starting point for your user story. File
+                        <filename>bk001-ch003-associate-general.xml</filename>
                     has at least one other included user story that
-                    you can use for additional help.
-                    </para>
-                </step>
-                <step>
-                    <para>Include the user story xml file into the <filename
-                        >bk001-ch003-associate-general.xml</filename> file. Follow the syntax of the
-                        existing <code>xi:include</code> statements.</para>
-                </step>
-                <step>
-                    <para>When your editing is completed. Double check Oxygen doesn't have any errors you
-                        are not expecting.</para>
-                </step>
-                <step>
-                    <para>Run maven locally to verify the build will run without errors
-                        <programlisting>$ mvn clean generate-sources</programlisting></para>
-                </step>
-                <step>
-                    <para>Add your changes into git<programlisting>$ git add .</programlisting></para>
-                </step>
-                <step>
-                    <para>Commit the changes with good syntax. After entering the commit command, VI syntax applies. Use "i" to insert and Esc to break out. ":wq" to write and quit.<programlisting>git commit -a
+                    you can use for additional help.</para>
+            </step>
+            <step>
+                <para>Include the user story xml file into the
+                        <filename>bk001-ch003-associate-general.xml</filename>
+                    file. Follow the syntax of the existing
+                        <code>xi:include</code> statements.</para>
+            </step>
+            <step>
+                <para>When your editing is complete, double check
+                    Oxygen doesn't have any unexpected errors.</para>
+            </step>
+            <step>
+                <para>Run maven locally to verify the build will run
+                    without errors
+                    <programlisting>$ mvn clean generate-sources</programlisting></para>
+            </step>
+            <step>
+                <para>Add your changes into
+                    git<programlisting>$ git add .</programlisting></para>
+            </step>
+            <step>
+                <para>Commit the changes with good syntax. After
+                    entering the commit command, VI syntax applies,
+                    use "i" to insert and Esc to break out. ":wq" to
+                    write and quit.</para>
+                <screen><prompt>$</prompt> <userinput>git commit -a</userinput>
+                    <computeroutput>my very short summary
 
-my very short summary
+more details go here. A few sentences would be nice.
 
-my more details go here. few sentences would be nice.
-
-blueprint training-manuals</programlisting></para>
-                </step>
-                <step>
-                    <para>Submit your patch for review<programlisting>$ git review</programlisting></para>
-                </step>
-                <step>
-                    <para>One last step. Go to the review page listed after you submitted your review
-                        and add the training core team as reviewers; Sean Roberts and Colin McNamara.</para>
-                </step>
-                <step>
-                    <para>More details on branching can be found here under <link
-                        xlink:href="https://wiki.openstack.org/wiki/Gerrit_Workflow">Gerrit
-                        Workflow</link> and the <link xlink:href="http://git-scm.com/doc">Git
-                            docs</link></para>
-                </step>
-            </procedure></para>
+blueprint training-manuals</computeroutput></screen>
+            </step>
+            <step>
+                <para>Submit your patch for
+                    review<programlisting>$ git review</programlisting></para>
+            </step>
+            <step>
+                <para>The last step is to go to the review page listed
+                    after you submitted your review and add the
+                    training core team as reviewers; Sean Roberts and
+                    Colin McNamara.</para>
+            </step>
+            <step>
+                <para>More details on branching can be found here
+                    under <link
+                        xlink:href="https://wiki.openstack.org/wiki/Gerrit_Workflow"
+                        >Gerrit Workflow</link> and the <link
+                        xlink:href="http://git-scm.com/doc">Git
+                        docs</link></para>
+            </step>
+        </procedure>
     </section>
     <section xml:id="add-training-content">
         <title>Add Content to the Training Manuals</title>
-        <para>
-            <procedure>
-                <step><para><emphasis role="bold">Getting Accounts and Tools:</emphasis> We can't do
-                    this without operators and developers using and creating the content. Anyone can
-                    contribute content. You will need the tools to get started. Go to the <link
+        <procedure>
+            <step>
+                <para><emphasis role="bold">Getting Accounts and
+                        Tools:</emphasis> We cannot do this without
+                    operators and developers using and creating the
+                    content. Anyone can contribute content. You will
+                    need the tools to get started. Go to the <link
                         xlink:href="http://docs.openstack.org/trunk/openstack-training/content/getting-tools-and-accounts.html"
-                        >Getting Tools and Accounts</link> page.</para>
-                </step>
-                 <step><para><emphasis role="bold">Pick a Card:</emphasis> Once you have your tools ready to go, you can
-                        assign some work to yourself. Go to the <link
-                            xlink:href="https://trello.com/board/openstack-training/51d6e5fee37248fd5b003de9"
-                            >Training Trello/KanBan storyboard</link> and assign a card / user story
-                        from the Sprint Backlog to yourself. If you don't have a Trello account, no
-                        problem, just create one. Email seanrob@yahoo-inc.com and you will have
-                        access. Move the card from the Sprint Backlog to Doing.</para>
-                    </step>
-                    <step>
-                    <para><emphasis role="bold">Create the Content:</emphasis> Each card / user
-                        story from the KanBan story board will be a separate chunk of content you
-                        will add to the openstack-manuals repository openstack-training sub-project.</para>
-                    </step>
-                <step>
-                    <para>Open the file <emphasis role="bold">st-training-guides.xml</emphasis> with
-                        your XML editor. All the content starts with the set file <filename
-                            >st-training-guides.xml</filename>. The XML structure follows
-                        the hierarchy Set -> Book -> Chapter -> Section. The <filename
-                            >st-training-guides.xml</filename> file holds the set level. Notice the
-                        set file uses <code>xi:include</code> statements to include the books. We want to open
-                        the associate book. Open the associate book and you will see the chapter
-                        include statements. These are the chapters that make up the Associate
-                        Training Guide book.</para>
-                </step>
-                <step>
-                    <para>Create a branch using the card number as <emphasis role="bold"
-                            >associate-card-XXX</emphasis> where XXX is the card number. Review
-                            <link
-                            xlink:href="http://docs.openstack.org/trunk/openstack-training/content/operator-create-branch.html"
-                            >Creating a Branch</link> again for instructions on how to complete the
-                        branch merge.</para>
-                </step>
-                <step>
-                    <para>Copy the <filename>user-story-includes-template.xml</filename>
-                        to <filename>associate-card-XXX.xml</filename>.</para>
-                </step>
-                <step>
-                    <para>Open the <filename
-                            >bk001-ch003-asssociate-general.xml</filename> file and add <emphasis
-                            role="bold">&lt;xi:include
+                        >Getting Tools and Accounts</link>
+                    page.</para>
+            </step>
+            <step>
+                <para><emphasis role="bold">Pick a Card:</emphasis>
+                    Once you have your tools ready to go, you can
+                    assign some work to yourself. Go to the <link
+                        xlink:href="https://trello.com/board/openstack-training/51d6e5fee37248fd5b003de9"
+                        >Training Trello/KanBan storyboard</link> and
+                    assign a card / user story from the Sprint Backlog
+                    to yourself. If you do not have a Trello account,
+                    no problem, just create one. Email
+                    seanrob@yahoo-inc.com and you will have access.
+                    Move the card from the Sprint Backlog to
+                    Doing.</para>
+            </step>
+            <step>
+                <para><emphasis role="bold">Create the
+                        Content:</emphasis> Each card / user story
+                    from the KanBan story board will be a separate
+                    chunk of content you will add to the
+                    openstack-manuals repository openstack-training
+                    sub-project.</para>
+            </step>
+            <step>
+                <para>Open the file <emphasis role="bold"
+                        >st-training-guides.xml</emphasis> with your
+                    XML editor. All the content starts with the set
+                    file <filename>st-training-guides.xml</filename>.
+                    The XML structure follows the hierarchy Set ->
+                    Book -> Chapter -> Section. The
+                        <filename>st-training-guides.xml</filename>
+                    file holds the set level. Notice the set file uses
+                        <code>xi:include</code> statements to include
+                    the books. We want to open the associate book.
+                    Open the associate book and you will see the
+                    chapter include statements. These are the chapters
+                    that make up the Associate Training Guide
+                    book.</para>
+            </step>
+            <step>
+                <para>Create a branch by using the card number as
+                        <emphasis role="bold"
+                            >associate-card-<replaceable>XXX</replaceable></emphasis>
+                    where <replaceable>XXX</replaceable> is the card
+                    number. Review <link
+                        xlink:href="http://docs.openstack.org/trunk/openstack-training/content/operator-create-branch.html"
+                        >Creating a Branch</link> again for
+                    instructions on how to complete the branch
+                    merge.</para>
+            </step>
+            <step>
+                <para>Copy the
+                        <filename>user-story-includes-template.xml</filename>
+                    to
+                    <filename>associate-card-XXX.xml</filename>.</para>
+            </step>
+            <step>
+                <para>Open the
+                        <filename>bk001-ch003-asssociate-general.xml</filename>
+                    file and add <emphasis role="bold">&lt;xi:include
                         href="associate-card-XXX.xml"></emphasis>.</para>
-                </step>
-                <step>
-                    <para>Side by side, open<emphasis role="bold"> associate-card-XXX.xml</emphasis>
-                        with your XML editor and open the <citetitle>Ubuntu 12.04 Install
-                            Guide</citetitle> with your HTML browser.</para>
-                </step>
-                <step>
-                    <para>Find the HTML content to include. Find the XML file that matches the HTML.
-                        Include the whole page using a simple href like <emphasis role="bold"
-                            >&lt;xi:include href="associate-card-XXX.xml"></emphasis> or include a
-                        section using xpath like <emphasis role="bold">&lt;xi:include
-                            href="../basic-install/src/basic-install_controller-common.xml"
-                            xpointer="xmlns(db=http://docbook.org/ns/docbook) xpath(//*[@xml:id =
-                            'controller-os'])"></emphasis> . Review the <filename
-                            >user-story-includes-template.xml</filename> file for the whole
-                        syntax.</para>
-                </step>
-                <step>
-                    <para>Copy in other content sources like the Aptira content, your own text
-                        describing what needs to be learned with the section, diagrams, and quizzes.
-                        If you include content from another source like Aptira cocntent make extra
-                        paragraph referencing the file and/or HTTP address the content came
-                        from.</para>
-                </step>
-                <step>
-                    <para>Verify the code is good by runnning <command>mvn clean generate-sources</command>
-                        and by
-                        reviewing the local HTML in <link
-                            xlink:href="target/docbkx/webhelp/local/training-guide/content/"
-                            >file:///Users/<replaceable>username</replaceable>/code/openstack-manuals/doc/training-guide/target/docbkx/webhelp/local/training-guide/content/</link>.
-                    </para>
-                </step>
-                <step>
-                    <para>Merge the branch.</para>
-                </step>
-                <step>
-                    <para>Move the card from Doing to Done.</para>
-                </step>
-            </procedure>
-        </para>
+            </step>
+            <step>
+                <para>Side by side, open<emphasis role="bold">
+                        associate-card-XXX.xml</emphasis> with your
+                    XML editor and open the <citetitle>Ubuntu 12.04
+                        Install Guide</citetitle> with your HTML
+                    browser.</para>
+            </step>
+            <step>
+                <para>Find the HTML content to include. Find the XML
+                    file that matches the HTML. Include the whole page
+                    using a simple href like <emphasis role="bold"
+                        >&lt;xi:include
+                        href="associate-card-XXX.xml"></emphasis> or
+                    include a section using xpath like <emphasis
+                        role="bold">&lt;xi:include
+                        href="../basic-install/src/basic-install_controller-common.xml"
+                        xpointer="xmlns(db=http://docbook.org/ns/docbook)
+                        xpath(//*[@xml:id =
+                        'controller-os'])"></emphasis> . Review the
+                        <filename>user-story-includes-template.xml</filename>
+                    file for the whole syntax.</para>
+            </step>
+            <step>
+                <para>Copy in other content sources including the
+                    Aptira content, a description of what the section
+                    aims to teach, diagrams, and quizzes. If you
+                    include content from another source like Aptira
+                    content, add a paragraph that references the file
+                    and/or HTTP address from where the content
+                    came.</para>
+            </step>
+            <step>
+                <para>Verify the code is good by running <command>mvn
+                        clean generate-sources</command> and by
+                    reviewing the local HTML in <link
+                        xlink:href="target/docbkx/webhelp/local/training-guide/content/"
+                            >file:///Users/<replaceable>username</replaceable>/code/openstack-manuals/doc/training-guide/target/docbkx/webhelp/local/training-guide/content/</link>.</para>
+            </step>
+            <step>
+                <para>Merge the branch.</para>
+            </step>
+            <step>
+                <para>Move the card from Doing to Done.</para>
+            </step>
+        </procedure>
     </section>
 </section>
