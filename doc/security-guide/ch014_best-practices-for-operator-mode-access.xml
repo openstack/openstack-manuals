@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://docbook.org/ns/docbook" xmlns:db="http://docbook.org/ns/docbook" version="5.0" xml:id="ch014_best-practices-for-operator-mode-access"><?dbhtml stop-chunking?>
+<chapter xmlns:xi="http://www.w3.org/2001/XInclude"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns="http://docbook.org/ns/docbook"
+         xmlns:db="http://docbook.org/ns/docbook"
+         version="5.0"
+         xml:id="ch014_best-practices-for-operator-mode-access">
+  <?dbhtml stop-chunking?>
     <title>Management Interfaces</title>
-    <para>It is necessary for administrators to perform command and control over the cloud for various operational functions. It is important these command and control facilities are understood and secured.</para>
+    <para>It is necessary for administrators to perform command and
+    control over the cloud for various operational functions. It is
+    important these command and control facilities are understood and
+    secured.</para>
     <para>OpenStack provides several management interfaces for operators and tenants:</para>
     <itemizedlist><listitem>
-        <para>OpenStack Dashboard (Horizon)</para>
+        <para>OpenStack dashboard (Horizon)</para>
       </listitem>
 <listitem>
         <para>OpenStack API</para>
@@ -13,7 +22,9 @@
         <para>Secure Shell (SSH)</para>
       </listitem>
 <listitem>
-        <para>OpenStack Management Utilities (nova-manage, glance-manage, etc.)</para>
+        <para>OpenStack Management Utilities (for example,
+        <systemitem class="service">nova-manage</systemitem>,
+        <systemitem class="service">glance-manage</systemitem>)</para>
       </listitem>
 <listitem>
         <para>Out-of-Band Management Interfaces (IPMI, etc.)</para>
@@ -21,7 +32,7 @@
 </itemizedlist>
     <section xml:id="ch014_best-practices-for-operator-mode-access-idp49280">
       <title>Dashboard</title>
-      <para>The OpenStack Dashboard (Horizon) provides administrators and tenants a web-based graphical interface to provision and access cloud-based resources. The dashboard communicates with the back-end services via calls to the OpenStack API (discussed above).</para>
+      <para>The OpenStack dashboard (Horizon) provides administrators and tenants a web-based graphical interface to provision and access cloud-based resources. The dashboard communicates with the back-end services via calls to the OpenStack API (discussed above).</para>
       <section xml:id="ch014_best-practices-for-operator-mode-access-idp50608">
         <title>Capabilities</title>
         <itemizedlist><listitem>
@@ -53,7 +64,7 @@
             <para>Both the Horizon web service and the OpenStack API it uses to communicate with the back-end are susceptible to web attack vectors such as denial of service and must be monitored.</para>
           </listitem>
 <listitem>
-            <para>It is now possible (though there are numerous deployment/security implications) to upload an image file directly from a user’s hard disk to Glance through Horizon. For multi-GB images it is still strongly recommended that the upload be done using the Glance CLI</para>
+            <para>It is now possible (though there are numerous deployment/security implications) to upload an image file directly from a user’s hard disk to OpenStack Image Service through the dashboard. For multi-GB images it is still strongly recommended that the upload be done using the Glance CLI</para>
           </listitem>
 <listitem>
             <para>Create and manage security groups through dashboard. The security groups allows L3-L4 packet filtering for security policies to protect virtual machines</para>
@@ -67,11 +78,20 @@
     </section>
     <section xml:id="ch014_best-practices-for-operator-mode-access-idp63760">
       <title>OpenStack API</title>
-      <para>The OpenStack API is a RESTful web service endpoint to access, provision and automate cloud-based resources.  Operators and users typically access the API through command-line utilities (i.e. Nova, Glance, etc.), language-specific libraries, or third-party tools.</para>
+      <para>The OpenStack API is a RESTful web service endpoint to
+      access, provision and automate cloud-based resources. Operators
+      and users typically access the API through command-line
+      utilities (for example, <command>nova</command> or
+      <command>glance</command>), language-specific libraries, or
+      third-party tools.</para>
       <section xml:id="ch014_best-practices-for-operator-mode-access-idp65328">
         <title>Capabilities</title>
         <itemizedlist><listitem>
-            <para>To the cloud administrator the API provides an overall view of the size and state of the cloud deployment and allows the creation of users, tenants/projects, assigning users to tenants/projects and specifying resource quotas on a per tenant/project basis.</para>
+            <para>To the cloud administrator, the API provides an
+            overall view of the size and state of the cloud deployment
+            and allows the creation of users, tenants/projects,
+            assigning users to tenants/projects, and specifying
+            resource quotas on a per tenant/project basis.</para>
           </listitem>
 <listitem>
             <para>The API provides a tenant interface for provisioning, managing, and accessing their resources.</para>
@@ -104,9 +124,11 @@
       <title>Management Utilities</title>
       <para>The OpenStack Management Utilities are open-source Python
       command-line clients that make API calls. There is a client for
-      each OpenStack service (nova, glance, etc.). In addition to the
+      each OpenStack service (for example, <systemitem
+      class="service">nova</systemitem>, <systemitem
+      class="service">glance</systemitem>). In addition to the
       standard CLI client, most of the services have a management
-      command line which makes direct calls to the database. These
+      command-line utility which makes direct calls to the database. These
       dedicated management utilities are slowly being
       deprecated.</para>
       <section xml:id="ch014_best-practices-for-operator-mode-access-idp77728">
@@ -121,13 +143,18 @@
       </section>
       <section xml:id="ch014_best-practices-for-operator-mode-access-idp80496">
         <title>References</title>
-        <para><citetitle>OpenStack End User Guide</citetitle> section <link xlink:href="http://docs.openstack.org/user-guide/content/section_cli_overview.html">command line clients overview</link></para>
+        <para><citetitle>OpenStack End User Guide</citetitle> section <link xlink:href="http://docs.openstack.org/user-guide/content/section_cli_overview.html">command-line clients overview</link></para>
         <para><citetitle>OpenStack End User Guide</citetitle> section <link xlink:href="http://docs.openstack.org/user-guide/content/cli_openrc.html">Download and source the OpenStack RC file</link></para>
       </section>
     </section>
     <section xml:id="ch014_best-practices-for-operator-mode-access-idp82336">
       <title>Out-of-Band Management Interface</title>
-      <para>OpenStack management relies on out-of-band management interfaces such as the IPMI protocol to access into nodes running OpenStack components. IPMI is a very popular specification to remotely manage, diagnose and reboot servers whether the operating system is running or the system has crashed.</para>
+      <para>OpenStack management relies on out-of-band management
+      interfaces such as the IPMI protocol to access into nodes
+      running OpenStack components. IPMI is a very popular
+      specification to remotely manage, diagnose, and reboot servers
+      whether the operating system is running or the system has
+      crashed.</para>
       <section xml:id="ch014_best-practices-for-operator-mode-access-idp83712">
         <title>Security Considerations</title>
         <itemizedlist><listitem>

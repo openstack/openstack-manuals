@@ -77,7 +77,8 @@
       Roles control the actions that a user is allowed to perform. In
       the default configuration, most actions do not require a
       particular role, but this is configurable by the system
-      administrator editing the appropriate policy.json file that
+      administrator editing the appropriate <filename>policy.json</filename>
+      file that
       maintains the rules. For example, a rule can be defined so that
       a user cannot allocate a public IP without the admin role. A
       user's access to particular images is limited by tenant, but the
@@ -127,16 +128,16 @@
       typical virtual system within the cloud. There are many ways to
       configure the details of an OpenStack cloud and many ways to
       implement a virtual system within that cloud. These
-      configuration details as well as the specific command line
+      configuration details as well as the specific command-line
       utilities and API calls to perform the actions described are
-      presented in the Image Managementand Volume
-      Managementchapters.</para>
+      presented in the Image Management and Volume
+      Management chapters.</para>
     <para>Images are disk images which are templates for virtual
-      machine file systems. The image service, Glance, is responsible
+      machine file systems. The OpenStack Image Service is responsible
       for the storage and management of images within
       OpenStack.</para>
     <para>Instances are the individual virtual machines running on
-      physical compute nodes. The compute service, Nova, manages
+      physical compute nodes. The OpenStack Compute Service manages
       instances. Any number of instances maybe started from the same
       image. Each instance is run from a copy of the base image so
       runtime changes made by an instance do not change the image it
@@ -161,11 +162,13 @@
     <para><guilabel>Initial State</guilabel></para>
   <para><guilabel>Images and Instances</guilabel></para>
     <para>The following diagram shows the system state prior to
-      launching an instance. The image store fronted by the image
-      service, Glance, has some number of predefined images. In the
-      cloud there is an available compute node with available vCPU,
+      launching an instance. The image store fronted by the Image
+      Service has some number of predefined images. In the
+      cloud, there is an available Compute node with available vCPU,
       memory and local disk resources. Plus there are a number of
-      predefined volumes in the cinder-volume service.</para>
+      predefined volumes in the
+      <systemitem class="service">cinder-volume</systemitem> service.
+    </para>
     <para>Figure 2.1. Base image state with no running
       instances</para>
   <figure>
@@ -177,12 +180,13 @@
     </mediaobject>
   </figure>
   <para><guilabel>Launching an instance</guilabel></para>
-    <para>To launch an instance the user selects an image, a flavor
-      and optionally other attributes. In this case the selected
+    <para>To launch an instance, the user selects an image, a flavor,
+      and other optional attributes. In this case the selected
       flavor provides a root volume (as all flavors do) labeled vda in
       the diagram and additional ephemeral storage labeled vdb in the
       diagram. The user has also opted to map a volume from the
-      cinder-volume store to the third virtual disk, vdc, on this
+      <systemitem class="service">cinder-volume</systemitem>
+      store to the third virtual disk, vdc, on this
       instance.</para>
     <para>Figure 2.2. Instance creation from image and run time
       state</para>
@@ -202,7 +206,8 @@
       present as the second disk (vdb). Be aware that the second disk
       is an empty disk with an emphemeral life as it is destroyed when
       you delete the instance. The compute node attaches to the
-      requested cinder-volume using iSCSI and maps this to the third
+      requested <systemitem class="service">cinder-volume</systemitem>
+      using iSCSI and maps this to the third
       disk (vdc) as requested. The vCPU and memory resources are
       provisioned and the instance is booted from the first drive. The
       instance runs and changes data on the disks indicated in red in
@@ -232,8 +237,8 @@
   </figure>
       <para>Once you launch a VM in OpenStack, there's something more
         going on in the background. To understand what's happening
-        behind the Dashboard, lets take a deeper dive into OpenStack’s
+        behind the dashboard, lets take a deeper dive into OpenStack’s
         VM provisioning. For launching a VM, you can either use
-        Command Line Interface or the OpenStack Horizon Dashboard.
+        the command-line interfaces or the OpenStack dashboard.
       </para>
 </chapter>
