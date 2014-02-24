@@ -55,7 +55,7 @@ The generated PDF documentation file is::
 
 The root of the generated HTML documentation is::
 
-    openstack-manuals/doc/src/user-guide/target/docbkx/webhelp/user-guide/content/index.html
+    openstack-manuals/doc/user-guide/target/docbkx/webhelp/user-guide/content/index.html
 
 Testing of changes and building of the manual
 =============================================
