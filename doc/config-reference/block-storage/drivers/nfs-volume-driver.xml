@@ -32,6 +32,24 @@
             the NFS driver.</para>
         <xi:include
             href="../../../common/tables/cinder-storage_nfs.xml"/>
+        <note>
+            <para>As of the Icehouse release, the NFS driver (and other
+                drivers based off it) will attempt to mount shares
+                using version 4.1 of the NFS protocol (including pNFS). If the
+                mount attempt is unsuccessful due to a lack of client or
+                server support, a subsequent mount attempt that requests the
+                default behavior of the <command>mount.nfs</command> command
+                will be performed. On most distributions, the default behavior
+                is to attempt mounting first with NFS v4.0, then silently fall
+                back to NFS v3.0 if necessary. If the
+                <option>nfs_mount_options</option> configuration option
+                contains a request for a specific version of NFS to be used,
+                or if specific options are specified in the shares
+                configuration file specified by the
+                <option>nfs_shares_config</option> configuration option, the
+                mount will be attempted as requested with no subsequent
+                attempts.</para>
+        </note>
     </section>
     <section xml:id="nfs-driver-howto">
         <title>How to use the NFS driver</title>
