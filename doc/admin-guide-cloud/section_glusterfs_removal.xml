@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="section_gluster_removal_gracefully">
+    <title>Gracefully remove a GlusterFS volume from usage</title>
+        <para>Configuring the <systemitem>cinder</systemitem> volume
+        service to use GlusterFS involves creating a shares file (for
+        example, <filename>/etc/cinder/glusterfs</filename>). This
+        shares file lists each GlusterFS volume (with its
+        corresponding storage server) that the
+        <systemitem>cinder</systemitem> volume service can use for
+        back end storage.</para>
+        <para>To remove a GlusterFS volume from usage as a back end,
+        delete the volume's corresponding entry from the shares file.
+        After doing so, restart the Block Storage services.</para>
+        <para os="rhel;centos;fedora;opensuse;sles">To restart the
+        Block Storage services on CentOS, Fedora, openSUSE, Red Hat
+        Enterprise Linux, or SUSE Linux Enterprise, run:</para>
+        <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>for i in api scheduler volume; do service openstack-cinder-$i restart; done</userinput></screen>
+        <para os="debian;ubuntu">To restart the Block Storage services
+        on Ubuntu or Debian, run:</para>
+        <screen os="debian;ubuntu"><prompt>#</prompt> <userinput>for i in api scheduler volume; do service cinder-${i} restart; done</userinput></screen>
+        <para>Restarting the Block Storage services will prevent
+        the <systemitem>cinder</systemitem> volume service from
+        exporting the deleted GlusterFS volume. This will prevent
+        any instances from mounting the volume from that point
+        onwards.</para>
+        <para>However, the removed GlusterFS volume might still be
+        mounted on an instance at this point. Typically, this is the
+        case when the volume was already mounted while its entry was
+        deleted from the shares file. Whenever this occurs, you
+        will have to unmount the volume as normal after the Block
+        Storage services are restarted.</para>
+</section>
