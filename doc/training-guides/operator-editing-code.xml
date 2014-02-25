@@ -16,15 +16,15 @@
                 <para>Check out <link
                         xlink:href="https://wiki.openstack.org/wiki/Documentation/HowTo"
                         >https://wiki.openstack.org/wiki/Documentation/HowTo</link>
-                    for more extensive setup instructions</para>
+                    for more extensive setup instructions.</para>
             </note>
             <step>
                 <para>Download and install Git from <link
                         xlink:href="http://git-scm.com/downloads"
-                        >http://git-scm.com/downloads</link></para>
+                        >http://git-scm.com/downloads</link>.</para>
             </step>
             <step>
-                <para>Create your local repository directory</para>
+                <para>Create your local repository directory:</para>
                 <screen><prompt>$</prompt> <userinput>mkdir /Users/<replaceable>username</replaceable>/code/</userinput></screen>
             </step>
             <step>
@@ -33,19 +33,19 @@
                     <step>
                         <para><link
                                 xlink:href="http://www.sourcetreeapp.com/download/"
-                                >http://www.sourcetreeapp.com/download/</link></para>
+                                >http://www.sourcetreeapp.com/download/</link>.</para>
                     </step>
                     <step>
                         <para>Ignore the Atlassian Bitbucket and Stack
-                            setup</para>
+                            setup.</para>
                     </step>
                     <step>
                         <para>Add your GitHub username and
-                            password</para>
+                            password.</para>
                     </step>
                     <step>
                         <para>Set your local repository
-                            location</para>
+                            location.</para>
                     </step>
                 </substeps>
             </step>
@@ -104,9 +104,8 @@
                     <step>
                         <para>Create the
                                 <filename>apache-maven</filename>
-                            directory</para>
+                            directory:</para>
                         <screen><prompt>$</prompt> <userinput>sudo mkdir /usr/local/apache-maven</userinput></screen>
-
                     </step>
                     <step>
                         <para>Copy the latest stable binary from <link
@@ -209,22 +208,21 @@
                 <screen><prompt>$</prompt> <userinput>sudo pip install git-review</userinput></screen>
             </step>
             <step>
-                <para>Change to the directory</para>
+                <para>Change to the directory:</para>
                 <screen><prompt>$</prompt> <userinput>cd /Users/<replaceable>username</replaceable>/code</userinput></screen>
             </step>
             <step>
-                <para>Clone the openstack-manuals repository
-                    with</para>
+                <para>Clone the openstack-manuals repository:</para>
                 <screen><prompt>$</prompt> <userinput>git clone http://github.com/openstack/openstack-manuals.git</userinput></screen>
             </step>
             <step>
-                <para>Change directory to the pulled repository</para>
+                <para>Change directory to the pulled repository:</para>
                 <screen><prompt>$</prompt> <userinput>cd openstack-manuals</userinput></screen>
             </step>
             <step>
-                <para>Enter your Launchpad account information after
-                    testing for ssh key setup with</para>
+                <para>Test the ssh key setup:</para>
                 <screen><prompt>$</prompt> <userinput>git review -s</userinput></screen>
+                <para>Then, enter your Launchpad account information.</para>
             </step>
         </procedure>
     </section>
@@ -232,8 +230,8 @@
         <title>Fix a Documentation Bug</title>
         <procedure>
             <step>
-                <para>Note: For this example, we are going to assume
-                    bug 1188522 and change 33713</para>
+                <note><para>For this example, we are going to assume
+                    bug 1188522 and change 33713</para></note>
             </step>
             <step>
                 <para>Bring up <link
@@ -241,9 +239,8 @@
                         >https://bugs.launchpad.net/openstack-manuals</link></para>
             </step>
             <step>
-                <para>Select a bug that is unassigned and that you can
-                    fix. Syntax errors are the best ones to start off
-                    with.</para>
+                <para>Select an unassigned bug that you want to fix.
+                    Start with something easy, like a syntax error.</para>
             </step>
             <step>
                 <para>Using oXygen, open the <filename>
@@ -261,12 +258,11 @@
                 <screen><prompt>$</prompt> <userinput>cd /Users/<replaceable>username</replaceable>/code/openstack-manuals/doc/admin-guide-cloud/</userinput></screen>
             </step>
             <step>
-                <para>Verify that you are on master with</para>
+                <para>Verify that you are on master:</para>
                 <screen><prompt>$</prompt> <userinput>git checkout master</userinput></screen>
             </step>
             <step>
-                <para>Create your working branch off master
-                    with</para>
+                <para>Create your working branch off master:</para>
                 <screen><prompt>$</prompt> <userinput>git checkout -b bug/1188522</userinput></screen>
             </step>
             <step>
@@ -279,27 +275,57 @@
                     the editor.</para>
             </step>
             <step>
-                <para>Once the bug is fixed, verify that the
-                    documentation can be built without errors by
-                    running</para>
+                <para>After you fix the bug, run maven to verify that the documentation builds successfully.
+                    To build a specific guide,
+                    look for a <filename>pom.xml</filename> file within a subdirectory, switch to that directory,
+                    then run the <command>mvn</command> command in that directory:</para>
                 <screen><prompt>$</prompt> <userinput>mvn clean generate-sources</userinput></screen>
             </step>
             <step>
                 <para>Verify that the HTML page reflects your changes
                     properly. You can open the file from the command
-                    line by using the "open" command</para>
+                    line by using the <command>open</command> command</para>
                 <screen><prompt>$</prompt> <userinput>open target/docbkx/webhelp/local/openstack-training/index.html</userinput></screen>
             </step>
             <step>
-                <para>Add the changes</para>
+                <para>Add the changes:</para>
                 <screen><prompt>$</prompt> <userinput>git add .</userinput></screen>
             </step>
             <step>
-                <para>Commit the changes</para>
+                <para>Commit the changes:</para>
                 <screen><prompt>$</prompt> <userinput>git commit -a -m "Removed reference to volume scheduler in the computer scheduler config and admin pages, bug 1188522"</userinput></screen>
             </step>
             <step>
-                <para>Submit the bug fix to Gerrit</para>
+                <para>Build commited changes locally by using <command>tox</command>. As part of the review process,
+                    Jenkins runs gating scripts to check that the patch is fine. Locally,
+                    you can use the <command>tox</command> tool to run the same checks and ensure that a patch works.
+                    Install the tox package and run it from the top level directory which has the <filename>tox.ini</filename> file.</para>
+                <screen><prompt>$</prompt> <userinput>sudo pip install tox</userinput>
+<prompt>$</prompt> <userinput>tox</userinput></screen>
+                <para>Jenkins runs the following four checks. You can run them individually:</para>
+                <substeps>
+                    <step>
+                        <para>Niceness tests (for example, to see extra whitespaces). Verify that the niceness check succeeds.</para>
+                        <screen><prompt>$</prompt> <userinput>tox -e checkniceness</userinput></screen>
+                    </step>
+                    <step>
+                        <para>Syntax checks. Verify that the syntax check succeeds.</para>
+                        <screen><prompt>$</prompt> <userinput>tox -e checksyntax</userinput></screen>
+                    </step>
+                    <step>
+                        <para>Check that no deleted files are referenced. Verify that the check succeeds.</para>
+                        <screen><prompt>$</prompt> <userinput>tox -e checkdeletions</userinput></screen>
+                    </step>
+                    <step>
+                        <para>Build the manuals. It also generates a directory <filename>publish-docs/</filename> that contains the built files for inspection.
+                            You can also use <filename>doc/local-files.html</filename> for looking at the manuals.
+                            Verify that the build succeeds.</para>
+                        <screen><prompt>$</prompt> <userinput>tox -e checkbuild</userinput></screen>
+                    </step>
+                </substeps>
+            </step>
+            <step>
+                <para>Submit the bug fix to Gerrit:</para>
                 <screen><prompt>$</prompt> <userinput>git review</userinput></screen>
             </step>
             <step>
@@ -321,37 +347,37 @@
                 <substeps>
                     <step>
                         <para>Respond to the inline comments if
-                            any</para>
+                            any.</para>
                     </step>
                     <step>
                         <para>Update the status to work in
-                            progress</para>
+                            progress.</para>
                     </step>
                     <step>
                         <para>Checkout the patch from the Gerrit
-                            change review</para>
+                            change review:</para>
                         <screen><prompt>$</prompt> <userinput>git review -d 33713</userinput></screen>
                     </step>
                     <step>
                         <para>Follow the recommended tweaks to the
-                            files</para>
+                            files.</para>
                     </step>
                     <step>
-                        <para>Rerun</para>
+                        <para>Rerun:</para>
                         <screen><prompt>$</prompt> <userinput>mvn clean generate-sources</userinput></screen>
                     </step>
                     <step>
                         <para>Add your additional changes to the
-                            change log</para>
+                            change log:</para>
                         <screen><prompt>$</prompt> <userinput>git commit -a --amend</userinput></screen>
                     </step>
                     <step>
-                        <para>Final commit</para>
+                        <para>Final commit:</para>
                         <screen><prompt>$</prompt> <userinput>git review</userinput></screen>
                     </step>
                     <step>
                         <para>Update the Jenkins status to change
-                            completed</para>
+                            completed.</para>
                     </step>
                 </substeps>
             </step>
@@ -372,34 +398,31 @@
             <step>
                 <para>Bring up <link
                         xlink:href="https://bugs.launchpad.net/openstack-manuals/+filebug"
-                        >https://bugs.launchpad.net/openstack-manuals/+filebug</link></para>
+                        >https://bugs.launchpad.net/openstack-manuals/+filebug</link>.</para>
             </step>
             <step>
-                <para>Give your bug a descriptive name</para>
+                <para>Give your bug a descriptive name.</para>
             </step>
             <step>
-                <para>Verify if asked that it is not a
-                    duplicate</para>
+                <para>Verify if asked that it is not a duplicate.</para>
             </step>
             <step>
-                <para>Add some more detail into the description
-                    field</para>
+                <para>Add some more detail into the description field.</para>
             </step>
             <step>
-                <para>Once submitted, select the assigned to pane and
-                    select "assign to me" or "sarob"</para>
+                <para>Once submitted, select the assigned to pane and select
+                    "assign to me" or "sarob".</para>
             </step>
             <step>
-                <para>Follow the instructions for fixing a bug in the
-                    Fix a Documentation Bug section.</para>
+                <para>Follow the instructions for fixing a bug in the Fix a
+                    Documentation Bug section.</para>
             </step>
         </procedure>
     </section>
     <section xml:id="create-branch">
         <title>Create a Branch</title>
         <note>
-            <para>This section uses the submission of this training
-                material as the example.</para>
+            <para>This section uses the submission of this training material as the example.</para>
         </note>
         <procedure>
             <step>
@@ -407,32 +430,33 @@
                 <screen><prompt>$</prompt> <userinput>git checkout -b bp/training-manuals</userinput></screen>
             </step>
             <step>
-                <para>From the openstack-manuals repository, use the
-                    template
-                        <filename>user-story-includes-template.xml</filename>
-                    as the starting point for your user story. File
-                        <filename>bk001-ch003-associate-general.xml</filename>
-                    has at least one other included user story that
-                    you can use for additional help.</para>
+                <para>From the openstack-manuals repository, use
+                the template <filename
+                >user-story-includes-template.xml</filename> as
+                the starting point for your user story. File
+                <filename>bk001-ch003-associate-general.xml</filename>
+                has at least one other included user story that
+                you can use for additional help.
+                </para>
             </step>
             <step>
-                <para>Include the user story xml file into the
-                        <filename>bk001-ch003-associate-general.xml</filename>
-                    file. Follow the syntax of the existing
-                        <code>xi:include</code> statements.</para>
+                <para>Include the user story xml file into the <filename
+                    >bk001-ch003-associate-general.xml</filename> file. Follow the syntax of the
+                    existing <code>xi:include</code> statements.</para>
             </step>
             <step>
-                <para>When your editing is complete, double check
-                    Oxygen doesn't have any unexpected errors.</para>
+                <para>When your editing is completed. Double check Oxygen doesn't have any errors you
+                    are not expecting.</para>
             </step>
             <step>
-                <para>Run maven locally to verify the build will run
-                    without errors
-                    <programlisting>$ mvn clean generate-sources</programlisting></para>
+                <para>Run maven locally to verify the build will run without errors.
+                    Look for a <filename>pom.xml</filename> file within a subdirectory, switch to that directory,
+                    then run the <command>mvn</command> command in that directory:</para>
+                    <screen><prompt>$</prompt> <userinput>mvn clean generate-sources</userinput></screen>
             </step>
             <step>
-                <para>Add your changes into
-                    git<programlisting>$ git add .</programlisting></para>
+                <para>Add your changes into git:</para>
+                <screen><prompt>$</prompt> <userinput>git add .</userinput></screen>
             </step>
             <step>
                 <para>Commit the changes with good syntax. After
@@ -447,22 +471,26 @@ more details go here. A few sentences would be nice.
 blueprint training-manuals</computeroutput></screen>
             </step>
             <step>
-                <para>Submit your patch for
-                    review<programlisting>$ git review</programlisting></para>
+                <para>Build commited changes locally using <command>tox</command>. As part of the review process,
+                    Jenkins runs gating scripts to check that the patch is fine. Locally,
+                    you can use the <command>tox</command> tool to run the same checks and ensure that a patch works.
+                    Install the tox package and run it from the top level directory which has the <filename>tox.ini</filename> file.</para>
+                <screen><prompt>$</prompt> <userinput>sudo pip install tox</userinput>
+<prompt>$</prompt> <userinput>tox</userinput></screen>
             </step>
             <step>
-                <para>The last step is to go to the review page listed
-                    after you submitted your review and add the
-                    training core team as reviewers; Sean Roberts and
-                    Colin McNamara.</para>
+               <para>Submit your patch for review:</para>
+               <screen><prompt>$</prompt> <userinput>git review</userinput></screen>
             </step>
             <step>
-                <para>More details on branching can be found here
-                    under <link
-                        xlink:href="https://wiki.openstack.org/wiki/Gerrit_Workflow"
-                        >Gerrit Workflow</link> and the <link
-                        xlink:href="http://git-scm.com/doc">Git
-                        docs</link></para>
+                <para>One last step. Go to the review page listed after you submitted your review
+                and add the training core team as reviewers; Sean Roberts and Colin McNamara.</para>
+            </step>
+            <step>
+                <para>More details on branching can be found here under <link
+                    xlink:href="https://wiki.openstack.org/wiki/Gerrit_Workflow">Gerrit
+                    Workflow</link> and the <link xlink:href="http://git-scm.com/doc">Git
+                        docs</link>.</para>
             </step>
         </procedure>
     </section>
