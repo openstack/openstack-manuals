@@ -1,162 +1,306 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://docbook.org/ns/docbook" xmlns:db="http://docbook.org/ns/docbook" version="5.0" xml:id="ch024_authentication"><?dbhtml stop-chunking?>
-    <title>Identity</title>
-    <para>The OpenStack Identity Service (Keystone) supports multiple methods of authentication, including username &amp; password, LDAP, and external authentication methods.  Upon successful authentication, The Identity Service provides the user with an authorization token used for subsequent service requests.</para>
-    <para>Transport Layer Security TLS/SSL provides authentication between services and persons using X.509 certificates.  Although the default mode for SSL is server-side only authentication, certificates may also be used for client authentication.</para>
-    <section xml:id="ch024_authentication-idp195568">
-      <title>Authentication</title>
-      <section xml:id="ch024_authentication-idp196256">
-        <title>Invalid Login Attempts</title>
-        <para>The Identity Service does not provide a method to limit access to accounts after repeated unsuccessful login attempts. Repeated failed login attempts are likely brute-force attacks (Refer figure Attack-types). This is a more significant issue in Public clouds.</para>
-        <para>Prevention is possible by using an external authentication system that blocks out an account after some configured number of failed login attempts. The account then may only be unlocked with further side-channel intervention.</para>
-        <para>If prevention is not an option, detection can be used to mitigate damage.Detection involves frequent review of access control logs to identify unauthorized attempts to access accounts. Possible remediation would include reviewing the strength of the user password, or blocking the network source of the attack via firewall rules. Firewall rules on the keystone server that restrict the number of connections could be used to reduce the attack effectiveness, and thus dissuade the attacker.</para>
-        <para>In addition, it is useful to examine account activity for unusual login times and suspicious actions, with possibly disable the account. Often times this approach is taken by credit card providers for fraud detection and alert.</para>
-      </section>
-      <section xml:id="ch024_authentication-idp241008">
-        <title>Multi-factor Authentication</title>
-        <para>Employ multi-factor authentication for network access to privileged user accounts. The Identity Service supports external authentication services through the Apache web server that can provide this functionality. Servers may also enforce client-side authentication using certificates.</para>
-        <para>This recommendation provides insulation from brute force, social engineering, and both spear and mass phishing attacks that may compromise administrator passwords.</para>
-      </section>
+<chapter xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  xmlns="http://docbook.org/ns/docbook"
+  xmlns:db="http://docbook.org/ns/docbook" version="5.0"
+  xml:id="ch024_authentication">
+  <?dbhtml stop-chunking?>
+  <title>Identity</title>
+  <para>The OpenStack Identity Service (Keystone) supports multiple
+    methods of authentication, including username &amp; password,
+    LDAP, and external authentication methods. Upon successful
+    authentication, The Identity Service provides the user with an
+    authorization token used for subsequent service requests.</para>
+  <para>Transport Layer Security TLS/SSL provides authentication
+    between services and persons using X.509 certificates. Although
+    the default mode for SSL is server-side only authentication,
+    certificates may also be used for client authentication.</para>
+  <section xml:id="ch024_authentication-idp195568">
+    <title>Authentication</title>
+    <section xml:id="ch024_authentication-idp196256">
+      <title>Invalid Login Attempts</title>
+      <para>The Identity Service does not provide a method to limit
+        access to accounts after repeated unsuccessful login attempts.
+        Repeated failed login attempts are likely brute-force attacks
+        (Refer figure Attack-types). This is a more significant issue
+        in Public clouds.</para>
+      <para>Prevention is possible by using an external authentication
+        system that blocks out an account after some configured number
+        of failed login attempts. The account then may only be
+        unlocked with further side-channel intervention.</para>
+      <para>If prevention is not an option, detection can be used to
+        mitigate damage.Detection involves frequent review of access
+        control logs to identify unauthorized attempts to access
+        accounts. Possible remediation would include reviewing the
+        strength of the user password, or blocking the network source
+        of the attack via firewall rules. Firewall rules on the
+        keystone server that restrict the number of connections could
+        be used to reduce the attack effectiveness, and thus dissuade
+        the attacker.</para>
+      <para>In addition, it is useful to examine account activity for
+        unusual login times and suspicious actions, with possibly
+        disable the account. Often times this approach is taken by
+        credit card providers for fraud detection and alert.</para>
     </section>
-    <section xml:id="ch024_authentication-idp243184">
-      <title>Authentication Methods</title>
-      <section xml:id="ch024_authentication-idp243824">
-        <title>Internally Implemented Authentication Methods</title>
-        <para>The Identity Service can store user credentials in an SQL Database, or may use an LDAP-compliant directory server. The Identity database may be separate from databases used by other OpenStack services to reduce the risk of a compromise of the stored credentials.</para>
-        <para>When authentication is provided via username and password, the Identity Service does not enforce policies on password strength, expiration, or failed authentication attempts as recommended by NIST Special Publication 800-118 (draft). Organizations that desire to enforce stronger password policies should consider using Keystone Identity Service Extensions or external authentication services.</para>
-        <para>LDAP simplifies integration of Identity authentication into an organization's existing directory service and user account management processes.</para>
-        <para>Authentication and authorization policy in OpenStack may be delegated to an external LDAP server. A typical use case is an organization that seeks to deploy a private cloud and already has a database of employees, the users. This may be in an LDAP system. Using LDAP as a source of authority authentication, requests to Identity Service are delegated to the LDAP service, which will authorize or deny requests based on locally set policies. A token is generated on successful authentication.</para>
-        <para>Note that if the LDAP system has attributes defined for the user such as admin, finance, HR etc, these must be mapped into roles and groups within Identity for use by the various OpenStack services. The <emphasis>etc/keystone.conf</emphasis> file provides the mapping from the LDAP attributes to Identity attributes.</para>
-        <para>The Identity Service <emphasis role="bold">MUST NOT</emphasis> be allowed to write to LDAP services used for authentication outside of the OpenStack deployment as this would allow a sufficiently privileged keystone user to make changes to the LDAP directory. This would allow privilege escalation within the wider organization or facilitate unauthorized access to other information and resources. In such a deployment, user provisioning would be out of the realm of the OpenStack deployment.</para>
-        <note>
-          <para>There is an <link xlink:href="https://bugs.launchpad.net/ossn/+bug/1168252">OpenStack Security Note (OSSN) regarding keystone.conf permissions</link>.</para>
-          <para>There is an <link xlink:href="https://bugs.launchpad.net/ossn/+bug/1155566">OpenStack Security Note (OSSN) regarding potential DoS attacks</link>.</para>
-        </note>
-      </section>
-      <section xml:id="ch024_authentication-idp251520">
-        <title>External Authentication Methods</title>
-        <para>Organizations may desire to implement external authentication for compatibility with existing authentication services or to enforce stronger authentication policy requirements. Although passwords are the most common form of authentication, they can be compromised through numerous methods, including keystroke logging and password compromise. External authentication services can provide alternative forms of authentication that minimize the risk from weak passwords.</para>
-        <para>These include:</para>
-        <itemizedlist><listitem>
-            <para>Password Policy Enforcement: Requires user passwords to conform to minimum standards for length, diversity of characters, expiration, or failed login attempts.</para>
-          </listitem>
-<listitem>
-            <para>Multi-factor authentication: The authentication
+    <section xml:id="ch024_authentication-idp241008">
+      <title>Multi-factor Authentication</title>
+      <para>Employ multi-factor authentication for network access to
+        privileged user accounts. The Identity Service supports
+        external authentication services through the Apache web server
+        that can provide this functionality. Servers may also enforce
+        client-side authentication using certificates.</para>
+      <para>This recommendation provides insulation from brute force,
+        social engineering, and both spear and mass phishing attacks
+        that may compromise administrator passwords.</para>
+    </section>
+  </section>
+  <section xml:id="ch024_authentication-idp243184">
+    <title>Authentication Methods</title>
+    <section xml:id="ch024_authentication-idp243824">
+      <title>Internally Implemented Authentication Methods</title>
+      <para>The Identity Service can store user credentials in an SQL
+        Database, or may use an LDAP-compliant directory server. The
+        Identity database may be separate from databases used by other
+        OpenStack services to reduce the risk of a compromise of the
+        stored credentials.</para>
+      <para>When authentication is provided via username and password,
+        the Identity Service does not enforce policies on password
+        strength, expiration, or failed authentication attempts as
+        recommended by NIST Special Publication 800-118 (draft).
+        Organizations that desire to enforce stronger password
+        policies should consider using Keystone Identity Service
+        Extensions or external authentication services.</para>
+      <para>LDAP simplifies integration of Identity authentication
+        into an organization's existing directory service and user
+        account management processes.</para>
+      <para>Authentication and authorization policy in OpenStack may
+        be delegated to an external LDAP server. A typical use case is
+        an organization that seeks to deploy a private cloud and
+        already has a database of employees, the users. This may be in
+        an LDAP system. Using LDAP as a source of authority
+        authentication, requests to Identity Service are delegated to
+        the LDAP service, which will authorize or deny requests based
+        on locally set policies. A token is generated on successful
+        authentication.</para>
+      <para>Note that if the LDAP system has attributes defined for
+        the user such as admin, finance, HR etc, these must be mapped
+        into roles and groups within Identity for use by the various
+        OpenStack services. The <emphasis>etc/keystone.conf</emphasis>
+        file provides the mapping from the LDAP attributes to Identity
+        attributes.</para>
+      <para>The Identity Service <emphasis role="bold">MUST
+          NOT</emphasis> be allowed to write to LDAP services used for
+        authentication outside of the OpenStack deployment as this
+        would allow a sufficiently privileged keystone user to make
+        changes to the LDAP directory. This would allow privilege
+        escalation within the wider organization or facilitate
+        unauthorized access to other information and resources. In
+        such a deployment, user provisioning would be out of the realm
+        of the OpenStack deployment.</para>
+      <note>
+        <para>There is an <link
+            xlink:href="https://bugs.launchpad.net/ossn/+bug/1168252"
+            >OpenStack Security Note (OSSN) regarding keystone.conf
+            permissions</link>.</para>
+        <para>There is an <link
+            xlink:href="https://bugs.launchpad.net/ossn/+bug/1155566"
+            >OpenStack Security Note (OSSN) regarding potential DoS
+            attacks</link>.</para>
+      </note>
+    </section>
+    <section xml:id="ch024_authentication-idp251520">
+      <title>External Authentication Methods</title>
+      <para>Organizations may desire to implement external
+        authentication for compatibility with existing authentication
+        services or to enforce stronger authentication policy
+        requirements. Although passwords are the most common form of
+        authentication, they can be compromised through numerous
+        methods, including keystroke logging and password compromise.
+        External authentication services can provide alternative forms
+        of authentication that minimize the risk from weak
+        passwords.</para>
+      <para>These include:</para>
+      <itemizedlist>
+        <listitem>
+          <para>Password Policy Enforcement: Requires user passwords
+            to conform to minimum standards for length, diversity of
+            characters, expiration, or failed login attempts.</para>
+        </listitem>
+        <listitem>
+          <para>Multi-factor authentication: The authentication
             service requires the user to provide information based on
             something they have, such as a one-time password token or
             X.509 certificate, and something they know, such as a
             password.</para>
-          </listitem>
-<listitem>
-            <para>Kerberos</para>
-          </listitem>
-</itemizedlist>
-      </section>
+        </listitem>
+        <listitem>
+          <para>Kerberos</para>
+        </listitem>
+      </itemizedlist>
     </section>
-    <section xml:id="ch024_authentication-idp256832">
-      <title>Authorization</title>
-      <para>The Identity Service supports the notion of groups and roles. Users belong to groups. A group has a list of roles. OpenStack services reference the roles of the user attempting to access the service. The OpenStack policy enforcer middleware takes into consideration the policy rule associated with each resource and the user's group/roles and tenant association to determine if he/she has access to the requested resource.</para>
-      <para>The Policy enforcement middleware enables fine-grained access control to OpenStack resources. Only admin users can provision new users and have access to various management functionality. The cloud tenant would be able to only spin up instances, attach volumes, etc.</para>
-      <section xml:id="ch024_authentication-idp259168">
-        <title>Establish Formal Access Control Policies</title>
-        <para>Prior to configuring roles, groups, and users, document your required access control policies for the OpenStack installation. The policies should be consistent with any regulatory or legal requirements for the organization. Future modifications to access control configuration should be done consistently with the formal policies. The policies should include the conditions and processes for creating, deleting, disabling, and enabling accounts, and for assigning privileges to the accounts. Periodically review the policies and ensure that configuration is in compliance with approved policies.</para>
-      </section>
-      <section xml:id="ch024_authentication-idp261600">
-        <title>Service Authorization</title>
-        <para>As described in the <link xlink:href="http://docs.openstack.org/admin-guide-cloud/content/index.html"><citetitle>OpenStack Cloud Administrator Guide</citetitle></link>, cloud administrators must define a user for each service, with a role of Admin. This service user account provides the service with the authorization to authenticate users.</para>
-        <para>The Compute and Object Storage services can be configured to use either the "tempAuth" file or Identity Service to store authentication information. The "tempAuth" solution MUST NOT be deployed in a production environment since it stores passwords in plain text.</para>
-        <para>The Identity Service supports client authentication for
+  </section>
+  <section xml:id="ch024_authentication-idp256832">
+    <title>Authorization</title>
+    <para>The Identity Service supports the notion of groups and
+      roles. Users belong to groups. A group has a list of roles.
+      OpenStack services reference the roles of the user attempting to
+      access the service. The OpenStack policy enforcer middleware
+      takes into consideration the policy rule associated with each
+      resource and the user's group/roles and tenant association to
+      determine if he/she has access to the requested resource.</para>
+    <para>The Policy enforcement middleware enables fine-grained
+      access control to OpenStack resources. Only admin users can
+      provision new users and have access to various management
+      functionality. The cloud tenant would be able to only spin up
+      instances, attach volumes, etc.</para>
+    <section xml:id="ch024_authentication-idp259168">
+      <title>Establish Formal Access Control Policies</title>
+      <para>Prior to configuring roles, groups, and users, document
+        your required access control policies for the OpenStack
+        installation. The policies should be consistent with any
+        regulatory or legal requirements for the organization. Future
+        modifications to access control configuration should be done
+        consistently with the formal policies. The policies should
+        include the conditions and processes for creating, deleting,
+        disabling, and enabling accounts, and for assigning privileges
+        to the accounts. Periodically review the policies and ensure
+        that configuration is in compliance with approved
+        policies.</para>
+    </section>
+    <section xml:id="ch024_authentication-idp261600">
+      <title>Service Authorization</title>
+      <para>As described in the <link
+          xlink:href="http://docs.openstack.org/admin-guide-cloud/content/index.html"
+            ><citetitle>OpenStack Cloud Administrator
+            Guide</citetitle></link>, cloud administrators must define
+        a user for each service, with a role of Admin. This service
+        user account provides the service with the authorization to
+        authenticate users.</para>
+      <para>The Compute and Object Storage services can be configured
+        to use either the "tempAuth" file or Identity Service to store
+        authentication information. The "tempAuth" solution MUST NOT
+        be deployed in a production environment since it stores
+        passwords in plain text.</para>
+      <para>The Identity Service supports client authentication for
         SSL which may be enabled. SSL client authentication provides
         an additional authentication factor, in addition to the
         username / password, that provides greater reliability on user
         identification. It reduces the risk of unauthorized access
-        when user names and passwords may be compromised.  However,
+        when user names and passwords may be compromised. However,
         there is additional administrative overhead and cost to issue
         certificates to users that may not be feasible in every
         deployment.</para>
-        <note>
-          <para>We recommend that you use client authentication with SSL for the authentication of services to the Identity Service.</para>
-        </note>
-        <para>The cloud administrator should protect sensitive configuration files for unauthorized modification. This can be achieved with mandatory access control frameworks such as SELinux, including <literal>/etc/keystone.conf</literal> and X.509 certificates.</para>
+      <note>
+        <para>We recommend that you use client authentication with SSL
+          for the authentication of services to the Identity
+          Service.</para>
+      </note>
+      <para>The cloud administrator should protect sensitive
+        configuration files for unauthorized modification. This can be
+        achieved with mandatory access control frameworks such as
+        SELinux, including <literal>/etc/keystone.conf</literal> and
+        X.509 certificates.</para>
 
-        <para>For client authentication with SSL, you need to issue
+      <para>For client authentication with SSL, you need to issue
         certificates. These certificates can be signed by an external
         authority or by the cloud administrator. OpenStack services by
         default check the signatures of certificates and connections
         fail if the signature cannot be checked. If the administrator
         uses self-signed certificates, the check might need to be
-        disabled.  To disable these certificates, set
-        <code>insecure=False</code> in the
-        <code>[filter:authtoken]</code> section in the
-        <filename>/etc/nova/api.paste.ini</filename> file. This
+        disabled. To disable these certificates, set
+          <code>insecure=False</code> in the
+          <code>[filter:authtoken]</code> section in the
+          <filename>/etc/nova/api.paste.ini</filename> file. This
         setting also disables certificates for other
         components.</para>
-     </section>
-      <section xml:id="ch024_authentication-idp267040">
-        <title>Administrative Users</title>
-        <para>We recommend that admin users authenticate using
-        Identity Service and an external authentication service that
-        supports 2-factor authentication, such as a certificate.  This
-        reduces the risk from passwords that may be compromised. This
+    </section>
+    <section xml:id="ch024_authentication-idp267040">
+      <title>Administrative Users</title>
+      <para>We recommend that admin users authenticate using Identity
+        Service and an external authentication service that supports
+        2-factor authentication, such as a certificate. This reduces
+        the risk from passwords that may be compromised. This
         recommendation is in compliance with NIST 800-53 IA-2(1)
         guidance in the use of multi factor authentication for network
         access to privileged accounts.</para>
-      </section>
-      <section xml:id="ch024_authentication-idp268960">
-        <title>End Users</title>
-        <para>The Identity Service can directly provide end-user authentication, or can be configured to use external authentication methods to conform to an organization's security policies and requirements.</para>
-      </section>
     </section>
-    <section xml:id="ch024_authentication-idp270544">
-      <title>Policies</title>
-      <para>Each OpenStack service has a policy file in json format, called <emphasis role="bold">policy.json</emphasis>. The policy file specifies rules, and the rule that governs each resource. A resource could be API access, the ability to attach to a volume, or to fire up instances.</para>
-      <para>The policies can be updated by the cloud administrator to further control access to the various resources. The middleware could also be further customized. Note that your users must be assigned to groups/roles that you refer to in your policies.</para>
-      <para>Below is a snippet of the Block Storage service policy.json file.</para>
-      <screen>
-{
-    "context_is_admin": [["role:admin"]],
-    "admin_or_owner":  [["is_admin:True"], ["project_id:%(project_id)s"]],
-    "default": [["rule:admin_or_owner"]],
-
-    "admin_api": [["is_admin:True"]],
-
-    "volume:create": [],
-    "volume:get_all": [],
-    "volume:get_volume_metadata": [],
-    "volume:get_snapshot": [],
-    "volume:get_all_snapshots": [],
-
-    "volume_extension:types_manage": [["rule:admin_api"]],
-    "volume_extension:types_extra_specs": [["rule:admin_api"]],
-  ...
-}</screen>
-      <para>Note the <emphasis role="bold">default</emphasis> rule specifies that the user must be either an admin or the owner of the volume. It essentially says only the owner of a volume or the admin may create/delete/update volumes. Certain other operations such as managing volume types are accessible only to admin users.</para>
+    <section xml:id="ch024_authentication-idp268960">
+      <title>End Users</title>
+      <para>The Identity Service can directly provide end-user
+        authentication, or can be configured to use external
+        authentication methods to conform to an organization's
+        security policies and requirements.</para>
     </section>
-    <section xml:id="ch024_authentication-idp276176">
-      <title>Tokens</title>
-      <para>Once a user is authenticated, a token is generated and used internally in OpenStack for authorization and access. The default token <emphasis role="bold">lifespan</emphasis> is<emphasis role="bold"> 24 hours</emphasis>. It is recommended that this value be set lower but caution needs to be taken as some internal services will need sufficient time to complete their work. The cloud may not provide services if tokens expire too early. An example of this would be the time needed by the Compute Service to transfer a disk image onto the hypervisor for local caching.</para>
-      <para>The following example shows a PKI token. Note that, in
+  </section>
+  <section xml:id="ch024_authentication-idp270544">
+    <title>Policies</title>
+    <para>Each OpenStack service has a policy file in json format,
+      called <emphasis role="bold">policy.json</emphasis>. The policy
+      file specifies rules, and the rule that governs each resource. A
+      resource could be API access, the ability to attach to a volume,
+      or to fire up instances.</para>
+    <para>The policies can be updated by the cloud administrator to
+      further control access to the various resources. The middleware
+      could also be further customized. Note that your users must be
+      assigned to groups/roles that you refer to in your
+      policies.</para>
+    <para>Below is a snippet of the Block Storage service policy.json
+      file.</para>
+    <programlisting language="json"><xi:include href="../common/samples/authentication.json" parse="text"/></programlisting>
+    <para>Note the <emphasis role="bold">default</emphasis> rule
+      specifies that the user must be either an admin or the owner of
+      the volume. It essentially says only the owner of a volume or
+      the admin may create/delete/update volumes. Certain other
+      operations such as managing volume types are accessible only to
+      admin users.</para>
+  </section>
+  <section xml:id="ch024_authentication-idp276176">
+    <title>Tokens</title>
+    <para>Once a user is authenticated, a token is generated and used
+      internally in OpenStack for authorization and access. The
+      default token <emphasis role="bold">lifespan</emphasis>
+        is<emphasis role="bold"> 24 hours</emphasis>. It is
+      recommended that this value be set lower but caution needs to be
+      taken as some internal services will need sufficient time to
+      complete their work. The cloud may not provide services if
+      tokens expire too early. An example of this would be the time
+      needed by the Compute Service to transfer a disk image onto the
+      hypervisor for local caching.</para>
+    <para>The following example shows a PKI token. Note that, in
       practice, the token id value is about 3500 bytes. We shorten it
       in this example.</para>
-      <screen> 
-        "token": {
-            "expires": "2013-06-26T16:52:50Z",
-            "id": "MIIKXAY...",
-            "issued_at": "2013-06-25T16:52:50.622502",
-            "tenant": {
-                "description": null,
-                "enabled": true,
-                "id": "912426c8f4c04fb0a07d2547b0704185",
-                "name": "demo"
-            }
-        }</screen>
-      <para>Note that the token is often passed within the structure of a larger context of an Identity Service response. These responses also provide a catalog of the various OpenStack services. Each service is listed with its name, access endpoints for internal, admin, and public access.</para>
-      <para>The Identity Service supports token revocation. This manifests as an API to revoke a token, to list revoked tokens and individual OpenStack services that cache tokens to query for the revoked tokens and remove them from their cache and append the same to their list of cached revoked tokens.</para>
-    </section>
-    <section xml:id="ch024_authentication-idp287584">
-      <title>Future</title>
-      <para>Domains are high-level containers for projects, users and groups. As such, they can be used to centrally manage all Keystone-based identity components. With the introduction of account Domains, server, storage and other resources can now be logically grouped into multiple Projects (previously called Tenants) which can themselves be grouped under a master account-like container. In addition, multiple users can be managed within an account Domain and assigned roles that vary for each Project.</para>
-      <para>Keystone's V3 API supports multiple domains. Users of different domains may be represented in different authentication backends and even have different attributes that must be mapped to a single set of roles and privileges, that are used in the policy definitions to access the various service resources.</para>
-      <para>Where a rule may specify access to only admin users and users belonging to the tenant, the mapping may be trivial. In other scenarios the cloud administrator may need to approve the mapping routines per tenant.</para>
-    </section>
-  </chapter>
+    <programlisting language="json"><xi:include href="../common/samples/token.json" parse="text"/></programlisting>
+    <para>Note that the token is often passed within the structure of
+      a larger context of an Identity Service response. These
+      responses also provide a catalog of the various OpenStack
+      services. Each service is listed with its name, access endpoints
+      for internal, admin, and public access.</para>
+    <para>The Identity Service supports token revocation. This
+      manifests as an API to revoke a token, to list revoked tokens
+      and individual OpenStack services that cache tokens to query for
+      the revoked tokens and remove them from their cache and append
+      the same to their list of cached revoked tokens.</para>
+  </section>
+  <section xml:id="ch024_authentication-idp287584">
+    <title>Future</title>
+    <para>Domains are high-level containers for projects, users and
+      groups. As such, they can be used to centrally manage all
+      Keystone-based identity components. With the introduction of
+      account Domains, server, storage and other resources can now be
+      logically grouped into multiple Projects (previously called
+      Tenants) which can themselves be grouped under a master
+      account-like container. In addition, multiple users can be
+      managed within an account Domain and assigned roles that vary
+      for each Project.</para>
+    <para>Keystone's V3 API supports multiple domains. Users of
+      different domains may be represented in different authentication
+      backends and even have different attributes that must be mapped
+      to a single set of roles and privileges, that are used in the
+      policy definitions to access the various service
+      resources.</para>
+    <para>Where a rule may specify access to only admin users and
+      users belonging to the tenant, the mapping may be trivial. In
+      other scenarios the cloud administrator may need to approve the
+      mapping routines per tenant.</para>
+  </section>
+</chapter>

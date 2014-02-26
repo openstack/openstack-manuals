@@ -2,6 +2,7 @@
     xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+    <?dbhtml stop-chunking?>
     <title>EMC SMI-S iSCSI driver</title>
     <para>The EMC SMI-S iSCSI driver, which is based on the iSCSI
         driver, can create, delete, attach, and detach volumes. It can
@@ -12,8 +13,8 @@
         HTTP.</para>
     <para>The EMC CIM Object Manager (ECOM) is packaged with the EMC
         SMI-S provider. It is a CIM server that enables CIM clients to
-        perform CIM operations over HTTP by using SMI-S in the back-end for
-        EMC storage operations.</para>
+        perform CIM operations over HTTP by using SMI-S in the
+        back-end for EMC storage operations.</para>
     <para>The EMC SMI-S Provider supports the SNIA Storage Management
         Initiative (SMI), an ANSI standard for storage management. It
         supports VMAX and VNX storage systems.</para>
@@ -29,8 +30,7 @@
     </section>
     <section xml:id="emc-supported-ops">
         <title>Supported operations</title>
-        <para>VMAX and
-            VNX arrays support these operations:</para>
+        <para>VMAX and VNX arrays support these operations:</para>
         <itemizedlist>
             <listitem>
                 <para>Create volume</para>
@@ -73,9 +73,9 @@
         <procedure>
             <title>To set up the EMC SMI-S iSCSI driver</title>
             <step>
-                <para>Install the <package>python-pywbem</package> package for your
-                    distribution. See <xref linkend="install-pywbem"
-                    />.</para>
+                <para>Install the <package>python-pywbem</package>
+                    package for your distribution. See <xref
+                        linkend="install-pywbem"/>.</para>
             </step>
             <step>
                 <para>Download SMI-S from PowerLink and install it.
@@ -93,11 +93,12 @@
             </step>
         </procedure>
         <section xml:id="install-pywbem">
-            <title>Install the <package>python-pywbem</package> package</title>
+            <title>Install the <package>python-pywbem</package>
+                package</title>
             <procedure>
                 <step>
-                    <para>Install the <package>python-pywbem</package> package for your
-                        distribution:</para>
+                    <para>Install the <package>python-pywbem</package>
+                        package for your distribution:</para>
                     <itemizedlist>
                         <listitem>
                             <para>On Ubuntu:</para>
@@ -119,14 +120,16 @@
             <title>Set up SMI-S</title>
             <para>You can install SMI-S on a non-OpenStack host.
                 Supported platforms include different flavors of
-                Windows, Red Hat, and SUSE Linux. The host can be either a
-                physical server or VM hosted by an ESX server. See
-                the EMC SMI-S Provider release notes for supported
-                platforms and installation instructions.</para>
+                Windows, Red Hat, and SUSE Linux. The host can be
+                either a physical server or VM hosted by an ESX
+                server. See the EMC SMI-S Provider release notes for
+                supported platforms and installation
+                instructions.</para>
             <note>
                 <para>You must discover storage arrays on the SMI-S
-                    server before you can use the Cinder driver. Follow
-                    instructions in the SMI-S release notes.</para>
+                    server before you can use the Cinder driver.
+                    Follow instructions in the SMI-S release
+                    notes.</para>
             </note>
             <para>SMI-S is usually installed at
                     <filename>/opt/emc/ECIM/ECOM/bin</filename> on
@@ -146,29 +149,33 @@
             <title>Register with VNX</title>
             <para>To export a VNX volume to a Compute node, you must
                 register the node with VNX.</para>
-            <para>On the Compute node <literal>1.1.1.1</literal>, run these commands (assume <literal>10.10.61.35</literal>
+            <para>On the Compute node <literal>1.1.1.1</literal>, run
+                these commands (assume <literal>10.10.61.35</literal>
                 is the iscsi target):</para>
             <screen><prompt>$</prompt> <userinput>sudo /etc/init.d/open-iscsi start</userinput></screen>
             <screen><prompt>$</prompt> <userinput>sudo iscsiadm -m discovery -t st -p <literal>10.10.61.35</literal></userinput></screen>
             <screen><prompt>$</prompt> <userinput>cd /etc/iscsi</userinput></screen>
             <screen><prompt>$</prompt> <userinput>sudo more initiatorname.iscsi</userinput></screen>
             <screen><prompt>$</prompt> <userinput>iscsiadm -m node</userinput></screen>
-            <para>Log in to VNX from the Compute node by using the target
-                corresponding to the SPA port:</para>
+            <para>Log in to VNX from the Compute node by using the
+                target corresponding to the SPA port:</para>
             <screen><prompt>$</prompt> <userinput>sudo iscsiadm -m node -T <literal>iqn.1992-04.com.emc:cx.apm01234567890.a0</literal> -p <literal>10.10.61.35</literal> -l</userinput></screen>
-            <para>Assume
+            <para>Assume that
                     <literal>iqn.1993-08.org.debian:01:1a2b3c4d5f6g</literal>
                 is the initiator name of the Compute node. Log in to
                 Unisphere, go to
                 <literal>VNX00000</literal>->Hosts->Initiators,
-                refresh and wait until initiator
+                refresh, and wait until initiator
                     <literal>iqn.1993-08.org.debian:01:1a2b3c4d5f6g</literal>
                 with SP Port <literal>A-8v0</literal> appears.</para>
-            <para>Click <guibutton>Register</guibutton>, select <guilabel>CLARiiON/VNX</guilabel>,
-                and enter the <literal>myhost1</literal> host name and <literal>myhost1</literal>
-                IP address. Click <guibutton>Register</guibutton>.
-                Now the <literal>1.1.1.1</literal> host appears under
-                <guimenu>Hosts</guimenu> <guimenuitem>Host List</guimenuitem> as well.</para>
+            <para>Click <guibutton>Register</guibutton>, select
+                    <guilabel>CLARiiON/VNX</guilabel>, and enter the
+                    <literal>myhost1</literal> host name and
+                    <literal>myhost1</literal> IP address. Click
+                    <guibutton>Register</guibutton>. Now the
+                    <literal>1.1.1.1</literal> host appears under
+                    <guimenu>Hosts</guimenu>
+                <guimenuitem>Host List</guimenuitem> as well.</para>
             <para>Log out of VNX on the Compute node:</para>
             <screen><prompt>$</prompt> <userinput>sudo iscsiadm -m node -u</userinput></screen>
             <para>Log in to VNX from the Compute node using the target
@@ -184,7 +191,7 @@
             <para>For VMAX, you must set up the Unisphere for VMAX
                 server. On the Unisphere for VMAX server, create
                 initiator group, storage group, and port group and put
-                them in a masking view. Initiator group contains the
+                them in a masking view. initiator group contains the
                 initiator names of the OpenStack hosts. Storage group
                 must have at least six gatekeepers.</para>
         </section>
@@ -219,37 +226,23 @@ cinder_emc_config_file = /etc/cinder/cinder_emc_config.xml</programlisting>
                 change.</para>
             <para>For VMAX, add the following lines to the XML
                 file:</para>
-            <programlisting language="xml">&lt;?xml version='1.0' encoding='UTF-8'?>
-&lt;EMC>
-&lt;StorageType>xxxx&lt;/StorageType>
-&lt;MaskingView>xxxx&lt;/MaskingView>
-&lt;EcomServerIp>x.x.x.x&lt;/EcomServerIp>
-&lt;EcomServerPort>xxxx&lt;/EcomServerPort>
-&lt;EcomUserName>xxxxxxxx&lt;/EcomUserName>
-&lt;EcomPassword>xxxxxxxx&lt;/EcomPassword>
-&lt;/EMC&lt;</programlisting>
+            <programlisting language="xml"><xi:include href="samples/emc-vmax.xml" parse="text"/></programlisting>
             <para>For VNX, add the following lines to the XML
                 file:</para>
-            <programlisting language="xml">&lt;?xml version='1.0' encoding='UTF-8'?>
-&lt;EMC>
-&lt;StorageType>xxxx&lt;/StorageType>
-&lt;EcomServerIp>x.x.x.x&lt;/EcomServerIp>
-&lt;EcomServerPort>xxxx&lt;/EcomServerPort>
-&lt;EcomUserName>xxxxxxxx&lt;/EcomUserName>
-&lt;EcomPassword>xxxxxxxx&lt;/EcomPassword>
-&lt;/EMC&lt;</programlisting>
+            <programlisting language="xml"><xi:include href="samples/emc-vnx.xml" parse="text"/></programlisting>
             <para>To attach VMAX volumes to an OpenStack VM, you must
-                create a Masking View by using Unisphere for VMAX. The
-                Masking View must have an Initiator Group that
+                create a masking view by using Unisphere for VMAX. The
+                masking view must have an initiator group that
                 contains the initiator of the OpenStack compute node
                 that hosts the VM.</para>
-            <para>StorageType is the thin pool where the user wants to
-                create the volume from. Only thin LUNs are supported
-                by the plug-in. Thin pools can be created using
-                Unisphere for VMAX and VNX.</para>
-            <para>EcomServerIp and EcomServerPort are the IP address
-                and port number of the ECOM server which is packaged
-                with SMI-S. EcomUserName and EcomPassword are
+            <para><parameter>StorageType</parameter> is the thin pool
+                where the user wants to create the volume from. Only
+                thin LUNs are supported by the plug-in. Thin pools can
+                be created using Unisphere for VMAX and VNX.</para>
+            <para><parameter>EcomServerIp</parameter> and
+                    <parameter>EcomServerPort</parameter> are the IP
+                address and port number of the ECOM server which is
+                packaged with SMI-S. EcomUserName and EcomPassword are
                 credentials for the ECOM server.</para>
         </section>
     </section>
