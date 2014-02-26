@@ -13,7 +13,7 @@
         compute node. This section shows you how to troubleshoot
         Compute.</para>
     <section xml:id="log-files-for-openstack-compute">
-        <title>Compute log files</title>
+        <title>Compute service logging</title>
         <para>Compute stores a log file for each service in
                 <filename>/var/log/nova</filename>. For example,
                 <filename>nova-compute.log</filename> is the log for
@@ -147,7 +147,26 @@
                 returns an error:</para>
             <screen><prompt>#</prompt> <userinput>virsh create libvirt.xml</userinput></screen>
         </section>
-    </section>
+        <section xml:id="section_compute-empty-log-output">
+            <title>Empty log output for Linux instances</title>
+            <para>You can view the log output of running instances
+            from either the <guilabel>Log</guilabel> tab of the
+            dashboard or the output of
+            <command>nova console-log</command>. In some cases, the
+            log output of a running Linux instance will be empty or
+            only display a single character (for example,
+            the <keycap>?</keycap> character).</para>
+            <para>This occurs when the Compute service attempts to
+            retrieve the log output of the instance via a serial
+            console while the instance itself is not configured to
+            send output to the console. To rectify this, append the
+            following parameters to kernel arguments specified in the
+            instance's boot loader:</para>
+            <screen>console=tty0 console=ttyS0,115200n8</screen>
+            <para>Upon rebooting, the instance will be configured to
+            send output to the Compute service.</para>
+        </section>
+        </section>
     <section xml:id="reset-state">
         <title>Reset the state of an instance</title>
         <para>If an instance remains in an intermediate state, such as
