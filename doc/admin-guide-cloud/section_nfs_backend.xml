@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="nfs_backend" xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="1.0">
+    <title>Configure an NFS storage backend</title>
+    <para>This section explains how to configure the
+    <systemitem>cinder</systemitem> volume service to use NFS storage.
+    The NFS shares to be used must already exist and be accessible
+    from the <systemitem>cinder</systemitem> volume service host.
+    </para>
+    <note>
+        <para os="rhel;centos;fedora;opensuse;sles">The
+        <systemitem>cinder</systemitem> volume service is named
+        <literal>openstack-cinder-volume</literal> on the following
+        distributions:</para>
+        <itemizedlist os="rhel;centos;fedora;opensuse;sles">
+        <listitem os="rhel;centos;fedora"><para>CentOS</para></listitem>
+        <listitem os="rhel;centos;fedora"><para>Fedora</para></listitem>
+        <listitem os="opensuse;sles"><para>openSUSE</para></listitem>
+        <listitem os="rhel;centos;fedora"><para>Red Hat Enterprise
+        Linux</para></listitem>
+        <listitem os="opensuse;sles"><para>SUSE Linux Enterprise
+        </para></listitem>
+        </itemizedlist>
+        <para>In Ubuntu and Debian distributions, the
+        <systemitem>cinder</systemitem> volume service is named
+        <literal>cinder-volume</literal>.</para>
+    </note>
+    <procedure>
+        <title>Configure the cinder volume service to use NFS storage</title>
+     <step>
+      <para>Log in as <systemitem>root</systemitem> to the system
+      hosting the <systemitem>cinder</systemitem> volume
+      service.</para>
+     </step>
+     <step>
+     <para>
+     Create a text file named <filename>nfsshares</filename> in
+    <filename>/etc/cinder/</filename>.
+     </para>
+     </step>
+     <step>
+     <para>
+         Add an entry to <filename>/etc/cinder/nfsshares</filename>
+         for each NFS share that the <systemitem>cinder</systemitem>
+         volume service should use for backend storage. Each entry
+         should be a separate line, and should use the following
+         format:
+     </para>
+     <programlisting><replaceable>HOST</replaceable>:<replaceable>SHARE</replaceable></programlisting>
+      <para>Where:</para>
+        <itemizedlist>
+         <listitem><para><replaceable>HOST</replaceable> is the IP
+         address or host name of the NFS server.</para></listitem>
+         <listitem><para><replaceable>SHARE</replaceable> is the
+         absolute path to an existing and accessible NFS share.
+         </para></listitem>
+        </itemizedlist>
+      </step>
+      <step>
+           <para>
+            Set <filename>/etc/cinder/nfsshares</filename> to be
+            owned by the <systemitem>root</systemitem> user and the
+            <systemitem>cinder</systemitem> group:
+           </para>
+           <screen><prompt>#</prompt> <userinput>chown root:cinder /etc/cinder/nfsshares</userinput></screen>
+      </step>
+      <step>
+           <para>
+            Set <filename>/etc/cinder/nfsshares</filename> to be
+            readable by members of the <systemitem>cinder</systemitem>
+            group:
+           </para>
+           <screen><prompt>#</prompt> <userinput>chmod 0640 /etc/cinder/nfsshares</userinput></screen>
+      </step>
+      <step>
+          <para>Configure the <systemitem>cinder</systemitem>
+            volume service to use the
+            <filename>/etc/cinder/nfsshares</filename> file created
+            earlier. To do so, open the
+            <filename>/etc/cinder/cinder.conf</filename> configuration
+            file and set the
+            <literal>nfs_shares_config</literal> configuration key to
+            <filename>/etc/cinder/nfsshares</filename>.
+            </para>
+            <para os="rhel;centos;fedora;opensuse;sles">On
+            distributions that include
+            <application>openstack-config</application>, you can
+            configure this by running the following command instead:
+            </para>
+           <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/cinder/cinder.conf \
+DEFAULT nfs_shares_config /etc/cinder/nfsshares</userinput></screen>
+            <para os="rhel;centos;fedora;opensuse;sles">The following
+            distributions include
+            <application>openstack-config</application>:</para>
+             <itemizedlist os="rhel;centos;fedora;opensuse;sles">
+            <listitem os="rhel;centos;fedora">
+                <para>CentOS</para>
+            </listitem>
+            <listitem os="rhel;centos;fedora">
+                <para>Fedora</para>
+            </listitem>
+            <listitem os="opensuse;sles">
+                <para>openSUSE</para>
+            </listitem>
+            <listitem os="rhel;centos;fedora">
+                <para>Red Hat Enterprise Linux</para>
+            </listitem>
+            <listitem os="opensuse;sles">
+                <para>SUSE Linux Enterprise</para>
+            </listitem>
+            </itemizedlist>
+      </step>
+      <step>
+           <para>
+            Optionally, provide any additional NFS mount options
+            required in your environment in the
+            <literal>nfs_mount_options</literal> configuration key of
+            <filename>/etc/cinder/cinder.conf</filename>.
+            If your NFS shares do not require any additional mount
+            options (or if you are unsure), skip this step.
+           </para>
+           <para os="rhel;centos;fedora;opensuse;sles">On
+            distributions that include
+            <application>openstack-config</application>, you can
+            configure this by running the following command instead:
+            </para>
+           <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/cinder/cinder.conf \
+DEFAULT nfs_mount_options <replaceable>OPTIONS</replaceable></userinput></screen>
+           <para os="rhel;centos;fedora;opensuse;sles">
+            Replace <replaceable>OPTIONS</replaceable> with the mount
+            options to be used when accessing NFS shares. See the
+            manual page for NFS for more information on available
+            mount options (<command>man nfs</command>).
+           </para>
+      </step>
+      <step>
+          <para>Configure the <systemitem>cinder</systemitem>
+            volume service to use the correct volume driver, namely
+            <literal>cinder.volume.drivers.nfs.NfsDriver</literal>. To
+            do so, open the
+            <filename>/etc/cinder/cinder.conf</filename>
+            configuration file and set the
+            <literal>volume_driver</literal> configuration key to
+            <literal>cinder.volume.drivers.nfs.NfsDriver</literal>.
+            </para>
+            <para os="rhel;centos;fedora;opensuse;sles">On
+            distributions that include
+            <application>openstack-config</application>, you can
+            configure this by running the following command instead:
+            </para>
+           <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/cinder/cinder.conf \
+DEFAULT volume_driver cinder.volume.drivers.nfs.NfsDriver</userinput></screen>
+      </step>
+      <step>
+        <para>
+        You can now restart the service to apply the configuration.
+        </para>
+        <para os="rhel;centos;fedora;opensuse;sles">To restart the
+        <systemitem>cinder</systemitem> volume service on CentOS,
+        Fedora, openSUSE, Red Hat Enterprise Linux, or SUSE Linux
+        Enterprise, run:</para>
+        <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>service openstack-cinder-volume restart</userinput></screen>
+        <para os="debian;ubuntu">To restart the
+        <systemitem>cinder</systemitem> volume service on Ubuntu or
+        Debian, run:</para>
+        <screen os="debian;ubuntu"><prompt>#</prompt> <userinput>service cinder-volume restart</userinput></screen>
+      </step>
+      </procedure>
+  <note>
+           <para>
+            The <literal>nfs_sparsed_volumes</literal> configuration
+            key determines whether volumes are created as sparse files
+            and grown as needed or fully allocated up front. The
+            default and recommended value is <literal>true</literal>,
+            which ensures volumes are initially created as sparse
+            files.
+           </para>
+           <para>
+            Setting <literal>nfs_sparsed_volumes</literal> to
+            <literal>false</literal> will result in volumes
+            being fully allocated at the time of creation. This
+            leads to increased delays in volume creation.
+            </para>
+            <para>
+            However, should you choose to set
+            <literal>nfs_sparsed_volumes</literal> to
+            <literal>false</literal>, you can do so directly in
+            <filename>/etc/cinder/cinder.conf</filename>.</para>
+            <para os="rhel;centos;fedora;opensuse;sles">On
+            distributions that include
+            <application>openstack-config</application>, you can
+            configure this by running the following command instead:
+            </para>
+           <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/cinder/cinder.conf \
+DEFAULT nfs_sparsed_volumes false</userinput></screen>
+      </note>
+    <important>
+        <para>If a client host has SELinux enabled, the
+        <systemitem>virt_use_nfs</systemitem> Boolean should also be
+        enabled if the host requires access to NFS volumes on an
+        instance. To enable this Boolean, run the following command
+        as the <systemitem>root</systemitem> user:
+      </para>
+      <screen><prompt>#</prompt> <userinput>setsebool -P virt_use_nfs on</userinput></screen>
+      <para>This command also makes the Boolean persistent across
+      reboots. Run this command on all client hosts that require
+      access to NFS volumes on an instance. This includes all Compute
+      nodes.</para>
+     </important>
+</section>
