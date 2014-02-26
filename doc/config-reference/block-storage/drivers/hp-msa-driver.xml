@@ -1,0 +1,32 @@
+<section xml:id="hp-msa-driver" xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+    <title>HP MSA Fibre Channel driver</title>
+    <para>The HP MSA fiber channel driver runs volume operations on the
+        storage array over HTTP.</para>
+    <para>A VDisk must be created on the HP MSA array first. This can be done using
+        the web interface or the command-line interface of the array.</para>
+    <para>The following options must be defined in the
+        <systemitem>cinder-volume</systemitem> configuration file
+        (<filename>/etc/cinder/cinder.conf</filename>):</para>
+    <itemizedlist>
+        <listitem>
+            <para>Set the <option>volume_driver</option> option to
+                <literal>cinder.volume.drivers.san.hp.hp_msa_fc.HPMSAFCDriver</literal>
+            </para>
+        </listitem>
+        <listitem>
+            <para>Set the <option>san_ip</option> option to the hostname or IP
+                address of your HP MSA array.</para>
+        </listitem>
+        <listitem>
+            <para>Set the <option>san_login</option> option to the login of an
+                existing user of the HP MSA array.
+            </para>
+        </listitem>
+        <listitem>
+            <para>Set the <option>san_password</option> option to the password
+                for this user.</para>
+        </listitem>
+    </itemizedlist>
+</section>
