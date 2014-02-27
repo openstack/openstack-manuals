@@ -9,23 +9,24 @@
     version="5.0">
     <title>Scheduling</title>
     <para>Compute uses the <systemitem class="service">nova-scheduler</systemitem> service to
-        determine how to dispatch compute and volume requests. For example, the <systemitem
+        determine how to dispatch compute requests. For example, the <systemitem
             class="service">nova-scheduler</systemitem> service determines which host a VM should
         launch on. The term <firstterm>host</firstterm> in the context of filters means a physical node that has a
             <systemitem class="service">nova-compute</systemitem> service running on it.
         You can configure the scheduler through a variety of options.</para>
     <para>Compute is configured with the following default scheduler options:</para>
-    <programlisting language="ini">scheduler_driver=nova.scheduler.multi.MultiScheduler
-compute_scheduler_driver=nova.scheduler.filter_scheduler.FilterScheduler
+    <programlisting language="ini">scheduler_driver=nova.scheduler.filter_scheduler.FilterScheduler
 scheduler_available_filters=nova.scheduler.filters.all_filters
-scheduler_default_filters=AvailabilityZoneFilter,RamFilter,ComputeFilter
-least_cost_functions=nova.scheduler.least_cost.compute_fill_first_cost_fn
-compute_fill_first_cost_fn_weight=-1.0</programlisting>
-    <para>By default, the compute scheduler is configured as a filter
+scheduler_default_filters=RetryFilter,AvailabilityZoneFilter,RamFilter,ComputeFilter,ComputeCapabilitiesFilter,ImagePropertiesFilter</programlisting>
+    <para>By default, the scheduler_driver is configured as a filter
         scheduler, as described in the next section. In the default
         configuration, this scheduler considers hosts that meet all
         the following criteria:</para>
     <itemizedlist>
+        <listitem>
+            <para>Have not been attempted for scheduling purposes
+                    (<literal>RetryFilter</literal>).</para>
+        </listitem>
         <listitem>
             <para>Are in the requested availability zone
                     (<literal>AvailabilityZoneFilter</literal>).</para>
@@ -38,10 +39,17 @@ compute_fill_first_cost_fn_weight=-1.0</programlisting>
             <para>Are capable of servicing the request
                     (<literal>ComputeFilter</literal>).</para>
         </listitem>
+        <listitem>
+            <para>Satisfy the extra specs associated with the instance type
+                    (<literal>ComputeCapabilitiesFilter</literal>).</para>
+        </listitem>
+        <listitem>
+            <para>Satisfy any architecture, hypervisor type, or virtual
+                machine mode properties specified on the instance's image
+                properties.
+                    (<literal>ImagePropertiesFilter</literal>).</para>
+        </listitem>
     </itemizedlist>
-    <para>For information on the volume scheduler, refer the Block Storage section of <link
-            xlink:href="http://docs.openstack.org/admin-guide-cloud/content/managing-volumes.html">
-    <citetitle>OpenStack Cloud Administrator Guide</citetitle></link> for information.</para>
     <section xml:id="filter-scheduler">
         <title>Filter scheduler</title>
         <para>The Filter Scheduler
@@ -49,11 +57,7 @@ compute_fill_first_cost_fn_weight=-1.0</programlisting>
             is the default scheduler for scheduling virtual machine
             instances. It supports filtering and weighting to make
             informed decisions on where a new instance should be
-            created. You can use this scheduler to schedule compute
-            requests but not volume requests. For example, you can use
-            it with only the
-                <literal>compute_scheduler_driver</literal>
-            configuration option.</para>
+            created.</para>
     </section>
     <section xml:id="scheduler-filters">
         <?dbhtml stop-chunking?>
@@ -98,7 +102,7 @@ scheduler_available_filters=myfilter.MyFilter</programlisting>
             defines the list of filters that are applied by the
                 <systemitem class="service">nova-scheduler</systemitem> service. As
             mentioned, the default filters are:</para>
-        <programlisting language="ini">scheduler_default_filters=AvailabilityZoneFilter,RamFilter,ComputeFilter</programlisting>
+        <programlisting language="ini">scheduler_default_filters=RetryFilter,AvailabilityZoneFilter,RamFilter,ComputeFilter,ComputeCapabilitiesFilter,ImagePropertiesFilter</programlisting>
         <para>The following sections describe the available
             filters.</para>
         <section xml:id="aggregatecorefilter">
@@ -519,8 +523,7 @@ ram_weight_multiplier=1.0</programlisting>
             Filter Scheduler. However, the Compute service also uses
             the Chance Scheduler,
                 <literal>nova.scheduler.chance.ChanceScheduler</literal>,
-            which randomly selects from lists of filtered hosts. It is
-            the default volume scheduler.</para>
+            which randomly selects from lists of filtered hosts.</para>
     </section>
     <xi:include href="../../common/section_cli_nova_host_aggregates.xml"/>
     <section xml:id="compute-scheduler-config-ref">
