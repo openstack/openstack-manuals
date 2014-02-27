@@ -73,9 +73,21 @@ export OS_AUTH_URL=http://controller:35357/v2.0</programlisting>
 +----------------------------------+---------+--------------------+--------+
 | a4c2d43f80a549a19864c89d759bb3fe | True    | admin@example.com  | admin  |
 +----------------------------------+---------+--------------------+--------+</computeroutput></screen>
-      <para>This verifies that your user account has the
-          <literal>admin</literal> role, which matches the role used
-        in the Identity Service <filename>policy.json</filename>
+      <screen><prompt>#</prompt> <userinput>keystone user-role-list</userinput>
+<computeroutput>+----------------------------------+----------+----------------------------------+----------------------------------+
+|                id                |   name   |             user_id              |            tenant_id             |
++----------------------------------+----------+----------------------------------+----------------------------------+
+| 9fe2ff9ee4384b1894a90878d3e92bab | _member_ | a4c2d43f80a549a19864c89d759bb3fe | e519b772cb43474582fa303da62559e5 |
+| 5d3b60b66f1f438b80eaae41a77b5951 |  admin   | a4c2d43f80a549a19864c89d759bb3fe | e519b772cb43474582fa303da62559e5 |
++----------------------------------+----------+----------------------------------+----------------------------------+</computeroutput></screen>
+      <para>Seeing that the <literal>id</literal> in the output
+        from the <command>keystone user-list</command>
+        command matches the <literal>user_id</literal> in the
+        <command>keystone user-role-list</command> command,
+        and that the admin role is listed for that user, for the
+        related tenant, this verifies that your user account has the
+        <literal>admin</literal> role, which matches the role
+        used in the Identity Service <filename>policy.json</filename>
         file.</para>
       <note>
         <para>As long as you define your credentials and the Identity
