@@ -163,7 +163,7 @@
         <title>Health check</title>
         <para>Provides an easy way to monitor whether the swift proxy
             server is alive. If you access the proxy with the path
-                <filename>/healthcheck</filename>, it respond
+                <filename>/healthcheck</filename>, it responds with
                 <literal>OK</literal> in the response body, which
             monitoring tools can use.</para>
         <xi:include
@@ -183,7 +183,7 @@
         <title>CNAME lookup</title>
         <para>Middleware that translates an unknown domain in the host
             header to something that ends with the configured
-            storage_domain by looking up the given domain's CNAME
+            <code>storage_domain</code> by looking up the given domain's CNAME
             record in DNS.</para>
         <xi:include
             href="../../common/tables/swift-proxy-server-filter-cname_lookup.xml"
@@ -215,7 +215,7 @@
                 <varlistentry>
                     <term><literal>temp_url_expires</literal></term>
                     <listitem>
-                        <para>An expiration date, in Unix time.</para>
+                        <para>An expiration date, in Unix time</para>
                     </listitem>
                 </varlistentry>
             </variablelist></para>
@@ -245,7 +245,7 @@
                 <para>The expiry date as a Unix timestamp</para>
             </listitem>
             <listitem>
-                <para>the full path to the object</para>
+                <para>The full path to the object</para>
             </listitem>
             <listitem>
                 <para>The secret key set as the
@@ -275,20 +275,21 @@ url = s.format(host='swift-cluster.example.com', path=path, sig=sig, expires=exp
             PUT is allowed. Using this in combination with browser
             form post translation middleware could also allow
             direct-from-browser uploads to specific locations in
-            Swift. Note that <note>
+            Object Storage.</para>
+            <note>
                 <para>Changing the
                         <literal>X-Account-Meta-Temp-URL-Key</literal>
                     invalidates any previously generated temporary
                     URLs within 60 seconds (the memcache time for the
-                    key). Swift supports up to two keys, specified by
+                    key). Object Storage supports up to two keys, specified by
                         <literal>X-Account-Meta-Temp-URL-Key</literal>
                     and
                         <literal>X-Account-Meta-Temp-URL-Key-2</literal>.
                     Signatures are checked against both keys, if
                     present. This is to allow for key rotation without
                     invalidating all existing temporary URLs.</para>
-            </note></para>
-        <para>Swift includes a script called
+            </note>
+        <para>Opject Storage includes a script called
                 <command>swift-temp-url</command> that generates the
             query parameters automatically:</para>
         <screen><prompt>$</prompt> <userinput>bin/swift-temp-url GET 3600 /v1/AUTH_account/container/object mykey</userinput>
@@ -296,7 +297,7 @@ url = s.format(host='swift-cluster.example.com', path=path, sig=sig, expires=exp
 temp_url_sig=5c4cc8886f36a9d0919d708ade98bf0cc71c9e91&amp;
 temp_url_expires=1374497657</computeroutput></screen>
         <para>Because this command only returns the path, you must
-            prefix the Swift storage host name (for example,
+            prefix the Object Storage host name (for example,
                 <literal>https://swift-cluster.example.com</literal>).</para>
         <para>With GET Temporary URLs, a
                 <literal>Content-Disposition</literal> header is set
@@ -370,7 +371,8 @@ pipeline = pipeline = healthcheck cache <emphasis role="bold">tempurl</emphasis>
             create a new account solely for this usage. Next, you need
             to place the containers and objects throughout the system
             so that they are on distinct partitions. The
-            swift-dispersion-populate tool does this by making up
+            <command>swift-dispersion-populate</command> tool does this
+            by making up
             random container and object names until they fall on
             distinct partitions. Last, and repeatedly for the life of
             the cluster, you must run the
@@ -445,7 +447,7 @@ Sample represents 1.00% of the object partition space
 </programlisting>
         <para>Alternatively, the dispersion report can also be output
             in json format. This allows it to be more easily consumed
-            by third party utilities:</para>
+            by third-party utilities:</para>
         <screen><prompt>$</prompt> <userinput>swift-dispersion-report -j</userinput>
 <computeroutput>{"object": {"retries:": 0, "missing_two": 0, "copies_found": 7863, "missing_one": 0,
 "copies_expected": 7863, "pct_found": 100.0, "overlapping": 0, "missing_all": 0}, "container":
@@ -463,7 +465,7 @@ Sample represents 1.00% of the object partition space
             objects concurrently and afterwards download them as a
             single object. It is different in that it does not rely on
             eventually consistent container listings to do so.
-            Instead, a user defined manifest of the object segments is
+            Instead, a user-defined manifest of the object segments is
             used.</para>
         <xi:include
             href="../../common/tables/swift-proxy-server-filter-slo.xml"
@@ -471,7 +473,8 @@ Sample represents 1.00% of the object partition space
     </section>
     <section xml:id="object-storage-container-quotas">
         <title>Container quotas</title>
-        <para>The container_quotas middleware implements simple quotas
+        <para>The <code>container_quotas</code> middleware
+            implements simple quotas
             that can be imposed on swift containers by a user with the
             ability to set container metadata, most likely the account
             administrator. This can be useful for limiting the scope
@@ -509,11 +512,13 @@ Sample represents 1.00% of the object partition space
             metadata entry must be requests (PUT, POST) if a given
             account quota (in bytes) is exceeded while DELETE requests
             are still allowed.</para>
-        <para>The x-account-meta-quota-bytes metadata entry must be
+        <para>The <parameter>x-account-meta-quota-bytes</parameter>
+            metadata entry must be
             set to store and enable the quota. Write requests to this
             metadata entry are only permitted for resellers. There is
             no account quota limitation on a reseller account even if
-            x-account-meta-quota-bytes is set.</para>
+            <parameter>x-account-meta-quota-bytes</parameter> is set.
+        </para>
         <para>Any object PUT operations that exceed the quota return a
             413 response (request entity too large) with a descriptive
             body.</para>
@@ -536,21 +541,23 @@ X-Trans-Id: tx602634cf478546a39b1be-0051e6bc7a</computeroutput></screen>
     </section>
     <section xml:id="object-storage-bulk-delete">
         <title>Bulk delete</title>
-        <para>Use bulk-delete to delete multiple files from an account
+        <para>Use <code>bulk-delete</code> to delete multiple files
+           from an account
             with a single request. Responds to DELETE requests with a
             header 'X-Bulk-Delete: true_value'. The body of the DELETE
-            request is a new line separated list of files to delete.
+            request is a new line-separated list of files to delete.
             The files listed must be URL encoded and in the
             form:</para>
         <programlisting>
     /container_name/obj_name
     </programlisting>
         <para>If all files are successfully deleted (or did not
-            exist), the operation returns HTTPOk. If any files failed
-            to delete, the operation returns HTTPBadGateway. In both
-            cases the response body is a JSON dictionary that shows
-            the number of files that were successfully deleted or not
-            found. The files that failed are listed.</para>
+        exist), the operation returns <code>HTTPOk</code>. If any
+        files failed to delete, the operation returns
+        <code>HTTPBadGateway</code>.  In both cases, the response body
+        is a JSON dictionary that shows the number of files that were
+        successfully deleted or not found. The files that failed are
+        listed.</para>
         <xi:include
             href="../../common/tables/swift-proxy-server-filter-bulk.xml"
         />
@@ -590,7 +597,7 @@ X-Trans-Id: tx602634cf478546a39b1be-0051e6bc7a</computeroutput></screen>
                 <uri>https://swift-cluster.example.com/v1/AUTH_account/container/object_prefix</uri>
             The name of each file uploaded is appended to the
             specified <literal>swift-url</literal>. So, you can upload
-            directly to the root of container with a url like:
+            directly to the root of container with a URL like:
                 <uri>https://swift-cluster.example.com/v1/AUTH_account/container/</uri>
             Optionally, you can include an object prefix to better
             separate different users’ uploads, such as:
@@ -641,7 +648,7 @@ signature = hmac.new(key, hmac_body, sha1).hexdigest()
             on the account.</para>
         <para>Be certain to use the full path, from the
                 <literal>/v1/</literal> onward.</para>
-        <para>The command line tool
+        <para>The command-line tool
                 <command>swift-form-signature</command> may be used
             (mostly just when testing) to compute expires and
             signature.</para>

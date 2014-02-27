@@ -20,12 +20,16 @@
         Configuration for servers and daemons can be expressed together in
         the same file for each type of server, or separately. If a required
         section for the service trying to start is missing there will be an
-        error. The sections not used by the service are ignored.
+        error. Sections not used by the service are ignored.
    </para>
     <para>
-        Consider the example of an object storage node. By convention
-        configuration for the object-server, object-updater,
-        object-replicator, and object-auditor exist in a single file
+        Consider the example of an Object Storage node. By convention
+        configuration for the <systemitem
+        class="service">object-server</systemitem>, <systemitem
+        class="service">object-updater</systemitem>, <systemitem
+        class="service">object-replicator</systemitem>, and
+        <systemitem class="service">object-auditor</systemitem> exist
+        in a single file
         <filename>/etc/swift/object-server.conf</filename>:
    </para>
     <programlisting language="ini">
@@ -53,7 +57,7 @@ reclaim_age = 259200
 Error: missing config path argument
 </computeroutput></screen>
     <para>
-        If you omit the object-auditor section this file can not be used
+        If you omit the object-auditor section, this file cannot be used
         as the configuration path when starting the
         <command>swift-object-auditor</command> daemon:
    </para>
@@ -65,10 +69,10 @@ Error: missing config path argument
         the files in the directory with the file extension &quot;.conf&quot;
         will be combined to generate the configuration object which is
         delivered to the Object Storage service. This is referred to generally as
-        &quot;directory based configuration&quot;.
+        &quot;directory-based configuration&quot;.
    </para>
     <para>
-        Directory based configuration leverages ConfigParser's native
+        Directory-based configuration leverages ConfigParser's native
         multi-file support. Files ending in &quot;.conf&quot; in the given
         directory are parsed in lexicographical order. File names starting
         with '.' are ignored. A mixture of file and directory configuration
@@ -84,7 +88,7 @@ Error: missing config path argument
         exist.
    </para>
     <para>
-        When using directory based configuration, if the same option under
+        When using directory-based configuration, if the same option under
         the same section appears more than once in different files, the last
         value parsed is said to override previous occurrences. You can
         ensure proper override precedence by prefixing the files in the
@@ -104,6 +108,6 @@ Error: missing config path argument
 </programlisting>
     <para>
         You can inspect the resulting combined configuration object using
-        the <command>swift-config</command> command line tool.
+        the <command>swift-config</command> command-line tool.
    </para>
 </section>
