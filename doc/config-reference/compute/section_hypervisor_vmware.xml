@@ -515,21 +515,17 @@ container_format=bare is_public=true \
             <literal>vlan_interface</literal> configuration option to
           match the ESX host interface that handles VLAN-tagged VM
           traffic.</para>
-        <para>OpenStack Compute automatically creates the corresponding port
-          groups.</para>
+        <para>OpenStack Compute automatically creates the
+          corresponding port groups.</para>
       </listitem>
       <listitem>
-        <para><emphasis role="bold">The OpenStack Networking
-            Service</emphasis>. If you use <acronym>OVS</acronym> as
-          the l2 agent, create a port group with the same name as the
-            <literal>DEFAULT.neutron_ovs_bridge</literal> value in the
-            <filename>nova.conf</filename> file. Otherwise, create a
-          port group with the same name as the
-            <literal>vmware.integration_bridge</literal> value in the
-            <filename>nova.conf</filename> file. In both cases, the
-          default value is <literal>br-int</literal>.</para>
-        <para>All VM NICs are attached to this port group for management by the
-          OpenStack Networking plug-in.</para>
+        <para>If you are using the OpenStack Networking Service:
+          Before provisioning VMs, create a port group with the same
+          name as the <literal>vmware.integration_bridge</literal> 
+          value in <filename>nova.conf</filename> (default is
+          <literal>br-int</literal>). All VM NICs are attached to
+          this port group for management by the OpenStack Networking
+          plug-in.</para>
       </listitem>
     </itemizedlist>
   </section>
