@@ -54,20 +54,20 @@
           <replaceable>GLANCE_DBPASS</replaceable> with your Image
         Service database password.</para>
       <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf \
-   DEFAULT sql_connection mysql://glance:<replaceable>GLANCE_DBPASS</replaceable>@<replaceable>controller</replaceable>/glance</userinput>
+   database connection mysql://glance:<replaceable>GLANCE_DBPASS</replaceable>@<replaceable>controller</replaceable>/glance</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-registry.conf \
-   DEFAULT sql_connection mysql://glance:<replaceable>GLANCE_DBPASS</replaceable>@<replaceable>controller</replaceable>/glance</userinput></screen>
+   database connection mysql://glance:<replaceable>GLANCE_DBPASS</replaceable>@<replaceable>controller</replaceable>/glance</userinput></screen>
       <para os="ubuntu;debian">Edit
           <filename>/etc/glance/glance-api.conf</filename> and
           <filename>/etc/glance/glance-registry.conf</filename> and
-        change the <literal>[DEFAULT]</literal> section.</para>
+        change the <literal>[database]</literal> section.</para>
       <programlisting os="ubuntu;debian" language="ini">...
-[DEFAULT]
+[database]
 ...
 # SQLAlchemy connection string for the reference implementation
 # registry server. Any valid SQLAlchemy connection string is fine.
 # See: http://www.sqlalchemy.org/docs/05/reference/sqlalchemy/connections.html#sqlalchemy.create_engine
-sql_connection = mysql://glance:GLANCE_DBPASS@<replaceable>controller</replaceable>/glance
+connection = mysql://glance:GLANCE_DBPASS@<replaceable>controller</replaceable>/glance
 ...</programlisting>
     </step>
     <step os="rhel;centos;fedora;opensuse;sles">
