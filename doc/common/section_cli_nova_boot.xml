@@ -181,11 +181,9 @@
                         <parameter>--user-data
                             <replaceable>USER-DATA-FILE</replaceable></parameter>
                     parameter.</para>
-                <screen><prompt>$</prompt> <userinput>nova boot --flavor <replaceable>FLAVOR_ID</replaceable> --image <replaceable>IMAGE_ID</replaceable> --key_name <replaceable>KEY_NAME</replaceable> \
-  --user-data mydata.file --security_group <replaceable>SEC_GROUP NAME_FOR_INSTANCE</replaceable> \
-  --meta <replaceable>KEY=VALUE</replaceable> --meta
-                    <replaceable>KEY=VALUE</replaceable> \
-                    <replaceable>SERVER_NAME</replaceable></userinput></screen>
+                <screen><prompt>$</prompt> <userinput>nova boot --flavor <replaceable>FLAVOR_ID</replaceable> --image <replaceable>IMAGE_ID</replaceable> --key-name <replaceable>KEY_NAME</replaceable> \
+  --user-data mydata.file --security-groups <replaceable>SEC_GROUP</replaceable> --meta <replaceable>KEY=VALUE</replaceable> \
+  <replaceable>myCirrosServer</replaceable></userinput></screen>
                 <para>Depending on the parameters that you provide,
                     the command returns a list of server
                     properties.</para>
@@ -222,8 +220,8 @@
 | adminPass                           | tVs5pL8HcPGw                         |
 | tenant_id                           | 66265572db174a7aa66eba661f58eb9e     |
 | created                             | 2013-07-16T16:25:34Z                 |
-| metadata                            | {}                                   |
-+-------------------------------------+--------------------------------------</computeroutput></screen>
+| metadata                            | {u'KEY': u'VALUE'}                   |
++-------------------------------------+--------------------------------------+</computeroutput></screen>
                 <para>Copy the server ID value from the
                         <literal>id</literal> field in the output. You
                     use this ID to get details for or delete your
@@ -243,7 +241,7 @@
                         that you want to put on the instance rather
                         than using the regular ssh key injection, you
                         can use the following
-                        command:<screen> <prompt>$</prompt> <userinput><?db-font-size 75%?>nova boot --image ubuntu-cloudimage --flavor 1 \
+                        command:<screen><prompt>$</prompt> <userinput><?db-font-size 75%?>nova boot --image ubuntu-cloudimage --flavor 1 vm-name \
   --file /root/.ssh/authorized_keys=special_authorized_keysfile</userinput></screen></para>
                 </note>
             </step>
