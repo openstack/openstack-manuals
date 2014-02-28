@@ -38,7 +38,7 @@
           ("Glance")</para>
       </listitem>
       <listitem>
-        <para>Network ("Quantum") provides virtual networking for
+        <para>Network ("Neutron") provides virtual networking for
           Compute.</para>
       </listitem>
       <listitem>
@@ -164,9 +164,9 @@
             from the queue and then performs tasks to manipulate the
             network (such as setting up bridging interfaces or
             changing iptables rules). This functionality is being
-            migrated to Quantum, a separate OpenStack service. In the
+            migrated to Neutron, a separate OpenStack project. In the
             Folsom release, much of the functionality will be
-            duplicated between nova-network and Quantum.</para>
+            duplicated between nova-network and Neutron.</para>
         </listitem>
         <listitem>
           <para>The nova-schedule process is conceptually the simplest
@@ -300,29 +300,29 @@
       <para>Most people will use this as a point of customization for
         their current authentication services.</para>
   <para><guilabel>Network</guilabel></para>
-      <para>Quantum provides "network connectivity as a service"
+      <para>Neutron provides "network connectivity as a service"
         between interface devices managed by other OpenStack services
         (most likely Nova). The service works by allowing users to
         create their own networks and then attach interfaces to them.
-        Like many of the OpenStack services, Quantum is highly
-        configurable due to it's plug-in architecture. These plug-ins
+        Like many of the OpenStack services, Neutron is highly
+        configurable due to its plug-in architecture. These plug-ins
         accommodate different networking equipment and software. As
         such, the architecture and deployment can vary dramatically.
         In the above architecture, a simple Linux networking plug-in
         is shown.</para>
       <itemizedlist>
         <listitem>
-          <para>quantum-server accepts API requests and then routes
-            them to the appropriate quantum plugin for action.</para>
+          <para>neutron-server accepts API requests and then routes
+            them to the appropriate Neutron plugin for action.</para>
         </listitem>
         <listitem>
-          <para>Quantum plugins and agents perform the actual actions
+          <para>Neutron plugins and agents perform the actual actions
             such as plugging and unplugging ports, creating networks
             or subnets and IP addressing. These plugins and agents
             differ depending on the vendor and technologies used in
-            the particular cloud. Quantum ships with plugins and
+            the particular cloud. Neutron ships with plugins and
             agents for: Cisco virtual and physical switches, NEC
-            OpenFlow products, Openvswitch, Linux bridging, the Ryu
+            OpenFlow products, Open vSwitch, Linux bridging, the Ryu
             Network Operating System, and VMware NSX.</para>
         </listitem>
         <listitem>
@@ -330,18 +330,18 @@
             IP addressing) and the specific plug-in agent.</para>
         </listitem>
         <listitem>
-          <para>Most Quantum installations will also make use of a
+          <para>Most Neutron installations will also make use of a
             messaging queue to route information between the
-            quantum-server and various agents as well as a database to
+            neutron-server and various agents as well as a database to
             store networking state for particular plugins.</para>
         </listitem>
       </itemizedlist>
-      <para>Quantum will interact mainly with Nova, where it will
+      <para>Neutron will interact mainly with Nova, where it will
         provide networks and connectivity for its instances.</para>
   <para><guilabel>Block Storage</guilabel></para>
       <para>Cinder separates out the persistent block storage
         functionality that was previously part of OpenStack Compute
-        (in the form of nova-volume) into it's own service. The
+        (in the form of nova-volume) into its own service. The
         OpenStack Block Storage API allows for manipulation of
         volumes, volume types (similar to compute flavors) and volume
         snapshots.</para>
@@ -372,6 +372,6 @@
             well as a database to store volume state.</para>
         </listitem>
       </itemizedlist>
-      <para>Like Quantum, Cinder will mainly interact with Nova,
+      <para>Like Neutron, Cinder will mainly interact with Nova,
         providing volumes for its instances.</para>
 </chapter>
