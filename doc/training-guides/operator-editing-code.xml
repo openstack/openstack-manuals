@@ -20,7 +20,7 @@
                 </step>
                 <step>
                     <para>Create your local repository directory</para>
-                    <screen><prompt>$</prompt><userinput>mkdir /Users/yourusername/code/</userinput></screen>
+                    <screen><prompt>$</prompt> <userinput>mkdir /Users/<replaceable>username</replaceable>/code/</userinput></screen>
                 </step>
                 <step>
                     <title>Install SourceTree</title>
@@ -66,17 +66,19 @@
                     <substeps>
                         <step>
                             <para>Create the <filename>apache-maven</filename> directory</para>
-                            <screen><prompt>$</prompt><userinput>sudo mkdir /usr/local/apache-maven</userinput></screen>
+                            <screen><prompt>$</prompt> <userinput>sudo mkdir /usr/local/apache-maven</userinput></screen>
+
                         </step>
                         <step>
-                            <para>Copy the latest stable binary from<link
+                            <para>Copy the latest stable binary from <link
                                 xlink:href="http://maven.apache.org/download.cgi"
                                 >http://maven.apache.org/download.cgi</link> into
-                                /usr/local/apache-maven</para>
+                                <filename>/usr/local/apache-maven</filename>.</para>
                         </step>
                         <step>
                             <para>Install maven with
-                                <screen><userinput>$</userinput> sudo /usr/local/apache-maven/XXXXX</screen></para>
+                                <screen><prompt>$</prompt> <userinput>sudo /usr/local/apache-maven/XXXXX</userinput></screen>
+                            </para>
                         </step>
                         <step>
                             <para>Add the maven path</para>
@@ -89,7 +91,7 @@
                             <screen><prompt>$</prompt> export MAVEN_OPTS='-Xms256m -XX:MaxPermSize=1024m -Xmx1024m'</screen>
                         </step>
                         <step>
-                            <para>verify maven is setup with</para>
+                            <para>Verify that maven is setup with</para>
                             <screen><prompt>$</prompt> <userinput>sudo mvn --install</userinput></screen>
                         </step>
                     </substeps>
@@ -137,30 +139,31 @@
                         the ssh-rsa algorithm and computer identifier. If this is your first time
                         setting up git and Github, be sure to run these steps in a Terminal
                         window:</para>
-                    <screen><prompt>$</prompt><userinput>git config --global user.name "Firstname Lastname"
+                    <screen><prompt>$</prompt> <userinput>git config --global user.name "Firstname Lastname"
 $ git config --global user.email "your_email@youremail.com" </userinput></screen>
                 </step>
                 <step>
-                    <para>Install git-review. If pip is not already installed, use "<emphasis
-                            role="bold">sudo easy_install pip</emphasis>" to install it on a Mac or
+                    <para>Install git-review. If pip is not already installed, use <code
+                            >sudo easy_install pip</code> to install it on a Mac or
                         Ubuntu</para>
-                    <screen><prompt>$</prompt><userinput>sudo pip install git-review</userinput></screen>
+                    <screen><prompt>$</prompt> <userinput>sudo pip install git-review</userinput></screen>
                 </step>
                 <step>
                     <para>Change to the directory</para>
-                    <screen><prompt>$</prompt><userinput>cd /Users/yourusername/code</userinput></screen>
+                    <screen><prompt>$</prompt> <userinput>cd /Users/<replaceable>username</replaceable>/code</userinput></screen>
                 </step>
                 <step>
-                    <para>Clone the openstack-manuals repository with</para><screen><prompt>$</prompt><userinput>git clone http://github.com/openstack/openstack-manuals.git</userinput></screen>
+                    <para>Clone the openstack-manuals repository with</para>
+                    <screen><prompt>$</prompt> <userinput>git clone http://github.com/openstack/openstack-manuals.git</userinput></screen>
                 </step>
                 <step>
                     <para>Change directory to the pulled repository</para>
-                    <screen><prompt>$</prompt><userinput>cd openstack-manuals</userinput></screen>
+                    <screen><prompt>$</prompt> <userinput>cd openstack-manuals</userinput></screen>
                 </step>
                 <step>
                     <para>Enter your Launchpad account information after testing
                         for ssh key setup with</para>
-                    <screen><prompt>$</prompt><userinput>git review -s</userinput></screen>
+                    <screen><prompt>$</prompt> <userinput>git review -s</userinput></screen>
                 </step>
             </procedure>
         </para>
@@ -184,7 +187,9 @@ $ git config --global user.email "your_email@youremail.com" </userinput></screen
                 </step>
                 <step>
                     <para>Using oXygen, open the
-                        /Users/&lt;username>/code/openstack-manuals/doc/admin-guide-cloud/bk-admin-guide-cloud.xml
+                    <filename>
+                        /Users/<replaceable>username</replaceable>/code/openstack-manuals/doc/admin-guide-cloud/bk-admin-guide-cloud.xml
+                    </filename>
                         master page for this example. It links together the rest
                         of the material. Find the page with the bug. Open the page
                         that is referenced in the bug description by selecting the
@@ -194,15 +199,15 @@ $ git config --global user.email "your_email@youremail.com" </userinput></screen
                 </step>
                 <step>
                     <para>In the shell,</para>
-                    <screen><prompt>$</prompt><userinput>cd /Users/&lt;username>/code/openstack-manuals/doc/admin-guide-cloud/</userinput></screen>
+                    <screen><prompt>$</prompt> <userinput>cd /Users/<replaceable>username</replaceable>/code/openstack-manuals/doc/admin-guide-cloud/</userinput></screen>
                 </step>
                 <step>
                     <para>Verify that you are on master with</para>
-                    <screen><prompt>$</prompt><userinput>git checkout master</userinput></screen>
+                    <screen><prompt>$</prompt> <userinput>git checkout master</userinput></screen>
                 </step>
                 <step>
                     <para>Create your working branch off master with</para>
-                    <screen><prompt>$</prompt><userinput>git checkout -b bug/1188522</userinput></screen>
+                    <screen><prompt>$</prompt> <userinput>git checkout -b bug/1188522</userinput></screen>
                 </step>
                 <step>
                     <para>Verify that you have the branch open through
@@ -216,24 +221,25 @@ $ git config --global user.email "your_email@youremail.com" </userinput></screen
                 <step>
                     <para>Once the bug is fixed, verify that the documentation
                         can be built without errors by running</para>
-                    <screen><prompt>$</prompt><userinput>mvn clean generate-sources</userinput></screen>
+                    <screen><prompt>$</prompt> <userinput>mvn clean generate-sources</userinput></screen>
                 </step>
                 <step>
-                    <para>Verify that the HTML page reflects your changes properly. You can open the file from the command line by using the "open" command</para>
-                    <screen><prompt>$</prompt><userinput>open target/docbkx/webhelp/local/openstack-training/index.html</userinput></screen>
+                    <para>Verify that the HTML page reflects your changes
+                       properly. You can open the file from the command line by
+                       using the "open" command</para>
+                    <screen><prompt>$</prompt> <userinput>open target/docbkx/webhelp/local/openstack-training/index.html</userinput></screen>
                 </step>
                 <step>
                     <para>Add the changes</para>
-                    <screen><prompt>$</prompt><userinput>git add .</userinput></screen>
+                    <screen><prompt>$</prompt> <userinput>git add .</userinput></screen>
                 </step>
                 <step>
                     <para>Commit the changes</para>
-                    <screen><prompt>$</prompt><userinput>git commit -a -m "Removed reference to volume scheduler in the computer scheduler
-                     config and admin pages, bug 1188522"</userinput></screen>
+                    <screen><prompt>$</prompt> <userinput>git commit -a -m "Removed reference to volume scheduler in the computer scheduler config and admin pages, bug 1188522"</userinput></screen>
                 </step>
                 <step>
                     <para>Submit the bug fix to Gerrit</para>
-                    <screen><prompt>$</prompt><userinput>git review</userinput></screen>
+                    <screen><prompt>$</prompt> <userinput>git review</userinput></screen>
                 </step>
                 <step>
                     <para>Track the Gerrit review process at<link
@@ -244,7 +250,8 @@ $ git config --global user.email "your_email@youremail.com" </userinput></screen
                 </step>
                 <step>
                     <para>Your change will be tested, track the Jenkins testing
-                        process at https://jenkins.openstack.org</para>
+                        process at <link xlink:href="https://jenkins.openstack.org">
+                      https://jenkins.openstack.org</link></para>
                 </step>
                 <step>
                     <para>If your change is rejected, complete the following steps:</para>
@@ -257,22 +264,22 @@ $ git config --global user.email "your_email@youremail.com" </userinput></screen
                         </step>
                         <step>
                             <para>Checkout the patch from the Gerrit change review</para>
-                            <screen><prompt>$</prompt><userinput>git review -d 33713</userinput></screen>
+                            <screen><prompt>$</prompt> <userinput>git review -d 33713</userinput></screen>
                         </step>
                         <step>
                             <para>Follow the recommended tweaks to the files</para>
                         </step>
                         <step>
                             <para>Rerun</para>
-                            <screen><prompt>$</prompt><userinput>mvn clean generate-sources</userinput></screen>
+                            <screen><prompt>$</prompt> <userinput>mvn clean generate-sources</userinput></screen>
                         </step>
                         <step>
-                            <para>add your additional changes to the change log</para>
-                            <screen><prompt>$</prompt><userinput>git commit -a --amend</userinput></screen>
+                            <para>Add your additional changes to the change log</para>
+                            <screen><prompt>$</prompt> <userinput>git commit -a --amend</userinput></screen>
                         </step>
                         <step>
                             <para>Final commit</para>
-                            <screen><prompt>$</prompt><userinput>git review</userinput></screen>
+                            <screen><prompt>$</prompt> <userinput>git review</userinput></screen>
                         </step>
                         <step>
                             <para>Update the Jenkins status to change completed</para>
@@ -281,7 +288,9 @@ $ git config --global user.email "your_email@youremail.com" </userinput></screen
                 </step>
                 <step>
                     <para>Follow the jenkins build progress at
-                        https://jenkins.openstack.org/view/Openstack-manuals/.
+                        <link xlink:href="https://jenkins.openstack.org/view/Openstack-manuals/">
+                          https://jenkins.openstack.org/view/Openstack-manuals/
+                        </link>.
                         Note if the build process fails, the online documentation
                         will not reflect your bug fix.</para>
                 </step>
@@ -301,7 +310,7 @@ $ git config --global user.email "your_email@youremail.com" </userinput></screen
                     <para>Give your bug a descriptive name</para>
                 </step>
                 <step>
-                    <para>verify if asked that it is not a duplicate</para>
+                    <para>Verify if asked that it is not a duplicate</para>
                 </step>
                 <step>
                     <para>Add some more detail into the description field</para>
@@ -327,15 +336,19 @@ $ git config --global user.email "your_email@youremail.com" </userinput></screen
                         branch<programlisting>$ git checkout -b bp/training-manuals</programlisting></para>
                 </step>
                 <step>
-                    <para>From the openstack-manuals repository, use the template <emphasis role="bold"
-                        >user-story-includes-template.xml</emphasis> as the starting point for your user
-                        story. <emphasis role="bold">bk001-ch003-associate-general.xml</emphasis> has at
-                        least one other included user story that you can use for additional help.</para>
+                    <para>From the openstack-manuals repository, use
+                    the template <filename
+                    >user-story-includes-template.xml</filename> as
+                    the starting point for your user story. File
+                    <filename>bk001-ch003-associate-general.xml</filename>
+                    has at least one other included user story that
+                    you can use for additional help.
+                    </para>
                 </step>
                 <step>
-                    <para>Include the user story xml file into the <emphasis role="bold"
-                        >bk001-ch003-associate-general.xml</emphasis> file. Follow the syntax of the
-                        existing xi:include statements.</para>
+                    <para>Include the user story xml file into the <filename
+                        >bk001-ch003-associate-general.xml</filename> file. Follow the syntax of the
+                        existing <code>xi:include</code> statements.</para>
                 </step>
                 <step>
                     <para>When your editing is completed. Double check Oxygen doesn't have any errors you
@@ -397,11 +410,11 @@ blueprint training-manuals</programlisting></para>
                     </step>
                 <step>
                     <para>Open the file <emphasis role="bold">st-training-guides.xml</emphasis> with
-                        your XML editor. All the content starts with the set file <emphasis
-                            role="bold">st-training-guides.xml</emphasis>. The XML structure follows
-                        the hierarchy Set -> Book -> Chapter -> Section. The <emphasis role="bold"
-                            >st-training-guides.xml</emphasis> file holds the set level. Notice the
-                        set file uses xi:include statements to include the books. We want to open
+                        your XML editor. All the content starts with the set file <filename
+                            >st-training-guides.xml</filename>. The XML structure follows
+                        the hierarchy Set -> Book -> Chapter -> Section. The <filename
+                            >st-training-guides.xml</filename> file holds the set level. Notice the
+                        set file uses <code>xi:include</code> statements to include the books. We want to open
                         the associate book. Open the associate book and you will see the chapter
                         include statements. These are the chapters that make up the Associate
                         Training Guide book.</para>
@@ -415,20 +428,19 @@ blueprint training-manuals</programlisting></para>
                         branch merge.</para>
                 </step>
                 <step>
-                    <para>Copy the <emphasis role="bold">user-story-includes-template.xml
-                        </emphasis>to <emphasis role="bold"
-                        >associate-card-XXX.xml</emphasis>.</para>
+                    <para>Copy the <filename>user-story-includes-template.xml</filename>
+                        to <filename>associate-card-XXX.xml</filename>.</para>
                 </step>
                 <step>
-                    <para>Open the <emphasis role="bold"
-                            >bk001-ch003-asssociate-general.xml</emphasis> file and add <emphasis
+                    <para>Open the <filename
+                            >bk001-ch003-asssociate-general.xml</filename> file and add <emphasis
                             role="bold">&lt;xi:include
-                        href="associate-card-XXX.xml"></emphasis></para>
+                        href="associate-card-XXX.xml"></emphasis>.</para>
                 </step>
                 <step>
                     <para>Side by side, open<emphasis role="bold"> associate-card-XXX.xml</emphasis>
-                        with your XML editor and open the <emphasis role="bold">ubuntu 12.04 install
-                            guide</emphasis> with your HTML browser.</para>
+                        with your XML editor and open the <citetitle>Ubuntu 12.04 Install
+                            Guide</citetitle> with your HTML browser.</para>
                 </step>
                 <step>
                     <para>Find the HTML content to include. Find the XML file that matches the HTML.
@@ -437,8 +449,8 @@ blueprint training-manuals</programlisting></para>
                         section using xpath like <emphasis role="bold">&lt;xi:include
                             href="../basic-install/src/basic-install_controller-common.xml"
                             xpointer="xmlns(db=http://docbook.org/ns/docbook) xpath(//*[@xml:id =
-                            'controller-os'])"></emphasis> . Review the <emphasis role="bold"
-                            >user-story-includes-template.xml</emphasis> file for the whole
+                            'controller-os'])"></emphasis> . Review the <filename
+                            >user-story-includes-template.xml</filename> file for the whole
                         syntax.</para>
                 </step>
                 <step>
@@ -449,16 +461,18 @@ blueprint training-manuals</programlisting></para>
                         from.</para>
                 </step>
                 <step>
-                    <para>Verify the code is good by runnning mvn clean generate-sources and by
+                    <para>Verify the code is good by runnning <command>mvn clean generate-sources</command>
+                        and by
                         reviewing the local HTML in <link
                             xlink:href="target/docbkx/webhelp/local/training-guide/content/"
-                            >file:///Users/(localUser)/code/openstack-manuals/doc/training-guide/target/docbkx/webhelp/local/training-guide/content/</link></para>
+                            >file:///Users/<replaceable>username</replaceable>/code/openstack-manuals/doc/training-guide/target/docbkx/webhelp/local/training-guide/content/</link>.
+                    </para>
                 </step>
                 <step>
-                    <para>Merge the branch</para>
+                    <para>Merge the branch.</para>
                 </step>
                 <step>
-                    <para>Move the card from Doing to Done</para>
+                    <para>Move the card from Doing to Done.</para>
                 </step>
             </procedure>
         </para>
