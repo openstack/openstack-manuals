@@ -4,26 +4,24 @@ xmlns:xi="http://www.w3.org/2001/XInclude"
 xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
 xml:id="docker">
     <title>Docker driver</title>
-    <para>The Docker driver is a hypervisor driver for OpenStack Compute,
-    introduced with the Havana release. Docker is an open-source engine which
-    automates the deployment of applications as highly portable, self-sufficient
-    containers which are independent of hardware, language, framework, packaging
-    system and hosting provider. Docker extends LXC with a high level API
-    providing a lightweight virtualization solution that runs processes in
-    isolation. It provides a way to automate software deployment in a secure and
-    repeatable environment. A standard container in Docker contains a software
-    component along with all of its dependencies - binaries, libraries,
-    configuration files, scripts, virtualenvs, jars, gems and tarballs. Docker
-    can be run on any x86_64 Linux kernel that supports cgroups and aufs. Docker
-    is a way of managing LXC containers on a single machine. However used behind
-    OpenStack Compute makes Docker much more powerful since it is then possible
-    to manage several hosts which will then manage hundreds of containers. The
-    current Docker project aims for full OpenStack compatibility. Containers
-    don't aim to be a replacement for VMs, they are just complementary in the
-    sense that they are better for specific use cases. Compute's support for VMs
-    is currently advanced thanks to the variety of hypervisors running VMs.
-    However it's not the case for containers even though libvirt/LXC is a good
-    starting point. Docker aims to go the second level of integration.</para>
+    <para>The Docker driver is a hypervisor driver for OpenStack Compute, introduced with the Havana
+        release. Docker is an open-source engine which automates the deployment of applications as
+        highly portable, self-sufficient containers which are independent of hardware, language,
+        framework, packaging system, and hosting provider.</para>
+    <para>Docker extends LXC with a high level API providing a lightweight virtualization solution
+        that runs processes in isolation. It provides a way to automate software deployment in a
+        secure and repeatable environment. A standard container in Docker contains a software
+        component along with all of its dependencies - binaries, libraries, configuration files,
+        scripts, virtualenvs, jars, gems, and tarballs.</para>
+    <para>Docker can be run on any x86_64 Linux kernel that supports cgroups and aufs. Docker is a
+        way of managing LXC containers on a single machine. However used behind OpenStack Compute
+        makes Docker much more powerful since it is then possible to manage several hosts which will
+        then manage hundreds of containers. The current Docker project aims for full OpenStack
+        compatibility. Containers do not aim to be a replacement for VMs; they are just complementary
+        in the sense that they are better for specific use cases. Compute's support for VMs is
+        currently advanced thanks to the variety of hypervisors running VMs. However it is not the
+        case for containers even though libvirt/LXC is a good starting point. Docker aims to go the
+        second level of integration.</para>
     <note><para>
             Some OpenStack Compute features are not implemented by
             the docker driver.  See the <link
@@ -40,7 +38,7 @@ xml:id="docker">
       <filename>/etc/nova/nova-compute.conf</filename> on all hosts running the
       <systemitem class="service">nova-compute</systemitem> service.
       <programlisting language="ini">compute_driver=docker.DockerDriver</programlisting></para>
-    <para>Glance also needs to be configured to support the Docker container format, in
+    <para>The Image Service also needs to be configured to support the Docker container format, in
     <filename>/etc/glance/glance-api.conf</filename>:
      <programlisting language="ini">container_formats = ami,ari,aki,bare,ovf,docker</programlisting></para>
 <xi:include href="../../common/tables/nova-docker.xml"/>

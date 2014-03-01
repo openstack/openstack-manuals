@@ -3,36 +3,29 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="section_block-storage-overview">
-    <title>Introduction to the Block Storage Service</title>
-    <para>The OpenStack Block Storage Service provides persistent
-        block storage resources that OpenStack Compute instances can
-        consume. This includes secondary attached storage similar to
-        the Amazon Elastic Block Storage (EBS) offering. In addition,
-        you can write images to a Block Storage device for
-        Compute to use as a bootable persistent
-        instance.</para>
-    <para>The Block Storage Service differs slightly from
-        the Amazon EBS offering. The Block Storage Service
-        does not provide a shared storage solution like NFS. With the
-        Block Storage Service, you can attach a device to
-        only one instance.</para>
-    <para>The Block Storage Service provides:</para>
+    <title>Introduction to the Block Storage service</title>
+    <para>The OpenStack Block Storage service provides persistent block storage resources that
+        OpenStack Compute instances can consume. This includes secondary attached storage similar to
+        the Amazon Elastic Block Storage (EBS) offering. In addition, you can write images to a
+        Block Storage device for Compute to use as a bootable persistent instance.</para>
+    <para>The Block Storage service differs slightly from the Amazon EBS offering. The Block Storage
+        service does not provide a shared storage solution like NFS. With the Block Storage service,
+        you can attach a device to only one instance.</para>
+    <para>The Block Storage service provides:</para>
     <itemizedlist>
         <listitem>
-            <para><systemitem class="service">cinder-api</systemitem>. A WSGI
-                app that authenticates and routes requests throughout
-                the Block Storage Service. It supports the OpenStack
-                APIs only, although there is a translation that can be
-                done through Compute's EC2 interface, which calls in to
-                the cinderclient.</para>
+            <para><systemitem class="service">cinder-api</systemitem>. A WSGI app that authenticates
+                and routes requests throughout the Block Storage service. It supports the OpenStack
+                APIs only, although there is a translation that can be done through Compute's EC2
+                interface, which calls in to the Block Storage client.</para>
         </listitem>
         <listitem>
-            <para><systemitem class="service">cinder-scheduler</systemitem>. Schedules and routes requests
-                to the appropriate volume service. As of Grizzly; depending upon your configuration
-                this may be simple round-robin scheduling to the running volume services, or it can
-                be more sophisticated through the use of the Filter Scheduler. The Filter Scheduler
-                is the default in Grizzly and enables filters on things like Capacity, Availability
-                Zone, Volume Types, and Capabilities as well as custom filters.</para>
+            <para><systemitem class="service">cinder-scheduler</systemitem>. Schedules and routes
+                requests to the appropriate volume service. Depending upon your configuration, this
+                may be simple round-robin scheduling to the running volume services, or it can be
+                more sophisticated through the use of the Filter Scheduler. The Filter Scheduler is
+                the default and enables filters on things like Capacity, Availability Zone, Volume
+                Types, and Capabilities as well as custom filters.</para>
         </listitem>
         <listitem>
             <para><systemitem class="service">cinder-volume</systemitem>.
@@ -45,39 +38,28 @@
                 to OpenStack Object Store (SWIFT).</para>
         </listitem>
     </itemizedlist>
-    <para>The Block Storage Service contains the following
-        components:</para>
+    <para>The Block Storage service contains the following components:</para>
     <itemizedlist>
         <listitem>
-            <para><emphasis role="bold">Back-end Storage
-                    Devices</emphasis>. The Block Storage
-                Service requires some form of back-end storage that
-                the service is built on. The default implementation is
-                to use LVM on a local volume group named
-                "cinder-volumes." In addition to the base driver
-                implementation, the Block Storage Service
-                also provides the means to add support for other
-                storage devices to be utilized such as external Raid
-                Arrays or other storage appliances. These back-end storage devices
-                may have custom block sizes when using KVM or QEMU as the hypervisor.</para>
+            <para><emphasis role="bold">Back-end Storage Devices</emphasis>. The Block Storage
+                service requires some form of back-end storage that the service is built on. The
+                default implementation is to use LVM on a local volume group named "cinder-volumes."
+                In addition to the base driver implementation, the Block Storage service also
+                provides the means to add support for other storage devices to be utilized such as
+                external Raid Arrays or other storage appliances. These back-end storage devices may
+                have custom block sizes when using KVM or QEMU as the hypervisor.</para>
         </listitem>
         <listitem>
-            <para><emphasis role="bold">Users and Tenants
-                    (Projects)</emphasis>. The Block Storage
-                Service is designed to be used by many different cloud
-                computing consumers or customers, basically tenants on
-                a shared system, using role-based access assignments.
-                Roles control the actions that a user is allowed to
-                perform. In the default configuration, most actions do
-                not require a particular role, but this is
-                configurable by the system administrator editing the
-                appropriate <filename>policy.json</filename> file that
-                maintains the rules. A user's access to particular
-                volumes is limited by tenant, but the username and
-                password are assigned per user. Key pairs granting
-                access to a volume are enabled per user, but quotas to
-                control resource consumption across available hardware
-                resources are per tenant.</para>
+            <para><emphasis role="bold">Users and Tenants (Projects)</emphasis>. The Block Storage
+                service can be used by many different cloud computing consumers or customers
+                (tenants on a shared system), using role-based access assignments. Roles control the
+                actions that a user is allowed to perform. In the default configuration, most
+                actions do not require a particular role, but this can be configured by the system
+                administrator in the appropriate <filename>policy.json</filename> file that
+                maintains the rules. A user's access to particular volumes is limited by tenant, but
+                the username and password are assigned per user. Key pairs granting access to a
+                volume are enabled per user, but quotas to control resource consumption across
+                available hardware resources are per tenant.</para>
             <para>For tenants, quota controls are available to
                 limit:</para>
             <itemizedlist>
@@ -94,14 +76,13 @@
                         (shared between snapshots and volumes).</para>
                 </listitem>
             </itemizedlist>
-            <para>You can revise the default quota values with the cinder CLI, so the limits placed by quotas are editable by admin users.</para>
+            <para>You can revise the default quota values with the Block Storage CLI, so the limits
+                placed by quotas are editable by admin users.</para>
         </listitem>
         <listitem>
-            <para><emphasis role="bold">Volumes, Snapshots, and
-                    Backups</emphasis>. The basic resources offered by
-                the Block Storage Service are volumes and
-                snapshots which are derived from volumes and
-                volume backups:</para>
+            <para><emphasis role="bold">Volumes, Snapshots, and Backups</emphasis>. The basic
+                resources offered by the Block Storage service are volumes and snapshots which are
+                derived from volumes and volume backups:</para>
             <itemizedlist>
                 <listitem>
                     <para><emphasis role="bold">Volumes</emphasis>.
@@ -113,13 +94,11 @@
                         Compute node through iSCSI.</para>
                 </listitem>
                 <listitem>
-                    <para><emphasis role="bold">Snapshots</emphasis>.
-                        A read-only point in time copy of a volume.
-                        The snapshot can be created from a volume that
-                        is currently in use (through the use of
-                        '--force True') or in an available state. The
-                        snapshot can then be used to create a new
-                        volume through create from snapshot.</para>
+                    <para><emphasis role="bold">Snapshots</emphasis>. A read-only point in time copy
+                        of a volume. The snapshot can be created from a volume that is currently in
+                        use (through the use of <option>--force True</option>) or in an available
+                        state. The snapshot can then be used to create a new volume through create
+                        from snapshot.</para>
                 </listitem>
                 <listitem>
                     <para><emphasis role="bold">Backups</emphasis>. An
