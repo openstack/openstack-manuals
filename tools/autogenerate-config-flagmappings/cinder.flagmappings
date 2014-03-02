@@ -3,13 +3,11 @@ allowed_direct_url_schemes images
 allowed_rpc_exception_modules rpc
 amqp_auto_delete rpc
 amqp_durable_queues rpc
-amqp_rpc_single_reply_queue rpc
 api_paste_config api
 api_rate_limit api
 auth_strategy auth
 available_devices block-device
 backdoor_port api
-backlog log
 backup_api_class backups
 backup_ceph_chunk_size backups_ceph
 backup_ceph_conf backups_ceph
@@ -20,6 +18,7 @@ backup_ceph_user backups_ceph
 backup_compression_algorithm backups
 backup_driver backups
 backup_manager backups
+backup_metadata_version backups
 backup_name_template backups
 backup_swift_auth backups_swift
 backup_swift_container backups_swift
@@ -33,8 +32,8 @@ backup_topic backups
 backup_tsm_compression backups_tsm
 backup_tsm_password backups_tsm
 backup_tsm_volume_prefix backups_tsm
-bindir storage
 capacity_weight_multiplier storage
+cinder_emc_config_file emc
 cinder_huawei_conf_file huawei
 cloned_volume_same_az zones
 compute_api_class common
@@ -66,7 +65,6 @@ eqlx_pool eqlx
 eqlx_use_chap eqlx
 expiry_thres_minutes netapp_7mode_nfs netapp_cdot_nfs
 fake_rabbit rpc
-fake_tests Unknown
 fatal_deprecations common
 fatal_exception_format_errors common
 glance_api_insecure images
@@ -86,6 +84,7 @@ gpfs_images_share_mode storage_gpfs
 gpfs_max_clone_depth storage_gpfs
 gpfs_mount_point_base storage_gpfs
 gpfs_sparse_volumes storage_gpfs
+gpfs_storage_pool storage_gpfs
 hds_cinder_config_file hds
 host common
 hp3par_api_url hp3par
@@ -97,6 +96,12 @@ hp3par_password hp3par
 hp3par_snapshot_expiration hp3par
 hp3par_snapshot_retention hp3par
 hp3par_username hp3par
+hplefthand_api_url hplefthand
+hplefthand_clustername hplefthand
+hplefthand_debug hplefthand
+hplefthand_iscsi_chap_enabled hplefthand
+hplefthand_password hplefthand
+hplefthand_username hplefthand
 iet_conf common
 image_conversion_dir images
 instance_format images
@@ -131,13 +136,19 @@ lvm_mirrors lvm
 lvm_type lvm
 matchmaker_heartbeat_freq rpc
 matchmaker_heartbeat_ttl rpc
-matchmaker_ringfile rpc
 max_age quota
 max_gigabytes storage
+max_header_line api
 migration_create_volume_timeout_secs storage
 monkey_patch common
 monkey_patch_modules common
+msa_vdisk hpmsa
 my_ip common
+nas_ip nas
+nas_login nas
+nas_password nas
+nas_private_key nas
+nas_ssh_port nas
 netapp_login netapp_7mode_iscsi netapp_7mode_nfs netapp_cdot_iscsi netapp_cdot_nfs
 netapp_password netapp_7mode_iscsi netapp_7mode_nfs netapp_cdot_iscsi netapp_cdot_nfs
 netapp_server_hostname netapp_7mode_iscsi netapp_7mode_nfs netapp_cdot_iscsi netapp_cdot_nfs
@@ -152,10 +163,8 @@ netapp_vserver netapp_cdot_iscsi netapp_cdot_nfs
 nexenta_blocksize nexenta_iscsi
 nexenta_host nexenta_iscsi
 nexenta_iscsi_target_portal_port nexenta_iscsi
-nexenta_mount_options nexenta_nfs
 nexenta_mount_point_base nexenta_nfs
 nexenta_nms_cache_volroot nexenta_nfs
-nexenta_oversub_ratio nexenta_nfs
 nexenta_password nexenta_iscsi
 nexenta_rest_port nexenta_iscsi
 nexenta_rest_protocol nexenta_iscsi
@@ -167,7 +176,6 @@ nexenta_sparse nexenta_iscsi
 nexenta_sparsed_volumes nexenta_iscsi
 nexenta_target_group_prefix nexenta_iscsi
 nexenta_target_prefix nexenta_iscsi
-nexenta_used_ratio nexenta_nfs
 nexenta_user nexenta_iscsi
 nexenta_volume nexenta_iscsi
 nexenta_volume_compression nexenta_nfs
@@ -197,12 +205,12 @@ osapi_volume_ext_list api
 osapi_volume_extension api
 osapi_volume_listen api
 osapi_volume_listen_port api
+osapi_volume_workers api
 periodic_fuzzy_delay common
 periodic_interval common
 policy_default_rule common
 policy_file common
 publish_errors rpc
-pybasedir common
 qpid_heartbeat rpc
 qpid_hostname rpc
 qpid_hosts rpc
@@ -238,7 +246,6 @@ report_interval common
 reservation_expire quota
 reserved_percentage common
 restore_discard_excess_bytes backups_ceph
-root_helper common
 rootwrap_config common
 rpc_backend rpc
 rpc_cast_timeout rpc
@@ -280,7 +287,6 @@ sf_api_port solidfire
 sf_emulate_512 solidfire
 snapshot_name_template backups
 snapshot_same_host backups
-sqlite_clean_db Unknown
 sqlite_db common
 sqlite_synchronous common
 ssh_conn_timeout san
@@ -328,6 +334,7 @@ vmware_wsdl_location vmware
 volume_api_class api
 volume_backend_name storage
 volume_clear storage
+volume_clear_ionice storage
 volume_clear_size storage
 volume_dd_blocksize storage
 volume_driver storage
@@ -348,8 +355,6 @@ xenapi_nfs_serverpath storage_xen
 xenapi_sr_base_path storage_xen
 xiv_ds8k_connection_type xiv
 xiv_ds8k_proxy xiv
-zadara_default_stripesize storage
-zadara_default_striping_mode zadara
 zadara_password zadara
 zadara_user zadara
 zadara_vol_encrypt zadara
@@ -361,6 +366,15 @@ zadara_vpsa_ip zadara
 zadara_vpsa_poolname zadara
 zadara_vpsa_port zadara
 zadara_vpsa_use_ssl zadara
+zoning_mode zoning
+BRCD_FABRIC_EXAMPLE/fc_fabric_address zoning
+BRCD_FABRIC_EXAMPLE/fc_fabric_password zoning
+BRCD_FABRIC_EXAMPLE/fc_fabric_port zoning
+BRCD_FABRIC_EXAMPLE/fc_fabric_user zoning
+BRCD_FABRIC_EXAMPLE/principal_switch_wwn zoning
+BRCD_FABRIC_EXAMPLE/zone_activate zoning
+BRCD_FABRIC_EXAMPLE/zone_name_prefix zoning
+BRCD_FABRIC_EXAMPLE/zoning_policy zoning
 database/backend storage
 database/connection connection
 database/connection_debug connection
@@ -372,6 +386,11 @@ database/max_retries storage
 database/min_pool_size storage
 database/retry_interval common
 database/use_tpool common
+fc-zone-manager/brcd_sb_connector zoning
+fc-zone-manager/fc_fabric_names zoning
+fc-zone-manager/fc_san_lookup_service zoning
+fc-zone-manager/zone_driver zoning
+fc-zone-manager/zoning_policy zoning
 keymgr/api_class keymgr
 keymgr/fixed_key keymgr
 matchmaker_redis/host common
@@ -379,3 +398,6 @@ matchmaker_redis/password common
 matchmaker_redis/port common
 matchmaker_ring/ringfile rpc
 rpc_notifier2/topics common
+ssl/ca_file ssl
+ssl/cert_file ssl
+ssl/key_file ssl

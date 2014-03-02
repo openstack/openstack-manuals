@@ -31,7 +31,7 @@
                        <td>(StrOpt) default availability zone to use when creating a new volume. If this is not set then we use the value from the storage_availability_zone option as the default availability_zone for new volumes.</td>
               </tr>
               <tr>
-                       <td>default_log_levels = amqp=WARN, amqplib=WARN, boto=WARN, keystone=INFO, qpid=WARN, sqlalchemy=WARN, suds=INFO, iso8601=WARN</td>
+                       <td>default_log_levels = amqp=WARN, amqplib=WARN, boto=WARN, qpid=WARN, sqlalchemy=WARN, suds=INFO, iso8601=WARN</td>
                        <td>(ListOpt) list of logger=LEVEL pairs</td>
               </tr>
               <tr>
@@ -99,7 +99,7 @@
                        <td>(StrOpt) DEPRECATED. A logging.Formatter log message format string which may use any of the available logging.LogRecord attributes. This option is deprecated.  Please use logging_context_format_string and logging_default_format_string instead.</td>
               </tr>
               <tr>
-                       <td>logging_context_format_string = %(asctime)s.%(msecs)03d %(process)d %(levelname)s %(name)s [%(request_id)s %(user)s %(tenant)s] %(instance)s%(message)s</td>
+                       <td>logging_context_format_string = %(asctime)s.%(msecs)03d %(process)d %(levelname)s %(name)s [%(request_id)s %(user_identity)s] %(instance)s%(message)s</td>
                        <td>(StrOpt) format string to use for log messages with context</td>
               </tr>
               <tr>
@@ -151,20 +151,12 @@
                        <td>(StrOpt) JSON file representing policy</td>
               </tr>
               <tr>
-                       <td>pybasedir = /usr/lib/python/site-packages</td>
-                       <td>(StrOpt) Directory where the cinder python module is installed</td>
-              </tr>
-              <tr>
                        <td>report_interval = 10</td>
                        <td>(IntOpt) seconds between nodes reporting state to datastore</td>
               </tr>
               <tr>
                        <td>reserved_percentage = 0</td>
                        <td>(IntOpt) The percentage of backend capacity is reserved</td>
-              </tr>
-              <tr>
-                       <td>root_helper = sudo</td>
-                       <td>(StrOpt) Deprecated: command to use for running commands as root</td>
               </tr>
               <tr>
                        <td>rootwrap_config = /etc/cinder/rootwrap.conf</td>
@@ -199,7 +191,7 @@
                        <td>(StrOpt) Private key file to use when starting the server securely</td>
               </tr>
               <tr>
-                       <td>state_path = $pybasedir</td>
+                       <td>state_path = /var/lib/cinder</td>
                        <td>(StrOpt) Top-level directory for maintaining cinder's state</td>
               </tr>
               <tr>
