@@ -167,8 +167,9 @@
             Compute services manages instances.</para>
         <para>For more information about creating and troubleshooting
             images, see the <citetitle><link
-                xlink:href="http://docs.openstack.org/image-guide/content/"
-                >OpenStack Virtual Machine Image Guide</link></citetitle>.</para>
+                    xlink:href="http://docs.openstack.org/image-guide/content/"
+                    >OpenStack Virtual Machine Image
+                Guide</link></citetitle>.</para>
         <para>For more information about image configuration options,
             see the <link
                 xlink:href="http://docs.openstack.org/trunk/config-reference/content/ch_configuring-openstack-image-service.html"
@@ -458,9 +459,8 @@
             a native package for most Linux distributions, or you can
             install the latest version using the
                 <application>pip</application> python package
-            installer:
-            <programlisting language="bash">sudo pip install python-novaclient</programlisting>
-        </para>
+            installer:</para>
+        <screen><prompt>$</prompt> <userinput>sudo pip install python-novaclient</userinput></screen>
         <para>For more information about
                 <application>python-novaclient</application> and other
             available command-line tools, see the <link
@@ -676,7 +676,7 @@ header: Date: Thu, 13 Sep 2012 20:27:36 GMT
                     <filename>/etc/openstack-dashboard/local_settings.py</filename>
                 and on openSUSE and SUSE Linux Enterprise Server:
                     <filename>/srv/www/openstack-dashboard/openstack_dashboard/local/local_settings.py</filename>)
-                <programlisting>OPENSTACK_HYPERVISOR_FEATURE = {
+                <programlisting language="ini">OPENSTACK_HYPERVISOR_FEATURE = {
 ...
     'can_set_password': False,
 }</programlisting></para>
@@ -688,7 +688,7 @@ header: Date: Thu, 13 Sep 2012 20:27:36 GMT
                 default. To enable it, set the following option in
                     <filename>/etc/nova/nova.conf</filename>:</para>
             <para>
-                <programlisting>[libvirt]
+                <programlisting language="ini">[libvirt]
 inject_password=true</programlisting>
             </para>
             <para>When enabled, Compute will modify the password of
@@ -874,7 +874,8 @@ inject_password=true</programlisting>
                 IP addresses to VM instances from the specified subnet
                 in addition to manually configuring the networking
                 bridge. IP addresses for VM instances are grabbed from
-                a subnet specified by the network administrator.</para>
+                a subnet specified by the network
+                administrator.</para>
             <para>Like Flat Mode, all instances are attached to a
                 single bridge on the compute node. In addition a DHCP
                 server is running to configure instances (depending on
@@ -885,27 +886,28 @@ inject_password=true</programlisting>
                     (<literal>flat_interface</literal>, eth0 by
                 default). For every instance, nova allocates a fixed
                 IP address and configure dnsmasq with the MAC/IP pair
-                for the VM. Dnsmasq doesn't take part in
-                the IP address allocation process, it only hands out
-                IPs according to the mapping done by nova. Instances
-                receive their fixed IPs by doing a dhcpdiscover.
-                These IPs are <emphasis role="italic">not</emphasis>
-                assigned to any of the host's network interfaces,
-                only to the VM's guest-side interface.</para>
-            <para>In any setup with flat networking, the hosts providing
-                the <systemitem class="service">nova-network</systemitem>
-                service are responsible for forwarding
-                traffic from the private network. They also run and
-                configure dnsmasq as a DHCP server listening on
-                this bridge, usually on IP address 10.0.0.1 (see
-                <link linkend="section_dnsmasq">DHCP server: dnsmasq
-                </link>). Compute can determine the NAT entries for
-                each network, though sometimes NAT is not used, such
-                as when configured with all public IPs or a hardware
-                router is used (one of the HA options). Such hosts
-                need to have <literal>br100</literal> configured and
-                physically connected to any other nodes that are hosting
-                VMs. You must set the <literal>flat_network_bridge</literal>
+                for the VM. Dnsmasq doesn't take part in the IP
+                address allocation process, it only hands out IPs
+                according to the mapping done by nova. Instances
+                receive their fixed IPs by doing a dhcpdiscover. These
+                IPs are <emphasis role="italic">not</emphasis>
+                assigned to any of the host's network interfaces, only
+                to the VM's guest-side interface.</para>
+            <para>In any setup with flat networking, the hosts
+                providing the <systemitem class="service"
+                    >nova-network</systemitem> service are responsible
+                for forwarding traffic from the private network. They
+                also run and configure dnsmasq as a DHCP server
+                listening on this bridge, usually on IP address
+                10.0.0.1 (see <link linkend="section_dnsmasq">DHCP
+                    server: dnsmasq </link>). Compute can determine
+                the NAT entries for each network, though sometimes NAT
+                is not used, such as when configured with all public
+                IPs or a hardware router is used (one of the HA
+                options). Such hosts need to have
+                    <literal>br100</literal> configured and physically
+                connected to any other nodes that are hosting VMs. You
+                must set the <literal>flat_network_bridge</literal>
                 option or create networks with the bridge parameter in
                 order to avoid raising an error. Compute nodes have
                 iptables/ebtables entries created for each project and
@@ -959,11 +961,11 @@ inject_password=true</programlisting>
                 creating a dnsmasq configuration file. Specify the
                 config file using the
                     <literal>dnsmasq_config_file</literal>
-                configuration option. For example:
-                <programlisting language="ini">dnsmasq_config_file=/etc/dnsmasq-nova.conf</programlisting>
-                See the <link
+                configuration option. For example:</para>
+            <programlisting language="ini">dnsmasq_config_file=/etc/dnsmasq-nova.conf</programlisting>
+            <para>See the <link
                     xlink:href="http://docs.openstack.org/havana/config-reference/content/"
-                        ><citetitle> OpenStack Configuration
+                        ><citetitle>OpenStack Configuration
                         Reference</citetitle></link> for an example of
                 how to change the behavior of dnsmasq using a dnsmasq
                 configuration file. The dnsmasq documentation has a
@@ -976,8 +978,8 @@ inject_password=true</programlisting>
                     <literal>dns_server</literal> configuration option
                 in <filename>/etc/nova/nova.conf</filename>. The
                 following example would configure dnsmasq to use
-                Google's public DNS server:
-                <programlisting language="ini">dns_server=8.8.8.8</programlisting></para>
+                Google's public DNS server:</para>
+            <programlisting language="ini">dns_server=8.8.8.8</programlisting>
             <para>Dnsmasq logging output goes to the syslog (typically
                     <filename>/var/log/syslog</filename> or
                     <filename>/var/log/messages</filename>, depending
@@ -1009,14 +1011,14 @@ inject_password=true</programlisting>
                     Each of the APIs is versioned by date.</para>
                 <para>To retrieve a list of supported versions for the
                     OpenStack metadata API, make a GET request to
-                    <programlisting>http://169.254.169.254/openstack</programlisting>
+                        <literal>http://169.254.169.254/openstack</literal>
                     For example:</para>
-                <para><screen><prompt>$</prompt> <userinput>curl http://169.254.169.254/openstack</userinput>
+                <screen><prompt>$</prompt> <userinput>curl http://169.254.169.254/openstack</userinput>
 <computeroutput>2012-08-10
 latest</computeroutput></screen>
-                    To retrieve a list of supported versions for the
+                <para>To list supported versions for the
                     EC2-compatible metadata API, make a GET request to
-                    <programlisting>http://169.254.169.254</programlisting></para>
+                        <literal>http://169.254.169.254</literal>.</para>
                 <para>For example:</para>
                 <screen><prompt>$</prompt> <userinput>curl http://169.254.169.254</userinput>
 <computeroutput>1.0
@@ -1039,39 +1041,22 @@ latest</computeroutput></screen>
                 <title>OpenStack metadata API</title>
                 <para>Metadata from the OpenStack API is distributed
                     in JSON format. To retrieve the metadata, make a
-                    GET request to:</para>
-                <programlisting>http://169.254.169.254/openstack/2012-08-10/meta_data.json</programlisting>
+                    GET request to
+                        <literal>http://169.254.169.254/openstack/2012-08-10/meta_data.json</literal>.</para>
                 <para>For example:</para>
-                <screen><prompt>$</prompt> <userinput>curl http://169.254.169.254/openstack/2012-08-10/meta_data.json</userinput>
-            <computeroutput>{"uuid": "d8e02d56-2648-49a3-bf97-6be8f1204f38", "availability_zone": "nova", "hostname": "test.novalocal", "launch_index": 0, "meta": {"priority": "low", "role": "webserver"}, "public_keys": {"mykey": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAgQDYVEprvtYJXVOBN0XNKVVRNCRX6BlnNbI+USLGais1sUWPwtSg7z9K9vhbYAPUZcq8c/s5S9dg5vTHbsiyPCIDOKyeHba4MUJq8Oh5b2i71/3BISpyxTBH/uZDHdslW2a+SrPDCeuMMoss9NFhBdKtDkdG9zyi0ibmCP6yMdEX8Q== Generated by Nova\n"}, "name": "test"}</computeroutput></screen>
-                <para>Here is the same content after having run
-                    through a JSON pretty-printer:</para>
-                <programlisting language="json">{
-    "availability_zone": "nova",
-    "hostname": "test.novalocal",
-    "launch_index": 0,
-    "meta": {
-        "priority": "low",
-        "role": "webserver"
-    },
-    "name": "test",
-    "public_keys": {
-        "mykey": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAgQDYVEprvtYJXVOBN0XNKVVRNCRX6BlnNbI+USLGais1sUWPwtSg7z9K9vhbYAPUZcq8c/s5S9dg5vTHbsiyPCIDOKyeHba4MUJq8Oh5b2i71/3BISpyxTBH/uZDHdslW2a+SrPDCeuMMoss9NFhBdKtDkdG9zyi0ibmCP6yMdEX8Q== Generated by Nova\n"
-    },
-    "uuid": "d8e02d56-2648-49a3-bf97-6be8f1204f38"
-}</programlisting>
+                <screen><prompt>$</prompt> <userinput>curl http://169.254.169.254/openstack/2012-08-10/meta_data.json</userinput></screen>
+                <programlisting language="json"><xi:include href="../common/samples/list_metadata.json" parse="text"/></programlisting>
                 <para>Instances also retrieve user data (passed as the
                         <literal>user_data</literal> parameter in the
                     API call or by the <literal>--user_data</literal>
                     flag in the <command>nova boot</command> command)
                     through the metadata service, by making a GET
-                    request to:
-                    <programlisting>http://169.254.169.254/openstack/2012-08-10/user_data</programlisting>
-                    For example:</para>
-                <para>
-                    <screen><prompt>$</prompt> <userinput>curl http://169.254.169.254/openstack/2012-08-10/user_data</userinput><computeroutput>#!/bin/bash
+                    request to
+                        <literal>http://169.254.169.254/openstack/2012-08-10/user_data</literal>.</para>
+                <para>For example:</para>
+                <screen><prompt>$</prompt> <userinput>curl http://169.254.169.254/openstack/2012-08-10/user_data</userinput>
+                        <computeroutput>#!/bin/bash
 echo 'Extra user data here'</computeroutput></screen>
-                </para>
             </simplesect>
             <simplesect>
                 <title>EC2 metadata API</title>
@@ -1083,8 +1068,8 @@ echo 'Extra user data here'</computeroutput></screen>
                     properly with OpenStack.</para>
                 <para>The EC2 API exposes a separate URL for each
                     metadata. You can retrieve a listing of these
-                    elements by making a GET query to:</para>
-                <programlisting>http://169.254.169.254/2009-04-04/meta-data/</programlisting>
+                    elements by making a GET query to
+                        <literal>http://169.254.169.254/2009-04-04/meta-data/</literal></para>
                 <para>For example:</para>
                 <screen><prompt>$</prompt> <userinput>curl http://169.254.169.254/2009-04-04/meta-data/</userinput><computeroutput>ami-id
 ami-launch-index
@@ -1111,14 +1096,14 @@ security-groups</computeroutput></screen>
                <computeroutput>0=mykey</computeroutput></screen>
                 <para>Instances can retrieve the public SSH key
                     (identified by keypair name when a user requests a
-                    new instance) by making a GET request to:</para>
-                <programlisting>http://169.254.169.254/2009-04-04/meta-data/public-keys/0/openssh-key</programlisting>
+                    new instance) by making a GET request to
+                        <literal>http://169.254.169.254/2009-04-04/meta-data/public-keys/0/openssh-key</literal>.</para>
                 <para>For example:</para>
                 <screen><prompt>$</prompt> <userinput>curl http://169.254.169.254/2009-04-04/meta-data/public-keys/0/openssh-key</userinput>
              <computeroutput>ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAgQDYVEprvtYJXVOBN0XNKVVRNCRX6BlnNbI+USLGais1sUWPwtSg7z9K9vhbYAPUZcq8c/s5S9dg5vTHbsiyPCIDOKyeHba4MUJq8Oh5b2i71/3BISpyxTBH/uZDHdslW2a+SrPDCeuMMoss9NFhBdKtDkdG9zyi0ibmCP6yMdEX8Q== Generated by Nova</computeroutput></screen>
                 <para>Instances can retrieve user data by making a GET
-                    request to:</para>
-                <programlisting>http://169.254.169.254/2009-04-04/user-data</programlisting>
+                    request to
+                        <literal>http://169.254.169.254/2009-04-04/user-data</literal>.</para>
                 <para>For example:</para>
                 <screen><prompt>$</prompt> <userinput>curl http://169.254.169.254/2009-04-04/user-data</userinput>
                <computeroutput>#!/bin/bash
@@ -1239,9 +1224,9 @@ echo 'Extra user data here'</computeroutput></screen>
                 <para>Every virtual instance is automatically assigned
                     a private IP address. You can optionally assign
                     public IP addresses to instances. The term
-                    <glossterm baseform="floating IP address">floating
-                    IP</glossterm> refers to
-                    an IP address, typically public, that you can
+                        <glossterm baseform="floating IP address"
+                        >floating IP</glossterm> refers to an IP
+                    address, typically public, that you can
                     dynamically add to a running virtual instance.
                     OpenStack Compute uses Network Address Translation
                     (NAT) to assign floating IPs to virtual
@@ -1252,7 +1237,7 @@ echo 'Extra user data here'</computeroutput></screen>
                         class="service">nova-network</systemitem>
                     service binds public IP addresses, as
                     follows:</para>
-                <programlisting>public_interface=<replaceable>vlan100</replaceable></programlisting>
+                <programlisting language="ini">public_interface=<replaceable>vlan100</replaceable></programlisting>
                 <para>If you make changes to the
                         <filename>/etc/nova/nova.conf</filename> file
                     while the <systemitem class="service"
@@ -1271,7 +1256,7 @@ echo 'Extra user data here'</computeroutput></screen>
                         and so this is the recommended path. To ensure
                         that traffic does not get SNATed to the
                         floating range, explicitly set
-                        <programlisting>dmz_cidr=x.x.x.x/y</programlisting>.
+                        <programlisting language="ini">dmz_cidr=x.x.x.x/y</programlisting>.
                         The <literal>x.x.x.x/y</literal> value
                         specifies the range of floating IPs for each
                         pool of floating IPs that you define. If the
@@ -1310,7 +1295,7 @@ echo 'Extra user data here'</computeroutput></screen>
                 <para>To make the changes permanent, edit the
                         <filename>/etc/sysctl.conf</filename> file and
                     update the IP forwarding setting:</para>
-                <programlisting>net.ipv4.ip_forward = 1</programlisting>
+                <programlisting language="ini">net.ipv4.ip_forward = 1</programlisting>
                 <para>Save the file and run this command to apply the
                     changes:</para>
                 <screen><prompt>$</prompt> <userinput>sysctl -p</userinput></screen>
@@ -1373,7 +1358,7 @@ echo 'Extra user data here'</computeroutput></screen>
                         <filename>/etc/nova/nova.conf</filename> file
                     and restart the <systemitem class="service"
                         >nova-network</systemitem> service:</para>
-                <programlisting>auto_assign_floating_ip=True</programlisting>
+                <programlisting language="ini">auto_assign_floating_ip=True</programlisting>
                 <note>
                     <para>If you enable this option and all floating
                         IP addresses have already been allocated, the
@@ -1470,7 +1455,7 @@ echo 'Extra user data here'</computeroutput></screen>
                         the instance (this is the configuration that
                         needs to be applied inside the image):</para>
                     <para><filename>/etc/network/interfaces</filename></para>
-                    <programlisting># The loopback network interface
+                    <programlisting language="bash"># The loopback network interface
 auto lo
 iface lo inet loopback
 
@@ -2062,22 +2047,22 @@ syslog_log_facility = LOG_LOCAL0</programlisting>
                         <filename>/etc/rsyslog.conf</filename> on the
                     log server host, which receives the log
                     files:</para>
-                <programlisting># provides TCP syslog reception
+                <programlisting language="bash"># provides TCP syslog reception
 $ModLoad imtcp
 $InputTCPServerRun 1024</programlisting>
                 <para>Add to <filename>/etc/rsyslog.conf</filename> a
                     filter rule on which looks for a host name. The
                     example below use
                         <replaceable>compute-01</replaceable> as an
-                    example of a compute host
-                    name:<programlisting>:hostname, isequal, "<replaceable>compute-01</replaceable>" /mnt/rsyslog/logs/compute-01.log</programlisting></para>
+                    example of a compute host name:</para>
+                <programlisting language="bash">:hostname, isequal, "<replaceable>compute-01</replaceable>" /mnt/rsyslog/logs/compute-01.log</programlisting>
                 <para>On the compute hosts, create a file named
                         <filename>/etc/rsyslog.d/60-nova.conf</filename>,
-                    with this
-                    content.<programlisting># prevent debug from dnsmasq with the daemon.none parameter
+                    with this content:</para>
+                <programlisting language="bash"># prevent debug from dnsmasq with the daemon.none parameter
 *.*;auth,authpriv.none,daemon.none,local0.none -/var/log/syslog
 # Specify a log level of ERROR
-local0.error    @@172.20.1.43:1024</programlisting></para>
+local0.error    @@172.20.1.43:1024</programlisting>
                 <para>Once you have created this file, restart your
                     rsyslog daemon. Error-level log messages on the
                     compute hosts should now be sent to your log
@@ -2248,7 +2233,7 @@ HostC            p2            5     10240     150
                             Here's an example using the EC2 API -
                             instance i-000015b9 that is running on
                             node np-rcc54:</para>
-                        <programlisting>i-000015b9 at3-ui02 running nectarkey (376, np-rcc54) 0 m1.xxlarge 2012-06-19T00:48:11.000Z 115.146.93.60</programlisting>
+                        <programlisting language="bash">i-000015b9 at3-ui02 running nectarkey (376, np-rcc54) 0 m1.xxlarge 2012-06-19T00:48:11.000Z 115.146.93.60</programlisting>
                     </step>
                     <step>
                         <para>You can review the status of the host by
@@ -2261,7 +2246,7 @@ HostC            p2            5     10240     150
                             can find the credentials for your database
                             in
                             <filename>/etc/nova.conf</filename>.</para>
-                        <programlisting>SELECT * FROM instances WHERE id = CONV('15b9', 16, 10) \G;
+                        <programlisting language="bash">SELECT * FROM instances WHERE id = CONV('15b9', 16, 10) \G;
 *************************** 1. row ***************************
               created_at: 2012-06-19 00:48:11
               updated_at: 2012-07-03 00:35:11
@@ -2289,7 +2274,7 @@ HostC            p2            5     10240     150
                             host the affected VMs should move. Run the
                             following database command to move the VM
                             to np-rcc46:</para>
-                        <programlisting>UPDATE instances SET host = 'np-rcc46' WHERE uuid = '3f57699a-e773-4650-a443-b4b37eed5a06'; </programlisting>
+                        <programlisting language="bash">UPDATE instances SET host = 'np-rcc46' WHERE uuid = '3f57699a-e773-4650-a443-b4b37eed5a06'; </programlisting>
                     </step>
                     <step>
                         <para>Next, if using a hypervisor that relies

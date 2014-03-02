@@ -5,17 +5,22 @@
     xmlns:ns5="http://www.w3.org/1999/xhtml"
     xmlns:ns4="http://www.w3.org/2000/svg"
     xmlns:ns3="http://www.w3.org/1998/Math/MathML"
-    xmlns:ns="http://docbook.org/ns/docbook"
-    version="5.0">
+    xmlns:ns="http://docbook.org/ns/docbook" version="5.0">
+    <?dbhtml stop-chunking?>
     <title>Scheduling</title>
-    <para>Compute uses the <systemitem class="service">nova-scheduler</systemitem> service to
-        determine how to dispatch compute requests. For example, the <systemitem
-            class="service">nova-scheduler</systemitem> service determines which host a VM should
-        launch on. The term <firstterm>host</firstterm> in the context of filters means a physical node that has a
-            <systemitem class="service">nova-compute</systemitem> service running on it.
-        You can configure the scheduler through a variety of options.</para>
-    <para>Compute is configured with the following default scheduler options:</para>
-    <programlisting language="ini">scheduler_driver=nova.scheduler.filter_scheduler.FilterScheduler
+    <para>Compute uses the <systemitem class="service"
+            >nova-scheduler</systemitem> service to determine how to
+        dispatch compute and volume requests. For example, the
+            <systemitem class="service">nova-scheduler</systemitem>
+        service determines which host a VM should launch on. The term
+            <firstterm>host</firstterm> in the context of filters
+        means a physical node that has a <systemitem class="service"
+            >nova-compute</systemitem> service running on it. You can
+        configure the scheduler through a variety of options.</para>
+    <para>Compute is configured with the following default scheduler
+        options:</para>
+    <programlisting language="ini">scheduler_driver=nova.scheduler.multi.MultiScheduler
+compute_scheduler_driver=nova.scheduler.filter_scheduler.FilterScheduler
 scheduler_available_filters=nova.scheduler.filters.all_filters
 scheduler_default_filters=RetryFilter,AvailabilityZoneFilter,RamFilter,ComputeFilter,ComputeCapabilitiesFilter,ImagePropertiesFilter</programlisting>
     <para>By default, the scheduler_driver is configured as a filter
@@ -40,16 +45,22 @@ scheduler_default_filters=RetryFilter,AvailabilityZoneFilter,RamFilter,ComputeFi
                     (<literal>ComputeFilter</literal>).</para>
         </listitem>
         <listitem>
-            <para>Satisfy the extra specs associated with the instance type
-                    (<literal>ComputeCapabilitiesFilter</literal>).</para>
+            <para>Satisfy the extra specs associated with the instance
+                type
+                (<literal>ComputeCapabilitiesFilter</literal>).</para>
         </listitem>
         <listitem>
-            <para>Satisfy any architecture, hypervisor type, or virtual
-                machine mode properties specified on the instance's image
-                properties.
+            <para>Satisfy any architecture, hypervisor type, or
+                virtual machine mode properties specified on the
+                instance's image properties.
                     (<literal>ImagePropertiesFilter</literal>).</para>
         </listitem>
     </itemizedlist>
+    <para>For information on the volume scheduler, refer the Block
+        Storage section of <link
+            xlink:href="http://docs.openstack.org/admin-guide-cloud/content/managing-volumes.html">
+            <citetitle>OpenStack Cloud Administrator
+            Guide</citetitle></link> for information.</para>
     <section xml:id="filter-scheduler">
         <title>Filter scheduler</title>
         <para>The Filter Scheduler
@@ -80,7 +91,7 @@ scheduler_default_filters=RetryFilter,AvailabilityZoneFilter,RamFilter,ComputeFi
                     </imageobject>
                 </mediaobject>
             </figure>
-       </para>
+        </para>
         <para>The <literal>scheduler_available_filters</literal>
             configuration option in <filename>nova.conf</filename>
             provides the Compute service with the list of the filters
@@ -100,9 +111,10 @@ scheduler_available_filters=myfilter.MyFilter</programlisting>
         <para>The <literal>scheduler_default_filters</literal>
             configuration option in <filename>nova.conf</filename>
             defines the list of filters that are applied by the
-                <systemitem class="service">nova-scheduler</systemitem> service. As
-            mentioned, the default filters are:</para>
-        <programlisting language="ini">scheduler_default_filters=RetryFilter,AvailabilityZoneFilter,RamFilter,ComputeFilter,ComputeCapabilitiesFilter,ImagePropertiesFilter</programlisting>
+                <systemitem class="service"
+                >nova-scheduler</systemitem> service. As mentioned,
+            the default filters are:</para>
+        <programlisting language="ini">scheduler_default_filters=AvailabilityZoneFilter,RamFilter,ComputeFilter</programlisting>
         <para>The following sections describe the available
             filters.</para>
         <section xml:id="aggregatecorefilter">
@@ -117,11 +129,12 @@ scheduler_available_filters=myfilter.MyFilter</programlisting>
             <title>AggregateInstanceExtraSpecsFilter</title>
             <para>Matches properties defined in an instance type's
                 extra specs against admin-defined properties on a host
-                aggregate. Works with specifications that are unscoped,
-                or are scoped with <literal>aggregate_instance_extra_specs</literal>.
-                 See the <link linkend="host-aggregates"
-                    >host aggregates</link> section for documentation
-                on how to use this filter.</para>
+                aggregate. Works with specifications that are
+                unscoped, or are scoped with
+                    <literal>aggregate_instance_extra_specs</literal>.
+                See the <link linkend="host-aggregates">host
+                    aggregates</link> section for documentation on how
+                to use this filter.</para>
         </section>
         <section xml:id="aggregate-multi-tenancy-isolation">
             <title>AggregateMultiTenancyIsolation</title>
@@ -175,7 +188,7 @@ scheduler_available_filters=myfilter.MyFilter</programlisting>
             <para>Passes all hosts that are operational and
                 enabled.</para>
             <para>In general, this filter should always be enabled.
-           </para>
+            </para>
         </section>
         <section xml:id="corefilter">
             <title>CoreFilter</title>
@@ -214,18 +227,7 @@ scheduler_available_filters=myfilter.MyFilter</programlisting>
             <para>With the API, use the
                     <literal>os:scheduler_hints</literal> key. For
                 example:</para>
-            <programlisting language="json">
-    {
-    'server': {
-        'name': 'server-1',
-        'imageRef': 'cedef40a-ed67-4d10-800e-17455edce175',
-        'flavorRef': '1'
-    },
-    'os:scheduler_hints': {
-        'different_host': ['a0cf03a5-d921-4877-bb5c-86d26cf818e1',
-                           '8c19174f-4220-44f0-824a-cd1eeef10287'],
-    }
-</programlisting>
+            <programlisting language="json"><xi:include href="../../common/samples/server-scheduler-hints.json" parse="text"/></programlisting>
         </section>
         <section xml:id="diskfilter">
             <title>DiskFilter</title>
@@ -238,8 +240,9 @@ scheduler_available_filters=myfilter.MyFilter</programlisting>
                 Configuration option in
                 <filename>nova.conf</filename>. The default setting
                 is:</para>
-                <programlisting language="ini">disk_allocation_ratio=1.0</programlisting>
-            <para>Adjusting this value to greater than 1.0 enables scheduling instances while over committing disk
+            <programlisting language="ini">disk_allocation_ratio=1.0</programlisting>
+            <para>Adjusting this value to greater than 1.0 enables
+                scheduling instances while over committing disk
                 resources on the node. This might be desirable if you
                 use an image format that is sparse or copy on write
                 such that each virtual instance does not require a 1:1
@@ -248,11 +251,11 @@ scheduler_available_filters=myfilter.MyFilter</programlisting>
         <section xml:id="groupaffinityfilter">
             <title>GroupAffinityFilter</title>
             <para>The GroupAffinityFilter ensures that an instance is
-                scheduled on to a host from a set of group hosts.
-                To take advantage of this filter, the requester must pass a
-                scheduler hint, using <literal>group</literal> as the
-                key and an arbitrary name as the value. Using
-                the <command>nova</command> command-line tool, use the
+                scheduled on to a host from a set of group hosts. To
+                take advantage of this filter, the requester must pass
+                a scheduler hint, using <literal>group</literal> as
+                the key and an arbitrary name as the value. Using the
+                    <command>nova</command> command-line tool, use the
                     <literal>--hint</literal> flag. For
                 example:</para>
             <screen><prompt>$</prompt> <userinput>nova boot --image cedef40a-ed67-4d10-800e-17455edce175 --flavor 1 \
@@ -264,8 +267,8 @@ scheduler_available_filters=myfilter.MyFilter</programlisting>
                 instance in a group is on a different host. To take
                 advantage of this filter, the requester must pass a
                 scheduler hint, using <literal>group</literal> as the
-                key and an arbitrary name as the value. Using
-                the <command>nova</command> command-line tool, use the
+                key and an arbitrary name as the value. Using the
+                    <command>nova</command> command-line tool, use the
                     <literal>--hint</literal> flag. For
                 example:</para>
             <screen><prompt>$</prompt> <userinput>nova boot --image cedef40a-ed67-4d10-800e-17455edce175 --flavor 1 \
@@ -314,8 +317,10 @@ scheduler_available_filters=myfilter.MyFilter</programlisting>
                 of images and a special (isolated) set of hosts, such
                 that the isolated images can only run on the isolated
                 hosts, and the isolated hosts can only run isolated
-                images. The flag <literal>restrict_isolated_hosts_to_isolated_images</literal>
-                can be used to force isolated hosts to only run isolated images.</para>
+                images. The flag
+                    <literal>restrict_isolated_hosts_to_isolated_images</literal>
+                can be used to force isolated hosts to only run
+                isolated images.</para>
             <para>The admin must specify the isolated set of images
                 and hosts in the <filename>nova.conf</filename> file
                 using the <literal>isolated_hosts</literal> and
@@ -323,7 +328,7 @@ scheduler_available_filters=myfilter.MyFilter</programlisting>
                 options. For example:
                 <programlisting language="ini">isolated_hosts=server1,server2
 isolated_images=342b492c-128f-4a42-8d3a-c5088cf27d13,ebd267a6-ca86-4d6c-9a0e-bd132d6b7d09</programlisting>
-           </para>
+            </para>
         </section>
         <section xml:id="jsonfilter">
             <title>JsonFilter</title>
@@ -380,18 +385,7 @@ isolated_images=342b492c-128f-4a42-8d3a-c5088cf27d13,ebd267a6-ca86-4d6c-9a0e-bd1
   --flavor 1 --hint query='[">=","$free_ram_mb",1024]' server1</userinput></screen>
             <para>With the API, use the
                     <literal>os:scheduler_hints</literal> key:</para>
-            <programlisting language="json">
-    {
-    'server': {
-        'name': 'server-1',
-        'imageRef': 'cedef40a-ed67-4d10-800e-17455edce175',
-        'flavorRef': '1'
-    },
-    'os:scheduler_hints': {
-        'query': '[">=","$free_ram_mb",1024]',
-    }
-}
-</programlisting>
+            <programlisting language="json"><xi:include href="../../common/samples/server-scheduler-hints2.json" parse="text"/></programlisting>
         </section>
         <section xml:id="ramfilter">
             <title>RamFilter</title>
@@ -416,8 +410,9 @@ isolated_images=342b492c-128f-4a42-8d3a-c5088cf27d13,ebd267a6-ca86-4d6c-9a0e-bd1
             <para>Filter out hosts that have already been attempted
                 for scheduling purposes. If the scheduler selects a
                 host to respond to a service request, and the host
-                fails to respond to the request, this filter prevents the scheduler from retrying that host for the
-                service request.</para>
+                fails to respond to the request, this filter prevents
+                the scheduler from retrying that host for the service
+                request.</para>
             <para>This filter is only useful if the
                     <literal>scheduler_max_attempts</literal>
                 configuration option is set to a value greater than
@@ -439,19 +434,7 @@ isolated_images=342b492c-128f-4a42-8d3a-c5088cf27d13,ebd267a6-ca86-4d6c-9a0e-bd1
   --hint same_host=8c19174f-4220-44f0-824a-cd1eeef10287 server-1</userinput></screen>
             <para>With the API, use the
                     <literal>os:scheduler_hints</literal> key:</para>
-            <programlisting language="json">
-    {
-    'server': {
-        'name': 'server-1',
-        'imageRef': 'cedef40a-ed67-4d10-800e-17455edce175',
-        'flavorRef': '1'
-    },
-    'os:scheduler_hints': {
-        'same_host': ['a0cf03a5-d921-4877-bb5c-86d26cf818e1',
-                      '8c19174f-4220-44f0-824a-cd1eeef10287'],
-    }
-}
-</programlisting>
+            <programlisting language="json"><xi:include href="../../common/samples/server-scheduler-hints3.json" parse="text"/></programlisting>
         </section>
         <section xml:id="simplecidraffinityfilter">
             <title>SimpleCIDRAffinityFilter</title>
@@ -485,18 +468,7 @@ isolated_images=342b492c-128f-4a42-8d3a-c5088cf27d13,ebd267a6-ca86-4d6c-9a0e-bd1
   --hint build_near_host_ip=192.168.1.1 --hint cidr=/24 server-1</userinput></screen>
             <para>With the API, use the
                     <literal>os:scheduler_hints</literal> key:</para>
-            <programlisting language="json">{
-    {
-    'server': {
-        'name': 'server-1',
-        'imageRef': 'cedef40a-ed67-4d10-800e-17455edce175',
-        'flavorRef': '1'
-    },
-    'os:scheduler_hints': {
-        'build_near_host_ip': '192.168.1.1',
-        'cidr': '24'
-    }
-}</programlisting>
+            <programlisting language="json"><xi:include href="../../common/samples/server-scheduler-hints4.json" parse="text"/></programlisting>
         </section>
     </section>
     <section xml:id="weights">
@@ -519,13 +491,15 @@ ram_weight_multiplier=1.0</programlisting>
     <section xml:id="chance-scheduler">
         <title>Chance scheduler</title>
         <?dbhtml stop-chunking?>
-        <para>As an administrator, you work with the
-            Filter Scheduler. However, the Compute service also uses
-            the Chance Scheduler,
+        <para>As an administrator, you work with the Filter Scheduler.
+            However, the Compute service also uses the Chance
+            Scheduler,
                 <literal>nova.scheduler.chance.ChanceScheduler</literal>,
-            which randomly selects from lists of filtered hosts.</para>
+            which randomly selects from lists of filtered
+            hosts.</para>
     </section>
-    <xi:include href="../../common/section_cli_nova_host_aggregates.xml"/>
+    <xi:include
+        href="../../common/section_cli_nova_host_aggregates.xml"/>
     <section xml:id="compute-scheduler-config-ref">
         <title>Configuration reference</title>
         <xi:include href="../../common/tables/nova-scheduling.xml"/>
