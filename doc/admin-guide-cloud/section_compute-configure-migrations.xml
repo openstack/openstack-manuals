@@ -221,29 +221,18 @@ none                  16502856         0  16502856   0% /lib/init/rw
 HostA:        921515008 101921792 772783104  12% /var/lib/nova/instances  ( &lt;--- this line is important.)</computeroutput></screen>
       </step>
       <step>
-        <para>Update the libvirt configurations. Modify the
-            <filename>/etc/libvirt/libvirtd.conf</filename>
-          file:</para>
-        <programlisting language="bash">before : #listen_tls = 0
-after : listen_tls = 0
-
-before : #listen_tcp = 1
-after : listen_tcp = 1
-
-add: auth_tcp = "none"</programlisting>
-        <para>Modify the <filename>/etc/libvirt/qemu.conf</filename>
-          file:</para>
-        <programlisting language="bash">before : #dynamic_ownership = 1
-after :  dynamic_ownership = 0</programlisting>
-        <para>Modify the
-            <filename>/etc/init/libvirt-bin.conf</filename>
-          file:</para>
-        <programlisting language="bash">before : exec /usr/sbin/libvirtd -d
-after : exec /usr/sbin/libvirtd -d -l</programlisting>
-        <para>Modify the <filename>/etc/default/libvirt-bin</filename>
-          file:</para>
-        <programlisting language="bash">before :libvirtd_opts=" -d"
-after :libvirtd_opts=" -d -l"</programlisting>
+        <para>Update the libvirt configurations so that the calls can be made securely. These methods enable remote access over TCP and are not documented here, please consult your network administrator for assistance in deciding how to configure access.</para>
+        <para>
+          <itemizedlist>
+            <listitem>
+                <para>SSH tunnel to libvirtd's UNIX socket</para></listitem>
+            <listitem><para>libvirtd TCP socket, with GSSAPI/Kerberos for
+              auth+data encryption</para></listitem>
+            <listitem><para>libvirtd TCP socket, with TLS for encryption and x509 client certs for authentication</para></listitem>
+                <listitem><para>libvirtd TCP socket, with TLS for encryption and Kerberos for authentication</para>
+            </listitem>
+          </itemizedlist>
+        </para>
         <para>Restart libvirt. After you run the command, ensure that
           libvirt is successfully restarted:</para>
         <screen><prompt>$</prompt> <userinput>stop libvirt-bin &amp;&amp; start libvirt-bin</userinput>
@@ -253,15 +242,9 @@ after :libvirtd_opts=" -d -l"</programlisting>
       <step>
         <para>Configure your firewall to allow libvirt to communicate
           between nodes.</para>
-        <para>For information about ports that are used with libvirt,
-          see <link
+        <para>For information about ports that are used with libvirt, see <link
             xlink:href="http://libvirt.org/remote.html#Remote_libvirtd_configuration"
-            >the libvirt documentation</link> By default, libvirt
-          listens on TCP port 16509 and an ephemeral TCP range from
-          49152 to 49261 is used for the KVM communications. As this
-          guide has disabled libvirt auth, you should take good care
-          that these ports are only open to hosts within your
-          installation.</para>
+            >the libvirt documentation</link> By default, libvirt listens on TCP port 16509 and an ephemeral TCP range from 49152 to 49261 is used for the KVM communications. Based on the secure remote access TCP configuration you chose, be careful choosing what ports you open and understand who has access.</para>
       </step>
       <step>
         <para>You can now configure options for live migration. In
@@ -269,7 +252,7 @@ after :libvirtd_opts=" -d -l"</programlisting>
           following chart is for advanced usage only.</para>
       </step>
     </procedure>
-    <xi:include href="../../common/tables/nova-livemigration.xml"/>
+    <xi:include href="../common/tables/nova-livemigration.xml"/>
     <section xml:id="true-live-migration-kvm-libvirt">
       <title>Enable true live migration</title>
       <para>By default, the Compute service does not use the libvirt
