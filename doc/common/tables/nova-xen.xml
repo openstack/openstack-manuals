@@ -24,15 +24,15 @@
               </tr>
               <tr>
                        <td>console_vmrc_error_retries = 10</td>
-                       <td>(IntOpt) number of retries for retrieving VMRC information</td>
+                       <td>(IntOpt) Number of retries for retrieving VMRC information</td>
               </tr>
               <tr>
                        <td>console_vmrc_port = 443</td>
-                       <td>(IntOpt) port for VMware VMRC connections</td>
+                       <td>(IntOpt) Port for VMware VMRC connections</td>
               </tr>
               <tr>
                        <td>console_xvp_conf = /etc/xvp.conf</td>
-                       <td>(StrOpt) generated XVP conf file</td>
+                       <td>(StrOpt) Generated XVP conf file</td>
               </tr>
               <tr>
                        <td>console_xvp_conf_template = $pybasedir/nova/console/xvp.conf.template</td>
@@ -44,7 +44,7 @@
               </tr>
               <tr>
                        <td>console_xvp_multiplex_port = 5900</td>
-                       <td>(IntOpt) port for XVP to multiplex VNC connections on</td>
+                       <td>(IntOpt) Port for XVP to multiplex VNC connections on</td>
               </tr>
               <tr>
                        <td>console_xvp_pid = /var/run/xvp.pid</td>
@@ -66,19 +66,19 @@
               </tr>
               <tr>
                        <td>agent_path = usr/sbin/xe-update-networking</td>
-                       <td>(StrOpt) Specifies the path in which the xenapi guest agent should be located. If the agent is present, network configuration is not injected into the image. Used if compute_driver=xenapi.XenAPIDriver and  flat_injected=True</td>
+                       <td>(StrOpt) Specifies the path in which the XenAPI guest agent should be located. If the agent is present, network configuration is not injected into the image. Used if compute_driver=xenapi.XenAPIDriver and flat_injected=True</td>
               </tr>
               <tr>
                        <td>agent_resetnetwork_timeout = 60</td>
-                       <td>(IntOpt) number of seconds to wait for agent reply to resetnetwork request</td>
+                       <td>(IntOpt) Number of seconds to wait for agent reply to resetnetwork request</td>
               </tr>
               <tr>
                        <td>agent_timeout = 30</td>
-                       <td>(IntOpt) number of seconds to wait for agent reply</td>
+                       <td>(IntOpt) Number of seconds to wait for agent reply</td>
               </tr>
               <tr>
                        <td>agent_version_timeout = 300</td>
-                       <td>(IntOpt) number of seconds to wait for agent to be fully operational</td>
+                       <td>(IntOpt) Number of seconds to wait for agent to be fully operational</td>
               </tr>
               <tr>
                        <td>cache_images = all</td>
@@ -119,6 +119,10 @@
               <tr>
                        <td>image_upload_handler = nova.virt.xenapi.image.glance.GlanceStore</td>
                        <td>(StrOpt) Dom0 plugin driver used to handle image uploads.</td>
+              </tr>
+              <tr>
+                       <td>introduce_vdi_retry_wait = 20</td>
+                       <td>(IntOpt) Number of seconds to wait for an SR to settle if the VDI does not exist when first introduced </td>
               </tr>
               <tr>
                        <td>ipxe_boot_menu_url = None</td>
@@ -162,7 +166,7 @@
               </tr>
               <tr>
                        <td>running_timeout = 60</td>
-                       <td>(IntOpt) number of seconds to wait for instance to go to running state</td>
+                       <td>(IntOpt) Number of seconds to wait for instance to go to running state</td>
               </tr>
               <tr>
                        <td>sparse_copy = True</td>
@@ -178,11 +182,11 @@
               </tr>
               <tr>
                        <td>target_host = None</td>
-                       <td>(StrOpt) iSCSI Target Host</td>
+                       <td>(StrOpt) The iSCSI Target Host</td>
               </tr>
               <tr>
                        <td>target_port = 3260</td>
-                       <td>(StrOpt) iSCSI Target Port, 3260 Default</td>
+                       <td>(StrOpt) The iSCSI Target Port, default is port 3260</td>
               </tr>
               <tr>
                        <td>torrent_base_url = None</td>
@@ -222,14 +226,14 @@
               </tr>
               <tr>
                        <td>use_agent_default = False</td>
-                       <td>(BoolOpt) Determines if the xenapi agent should be used when the image used does not contain a hint to declare if the agent is present or not. The hint is a glance property "xenapi_use_agent" that has the value "true" or "false". Note that waiting for the agent when it is not present will significantly increase server boot times.</td>
+                       <td>(BoolOpt) Determines if the XenAPI agent should be used when the image used does not contain a hint to declare if the agent is present or not. The hint is a glance property "xenapi_use_agent" that has the value "True" or "False". Note that waiting for the agent when it is not present will significantly increase server boot times.</td>
               </tr>
               <tr>
                        <td>use_join_force = True</td>
                        <td>(BoolOpt) To use for hosts with different CPUs</td>
               </tr>
               <tr>
-                       <td>vhd_coalesce_max_attempts = 5</td>
+                       <td>vhd_coalesce_max_attempts = 20</td>
                        <td>(IntOpt) Max number of times to poll for VHD to coalesce. Used only if compute_driver=xenapi.XenAPIDriver</td>
               </tr>
               <tr>

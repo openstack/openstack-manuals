@@ -36,7 +36,7 @@
               </tr>
               <tr>
                        <td>timeout_nbd = 10</td>
-                       <td>(IntOpt) time to wait for a NBD device coming up</td>
+                       <td>(IntOpt) Amount of time, in seconds, to wait for NBD device start up.</td>
               </tr>
               <tr>
                        <td>use_cow_images = True</td>
@@ -44,11 +44,11 @@
               </tr>
               <tr>
                        <td>vcpu_pin_set = None</td>
-                       <td>(StrOpt) Which pcpus can be used by vcpus of instance e.g: "4-12,^8,15"</td>
+                       <td>(StrOpt) Defines which pcpus that instance vcpus can use. For example, "4-12,^8,15"</td>
               </tr>
               <tr>
                        <td>virt_mkfs = []</td>
-                       <td>(MultiStrOpt) mkfs commands for ephemeral device. The format is &lt;os_type&gt;=&lt;mkfs command&gt;</td>
+                       <td>(MultiStrOpt) Name of the mkfs commands for ephemeral device. The format is &lt;os_type&gt;=&lt;mkfs command&gt;</td>
               </tr>
               <tr>
                   <th colspan="2">[libvirt]</th>
@@ -63,26 +63,26 @@
               </tr>
               <tr>
                        <td>images_rbd_ceph_conf = </td>
-                       <td>(StrOpt) path to the ceph configuration file to use</td>
+                       <td>(StrOpt) Path to the ceph configuration file to use</td>
               </tr>
               <tr>
                        <td>images_rbd_pool = rbd</td>
-                       <td>(StrOpt) the RADOS pool in which rbd volumes are stored</td>
+                       <td>(StrOpt) The RADOS pool in which rbd volumes are stored</td>
               </tr>
               <tr>
                        <td>images_type = default</td>
-                       <td>(StrOpt) VM Images format. Acceptable values are: raw, qcow2, lvm,rbd, default. If default is specified, then use_cow_images flag is used instead of this one.</td>
+                       <td>(StrOpt) VM Images format. Acceptable values are: raw, qcow2, lvm, rbd, default. If default is specified, then use_cow_images flag is used instead of this one.</td>
               </tr>
               <tr>
                        <td>images_volume_group = None</td>
                        <td>(StrOpt) LVM Volume Group that is used for VM images, when you specify images_type=lvm.</td>
               </tr>
               <tr>
-                       <td>inject_key = True</td>
+                       <td>inject_key = False</td>
                        <td>(BoolOpt) Inject the ssh public key at boot time</td>
               </tr>
               <tr>
-                       <td>inject_partition = 1</td>
+                       <td>inject_partition = -2</td>
                        <td>(IntOpt) The partition to inject to : -2 =&gt; disable, -1 =&gt; inspect (libguestfs only), 0 =&gt; not partitioned, &gt;0 =&gt; partition number</td>
               </tr>
               <tr>
@@ -91,15 +91,11 @@
               </tr>
               <tr>
                        <td>iscsi_use_multipath = False</td>
-                       <td>(BoolOpt) use multipath connection of the iSCSI volume</td>
+                       <td>(BoolOpt) Use multipath connection of the iSCSI volume</td>
               </tr>
               <tr>
                        <td>iser_use_multipath = False</td>
-                       <td>(BoolOpt) use multipath connection of the iSER volume</td>
-              </tr>
-              <tr>
-                       <td>lvm_snapshot_size = 1000</td>
-                       <td>(IntOpt) The amount of storage (in megabytes) to allocate for LVM snapshot copy-on-write blocks.</td>
+                       <td>(BoolOpt) Use multipath connection of the iSER volume</td>
               </tr>
               <tr>
                        <td>rescue_image_id = None</td>

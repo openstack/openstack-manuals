@@ -32,7 +32,7 @@
               </tr>
               <tr>
                        <td>disk_allocation_ratio = 1.0</td>
-                       <td>(FloatOpt) virtual disk to physical disk allocation ratio</td>
+                       <td>(FloatOpt) Virtual disk to physical disk allocation ratio</td>
               </tr>
               <tr>
                        <td>isolated_hosts = </td>
@@ -83,6 +83,10 @@
                        <td>(StrOpt) Default driver to use for the scheduler</td>
               </tr>
               <tr>
+                       <td>scheduler_driver_task_period = 60</td>
+                       <td>(IntOpt) How often (in seconds) to run periodic tasks in the scheduler driver of your choice. Please note this is likely to interact with the value of service_down_time, but exactly how they interact will depend on your choice of scheduler driver.</td>
+              </tr>
+              <tr>
                        <td>scheduler_host_manager = nova.scheduler.host_manager.HostManager</td>
                        <td>(StrOpt) The scheduler host manager class to use</td>
               </tr>
@@ -96,7 +100,7 @@
               </tr>
               <tr>
                        <td>scheduler_manager = nova.scheduler.manager.SchedulerManager</td>
-                       <td>(StrOpt) full class name for the Manager for scheduler</td>
+                       <td>(StrOpt) Full class name for the Manager for scheduler</td>
               </tr>
               <tr>
                        <td>scheduler_max_attempts = 3</td>
@@ -104,7 +108,7 @@
               </tr>
               <tr>
                        <td>scheduler_topic = scheduler</td>
-                       <td>(StrOpt) the topic scheduler nodes listen on</td>
+                       <td>(StrOpt) The topic scheduler nodes listen on</td>
               </tr>
               <tr>
                        <td>scheduler_weight_classes = nova.scheduler.weights.all_weighers</td>
@@ -119,7 +123,7 @@
               </tr>
               <tr>
                        <td>scheduler_filter_classes = nova.cells.filters.all_filters</td>
-                       <td>(ListOpt) Filter classes the cells scheduler should use.  An entry of "nova.cells.filters.all_filters"maps to all cells filters included with nova.</td>
+                       <td>(ListOpt) Filter classes the cells scheduler should use.  An entry of "nova.cells.filters.all_filters" maps to all cells filters included with nova.</td>
               </tr>
               <tr>
                        <td>scheduler_retries = 10</td>
@@ -131,18 +135,26 @@
               </tr>
               <tr>
                        <td>scheduler_weight_classes = nova.cells.weights.all_weighers</td>
-                       <td>(ListOpt) Weigher classes the cells scheduler should use.  An entry of "nova.cells.weights.all_weighers"maps to all cell weighers included with nova.</td>
+                       <td>(ListOpt) Weigher classes the cells scheduler should use.  An entry of "nova.cells.weights.all_weighers" maps to all cell weighers included with nova.</td>
               </tr>
               <tr>
                   <th colspan="2">[metrics]</th>
+              </tr>
+              <tr>
+                       <td>required = True</td>
+                       <td>(BoolOpt) How to treat the unavailable metrics. When a metric is NOT available for a host, if it is set to be True, it would raise an exception, so it is recommended to use the scheduler filter MetricFilter to filter out those hosts. If it is set to be False, the unavailable metric would be treated as a negative factor in weighing process, the returned value would be set by the option weight_of_unavailable.</td>
               </tr>
               <tr>
                        <td>weight_multiplier = 1.0</td>
                        <td>(FloatOpt) Multiplier used for weighing metrics.</td>
               </tr>
               <tr>
+                       <td>weight_of_unavailable = -10000.0</td>
+                       <td>(FloatOpt) The final weight value to be returned if required is set to False and any one of the metrics set by weight_setting is unavailable.</td>
+              </tr>
+              <tr>
                        <td>weight_setting = </td>
-                       <td>(ListOpt) How the metrics are going to be weighed. This should be in the form of "&lt;name1&gt;=&lt;ratio1&gt;, &lt;name2&gt;=&lt;ratio2&gt;, ...", where &lt;nameX&gt; is one of the metric to be weighed, and &lt;ratioX&gt; is the corresponding ratio. So for "name1=1.0, name2=-1.0" The final weight would be name1.value * 1.0 + name2.value * -1.0.</td>
+                       <td>(ListOpt) How the metrics are going to be weighed. This should be in the form of "&lt;name1&gt;=&lt;ratio1&gt;, &lt;name2&gt;=&lt;ratio2&gt;, ...", where &lt;nameX&gt; is one of the metrics to be weighed, and &lt;ratioX&gt; is the corresponding ratio. So for "name1=1.0, name2=-1.0" The final weight would be name1.value * 1.0 + name2.value * -1.0.</td>
               </tr>
        </tbody>
         </table>
