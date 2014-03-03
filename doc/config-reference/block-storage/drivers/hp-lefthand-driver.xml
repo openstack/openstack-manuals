@@ -1,81 +1,453 @@
-<section xml:id="HPSan-driver" xmlns="http://docbook.org/ns/docbook"
-    xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
-    <title>HP / LeftHand SAN</title>
-    <para>HP/LeftHand SANs are optimized for virtualized environments
-        with VMware ESX &amp; Microsoft Hyper-V, though the OpenStack
-        integration provides additional support to various other
-        virtualized environments, such as Xen, KVM, and OpenVZ, by
-        exposing the volumes through ISCSI to connect to the
-        instances.</para>
-    <para>The HpSanISCSIDriver enables you to use a HP/Lefthand SAN
-        that supports the Cliq interface. Every supported volume
-        operation translates into a cliq call in the back-end.</para>
-    <para>To use Cinder with HP/Lefthand SAN, you must set the
-        following parameters in the <filename>cinder.conf</filename>
-        file:</para>
-    <itemizedlist>
-        <listitem>
-            <para>Set
-                    <parameter>volume_driver=cinder.volume.drivers.san.HpSanISCSIDriver</parameter>.</para>
-        </listitem>
-        <listitem>
-            <para>Set <parameter>san_ip</parameter> flag to the
-                hostname or VIP of your Virtual Storage Appliance
-                (VSA).</para>
-        </listitem>
-        <listitem>
-            <para>Set <parameter>san_login</parameter> and
-                    <parameter>san_password</parameter> to the user
-                name and password of the ssh user with all necessary
-                privileges on the appliance.</para>
-        </listitem>
-        <listitem>
-            <para>Set <code>san_ssh_port=16022</code>. The default is
-                22. However, the default for the VSA is usually
-                16022.</para>
-        </listitem>
-        <listitem>
-            <para>Set <code>san_clustername</code> to the name of the
-                cluster where the associated volumes are
-                created.</para>
-        </listitem>
-    </itemizedlist>
-    <para>The following optional parameters have the following default
-        values:</para>
-    <itemizedlist>
-        <listitem>
-            <para><code>san_thin_provision=True</code>. To disable
-                thin provisioning, set to <literal>False</literal>.
-           </para>
-        </listitem>
-        <listitem>
-            <para><code>san_is_local=False</code>. Typically, this
-                parameter is set to <literal>False</literal> for this
-                driver. To configure the cliq commands to run locally
-                instead of over ssh, set this parameter to
-                    <literal>True</literal>.</para>
-        </listitem>
-    </itemizedlist>
-    <para>In addition to configuring the <systemitem class="service"
-            >cinder-volume</systemitem> service, you must configure
-        the VSA to function in an OpenStack environment.</para>
-    <procedure>
-        <title>To configure the VSA</title>
-        <step>
-            <para>Configure Chap on each of the <systemitem
-                    class="service">nova-compute</systemitem>
-                nodes.</para>
-        </step>
-        <step>
-            <para>Add Server associations on the VSA with the
-                associated Chap and initiator information. The name
-                should correspond to the <emphasis role="italic"
-                    >'hostname'</emphasis> of the <systemitem
-                    class="service">nova-compute</systemitem> node.
-                For Xen, this is the hypervisor host name. To do this,
-                use either Cliq or the Centralized Management
-                Console.</para>
-        </step>
-    </procedure>
+<section xml:id="HP-LeftHand-StoreVirtual-driver" xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="5.0">
+    <title>HP LeftHand/StoreVirtual driver</title>
+    <para>
+        The
+        <filename>HPLeftHandISCSIDriver</filename>
+        is based on the
+        Block Storage Service (Cinder) plug-in architecture. Volume operations
+        are run by communicating with the HP LeftHand/StoreVirtual system over
+        HTTPS, or SSH connections. HTTPS communications use the
+        <package>hplefthandclient</package>,
+        which is part of the Python standard library.
+    </para>
+    <para>
+        The
+        <filename>HPLeftHandISCSIDriver</filename>
+        can be configured
+        to run in one of two possible modes, legacy mode which uses SSH/CLIQ to
+        communicate with the HP LeftHand/StoreVirtual array, or standard mode
+        which uses a new REST client to communicate with the array. No new
+        functionality has been, or will be, supported in legacy mode. For
+        performance improvements and new functionality, the driver must be
+        configured for standard mode, the <package>hplefthandclient</package>
+        must be downloaded, and HP LeftHand/StoreVirtual Operating System
+        software version 11.5 or
+        higher is required on the array. To configure
+        the driver in standard mode see section
+        <link xlink:href="hp-lefthand-rest-driver">
+        HP LeftHand/StoreVirtual REST driver standard mode</link>,
+        to configure the driver in legacy mode, see section
+        <link xlink:href="hp-lefthand-clix-driver">
+        HP LeftHand/StoreVirtual CLIQ driver legacy mode</link>.
+    </para>
+    <para>For information about how to manage HP LeftHand/StoreVirtual
+        storage systems, see the HP LeftHand/StoreVirtual user documentation.
+    </para>
+    <section xml:id="hp-lefthand-rest-driver">
+        <title>HP LeftHand/StoreVirtual REST driver standard mode</title>
+        <para>This section describes how to configure the HP
+        LeftHand/StoreVirtual Cinder driver in standard mode.
+        </para>
+        <section xml:id="hp-lefthand-sys-reqs">
+            <title>System requirements</title>
+            <para>To use the HP LeftHand/StoreVirtual driver in standard mode,
+                do the following:
+            </para>
+            <itemizedlist>
+                <listitem>
+                    <para>Install LeftHand/StoreVirtual Operating System
+                        software version 11.5 or higher on the HP
+                        LeftHand/StoreVirtual storage system.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>Create a cluster group.</para>
+                </listitem>
+                <listitem>
+                    <para>
+                        Install the <package>hplefthandclient</package> version
+                        1.0.2 from the Python Package Index on the system with the
+                        enabled Block Storage Service volume drivers.
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </section>
+        <section xml:id="hp-lefthand-supported-ops-rest">
+            <title>Supported operations</title>
+            <itemizedlist>
+                <listitem>
+                    <para>Create volumes</para>
+                </listitem>
+                <listitem>
+                    <para>Delete volumes</para>
+                </listitem>
+                <listitem>
+                    <para>Extend volumes</para>
+                </listitem>
+                <listitem>
+                    <para>Attach volumes</para>
+                </listitem>
+                <listitem>
+                    <para>Detach volumes</para>
+                </listitem>
+                <listitem>
+                    <para>Create snapshots</para>
+                </listitem>
+                <listitem>
+                    <para>Delete snapshots</para>
+                </listitem>
+                <listitem>
+                    <para>Create volumes from snapshots</para>
+                </listitem>
+                <listitem>
+                    <para>Create cloned volumes</para>
+                </listitem>
+                <listitem>
+                    <para>Copy images to volumes</para>
+                </listitem>
+                <listitem>
+                    <para>Copy volumes to images</para>
+                </listitem>
+                <listitem>
+                    <para>Backend assisted volume migration</para>
+                </listitem>
+                <listitem>
+                    <para>Volume retype</para>
+                </listitem>
+            </itemizedlist>
+            <para>When a volume is migrated, using Backend assisted volume
+                migration, both source and destination clusters must be in
+                the same HP LeftHand/StoreVirtual management group.
+                The HP LeftHand/StoreVirtual array will use native LeftHand
+                APIs to migrate the volume. The volume cannot be attached
+                or have snapshots to migrate.
+            </para>
+            <para>
+                Volume type support for the driver includes the ability to set
+                the following capabilities in the OpenStack Cinder API
+                <filename>cinder.api.contrib.types_extra_specs</filename>
+                volume type extra specs extension module.
+            </para>
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        <literal>hplh:provisioning</literal>
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <literal>hplh:ao</literal>
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <literal>hplh:data_pl</literal>
+                    </para>
+                </listitem>
+            </itemizedlist>
+            <para>
+                To work with the default filter scheduler, the key values
+                are case sensitive and scoped with
+                <literal>'hplh:'</literal>.
+                For information about how to set the key-value pairs and
+                associate them with a volume type, run the following
+                command:
+            </para>
+<screen> <prompt>$</prompt> <userinput>cinder help type-key</userinput></screen>
+            <itemizedlist>
+              <listitem>
+                <para>The following keys require that the HP LeftHand/StoreVirtual
+                            storage array be configured for.</para>
+                <variablelist>
+                  <varlistentry><term>hplh:ao</term>
+                    <listitem><para>The HP LeftHand/StoreVirtual storage array
+                                    must be configured for Adaptive Optimization.</para></listitem>
+                  </varlistentry>
+                  <varlistentry><term>hplh:data_pl</term>
+                    <listitem><para>The HP LeftHand/StoreVirtual storage array
+                                    must be able to support the Data Protection level
+                                    specified by the extra spec.</para></listitem>
+                  </varlistentry>
+                </variablelist>
+              </listitem>
+            </itemizedlist>
+            <itemizedlist>
+              <listitem>
+                <para>If volume types are not used or a particular key is not
+                            set for a volume type, the following defaults are used:</para>
+                <variablelist>
+                  <varlistentry><term>hplh:provisioning</term>
+                    <listitem><para>Defaults to <parameter>thin</parameter> provisioning, the valid values are,
+                                    <parameter>thin</parameter>
+                                    and
+                                    <parameter>full</parameter></para></listitem>
+                  </varlistentry>
+                  <varlistentry><term>hplh:ao</term>
+                    <listitem><para>Defaults to <parameter>true</parameter>, the valid values are,
+                                    <parameter>true</parameter>
+                                    and
+                                    <parameter>false</parameter>.</para></listitem>
+                  </varlistentry>
+                  <varlistentry><term>hplh:data_pl</term>
+                    <listitem><para>Defaults to
+                                    <parameter>r-0</parameter>,
+                                    Network RAID-0 (None), the valid values are,</para>
+                                <para>
+                                    <parameter>r-0</parameter>,
+                                    Network RAID-0 (None)
+                                </para>
+                                <para>
+                                    <parameter>r-5</parameter>,
+                                    Network RAID-5 (Single Parity)
+                                </para>
+                                <para>
+                                    <parameter>r-10-2</parameter>,
+                                    Network RAID-10 (2-Way Mirror)
+                                </para>
+                                <para>
+                                    <parameter>r-10-3</parameter>,
+                                    Network RAID-10 (3-Way Mirror)
+                                </para>
+                                <para>
+                                    <parameter>r-10-4</parameter>,
+                                    Network RAID-10 (4-Way Mirror)
+                                </para>
+                                <para>
+                                    <parameter>r-6</parameter>,
+                                    Network RAID-6 (Dual Parity),
+                                </para>
+                    </listitem>
+                  </varlistentry>
+                </variablelist>
+              </listitem>
+            </itemizedlist>
+
+        </section>
+        <section xml:id="enable-hp-lefthand">
+            <title>Enable the HP LeftHand/StoreVirtual iSCSI driver in standard mode
+            </title>
+            <para>
+                The
+                <filename>HPLeftHandISCSIDriver</filename>
+                is installed with the OpenStack software.
+            </para>
+            <procedure>
+                <step>
+                    <para>
+                        Install the
+                        <filename>hplefthandclient</filename>
+                        Python package on the OpenStack Block Storage system.
+                    </para>
+<screen><prompt>$</prompt> <userinput>sudo pip install 'hplefthandclient&gt;=1.0.2,&lt;2.0'</userinput></screen>
+                 </step>
+                <step>
+                    <para>If you are not using an existing cluster, create a
+                        cluster on the HP LeftHand storage system to be used as
+                        the cluster for creating volumes.
+                    </para>
+                </step>
+                <step>
+                    <para>
+                        Make the following changes in the
+                        <filename>/etc/cinder/cinder.conf</filename>
+                        file:
+                    </para>
+                    <programlisting><emphasis role="bold">## REQUIRED SETTINGS</emphasis>
+
+# LeftHand WS API Server URL
+hplefthand_api_url=<replaceable>https://10.10.0.141:8081/lhos</replaceable>
+
+# LeftHand Super user username
+hplefthand_username=<replaceable>lhuser</replaceable>
+
+# LeftHand Super user password
+hplefthand_password=<replaceable>lhpass</replaceable>
+
+# LeftHand cluster to use for volume creation
+hplefthand_clustername=<replaceable>ClusterLefthand</replaceable>
+
+# LeftHand iSCSI driver
+volume_driver=cinder.volume.drivers.san.hp.hp_lefthand_iscsi.HPLeftHandISCSIDriver
+
+<emphasis role="bold">## OPTIONAL SETTINGS</emphasis>
+
+# Should CHAPS authentication be used (default=false)
+hplefthand_iscsi_chap_enabled=false
+
+# Enable HTTP debugging to LeftHand (default=false)
+hplefthand_debug=false
+                    </programlisting>
+                    <para>You can enable only one driver on each
+                        cinder instance unless you enable multiple
+                        back-end support. See the Cinder multiple
+                        back-end support instructions to enable this
+                        feature.
+                    </para>
+                    <para>
+                        If the <option>hplefthand_iscsi_chap_enabled</option>
+                        is set to <literal>true</literal>, the driver will
+                        associate randomly-generated CHAP secrets with all
+                        hosts on the HP LeftHand/StoreVirtual system. OpenStack Compute
+                        nodes use these secrets when creating iSCSI connections.
+                        <important>
+                            <para>CHAP secrets are passed from OpenStack Block
+                                Storage to Compute in clear text. This
+                                communication should be secured to
+                                ensure that CHAP secrets are not discovered.
+                            </para>
+                        </important>
+                        <note>
+                            <para>CHAP secrets are added to existing hosts as
+                                well as newly-created ones. If the CHAP option
+                                is enabled, hosts will not be able to access
+                                the storage without the generated secrets.
+                            </para>
+                        </note>
+                    </para>
+                </step>
+                <step>
+                    <para>
+                        Save the changes to the <filename>cinder.conf</filename>
+                        file and restart the
+                        <systemitem class="service">cinder-volume</systemitem>
+                        service.
+                    </para>
+                </step>
+            </procedure>
+            <para>The HP LeftHand/StoreVirtual driver is now enabled in
+                standard mode on your OpenStack system. If you experience
+                problems, review the Block Storage Service log files for errors.
+            </para>
+        </section>
+    </section>
+    <section xml:id="hp-lefthand-clix-driver">
+        <title>HP LeftHand/StoreVirtual CLIQ driver legacy mode</title>
+        <para>This section describes how to configure the HP
+        LeftHand/StoreVirtual Cinder driver in legacy mode.
+        </para>
+        <para>The
+        <filename>HPLeftHandISCSIDriver</filename>
+        allows you to use a HP Lefthand/StoreVirtual SAN that supports the
+        CLIQ interface. Every supported volume operation translates into a
+        CLIQ call in the back-end.
+        </para>
+        <section xml:id="hp-lefthand-supported-ops-cliq">
+            <title>Supported operations</title>
+            <itemizedlist>
+                <listitem>
+                    <para>Create volumes</para>
+                </listitem>
+                <listitem>
+                    <para>Delete volumes</para>
+                </listitem>
+                <listitem>
+                    <para>Extend volumes</para>
+                </listitem>
+                <listitem>
+                    <para>Attach volumes</para>
+                </listitem>
+                <listitem>
+                    <para>Detach volumes</para>
+                </listitem>
+                <listitem>
+                    <para>Create snapshots.</para>
+                </listitem>
+                <listitem>
+                    <para>Delete snapshots</para>
+                </listitem>
+                <listitem>
+                    <para>Create volumes from snapshots</para>
+                </listitem>
+                <listitem>
+                    <para>Copy images to volumes</para>
+                </listitem>
+                <listitem>
+                    <para>Copy volumes to images</para>
+                </listitem>
+            </itemizedlist>
+        </section>
+        <section xml:id="enable-hp-lefthand-cliq">
+            <title>Enable the HP LeftHand/StoreVirtual iSCSI driver in legacy mode
+            </title>
+            <para>
+                The
+                <filename>HPLeftHandISCSIDriver</filename>
+                is installed with the OpenStack software.
+            </para>
+            <procedure>
+                <step>
+                    <para>If you are not using an existing cluster, create a
+                        cluster on the HP Lefthand storage system to be used as
+                        the cluster for creating volumes.
+                    </para>
+                </step>
+                <step>
+                    <para>
+                        Make the following changes in the
+                        <filename>/etc/cinder/cinder.conf</filename>
+                        file.
+                    </para>
+<programlisting><emphasis role="bold">## REQUIRED SETTINGS</emphasis>
+
+# VIP of your Virtual Storage Appliance (VSA).
+san_ip=<replaceable>10.10.0.141</replaceable>
+
+# LeftHand Super user username
+san_login=<replaceable>lhuser</replaceable>
+
+# LeftHand Super user password
+san_password=<replaceable>lhpass</replaceable>
+
+# LeftHand ssh port, the default for the VSA is usually 16022.
+san_ssh_port=16022
+
+# LeftHand cluster to use for volume creation
+san_clustername=<replaceable>ClusterLefthand</replaceable>
+
+# LeftHand iSCSI driver
+volume_driver=cinder.volume.drivers.san.hp.hp_lefthand_iscsi.HPLeftHandISCSIDriver
+
+<emphasis role="bold">## OPTIONAL SETTINGS</emphasis>
+
+# LeftHand provisioning, to disable thin provisioning, set to
+# set to False.
+san_thin_provision=True
+
+# Typically, this parameter is set to False, for this driver.
+# To configure the CLIQ commands to run locally instead of over ssh,
+# set this parameter to True
+san_is_local=False
+                    </programlisting>
+                </step>
+                <step>
+                    <para>
+                        Save the changes to the
+                        <filename>cinder.conf</filename>
+                        file and restart the
+                        <systemitem class="service">cinder-volume</systemitem>
+                        service.
+                    </para>
+                </step>
+            </procedure>
+            <para>The HP LeftHand/StoreVirtual driver is now enabled in
+                legacy mode on your OpenStack system. If you experience
+                problems, review the Block Storage Service log files for errors.
+            </para>
+            <para>To configure the VSA</para>
+            <procedure>
+                <step>
+                    <para>
+                        Configure CHAP on each of the
+                        <systemitem class="service">nova-compute</systemitem>
+                        nodes.
+                    </para>
+                </step>
+                <step>
+                    <para>
+                        Add server associations on the VSA with the associated
+                        CHAPS and initiator information. The name should
+                        correspond to the
+                        <parameter>hostname</parameter>
+                        of the
+                        <parameter>nova-compute</parameter>
+                        node. For Xen, this is the hypervisor host name. To do
+                        this, use either CLIQ or the Centralized Management
+                        Console.
+                    </para>
+                </step>
+            </procedure>
+        </section>
+    </section>
 </section>
