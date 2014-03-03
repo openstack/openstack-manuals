@@ -114,6 +114,42 @@ export OS_AUTH_URL=http://localhost:5000/v2.0</programlisting>
             </step>
         </procedure>
     </section>
+    <section xml:id="cli_routers">
+      <title>Create routers</title>
+      <procedure>
+        <step>
+          <para>Create a new router:</para>
+<screen><prompt>$</prompt> <userinput>neutron router-create <replaceable>router1</replaceable></userinput></screen>
+<screen><computeroutput>Created a new router:
++-----------------------+--------------------------------------+
+| Field                 | Value                                |
++-----------------------+--------------------------------------+
+| admin_state_up        | True                                 |
+| external_gateway_info |                                      |
+| id                    | 6e1f11ed-014b-4c16-8664-f4f615a3137a |
+| name                  | router1                              |
+| status                | ACTIVE                               |
+| tenant_id             | 7b5970fbe7724bf9b74c245e66b92abf     |
++-----------------------+--------------------------------------+</computeroutput></screen>
+          <para>Take note of the unique router identifier returned, this
+          will be required in subsequent steps.</para>
+        </step>
+        <step>
+          <para>Link the router to the external provider network:</para>
+            <screen><prompt>$</prompt> <userinput>neutron router-gateway-set <replaceable>ROUTER</replaceable> <replaceable>NETWORK</replaceable></userinput></screen>
+          <para>Replace <replaceable>ROUTER</replaceable> with the unique
+          identifier of the router, replace <replaceable>NETWORK</replaceable>
+          with the unique identifier of the external provider network.</para>
+        </step>
+        <step>
+          <para>Link the router to the subnet:</para>
+          <screen><prompt>$</prompt> <userinput>neutron router-interface-add <replaceable>ROUTER</replaceable> <replaceable>SUBNET</replaceable></userinput></screen>
+        <para>Replace <replaceable>ROUTER</replaceable> with the unique
+          identifier of the router, replace <replaceable>SUBNET</replaceable>
+          with the unique identifier of the subnet.</para>
+        </step>
+      </procedure>
+    </section>
     <section xml:id="cli_ports">
         <title>Create ports</title>
         <procedure>
@@ -136,7 +172,7 @@ export OS_AUTH_URL=http://localhost:5000/v2.0</programlisting>
 | network_id           | 2d627131-c841-4e3a-ace6-f2dd75773b6d                                                |
 | status               | DOWN                                                                                |
 | tenant_id            | 3671f46ec35e4bbca6ef92ab7975e463                                                    |
-+----------------------+-------------------------------------------------------------------------------------+                 </computeroutput></screen>
++----------------------+-------------------------------------------------------------------------------------+</computeroutput></screen>
                 <para>In the previous command, <literal>net1</literal>
                     is the network name, which is a positional
                     argument. <literal>--fixed-ip
