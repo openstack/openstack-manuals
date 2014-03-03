@@ -797,46 +797,25 @@ none                  16502856         0  16502856   0% /lib/init/rw
 HostA:        921515008 101921792 772783104  12% /var/lib/nova/instances  ( &lt;--- this line is important.)
 </programlisting>
         </listitem>
-
-        <listitem>
-          <para>Update the libvirt configurations. Modify
-              <filename>/etc/libvirt/libvirtd.conf</filename>:</para>
-
-          <programlisting>
-before : #listen_tls = 0
-after : listen_tls = 0
-
-before : #listen_tcp = 1
-after : listen_tcp = 1
-
-add: auth_tcp = "none"
-                            </programlisting>
-
-          <para>Modify <filename>/etc/init/libvirt-bin.conf</filename></para>
-
-          <programlisting>
-before : exec /usr/sbin/libvirtd -d
-after : exec /usr/sbin/libvirtd -d -l
-                            </programlisting>
-
-          <para>Modify <filename>/etc/default/libvirt-bin</filename></para>
-
-          <programlisting>
-before :libvirtd_opts=" -d"
-after :libvirtd_opts=" -d -l"
-                            </programlisting>
-
-          <para>Restart libvirt. After executing the command, ensure
-            that libvirt is successfully restarted.</para>
-
-          <screen><prompt>$</prompt> <userinput>stop libvirt-bin &amp;&amp; start libvirt-bin</userinput>
+      <listitem>
+        <para>Update the libvirt configurations so that the calls can be made securely. These methods enable remote access over TCP and are not documented here, please consult your network administrator for assistance in deciding how to configure access.</para>
+        <para>
+          <itemizedlist>
+            <listitem>
+              <para>SSH tunnel to libvirtd's UNIX socket</para></listitem>
+            <listitem><para>libvirtd TCP socket, with GSSAPI/Kerberos for
+              auth+data encryption</para></listitem>
+            <listitem><para>libvirtd TCP socket, with TLS for encryption and x509 client certs for authentication</para></listitem>
+            <listitem><para>libvirtd TCP socket, with TLS for encryption and Kerberos for authentication</para>
+            </listitem>
+          </itemizedlist>
+        </para>
+        <para>Restart libvirt. After you run the command, ensure that
+          libvirt is successfully restarted:</para>
+        <screen><prompt>$</prompt> <userinput>stop libvirt-bin &amp;&amp; start libvirt-bin</userinput>
 <prompt>$</prompt> <userinput>ps -ef | grep libvirt</userinput></screen>
-
-          <programlisting language="bash">
-
-root 1145 1 0 Nov27 ? 00:00:03 /usr/sbin/libvirtd -d -l
-          </programlisting>
-        </listitem>
+        <screen><computeroutput>root 1145 1 0 Nov27 ? 00:00:03 /usr/sbin/libvirtd -d -l</computeroutput></screen>
+      </listitem>
         <listitem>
         <para> Configure your firewall to allow libvirt to communicate between nodes.</para>
         <para>Information about ports used with libvirt can be found at <link xlink:href="http://libvirt.org/remote.html#Remote_libvirtd_configuration">the libvirt documentation</link>
