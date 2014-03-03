@@ -109,8 +109,7 @@
             For information about how to set the key-value pairs and
             associate them with a volume type, run the following
             command:
-            <screen><prompt>$</prompt> <userinput>
-            cinder help type-key</userinput></screen>
+            <screen><prompt>$</prompt> <userinput>cinder help type-key</userinput></screen>
         </para>
         <note>
             <para>Volumes that are cloned only support extra specs
@@ -193,7 +192,7 @@
                 <para>Install the <filename>hp3parclient</filename>
                     Python package on the OpenStack Block Storage
                     system.
-                    <screen>$sudo pip install hp3parclient</screen>
+                    <screen><prompt>$</prompt> <userinput>sudo pip install hp3parclient</userinput></screen>
                 </para>
             </step>
             <step>
@@ -204,31 +203,38 @@
                     <step>
                         <para>Log onto the HP 3PAR storage system with
                             administrator
-                            access.<screen>#ssh 3paradm@&lt;HP 3PAR IP Address></screen></para>
+                            access.</para>
+                            <screen><prompt>$</prompt> <userinput>ssh 3paradm@<replaceable>&lt;HP 3PAR IP Address&gt;</replaceable></userinput></screen>
                     </step>
                     <step>
                         <para>View the current state of the Web
-                            Services API Server.
-                            <screen>#showwsapi</screen><screen><computeroutput>-Service- -State- -HTTP_State-
-        HTTP_Port -HTTPS_State- HTTPS_Port -Version-</computeroutput></screen><screen><computeroutput>Enabled   Active Enabled       8008
-        Enabled       8080         1.1</computeroutput></screen></para>
+                            Services API Server.</para>
+                            <screen><prompt>#</prompt> <userinput>showwsapi</userinput>
+<computeroutput>-Service- -State- -HTTP_State- HTTP_Port -HTTPS_State- HTTPS_Port -Version-
+Enabled   Active Enabled       8008        Enabled       8080         1.1</computeroutput></screen>
                     </step>
                     <step>
                         <para>If the Web Services API Server is
                             disabled, start
-                            it.<screen>#startwsapi</screen></para>
+                            it.
+                        </para>
+                        <screen><prompt>#</prompt> <userinput>startwsapi</userinput></screen>
                     </step>
                 </substeps>
             </step>
             <step>
                 <para>If the HTTP or HTTPS state is disabled, enable
                     one of
-                    them.<screen>#setwsapi -http enable </screen> or <screen>#setwsapi -https enable </screen><note>
+                    them.
+                    <screen><prompt>#</prompt> <userinput>setwsapi -http enable</userinput></screen>
+                    or <screen><prompt>#</prompt> <userinput>setwsapi -https enable</userinput></screen>
+                    </para>
+                    <note>
                         <para>To stop the Web Services API Server, use
                             the stopwsapi command. For other options
                             run the <command>setwsapi –h</command>
                             command.</para>
-                    </note></para>
+                    </note>
             </step>
             <step>
                 <para>If you are not using an existing CPG, create a
@@ -239,54 +245,53 @@
                 <para>Make the following changes in the
                         <filename>/etc/cinder/cinder.conf</filename>
                     file.</para>
-                <programlisting>
-                        <emphasis role="bold">## REQUIRED SETTINGS</emphasis>
+                <programlisting language="ini"><emphasis role="bold">## REQUIRED SETTINGS</emphasis>
 # 3PAR WS API Server URL
-  hp3par_api_url=https://10.10.0.141:8080/api/v1
+hp3par_api_url=https://10.10.0.141:8080/api/v1
 
 # 3PAR Super user username
-  hp3par_username=3paradm
+hp3par_username=3paradm
 
 # 3PAR Super user password
-  hp3par_password=3parpass
+hp3par_password=3parpass
 
 # 3PAR CPG to use for volume creation
-  hp3par_cpg=OpenStackCPG_RAID5_NL
+hp3par_cpg=OpenStackCPG_RAID5_NL
 
 # IP address of SAN controller for SSH access to the array
-  san_ip=10.10.22.241
+san_ip=10.10.22.241
 
 # Username for SAN controller for SSH access to the array
-  san_login=3paradm
+san_login=3paradm
 
 # Password for SAN controller for SSH access to the array
-  san_password=3parpass
+san_password=3parpass
 
 # FIBRE CHANNEL(uncomment the next line to enable the FC driver)
-  # volume_driver=cinder.volume.drivers.san.hp.hp_3par_fc.HP3PARFCDriver
+# volume_driver=cinder.volume.drivers.san.hp.hp_3par_fc.HP3PARFCDriver
 
 # iSCSI (uncomment the next line to enable the iSCSI driver and
 # hp3par_iscsi_ips or iscsi_ip_address)
-  #volume_driver=cinder.volume.drivers.san.hp.hp_3par_iscsi.HP3PARISCSIDriver
+#volume_driver=cinder.volume.drivers.san.hp.hp_3par_iscsi.HP3PARISCSIDriver
 
 # iSCSI multiple port configuration
-  # hp3par_iscsi_ips=10.10.220.253:3261,10.10.222.234
+# hp3par_iscsi_ips=10.10.220.253:3261,10.10.222.234
 
 # Still available for single port iSCSI configuration
-  #iscsi_ip_address=10.10.220.253
-                        <emphasis role="bold">## OPTIONAL SETTINGS</emphasis>
+#iscsi_ip_address=10.10.220.253
+
+<emphasis role="bold">## OPTIONAL SETTINGS</emphasis>
 # Enable HTTP debugging to 3PAR
-  hp3par_debug=False
+hp3par_debug=False
 
 # The CPG to use for Snapshots for volumes. If empty hp3par_cpg will be used.
-  hp3par_snap_cpg=OpenStackSNAP_CPG
+hp3par_snap_cpg=OpenStackSNAP_CPG
 
 # Time in hours to retain a snapshot. You can't delete it before this expires.
-  hp3par_snapshot_retention=48
+hp3par_snapshot_retention=48
 
 # Time in hours when a snapshot expires and is deleted. This must be larger than retention.
-  hp3par_snapshot_expiration=72
-                    </programlisting>
+hp3par_snapshot_expiration=72</programlisting>
                 <note>
                     <para>You can enable only one driver on each
                         cinder instance unless you enable multiple
