@@ -125,7 +125,6 @@ glance_port glance
 glance_protocol glance
 heal_instance_info_cache_interval compute
 host common
-host_state_interval compute
 image_cache_manager_interval compute
 image_cache_subdirectory_name compute
 image_decryption_dir s3
@@ -184,6 +183,7 @@ logging_exception_prefix logging
 matchmaker_heartbeat_freq rpc
 matchmaker_heartbeat_ttl rpc
 max_age policy
+max_header_line api
 max_instances_per_host scheduling
 max_io_ops_per_host scheduling
 max_local_block_devices policy
@@ -212,6 +212,7 @@ network_topic network
 networks_path network
 neutron_admin_auth_url neutron
 neutron_admin_password neutron
+neutron_admin_tenant_id neutron
 neutron_admin_tenant_name neutron
 neutron_admin_username neutron
 neutron_api_insecure neutron
@@ -245,6 +246,7 @@ osapi_hide_server_address_states api
 osapi_max_limit policy
 osapi_max_request_body_size policy
 ovs_vsctl_timeout network
+password redis
 password_length policy
 pci_alias pci
 pci_passthrough_whitelist pci
@@ -252,6 +254,7 @@ periodic_enable periodic
 periodic_fuzzy_delay periodic
 policy_default_rule policy
 policy_file policy
+port common
 preallocate_images hypervisor
 project_cert_subject ca
 public_interface network
@@ -336,6 +339,7 @@ s3_use_ssl s3
 scheduler_available_filters scheduling
 scheduler_default_filters scheduling
 scheduler_driver scheduling
+scheduler_driver_task_period scheduling
 scheduler_host_manager scheduling
 scheduler_host_subset_size scheduling
 scheduler_json_config_location scheduling
@@ -366,9 +370,11 @@ tcp_keepidle wsgi
 teardown_unused_network_gateway network
 tempdir common
 timeout_nbd hypervisor
+transport_url common
 until_refresh policy
 update_dns_entries network
 use-syslog logging
+use-syslog-rfc-format logging
 use_cow_images hypervisor
 use_forwarded_for api
 use_ipv6 ipv6
@@ -488,6 +494,8 @@ hyperv/force_hyperv_utils_v1 hyperv
 hyperv/force_volumeutils_v1 volumes
 hyperv/instances_path_share hyperv
 hyperv/limit_cpu_features hyperv
+hyperv/mounted_disk_query_retry_count hyperv
+hyperv/mounted_disk_query_retry_interval hyperv
 hyperv/qemu_img_cmd hyperv
 hyperv/volume_attach_retry_count volumes
 hyperv/volume_attach_retry_interval volumes
@@ -517,7 +525,6 @@ libvirt/iser_use_multipath hypervisor
 libvirt/live_migration_bandwidth livemigration
 libvirt/live_migration_flag livemigration
 libvirt/live_migration_uri livemigration
-libvirt/lvm_snapshot_size hypervisor
 libvirt/nfs_mount_options volumes
 libvirt/nfs_mount_point_base volumes
 libvirt/num_aoe_discover_tries volumes
@@ -531,6 +538,7 @@ libvirt/remove_unused_resized_minimum_age_seconds libvirt
 libvirt/rescue_image_id hypervisor
 libvirt/rescue_kernel_id hypervisor
 libvirt/rescue_ramdisk_id hypervisor
+libvirt/rng_dev_path libvirt
 libvirt/scality_sofs_config volumes
 libvirt/scality_sofs_mount_point volumes
 libvirt/snapshot_compression hypervisor
@@ -541,21 +549,23 @@ libvirt/use_usb_tablet hypervisor
 libvirt/use_virtio_for_bridges hypervisor
 libvirt/vif_driver libvirt
 libvirt/virt_type libvirt
+libvirt/volume_clear libvirt
+libvirt/volume_clear_size libvirt
 libvirt/volume_drivers libvirt
 libvirt/wait_soft_reboot_seconds libvirt
 libvirt/xen_hvmloader_path xen
-matchmaker_redis/host redis
-matchmaker_redis/password redis
-matchmaker_redis/port redis
 matchmaker_ring/ringfile rpc
+metrics/required scheduling
 metrics/weight_multiplier scheduling
+metrics/weight_of_unavailable scheduling
 metrics/weight_setting scheduling
 osapi_v3/enabled apiv3
 osapi_v3/extensions_blacklist apiv3
 osapi_v3/extensions_whitelist apiv3
+rdp/enabled rdp
+rdp/html5_proxy_base_url rdp
 remote_debug/host redis
 remote_debug/port redis
-rpc_notifier2/topics rpc
 spice/agent_enabled spice
 spice/enabled spice
 spice/html5proxy_base_url spice
@@ -610,6 +620,7 @@ xenserver/default_os_type xen
 xenserver/disable_agent xen
 xenserver/image_compression_level xen
 xenserver/image_upload_handler xen
+xenserver/introduce_vdi_retry_wait xen
 xenserver/ipxe_boot_menu_url xen
 xenserver/ipxe_mkisofs_cmd xen
 xenserver/ipxe_network_name xen
