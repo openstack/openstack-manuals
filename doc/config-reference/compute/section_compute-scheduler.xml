@@ -199,7 +199,7 @@ scheduler_available_filters=myfilter.MyFilter</programlisting>
                 instance may exceed the physical cores).</para>
             <para>This filter can be configured to allow a fixed
                 amount of vCPU overcommitment by using the
-                    <literal>cpu_allocation_ratio</literal>
+                    <option>cpu_allocation_ratio</option>
                 Configuration option in
                 <filename>nova.conf</filename>. The default setting
                 is:</para>
@@ -209,6 +209,17 @@ scheduler_available_filters=myfilter.MyFilter</programlisting>
                 that node.</para>
             <para>To disallow vCPU overcommitment set:</para>
             <programlisting language="ini">cpu_allocation_ratio=1.0</programlisting>
+            <note>
+              <para>
+                The Compute API will always return the actual number of CPU
+                cores available on a compute node regardless of the value of
+                the <option>cpu_allocation_ratio</option> configuration key. As
+                a result changes to the <option>cpu_allocation_ratio</option>
+                are not reflected via the command line clients or the
+                dashboard. Changes to this configuration key are only taken
+                into account internally in the scheduler.
+              </para>
+            </note>
         </section>
         <section xml:id="differenthostfilter">
             <title>DifferentHostFilter</title>
