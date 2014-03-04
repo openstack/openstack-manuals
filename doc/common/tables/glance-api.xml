@@ -28,7 +28,7 @@
               </tr>
               <tr>
                        <td>default_publisher_id = image.localhost</td>
-                       <td>(StrOpt) Default publisher_id for outgoing notifications</td>
+                       <td>(StrOpt) Default publisher_id for outgoing notifications.</td>
               </tr>
               <tr>
                        <td>default_store = file</td>
@@ -47,8 +47,12 @@
                        <td>(IntOpt) Maximum size of image a user can upload in bytes. Defaults to 1099511627776 bytes (1 TB).</td>
               </tr>
               <tr>
-                       <td>known_stores = glance.store.filesystem.Store, glance.store.http.Store, glance.store.rbd.Store, glance.store.s3.Store, glance.store.swift.Store, glance.store.sheepdog.Store, glance.store.cinder.Store</td>
+                       <td>known_stores = glance.store.filesystem.Store, glance.store.http.Store, glance.store.rbd.Store, glance.store.s3.Store, glance.store.swift.Store, glance.store.sheepdog.Store, glance.store.cinder.Store, glance.store.vmware_datastore.Store</td>
                        <td>(ListOpt) List of which store classes and store class locations are currently known to glance at startup.</td>
+              </tr>
+              <tr>
+                       <td>location_strategy = location_order</td>
+                       <td>(StrOpt) This value sets what strategy will be used to determine the image location order. Currently two strategies are packaged with Glance 'location_order' and 'store_type'.</td>
               </tr>
               <tr>
                        <td>owner_is_tenant = True</td>
@@ -65,6 +69,13 @@
               <tr>
                        <td>use_user_token = True</td>
                        <td>(BoolOpt) Whether to pass through the user token when making requests to the registry.</td>
+              </tr>
+              <tr>
+                  <th colspan="2">[store_type_location_strategy]</th>
+              </tr>
+              <tr>
+                       <td>store_type_preference = </td>
+                       <td>(ListOpt) The store names to use to get store preference order. The name must be registered by one of the stores defined by the 'known_stores' config option. This option will be applied when you using 'store_type' option as image location strategy defined by the 'location_strategy' config option.</td>
               </tr>
        </tbody>
         </table>
