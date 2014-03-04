@@ -58,28 +58,9 @@
                             <sectionAutolabel>0</sectionAutolabel>
                             <tocSectionDepth>1</tocSectionDepth>
                             <formalProcedures>0</formalProcedures>
-                            <targetDirectory>${basedir}/target/docbkx/webhelp/${release.path.name}/install-guide/install</targetDirectory>
-                            <webhelpDirname>${operating.system}</webhelpDirname>
+                            <webhelpDirname>${release.path.name}/install-guide/install/${operating.system}</webhelpDirname>
                             <includeDateInPdfFilename>0</includeDateInPdfFilename>
                             <pdfFilenameBase>openstack-install-guide-${operating.system}-${release.path.name}</pdfFilenameBase>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>cleanup</id>
-                        <goals>
-                            <goal>generate-webhelp</goal>
-                        </goals>
-                        <phase>generate-sources</phase>
-                        <configuration>
-                          <includes>dummy.xml</includes>
-                          <postProcess>
-                            <delete includeemptydirs="true" verbose="true">
-                              <fileset dir="${basedir}/target/docbkx/webhelp/${release.path.name}" >
-                                <include name="**/*"/>
-                                <exclude name="install-guide/install/**"/>
-                              </fileset>
-                            </delete>
-                          </postProcess>
                         </configuration>
                     </execution>
                 </executions>
