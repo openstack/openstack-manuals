@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="glusterfs_backend" xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="1.0">
+    <title>Configure a GlusterFS backend</title>
+    <para>
+        This section explains how to configure OpenStack Block Storage
+        to use GlusterFS as a backend. The used GlusterFS shares must
+        already exist and be accessible from the server hosting the
+        <systemitem class="service">cinder</systemitem> volume
+        service.
+    </para>
+    <note>
+        <para os="rhel;centos;fedora;opensuse;sles">The
+        <systemitem class="service">cinder</systemitem> volume service
+        is named <literal>openstack-cinder-volume</literal> on the
+        following distributions:</para>
+        <itemizedlist os="rhel;centos;fedora;opensuse;sles">
+        <listitem os="rhel;centos;fedora"><para>CentOS</para></listitem>
+        <listitem os="rhel;centos;fedora"><para>Fedora</para></listitem>
+        <listitem os="opensuse;sles"><para>openSUSE</para></listitem>
+        <listitem os="rhel;centos;fedora"><para>Red Hat Enterprise
+        Linux</para></listitem>
+        <listitem os="opensuse;sles"><para>SUSE Linux Enterprise
+        </para></listitem>
+        </itemizedlist>
+        <para>In Ubuntu and Debian distributions, the
+        <systemitem class="service">cinder</systemitem> volume
+        service is named <literal>cinder-volume</literal>.</para>
+    </note>
+    <para>
+        Mounting GlusterFS volumes requires utilities and libraries
+        from the <package>glusterfs-fuse</package> package. This
+        package must be installed on all systems that will access
+        volumes backed by GlusterFS.
+    </para>
+    <note os="ubuntu;debian">
+    <para>
+        The utilities and libraries required for mounting GlusterFS
+        volumes on Ubuntu and Debian distributions are available from
+        the <package>glusterfs-client</package> package instead.
+    </para>
+    </note>
+        <para>For information on how to install and configure
+        GlusterFS, refer to the
+        <link xlink:href="http://gluster.org/community/documentation/index.php/Main_Page">GlusterDocumentation</link>
+        page.</para>
+    <procedure>
+        <title>Configuring GlusterFS for the OpenStack Block Storage</title>
+        <para>
+        The GlusterFS server must also be configured accordingly in
+        order to allow OpenStack Block Storage to use GlusterFS shares:
+        </para>
+        <step>
+            <para>
+                Log in as <systemitem>root</systemitem> to the
+                GlusterFS server.
+            </para>
+        </step>
+        <step>
+            <para>
+                Set each Gluster volume to use the same UID and GID as
+                the <systemitem>cinder</systemitem> user:
+            </para>
+            <screen><prompt>#</prompt> <userinput>gluster volume set <replaceable>VOL_NAME</replaceable> storage.owner-uid <replaceable>cinder-uid</replaceable></userinput>
+<prompt>#</prompt> <userinput>gluster volume set <replaceable>VOL_NAME</replaceable> storage.owner-gid <replaceable>cinder-gid</replaceable></userinput></screen>
+            <para>Where:</para>
+            <itemizedlist>
+                <listitem><para><replaceable>VOL_NAME</replaceable> is the
+                Gluster volume name.</para></listitem>
+                <listitem><para><replaceable>cinder-uid</replaceable> is the UID of the <systemitem>cinder</systemitem> user.</para></listitem>
+                <listitem><para><replaceable>cinder-gid</replaceable> is the GID of the <systemitem>cinder</systemitem> user.</para></listitem>
+            </itemizedlist>
+            <note>
+                <para>
+                    The default UID and GID of the
+                    <systemitem>cinder</systemitem> user is
+                    <literal>165</literal> on most distributions.
+                </para>
+            </note>
+        </step>
+        <step>
+            <para>
+                Configure each Gluster volume to accept
+                <systemitem>libgfapi</systemitem> connections. To do
+                this, set each Gluster volume to allow insecure ports:
+            </para>
+            <screen><prompt>#</prompt> <userinput>gluster volume set <replaceable>VOL_NAME</replaceable> server.allow-insecure on</userinput></screen>
+        </step>
+        <step>
+            <para>
+                Enable client connections from unprivileged ports.
+                To do this, add the following line to
+                <filename>/etc/glusterfs/glusterd.vol</filename>:
+            </para>
+            <programlisting>option rpc-auth-allow-insecure on</programlisting>
+        </step>
+        <step>
+            <para>
+                Restart the <systemitem>glusterd</systemitem> service:
+            </para>
+            <screen><prompt>#</prompt> <userinput>service glusterd restart</userinput></screen>
+        </step>
+    </procedure>
+    <procedure>
+        <title>Configuring cinder-volume to use GlusterFS</title>
+        <para>
+        Once the GlusterFS service is configured as needed, perform
+        the following procedure:
+        </para>
+        <step>
+            <para>
+                Log in as <systemitem>root</systemitem> to the system
+                hosting the cinder volume service.
+            </para>
+        </step>
+        <step>
+            <para>
+                Create a text file named
+                <filename>glusterfs</filename>
+                in <filename>/etc/cinder/</filename>.</para>
+        </step>
+        <step>
+            <para>Add an entry to
+            <filename>/etc/cinder/glusterfs</filename> for each
+            GlusterFS share that OpenStack Block Storage should use
+            for backend storage. Each entry should be a separate line,
+            and should use the following format:</para>
+            <programlisting><replaceable>HOST</replaceable>:/<replaceable>VOL_NAME</replaceable></programlisting>
+            <para>
+                Where:
+            </para>
+            <itemizedlist>
+                <listitem>
+                    <para>
+                    <replaceable>HOST</replaceable> is the IP address
+                    or host name of the Red Hat Storage server.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                    <replaceable>VOL_NAME</replaceable> is the name an
+                    existing and accessible volume on the GlusterFS
+                    server.
+                    </para>
+                </listitem>
+            </itemizedlist>
+            <para>
+                Optionally, if your environment requires additional
+                mount options for a share, you can add them to the
+                share's entry:
+            </para>
+            <programlisting><replaceable>HOST</replaceable>:/<replaceable>VOL_NAME</replaceable> -o <replaceable>OPTIONS</replaceable></programlisting>
+            <para>
+                Replace <replaceable>OPTIONS</replaceable> with a
+                comma-separated list of mount options.
+            </para>
+        </step>
+        <step>
+        <para>Set <filename>/etc/cinder/glusterfs</filename> to be
+        owned by the <systemitem>root</systemitem> user and the
+        <systemitem>cinder</systemitem> group.
+            </para>
+            <screen><prompt>#</prompt> <userinput>chown root:cinder /etc/cinder/glusterfs</userinput></screen>
+        </step>
+        <step>
+        <para>Set <filename>/etc/cinder/glusterfs</filename> to be
+        readable by members of the <systemitem>cinder</systemitem>
+        group:
+            </para>
+            <screen><prompt>#</prompt> <userinput>chmod 0640 <replaceable>FILE</replaceable></userinput></screen>
+        </step>
+        <step>
+            <para>Configure OpenStack Block Storage to use the
+            <filename>/etc/cinder/glusterfs</filename> file created
+            earlier. To do so, open the
+            <filename>/etc/cinder/cinder.conf</filename> configuration
+            file and set the
+            <literal>glusterfs_shares_config</literal> configuration
+            key to <filename>/etc/cinder/glusterfs</filename>.
+            </para>
+            <para os="rhel;centos;fedora;opensuse;sles">On
+            distributions that include
+            <application>openstack-config</application>, you can
+            configure this by running the following command instead:
+            </para>
+           <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/cinder/cinder.conf \
+DEFAULT glusterfs_shares_config /etc/cinder/glusterfs</userinput></screen>
+           <para os="rhel;centos;fedora;opensuse;sles">The following
+            distributions include
+            <application>openstack-config</application>:</para>
+             <itemizedlist os="rhel;centos;fedora;opensuse;sles">
+            <listitem os="rhel;centos;fedora">
+                <para>CentOS</para>
+            </listitem>
+            <listitem os="rhel;centos;fedora">
+                <para>Fedora</para>
+            </listitem>
+            <listitem os="opensuse;sles">
+                <para>openSUSE</para>
+            </listitem>
+            <listitem os="rhel;centos;fedora">
+                <para>Red Hat Enterprise Linux</para>
+            </listitem>
+            <listitem os="opensuse;sles">
+                <para>SUSE Linux Enterprise</para>
+            </listitem>
+            </itemizedlist>
+        </step>
+        <step>
+            <para>Configure OpenStack Block Storage to use the correct
+            volume driver, namely
+            <literal>cinder.volume.drivers.glusterfs</literal>. To do
+            so, open the <filename>/etc/cinder/cinder.conf</filename>
+            configuration file and set the
+            <literal>volume_driver</literal> configuration key to
+            <literal>cinder.volume.drivers.glusterfs</literal>.
+            </para>
+            <para os="rhel;centos;fedora;opensuse;sles">On
+            distributions that include
+            <application>openstack-config</application>, you can
+            configure this by running the following command instead:
+            </para>
+           <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/cinder/cinder.conf \
+DEFAULT volume_driver cinder.volume.drivers.glusterfs.GlusterfsDriver</userinput></screen>
+        </step>
+        <step>
+        <para>
+        You can now restart the service to apply the configuration.
+        </para>
+        <para os="rhel;centos;fedora;opensuse;sles">To restart the
+        <systemitem class="service">cinder</systemitem> volume service
+        on CentOS, Fedora, openSUSE, RedHat Enterprise Linux, or SUSE
+        Linux Enterprise, run:</para>
+        <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>service openstack-cinder-volume restart</userinput></screen>
+        <para os="debian;ubuntu">To restart the
+        <systemitem class="service">cinder</systemitem> volume service
+        on Ubuntu or Debian, run:</para>
+        <screen os="debian;ubuntu"><prompt>#</prompt> <userinput>service cinder-volume restart</userinput></screen>
+        </step>
+    </procedure>
+    <para>OpenStack Block Storage is now configured to use a GlusterFS
+    backend.</para>
+    <note>
+        <para>
+                In <filename>/etc/cinder/cinder.conf</filename>, the
+                <literal>glusterfs_sparsed_volumes</literal>
+                configuration key determines whether volumes are
+                created as sparse files and grown as needed or fully
+                allocated up front. The default and recommended value
+                of this key is <literal>true</literal>, which ensures
+                volumes are initially created as sparse files.
+            </para>
+            <para>
+                Setting <literal>glusterfs_sparsed_volumes</literal>
+                to <literal>false</literal> will result in volumes
+                being fully allocated at the time of creation. This
+                leads to increased delays in volume creation.
+            </para>
+            <para>
+            However, should you choose to set
+            <literal>glusterfs_sparsed_volumes</literal> to
+            <literal>false</literal>, you can do so directly in
+            <filename>/etc/cinder/cinder.conf</filename>.</para>
+            <para os="rhel;centos;fedora;opensuse;sles">On
+            distributions that include
+            <application>openstack-config</application>, you can
+            configure this by running the following command instead:
+            </para>
+           <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/cinder/cinder.conf \
+DEFAULT glusterfs_sparsed_volumes false</userinput></screen>
+    </note>
+    <important>
+        <para>If a client host has SELinux enabled, the
+        <systemitem>virt_use_fusefs</systemitem> Boolean should also be
+        enabled if the host requires access to GlusterFS volumes on
+        an instance. To enable this Boolean, run the following command
+        as the <systemitem>root</systemitem> user:
+      </para>
+        <screen><prompt>#</prompt> <userinput>setsebool -P virt_use_fusefs on</userinput></screen>
+        <para>This command also makes the Boolean persistent across
+        reboots. Run this command on all client hosts that require
+        access to GlusterFS volumes on an instance. This includes all
+        compute nodes.</para>
+    </important>
+</section>
