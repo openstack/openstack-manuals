@@ -22,7 +22,76 @@
     <para>It is important to be mindful of the size of requests that will be processed by any chosen SSL proxy.</para>
     <section xml:id="ch020_ssl-everywhere-idp44384">
       <title>Examples</title>
-      <para>Below we provide some sample configuration setting for enabling SSL in some of the most popular web servers/SSL terminators with recommended configurations. Note that we have SSL v3 enabled in some of these examples as this will be required in many deployments for client compatibility.</para>
+      <para>Below we provide some sample recommended configuration settings for enabling SSL in some of the more popular web servers/SSL terminators. Note that we have SSL v3 enabled in some of these examples as this will be required in many deployments for client compatibility.</para>
+      <para>Before we delve into the configurations, we briefly discuss the ciphers' configuration element and its format. A  more exhaustive treatment on available ciphers and the OpenSSL cipher list format can be found at: <link xlink:href="https://www.openssl.org/docs/apps/ciphers.html">ciphers</link>.</para>
+<programlisting>
+ciphers = "HIGH:!RC4:!MD5:!aNULL:!eNULL:!EXP:!LOW:!MEDIUM"
+</programlisting>
+<para>or</para>
+<programlisting>
+ciphers = "kEECDH:kEDH:kRSA:HIGH:!RC4:!MD5:!aNULL:!eNULL:!EXP:!LOW:!MEDIUM"
+</programlisting>
+      <para>Cipher string options are separated by ":", while "!" provides negation of the immediately following element. Element order indicates preference unless overridden by qualifiers such as HIGH. Let us take a closer look at the elements in the above sample strings.</para>
+ <variablelist>
+    <varlistentry>
+    <term><code>kEECDH:kEDH</code></term>
+    <listitem>
+           <para>Ephemeral Elliptic Curve Diffie-Hellman (abbreviated as EECDH and ECDHE).</para>
+           <para>Ephemeral Diffie-Hellman (abbreviated either as EDH or DHE) uses prime field groups.</para>
+           <para>Both approaches provide <link xlink:href="http://en.wikipedia.org/wiki/Forward_secrecy">Perfect Foward Secrecy (PFS).</link></para>
+           <para>Ephemeral Elliptic Curves require the server to be configured with a named curve, and provide better security than prime field groups and at lower computational cost. However, prime field groups are more widely implemented, and thus typically both are included in list.</para>
+    </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><code>kRSA</code></term>
+     <listitem>
+              <para>Cipher suites using the <link xlink:href="http://en.wikipedia.org/wiki/RSA_%28cryptosystem%29">RSA</link> exchange, authentication or either respectively.</para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><code>HIGH</code></term>
+     <listitem>
+             <para>Selects highest possible security cipher in the negotiation phase. These typically have keys of length 128 bits or longer.</para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><code>!RC4</code></term>
+     <listitem>
+              <para>No RC4. RC4 has flaws in the context of TLS/SSL V3. See <link xlink:href="cr.yp.to/streamciphers/rc4biases-20130708.pdf"> On the Security of RC4 in TLS and WPA</link>.</para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><code>!MD5</code></term>
+     <listitem>
+              <para>No MD5. MD5 is not collision resistent, and thus not acceptable for Message Authentication Codes (MAC) or signatures.</para>
+     </listitem>
+     </varlistentry>
+    <varlistentry>
+     <term><code>!aNULL:!eNULL</code></term>
+     <listitem>
+              <para>Disallows clear text</para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><code>!EXP</code></term>
+     <listitem>
+              <para>Disallows export encryption algorithms, which by design tend to were weak, typically using 40 and 56 bit keys.</para>
+              <para>US Export restrictions on cryptography systems have been lifted and no longer need to be supported.</para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><code>!LOW:!MEDIUM</code></term>
+     <listitem>
+              <para>Disallows low (keys 56 or  64 bits long) and medium (128 bit long keys) ciphers because of their vulnerability to brute force attacks (example 2-DES). This constraint leaves acceptable Triple Data Encryption Standard (Triple DES) also known as Triple Data Encryption Algorithm (TDEA) and the Advanced Encryption Standard (AES), each of which has keys greater than equal to 128 bits and thus more secure.</para>
+    </listitem>
+   </varlistentry>
+   <varlistentry>
+    <term><code>Protocols</code></term>
+    <listitem>
+             <para>Protocols are enabled/disabled through SSL_CTX_set_options. We recommend disabling SSLv2 and enabling TLS or SSLv3 (which was standardised as TLS with a few changes).</para>
+    </listitem>
+   </varlistentry>
+ </variablelist>
       <section xml:id="ch020_ssl-everywhere-idp45712">
         <title>Pound - with AES-NI acceleration</title>
         <screen> 
@@ -47,7 +116,7 @@ Alive       30
 #Client     10
 ## allow 10 second proxy connect time
 ConnTO      10
-## use hardware-accelleration card supported by openssl(1):
+## use hardware-acceleration card supported by openssl(1):
 SSLEngine   "aesni"
 # poundctl control socket
 Control "/var/run/pound/poundctl.socket"
@@ -86,8 +155,8 @@ pem-file = "
 ssl = on
 # List of allowed SSL ciphers.
 # OpenSSL's high-strength ciphers which require authentication
-# NOTE: This list does not include any RC4 ciphers.
-ciphers = "HIGH:!aNULL:!eNULL:!DES:!3DES"
+# NOTE: forbids clear text, use of RC4 or MD5 or LOW and MEDIUM strength ciphers
+ciphers = "HIGH:!RC4:!MD5:!aNULL:!eNULL:!EXP:!LOW:!MEDIUM"
 # Enforce server cipher list order
 prefer-server-ciphers = on
 # Number of worker processes
@@ -124,7 +193,7 @@ server {
     ssl_certificate ;
     ssl_certificate_key ;
     ssl_protocols TLSv1.1 TLSv1.2;
-    ssl_ciphers HIGH:!aNULL:!eNULL:!DES:!3DES;
+    ssl_ciphers HIGH:!RC4:!MD5:!aNULL:!eNULL:!EXP:!LOW:!MEDIUM
 
     server_name _;
     keepalive_timeout 5;
@@ -144,7 +213,7 @@ server {
   ServerName &lt;site FQDN&gt;
   SSLEngine On
   SSLProtocol +SSLv3 +TLSv1 +TLSv1.1 +TLSv1.2,
-  SSLCipherSuite HIGH:!aNULL:!eNULL:!DES:!3DES;
+  SSLCipherSuite HIGH:!RC4:!MD5:!aNULL:!eNULL:!EXP:!LOW:!MEDIUM
   SSLCertificateFile    /path/&lt;site FQDN&gt;.crt
   SSLCACertificateFile  /path/&lt;site FQDN&gt;.crt
   SSLCertificateKeyFile /path/&lt;site FQDN&gt;.key
@@ -167,7 +236,7 @@ server {
   ServerName &lt;site FQDN&gt;
   SSLEngine On
   SSLProtocol +SSLv3 +TLSv1 +TLSv1.1 +TLSv1.2,
-  SSLCipherSuite HIGH:!aNULL:!eNULL:!DES:!3DES;
+  SSLCipherSuite HIGH:!RC4:!MD5:!aNULL:!eNULL:!EXP:!LOW:!MEDIUM
   SSLCertificateFile    /path/&lt;site FQDN&gt;.crt
   SSLCACertificateFile  /path/&lt;site FQDN&gt;.crt
   SSLCertificateKeyFile /path/&lt;site FQDN&gt;.key
