@@ -55,27 +55,8 @@
                             <sectionAutolabel>0</sectionAutolabel>
                             <tocSectionDepth>1</tocSectionDepth>
                             <sectionLabelIncludesComponentLabel>0</sectionLabelIncludesComponentLabel>
-                            <targetDirectory>${basedir}/target/docbkx/webhelp/${release.path.name}/config-reference</targetDirectory>
-                            <webhelpDirname>/</webhelpDirname>
+                            <webhelpDirname>${release.path.name}/config-reference</webhelpDirname>
                             <pdfFilenameBase>config-reference-${release.path.name}</pdfFilenameBase>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>cleanup</id>
-                        <goals>
-                            <goal>generate-webhelp</goal>
-                        </goals>
-                        <phase>generate-sources</phase>
-                        <configuration>
-                          <includes>dummy.xml</includes>
-                          <postProcess>
-                            <delete includeemptydirs="true" verbose="true">
-                              <fileset dir="${basedir}/target/docbkx/webhelp/${release.path.name}" >
-                                <include name="**/*"/>
-                                <exclude name="config-reference/**"/>
-                              </fileset>
-                            </delete>
-                          </postProcess>
                         </configuration>
                     </execution>
                 </executions>
