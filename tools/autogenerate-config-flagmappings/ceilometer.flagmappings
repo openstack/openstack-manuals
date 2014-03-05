@@ -1,92 +1,55 @@
-admin_password keystone_authtoken
-admin_tenant_name keystone_authtoken
-admin_token keystone_authtoken
-admin_user keystone_authtoken
-allowed_rpc_exception_modules
-auth_admin_prefix
-auth_host keystone_authtoken
-auth_port keystone_authtoken
-auth_protocol keystone_authtoken
-auth_strategy DEFAULT
-auth_uri keystone_authtoken
-auth_version keystone_authtoken
-backdoor_port DEFAULT
-backend database
-cache
-certfile keystone_authtoken
-cinder_control_exchange DEFAULT
-connection database
-connection_debug database
-connection_trace database
-control_exchange DEFAULT
-counter_source DEFAULT
-database_connection DEFAULT
+allowed_rpc_exception_modules rpc
+amqp_auto_delete amqp
+amqp_durable_queues amqp
+auth_strategy auth
+backdoor_port common
+cinder_control_exchange exchange
+control_exchange exchange
+database_connection database
 debug logging
 default_log_levels logging
 default_notification_level logging
-default_publisher_id DEFAULT
-delay_auth_decision
-disable_process_locking
-enable_v1_api DEFAULT
-fake_rabbit
-fatal_deprecations
-glance_control_exchange DEFAULT
-host
-host
-host
-http_connect_timeout
-http_handler
-hypervisor_inspector
-idle_timeout
-instance_format
-instance_uuid_format
-keyfile keystone_authtoken
-kombu_ssl_ca_certs
-kombu_ssl_certfile
-kombu_ssl_keyfile
-kombu_ssl_version
-libvirt_type
-libvirt_uri
-list_notifier_drivers
-lock_path
-log_config logging
-log_date_format logging
-log_dir logging
-log_file logging
-log_format logging
+default_publisher_id exchange
+disable_process_locking common
+dispatcher rpc
+enable_v1_api api
+fake_rabbit rabbitmq
+fatal_deprecations common
+glance_control_exchange exchange
+heat_control_exchange exchange
+host redis
+http_control_exchanges exchange
+hypervisor_inspector inspector
+instance_format logging
+instance_uuid_format logging
+kombu_ssl_ca_certs rabbitmq
+kombu_ssl_certfile rabbitmq
+kombu_ssl_keyfile rabbitmq
+kombu_ssl_version rabbitmq
+libvirt_type inspector
+libvirt_uri inspector
+lock_path common
+log-config-append logging
+log-date-format logging
+log-dir logging
+log-file logging
+log-format logging
 logging_context_format_string logging
 logging_debug_format_suffix logging
 logging_default_format_string logging
 logging_exception_prefix logging
-matchmaker_heartbeat_freq
-matchmaker_heartbeat_ttl
-max_overflow
-max_pool_size
-max_retries
-memcache_secret_key
-memcache_security_strategy
-memcache_servers
-memcached_servers
-metering_secret DEFAULT
-metering_topic DEFAULT
-min_pool_size database
+matchmaker_heartbeat_freq redis
+matchmaker_heartbeat_ttl redis
+max_request_body_size api
 mysql_engine database
-notification_driver
-notification_topics
-nova_control_exchange DEFAULT
-os_auth_url service_credentials
-os_password service_credentials
-os_tenant_id service_credentials
-os_tenant_name service_credentials
-os_username service_credentials
-password
-pipeline_cfg_file
-policy_default_rule
-policy_file
-pool_timeout
-port
-port
-publish_errors
+neutron_control_exchange exchange
+notification_driver amqp
+notification_topics amqp
+nova_control_exchange exchange
+pipeline_cfg_file api
+policy_default_rule api
+policy_file api
+publish_errors logging
 qpid_heartbeat qpid
 qpid_hostname qpid
 qpid_hosts qpid
@@ -95,9 +58,8 @@ qpid_port qpid
 qpid_protocol qpid
 qpid_sasl_mechanisms qpid
 qpid_tcp_nodelay qpid
+qpid_topology_version qpid
 qpid_username qpid
-quantum_control_exchange DEFAULT
-rabbit_durable_queues rabbitmq
 rabbit_ha_queues rabbitmq
 rabbit_host rabbitmq
 rabbit_hosts rabbitmq
@@ -109,12 +71,9 @@ rabbit_retry_interval rabbitmq
 rabbit_use_ssl rabbitmq
 rabbit_userid rabbitmq
 rabbit_virtual_host rabbitmq
-reseller_prefix DEFAULT
-reserved_metadata_length
-reserved_metadata_namespace
-retry_interval
-revocation_cache_time
-ringfile
+reseller_prefix swift
+reserved_metadata_length api
+reserved_metadata_namespace api
 rpc_backend rpc
 rpc_cast_timeout rpc
 rpc_conn_pool_size rpc
@@ -127,16 +86,62 @@ rpc_zmq_ipc_dir rpc
 rpc_zmq_matchmaker rpc
 rpc_zmq_port rpc
 rpc_zmq_topic_backlog rpc
-signing_dir keystone_authtoken
-slave_connection
+sample_source exchange
 sqlite_db database
 sqlite_synchronous database
-syslog_log_facility
-token_cache_time
-topics
-udp_address
-udp_port
-use_stderr
-use_syslog
-use_tpool database
+syslog-log-facility logging
+use-syslog logging
+use-syslog-rfc-format logging
+use_stderr logging
 verbose logging
+alarm/evaluation_interval alarm
+alarm/evaluation_service alarm
+alarm/notifier_rpc_topic alarm
+alarm/partition_rpc_topic alarm
+alarm/record_history alarm
+alarm/rest_notifier_certificate_file alarm
+alarm/rest_notifier_certificate_key alarm
+alarm/rest_notifier_ssl_verify alarm
+api/host api
+api/port api
+collector/udp_address collector
+collector/udp_port collector
+database/backend database
+database/connection database
+database/connection_debug database
+database/connection_trace database
+database/idle_timeout database
+database/max_overflow database
+database/max_pool_size database
+database/max_retries database
+database/min_pool_size database
+database/pool_timeout database
+database/retry_interval database
+database/slave_connection database
+database/time_to_live database
+dispatcher_file/backup_count collector
+dispatcher_file/file_path collector
+dispatcher_file/max_bytes collector
+event/definitions_cfg_file events
+event/drop_unmatched_notifications events
+matchmaker_redis/host redis
+matchmaker_redis/password redis
+matchmaker_redis/port redis
+matchmaker_ring/ringfile redis
+notification/ack_on_event_error events
+notification/store_events events
+publisher/metering_secret rpc
+publisher_rpc/metering_topic rpc
+rpc_notifier2/topics rpc
+service_credentials/insecure auth
+service_credentials/os-auth-url auth
+service_credentials/os-cacert auth
+service_credentials/os-endpoint-type auth
+service_credentials/os-password auth
+service_credentials/os-region-name auth
+service_credentials/os-tenant-id auth
+service_credentials/os-tenant-name auth
+service_credentials/os-username auth
+ssl/ca_file ssl
+ssl/cert_file ssl
+ssl/key_file ssl
