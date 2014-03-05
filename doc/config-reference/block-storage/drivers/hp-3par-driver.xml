@@ -77,7 +77,7 @@
         </itemizedlist>
         <para>Volume type support for both HP 3PAR drivers includes
             the ability to set the following capabilities in the
-            OpenStack Cinder API
+            OpenStack Block Storage API
                 <filename>cinder.api.contrib.types_extra_specs</filename>
             volume type extra specs extension module:</para>
         <itemizedlist>
@@ -96,16 +96,10 @@
             <listitem>
                 <para><literal>hp3par:vvs</literal></para>
             </listitem>
-            <listitem>
-                <para><literal>qos:maxBWS</literal></para>
-            </listitem>
-            <listitem>
-                <para><literal>qos:maxIOPS</literal></para>
-            </listitem>
         </itemizedlist>
         <para>To work with the default filter scheduler, the key
             values are case sensitive and scoped with
-                <literal>hp3par:</literal> or <literal>qos:</literal>.
+                <literal>hp3par:</literal>.
             For information about how to set the key-value pairs and
             associate them with a volume type, run the following
             command:
@@ -118,31 +112,6 @@
                 cloned volume in the HP 3PAR StoreServ storage array
                 is not populated.</para>
         </note>
-        <para>The following keys require that the HP 3PAR StoreServ
-            storage array has a Priority Optimization license
-            installed.</para>
-        <itemizedlist>
-            <listitem>
-                <para><literal>hp3par:vvs</literal> - The virtual
-                    volume set name that has been predefined by the
-                    Administrator with Quality of Service (QoS) rules
-                    associated to it. If you specify
-                        <literal>hp3par:vvs</literal>, the
-                        <literal>qos:maxIOPS</literal> and
-                        <literal>qos:maxBWS</literal> settings are
-                    ignored.</para>
-            </listitem>
-            <listitem>
-                <para><literal>qos:maxBWS</literal> - The QoS I/O
-                    issue count rate limit in MBs. If not set, the I/O
-                    issue bandwidth rate has no limit.</para>
-            </listitem>
-            <listitem>
-                <para><literal>qos:maxIOPS</literal> - The QoS I/O
-                    issue count rate limit. If not set, the I/O issue
-                    count rate has no limit.</para>
-            </listitem>
-        </itemizedlist>
         <para>If volume types are not used or a particular key is not
             set for a volume type, the following defaults are
             used.</para>
@@ -168,18 +137,106 @@
             </listitem>
             <listitem>
                 <para><literal>hp3par:persona</literal> - Defaults to
-                    the <literal>1 – Generic</literal> persona. The
-                    valid values are, <literal>1 – Generic</literal>,
+                    the <literal>1 - Generic</literal> persona. The
+                    valid values are, <literal>1 - Generic</literal>,
                         <literal>2 - Generic-ALUA</literal>,
                         <literal>6 - Generic-legacy</literal>,
                         <literal>7 - HPUX-legacy</literal>, <literal>8
-                        - AIX-legacy</literal>, <literal>9 –
+                        - AIX-legacy</literal>, <literal>9 -
                         EGENERA</literal>, <literal>10 -
-                        ONTAP-legacy</literal>, <literal>11 –
-                        VMware</literal>, and <literal>12 -
-                        OpenVMS</literal>.</para>
+                        ONTAP-legacy</literal>, <literal>11 -
+                        VMware</literal>, <literal>12 -
+                        OpenVMS</literal>, <literal>13 - HPUX</literal>,
+                        and <literal>15 - WindowsServer</literal>.</para>
             </listitem>
         </itemizedlist>
+        <para>QoS support for both HP 3PAR drivers includes
+            the ability to set the following capabilities in the
+            OpenStack Block Storage API
+            <filename>cinder.api.contrib.qos_specs_manage</filename>
+            qos specs extension module:</para>
+        <itemizedlist>
+            <listitem>
+                <para><literal>minBWS</literal></para>
+            </listitem>
+            <listitem>
+                <para><literal>maxBWS</literal></para>
+            </listitem>
+            <listitem>
+                <para><literal>minIOPS</literal></para>
+            </listitem>
+            <listitem>
+                <para><literal>maxIOPS</literal></para>
+            </listitem>
+            <listitem>
+                <para><literal>latency</literal></para>
+            </listitem>
+            <listitem>
+                <para><literal>priority</literal></para>
+            </listitem>
+        </itemizedlist>
+        <para>The qos keys above no longer require to be scoped
+            but must be created and associated to a volume type.
+            For information about how to set the key-value pairs and
+            associate them with a volume type, run the following
+            commands:
+            <screen><prompt>$</prompt> <userinput>cinder help qos-create</userinput></screen>
+            <screen><prompt>$</prompt> <userinput>cinder help qos-key</userinput></screen>
+            <screen><prompt>$</prompt> <userinput>cinder help qos-associate</userinput></screen>
+        </para>
+
+        <para>The following keys require that the HP 3PAR StoreServ
+            storage array has a Priority Optimization license
+            installed.</para>
+        <itemizedlist>
+            <listitem>
+                <para><literal>hp3par:vvs</literal> - The virtual
+                    volume set name that has been predefined by the
+                    Administrator with Quality of Service (QoS) rules
+                    associated to it. If you specify extra_specs
+                        <literal>hp3par:vvs</literal>, the
+                        qos_specs <literal>minIOPS</literal>,
+                        <literal>maxIOPS</literal>, <literal>minBWS</literal>,
+                        and <literal>maxBWS</literal> settings are
+                    ignored.</para>
+            </listitem>
+            <listitem>
+                <para><literal>minBWS</literal> - The QoS I/O
+                    issue bandwidth minimum goal in MBs. If not set, the I/O
+                    issue bandwidth rate has no minimum goal.</para>
+            </listitem>
+            <listitem>
+                <para><literal>maxBWS</literal> - The QoS I/O
+                    issue bandwidth rate limit in MBs. If not set, the I/O
+                    issue bandwidth rate has no limit.</para>
+            </listitem>
+            <listitem>
+                <para><literal>minIOPS</literal> - The QoS I/O
+                    issue count minimum goal. If not set, the I/O issue
+                    count has no minimum goal.</para>
+            </listitem>
+            <listitem>
+                <para><literal>maxIOPS</literal> - The QoS I/O
+                    issue count rate limit. If not set, the I/O issue
+                    count rate has no limit.</para>
+            </listitem>
+            <listitem>
+                <para><literal>latency</literal> - The latency
+                    goal in milliseconds.</para>
+            </listitem>
+            <listitem>
+                <para><literal>priority</literal> - The priority of
+                    the QoS rule over other rules. If not set, the
+                    priority is normal, valid values are low, normal
+                    and high.</para>
+            </listitem>
+        </itemizedlist>
+        <note>
+            <para>Since the Icehouse release, minIOPS and maxIOPS must
+                be used together to set I/O limits. Similarly, minBWS
+                and maxBWS must be used together. If only one is set
+                the other will be set to the same value.</para>
+        </note>
     </section>
     <section xml:id="enable-hp-3par-fibre-channel">
         <title>Enable the HP 3PAR Fibre Channel and iSCSI
