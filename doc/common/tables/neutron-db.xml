@@ -16,6 +16,20 @@
           </thead>
           <tbody>
               <tr>
+                  <th colspan="2">[DEFAULT]</th>
+              </tr>
+              <tr>
+                       <td>sqlite_db = </td>
+                       <td>(StrOpt) The file name to use with SQLite</td>
+              </tr>
+              <tr>
+                       <td>sqlite_synchronous = True</td>
+                       <td>(BoolOpt) If True, SQLite uses synchronous mode</td>
+              </tr>
+              <tr>
+                  <th colspan="2">[database]</th>
+              </tr>
+              <tr>
                        <td>backend = sqlalchemy</td>
                        <td>(StrOpt) The backend to use for db</td>
               </tr>
@@ -32,12 +46,24 @@
                        <td>(BoolOpt) Add python stack traces to SQL as comment strings</td>
               </tr>
               <tr>
-                       <td>dhcp_agents_per_network = 1</td>
-                       <td>(IntOpt) Number of DHCP agents scheduled to host a network.</td>
+                       <td>db_inc_retry_interval = True</td>
+                       <td>(BoolOpt) Whether to increase interval between db connection retries, up to db_max_retry_interval</td>
+              </tr>
+              <tr>
+                       <td>db_max_retries = 20</td>
+                       <td>(IntOpt) maximum db connection retries before error is raised. (setting -1 implies an infinite retry count)</td>
+              </tr>
+              <tr>
+                       <td>db_max_retry_interval = 10</td>
+                       <td>(IntOpt) max seconds between db connection retries, if db_inc_retry_interval is enabled</td>
+              </tr>
+              <tr>
+                       <td>db_retry_interval = 1</td>
+                       <td>(IntOpt) seconds between db connection retries</td>
               </tr>
               <tr>
                        <td>idle_timeout = 3600</td>
-                       <td>(IntOpt) timeout before idle sql connections are reaped</td>
+                       <td>(IntOpt) Timeout before idle sql connections are reaped</td>
               </tr>
               <tr>
                        <td>max_overflow = 20</td>
@@ -49,7 +75,7 @@
               </tr>
               <tr>
                        <td>max_retries = 10</td>
-                       <td>(IntOpt) maximum db connection retries during startup. (setting -1 implies an infinite retry count)</td>
+                       <td>(IntOpt) Maximum db connection retries during startup. (setting -1 implies an infinite retry count)</td>
               </tr>
               <tr>
                        <td>min_pool_size = 1</td>
@@ -61,23 +87,15 @@
               </tr>
               <tr>
                        <td>retry_interval = 10</td>
-                       <td>(IntOpt) interval between retries of opening a sql connection</td>
+                       <td>(IntOpt) Interval between retries of opening a sql connection</td>
               </tr>
               <tr>
                        <td>slave_connection = </td>
                        <td>(StrOpt) The SQLAlchemy connection string used to connect to the slave database</td>
               </tr>
               <tr>
-                       <td>sqlite_db = </td>
-                       <td>(StrOpt) the filename to use with sqlite</td>
-              </tr>
-              <tr>
-                       <td>sqlite_synchronous = True</td>
-                       <td>(BoolOpt) If true, use synchronous mode for sqlite</td>
-              </tr>
-              <tr>
-                       <td>use_tpool = False</td>
-                       <td>(BoolOpt) Enable the experimental use of thread pooling for all DB API calls</td>
+                       <td>use_db_reconnect = False</td>
+                       <td>(BoolOpt) Enable the experimental use of database reconnect on connection lost</td>
               </tr>
        </tbody>
         </table>

@@ -5,7 +5,7 @@
              repository -->
         <para xmlns="http://docbook.org/ns/docbook" version="5.0">
         <table rules="all">
-          <caption>Description of configuration options for VMware NSX</caption>
+          <caption>Description of configuration options for vmware</caption>
            <col width="50%"/>
            <col width="50%"/>
            <thead>
@@ -16,24 +16,7 @@
           </thead>
           <tbody>
               <tr>
-                       <td>agent_mode = agent</td>
-                       <td>(StrOpt) The mode used to implement DHCP/metadata services.</td>
-              </tr>
-              <tr>
-                       <td>always_read_status = False</td>
-                       <td>(BoolOpt) Always read operational status from backend on show operations. Enabling this option might slow down the system.</td>
-              </tr>
-              <tr>
-                       <td>concurrent_connections = 10</td>
-                       <td>(IntOpt) Maximum concurrent connections to each NSX controller.</td>
-              </tr>
-              <tr>
-                       <td>datacenter_moid = None</td>
-                       <td>(StrOpt) Optional parameter identifying the ID of datacenter to deploy NSX Edges</td>
-              </tr>
-              <tr>
-                       <td>datastore_id = None</td>
-                       <td>(StrOpt) Optional parameter identifying the ID of datastore to deploy NSX Edges</td>
+                  <th colspan="2">[DEFAULT]</th>
               </tr>
               <tr>
                        <td>default_interface_name = breth0</td>
@@ -52,60 +35,16 @@
                        <td>(StrOpt) Unique identifier of the Service Cluster which will be used by logical services like dhcp and metadata</td>
               </tr>
               <tr>
-                       <td>default_transport_type = stt</td>
-                       <td>(StrOpt) The default network tranport type to use (stt, gre, bridge, ipsec_gre, or ipsec_stt)</td>
-              </tr>
-              <tr>
                        <td>default_tz_uuid = None</td>
                        <td>(StrOpt) This is uuid of the default NSX Transport zone that will be used for creating tunneled isolated "Neutron" networks. It needs to be created in NSX before starting Neutron with the nsx plugin.</td>
-              </tr>
-              <tr>
-                       <td>deployment_container_id = None</td>
-                       <td>(StrOpt) Optional parameter identifying the ID of datastore to deploy NSX Edges</td>
-              </tr>
-              <tr>
-                       <td>external_network = None</td>
-                       <td>(StrOpt) Network ID for physical network connectivity</td>
               </tr>
               <tr>
                        <td>http_timeout = 10</td>
                        <td>(IntOpt) Time before aborting a request</td>
               </tr>
               <tr>
-                       <td>manager_uri = None</td>
-                       <td>(StrOpt) uri for vsm</td>
-              </tr>
-              <tr>
-                       <td>max_lp_per_bridged_ls = 5000</td>
-                       <td>(IntOpt) Maximum number of ports of a logical switch on a bridged transport zone (default 5000)</td>
-              </tr>
-              <tr>
-                       <td>max_lp_per_overlay_ls = 256</td>
-                       <td>(IntOpt) Maximum number of ports of a logical switch on an overlay transport zone (default 256)</td>
-              </tr>
-              <tr>
-                       <td>max_random_sync_delay = 0</td>
-                       <td>(IntOpt) Maximum value for the additional random delay in seconds between runs of the state synchronization task</td>
-              </tr>
-              <tr>
-                       <td>metadata_mode = access_network</td>
-                       <td>(StrOpt) If set to access_network this enables a dedicated connection to the metadata proxy for metadata server access via Neutron router. If set to dhcp_host_route this enables host route injection via the dhcp agent. This option is only useful if running on a host that does not support namespaces otherwise access_network should be used.</td>
-              </tr>
-              <tr>
-                       <td>min_chunk_size = 500</td>
-                       <td>(IntOpt) Minimum number of resources to be retrieved from NSX during state synchronization</td>
-              </tr>
-              <tr>
-                       <td>min_sync_req_delay = 10</td>
-                       <td>(IntOpt) Minimum delay, in seconds, between two state synchronization queries to NSX. It must not exceed state_sync_interval</td>
-              </tr>
-              <tr>
                        <td>nsx_controllers = None</td>
                        <td>(ListOpt) Lists the NSX controllers in this cluster</td>
-              </tr>
-              <tr>
-                       <td>nsx_gen_timeout = -1</td>
-                       <td>(IntOpt) Number of seconds a generation id should be valid for (default -1 meaning do not time out)</td>
               </tr>
               <tr>
                        <td>nsx_password = admin</td>
@@ -124,20 +63,137 @@
                        <td>(IntOpt) Total time limit for a cluster request</td>
               </tr>
               <tr>
-                       <td>resource_pool_id = None</td>
-                       <td>(StrOpt) Optional parameter identifying the ID of resource to deploy NSX Edges</td>
-              </tr>
-              <tr>
                        <td>retries = 2</td>
                        <td>(IntOpt) Number of time a request should be retried</td>
+              </tr>
+              <tr>
+                  <th colspan="2">[ESWITCH]</th>
               </tr>
               <tr>
                        <td>retries = 3</td>
                        <td>(IntOpt) The number of retries the agent will send request to daemon before giving up</td>
               </tr>
               <tr>
-                       <td>state_sync_interval = 120</td>
+                  <th colspan="2">[NSX]</th>
+              </tr>
+              <tr>
+                       <td>agent_mode = agent</td>
+                       <td>(StrOpt) The mode used to implement DHCP/metadata services.</td>
+              </tr>
+              <tr>
+                       <td>concurrent_connections = 10</td>
+                       <td>(IntOpt) Maximum concurrent connections to each NSX controller.</td>
+              </tr>
+              <tr>
+                       <td>default_transport_type = stt</td>
+                       <td>(StrOpt) The default network tranport type to use (stt, gre, bridge, ipsec_gre, or ipsec_stt)</td>
+              </tr>
+              <tr>
+                       <td>max_lp_per_bridged_ls = 5000</td>
+                       <td>(IntOpt) Maximum number of ports of a logical switch on a bridged transport zone (default 5000)</td>
+              </tr>
+              <tr>
+                       <td>max_lp_per_overlay_ls = 256</td>
+                       <td>(IntOpt) Maximum number of ports of a logical switch on an overlay transport zone (default 256)</td>
+              </tr>
+              <tr>
+                       <td>metadata_mode = access_network</td>
+                       <td>(StrOpt) If set to access_network this enables a dedicated connection to the metadata proxy for metadata server access via Neutron router. If set to dhcp_host_route this enables host route injection via the dhcp agent. This option is only useful if running on a host that does not support namespaces otherwise access_network should be used.</td>
+              </tr>
+              <tr>
+                       <td>nsx_gen_timeout = -1</td>
+                       <td>(IntOpt) Number of seconds a generation id should be valid for (default -1 meaning do not time out)</td>
+              </tr>
+              <tr>
+                  <th colspan="2">[NSX_DHCP]</th>
+              </tr>
+              <tr>
+                       <td>default_lease_time = 43200</td>
+                       <td>(IntOpt) Default DHCP lease time</td>
+              </tr>
+              <tr>
+                       <td>domain_name = openstacklocal</td>
+                       <td>(StrOpt) Domain to use for building the hostnames</td>
+              </tr>
+              <tr>
+                       <td>extra_domain_name_servers = </td>
+                       <td>(ListOpt) Comma separated list of additional domain name servers</td>
+              </tr>
+              <tr>
+                  <th colspan="2">[NSX_LSN]</th>
+              </tr>
+              <tr>
+                       <td>sync_on_missing_data = False</td>
+                       <td>(BoolOpt) Pull LSN information from NSX in case it is missing from the local data store. This is useful to rebuild the local store in case of server recovery.</td>
+              </tr>
+              <tr>
+                  <th colspan="2">[NSX_METADATA]</th>
+              </tr>
+              <tr>
+                       <td>metadata_server_address = 127.0.0.1</td>
+                       <td>(StrOpt) IP address used by Metadata server.</td>
+              </tr>
+              <tr>
+                       <td>metadata_server_port = 8775</td>
+                       <td>(IntOpt) TCP Port used by Metadata server.</td>
+              </tr>
+              <tr>
+                       <td>metadata_shared_secret = </td>
+                       <td>(StrOpt) Shared secret to sign instance-id request</td>
+              </tr>
+              <tr>
+                  <th colspan="2">[NSX_SYNC]</th>
+              </tr>
+              <tr>
+                       <td>always_read_status = False</td>
+                       <td>(BoolOpt) Always read operational status from backend on show operations. Enabling this option might slow down the system.</td>
+              </tr>
+              <tr>
+                       <td>max_random_sync_delay = 0</td>
+                       <td>(IntOpt) Maximum value for the additional random delay in seconds between runs of the state synchronization task</td>
+              </tr>
+              <tr>
+                       <td>min_chunk_size = 500</td>
+                       <td>(IntOpt) Minimum number of resources to be retrieved from NSX during state synchronization</td>
+              </tr>
+              <tr>
+                       <td>min_sync_req_delay = 1</td>
+                       <td>(IntOpt) Minimum delay, in seconds, between two state synchronization queries to NSX. It must not exceed state_sync_interval</td>
+              </tr>
+              <tr>
+                       <td>state_sync_interval = 10</td>
                        <td>(IntOpt) Interval in seconds between runs of the state synchronization task. Set it to 0 to disable it</td>
+              </tr>
+              <tr>
+                  <th colspan="2">[vcns]</th>
+              </tr>
+              <tr>
+                       <td>datacenter_moid = None</td>
+                       <td>(StrOpt) Optional parameter identifying the ID of datacenter to deploy NSX Edges</td>
+              </tr>
+              <tr>
+                       <td>datastore_id = None</td>
+                       <td>(StrOpt) Optional parameter identifying the ID of datastore to deploy NSX Edges</td>
+              </tr>
+              <tr>
+                       <td>deployment_container_id = None</td>
+                       <td>(StrOpt) Optional parameter identifying the ID of datastore to deploy NSX Edges</td>
+              </tr>
+              <tr>
+                       <td>external_network = None</td>
+                       <td>(StrOpt) Network ID for physical network connectivity</td>
+              </tr>
+              <tr>
+                       <td>manager_uri = None</td>
+                       <td>(StrOpt) uri for vsm</td>
+              </tr>
+              <tr>
+                       <td>password = default</td>
+                       <td>(StrOpt) Password for vsm</td>
+              </tr>
+              <tr>
+                       <td>resource_pool_id = None</td>
+                       <td>(StrOpt) Optional parameter identifying the ID of resource to deploy NSX Edges</td>
               </tr>
               <tr>
                        <td>task_status_check_interval = 2000</td>
