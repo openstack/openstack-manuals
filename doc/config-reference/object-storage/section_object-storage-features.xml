@@ -51,14 +51,11 @@
                 maintenance and still guarantee object availability in
                 the event that another zone fails during your
                 maintenance.</para>
-            <para>You could keep each server in its own cabinet to
-                achieve cabinet level isolation, but you may wish to
-                wait until your swift service is better established
-                before developing cabinet-level isolation. OpenStack
-                Object Storage is flexible; if you later decide to
-                change the isolation level, you can take down one zone
-                at a time and move them to appropriate new homes.
-            </para>
+            <para>You could keep each server in its own cabinet to achieve cabinet level isolation,
+                but you may wish to wait until your Object Storage service is better established
+                before developing cabinet-level isolation. OpenStack Object Storage is flexible; if
+                you later decide to change the isolation level, you can take down one zone at a time
+                and move them to appropriate new homes.</para>
         </section>
     </section>
     <section xml:id="swift-raid-controller">
@@ -161,11 +158,9 @@
     </section>
     <section xml:id="object-storage-healthcheck">
         <title>Health check</title>
-        <para>Provides an easy way to monitor whether the swift proxy
-            server is alive. If you access the proxy with the path
-                <filename>/healthcheck</filename>, it responds with
-                <literal>OK</literal> in the response body, which
-            monitoring tools can use.</para>
+        <para>Provides an easy way to monitor whether the Object Storage proxy server is alive. If
+            you access the proxy with the path <filename>/healthcheck</filename>, it responds with
+                <literal>OK</literal> in the response body, which monitoring tools can use.</para>
         <xi:include
             href="../../common/tables/swift-account-server-filter-healthcheck.xml"
         />
@@ -192,18 +187,14 @@
     <section xml:id="object-storage-tempurl">
         <?dbhtml stop-chunking?>
         <title>Temporary URL</title>
-        <para>Allows the creation of URLs to provide temporary access
-            to objects. For example, a website may wish to provide a
-            link to download a large object in Swift, but the Swift
-            account has no public access. The website can generate a
-            URL that provides GET access for a limited time to the
-            resource. When the web browser user clicks on the link,
-            the browser downloads the object directly from Swift,
-            eliminating the need for the website to act as a proxy for
-            the request. If the user shares the link with all his
-            friends, or accidentally posts it on a forum, the direct
-            access is limited to the expiration time set when the
-            website created the link.</para>
+        <para>Allows the creation of URLs to provide temporary access to objects. For example, a
+            website may wish to provide a link to download a large object in OpenStack Object
+            Storage, but the Object Storage account has no public access. The website can generate a
+            URL that provides GET access for a limited time to the resource. When the web browser
+            user clicks on the link, the browser downloads the object directly from Object Storage,
+            eliminating the need for the website to act as a proxy for the request. If the user
+            shares the link with all his friends, or accidentally posts it on a forum, the direct
+            access is limited to the expiration time set when the website created the link.</para>
         <para>A temporary URL is the typical URL associated with an
             object, with two additional query parameters:<variablelist>
                 <varlistentry>
@@ -225,13 +216,11 @@
     temp_url_sig=da39a3ee5e6b4b0d3255bfef95601890afd80709&amp;
     temp_url_expires=1323479485
 </programlisting></para>
-        <para>To create temporary URLs, first set the
-                <literal>X-Account-Meta-Temp-URL-Key</literal> header
-            on your Swift account to an arbitrary string. This string
-            serves as a secret key. For example, to set a key of
-                <literal>b3968d0207b54ece87cccc06515a89d4</literal>
-            using the <command>swift</command> command-line
-            tool:</para>
+        <para>To create temporary URLs, first set the <literal>X-Account-Meta-Temp-URL-Key</literal>
+            header on your Object Storage account to an arbitrary string. This string serves as a
+            secret key. For example, to set a key of
+                <literal>b3968d0207b54ece87cccc06515a89d4</literal> using the
+                <command>swift</command> command-line tool:</para>
         <screen><prompt>$</prompt> <userinput>swift post -m "Temp-URL-Key:<replaceable>b3968d0207b54ece87cccc06515a89d4</replaceable>"</userinput></screen>
         <para>Next, generate an HMAC-SHA1 (RFC 2104) signature to
             specify:</para>
@@ -473,14 +462,11 @@ Sample represents 1.00% of the object partition space
     </section>
     <section xml:id="object-storage-container-quotas">
         <title>Container quotas</title>
-        <para>The <code>container_quotas</code> middleware
-            implements simple quotas
-            that can be imposed on swift containers by a user with the
-            ability to set container metadata, most likely the account
-            administrator. This can be useful for limiting the scope
-            of containers that are delegated to non-admin users,
-            exposed to formpost uploads, or just as a self-imposed
-            sanity check.</para>
+        <para>The <code>container_quotas</code> middleware implements simple quotas that can be
+            imposed on Object Storage containers by a user with the ability to set container
+            metadata, most likely the account administrator. This can be useful for limiting the
+            scope of containers that are delegated to non-admin users, exposed to formpost uploads,
+            or just as a self-imposed sanity check.</para>
         <para>Any object PUT operations that exceed these quotas
             return a 413 response (request entity too large) with a
             descriptive body.</para>
@@ -592,15 +578,13 @@ X-Trans-Id: tx602634cf478546a39b1be-0051e6bc7a</computeroutput></screen>
   &lt;input type="submit" /&gt;
 &lt;/form&gt;]]&gt;
 </programlisting>
-        <para>The <literal>swift-url</literal> is the URL to the Swift
-            destination, such as:
-                <uri>https://swift-cluster.example.com/v1/AUTH_account/container/object_prefix</uri>
-            The name of each file uploaded is appended to the
-            specified <literal>swift-url</literal>. So, you can upload
-            directly to the root of container with a URL like:
-                <uri>https://swift-cluster.example.com/v1/AUTH_account/container/</uri>
-            Optionally, you can include an object prefix to better
-            separate different users’ uploads, such as:
+        <para>The <literal>swift-url</literal> is the URL to the Object Storage destination, such
+            as: <uri>https://swift-cluster.example.com/v1/AUTH_account/container/object_prefix</uri>
+            The name of each file uploaded is appended to the specified
+            <literal>swift-url</literal>. So, you can upload directly to the root of container with
+            a URL like: <uri>https://swift-cluster.example.com/v1/AUTH_account/container/</uri>
+            Optionally, you can include an object prefix to better separate different users’
+            uploads, such as:
                 <uri>https://swift-cluster.example.com/v1/AUTH_account/container/object_prefix</uri>
         </para>
         <note>

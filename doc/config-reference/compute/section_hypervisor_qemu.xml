@@ -29,14 +29,14 @@ libvirt_type=qemu</programlisting></para>
     <para>
     For some operations you may also have to install the <command>guestmount</command> utility:</para>
     <para>On Ubuntu:
-    <screen><prompt>$></prompt> <userinput>sudo apt-get install guestmount</userinput></screen>
-   </para>
-    <para>On RHEL, Fedora or CentOS:
-    <screen><prompt>$></prompt> <userinput>sudo yum install libguestfs-tools</userinput></screen>
-   </para>
+        <screen><prompt>$</prompt> <userinput>sudo apt-get install guestmount</userinput></screen>
+    </para>
+    <para>On Red Hat Enterprise Linux, Fedora, or CentOS:
+        <screen><prompt>$</prompt> <userinput>sudo yum install libguestfs-tools</userinput></screen>
+    </para>
     <para>On openSUSE:
-    <screen><prompt>$></prompt> <userinput>sudo zypper install guestfs-tools</userinput></screen>
-   </para>
+        <screen><prompt>$</prompt> <userinput>sudo zypper install guestfs-tools</userinput></screen>
+    </para>
     <para>The QEMU hypervisor supports the following virtual machine image formats:</para>
     <itemizedlist>
         <listitem>
@@ -46,22 +46,20 @@ libvirt_type=qemu</programlisting></para>
             <para>QEMU Copy-on-write (qcow2)</para>
         </listitem>
         <listitem>
-            <para>VMWare virtual machine disk format (vmdk)</para>
+            <para>VMware virtual machine disk format (vmdk)</para>
         </listitem>
     </itemizedlist>
     <section xml:id="fixes-rhel-qemu">
       <title>Tips and fixes for QEMU on RHEL</title>
-    <para>If you are testing OpenStack in a virtual machine, you need
-            to configure nova to use qemu without KVM and hardware
-            virtualization. The second command relaxes SELinux rules
-            to allow this mode of operation
-            (<link xlink:href="https://bugzilla.redhat.com/show_bug.cgi?id=753589">
-            https://bugzilla.redhat.com/show_bug.cgi?id=753589</link>). The
-            last two commands here work around a libvirt issue fixed in
-            RHEL 6.4. Note nested virtualization will be the much
-            slower TCG variety, and you should provide lots of memory
-            to the top level guest, as the OpenStack-created guests
-            default to 2GM RAM with no overcommit.</para>
+    <para>If you are testing OpenStack in a virtual machine, you must configure Compute to use qemu
+            without KVM and hardware virtualization. The second command relaxes SELinux rules to
+            allow this mode of operation (<link
+                xlink:href="https://bugzilla.redhat.com/show_bug.cgi?id=753589">
+                https://bugzilla.redhat.com/show_bug.cgi?id=753589</link>). The last two commands
+            here work around a libvirt issue fixed in Red Hat Enterprise Linux 6.4. Nested
+            virtualization will be the much slower TCG variety, and you should provide lots of
+            memory to the top-level guest, because the OpenStack-created guests default to 2GM RAM
+            with no overcommit.</para>
         <note><para>The second command, <command>setsebool</command>, may take a while.
        </para></note>
         <screen><prompt>$></prompt> <userinput>sudo openstack-config --set /etc/nova/nova.conf DEFAULT libvirt_type qemu</userinput>
