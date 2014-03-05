@@ -696,23 +696,23 @@ inject_password=true</programlisting>
                     <filename>/etc/shadow</filename> file inside of
                 the virtual machine instance.</para>
             <note>
-                <para>Users will only be able to ssh to the instance
-                    using the admin password if:<itemizedlist>
-                        <listitem>
-                            <para>The virtual machine image is a Linux
-                                distribution</para>
-                        </listitem>
-                        <listitem>
-                            <para>The virtual machine has been
-                                configured to allow users to ssh as
-                                the root user. This is not the case
-                                for <link
-                                   xlink:href="http://cloud-images.ubuntu.com/"
-                                   >Ubuntu cloud images</link>, which
-                                disallow ssh to the root account by
-                                default.</para>
-                        </listitem>
-                    </itemizedlist></para>
+                <para>Users can only ssh to the instance by using the
+                    admin password if:</para>
+                <itemizedlist>
+                    <listitem>
+                        <para>The virtual machine image is a Linux
+                            distribution</para>
+                    </listitem>
+                    <listitem>
+                        <para>The virtual machine has been configured
+                            to allow users to ssh as the root user.
+                            This is not the case for <link
+                                xlink:href="http://cloud-images.ubuntu.com/"
+                                >Ubuntu cloud images</link>, which
+                            disallow ssh to the root account by
+                            default.</para>
+                    </listitem>
+                </itemizedlist>
             </note>
         </simplesect>
         <simplesect>
@@ -763,30 +763,31 @@ inject_password=true</programlisting>
             <para>Currently, Compute with <systemitem class="service"
                     >nova-network</systemitem> supports these kinds of
                 networks, implemented in different “Network Manager”
-                types: <itemizedlist>
-                    <listitem>
-                        <para>Flat Network Manager</para>
-                    </listitem>
-                    <listitem>
-                        <para>Flat DHCP Network Manager</para>
-                    </listitem>
-                    <listitem>
-                        <para>VLAN Network Manager</para>
-                    </listitem>
-                </itemizedlist></para>
-            <para>These networks can co-exist in a cloud system.
-                However, because you can't yet select the type of
-                network for a given project, you cannot configure more
-                than one type of network in a given Compute
+                types:</para>
+            <itemizedlist>
+                <listitem>
+                    <para>Flat Network Manager</para>
+                </listitem>
+                <listitem>
+                    <para>Flat DHCP Network Manager</para>
+                </listitem>
+                <listitem>
+                    <para>VLAN Network Manager</para>
+                </listitem>
+            </itemizedlist>
+            <para>These network managers can co-exist in a cloud
+                system. However, because you cannot select the type of
+                network for a given project, you cannot configure
+                multiple network types in a single Compute
                 installation.</para>
             <note>
                 <para>All networking options require network
                     connectivity to be already set up between
                     OpenStack physical nodes. OpenStack does not
-                    configure any physical network interfaces.
-                    OpenStack automatically creates all network
-                    bridges (for example, br100) and VM virtual
-                    interfaces.</para>
+                    configure any physical network interfaces. All
+                    network managers automatically create VM virtual
+                    interfaces. Some, but not all, create network
+                    bridges such as <literal>br100</literal>.</para>
                 <para>All machines must have a <emphasis role="italic"
                         >public</emphasis> and <emphasis role="italic"
                         >internal</emphasis> network interface
@@ -795,8 +796,10 @@ inject_password=true</programlisting>
                     public interface, and
                         <literal>flat_interface</literal> and
                         <literal>vlan_interface</literal> for the
-                    internal interface with flat / VLAN
-                    managers).</para>
+                    internal interface with flat / VLAN managers).
+                    This guide refers to the public network as the
+                    external network and the private network as the
+                    internal or tenant network.</para>
                 <para>The internal network interface is used for
                     communication with VMs, it shouldn't have an IP
                     address attached to it before OpenStack
@@ -807,6 +810,11 @@ inject_password=true</programlisting>
                         mode</emphasis>, because it must receive
                     packets whose target MAC address is of the guest
                     VM, not of the host.</para>
+                <para>Throughout this documentation, the public
+                    network is sometimes referred to as the external
+                    network, while the internal network is also
+                    sometimes referred to as the private network or
+                    tenant network.</para>
             </note>
             <para>All the network managers configure the network using
                     <emphasis role="italic">network
@@ -856,8 +864,8 @@ inject_password=true</programlisting>
                 subnet, and then injected into the image on launch.
                 Each instance receives a fixed IP address from the
                 pool of available addresses. A system administrator
-                may create the Linux networking bridge (typically
-                named <literal>br100</literal>, although this
+                must create the Linux networking bridge (typically
+                named <literal>br100</literal>, although this is
                 configurable) on the systems running the <systemitem
                     class="service">nova-network</systemitem> service.
                 All instances of the system are attached to the same
@@ -921,6 +929,19 @@ inject_password=true</programlisting>
                         >cannot</emphasis> ping them from the compute
                     nodes. This is expected behavior.</para>
             </note>
+            <para>For flat and flat DHCP modes, create networks as
+                follows:</para>
+            <screen><prompt>$</prompt> <userinput>nova network-create vmnet \
+  --fixed-range-v4=10.0.0.0/24 --fixed-cidr=10.20.0.0/16 --bridge=br100</userinput></screen>
+            <para>The confusingly-named
+                    <option>--fixed-range-v4-</option> option
+                specifies the network subnet. The
+                    <option>--fixed-cidr</option> option specifies a
+                range of fixed IP addresses to allocate, and can be a
+                subset of the <option>--fixed-range-v4</option>
+                argument. The <option>--bridge</option> option
+                specifies the bridge device to which this network is
+                connected on every compute node.</para>
             <para><emphasis role="bold">VLAN Network Mode is the
                     default mode</emphasis> for OpenStack Compute. In
                 this mode, Compute creates a VLAN and bridge for each
@@ -1392,24 +1413,25 @@ echo 'Extra user data here'</computeroutput></screen>
             <?dbhtml stop-chunking?>
             <para>The multi-nic feature allows you to plug more than
                 one interface to your instances, making it possible to
-                make several use cases available: <itemizedlist>
-                    <listitem>
-                        <para>SSL Configurations (VIPs)</para>
-                    </listitem>
-                    <listitem>
-                        <para>Services failover/ HA</para>
-                    </listitem>
-                    <listitem>
-                        <para>Bandwidth Allocation</para>
-                    </listitem>
-                    <listitem>
-                        <para>Administrative/ Public access to your
-                            instances</para>
-                    </listitem>
-                </itemizedlist> Each VIF is representative of a
-                separate network with its own IP block. Every network
-                mode introduces it's own set of changes regarding the
-                mulitnic usage: <figure>
+                make several use cases available:</para>
+            <itemizedlist>
+                <listitem>
+                    <para>SSL Configurations (VIPs)</para>
+                </listitem>
+                <listitem>
+                    <para>Services failover/ HA</para>
+                </listitem>
+                <listitem>
+                    <para>Bandwidth Allocation</para>
+                </listitem>
+                <listitem>
+                    <para>Administrative/ Public access to your
+                        instances</para>
+                </listitem>
+            </itemizedlist>
+            <para>Each VIF is representative of a separate network
+                with its own IP block. Every network mode introduces
+                it's own set of changes regarding the mulitnic usage: <figure>
                     <title>multinic flat manager</title>
                     <mediaobject>
                         <imageobject>
@@ -1673,8 +1695,8 @@ net.bridge.bridge-nf-call-ip6tables=0</programlisting>
             responsible for a certain aspect of the system. It is a
             logical grouping of code relating to a portion of the
             system. In general other components should be using the
-            manager to make changes to the components that it is
-            responsible for.</para>
+            manager to make changes to the components for which it is
+            responsible.</para>
         <itemizedlist>
             <listitem>
                 <para><systemitem class="service"
