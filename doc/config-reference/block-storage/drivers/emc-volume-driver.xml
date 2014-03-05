@@ -144,11 +144,11 @@
         </section>
         <section xml:id="register-emc">
             <title>Register with VNX</title>
-            <para>To export a VNX volume to a Compute node, you must
+            <para>To export a VNX volume to a compute node, you must
                 register the node with VNX.</para>
             <procedure>
                 <title>Register the node</title>
-                <step><para>On the Compute node <literal>1.1.1.1</literal>, do
+                <step><para>On the compute node <literal>1.1.1.1</literal>, do
                     the following (assume <literal>10.10.61.35</literal>
                     is the iscsi target):</para>
                     <screen><prompt>$</prompt> <userinput>sudo /etc/init.d/open-iscsi start</userinput>
@@ -156,12 +156,12 @@
 <prompt>$</prompt> <userinput>cd /etc/iscsi</userinput>
 <prompt>$</prompt> <userinput>sudo more initiatorname.iscsi</userinput>
 <prompt>$</prompt> <userinput>iscsiadm -m node</userinput></screen></step>
-                <step><para>Log in to VNX from the Compute node using the target
+                <step><para>Log in to VNX from the compute node using the target
                     corresponding to the SPA port:</para>
                     <screen><prompt>$</prompt> <userinput>sudo iscsiadm -m node -T iqn.1992-04.com.emc:cx.apm01234567890.a0 -p 10.10.61.35 -l</userinput></screen>
                     <para>Where
                         <literal>iqn.1992-04.com.emc:cx.apm01234567890.a0</literal>
-                        is the initiator name of the Compute node. Login to
+                        is the initiator name of the compute node. Login to
                         Unisphere, go to
                         <literal>VNX00000</literal>-&gt;Hosts-&gt;Initiators,
                         Refresh and wait until initiator
@@ -173,10 +173,10 @@
                     IP address <literal>myhost1</literal>. Click <guibutton>Register</guibutton>.
                     Now host <literal>1.1.1.1</literal> also appears under
                     Hosts-&gt;Host List.</para></step>
-                <step><para>Log out of VNX on the Compute node:</para>
+                <step><para>Log out of VNX on the compute node:</para>
                     <screen><prompt>$</prompt> <userinput>sudo iscsiadm -m node -u</userinput></screen></step>
                 <step>
-                    <para>Log in to VNX from the Compute node using the target
+                    <para>Log in to VNX from the compute node using the target
                         corresponding to the SPB port:</para>
                     <screen><prompt>$</prompt> <userinput>sudo iscsiadm -m node -T iqn.1992-04.com.emc:cx.apm01234567890.b8 -p 10.10.10.11 -l</userinput></screen>
                 </step>
@@ -247,9 +247,13 @@ cinder_emc_config_file = /etc/cinder/cinder_emc_config.xml</programlisting>
                 </listitem>
             </itemizedlist>
             <note>
-                <para>To attach VMAX volumes to an OpenStack VM, you must create a Masking View by
-                    using Unisphere for VMAX. The Masking View must have an Initiator Group that
-                    contains the initiator of the OpenStack Compute node that hosts the VM.</para>
+                <para>
+                  To attach VMAX volumes to an OpenStack VM, you must
+                  create a Masking View by using Unisphere for
+                  VMAX. The Masking View must have an Initiator Group
+                  that contains the initiator of the OpenStack compute
+                  node that hosts the VM.
+                </para>
             </note>
         </section>
     </section>
