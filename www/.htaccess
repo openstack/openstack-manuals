@@ -98,3 +98,10 @@ redirect 301 /trunk/openstack-training/ /training-guides/
 redirect 301 /trunk/training-guide/ /training-guides/
 redirect 301 /trunk/training-guides/ /training-guides/
 
+# A doc generation bug resulted in Google indexing links containing "//", which cause
+# problems with linked content (images/css/etc).  This rule generates a 301 redirect
+# for these links.
+#
+# details: https://bugs.launchpad.net/openstack-manuals/+bug/1288513
+redirectmatch 301 (.*)//(.*) $1/$2
+
