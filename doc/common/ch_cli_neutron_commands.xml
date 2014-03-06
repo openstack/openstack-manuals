@@ -10,7 +10,8 @@
 
     <title>Networking command-line client</title>
     <para>The <command>neutron</command> client is the command-line interface
-         (CLI) for the OpenStack Networking API and its extensions.
+         (CLI) for the OpenStack Networking API and its extensions. This chapter documents
+         <command>neutron</command> version 2.3.4.
     </para>
     <para>For help on a specific <command>neutron</command>
        command, enter:
@@ -1063,7 +1064,7 @@
     <term><command>quota-list</command></term>
     <listitem>
       <para>
-        List defined quotas of all tenants.
+        List quotas of all tenants who have non-default quota values.
       </para>
     </listitem>
   </varlistentry>
@@ -7222,7 +7223,7 @@ Update network's information.
                            [--tenant-id TENANT_ID] [--name NAME]
                            [--admin-state-down] [--mac-address MAC_ADDRESS]
                            [--device-id DEVICE_ID]
-                           [--fixed-ip ip_address=IP_ADDR]
+                           [--fixed-ip subnet_id=SUBNET,ip_address=IP_ADDR]
                            [--security-group SECURITY_GROUP | --no-security-groups]
                            [--extra-dhcp-opt EXTRA_DHCP_OPTS]
                            NETWORK
@@ -7302,8 +7303,8 @@ Create a port for a given tenant.
     <term><command>--fixed-ip</command></term>
     <listitem>
       <para>
-        ip_address=IP_ADDR
-      Desired IP for this port:
+        subnet_id=SUBNET,ip_address=IP_ADDR
+      Desired IP and/or subnet for this port:
       subnet_id=&lt;name_or_id&gt;,ip_address=&lt;ip&gt;, (This option
       can be repeated.)
       </para>
@@ -7849,7 +7850,7 @@ Delete defined quotas of a given tenant.
                           [--request-format {json,xml}]
         </computeroutput></screen>
         <para>
-List defined quotas of all tenants.
+List quotas of all tenants who have non-default quota values.
         </para>  <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
