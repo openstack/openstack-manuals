@@ -167,27 +167,6 @@ flavor = keystone</programlisting>
       </substeps>
     </step>
     <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
-      <para>Add the credentials to the
-          <filename>/etc/glance/glance-api-paste.ini</filename> and
-          <filename>/etc/glance/glance-registry-paste.ini</filename>
-        files.</para>
-      <para os="centos">On CentOS, you may need to copy these files to the
-        correct location.</para>
-      <screen os="centos">
-<prompt>#</prompt> <userinput>cp /usr/share/glance/glance-api-dist-paste.ini /etc/glance/glance-api-paste.ini</userinput>
-<prompt>#</prompt> <userinput>cp /usr/share/glance/glance-registry-dist-paste.ini /etc/glance/glance-registry-paste.ini</userinput>
-</screen>
-      <para>Edit each file to set the following options in the
-          <literal>[filter:authtoken]</literal> section and leave
-         any other existing option as it is.</para>
-      <programlisting language="ini">[filter:authtoken]
-paste.filter_factory=keystoneclient.middleware.auth_token:filter_factory
-auth_host=controller
-admin_user=glance
-admin_tenant_name=service
-admin_password=<replaceable>GLANCE_PASS</replaceable></programlisting>
-    </step>
-    <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
       <para>Register the Image Service with the Identity Service so
         that other OpenStack services can locate it. Register the
         service and create the endpoint:</para>
