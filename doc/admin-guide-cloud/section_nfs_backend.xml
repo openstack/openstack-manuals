@@ -2,17 +2,17 @@
 <section xml:id="nfs_backend" xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="1.0">
-    <title>Configure an NFS storage backend</title>
-    <para>This section explains how to configure the
-    <systemitem>cinder</systemitem> volume service to use NFS storage.
-    The NFS shares to be used must already exist and be accessible
-    from the <systemitem>cinder</systemitem> volume service host.
+    <title>Configure an NFS storage back end</title>
+    <para>This section explains how to configure OpenStack Block
+    Storage to use NFS storage. You must be able to access the NFS
+    shares from the server that hosts the
+    <systemitem class="service">cinder</systemitem> volume service.
     </para>
-    <note>
-        <para os="rhel;centos;fedora;opensuse;sles">The
-        <systemitem>cinder</systemitem> volume service is named
-        <literal>openstack-cinder-volume</literal> on the following
-        distributions:</para>
+<note>
+<para os="rhel;centos;fedora;opensuse;sles">The
+        <systemitem class="service">cinder</systemitem> volume service
+        is named <literal>openstack-cinder-volume</literal> on the
+        following distributions:</para>
         <itemizedlist os="rhel;centos;fedora;opensuse;sles">
         <listitem os="rhel;centos;fedora"><para>CentOS</para></listitem>
         <listitem os="rhel;centos;fedora"><para>Fedora</para></listitem>
@@ -23,11 +23,11 @@
         </para></listitem>
         </itemizedlist>
         <para>In Ubuntu and Debian distributions, the
-        <systemitem>cinder</systemitem> volume service is named
-        <literal>cinder-volume</literal>.</para>
-    </note>
+        <systemitem class="service">cinder</systemitem> volume
+        service is named <literal>cinder-volume</literal>.</para>
+</note>
     <procedure>
-        <title>Configure the cinder volume service to use NFS storage</title>
+        <title>Configure Block Storage to use an NFS storage back end</title>
      <step>
       <para>Log in as <systemitem>root</systemitem> to the system
       hosting the <systemitem>cinder</systemitem> volume
@@ -42,8 +42,9 @@
      <step>
      <para>
          Add an entry to <filename>/etc/cinder/nfsshares</filename>
-         for each NFS share that the <systemitem>cinder</systemitem>
-         volume service should use for backend storage. Each entry
+         for each NFS share that the
+         <systemitem class="service">cinder</systemitem>
+         volume service should use for back end storage. Each entry
          should be a separate line, and should use the following
          format:
      </para>
@@ -74,7 +75,8 @@
            <screen><prompt>#</prompt> <userinput>chmod 0640 /etc/cinder/nfsshares</userinput></screen>
       </step>
       <step>
-          <para>Configure the <systemitem>cinder</systemitem>
+          <para>Configure the
+          <systemitem class="service">cinder</systemitem>
             volume service to use the
             <filename>/etc/cinder/nfsshares</filename> file created
             earlier. To do so, open the
@@ -135,7 +137,8 @@ DEFAULT nfs_mount_options <replaceable>OPTIONS</replaceable></userinput></screen
            </para>
       </step>
       <step>
-          <para>Configure the <systemitem>cinder</systemitem>
+          <para>Configure the
+          <systemitem class="service">cinder</systemitem>
             volume service to use the correct volume driver, namely
             <literal>cinder.volume.drivers.nfs.NfsDriver</literal>. To
             do so, open the
@@ -152,20 +155,18 @@ DEFAULT nfs_mount_options <replaceable>OPTIONS</replaceable></userinput></screen
            <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/cinder/cinder.conf \
 DEFAULT volume_driver cinder.volume.drivers.nfs.NfsDriver</userinput></screen>
       </step>
-      <step>
-        <para>
+        <step><para>
         You can now restart the service to apply the configuration.
         </para>
         <para os="rhel;centos;fedora;opensuse;sles">To restart the
-        <systemitem>cinder</systemitem> volume service on CentOS,
-        Fedora, openSUSE, Red Hat Enterprise Linux, or SUSE Linux
-        Enterprise, run:</para>
+        <systemitem class="service">cinder</systemitem> volume service
+        on CentOS, Fedora, openSUSE, Red Hat Enterprise Linux, or SUSE
+        Linux Enterprise, run:</para>
         <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>service openstack-cinder-volume restart</userinput></screen>
         <para os="debian;ubuntu">To restart the
         <systemitem>cinder</systemitem> volume service on Ubuntu or
         Debian, run:</para>
-        <screen os="debian;ubuntu"><prompt>#</prompt> <userinput>service cinder-volume restart</userinput></screen>
-      </step>
+        <screen os="debian;ubuntu"><prompt>#</prompt> <userinput>service cinder-volume restart</userinput></screen></step>
       </procedure>
   <note>
            <para>

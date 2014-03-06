@@ -2,16 +2,16 @@
 <section xml:id="glusterfs_backend" xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="1.0">
-    <title>Configure a GlusterFS backend</title>
+    <title>Configure a GlusterFS back end</title>
     <para>
         This section explains how to configure OpenStack Block Storage
-        to use GlusterFS as a backend. The used GlusterFS shares must
-        already exist and be accessible from the server hosting the
+        to use GlusterFS as a back end. You must be able to access the
+        GlusterFS shares from the server that hosts the
         <systemitem class="service">cinder</systemitem> volume
         service.
     </para>
-    <note>
-        <para os="rhel;centos;fedora;opensuse;sles">The
+<note>
+<para os="rhel;centos;fedora;opensuse;sles">The
         <systemitem class="service">cinder</systemitem> volume service
         is named <literal>openstack-cinder-volume</literal> on the
         following distributions:</para>
@@ -27,7 +27,7 @@
         <para>In Ubuntu and Debian distributions, the
         <systemitem class="service">cinder</systemitem> volume
         service is named <literal>cinder-volume</literal>.</para>
-    </note>
+</note>
     <para>
         Mounting GlusterFS volumes requires utilities and libraries
         from the <package>glusterfs-fuse</package> package. This
@@ -46,7 +46,7 @@
         <link xlink:href="http://gluster.org/community/documentation/index.php/Main_Page">GlusterDocumentation</link>
         page.</para>
     <procedure>
-        <title>Configuring GlusterFS for the OpenStack Block Storage</title>
+        <title>Configure GlusterFS for OpenStack Block Storage</title>
         <para>
         The GlusterFS server must also be configured accordingly in
         order to allow OpenStack Block Storage to use GlusterFS shares:
@@ -103,10 +103,10 @@
         </step>
     </procedure>
     <procedure>
-        <title>Configuring cinder-volume to use GlusterFS</title>
+        <title>Configure Block Storage to use a GlusterFS back end</title>
         <para>
-        Once the GlusterFS service is configured as needed, perform
-        the following procedure:
+        After you configure the GlusterFS service, complete these
+        steps:
         </para>
         <step>
             <para>
@@ -124,7 +124,7 @@
             <para>Add an entry to
             <filename>/etc/cinder/glusterfs</filename> for each
             GlusterFS share that OpenStack Block Storage should use
-            for backend storage. Each entry should be a separate line,
+            for back end storage. Each entry should be a separate line,
             and should use the following format:</para>
             <programlisting><replaceable>HOST</replaceable>:/<replaceable>VOL_NAME</replaceable></programlisting>
             <para>
@@ -224,8 +224,7 @@ DEFAULT glusterfs_shares_config /etc/cinder/glusterfs</userinput></screen>
            <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/cinder/cinder.conf \
 DEFAULT volume_driver cinder.volume.drivers.glusterfs.GlusterfsDriver</userinput></screen>
         </step>
-        <step>
-        <para>
+        <step><para>
         You can now restart the service to apply the configuration.
         </para>
         <para os="rhel;centos;fedora;opensuse;sles">To restart the
@@ -236,11 +235,10 @@ DEFAULT volume_driver cinder.volume.drivers.glusterfs.GlusterfsDriver</userinput
         <para os="debian;ubuntu">To restart the
         <systemitem class="service">cinder</systemitem> volume service
         on Ubuntu or Debian, run:</para>
-        <screen os="debian;ubuntu"><prompt>#</prompt> <userinput>service cinder-volume restart</userinput></screen>
-        </step>
+        <screen os="debian;ubuntu"><prompt>#</prompt> <userinput>service cinder-volume restart</userinput></screen></step>
     </procedure>
     <para>OpenStack Block Storage is now configured to use a GlusterFS
-    backend.</para>
+    back end.</para>
     <note>
         <para>
                 In <filename>/etc/cinder/cinder.conf</filename>, the
