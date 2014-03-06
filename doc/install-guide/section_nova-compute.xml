@@ -194,18 +194,18 @@ glance_host=<replaceable>controller</replaceable></programlisting>
         <emphasis>zero</emphasis>, your hypervisor and/or CPU do not
         support nested hardware acceleration and
         <literal>libvirt</literal> must use QEMU instead of KVM. Edit
-        the <literal>[DEFAULT]</literal> section in the
+        the <literal>[libvirt]</literal> section in the
         <filename>/etc/nova/nova-compute.conf</filename> file to modify
         this key:</para>
-      <programlisting os="ubuntu;debian" language="ini">[DEFAULT]
+      <programlisting os="ubuntu;debian" language="ini">[libvirt]
 ...
-libvirt_type = qemu</programlisting>
+virt_type = qemu</programlisting>
       <para os="rhel;centos;fedora;sles;opensuse">If this command returns
         a value of <emphasis>zero</emphasis>, your hypervisor and/or CPU
         do not support nested hardware acceleration and
         <literal>libvirt</literal> must use QEMU instead of KVM.
         Configure <literal>libvirt</literal> to use QEMU:</para>
-      <screen os="rhel;centos;fedora;sles;opensuse"><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT libvirt_type qemu</userinput></screen>
+      <screen os="rhel;centos;fedora;sles;opensuse"><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf libvirt virt_type qemu</userinput></screen>
     </step>
     <step>
       <para>Edit the <filename>/etc/nova/api-paste.ini</filename>
