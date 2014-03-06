@@ -103,6 +103,22 @@ server2@lvmstorage-2    zone1</computeroutput></screen>
                 attribute.</para>
         </listitem>
     </itemizedlist>
+    <note>
+    <para>If you plan to decommission a block storage node, you must
+    stop the <systemitem class="service">cinder</systemitem> volume
+    service on the node after performing the migration.</para>
+    <para os="rhel;centos;fedora;opensuse;sles">On nodes that run
+    CentOS, Fedora, openSUSE, RedHat Enterprise Linux, or SUSE Linux
+    Enterprise, run:</para>
+    <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>service openstack-cinder-volume stop</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-cinder-volume off</userinput></screen>
+    <para os="debian;ubuntu">On nodes that run Ubuntu or Debian, run:
+    </para>
+    <screen os="debian;ubuntu"><prompt>#</prompt> <userinput>service cinder-volume stop</userinput>
+<prompt>#</prompt> <userinput>chkconfig cinder-volume off</userinput></screen>
+    <para>Stopping the <systemitem>cinder</systemitem> volume service
+    will prevent volumes from being allocated to the node.</para>
+    </note>
     <para>Migrate this volume to the second LVM back-end:</para>
     <screen><prompt>$</prompt> <userinput>cinder migrate 6088f80a-f116-4331-ad48-9afb0dfb196c server2@lvmstorage-2</userinput></screen>
     <para>You can use the <command>cinder show</command> command to
@@ -140,7 +156,7 @@ server2@lvmstorage-2    zone1</computeroutput></screen>
             <literal>host</literal> is the new host, and
             <literal>name_id</literal> holds the ID of the volume
         created by the migration. If you look at the second LVM
-        back-end, you find the logical volume
+        back end, you find the logical volume
             <literal>volume-133d1f56-9ffc-4f57-8798-d5217d851862</literal>.</para>
     <note>
         <para>The migration is not visible to non-admin users (for
