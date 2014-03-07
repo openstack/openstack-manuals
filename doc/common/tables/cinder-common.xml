@@ -4,7 +4,7 @@
              The tool to do so lives in the tools directory of this
              repository -->
         <para xmlns="http://docbook.org/ns/docbook" version="5.0">
-        <table rules="all">
+        <table rules="all" xml:id="config_table_cinder_common">
           <caption>Description of configuration options for common</caption>
            <col width="50%"/>
            <col width="50%"/>
@@ -31,8 +31,8 @@
                        <td>(StrOpt) default availability zone to use when creating a new volume. If this is not set then we use the value from the storage_availability_zone option as the default availability_zone for new volumes.</td>
               </tr>
               <tr>
-                       <td>default_log_levels = amqp=WARN, amqplib=WARN, boto=WARN, qpid=WARN, sqlalchemy=WARN, suds=INFO, iso8601=WARN</td>
-                       <td>(ListOpt) list of logger=LEVEL pairs</td>
+                       <td>default_log_levels = amqp=WARN, amqplib=WARN, boto=WARN, qpid=WARN, sqlalchemy=WARN, suds=INFO, iso8601=WARN, requests.packages.urllib3.connectionpool=WARN</td>
+                       <td>(ListOpt) List of logger=LEVEL pairs</td>
               </tr>
               <tr>
                        <td>default_notification_level = INFO</td>
@@ -56,7 +56,7 @@
               </tr>
               <tr>
                        <td>fatal_deprecations = False</td>
-                       <td>(BoolOpt) make deprecations fatal</td>
+                       <td>(BoolOpt) Make deprecations fatal</td>
               </tr>
               <tr>
                        <td>fatal_exception_format_errors = False</td>
@@ -100,19 +100,19 @@
               </tr>
               <tr>
                        <td>logging_context_format_string = %(asctime)s.%(msecs)03d %(process)d %(levelname)s %(name)s [%(request_id)s %(user_identity)s] %(instance)s%(message)s</td>
-                       <td>(StrOpt) format string to use for log messages with context</td>
+                       <td>(StrOpt) Format string to use for log messages with context</td>
               </tr>
               <tr>
                        <td>logging_debug_format_suffix = %(funcName)s %(pathname)s:%(lineno)d</td>
-                       <td>(StrOpt) data to append to log format when level is DEBUG</td>
+                       <td>(StrOpt) Data to append to log format when level is DEBUG</td>
               </tr>
               <tr>
                        <td>logging_default_format_string = %(asctime)s.%(msecs)03d %(process)d %(levelname)s %(name)s [-] %(instance)s%(message)s</td>
-                       <td>(StrOpt) format string to use for log messages without context</td>
+                       <td>(StrOpt) Format string to use for log messages without context</td>
               </tr>
               <tr>
                        <td>logging_exception_prefix = %(asctime)s.%(msecs)03d %(process)d TRACE %(name)s %(instance)s</td>
-                       <td>(StrOpt) prefix each line of exception output with this format</td>
+                       <td>(StrOpt) Prefix each line of exception output with this format</td>
               </tr>
               <tr>
                        <td>monkey_patch = False</td>
@@ -200,7 +200,7 @@
               </tr>
               <tr>
                        <td>syslog-log-facility = LOG_USER</td>
-                       <td>(StrOpt) syslog facility to receive log lines</td>
+                       <td>(StrOpt) Syslog facility to receive log lines</td>
               </tr>
               <tr>
                        <td>tcp_keepidle = 600</td>
@@ -211,16 +211,20 @@
                        <td>(IntOpt) count of reservations until usage is refreshed</td>
               </tr>
               <tr>
-                       <td>use-syslog = False</td>
-                       <td>(BoolOpt) Use syslog for logging.</td>
-              </tr>
-              <tr>
                        <td>use_forwarded_for = False</td>
                        <td>(BoolOpt) Treat X-Forwarded-For as the canonical remote address. Only enable this if you have a sanitizing proxy.</td>
               </tr>
               <tr>
                        <td>use_stderr = True</td>
                        <td>(BoolOpt) Log output to standard error</td>
+              </tr>
+              <tr>
+                       <td>use-syslog = False</td>
+                       <td>(BoolOpt) Use syslog for logging. Existing syslog format is DEPRECATED during I, and then will be changed in J to honor RFC5424</td>
+              </tr>
+              <tr>
+                       <td>use-syslog-rfc-format = False</td>
+                       <td>(BoolOpt) (Optional) Use syslog rfc5424 format for logging. If enabled, will add APP-NAME (RFC5424) before the MSG part of the syslog message.  The old format without APP-NAME is deprecated in I, and will be removed in J.</td>
               </tr>
               <tr>
                        <td>verbose = False</td>

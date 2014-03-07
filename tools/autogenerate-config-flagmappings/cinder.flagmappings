@@ -50,6 +50,7 @@ default_availability_zone common
 default_log_levels common
 default_notification_level common
 default_publisher_id common
+default_timeout rpc
 default_volume_type common
 disable_process_locking common
 enable_new_services common
@@ -64,6 +65,7 @@ eqlx_group_name eqlx
 eqlx_pool eqlx
 eqlx_use_chap eqlx
 expiry_thres_minutes netapp_7mode_nfs netapp_cdot_nfs
+extra_capabilities api
 fake_rabbit rpc
 fatal_deprecations common
 fatal_exception_format_errors common
@@ -123,11 +125,11 @@ kombu_ssl_keyfile rpc
 kombu_ssl_version rpc
 lio_initiator_iqns common
 lock_path common
-log-config-append common
-log-date-format common
-log-dir common
-log-file common
-log-format common
+log_config_append common
+log_date_format common
+log_dir common
+log_file common
+log_format common
 logging_context_format_string common
 logging_debug_format_suffix common
 logging_default_format_string common
@@ -139,6 +141,7 @@ matchmaker_heartbeat_ttl rpc
 max_age quota
 max_gigabytes storage
 max_header_line api
+max_luns_per_storage_group emc
 migration_create_volume_timeout_secs storage
 monkey_patch common
 monkey_patch_modules common
@@ -149,6 +152,7 @@ nas_login nas
 nas_password nas
 nas_private_key nas
 nas_ssh_port nas
+naviseccli_path emc
 netapp_controller_ips netapp_eseries_iscsi
 netapp_copyoffload_tool_path netapp_cdot_nfs
 netapp_login netapp_7mode_iscsi netapp_7mode_nfs netapp_cdot_iscsi netapp_cdot_nfs netapp_eseries_iscsi
@@ -211,6 +215,7 @@ osapi_volume_extension api
 osapi_volume_listen api
 osapi_volume_listen_port api
 osapi_volume_workers api
+pbm_default_policy vmware
 periodic_fuzzy_delay common
 periodic_interval common
 policy_default_rule common
@@ -302,6 +307,7 @@ ssl_cert_file common
 ssl_key_file common
 state_path common
 storage_availability_zone common
+storage_vnx_pool_name emc
 storwize_svc_connection_protocol storwize
 storwize_svc_flashcopy_timeout storwize
 storwize_svc_iscsi_chap_enabled storwize
@@ -315,22 +321,24 @@ storwize_svc_vol_iogrp storwize
 storwize_svc_vol_rsize storwize
 storwize_svc_vol_warning storwize
 storwize_svc_volpool_name storwize
-syslog-log-facility common
+syslog_log_facility common
 tcp_keepidle common
 thres_avl_size_perc_start netapp_7mode_nfs netapp_cdot_nfs
 thres_avl_size_perc_stop netapp_7mode_nfs netapp_cdot_nfs
 transfer_api_class api
 until_refresh common
-use-syslog common
 use_default_quota_class quota
 use_forwarded_for common
 use_multipath_for_image_xfer images
 use_stderr common
+use_syslog common
+use_syslog_rfc_format common
 verbose common
 vmware_api_retry_count vmware
 vmware_host_ip vmware
 vmware_host_password vmware
 vmware_host_username vmware
+vmware_host_version vmware
 vmware_image_transfer_timeout_secs vmware
 vmware_max_objects_retrieval vmware
 vmware_task_poll_interval vmware
@@ -349,6 +357,8 @@ volume_name_template api
 volume_service_inithost_offload storage
 volume_tmp_dir storage_ceph
 volume_topic rpc
+volume_transfer_key_length api
+volume_transfer_salt_length api
 volume_usage_audit_period storage
 volumes_dir storage
 windows_iscsi_lun_path windows
@@ -372,14 +382,14 @@ zadara_vpsa_poolname zadara
 zadara_vpsa_port zadara
 zadara_vpsa_use_ssl zadara
 zoning_mode zoning
-BRCD_FABRIC_EXAMPLE/fc_fabric_address zoning
-BRCD_FABRIC_EXAMPLE/fc_fabric_password zoning
-BRCD_FABRIC_EXAMPLE/fc_fabric_port zoning
-BRCD_FABRIC_EXAMPLE/fc_fabric_user zoning
-BRCD_FABRIC_EXAMPLE/principal_switch_wwn zoning
-BRCD_FABRIC_EXAMPLE/zone_activate zoning
-BRCD_FABRIC_EXAMPLE/zone_name_prefix zoning
-BRCD_FABRIC_EXAMPLE/zoning_policy zoning
+BRCD_FABRIC_EXAMPLE/fc_fabric_address zoning_fabric
+BRCD_FABRIC_EXAMPLE/fc_fabric_password zoning_fabric
+BRCD_FABRIC_EXAMPLE/fc_fabric_port zoning_fabric
+BRCD_FABRIC_EXAMPLE/fc_fabric_user zoning_fabric
+BRCD_FABRIC_EXAMPLE/principal_switch_wwn zoning_fabric
+BRCD_FABRIC_EXAMPLE/zone_activate zoning_fabric
+BRCD_FABRIC_EXAMPLE/zone_name_prefix zoning_fabric
+BRCD_FABRIC_EXAMPLE/zoning_policy zoning_fabric
 database/backend storage
 database/connection connection
 database/connection_debug connection
@@ -391,10 +401,10 @@ database/max_retries storage
 database/min_pool_size storage
 database/retry_interval common
 database/use_tpool common
-fc-zone-manager/brcd_sb_connector zoning
+fc-zone-manager/brcd_sb_connector zoning_manager
 fc-zone-manager/fc_fabric_names zoning
-fc-zone-manager/fc_san_lookup_service zoning
-fc-zone-manager/zone_driver zoning
+fc-zone-manager/fc_san_lookup_service zoning_manager
+fc-zone-manager/zone_driver zoning_manager
 fc-zone-manager/zoning_policy zoning
 keymgr/api_class keymgr
 keymgr/fixed_key keymgr
@@ -406,3 +416,6 @@ rpc_notifier2/topics common
 ssl/ca_file ssl
 ssl/cert_file ssl
 ssl/key_file ssl
+port rpc
+password rpc
+transport_url rpc

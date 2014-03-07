@@ -4,7 +4,7 @@
              The tool to do so lives in the tools directory of this
              repository -->
         <para xmlns="http://docbook.org/ns/docbook" version="5.0">
-        <table rules="all">
+        <table rules="all" xml:id="config_table_cinder_rpc">
           <caption>Description of configuration options for rpc</caption>
            <col width="50%"/>
            <col width="50%"/>
@@ -33,6 +33,10 @@
               <tr>
                        <td>control_exchange = openstack</td>
                        <td>(StrOpt) AMQP exchange to connect to if using RabbitMQ or Qpid</td>
+              </tr>
+              <tr>
+                       <td>default_timeout = 20</td>
+                       <td>(IntOpt) Default Time Out For CLI operations in minutes</td>
               </tr>
               <tr>
                        <td>fake_rabbit = False</td>
@@ -72,7 +76,7 @@
               </tr>
               <tr>
                        <td>publish_errors = False</td>
-                       <td>(BoolOpt) publish error events</td>
+                       <td>(BoolOpt) Publish error events</td>
               </tr>
               <tr>
                        <td>qpid_heartbeat = 60</td>
@@ -216,6 +220,21 @@
               <tr>
                        <td>ringfile = /etc/oslo/matchmaker_ring.json</td>
                        <td>(StrOpt) Matchmaker ring file (JSON)</td>
+              </tr>
+              <tr>
+                  <th colspan="2">[DEFAULT]</th>
+              </tr>
+              <tr>
+                       <td>port = 6379</td>
+                       <td>(IntOpt) Use this port to connect to redis host.</td>
+              </tr>
+              <tr>
+                       <td>password = None</td>
+                       <td>(StrOpt) Password for Redis server. (optional)</td>
+              </tr>
+              <tr>
+                       <td>transport_url = None</td>
+                       <td>(StrOpt) A URL representing the messaging driver to use and its full configuration. If not set, we fall back to the rpc_backend option and driver specific configuration.</td>
               </tr>
        </tbody>
         </table>
