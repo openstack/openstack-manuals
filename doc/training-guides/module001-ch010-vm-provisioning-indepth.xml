@@ -4,115 +4,210 @@
   xmlns:xlink="http://www.w3.org/1999/xlink"
  version="5.0"
   xml:id="module001-ch010-vm-provisioning-indepth">
-  <title>VM Provisioning Indepth</title>
-  <para>More Content To be Added ...</para>
-  <para>The request flow for provisioning an Instance goes like
-    this:</para>
+  <title>VM provisioning in-depth</title>
+  <!--
+    <para>More content to be added...</para>
+  -->
+  <para>
+    The request flow for provisioning an instance goes like
+    this:
+  </para>
+  <!-- The steps here correspond to numbers in figure
+       figures/image02.png at the end of this file. Do not renumber
+       the steps -->
   <orderedlist>
     <listitem>
-      <para>Dashboard or CLI gets the user credentials authenticates
-        with Keystone via REST api.</para>
-    </listitem>
-  </orderedlist>
-  <para>Keystone authenticate the credentials and generate &amp; send
-    back auth-token which will be used for sending request to other
-    Components through REST-call.</para>
-  <orderedlist>
-    <listitem>
-      <para>Dashboard or CLI convert the new instance request
-        specified in ‘launch instance’ or ‘nova-boot’ form to REST
-        API request and send it to nova-api.</para>
+      <!-- 1 -->
+      <para>The dashboard or CLI gets the user credentials and authenticates
+        with the Identity Service via REST API.
+      </para>
+      <para>
+        The Identity Service authenticates the user with the user
+        credentials, and then generates and sends back an auth-token
+        which will be used for sending the request to other components
+        through REST-call.
+      </para>
     </listitem>
     <listitem>
-      <para>nova-api receive the request and sends the request for
-        validation auth-token and access permission to
-        keystone.</para>
-    </listitem>
-  </orderedlist>
-  <para>Keystone validates the token and sends updated auth headers
-    with roles and permissions.</para>
-  <orderedlist>
-    <listitem>
-      <para>nova-api interacts with nova-database.</para>
-    </listitem>
-  </orderedlist>
-  <para>Creates initial db entry for new instance.</para>
-  <orderedlist>
-    <listitem>
-      <para>nova-api sends the rpc.call request to nova-scheduler
-        excepting to get updated instance entry with host ID
-        specified.</para>
+      <!-- 2 -->
+      <para>
+        The dashboard or CLI converts the new instance request
+        specified in <guilabel>launch instance</guilabel> or
+        <command>nova-boot</command> form to a REST API request and
+        sends it to <systemitem class="service">nova-api</systemitem>.
+      </para>
     </listitem>
     <listitem>
-      <para>nova-scheduler picks the request from the queue.</para>
+      <!-- 3 -->
+      <para>
+        <systemitem class="service">nova-api</systemitem> receives the
+        request and sends a request to the Identity Service for
+        validation of the auth-token and access permission.
+      </para>
+      <para>
+        The Identity Service validates the token and sends updated
+        authentication headers with roles and permissions.
+      </para>
     </listitem>
     <listitem>
-      <para>nova-scheduler interacts with nova-database to find an
-        appropriate host via filtering and weighing.</para>
-    </listitem>
-  </orderedlist>
-  <para>Returns the updated instance entry with appropriate host ID
-    after filtering and weighing.</para>
-  <para>nova-scheduler sends the rpc.cast request to nova-compute for
-    ‘launching instance’ on appropriate host .</para>
-  <orderedlist>
-    <listitem>
-      <para>nova-compute picks the request from the queue.</para>
-    </listitem>
-    <listitem>
-      <para>nova-compute send the rpc.call request to nova-conductor
-        to fetch the instance information such as host ID and flavor(
-        Ram , CPU ,Disk).</para>
+      <!-- 4 -->
+      <para>
+        <systemitem class="service">nova-api</systemitem> checks for
+        conflicts with <systemitem
+        class="service">nova-database</systemitem>.
+      </para>
+      <para>
+        <systemitem class="service">nova-api</systemitem> creates
+        initial database entry for a new instance.
+      </para>
     </listitem>
     <listitem>
-      <para>nova-conductor picks the request from the queue.</para>
+      <!-- 5 -->
+      <para>
+        <systemitem class="service">nova-api</systemitem> sends the
+        rpc.call request to <systemitem
+        class="service">nova-scheduler</systemitem> expecting to get
+        updated instance entry with host ID specified.
+      </para>
     </listitem>
     <listitem>
-      <para>nova-conductor interacts with nova-database.</para>
-    </listitem>
-  </orderedlist>
-  <para>Return the instance information.</para>
-  <para>nova-compute picks the instance information from the
-    queue.</para>
-  <orderedlist>
-    <listitem>
-      <para>nova-compute does the REST call by passing auth-token to
-        glance-api to get the Image URI by Image ID from glance and
-        upload image from image storage.</para>
+      <!-- 6 -->
+      <para>
+        <systemitem class="service">nova-scheduler</systemitem> picks
+        up the request from the queue.
+      </para>
     </listitem>
     <listitem>
-      <para>glance-api validates the auth-token with keystone.</para>
+      <!-- 7 -->
+      <para>
+        <systemitem class="service">nova-scheduler</systemitem>
+        interacts with <systemitem
+        class="service">nova-database</systemitem> to find an
+        appropriate host via filtering and weighing.
+      </para>
+      <para>
+        <systemitem class="service">nova-scheduler</systemitem>
+        returns the updated instance entry with the appropriate host
+        ID after filtering and weighing.
+      </para>
+      <para>
+        <systemitem class="service">nova-scheduler</systemitem> sends
+        the rpc.cast request to <systemitem
+        class="service">nova-compute</systemitem> for launching an
+        instance on the appropriate host.
+      </para>
     </listitem>
-  </orderedlist>
-  <para>nova-compute get the image metadata.</para>
-  <para>nova-compute does the REST-call by passing auth-token to
-    Network API to allocate and configure the network such that
-    instance gets the IP address.</para>
-  <orderedlist>
     <listitem>
-      <para>quantum-server validates the auth-token with
-        keystone.</para>
-    </listitem>
-  </orderedlist>
-  <para>nova-compute get the network info.</para>
-  <orderedlist>
-    <listitem>
-      <para>nova-compute does the REST call by passing auth-token to
-        Volume API to attach volumes to instance.</para>
+      <!-- 8 -->
+      <para>
+        <systemitem class="service">nova-compute</systemitem> picks up
+        the request from the queue.
+      </para>
     </listitem>
     <listitem>
-      <para>cinder-api validates the auth-token with keystone.</para>
+      <para>
+      <!-- 9 -->
+        <systemitem class="service">nova-compute</systemitem> sends the
+        rpc.call request to <systemitem
+        class="service">nova-conductor</systemitem> to fetch the
+        instance information such as host ID and flavor (RAM, CPU,
+        Disk).
+      </para>
     </listitem>
-  </orderedlist>
-  <para>nova-compute gets the block storage info.</para>
-  <orderedlist>
     <listitem>
-      <para>nova-compute generates data for hypervisor driver and
-        executes request on Hypervisor( via libvirt or api).</para>
+      <!-- 10 -->
+      <para>
+        <systemitem class="service">nova-conductor</systemitem> picks
+        up the request from the queue.
+      </para>
+    </listitem>
+    <listitem>
+      <!-- 11 -->
+      <para>
+        <systemitem class="service">nova-conductor</systemitem>
+        interacts with <systemitem
+        class="service">nova-database</systemitem>.
+      </para>
+      <para>
+        <systemitem class="service">nova-conductor</systemitem>
+        returns the instance information.
+      </para>
+      <para>
+        <systemitem class="service">nova-compute</systemitem> picks up the
+        instance information from the queue.
+      </para>
+    </listitem>
+    <listitem>
+      <!-- 12 -->
+      <para>
+        <systemitem class="service">nova-compute</systemitem> performs
+        the REST call by passing the auth-token to <systemitem
+        class="service">glance-api</systemitem>. Then, <systemitem
+        class="service">nova-compute</systemitem> uses the Image ID to
+        retrieve the Image URI from the Image Service, and loads the
+        image from the image storage.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        <!-- 13 -->
+        <systemitem class="service">glance-api</systemitem> validates
+        the auth-token with keystone.
+      </para>
+      <para>
+        <systemitem class="service">nova-compute</systemitem> gets the
+        image metadata.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        <!-- 14 -->
+        <systemitem class="service">nova-compute</systemitem> performs
+        the REST-call by passing the auth-token to Network API to
+        allocate and configure the network so that the instance gets
+        the IP address.
+      </para>
+    </listitem>
+    <listitem>
+      <!-- 15 -->
+      <para>
+        <systemitem class="service">neutron-server</systemitem>
+        validates the auth-token with keystone.
+      </para>
+      <para>
+        <systemitem class="service">nova-compute</systemitem>
+        retrieves the network info.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        <!-- 16 -->
+        <systemitem class="service">nova-compute</systemitem> performs
+        the REST call by passing the auth-token to Volume API to attach
+        volumes to the instance.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        <!-- 17 -->
+        <systemitem class="service">cinder-api</systemitem> validates
+        the auth-token with keystone.
+      </para>
+      <para>
+        <systemitem class="service">nova-compute</systemitem> retrieves the
+        block storage info.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        <systemitem class="service">nova-compute</systemitem>
+        generates data for the hypervisor driver and executes the
+        request on the hypervisor (via libvirt or API).
+      </para>
     </listitem>
   </orderedlist>
   <figure>
-    <title>Nova VM Provisioning</title>
+    <title>Nova VM provisioning</title>
     <mediaobject>
       <imageobject>
         <imagedata fileref="figures/image02.png"/>
