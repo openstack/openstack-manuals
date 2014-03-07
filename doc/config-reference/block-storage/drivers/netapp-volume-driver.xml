@@ -83,7 +83,7 @@
                         visit the <link
                             xlink:href="https://communities.netapp.com/groups/openstack"
                             > OpenStack NetApp
-                        community.</link></para>
+                        community</link>.</para>
                 </tip>
             </simplesect>
         </section>
@@ -135,12 +135,108 @@
                         will not work and you may see warnings in the
                         Cinder logs.</para>
                 </note>
+            </simplesect>
+            <simplesect>
+                <title>NetApp NFS Copy Offload client</title>
+                <para>A feature was added in the Icehouse release of the NetApp unified
+                    driver that enables Image Service images to be efficiently copied to a
+                    destination Block Storage volume. When the Block Storage and Image Service are
+                    configured to use the NetApp NFS Copy Offload client, a controller-side copy
+                    will be attempted before reverting to downloading the image from the
+                    Image Service. This improves image provisioning times while reducing the
+                    consumption of bandwidth and CPU cycles on the host(s) running the Image
+                    and Block Storage services. This is due to the copy operation being performed
+                    completely within the storage cluster.</para>
+                <para>The NetApp NFS Copy Offload client can be used in either of the following
+                    scenarios:</para>
+                <itemizedlist>
+                    <listitem>
+                        <para>The Image Service is configured to store images in an NFS share that
+                            is exported from a NetApp FlexVol volume <emphasis>and</emphasis>
+                            the destination for the new Block Storage volume will be on an NFS share
+                            exported from a different FlexVol volume than the one used by
+                            the Image Service. Both FlexVols must be located within the same cluster.</para>
+                    </listitem>
+                    <listitem>
+                        <para>The source image from the Image Service has already been cached in an NFS
+                            image cache within a Block Storage backend. The cached image resides on a
+                            different FlexVol volume than the destination for the new Block Storage
+                            volume. Both FlexVols must be located within the same cluster.</para>
+                    </listitem>
+                </itemizedlist>
+                <para>In order to use this feature, the Image Service must be configured as follows:</para>
+                <itemizedlist>
+                    <listitem>
+                        <para>The <literal>default_store</literal> configuration option should be set to
+                            <literal>file</literal></para>
+                    </listitem>
+                    <listitem>
+                        <para>The <literal>filesystem_store_datadir</literal> configuration option should be set to
+                            the path to the the Image Service NFS export</para>
+                    </listitem>
+                    <listitem>
+                        <para>The <literal>show_image_direct_url</literal> configuration option should be set to
+                            <literal>True</literal></para>
+                    </listitem>
+                    <listitem>
+                        <para>The <literal>show_multiple_locations</literal> configuration option should be set to
+                            <literal>True</literal></para>
+                    </listitem>
+                    <listitem>
+                        <para>The <literal>filesystem_store_metadata_file</literal> configuration option
+                            should refer to a metadata file. The metadata file should contain a
+                            JSON object that contains the correct information about the NFS export
+                            used by the Image Service, similar to:</para>
+                    </listitem>
+                </itemizedlist>
+                <programlisting language="ini">
+{
+    "share_location": "<replaceable>nfs://192.168.0.1/myGlanceExport</replaceable>",
+    "mount_point": "<replaceable>/var/lib/glance/images</replaceable>",
+    "type": "nfs"
+}
+                </programlisting>
+                <para>In order to use this feature, the Block Storage Service must be configured as follows:</para>
+                <itemizedlist>
+                    <listitem>
+                        <para>The <literal>netapp_copyoffload_tool</literal> configuration option should be set to
+                            the path to the NetApp Copy Offload binary</para>
+                    </listitem>
+                    <listitem>
+                        <para>The <literal>glance_api_version</literal> configuration option should be set to
+                            <literal>2</literal></para>
+                    </listitem>
+                </itemizedlist>
+                <important>
+                    <para>This feature requires that:</para>
+                    <itemizedlist>
+                        <listitem>
+                            <para>The storage system must have Data ONTAP v8.2 or greater
+                                installed.</para>
+                        </listitem>
+                        <listitem>
+                            <para>The vStorage feature must be enabled on each storage virtual
+                                machine (SVM, also known as a Vserver) that is permitted to
+                                interact with the copy offload client.</para>
+                        </listitem>
+                        <listitem>
+                            <para>NFS v4.0 or greater must be enabled and correctly exported
+                                from the SVM in order for the copy offload workflow to succeed.</para>
+                        </listitem>
+                    </itemizedlist>
+                </important>
                 <tip>
-                    <para>For more information on these options and
-                        other deployment and operational scenarios,
-                        visit the <link
-                            xlink:href="https://communities.netapp.com/groups/openstack"
-                            >OpenStack NetApp community.</link></para>
+                    <para>To download the NetApp copy offload binary to be utilized
+                        in conjunction with the <literal>netapp_copyoffload_tool_path</literal>
+                        configuration option, please visit the Downloads section of
+                        the <link xlink:href="http://support.netapp.com/">NetApp
+                        support site</link>.</para>
+                </tip>
+                <tip>
+                    <para>For more information on these options and other deployment
+                        and operational scenarios, visit the <link
+                        xlink:href="https://communities.netapp.com/groups/openstack">
+                        OpenStack NetApp community</link>.</para>
                 </tip>
             </simplesect>
         </section>
@@ -239,7 +335,7 @@
                         other deployment and operational scenarios,
                         visit the <link
                             xlink:href="https://communities.netapp.com/groups/openstack"
-                            >OpenStack NetApp community.</link></para>
+                            >OpenStack NetApp community</link>.</para>
                 </tip>
             </simplesect>
         </section>
@@ -289,7 +385,7 @@
                         other deployment and operational scenarios,
                         visit the <link
                             xlink:href="https://communities.netapp.com/groups/openstack"
-                            >OpenStack NetApp community.</link></para>
+                            >OpenStack NetApp community</link>.</para>
                 </tip>
             </simplesect>
         </section>
