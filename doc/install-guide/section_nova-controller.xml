@@ -151,6 +151,7 @@ vncserver_proxyclient_address=192.168.0.10</programlisting>
         Service running on the controller. Replace
         <replaceable>NOVA_PASS</replaceable> with your Compute password.</para>
       <screen os="fedora;rhel;centos;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT auth_strategy keystone</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf keystone_authtoken auth_uri http://<replaceable>controller</replaceable>:5000</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf keystone_authtoken auth_host <replaceable>controller</replaceable></userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf keystone_authtoken auth_protocol http</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf keystone_authtoken auth_port 35357</userinput>
@@ -170,31 +171,10 @@ auth_strategy=keystone</programlisting>
       <programlisting os="ubuntu;debian" language="ini">
 [keystone_authtoken]
 ...
+auth_uri = http://<replaceable>controller</replaceable>:5000
 auth_host = controller
 auth_port = 35357
 auth_protocol = http
-admin_tenant_name = service
-admin_user = nova
-admin_password = <replaceable>NOVA_PASS</replaceable></programlisting>
-    </step>
-
-    <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
-      <para>Add the credentials to the
-          <filename>/etc/nova/api-paste.ini</filename> file. Add these
-        options to the <literal>[filter:authtoken]</literal>
-        section:</para>
-      <note>
-        <title>Use of .ini files</title>
-        <para>You might sometimes have to edit <filename>.ini</filename> files
-        during initial setup. However,
-         do not edit these files for general configuration tasks.</para>
-      </note>
-      <programlisting language="ini">[filter:authtoken]
-paste.filter_factory = keystoneclient.middleware.auth_token:filter_factory
-auth_host = <replaceable>controller</replaceable>
-auth_port = 35357
-auth_protocol = http
-auth_uri = http://<replaceable>controller</replaceable>:5000/v2.0
 admin_tenant_name = service
 admin_user = nova
 admin_password = <replaceable>NOVA_PASS</replaceable></programlisting>
