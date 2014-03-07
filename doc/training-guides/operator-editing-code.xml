@@ -115,24 +115,33 @@
                                 <filename>/usr/local/apache-maven</filename>.</para>
                     </step>
                     <step>
-                        <para>Install maven:</para>
-                        <screen><prompt>$</prompt> <userinput>sudo /usr/local/apache-maven/XXXXX</userinput></screen>
+                        <para>Extract the distribution archive to the directory you wish to install Maven:</para>
+                        <screen><prompt>$</prompt> <userinput>cd /usr/local/apache-maven/</userinput>
+<prompt>$</prompt> <userinput>sudo tar -xvzf apache-maven-x.x.x-bin.tar.gz</userinput></screen>
+                        <para>The <filename>apache-maven-<replaceable>x.x.x</replaceable></filename> subdirectory is created from the archive file, where <replaceable>x.x.x</replaceable> is your Maven version.</para>
                     </step>
                     <step>
-                        <para>Add the maven path:</para>
-                        <screen><prompt>$</prompt> <userinput>sudo touch /etc/path.d/mvn.path</userinput>
-<prompt>$</prompt> <userinput>sudo vi /etc/path.d/mvn.path</userinput>
-<prompt>$</prompt> <userinput>/usr/local/apache-maven/apache-maven-3.0.5/bin</userinput></screen>
+                    <para>Add the M2_HOME environment variable:</para>
+                        <screen><prompt>$</prompt> <userinput>export M2_HOME=/usr/local/apache-maven/apache-maven-x.x.x</userinput></screen>
                     </step>
                     <step>
-                        <para>Define your maven user profile
-                            settings:</para>
-                        <screen><prompt>$</prompt> export MAVEN_OPTS='-Xms256m -XX:MaxPermSize=1024m -Xmx1024m'</screen>
+                        <para>Add the M2 environment variable:</para>
+                        <screen><prompt>$</prompt> <userinput>export M2=$M2_HOME/bin</userinput></screen>
                     </step>
                     <step>
-                        <para>Verify that maven is set up
-                            correctly:</para>
-                        <screen><prompt>$</prompt> <userinput>sudo mvn --install</userinput></screen>
+                        <para>Optionally, add the MAVEN_OPTS environment variable to specify JVM properties. Use this environment variable to specify extra options to Maven:</para>
+                        <screen><prompt>$</prompt> <userinput>export MAVEN_OPTS='-Xms256m -XX:MaxPermSize=1024m -Xmx1024m'</userinput></screen>
+                    </step>
+                    <step>
+                        <para>Add the M2 environment variable to your path:</para>
+                        <screen><prompt>$</prompt> <userinput>export PATH=$M2:$PATH</userinput></screen>
+                    </step>
+                    <step>
+                        <para>Make sure that JAVA_HOME is set to the location of your JDK and that $JAVA_HOME/bin is in your PATH environment variable.</para>
+                    </step>
+                    <step>
+                        <para>Run the mvn command to make sure that Maven is correctly installed:</para>
+                        <screen><prompt>$</prompt> <userinput>mvn --version</userinput></screen>
                     </step>
                 </substeps>
             </step>
