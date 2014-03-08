@@ -11,7 +11,7 @@
     <title>Compute command-line client</title>
     <para>The <command>nova</command> client is the command-line interface
          (CLI) for the OpenStack Compute API and its extensions. This chapter documents
-         <command>nova</command> version 2.16.0.
+         <command>nova</command> version 2.17.0.
     </para>
     <para>For help on a specific <command>nova</command>
        command, enter:
@@ -20,7 +20,8 @@
 
     <section xml:id="novaclient_command_usage">
        <title>nova usage</title>
-        <screen><computeroutput>            [--timeout &lt;seconds&gt;] [--os-auth-token OS_AUTH_TOKEN]
+        <screen><computeroutput>usage: nova [--version] [--debug] [--os-cache] [--timings]
+            [--timeout &lt;seconds&gt;] [--os-auth-token OS_AUTH_TOKEN]
             [--os-username &lt;auth-user-name&gt;] [--os-password &lt;auth-password&gt;]
             [--os-tenant-name &lt;auth-tenant-name&gt;]
             [--os-tenant-id &lt;auth-tenant-id&gt;] [--os-auth-url &lt;auth-url&gt;]
@@ -865,6 +866,14 @@
     <listitem>
       <para>
         Shutdown, re-image, and re-boot a server.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>refresh-network</command></term>
+    <listitem>
+      <para>
+        Refresh server network information.
       </para>
     </listitem>
   </varlistentry>
@@ -5377,6 +5386,25 @@ Shutdown, re-image, and re-boot a server.
       <para>
         Preserve the default ephemeral storage partition on
       rebuild.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="novaclient_subcommand_refresh-network">
+        <title>nova refresh-network command</title>
+        <screen><computeroutput>usage: nova refresh-network &lt;server&gt;
+        </computeroutput></screen>
+        <para>
+Refresh server network information.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;server&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of a server for which the network cache should be
+      refreshed from neutron (Admin only).
       </para>
     </listitem>
   </varlistentry>
