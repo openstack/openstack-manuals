@@ -12,7 +12,7 @@
   were only used to bootstrap the administrative user and register
   the Identity Service.</para>
 
-  <screen><prompt>#</prompt> <userinput>unset OS_SERVICE_TOKEN OS_SERVICE_ENDPOINT</userinput></screen>
+  <screen><prompt>$</prompt> <userinput>unset OS_SERVICE_TOKEN OS_SERVICE_ENDPOINT</userinput></screen>
 
   <para>You can now use regular username-based authentication.
   Request an authentication token using the <literal>admin</literal>
@@ -26,7 +26,7 @@
      See <xref linkend="keystone-install"/> for further details.
   </para>
 
-  <screen><prompt>#</prompt> <userinput>keystone --os-username=admin --os-password=<replaceable>ADMIN_PASS</replaceable> \
+  <screen><prompt>$</prompt> <userinput>keystone --os-username=admin --os-password=<replaceable>ADMIN_PASS</replaceable> \
   --os-auth-url=http://controller:35357/v2.0 token-get</userinput></screen>
 
   <para>You should receive a token in response, paired with your user ID.
@@ -36,7 +36,7 @@
   <para>Next, verify that authorization is behaving as expected by requesting
   authorization on a tenant.</para>
 
-  <screen><prompt>#</prompt> <userinput>keystone --os-username=admin --os-password=<replaceable>ADMIN_PASS</replaceable> \
+  <screen><prompt>$</prompt> <userinput>keystone --os-username=admin --os-password=<replaceable>ADMIN_PASS</replaceable> \
   --os-tenant-name=admin --os-auth-url=http://controller:35357/v2.0 token-get</userinput></screen>
 
   <para>You should receive a new token in response, this time including the
@@ -46,7 +46,7 @@
 
   <para>You can also set your <literal>--os-*</literal> variables in your
   environment to simplify command-line usage. Set up a
-  <filename>keystonerc</filename> file with the admin credentials and
+  <filename>openrc.sh</filename> file with the admin credentials and
   admin endpoint.</para>
 
   <programlisting language="bash">export OS_USERNAME=admin
@@ -56,9 +56,9 @@ export OS_AUTH_URL=http://controller:35357/v2.0</programlisting>
 
   <para>You can source this file to read in the environment variables.</para>
 
-  <screen><prompt>#</prompt> <userinput>source keystonerc</userinput></screen>
+  <screen><prompt>$</prompt> <userinput>source openrc.sh</userinput></screen>
 
-  <para>Verify that your <filename>keystonerc</filename> is configured
+  <para>Verify that your <filename>openrc.sh</filename> file is configured
   correctly by performing the same command as above, but without the
   <literal>--os-*</literal> arguments.</para>
 
@@ -71,7 +71,7 @@ export OS_AUTH_URL=http://controller:35357/v2.0</programlisting>
   <para>Finally, verify that your admin account has authorization to
   perform administrative commands.</para>
 
-  <screen><prompt>#</prompt> <userinput>keystone user-list</userinput>
+  <screen><prompt>$</prompt> <userinput>keystone user-list</userinput>
 <computeroutput>
 +----------------------------------+---------+--------------------+--------+
 |                id                | enabled | email              |  name  |
