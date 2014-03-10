@@ -101,7 +101,7 @@
                     <itemizedlist>
                         <listitem>
                             <para>On Ubuntu:</para>
-                            <screen><prompt>$</prompt> <userinput>sudo apt-get install python-pywbem</userinput></screen>
+                            <screen><prompt>#</prompt> <userinput>apt-get install python-pywbem</userinput></screen>
                         </listitem>
                         <listitem>
                             <para>On openSUSE:</para>
@@ -151,14 +151,14 @@
                 <step><para>On the compute node <literal>1.1.1.1</literal>, do
                     the following (assume <literal>10.10.61.35</literal>
                     is the iscsi target):</para>
-                    <screen><prompt>$</prompt> <userinput>sudo /etc/init.d/open-iscsi start</userinput>
-<prompt>$</prompt> <userinput>sudo iscsiadm -m discovery -t st -p 10.10.61.35</userinput>
-<prompt>$</prompt> <userinput>cd /etc/iscsi</userinput>
-<prompt>$</prompt> <userinput>sudo more initiatorname.iscsi</userinput>
-<prompt>$</prompt> <userinput>iscsiadm -m node</userinput></screen></step>
+                    <screen><prompt>#</prompt> <userinput>/etc/init.d/open-iscsi start</userinput>
+<prompt>#</prompt> <userinput>iscsiadm -m discovery -t st -p 10.10.61.35</userinput>
+<prompt>#</prompt> <userinput>cd /etc/iscsi</userinput>
+<prompt>#</prompt> <userinput>more initiatorname.iscsi</userinput>
+<prompt>#</prompt> <userinput>iscsiadm -m node</userinput></screen></step>
                 <step><para>Log in to VNX from the compute node using the target
                     corresponding to the SPA port:</para>
-                    <screen><prompt>$</prompt> <userinput>sudo iscsiadm -m node -T iqn.1992-04.com.emc:cx.apm01234567890.a0 -p 10.10.61.35 -l</userinput></screen>
+                    <screen><prompt>#</prompt> <userinput>iscsiadm -m node -T iqn.1992-04.com.emc:cx.apm01234567890.a0 -p 10.10.61.35 -l</userinput></screen>
                     <para>Where
                         <literal>iqn.1992-04.com.emc:cx.apm01234567890.a0</literal>
                         is the initiator name of the compute node. Login to
@@ -174,11 +174,11 @@
                     Now host <literal>1.1.1.1</literal> also appears under
                     Hosts-&gt;Host List.</para></step>
                 <step><para>Log out of VNX on the compute node:</para>
-                    <screen><prompt>$</prompt> <userinput>sudo iscsiadm -m node -u</userinput></screen></step>
+                    <screen><prompt>#</prompt> <userinput>iscsiadm -m node -u</userinput></screen></step>
                 <step>
                     <para>Log in to VNX from the compute node using the target
                         corresponding to the SPB port:</para>
-                    <screen><prompt>$</prompt> <userinput>sudo iscsiadm -m node -T iqn.1992-04.com.emc:cx.apm01234567890.b8 -p 10.10.10.11 -l</userinput></screen>
+                    <screen><prompt>#</prompt> <userinput>iscsiadm -m node -T iqn.1992-04.com.emc:cx.apm01234567890.b8 -p 10.10.10.11 -l</userinput></screen>
                 </step>
                 <step> <para>In Unisphere register the initiator with the SPB
                     port.</para></step>
