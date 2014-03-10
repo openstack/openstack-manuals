@@ -16,6 +16,9 @@
           </thead>
           <tbody>
               <tr>
+                  <th colspan="2">[DEFAULT]</th>
+              </tr>
+              <tr>
                        <td>amqp_auto_delete = False</td>
                        <td>(BoolOpt) Auto-delete queues in amqp.</td>
               </tr>
@@ -28,28 +31,12 @@
                        <td>(StrOpt) AMQP exchange to connect to if using RabbitMQ or Qpid</td>
               </tr>
               <tr>
-                       <td>host = 127.0.0.1</td>
-                       <td>(StrOpt) Host to locate redis</td>
-              </tr>
-              <tr>
                        <td>matchmaker_heartbeat_freq = 300</td>
                        <td>(IntOpt) Heartbeat frequency</td>
               </tr>
               <tr>
                        <td>matchmaker_heartbeat_ttl = 600</td>
                        <td>(IntOpt) Heartbeat time-to-live.</td>
-              </tr>
-              <tr>
-                       <td>password = None</td>
-                       <td>(StrOpt) HTTP password for authentication</td>
-              </tr>
-              <tr>
-                       <td>port = 6379</td>
-                       <td>(IntOpt) Use this port to connect to redis host.</td>
-              </tr>
-              <tr>
-                       <td>ringfile = /etc/oslo/matchmaker_ring.json</td>
-                       <td>(StrOpt) Matchmaker ring file (JSON)</td>
               </tr>
               <tr>
                        <td>rpc_backend = neutron.openstack.common.rpc.impl_kombu</td>
@@ -68,16 +55,44 @@
                        <td>(IntOpt) Seconds to wait for a response from call or multicall</td>
               </tr>
               <tr>
-                       <td>rpc_support_old_agents = False</td>
-                       <td>(BoolOpt) Enable server RPC compatibility with old agents</td>
-              </tr>
-              <tr>
                        <td>rpc_thread_pool_size = 64</td>
                        <td>(IntOpt) Size of RPC thread pool</td>
               </tr>
               <tr>
+                       <td>rpc_workers = 0</td>
+                       <td>(IntOpt) Number of RPC worker processes for service</td>
+              </tr>
+              <tr>
+                  <th colspan="2">[AGENT]</th>
+              </tr>
+              <tr>
+                       <td>rpc_support_old_agents = False</td>
+                       <td>(BoolOpt) Enable server RPC compatibility with old agents</td>
+              </tr>
+              <tr>
+                  <th colspan="2">[matchmaker_ring]</th>
+              </tr>
+              <tr>
+                       <td>ringfile = /etc/oslo/matchmaker_ring.json</td>
+                       <td>(StrOpt) Matchmaker ring file (JSON)</td>
+              </tr>
+              <tr>
+                  <th colspan="2">[rpc_notifier2]</th>
+              </tr>
+              <tr>
                        <td>topics = notifications</td>
                        <td>(ListOpt) AMQP topic(s) used for openstack notifications</td>
+              </tr>
+              <tr>
+                  <th colspan="2">[DEFAULT]</th>
+              </tr>
+              <tr>
+                       <td>port = 6379</td>
+                       <td>(IntOpt) Use this port to connect to redis host.</td>
+              </tr>
+              <tr>
+                       <td>password = None</td>
+                       <td>(StrOpt) Password for Redis server. (optional)</td>
               </tr>
        </tbody>
         </table>

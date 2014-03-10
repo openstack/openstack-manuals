@@ -5,7 +5,7 @@
              repository -->
         <para xmlns="http://docbook.org/ns/docbook" version="5.0">
         <table rules="all">
-          <caption>Description of configuration options for notifier</caption>
+          <caption>Description of configuration options for metering_agent</caption>
            <col width="50%"/>
            <col width="50%"/>
            <thead>
@@ -19,20 +19,19 @@
                   <th colspan="2">[DEFAULT]</th>
               </tr>
               <tr>
-                       <td>default_notification_level = INFO</td>
-                       <td>(StrOpt) Default notification level for outgoing notifications</td>
+                       <td>driver = neutron.services.metering.drivers.noop.noop_driver.NoopMeteringDriver</td>
+                       <td>(StrOpt) Metering driver</td>
               </tr>
               <tr>
-                       <td>default_publisher_id = $host</td>
-                       <td>(StrOpt) Default publisher_id for outgoing notifications</td>
+                       <td>measure_interval = 30</td>
+                       <td>(IntOpt) Interval between two metering measures</td>
               </tr>
               <tr>
-                       <td>notification_driver = []</td>
-                       <td>(MultiStrOpt) Driver or drivers to handle sending notifications</td>
+                  <th colspan="2">[AGENT]</th>
               </tr>
               <tr>
-                       <td>notification_topics = notifications</td>
-                       <td>(ListOpt) AMQP topic used for openstack notifications</td>
+                       <td>report_interval = 4</td>
+                       <td>(FloatOpt) Seconds between nodes reporting state to server; should be less than agent_down_time, best if it is half or less than agent_down_time.</td>
               </tr>
        </tbody>
         </table>

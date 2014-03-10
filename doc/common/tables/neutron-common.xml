@@ -16,20 +16,11 @@
           </thead>
           <tbody>
               <tr>
-                       <td>admin_password = None</td>
-                       <td>(StrOpt) Admin password</td>
+                  <th colspan="2">[DEFAULT]</th>
               </tr>
               <tr>
                        <td>admin_password = None</td>
                        <td>(StrOpt) Admin password</td>
-              </tr>
-              <tr>
-                       <td>admin_password = None</td>
-                       <td>(StrOpt) ESM admin password.</td>
-              </tr>
-              <tr>
-                       <td>admin_tenant_name = None</td>
-                       <td>(StrOpt) Admin tenant name</td>
               </tr>
               <tr>
                        <td>admin_tenant_name = None</td>
@@ -40,20 +31,24 @@
                        <td>(StrOpt) Admin username</td>
               </tr>
               <tr>
-                       <td>admin_user = None</td>
-                       <td>(StrOpt) Admin user</td>
+                       <td>agent_down_time = 9</td>
+                       <td>(IntOpt) Seconds to regard the agent is down; should be at least twice report_interval, to be sure the agent is down for good.</td>
               </tr>
               <tr>
-                       <td>allowed_rpc_exception_modules = neutron.openstack.common.exception, nova.exception, cinder.exception, exceptions</td>
-                       <td>(ListOpt) Modules of exceptions that are permitted to be recreatedupon receiving exception data from an rpc call.</td>
+                       <td>allowed_rpc_exception_modules = nova.exception, cinder.exception, exceptions</td>
+                       <td>(ListOpt) Modules of exceptions that are permitted to be recreated upon receiving exception data from an rpc call.</td>
               </tr>
               <tr>
                        <td>api_workers = 0</td>
                        <td>(IntOpt) Number of separate worker processes for service</td>
               </tr>
               <tr>
-                       <td>auth_region = None</td>
-                       <td>(StrOpt) Authentication region</td>
+                       <td>auth_ca_cert = None</td>
+                       <td>(StrOpt) Certificate Authority public key (CA cert) file for ssl</td>
+              </tr>
+              <tr>
+                       <td>auth_insecure = False</td>
+                       <td>(BoolOpt) Turn off verification of the certificate for ssl</td>
               </tr>
               <tr>
                        <td>auth_region = None</td>
@@ -62,10 +57,6 @@
               <tr>
                        <td>auth_strategy = keystone</td>
                        <td>(StrOpt) The type of authentication to use</td>
-              </tr>
-              <tr>
-                       <td>auth_url = None</td>
-                       <td>(StrOpt) Authentication URL</td>
               </tr>
               <tr>
                        <td>auth_url = None</td>
@@ -84,12 +75,44 @@
                        <td>(IntOpt) The port to bind to</td>
               </tr>
               <tr>
+                       <td>ca-certs = None</td>
+                       <td>(StrOpt) CA certificates</td>
+              </tr>
+              <tr>
                        <td>core_plugin = None</td>
                        <td>(StrOpt) The core plugin Neutron will use</td>
               </tr>
               <tr>
+                       <td>ctl-cert = None</td>
+                       <td>(StrOpt) controller certificate</td>
+              </tr>
+              <tr>
+                       <td>ctl-privkey = None</td>
+                       <td>(StrOpt) controller private key</td>
+              </tr>
+              <tr>
                        <td>dhcp_agent_notification = True</td>
                        <td>(BoolOpt) Allow sending resource operation notification to DHCP agent</td>
+              </tr>
+              <tr>
+                       <td>dhcp_agents_per_network = 1</td>
+                       <td>(IntOpt) Number of DHCP agents scheduled to host a network.</td>
+              </tr>
+              <tr>
+                       <td>dhcp_confs = $state_path/dhcp</td>
+                       <td>(StrOpt) Location to store DHCP server config files</td>
+              </tr>
+              <tr>
+                       <td>dhcp_delete_namespaces = False</td>
+                       <td>(BoolOpt) Delete namespace after removing a dhcp server.</td>
+              </tr>
+              <tr>
+                       <td>dhcp_domain = openstacklocal</td>
+                       <td>(StrOpt) Domain to use for building the hostnames</td>
+              </tr>
+              <tr>
+                       <td>dhcp_driver = neutron.agent.linux.dhcp.Dnsmasq</td>
+                       <td>(StrOpt) The driver used to manage the DHCP server.</td>
               </tr>
               <tr>
                        <td>dhcp_lease_duration = 86400</td>
@@ -100,16 +123,24 @@
                        <td>(BoolOpt) Whether to disable inter-process locks</td>
               </tr>
               <tr>
+                       <td>endpoint_type = adminURL</td>
+                       <td>(StrOpt) Network service endpoint type to pull from the keystone catalog</td>
+              </tr>
+              <tr>
                        <td>force_gateway_on_subnet = False</td>
                        <td>(BoolOpt) Ensure that configured gateway is on subnet</td>
               </tr>
               <tr>
-                       <td>host = [hostname]</td>
-                       <td>(StrOpt) The hostname Neutron is running on</td>
+                       <td>interface_driver = None</td>
+                       <td>(StrOpt) The driver used to manage the virtual interface.</td>
+              </tr>
+              <tr>
+                       <td>ip_lib_force_root = False</td>
+                       <td>(BoolOpt) Force ip_lib calls to use the root helper</td>
               </tr>
               <tr>
                        <td>lock_path = None</td>
-                       <td>(StrOpt) Directory to use for lock files. Default to a temp directory</td>
+                       <td>(StrOpt) Directory to use for lock files.</td>
               </tr>
               <tr>
                        <td>mac_generation_retries = 16</td>
@@ -128,26 +159,6 @@
                        <td>(IntOpt) Maximum number of host routes per subnet</td>
               </tr>
               <tr>
-                       <td>meta_flavor_driver_mappings = None</td>
-                       <td>(StrOpt) Mapping between flavor and LinuxInterfaceDriver</td>
-              </tr>
-              <tr>
-                       <td>network_device_mtu = None</td>
-                       <td>(IntOpt) MTU setting for device.</td>
-              </tr>
-              <tr>
-                       <td>network_vlan_ranges = </td>
-                       <td>(ListOpt) List of &lt;physical_network&gt;:&lt;vlan_min&gt;:&lt;vlan_max&gt; or &lt;physical_network&gt;</td>
-              </tr>
-              <tr>
-                       <td>ovs_integration_bridge = br-int</td>
-                       <td>(StrOpt) Name of Open vSwitch bridge to use</td>
-              </tr>
-              <tr>
-                       <td>ovs_use_veth = False</td>
-                       <td>(BoolOpt) Uses veth for an interface or not</td>
-              </tr>
-              <tr>
                        <td>periodic_fuzzy_delay = 5</td>
                        <td>(IntOpt) Range of seconds to randomly delay when starting the periodic task scheduler to reduce stampeding. (Disable by setting to 0)</td>
               </tr>
@@ -156,8 +167,8 @@
                        <td>(IntOpt) Seconds between running periodic tasks</td>
               </tr>
               <tr>
-                       <td>root_helper = sudo</td>
-                       <td>(StrOpt) Root helper application.</td>
+                       <td>report_interval = 300</td>
+                       <td>(IntOpt) Interval between two metering reports</td>
               </tr>
               <tr>
                        <td>root_helper = sudo</td>
@@ -166,6 +177,47 @@
               <tr>
                        <td>state_path = /var/lib/neutron</td>
                        <td>(StrOpt) Where to store Neutron state files. This directory must be writable by the agent.</td>
+              </tr>
+              <tr>
+                  <th colspan="2">[AGENT]</th>
+              </tr>
+              <tr>
+                       <td>root_helper = sudo</td>
+                       <td>(StrOpt) Root helper application.</td>
+              </tr>
+              <tr>
+                  <th colspan="2">[PROXY]</th>
+              </tr>
+              <tr>
+                       <td>admin_password = None</td>
+                       <td>(StrOpt) Admin password</td>
+              </tr>
+              <tr>
+                       <td>admin_tenant_name = None</td>
+                       <td>(StrOpt) Admin tenant name</td>
+              </tr>
+              <tr>
+                       <td>admin_user = None</td>
+                       <td>(StrOpt) Admin user</td>
+              </tr>
+              <tr>
+                       <td>auth_region = None</td>
+                       <td>(StrOpt) Authentication region</td>
+              </tr>
+              <tr>
+                       <td>auth_strategy = keystone</td>
+                       <td>(StrOpt) The type of authentication to use</td>
+              </tr>
+              <tr>
+                       <td>auth_url = None</td>
+                       <td>(StrOpt) Authentication URL</td>
+              </tr>
+              <tr>
+                  <th colspan="2">[heleos]</th>
+              </tr>
+              <tr>
+                       <td>admin_password = None</td>
+                       <td>(StrOpt) ESM admin password.</td>
               </tr>
        </tbody>
         </table>
