@@ -268,23 +268,19 @@
                 below. Also consult the <link
                     xlink:href="http://docs.openstack.org/developer/swift/apache_deployment_guide.html"
                     >Apache Deployment Guide</link></para>
-            <screen>sudo apt-get install libapache2-mod-wsgi</screen>
+            <screen><prompt>#</prompt> <userinput>apt-get install libapache2-mod-wsgi</userinput></screen>
             <para>Modify file
                     <filename>/etc/apache2/envvars</filename>
                 with</para>
-            <programlisting>
-            export APACHE_RUN_USER=swift
-            export APACHE_RUN_GROUP=swift
-            </programlisting>
+            <programlisting>export APACHE_RUN_USER=swift
+export APACHE_RUN_GROUP=swift</programlisting>
             <para>An alternative is to modify your Apache conf file
                 with</para>
-            <programlisting>
-            User swift
-            Group swift
-            </programlisting>
-            <para>Create a "swift" directory in your Apache document
-                root:</para>
-            <screen><prompt>#</prompt><userinput>sudo mkdir /var/www/swift/</userinput></screen>
+            <programlisting>User swift
+Group swift</programlisting>
+            <para>Create a <filename>swift</filename> directory in
+               your Apache document root:</para>
+            <screen><prompt>#</prompt> <userinput>mkdir /var/www/swift/</userinput></screen>
             <para>Create the file
                     <filename>$YOUR_APACHE_DOC_ROOT/swift/proxy-server.wsgi</filename>:</para>
             <programlisting>from swift.common.wsgi import init_request_processor application, conf, logger, log_name = \
