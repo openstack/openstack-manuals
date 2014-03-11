@@ -1,0 +1,61 @@
+<section xml:id="section_configuring-compute-to-use-ipv6-addresses"
+         xmlns="http://docbook.org/ns/docbook"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns:xi="http://www.w3.org/2001/XInclude"
+         xmlns:ns5="http://www.w3.org/1999/xhtml"
+         xmlns:ns4="http://www.w3.org/2000/svg"
+         xmlns:ns3="http://www.w3.org/1998/Math/MathML"
+         xmlns:ns="http://docbook.org/ns/docbook" version="5.0">
+  <title>Configure Compute to use IPv6 addresses</title>
+  <para>If you are using OpenStack Compute with <systemitem>nova-network</systemitem>, you can put
+    Compute into IPv4/IPv6 dual-stack mode, so that it uses both IPv4 and IPv6 addresses for
+    communication. In IPv4/IPv6 dual-stack mode, instances can acquire their IPv6 global unicast
+    address by using a stateless address auto configuration mechanism [RFC 4862/2462]. IPv4/IPv6
+    dual-stack mode works with both <literal>VlanManager</literal> and
+      <literal>FlatDHCPManager</literal> networking modes. In <literal>VlanManager</literal>, each
+    project uses a different 64-bit global routing prefix. In <literal>FlatDHCPManager</literal>,
+    all instances use one 64-bit global routing prefix.</para>
+  <para>This configuration was tested with VM images that have an IPv6 stateless address auto
+    configuration capability. This capability is required for any VM you want to run with
+    an IPv6 address. You must use EUI-64 address for stateless address auto configuration.
+    Each node that executes a <literal>nova-*</literal> service must have
+    <literal>python-netaddr</literal> and <literal>radvd</literal> installed.
+  </para>
+  <procedure>
+    <title>Switch into IPv4/IPv6 dual-stack mode</title>
+    <step><para>On all nodes running a <literal>nova-*</literal> service, install
+          <systemitem>python-netaddr</systemitem>:</para>
+      <screen><prompt>#</prompt> <userinput>apt-get install python-netaddr</userinput></screen></step>
+    <step><para>On all <literal>nova-network</literal> nodes, install <literal>radvd</literal> and configure
+        IPv6 networking:</para>
+      <screen><prompt>#</prompt> <userinput>apt-get install radvd</userinput>
+<prompt>#</prompt> <userinput>echo 1 &gt; /proc/sys/net/ipv6/conf/all/forwarding</userinput>
+<prompt>#</prompt> <userinput>echo 0 &gt; /proc/sys/net/ipv6/conf/all/accept_ra</userinput></screen></step>
+    <step><para>Edit the <filename>nova.conf</filename> file on all nodes to specify
+          <literal>use_ipv6 = True</literal>.</para></step>
+    <step><para>Restart all <literal>nova-*</literal> services.</para></step>
+  </procedure>
+  <note><para>You can add a fixed range for IPv6 addresses to the <command>nova network-create</command>
+      command. Specify <option>public</option> or <option>private</option> after the
+        <option>network-create</option> parameter.</para>
+    <screen><prompt>$</prompt> <userinput>nova network-create public --fixed-range-v4 <replaceable>fixed_range_v4</replaceable> --vlan <replaceable>vlan_id</replaceable> --vpn <replaceable>vpn_start</replaceable> --fixed-range-v6 <replaceable>fixed_range_v6</replaceable></userinput></screen>
+    <para>You can set IPv6 global routing prefix by using the <option>--fixed_range_v6</option>
+       parameter. The default value for the parameter is: <literal>fd00::/48</literal>.
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>When you use <literal>FlatDHCPManager</literal>, the command uses the original
+          <option>--fixed_range_v6</option> value. For example:</para>
+        <screen><prompt>$</prompt> <userinput>nova network-create public  --fixed-range-v4 10.0.2.0/24 --fixed-range-v6 fd00:1::/48</userinput></screen>
+      </listitem>
+      <listitem>
+        <para>When you use <literal>VlanManager</literal>, the command
+          increments the subnet ID to create subnet prefixes.
+          Guest VMs use this prefix to generate their IPv6 global
+          unicast address. For example:</para>
+        <screen><prompt>$</prompt> <userinput>nova network-create public --fixed-range-v4 10.0.1.0/24 --vlan 100 --vpn 1000 --fixed-range-v6 fd00:1::/48</userinput></screen>
+      </listitem>
+    </itemizedlist>
+  </note>
+  <xi:include href="../../common/tables/nova-ipv6.xml"/>
+</section>
