@@ -1,0 +1,70 @@
+<section xml:id="section_fc-zoning" xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+    <title>Fibre Channel Zone Manager</title>
+    <para>The Fibre Channel Zone Manager allows FC SAN Zone/Access
+        control management in conjunction with Fibre Channel block
+        storage. The configuration of Fibre Channel Zone Manager and
+        various zone drivers are described in this section.</para>
+    <section xml:id="enable-fc-zone-manager">
+        <title>Configure Block Storage to use Fibre Channel Zone Manager
+        </title>
+        <para>If Block Storage is configured to use a Fibre Channel volume
+            driver that supports Zone Manager, update
+            <filename>cinder.conf</filename> to add the following
+            configuration options to enable Fibre Channel Zone Manager.
+        </para>
+        <para>Make the following changes in the
+            <filename>/etc/cinder/cinder.conf</filename>
+            file.</para>
+        <xi:include href="../../common/tables/cinder-zoning.xml"/>
+        <para>To use different Fibre Channel Zone Drivers, use the
+            parameters described in this section.</para>
+        <note>
+            <para>When multi backend configuration is used, provide
+                the <option>zoning_mode</option> configuration option as
+                part of the volume driver configuration where
+                <option>volume_driver</option> option is specified.</para>
+        </note>
+        <note>
+            <para>Default value of <option>zoning_mode</option> is
+                <literal>None</literal> and this needs to be changed to
+                <literal>fabric</literal> to allow fabric zoning.</para>
+        </note>
+        <note>
+            <para><option>zoning_policy</option> can be configured as
+                <literal>initiator-target</literal> or
+                <literal>initiator</literal>
+            </para>
+        </note>
+    </section>
+    <section xml:id="brcd-fc-zone-driver">
+        <title>Brocade Fibre Channel Zone Driver</title>
+        <para>Brocade Fibre Channel Zone Driver performs zoning operations
+            via SSH. Configure Brocade Zone Driver and lookup service by
+            specifying the following parameters:</para>
+        <xi:include href="../../common/tables/cinder-zoning_manager.xml"/>
+        <para>Configure SAN fabric parameters in the form of fabric
+            groups as described in the example below:</para>
+        <xi:include href="../../common/tables/cinder-zoning_fabric.xml"/>
+        <note>
+            <para>Define a fabric group for each fabric using the fabric names
+                used in <option>fc_fabric_names</option> configuration option
+                as group name.
+            </para>
+        </note>
+        <section xml:id="brcd-zone-driver-sys-reqs">
+            <title>System requirements</title>
+            <para>Brocade Fibre Channel Zone Driver requires firmware version
+                FOS v6.4 or higher.</para>
+            <para>As a best practice for zone management, use a user account
+                with <literal>zoneadmin</literal> role.
+                Users with <literal>admin</literal> role (including the default
+                <literal>admin</literal> user account) are limited to a maximum
+                of two concurrent SSH sessions.
+            </para>
+            <para>For information about how to manage Brocade Fibre Channel
+                switches, see the Brocade Fabric OS user documentation.</para>
+        </section>
+    </section>
+</section>
