@@ -11,13 +11,12 @@
     <?dbhtml stop-chunking?>
     <para>For a Linux-based image to have full functionality in an
         OpenStack Compute cloud, there are a few requirements. For
-        some of these, the requirement can be fulfilled by installing
+        some of these, you can fulfill the requirement by installing
         the <link
             xlink:href="https://cloudinit.readthedocs.org/en/latest/"
                 ><package>cloud-init</package></link> package. Read
         this section before you create your own image to be sure that
-        the image supports the OpenStack features that you plan on
-        using.</para>
+        the image supports the OpenStack features that you plan to use.</para>
     <itemizedlist>
         <listitem>
             <para>Disk partitions and resize root partition on boot
@@ -227,7 +226,8 @@
             <para>You do not need a <filename>/boot</filename>
                 partition unless your image is an older Linux
                 distribution that requires that
-                    <filename>/boot</filename> is not managed by LVM.</para>
+                    <filename>/boot</filename> is not managed by
+                LVM.</para>
         </simplesect>
     </section>
     <section xml:id="mac-adddress">
@@ -419,12 +419,12 @@ done</programlisting>
             variable:
             <programlisting language="bash">GRUB_CMDLINE_LINUX_DEFAULT="console=ttyS0"</programlisting></para>
         <para>Next, update the grub configuration. On Debian-based
-            operating-systems such as Ubuntu,
-            do:<screen><prompt>$</prompt> <userinput>sudo update-grub</userinput></screen></para>
-        <para>On Fedora-based systems such as RHEL and CentOS,
-            do:<screen><prompt>$</prompt> <userinput>sudo grub2-mkconfig -o /boot/grub2/grub.cfg</userinput></screen></para>
+            operating-systems such as Ubuntu, run this command:</para>
+        <screen><prompt>#</prompt> <userinput>update-grub</userinput></screen>
+        <para>On Fedora-based systems, such as RHEL and CentOS, and on
+            openSUSE, run this command:</para>
+        <screen><prompt>#</prompt> <userinput>grub2-mkconfig -o /boot/grub2/grub.cfg</userinput></screen>
     </section>
-
     <section xml:id="image-xen-pv">
         <title>Paravirtualized Xen support in the kernel (Xen
             hypervisor only)</title>
@@ -514,9 +514,9 @@ done</programlisting>
         <para>To see how the settings affect the deletion of a running
             instance, check the directory where the images are
             stored:</para>
-        <screen><prompt>$</prompt> <userinput>sudo ls -lash /var/lib/nova/instances/_base/</userinput></screen>
-        <para>Then look for the identifier in
-                <filename>/var/log/compute/compute.log</filename>:</para>
+        <screen><prompt>#</prompt> <userinput>ls -lash /var/lib/nova/instances/_base/</userinput></screen>
+        <para>In the <filename>/var/log/compute/compute.log</filename>
+            file, look for the identifier:</para>
         <screen><computeroutput>2012-02-18 04:24:17 41389 WARNING nova.virt.libvirt.imagecache [-] Unknown base file: /var/lib/nova/instances/_base/06a057b9c7b0b27e3b496f53d1e88810
 a0d1d5d3_20
 2012-02-18 04:24:17 41389 INFO nova.virt.libvirt.imagecache [-] Removable base files: /var/lib/nova/instances/_base/06a057b9c7b0b27e3b496f53d1e88810
