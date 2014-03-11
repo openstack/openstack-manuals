@@ -47,7 +47,8 @@
                 driver uses the WWPN associated with the volume's
                 preferred node (if available), otherwise it uses the
                 first available WWPN of the system. The driver obtains
-                the WWPNs directly from the storage system; you do not need to provide these WWPNs directly to the
+                the WWPNs directly from the storage system; you do not
+                need to provide these WWPNs directly to the
                 driver.</para>
             <note>
                 <para>If using FC, ensure that the compute nodes have
@@ -542,35 +543,37 @@
                 options can be passed to the IBM Storwize/SVC driver
                 with the "drivers" scope.</para>
             <para>The following <literal>extra specs</literal> keys
-                are supported by the IBM Storwize/SVC driver: <itemizedlist>
-                    <listitem>
-                        <para>rsize</para>
-                    </listitem>
-                    <listitem>
-                        <para>warning</para>
-                    </listitem>
-                    <listitem>
-                        <para>autoexpand</para>
-                    </listitem>
-                    <listitem>
-                        <para>grainsize</para>
-                    </listitem>
-                    <listitem>
-                        <para>compression</para>
-                    </listitem>
-                    <listitem>
-                        <para>easytier</para>
-                    </listitem>
-                    <listitem>
-                        <para>multipath</para>
-                    </listitem>
-                    <listitem>
-                        <para>iogrp</para>
-                    </listitem>
-                </itemizedlist> These keys have the same semantics as
-                their counterparts in the configuration file. They are
-                set similarly; for example, <literal>rsize=2</literal>
-                or <literal>compression=False</literal>.</para>
+                are supported by the IBM Storwize/SVC driver:</para>
+            <itemizedlist>
+                <listitem>
+                    <para>rsize</para>
+                </listitem>
+                <listitem>
+                    <para>warning</para>
+                </listitem>
+                <listitem>
+                    <para>autoexpand</para>
+                </listitem>
+                <listitem>
+                    <para>grainsize</para>
+                </listitem>
+                <listitem>
+                    <para>compression</para>
+                </listitem>
+                <listitem>
+                    <para>easytier</para>
+                </listitem>
+                <listitem>
+                    <para>multipath</para>
+                </listitem>
+                <listitem>
+                    <para>iogrp</para>
+                </listitem>
+            </itemizedlist>
+            <para>These keys have the same semantics as their
+                counterparts in the configuration file. They are set
+                similarly; for example, <literal>rsize=2</literal> or
+                    <literal>compression=False</literal>.</para>
         </simplesect>
         <simplesect>
             <title>Example: Volume types</title>
@@ -645,6 +648,47 @@
                 is taking place, attempting to delete or extend the
                 source volume will result in that operation waiting
                 for the copy to complete.</para>
+        </simplesect>
+        <simplesect>
+            <title>Volume retype</title>
+            <para>The IBM Storwize/SVC driver enables you to modify
+                volume types. When you modify volume types, you can
+                also change these extra specs properties:</para>
+            <itemizedlist>
+                <listitem>
+                    <para>rsize</para>
+                </listitem>
+                <listitem>
+                    <para>warning</para>
+                </listitem>
+                <listitem>
+                    <para>autoexpand</para>
+                </listitem>
+                <listitem>
+                    <para>grainsize</para>
+                </listitem>
+                <listitem>
+                    <para>compression</para>
+                </listitem>
+                <listitem>
+                    <para>easytier</para>
+                </listitem>
+                <listitem>
+                    <para>iogrp</para>
+                </listitem>
+            </itemizedlist>
+            <note>
+                <para>When you change the <literal>rsize</literal>,
+                        <literal>grainsize</literal> or
+                        <literal>compression</literal> properties,
+                    volume copies are asynchronously synchronized on
+                    the array.</para>
+            </note>
+            <note>
+                <para>To change the <literal>iogrp</literal> property,
+                    IBM Storwize/SVC firmware version 6.4.0 or later
+                    is required.</para>
+            </note>
         </simplesect>
     </section>
 </section>
