@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-  <section xmlns="http://docbook.org/ns/docbook"
+<section xmlns="http://docbook.org/ns/docbook"
   xmlns:xi="http://www.w3.org/2001/XInclude"
-  xmlns:xlink="http://www.w3.org/1999/xlink"
-  version="5.0"
+  xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
   xml:id="drivers">
-<title>Drivers</title>
-<section xml:id="header">
+  <title>Drivers</title>
+  <!--<section xml:id="header">
 <title>Header</title>
 <para>
 ..
@@ -23,66 +22,92 @@
 </para>
 </section>
 <section xml:id="Drivers">
-<title>Drivers</title>
-<para>
-=======
-Cinder exposes an API to users to interact with different storage backend
-solutions. The following are standards across all drivers for Cinder services
-to properly interact with a driver.
-</para>
-</section>
-<section xml:id="Minimum-Features">
-<title>Minimum-Features</title>
-<para>
-----------------
-Minimum features are enforced to avoid having a grid of what features are
-supported by which drivers and which releases. Cinder Core requires that all
-drivers implement the following minimum features.
-Havana
-------
-<itemizedlist>
-<listitem><para>Volume Create/Delete</para></listitem>
-<listitem><para>Volume Attach/Detach</para></listitem>
-<listitem><para>Snapshot Create/Delete</para></listitem>
-<listitem><para>Create Volume from Snapshot</para></listitem>
-<listitem><para>Get Volume Stats</para></listitem>
-<listitem><para>Copy Image to Volume</para></listitem>
-<listitem><para>Copy Volume to Image</para></listitem>
-<listitem><para>Clone Volume</para></listitem>
-</itemizedlist>
-</para>
-</section>
-<section xml:id="Icehouse">
-<title>Icehouse</title>
-<para>
---------
-<itemizedlist>
-<listitem><para>All of the above plus</para></listitem>
-<listitem><para>Extend Volume</para></listitem>
-</itemizedlist>
-</para>
-</section>
-<section xml:id="Volume-Stats">
-<title>Volume-Stats</title>
-<para>
-------------
-Volume stats are used by the different schedulers for the drivers to provide
-a report on their current state of the backend. The following should be
-provided by a driver.
-<itemizedlist>
-<listitem><para>driver_version</para></listitem>
-<listitem><para>free_capacity_gb</para></listitem>
-<listitem><para>reserved_percentage</para></listitem>
-<listitem><para>storage_protocol</para></listitem>
-<listitem><para>total_capacity_gb</para></listitem>
-<listitem><para>vendor_name</para></listitem>
-<listitem><para>volume_backend_name</para></listitem>
-</itemizedlist>
-<itemizedlist>
-<listitem><para>If the driver is unable to provide a value for free_capacity_gb or</para></listitem>
-</itemizedlist>
-total_capacity_gb, keywords can be provided instead. Please use 'unknown' if
-the array cannot report the value or 'infinite' if the array has no upper
-</para>
-</section>
+<title>Drivers</title>-->
+  <para>Cinder exposes an API to enable users to interact with
+    different storage back-end solutions. The following standards are
+    required across all drivers for Cinder services to properly
+    interact with a driver.</para>
+  <para>Minimum features are enforced to avoid having a grid of which
+    features are supported by which drivers in which releases. Cinder
+    core requires that all drivers implement the following minimum
+    features.</para>
+  <section xml:id="havana">
+    <title>Havana</title>
+    <para>
+      <itemizedlist>
+        <listitem>
+          <para>Volume Create/Delete</para>
+        </listitem>
+        <listitem>
+          <para>Volume Attach/Detach</para>
+        </listitem>
+        <listitem>
+          <para>Snapshot Create/Delete</para>
+        </listitem>
+        <listitem>
+          <para>Create Volume from Snapshot</para>
+        </listitem>
+        <listitem>
+          <para>Get Volume Stats</para>
+        </listitem>
+        <listitem>
+          <para>Copy Image to Volume</para>
+        </listitem>
+        <listitem>
+          <para>Copy Volume to Image</para>
+        </listitem>
+        <listitem>
+          <para>Clone Volume</para>
+        </listitem>
+      </itemizedlist>
+    </para>
+  </section>
+  <section xml:id="Icehouse">
+    <title>Icehouse</title>
+    <para>
+      <itemizedlist>
+        <listitem>
+          <para>All of the above plus</para>
+        </listitem>
+        <listitem>
+          <para>Extend Volume</para>
+        </listitem>
+      </itemizedlist>
+    </para>
+  </section>
+  <section xml:id="Volume-Stats">
+    <title>Volume-Stats</title>
+    <para>Volume stats are used by the different schedulers for the
+      drivers to provide a report on their current state of the back
+      end. A driver must provide these stats:</para>
+    <itemizedlist>
+      <listitem>
+        <para>driver_version</para>
+      </listitem>
+      <listitem>
+        <para>free_capacity_gb</para>
+      </listitem>
+      <listitem>
+        <para>reserved_percentage</para>
+      </listitem>
+      <listitem>
+        <para>storage_protocol</para>
+      </listitem>
+      <listitem>
+        <para>total_capacity_gb</para>
+      </listitem>
+      <listitem>
+        <para>vendor_name</para>
+      </listitem>
+      <listitem>
+        <para>volume_backend_name</para>
+      </listitem>
+    </itemizedlist>
+    <para>If the driver cannot provide a value for
+        <literal>free_capacity_gb</literal> or
+        <literal>total_capacity_gb</literal>, the driver can provide
+      keywords instead. If the array cannot report the value, use
+        <literal>unknown</literal>. If the array has no upper limit,
+      use <literal>infinite</literal>.</para>
+  </section>
 </section>
