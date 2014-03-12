@@ -6,14 +6,6 @@
   xmlns:svg="http://www.w3.org/2000/svg"
   xmlns:html="http://www.w3.org/1999/xhtml" version="5.0">
     <title>Configure controller node</title>
-    <note>
-      <para>This is for a node which runs the control components of
-        Neutron, but does not run any of the components that provide
-        the underlying functionality (such as the plug-in agent or the
-        L3 agent). If you wish to have a combined controller/compute
-        node follow these instructions, and then those for the compute
-        node.</para>
-    </note>
     <warning os="rhel;centos">
       <para>By default, the <literal>system-config-firewall</literal>
         automated firewall configuration tool is in place on RHEL.
@@ -30,168 +22,46 @@
         set up, disable the tool to make it easier to debug network
         issues.</para>
     </warning>
-<!-- FIXME This material needs validation, updates, and relocation to more
-  appropriate sections.
-
-  <procedure os="debian">
-  <para os="debian">When you install a Networking node, you must
-    configure it for API endpoints, RabbitMQ,
-      <code>keystone_authtoken</code>, and the database. Use
-      <package>debconf</package> to configure these values.</para>
-  <para os="debian">When you install a Networking package,
-      <package>debconf</package> prompts you to choose configuration
-    options including which plug-in to use, as follows:</para>
-  <informalfigure os="debian">
-    <mediaobject>
-      <imageobject>
-        <imagedata scale="50"
-          fileref="figures/debconf-screenshots/neutron_1_plugin_selection.png"
-        />
-      </imageobject>
-    </mediaobject>
-  </informalfigure>
-  <para os="debian">This parameter sets the
-      <parameter>core_plugin</parameter> option value in the
-      <filename>/etc/neutron/neutron.conf</filename> file.</para>
-  <note os="debian">
-    <para>When you install the <package>neutron-common</package>
-      package, all plug-ins are installed by default.</para>
-  </note>
-  <para os="debian">This table lists the values for the
-      <parameter>core_plugin</parameter> option. These values depend
-    on your response to the <package>debconf</package> prompt.</para>
-  <table rules="all" os="debian">
-    <caption>Plug-ins and the core_plugin option</caption>
-    <thead>
-      <tr>
-        <th>Plug-in</th>
-        <th>core_plugin value in
-          <filename>neutron.conf</filename></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><para>BigSwitch</para></td>
-        <td><para>neutron.plugins.bigswitch.plugin.NeutronRestProxyV2</para></td>
-      </tr>
-      <tr>
-        <td><para>Brocade</para></td>
-        <td><para>neutron.plugins.brocade.NeutronPlugin.BrocadePluginV2</para></td>
-      </tr>
-      <tr>
-        <td><para>Cisco</para></td>
-        <td><para>neutron.plugins.cisco.network_plugin.PluginV2</para></td>
-      </tr>
-      <tr>
-        <td><para>Hyper-V</para></td>
-        <td><para>neutron.plugins.hyperv.hyperv_neutron_plugin.HyperVNeutronPlugin</para></td>
-      </tr>
-      <tr>
-        <td><para>LinuxBridge</para></td>
-        <td><para>neutron.plugins.linuxbridge.lb_neutron_plugin.LinuxBridgePluginV2</para></td>
-      </tr>
-      <tr>
-        <td><para>Mellanox</para></td>
-        <td><para>neutron.plugins.mlnx.mlnx_plugin.MellanoxEswitchPlugin</para></td>
-      </tr>
-      <tr>
-        <td><para>MetaPlugin</para></td>
-        <td><para>neutron.plugins.metaplugin.meta_neutron_plugin.MetaPluginV2</para></td>
-      </tr>
-      <tr>
-        <td><para>Midonet</para></td>
-        <td><para>neutron.plugins.midonet.plugin.MidonetPluginV2</para></td>
-      </tr>
-      <tr>
-        <td><para>ml2</para></td>
-        <td><para>neutron.plugins.ml2.plugin.Ml2Plugin</para></td>
-      </tr>
-      <tr>
-        <td><para>Nec</para></td>
-        <td><para>neutron.plugins.nec.nec_plugin.NECPluginV2</para></td>
-      </tr>
-      <tr>
-        <td><para>OpenVSwitch</para></td>
-        <td><para>neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2</para></td>
-      </tr>
-      <tr>
-        <td><para>PLUMgrid</para></td>
-        <td><para>neutron.plugins.plumgrid.plumgrid_nos_plugin.plumgrid_plugin.NeutronPluginPLUMgridV2</para></td>
-      </tr>
-      <tr>
-        <td><para>RYU</para></td>
-        <td><para>neutron.plugins.ryu.ryu_neutron_plugin.RyuNeutronPluginV2</para></td>
-      </tr>
-    </tbody>
-  </table>
-  <para os="debian">Depending on the value of
-      <parameter>core_plugin</parameter>, the start-up scripts start
-    the daemons by using the corresponding plug-in configuration file
-    directly. For example, if you selected the Open vSwitch plug-in,
-      <code>neutron-server</code> automatically launches with
-
-FIXME Removed a double-hyphen here.
-
-      <parameter>config-file
-      /etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</parameter>.</para>
-  <para os="debian">The <package>neutron-common</package> package also
-    prompts you for the default network configuration:</para>
-  <informalfigure os="debian">
-    <mediaobject>
-      <imageobject>
-        <imagedata scale="50"
-          fileref="figures/debconf-screenshots/neutron_2_networking_type.png"
-        />
-      </imageobject>
-    </mediaobject>
-  </informalfigure>
-  <informalfigure os="debian">
-    <mediaobject>
-      <imageobject>
-        <imagedata scale="50"
-          fileref="figures/debconf-screenshots/neutron_3_hypervisor_ip.png"
-        />
-      </imageobject>
-    </mediaobject>
-  </informalfigure>
-  </procedure>
--->
-  <procedure>
-  <para os="rhel;centos;fedora;opensuse;sles;ubuntu">Before you
-    configure individual nodes for Networking, you must create the
-    required OpenStack components: user, service, database, and one or
-    more endpoints. After you complete these steps on the controller
-    node, follow the instructions in this guide to set up OpenStack
-    Networking nodes.</para>
-    <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
+    <procedure os="rhel;centos;fedora;opensuse;sles;ubuntu">
+      <title>Prerequisites</title>
+      <para os="rhel;centos;fedora;opensuse;sles;ubuntu">Before you
+        configure individual nodes for Networking, you must create the
+        required OpenStack components: user, service, database, and one or
+        more endpoints. After you complete these steps on the controller
+        node, follow the instructions in this guide to set up OpenStack
+        Networking nodes.</para>
+      <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
       <!-- TODO(sross): change this to use `openstack-db` once it supports Neutron -->
-      <!-- TODO(sross): move this into its own section -->
-      <para>Use the password that you set previously to log in as root
-        and create a <literal>neutron</literal> database:</para>
-      <screen><prompt>#</prompt> <userinput>mysql -u root -p</userinput>
+        <para>Connect to the MySQL database as the root user, create the
+          <literal>neutron</literal> database, and grant the proper
+          access to it:</para>
+        <screen><prompt>#</prompt> <userinput>mysql -u root -p</userinput>
 <prompt>mysql></prompt> <userinput>CREATE DATABASE neutron;</userinput>
 <prompt>mysql></prompt> <userinput>GRANT ALL PRIVILEGES ON neutron.* TO 'neutron'@'localhost' \
 IDENTIFIED BY '<replaceable>NEUTRON_DBPASS</replaceable>';</userinput>
 <prompt>mysql></prompt> <userinput>GRANT ALL PRIVILEGES ON neutron.* TO 'neutron'@'%' \
 IDENTIFIED BY '<replaceable>NEUTRON_DBPASS</replaceable>';</userinput></screen>
-    </step>
-    <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
-      <para>Create the required user, service, and endpoint so that
-        Networking can interface with the Identity Service.</para>
-      <para>Create a <literal>neutron</literal> user:</para>
-      <screen><prompt>#</prompt> <userinput>keystone user-create --name=neutron --pass=<replaceable>NEUTRON_PASS</replaceable> --email=<replaceable>neutron@example.com</replaceable></userinput></screen>
-      <para>Add the user role to the neutron user:</para>
-      <screen><prompt>#</prompt> <userinput>keystone user-role-add --user=neutron --tenant=service --role=admin</userinput></screen>
-      <para>Create the neutron service:</para>
-      <screen><prompt>#</prompt> <userinput>keystone service-create --name=neutron --type=network \
-     --description="OpenStack Networking"</userinput></screen>
-      <para>Create a Networking endpoint:</para>
-      <screen><prompt>#</prompt> <userinput>keystone endpoint-create \
-     --service-id $(keystone service-list | awk '/ network / {print $2}') \
-     --publicurl http://<replaceable>controller</replaceable>:9696 \
-     --adminurl http://<replaceable>controller</replaceable>:9696 \
-     --internalurl http://<replaceable>controller</replaceable>:9696</userinput></screen>
-    </step>
+      </step>
+      <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
+        <para>Create the required user, service, and endpoint so that
+          Networking can interface with the Identity Service.</para>
+        <para>Create a <literal>neutron</literal> user:</para>
+        <screen><prompt>#</prompt> <userinput>keystone user-create --name=neutron --pass=<replaceable>NEUTRON_PASS</replaceable> --email=<replaceable>neutron@example.com</replaceable></userinput></screen>
+        <para>Add the user role to the neutron user:</para>
+        <screen><prompt>#</prompt> <userinput>keystone user-role-add --user=neutron --tenant=service --role=admin</userinput></screen>
+        <para>Create the neutron service:</para>
+        <screen><prompt>#</prompt> <userinput>keystone service-create --name=neutron --type=network \
+  --description="OpenStack Networking"</userinput></screen>
+        <para>Create a Networking endpoint:</para>
+        <screen><prompt>#</prompt> <userinput>keystone endpoint-create \
+  --service-id $(keystone service-list | awk '/ network / {print $2}') \
+  --publicurl http://<replaceable>controller</replaceable>:9696 \
+  --adminurl http://<replaceable>controller</replaceable>:9696 \
+  --internalurl http://<replaceable>controller</replaceable>:9696</userinput></screen>
+      </step>
+    </procedure>
+    <procedure>
+      <title>Install and configure server component</title>
       <step>
         <para>Install the server component of Networking and any dependencies.</para>
         <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install neutron-server</userinput></screen>
@@ -199,53 +69,61 @@ IDENTIFIED BY '<replaceable>NEUTRON_DBPASS</replaceable>';</userinput></screen>
         <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-neutron python-neutron python-neutronclient</userinput></screen>
       </step>
       <step os="rhel;centos;fedora;opensuse;sles">
-          <para>Configure Networking to connect to the database:</para>
-          <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf database connection \
-   mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@controller/neutron</userinput></screen>
+        <para>Configure Networking to connect to the database:</para>
+        <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf database connection \
+  mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@controller/neutron</userinput></screen>
       </step>
       <step os="ubuntu;debian">
         <para>Configure Networking to use your MySQL database. Edit the
           <filename>/etc/neutron/neutron.conf</filename> file and add the
-          following key under the <literal>[database]</literal> section. Replace
-          <replaceable>NEUTRON_DBPASS</replaceable> with the password you
-          chose for the Neutron database.</para>
+          following key under the <literal>[database]</literal> section.
+          Replace <replaceable>NEUTRON_DBPASS</replaceable> with the password
+          you chose for the Neutron database.</para>
         <programlisting language="ini">[database]
 ...
 connection = mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@<replaceable>controller</replaceable>/neutron</programlisting>
       </step>
       <step os="rhel;centos;fedora;opensuse;sles">
-          <para>Configure Networking to use <systemitem class="service">keystone</systemitem> for authentication:</para>
-          <substeps>
-              <step>
-                  <para>Set the <literal>auth_strategy</literal>
-                  configuration key to <literal>keystone</literal> in the
-                  <literal>DEFAULT</literal> section of the file:</para>
-                  <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf DEFAULT auth_strategy keystone</userinput></screen>
-              </step>
-              <step>
-                  <para>Set the <systemitem class="service">neutron</systemitem> configuration for
-                      <systemitem class="service">keystone</systemitem> authentication:</para>
-                      <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf keystone_authtoken \
-   auth_host <replaceable>controller</replaceable></userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf keystone_authtoken \
-   auth_url http://<replaceable>controller</replaceable>:35357/v2.0</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf keystone_authtoken \
-   admin_tenant_name service</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf keystone_authtoken \
-   admin_user neutron</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf keystone_authtoken \
-   admin_password <replaceable>NEUTRON_PASS</replaceable></userinput></screen>
-              </step></substeps>
-      </step>
-      <step os="ubuntu;debian">
-        <para>Configure Networking to use <systemitem class="service">keystone</systemitem> as the Identity Service
-          for authentication.</para>
+        <para>Configure Networking to use
+          <systemitem class="service">keystone</systemitem> as the Identity
+          Service for authentication:</para>
         <substeps>
           <step>
-            <para>Edit the
-              <filename>/etc/neutron/neutron.conf</filename> file and add the
-              following key under the <literal>[DEFAULT]</literal>
-              section.</para>
+            <para>Set the <literal>auth_strategy</literal>
+              configuration key to <literal>keystone</literal> in the
+              <literal>DEFAULT</literal> section of the file:</para>
+            <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf DEFAULT auth_strategy keystone</userinput></screen>
+          </step>
+          <step>
+            <para>Set the <systemitem class="service">neutron</systemitem> configuration for
+            <systemitem class="service">keystone</systemitem> authentication:</para>
+            <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf keystone_authtoken \
+  auth_uri http://<replaceable>controller</replaceable>:5000</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf keystone_authtoken \
+  auth_host <replaceable>controller</replaceable></userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf keystone_authtoken \
+  auth_protocol http</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf keystone_authtoken \
+  auth_port 35357</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf keystone_authtoken \
+  admin_tenant_name service</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf keystone_authtoken \
+  admin_user neutron</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf keystone_authtoken \
+  admin_password <replaceable>NEUTRON_PASS</replaceable></userinput></screen>
+          </step>
+        </substeps>
+      </step>
+      <step os="ubuntu;debian">
+        <para>Configure Networking to use
+          <systemitem class="service">keystone</systemitem> as the Identity
+          Service for authentication.</para>
+        <substeps>
+          <step>
+            <para>Edit the <filename>/etc/neutron/neutron.conf</filename>
+              file and add the
+              file and add the following key under the
+              <literal>[DEFAULT]</literal> section.</para>
             <programlisting language="ini">[DEFAULT]
 ...
 auth_strategy = keystone</programlisting>
@@ -255,122 +133,120 @@ auth_strategy = keystone</programlisting>
               chose for the Neutron user in Keystone.</para>
             <programlisting language="ini">[keystone_authtoken]
 ...
-auth_host = <replaceable>controller</replaceable>
-auth_port = 35357
-auth_protocol = http
-admin_tenant_name = service
-admin_user = neutron
-admin_password = <replaceable>NEUTRON_PASS</replaceable>
 auth_uri = http://<replaceable>controller</replaceable>:5000
-auth_url = http://<replaceable>controller</replaceable>:35357/v2.0
-            </programlisting>
-          </step>
-          <step>
-            <para>Edit the <filename>/etc/neutron/api-paste.ini</filename> file
-              and add the following keys under the
-              <literal>[filter:authtoken]</literal> section. Replace
-              <replaceable>NEUTRON_PASS</replaceable> with the password you
-              chose for the Neutron user in Keystone.</para>
-            <programlisting language="ini">[filter:authtoken]
-...
-paste.filter_factory = keystoneclient.middleware.auth_token:filter_factory
+auth_host = <replaceable>controller</replaceable>
+auth_protocol = http
+auth_port = 35357
 admin_tenant_name = service
 admin_user = neutron
 admin_password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
           </step>
         </substeps>
       </step>
-      <step os="rhel;centos;fedora;opensuse;sles">
-          <para>Configure the <filename>/etc/neutron/api-paste.ini</filename> file for <systemitem class="service">keystone</systemitem>
-          authentication:</para>
-              <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/api-paste.ini filter:authtoken \
-   paste.filter_factory keystoneclient.middleware.auth_token:filter_factory</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/api-paste.ini filter:authtoken \
-   auth_host <replaceable>controller</replaceable></userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/api-paste.ini filter:authtoken \
-   admin_tenant_name service</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/api-paste.ini filter:authtoken \
-   admin_user neutron</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/api-paste.ini filter:authtoken \
-   admin_password <replaceable>NEUTRON_PASS</replaceable></userinput></screen>
-      </step>
       <step os="opensuse;sles">
-          <para>Configure access to the <application>RabbitMQ</application> service:</para>
-          <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf DEFAULT \
-   rpc_backend neutron.openstack.common.rpc.impl_kombu</userinput>
+        <para>Configure access to the <application>RabbitMQ</application>
+          service:</para>
+        <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf DEFAULT \
+  rpc_backend neutron.openstack.common.rpc.impl_kombu</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf DEFAULT \
-   rabbit_host controller</userinput>
+  rabbit_host controller</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf DEFAULT \
-   rabbit_userid guest</userinput>
+  rabbit_userid guest</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf DEFAULT \
-   rabbit_password <replaceable>RABBIT_PASS</replaceable></userinput></screen>
+  rabbit_password <replaceable>RABBIT_PASS</replaceable></userinput></screen>
       </step>
       <step os="rhel;centos;fedora">
-        <para>Configure access to the <application>Qpid</application> message queue:</para>
-            <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf DEFAULT \
-   rpc_backend neutron.openstack.common.rpc.impl_qpid</userinput>
+        <para>Configure access to the <application>Qpid</application> message
+          queue:</para>
+        <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf DEFAULT \
+  rpc_backend neutron.openstack.common.rpc.impl_qpid</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf DEFAULT \
-   qpid_hostname <replaceable>controller</replaceable></userinput>
+  qpid_hostname <replaceable>controller</replaceable></userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf DEFAULT \
-   qpid_port 5672</userinput>
+  qpid_port 5672</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf DEFAULT \
-   qpid_username <replaceable>guest</replaceable></userinput>
+  qpid_username <replaceable>guest</replaceable></userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf DEFAULT \
-   qpid_password <replaceable>guest</replaceable></userinput></screen>
+  qpid_password <replaceable>guest</replaceable></userinput></screen>
       </step>
       <step os="ubuntu;debian">
         <para>Configure Networking to use your message broker. Edit the
           <filename>/etc/neutron/neutron.conf</filename> file and add
           the following keys under the <literal>[DEFAULT]</literal>
           section.</para>
-        <para>Replace
-          <replaceable>RABBIT_PASS</replaceable> with the password you chose
-          for RabbitMQ.</para>
-       <programlisting language="ini">[DEFAULT]
+        <para>Replace <replaceable>RABBIT_PASS</replaceable> with the
+          password you chose for RabbitMQ.</para>
+        <programlisting language="ini">[DEFAULT]
 ...
 rpc_backend = neutron.openstack.common.rpc.impl_kombu
 rabbit_host = <replaceable>controller</replaceable>
 rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
       </step>
-      <step os="rhel;centos;fedora">
-        <para>Set the <literal>root_helper</literal> configuration in the
-          <literal>[agent]</literal> section of <filename>/etc/neutron/neutron.conf</filename>:</para>
-          <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf AGENT \
-   root_helper "sudo neutron-rootwrap /etc/neutron/rootwrap.conf"</userinput></screen>
+    </procedure>
+    <procedure>
+      <title>Install and configure Open vSwitch (OVS) plug-in</title>
+      <para>OpenStack Networking supports a variety of plug-ins. For
+        simplicity, we chose to cover the most common plug-in, Open
+        vSwitch, and configure it to use basic GRE tunnels for tenant
+        network traffic.</para>
+      <step>
+        <para>Install the Open vSwitch plug-in:</para>
+        <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install neutron-plugin-openvswitch</userinput></screen>
+        <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>yum install openstack-neutron-openvswitch</userinput></screen>
+        <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-neutron-openvswitch-agent</userinput></screen>
       </step>
       <step>
-        <para>Although the controller node does not run any Networking agents,
-          you must install and configure the same plug-in that you configured
-          on the network node.</para>
-        <para><link linkend="install-neutron.install-plug-in-controller">
-          Install and configure the Networking plug-ins on a dedicated
-          controller node</link></para>
+        <para>You must set some common configuration options no
+          matter which networking technology you choose to use
+          with Open vSwitch. You must configure Networking core to
+          use <acronym>OVS</acronym>. Edit the
+          <filename>/etc/neutron/neutron.conf</filename>
+          file:</para>
+        <programlisting language="ini">core_plugin = neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2</programlisting>
+        <note>
+          <para>The dedicated controller node does not need to run
+            Open vSwitch or the Open vSwitch agent.</para>
+        </note>
       </step>
       <step>
-      <para os="rhel;centos;fedora;opensuse;sles">Configure OpenStack Compute to use OpenStack Networking
-          services. Configure the <filename>/etc/nova/nova.conf</filename>
-          file as per instructions below:</para>
-      <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT \
-   network_api_class nova.network.neutronv2.api.API</userinput>
+        <para>Configure the <acronym>OVS</acronym> plug-in to use GRE
+          tunneling. Edit the
+          <filename>/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>
+          file:</para>
+        <programlisting language="ini">[ovs]
+tenant_network_type = gre
+tunnel_id_ranges = 1:1000
+enable_tunneling = True</programlisting>
+      </step>
+    </procedure>
+    <procedure>
+      <title>Configure Compute services for Networking</title>
+      <step>
+        <para os="rhel;centos;fedora;opensuse;sles">Configure Compute to use
+          OpenStack Networking services. Configure the
+          <filename>/etc/nova/nova.conf</filename> file as per instructions
+          below:</para>
+        <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT \
+  network_api_class nova.network.neutronv2.api.API</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT \
-   neutron_url http://<replaceable>controller</replaceable>:9696</userinput>
+  neutron_url http://<replaceable>controller</replaceable>:9696</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT \
-   neutron_auth_strategy keystone</userinput>
+  neutron_auth_strategy keystone</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT \
-   neutron_admin_tenant_name service</userinput>
+  neutron_admin_tenant_name service</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT \
-   neutron_admin_username neutron</userinput>
+  neutron_admin_username neutron</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT \
-   neutron_admin_password <replaceable>NEUTRON_PASS</replaceable></userinput>
+  neutron_admin_password <replaceable>NEUTRON_PASS</replaceable></userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT \
-   neutron_admin_auth_url http://<replaceable>controller</replaceable>:35357/v2.0</userinput>
+  neutron_admin_auth_url http://<replaceable>controller</replaceable>:35357/v2.0</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT \
-   linuxnet_interface_driver nova.network.linux_net.LinuxOVSInterfaceDriver</userinput>
+  linuxnet_interface_driver nova.network.linux_net.LinuxOVSInterfaceDriver</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT \
-   firewall_driver nova.virt.firewall.NoopFirewallDriver</userinput>
+  firewall_driver nova.virt.firewall.NoopFirewallDriver</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT \
-   security_group_api neutron</userinput></screen>
-        <para os="ubuntu;debian">Configure OpenStack Compute to use OpenStack Networking
+  security_group_api neutron</userinput></screen>
+        <para os="ubuntu;debian">Configure Compute to use OpenStack Networking
           services. Edit the <filename>/etc/nova/nova.conf</filename>
           file:</para>
         <programlisting language="ini" os="ubuntu;debian">network_api_class=nova.network.neutronv2.api.API
@@ -391,8 +267,8 @@ security_group_api=neutron</programlisting>
               as the No-Op firewall. This firewall is a
               <systemitem class="service">nova</systemitem> firewall,
               and because  <systemitem class="service">neutron</systemitem>
-              handles the Firewall, you must tell <systemitem class="service">nova</systemitem>
-              not to use one.</para>
+              handles the Firewall, you must tell
+              <systemitem class="service">nova</systemitem> not to use one.</para>
               <para>When Networking handles the firewall, the option
               <code>firewall_driver</code> should be set according to
               the specified plug-in. For example with
@@ -407,16 +283,16 @@ firewall_driver=neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallD
    neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver</userinput></screen>
             </listitem>
             <listitem>
-               <para>If you do not want to use a firewall in Compute or
-               Networking, set
-               <code>firewall_driver=nova.virt.firewall.NoopFirewallDriver</code>
-               in both config files, and comment out or remove
-               <code>security_group_api=neutron</code> in the
-               <filename>/etc/nova/nova.conf</filename> file, otherwise
-               you may encounter <errortext>ERROR: The server has either
-               erred or is incapable of performing the requested
-               operation. (HTTP 500)</errortext> when issuing
-              <command>nova list</command> commands.</para>
+              <para>If you do not want to use a firewall in Compute or
+                Networking, set
+                <code>firewall_driver=nova.virt.firewall.NoopFirewallDriver</code>
+                in both config files, and comment out or remove
+                <code>security_group_api=neutron</code> in the
+                <filename>/etc/nova/nova.conf</filename> file, otherwise
+                you may encounter <errortext>ERROR: The server has either
+                erred or is incapable of performing the requested
+                operation. (HTTP 500)</errortext> when issuing
+                <command>nova list</command> commands.</para>
             </listitem>
           </itemizedlist>
         </note>
@@ -444,6 +320,9 @@ firewall_driver=neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallD
           following:</para>
         <programlisting>NEUTRON_PLUGIN_CONF="/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini"</programlisting>
       </step>
+    </procedure>
+    <procedure>
+      <title>Finalize installation</title>
       <step os="ubuntu;debian">
         <para>Restart the Compute and Networking services:</para>
         <screen><prompt>#</prompt> <userinput>service nova-api restart</userinput>
@@ -466,87 +345,4 @@ firewall_driver=neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallD
 <prompt>#</prompt> <userinput>chkconfig openstack-neutron on</userinput></screen>
       </step>
     </procedure>
-    <section xml:id="install-neutron.install-plug-in-controller">
-      <title>Install and configure the Neutron plug-ins on a dedicated
-        controller node</title>
-      <section xml:id="install-neutron.install-plug-in-controller.ovs">
-        <title>Install the Open vSwitch (OVS) plug-in on a dedicated
-          controller node</title>
-        <procedure>
-          <step>
-            <para>Install the Open vSwitch plug-in:</para>
-            <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install neutron-plugin-openvswitch</userinput></screen>
-            <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>yum install openstack-neutron-openvswitch</userinput></screen>
-            <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-neutron-openvswitch-agent</userinput></screen>
-          </step>
-          <step>
-            <para>You must set some common configuration options no
-              matter which networking technology you choose to use
-              with Open vSwitch. You must configure Networking core to
-              use <acronym>OVS</acronym>. Edit the
-                <filename>/etc/neutron/neutron.conf</filename>
-              file:</para>
-            <programlisting language="ini">core_plugin = neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2</programlisting>
-          </step>
-          <step>
-            <para>Configure the <acronym>OVS</acronym> plug-in for the
-              networking type that you chose when you configured the
-              network node: <link
-                linkend="install-neutron.install-plug-in-controller.ovs.gre"
-                >GRE tunneling</link> or <link
-                linkend="install-neutron.install-plug-in-controller.ovs.vlan"
-                >VLANs</link>.</para>
-            <!-- TODO(sross): support provider networks?  you need to modify things above for this to work -->
-            <note>
-              <para>The dedicated controller node does not need to run
-                Open vSwitch or the Open vSwitch agent.</para>
-            </note>
-          </step>
-          <step>
-            <para>Now, return to the general <acronym>OVS</acronym>
-              instructions.</para>
-          </step>
-        </procedure>
-        <section
-          xml:id="install-neutron.install-plug-in-controller.ovs.gre">
-          <title>Configure the Neutron <acronym>OVS</acronym> plug-in
-            for GRE tunneling on a dedicated controller node</title>
-          <procedure>
-            <step>
-              <para>Tell the <acronym>OVS</acronym> plug-in to use GRE
-                tunneling. Edit the
-                  <filename>/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>
-                file:</para>
-              <programlisting language="ini">[ovs]
-tenant_network_type = gre
-tunnel_id_ranges = 1:1000
-enable_tunneling = True</programlisting>
-            </step>
-            <step>
-              <para>Return to the general <acronym>OVS</acronym>
-                instructions.</para>
-            </step>
-          </procedure>
-        </section>
-        <section
-          xml:id="install-neutron.install-plug-in-controller.ovs.vlan">
-          <title>Configure the Neutron <acronym>OVS</acronym> plug-in
-            for VLANs on a dedicated controller node</title>
-          <procedure>
-            <step>
-              <para>Tell <acronym>OVS</acronym> to use VLANS. Edit the
-                  <filename>/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>
-                file, as follows:</para>
-              <programlisting language="ini">[ovs]
-tenant_network_type = vlan
-network_vlan_ranges = physnet1:1:4094</programlisting>
-            </step>
-            <step>
-              <para>Return to the general <acronym>OVS</acronym>
-                instructions.</para>
-            </step>
-          </procedure>
-        </section>
-      </section>
-    </section>
   </section>
