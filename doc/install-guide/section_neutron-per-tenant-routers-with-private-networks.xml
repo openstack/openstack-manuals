@@ -413,7 +413,7 @@ export OS_AUTH_URL=http://<replaceable>controller</replaceable>:5000/v2.0/</prog
             <step>
                 <para>Get the tenant ID (Used as $TENANT_ID
                     later):</para>
-                <screen><prompt>#</prompt> <userinput>keystone tenant-list</userinput>
+                <screen><prompt>$</prompt> <userinput>keystone tenant-list</userinput>
 <computeroutput>+----------------------------------+---------+---------+
 |                id                |   name  | enabled |
 +----------------------------------+---------+---------+
@@ -426,7 +426,7 @@ export OS_AUTH_URL=http://<replaceable>controller</replaceable>:5000/v2.0/</prog
             </step>
             <step>
                 <para>Get user information:</para>
-                <screen><prompt>#</prompt> <userinput>keystone user-list</userinput>
+                <screen><prompt>$</prompt> <userinput>keystone user-list</userinput>
 <computeroutput>+----------------------------------+-------+---------+-------------------+
 |                id                |  name | enabled |       email       |
 +----------------------------------+-------+---------+-------------------+
@@ -440,7 +440,7 @@ export OS_AUTH_URL=http://<replaceable>controller</replaceable>:5000/v2.0/</prog
             <step>
                 <para>Create the external network and its subnet by
                     admin user:</para>
-                <screen><prompt>#</prompt> <userinput>neutron net-create Ext-Net --provider:network_type local --router:external true</userinput>
+                <screen><prompt>$</prompt> <userinput>neutron net-create Ext-Net --provider:network_type local --router:external true</userinput>
 <computeroutput>Created a new network:
 +---------------------------+--------------------------------------+
 | Field                     | Value                                |
@@ -458,7 +458,7 @@ export OS_AUTH_URL=http://<replaceable>controller</replaceable>:5000/v2.0/</prog
 | tenant_id                 | b7445f221cda4f4a8ac7db6b218b1339     |
 +---------------------------+--------------------------------------+</computeroutput></screen>
 
-                <screen><prompt>#</prompt> <userinput>neutron subnet-create Ext-Net 30.0.0.0/24 --disable-dhcp</userinput>
+                <screen><prompt>$</prompt> <userinput>neutron subnet-create Ext-Net 30.0.0.0/24 --disable-dhcp</userinput>
 <computeroutput>Created a new subnet:
 +------------------+--------------------------------------------+
 | Field            | Value                                      |
@@ -500,7 +500,7 @@ export OS_AUTH_URL=http://<replaceable>controller</replaceable>:5000/v2.0/</prog
                 <substeps>
                     <step>
                         <para>Create a network for TenantA:</para>
-                        <screen><prompt>#</prompt> <userinput>neutron --os-tenant-name TenantA --os-username UserA --os-password password \
+                        <screen><prompt>$</prompt> <userinput>neutron --os-tenant-name TenantA --os-username UserA --os-password password \
  --os-auth-url=http://localhost:5000/v2.0 net-create TenantA-Net</userinput>
 <computeroutput>Created a new network:
 +-----------------+--------------------------------------+
@@ -518,7 +518,7 @@ export OS_AUTH_URL=http://<replaceable>controller</replaceable>:5000/v2.0/</prog
                         <para>After that, you can use admin user to
                             query the provider network
                             information:</para>
-                        <screen><prompt>#</prompt> <userinput>neutron net-show TenantA-Net</userinput>
+                        <screen><prompt>$</prompt> <userinput>neutron net-show TenantA-Net</userinput>
 <computeroutput>+---------------------------+--------------------------------------+
 | Field                     | Value                                |
 +---------------------------+--------------------------------------+
@@ -541,7 +541,7 @@ export OS_AUTH_URL=http://<replaceable>controller</replaceable>:5000/v2.0/</prog
                     <step>
                         <para>Create a subnet on the network
                             TenantA-Net:</para>
-                        <screen><prompt>#</prompt> <userinput>neutron --os-tenant-name TenantA --os-username UserA --os-password password \
+                        <screen><prompt>$</prompt> <userinput>neutron --os-tenant-name TenantA --os-username UserA --os-password password \
   --os-auth-url=http://localhost:5000/v2.0 subnet-create TenantA-Net 10.0.0.0/24</userinput>
 <computeroutput>Created a new subnet:
 +------------------+--------------------------------------------+
@@ -584,7 +584,7 @@ export OS_AUTH_URL=http://<replaceable>controller</replaceable>:5000/v2.0/</prog
                     <step>
                         <para>Create and configure a router for
                             TenantA:</para>
-                        <screen><prompt>#</prompt> <userinput>neutron --os-tenant-name TenantA --os-username UserA --os-password password \
+                        <screen><prompt>$</prompt> <userinput>neutron --os-tenant-name TenantA --os-username UserA --os-password password \
   --os-auth-url=http://localhost:5000/v2.0 router-create TenantA-R1</userinput>
 <computeroutput>Created a new router:
 +-----------------------+--------------------------------------+
@@ -597,12 +597,12 @@ export OS_AUTH_URL=http://<replaceable>controller</replaceable>:5000/v2.0/</prog
 | status                | ACTIVE                               |
 | tenant_id             | 247e478c599f45b5bd297e8ddbbc9b6a     |
 +-----------------------+--------------------------------------+</computeroutput></screen>
-                        <screen><prompt>#</prompt> <userinput>neutron --os-tenant-name TenantA --os-username UserA --os-password password \
+                        <screen><prompt>$</prompt> <userinput>neutron --os-tenant-name TenantA --os-username UserA --os-password password \
   --os-auth-url=http://localhost:5000/v2.0 router-interface-add \
   TenantA-R1 51e2c223-0492-4385-b6e9-83d4e6d10657</userinput></screen>
                         <para>Added interface to router
                             TenantA-R1</para>
-                        <screen><prompt>#</prompt> <userinput>neutron --os-tenant-name TenantA --os-username UserA --os-password password \
+                        <screen><prompt>$</prompt> <userinput>neutron --os-tenant-name TenantA --os-username UserA --os-password password \
   --os-auth-url=http://localhost:5000/v2.0 \
   router-gateway-set TenantA-R1 Ext-Net</userinput></screen>
                     </step>
@@ -614,7 +614,7 @@ export OS_AUTH_URL=http://<replaceable>controller</replaceable>:5000/v2.0/</prog
 
                     <step>
                         <para>Create a floating IP:</para>
-                        <screen><prompt>#</prompt> <userinput>neutron --os-tenant-name TenantA --os-username UserA --os-password password \
+                        <screen><prompt>$</prompt> <userinput>neutron --os-tenant-name TenantA --os-username UserA --os-password password \
   --os-auth-url=http://localhost:5000/v2.0 floatingip-create Ext-Net</userinput>
 <computeroutput>Created a new floatingip:
 +---------------------+--------------------------------------+
@@ -707,21 +707,21 @@ rtt min/avg/max/mdev = 0.898/15.621/45.027/20.793 ms
                     <step>
                         <para>Create networks and subnets for
                             TenantC:</para>
-                        <screen><prompt>#</prompt> <userinput>neutron --os-tenant-name TenantC --os-username UserC --os-password password \
+                        <screen><prompt>$</prompt> <userinput>neutron --os-tenant-name TenantC --os-username UserC --os-password password \
   --os-auth-url=http://localhost:5000/v2.0 net-create TenantC-Net1</userinput>
-<prompt>#</prompt> <userinput>neutron --os-tenant-name TenantC --os-username UserC --os-password password \
+<prompt>$</prompt> <userinput>neutron --os-tenant-name TenantC --os-username UserC --os-password password \
    --os-auth-url=http://localhost:5000/v2.0 subnet-create TenantC-Net1 \
     10.0.0.0/24 --name TenantC-Subnet1</userinput>
-<prompt>#</prompt> <userinput>neutron --os-tenant-name TenantC --os-username UserC --os-password password \
+<prompt>$</prompt> <userinput>neutron --os-tenant-name TenantC --os-username UserC --os-password password \
   --os-auth-url=http://localhost:5000/v2.0 net-create TenantC-Net2</userinput>
-<prompt>#</prompt> <userinput>neutron --os-tenant-name TenantC --os-username UserC --os-password password \
+<prompt>$</prompt> <userinput>neutron --os-tenant-name TenantC --os-username UserC --os-password password \
   --os-auth-url=http://localhost:5000/v2.0 subnet-create TenantC-Net2 \
   10.0.1.0/24 --name TenantC-Subnet2</userinput>
 </screen>
                         <para>After that you can use admin user to
                             query the network's provider network
                             information:</para>
-                        <screen><prompt>#</prompt> <userinput>neutron net-show TenantC-Net1</userinput>
+                        <screen><prompt>$</prompt> <userinput>neutron net-show TenantC-Net1</userinput>
 <computeroutput>+---------------------------+--------------------------------------+
 | Field                     | Value                                |
 +---------------------------+--------------------------------------+
@@ -738,7 +738,7 @@ rtt min/avg/max/mdev = 0.898/15.621/45.027/20.793 ms
 | tenant_id                 | 2b4fec24e62e4ff28a8445ad83150f9d     |
 +---------------------------+--------------------------------------+
 </computeroutput></screen>
-                        <screen><prompt>#</prompt> <userinput>neutron net-show TenantC-Net2</userinput>
+                        <screen><prompt>$</prompt> <userinput>neutron net-show TenantC-Net2</userinput>
 <computeroutput>+---------------------------+--------------------------------------+
 | Field                     | Value                                |
 +---------------------------+--------------------------------------+
@@ -763,20 +763,20 @@ rtt min/avg/max/mdev = 0.898/15.621/45.027/20.793 ms
                     <step>
                         <para>Create a server TenantC-VM1 for TenantC
                             on TenantC-Net1.</para>
-                        <screen><prompt>#</prompt> <userinput>nova --os-tenant-name TenantC --os-username UserC --os-password password  \
+                        <screen><prompt>$</prompt> <userinput>nova --os-tenant-name TenantC --os-username UserC --os-password password  \
   --os-auth-url=http://localhost:5000/v2.0 boot --image tty --flavor 1 \
   --nic net-id=91309738-c317-40a3-81bb-bed7a3917a85 TenantC_VM1</userinput></screen>
                     </step>
                     <step>
                         <para>Create a server TenantC-VM3 for TenantC
                             on TenantC-Net2.</para>
-                        <screen><prompt>#</prompt> <userinput>nova --os-tenant-name TenantC --os-username UserC --os-password password \
+                        <screen><prompt>$</prompt> <userinput>nova --os-tenant-name TenantC --os-username UserC --os-password password \
   --os-auth-url=http://localhost:5000/v2.0 boot --image tty --flavor 1 \
   --nic net-id=5b373ad2-7866-44f4-8087-f87148abd623 TenantC_VM3</userinput></screen>
                     </step>
                     <step>
                         <para>List servers of TenantC.</para>
-                        <screen><prompt>#</prompt> <userinput>nova --os-tenant-name TenantC --os-username UserC --os-password password \
+                        <screen><prompt>$</prompt> <userinput>nova --os-tenant-name TenantC --os-username UserC --os-password password \
   --os-auth-url=http://localhost:5000/v2.0 list</userinput>
 <computeroutput>+--------------------------------------+-------------+--------+-----------------------+
 | ID                                   | Name        | Status | Networks              |
@@ -798,15 +798,15 @@ rtt min/avg/max/mdev = 0.898/15.621/45.027/20.793 ms
                     <step>
                         <para>Create and configure a router for
                             TenantC:</para>
-                        <screen><prompt>#</prompt> <userinput>neutron --os-tenant-name TenantC --os-username UserC --os-password password \
+                        <screen><prompt>$</prompt> <userinput>neutron --os-tenant-name TenantC --os-username UserC --os-password password \
   --os-auth-url=http://localhost:5000/v2.0 router-create TenantC-R1</userinput></screen>
-                        <screen><prompt>#</prompt> <userinput>neutron --os-tenant-name TenantC --os-username UserC --os-password password \
+                        <screen><prompt>$</prompt> <userinput>neutron --os-tenant-name TenantC --os-username UserC --os-password password \
   --os-auth-url=http://localhost:5000/v2.0 router-interface-add \
   TenantC-R1 cf03fd1e-164b-4527-bc87-2b2631634b83</userinput>
-<prompt>#</prompt> <userinput>neutron --os-tenant-name TenantC --os-username UserC --os-password password \
+<prompt>$</prompt> <userinput>neutron --os-tenant-name TenantC --os-username UserC --os-password password \
   --os-auth-url=http://localhost:5000/v2.0 router-interface-add \
   TenantC-R1 38f0b2f0-9f98-4bf6-9520-f4abede03300</userinput></screen>
-                        <screen><prompt>#</prompt> <userinput>neutron --os-tenant-name TenantC --os-username UserC --os-password password \
+                        <screen><prompt>$</prompt> <userinput>neutron --os-tenant-name TenantC --os-username UserC --os-password password \
   --os-auth-url=http://localhost:5000/v2.0 \
   router-gateway-set TenantC-R1 Ext-Net</userinput></screen>
                     </step>

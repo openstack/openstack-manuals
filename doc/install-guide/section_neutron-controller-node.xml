@@ -46,14 +46,14 @@ IDENTIFIED BY '<replaceable>NEUTRON_DBPASS</replaceable>';</userinput></screen>
         <para>Create the required user, service, and endpoint so that
           Networking can interface with the Identity Service.</para>
         <para>Create a <literal>neutron</literal> user:</para>
-        <screen><prompt>#</prompt> <userinput>keystone user-create --name=neutron --pass=<replaceable>NEUTRON_PASS</replaceable> --email=<replaceable>neutron@example.com</replaceable></userinput></screen>
+        <screen><prompt>$</prompt> <userinput>keystone user-create --name=neutron --pass=<replaceable>NEUTRON_PASS</replaceable> --email=<replaceable>neutron@example.com</replaceable></userinput></screen>
         <para>Add the user role to the neutron user:</para>
-        <screen><prompt>#</prompt> <userinput>keystone user-role-add --user=neutron --tenant=service --role=admin</userinput></screen>
+        <screen><prompt>$</prompt> <userinput>keystone user-role-add --user=neutron --tenant=service --role=admin</userinput></screen>
         <para>Create the neutron service:</para>
-        <screen><prompt>#</prompt> <userinput>keystone service-create --name=neutron --type=network \
+        <screen><prompt>$</prompt> <userinput>keystone service-create --name=neutron --type=network \
   --description="OpenStack Networking"</userinput></screen>
         <para>Create a Networking endpoint:</para>
-        <screen><prompt>#</prompt> <userinput>keystone endpoint-create \
+        <screen><prompt>$</prompt> <userinput>keystone endpoint-create \
   --service-id $(keystone service-list | awk '/ network / {print $2}') \
   --publicurl http://<replaceable>controller</replaceable>:9696 \
   --adminurl http://<replaceable>controller</replaceable>:9696 \

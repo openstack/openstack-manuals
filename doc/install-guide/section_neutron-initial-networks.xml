@@ -21,21 +21,21 @@
           <literal>ext-net</literal> might be assigned to VMs so that the
           external network can contact them. Neutron-based services route the
           traffic appropriately.</para>
-        <screen><prompt>#</prompt> <userinput>neutron net-create ext-net --router:external=True <replaceable>SPECIAL_OPTIONS</replaceable></userinput></screen>
+        <screen><prompt>$</prompt> <userinput>neutron net-create ext-net --router:external=True <replaceable>SPECIAL_OPTIONS</replaceable></userinput></screen>
       </step>
       <step>
         <para>Create the associated subnet with the same gateway and
           CIDR as <replaceable>EXTERNAL_INTERFACE</replaceable>. It
           does not have DHCP because it represents a slice of the
           external world:</para>
-        <screen><prompt>#</prompt> <userinput>neutron subnet-create ext-net \
+        <screen><prompt>$</prompt> <userinput>neutron subnet-create ext-net \
   --allocation-pool start=<replaceable>FLOATING_IP_START</replaceable>,end=<replaceable>FLOATING_IP_END</replaceable> \
   --gateway=<replaceable>EXTERNAL_INTERFACE_GATEWAY</replaceable> --enable_dhcp=False \
   <replaceable>EXTERNAL_INTERFACE_CIDR</replaceable></userinput></screen>
       </step>
       <step>
         <para>Create one or more initial tenants, for example:</para>
-        <screen><prompt>#</prompt> <userinput>keystone tenant-create --name <replaceable>DEMO_TENANT</replaceable></userinput></screen>
+        <screen><prompt>$</prompt> <userinput>keystone tenant-create --name <replaceable>DEMO_TENANT</replaceable></userinput></screen>
         <para os="rhel;centos;fedora;opensuse;sles;ubuntu"> See <xref
             linkend="keystone-users"/> for further details.</para>
         <para os="debian"> See <xref linkend="keystone-install"/> for
@@ -50,15 +50,15 @@
           command.</para>
         <para>Use the following to quickly get the
             <replaceable>DEMO_TENANT</replaceable> tenant-id:</para>
-        <screen><prompt>#</prompt> <userinput>keystone tenant-list | grep <replaceable>DEMO_TENANT</replaceable> | awk '{print $2;}'</userinput></screen>
+        <screen><prompt>$</prompt> <userinput>keystone tenant-list | grep <replaceable>DEMO_TENANT</replaceable> | awk '{print $2;}'</userinput></screen>
         <para>Then create the router:</para>
-        <screen><prompt>#</prompt> <userinput>neutron router-create ext-to-int --tenant-id <replaceable>DEMO_TENANT_ID</replaceable></userinput></screen>
+        <screen><prompt>$</prompt> <userinput>neutron router-create ext-to-int --tenant-id <replaceable>DEMO_TENANT_ID</replaceable></userinput></screen>
       </step>
       <step>
         <para>Connect the router to <literal>ext-net</literal> by
           setting the gateway for the router as
             <literal>ext-net</literal>:</para>
-        <screen><prompt>#</prompt> <userinput>neutron router-gateway-set <replaceable>EXT_TO_INT_ID</replaceable> <replaceable>EXT_NET_ID</replaceable></userinput></screen>
+        <screen><prompt>$</prompt> <userinput>neutron router-gateway-set <replaceable>EXT_TO_INT_ID</replaceable> <replaceable>EXT_NET_ID</replaceable></userinput></screen>
       </step>
       <step>
         <para>Create an internal network for
@@ -66,9 +66,9 @@
           subnet over an arbitrary internal IP range, such as,
             <literal>10.5.5.0/24</literal>), and connect it to the
           router by setting it as a port:</para>
-        <screen><prompt>#</prompt> <userinput>neutron net-create --tenant-id <replaceable>DEMO_TENANT_ID</replaceable> demo-net <replaceable>SPECIAL_OPTIONS</replaceable></userinput>
-<prompt>#</prompt> <userinput>neutron subnet-create --tenant-id <replaceable>DEMO_TENANT_ID</replaceable> demo-net 10.5.5.0/24 --gateway 10.5.5.1</userinput>
-<prompt>#</prompt> <userinput>neutron router-interface-add <replaceable>EXT_TO_INT_ID</replaceable> <replaceable>DEMO_NET_SUBNET_ID</replaceable></userinput></screen>
+        <screen><prompt>$</prompt> <userinput>neutron net-create --tenant-id <replaceable>DEMO_TENANT_ID</replaceable> demo-net <replaceable>SPECIAL_OPTIONS</replaceable></userinput>
+<prompt>$</prompt> <userinput>neutron subnet-create --tenant-id <replaceable>DEMO_TENANT_ID</replaceable> demo-net 10.5.5.0/24 --gateway 10.5.5.1</userinput>
+<prompt>$</prompt> <userinput>neutron router-interface-add <replaceable>EXT_TO_INT_ID</replaceable> <replaceable>DEMO_NET_SUBNET_ID</replaceable></userinput></screen>
       </step>
     </procedure>
     <section
