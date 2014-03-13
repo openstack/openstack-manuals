@@ -522,14 +522,14 @@
                             networks.</para></td>
                         <td>
                             <screen><prompt>#</prompt> <userinput>neutron net-create public --router:external=True</userinput>
-<prompt>#</prompt> <userinput>neutron subnet-create public 172.16.1.0/24</userinput></screen>
+<prompt>$</prompt> <userinput>neutron subnet-create public 172.16.1.0/24</userinput></screen>
                         </td>
                     </tr>
                     <tr>
                         <td>
                             <para>Lists external networks.</para></td>
                         <td>
-                            <screen><prompt>#</prompt> <userinput>neutron net-list -- --router:external=True</userinput></screen>
+                            <screen><prompt>$</prompt> <userinput>neutron net-list -- --router:external=True</userinput></screen>
                         </td>
                     </tr>
                     <tr>
@@ -537,13 +537,13 @@
                                 connects to multiple L2 networks
                                 privately.</para></td>
                         <td>
-                            <screen><prompt>#</prompt> <userinput>neutron net-create net1</userinput>
-<prompt>#</prompt> <userinput>neutron subnet-create net1 10.0.0.0/24</userinput>
-<prompt>#</prompt> <userinput>neutron net-create net2</userinput>
-<prompt>#</prompt> <userinput>neutron subnet-create net2 10.0.1.0/24</userinput>
-<prompt>#</prompt> <userinput>neutron router-create router1</userinput>
-<prompt>#</prompt> <userinput>neutron router-interface-add router1 &lt;subnet1-uuid&gt;</userinput>
-<prompt>#</prompt> <userinput>neutron router-interface-add router1 &lt;subnet2-uuid&gt;</userinput></screen>
+                            <screen><prompt>$</prompt> <userinput>neutron net-create net1</userinput>
+<prompt>$</prompt> <userinput>neutron subnet-create net1 10.0.0.0/24</userinput>
+<prompt>$</prompt> <userinput>neutron net-create net2</userinput>
+<prompt>$</prompt> <userinput>neutron subnet-create net2 10.0.1.0/24</userinput>
+<prompt>$</prompt> <userinput>neutron router-create router1</userinput>
+<prompt>$</prompt> <userinput>neutron router-interface-add router1 &lt;subnet1-uuid&gt;</userinput>
+<prompt>$</prompt> <userinput>neutron router-interface-add router1 &lt;subnet2-uuid&gt;</userinput></screen>
                         </td>
                     </tr>
                     <tr>
@@ -553,7 +553,7 @@
                                 act as a NAT gateway for external
                                 connectivity.</para></td>
                         <td>
-                            <screen><prompt>#</prompt> <userinput>neutron router-gateway-set router1 &lt;ext-net-id&gt;</userinput></screen>
+                            <screen><prompt>$</prompt> <userinput>neutron router-gateway-set router1 &lt;ext-net-id&gt;</userinput></screen>
                             <para>The router obtains an interface with
                                 the gateway_ip address of the subnet,
                                 and this interface is attached to a
@@ -573,7 +573,7 @@
                         <td>
                             <para>Lists routers.</para></td>
                         <td>
-                            <screen><prompt>#</prompt> <userinput>neutron router-list</userinput></screen>
+                            <screen><prompt>$</prompt> <userinput>neutron router-list</userinput></screen>
                         </td>
                     </tr>
                     <tr>
@@ -581,7 +581,7 @@
                             <para>Shows information for a specified
                                 router.</para></td>
                         <td>
-                            <screen><prompt>#</prompt> <userinput>neutron router-show &lt;router_id&gt;</userinput></screen>
+                            <screen><prompt>$</prompt> <userinput>neutron router-show &lt;router_id&gt;</userinput></screen>
                         </td>
                     </tr>
                     <tr>
@@ -597,11 +597,11 @@
                                 represents the VM NIC to which the
                                 floating IP should map.</para></td>
                         <td>
-                            <screen><prompt>#</prompt> <userinput>neutron port-list -c id -c fixed_ips -- --device_id=&lt;instance_id&gt;</userinput></screen>
+                            <screen><prompt>$</prompt> <userinput>neutron port-list -c id -c fixed_ips -- --device_id=&lt;instance_id&gt;</userinput></screen>
                             <para>This port must be on an Networking
                                 subnet that is attached to a router
                                 uplinked to the external network used
-                                to create the floating IP. 
+                                to create the floating IP.
                                 Conceptually, this is because the
                                 router must be able to perform the
                                 Destination NAT (DNAT) rewriting of
@@ -617,8 +617,8 @@
                             <para>Creates a floating IP address and
                                 associates it with a port.</para></td>
                         <td>
-                            <screen><prompt>#</prompt> <userinput>neutron floatingip-create &lt;ext-net-id&gt;</userinput>
-<prompt>#</prompt> <userinput>neutron floatingip-associate &lt;floatingip-id&gt; &lt;internal VM port-id&gt;</userinput></screen>
+                            <screen><prompt>$</prompt> <userinput>neutron floatingip-create &lt;ext-net-id&gt;</userinput>
+<prompt>$</prompt> <userinput>neutron floatingip-associate &lt;floatingip-id&gt; &lt;internal VM port-id&gt;</userinput></screen>
                         </td>
                     </tr>
                     <tr>
@@ -627,14 +627,14 @@
                                 associates it with a port, in a single
                                 step.</para></td>
                         <td>
-                            <screen><prompt>#</prompt> <userinput>neutron floatingip-create --port_id &lt;internal VM port-id&gt; &lt;ext-net-id&gt;</userinput></screen>
+                            <screen><prompt>$</prompt> <userinput>neutron floatingip-create --port_id &lt;internal VM port-id&gt; &lt;ext-net-id&gt;</userinput></screen>
                         </td>
                     </tr>
                     <tr>
                         <td>
                             <para>Lists floating IPs.</para></td>
                         <td>
-                            <screen><prompt>#</prompt> <userinput>neutron floatingip-list</userinput></screen>
+                            <screen><prompt>$</prompt> <userinput>neutron floatingip-list</userinput></screen>
                         </td>
                     </tr>
                     <tr>
@@ -642,7 +642,7 @@
                             <para>Finds floating IP for a specified VM
                                 port.</para></td>
                         <td>
-                            <screen><prompt>#</prompt> <userinput>neutron floatingip-list -- --port_id=ZZZ</userinput></screen>
+                            <screen><prompt>$</prompt> <userinput>neutron floatingip-list -- --port_id=ZZZ</userinput></screen>
                         </td>
                     </tr>
                     <tr>
@@ -650,7 +650,7 @@
                             <para>Disassociates a floating IP
                                 address.</para></td>
                         <td>
-                            <screen><prompt>#</prompt> <userinput>neutron floatingip-disassociate &lt;floatingip-id&gt;</userinput></screen>
+                            <screen><prompt>$</prompt> <userinput>neutron floatingip-disassociate &lt;floatingip-id&gt;</userinput></screen>
                         </td>
                     </tr>
                     <tr>
@@ -658,14 +658,14 @@
                             <para>Deletes the floating IP
                                 address.</para></td>
                         <td>
-                            <screen><prompt>#</prompt> <userinput>neutron floatingip-delete &lt;floatingip-id&gt;</userinput></screen>
+                            <screen><prompt>$</prompt> <userinput>neutron floatingip-delete &lt;floatingip-id&gt;</userinput></screen>
                         </td>
                     </tr>
                     <tr>
                         <td>
                             <para>Clears the gateway.</para></td>
                         <td>
-                            <screen><prompt>#</prompt> <userinput>neutron router-gateway-clear router1</userinput></screen>
+                            <screen><prompt>$</prompt> <userinput>neutron router-gateway-clear router1</userinput></screen>
                         </td>
                     </tr>
                     <tr>
@@ -673,14 +673,14 @@
                             <para>Removes the interfaces from the
                                 router.</para></td>
                         <td>
-                            <screen><prompt>#</prompt> <userinput>neutron router-interface-delete router1 &lt;subnet-id&gt;</userinput></screen>
+                            <screen><prompt>$</prompt> <userinput>neutron router-interface-delete router1 &lt;subnet-id&gt;</userinput></screen>
                         </td>
                     </tr>
                     <tr>
                         <td>
                             <para>Deletes the router.</para></td>
                         <td>
-                            <screen><prompt>#</prompt> <userinput>neutron router-delete router1</userinput></screen>
+                            <screen><prompt>$</prompt> <userinput>neutron router-delete router1</userinput></screen>
                         </td>
                     </tr>
                 </tbody>
@@ -898,51 +898,51 @@
                             <para>Creates a security group for our web
                                 servers.</para></td>
                         <td>
-                            <screen><prompt>#</prompt> <userinput>neutron security-group-create webservers --description "security group for webservers"</userinput></screen></td>
+                            <screen><prompt>$</prompt> <userinput>neutron security-group-create webservers --description "security group for webservers"</userinput></screen></td>
                     </tr>
                     <tr>
                         <td><para>Lists security groups.</para></td>
-                        <td><screen><prompt>#</prompt> <userinput>neutron security-group-list</userinput></screen>
+                        <td><screen><prompt>$</prompt> <userinput>neutron security-group-list</userinput></screen>
                         </td>
                     </tr>
                     <tr>
                         <td>
                             <para>Creates a security group rule to
                                 allow port 80 ingress.</para></td>
-                        <td><screen><prompt>#</prompt> <userinput>neutron security-group-rule-create --direction ingress --protocol tcp --port_range_min 80 --port_range_max 80 &lt;security_group_uuid&gt;</userinput></screen>
+                        <td><screen><prompt>$</prompt> <userinput>neutron security-group-rule-create --direction ingress --protocol tcp --port_range_min 80 --port_range_max 80 &lt;security_group_uuid&gt;</userinput></screen>
                         </td>
                     </tr>
                     <tr>
                         <td>
                             <para>Lists security group
                             rules.</para></td>
-                        <td><screen><prompt>#</prompt> <userinput>neutron security-group-rule-list</userinput></screen>
+                        <td><screen><prompt>$</prompt> <userinput>neutron security-group-rule-list</userinput></screen>
                         </td>
                     </tr>
                     <tr>
                         <td><para>Deletes a security group
                                 rule.</para></td>
-                        <td><screen><prompt>#</prompt> <userinput>neutron security-group-rule-delete &lt;security_group_rule_uuid&gt;</userinput></screen>
+                        <td><screen><prompt>$</prompt> <userinput>neutron security-group-rule-delete &lt;security_group_rule_uuid&gt;</userinput></screen>
                         </td>
                     </tr>
                     <tr>
                         <td>
                             <para>Deletes a security
                             group.</para></td>
-                        <td><screen><prompt>#</prompt> <userinput>neutron security-group-delete &lt;security_group_uuid&gt;</userinput></screen>
+                        <td><screen><prompt>$</prompt> <userinput>neutron security-group-delete &lt;security_group_uuid&gt;</userinput></screen>
                         </td>
                     </tr>
                     <tr>
                         <td><para>Creates a port and associates two
                                 security groups.</para></td>
-                        <td><screen><prompt>#</prompt> <userinput>neutron port-create --security-group &lt;security_group_id1&gt; --security-group &lt;security_group_id2&gt; &lt;network_id&gt;</userinput></screen>
+                        <td><screen><prompt>$</prompt> <userinput>neutron port-create --security-group &lt;security_group_id1&gt; --security-group &lt;security_group_id2&gt; &lt;network_id&gt;</userinput></screen>
                         </td>
                     </tr>
                     <tr>
                         <td>
                             <para>Removes security groups from a
                                 port.</para></td>
-                        <td><screen><prompt>#</prompt> <userinput>neutron port-update --no-security-groups &lt;port_id&gt;</userinput></screen>
+                        <td><screen><prompt>$</prompt> <userinput>neutron port-update --no-security-groups &lt;port_id&gt;</userinput></screen>
                         </td>
                     </tr>
                 </tbody>
@@ -989,15 +989,15 @@
                             option is required for pool
                             creation.</para></td>
                     <td>
-                        <screen><prompt>#</prompt> <userinput>neutron lb-pool-create --lb-method ROUND_ROBIN --name mypool --protocol HTTP --subnet-id &lt;subnet-uuid&gt; <parameter>--provider &lt;provider_name&gt;</parameter></userinput></screen></td>
+                        <screen><prompt>$</prompt> <userinput>neutron lb-pool-create --lb-method ROUND_ROBIN --name mypool --protocol HTTP --subnet-id &lt;subnet-uuid&gt; <parameter>--provider &lt;provider_name&gt;</parameter></userinput></screen></td>
                 </tr>
                 <tr>
                     <td>
                         <para>Associates two web servers with
                             pool.</para></td>
                     <td>
-                        <screen><prompt>#</prompt> <userinput>neutron lb-member-create --address  &lt;webserver one IP&gt; --protocol-port 80 mypool</userinput>
-<prompt>#</prompt> <userinput>neutron lb-member-create --address  &lt;webserver two IP&gt; --protocol-port 80 mypool</userinput></screen></td>
+                        <screen><prompt>$</prompt> <userinput>neutron lb-member-create --address  &lt;webserver one IP&gt; --protocol-port 80 mypool</userinput>
+<prompt>$</prompt> <userinput>neutron lb-member-create --address  &lt;webserver two IP&gt; --protocol-port 80 mypool</userinput></screen></td>
                 </tr>
                 <tr>
                     <td>
@@ -1005,13 +1005,13 @@
                             make sure our instances are still running
                             on the specified
                         protocol-port.</para></td>
-                    <td><screen><prompt>#</prompt> <userinput>neutron lb-healthmonitor-create --delay 3 --type HTTP --max-retries 3 --timeout 3</userinput></screen>
+                    <td><screen><prompt>$</prompt> <userinput>neutron lb-healthmonitor-create --delay 3 --type HTTP --max-retries 3 --timeout 3</userinput></screen>
                     </td>
                 </tr>
                 <tr>
                     <td><para>Associates a health monitor with
                             pool.</para></td>
-                    <td><screen><prompt>#</prompt> <userinput>neutron lb-healthmonitor-associate  &lt;healthmonitor-uuid&gt; mypool</userinput></screen>
+                    <td><screen><prompt>$</prompt> <userinput>neutron lb-healthmonitor-associate  &lt;healthmonitor-uuid&gt; mypool</userinput></screen>
                     </td>
                 </tr>
                 <tr>
@@ -1021,7 +1021,7 @@
                             directs the requests to one of the pool
                             members.</para></td>
                     <td>
-                        <screen><prompt>#</prompt> <userinput>neutron lb-vip-create --name myvip --protocol-port 80 --protocol HTTP --subnet-id &lt;subnet-uuid&gt; mypool</userinput></screen>
+                        <screen><prompt>$</prompt> <userinput>neutron lb-vip-create --name myvip --protocol-port 80 --protocol HTTP --subnet-id &lt;subnet-uuid&gt; mypool</userinput></screen>
                     </td>
                 </tr>
             </tbody>
@@ -1371,7 +1371,7 @@
             <itemizedlist>
                 <listitem>
                     <para>Create a firewall rule:</para>
-                    <screen><prompt>#</prompt> <userinput>neutron firewall-rule-create --protocol &lt;tcp|udp|icmp|any&gt; --destination-port &lt;port-range&gt; --action &lt;allow|deny&gt;</userinput></screen>
+                    <screen><prompt>$</prompt> <userinput>neutron firewall-rule-create --protocol &lt;tcp|udp|icmp|any&gt; --destination-port &lt;port-range&gt; --action &lt;allow|deny&gt;</userinput></screen>
                     <para>The CLI requires that a protocol value be
                         provided. If the rule is protocol agnostic,
                         the 'any' value can be used.</para>
@@ -1382,7 +1382,7 @@
                 </listitem>
                 <listitem>
                     <para>Create a firewall policy:</para>
-                    <screen><prompt>#</prompt> <userinput>neutron firewall-policy-create --firewall-rules  "&lt;firewall-rule ids or names separated by space&gt;" myfirewallpolicy</userinput></screen>
+                    <screen><prompt>$</prompt> <userinput>neutron firewall-policy-create --firewall-rules  "&lt;firewall-rule ids or names separated by space&gt;" myfirewallpolicy</userinput></screen>
                     <para>The order of the rules specified above is
                         important. A firewall policy can be created
                         without any rules and rules can be added later
@@ -1402,7 +1402,7 @@
                 </listitem>
                 <listitem>
                     <para>Create a firewall:</para>
-                    <screen><prompt>#</prompt> <userinput>neutron firewall-create  &lt;firewall-policy-uuid&gt;</userinput></screen>
+                    <screen><prompt>$</prompt> <userinput>neutron firewall-create  &lt;firewall-policy-uuid&gt;</userinput></screen>
                 </listitem>
             </itemizedlist>
             <note>
@@ -1437,12 +1437,12 @@
                 <listitem>
                     <para>Create a port with a specific
                         allowed-address-pairs:</para>
-                    <screen><prompt>#</prompt> <userinput>neutron port-create net1 --allowed-address-pairs type=dict list=true mac_address=&lt;mac_address&gt;,ip_address=&lt;ip_cidr&gt;</userinput></screen>
+                    <screen><prompt>$</prompt> <userinput>neutron port-create net1 --allowed-address-pairs type=dict list=true mac_address=&lt;mac_address&gt;,ip_address=&lt;ip_cidr&gt;</userinput></screen>
                 </listitem>
                 <listitem>
                     <para>Update a port adding
                         allowed-address-pairs:</para>
-                    <screen><prompt>#</prompt> <userinput>neutron port-update  &lt;port-uuid&gt; --allowed-address-pairs type=dict list=true mac_address=&lt;mac_address&gt;,ip_address=&lt;ip_cidr&gt;</userinput></screen>
+                    <screen><prompt>$</prompt> <userinput>neutron port-update  &lt;port-uuid&gt; --allowed-address-pairs type=dict list=true mac_address=&lt;mac_address&gt;,ip_address=&lt;ip_cidr&gt;</userinput></screen>
                 </listitem>
             </itemizedlist>
             <note>
@@ -1604,7 +1604,7 @@
                                    <para>Creates QoS Queue
                                    (admin-only).</para></td>
                                 <td>
-                                   <screen><prompt>#</prompt> <userinput>neutron queue-create--min 10 --max 1000 myqueue</userinput></screen>
+                                   <screen><prompt>$</prompt> <userinput>neutron queue-create--min 10 --max 1000 myqueue</userinput></screen>
                                 </td>
                             </tr>
                             <tr>
@@ -1612,20 +1612,20 @@
                                    <para>Associates a queue with a
                                    network.</para></td>
                                 <td>
-                                   <screen><prompt>#</prompt> <userinput>neutron net-create network --queue_id=&lt;queue_id&gt;</userinput></screen>
+                                   <screen><prompt>$</prompt> <userinput>neutron net-create network --queue_id=&lt;queue_id&gt;</userinput></screen>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                    <para>Creates a default system
                                    queue.</para></td>
-                                <td><screen><prompt>#</prompt> <userinput>neutron queue-create --default True --min 10 --max 2000 default</userinput></screen>
+                                <td><screen><prompt>$</prompt> <userinput>neutron queue-create --default True --min 10 --max 2000 default</userinput></screen>
                                 </td>
                             </tr>
                             <tr>
                                 <td><para>Lists QoS
                                    queues.</para></td>
-                                <td><screen><prompt>#</prompt> <userinput>neutron queue-list</userinput></screen>
+                                <td><screen><prompt>$</prompt> <userinput>neutron queue-list</userinput></screen>
                                 </td>
                             </tr>
                             <tr>
@@ -1633,7 +1633,7 @@
                                    <para>Deletes a QoS
                                    queue.</para></td>
                                 <td>
-                                   <screen><prompt>#</prompt> <userinput>neutron queue-delete &lt;queue_id or name&gt;'</userinput></screen>
+                                   <screen><prompt>$</prompt> <userinput>neutron queue-delete &lt;queue_id or name&gt;'</userinput></screen>
                                 </td>
                             </tr>
                         </tbody>
@@ -1712,11 +1712,11 @@
                     <title>VMware NSX L3 extension operations</title>
                     <para>Create external network and map it to a
                         specific NSX gateway service:</para>
-                    <screen><prompt>#</prompt> <userinput>neutron net-create public --router:external=True --provider:network_type l3_ext \
+                    <screen><prompt>$</prompt> <userinput>neutron net-create public --router:external=True --provider:network_type l3_ext \
 --provider:physical_network &lt;L3-Gateway-Service-UUID&gt;</userinput></screen>
                     <para>Terminate traffic on a specific VLAN from a
                         NSX gateway service:</para>
-                    <screen><prompt>#</prompt> <userinput>neutron net-create public --router:external=True --provider:network_type l3_ext \
+                    <screen><prompt>$</prompt> <userinput>neutron net-create public --router:external=True --provider:network_type l3_ext \
 --provider:physical_network &lt;L3-Gateway-Service-UUID&gt; --provider:segmentation_id &lt;VLAN_ID&gt;</userinput></screen>
                 </section>
             </section>
@@ -1966,17 +1966,17 @@
                     <para>Update a router with rules to permit traffic
                         by default but block traffic from external
                         networks to the 10.10.10.0/24 subnet:</para>
-                    <screen><prompt>#</prompt> <userinput>neutron router-update <replaceable>Router-UUID</replaceable> --router_rules type=dict list=true\
+                    <screen><prompt>$</prompt> <userinput>neutron router-update <replaceable>Router-UUID</replaceable> --router_rules type=dict list=true\
 source=any,destination=any,action=permit \
 source=external,destination=10.10.10.0/24,action=deny</userinput></screen>
                     <para>Specify alternate next-hop addresses for a
                         specific subnet:</para>
-                    <screen><prompt>#</prompt> <userinput>neutron router-update <replaceable>Router-UUID</replaceable> --router_rules type=dict list=true\
+                    <screen><prompt>$</prompt> <userinput>neutron router-update <replaceable>Router-UUID</replaceable> --router_rules type=dict list=true\
 source=any,destination=any,action=permit \
 source=10.10.10.0/24,destination=any,action=permit,nexthops=10.10.10.254+10.10.10.253</userinput></screen>
                     <para>Block traffic between two subnets while
                         allowing everything else:</para>
-                    <screen><prompt>#</prompt> <userinput>neutron router-update <replaceable>Router-UUID</replaceable> --router_rules type=dict list=true\
+                    <screen><prompt>$</prompt> <userinput>neutron router-update <replaceable>Router-UUID</replaceable> --router_rules type=dict list=true\
 source=any,destination=any,action=permit \
 source=10.10.10.0/24,destination=10.20.20.20/24,action=deny</userinput></screen>
                 </section>
