@@ -3,11 +3,11 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="configuring-keystone-for-ldap-backend">
-    <title>Configure the Identity Service with an LDAP
-        back-end</title>
+    <title>Configure the Identity Service with an LDAP back
+        end</title>
     <para>As an alternative to the SQL database backing store, the
         Identity Service can use a directory server to provide the
-        Identity Service, for example:</para>
+        Identity Service. For example:</para>
     <programlisting language="ini">dn: dc=AcmeExample,dc=org
 dc: AcmeExample
 objectClass: dcObject
@@ -49,22 +49,19 @@ role_tree_dn = ou=Roles,dc=AcmeExample,dc=com
 role_objectclass = organizationalRole</programlisting>
     <para>The default object classes and attributes are intentionally
         simple. They reflect the common standard objects according to
-        the LDAP RFCs. However, in a live deployment, you can override
-        the correct attributes to support a preexisting, complex
-        schema. For example, in the user object, the objectClass
-        posixAccount from RFC2307 is very common. If this is the
-        underlying objectclass, then the <emphasis>uid</emphasis>
-        field should probably be <emphasis>uidNumber</emphasis> and
-            <emphasis>username</emphasis> field either
-            <emphasis>uid</emphasis> or <emphasis>cn</emphasis>. To
-        change these two fields, the corresponding entries in the
-        Keystone configuration file are:</para>
+        the LDAP RFCs. You can override object attributes to map to a
+        pre-existing schema. For example, RFC2307-compliant posixAccount
+        objects will commonly include the <emphasis>uid</emphasis>
+        and <emphasis>cn</emphasis> attributes. These fields can be
+        mapped to their corresponding entries in the
+        <filename>keystone.conf</filename> file:
+    </para>
     <programlisting language="ini">[ldap]
 user_id_attribute = uidNumber
 user_name_attribute = cn</programlisting>
     <para>Depending on your deployment, you can modify a set of
         allowed actions for each object type. For example, you might
-        set the following options:</para>
+        set these options:</para>
     <programlisting language="ini">[ldap]
 user_allow_create = False
 user_allow_update = False
@@ -77,7 +74,7 @@ tenant_allow_delete = True
 role_allow_create = True
 role_allow_update = True
 role_allow_delete = True</programlisting>
-    <para>If the back-end provides too much output, you can filter
+    <para>If the back end provides too much output, you can filter
         users, tenants, and roles. For example:</para>
     <programlisting language="ini">[ldap]
 user_filter = (memberof=CN=acme-users,OU=workgroups,DC=AcmeExample,DC=com)
@@ -86,8 +83,8 @@ role_filter =</programlisting>
     <para>If the directory server has not enabled the
             <literal>boolean</literal> type for the user, you can use
         configuration options to extract the value from an integer
-        attribute. For example, in an Active Directory, as
-        follows:</para>
+        attribute. For example, in an Active Directory, set these
+        configuration options:</para>
     <programlisting language="ini">[ldap]
 user_enabled_attribute = userAccountControl
 user_enabled_mask      = 2
@@ -132,4 +129,22 @@ role_id_attribute        = cn
 role_name_attribute      = ou
 role_member_attribute    = roleOccupant
 role_attribute_ignore    =</programlisting>
+    <simplesect>
+        <title>Assignment</title>
+        <para>The Assignment feature allows a combination of LDAP and SQL
+            for Identity Service authentication and authorization.
+            Consequently, the LDAP directory authenticates users and the
+            Identity Service SQL back end authorizes their access to projects
+            and roles.</para>
+        <para>Enable the Assignment driver in the
+        <filename>keystone.conf</filename> file alongside the LDAP
+        driver:</para>
+        <para>
+            <programlisting language="ini">[identity]
+driver = keystone.identity.backends.ldap.Identity
+
+[assignment]
+driver = keystone.assignment.backends.sql.Assignment</programlisting>
+        </para>
+    </simplesect>
 </section>
