@@ -64,21 +64,21 @@
   <para><guilabel>Nova RPC Mappings</guilabel></para>
   <para>The figure below shows the internals of a message broker node
     (referred to as a RabbitMQ node in the diagrams) when a single
-    instance is deployed and shared in an OpenStack cloud. Every Nova
-    component connects to the message broker and, depending on its
+    instance is deployed and shared in an OpenStack cloud. Every component
+    within Nova connects to the message broker and, depending on its
     personality, such as a compute node or a network node, may
     use the queue either as an Invoker (such as API or Scheduler) or a
     Worker (such as Compute or Network). Invokers and Workers do not
-    actually exist in the Nova object model, but we are going to use
-    them as an abstraction for sake of clarity. An Invoker is a
-    component that sends messages in the queuing system via two
-    operations: 1) rpc.call and ii) rpc.cast; a Worker is a component
-    that receives messages from the queuing system and reply
+    actually exist in the Nova object model, but in this example they are used
+    as an abstraction for the sake of clarity. An Invoker is a
+    component that sends messages in the queuing system using <command>rpc.call
+    </command> and <command>rpc.cast</command>. A worker is a component
+    that receives messages from the queuing system and replies
     accordingly to rcp.call operations.</para>
   <para>Figure 2 shows the following internal elements:</para>
   <itemizedlist>
     <listitem>
-      <para><emphasis role="bold">Topic Publisher:</emphasis>a Topic
+      <para><emphasis role="bold">Topic Publisher:</emphasis> A Topic
         Publisher comes to life when an rpc.call or an rpc.cast
         operation is executed; this object is instantiated and used to
         push a message to the queuing system. Every publisher connects
@@ -86,7 +86,7 @@
         limited to the message delivery.</para>
     </listitem>
     <listitem>
-      <para><emphasis role="bold">Direct Consumer:</emphasis>a Direct
+      <para><emphasis role="bold">Direct Consumer:</emphasis> A Direct
         Consumer comes to life if (an only if) a rpc.call operation is
         executed; this object is instantiated and used to receive a
         response message from the queuing system; Every consumer
@@ -97,7 +97,7 @@
         Topic Publisher (only rpc.call operations).</para>
     </listitem>
     <listitem>
-      <para><emphasis role="bold">Topic Consumer:</emphasis>a Topic
+      <para><emphasis role="bold">Topic Consumer:</emphasis> A Topic
         Consumer comes to life as soon as a Worker is instantiated and
         exists throughout its life-cycle; this object is used to
         receive messages from the queue and it invokes the appropriate
@@ -111,7 +111,7 @@
         exchange key is ‘topic.host’).</para>
     </listitem>
     <listitem>
-      <para><emphasis role="bold">Direct Publisher:</emphasis>a Direct
+      <para><emphasis role="bold">Direct Publisher:</emphasis> A Direct
         Publisher comes to life only during rpc.call operations and it
         is instantiated to return the message required by the
         request/response operation. The object connects to a
@@ -119,7 +119,7 @@
         incoming message.</para>
     </listitem>
     <listitem>
-      <para><emphasis role="bold">Topic Exchange:</emphasis>The
+      <para><emphasis role="bold">Topic Exchange:</emphasis> The
         Exchange is a routing table that exists in the context of a
         virtual host (the multi-tenancy mechanism provided by Qpid or
         RabbitMQ); its type (such as topic vs. direct) determines the
@@ -127,14 +127,14 @@
         topic-based exchange for every topic in Nova.</para>
     </listitem>
     <listitem>
-      <para><emphasis role="bold">Direct Exchange:</emphasis>this is a
+      <para><emphasis role="bold">Direct Exchange:</emphasis> This is a
         routing table that is created during rpc.call operations;
         there are many instances of this kind of exchange throughout
         the life-cycle of a message broker node, one for each rpc.call
         invoked.</para>
     </listitem>
     <listitem>
-      <para><emphasis role="bold">Queue Element:</emphasis>A Queue is
+      <para><emphasis role="bold">Queue Element:</emphasis> A Queue is
         a message bucket. Messages are kept in the queue until a
         Consumer (either Topic or Direct Consumer) connects to the
         queue and fetch it. Queues can be shared or can be exclusive.
@@ -302,56 +302,56 @@
   <para>The following parameters are default:</para>
   <itemizedlist>
     <listitem>
-      <para><emphasis role="bold">Insist:</emphasis> insist on
+      <para><emphasis role="bold">Insist:</emphasis> Insist on
         connecting to a server. In a configuration with multiple
         load-sharing servers, the Insist option tells the server that
         the client is insisting on a connection to the specified
         server. Default is False.</para>
     </listitem>
     <listitem>
-      <para><emphasis role="bold">Connect_timeout:</emphasis> the
+      <para><emphasis role="bold">Connect_timeout:</emphasis> The
         timeout in seconds before the client gives up connecting to
         the server. The default is no timeout.</para>
     </listitem>
     <listitem>
-      <para><emphasis role="bold">SSL:</emphasis> use SSL to connect
+      <para><emphasis role="bold">SSL:</emphasis> Use SSL to connect
         to the server. The default is False.</para>
     </listitem>
   </itemizedlist>
   <para>More precisely consumers need the following parameters:</para>
   <itemizedlist>
     <listitem>
-      <para><emphasis role="bold">Connection:</emphasis> the above
+      <para><emphasis role="bold">Connection:</emphasis> The above
         mentioned Connection object.</para>
     </listitem>
     <listitem>
-      <para><emphasis role="bold">Queue:</emphasis>name of the
+      <para><emphasis role="bold">Queue:</emphasis> Name of the
         queue.</para>
     </listitem>
     <listitem>
-      <para><emphasis role="bold">Exchange:</emphasis>name of the
+      <para><emphasis role="bold">Exchange:</emphasis> Name of the
         exchange the queue binds to.</para>
     </listitem>
     <listitem>
-      <para><emphasis role="bold">Routing_key:</emphasis>the
+      <para><emphasis role="bold">Routing_key:</emphasis> The
         interpretation of the routing key depends on the value of the
         exchange_type attribute.</para>
     </listitem>
   </itemizedlist>
   <itemizedlist>
     <listitem>
-      <para><emphasis role="bold">Direct exchange:</emphasis>if the
+      <para><emphasis role="bold">Direct exchange:</emphasis> If the
         routing key property of the message and the routing_key
         attribute of the queue are identical, then the message is
         forwarded to the queue.</para>
     </listitem>
     <listitem>
-      <para><emphasis role="bold">Fanout exchange:</emphasis>messages
+      <para><emphasis role="bold">Fanout exchange:</emphasis> Messages
         are forwarded to the queues bound the exchange, even if the
         binding does not have a key.</para>
     </listitem>
     <listitem>
-      <para><emphasis role="bold">Topic exchange:</emphasis>if the
+      <para><emphasis role="bold">Topic exchange:</emphasis> If the
         routing key property of the message matches the routing key of
         the key according to a primitive pattern matching scheme, then
         the message is forwarded to the queue. The message routing key
@@ -365,7 +365,7 @@
   </itemizedlist>
   <itemizedlist>
     <listitem>
-      <para><emphasis role="bold">Durable:</emphasis>this flag
+      <para><emphasis role="bold">Durable:</emphasis> This flag
         determines the durability of both exchanges and queues;
         durable exchanges and queues remain active when a RabbitMQ
         server restarts. Non-durable exchanges/queues (transient
@@ -374,29 +374,29 @@
         bind to transient exchanges. Default is True.</para>
     </listitem>
     <listitem>
-      <para><emphasis role="bold">Auto_delete:</emphasis>if set, the
+      <para><emphasis role="bold">Auto_delete:</emphasis> If set, the
         exchange is deleted when all queues have finished using it.
         Default is False.</para>
     </listitem>
     <listitem>
-      <para><emphasis role="bold">Exclusive:</emphasis>exclusive
+      <para><emphasis role="bold">Exclusive:</emphasis> Exclusive
         queues (such as non-shared) may only be consumed from by the
         current connection. When exclusive is on, this also implies
         auto_delete. Default is False.</para>
     </listitem>
     <listitem>
-      <para><emphasis role="bold">Exchange_type:</emphasis>AMQP
+      <para><emphasis role="bold">Exchange_type:</emphasis> AMQP
         defines several default exchange types (routing algorithms)
         that covers most of the common messaging use cases.</para>
     </listitem>
     <listitem>
-      <para><emphasis role="bold">Auto_ack:</emphasis>acknowledgement
+      <para><emphasis role="bold">Auto_ack:</emphasis> Acknowledgement
         is handled automatically once messages are received. By
         default auto_ack is set to False, and the receiver is required
         to manually handle acknowledgment.</para>
     </listitem>
     <listitem>
-      <para><emphasis role="bold">No_ack:</emphasis>it disable
+      <para><emphasis role="bold">No_ack:</emphasis> It disables
         acknowledgement on the server-side. This is different from
         auto_ack in that acknowledgement is turned off altogether.
         This functionality increases performance but at the cost of
@@ -404,7 +404,7 @@
         can deliver them to the application.</para>
     </listitem>
     <listitem>
-      <para><emphasis role="bold">Auto_declare:</emphasis>if this is
+      <para><emphasis role="bold">Auto_declare:</emphasis> If this is
         True and the exchange name is set, the exchange will be
         automatically declared at instantiation. Auto declare is on by
         default. Publishers specify most the parameters of consumers
@@ -412,19 +412,19 @@
         specify the following:</para>
     </listitem>
     <listitem>
-      <para><emphasis role="bold">Delivery_mode:</emphasis>the default
+      <para><emphasis role="bold">Delivery_mode:</emphasis> The default
         delivery mode used for messages. The value is an integer. The
         following delivery modes are supported by RabbitMQ:</para>
     </listitem>
   </itemizedlist>
   <itemizedlist>
     <listitem>
-      <para><emphasis role="bold">1 or “transient”:</emphasis>the
+      <para><emphasis role="bold">1 or “transient”:</emphasis> The
         message is transient. Which means it is stored in memory only,
         and is lost if the server dies or restarts.</para>
     </listitem>
     <listitem>
-      <para><emphasis role="bold">2 or “persistent”:</emphasis>the
+      <para><emphasis role="bold">2 or “persistent”:</emphasis> The
         message is persistent. Which means the message is stored both
         in-memory, and on disk, and therefore preserved if the server
         dies or restarts.</para>
