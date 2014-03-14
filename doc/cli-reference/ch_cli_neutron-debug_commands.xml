@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="neutron-debug_commands">
+
+  <!-- This file is manually generated, unlike many of the other chapters. -->
+
+    <?dbhtml stop-chunking?>
+
+    <title>neutron-debug command-line client</title>
+    <para>The <command>neutron-debug</command> client is an extension
+    to the <command>neutron</command> command-line interface (CLI) for the OpenStack
+    neutron-debug tool. This chapter documents
+      <command>neutron-debug</command> version 2.3.0.</para>
+    <para>For help on a specific <command>neutron-debug</command>
+    command, enter:</para>
+    <screen><prompt>$</prompt> <userinput><command>neutron-debug</command> <option>help</option> <replaceable>COMMAND</replaceable></userinput></screen>
+
+    <section xml:id="neutron-debug_command_usage">
+       <title>neutron-debug usage</title>
+        <screen><computeroutput>              [--os-password &lt;auth-password&gt;]
+              [--os-tenant-name &lt;auth-tenant-name&gt;]
+              [--os-tenant-id &lt;auth-tenant-id&gt;] [--os-auth-url &lt;auth-url&gt;]
+              [--os-region-name &lt;region-name&gt;] [--service-type &lt;service-type&gt;]
+              [--service-name &lt;service-name&gt;]
+              [--volume-service-name &lt;volume-service-name&gt;]
+              [--endpoint-type &lt;endpoint-type&gt;]
+              [--os-volume-api-version &lt;volume-api-ver&gt;]
+              [--os-cacert &lt;ca-certificate&gt;] [--retries &lt;retries&gt;]
+              &lt;subcommand&gt; ...
+</computeroutput></screen>
+  <variablelist wordsize="10">
+    <title>Subcommands</title>
+  <varlistentry>
+    <term><command>probe-create</command></term>
+    <listitem>
+      <para>
+        Create probe port - create port and interface within a network namespace.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>probe-list</command></term>
+    <listitem>
+      <para>
+      List all probes.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>probe-clear</command></term>
+    <listitem>
+      <para>
+        Clear all probes.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>probe-delete</command></term>
+    <listitem>
+      <para>
+        Delete probe - delete port then delete the namespace.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>probe-exec</command></term>
+    <listitem>
+      <para>
+        Execute commands in the namespace of the probe.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>ping-all</command></term>
+    <listitem>
+      <para>
+        ping-all is all-in-one command to ping all fixed IP's in a specified network.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+  <section xml:id="neutron-debug_command_optional">
+        <title>neutron-debug optional arguments</title>
+  <variablelist wordsize="10">
+      <varlistentry>
+        <term><command>--version</command></term>
+        <listitem>
+          <para>Show version number and exit.</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><command>-v, --verbose, --debug</command></term>
+        <listitem>
+          <para>Increase verbosity of output and show tracebacks on
+            errors. Can be repeated.</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><command>-q, --quiet</command></term>
+        <listitem>
+          <para>Suppress output except warnings and errors</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><command>-h, --help</command></term>
+        <listitem>
+          <para>Show this help message and exit</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><command>--os-auth-strategy
+            &lt;auth-strategy&gt;</command></term>
+        <listitem>
+          <para>Authentication strategy (Env: OS_AUTH_STRATEGY,
+            default keystone). For now, any other value will disable
+            the authentication</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><command>--os-auth-url &lt;auth-url&gt;</command></term>
+        <listitem>
+          <para>Authentication URL (Env: OS_AUTH_URL)</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><command>--os-tenant-name
+            &lt;auth-tenant-name&gt;</command></term>
+        <listitem>
+          <para>Authentication tenant name (Env: OS_TENANT_NAME)
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><command>--os-tenant-id
+          &lt;auth-tenant-id&gt;</command></term>
+        <listitem>
+          <para>Authentication tenant name (Env: OS_TENANT_ID)
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><command>--os-username
+          &lt;auth-username&gt;</command></term>
+        <listitem>
+          <para>Authentication username (Env: OS_USERNAME)</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><command>--os-password
+          &lt;auth-password&gt;</command></term>
+        <listitem>
+          <para>Authentication password (Env: OS_PASSWORD)</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><command>--os-region-name
+            &lt;auth-region-name&gt;</command></term>
+        <listitem>
+          <para>Authentication region name (Env: OS_REGION_NAME)
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><command>--os-token &lt;token&gt;</command></term>
+        <listitem>
+          <para>Defaults to <code>env[OS_TOKEN]</code>
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><command>--endpoint-type
+          &lt;endpoint-type&gt;</command></term>
+        <listitem>
+          <para>Defaults to <code>env[OS_ENDPOINT_TYPE]</code> or
+            public URL.</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><command>--os-url &lt;url&gt;</command></term>
+        <listitem>
+          <para>Defaults to <code>env[OS_URL]</code>
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><command>--os-cacert
+          &lt;ca-certificate&gt;</command></term>
+        <listitem>
+          <para>Specify a CA bundle file to use in verifying a TLS
+            (https) server certificate. Defaults to
+              <code>env[OS_CACERT]</code>
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><command>--insecure</command></term>
+        <listitem>
+          <para>Explicitly allow neutron-debug to perform "insecure"
+            SSL (https) requests. The server's certificate will not be
+            verified against any certificate authorities. This option
+            should be used with caution.</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><command>--config-file CONFIG_FILE</command></term>
+        <listitem>
+          <para>Config file for interface driver (You may also use
+            l3_agent.ini)</para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+    </section>
+  <section xml:id="neutron-debug_subcommand_probe-create">
+        <title>neutron-debug probe-create command</title>
+        <screen><computeroutput>usage: neutron-debug probe-create NET
+        </computeroutput></screen>
+        <para>Create probe port - create port and interface, then
+          place it into the created network namespace.</para>     <variablelist wordsize="10">
+            <title>Positional arguments</title>
+            <varlistentry>
+              <term><command>NET ID</command></term>
+              <listitem>
+                <para>ID of the network in which the probe will be
+            created.</para>
+              </listitem>
+            </varlistentry>
+          </variablelist>
+    </section>
+  <section xml:id="neutron-debug_subcommand_probe-list">
+        <title>neutron-debug probe-list command</title>
+        <screen><computeroutput>usage: neutron-debug probe-list
+        </computeroutput></screen>
+        <para>List probes.</para>
+  </section>
+  <section xml:id="neutron-debug_subcommand_probe-clear">
+        <title>neutron-debug probe-clear command</title>
+        <screen><computeroutput>usage: neutron-debug probe-clear
+        </computeroutput></screen>
+        <para>Clear all probes.</para>
+    </section>
+  <section xml:id="neutron-debug_subcommand_probe-delete">
+        <title>neutron-debug probe-delete command</title>
+        <screen><computeroutput>usage: neutron-debug probe-delete &lt;port-id&gt;
+        </computeroutput></screen>
+        <para>
+Remove a probe.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;port-id&gt;</command></term>
+    <listitem>
+      <para>ID of the probe to delete.</para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+  <section xml:id="neutron-debug_subcommand_probe-exec">
+        <title>neutron-debug probe-exec command</title>
+        <screen><computeroutput>usage: neutron-debug probe-exec &lt;port-id> &lt;command>
+        </computeroutput></screen>
+        <para>Execute commands in the namespace of the probe</para>
+  </section>
+  <section xml:id="neutron-debug_subcommand_ping-all">
+        <title>neutron-debug ping-all command</title>
+        <screen><computeroutput>usage: neutron-debug ping-all &lt;port-id> --timeout &lt;number
+        </computeroutput></screen>
+        <para>All-in-one command to ping all fixed IP's
+      in a specified network.</para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;port-id&gt;</command></term>
+    <listitem>
+      <para>ID of the port to use.</para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--timeout &lt;timeout in
+          seconds&gt;</command></term>
+    <listitem>
+      <para>Optional ping timeout.</para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+  <section xml:id="neutron-debug_subcommand_backup-show">
+        <title>neutron-debug example</title>
+        <screen><computeroutput>usage: neutron-debug create-probe &lt; NET_ID&gt;
+        </computeroutput></screen>
+        <para>Create a probe namespace within the network identified
+      by NET_ID. The namespace will have the name of qprobe-&lt;UUID
+      of the probe port></para>
+      <note><para>For the following examples to function, the security group rules
+        may need to be modified to allow the SSH (TCP port 22) or ping
+        (ICMP) traffic into network.</para></note>
+      <screen><computeroutput>usage: neutron-debug probe-exec &lt;probe ID> "ssh &lt;IP of instance&gt;"
+        </computeroutput></screen>
+      <para>SSH to an instance within the network.</para>
+      <screen><computeroutput>usage: neutron-debug ping-all &lt;network ID&gt;"
+        </computeroutput></screen>
+      <para>Ping all instances on this network to verify they are
+      responding.</para>
+      <screen><computeroutput>usage: neutron-debug probe-exec &lt;probe_ID> dhcping &lt;VM_MAC address&gt; -s &lt;IP of DHCP server&gt;"
+        </computeroutput></screen>
+      <para>Ping the DHCP server for this network using dhcping to
+      verify it is working.</para>
+    </section>
+</chapter>
