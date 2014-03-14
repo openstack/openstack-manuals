@@ -11,7 +11,7 @@
           <envar>OS_SERVICE_TOKEN</envar> and
           <envar>OS_SERVICE_ENDPOINT</envar> environment
         variables:</para>
-      <screen><prompt>#</prompt> <userinput>unset OS_SERVICE_TOKEN OS_SERVICE_ENDPOINT</userinput></screen>
+      <screen><prompt>$</prompt> <userinput>unset OS_SERVICE_TOKEN OS_SERVICE_ENDPOINT</userinput></screen>
       <para>These variables, which were used to bootstrap the
         administrative user and register the Identity Service, are no
         longer needed.</para>
@@ -22,7 +22,7 @@
       <para>Request a authentication token by using the
           <literal>admin</literal> user and the password you chose for
         that user:</para>
-      <screen><prompt>#</prompt> <userinput>keystone --os-username=admin --os-password=<replaceable>ADMIN_PASS</replaceable> \
+      <screen><prompt>$</prompt> <userinput>keystone --os-username=admin --os-password=<replaceable>ADMIN_PASS</replaceable> \
   --os-auth-url=http://controller:35357/v2.0 token-get</userinput></screen>
       <para>In response, you receive a token paired with your user ID.
         This verifies that the Identity Service is running on the
@@ -32,7 +32,7 @@
     <step>
       <para>Verify that authorization behaves as expected. To do so,
         request authorization on a tenant:</para>
-      <screen><prompt>#</prompt> <userinput>keystone --os-username=admin --os-password=<replaceable>ADMIN_PASS</replaceable> \
+      <screen><prompt>$</prompt> <userinput>keystone --os-username=admin --os-password=<replaceable>ADMIN_PASS</replaceable> \
   --os-tenant-name=admin --os-auth-url=http://controller:35357/v2.0 \
   token-get</userinput></screen>
       <para>In response, you receive a token that includes the ID of
@@ -53,7 +53,7 @@ export OS_AUTH_URL=http://controller:35357/v2.0</programlisting>
     <step>
       <para>Source this file to read in the environment
         variables:</para>
-      <screen><prompt>#</prompt> <userinput>source openrc.sh</userinput></screen>
+      <screen><prompt>$</prompt> <userinput>source openrc.sh</userinput></screen>
     </step>
     <step>
       <para>Verify that your <filename>openrc.sh</filename> file is
@@ -67,13 +67,13 @@ export OS_AUTH_URL=http://controller:35357/v2.0</programlisting>
     <step>
       <para>Verify that your admin account has authorization to
         perform administrative commands:</para>
-      <screen><prompt>#</prompt> <userinput>keystone user-list</userinput>
+      <screen><prompt>$</prompt> <userinput>keystone user-list</userinput>
 <computeroutput>+----------------------------------+---------+--------------------+--------+
 |                id                | enabled | email              |  name  |
 +----------------------------------+---------+--------------------+--------+
 | a4c2d43f80a549a19864c89d759bb3fe | True    | admin@example.com  | admin  |
 +----------------------------------+---------+--------------------+--------+</computeroutput></screen>
-      <screen><prompt>#</prompt> <userinput>keystone user-role-list</userinput>
+      <screen><prompt>$</prompt> <userinput>keystone user-role-list</userinput>
 <computeroutput>+----------------------------------+----------+----------------------------------+----------------------------------+
 |                id                |   name   |             user_id              |            tenant_id             |
 +----------------------------------+----------+----------------------------------+----------------------------------+

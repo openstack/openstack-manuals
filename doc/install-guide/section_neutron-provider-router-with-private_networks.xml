@@ -380,7 +380,7 @@ export OS_AUTH_URL="http://<replaceable>controller</replaceable>:5000/v2.0/"</pr
             <listitem>
                 <para>Export the environment variables in the
                         <filename>adminrc</filename> file:</para>
-                <screen><prompt>#</prompt> <userinput>source adminrc</userinput></screen>
+                <screen><prompt>$</prompt> <userinput>source adminrc</userinput></screen>
             </listitem>
         </itemizedlist>
         <para>The <literal>admin</literal> tenant can define resources
@@ -396,13 +396,13 @@ export OS_AUTH_URL="http://<replaceable>controller</replaceable>:5000/v2.0/"</pr
             <step>
                 <para>Get the <literal>tenant_A</literal> tenant
                     ID:</para>
-                <screen><prompt>#</prompt> <userinput>TENANT_ID=$(keystone tenant-list | awk '/ tenant_A / { print $2 }')</userinput></screen>
+                <screen><prompt>$</prompt> <userinput>TENANT_ID=$(keystone tenant-list | awk '/ tenant_A / { print $2 }')</userinput></screen>
             </step>
             <step>
                 <para>Create the <literal>net1</literal> internal
                     network for the <literal>tenant_A</literal>
                     tenant:</para>
-                <screen><prompt>#</prompt> <userinput>neutron net-create --tenant-id $TENANT_ID net1</userinput>
+                <screen><prompt>$</prompt> <userinput>neutron net-create --tenant-id $TENANT_ID net1</userinput>
 <computeroutput>+---------------------------+--------------------------------------+
 | Field                     | Value                                |
 +---------------------------+--------------------------------------+
@@ -422,7 +422,7 @@ export OS_AUTH_URL="http://<replaceable>controller</replaceable>:5000/v2.0/"</pr
             <step>
                 <para>Create a subnet on the <literal>net1</literal>
                     network and store its ID in a variable:</para>
-                <screen><prompt>#</prompt> <userinput>neutron subnet-create --tenant-id $TENANT_ID net1 10.5.5.0/24 \
+                <screen><prompt>$</prompt> <userinput>neutron subnet-create --tenant-id $TENANT_ID net1 10.5.5.0/24 \
     --dns_nameservers list=true 8.8.8.7 8.8.8.8</userinput>
 <computeroutput>+------------------+--------------------------------------------+
 | Field            | Value                                      |
@@ -440,7 +440,7 @@ export OS_AUTH_URL="http://<replaceable>controller</replaceable>:5000/v2.0/"</pr
 | network_id       | e99a361c-0af8-4163-9feb-8554d4c37e4f       |
 | tenant_id        | e40fa60181524f9f9ee7aa1038748f08           |
 +------------------+--------------------------------------------+</computeroutput>
-<prompt>#</prompt> <userinput>SUBNET_ID=<replaceable>c395cb5d-ba03-41ee-8a12-7e792d51a167</replaceable></userinput></screen>
+<prompt>$</prompt> <userinput>SUBNET_ID=<replaceable>c395cb5d-ba03-41ee-8a12-7e792d51a167</replaceable></userinput></screen>
                 <note>
                     <para>The <literal>id</literal> value will be
                         different on your system.</para>
@@ -457,7 +457,7 @@ export OS_AUTH_URL="http://<replaceable>controller</replaceable>:5000/v2.0/"</pr
                 <para>Create a <literal>router1</literal> router and
                     store its ID in the <literal>ROUTER_ID</literal>
                     variable:</para>
-                <screen><prompt>#</prompt> <userinput>neutron router-create router1</userinput>
+                <screen><prompt>$</prompt> <userinput>neutron router-create router1</userinput>
 <computeroutput>+-----------------------+--------------------------------------+
 | Field                 | Value                                |
 +-----------------------+--------------------------------------+
@@ -468,7 +468,7 @@ export OS_AUTH_URL="http://<replaceable>controller</replaceable>:5000/v2.0/"</pr
 | status                | ACTIVE                               |
 | tenant_id             | 48fb81ab2f6b409bafac8961a594980f     |
 +-----------------------+--------------------------------------+</computeroutput>
-<prompt>#</prompt> <userinput>ROUTER_ID=<replaceable>685f64e7-a020-4fdf-a8ad-e41194ae124b</replaceable></userinput></screen>
+<prompt>$</prompt> <userinput>ROUTER_ID=<replaceable>685f64e7-a020-4fdf-a8ad-e41194ae124b</replaceable></userinput></screen>
                 <note>
                     <para>The <literal>id</literal> value will be
                         different on your system.</para>
@@ -485,7 +485,7 @@ export OS_AUTH_URL="http://<replaceable>controller</replaceable>:5000/v2.0/"</pr
                         <literal>router1</literal> router and attach
                     it to the subnet from
                     <literal>net1</literal>:</para>
-                <screen><prompt>#</prompt> <userinput>neutron router-interface-add $ROUTER_ID $SUBNET_ID</userinput>
+                <screen><prompt>$</prompt> <userinput>neutron router-interface-add $ROUTER_ID $SUBNET_ID</userinput>
 <computeroutput>Added interface to router 685f64e7-a020-4fdf-a8ad-e41194ae124b</computeroutput></screen>
                 <note>
                     <para>You can repeat this step to add interfaces
@@ -498,7 +498,7 @@ export OS_AUTH_URL="http://<replaceable>controller</replaceable>:5000/v2.0/"</pr
                     network and store its ID in a the
                         <literal>EXTERNAL_NETWORK_ID</literal>
                     variable:</para>
-                <screen><prompt>#</prompt> <userinput>neutron net-create ext_net \
+                <screen><prompt>$</prompt> <userinput>neutron net-create ext_net \
     --router:external=True --provider:network_type=vlan \
     --provider:physical_network=physnet1 --provider:segmentation_id=1</userinput>
 <computeroutput>+---------------------------+--------------------------------------+
@@ -516,7 +516,7 @@ export OS_AUTH_URL="http://<replaceable>controller</replaceable>:5000/v2.0/"</pr
 | subnets                   |                                      |
 | tenant_id                 | 48fb81ab2f6b409bafac8961a594980f     |
 +---------------------------+--------------------------------------+</computeroutput>
-<prompt>#</prompt> <userinput>EXTERNAL_NETWORK_ID=<replaceable>8858732b-0400-41f6-8e5c-25590e67ffeb</replaceable></userinput></screen>
+<prompt>$</prompt> <userinput>EXTERNAL_NETWORK_ID=<replaceable>8858732b-0400-41f6-8e5c-25590e67ffeb</replaceable></userinput></screen>
             </step>
             <step>
                 <para>Create the subnet for floating IPs.</para>
@@ -524,7 +524,7 @@ export OS_AUTH_URL="http://<replaceable>controller</replaceable>:5000/v2.0/"</pr
                     <para>The DHCP service is disabled for this
                         subnet.</para>
                 </note>
-                <screen><prompt>#</prompt> <userinput>neutron subnet-create ext_net \
+                <screen><prompt>$</prompt> <userinput>neutron subnet-create ext_net \
     --allocation-pool start=7.7.7.130,end=7.7.7.150 \
     --gateway 7.7.7.1 7.7.7.0/24 --disable-dhcp</userinput>
 <computeroutput>+------------------+--------------------------------------------------+
@@ -546,7 +546,7 @@ export OS_AUTH_URL="http://<replaceable>controller</replaceable>:5000/v2.0/"</pr
             <step>
                 <para>Set the gateway for the router to the external
                     network:</para>
-                <screen><prompt>#</prompt> <userinput>neutron router-gateway-set $ROUTER_ID $EXTERNAL_NETWORK_ID</userinput>
+                <screen><prompt>$</prompt> <userinput>neutron router-gateway-set $ROUTER_ID $EXTERNAL_NETWORK_ID</userinput>
 <computeroutput>Set gateway for router 685f64e7-a020-4fdf-a8ad-e41194ae124b</computeroutput></screen>
             </step>
         </procedure>
@@ -560,25 +560,25 @@ export OS_AUTH_URL="http://<replaceable>controller</replaceable>:5000/v2.0/"</pr
                     VM after it starts. Store the port ID that was
                     allocated for the VM in the
                         <literal>PORT_ID</literal> variable:</para>
-                <screen><prompt>#</prompt> <userinput>nova list</userinput>
+                <screen><prompt>$</prompt> <userinput>nova list</userinput>
 <computeroutput>+--------------------------------------+--------+--------+---------------+
 |                  ID                  |  Name  | Status |    Networks   |
 +--------------------------------------+--------+--------+---------------+
 | 1cdc671d-a296-4476-9a75-f9ca1d92fd26 | testvm | ACTIVE | net1=10.5.5.3 |
 +--------------------------------------+--------+--------+---------------+</computeroutput>
-<prompt>#</prompt> <userinput>neutron port-list -- --device_id <replaceable>1cdc671d-a296-4476-9a75-f9ca1d92fd26</replaceable></userinput>
+<prompt>$</prompt> <userinput>neutron port-list -- --device_id <replaceable>1cdc671d-a296-4476-9a75-f9ca1d92fd26</replaceable></userinput>
 <computeroutput>+--------------------------------------+------+-------------------+---------------------------------------------------------------------------------+
 | id                                   | name | mac_address       | fixed_ips                                                                       |
 +--------------------------------------+------+-------------------+---------------------------------------------------------------------------------+
 | 9aa47099-b87b-488c-8c1d-32f993626a30 |      | fa:16:3e:b4:d6:6c | {"subnet_id": "c395cb5d-ba03-41ee-8a12-7e792d51a167", "ip_address": "10.5.5.3"} |
 +--------------------------------------+------+-------------------+---------------------------------------------------------------------------------+</computeroutput>
-<prompt>#</prompt> <userinput>PORT_ID=<replaceable>9aa47099-b87b-488c-8c1d-32f993626a30</replaceable></userinput></screen>
+<prompt>$</prompt> <userinput>PORT_ID=<replaceable>9aa47099-b87b-488c-8c1d-32f993626a30</replaceable></userinput></screen>
             </step>
             <step>
                 <para>Allocate a floating IP and store its ID in the
                         <literal>FLOATING_ID</literal>
                     variable:</para>
-                <screen><prompt>#</prompt> <userinput>neutron floatingip-create ext_net</userinput>
+                <screen><prompt>$</prompt> <userinput>neutron floatingip-create ext_net</userinput>
 <computeroutput>+---------------------+--------------------------------------+
 | Field               | Value                                |
 +---------------------+--------------------------------------+
@@ -590,17 +590,17 @@ export OS_AUTH_URL="http://<replaceable>controller</replaceable>:5000/v2.0/"</pr
 | router_id           |                                      |
 | tenant_id           | e40fa60181524f9f9ee7aa1038748f08     |
 +---------------------+--------------------------------------+</computeroutput>
-<prompt>#</prompt> <userinput>FLOATING_ID=<replaceable>7.7.7.131</replaceable></userinput></screen>
+<prompt>$</prompt> <userinput>FLOATING_ID=<replaceable>7.7.7.131</replaceable></userinput></screen>
             </step>
             <step>
                 <para>Associate the floating IP with the port for the
                     VM:</para>
-                <screen><prompt>#</prompt> <userinput>neutron floatingip-associate $FLOATING_ID $PORT_ID</userinput>
+                <screen><prompt>$</prompt> <userinput>neutron floatingip-associate $FLOATING_ID $PORT_ID</userinput>
 <computeroutput>Associated floatingip 40952c83-2541-4d0c-b58e-812c835079a5</computeroutput></screen>
             </step>
             <step>
                 <para>Show the floating IP:</para>
-                <screen><prompt>#</prompt> <userinput>neutron floatingip-show $FLOATING_ID</userinput>
+                <screen><prompt>$</prompt> <userinput>neutron floatingip-show $FLOATING_ID</userinput>
 <computeroutput>+---------------------+--------------------------------------+
 | Field               | Value                                |
 +---------------------+--------------------------------------+
@@ -615,7 +615,7 @@ export OS_AUTH_URL="http://<replaceable>controller</replaceable>:5000/v2.0/"</pr
             </step>
             <step>
                 <para>Test the floating IP:</para>
-                <screen><prompt>#</prompt> <userinput>ping 7.7.7.131</userinput>
+                <screen><prompt>$</prompt> <userinput>ping 7.7.7.131</userinput>
 <computeroutput>PING 7.7.7.131 (7.7.7.131) 56(84) bytes of data.
 64 bytes from 7.7.7.131: icmp_req=2 ttl=64 time=0.152 ms
 64 bytes from 7.7.7.131: icmp_req=3 ttl=64 time=0.049 ms</computeroutput></screen>
