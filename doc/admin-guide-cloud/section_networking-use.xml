@@ -457,14 +457,14 @@
                     of tenants by specifying an Identity
                         <option>tenant_id</option> in the command, as
                     follows:</para>
-                <screen><prompt>#</prompt> <userinput>neutron net-create --tenant-id=<replaceable>tenant-id</replaceable> <replaceable>network-name</replaceable></userinput></screen>
+                <screen><prompt>$</prompt> <userinput>neutron net-create --tenant-id=<replaceable>tenant-id</replaceable> <replaceable>network-name</replaceable></userinput></screen>
                 <para>For example:</para>
-                <screen><prompt>#</prompt> <userinput>neutron net-create --tenant-id=5e4bbe24b67a4410bc4d9fae29ec394e net1</userinput></screen>
+                <screen><prompt>$</prompt> <userinput>neutron net-create --tenant-id=5e4bbe24b67a4410bc4d9fae29ec394e net1</userinput></screen>
                 <note>
                     <para>To view all tenant IDs in Identity, run the
                         following command as an Identity Service admin
                         user:</para>
-                    <screen><prompt>#</prompt> <userinput>keystone tenant-list</userinput></screen>
+                    <screen><prompt>$</prompt> <userinput>keystone tenant-list</userinput></screen>
                 </note>
             </section>
             <?hard-pagebreak?>
@@ -487,37 +487,37 @@
                         <tr>
                             <td>Creates a network that all tenants can
                                 use.</td>
-                            <td><screen><prompt>#</prompt> <userinput>neutron net-create --shared public-net</userinput></screen></td>
+                            <td><screen><prompt>$</prompt> <userinput>neutron net-create --shared public-net</userinput></screen></td>
                         </tr>
                         <tr>
                             <td>Creates a subnet with a specified
                                 gateway IP address.</td>
-                            <td><screen><prompt>#</prompt> <userinput>neutron subnet-create --gateway 10.0.0.254 net1 10.0.0.0/24</userinput></screen></td>
+                            <td><screen><prompt>$</prompt> <userinput>neutron subnet-create --gateway 10.0.0.254 net1 10.0.0.0/24</userinput></screen></td>
                         </tr>
                         <tr>
                             <td>Creates a subnet that has no gateway
                                 IP address.</td>
-                            <td><screen><prompt>#</prompt> <userinput>neutron subnet-create --no-gateway net1 10.0.0.0/24</userinput></screen></td>
+                            <td><screen><prompt>$</prompt> <userinput>neutron subnet-create --no-gateway net1 10.0.0.0/24</userinput></screen></td>
                         </tr>
                         <tr>
                             <td>Creates a subnet with DHCP
                                 disabled.</td>
-                            <td><screen><prompt>#</prompt> <userinput>neutron subnet-create net1 10.0.0.0/24 --enable_dhcp False</userinput></screen></td>
+                            <td><screen><prompt>$</prompt> <userinput>neutron subnet-create net1 10.0.0.0/24 --enable_dhcp False</userinput></screen></td>
                         </tr>
                         <tr>
                             <td>Creates a subnet with a specified set
                                 of host routes.</td>
-                            <td><screen><prompt>#</prompt> <userinput>neutron subnet-create test-net1 40.0.0.0/24 --host_routes type=dict list=true destination=40.0.1.0/24,nexthop=40.0.0.2</userinput></screen></td>
+                            <td><screen><prompt>$</prompt> <userinput>neutron subnet-create test-net1 40.0.0.0/24 --host_routes type=dict list=true destination=40.0.1.0/24,nexthop=40.0.0.2</userinput></screen></td>
                         </tr>
                         <tr>
                             <td>Creates a subnet with a specified set
                                 of dns name servers.</td>
-                            <td><screen><prompt>#</prompt> <userinput>neutron subnet-create test-net1 40.0.0.0/24 --dns_nameservers list=true 8.8.8.7 8.8.8.8</userinput></screen></td>
+                            <td><screen><prompt>$</prompt> <userinput>neutron subnet-create test-net1 40.0.0.0/24 --dns_nameservers list=true 8.8.8.7 8.8.8.8</userinput></screen></td>
                         </tr>
                         <tr>
                             <td>Displays all ports and IPs allocated
                                 on a network.</td>
-                            <td><screen><prompt>#</prompt> <userinput>neutron port-list --network_id <replaceable>net-id</replaceable></userinput></screen></td>
+                            <td><screen><prompt>$</prompt> <userinput>neutron port-list --network_id <replaceable>net-id</replaceable></userinput></screen></td>
                         </tr>
                     </tbody>
                 </table>
@@ -545,12 +545,12 @@
                     <tbody>
                         <tr>
                             <td>Checks available networks.</td>
-                            <td><screen><prompt>#</prompt> <userinput>neutron net-list</userinput></screen></td>
+                            <td><screen><prompt>$</prompt> <userinput>neutron net-list</userinput></screen></td>
                         </tr>
                         <tr>
                             <td>Boots a VM with a single NIC on a
                                 selected Networking network.</td>
-                            <td><screen><prompt>#</prompt> <userinput>nova boot --image <replaceable>img</replaceable> --flavor <replaceable>flavor</replaceable> --nic net-id=<replaceable>net-id</replaceable> <replaceable>vm-name</replaceable></userinput></screen>
+                            <td><screen><prompt>$</prompt> <userinput>nova boot --image <replaceable>img</replaceable> --flavor <replaceable>flavor</replaceable> --nic net-id=<replaceable>net-id</replaceable> <replaceable>vm-name</replaceable></userinput></screen>
                             </td>
                         </tr>
                         <tr>
@@ -561,17 +561,17 @@
                                    linkend="network_compute_note"
                                    />.</para>
                             </td>
-                            <td><screen><prompt>#</prompt> <userinput>neutron port-list --device_id=<replaceable>vm-id</replaceable></userinput></screen></td>
+                            <td><screen><prompt>$</prompt> <userinput>neutron port-list --device_id=<replaceable>vm-id</replaceable></userinput></screen></td>
                         </tr>
                         <tr>
                             <td>Searches for ports, but shows only the
                                 <option>mac_address</option> of the port.</td>
-                            <td><screen><prompt>#</prompt> <userinput>neutron port-list --field mac_address --device_id=<replaceable>vm-id</replaceable></userinput></screen></td>
+                            <td><screen><prompt>$</prompt> <userinput>neutron port-list --field mac_address --device_id=<replaceable>vm-id</replaceable></userinput></screen></td>
                         </tr>
                         <tr>
                             <td>Temporarily disables a port from
                                 sending traffic.</td>
-                            <td><screen><prompt>#</prompt> <userinput>neutron port-update <replaceable>port-id</replaceable> --admin_state_up=False</userinput></screen></td>
+                            <td><screen><prompt>$</prompt> <userinput>neutron port-update <replaceable>port-id</replaceable> --admin_state_up=False</userinput></screen></td>
                         </tr>
                     </tbody>
                 </table>
@@ -618,7 +618,7 @@
                     <tbody>
                         <tr>
                             <td>Boots a VM with multiple NICs.</td>
-                            <td><screen><prompt>#</prompt> <userinput>nova boot --image <replaceable>img</replaceable> --flavor <replaceable>flavor</replaceable> --nic net-id=<replaceable>net1-id</replaceable> --nic net-id=<replaceable>net2-id</replaceable> <replaceable>vm-name</replaceable></userinput></screen></td>
+                            <td><screen><prompt>$</prompt> <userinput>nova boot --image <replaceable>img</replaceable> --flavor <replaceable>flavor</replaceable> --nic net-id=<replaceable>net1-id</replaceable> --nic net-id=<replaceable>net2-id</replaceable> <replaceable>vm-name</replaceable></userinput></screen></td>
                         </tr>
                         <tr>
                             <td>Boots a VM with a specific IP address.
@@ -627,8 +627,8 @@
                                 specifying a <option>port-id</option>
                                 rather than a
                                 <option>net-id</option>.</td>
-                            <td><screen><prompt>#</prompt> <userinput>neutron port-create --fixed-ip subnet_id=<replaceable>subnet-id</replaceable>,ip_address=<replaceable>IP</replaceable> <replaceable>net-id</replaceable></userinput>
-<prompt>#</prompt> <userinput>nova boot --image <replaceable>img</replaceable> --flavor <replaceable>flavor</replaceable> --nic port-id=<replaceable>port-id</replaceable> <replaceable>vm-name</replaceable></userinput></screen>
+                            <td><screen><prompt>$</prompt> <userinput>neutron port-create --fixed-ip subnet_id=<replaceable>subnet-id</replaceable>,ip_address=<replaceable>IP</replaceable> <replaceable>net-id</replaceable></userinput>
+<prompt>$</prompt> <userinput>nova boot --image <replaceable>img</replaceable> --flavor <replaceable>flavor</replaceable> --nic port-id=<replaceable>port-id</replaceable> <replaceable>vm-name</replaceable></userinput></screen>
                             </td>
                         </tr>
                         <tr>
@@ -637,7 +637,7 @@
                                 tenant who submits the request
                                 (without the <parameter>--nic</parameter>
                                 option).</td>
-                            <td><screen><prompt>#</prompt> <userinput>nova boot --image <replaceable>img</replaceable> --flavor <replaceable>flavor</replaceable> <replaceable>vm-name</replaceable></userinput></screen>
+                            <td><screen><prompt>$</prompt> <userinput>nova boot --image <replaceable>img</replaceable> --flavor <replaceable>flavor</replaceable> <replaceable>vm-name</replaceable></userinput></screen>
                             </td>
                         </tr>
                     </tbody>
@@ -665,9 +665,9 @@
                                 <command>ping</command> and
                                 <command>ssh</command> access to your
                             VMs.</para>
-                        <screen><prompt>#</prompt> <userinput>neutron security-group-rule-create --protocol icmp \
+                        <screen><prompt>$</prompt> <userinput>neutron security-group-rule-create --protocol icmp \
     --direction ingress default</userinput></screen>
-                        <screen><prompt>#</prompt> <userinput>neutron security-group-rule-create --protocol tcp --port-range-min 22 \
+                        <screen><prompt>$</prompt> <userinput>neutron security-group-rule-create --protocol tcp --port-range-min 22 \
     --port-range-max 22 --direction ingress default</userinput></screen>
                     </listitem>
                     <listitem>
@@ -680,8 +680,8 @@
                             commands enable <command>ping</command>
                             and <command>ssh</command> access to your
                             VMs.</para>
-                        <screen><prompt>#</prompt> <userinput>nova secgroup-add-rule default icmp -1 -1 0.0.0.0/0</userinput>
-<prompt>#</prompt> <userinput>nova secgroup-add-rule default tcp 22 22 0.0.0.0/0</userinput></screen>
+                        <screen><prompt>$</prompt> <userinput>nova secgroup-add-rule default icmp -1 -1 0.0.0.0/0</userinput>
+<prompt>$</prompt> <userinput>nova secgroup-add-rule default tcp 22 22 0.0.0.0/0</userinput></screen>
                     </listitem>
                 </itemizedlist>
                 <note>

@@ -55,12 +55,12 @@
             <substeps>
                 <step>
                     <para>Use this command to list all volumes:</para>
-                    <screen><prompt>$</prompt> <userinput>lvdisplay</userinput></screen>
+                    <screen><prompt>#</prompt> <userinput>lvdisplay</userinput></screen>
                 </step>
                 <step>
                     <para>Create the snapshot; you can do this while
                         the volume is attached to an instance:</para>
-                    <screen><prompt>$</prompt> <userinput>lvcreate --size 10G --snapshot --name volume-00000001-snapshot /dev/cinder-volumes/volume-00000001</userinput></screen>
+                    <screen><prompt>#</prompt> <userinput>lvcreate --size 10G --snapshot --name volume-00000001-snapshot /dev/cinder-volumes/volume-00000001</userinput></screen>
                     <para>Use the <option>--snapshot</option>
                         configuration option to tell LVM that you want
                         a snapshot of an already existing volume. The
@@ -136,7 +136,7 @@ Block device           251:14</programlisting>
                         partitions created inside instances, you
                         cannot see its content and create efficient
                         backups.</para>
-                    <screen><prompt>$</prompt> <userinput>kpartx -av /dev/cinder-volumes/volume-00000001-snapshot</userinput></screen>
+                    <screen><prompt>#</prompt> <userinput>kpartx -av /dev/cinder-volumes/volume-00000001-snapshot</userinput></screen>
                     <note os="debian">
                         <para>On a Debian-based distribution, you can
                             use the <command>apt-get install kpartx</command>
@@ -163,7 +163,7 @@ Block device           251:14</programlisting>
                 </step>
                 <step>
                     <para>Mount your partition:</para>
-                    <screen><prompt>$</prompt> <userinput>mount /dev/mapper/cinder--volumes-volume--volume--00000001--snapshot1 /mnt</userinput></screen>
+                    <screen><prompt>#</prompt> <userinput>mount /dev/mapper/cinder--volumes-volume--volume--00000001--snapshot1 /mnt</userinput></screen>
                     <para>If the partition mounts successfully, no
                         errors are returned.</para>
                     <para>You can directly access the data inside the

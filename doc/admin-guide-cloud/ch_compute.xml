@@ -466,7 +466,7 @@
                 xlink:href="http://docs.openstack.org/user-guide/content/index.html">
                 <citetitle>OpenStack End User
             Guide</citetitle></link>.</para>
-        <screen><prompt>#</prompt> <userinput>nova --debug list</userinput>
+        <screen><prompt>$</prompt> <userinput>nova --debug list</userinput>
  <?db-font-size 75%?><computeroutput>connect: (10.0.0.15, 5000)
 send: 'POST /v2.0/tokens HTTP/1.1\r\nHost: 10.0.0.15:5000\r\nContent-Length: 116\r\ncontent-type: application/json\r\naccept-encoding: gzip, deflate\r\naccept: application/json\r\nuser-agent: python-novaclient\r\n\r\n{"auth": {"tenantName": "demoproject", "passwordCredentials": {"username": "demouser", "password": "demopassword"}}}'
 reply: 'HTTP/1.1 200 OK\r\n'
@@ -1327,13 +1327,13 @@ echo 'Extra user data here'</computeroutput></screen>
                 <programlisting language="ini">net.ipv4.ip_forward = 1</programlisting>
                 <para>Save the file and run this command to apply the
                     changes:</para>
-                <screen><prompt>$</prompt> <userinput>sysctl -p</userinput></screen>
+                <screen><prompt>#</prompt> <userinput>sysctl -p</userinput></screen>
                 <para>You can also update the setting by restarting
                     the network service.</para>
                 <para>For example, on Ubuntu, run this command:</para>
-                <screen><userinput><prompt>$</prompt>/etc/init.d/procps.sh restart</userinput></screen>
+                <screen><userinput><prompt>#</prompt>/etc/init.d/procps.sh restart</userinput></screen>
                 <para>On RHEL/Fedora/CentOS, run this command:</para>
-                <screen><prompt>$</prompt> <userinput>service network restart</userinput></screen>
+                <screen><prompt>#</prompt> <userinput>service network restart</userinput></screen>
             </section>
             <section xml:id="create_list_of_available_floating_ips">
                 <title>Create a list of available floating IP
@@ -1343,28 +1343,23 @@ echo 'Extra user data here'</computeroutput></screen>
                         <command>nova-manage floating create</command>
                     command to add entries to this list.</para>
                 <para>For example:</para>
-                <screen><prompt>$</prompt> <userinput>nova-manage floating create --pool=nova --ip_range=68.99.26.170/31</userinput></screen>
+                <screen><prompt>#</prompt> <userinput>nova-manage floating create --pool=nova --ip_range=68.99.26.170/31</userinput></screen>
                 <para>You can use the following
                         <command>nova-manage</command> commands to
                     perform floating IP operations:</para>
                 <itemizedlist>
                     <listitem>
-                        <screen><userinput>nova-manage floating list</userinput></screen>
+                        <screen><prompt>#</prompt> <userinput>nova-manage floating list</userinput></screen>
                         <para>Lists the floating IP addresses in the
                             pool.</para>
                     </listitem>
                     <listitem>
-                        <screen><userinput>nova-manage floating create
-                                   --pool=<replaceable>[pool
-                                   name]</replaceable>
-                                   --ip_range=<replaceable>[CIDR]</replaceable>
-                            </userinput></screen>
+<screen><prompt>#</prompt> <userinput>nova-manage floating create --pool=<replaceable>[pool name]</replaceable> --ip_range=<replaceable>[CIDR]</replaceable></userinput></screen>
                         <para>Creates specific floating IPs for either
                             a single address or a subnet.</para>
                     </listitem>
                     <listitem>
-                        <screen><userinput>nova-manage floating delete
-                                   <replaceable>[CIDR]</replaceable></userinput></screen>
+                        <screen><prompt>#</prompt> <userinput>nova-manage floating delete <replaceable>[CIDR]</replaceable></userinput></screen>
                         <para>Removes floating IP addresses using the
                             same parameters as the create
                             command.</para>
@@ -1404,7 +1399,7 @@ echo 'Extra user data here'</computeroutput></screen>
                 rights. You can disassociate the project from the
                 network with a scrub command and the project ID as the
                 final parameter:</para>
-            <screen><prompt>$</prompt> <userinput>nova-manage project scrub --project=<replaceable>&lt;id></replaceable></userinput>      </screen>
+            <screen><prompt>#</prompt> <userinput>nova-manage project scrub --project=<replaceable>&lt;id></replaceable></userinput></screen>
         </section>
         <section xml:id="section_use-multi-nics">
             <title>Multiple interfaces for your instances
@@ -1942,23 +1937,23 @@ net.bridge.bridge-nf-call-ip6tables=0</programlisting>
                 <step>
                     <para>For administrators, the standard pattern for
                         executing a nova-manage command is:</para>
-                    <screen><prompt>$</prompt> <userinput>nova-manage category command <replaceable>[args]</replaceable></userinput></screen>
+                    <screen><prompt>#</prompt> <userinput>nova-manage category command <replaceable>[args]</replaceable></userinput></screen>
                 </step>
                 <step>
                     <para>For example, to obtain a list of all
                         projects:</para>
-                    <screen><prompt>$</prompt> <userinput>nova-manage project list</userinput></screen>
+                    <screen><prompt>#</prompt> <userinput>nova-manage project list</userinput></screen>
                 </step>
                 <step>
                     <para>Run without arguments to see a list of
                         available command categories:</para>
-                    <screen><prompt>$</prompt> <userinput>nova-manage</userinput></screen>
+                    <screen><prompt>#</prompt> <userinput>nova-manage</userinput></screen>
                 </step>
                 <step>
                     <para>You can also run with a category argument
                         such as user to see a list of all commands in
                         that category:</para>
-                    <screen><prompt>$</prompt> <userinput>nova-manage service</userinput></screen>
+                    <screen><prompt>#</prompt> <userinput>nova-manage service</userinput></screen>
                 </step>
             </procedure>
             <simplesect>
@@ -2113,7 +2108,7 @@ local0.error    @@172.20.1.43:1024</programlisting>
                 <step>
                     <para>Look at the running instances, to get the ID
                         of the instance you wish to migrate.</para>
-                    <screen><prompt>#</prompt> <userinput>nova list</userinput>
+                    <screen><prompt>$</prompt> <userinput>nova list</userinput>
 <computeroutput><![CDATA[+--------------------------------------+------+--------+-----------------+
 |                  ID                  | Name | Status |Networks         |
 +--------------------------------------+------+--------+-----------------+
@@ -2125,7 +2120,7 @@ local0.error    @@172.20.1.43:1024</programlisting>
                     <para>Look at information associated with that
                         instance - our example is vm1 from
                         above.</para>
-                    <screen><prompt>#</prompt> <userinput>nova show d1df1b5a-70c4-4fed-98b7-423362f2c47c</userinput>
+                    <screen><prompt>$</prompt> <userinput>nova show d1df1b5a-70c4-4fed-98b7-423362f2c47c</userinput>
 <computeroutput><![CDATA[+-------------------------------------+----------------------------------------------------------+
 |               Property              |                          Value                           |
 +-------------------------------------+----------------------------------------------------------+
@@ -2209,7 +2204,7 @@ HostC            p2            5     10240     150
                     <para>Use the <command>nova
                             live-migration</command> command to
                         migrate the instances.</para>
-                    <screen><prompt>#</prompt> <userinput>nova live-migration d1df1b5a-70c4-4fed-98b7-423362f2c47c HostC</userinput><computeroutput><![CDATA[Migration of d1df1b5a-70c4-4fed-98b7-423362f2c47c initiated.]]></computeroutput></screen>
+                    <screen><prompt>$</prompt> <userinput>nova live-migration d1df1b5a-70c4-4fed-98b7-423362f2c47c HostC</userinput><computeroutput><![CDATA[Migration of d1df1b5a-70c4-4fed-98b7-423362f2c47c initiated.]]></computeroutput></screen>
                     <para>Make sure instances are migrated
                         successfully with <command>nova
                         list</command>. If instances are still running
@@ -2722,7 +2717,7 @@ done &lt; $volumes_tmp_file</programlisting>
                     <step>
                         <para>In this example, the iscsi session is
                             number 15 for that instance:</para>
-                        <screen><prompt>$</prompt> <userinput>iscsiadm -m session -u -r 15</userinput></screen>
+                        <screen><prompt>#</prompt> <userinput>iscsiadm -m session -u -r 15</userinput></screen>
                     </step>
                     <step>
                         <para>Do not forget the <literal>-r</literal>
