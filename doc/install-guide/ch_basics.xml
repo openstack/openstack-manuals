@@ -395,16 +395,37 @@ iface eth1 inet static
             for the root password for the database. Choose a strong
             password and remember it.</para>
         </note>
-        <para>Edit <filename os="ubuntu;debian"
-            >/etc/mysql/my.cnf</filename><filename
-            os="opensuse;sles;rhel;fedora;centos"
-            >/etc/my.cnf</filename> and set the
-            <literal>bind-address</literal> to the internal IP address
-          of the controller, to enable access from outside the
-          controller node.</para>
-        <programlisting language="ini">[mysqld]
+        <para>The MySQL configuration requires some changes to work with
+          OpenStack.</para>
+        <procedure>
+          <step>
+            <para os="ubuntu;debian">Edit the
+              <filename>/etc/mysql/my.cnf</filename> file:</para>
+            <para os="opensuse;sles;rhel;fedora;centos">Edit the
+              <filename>/etc/my.cnf</filename> file:</para>
+            <substeps>
+              <step>
+                <para>Under the <literal>[mysqld]</literal> section, set the
+                  <literal>bind-address</literal> key to the management IP
+                  address of the controller node to enable access by other
+                  nodes via the management network:</para>
+                <programlisting>[mysqld]
 ...
-bind-address            = 192.168.0.10</programlisting>
+bind-address = 192.168.0.10</programlisting>
+              </step>
+              <step>
+                <para>Under the <literal>[mysqld]</literal> section, set the
+                  following keys to enable the UTF-8 character set by
+                  default:</para>
+                <programlisting>[mysqld]
+...
+collation-server = utf8_general_ci
+init-connect = 'SET NAMES utf8'
+character-set-server = utf8</programlisting>
+              </step>
+            </substeps>
+          </step>
+        </procedure>
         <para os="ubuntu;debian">Restart the MySQL service to apply
           the changes:</para>
         <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service mysql restart</userinput></screen>
