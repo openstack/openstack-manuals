@@ -10,36 +10,35 @@
         to the OpenStack Networking service must provide an
         authentication token in X-Auth-Token request header. The
         aforementioned token should have been obtained by
-        authenticating with the OpenStack Identity endpoint. For more
-        information concerning authentication with OpenStack Identity,
-        please refer to the OpenStack Identity documentation. When
-        OpenStack Identity is enabled, it is not mandatory to specify
-        tenant_id for resources in create requests, as the tenant
-        identifier will be derived from the Authentication token.
-        Please note that the default authorization settings only allow
-        administrative users to create resources on behalf of a
-        different tenant. OpenStack Networking uses information
-        received from OpenStack Identity to authorize user requests.
-        OpenStack Networking handles two kind of authorization
-        policies: <itemizedlist>
-            <listitem>
-                <para><emphasis role="bold"
-                    >Operation-based</emphasis>: policies specify
-                    access criteria for specific operations, possibly
-                    with fine-grained control over specific
-                    attributes; </para>
-            </listitem>
-            <listitem>
-                <para><emphasis role="bold">Resource-based:</emphasis>
-                    whether access to specific resource might be
-                    granted or not according to the permissions
-                    configured for the resource (currently available
-                    only for the network resource). The actual
-                    authorization policies enforced in OpenStack
-                    Networking might vary from deployment to
-                    deployment. </para>
-            </listitem>
-        </itemizedlist></para>
+        authenticating with the OpenStack Identity endpoint.</para>
+    <para>For more information concerning authentication with
+        OpenStack Identity, please refer to the OpenStack Identity
+        documentation. When OpenStack Identity is enabled, it is not
+        mandatory to specify tenant_id for resources in create
+        requests, as the tenant identifier will be derived from the
+        Authentication token. Please note that the default
+        authorization settings only allow administrative users to
+        create resources on behalf of a different tenant. OpenStack
+        Networking uses information received from OpenStack Identity
+        to authorize user requests. OpenStack Networking handles two
+        kind of authorization policies:</para>
+    <itemizedlist>
+        <listitem>
+            <para><emphasis role="bold">Operation-based</emphasis>:
+                policies specify access criteria for specific
+                operations, possibly with fine-grained control over
+                specific attributes; </para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">Resource-based:</emphasis>
+                whether access to specific resource might be granted
+                or not according to the permissions configured for the
+                resource (currently available only for the network
+                resource). The actual authorization policies enforced
+                in OpenStack Networking might vary from deployment to
+                deployment. </para>
+        </listitem>
+    </itemizedlist>
     <para>The policy engine reads entries from the <emphasis
             role="italic">policy.json</emphasis> file. The actual
         location of this file might vary from distribution to
@@ -75,93 +74,101 @@
         for instance <code>extension:provider_network:set</code> will
         be triggered if the attributes defined by the Provider Network
         extensions are specified in an API request.</para>
-    <para>An authorization policy can be composed by one or more rules. If more rules are specified,
-        evaluation policy will be successful if any of the rules evaluates successfully; if an API
-        operation matches multiple policies, then all the policies must evaluate successfully. Also,
-        authorization rules are recursive. Once a rule is matched, the rule(s) can be resolved to
-        another rule, until a terminal rule is reached.</para>
+    <para>An authorization policy can be composed by one or more
+        rules. If more rules are specified, evaluation policy will be
+        successful if any of the rules evaluates successfully; if an
+        API operation matches multiple policies, then all the policies
+        must evaluate successfully. Also, authorization rules are
+        recursive. Once a rule is matched, the rule(s) can be resolved
+        to another rule, until a terminal rule is reached.</para>
     <para>The OpenStack Networking policy engine currently defines the
         following kinds of terminal rules:</para>
-    <para><itemizedlist>
-            <listitem>
-                <para><emphasis role="bold">Role-based rules</emphasis>: evaluate successfully if
-                    the user submitting the request has the specified role. For instance
-                        <code>"role:admin"</code>is successful if the user submitting the request is
-                    an administrator.</para>
-            </listitem>
-            <listitem>
-                <para><emphasis role="bold">Field-based rules: </emphasis>evaluate successfully if a
-                    field of the resource specified in the current request matches a specific value.
-                    For instance <code>"field:networks:shared=True"</code> is successful if the
-                    attribute <emphasis role="italic">shared</emphasis> of the <emphasis
-                        role="italic">network</emphasis> resource is set to true.</para>
-            </listitem>
-            <listitem>
-                <para><emphasis role="bold">Generic rules:</emphasis> compare an attribute in the
-                    resource with an attribute extracted from the user's security credentials and
-                    evaluates successfully if the comparison is successful. For instance
-                        <code>"tenant_id:%(tenant_id)s"</code> is successful if the tenant
-                    identifier in the resource is equal to the tenant identifier of the user
-                    submitting the request.</para>
-            </listitem>
-        </itemizedlist> The following is an extract from the default policy.json file: </para>
-    <para><code>{</code></para>
-    <para><code>    "admin_or_owner": [["role:admin"], ["tenant_id:%(tenant_id)s"]],
-                </code><emphasis role="bold">[1]</emphasis></para>
-    <para><code>    "admin_or_network_owner": [["role:admin"],
-            ["tenant_id:%(network_tenant_id)s"]],</code></para>
-    <para><code>    "admin_only": [["role:admin"]], "regular_user": [],</code></para>
-    <para><code>    "shared": [["field:networks:shared=True"]],</code></para>
-    <para><code>    "default": [["rule:admin_or_owner"]],</code><emphasis role="bold">[2]</emphasis></para>
-    <para><code>    "create_subnet": [["rule:admin_or_network_owner"]],</code></para>
-    <para><code>    "get_subnet": [["rule:admin_or_owner"], ["rule:shared"]],</code></para>
-    <para><code>    "update_subnet": [["rule:admin_or_network_owner"]],</code></para>
-    <para><code>    "delete_subnet": [["rule:admin_or_network_owner"]],</code></para>
-    <para><code>    "create_network": [],</code></para>
-    <para><code>    "get_network": [["rule:admin_or_owner"], ["rule:shared"]],</code><emphasis role="bold">[3]</emphasis></para>
-    <para><code>    "create_network:shared": [["rule:admin_only"]], </code><emphasis role="bold">[4]</emphasis>
-    </para>
-    <para><code>    "update_network": [["rule:admin_or_owner"]],</code></para>
-    <para><code>    "delete_network": [["rule:admin_or_owner"]],</code></para>
-    <para><code>    "create_port": [], </code></para>
-    <para><code>    "create_port:mac_address": [["rule:admin_or_network_owner"]],</code><emphasis role="bold">[5]</emphasis></para>
-    <para><code>    "create_port:fixed_ips": [["rule:admin_or_network_owner"]],</code></para>
-    <para><code>    "get_port": [["rule:admin_or_owner"]],</code></para>
-    <para><code>    "update_port": [["rule:admin_or_owner"]], </code></para>
-    <para><code>    "delete_port": [["rule:admin_or_owner"]]</code></para>
-    <para><code>}</code></para>
-    <para>[1] is a rule which evaluates successfully if the current user is an administrator or the
-        owner of the resource specified in the request (tenant identifier is equal).</para>
-    <para>[2] is the default policy which is always evaluated if an API operation does not match any
-        of the policies in policy.json.</para>
-    <para>[3] This policy will evaluate successfully if either <emphasis role="italic"
-            >admin_or_owner</emphasis>, or <emphasis role="italic">shared</emphasis> evaluates
-        successfully.</para>
-    <para>[4] This policy will restrict the ability of manipulating the <emphasis role="italic"
-            >shared</emphasis> attribute for a network to administrators only.</para>
-    <para>[5] This policy will restrict the ability of manipulating the <emphasis role="italic"
-            >mac_address</emphasis> attribute for a port only to administrators and the owner of the
-        network where the port is attached.</para>
-    <para>In some cases, some operations should be restricted to administrators only; therefore, as
-        a further example, let us consider how this sample policy file should be modified in a
-        scenario where tenants are allowed only to define networks and see their resources, and all
-        the other operations can be performed only in an administrative context:</para>
-    <para><code>{</code></para>
-    <para><code>    "admin_or_owner": [["role:admin"], ["tenant_id:%(tenant_id)s"]],</code></para>
-    <para><code>    "admin_only": [["role:admin"]], "regular_user": [],</code></para>
-    <para><code>    "default": [["rule:admin_only"]], </code></para>
-    <para><code>    "create_subnet": [["rule:admin_only"]],</code></para>
-    <para><code>    "get_subnet": [["rule:admin_or_owner"]],</code></para>
-    <para><code>    "update_subnet": [["rule:admin_only"]],</code></para>
-    <para><code>    "delete_subnet": [["rule:admin_only"]],</code></para>
-    <para><code>    "create_network": [],</code></para>
-    <para><code>    "get_network": [["rule:admin_or_owner"]],</code></para>
-    <para><code>    "create_network:shared": [["rule:admin_only"]],</code></para>
-    <para><code>    "update_network": [["rule:admin_or_owner"]],</code></para>
-    <para><code>    "delete_network": [["rule:admin_or_owner"]],</code></para>
-    <para><code>    "create_port": [["rule:admin_only"]], </code></para>
-    <para><code>    "get_port": [["rule:admin_or_owner"]],</code></para>
-    <para><code>    "update_port": [["rule:admin_only"]], </code></para>
-    <para><code>    "delete_port": [["rule:admin_only"]]</code></para>
-    <para><code>}</code></para>
+    <itemizedlist>
+        <listitem>
+            <para><emphasis role="bold">Role-based rules</emphasis>:
+                evaluate successfully if the user submitting the
+                request has the specified role. For instance
+                    <code>"role:admin"</code>is successful if the user
+                submitting the request is an administrator.</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">Field-based rules:
+                </emphasis>evaluate successfully if a field of the
+                resource specified in the current request matches a
+                specific value. For instance
+                    <code>"field:networks:shared=True"</code> is
+                successful if the attribute <emphasis role="italic"
+                    >shared</emphasis> of the <emphasis role="italic"
+                    >network</emphasis> resource is set to
+                true.</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">Generic rules:</emphasis>
+                compare an attribute in the resource with an attribute
+                extracted from the user's security credentials and
+                evaluates successfully if the comparison is
+                successful. For instance
+                    <code>"tenant_id:%(tenant_id)s"</code> is
+                successful if the tenant identifier in the resource is
+                equal to the tenant identifier of the user submitting
+                the request.</para>
+        </listitem>
+    </itemizedlist>
+    <para>The following is an extract from the default policy.json
+        file:</para>
+    <example xml:id="xml_example">
+        <title>policy.json file</title>
+        <programlistingco>
+            <areaspec>
+                <area xml:id="policy.json.rule1" units="linecolumn"
+                    coords="2 23"/>
+                <area xml:id="policy.json.rule2" units="linecolumn"
+                    coords="31 16"/>
+                <area xml:id="policy.json.rule3" units="linecolumn"
+                    coords="62 20"/>
+                <area xml:id="policy.json.rule4" units="linecolumn"
+                    coords="70 30"/>
+                <area xml:id="policy.json.rule5" units="linecolumn"
+                    coords="88 32"/>
+            </areaspec>
+            <programlisting language="json"><xi:include href="samples/policy.json" parse="text"/></programlisting>
+        </programlistingco>
+    </example>
+    <calloutlist>
+        <callout arearefs="policy.json.rule1">
+            <para>A rule that evaluates successfully if the current
+                user is an administrator or the owner of the resource
+                specified in the request (tenant identifier is
+                equal).</para>
+        </callout>
+        <callout arearefs="policy.json.rule2">
+            <para>The default policy that is always evaluated if an
+                API operation does not match any of the policies in
+                policy.json.</para>
+        </callout>
+        <callout arearefs="policy.json.rule3">
+            <para>This policy evaluates successfully if either
+                    <literal>admin_or_owner</literal>, or
+                    <literal>shared</literal> evaluates
+                successfully.</para>
+        </callout>
+        <callout arearefs="policy.json.rule4">
+            <para>This policy restricts the ability of manipulating
+                the <literal>shared</literal> attribute for a network
+                to administrators only.</para>
+        </callout>
+        <callout arearefs="policy.json.rule5">
+            <para>This policy restricts the ability of manipulating
+                the <literal>mac_address</literal> attribute for a
+                port only to administrators and the owner of the
+                network where the port is attached.</para>
+        </callout>
+    </calloutlist>
+    <para>In some cases, some operations should be restricted to
+        administrators only; therefore, as a further example, let us
+        consider how this sample policy file should be modified in a
+        scenario where tenants are allowed only to define networks and
+        see their resources, and all the other operations can be
+        performed only in an administrative context:</para>
+    <programlisting language="json"><xi:include href="samples/policy2.json" parse="text"/></programlisting>
 </chapter>

@@ -5,44 +5,47 @@
     xml:id="keystone-concepts">
     <?dbhtml stop-chunking?>
     <title>Identity Service Concepts</title>
-    <para> The Identity service performs the following functions: </para>
+    <para>The Identity service performs the following
+        functions:</para>
     <itemizedlist spacing="compact">
         <listitem>
-            <para>User management. Tracks users and their permissions. </para>
+            <para>User management. Tracks users and their
+                permissions.</para>
         </listitem>
         <listitem>
             <para>Service catalog. Provides a catalog of available
-                services with their API endpoints. </para>
+                services with their API endpoints.</para>
         </listitem>
     </itemizedlist>
-    <para> To understand the Identity Service, you must understand the
-        following concepts: </para>
+    <para>To understand the Identity Service, you must understand the
+        following concepts:</para>
     <variablelist>
         <varlistentry>
             <term>User</term>
             <listitem>
-                <para>Digital representation of a person, system, or service
-                    who uses OpenStack cloud services.  Identity authentication
-                    services will validate that incoming request are being made
-                    by the user who claims to be making the call. Users have a
-                    login and may be assigned tokens to access resources. Users
-                    may be directly assigned to a particular tenant and behave
-                    as if they are contained in that tenant.
-                </para>
+                <para>Digital representation of a person, system, or
+                    service who uses OpenStack cloud services.
+                    Identity authentication services will validate
+                    that incoming request are being made by the user
+                    who claims to be making the call. Users have a
+                    login and may be assigned tokens to access
+                    resources. Users may be directly assigned to a
+                    particular tenant and behave as if they are
+                    contained in that tenant.</para>
             </listitem>
         </varlistentry>
         <varlistentry>
             <term>Credentials</term>
             <listitem>
                 <para>Data that is known only by a user that proves
-                    who they are.  In the Identity Service, examples
-                    are: </para>
+                    who they are. In the Identity Service, examples
+                    are:</para>
                 <itemizedlist>
                     <listitem>
-                        <para>Username and password </para>
+                        <para>Username and password</para>
                     </listitem>
                     <listitem>
-                        <para>Username and API key </para>
+                        <para>Username and API key</para>
                     </listitem>
                     <listitem>
                         <para>An authentication token provided by the
@@ -61,7 +64,8 @@
                     and password or a username and API key. In
                     response to these credentials, the Identity
                     Service issues the user an authentication token,
-                    which the user provides in subsequent requests. </para>
+                    which the user provides in subsequent
+                    requests.</para>
             </listitem>
         </varlistentry>
         <varlistentry>
@@ -71,14 +75,14 @@
                     resources. Each token has a scope which describes
                     which resources are accessible with it. A token
                     may be revoked at anytime and is valid for a
-                    finite duration. </para>
+                    finite duration.</para>
                 <para>While the Identity Service supports token-based
                     authentication in this release, the intention is
                     for it to support additional protocols in the
                     future. The intent is for it to be an integration
                     service foremost, and not aspire to be a
                     full-fledged identity store and management
-                    solution. </para>
+                    solution.</para>
             </listitem>
         </varlistentry>
         <varlistentry>
@@ -87,7 +91,7 @@
                 <para>A container used to group or isolate resources
                     and/or identity objects. Depending on the service
                     operator, a tenant may map to a customer, account,
-                    organization, or project. </para>
+                    organization, or project.</para>
             </listitem>
         </varlistentry>
         <varlistentry>
@@ -96,7 +100,8 @@
                 <para>An OpenStack service, such as Compute (Nova),
                     Object Storage (Swift), or Image Service (Glance).
                     Provides one or more endpoints through which users
-                    can access resources and perform operations. </para>
+                    can access resources and perform
+                    operations.</para>
             </listitem>
         </varlistentry>
         <varlistentry>
@@ -107,7 +112,7 @@
                     an extension for templates, you can create an
                     endpoint template, which represents the templates
                     of all the consumable services that are available
-                    across the regions. </para>
+                    across the regions.</para>
             </listitem>
         </varlistentry>
         <varlistentry>
@@ -117,46 +122,46 @@
                     them to perform a specific set of operations. A
                     role includes a set of rights and privileges. A
                     user assuming that role inherits those rights and
-                    privileges. </para>
+                    privileges.</para>
                 <para>In the Identity Service, a token that is issued
                     to a user includes the list of roles that user can
                     assume. Services that are being called by that
                     user determine how they interpret the set of roles
                     a user has and which operations or resources each
-                    role grants access to. </para>
+                    role grants access to.</para>
             </listitem>
         </varlistentry>
     </variablelist>
-    <para>
-        <mediaobject>
-            <imageobject role="fo">
-                <imagedata
-                    fileref="figures/SCH_5002_V00_NUAC-Keystone.png"
-                    format="PNG" scale="50"/>
-            </imageobject>
-            <imageobject role="html">
-                <imagedata
-                    fileref="figures/SCH_5002_V00_NUAC-Keystone.png"
-                    format="PNG" scale="10"/>
-            </imageobject>
-        </mediaobject>
-    </para>
+    <mediaobject>
+        <imageobject role="fo">
+            <imagedata
+                fileref="figures/SCH_5002_V00_NUAC-Keystone.png"
+                format="PNG" scale="50"/>
+        </imageobject>
+        <imageobject role="html">
+            <imagedata
+                fileref="figures/SCH_5002_V00_NUAC-Keystone.png"
+                format="PNG" scale="10"/>
+        </imageobject>
+    </mediaobject>
     <section xml:id="keystone-user-management">
         <title>User management</title>
-        <para> The main components of Identity user management are: <itemizedlist>
-                <listitem>
-                    <para>Users</para>
-                </listitem>
-                <listitem>
-                    <para>Tenants</para>
-                </listitem>
-                <listitem>
-                    <para>Roles</para>
-                </listitem>
-            </itemizedlist></para>
+        <para>The main components of Identity user management
+            are:</para>
+        <itemizedlist>
+            <listitem>
+                <para>Users</para>
+            </listitem>
+            <listitem>
+                <para>Tenants</para>
+            </listitem>
+            <listitem>
+                <para>Roles</para>
+            </listitem>
+        </itemizedlist>
         <para>A <emphasis>user</emphasis> represents a human user, and
             has associated information such as username, password and
-            email. This example creates a user named "alice": </para>
+            email. This example creates a user named "alice":</para>
         <screen><prompt>$</prompt> <userinput>keystone user-create --name=alice --pass=mypassword123 --email=alice@example.com</userinput></screen>
         <para>A <emphasis>tenant</emphasis> can be a project, group,
             or organization. Whenever you make requests to OpenStack
@@ -164,7 +169,7 @@
             query the Compute service for a list of running instances,
             you will receive a list of all of the running instances in
             the tenant you specified in your query. This example
-            creates a tenant named "acme": </para>
+            creates a tenant named "acme":</para>
         <screen><prompt>$</prompt> <userinput>keystone tenant-create --name=acme</userinput></screen>
         <note>
             <para>Because the term <emphasis>project</emphasis> was
@@ -173,22 +178,22 @@
                 use <literal>--project_id</literal> instead of
                     <literal>--tenant-id</literal> or
                     <literal>--os-tenant-id</literal> to refer to a
-                tenant ID. </para>
+                tenant ID.</para>
         </note>
         <para>A <emphasis>role</emphasis> captures what operations a
             user is permitted to perform in a given tenant. This
-            example creates a role named "compute-user": </para>
+            example creates a role named "compute-user":</para>
         <screen><prompt>$</prompt> <userinput>keystone role-create --name=compute-user</userinput></screen>
         <note>
             <para>It is up to individual services such as the Compute
                 service and Image service to assign meaning to these
                 roles. As far as the Identity service is concerned, a
-                role is simply a name. </para>
+                role is simply a name.</para>
         </note>
         <para>The Identity service associates a user with a tenant and
             a role. To continue with our previous examples, we may
             wish to assign the "alice" user the "compute-user" role in
-            the "acme" tenant: </para>
+            the "acme" tenant:</para>
         <screen><prompt>$</prompt> <userinput>keystone user-list</userinput></screen>
         <screen><computeroutput>+--------+---------+-------------------+--------+
 |   id   | enabled |       email       |  name  |
@@ -211,7 +216,7 @@
         <para>A user can be assigned different roles in different
             tenants: for example, Alice may also have the "admin" role
             in the "Cyberdyne" tenant. A user can also be assigned
-            multiple roles in the same tenant. </para>
+            multiple roles in the same tenant.</para>
         <para>The
                     <filename>/etc/<replaceable>[SERVICE_CODENAME]</replaceable>/policy.json</filename>
             controls what users are allowed to do for a given service.
@@ -220,136 +225,47 @@
                 <filename>/etc/glance/policy.json</filename> specifies
             the access policy for the Image service, and
                 <filename>/etc/keystone/policy.json</filename>
-            specifies the access policy for the Identity service. </para>
+            specifies the access policy for the Identity
+            service.</para>
         <para>The default <filename>policy.json</filename> files in
             the Compute, Identity, and Image service recognize only
             the <literal>admin</literal> role: all operations that do
             not require the <literal>admin</literal> role will be
-            accessible by any user that has any role in a tenant. </para>
+            accessible by any user that has any role in a
+            tenant.</para>
         <para>If you wish to restrict users from performing operations
             in, say, the Compute service, you need to create a role in
             the Identity service and then modify
                 <filename>/etc/nova/policy.json</filename> so that
-            this role is required for Compute operations. </para>
+            this role is required for Compute operations.</para>
         <para>For example, this line in
                 <filename>/etc/nova/policy.json</filename> specifies
             that there are no restrictions on which users can create
             volumes: if the user has any role in a tenant, they will
-            be able to create volumes in that tenant. </para>
-        <programlisting language="json">"volume:create": [],     </programlisting>
+            be able to create volumes in that tenant.</para>
+        <programlisting language="json">{
+   "volume:create":[
+
+   ]
+}</programlisting>
         <para>If we wished to restrict creation of volumes to users
             who had the <literal>compute-user</literal> role in a
             particular tenant, we would add
-                <literal>"role:compute-user"</literal>, like so: </para>
-        <programlisting language="json">"volume:create": ["role:compute-user"],</programlisting>
-        <para>
-            If we wished to restrict all Compute service requests to require
-            this role, the resulting file would look like:
-        </para>
+                <literal>"role:compute-user"</literal>, like
+            so:</para>
         <programlisting language="json">{
-    "admin_or_owner":  [["role:admin"], ["project_id:%(project_id)s"]],
-    "default": [["rule:admin_or_owner"]],
-
-    "compute:create": ["role":"compute-user"],
-    "compute:create:attach_network": ["role":"compute-user"],
-    "compute:create:attach_volume": ["role":"compute-user"],
-    "compute:get_all": ["role":"compute-user"],
-
-                "admin_api": [["role:admin"]],
-                "compute_extension:accounts": [["rule:admin_api"]],
-                "compute_extension:admin_actions": [["rule:admin_api"]],
-                "compute_extension:admin_actions:pause": [["rule:admin_or_owner"]],
-                "compute_extension:admin_actions:unpause": [["rule:admin_or_owner"]],
-                "compute_extension:admin_actions:suspend": [["rule:admin_or_owner"]],
-                "compute_extension:admin_actions:resume": [["rule:admin_or_owner"]],
-                "compute_extension:admin_actions:lock": [["rule:admin_api"]],
-                "compute_extension:admin_actions:unlock": [["rule:admin_api"]],
-                "compute_extension:admin_actions:resetNetwork": [["rule:admin_api"]],
-                "compute_extension:admin_actions:injectNetworkInfo": [["rule:admin_api"]],
-                "compute_extension:admin_actions:createBackup": [["rule:admin_or_owner"]],
-                "compute_extension:admin_actions:migrateLive": [["rule:admin_api"]],
-                "compute_extension:admin_actions:migrate": [["rule:admin_api"]],
-                "compute_extension:aggregates": [["rule:admin_api"]],
-                "compute_extension:certificates": ["role":"compute-user"],
-                "compute_extension:cloudpipe": [["rule:admin_api"]],
-                "compute_extension:console_output": ["role":"compute-user"],
-                "compute_extension:consoles": ["role":"compute-user"],
-                "compute_extension:createserverext": ["role":"compute-user"],
-                "compute_extension:deferred_delete": ["role":"compute-user"],
-                "compute_extension:disk_config": ["role":"compute-user"],
-                "compute_extension:evacuate": [["rule:admin_api"]],
-                "compute_extension:extended_server_attributes": [["rule:admin_api"]],
-                "compute_extension:extended_status": ["role":"compute-user"],
-                "compute_extension:flavorextradata": ["role":"compute-user"],
-                "compute_extension:flavorextraspecs": ["role":"compute-user"],
-                "compute_extension:flavormanage": [["rule:admin_api"]],
-                "compute_extension:floating_ip_dns": ["role":"compute-user"],
-                "compute_extension:floating_ip_pools": ["role":"compute-user"],
-                "compute_extension:floating_ips": ["role":"compute-user"],
-                "compute_extension:hosts": [["rule:admin_api"]],
-                "compute_extension:keypairs": ["role":"compute-user"],
-                "compute_extension:multinic": ["role":"compute-user"],
-                "compute_extension:networks": [["rule:admin_api"]],
-                "compute_extension:quotas": ["role":"compute-user"],
-                "compute_extension:rescue": ["role":"compute-user"],
-                "compute_extension:security_groups": ["role":"compute-user"],
-                "compute_extension:server_action_list": [["rule:admin_api"]],
-                "compute_extension:server_diagnostics": [["rule:admin_api"]],
-                "compute_extension:simple_tenant_usage:show": [["rule:admin_or_owner"]],
-                "compute_extension:simple_tenant_usage:list": [["rule:admin_api"]],
-                "compute_extension:users": [["rule:admin_api"]],
-                "compute_extension:virtual_interfaces": ["role":"compute-user"],
-                "compute_extension:virtual_storage_arrays": ["role":"compute-user"],
-                "compute_extension:volumes": ["role":"compute-user"],
-                "compute_extension:volumetypes": ["role":"compute-user"],
-
-    "volume:create": ["role":"compute-user"],
-    "volume:get_all": ["role":"compute-user"],
-    "volume:get_volume_metadata": ["role":"compute-user"],
-    "volume:get_snapshot": ["role":"compute-user"],
-    "volume:get_all_snapshots": ["role":"compute-user"],
-
-    "network:get_all_networks": ["role":"compute-user"],
-    "network:get_network": ["role":"compute-user"],
-    "network:delete_network": ["role":"compute-user"],
-    "network:disassociate_network": ["role":"compute-user"],
-    "network:get_vifs_by_instance": ["role":"compute-user"],
-    "network:allocate_for_instance": ["role":"compute-user"],
-    "network:deallocate_for_instance": ["role":"compute-user"],
-    "network:validate_networks": ["role":"compute-user"],
-    "network:get_instance_uuids_by_ip_filter": ["role":"compute-user"],
-
-    "network:get_floating_ip": ["role":"compute-user"],
-    "network:get_floating_ip_pools": ["role":"compute-user"],
-    "network:get_floating_ip_by_address": ["role":"compute-user"],
-    "network:get_floating_ips_by_project": ["role":"compute-user"],
-    "network:get_floating_ips_by_fixed_address": ["role":"compute-user"],
-    "network:allocate_floating_ip": ["role":"compute-user"],
-    "network:deallocate_floating_ip": ["role":"compute-user"],
-    "network:associate_floating_ip": ["role":"compute-user"],
-    "network:disassociate_floating_ip": ["role":"compute-user"],
-
-    "network:get_fixed_ip": ["role":"compute-user"],
-    "network:add_fixed_ip_to_instance": ["role":"compute-user"],
-    "network:remove_fixed_ip_from_instance": ["role":"compute-user"],
-    "network:add_network_to_project": ["role":"compute-user"],
-    "network:get_instance_nw_info": ["role":"compute-user"],
-
-    "network:get_dns_domains": ["role":"compute-user"],
-    "network:add_dns_entry": ["role":"compute-user"],
-    "network:modify_dns_entry": ["role":"compute-user"],
-    "network:delete_dns_entry": ["role":"compute-user"],
-    "network:get_dns_entries_by_address": ["role":"compute-user"],
-    "network:get_dns_entries_by_name": ["role":"compute-user"],
-    "network:create_private_dns_domain": ["role":"compute-user"],
-    "network:create_public_dns_domain": ["role":"compute-user"],
-    "network:delete_dns_domain": ["role":"compute-user"]
-}      </programlisting>
+   "volume:create":[
+      "role:compute-user"
+   ]
+}</programlisting>
+        <para> If we wished to restrict all Compute service requests
+            to require this role, the resulting file would look like: </para>
+        <programlisting language="json"><xi:include href="samples/roles.json" parse="text"/></programlisting>
     </section>
     <section xml:id="keystone-service-mgmt">
         <title>Service management</title>
-        <para> The Identity Service provides the following service
-            management functions: </para>
+        <para>The Identity Service provides the following service
+            management functions:</para>
         <itemizedlist>
             <listitem>
                 <para>Services</para>
@@ -362,8 +278,8 @@
             corresponds to each service (such as, a user named
                 <emphasis>nova</emphasis>, for the Compute service)
             and a special service tenant, which is called
-                <emphasis>service</emphasis>. </para>
+                <emphasis>service</emphasis>.</para>
         <para>The commands for creating services and endpoints are
-            described in a later section. </para>
+            described in a later section.</para>
     </section>
 </section>
