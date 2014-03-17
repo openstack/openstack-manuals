@@ -4,8 +4,8 @@
              The tool to do so lives in the tools directory of this
              repository -->
         <para xmlns="http://docbook.org/ns/docbook" version="5.0">
-        <table rules="all" xml:id="config_table_neutron_embrane">
-          <caption>Description of configuration options for embrane</caption>
+        <table rules="all" xml:id="config_table_neutron_embrane_lb">
+          <caption>Description of configuration options for embrane_lb</caption>
            <col width="50%"/>
            <col width="50%"/>
            <thead>
@@ -16,19 +16,23 @@
           </thead>
           <tbody>
               <tr>
-                  <th colspan="2">[heleos]</th>
+                  <th colspan="2">[heleoslb]</th>
               </tr>
               <tr>
-                       <td>admin_username = admin</td>
+                       <td>admin_password = None</td>
+                       <td>(StrOpt) ESM admin password.</td>
+              </tr>
+              <tr>
+                       <td>admin_username = None</td>
                        <td>(StrOpt) ESM admin username.</td>
               </tr>
               <tr>
-                       <td>async_requests = True</td>
+                       <td>async_requests = None</td>
                        <td>(BoolOpt) Define if the requests have run asynchronously or not</td>
               </tr>
               <tr>
                        <td>dummy_utif_id = None</td>
-                       <td>(StrOpt) Dummy user traffic Security Zone id</td>
+                       <td>(StrOpt) Dummy user traffic Security Zone id for LBs</td>
               </tr>
               <tr>
                        <td>esm_mgmt = None</td>
@@ -36,23 +40,31 @@
               </tr>
               <tr>
                        <td>inband_id = None</td>
-                       <td>(StrOpt) In band Security Zone id</td>
+                       <td>(StrOpt) In band Security Zone id for LBs</td>
+              </tr>
+              <tr>
+                       <td>lb_flavor = small</td>
+                       <td>(StrOpt) choose LB image flavor to use, accepted values: small, medium</td>
+              </tr>
+              <tr>
+                       <td>lb_image = None</td>
+                       <td>(StrOpt) Load Balancer image id (Embrane LB)</td>
               </tr>
               <tr>
                        <td>mgmt_id = None</td>
-                       <td>(StrOpt) Management Security Zone id</td>
+                       <td>(StrOpt) Management Security Zone id for LBs</td>
               </tr>
               <tr>
                        <td>oob_id = None</td>
-                       <td>(StrOpt) Out of band Security Zone id</td>
+                       <td>(StrOpt) Out of band Security Zone id for LBs</td>
               </tr>
               <tr>
-                       <td>resource_pool_id = default</td>
+                       <td>resource_pool_id = None</td>
                        <td>(StrOpt) Shared resource pool id</td>
               </tr>
               <tr>
-                       <td>router_image = None</td>
-                       <td>(StrOpt) Router image id (Embrane FW/VPN)</td>
+                       <td>sync_interval = 60</td>
+                       <td>(IntOpt) resource synchronization interval in seconds</td>
               </tr>
        </tbody>
         </table>
