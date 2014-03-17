@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://docbook.org/ns/docbook" xmlns:db="http://docbook.org/ns/docbook" version="5.0" xml:id="ch031_neutron-architecture"><?dbhtml stop-chunking?>
     <title>Networking Architecture</title>
-    <para>OpenStack Networking is a standalone service that often involves deploying several processes across a number of nodes. These processes interact with each other and with other OpenStack services. The main process of the OpenStack Networking service is neutron-server, a Python daemon that exposes the OpenStack Networking API and passes tenant requests to a suite of plugins for additional processing.</para>
+    <para>OpenStack Networking is a standalone service that often involves deploying several processes across a number of nodes. These processes interact with each other and with other OpenStack services. The main process of the OpenStack Networking service is neutron-server, a Python daemon that exposes the OpenStack Networking API and passes tenant requests to a suite of plug-ins for additional processing.</para>
     <para>OpenStack Networking components encompasses the following elements:</para>
     <itemizedlist><listitem>
         <para><emphasis role="bold">neutron server</emphasis>  (<literal>neutron-server</literal> and <literal>neutron-*-plugin</literal>): This service runs on the network node to service the Networking API and its extensions. It also enforces the network model and IP addressing of each port. The neutron-server and plugin agents require access to a database for persistent storage and access to a message queue for inter-communication.</para>
@@ -10,10 +10,10 @@
         <para><emphasis role="bold">plugin agent</emphasis>  (<literal>neutron-*-agent</literal>): Runs on each compute node to manage local virtual switch (vswitch) configuration. The agents to be run will depend on which plugin you are using. This service requires message queue access. <emphasis>Optional depending on plugin.</emphasis></para>
       </listitem>
 <listitem>
-        <para><emphasis role="bold">DHCP agent</emphasis>  (<literal>neutron-dhcp-agent</literal>): Provides DHCP services to tenant networks. This agent is the same across all plugins and is responsible for maintaining DHCP configuration. The neutron-dhcp-agent requires message queue access.</para>
+        <para><emphasis role="bold">DHCP agent</emphasis>  (<literal>neutron-dhcp-agent</literal>): Provides DHCP services to tenant networks. This agent is the same across all plug-ins and is responsible for maintaining DHCP configuration. The neutron-dhcp-agent requires message queue access.</para>
       </listitem>
 <listitem>
-        <para><emphasis role="bold">l3 agent</emphasis>  (<literal>neutron-l3-agent</literal>): Provides L3/NAT forwarding for external network access of VMs on tenant networks. Requires message queue access. <emphasis>Optional depending on plugin.</emphasis></para>
+        <para><emphasis role="bold">l3 agent</emphasis>  (<literal>neutron-l3-agent</literal>): Provides L3/NAT forwarding for external network access of VMs on tenant networks. Requires message queue access. <emphasis>Optional depending on plug-in.</emphasis></para>
       </listitem>
 <listitem>
         <para><emphasis role="bold">network provider services</emphasis>  (SDN server/services). Provide additional networking services that are provided to tenant networks. These SDN services may interact with the neutron-server, neutron-plugin, and/or plugin-agents via REST APIs or other communication channels.</para>
@@ -44,7 +44,7 @@
             <para><emphasis role="bold">Management network</emphasis> Used for internal communication between OpenStack Components. The IP addresses on this network should be reachable only within the data center and is considered the Management Security Domain.</para>
           </listitem>
 <listitem>
-            <para><emphasis role="bold">Guest network</emphasis> Used for VM data communication within the cloud deployment. The IP addressing requirements of this network depend on the OpenStack Networking plugin in use and the network configuration choices of the virtual networks made by the tenant. This network is considered the Guest Security Domain.</para>
+            <para><emphasis role="bold">Guest network</emphasis> Used for VM data communication within the cloud deployment. The IP addressing requirements of this network depend on the OpenStack Networking plug-in in use and the network configuration choices of the virtual networks made by the tenant. This network is considered the Guest Security Domain.</para>
           </listitem>
 <listitem>
             <para><emphasis role="bold">External network</emphasis> Used to provide VMs with Internet access in some deployment scenarios. The IP addresses on this network should be reachable by anyone on the Internet and is considered to be in the Public Security Domain.</para>
