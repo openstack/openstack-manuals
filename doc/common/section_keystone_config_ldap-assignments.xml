@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="configuring-keystone-for-ldap-backend-assignments">
+<title>Separate role authorization and user authentication</title>
+    <para>When you configure the Identity service to use an LDAP back
+    end, you can split authentication and authorization using the
+    <emphasis>Assignments</emphasis> feature.</para>
+    <para>The Assignments feature enables administrators to manage
+    project role authorization using the Identity service's own SQL
+    database, while still providing user authentication through the
+    LDAP directory.</para>
+    <para>To configure this:</para>
+    <procedure>
+        <title>Separating role authorization and user authentication
+        through Assignments</title>
+    <step>
+        <para>Configure the Identity service to authenticate users
+        through the LDAP driver. To do so, first find the
+        <literal>[identity]</literal> section in the
+        <filename>/etc/keystone/keystone.conf</filename> configuration
+        file. Then, set the <literal>driver</literal> configuration
+        key in that section to
+        <literal>keystone.identity.backends.ldap.Identity</literal>:
+        </para>
+    <programlisting>[identity]
+driver = keystone.identity.backends.ldap.Identity</programlisting>
+    </step>
+    <step><para>Next, enable the Assignment driver. To do so, find the
+    <literal>[assignment]</literal> section in the
+    <filename>/etc/keystone/keystone.conf</filename> configuration
+    file. Then, set the <literal>driver</literal> configuration key in
+    that section to
+    <literal>keystone.assignment.backends.sql.Assignment</literal>:
+    </para>
+    <programlisting>[assignment]
+driver = keystone.assignment.backends.sql.Assignment</programlisting>
+    </step>
+    </procedure>
+    <para os="rhel;centos;fedora;opensuse;sles">On
+     distributions that include
+     <application>openstack-config</application>, you can
+     configure both drivers by running the following commands instead:
+            </para>
+           <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/keystone/keystone.conf \
+identity driver keystone.identity.backends.ldap.Identity</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/keystone/keystone.conf \
+assignment driver keystone.assignment.backends.sql.Assignment</userinput></screen>
+</section>
