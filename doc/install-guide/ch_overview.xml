@@ -8,113 +8,146 @@
     <para>We are updating this material for Icehouse. You may find structure
       and/or content issues during this process.</para>
   </warning>
-  <para>This install guide offers a few of the many ways to install
-    <glossterm>OpenStack</glossterm> components and have them work together.
-    It is meant as a
-    "choose your own adventure" guide, not a comprehensive guide. The
-      <citetitle>OpenStack Configuration Reference</citetitle> lists
-    every option in all OpenStack services. Before you begin an
-    installation adventure, here are some things you should know about
-    OpenStack concepts.</para>
-  <xi:include href="../common/ch_getstart.xml"
-    xpointer="element(para1)"/>
-  <xi:include href="../common/ch_getstart.xml"
-    xpointer="element(para2)"/>
-  <xi:include href="../common/ch_getstart.xml"
-    xpointer="element(para3)"/>
-  <xi:include href="../common/ch_getstart.xml"
-    xpointer="element(table1)"/>
-  <xi:include href="../common/section_getstart_conceptual_arch.xml"/>
-  <xi:include href="../common/section_getstart_logical_arch.xml"/>
-  <section xml:id="overview-architecture">
+  <section xml:id="architecture_overview">
+    <title>Overview</title>
+    <para>The <glossterm>OpenStack</glossterm> project is an open source cloud
+      computing platform that supports all types of cloud environments. The
+      project aims for simple implementation, massive scalability, and a rich
+      set of features. Cloud computing experts from around the world
+      contribute to the project.</para>
+    <para>OpenStack provides an Infrastructure-as-a-Service
+      (<glossterm>IaaS</glossterm>) solution through a variety of complemental
+      services. Each service offers an application programming interface
+      (<glossterm>API</glossterm>) that facilitates this integration. The
+      following table provides a list of OpenStack services:</para>
+    <xi:include href="../common/ch_getstart.xml"
+      xpointer="element(table1)"/>
+    <para>This guide describes how to deploy these services in a functional
+      test environment and, by example, teaches you how to build a production
+      environment.</para>
+  </section>
+  <section xml:id="architecture_conceptual-architecture">
+    <title>Conceptual architecture</title>
+    <para>Launching a virtual machine or instance involves many interactions
+      among several services. The following diagram provides the conceptual
+      architecture of a typical OpenStack environment.</para>
+    <figure xml:id="conceptual-architecture">
+      <title>Conceptual architecture</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata contentwidth="6in"
+            fileref="../common/figures/openstack_havana_conceptual_arch.png"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+  </section>
+  <section xml:id="architecture_example-architectures">
     <title>Example architectures</title>
-    <para>This guide enables you to choose your own OpenStack
-      adventure. OpenStack is highly configurable to meet different
-      needs with various compute, networking, and storage options.</para>
-    <para>This guide uses the following example architectures:</para>
+    <para>OpenStack is highly configurable to meet different needs with various
+      compute, networking, and storage options. This guide enables you to
+      choose your own OpenStack adventure using a combination of basic and
+      optional services. This guide uses the following example
+      architectures:</para>
     <itemizedlist>
       <listitem>
-        <para>Basic architecture with legacy networking</para>
+        <para>Two-node architecture with legacy networking. See <xref linkend="example-architecture-with-legacy-networking"/>.</para>
         <itemizedlist>
           <listitem>
-            <para>The <glossterm>controller node</glossterm> runs the Identity
-              Service, Image Service,
-              dashboard, and management portion of Compute. It also contains
-              the associated API services, MySQL databases, and messaging
-              system.</para>
+            <para>The basic
+              <glossterm  baseform="cloud controller node">controller node</glossterm>
+              runs the Identity service, Image Service, management portion of
+              Compute, and the dashboard necessary to launch a simple instance.
+              It also includes supporting services such as MySQL,
+              <glossterm>AMQP</glossterm>, and
+              <glossterm>NTP</glossterm>.</para>
+            <para>Optionally, the controller node also runs portions of
+              Block Storage, Object Storage, Database Service, Orchestration,
+              and Telemetry. These components provide additional features for
+              your environment.</para>
           </listitem>
           <listitem>
-            <para>The <glossterm>compute node</glossterm> runs the
+            <para>The basic <glossterm>compute node</glossterm> runs the
               <glossterm>hypervisor</glossterm> portion of Compute,
               which operates <glossterm>tenant</glossterm>
-              <glossterm baseform="virtual machine (VM)">virtual machines</glossterm>.
-              By default, Compute uses
+              <glossterm baseform="virtual machine (VM)">virtual machines</glossterm>
+              or instances. By default, Compute uses
               <glossterm baseform="kernel-based VM (KVM)">KVM</glossterm>
               as the <glossterm>hypervisor</glossterm>. Compute also
-              provisions and operates
-              tenant networks and implements
+              provisions and operates tenant networks and implements
               <glossterm baseform="security group">security groups</glossterm>.
               You can run more than one compute node.</para>
-          </listitem>
-          <listitem>
-            <para>When implementing this architecture, skip
-              <xref linkend="ch_neutron" />.</para>
+            <para>Optionally, the compute node also runs the Telemetry
+              agent. This component provides additional features for
+              your environment.</para>
           </listitem>
         </itemizedlist>
-        <figure xml:id="basic-architecture-with-legacy-networking">
-          <title>Basic architecture with legacy networking</title>
+        <note>
+          <para>When you implement this architecture, skip
+            <xref linkend="ch_neutron" />. To use optional services, you
+            might need to install additional nodes, as described in
+            subsequent chapters.</para>
+        </note>
+        <figure xml:id="example-architecture-with-legacy-networking">
+          <title>Two-node architecture with legacy networking</title>
           <mediaobject>
             <imageobject>
               <imagedata contentwidth="6in"
-                fileref="figures/basic-architecture.svg"/>
+                fileref="figures/installguide_arch-nova.png"/>
             </imageobject>
           </mediaobject>
         </figure>
       </listitem>
       <listitem>
-        <para>Basic architecture with OpenStack Networking (Neutron)</para>
+        <para>Three-node architecure with OpenStack Networking (neutron). See <xref linkend="example-architecture-with-neutron-networking"/>.</para>
         <itemizedlist>
           <listitem>
-            <para>The <glossterm baseform="cloud controller node">controller node</glossterm>
-              runs the Identity
-              Service, Image Service,
-              dashboard, and management portions of Compute and Networking.
-              It also contains the associated API services, MySQL databases,
-              and messaging system.</para>
+            <para>The basic controller node runs the Identity service, Image
+              Service, management portions of Compute and Networking,
+              Networking plug-in, and the dashboard. It also includes
+              supporting services such as MySQL, AMQP, and NTP.</para>
+            <para>Optionally, the controller node also runs portions of
+              Block Storage, Object Storage, Database Service, Orchestration,
+              and Telemetry. These components provide additional features for
+              your environment.</para>
           </listitem>
           <listitem>
-            <para>The network node runs the Networking plug-in agent and
-              several layer 3 agents that provision tenant networks and
-              provide services to them, including routing, <glossterm
-              baseform="Network Address Translation (NAT)">NAT</glossterm>,
-              and <glossterm>DHCP</glossterm>.
-              It also handles external (internet) connectivity for tenant
-              virtual machines.</para>
+            <para>The network node runs the Networking plug-in, layer 2 agent,
+              and several layer 3 agents that provision and operate tenant
+              networks. Layer 2 services include provisioning of virtual
+              networks and tunnels. Layer 3 services include routing,
+              <glossterm baseform="Network Address Translation (NAT)">NAT</glossterm>
+              , and <glossterm>DHCP</glossterm>. This node also handles
+              external (internet) connectivity for tenant virtual machines
+              or instances.</para>
           </listitem>
           <listitem>
             <para>The compute node runs the hypervisor portion of Compute,
-              which operates tenant virtual machines. By default, Compute uses
-              KVM as the hypervisor. The compute node also runs the Networking
-              plug-in agent, which operates tenant networks and implements
-              security groups. You can run more than one compute node.</para>
-          </listitem>
-          <listitem>
-            <para>When implementing this architecture, skip
-              <xref linkend="nova-network" />.</para>
+              which operates tenant virtual machines or instances. By default
+              Compute uses KVM as the hypervisor. The compute node also runs
+              the Networking plug-in and layer 2 agent which operate tenant
+              networks and implement security groups. You can run more than
+              one compute node.</para>
+            <para>Optionally, the compute node also runs the Telemetry
+              agent. This component provides additional features for
+              your environment.</para>
           </listitem>
         </itemizedlist>
-        <figure xml:id="basic-architecture-with-virtual-networking">
-          <title>Basic architecture with OpenStack Networking (Neutron)</title>
+        <note>
+          <para>When you implement this architecture, skip
+            <xref linkend="nova-network" /> in <xref linkend="ch_nova" />.
+            To use optional services, you might need to install additional
+            nodes, as described in subsequent chapters.</para>
+        </note>
+        <figure xml:id="example-architecture-with-neutron-networking">
+          <title>Three-node architecture with OpenStack Networking (neutron)</title>
           <mediaobject>
             <imageobject>
-              <imagedata contentwidth="5in"
-                fileref="../common/figures/Neutron-PhysNet-Diagram.png"/>
+              <imagedata contentwidth="6in"
+                fileref="figures/installguide_arch-neutron.png"/>
             </imageobject>
           </mediaobject>
         </figure>
       </listitem>
     </itemizedlist>
-    <para>You can add nodes that run Block Storage or Object Storage to
-      either of these architectures.</para>
   </section>
 </chapter>
