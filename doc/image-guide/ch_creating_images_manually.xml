@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter [
+<!-- Some useful entities borrowed from HTML -->
+<!ENTITY nbsp "&#160;">
+]>
 <chapter xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
@@ -130,14 +134,16 @@ Starting install...
 Creating domain...                                                                                                                                       |    0 B     00:00
 Domain installation still in progress. You can reconnect to
 the console to complete the installation process.</computeroutput></screen>
-        <para>This uses the KVM hypervisor to start up a virtual
-            machine with the libvirt name of
-                <literal>centos-6.4</literal> with 1024MB of RAM, with
-            a virtual CD-ROM drive associated with the
-                <filename>/data/CentOS-6.4-x86_64-netinstall.iso</filename>
-            file, and a local hard disk which is stored in the host at
-                <filename>/data/centos-6.4.qcow2</filename> that is
-            10GB in size in qcow2 format. It configures networking to
+         <para>
+            The KVM hypervisor starts the virtual machine with the
+            libvirt name, <literal>centos-6.4</literal>, with
+            1024&nbsp;MB of RAM. The virtual machine also has a virtual
+            CD-ROM drive associated with the
+            <filename>/data/CentOS-6.4-x86_64-netinstall.iso</filename>
+            file and a local 10&nbsp;GB hard disk in qcow2 format that is
+            stored in the host at
+            <filename>/data/centos-6.4.qcow2</filename>.
+            It configures networking to
             use libvirt's default network. There is a VNC server that
             is listening on all interfaces, and libvirt will not
             attempt to launch a VNC client automatically nor try to
@@ -146,13 +152,13 @@ the console to complete the installation process.</computeroutput></screen>
             libvirt will attempt to optimize the configuration for a
             Linux guest running a RHEL 6.x distribution.<note>
                 <para>When using the libvirt
-                        <literal>default</literal> network, libvirt
-                    will connect the virtual machine's interface to a
-                    bridge called <literal>virbr0</literal>. There is
-                    a dnsmasq process managed by libvirt that will
-                    hand out an IP address on the 192.168.122.0/24
-                    subnet, and libvirt has iptables rules for doing
-                    NAT for IP addresses on this subnet.</para>
+                <literal>default</literal> network, libvirt will
+                connect the virtual machine's interface to a bridge
+                called <literal>virbr0</literal>. There is a dnsmasq
+                process managed by libvirt that will hand out an IP
+                address on the 192.168.122.0/24 subnet, and libvirt
+                has iptables rules for doing NAT for IP addresses on
+                this subnet.</para>
             </note></para>
         <para>Run the <command>virt-install --os-variant
                 list</command> command to see a range of allowed
