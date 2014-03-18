@@ -9,8 +9,9 @@
     dispatch compute and volume requests. For example, the
     nova-scheduler service determines which host a VM should launch
     on. The term host in the context of filters means a physical node
-    that has a nova-compute service running on it. You can configure
-    the scheduler through a variety of options.</para>
+    that has a <systemitem class="service">nova-compute</systemitem>
+    service running on it. You can configure the scheduler through a
+    variety of options.</para>
   <figure>
     <title>Nova</title>
     <mediaobject>
@@ -91,7 +92,7 @@
         </listitem>
         <listitem>
           <para>ComputeCapabilitiesFilter - checks that the
-            capabilities provided by the host compute service satisfy
+            capabilities provided by the host Compute service satisfy
             any extra specifications associated with the instance
             type. It passes hosts that can create the specified
             instance type.</para>
@@ -140,7 +141,7 @@
       <para>Next standard filter to describe is AvailabilityZoneFilter
         and it isn’t difficult too. This filter just looks at the
         availability zone of compute node and availability zone from
-        the properties of the request. Each compute service has its
+        the properties of the request. Each Compute service has its
         own availability zone. So deployment engineers have an option
         to run scheduler with availability zones support and can
         configure availability zones on each compute host. This
@@ -169,7 +170,7 @@
         capabilities satisfy the requested specifications. All hosts
         are passed if no extra_specs are specified.</para>
       <para>ComputeFilter is quite simple and passes any host whose
-        compute service is enabled and operational.</para>
+        Compute service is enabled and operational.</para>
       <para>Now we are going to IsolatedHostsFilter. There can be some
         special hosts reserved for specific images. These hosts are
         called isolated. So the images to run on the isolated hosts
