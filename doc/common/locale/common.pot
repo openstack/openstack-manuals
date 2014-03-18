@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-03-14 06:23+0000\n"
+"POT-Creation-Date: 2014-03-18 06:29+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4526,6 +4526,46 @@ msgstr ""
 msgid "The name of the trait to list Required."
 msgstr ""
 
+#: ./doc/common/section_conventions.xml:8(title)
+msgid "Conventions"
+msgstr ""
+
+#: ./doc/common/section_conventions.xml:9(para)
+msgid "The OpenStack documentation uses several typesetting conventions:"
+msgstr ""
+
+#: ./doc/common/section_conventions.xml:14(title)
+msgid "Admonitions"
+msgstr ""
+
+#: ./doc/common/section_conventions.xml:15(para)
+msgid "Admonitions take three forms:"
+msgstr ""
+
+#: ./doc/common/section_conventions.xml:19(para)
+msgid "This is a note. The information in a note is usually in the form of a handy tip or reminder."
+msgstr ""
+
+#: ./doc/common/section_conventions.xml:25(para)
+msgid "This is important. The information in an important admonition is something you must be aware of before moving on."
+msgstr ""
+
+#: ./doc/common/section_conventions.xml:31(para)
+msgid "This is a warning. The information in warnings is critical. Warnings provide additional information about risk of data loss or security issues."
+msgstr ""
+
+#: ./doc/common/section_conventions.xml:40(title)
+msgid "Command prompts"
+msgstr ""
+
+#: ./doc/common/section_conventions.xml:41(para)
+msgid "Commands prefixed with the <literal>#</literal> prompt are to be executed by the <literal>root</literal> user. These examples can also be executed using the <placeholder-1/> command, if available."
+msgstr ""
+
+#: ./doc/common/section_conventions.xml:47(para)
+msgid "Commands prefixed with the <literal>$</literal> prompt can be executed by any user, including <literal>root</literal>."
+msgstr ""
+
 #: ./doc/common/ch_cli_neutron_commands.xml:11(title)
 msgid "Networking command-line client"
 msgstr ""
@@ -8330,7 +8370,7 @@ msgid "Object Storage (Swift)"
 msgstr ""
 
 #: ./doc/common/section_objectstorage-arch.xml:61(para)
-msgid "Currently, 2TB or 3TB SATA disks deliver good price/performance value. You can use desktop-grade drives if you have responsive remote hands in the datacenter and enterprise-grade drives if you don't."
+msgid "Currently, 2 TB or 3 TB SATA disks deliver good price/performance value. You can use desktop-grade drives if you have responsive remote hands in the datacenter and enterprise-grade drives if you don't."
 msgstr ""
 
 #: ./doc/common/section_objectstorage-arch.xml:66(para)
@@ -9133,6 +9173,82 @@ msgstr ""
 msgid "Configurable WSGI middleware that handles authentication. Usually the Identity Service."
 msgstr ""
 
+#: ./doc/common/section_keystone_config_ldap-hardening.xml:6(title)
+msgid "Secure the OpenStack Identity service connection to an LDAP back end"
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-hardening.xml:8(para)
+msgid "The Identity service supports the use of TLS to encrypt LDAP traffic. Before configuring this, you must first verify where your certificate authority file is located. For more information, see <xref linkend=\"certificates-for-pki\"/>."
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-hardening.xml:12(para)
+msgid "Once you verify the location of your certificate authority file:"
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-hardening.xml:15(title)
+msgid "Configuring TLS encryption on LDAP traffic"
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-hardening.xml:17(para)
+msgid "Open the <filename>/etc/keystone/keystone.conf</filename> configuration file."
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-hardening.xml:23(para)
+msgid "Find the <literal>[ldap]</literal> section."
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-hardening.xml:26(para)
+msgid "In the <literal>[ldap]</literal> section, set the <literal>use_tls</literal> configuration key to <literal>True</literal>. Doing so will enable TLS."
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-hardening.xml:31(para)
+msgid "Configure the Identity service to use your certificate authorities file. To do so, set the <literal>tls_cacertfile</literal> configuration key in the <literal>ldap</literal> section to the certificate authorities file's path."
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-hardening.xml:37(para)
+msgid "You can also set the <literal>tls_cacertdir</literal> (also in the <literal>ldap</literal> section) to the directory where all certificate authorities files are kept. If both <literal>tls_cacertfile</literal> and <literal>tls_cacertdir</literal> are set, then the latter will be ignored."
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-hardening.xml:46(para)
+msgid "Specify what client certificate checks to perform on incoming TLS sessions from the LDAP server. To do so, set the <literal>tls_req_cert</literal> configuration key in the <literal>[ldap]</literal> section to <literal>demand</literal>, <literal>allow</literal>, or <literal>never</literal>:"
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-hardening.xml:53(para)
+msgid "<parameter>demand</parameter>: a certificate will always be requested from the LDAP server. The session will be terminated if no certificate is provided, or if the certificate provided cannot be verified against the existing certificate authorities file."
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-hardening.xml:60(para)
+msgid "<parameter>allow</parameter>: a certificate will always be requested from the LDAP server. The session will proceed as normal even if a certificate is not provided. If a certificate is provided but it cannot be verified against the existing certificate authorities file, the certificate will be ignored and the session will proceed as normal."
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-hardening.xml:67(para)
+msgid "<parameter>never</parameter>: a certificate will never be requested."
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-hardening.xml:72(para)
+msgid "On distributions that include <application>openstack-config</application>, you can configure TLS encryption on LDAP traffic by running the following commands instead:"
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-hardening.xml:80(replaceable)
+msgid "CA_FILE"
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-hardening.xml:82(replaceable)
+msgid "CERT_BEHAVIOR"
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-hardening.xml:83(para)
+msgid "Where:"
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-hardening.xml:85(para)
+msgid "<replaceable>CA_FILE</replaceable> is the absolute path to the certificate authorities file that should be used to encrypt LDAP traffic."
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-hardening.xml:88(para)
+msgid "<replaceable>CERT_BEHAVIOR</replaceable>: specifies what client certificate checks to perform on an incoming TLS session from the LDAP server (<literal>demand</literal>, <literal>allow</literal>, or <literal>never</literal>)."
+msgstr ""
+
 #: ./doc/common/section_rpc-for-networking.xml:7(title) ./doc/common/section_rpc.xml:7(title)
 msgid "Configure the Oslo RPC messaging system"
 msgstr ""
@@ -9566,7 +9682,7 @@ msgid "The queue. A central hub for passing messages between daemons. Usually im
 msgstr ""
 
 #: ./doc/common/section_getstart_compute.xml:192(para)
-msgid "SQL database. Stores most build-time and runtime states for a cloud infrastructure. Includes instance types that are available for use, instances in use, available networks, and projects. Theoretically, OpenStack Compute can support any database that SQL-Alchemy supports, but the only databases widely used are sqlite3 databases (only appropriate for test and development work), MySQL, and PostgreSQL."
+msgid "SQL database. Stores most build-time and runtime states for a cloud infrastructure. Includes instance types that are available for use, instances in use, available networks, and projects. Theoretically, OpenStack Compute can support any database that SQL-Alchemy supports, but the only databases widely used are SQLite3 databases (only appropriate for test and development work), MySQL, and PostgreSQL."
 msgstr ""
 
 #: ./doc/common/section_getstart_compute.xml:201(para)
@@ -11342,6 +11458,10 @@ msgstr ""
 msgid "<emphasis role=\"bold\">How to find unknown options?</emphasis> The unknown options can be easily found by watching the output of <literal>create_xxx</literal> or <literal>show_xxx</literal> command. For example, in the port creation command, we see the fixed_ips fields, which can be used as an unknown option."
 msgstr ""
 
+#: ./doc/common/ch_preface.xml:10(title)
+msgid "Preface"
+msgstr ""
+
 #: ./doc/common/section_cli_keystone_apiv3.xml:5(title)
 msgid "Use Identity Service API v3 instead of API v2.0"
 msgstr ""
@@ -12285,6 +12405,38 @@ msgstr ""
 
 #: ./doc/common/section_about-object-storage.xml:27(para)
 msgid "For more information, review the key concepts in the developer documentation at <link href=\"http://docs.openstack.org/developer/swift/\">docs.openstack.org/developer/swift/</link>."
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-assignments.xml:6(title)
+msgid "Separate role authorization and user authentication"
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-assignments.xml:7(para)
+msgid "When you configure the Identity service to use an LDAP back end, you can split authentication and authorization using the <emphasis>Assignments</emphasis> feature."
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-assignments.xml:10(para)
+msgid "The Assignments feature enables administrators to manage project role authorization using the Identity service's own SQL database, while still providing user authentication through the LDAP directory."
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-assignments.xml:14(para)
+msgid "To configure this:"
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-assignments.xml:16(title)
+msgid "Separating role authorization and user authentication through Assignments"
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-assignments.xml:19(para)
+msgid "Configure the Identity service to authenticate users through the LDAP driver. To do so, first find the <literal>[identity]</literal> section in the <filename>/etc/keystone/keystone.conf</filename> configuration file. Then, set the <literal>driver</literal> configuration key in that section to <literal>keystone.identity.backends.ldap.Identity</literal>:"
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-assignments.xml:30(para)
+msgid "Next, enable the Assignment driver. To do so, find the <literal>[assignment]</literal> section in the <filename>/etc/keystone/keystone.conf</filename> configuration file. Then, set the <literal>driver</literal> configuration key in that section to <literal>keystone.assignment.backends.sql.Assignment</literal>:"
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-assignments.xml:41(para)
+msgid "On distributions that include <application>openstack-config</application>, you can configure both drivers by running the following commands instead:"
 msgstr ""
 
 #: ./doc/common/section_cli_cinder_manage_volumes.xml:7(title)
@@ -14070,11 +14222,11 @@ msgid "Easily scalable for future growth"
 msgstr ""
 
 #: ./doc/common/section_storage-concepts.xml:51(td)
-msgid "Example: 10GB first disk, 30GB/core second disk"
+msgid "Example: 10 GB first disk, 30 GB/core second disk"
 msgstr ""
 
 #: ./doc/common/section_storage-concepts.xml:52(td)
-msgid "Example: 1TB \"extra hard drive\""
+msgid "Example: 1 TB \"extra hard drive\""
 msgstr ""
 
 #: ./doc/common/section_storage-concepts.xml:53(td)
@@ -14319,18 +14471,6 @@ msgstr ""
 
 #: ./doc/common/section_keystone_config_ldap.xml:108(para)
 msgid "If Active Directory classes and attributes do not match the specified classes in the LDAP module, so you can modify them, as follows:"
-msgstr ""
-
-#: ./doc/common/section_keystone_config_ldap.xml:133(title)
-msgid "Assignment"
-msgstr ""
-
-#: ./doc/common/section_keystone_config_ldap.xml:134(para)
-msgid "The Assignment feature allows a combination of LDAP and SQL for Identity Service authentication and authorization. Consequently, the LDAP directory authenticates users and the Identity Service SQL back end authorizes their access to projects and roles."
-msgstr ""
-
-#: ./doc/common/section_keystone_config_ldap.xml:139(para)
-msgid "Enable the Assignment driver in the <filename>keystone.conf</filename> file alongside the LDAP driver:"
 msgstr ""
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
