@@ -111,14 +111,14 @@
       </section>
       <section xml:id="ch046_data-residency-idp78448">
         <title>Cinder volume data</title>
-        <para>Plugins to OpenStack Block Storage will store data in a variety of ways. Many plugins are specific to a vendor or technology, whereas others are more DIY solutions around filesystems such as LVM or ZFS. Methods to securely destroy data will vary from one plugin to another, from one vendor's solution to another, and from one filesystem to another.</para>
-        <para>Some backends such as ZFS will support copy-on-write to prevent data exposure. In these cases, reads from unwritten blocks will always return zero. Other backends such as LVM may not natively support this, thus the Cinder plugin takes the responsibility to override previously written blocks before handing them to users. It is important to review what assurances your chosen volume backend provides and to see what mediations may be available for those assurances not provided.</para>
+        <para>Plugins to OpenStack Block Storage will store data in a variety of ways. Many plug-ins are specific to a vendor or technology, whereas others are more DIY solutions around filesystems such as LVM or ZFS. Methods to securely destroy data will vary from one plugin to another, from one vendor's solution to another, and from one filesystem to another.</para>
+        <para>Some backends such as ZFS will support copy-on-write to prevent data exposure. In these cases, reads from unwritten blocks will always return zero. Other backends such as LVM may not natively support this, thus the Block Storage plug-in takes the responsibility to override previously written blocks before handing them to users. It is important to review what assurances your chosen volume backend provides and to see what mediations may be available for those assurances not provided.</para>
         <para>Finally, while not a feature of OpenStack, vendors and implementors may choose to add or support encryption of volumes. In this case, destruction of data is as simple as throwing away the key.</para>
       </section>
       <section xml:id="ch046_data-residency-idp81664">
         <title>Compute instance ephemeral storage</title>
-        <para>The creation and destruction of ephemeral storage will be somewhat dependent on the chosen hypervisor and the OpenStack Compute plugin.</para>
-        <para>The libvirt plugin for compute may maintain ephemeral storage directly on a filesystem, or in LVM. Filesystem storage generally will not overwrite data when it is removed, although there is a guarantee that dirty extents are not provisioned to users.</para>
+        <para>The creation and destruction of ephemeral storage will be somewhat dependent on the chosen hypervisor and the OpenStack Compute plug-in.</para>
+        <para>The libvirt plug-in for compute may maintain ephemeral storage directly on a filesystem, or in LVM. Filesystem storage generally will not overwrite data when it is removed, although there is a guarantee that dirty extents are not provisioned to users.</para>
         <para>When using LVM backed ephemeral storage, which is block-based, it is necessary that the OpenStack Compute software securely erases blocks to prevent information disclosure. There have in the past been information disclosure vulnerabilities related to improperly erased ephemeral block storage devices.</para>
         <para>Filesystem storage is a more secure solution for ephemeral block storage devices than LVM as dirty extents cannot be provisioned to users. However, it is important to be mindful that user data is not destroyed, so it is suggested to encrypt the backing filesystem.</para>
       </section>

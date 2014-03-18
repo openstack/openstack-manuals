@@ -56,14 +56,14 @@
     <para>The original OpenStack Compute network implementation
         assumed a very basic model of performing all isolation through
         Linux VLANs and IP tables. OpenStack Networking introduces the
-        concept of a plugin, which is a pluggable back-end
-        implementation of the OpenStack Networking API. A plugin can
+        concept of a plug-in, which is a pluggable back-end
+        implementation of the OpenStack Networking API. A plug-in can
         use a variety of technologies to implement the logical API
-        requests. Some OpenStack Networking plugins might use basic
+        requests. Some OpenStack Networking plug-ins might use basic
         Linux VLANs and IP tables, while others might use more
         advanced technologies, such as L2-in-L3 tunneling or OpenFlow,
         to provide similar benefits.</para>
-    <para>The current set of plugins include:</para>
+    <para>The current set of plug-ins include:</para>
     <itemizedlist>
         <listitem>
             <para><emphasis role="bold">Big Switch, Floodlight REST
@@ -131,7 +131,7 @@
     </itemizedlist>
     <para>Plugins can have different properties in terms of hardware
         requirements, features, performance, scale, operator tools,
-        etc. Supporting many plugins enables the cloud administrator
+        etc. Supporting many plug-ins enables the cloud administrator
         to weigh different options and decide which networking
         technology is right for the deployment.</para>
     <para>Components of OpenStack Networking</para>
@@ -148,8 +148,8 @@
     <para>The main process of the OpenStack Networking server is
         quantum-server, which is a Python daemon that exposes the
         OpenStack Networking API and passes user requests to the
-        configured OpenStack Networking plugin for additional
-        processing. Typically, the plugin requires access to a
+        configured OpenStack Networking plug-in for additional
+        processing. Typically, the plug-in requires access to a
         database for persistent storage, similar to other OpenStack
         services.</para>
     <para>If your deployment uses a controller host to run centralized
@@ -164,21 +164,21 @@
             <para><emphasis role="bold">plugin agent
                     (quantum-*-agent):</emphasis>Runs on each
                 hypervisor to perform local vswitch configuration.
-                Agent to be run depends on which plugin you are using,
-                as some plugins do not require an agent.</para>
+                Agent to be run depends on which plug-in you are using,
+                as some plug-ins do not require an agent.</para>
         </listitem>
         <listitem>
             <para><emphasis role="bold">dhcp agent
                     (quantum-dhcp-agent):</emphasis>Provides DHCP
                 services to tenant networks. This agent is the same
-                across all plugins.</para>
+                across all plug-ins.</para>
         </listitem>
         <listitem>
             <para><emphasis role="bold">l3 agent
                     (quantum-l3-agent):</emphasis>Provides L3/NAT
                 forwarding to provide external network access for VMs
                 on tenant networks. This agent is the same across all
-                plugins.</para>
+                plug-ins.</para>
         </listitem>
     </itemizedlist>
     <para>These agents interact with the main quantum-server process
@@ -246,7 +246,7 @@
             <para><emphasis role="bold">Data network:</emphasis>Used
                 for VM data communication within the cloud deployment.
                 The IP addressing requirements of this network depend
-                on the OpenStack Networking plugin in use.</para>
+                on the OpenStack Networking plug-in in use.</para>
         </listitem>
         <listitem>
             <para><emphasis role="bold">External
