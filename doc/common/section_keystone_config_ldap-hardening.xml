@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="configuring-keystone-for-ldap-backend-harden">
+    <title>Secure the OpenStack Identity service connection to an
+    LDAP back end</title>
+    <para>The Identity service supports the use of TLS to encrypt LDAP
+    traffic. Before configuring this, you must first verify where your
+    certificate authority file is located. For more information, see
+    <xref linkend="certificates-for-pki"/>.</para>
+    <para>Once you verify the location of your certificate authority
+    file:</para>
+    <procedure>
+    <title>Configuring TLS encryption on LDAP traffic</title>
+    <step>
+        <para>Open the
+        <filename>/etc/keystone/keystone.conf</filename> configuration
+        file.
+        </para>
+    </step>
+    <step>
+        <para>Find the <literal>[ldap]</literal> section.</para>
+    </step>
+    <step>
+        <para>In the <literal>[ldap]</literal> section, set the
+        <literal>use_tls</literal> configuration key to
+        <literal>True</literal>. Doing so will enable TLS.</para>
+    </step>
+    <step>
+        <para>Configure the Identity service to use your certificate
+    authorities file. To do so, set the
+    <literal>tls_cacertfile</literal> configuration key in the
+    <literal>ldap</literal> section to the certificate authorities
+    file's path.
+    </para>
+    <note><para>You can also set the <literal>tls_cacertdir</literal>
+    (also in the <literal>ldap</literal> section) to the directory
+    where all certificate authorities files are kept. If both
+    <literal>tls_cacertfile</literal> and
+    <literal>tls_cacertdir</literal> are set, then the latter will
+    be ignored.
+    </para></note>
+    </step>
+    <step>
+        <para>Specify what client certificate checks to perform on
+        incoming TLS sessions from the LDAP server. To do so, set the
+        <literal>tls_req_cert</literal> configuration key in the
+        <literal>[ldap]</literal> section to <literal>demand</literal>,
+        <literal>allow</literal>, or <literal>never</literal>:
+        </para>
+        <itemizedlist>
+            <listitem><para><parameter>demand</parameter>: a
+            certificate will always be requested from the LDAP server.
+            The session will be terminated if no certificate is
+            provided, or if the certificate provided cannot be
+            verified against the existing certificate authorities
+            file.
+            </para></listitem>
+            <listitem><para><parameter>allow</parameter>: a
+            certificate will always be requested from the LDAP server.
+            The session will proceed as normal even if a certificate
+            is not provided. If a certificate is provided but it
+            cannot be verified against the existing certificate
+            authorities file, the certificate will be ignored and the
+            session will proceed as normal.</para></listitem>
+            <listitem><para><parameter>never</parameter>: a
+            certificate will never be requested.</para></listitem>
+        </itemizedlist>
+    </step>
+    </procedure>
+    <para os="rhel;centos;fedora;opensuse;sles">On distributions that
+    include <application>openstack-config</application>, you can
+    configure TLS encryption on LDAP traffic by running the following
+    commands instead:
+    </para>
+    <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>openstack --config --set /etc/keystone/keystone.conf \
+ldap use_tls True</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/keystone/keystone.conf \
+ldap tls_cacertfile <replaceable>CA_FILE</replaceable></userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/keystone/keystone.conf \
+ldap tls_req_cert <replaceable>CERT_BEHAVIOR</replaceable></userinput></screen>
+<para>Where:</para>
+    <itemizedlist>
+        <listitem><para><replaceable>CA_FILE</replaceable>
+        is the absolute path to the certificate authorities file that
+        should be used to encrypt LDAP traffic.</para></listitem>
+        <listitem><para><replaceable>CERT_BEHAVIOR</replaceable>:
+        specifies what client certificate checks to perform on an
+        incoming TLS session from the LDAP server
+        (<literal>demand</literal>, <literal>allow</literal>, or
+        <literal>never</literal>).</para></listitem>
+     </itemizedlist>
+</section>
