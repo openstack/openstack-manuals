@@ -2,7 +2,7 @@
   xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
   xml:id="cinder-controller">
-  <title>Configure a Block Storage Service controller</title>
+  <title>Configure a Block Storage service controller</title>
   <note>
      <para>This section describes how to configure OpenStack Block Storage
          services on the <glossterm baseform="controller node">Controller node</glossterm>
@@ -17,7 +17,7 @@
   <procedure>
     <step>
       <para>Install the appropriate packages for the Block Storage
-        Service:</para>
+        service:</para>
       <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install cinder-api cinder-scheduler</userinput></screen>
       <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>yum install openstack-cinder</userinput></screen>
       <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install  openstack-cinder-api openstack-cinder-scheduler</userinput></screen>
@@ -50,7 +50,7 @@
 connection = mysql://cinder:<replaceable>CINDER_DBPASS</replaceable>@<replaceable>controller</replaceable>/cinder</programlisting>
     </step>
     <step os="rhel;centos;fedora;opensuse;sles">
-      <para>To create the Block Storage Service database and tables
+      <para>To create the Block Storage service database and tables
         and a <literal>cinder</literal> database user, run the
           <command>openstack-db</command> command.</para>
       <screen><prompt>#</prompt> <userinput>openstack-db --init --service cinder --password <replaceable>CINDER_DBPASS</replaceable></userinput></screen>
@@ -67,13 +67,13 @@ IDENTIFIED BY '<replaceable>CINDER_DBPASS</replaceable>';</userinput></screen>
     </step>
     <step os="ubuntu">
       <para>Create the database tables for the Block Storage
-        Service.</para>
+        service.</para>
       <screen><prompt>#</prompt> <userinput>cinder-manage db sync</userinput></screen>
     </step>
     <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
       <para>Create a <literal>cinder</literal> user. The Block Storage
-        Service uses this user to authenticate with the Identity
-        Service. Use the <literal>service</literal> tenant and give
+        service uses this user to authenticate with the Identity
+        service. Use the <literal>service</literal> tenant and give
         the user the <literal>admin</literal> role.</para>
       <screen><prompt>$</prompt> <userinput>keystone user-create --name=cinder --pass=<replaceable>CINDER_PASS</replaceable> --email=<replaceable>cinder@example.com</replaceable></userinput>
 <prompt>$</prompt> <userinput>keystone user-role-add --user=cinder --tenant=service --role=admin</userinput></screen>
@@ -132,7 +132,7 @@ rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
     </step>
 
     <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
-      <para>Register the Block Storage Service with the Identity
+      <para>Register the Block Storage service with the Identity
         Service so that other OpenStack services can locate it.
         Register the service and specify the endpoint using the
           <command>keystone</command> command.</para>
@@ -146,8 +146,8 @@ rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
     </step>
     <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
       <para>Also register a service and endpoint for version 2 of the
-        Block Storage Service API.</para>
-      <screen><prompt>$</prompt> <userinput>keystone service-create --name=cinderv2 --type=volumev2 \
+        Block Storage service API.</para>
+      <screen><prompt>#</prompt> <userinput>keystone service-create --name=cinderv2 --type=volumev2 \
   --description="OpenStack Block Storage v2"</userinput>
 <prompt>$</prompt> <userinput>keystone endpoint-create \
   --service-id=$(keystone service-list | awk '/ volumev2 / {print $2}') \
