@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="section_compute-instance-building-blocks"
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="5.0">
+    <title>Instance building blocks</title>
+    <para>In OpenStack, the base operating system is usually copied from an image stored in the
+        OpenStack Image Service. This is the most common case and results in an ephemeral instance
+        that starts from a known template state and loses all accumulated states on shutdown.</para>
+    <para>You can also put an operating system on a persistent volume in Compute or the Block
+        Storage volume system. This gives a more traditional, persistent system that accumulates
+        states, which are preserved across restarts. To get a list of available images on your
+        system, run:
+        <screen><prompt>$</prompt> <userinput>nova image-list</userinput>
+<?db-font-size 50%?><computeroutput>+--------------------------------------+-------------------------------+--------+--------------------------------------+
+| ID                                   | Name                          | Status | Server                               |
++--------------------------------------+-------------------------------+--------+--------------------------------------+
+| aee1d242-730f-431f-88c1-87630c0f07ba | Ubuntu 12.04 cloudimg amd64   | ACTIVE |                                      |
+| 0b27baa1-0ca6-49a7-b3f4-48388e440245 | Ubuntu 12.10 cloudimg amd64   | ACTIVE |                                      |
+| df8d56fc-9cea-4dfd-a8d3-28764de3cb08 | jenkins                       | ACTIVE |                                      |
++--------------------------------------+-------------------------------+--------+--------------------------------------+</computeroutput></screen>
+    </para>
+        <para>The displayed image attributes are:</para>
+        <variablelist>
+            <varlistentry>
+                <term><literal>ID</literal></term>
+                <listitem>
+                    <para>Automatically generated UUID of the image.</para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><literal>Name</literal></term>
+                <listitem>
+                    <para>Free form, human-readable name for image.</para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><literal>Status</literal></term>
+                <listitem>
+                    <para>The status of the image. Images marked
+                        <literal>ACTIVE</literal> are available
+                        for use.</para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><literal>Server</literal></term>
+                <listitem>
+                    <para>For images that are created as snapshots of
+                        running instances, this is the UUID of the
+                        instance the snapshot derives from. For
+                        uploaded images, this field is blank.</para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <para>Virtual hardware templates are called <literal>flavors</literal>. The default
+        installation provides five flavors. By default, these are configurable by administrative
+        users. However, you can change this behavior by redefining the access controls for
+            <parameter>compute_extension:flavormanage</parameter> in
+            <filename>/etc/nova/policy.json</filename> on the <filename>compute-api</filename>
+        server.</para>
+        <para>For a list of flavors that are available on your system, run:</para>
+        <screen><prompt>$</prompt> <userinput>nova flavor-list</userinput>
+<computeroutput>+----+-----------+-----------+------+-----------+------+-------+-------------+
+| ID |    Name   | Memory_MB | Disk | Ephemeral | Swap | VCPUs | RXTX_Factor |
++----+-----------+-----------+------+-----------+------+-------+-------------+
+| 1  | m1.tiny   | 512       | 1    | N/A       | 0    | 1     |             |
+| 2  | m1.small  | 2048      | 20   | N/A       | 0    | 1     |             |
+| 3  | m1.medium | 4096      | 40   | N/A       | 0    | 2     |             |
+| 4  | m1.large  | 8192      | 80   | N/A       | 0    | 4     |             |
+| 5  | m1.xlarge | 16384     | 160  | N/A       | 0    | 8     |             |
++----+-----------+-----------+------+-----------+------+-------+-------------+
+</computeroutput></screen>
+    </section>

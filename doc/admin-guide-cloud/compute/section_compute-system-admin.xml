@@ -1,0 +1,934 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="section_compute-system-admin"
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="5.0">
+    <title>System administration</title>
+    <para>By understanding how the different installed nodes
+            interact with each other, you can administer the Compute
+            installation. Compute offers many ways to install using
+            multiple servers but the general idea is that you can have
+            multiple compute nodes that control the virtual servers
+            and a cloud controller node that contains the remaining
+            Compute services.</para>
+        <para>The Compute cloud works through the interaction of a series of daemon processes named
+            <systemitem>nova-*</systemitem> that reside persistently on the host machine or
+        machines. These binaries can all run on the same machine or be spread out on multiple boxes
+        in a large deployment. The responsibilities of services and drivers are:</para>
+    <para>
+        <itemizedlist>
+            <listitem>
+                <para>Services:</para>
+                <itemizedlist>
+                    <listitem>
+                        <para><systemitem class="service">nova-api</systemitem>. Receives xml
+                            requests and sends them to the rest of the system. It is a wsgi app that
+                            routes and authenticate requests. It supports the EC2 and OpenStack
+                            APIs. There is a <filename>nova-api.conf</filename> file created when
+                            you install Compute.</para>
+                    </listitem>
+                    <listitem>
+                        <para><systemitem>nova-cert</systemitem>. Provides the certificate
+                            manager.</para>
+                    </listitem>
+                    <listitem>
+                        <para><systemitem class="service">nova-compute</systemitem>. Responsible for
+                            managing virtual machines. It loads a Service object which exposes the
+                            public methods on ComputeManager through Remote Procedure Call
+                            (RPC).</para>
+                    </listitem>
+                    <listitem>
+                        <para><systemitem>nova-conductor</systemitem>. Provides database-access
+                            support for Compute nodes (thereby reducing security risks).</para>
+                    </listitem>
+                    <listitem>
+                        <para><systemitem>nova-consoleauth</systemitem>. Handles console
+                            authentication.</para>
+                    </listitem>
+                    <listitem>
+                        <para><systemitem class="service">nova-objectstore</systemitem>: The
+                                <systemitem class="service">nova-objectstore</systemitem> service is
+                            an ultra simple file-based storage system for images that replicates
+                            most of the S3 API. It can be replaced with OpenStack Image Service and
+                            a simple image manager or use OpenStack Object Storage as the virtual
+                            machine image storage facility. It must reside on the same node as
+                                <systemitem class="service">nova-compute</systemitem>.</para>
+                    </listitem>
+                    <listitem>
+                        <para><systemitem class="service">nova-network</systemitem>. Responsible for
+                            managing floating and fixed IPs, DHCP, bridging and VLANs. It loads a
+                            Service object which exposes the public methods on one of the subclasses
+                            of NetworkManager. Different networking strategies are available to the
+                            service by changing the network_manager configuration option to
+                            FlatManager, FlatDHCPManager, or VlanManager (default is VLAN if no
+                            other is specified).</para>
+                    </listitem>
+                    <listitem>
+                        <para><systemitem>nova-scheduler</systemitem>. Dispatches requests for
+                            new virtual machines to the correct node.</para>
+                    </listitem>
+                    <listitem>
+                        <para><systemitem>nova-novncproxy</systemitem>. Provides a VNC proxy for
+                            browsers (enabling VNC consoles to access virtual machines).</para>
+                    </listitem>
+                </itemizedlist>
+            </listitem>
+            <listitem>
+                <para>Some services have drivers that change how the service implements the core of
+                    its functionality. For example, the <systemitem>nova-compute</systemitem>
+                    service supports drivers that let you choose with which hypervisor type it will
+                    talk. <systemitem>nova-network</systemitem> and
+                        <systemitem>nova-scheduler</systemitem> also have drivers.</para>
+            </listitem>
+            </itemizedlist>
+    </para>
+        <section xml:id="section_compute-service-arch">
+            <title>Compute service architecture</title>
+            <para>The following basic categories describe the service architecture and what's going
+            on within the cloud controller.</para>
+            <simplesect>
+                <title>API server</title>
+                <para>At the heart of the cloud framework is an API server. This API server makes
+                command and control of the hypervisor, storage, and networking programmatically
+                available to users.</para>
+                <para>The API endpoints are basic HTTP web services
+                    which handle authentication, authorization, and
+                    basic command and control functions using various
+                    API interfaces under the Amazon, Rackspace, and
+                    related models. This enables API compatibility
+                    with multiple existing tool sets created for
+                    interaction with offerings from other vendors.
+                    This broad compatibility prevents vendor
+                    lock-in.</para>
+            </simplesect>
+            <simplesect>
+                <title>Message queue</title>
+                <para>A messaging queue brokers the interaction
+                    between compute nodes (processing), the networking
+                    controllers (software which controls network
+                    infrastructure), API endpoints, the scheduler
+                    (determines which physical hardware to allocate to
+                    a virtual resource), and similar components.
+                    Communication to and from the cloud controller is
+                    by HTTP requests through multiple API
+                    endpoints.</para>
+                <para>A typical message passing event begins with the API server receiving a request
+                from a user. The API server authenticates the user and ensures that the user is
+                permitted to issue the subject command. The availability of objects implicated in
+                the request is evaluated and, if available, the request is routed to the queuing
+                engine for the relevant workers. Workers continually listen to the queue based on
+                their role, and occasionally their type host name. When an applicable work request
+                arrives on the queue, the worker takes assignment of the task and begins its
+                execution. Upon completion, a response is dispatched to the queue which is received
+                by the API server and relayed to the originating user. Database entries are queried,
+                added, or removed as necessary throughout the process.</para>
+            </simplesect>
+            <simplesect>
+                <title>Compute worker</title>
+                <para>Compute workers manage computing instances on
+                    host machines. The API dispatches commands to
+                    compute workers to complete these tasks:</para>
+                <itemizedlist>
+                    <listitem>
+                        <para>Run instances</para>
+                    </listitem>
+                    <listitem>
+                        <para>Terminate instances</para>
+                    </listitem>
+                    <listitem>
+                        <para>Reboot instances</para>
+                    </listitem>
+                    <listitem>
+                        <para>Attach volumes</para>
+                    </listitem>
+                    <listitem>
+                        <para>Detach volumes</para>
+                    </listitem>
+                    <listitem>
+                        <para>Get console output</para>
+                    </listitem>
+                </itemizedlist>
+            </simplesect>
+            <simplesect>
+                <title>Network Controller</title>
+                <para>The Network Controller manages the networking
+                    resources on host machines. The API server
+                    dispatches commands through the message queue,
+                    which are subsequently processed by Network
+                    Controllers. Specific operations include:</para>
+                <itemizedlist>
+                    <listitem>
+                        <para>Allocate fixed IP addresses</para>
+                    </listitem>
+                    <listitem>
+                        <para>Configuring VLANs for projects</para>
+                    </listitem>
+                    <listitem>
+                        <para>Configuring networks for compute
+                            nodes</para>
+                    </listitem>
+                </itemizedlist>
+            </simplesect>
+        </section>
+        <section xml:id="section_manage-compute-users">
+            <title>Manage Compute users</title>
+            <para>Access to the Euca2ools (ec2) API is controlled by
+                an access and secret key. The user’s access key needs
+                to be included in the request, and the request must be
+                signed with the secret key. Upon receipt of API
+                requests, Compute verifies the signature and runs
+                commands on behalf of the user.</para>
+            <para>To begin using Compute, you must create a user with
+                the Identity Service.</para>
+        </section>
+        <section xml:id="section_manage-the-cloud">
+            <title>Manage the cloud</title>
+            <para>A system administrator can use the <command>nova</command> client and the
+                <command>Euca2ools</command> commands to manage the cloud.</para>
+            <para>Both nova client and euca2ools can be used by all users, though specific commands
+            might be restricted by Role Based Access Control in the Identity Service.</para>
+            <procedure>
+                <title>To use the nova client</title>
+                <step>
+                    <para>Installing the <package>python-novaclient</package> package gives you a
+                        <code>nova</code> shell command that enables Compute API interactions from
+                    the command line. Install the client, and then provide your user name and
+                    password (typically set as environment variables for convenience), and then you
+                    have the ability to send commands to your cloud on the command line.</para>
+                    <para>To install <package>python-novaclient</package>, download the tarball from
+                        <link
+                        xlink:href="http://pypi.python.org/pypi/python-novaclient/2.6.3#downloads"
+                        >http://pypi.python.org/pypi/python-novaclient/2.6.3#downloads</link> and
+                    then install it in your favorite python environment.</para>
+                    <screen><prompt>$</prompt> <userinput>curl -O http://pypi.python.org/packages/source/p/python-novaclient/python-novaclient-2.6.3.tar.gz</userinput>
+<prompt>$</prompt> <userinput>tar -zxvf python-novaclient-2.6.3.tar.gz</userinput>
+<prompt>$</prompt> <userinput>cd python-novaclient-2.6.3</userinput></screen>
+<para>As <systemitem class="username">root</systemitem> execute:</para>
+<screen><prompt>#</prompt> <userinput>python setup.py install</userinput></screen>
+                </step>
+                <step>
+                    <para>Confirm the installation by running:</para>
+                    <screen><prompt>$</prompt> <userinput>nova help</userinput>
+<computeroutput>usage: nova [--version] [--debug] [--os-cache] [--timings]
+            [--timeout &lt;seconds&gt;] [--os-username &lt;auth-user-name&gt;]
+            [--os-password &lt;auth-password&gt;]
+            [--os-tenant-name &lt;auth-tenant-name&gt;]
+            [--os-tenant-id &lt;auth-tenant-id&gt;] [--os-auth-url &lt;auth-url&gt;]
+            [--os-region-name &lt;region-name&gt;] [--os-auth-system &lt;auth-system&gt;]
+            [--service-type &lt;service-type&gt;] [--service-name &lt;service-name&gt;]
+            [--volume-service-name &lt;volume-service-name&gt;]
+            [--endpoint-type &lt;endpoint-type&gt;]
+            [--os-compute-api-version &lt;compute-api-ver&gt;]
+            [--os-cacert &lt;ca-certificate&gt;] [--insecure]
+            [--bypass-url &lt;bypass-url&gt;]
+            &lt;subcommand&gt; ...</computeroutput></screen>
+                    <note><para>This command returns a list of <command>nova</command> commands and parameters. To obtain help
+                        for a subcommand, run:</para>
+                        <screen><prompt>$</prompt> <userinput>nova help <replaceable>subcommand</replaceable></userinput></screen>
+                        <para>You can also refer to the <link
+                            xlink:href="http://docs.openstack.org/cli-reference/content/">
+                            <citetitle>OpenStack Command-Line Reference</citetitle></link>
+                            for a complete listing of <command>nova</command>
+                            commands and parameters.</para></note>
+                </step>
+                <step>
+                    <para>Set the required parameters as environment variables to make running
+                    commands easier. For example, you can add <parameter>--os-username</parameter>
+                    as a <command>nova</command> option, or set it as an environment variable. To
+                    set the user name, password, and tenant as environment variables, use:</para>
+                    <screen><prompt>$</prompt> <userinput>export OS_USERNAME=joecool</userinput>
+<prompt>$</prompt> <userinput>export OS_PASSWORD=coolword</userinput>
+<prompt>$</prompt> <userinput>export OS_TENANT_NAME=coolu</userinput>  </screen>
+                </step>
+                <step>
+                    <para>Using the Identity Service, you are supplied with an authentication
+                    endpoint, which Compute recognizes as the <literal>OS_AUTH_URL</literal>.</para>
+                    <para>
+                        <screen><prompt>$</prompt> <userinput>export OS_AUTH_URL=http://hostname:5000/v2.0</userinput>
+<prompt>$</prompt> <userinput>export NOVA_VERSION=1.1</userinput></screen>
+                    </para>
+                </step>
+            </procedure>
+            <simplesect>
+                <title>Use the euca2ools commands</title>
+                <para>For a command-line interface to EC2 API calls, use the
+                    <command>euca2ools</command> command-line tool. See <link
+                    xlink:href="http://open.eucalyptus.com/wiki/Euca2oolsGuide_v1.3"
+                    >http://open.eucalyptus.com/wiki/Euca2oolsGuide_v1.3</link></para>
+            </simplesect>
+        </section>
+    <xi:include
+            href="../../common/section_cli_nova_usage_statistics.xml"/>
+        <section xml:id="section_manage-logs">
+            <title>Manage logs</title>
+            <simplesect>
+                <title>Logging module</title>
+            <para>To specify a configuration file to change the logging behavior, add this line to
+                the <filename>/etc/nova/nova.conf</filename> file . To change the logging level,
+                such as <literal>DEBUG</literal>, <literal>INFO</literal>,
+                    <literal>WARNING</literal>, <literal>ERROR</literal>), use:
+                <programlisting language="ini">log-config=/etc/nova/logging.conf</programlisting></para>
+                <para>The logging configuration file is an ini-style configuration file, which must
+                contain a section called <literal>logger_nova</literal>, which controls the behavior
+                of the logging facility in the <literal>nova-*</literal> services. For
+                example:<programlisting language="ini">[logger_nova]
+level = INFO
+handlers = stderr
+qualname = nova</programlisting></para>
+                <para>This example sets the debugging level to <literal>INFO</literal> (which less
+                verbose than the default <literal>DEBUG</literal> setting). <itemizedlist>
+                    <listitem>
+                        <para>For more details on the logging configuration syntax, including the
+                            meaning of the <literal>handlers</literal> and
+                                <literal>quaname</literal> variables, see the <link
+                                xlink:href="http://docs.python.org/release/2.7/library/logging.html#configuration-file-format"
+                                >Python documentation on logging configuration file format
+                            </link>f.</para>
+                    </listitem>
+                    <listitem>
+                        <para>For an example <filename>logging.conf</filename> file with various
+                            defined handlers, see the
+                            <link xlink:href="http://docs.openstack.org/trunk/config-reference/content/">
+                                <citetitle>OpenStack Configuration Reference</citetitle></link>.</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            </simplesect>
+            <simplesect>
+                <title>Syslog</title>
+                <para>You can configure OpenStack Compute services to send logging information to
+                    <systemitem>syslog</systemitem>. This is useful if you want to use
+                    <systemitem>rsyslog</systemitem>, which forwards the logs to a remote machine.
+                You need to separately configure the Compute service (nova), the Identity service
+                (keystone), the Image Service (glance), and, if you are using it, the Block Storage
+                service (cinder) to send log messages to <systemitem>syslog</systemitem>. To do so,
+                add the following lines to:</para>
+                <itemizedlist>
+                    <listitem>
+                        <para><filename>/etc/nova/nova.conf</filename></para>
+                    </listitem>
+                    <listitem>
+                        <para><filename>/etc/keystone/keystone.conf</filename></para>
+                    </listitem>
+                    <listitem>
+                        <para><filename>/etc/glance/glance-api.conf</filename></para>
+                    </listitem>
+                    <listitem>
+                        <para><filename>/etc/glance/glance-registry.conf</filename></para>
+                    </listitem>
+                    <listitem>
+                        <para><filename>/etc/cinder/cinder.conf</filename></para>
+                    </listitem>
+                </itemizedlist>
+                <programlisting language="ini">verbose = False
+debug = False
+use_syslog = True
+syslog_log_facility = LOG_LOCAL0</programlisting>
+                <para>In addition to enabling <systemitem>syslog</systemitem>, these settings also
+                turn off more verbose output and debugging output from the log.<note>
+                    <para>Although the example above uses the same local facility for each service
+                            (<literal>LOG_LOCAL0</literal>, which corresponds to
+                            <systemitem>syslog</systemitem> facility <literal>LOCAL0</literal>), we
+                        recommend that you configure a separate local facility for each service, as
+                        this provides better isolation and more flexibility. For example, you may
+                        want to capture logging information at different severity levels for
+                        different services. <systemitem>syslog</systemitem> allows you to define up
+                        to seven local facilities, <literal>LOCAL0, LOCAL1, ..., LOCAL7</literal>.
+                        For more details, see the <systemitem>syslog</systemitem>
+                        documentation.</para>
+                </note></para>
+            </simplesect>
+            <simplesect>
+                <title>Rsyslog</title>
+                <para><systemitem>rsyslog</systemitem> is a useful tool for setting up a centralized
+                log server across multiple machines. We briefly describe the configuration to set up
+                an <systemitem>rsyslog</systemitem> server; a full treatment of
+                    <systemitem>rsyslog</systemitem> is beyond the scope of this document. We assume
+                    <systemitem>rsyslog</systemitem> has already been installed on your hosts
+                (default for most Linux distributions).</para>
+                <para>This example provides a minimal configuration for
+                    <filename>/etc/rsyslog.conf</filename> on the log server host, which receives
+                the log files:</para>
+                <programlisting language="bash"># provides TCP syslog reception
+$ModLoad imtcp
+$InputTCPServerRun 1024</programlisting>
+                <para>Add a filter rule to <filename>/etc/rsyslog.conf</filename> which looks for a
+                host name. The example below uses <replaceable>compute-01</replaceable> as an
+                example of a compute host name:</para>
+                <programlisting language="bash">:hostname, isequal, "<replaceable>compute-01</replaceable>" /mnt/rsyslog/logs/compute-01.log</programlisting>
+                <para>On each compute host, create a file named
+                    <filename>/etc/rsyslog.d/60-nova.conf</filename>, with the following
+                content:</para>
+                <programlisting language="bash"># prevent debug from dnsmasq with the daemon.none parameter
+*.*;auth,authpriv.none,daemon.none,local0.none -/var/log/syslog
+# Specify a log level of ERROR
+local0.error    @@172.20.1.43:1024</programlisting>
+                <para>Once you have created this file, restart your <systemitem>rsyslog</systemitem>
+                daemon. Error-level log messages on the compute hosts should now be sent to your log
+                server.</para>
+            </simplesect>
+        </section>
+        <xi:include href="section_compute-rootwrap.xml"/>
+        <xi:include href="section_compute-configure-migrations.xml"/>
+        <section xml:id="section_live-migration-usage">
+            <title>Migrate instances</title>
+            <para>Before starting migrations, review the <link linkend="section_configuring-compute-migrations">Configure migrations section</link>.</para>
+            <para>Migration provides a scheme to migrate running
+                instances from one OpenStack Compute server to another
+                OpenStack Compute server.</para>
+            <procedure>
+                <title>To migrate instances</title>
+                <step>
+                    <para>Look at the running instances, to get the ID
+                        of the instance you wish to migrate.</para>
+                    <screen><prompt>$</prompt> <userinput>nova list</userinput>
+<computeroutput><![CDATA[+--------------------------------------+------+--------+-----------------+
+|                  ID                  | Name | Status |Networks         |
++--------------------------------------+------+--------+-----------------+
+| d1df1b5a-70c4-4fed-98b7-423362f2c47c | vm1  | ACTIVE | private=a.b.c.d |
+| d693db9e-a7cf-45ef-a7c9-b3ecb5f22645 | vm2  | ACTIVE | private=e.f.g.h |
++--------------------------------------+------+--------+-----------------+]]></computeroutput></screen>
+                </step>
+                <step>
+                    <para>Look at information associated with that instance. This example uses 'vm1'
+                    from above.</para>
+                    <screen><prompt>$</prompt> <userinput>nova show d1df1b5a-70c4-4fed-98b7-423362f2c47c</userinput>
+<computeroutput><![CDATA[+-------------------------------------+----------------------------------------------------------+
+|               Property              |                          Value                           |
++-------------------------------------+----------------------------------------------------------+
+...
+| OS-EXT-SRV-ATTR:host                | HostB                                                    |
+...
+| flavor                              | m1.tiny                                                  |
+| id                                  | d1df1b5a-70c4-4fed-98b7-423362f2c47c                     |
+| name                                | vm1                                                      |
+| private network                     | a.b.c.d                                                  |
+| status                              | ACTIVE                                                   |
+...
++-------------------------------------+----------------------------------------------------------+]]></computeroutput></screen>
+                    <para>In this example, vm1 is running on HostB.</para>
+                </step>
+                <step>
+                    <para>Select the server to which instances will be migrated:</para>
+                    <screen><prompt>#</prompt> <userinput>nova service-list</userinput>
+<computeroutput>+------------------+------------+----------+---------+-------+----------------------------+-----------------+
+| Binary           | Host       | Zone     | Status  | State | Updated_at                 | Disabled Reason |
++------------------+------------+----------+---------+-------+----------------------------+-----------------+
+| nova-consoleauth | HostA      | internal | enabled | up    | 2014-03-25T10:33:25.000000 | -               |
+| nova-scheduler   | HostA      | internal | enabled | up    | 2014-03-25T10:33:25.000000 | -               |
+| nova-conductor   | HostA      | internal | enabled | up    | 2014-03-25T10:33:27.000000 | -               |
+| nova-compute     | HostB      | nova     | enabled | up    | 2014-03-25T10:33:31.000000 | -               |
+| nova-compute     | HostC      | nova     | enabled | up    | 2014-03-25T10:33:31.000000 | -               |
+| nova-cert        | HostA      | internal | enabled | up    | 2014-03-25T10:33:31.000000 | -               |
++------------------+-----------------------+----------+---------+-------+----------------------------+-----------------+</computeroutput>
+                    </screen>
+                    <para>In this example, HostC can be picked up
+                        because <systemitem class="service">nova-compute</systemitem>
+                        is running on it.</para>
+                </step>
+                <step>
+                    <para>Ensure that HostC has enough resources for
+                        migration.</para>
+                <screen><prompt>#</prompt> <userinput>nova host-describe HostC</userinput>
+<computeroutput>+-----------+------------+-----+-----------+---------+
+| HOST      | PROJECT    | cpu | memory_mb | disk_gb |
++-----------+------------+-----+-----------+---------+
+| HostC     | (total)    | 16   | 32232    | 878     |
+| HostC     | (used_now) | 13   | 21284    | 442     |
+| HostC     | (used_max) | 13   | 21284    | 442     |
+| HostC     | p1         | 13   | 21284    | 442     |
+| HostC     | p2         | 13   | 21284    | 442     |
++-----------+------------+-----+-----------+---------+</computeroutput>
+                    </screen>
+                    <itemizedlist>
+                        <listitem>
+                            <para><emphasis role="bold"
+                                   >cpu:</emphasis>the number of
+                                cpu</para>
+                        </listitem>
+                        <listitem>
+                            <para><emphasis role="bold">memory_mb:</emphasis>total amount of memory
+                            (in MB)</para>
+                        </listitem>
+                        <listitem>
+                            <para><emphasis role="bold">disk_gb:</emphasis>total amount of space for
+                            NOVA-INST-DIR/instances (in GB)</para>
+                        </listitem>
+                        <listitem>
+                            <para><emphasis role="bold">1st line shows </emphasis>total amount of
+                            resources for the physical server.</para>
+                        </listitem>
+                        <listitem>
+                            <para><emphasis role="bold">2nd line shows </emphasis>currently used
+                            resources.</para>
+                        </listitem>
+                        <listitem>
+                            <para><emphasis role="bold">3rd line shows </emphasis>maximum used
+                            resources.</para>
+                        </listitem>
+                        <listitem>
+                            <para><emphasis role="bold">4th line and
+                                   under</emphasis> shows the resource
+                                for each project.</para>
+                        </listitem>
+                    </itemizedlist>
+                </step>
+                <step>
+                    <para>Use the <command>nova live-migration</command> command to migrate the
+                    instances:<screen><prompt>$</prompt> <userinput>nova live-migration <replaceable>server</replaceable> <replaceable>host_name</replaceable> </userinput></screen></para>
+                <para>Where <replaceable>server</replaceable> can be either the server's ID or name.
+                    For example:</para>
+                    <screen><prompt>$</prompt> <userinput>nova live-migration d1df1b5a-70c4-4fed-98b7-423362f2c47c HostC</userinput><computeroutput>
+<![CDATA[Migration of d1df1b5a-70c4-4fed-98b7-423362f2c47c initiated.]]></computeroutput></screen>
+                    <para>Ensure instances are migrated successfully with <command>nova
+                        list</command>. If instances are still running on HostB, check log files
+                    (src/dest <systemitem class="service">nova-compute</systemitem> and <systemitem
+                        class="service">nova-scheduler</systemitem>) to determine why. <note>
+                        <para>Although the <command>nova</command> command is called
+                                <command>live-migration</command>, under the default Compute
+                            configuration options the instances are suspended before
+                            migration.</para>
+                        <para>For more details, see <link
+                                xlink:href="http://docs.openstack.org/trunk/config-reference/content/configuring-openstack-compute-basics.html"
+                                >Configure migrations</link> in <citetitle>OpenStack Configuration
+                                Reference</citetitle>.</para>
+                    </note>
+                </para>
+                </step>
+            </procedure>
+        </section>
+        <section xml:id="section_nova-compute-node-down">
+            <title>Recover from a failed compute node</title>
+            <para>If you have deployed Compute with a shared file
+                system, you can quickly recover from a failed compute
+                node. Of the two methods covered in these sections,
+                the evacuate API is the preferred method even in the
+                absence of shared storage. The evacuate API provides
+                many benefits over manual recovery, such as
+                re-attachment of volumes and floating IPs.</para>
+            <xi:include href="../../common/section_cli_nova_evacuate.xml"/>
+            <section xml:id="nova-compute-node-down-manual-recovery">
+                <title>Manual recovery</title>
+                <para>For KVM/libvirt compute node recovery, see the previous section. Use the
+                following procedure for all other hypervisors.</para>
+                <procedure>
+                    <title>To work with host information</title>
+                    <step>
+                        <para>Identify the VMs on the affected hosts, using tools such as a
+                        combination of <literal>nova list</literal> and <literal>nova show</literal>
+                        or <literal>euca-describe-instances</literal>. Here's an example using the
+                        EC2 API - instance i-000015b9 that is running on node np-rcc54:</para>
+                        <programlisting language="bash">i-000015b9 at3-ui02 running nectarkey (376, np-rcc54) 0 m1.xxlarge 2012-06-19T00:48:11.000Z 115.146.93.60</programlisting>
+                    </step>
+                    <step>
+                        <para>You can review the status of the host by using the Compute database.
+                        Some of the important information is highlighted below. This example
+                        converts an EC2 API instance ID into an OpenStack ID; if you used the
+                            <literal>nova</literal> commands, you can substitute the ID directly.
+                        You can find the credentials for your database in
+                            <filename>/etc/nova.conf</filename>.</para>
+                        <programlisting language="bash">SELECT * FROM instances WHERE id = CONV('15b9', 16, 10) \G;
+*************************** 1. row ***************************
+              created_at: 2012-06-19 00:48:11
+              updated_at: 2012-07-03 00:35:11
+              deleted_at: NULL
+...
+                      id: 5561
+...
+             power_state: 5
+                vm_state: shutoff
+...
+                hostname: at3-ui02
+                    host: np-rcc54
+...
+                    uuid: 3f57699a-e773-4650-a443-b4b37eed5a06
+...
+              task_state: NULL
+...</programlisting>
+                    </step>
+                </procedure>
+                <procedure>
+                    <title>To recover the VM</title>
+                    <step>
+                        <para>When you know the status of the VM on the failed host, determine to
+                        which compute host the affected VM should be moved. For example, run the
+                        following database command to move the VM to np-rcc46:</para>
+                        <programlisting language="bash">UPDATE instances SET host = 'np-rcc46' WHERE uuid = '3f57699a-e773-4650-a443-b4b37eed5a06'; </programlisting>
+                    </step>
+                    <step>
+                        <para>If using a hypervisor that relies on libvirt (such as KVM), it is a
+                        good idea to update the <literal>libvirt.xml</literal> file (found in
+                            <literal>/var/lib/nova/instances/[instance ID]</literal>). The important
+                        changes to make are:</para>
+                    <para>
+                        <itemizedlist>
+                            <listitem>
+                                <para>Change the <literal>DHCPSERVER</literal> value to the host IP
+                                    address of the compute host that is now the VM's new
+                                    home.</para>
+                            </listitem>
+                            <listitem>
+                                <para>Update the VNC IP if it isn't already to:
+                                        <literal>0.0.0.0</literal>.</para>
+                            </listitem>
+                        </itemizedlist>
+                    </para>
+                    </step>
+                    <step>
+                        <para>Reboot the VM:</para>
+                        <screen><prompt>$</prompt> <userinput>nova reboot --hard 3f57699a-e773-4650-a443-b4b37eed5a06</userinput></screen>
+                    </step>
+                 </procedure>
+                <para>In theory, the above database update and <literal>nova
+                    reboot</literal> command are all that is required to recover a VM from a
+                    failed host. However, if further problems occur, consider looking at
+                    recreating the network filter configuration using <literal>virsh</literal>,
+                    restarting the Compute services or updating the <literal>vm_state</literal>
+                    and <literal>power_state</literal> in the Compute database.</para>
+            </section>
+        </section>
+        <section xml:id="section_nova-uid-mismatch">
+            <title>Recover from a UID/GID mismatch</title>
+            <para>When running OpenStack compute, using a shared file
+                system or an automated configuration tool, you could
+                encounter a situation where some files on your compute
+                node are using the wrong UID or GID. This causes a
+                raft of errors, such as being unable to live migrate,
+                or start virtual machines.</para>
+            <para>The following procedure runs on <systemitem class="service"
+                >nova-compute</systemitem> hosts, based on the KVM hypervisor, and could help to
+            restore the situation:</para>
+            <procedure>
+                <title>To recover from a UID/GID mismatch</title>
+                <step>
+                    <para>Ensure you don't use numbers that are already used for some other
+                    user/group.</para>
+                </step>
+                <step>
+                    <para>Set the nova uid in <filename>/etc/passwd</filename> to the same number in
+                    all hosts (for example, 112).</para>
+                </step>
+                <step>
+                    <para>Set the libvirt-qemu uid in
+                            <filename>/etc/passwd</filename> to the
+                        same number in all hosts (for example,
+                        119).</para>
+                </step>
+                <step>
+                    <para>Set the nova group in
+                            <filename>/etc/group</filename> file to
+                        the same number in all hosts (for example,
+                        120).</para>
+                </step>
+                <step>
+                    <para>Set the libvirtd group in
+                            <filename>/etc/group</filename> file to
+                        the same number in all hosts (for example,
+                        119).</para>
+                </step>
+                <step>
+                    <para>Stop the services on the compute
+                        node.</para>
+                </step>
+                <step>
+                    <para>Change all the files owned by user nova or
+                        by group nova. For example:</para>
+                    <programlisting language="bash">find / -uid 108 -exec chown nova {} \; # note the 108 here is the old nova uid before the change
+find / -gid 120 -exec chgrp nova {} \;</programlisting>
+                </step>
+                <step>
+                    <para>Repeat the steps for the libvirt-qemu owned files if those needed to
+                    change.</para>
+                </step>
+                <step>
+                    <para>Restart the services.</para>
+                </step>
+                <step>
+                    <para>Now you can run the <command>find</command>
+                        command to verify that all files using the
+                        correct identifiers.</para>
+                </step>
+            </procedure>
+        </section>
+        <section xml:id="section_nova-disaster-recovery-process">
+            <title>Compute disaster recovery process</title>
+            <para>Use the following procedures to manage your cloud after a disaster, and to easily
+            back up its persistent storage volumes. Backups <emphasis role="bold">are</emphasis>
+            mandatory, even outside of disaster scenarios.</para>
+            <para>For a DRP definition, see <link
+                xlink:href="http://en.wikipedia.org/wiki/Disaster_Recovery_Plan"
+                >http://en.wikipedia.org/wiki/Disaster_Recovery_Plan</link>.</para>
+            <simplesect>
+                <title>A- The disaster recovery process
+                    presentation</title>
+                <para>A disaster could happen to several components of
+                    your architecture: a disk crash, a network loss, a
+                    power cut, and so on. In this example, assume the
+                    following set up:</para>
+                <orderedlist>
+                    <listitem>
+                        <para>A cloud controller (<systemitem>nova-api</systemitem>,
+                            <systemitem>nova-objecstore</systemitem>,
+                            <systemitem>nova-network</systemitem>)</para>
+                    </listitem>
+                    <listitem>
+                        <para>A compute node (<systemitem
+                                class="service"
+                                >nova-compute</systemitem>)</para>
+                    </listitem>
+                    <listitem>
+                        <para>A Storage Area Network used by
+                                <systemitem class="service"
+                                >cinder-volumes</systemitem> (aka
+                            SAN)</para>
+                    </listitem>
+                </orderedlist>
+                <para>The disaster example is the worst one: a power
+                    loss. That power loss applies to the three
+                    components. <emphasis role="italic">Let's see what
+                        runs and how it runs before the
+                        crash</emphasis>:</para>
+                <itemizedlist>
+                    <listitem>
+                        <para>From the SAN to the cloud controller, we
+                            have an active iscsi session (used for the
+                            "cinder-volumes" LVM's VG).</para>
+                    </listitem>
+                    <listitem>
+                        <para>From the cloud controller to the compute node, we also have active
+                        iscsi sessions (managed by <systemitem class="service"
+                            >cinder-volume</systemitem>).</para>
+                    </listitem>
+                    <listitem>
+                        <para>For every volume, an iscsi session is made (so 14 ebs volumes equals
+                        14 sessions).</para>
+                    </listitem>
+                    <listitem>
+                        <para>From the cloud controller to the compute node, we also have iptables/
+                        ebtables rules which allow access from the cloud controller to the running
+                        instance.</para>
+                    </listitem>
+                    <listitem>
+                        <para>And at least, from the cloud controller to the compute node; saved
+                        into database, the current state of the instances (in that case "running" ),
+                        and their volumes attachment (mount point, volume ID, volume status, and so
+                        on.)</para>
+                    </listitem>
+                </itemizedlist>
+                <para>Now, after the power loss occurs and all
+                    hardware components restart, the situation is as
+                    follows:</para>
+                <itemizedlist>
+                    <listitem>
+                        <para>From the SAN to the cloud, the ISCSI
+                            session no longer exists.</para>
+                    </listitem>
+                    <listitem>
+                        <para>From the cloud controller to the compute
+                            node, the ISCSI sessions no longer exist.
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para>From the cloud controller to the compute node, the iptables and
+                        ebtables are recreated, since, at boot,
+                            <systemitem>nova-network</systemitem> reapplies the
+                        configurations.</para>
+                    </listitem>
+                    <listitem>
+                        <para>From the cloud controller, instances are in a shutdown state (because
+                        they are no longer running)</para>
+                    </listitem>
+                    <listitem>
+                        <para>In the database, data was not updated at all, since Compute could not
+                        have anticipated the crash.</para>
+                    </listitem>
+                </itemizedlist>
+                <para>Before going further, and to prevent the administrator from making fatal
+                    mistakes,<emphasis role="bold"> the instances won't be lost</emphasis>, because
+                no "<command role="italic">destroy</command>" or "<command role="italic"
+                    >terminate</command>" command was invoked, so the files for the instances remain
+                on the compute node.</para>
+                <para>Perform these tasks in this exact order. <emphasis role="underline">Any extra
+                    step would be dangerous at this stage</emphasis> :</para>
+                <para>
+                    <orderedlist>
+                        <listitem>
+                            <para>Get the current relation from a
+                                volume to its instance, so that you
+                                can recreate the attachment.</para>
+                        </listitem>
+                        <listitem>
+                            <para>Update the database to clean the
+                                stalled state. (After that, you cannot
+                                perform the first step).</para>
+                        </listitem>
+                        <listitem>
+                            <para>Restart the instances. In other
+                                words, go from a shutdown to running
+                                state.</para>
+                        </listitem>
+                        <listitem>
+                            <para>After the restart, reattach the volumes to their respective
+                            instances (optional).</para>
+                        </listitem>
+                        <listitem>
+                            <para>SSH into the instances to reboot them.</para>
+                        </listitem>
+                    </orderedlist>
+                </para>
+            </simplesect>
+            <simplesect>
+                <title>B - Disaster recovery</title>
+                <procedure>
+                    <title>To perform disaster recovery</title>
+                    <step>
+                        <title>Get the instance-to-volume
+                            relationship</title>
+                        <para>You must get the current relationship from a volume to its instance,
+                        because you will re-create the attachment.</para>
+                        <para>You can find this relationship by running <command>nova
+                            volume-list</command>. Note that the <command>nova</command> client
+                        includes the ability to get volume information from Block Storage.</para>
+                    </step>
+                    <step>
+                        <title>Update the database</title>
+                        <para>Update the database to clean the stalled state. You must restore for
+                        every volume, using these queries to clean up the database:</para>
+                        <screen><prompt>mysql></prompt> <userinput>use cinder;</userinput>
+<prompt>mysql></prompt> <userinput>update volumes set mountpoint=NULL;</userinput>
+<prompt>mysql></prompt> <userinput>update volumes set status="available" where status &lt;&gt;"error_deleting";</userinput>
+<prompt>mysql></prompt> <userinput>update volumes set attach_status="detached";</userinput>
+<prompt>mysql></prompt> <userinput>update volumes set instance_id=0;</userinput></screen>
+                        <para>Then, when you run <command>nova volume-list</command> commands, all
+                        volumes appear in the listing.</para>
+                    </step>
+                    <step>
+                        <title>Restart instances</title>
+                        <para>Restart the instances using the <command>nova reboot
+                                <replaceable>$instance</replaceable></command> command.</para>
+                        <para>At this stage, depending on your image, some instances completely
+                        reboot and become reachable, while others stop on the "plymouth"
+                        stage.</para>
+                    </step>
+                    <step>
+                        <title>DO NOT reboot a second time</title>
+                        <para>Do not reboot instances that are stopped at this point. Instance state
+                        depends on whether you added an <filename>/etc/fstab</filename> entry for
+                        that volume. Images built with the <package>cloud-init</package> package
+                        remain in a pending state, while others skip the missing volume and start.
+                        The idea of that stage is only to ask nova to reboot every instance, so the
+                        stored state is preserved. For more information about
+                            <package>cloud-init</package>, see <link
+                            xlink:href="https://help.ubuntu.com/community/CloudInit"
+                            >help.ubuntu.com/community/CloudInit</link>.</para>
+                    </step>
+                    <step>
+                        <title>Reattach volumes</title>
+                        <para>After the restart, you can reattach the volumes to their respective
+                        instances. Now that <command>nova</command> has restored the right status,
+                        it is time to perform the attachments through a <command>nova
+                            volume-attach</command></para>
+                        <para>This simple snippet uses the created
+                            file:</para>
+                        <programlisting language="bash">#!/bin/bash
+
+while read line; do
+    volume=`echo $line | $CUT -f 1 -d " "`
+    instance=`echo $line | $CUT -f 2 -d " "`
+    mount_point=`echo $line | $CUT -f 3 -d " "`
+        echo "ATTACHING VOLUME FOR INSTANCE - $instance"
+    nova volume-attach $instance $volume $mount_point
+    sleep 2
+done &lt; $volumes_tmp_file</programlisting>
+                        <para>At that stage, instances that were
+                            pending on the boot sequence (<emphasis
+                                role="italic">plymouth</emphasis>)
+                            automatically continue their boot, and
+                            restart normally, while the ones that
+                            booted see the volume.</para>
+                    </step>
+                    <step>
+                        <title>SSH into instances</title>
+                        <para>If some services depend on the volume, or if a volume has an entry
+                        into <systemitem>fstab</systemitem>, it could be good to simply restart the
+                        instance. This restart needs to be made from the instance itself, not
+                        through <command>nova</command>. So, we SSH into the instance and perform a
+                        reboot:</para>
+                        <screen><prompt>#</prompt> <userinput>shutdown -r now</userinput></screen>
+                    </step>
+                </procedure>
+                <para>By completing this procedure, you can
+                    successfully recover your cloud.</para>
+            <note>
+                <para>Follow these guidelines:</para>
+                <itemizedlist>
+                    <listitem>
+                        <para>Use the <parameter> errors=remount</parameter> parameter in the
+                                <filename>fstab</filename> file, which prevents data
+                            corruption.</para>
+                        <para>The system locks any write to the disk if it detects an I/O error.
+                            This configuration option should be added into the <systemitem
+                                class="service">cinder-volume</systemitem> server (the one which
+                            performs the ISCSI connection to the SAN), but also into the instances'
+                                <filename>fstab</filename> file.</para>
+                    </listitem>
+                    <listitem>
+                        <para>Do not add the entry for the SAN's disks to the <systemitem
+                                class="service">cinder-volume</systemitem>'s
+                                <filename>fstab</filename> file.</para>
+                        <para>Some systems hang on that step, which means you could lose access to
+                            your cloud-controller. To re-run the session manually, you would run the
+                            following command before performing the mount:
+                            <screen><prompt>#</prompt> <userinput>iscsiadm -m discovery -t st -p $SAN_IP $ iscsiadm -m node --target-name $IQN -p $SAN_IP -l</userinput></screen></para>
+                    </listitem>
+                    <listitem>
+                        <para>For your instances, if you have the whole <filename>/home/</filename>
+                            directory on the disk, instead of emptying the
+                                <filename>/home</filename> directory and map the disk on it, leave a
+                            user's directory with the user's bash files and the
+                                <filename>authorized_keys</filename> file.</para>
+                        <para>This enables you to connect to the instance, even without the volume
+                            attached, if you allow only connections through public keys.</para>
+                    </listitem>
+                </itemizedlist>
+            </note>
+            </simplesect>
+            <simplesect>
+                <title>C - Scripted DRP</title>
+                <procedure>
+                    <title>To use scripted DRP</title>
+                    <para>You can download from <link
+                            xlink:href="https://github.com/Razique/BashStuff/blob/master/SYSTEMS/OpenStack/SCR_5006_V00_NUAC-OPENSTACK-DRP-OpenStack.sh"
+                            >here</link> a bash script which performs
+                        these steps:</para>
+                    <step>
+                        <para>The "test mode" allows you to perform
+                            that whole sequence for only one
+                            instance.</para>
+                    </step>
+                    <step>
+                        <para>To reproduce the power loss, connect to
+                            the compute node which runs that same
+                            instance and close the iscsi session.
+                                <emphasis role="underline">Do not
+                                detach the volume through
+                                   <command>nova
+                                   volume-detach</command></emphasis>,
+                            but instead manually close the iscsi
+                            session.</para>
+                    </step>
+                    <step>
+                        <para>In this example, the iscsi session is
+                            number 15 for that instance:</para>
+                        <screen><prompt>#</prompt> <userinput>iscsiadm -m session -u -r 15</userinput></screen>
+                    </step>
+                    <step>
+                        <para>Do not forget the <literal>-r</literal>
+                            flag. Otherwise, you close ALL
+                            sessions.</para>
+                    </step>
+                </procedure>
+            </simplesect>
+        </section>
+    </section>

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="section_compute-images-and-instances"
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="5.0">
+    <title>Images and instances</title>
+    <para>Disk images provide templates for virtual machine file
+            systems. The Image Service manages storage and management
+            of images.</para>
+    <para>Instances are the individual virtual machines that run
+            on physical compute nodes. Users can launch any number of
+            instances from the same image. Each launched instance runs
+            from a copy of the base image so that any changes made to
+            the instance do not affect the base image. You can take
+            snapshots of running instances to create an image based on
+            the current disk state of a particular instance. The
+            Compute services manages instances.</para>
+    <para>When you launch an instance, you must choose a <literal>flavor</literal>, which represents
+        a set of virtual resources. Flavors define how many virtual CPUs an instance has and the
+        amount of RAM and size of its ephemeral disks. OpenStack provides a number of predefined
+        flavors that you can edit or add to. Users must select from the set of available flavors
+        defined on their cloud.</para>
+    <note><itemizedlist>
+            <listitem>
+                <para>For more information about creating and troubleshooting images, see the
+                      <link
+                      xlink:href="http://docs.openstack.org/image-guide/content/"
+                      ><citetitle>OpenStack Virtual Machine Image Guide</citetitle></link>.
+                    </para>
+            </listitem>
+            <listitem>
+                    <para>For more information about image configuration options, see the <link
+                            xlink:href="http://docs.openstack.org/trunk/config-reference/content/ch_configuring-openstack-image-service.html"
+                            >Image Services</link> section of the <citetitle>OpenStack Configuration
+                            Reference</citetitle>.</para>
+                </listitem>
+                <listitem>
+                    <para>For more information about flavors, see <xref linkend="customize-flavors"/> or the <link
+                            xlink:href="http://docs.openstack.org/trunk/openstack-ops/content/flavors.html"
+                            >Flavors</link> section in the <citetitle>OpenStack Operations
+                            Guide</citetitle>.</para>
+                </listitem>
+        </itemizedlist></note>
+        <para>You can add and remove additional resources from running
+            instances, such as persistent volume storage, or public IP
+            addresses. The example used in this chapter is of a
+            typical virtual system within an OpenStack cloud. It uses
+            the <systemitem class="service">cinder-volume</systemitem>
+            service, which provides persistent block storage, instead
+            of the ephemeral storage provided by the selected instance
+            flavor.</para>
+        <para>This diagram shows the system state prior to launching an instance. The image store,
+        fronted by the Image service (glance) has a number of predefined images. Inside the cloud, a
+        compute node contains the available vCPU, memory, and local disk resources. Additionally,
+        the <systemitem class="service">cinder-volume</systemitem> service provides a number of
+        predefined volumes.</para>
+        <figure xml:id="initial-instance-state-figure">
+            <title>Base image state with no running instances</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata
+                        fileref="../../common/figures/instance-life-1.png"
+                    />
+                </imageobject>
+            </mediaobject>
+        </figure>
+        <para>To launch an instance, select an image, a flavor, and
+            other optional attributes. The selected flavor provides a
+            root volume, labeled <literal>vda</literal> in this
+            diagram, and additional ephemeral storage, labeled
+            <literal>vdb</literal>. In this example, the
+            <systemitem class="service">cinder-volume</systemitem>
+            store is mapped to the third virtual disk on this
+            instance, <literal>vdc</literal>.</para>
+        <figure xml:id="run-instance-state-figure">
+            <title>Instance creation from image and runtime
+                state</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata
+                        fileref="../../common/figures/instance-life-2.png"
+                    />
+                </imageobject>
+            </mediaobject>
+        </figure>
+        <para>The base image is copied from the image store to the
+            local disk. The local disk is the first disk that the
+            instance accesses, and is labeled <literal>vda</literal>.
+            By using smaller images, your instances start up faster as
+            less data needs to be copied across the network.</para>
+        <para>A new empty disk, labeled <literal>vdb</literal> is also
+            created. This is an empty ephemeral disk, which is
+            destroyed when you delete the instance.</para>
+        <para>The compute node is attached to the <systemitem
+            class="service">cinder-volume</systemitem> using
+            iSCSI, and maps to the third disk, <literal>vdc</literal>.
+            The vCPU and memory resources are provisioned and the
+            instance is booted from <literal>vda</literal>. The
+            instance runs and changes data on the disks as indicated
+            in red in the diagram.
+            <!--This isn't very accessible, need to consider rewording to explain more fully. LKB  -->
+        </para>
+        <note>
+            <para>Some of the details in this example scenario might be different in your
+            environment. For example, you might use a different type of back-end storage or
+            different network protocols. One common variant is that the ephemeral storage used for
+            volumes <literal>vda</literal> and <literal>vdb</literal> could be backed by network
+            storage rather than a local disk.</para>
+        </note>
+        <para>When the instance is deleted, the state is reclaimed with the exception of the
+        persistent volume. The ephemeral storage is purged; memory and vCPU resources are released.
+        The image remains unchanged throughout.</para>
+        <figure xml:id="end-instance-state-figure">
+            <title>End state of image and volume after instance
+                exits</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata
+                        fileref="../../common/figures/instance-life-3.png"
+                   />
+                </imageobject>
+            </mediaobject>
+        </figure>
+        <xi:include href="section_compute-image-mgt.xml"/>
+        <xi:include href="../image/section_glance-property-protection.xml"/>
+        <xi:include href="section_compute-instance-building-blocks.xml"/>
+        <xi:include href="section_compute-instance-mgt-tools.xml"/>
+        <section xml:id="section_instance-scheduling-constraints">
+            <title>Control where instances run</title>
+            <para>The <link
+                xlink:href="http://docs.openstack.org/trunk/config-reference/content/">
+                <citetitle>OpenStack Configuration Reference</citetitle></link>
+                provides detailed information on controlling where your
+                instances run, including ensuring a set of instances run
+                on different compute nodes for service resiliency or on
+                the same node for high performance inter-instance
+                communications.</para>
+            <para>Admin users can specify an exact compute node to run on
+                using the command <command>--availability-zone
+                    <replaceable>availability-zone</replaceable>:<replaceable>compute-host</replaceable></command>
+            </para>
+        </section>
+    </section>
