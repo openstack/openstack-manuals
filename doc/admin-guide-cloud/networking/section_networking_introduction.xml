@@ -86,16 +86,76 @@
             </listitem>
         </itemizedlist>
     </section>
+    <section xml:id="section_networking-api-ssl">
+        <title>Configure SSL support for networking API</title>
+        <para>OpenStack Networking supports SSL for the Networking API
+           server. By default, SSL is disabled but you can enable it in
+           the <filename>neutron.conf</filename> file.</para>
+        <para>Set these options to configure SSL:</para>
+        <variablelist>
+            <varlistentry>
+                <term><code>use_ssl = True</code></term>
+                <listitem>
+                    <para>Enables SSL on the networking API server.</para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><code>ssl_cert_file = <replaceable>/path/to/certfile</replaceable></code></term>
+                <listitem>
+                    <para>Certificate file that is used when you
+                       securely start the Networking API server.</para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><code>ssl_key_file = <replaceable>/path/to/keyfile</replaceable></code></term>
+                <listitem>
+                    <para>Private key file that is used when you
+                       securely start the Networking API server.</para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><code>ssl_ca_file = <replaceable>/path/to/cafile</replaceable></code></term>
+                <listitem>
+                    <para>Optional. CA certificate file that is used
+                        when you securely start the Networking API server.
+                        This file verifies connecting clients.
+                        Set this option when API clients must
+                        authenticate to the API server by using SSL
+                        certificates that are signed by a trusted
+                        CA.</para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><code>tcp_keepidle = 600</code></term>
+                <listitem>
+                    <para>The value of TCP_KEEPIDLE, in seconds, for
+                    each server socket when starting the API
+                    server. Not supported on OS X.</para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><code>retry_until_window = 30</code></term>
+                <listitem>
+                    <para>Number of seconds to keep retrying to listen.</para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><code>backlog = 4096</code></term>
+                <listitem>
+                    <para>Number of backlog requests with with to
+                    configure the socket.</para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </section>
     <section xml:id="section_lbaas-overview">
     <title>Load Balancing-as-a-Service (LBaaS) overview</title>
-    <para>
-            <glossterm>Load Balancing-as-a-Service (LBaaS)</glossterm> enables
+    <para><glossterm>Load Balancing-as-a-Service (LBaaS)</glossterm> enables
              Networking to distribute incoming requests evenly between
              designated instances. This ensures the workload is shared
              predictably among instances, and allows more effective use of
              system resources. Incoming requests are distributed using one of
              these load balancing methods:</para>
-        <para>
             <variablelist>
                 <varlistentry>
                     <term>Round robin</term>
@@ -134,8 +194,7 @@
                 <tbody>
                     <tr>
                         <td>
-                        <glossterm baseform="Monitor (LBaaS)" role="bold">Monitors</glossterm>
-                        </td>
+                        <glossterm baseform="Monitor (LBaaS)" role="bold">Monitors</glossterm></td>
                         <td>LBaaS provides availability monitoring
                           with the <command>ping</command>, TCP, HTTP
                           and HTTPS GET methods. <glossterm
@@ -143,12 +202,11 @@
                           (LBaaS)">Monitors</glossterm> are
                           implemented to determine whether pool
                           members are available to handle
-                          requests.
-                        </td>
+                          requests.</td>
                     </tr>
                     <tr>
                         <td><emphasis role="bold">Management</emphasis></td>
-                        <td>LBaaS is managed using a variety of toolsets. The
+                        <td>LBaaS is managed using a variety of tool sets. The
                         <systemitem>REST API</systemitem> is available for
                         programmatic administration and scripting. Users perform
                         administrative management of load balancers through
@@ -169,12 +227,10 @@
                                 ensuring incoming requests are routed to the
                                 same instance within a pool of multiple
                                 instances. LBaaS supports routing decisions
-                                based on cookies and source IP address.</para>
-                        </td>
+                                based on cookies and source IP address.</para></td>
                     </tr>
                 </tbody>
             </table>
-            </para>
     </section>
     <section xml:id="section_plugin-arch">
         <title>Plug-in architecture</title>
@@ -204,16 +260,14 @@
                             (Floodlight REST Proxy)</emphasis></td>
                     <td>This guide and <link
                             xlink:href="http://www.openflowhub.org/display/floodlightcontroller/Neutron+REST+Proxy+Plugin"
-                            >http://www.openflowhub.org/display/floodlightcontroller/Neutron+REST+Proxy+Plugin</link>
-                    </td>
+                            >http://www.openflowhub.org/display/floodlightcontroller/Neutron+REST+Proxy+Plugin</link></td>
                 </tr>
                 <tr>
                     <td><emphasis role="bold">Brocade
                             Plug-in</emphasis></td>
                     <td>This guide and <link
                             xlink:href="https://wiki.openstack.org/wiki/Brocade-neutron-plugin"
-                            >https://wiki.openstack.org/wiki/Brocade-neutron-plugin</link>
-                    </td>
+                            >https://wiki.openstack.org/wiki/Brocade-neutron-plugin</link></td>
                 </tr>
                 <tr>
                     <td><emphasis role="bold">Cisco</emphasis></td>
@@ -1351,49 +1405,39 @@ interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver</programlist
             driver is required when enabling LBaaS for OVS-based
             plug-ins, including BigSwitch, Floodlight, NEC, NSX, and
             Ryu.</para>
-            <orderedlist>
-                <listitem>
-                    <para>Install the agent by running:</para>
-                    <para>
+            <procedure>
+                <step>
+                    <para>Install the agent:</para>
 <screen><prompt>#</prompt> <userinput>apt-get install neutron-lbaas-agent</userinput></screen>
-                    </para>
-                </listitem>
-                <listitem>
+                </step>
+                <step>
                     <para>Enable the <productname>HAProxy</productname>
                     plug-in using the <option>service_provider</option>
                     parameter in the <filename>/etc/neutron/neutron.conf</filename>
                         file:</para>
-                        <programlisting language="ini">
-service_provider = LOADBALANCER:Haproxy:neutron.services.loadbalancer.drivers.haproxy.plugin_driver.HaproxyOnHostPluginDriver:default</programlisting>
-                </listitem>
-                <listitem>
+                        <programlisting language="ini">service_provider = LOADBALANCER:Haproxy:neutron.services.loadbalancer.drivers.haproxy.plugin_driver.HaproxyOnHostPluginDriver:default</programlisting>
+                </step>
+                <step>
                     <para>Enable the load balancer plugin using <option>service_plugin</option> in
                         the <filename>/etc/neutron/neutron.conf</filename> file:</para>
-                        <programlisting language="ini">
-service_plugins = neutron.services.loadbalancer.plugin.LoadBalancerPlugin</programlisting>
-                </listitem>
-                <listitem>
+                        <programlisting language="ini">service_plugins = neutron.services.loadbalancer.plugin.LoadBalancerPlugin</programlisting>
+                </step>
+                <step>
                     <para>Enable the <productname>HAProxy</productname> load
                         balancer in the <filename>/etc/neutron/lbaas_agent.ini</filename> file:</para>
-                        <programlisting language="ini">
-device_driver = neutron.services.loadbalancer.drivers.haproxy.namespace_driver.HaproxyNSDriver</programlisting>
-                </listitem>
-                <listitem>
+                        <programlisting language="ini">device_driver = neutron.services.loadbalancer.drivers.haproxy.namespace_driver.HaproxyNSDriver</programlisting>
+                </step>
+                <step>
                     <para>Select the required driver in
                             the <filename>/etc/neutron/lbaas_agent.ini</filename> file:</para>
                     <para>Enable the Open vSwitch LBaaS driver:</para>
-                    <para>
-                        <programlisting language="ini">
-interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver</programlisting>
-                        Or enable the Linux Bridge LBaaS driver:
-                    </para>
-                    <para>
-                        <programlisting language="ini">
-interface_driver = neutron.agent.linux.interface.BridgeInterfaceDriver</programlisting>
-                        Apply the new settings by restarting the
+                        <programlisting language="ini">interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver</programlisting>
+                    <para>Or enable the Linux Bridge LBaaS driver:</para>
+                        <programlisting language="ini">interface_driver = neutron.agent.linux.interface.BridgeInterfaceDriver</programlisting>
+                        <para>Apply the new settings by restarting the
                         <systemitem>neutron-server</systemitem> and
                         <systemitem>neutron-lbaas-agent</systemitem>
-                        services.</para>
+                            services.</para>
                         <note><title>Upgrade from Havana to Icehouse</title>
                         <para>There were changes in LBaaS
                         server-agent communications in Icehouse so during
@@ -1401,25 +1445,21 @@ interface_driver = neutron.agent.linux.interface.BridgeInterfaceDriver</programl
                         server and agent sides before actual use of the load
                         balancing service.</para>
                         </note>
-                </listitem>
-                <listitem>
+                </step>
+                <step>
                     <para>Enable Load Balancing in the <guimenu>Project</guimenu>
                         section of the Dashboard user interface:</para>
                     <para>Change the <option>enable_lb</option> option to
                      <parameter>True</parameter> in the
                      <filename>/etc/openstack-dashboard/local_settings</filename>
                      file:</para>
-                    <para>
-                        <programlisting language="python">
-OPENSTACK_NEUTRON_NETWORK = {
-'enable_lb': True,</programlisting>
-                    </para>
+                        <programlisting language="python">OPENSTACK_NEUTRON_NETWORK = {'enable_lb': True,</programlisting>
                     <para>Apply the new settings by restarting the
                         <systemitem>httpd</systemitem> service.  You can
                         now view the Load Balancer management options in
                         dashboard's <guimenu>Project</guimenu> view.</para>
-                </listitem>
-            </orderedlist>
+                </step>
+            </procedure>
         </section>
         <section xml:id="install_neutron-fwaas-agent">
             <title>Configure FWaaS agent</title>
