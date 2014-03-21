@@ -58,7 +58,7 @@ connection = mysql://cinder:<replaceable>CINDER_DBPASS</replaceable>@<replaceabl
     <step os="ubuntu">
       <para>Use the password that you set to log in as root to create
         a <literal>cinder</literal> database.</para>
-      <screen><prompt>#</prompt> <userinput>mysql -u root -p</userinput>
+      <screen><prompt>$</prompt> <userinput>mysql -u root -p</userinput>
 <prompt>mysql></prompt> <userinput>CREATE DATABASE cinder;</userinput>
 <prompt>mysql></prompt> <userinput>GRANT ALL PRIVILEGES ON cinder.* TO 'cinder'@'localhost' \
 IDENTIFIED BY '<replaceable>CINDER_DBPASS</replaceable>';</userinput>
@@ -75,8 +75,8 @@ IDENTIFIED BY '<replaceable>CINDER_DBPASS</replaceable>';</userinput></screen>
         Service uses this user to authenticate with the Identity
         Service. Use the <literal>service</literal> tenant and give
         the user the <literal>admin</literal> role.</para>
-      <screen><prompt>#</prompt> <userinput>keystone user-create --name=cinder --pass=<replaceable>CINDER_PASS</replaceable> --email=<replaceable>cinder@example.com</replaceable></userinput>
-<prompt>#</prompt> <userinput>keystone user-role-add --user=cinder --tenant=service --role=admin</userinput></screen>
+      <screen><prompt>$</prompt> <userinput>keystone user-create --name=cinder --pass=<replaceable>CINDER_PASS</replaceable> --email=<replaceable>cinder@example.com</replaceable></userinput>
+<prompt>$</prompt> <userinput>keystone user-role-add --user=cinder --tenant=service --role=admin</userinput></screen>
     </step>
     <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
       <para>Add the credentials to the file
@@ -136,9 +136,9 @@ rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
         Service so that other OpenStack services can locate it.
         Register the service and specify the endpoint using the
           <command>keystone</command> command.</para>
-      <screen><prompt>#</prompt> <userinput>keystone service-create --name=cinder --type=volume \
+      <screen><prompt>$</prompt> <userinput>keystone service-create --name=cinder --type=volume \
   --description="OpenStack Block Storage"</userinput>
-<prompt>#</prompt> <userinput>keystone endpoint-create \
+<prompt>$</prompt> <userinput>keystone endpoint-create \
   --service-id=$(keystone service-list | awk '/ volume / {print $2}') \
   --publicurl=http://<replaceable>controller</replaceable>:8776/v1/%\(tenant_id\)s \
   --internalurl=http://<replaceable>controller</replaceable>:8776/v1/%\(tenant_id\)s \
@@ -147,9 +147,9 @@ rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
     <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
       <para>Also register a service and endpoint for version 2 of the
         Block Storage Service API.</para>
-      <screen><prompt>#</prompt> <userinput>keystone service-create --name=cinderv2 --type=volumev2 \
+      <screen><prompt>$</prompt> <userinput>keystone service-create --name=cinderv2 --type=volumev2 \
   --description="OpenStack Block Storage v2"</userinput>
-<prompt>#</prompt> <userinput>keystone endpoint-create \
+<prompt>$</prompt> <userinput>keystone endpoint-create \
   --service-id=$(keystone service-list | awk '/ volumev2 / {print $2}') \
   --publicurl=http://<replaceable>controller</replaceable>:8776/v2/%\(tenant_id\)s \
   --internalurl=http://<replaceable>controller</replaceable>:8776/v2/%\(tenant_id\)s \

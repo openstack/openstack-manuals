@@ -167,8 +167,8 @@ log_dir = /var/log/ceilometer</programlisting>
         Telemetry service uses to authenticate with the Identity
         Service. Use the <literal>service</literal> tenant and give
         the user the <literal>admin</literal> role:</para>
-      <screen><prompt>#</prompt> <userinput>keystone user-create --name=ceilometer --pass=<replaceable>CEILOMETER_PASS</replaceable> --email=<replaceable>ceilometer@example.com</replaceable></userinput>
-<prompt>#</prompt> <userinput>keystone user-role-add --user=ceilometer --tenant=service --role=admin</userinput></screen>
+      <screen><prompt>$</prompt> <userinput>keystone user-create --name=ceilometer --pass=<replaceable>CEILOMETER_PASS</replaceable> --email=<replaceable>ceilometer@example.com</replaceable></userinput>
+<prompt>$</prompt> <userinput>keystone user-role-add --user=ceilometer --tenant=service --role=admin</userinput></screen>
     </step>
     <step>
       <para>Add the credentials to the configuration files for the
@@ -215,9 +215,9 @@ os_password = <replaceable>CEILOMETER_PASS</replaceable></programlisting>
         that other OpenStack services can locate it. Use the
           <command>keystone</command> command to register the service
         and specify the endpoint:</para>
-      <screen><prompt>#</prompt> <userinput>keystone service-create --name=ceilometer --type=metering \
+      <screen><prompt>$</prompt> <userinput>keystone service-create --name=ceilometer --type=metering \
   --description="Telemetry"</userinput>
-<prompt>#</prompt> <userinput>keystone endpoint-create \
+<prompt>$</prompt> <userinput>keystone endpoint-create \
   --service-id=$(keystone service-list | awk '/ metering / {print $2}') \
   --publicurl=http://<replaceable>controller</replaceable>:8777 \
   --internalurl=http://<replaceable>controller</replaceable>:8777 \
