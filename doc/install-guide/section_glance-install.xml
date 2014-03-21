@@ -85,7 +85,7 @@ connection = mysql://glance:GLANCE_DBPASS@<replaceable>controller</replaceable>/
     <step os="ubuntu">
       <para>Use the password you created to log in as root and create
         a <literal>glance</literal> database user:</para>
-      <screen><prompt>#</prompt> <userinput>mysql -u root -p</userinput>
+      <screen><prompt>$</prompt> <userinput>mysql -u root -p</userinput>
 <prompt>mysql></prompt> <userinput>CREATE DATABASE glance;</userinput>
 <prompt>mysql></prompt> <userinput>GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'localhost' \
 IDENTIFIED BY '<replaceable>GLANCE_DBPASS</replaceable>';</userinput>
@@ -103,9 +103,9 @@ IDENTIFIED BY '<replaceable>GLANCE_DBPASS</replaceable>';</userinput></screen>
           <literal>glance</literal> user. Use the
           <literal>service</literal> tenant and give the user the
           <literal>admin</literal> role.</para>
-      <screen><prompt>#</prompt> <userinput>keystone user-create --name=glance --pass=<replaceable>GLANCE_PASS</replaceable> \
+      <screen><prompt>$</prompt> <userinput>keystone user-create --name=glance --pass=<replaceable>GLANCE_PASS</replaceable> \
    --email=<replaceable>glance@example.com</replaceable></userinput>
-<prompt>#</prompt> <userinput>keystone user-role-add --user=glance --tenant=service --role=admin</userinput></screen>
+<prompt>$</prompt> <userinput>keystone user-role-add --user=glance --tenant=service --role=admin</userinput></screen>
     </step>
     <step>
       <para>Configure the Image Service to use the Identity
@@ -170,9 +170,9 @@ flavor = keystone</programlisting>
       <para>Register the Image Service with the Identity Service so
         that other OpenStack services can locate it. Register the
         service and create the endpoint:</para>
-      <screen><prompt>#</prompt> <userinput>keystone service-create --name=glance --type=image \
+      <screen><prompt>$</prompt> <userinput>keystone service-create --name=glance --type=image \
   --description="OpenStack Image Service"</userinput>
-<prompt>#</prompt> <userinput>keystone endpoint-create \
+<prompt>$</prompt> <userinput>keystone endpoint-create \
   --service-id=$(keystone service-list | awk '/ image / {print $2}') \
   --publicurl=http://<replaceable>controller</replaceable>:9292 \
   --internalurl=http://<replaceable>controller</replaceable>:9292 \

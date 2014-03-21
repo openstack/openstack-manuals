@@ -55,7 +55,7 @@ connection = mysql://heat:<replaceable>HEAT_DBPASS</replaceable>@controller/heat
     <step>
       <para>Use the password that you set previously to log in as <literal>root</literal> and
         create a <literal>heat</literal> database user:</para>
-      <screen><prompt>#</prompt> <userinput>mysql -u root -p</userinput>
+      <screen><prompt>$</prompt> <userinput>mysql -u root -p</userinput>
 <prompt>mysql></prompt> <userinput>CREATE DATABASE heat;</userinput>
 <prompt>mysql></prompt> <userinput>GRANT ALL PRIVILEGES ON heat.* TO 'heat'@'localhost' \
 IDENTIFIED BY '<replaceable>HEAT_DBPASS</replaceable>';</userinput>
@@ -100,9 +100,9 @@ rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
         Orchestration service can use to authenticate with the
         Identity Service. Use the <literal>service</literal> tenant
         and give the user the <literal>admin</literal> role:</para>
-      <screen><prompt>#</prompt> <userinput>keystone user-create --name=heat --pass=<replaceable>HEAT_PASS</replaceable> \
+      <screen><prompt>$</prompt> <userinput>keystone user-create --name=heat --pass=<replaceable>HEAT_PASS</replaceable> \
   --email=<replaceable>heat@example.com</replaceable></userinput>
-<prompt>#</prompt> <userinput>keystone user-role-add --user=heat --tenant=service --role=admin</userinput></screen>
+<prompt>$</prompt> <userinput>keystone user-role-add --user=heat --tenant=service --role=admin</userinput></screen>
     </step>
     <step>
       <para>Edit the <filename>/etc/heat/heat.conf</filename> file to
@@ -126,16 +126,16 @@ keystone_ec2_uri = http://<replaceable>controller</replaceable>:5000/v2.0/ec2tok
         Identity Service so that other OpenStack services can locate
         these APIs. Register the service and specify the
         endpoint:</para>
-      <screen><prompt>#</prompt> <userinput>keystone service-create --name=heat --type=orchestration \
+      <screen><prompt>$</prompt> <userinput>keystone service-create --name=heat --type=orchestration \
   --description="Orchestration"</userinput>
-<prompt>#</prompt> <userinput>keystone endpoint-create \
+<prompt>$</prompt> <userinput>keystone endpoint-create \
   --service-id=$(keystone service-list | awk '/ orchestration / {print $2}') \
   --publicurl=http://<replaceable>controller</replaceable>:8004/v1/%\(tenant_id\)s \
   --internalurl=http://<replaceable>controller</replaceable>:8004/v1/%\(tenant_id\)s \
   --adminurl=http://<replaceable>controller</replaceable>:8004/v1/%\(tenant_id\)s</userinput>
-<prompt>#</prompt> <userinput>keystone service-create --name=heat-cfn --type=cloudformation \
+<prompt>$</prompt> <userinput>keystone service-create --name=heat-cfn --type=cloudformation \
   --description="Orchestration CloudFormation"</userinput>
-<prompt>#</prompt> <userinput>keystone endpoint-create \
+<prompt>$</prompt> <userinput>keystone endpoint-create \
   --service-id=$(keystone service-list | awk '/ cloudformation / {print $2}') \
   --publicurl=http://<replaceable>controller</replaceable>:8000/v1 \
   --internalurl=http://<replaceable>controller</replaceable>:8000/v1 \
