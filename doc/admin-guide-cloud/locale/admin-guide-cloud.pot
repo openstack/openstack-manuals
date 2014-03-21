@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-03-20 06:22+0000\n"
+"POT-Creation-Date: 2014-03-21 06:24+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -245,363 +245,363 @@ msgstr ""
 msgid "(ListOpt) Comma-separated list containing first the Filter class to use, followed by that Filter arguments (which vary depending on the Filter class selected)."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_ts_cinder_config.xml:7(title)
+#: ./doc/admin-guide-cloud/section_ts_cinder_config.xml:11(title)
 msgid "Troubleshoot the Block Storage configuration"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_ts_cinder_config.xml:9(para)
+#: ./doc/admin-guide-cloud/section_ts_cinder_config.xml:13(para)
 msgid "This section helps you solve some basic and common errors that you might encounter during setup and configuration of the Block Storage Service. The focus here is on failed creation of volumes. The most important thing to know is where to look in case of a failure."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_ts_cinder_config.xml:14(para)
+#: ./doc/admin-guide-cloud/section_ts_cinder_config.xml:18(para)
 msgid "Two log files are especially helpful for solving volume creation failures, the <systemitem class=\"service\">cinder-api</systemitem> log and the <systemitem class=\"service\">cinder-volume</systemitem> log. The <systemitem class=\"service\">cinder-api</systemitem> log is useful for determining if you have endpoint or connectivity issues. If you send a request to create a volume and it fails, review the <systemitem class=\"service\">cinder-api</systemitem> log to determine whether the request made it to the Block Storage service. If the request is logged and you see no errors or trace-backs, check the <systemitem class=\"service\">cinder-volume</systemitem> log for errors or trace-backs."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_ts_cinder_config.xml:28(para)
+#: ./doc/admin-guide-cloud/section_ts_cinder_config.xml:32(para)
 msgid "Create commands are listed in the <systemitem class=\"service\">cinder-api</systemitem> log."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_ts_cinder_config.xml:31(para)
+#: ./doc/admin-guide-cloud/section_ts_cinder_config.xml:35(para)
 msgid "These entries in the <filename>cinder.openstack.common.log</filename> file can be used to assist in troubleshooting your block storage configuration."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_ts_cinder_config.xml:103(para)
+#: ./doc/admin-guide-cloud/section_ts_cinder_config.xml:107(para)
 msgid "These common issues might occur during configuration. To correct, use these suggested solutions."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_ts_cinder_config.xml:107(para)
+#: ./doc/admin-guide-cloud/section_ts_cinder_config.xml:111(para)
 msgid "Issues with <literal>state_path</literal> and <literal>volumes_dir</literal> settings."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_ts_cinder_config.xml:109(para)
+#: ./doc/admin-guide-cloud/section_ts_cinder_config.xml:113(para)
 msgid "The OpenStack Block Storage uses <placeholder-1/> as the default iscsi helper and implements persistent targets. This means that in the case of a tgt restart or even a node reboot your existing volumes on that node will be restored automatically with their original IQN."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_ts_cinder_config.xml:114(para)
+#: ./doc/admin-guide-cloud/section_ts_cinder_config.xml:118(para)
 msgid "In order to make this possible the iSCSI target information needs to be stored in a file on creation that can be queried in case of restart of the tgt daemon. By default, Block Storage uses a <literal>state_path</literal> variable, which if installing with Yum or APT should be set to <filename>/var/lib/cinder/</filename>. The next part is the <literal>volumes_dir</literal> variable, by default this just simply appends a \"<literal>volumes</literal>\" directory to the <literal>state_path</literal>. The result is a file-tree <filename>/var/lib/cinder/volumes/</filename>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_ts_cinder_config.xml:127(para)
+#: ./doc/admin-guide-cloud/section_ts_cinder_config.xml:131(para)
 msgid "While this should all be handled by the installer, it can go wrong. If you have trouble creating volumes and this directory does not exist you should see an error message in the <systemitem class=\"service\">cinder-volume</systemitem> log indicating that the <literal>volumes_dir</literal> does not exist, and it should provide information about which path it was looking for."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_ts_cinder_config.xml:137(para)
+#: ./doc/admin-guide-cloud/section_ts_cinder_config.xml:141(para)
 msgid "The persistent tgt include file."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_ts_cinder_config.xml:138(para)
+#: ./doc/admin-guide-cloud/section_ts_cinder_config.xml:142(para)
 msgid "Along with the <option>volumes_dir</option> option, the iSCSI target driver also needs to be configured to look in the correct place for the persist files. This is a simple entry in the <filename>/etc/tgt/conf.d</filename> file that you should have set when you installed OpenStack. If issues occur, verify that you have a <filename>/etc/tgt/conf.d/cinder.conf</filename> file."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_ts_cinder_config.xml:147(para)
+#: ./doc/admin-guide-cloud/section_ts_cinder_config.xml:151(para)
 msgid "If the file is not present, create it with this command:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_ts_cinder_config.xml:152(para)
+#: ./doc/admin-guide-cloud/section_ts_cinder_config.xml:156(para)
 msgid "No sign of attach call in the <systemitem class=\"service\">cinder-api</systemitem> log."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_ts_cinder_config.xml:155(para)
+#: ./doc/admin-guide-cloud/section_ts_cinder_config.xml:159(para)
 msgid "This is most likely going to be a minor adjustment to your <filename>nova.conf</filename> file. Make sure that your <filename>nova.conf</filename> has this entry:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_ts_cinder_config.xml:162(para)
+#: ./doc/admin-guide-cloud/section_ts_cinder_config.xml:166(para)
 msgid "Failed to create iscsi target error in the <filename>cinder-volume.log</filename> file."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_ts_cinder_config.xml:166(para)
-msgid "You might see this error in <filename>cinder-volume.log</filename> after trying to create a volume that is 1 GB. To fix this issue:"
+#: ./doc/admin-guide-cloud/section_ts_cinder_config.xml:170(para)
+msgid "You might see this error in <filename>cinder-volume.log</filename> after trying to create a volume that is 1 GB. To fix this issue:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_ts_cinder_config.xml:170(para)
+#: ./doc/admin-guide-cloud/section_ts_cinder_config.xml:174(para)
 msgid "Change content of the <filename>/etc/tgt/targets.conf</filename> from <literal>include /etc/tgt/conf.d/*.conf</literal> to <literal>include /etc/tgt/conf.d/cinder_tgt.conf</literal>, as follows:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_ts_cinder_config.xml:179(para)
+#: ./doc/admin-guide-cloud/section_ts_cinder_config.xml:183(para)
 msgid "Restart <systemitem class=\"service\">tgt</systemitem> and <systemitem class=\"service\">cinder-*</systemitem> services so they pick up the new configuration."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_blockstorage.xml:6(title)
+#: ./doc/admin-guide-cloud/ch_blockstorage.xml:10(title)
 msgid "Block Storage"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_blockstorage.xml:7(para)
+#: ./doc/admin-guide-cloud/ch_blockstorage.xml:11(para)
 msgid "The OpenStack Block Storage service works through the interaction of a series of daemon processes named <systemitem class=\"daemon\">cinder-*</systemitem> that reside persistently on the host machine or machines. The binaries can all be run from a single node, or spread across multiple nodes. They can also be run on the same node as other OpenStack services."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_blockstorage.xml:15(title)
+#: ./doc/admin-guide-cloud/ch_blockstorage.xml:19(title)
 msgid "Introduction to Block Storage"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_blockstorage.xml:16(para)
+#: ./doc/admin-guide-cloud/ch_blockstorage.xml:20(para)
 msgid "To administer the OpenStack Block Storage service, it is helpful to understand a number of concepts. You must make certain choices when you configure the Block Storage service in OpenStack. The bulk of the options come down to two choices, single node or multi-node install. You can read a longer discussion about storage decisions in <link href=\"http://docs.openstack.org/trunk/openstack-ops/content/storage_decision.html\">Storage Decisions</link> in the <citetitle>OpenStack Operations Guide</citetitle>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_blockstorage.xml:25(para)
+#: ./doc/admin-guide-cloud/ch_blockstorage.xml:29(para)
 msgid "The OpenStack Block Storage Service enables you to add extra block-level storage to your OpenStack Compute instances. This service is similar to the Amazon EC2 Elastic Block Storage (EBS) offering."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_blockstorage.xml:32(title)
+#: ./doc/admin-guide-cloud/ch_blockstorage.xml:36(title)
 msgid "Manage volumes"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_blockstorage.xml:33(para)
+#: ./doc/admin-guide-cloud/ch_blockstorage.xml:37(para)
 msgid "The default OpenStack Block Storage service implementation is an iSCSI solution that uses Logical Volume Manager (LVM) for Linux."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_blockstorage.xml:37(para)
+#: ./doc/admin-guide-cloud/ch_blockstorage.xml:41(para)
 msgid "The OpenStack Block Storage service is not a shared storage solution like a Storage Area Network (SAN) of NFS volumes, where you can attach a volume to multiple servers. With the OpenStack Block Storage service, you can attach a volume to only one instance at a time."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_blockstorage.xml:43(para)
+#: ./doc/admin-guide-cloud/ch_blockstorage.xml:47(para)
 msgid "The OpenStack Block Storage service also provides drivers that enable you to use several vendors' back-end storage devices, in addition to or instead of the base LVM implementation."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_blockstorage.xml:48(para)
+#: ./doc/admin-guide-cloud/ch_blockstorage.xml:52(para)
 msgid "This high-level procedure shows you how to create and attach a volume to a server instance."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_blockstorage.xml:52(para)
+#: ./doc/admin-guide-cloud/ch_blockstorage.xml:56(para)
 msgid "You must configure both OpenStack Compute and the OpenStack Block Storage service through the <filename>cinder.conf</filename> file."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_blockstorage.xml:57(para)
+#: ./doc/admin-guide-cloud/ch_blockstorage.xml:61(para)
 msgid "Create a volume through the <placeholder-1/> command. This command creates an LV into the volume group (VG) <literal>cinder-volumes</literal>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_blockstorage.xml:63(para)
+#: ./doc/admin-guide-cloud/ch_blockstorage.xml:67(para)
 msgid "Attach the volume to an instance through the <placeholder-1/> command. This command creates a unique iSCSI IQN that is exposed to the compute node."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_blockstorage.xml:69(para)
+#: ./doc/admin-guide-cloud/ch_blockstorage.xml:73(para)
 msgid "The compute node, which runs the instance, now has an active ISCSI session and new local storage (usually a <filename>/dev/sdX</filename> disk)."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_blockstorage.xml:76(para)
+#: ./doc/admin-guide-cloud/ch_blockstorage.xml:80(para)
 msgid "libvirt uses that local storage as storage for the instance. The instance gets a new disk (usually a <filename>/dev/vdX</filename> disk)."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_blockstorage.xml:85(para)
-msgid "For this particular walk through, one cloud controller runs <systemitem class=\"service\">nova-api</systemitem>, <systemitem class=\"service\">nova-scheduler</systemitem>, <systemitem class=\"service\">nova-objectstore</systemitem>, <literal>nova-network</literal> and <literal>cinder-*</literal> services. Two additional compute nodes run <systemitem class=\"service\">nova-compute</systemitem>. The walk through uses a custom partitioning scheme that carves out 60 GB of space and labels it as LVM. The network uses the <literal>FlatManager</literal> and <literal>NetworkManager</literal> settings for OpenStack Compute (Nova)."
+#: ./doc/admin-guide-cloud/ch_blockstorage.xml:89(para)
+msgid "For this particular walk through, one cloud controller runs <systemitem class=\"service\">nova-api</systemitem>, <systemitem class=\"service\">nova-scheduler</systemitem>, <systemitem class=\"service\">nova-objectstore</systemitem>, <literal>nova-network</literal> and <literal>cinder-*</literal> services. Two additional compute nodes run <systemitem class=\"service\">nova-compute</systemitem>. The walk through uses a custom partitioning scheme that carves out 60 GB of space and labels it as LVM. The network uses the <literal>FlatManager</literal> and <literal>NetworkManager</literal> settings for OpenStack Compute (Nova)."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_blockstorage.xml:99(para)
+#: ./doc/admin-guide-cloud/ch_blockstorage.xml:103(para)
 msgid "The network mode does not interfere with the way cinder works, but you must set up networking for cinder to work. For details, see <xref linkend=\"ch_networking\"/>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_blockstorage.xml:102(para)
+#: ./doc/admin-guide-cloud/ch_blockstorage.xml:106(para)
 msgid "To set up Compute to use volumes, ensure that Block Storage is installed along with lvm2. This guide describes how to troubleshoot your installation and back up your Compute volumes."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_blockstorage.xml:107(title)
+#: ./doc/admin-guide-cloud/ch_blockstorage.xml:111(title)
 msgid "Boot from volume"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_blockstorage.xml:108(para)
+#: ./doc/admin-guide-cloud/ch_blockstorage.xml:112(para)
 msgid "In some cases, instances can be stored and run from inside volumes. For information, see the <link href=\"http://docs.openstack.org/user-guide/content/boot_from_volume.html\">Launch an instance from a volume</link> section in the <link href=\"http://docs.openstack.org/user-guide/content/\"><citetitle>OpenStack End User Guide</citetitle></link>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_blockstorage.xml:126(title)
+#: ./doc/admin-guide-cloud/ch_blockstorage.xml:130(title)
 msgid "Troubleshoot your installation"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_blockstorage.xml:127(para)
+#: ./doc/admin-guide-cloud/ch_blockstorage.xml:131(para)
 msgid "This section provides useful tips to help troubleshoot your Block Storage Service installation."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:6(title)
+#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:10(title)
 msgid "Back up Block Storage Service disks"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:7(para)
+#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:11(para)
 msgid "While you can use the LVM snapshot to create snapshots, you can also use it to back up your volumes. By using LVM snapshot, you reduce the size of the backup; only existing data is backed up instead of the entire volume."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:11(para)
+#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:15(para)
 msgid "To back up a volume, you must create a snapshot of it. An LVM snapshot is the exact copy of a logical volume, which contains data in a frozen state. This prevents data corruption, because data cannot be manipulated during the volume creation process. Remember that the volumes created through a <placeholder-1/> command exist in an LVM logical volume."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:18(para)
+#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:22(para)
 msgid "You must also make sure that the operating system is not using the volume, and that all data has been flushed on the guest filesystems. This usually means that those filesystems have to be unmounted during the snapshot creation. They can be mounted again as soon as the logical volume snapshot has been created."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:23(para)
+#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:27(para)
 msgid "Before you create the snapshot, you must have enough space to save it. As a precaution, you should have at least twice as much space as the potential snapshot size. If insufficient space is available, the snapshot might become corrupted."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:28(para)
-msgid "For this example, assume that a 100 GB volume named <literal>volume-00000001</literal> was created for an instance while only 4 GB are used. This example uses these commands to back up only those 4 GB:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:34(para)
-msgid "<placeholder-1/> command. Directly manipulates the volumes."
+#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:32(para)
+msgid "For this example, assume that a 100 GB volume named <literal>volume-00000001</literal> was created for an instance while only 4 GB are used. This example uses these commands to back up only those 4 GB:"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:38(para)
-msgid "<placeholder-1/> command. Discovers the partition table created inside the instance."
+msgid "<placeholder-1/> command. Directly manipulates the volumes."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:42(para)
-msgid "<placeholder-1/> command. Creates a minimum-sized backup."
+msgid "<placeholder-1/> command. Discovers the partition table created inside the instance."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:46(para)
-msgid "<placeholder-1/> command. Calculates the backup checksum to check its consistency."
+msgid "<placeholder-1/> command. Creates a minimum-sized backup."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:50(para)
+msgid "<placeholder-1/> command. Calculates the backup checksum to check its consistency."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:54(para)
 msgid "You can apply this process to volumes of any size."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:52(title)
+#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:56(title)
 msgid "To back up Block Storage Service disks"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:54(title)
+#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:58(title)
 msgid "Create a snapshot of a used volume"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:57(para)
+#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:61(para)
 msgid "Use this command to list all volumes:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:61(para)
+#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:65(para)
 msgid "Create the snapshot; you can do this while the volume is attached to an instance:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:64(para)
+#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:68(para)
 msgid "Use the <option>--snapshot</option> configuration option to tell LVM that you want a snapshot of an already existing volume. The command includes the size of the space reserved for the snapshot volume, the name of the snapshot, and the path of an already existing volume. Generally, this path is <filename>/dev/cinder-volumes/<replaceable>$volume_name</replaceable></filename>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:72(para)
+#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:76(para)
 msgid "The size does not have to be the same as the volume of the snapshot. The <parameter>size</parameter> parameter defines the space that LVM reserves for the snapshot volume. As a precaution, the size should be the same as that of the original volume, even if the whole space is not currently used by the snapshot."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:83(para)
+#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:87(para)
 msgid "Run the <placeholder-1/> command again to verify the snapshot:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:125(title)
+#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:129(title)
 msgid "Partition table discovery"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:128(para)
+#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:132(para)
 msgid "To exploit the snapshot with the <placeholder-1/> command, mount your partition on the Block Storage Service server."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:132(para)
+#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:136(para)
 msgid "The <placeholder-1/> utility discovers and maps table partitions. You can use it to view partitions that are created inside the instance. Without using the partitions created inside instances, you cannot see its content and create efficient backups."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:141(para)
+#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:145(para)
 msgid "On a Debian-based distribution, you can use the <placeholder-1/> command to install <placeholder-2/>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:146(para)
+#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:150(para)
 msgid "If the tools successfully find and map the partition table, no errors are returned."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:151(para)
+#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:155(para)
 msgid "To check the partition table map, run this command:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:154(para)
+#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:158(para)
 msgid "You can see the <literal>cinder--volumes-volume--00000001--snapshot1</literal> partition."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:157(para)
+#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:161(para)
 msgid "If you created more than one partition on that volume, you see several partitions; for example: <literal>cinder--volumes-volume--00000001--snapshot2</literal>, <literal>cinder--volumes-volume--00000001--snapshot3</literal>, and so on."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:165(para)
+#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:169(para)
 msgid "Mount your partition:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:167(para)
+#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:171(para)
 msgid "If the partition mounts successfully, no errors are returned."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:169(para)
+#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:173(para)
 msgid "You can directly access the data inside the instance. If a message prompts you for a partition or you cannot mount it, determine whether enough space was allocated for the snapshot or the <placeholder-1/> command failed to discover the partition table."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:176(para)
+#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:180(para)
 msgid "Allocate more space to the snapshot and try the process again."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:182(title)
+#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:186(title)
 msgid "Use the <placeholder-1/> command to create archives"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:184(para)
+#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:188(para)
 msgid "Create a backup of the volume:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:186(para)
+#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:190(para)
 msgid "This command creates a <filename>tar.gz</filename> file that contains the data, <emphasis role=\"italic\">and data only</emphasis>. This ensures that you do not waste space by backing up empty sectors."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:192(title)
+#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:196(title)
 msgid "Checksum calculation I"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:193(para)
+#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:197(para)
 msgid "You should always have the checksum for your backup files. When you transfer the same file over the network, you can run a checksum calculation to ensure that your file was not corrupted during its transfer. The checksum is a unique ID for a file. If the checksums are different, the file is corrupted."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:199(para)
+#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:203(para)
 msgid "Run this command to run a checksum for your file and save the result to a file:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:203(para)
+#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:207(para)
 msgid "Use the <placeholder-1/> command carefully because the time it takes to complete the calculation is directly proportional to the size of the file."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:207(para)
-msgid "For files larger than around 4 to 6 GB, and depending on your CPU, the process might take a long time."
+#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:211(para)
+msgid "For files larger than around 4 to 6 GB, and depending on your CPU, the process might take a long time."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:213(title)
+#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:217(title)
 msgid "After work cleaning"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:214(para)
+#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:218(para)
 msgid "Now that you have an efficient and consistent backup, use this command to clean up the file system:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:219(para)
+#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:223(para)
 msgid "Unmount the volume:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:223(para)
+#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:227(para)
 msgid "Delete the partition table:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:227(para)
+#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:231(para)
 msgid "Remove the snapshot:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:231(para)
+#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:235(para)
 msgid "Repeat these steps for all your volumes."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:234(title)
+#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:238(title)
 msgid "Automate your backups"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:235(para)
+#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:239(para)
 msgid "Because more and more volumes might be allocated to your Block Storage service, you might want to automate your backups. The <link href=\"https://github.com/Razique/BashStuff/blob/master/SYSTEMS/OpenStack/SCR_5005_V01_NUAC-OPENSTACK-EBS-volumes-backup.sh\">SCR_5005_V01_NUAC-OPENSTACK-EBS-volumes-backup.sh</link> script assists you with this task. The script performs the operations from the previous example, but also provides a mail report and runs the backup based on the <option>backups_retention_days</option> setting."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:245(para)
+#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:249(para)
 msgid "Launch this script from the server that runs the Block Storage Service."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:247(para)
+#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:251(para)
 msgid "This example shows a mail report:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:261(para)
+#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml:265(para)
 msgid "The script also enables you to SSH to your instances and run a <placeholder-1/> command into them. To make this work, enable the connection to the Compute project keys. If you do not want to run the <placeholder-2/> command, you can add <literal>enable_mysql_dump=0</literal> to the script to turn off this functionality."
 msgstr ""
 
@@ -1510,7 +1510,7 @@ msgstr ""
 msgid "This command also makes the Boolean persistent across reboots. Run this command on all client hosts that require access to NFS volumes on an instance. This includes all Compute nodes."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_dashboard.xml:6(title) ./doc/admin-guide-cloud/ch_compute.xml:664(title)
+#: ./doc/admin-guide-cloud/ch_dashboard.xml:6(title) ./doc/admin-guide-cloud/ch_compute.xml:668(title)
 msgid "Dashboard"
 msgstr ""
 
@@ -1552,1829 +1552,1829 @@ msgstr ""
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
-#: ./doc/admin-guide-cloud/ch_compute.xml:211(None)
+#: ./doc/admin-guide-cloud/ch_compute.xml:215(None)
 msgid "@@image: '../common/figures/instance-life-1.png'; md5=c7e56263f9ffb5a5cffb59fbc5ffba35"
 msgstr ""
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
-#: ./doc/admin-guide-cloud/ch_compute.xml:230(None)
+#: ./doc/admin-guide-cloud/ch_compute.xml:234(None)
 msgid "@@image: '../common/figures/instance-life-2.png'; md5=84aed8a4c2575548c2f8bacf496465ac"
 msgstr ""
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
-#: ./doc/admin-guide-cloud/ch_compute.xml:272(None)
+#: ./doc/admin-guide-cloud/ch_compute.xml:276(None)
 msgid "@@image: '../common/figures/instance-life-3.png'; md5=e25d1bd617373f95e1b8a12605a65ac6"
 msgstr ""
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
-#: ./doc/admin-guide-cloud/ch_compute.xml:1435(None)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1439(None)
 msgid "@@image: '../common/figures/SCH_5007_V00_NUAC-multi_nic_OpenStack-Flat-manager.jpg'; md5=31f7e15a45d042bd9d6499631e2f3ccc"
 msgstr ""
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
-#: ./doc/admin-guide-cloud/ch_compute.xml:1445(None)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1449(None)
 msgid "@@image: '../common/figures/SCH_5007_V00_NUAC-multi_nic_OpenStack-Flat-DHCP-manager.jpg'; md5=0f33a228f1dec4a4e4424dd5ee81bde8"
 msgstr ""
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
-#: ./doc/admin-guide-cloud/ch_compute.xml:1455(None)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1459(None)
 msgid "@@image: '../common/figures/SCH_5007_V00_NUAC-multi_nic_OpenStack-VLAN-manager.jpg'; md5=0acaf3e2041f941d8fee2d111f37e7ac"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:8(title) ./doc/admin-guide-cloud/networking/section_networking-config-identity.xml:102(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:12(title) ./doc/admin-guide-cloud/networking/section_networking-config-identity.xml:102(title)
 msgid "Compute"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:9(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:13(para)
 msgid "The OpenStack Compute service allows you to control an Infrastructure-as-a-Service (IaaS) cloud computing platform. It gives you control over instances and networks, and allows you to manage access to the cloud through users and projects."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:14(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:18(para)
 msgid "Compute does not include any virtualization software. Instead, it defines drivers that interact with underlying virtualization mechanisms that run on your host operating system, and exposes functionality over a web-based API."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:19(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:23(title)
 msgid "Hypervisors"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:20(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:24(para)
 msgid "Compute controls hypervisors through an API server. Selecting the best hypervisor to use can be difficult, and you must take budget, resource constraints, supported features, and required technical specifications into account. However, the majority of OpenStack development is done on systems using KVM and Xen-based hypervisors. For a detailed list of features and support across different hypervisors, see <link href=\"http://wiki.openstack.org/HypervisorSupportMatrix\">http://wiki.openstack.org/HypervisorSupportMatrix</link>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:30(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:34(para)
 msgid "You can also orchestrate clouds using multiple hypervisors in different availability zones. Compute supports the following hypervisors:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:38(link)
+#: ./doc/admin-guide-cloud/ch_compute.xml:42(link)
 msgid "Baremetal"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:45(link) ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:329(th)
+#: ./doc/admin-guide-cloud/ch_compute.xml:49(link) ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:329(th)
 msgid "Hyper-V"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:52(link)
+#: ./doc/admin-guide-cloud/ch_compute.xml:56(link)
 msgid "Kernel-based Virtual Machine (KVM)"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:58(link)
+#: ./doc/admin-guide-cloud/ch_compute.xml:62(link)
 msgid "Linux Containers (LXC)"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:64(link)
+#: ./doc/admin-guide-cloud/ch_compute.xml:68(link)
 msgid "Quick Emulator (QEMU)"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:71(link)
+#: ./doc/admin-guide-cloud/ch_compute.xml:75(link)
 msgid "User Mode Linux (UML)"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:78(link)
+#: ./doc/admin-guide-cloud/ch_compute.xml:82(link)
 msgid "VMWare vSphere"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:85(link)
+#: ./doc/admin-guide-cloud/ch_compute.xml:89(link)
 msgid "Xen"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:89(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:93(para)
 msgid "For more information about hypervisors, see the <link href=\"http://docs.openstack.org/trunk/config-reference/content/section_compute-hypervisors.html\">Hypervisors</link> section in the <citetitle>OpenStack Configuration Reference</citetitle>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:96(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:100(title)
 msgid "Tenants, users, and roles"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:97(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:101(para)
 msgid "The Compute system is designed to be used by different consumers in the form of tenants on a shared system, and role-based access assignments. Roles control the actions that a user is allowed to perform."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:101(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:105(para)
 msgid "Tenants are isolated resource containers that form the principal organizational structure within the Compute service. They consist of an individual VLAN, and volumes, instances, images, keys, and users. A user can specify the tenant by appending <literal>:project_id</literal> to their access key. If no tenant is specified in the API request, Compute attempts to use a tenant with the same ID as the user."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:109(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:113(para)
 msgid "For tenants, quota controls are available to limit the:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:113(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:117(para)
 msgid "number of volumes that may be launched."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:116(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:120(para)
 msgid "number of processor cores and the amount of RAM that can be allocated."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:120(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:124(para)
 msgid "floating IP addresses assigned to any instance when it launches. This allows instances to have the same publicly accessible IP addresses."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:125(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:129(para)
 msgid "fixed IP addresses assigned to the same instance when it launches. This allows instances to have the same publicly or privately accessible IP addresses."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:131(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:135(para)
 msgid "Roles control the actions a user is allowed to perform. By default, most actions do not require a particular role, but you can configure them by editing the <filename>policy.json</filename> file for user roles. For example, a rule can be defined so that a user must have the <parameter>admin</parameter> role in order to be able to allocate a public IP address."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:138(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:142(para)
 msgid "A tenant limits users' access to particular images. Each user is assigned a username and password. Keypairs granting access to an instance are enabled for each user, but quotas are set, so that each tenant can control resource consumption across available hardware resources."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:145(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:149(para)
 msgid "Earlier versions of OpenStack used the term <systemitem class=\"service\">project</systemitem> instead of <systemitem class=\"service\">tenant</systemitem>. Because of this legacy terminology, some command-line tools use <parameter>--project_id</parameter> where you would normally expect to enter a tenant ID."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:155(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:159(title)
 msgid "Images and instances"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:156(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:160(para)
 msgid "Disk images provide templates for virtual machine file systems. The Glance service manages storage and management of images."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:159(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:163(para)
 msgid "Instances are the individual virtual machines that run on physical compute nodes. Users can launch any number of instances from the same image. Each launched instance runs from a copy of the base image so that any changes made to the instance do not affect the base image. You can take snapshots of running instances to create an image based on the current disk state of a particular instance. The Compute services manages instances."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:167(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:171(para)
 msgid "For more information about creating and troubleshooting images, see the <citetitle><link href=\"http://docs.openstack.org/image-guide/content/\">OpenStack Virtual Machine Image Guide</link></citetitle>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:172(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:176(para)
 msgid "For more information about image configuration options, see the <link href=\"http://docs.openstack.org/trunk/config-reference/content/ch_configuring-openstack-image-service.html\">Image Services</link> section of the <citetitle>OpenStack Configuration Reference</citetitle>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:178(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:182(para)
 msgid "When you launch an instance, you must choose a <literal>flavor</literal>, which represents a set of virtual resources. Flavors define how many virtual CPUs an instance has and the amount of RAM and size of its ephemeral disks. OpenStack provides a number of predefined flavors that you can edit or add to. Users must select from the set of available flavors defined on their cloud."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:186(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:190(para)
 msgid "For more information about flavors, see the <link href=\"http://docs.openstack.org/trunk/openstack-ops/content/flavors.html\">Flavors</link> section in the <citetitle>OpenStack Operations Guide</citetitle>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:190(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:194(para)
 msgid "You can add and remove additional resources from running instances, such as persistent volume storage, or public IP addresses. The example used in this chapter is of a typical virtual system within an OpenStack cloud. It uses the <systemitem class=\"service\">cinder-volume</systemitem> service, which provides persistent block storage, instead of the ephemeral storage provided by the selected instance flavor."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:198(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:202(para)
 msgid "This diagram shows the system state prior to launching an instance. The image store, fronted by the image service, Glance, has a number of predefined images. Inside the cloud, a compute node contains the available vCPU, memory, and local disk resources. Additionally, the <systemitem class=\"service\">cinder-volume</systemitem> service provides a number of predefined volumes."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:206(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:210(title)
 msgid "Base image state with no running instances"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:215(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:219(para)
 msgid "To launch an instance, select an image, a flavor, and other optional attributes. The selected flavor provides a root volume, labeled <literal>vda</literal> in this diagram, and additional ephemeral storage, labeled <literal>vdb</literal>. In this example, the <systemitem class=\"service\">cinder-volume</systemitem> store is mapped to the third virtual disk on this instance, <literal>vdc</literal>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:224(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:228(title)
 msgid "Instance creation from image and runtime state"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:234(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:238(para)
 msgid "The base image is copied from the image store to the local disk. The local disk is the first disk that the instance accesses, and is labeled <literal>vda</literal>. By using smaller images, your instances start up faster as less data needs to be copied across the network."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:239(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:243(para)
 msgid "A new empty disk, labeled <literal>vdb</literal> is also created. This is an empty ephemeral disk, which is destroyed when you delete the instance."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:242(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:246(para)
 msgid "The compute node is attached to the <systemitem class=\"service\">cinder-volume</systemitem> using iSCSI, and maps to the third disk, <literal>vdc</literal>. The vCPU and memory resources are provisioned and the instance is booted from <literal>vda</literal>. The instance runs and changes data on the disks as indicated in red in the diagram."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:252(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:256(para)
 msgid "Some of the details in this example scenario might be different in your environment. Specifically, you might use a different type of back-end storage or different network protocols. One common variant is that the ephemeral storage used for volumes <literal>vda</literal> and <literal>vdb</literal> could be backed by network storage rather than a local disk."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:261(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:265(para)
 msgid "When the instance is deleted, the state is reclaimed with the exception of the persistent volume. The ephemeral storage is purged, memory and vCPU resources are released. The image remains unchanged throughout."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:266(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:270(title)
 msgid "End state of image and volume after instance exits"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:278(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:282(title)
 msgid "System architecture"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:279(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:283(para)
 msgid "OpenStack Compute contains several main components. The <glossterm>cloud controller</glossterm> represents the global state and interacts with the other components. The <literal>API server</literal> acts as the web services front end for the cloud controller. The <literal>compute controller</literal> provides compute server resources and usually also contains the Compute service."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:286(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:290(para)
 msgid "The <literal>object store</literal> is an optional component that provides storage services. An <literal>auth manager</literal> provides authentication and authorization services when used with the Compute system, or you can use the <literal>identity service</literal> as a separate authentication service instead. A <literal>volume controller</literal> provides fast and permanent block-level storage for the compute servers. The <literal>network controller</literal> provides virtual networks to enable compute servers to interact with each other and with the public network. The <literal>scheduler</literal> is used to select the most suitable compute controller to host an instance."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:300(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:304(para)
 msgid "Compute uses a messaging-based, <literal>shared nothing</literal> architecture. All major components exist on multiple servers, including the compute, volume, and network controllers, and the object store or image service. The state of the entire system is stored in a database. The cloud controller communicates with the internal object store using HTTP, but it communicates with the scheduler, network controller, and volume controller using AMQP (advanced message queueing protocol). To avoid blocking a component while waiting for a response, Compute uses asynchronous calls, with a callback that is triggered when a response is received."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:314(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:318(title)
 msgid "Block storage"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:315(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:319(para)
 msgid "OpenStack provides two classes of block storage: ephemeral storage and persistent volumes. Volumes are persistent virtualized block devices independent of any particular instance."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:319(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:323(para)
 msgid "Ephemeral storage is associated with a single unique instance, and it exists only for the life of that instance. The amount of ephemeral storage is defined by the flavor of the instance. Generally, the root file system for an instance will be stored on ephemeral storage. It persists across reboots of the guest operating system, but when the instance is deleted, the ephemeral storage is also removed."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:327(para)
-msgid "In addition to the ephemeral root volume, all flavors except the smallest, <filename>m1.tiny</filename>, also provide an additional ephemeral block device of between 20 and 160GB. These sizes can be configured to suit your environment. This is presented as a raw block device with no partition table or file system. Cloud-aware operating system images can discover, format, and mount these storage devices. For example, the <systemitem class=\"service\">cloud-init</systemitem> package included in Ubuntu's stock cloud images format this space as an <filename>ext3</filename> file system and mount it on <filename>/mnt</filename>. This is a feature of the guest operating system you are using, and is not an OpenStack mechanism. OpenStack only provisions the raw storage."
+#: ./doc/admin-guide-cloud/ch_compute.xml:331(para)
+msgid "In addition to the ephemeral root volume, all flavors except the smallest, <filename>m1.tiny</filename>, also provide an additional ephemeral block device of between 20 and 160 GB. These sizes can be configured to suit your environment. This is presented as a raw block device with no partition table or file system. Cloud-aware operating system images can discover, format, and mount these storage devices. For example, the <systemitem class=\"service\">cloud-init</systemitem> package included in Ubuntu's stock cloud images format this space as an <filename>ext3</filename> file system and mount it on <filename>/mnt</filename>. This is a feature of the guest operating system you are using, and is not an OpenStack mechanism. OpenStack only provisions the raw storage."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:342(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:346(para)
 msgid "Persistent volumes are created by users and their size is limited only by the user's quota and availability limits. Upon initial creation, volumes are raw block devices without a partition table or a file system. To partition or format volumes, you must attach them to an instance. Once they are attached to an instance, you can use persistent volumes in much the same way as you would use external hard disk drive. You can attach volumes to only one instance at a time, although you can detach and reattach volumes to as many different instances as you like."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:353(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:357(para)
 msgid "Persistent volumes can be configured as bootable and used to provide a persistent virtual instance similar to traditional non-cloud-based virtualization systems. Typically, the resulting instance can also still have ephemeral storage depending on the flavor selected, but the root file system can be on the persistent volume and its state maintained even if the instance is shut down. For more information about this type of configuration, see the <citetitle>OpenStack Configuration Reference</citetitle>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:364(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:368(para)
 msgid "Persistent volumes do not provide concurrent access from multiple instances. That type of configuration requires a traditional network file system like NFS or CIFS, or a cluster file system such as GlusterFS. These systems can be built within an OpenStack cluster or provisioned outside of it, but OpenStack software does not provide these features."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:374(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:378(title)
 msgid "Image management"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:375(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:379(para)
 msgid "The OpenStack Image service discovers, registers, and retrieves virtual machine images. The service also includes a RESTful API that allows you to query VM image metadata and retrieve the actual image with HTTP requests. For more information about the API, see the <link href=\"http://api.openstack.org/api-ref.html#os-images-2.0\"> OpenStack API</link> or the <link href=\"http://docs.openstack.org/developer/python-glanceclient/\"> Python API</link>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:384(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:388(para)
 msgid "The OpenStack Image service can be controlled using a command-line tool. For more information about the OpenStack Image command-line tool, see the <link href=\"http://docs.openstack.org/user-guide/content/cli_manage_images.html\"> Image Management</link> section in the <citetitle>OpenStack User Guide</citetitle>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:390(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:394(para)
 msgid "Virtual images that have been made available through the Image service can be stored in a variety of ways. In order to use these services, you must have a working installation of the Image Service, with a working endpoint, and users that have been created in the Identity Service. Additionally, you must meet the environment variables required by the Compute and Image clients."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:398(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:402(para)
 msgid "The Image Service supports these back end stores:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:401(term)
+#: ./doc/admin-guide-cloud/ch_compute.xml:405(term)
 msgid "File system"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:403(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:407(para)
 msgid "The OpenStack Image Service stores virtual machine images in the file system back-end by default. This simple back end writes image files to the local file system."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:410(term)
+#: ./doc/admin-guide-cloud/ch_compute.xml:414(term)
 msgid "Object Storage service"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:412(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:416(para)
 msgid "The OpenStack highly-available object storage service."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:417(term)
+#: ./doc/admin-guide-cloud/ch_compute.xml:421(term)
 msgid "S3"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:419(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:423(para)
 msgid "The Amazon S3 service."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:423(term)
+#: ./doc/admin-guide-cloud/ch_compute.xml:427(term)
 msgid "HTTP"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:425(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:429(para)
 msgid "OpenStack Image Service can read virtual machine images that are available on the internet using HTTP. This store is read only."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:432(term)
+#: ./doc/admin-guide-cloud/ch_compute.xml:436(term)
 msgid "Rados block device (RBD)"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:434(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:438(para)
 msgid "Stores images inside of a Ceph storage cluster using Ceph's RBD interface."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:439(term)
+#: ./doc/admin-guide-cloud/ch_compute.xml:443(term)
 msgid "GridFS"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:441(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:445(para)
 msgid "Stores images using MongoDB."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:448(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:452(title)
 msgid "Instance management tools"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:449(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:453(para)
 msgid "OpenStack provides command-line, web-based, and API-based instance management tools. Additionally, a number of third-party management tools are available, using either the native API or the provided EC2-compatible API."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:454(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:458(para)
 msgid "The OpenStack <application>python-novaclient</application> package provides a basic command-line utility, which uses the <placeholder-1/> command. This is available as a native package for most Linux distributions, or you can install the latest version using the <application>pip</application> python package installer:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:463(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:467(para)
 msgid "For more information about <application>python-novaclient</application> and other available command-line tools, see the <link href=\"http://docs.openstack.org/user-guide/content/index.html\"><citetitle>OpenStack End User Guide</citetitle></link>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:487(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:491(title)
 msgid "EC2 compatibility API"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:488(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:492(para)
 msgid "In addition to the native compute API, OpenStack provides an EC2-compatible API. This API allows EC2 legacy workflows built for EC2 to work with OpenStack."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:491(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:495(para)
 msgid "The <citetitle>OpenStack Configuration Reference</citetitle> lists configuration options for customizing this compatibility API on your OpenStack cloud."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:495(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:499(para)
 msgid "Numerous third-party tools and language-specific SDKs can be used to interact with OpenStack clouds, using both native and compatibility APIs. Some of the more popular third-party tools are:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:501(term)
+#: ./doc/admin-guide-cloud/ch_compute.xml:505(term)
 msgid "Euca2ools"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:503(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:507(para)
 msgid "A popular open source command-line tool for interacting with the EC2 API. This is convenient for multi-cloud environments where EC2 is the common API, or for transitioning from EC2-based clouds to OpenStack. For more information, see the <link href=\"http://open.eucalyptus.com/wiki/Euca2oolsGuide\">euca2ools site</link>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:514(term)
+#: ./doc/admin-guide-cloud/ch_compute.xml:518(term)
 msgid "Hybridfox"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:516(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:520(para)
 msgid "A Firefox browser add-on that provides a graphical interface to many popular public and private cloud technologies, including OpenStack. For more information, see the <link href=\"http://code.google.com/p/hybridfox/\"> hybridfox site</link>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:525(term)
+#: ./doc/admin-guide-cloud/ch_compute.xml:529(term)
 msgid "boto"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:527(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:531(para)
 msgid "A Python library for interacting with Amazon Web Services. It can be used to access OpenStack through the EC2 compatibility API. For more information, see the <link href=\"https://github.com/boto/boto\"> boto project page on GitHub</link>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:536(term)
+#: ./doc/admin-guide-cloud/ch_compute.xml:540(term)
 msgid "fog"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:538(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:542(para)
 msgid "A Ruby cloud services library. It provides methods for interacting with a large number of cloud and virtualization platforms, including OpenStack. For more information, see the <link href=\"https://rubygems.org/gems/fog\"> fog site</link>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:547(term)
+#: ./doc/admin-guide-cloud/ch_compute.xml:551(term)
 msgid "php-opencloud"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:549(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:553(para)
 msgid "A PHP SDK designed to work with most OpenStack- based cloud deployments, as well as Rackspace public cloud. For more information, see the <link href=\"http://www.php-opencloud.com\"> php-opencloud site</link>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:560(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:564(title)
 msgid "Building blocks"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:561(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:565(para)
 msgid "In OpenStack the base operating system is usually copied from an image stored in the OpenStack Image service. This is the most common case and results in an ephemeral instance that starts from a known template state and loses all accumulated states on shutdown. It is also possible to put an operating system on a persistent volume in the Nova-Volume or Cinder volume system. This gives a more traditional persistent system that accumulates states, which are preserved across restarts. To get a list of available images on your system run: <placeholder-1/>"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:580(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:584(para)
 msgid "The displayed image attributes are:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:583(literal)
+#: ./doc/admin-guide-cloud/ch_compute.xml:587(literal)
 msgid "ID"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:585(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:589(para)
 msgid "Automatically generated UUID of the image"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:590(literal)
+#: ./doc/admin-guide-cloud/ch_compute.xml:594(literal)
 msgid "Name"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:592(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:596(para)
 msgid "Free form, human-readable name for image"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:597(literal)
+#: ./doc/admin-guide-cloud/ch_compute.xml:601(literal)
 msgid "Status"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:599(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:603(para)
 msgid "The status of the image. Images marked <literal>ACTIVE</literal> are available for use."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:605(literal)
+#: ./doc/admin-guide-cloud/ch_compute.xml:609(literal)
 msgid "Server"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:607(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:611(para)
 msgid "For images that are created as snapshots of running instances, this is the UUID of the instance the snapshot derives from. For uploaded images, this field is blank."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:615(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:619(para)
 msgid "Virtual hardware templates are called <literal>flavors</literal>. The default installation provides five flavors. By default, these are configurable by admin users, however that behavior can be changed by redefining the access controls for <parameter>compute_extension:flavormanage</parameter> in <filename>/etc/nova/policy.json</filename> on the <filename>compute-api</filename> server."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:623(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:627(para)
 msgid "For a list of flavors that are available on your system:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:640(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:644(title)
 msgid "Control where instances run"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:641(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:645(para)
 msgid "The <citetitle>OpenStack Configuration Reference</citetitle> provides detailed information on controlling where your instances run, including ensuring a set of instances run on different compute nodes for service resiliency or on the same node for high performance inter-instance communications."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:650(replaceable)
+#: ./doc/admin-guide-cloud/ch_compute.xml:654(replaceable)
 msgid "availability-zone"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:650(replaceable)
+#: ./doc/admin-guide-cloud/ch_compute.xml:654(replaceable)
 msgid "compute-host"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:648(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:652(para)
 msgid "Admin users can specify an exact compute node to run on using the command <placeholder-1/>"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:655(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:659(title)
 msgid "Admin password injection"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:656(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:660(para)
 msgid "You can configure Compute to generate a random administrator (root) password and inject that password into the instance. If this feature is enabled, a user can ssh to an instance without an ssh keypair. The random password appears in the output of the <placeholder-1/> command. You can also view and set the admin password from the dashboard."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:665(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:669(para)
 msgid "The dashboard is configured by default to display the admin password and allow the user to modify it."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:668(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:672(para)
 msgid "If you do not want to support password injection, we recommend disabling the password fields by editing your Dashboard <filename>local_settings</filename> file (file location will vary by Linux distribution, on Fedora/RHEL/CentOS: <filename> /etc/openstack-dashboard/local_settings</filename>, on Ubuntu and Debian: <filename>/etc/openstack-dashboard/local_settings.py</filename> and on openSUSE and SUSE Linux Enterprise Server: <filename>/srv/www/openstack-dashboard/openstack_dashboard/local/local_settings.py</filename>) <placeholder-1/>"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:684(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:688(title)
 msgid "Libvirt-based hypervisors (KVM, QEMU, LXC)"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:685(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:689(para)
 msgid "For hypervisors such as KVM that use the libvirt backend, admin password injection is disabled by default. To enable it, set the following option in <filename>/etc/nova/nova.conf</filename>:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:693(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:697(para)
 msgid "When enabled, Compute will modify the password of the root account by editing the <filename>/etc/shadow</filename> file inside of the virtual machine instance."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:698(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:702(para)
 msgid "Users can only ssh to the instance by using the admin password if:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:702(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:706(para)
 msgid "The virtual machine image is a Linux distribution"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:706(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:710(para)
 msgid "The virtual machine has been configured to allow users to ssh as the root user. This is not the case for <link href=\"http://cloud-images.ubuntu.com/\">Ubuntu cloud images</link>, which disallow ssh to the root account by default."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:718(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:722(title)
 msgid "XenAPI (XenServer/XCP)"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:719(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:723(para)
 msgid "Compute uses the XenAPI agent to inject passwords into guests when using the XenAPI hypervisor backend. The virtual machine image must be configured with the agent for password injection to work."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:725(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:729(title)
 msgid "Windows images (all hypervisors)"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:726(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:730(para)
 msgid "To support the admin password for Windows virtual machines, you must configure the Windows image to retrieve the admin password on boot by installing an agent such as <link href=\"https://github.com/cloudbase/cloudbase-init\">cloudbase-init</link>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:736(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:740(title)
 msgid "Networking with nova-network"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:737(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:741(para)
 msgid "Understanding the networking configuration options helps you design the best configuration for your Compute instances."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:741(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:745(title)
 msgid "Networking options"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:742(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:746(para)
 msgid "This section offers a brief overview of each concept in networking for Compute. With the Grizzly release, you can choose to either install and configure <systemitem class=\"service\">nova-network</systemitem> for networking between VMs or use the Networking service (neutron) for networking. To configure Compute networking options with OpenStack Networking, see the <xref linkend=\"ch_networking\"/>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:751(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:755(para)
 msgid "For each VM instance, Compute assigns to it a private IP address. (Currently, Compute with <systemitem class=\"service\">nova-network</systemitem> only supports Linux bridge networking that enables the virtual interfaces to connect to the outside network through the physical interface.)"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:758(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:762(para)
 msgid "The network controller with <systemitem class=\"service\">nova-network</systemitem> provides virtual networks to enable compute servers to interact with each other and with the public network."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:762(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:766(para)
 msgid "Currently, Compute with <systemitem class=\"service\">nova-network</systemitem> supports these kinds of networks, implemented in different “Network Manager” types:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:768(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:772(para)
 msgid "Flat Network Manager"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:771(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:775(para)
 msgid "Flat DHCP Network Manager"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:774(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:778(para)
 msgid "VLAN Network Manager"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:777(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:781(para)
 msgid "These network managers can co-exist in a cloud system. However, because you cannot select the type of network for a given project, you cannot configure multiple network types in a single Compute installation."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:783(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:787(para)
 msgid "All networking options require network connectivity to be already set up between OpenStack physical nodes. OpenStack does not configure any physical network interfaces. All network managers automatically create VM virtual interfaces. Some, but not all, create network bridges such as <literal>br100</literal>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:790(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:794(para)
 msgid "All machines must have a <emphasis role=\"italic\">public</emphasis> and <emphasis role=\"italic\">internal</emphasis> network interface (controlled by the options: <literal>public_interface</literal> for the public interface, and <literal>flat_interface</literal> and <literal>vlan_interface</literal> for the internal interface with flat / VLAN managers). This guide refers to the public network as the external network and the private network as the internal or tenant network."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:802(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:806(para)
 msgid "The internal network interface is used for communication with VMs, it shouldn't have an IP address attached to it before OpenStack installation (it serves merely as a fabric where the actual endpoints are VMs and dnsmasq). Also, the internal network interface must be put in <emphasis role=\"italic\">promiscuous mode</emphasis>, because it must receive packets whose target MAC address is of the guest VM, not of the host."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:812(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:816(para)
 msgid "Throughout this documentation, the public network is sometimes referred to as the external network, while the internal network is also sometimes referred to as the private network or tenant network."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:818(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:822(para)
 msgid "All the network managers configure the network using <emphasis role=\"italic\">network drivers</emphasis>. For example, the Linux L3 driver (<literal>l3.py</literal> and <literal>linux_net.py</literal>), which makes use of <literal>iptables</literal>, <literal>route</literal> and other network management facilities, and libvirt's <link href=\"http://libvirt.org/formatnwfilter.html\">network filtering facilities</link>. The driver isn't tied to any particular network manager; all network managers use the same driver. The driver usually initializes (creates bridges and so on) only when the first VM lands on this host node."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:832(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:836(para)
 msgid "All network managers operate in either <emphasis role=\"italic\">single-host</emphasis> or <emphasis role=\"italic\">multi-host</emphasis> mode. This choice greatly influences the network configuration. In single-host mode, a single <systemitem class=\"service\">nova-network</systemitem> service provides a default gateway for VMs and hosts a single DHCP server (dnsmasq). In multi-host mode, each compute node runs its own <systemitem class=\"service\">nova-network</systemitem> service. In both cases, all traffic between VMs and the outer world flows through <systemitem class=\"service\">nova-network</systemitem>. Each mode has its pros and cons. Read more in the <link href=\"http://docs.openstack.org/havana/config-reference/content/\"><citetitle>OpenStack Configuration Reference</citetitle></link>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:849(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:853(para)
 msgid "Compute makes a distinction between <emphasis role=\"italic\">fixed IPs</emphasis> and <emphasis role=\"italic\">floating IPs</emphasis> for VM instances. Fixed IPs are IP addresses that are assigned to an instance on creation and stay the same until the instance is explicitly terminated. By contrast, floating IPs are addresses that can be dynamically associated with an instance. A floating IP address can be disassociated and associated with another instance at any time. A user can reserve a floating IP for their project."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:860(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:864(para)
 msgid "In <emphasis role=\"bold\">Flat Mode</emphasis>, a network administrator specifies a subnet. The IP addresses for VM instances are grabbed from the subnet, and then injected into the image on launch. Each instance receives a fixed IP address from the pool of available addresses. A system administrator must create the Linux networking bridge (typically named <literal>br100</literal>, although this is configurable) on the systems running the <systemitem class=\"service\">nova-network</systemitem> service. All instances of the system are attached to the same bridge, configured manually by the network administrator."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:874(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:878(para)
 msgid "The configuration injection currently only works on Linux-style systems that keep networking configuration in <filename>/etc/network/interfaces</filename>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:879(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:883(para)
 msgid "In <emphasis role=\"bold\">Flat DHCP Mode</emphasis>, OpenStack starts a DHCP server (dnsmasq) to pass out IP addresses to VM instances from the specified subnet in addition to manually configuring the networking bridge. IP addresses for VM instances are grabbed from a subnet specified by the network administrator."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:886(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:890(para)
 msgid "Like Flat Mode, all instances are attached to a single bridge on the compute node. In addition a DHCP server is running to configure instances (depending on single-/multi-host mode, alongside each <systemitem class=\"service\">nova-network</systemitem>). In this mode, Compute does a bit more configuration in that it attempts to bridge into an ethernet device (<literal>flat_interface</literal>, eth0 by default). For every instance, nova allocates a fixed IP address and configure dnsmasq with the MAC/IP pair for the VM. Dnsmasq doesn't take part in the IP address allocation process, it only hands out IPs according to the mapping done by nova. Instances receive their fixed IPs by doing a dhcpdiscover. These IPs are <emphasis role=\"italic\">not</emphasis> assigned to any of the host's network interfaces, only to the VM's guest-side interface."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:903(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:907(para)
 msgid "In any setup with flat networking, the hosts providing the <systemitem class=\"service\">nova-network</systemitem> service are responsible for forwarding traffic from the private network. They also run and configure dnsmasq as a DHCP server listening on this bridge, usually on IP address 10.0.0.1 (see <link linkend=\"section_dnsmasq\">DHCP server: dnsmasq </link>). Compute can determine the NAT entries for each network, though sometimes NAT is not used, such as when configured with all public IPs or a hardware router is used (one of the HA options). Such hosts need to have <literal>br100</literal> configured and physically connected to any other nodes that are hosting VMs. You must set the <literal>flat_network_bridge</literal> option or create networks with the bridge parameter in order to avoid raising an error. Compute nodes have iptables/ebtables entries created for each project and instance to protect against IP/MAC address spoofing and ARP poisoning."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:924(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:928(para)
 msgid "In single-host Flat DHCP mode you <emphasis role=\"italic\">will</emphasis> be able to ping VMs through their fixed IP from the nova-network node, but you <emphasis role=\"italic\">cannot</emphasis> ping them from the compute nodes. This is expected behavior."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:931(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:935(para)
 msgid "For flat and flat DHCP modes, create networks as follows:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:935(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:939(para)
 msgid "The confusingly-named <option>--fixed-range-v4-</option> option specifies the network subnet. The <option>--fixed-cidr</option> option specifies a range of fixed IP addresses to allocate, and can be a subset of the <option>--fixed-range-v4</option> argument. The <option>--bridge</option> option specifies the bridge device to which this network is connected on every compute node."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:944(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:948(para)
 msgid "<emphasis role=\"bold\">VLAN Network Mode is the default mode</emphasis> for OpenStack Compute. In this mode, Compute creates a VLAN and bridge for each project. For multiple machine installation, the VLAN Network Mode requires a switch that supports VLAN tagging (IEEE 802.1Q). The project gets a range of private IPs that are only accessible from inside the VLAN. In order for a user to access the instances in their project, a special VPN instance (code named cloudpipe) needs to be created. Compute generates a certificate and key for the user to access the VPN and starts the VPN automatically. It provides a private network segment for each project's instances that can be accessed through a dedicated VPN connection from the Internet. In this mode, each project gets its own VLAN, Linux networking bridge, and subnet."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:961(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:965(para)
 msgid "The subnets are specified by the network administrator, and are assigned dynamically to a project when required. A DHCP Server is started for each VLAN to pass out IP addresses to VM instances from the subnet assigned to the project. All instances belonging to one project are bridged into the same VLAN for that project. OpenStack Compute creates the Linux networking bridges and VLANs when required."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:972(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:976(title)
 msgid "DHCP server: dnsmasq"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:973(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:977(para)
 msgid "The Compute service uses <link href=\"http://www.thekelleys.org.uk/dnsmasq/doc.html\">dnsmasq</link> as the DHCP server when running with either that Flat DHCP Network Manager or the VLAN Network Manager. The <systemitem class=\"service\">nova-network</systemitem> service is responsible for starting up dnsmasq processes."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:980(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:984(para)
 msgid "The behavior of dnsmasq can be customized by creating a dnsmasq configuration file. Specify the config file using the <literal>dnsmasq_config_file</literal> configuration option. For example:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:986(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:990(para)
 msgid "See the <link href=\"http://docs.openstack.org/havana/config-reference/content/\"><citetitle>OpenStack Configuration Reference</citetitle></link> for an example of how to change the behavior of dnsmasq using a dnsmasq configuration file. The dnsmasq documentation has a more comprehensive <link href=\"http://www.thekelleys.org.uk/dnsmasq/docs/dnsmasq.conf.example\">dnsmasq configuration file example</link>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:995(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:999(para)
 msgid "Dnsmasq also acts as a caching DNS server for instances. You can explicitly specify the DNS server that dnsmasq should use by setting the <literal>dns_server</literal> configuration option in <filename>/etc/nova/nova.conf</filename>. The following example would configure dnsmasq to use Google's public DNS server:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1003(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1007(para)
 msgid "Dnsmasq logging output goes to the syslog (typically <filename>/var/log/syslog</filename> or <filename>/var/log/messages</filename>, depending on Linux distribution). The dnsmasq logging output can be useful for troubleshooting if VM instances boot successfully but are not reachable over the network."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1010(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1014(para)
 msgid "A network administrator can run <code>nova-manage fixed reserve --address=<replaceable>x.x.x.x</replaceable></code> to specify the starting point IP address (x.x.x.x) to reserve with the DHCP server. This reservation only affects which IP address the VMs start at, not the fixed IP addresses that the <systemitem class=\"service\">nova-network</systemitem> service places on the bridges."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1022(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1026(title)
 msgid "Metadata service"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1024(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1028(title)
 msgid "Introduction"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1025(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1029(para)
 msgid "The Compute service uses a special metadata service to enable virtual machine instances to retrieve instance-specific data. Instances access the metadata service at <literal>http://169.254.169.254</literal>. The metadata service supports two sets of APIs: an OpenStack metadata API and an EC2-compatible API. Each of the APIs is versioned by date."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1033(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1037(para)
 msgid "To retrieve a list of supported versions for the OpenStack metadata API, make a GET request to <literal>http://169.254.169.254/openstack</literal> For example:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1040(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1044(para)
 msgid "To list supported versions for the EC2-compatible metadata API, make a GET request to <literal>http://169.254.169.254</literal>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1043(para) ./doc/admin-guide-cloud/ch_compute.xml:1067(para) ./doc/admin-guide-cloud/ch_compute.xml:1077(para) ./doc/admin-guide-cloud/ch_compute.xml:1094(para) ./doc/admin-guide-cloud/ch_compute.xml:1122(para) ./doc/admin-guide-cloud/ch_compute.xml:1128(para) ./doc/admin-guide-cloud/ch_compute.xml:1346(para) ./doc/admin-guide-cloud/networking/section_networking-config-identity.xml:47(para) ./doc/admin-guide-cloud/networking/section_networking-config-identity.xml:61(para) ./doc/admin-guide-cloud/networking/section_networking-use.xml:461(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1047(para) ./doc/admin-guide-cloud/ch_compute.xml:1071(para) ./doc/admin-guide-cloud/ch_compute.xml:1081(para) ./doc/admin-guide-cloud/ch_compute.xml:1098(para) ./doc/admin-guide-cloud/ch_compute.xml:1126(para) ./doc/admin-guide-cloud/ch_compute.xml:1132(para) ./doc/admin-guide-cloud/ch_compute.xml:1350(para) ./doc/admin-guide-cloud/networking/section_networking-config-identity.xml:47(para) ./doc/admin-guide-cloud/networking/section_networking-config-identity.xml:61(para) ./doc/admin-guide-cloud/networking/section_networking-use.xml:461(para)
 msgid "For example:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1055(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1059(para)
 msgid "If you write a consumer for one of these APIs, always attempt to access the most recent API version supported by your consumer first, then fall back to an earlier version if the most recent one is not available."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1062(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1066(title)
 msgid "OpenStack metadata API"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1063(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1067(para)
 msgid "Metadata from the OpenStack API is distributed in JSON format. To retrieve the metadata, make a GET request to <literal>http://169.254.169.254/openstack/2012-08-10/meta_data.json</literal>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1070(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1074(para)
 msgid "Instances also retrieve user data (passed as the <literal>user_data</literal> parameter in the API call or by the <literal>--user_data</literal> flag in the <placeholder-1/> command) through the metadata service, by making a GET request to <literal>http://169.254.169.254/openstack/2012-08-10/user_data</literal>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1083(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1087(title)
 msgid "EC2 metadata API"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1084(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1088(para)
 msgid "The metadata service has an API that is compatible with version 2009-04-04 of the <link href=\"http://docs.amazonwebservices.com/AWSEC2/2009-04-04/UserGuide/AESDG-chapter-instancedata.html\">Amazon EC2 metadata service</link>; virtual machine images that are designed for EC2 work properly with OpenStack."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1090(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1094(para)
 msgid "The EC2 API exposes a separate URL for each metadata. You can retrieve a listing of these elements by making a GET query to <literal>http://169.254.169.254/2009-04-04/meta-data/</literal>"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1118(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1122(para)
 msgid "Instances can retrieve the public SSH key (identified by keypair name when a user requests a new instance) by making a GET request to <literal>http://169.254.169.254/2009-04-04/meta-data/public-keys/0/openssh-key</literal>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1125(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1129(para)
 msgid "Instances can retrieve user data by making a GET request to <literal>http://169.254.169.254/2009-04-04/user-data</literal>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1134(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1138(title)
 msgid "Run the metadata service"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1135(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1139(para)
 msgid "The metadata service is implemented by either the <systemitem class=\"service\">nova-api</systemitem> service or the <systemitem class=\"service\">nova-api-metadata</systemitem> service. (The <systemitem class=\"service\">nova-api-metadata</systemitem> service is generally only used when running in multi-host mode, see the <link href=\"http://docs.openstack.org/havana/config-reference/content/\"><citetitle>OpenStack Configuration Reference</citetitle></link> for details). If you are running the <systemitem class=\"service\">nova-api</systemitem> service, you must have <literal>metadata</literal> as one of the elements of the list of the <literal>enabled_apis</literal> configuration option in <filename>/etc/nova/nova.conf</filename>. The default <literal>enabled_apis</literal> configuration setting includes the metadata service, so you should not need to modify it."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1158(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1162(para)
 msgid "Hosts access the service at <literal>169.254.169.254:80</literal>, and this is translated to <literal>metadata_host:metadata_port</literal> by an iptables rule established by the <systemitem class=\"service\">nova-network</systemitem> servce. In multi-host mode, <option>metadata_host</option> can be set to <literal>127.0.0.1</literal>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1167(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1171(para)
 msgid "To enable instances to reach the metadata service, the <systemitem class=\"service\">nova-network</systemitem> service configures iptables to NAT port <literal>80</literal> of the <literal>169.254.169.254</literal> address to the IP address specified in <option>metadata_host</option> (default <literal>$my_ip</literal>, which is the IP address of the <systemitem class=\"service\">nova-network</systemitem> service) and port specified in <option>metadata_port</option> (default <literal>8775</literal>) in <filename>/etc/nova/nova.conf</filename>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1181(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1185(para)
 msgid "The <literal>metadata_host</literal> configuration option must be an IP address, not a host name."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1186(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1190(para)
 msgid "The default Compute service settings assume that the <systemitem class=\"service\">nova-network</systemitem> service and the <systemitem class=\"service\">nova-api</systemitem> service are running on the same host. If this is not the case, you must make this change in the <filename>/etc/nova/nova.conf</filename> file on the host running the <systemitem class=\"service\">nova-network</systemitem> service:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1197(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1201(para)
 msgid "Set the <literal>metadata_host</literal> configuration option to the IP address of the host where the <systemitem class=\"service\">nova-api</systemitem> service runs."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1208(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1212(title)
 msgid "Enable ping and SSH on VMs"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1209(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1213(para)
 msgid "Be sure you enable access to your VMs by using the <placeholder-1/> or <placeholder-2/> command. These commands enable you to <placeholder-3/> and <placeholder-4/> to your VMs:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1215(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1219(para)
 msgid "You must run these commands as root only if the credentials used to interact with <systemitem class=\"service\">nova-api</systemitem> are in <filename>/root/.bashrc</filename>. If the EC2 credentials are the <filename>.bashrc</filename> file for another user, you must run these commands as the user."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1223(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1227(para)
 msgid "Run <placeholder-1/> commands:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1226(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1230(para)
 msgid "Using euca2ools:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1229(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1233(para)
 msgid "If you still cannot ping or SSH your instances after issuing the <placeholder-1/> commands, look at the number of <literal>dnsmasq</literal> processes that are running. If you have a running instance, check to see that TWO <literal>dnsmasq</literal> processes are running. If not, perform this as root:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1240(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1244(title)
 msgid "Configure public (floating) IP addresses"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1243(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1247(para)
 msgid "This section describes how to configure floating IP addresses if you opt to use <systemitem class=\"service\">nova-network</systemitem> instead of neutron for OpenStack Networking. For instructions on how to configure neutron to provide access to instances through floating IP addresses, see <xref linkend=\"section_l3_router_and_nat\"/>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1253(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1257(title)
 msgid "Private and public IP addresses"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1254(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1258(para)
 msgid "Every virtual instance is automatically assigned a private IP address. You can optionally assign public IP addresses to instances. The term <glossterm baseform=\"floating IP address\">floating IP</glossterm> refers to an IP address, typically public, that you can dynamically add to a running virtual instance. OpenStack Compute uses Network Address Translation (NAT) to assign floating IPs to virtual instances."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1264(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1268(para)
 msgid "If you plan to use this feature, you must add edit the <filename>/etc/nova/nova.conf</filename> file to specify to which interface the <systemitem class=\"service\">nova-network</systemitem> service binds public IP addresses, as follows:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1270(replaceable)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1274(replaceable)
 msgid "vlan100"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1271(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1275(para)
 msgid "If you make changes to the <filename>/etc/nova/nova.conf</filename> file while the <systemitem class=\"service\">nova-network</systemitem> service is running, you must restart the service."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1277(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1281(title)
 msgid "Traffic between VMs using floating IPs"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1279(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1283(para)
 msgid "Because floating IPs are implemented by using a source NAT (SNAT rule in iptables), security groups can show inconsistent behavior if VMs use their floating IP to communicate with other VMs, particularly on the same physical host. Traffic from VM to VM across the fixed network does not have this issue, and so this is the recommended path. To ensure that traffic does not get SNATed to the floating range, explicitly set <placeholder-1/>. The <literal>x.x.x.x/y</literal> value specifies the range of floating IPs for each pool of floating IPs that you define. If the VMs in the source group have floating IPs, this configuration is also required."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1298(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1302(title)
 msgid "Enable IP forwarding"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1299(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1303(para)
 msgid "By default, IP forwarding is disabled on most Linux distributions. To use the floating IP feature, you must enable IP forwarding."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1303(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1307(para)
 msgid "You must enable IP forwarding on only the nodes that run the <systemitem class=\"service\">nova-network</systemitem> service. If you use <literal>multi_host</literal> mode, make sure to enable it on all compute nodes. Otherwise, enable it on only the node that runs the <systemitem class=\"service\">nova-network</systemitem> service."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1312(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1316(para)
 msgid "To check if the forwarding is enabled, run this command:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1316(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1320(para)
 msgid "Alternatively, you can run this command:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1319(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1323(para)
 msgid "In this example, IP forwarding is <emphasis role=\"bold\">disabled</emphasis>. To enable it dynamically, run this command:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1323(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1327(para)
 msgid "Or:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1325(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1329(para)
 msgid "To make the changes permanent, edit the <filename>/etc/sysctl.conf</filename> file and update the IP forwarding setting:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1329(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1333(para)
 msgid "Save the file and run this command to apply the changes:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1332(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1336(para)
 msgid "You can also update the setting by restarting the network service."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1334(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1338(para)
 msgid "For example, on Ubuntu, run this command:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1336(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1340(para)
 msgid "On RHEL/Fedora/CentOS, run this command:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1340(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1344(title)
 msgid "Create a list of available floating IP addresses"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1342(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1346(para)
 msgid "Nova maintains a list of floating IP addresses that you can assign to instances. Use the <placeholder-1/> command to add entries to this list."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1348(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1352(para)
 msgid "You can use the following <placeholder-1/> commands to perform floating IP operations:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1354(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1358(para)
 msgid "Lists the floating IP addresses in the pool."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1358(replaceable)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1362(replaceable)
 msgid "[pool name]"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1358(replaceable) ./doc/admin-guide-cloud/ch_compute.xml:1363(replaceable)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1362(replaceable) ./doc/admin-guide-cloud/ch_compute.xml:1367(replaceable)
 msgid "[CIDR]"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1359(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1363(para)
 msgid "Creates specific floating IPs for either a single address or a subnet."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1364(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1368(para)
 msgid "Removes floating IP addresses using the same parameters as the create command."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1369(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1373(para)
 msgid "For information about how administrators can associate floating IPs with instances, see <link href=\"http://docs.openstack.org/user-guide-admin/content/manage_ip_addresses.html\">Manage IP addresses</link> in the <citetitle>OpenStack Admin User Guide</citetitle>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1377(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1381(title)
 msgid "Automatically add floating IPs"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1378(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1382(para)
 msgid "You can configure the <systemitem class=\"service\">nova-network</systemitem> service to automatically allocate and assign a floating IP address to virtual instances when they are launched. Add the following line to the <filename>/etc/nova/nova.conf</filename> file and restart the <systemitem class=\"service\">nova-network</systemitem> service:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1388(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1392(para)
 msgid "If you enable this option and all floating IP addresses have already been allocated, the <placeholder-1/> command fails."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1396(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1400(title)
 msgid "Remove a network from a project"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1397(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1401(para)
 msgid "You cannot remove a network that has already been associated to a project by simply deleting it."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1399(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1403(para)
 msgid "To determine the project ID you must have admin rights. You can disassociate the project from the network with a scrub command and the project ID as the final parameter:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1403(replaceable)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1407(replaceable)
 msgid "&lt;id&gt;"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1406(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1410(title)
 msgid "Multiple interfaces for your instances (multinic)"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1409(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1413(para)
 msgid "The multi-nic feature allows you to plug more than one interface to your instances, making it possible to make several use cases available:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1414(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1418(para)
 msgid "SSL Configurations (VIPs)"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1417(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1421(para)
 msgid "Services failover/ HA"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1420(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1424(para)
 msgid "Bandwidth Allocation"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1423(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1427(para)
 msgid "Administrative/ Public access to your instances"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1430(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1434(title)
 msgid "multinic flat manager"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1440(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1444(title)
 msgid "multinic flatdhcp manager"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1450(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1454(title)
 msgid "multinic VLAN manager"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1427(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1431(para)
 msgid "Each VIF is representative of a separate network with its own IP block. Every network mode introduces it's own set of changes regarding the mulitnic usage: <placeholder-1/><placeholder-2/><placeholder-3/>"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1461(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1465(title)
 msgid "Use the multinic feature"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1462(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1466(para)
 msgid "In order to use the multinic feature, first create two networks, and attach them to your project: <placeholder-1/> Now every time you spawn a new instance, it gets two IP addresses from the respective DHCP servers:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1477(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1481(para)
 msgid "Make sure to power up the second interface on the instance, otherwise that last won't be reachable through its second IP. Here is an example of how to setup the interfaces within the instance (this is the configuration that needs to be applied inside the image):"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1483(filename)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1487(filename)
 msgid "/etc/network/interfaces"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1495(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1499(para)
 msgid "If the Virtual Network Service Neutron is installed, it is possible to specify the networks to attach to the respective interfaces by using the <literal>--nic</literal> flag when invoking the <literal>nova</literal> command: <placeholder-1/>"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1507(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1511(title)
 msgid "Troubleshoot Networking"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1509(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1513(title)
 msgid "Cannot reach floating IPs"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1510(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1514(para)
 msgid "If you cannot reach your instances through the floating IP address, make sure the default security group allows ICMP (ping) and SSH (port 22), so that you can reach the instances:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1521(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1525(para)
 msgid "Ensure the NAT rules have been added to iptables on the node that nova-network is running on, as root:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1529(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1533(para)
 msgid "Check that the public address, in this example \"68.99.26.170\", has been added to your public interface: You should see the address in the listing when you enter \"ip addr\" at the command prompt."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1541(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1545(para)
 msgid "Note that you cannot SSH to an instance with a public IP from within the same server as the routing configuration won't allow it."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1544(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1548(para)
 msgid "You can use <placeholder-1/> to identify if packets are being routed to the inbound interface on the compute host. If the packets are reaching the compute hosts but the connection is failing, the issue may be that the packet is being dropped by reverse path filtering. Try disabling reverse path filtering on the inbound interface. For example, if the inbound interface is <literal>eth2</literal>, as root:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1554(replaceable)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1558(replaceable)
 msgid "eth2"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1555(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1559(para)
 msgid "If this solves your issue, add this line to <filename>/etc/sysctl.conf</filename> so that the reverse path filter is disabled the next time the compute host reboots: <placeholder-1/>"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1562(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1566(title)
 msgid "Disable firewall"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1563(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1567(para)
 msgid "To help debug networking issues with reaching VMs, you can disable the firewall by setting the following option in <filename>/etc/nova/nova.conf</filename>:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1568(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1572(para)
 msgid "We strongly recommend you remove this line to re-enable the firewall once your networking issues have been resolved."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1573(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1577(title)
 msgid "Packet loss from instances to nova-network server (VLANManager mode)"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1575(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1579(para)
 msgid "If you can SSH to your instances but you find that the network interactions to your instance is slow, or if you find that running certain operations are slower than they should be (for example, <placeholder-1/>), then there may be packet loss occurring on the connection to the instance."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1582(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1586(para)
 msgid "Packet loss can be caused by Linux networking configuration settings related to bridges. Certain settings can cause packets to be dropped between the VLAN interface (for example, <literal>vlan100</literal>) and the associated bridge interface (for example, <literal>br100</literal>) on the host running the <systemitem class=\"service\">nova-network</systemitem> service."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1591(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1595(para)
 msgid "One way to check if this is the issue in your setup is to open up three terminals and run the following commands:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1594(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1598(para)
 msgid "In the first terminal, on the host running nova-network, use <placeholder-1/> to monitor DNS-related traffic (UDP, port 53) on the VLAN interface. As root:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1599(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1603(para)
 msgid "In the second terminal, also on the host running nova-network, use <placeholder-1/> to monitor DNS-related traffic on the bridge interface. As root:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1604(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1608(para)
 msgid "In the third terminal, SSH inside of the instance and generate DNS requests by using the <placeholder-1/> command:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1608(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1612(para)
 msgid "The symptoms may be intermittent, so try running <placeholder-1/> multiple times. If the network configuration is correct, the command should return immediately each time. If it is not functioning properly, the command hangs for several seconds."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1614(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1618(para)
 msgid "If the <placeholder-1/> command sometimes hangs, and there are packets that appear in the first terminal but not the second, then the problem may be due to filtering done on the bridges. Try to disable filtering, as root:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1622(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1626(para)
 msgid "If this solves your issue, add this line to <filename>/etc/sysctl.conf</filename> so that these changes take effect the next time the host reboots:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1631(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1635(title)
 msgid "KVM: Network connectivity works initially, then fails"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1633(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1637(para)
 msgid "Some administrators have observed an issue with the KVM hypervisor where instances running Ubuntu 12.04 sometimes loses network connectivity after functioning properly for a period of time. Some users have reported success with loading the vhost_net kernel module as a workaround for this issue (see <link href=\"https://bugs.launchpad.net/ubuntu/+source/libvirt/+bug/997978/\">bug #997978</link>) . This kernel module may also <link href=\"http://www.linux-kvm.org/page/VhostNet\">improve network performance on KVM</link>. To load the kernel module, as root:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1648(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1652(para)
 msgid "Loading the module has no effect on running instances."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1655(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1659(title)
 msgid "Volumes"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1656(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1660(para)
 msgid "The Block Storage Service provides persistent block storage resources that OpenStack Compute instances can consume."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1659(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1663(para)
 msgid "See the <citetitle>OpenStack Configuration Reference</citetitle> for information about configuring volume drivers and creating and attaching volumes to server instances."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1665(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1669(title)
 msgid "System administration"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1666(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1670(para)
 msgid "By understanding how the different installed nodes interact with each other you can administer the Compute installation. Compute offers many ways to install using multiple servers but the general idea is that you can have multiple compute nodes that control the virtual servers and a cloud controller node that contains the remaining Compute services."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1673(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1677(para)
 msgid "The Compute cloud works through the interaction of a series of daemon processes named nova-* that reside persistently on the host machine or machines. These binaries can all run on the same machine or be spread out on multiple boxes in a large deployment. The responsibilities of Services, Managers, and Drivers, can be a bit confusing at first. Here is an outline the division of responsibilities to make understanding the system a little bit easier."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1682(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1686(para)
 msgid "Currently, Services are <systemitem class=\"service\">nova-api</systemitem>, <systemitem class=\"service\">nova-objectstore</systemitem> (which can be replaced with Glance, the OpenStack Image Service), <systemitem class=\"service\">nova-compute</systemitem>, and <systemitem class=\"service\">nova-network</systemitem>. Managers and Drivers are specified by configuration options and loaded using utils.load_object(). Managers are responsible for a certain aspect of the system. It is a logical grouping of code relating to a portion of the system. In general other components should be using the manager to make changes to the components for which it is responsible."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1697(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1701(para)
 msgid "<systemitem class=\"service\">nova-api</systemitem>. Receives xml requests and sends them to the rest of the system. It is a wsgi app that routes and authenticate requests. It supports the EC2 and OpenStack APIs. There is a <filename>nova-api.conf</filename> file created when you install Compute."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1706(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1710(para)
 msgid "<systemitem class=\"service\">nova-objectstore</systemitem>: The <systemitem class=\"service\">nova-objectstore</systemitem> service is an ultra simple file-based storage system for images that replicates most of the S3 API. It can be replaced with OpenStack Image Service and a simple image manager or use OpenStack Object Storage as the virtual machine image storage facility. It must reside on the same node as <systemitem class=\"service\">nova-compute</systemitem>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1720(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1724(para)
 msgid "<systemitem class=\"service\">nova-compute</systemitem>. Responsible for managing virtual machines. It loads a Service object which exposes the public methods on ComputeManager through Remote Procedure Call (RPC)."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1728(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1732(para)
 msgid "<systemitem class=\"service\">nova-network</systemitem>. Responsible for managing floating and fixed IPs, DHCP, bridging and VLANs. It loads a Service object which exposes the public methods on one of the subclasses of NetworkManager. Different networking strategies are available to the service by changing the network_manager configuration option to FlatManager, FlatDHCPManager, or VlanManager (default is VLAN if no other is specified)."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1741(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1745(title)
 msgid "Compute service architecture"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1742(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1746(para)
 msgid "These basic categories describe the service architecture and what's going on within the cloud controller."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1746(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1750(title)
 msgid "API server"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1747(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1751(para)
 msgid "At the heart of the cloud framework is an API server. This API server makes command and control of the hypervisor, storage, and networking programmatically available to users in realization of the definition of cloud computing."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1752(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1756(para)
 msgid "The API endpoints are basic HTTP web services which handle authentication, authorization, and basic command and control functions using various API interfaces under the Amazon, Rackspace, and related models. This enables API compatibility with multiple existing tool sets created for interaction with offerings from other vendors. This broad compatibility prevents vendor lock-in."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1763(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1767(title)
 msgid "Message queue"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1764(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1768(para)
 msgid "A messaging queue brokers the interaction between compute nodes (processing), the networking controllers (software which controls network infrastructure), API endpoints, the scheduler (determines which physical hardware to allocate to a virtual resource), and similar components. Communication to and from the cloud controller is by HTTP requests through multiple API endpoints."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1773(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1777(para)
 msgid "A typical message passing event begins with the API server receiving a request from a user. The API server authenticates the user and ensures that the user is permitted to issue the subject command. Availability of objects implicated in the request is evaluated and, if available, the request is routed to the queuing engine for the relevant workers. Workers continually listen to the queue based on their role, and occasionally their type host name. When such listening produces a work request, the worker takes assignment of the task and begins its execution. Upon completion, a response is dispatched to the queue which is received by the API server and relayed to the originating user. Database entries are queried, added, or removed as necessary throughout the process."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1792(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1796(title)
 msgid "Compute worker"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1793(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1797(para)
 msgid "Compute workers manage computing instances on host machines. The API dispatches commands to compute workers to complete these tasks:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1798(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1802(para)
 msgid "Run instances"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1801(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1805(para)
 msgid "Terminate instances"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1804(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1808(para)
 msgid "Reboot instances"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1807(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1811(para)
 msgid "Attach volumes"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1810(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1814(para)
 msgid "Detach volumes"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1813(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1817(para)
 msgid "Get console output"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1818(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1822(title)
 msgid "Network Controller"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1819(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1823(para)
 msgid "The Network Controller manages the networking resources on host machines. The API server dispatches commands through the message queue, which are subsequently processed by Network Controllers. Specific operations include:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1826(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1830(para)
 msgid "Allocate fixed IP addresses"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1829(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1833(para)
 msgid "Configuring VLANs for projects"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1832(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1836(para)
 msgid "Configuring networks for compute nodes"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1839(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1843(title)
 msgid "Manage Compute users"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1840(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1844(para)
 msgid "Access to the Euca2ools (ec2) API is controlled by an access and secret key. The user’s access key needs to be included in the request, and the request must be signed with the secret key. Upon receipt of API requests, Compute verifies the signature and runs commands on behalf of the user."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1846(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1850(para)
 msgid "To begin using Compute, you must create a user with the Identity Service."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1850(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1854(title)
 msgid "Manage the cloud"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1851(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1855(para)
 msgid "A system administrator can use these tools to manage a cloud; the nova client, the <placeholder-1/> command, and the <placeholder-2/> commands."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1855(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1859(para)
 msgid "The <placeholder-1/> command can only be run by cloud administrators. Both nova client and euca2ools can be used by all users, though specific commands might be restricted by Role Based Access Control in the Identity Service."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1861(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1865(title)
 msgid "To use the nova command-line tool"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1863(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1867(para)
 msgid "Installing the python-novaclient gives you a <code>nova</code> shell command that enables Compute API interactions from the command line. You install the client, and then provide your user name and password, set as environment variables for convenience, and then you can have the ability to send commands to your cloud on the command-line."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1871(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1875(para)
 msgid "To install python-novaclient, download the tarball from <link href=\"http://pypi.python.org/pypi/python-novaclient/2.6.3#downloads\">http://pypi.python.org/pypi/python-novaclient/2.6.3#downloads</link> and then install it in your favorite python environment."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1880(para) ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:497(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1884(para) ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:497(para)
 msgid "As <systemitem class=\"username\">root</systemitem> execute:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1884(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1888(para)
 msgid "Now that you have installed the python-novaclient, confirm the installation by entering:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1903(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1907(para)
 msgid "This command returns a list of nova commands and parameters. Set the required parameters as environment variables to make running commands easier. You can add <parameter>--os-username</parameter>, for example, on the nova command, or set it as environment variables:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1915(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1919(para)
 msgid "Using the Identity Service, you are supplied with an authentication endpoint, which nova recognizes as the <literal>OS_AUTH_URL</literal>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1926(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1930(title)
 msgid "To use the nova-manage command"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1927(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1931(para)
 msgid "The nova-manage command may be used to perform many essential functions for administration and ongoing maintenance of nova, such as network creation or user manipulation."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1932(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1936(para)
 msgid "The man page for nova-manage has a good explanation for each of its functions, and is recommended reading for those starting out. Access it by running:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1939(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1943(para)
 msgid "For administrators, the standard pattern for executing a nova-manage command is:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1941(replaceable)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1945(replaceable)
 msgid "[args]"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1944(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1948(para)
 msgid "For example, to obtain a list of all projects:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1949(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1953(para)
 msgid "Run without arguments to see a list of available command categories:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1954(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1958(para)
 msgid "You can also run with a category argument such as user to see a list of all commands in that category:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1961(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1965(title)
 msgid "Use the euca2ools commands"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1962(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1966(para)
 msgid "For a command-line interface to EC2 API calls, use the euca2ools command-line tool. See <link href=\"http://open.eucalyptus.com/wiki/Euca2oolsGuide_v1.3\">http://open.eucalyptus.com/wiki/Euca2oolsGuide_v1.3</link>"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1971(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1975(title)
 msgid "Manage logs"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1973(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1977(title)
 msgid "Logging module"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1974(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1978(para)
 msgid "Add this line to the <filename>/etc/nova/nova.conf</filename> file to specify a configuration file to change the logging behavior. To change the logging level, such as <literal>DEBUG</literal>, <literal>INFO</literal>, <literal>WARNING</literal>, <literal>ERROR</literal>): <placeholder-1/>"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1983(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1987(para)
 msgid "The log config file is an ini-style config file which must contain a section called <literal>logger_nova</literal>, which controls the behavior of the logging facility in the <literal>nova-*</literal> services. The file must contain a section called <literal>logger_nova</literal>, for example:<placeholder-1/>"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:1994(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:1998(para)
 msgid "This example sets the debugging level to <literal>INFO</literal> (which less verbose than the default <literal>DEBUG</literal> setting). See the <link href=\"http://docs.python.org/release/2.7/library/logging.html#configuration-file-format\">Python documentation on logging configuration file format </link>for more details on this file, including the meaning of the <literal>handlers</literal> and <literal>quaname</literal> variables. See <link href=\"http://git.openstack.org/cgit/openstack/nova/plain/etc/nova/logging_sample.conf\">etc/nova/logging_sample.conf</link> in the openstack/nova repository on GitHub for an example <filename>logging.conf</filename> file with various handlers defined."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2012(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2016(title)
 msgid "Syslog"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2013(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2017(para)
 msgid "You can configure OpenStack Compute services to send logging information to syslog. This is useful if you want to use rsyslog, which forwards the logs to a remote machine. You need to separately configure the Compute service (Nova), the Identity Service (Keystone), the Image Service (Glance), and, if you are using it, the Block Storage Service (Cinder) to send log messages to syslog. To do so, add these lines to:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2024(filename)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2028(filename)
 msgid "/etc/nova/nova.conf"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2027(filename)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2031(filename)
 msgid "/etc/keystone/keystone.conf"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2030(filename)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2034(filename)
 msgid "/etc/glance/glance-api.conf"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2033(filename)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2037(filename)
 msgid "/etc/glance/glance-registry.conf"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2036(filename)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2040(filename)
 msgid "/etc/cinder/cinder.conf"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2046(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2050(para)
 msgid "While the example above uses the same local facility for each service (<literal>LOG_LOCAL0</literal>, which corresponds to syslog facility <literal>LOCAL0</literal>), we recommend that you configure a separate local facility for each service, as this provides better isolation and more flexibility. For example, you may want to capture logging info at different severity levels for different services. Syslog allows you to define up to seven local facilities, <literal>LOCAL0, LOCAL1, ..., LOCAL7</literal>. See the syslog documentation for more details."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2043(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2047(para)
 msgid "In addition to enabling syslog, these settings also turn off more verbose output and debugging output from the log.<placeholder-1/>"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2064(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2068(title)
 msgid "Rsyslog"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2065(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2069(para)
 msgid "Rsyslog is a useful tool for setting up a centralized log server across multiple machines. We briefly describe the configuration to set up an rsyslog server; a full treatment of rsyslog is beyond the scope of this document. We assume rsyslog has already been installed on your hosts, which is the default on most Linux distributions."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2073(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2077(para)
 msgid "This example shows a minimal configuration for <filename>/etc/rsyslog.conf</filename> on the log server host, which receives the log files:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2080(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2084(para)
 msgid "Add to <filename>/etc/rsyslog.conf</filename> a filter rule on which looks for a host name. The example below use <replaceable>compute-01</replaceable> as an example of a compute host name:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2085(replaceable)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2089(replaceable)
 msgid "compute-01"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2086(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2090(para)
 msgid "On the compute hosts, create a file named <filename>/etc/rsyslog.d/60-nova.conf</filename>, with this content:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2093(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2097(para)
 msgid "Once you have created this file, restart your rsyslog daemon. Error-level log messages on the compute hosts should now be sent to your log server."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2102(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2106(title)
 msgid "Migration"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2103(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2107(para)
 msgid "Before starting migrations, review the <link linkend=\"section_configuring-compute-migrations\">Configure migrations section</link>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2104(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2108(para)
 msgid "Migration provides a scheme to migrate running instances from one OpenStack Compute server to another OpenStack Compute server."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2108(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2112(title)
 msgid "To migrate instances"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2110(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2114(para)
 msgid "Look at the running instances, to get the ID of the instance you wish to migrate."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2121(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2125(para)
 msgid "Look at information associated with that instance - our example is vm1 from above."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2138(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2142(para)
 msgid "In this example, vm1 is running on HostB."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2142(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2146(para)
 msgid "Select the server to migrate instances to."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2149(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2153(para)
 msgid "In this example, HostC can be picked up because <systemitem class=\"service\">nova-compute</systemitem> is running on it."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2155(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2159(para)
 msgid "Ensure that HostC has enough resource for migration."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2167(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2171(para)
 msgid "<emphasis role=\"bold\">cpu:</emphasis>the number of cpu"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2172(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2176(para)
 msgid "<emphasis role=\"bold\">mem(mb):</emphasis>total amount of memory (MB)"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2177(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2181(para)
 msgid "<emphasis role=\"bold\">hdd:</emphasis>total amount of space for NOVA-INST-DIR/instances (GB)"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2183(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2187(para)
 msgid "<emphasis role=\"bold\">1st line shows </emphasis>total amount of resource physical server has."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2188(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2192(para)
 msgid "<emphasis role=\"bold\">2nd line shows </emphasis>current used resource."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2193(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2197(para)
 msgid "<emphasis role=\"bold\">3rd line shows </emphasis>maximum used resource."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2198(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2202(para)
 msgid "<emphasis role=\"bold\">4th line and under</emphasis> shows the resource for each project."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2205(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2209(para)
 msgid "Use the <placeholder-1/> command to migrate the instances."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2218(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2222(para)
 msgid "While the nova command is called <placeholder-1/>, under the default Compute configuration options the instances are suspended before migration."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2223(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2227(para)
 msgid "See <link href=\"http://docs.openstack.org/havana/config-reference/content/configuring-openstack-compute-basics.html\">Configure migrations</link> in <citetitle>OpenStack Configuration Reference</citetitle> for more details."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2209(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2213(para)
 msgid "Make sure instances are migrated successfully with <placeholder-1/>. If instances are still running on HostB, check log files (src/dest <systemitem class=\"service\">nova-compute</systemitem> and <systemitem class=\"service\">nova-scheduler</systemitem>) to determine why. <placeholder-2/>"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2235(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2239(title)
 msgid "Recover from a failed compute node"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2236(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2240(para)
 msgid "If you have deployed Compute with a shared file system, you can quickly recover from a failed compute node. Of the two methods covered in these sections, the evacuate API is the preferred method even in the absence of shared storage. The evacuate API provides many benefits over manual recovery, such as re-attachment of volumes and floating IPs."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2245(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2249(title)
 msgid "Manual recovery"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2246(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2250(para)
 msgid "For KVM/libvirt compute node recovery, see the previous section. Use this procedure for other hypervisors."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2250(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2254(title)
 msgid "To work with host information"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2252(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2256(para)
 msgid "Identify the vms on the affected hosts, using tools such as a combination of <literal>nova list</literal> and <literal>nova show</literal> or <literal>euca-describe-instances</literal>. Here's an example using the EC2 API - instance i-000015b9 that is running on node np-rcc54:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2263(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2267(para)
 msgid "You can review the status of the host by using the nova database. Some of the important information is highlighted below. This example converts an EC2 API instance ID into an OpenStack ID - if you used the <literal>nova</literal> commands, you can substitute the ID directly. You can find the credentials for your database in <filename>/etc/nova.conf</filename>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2294(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2298(title)
 msgid "To recover the VM"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2296(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2300(para)
 msgid "Armed with the information of VMs on the failed host, determine to which compute host the affected VMs should move. Run the following database command to move the VM to np-rcc46:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2304(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2308(para)
 msgid "Next, if using a hypervisor that relies on libvirt (such as KVM) it is a good idea to update the <literal>libvirt.xml</literal> file (found in <literal>/var/lib/nova/instances/[instance ID]</literal>). The important changes to make are to change the <literal>DHCPSERVER</literal> value to the host ip address of the compute host that is the VMs new home, and update the VNC IP if it isn't already <literal>0.0.0.0</literal>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2319(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2323(para)
 msgid "Next, reboot the VM:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2323(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2327(para)
 msgid "In theory, the above database update and <literal>nova reboot</literal> command are all that is required to recover the VMs from a failed host. However, if further problems occur, consider looking at recreating the network filter configuration using <literal>virsh</literal>, restarting the Compute services or updating the <literal>vm_state</literal> and <literal>power_state</literal> in the Compute database."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2340(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2344(title)
 msgid "Recover from a UID/GID mismatch"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2341(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2345(para)
 msgid "When running OpenStack compute, using a shared file system or an automated configuration tool, you could encounter a situation where some files on your compute node are using the wrong UID or GID. This causes a raft of errors, such as being unable to live migrate, or start virtual machines."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2347(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2351(para)
 msgid "This basic procedure runs on <systemitem class=\"service\">nova-compute</systemitem> hosts, based on the KVM hypervisor, that could help to restore the situation:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2352(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2356(title)
 msgid "To recover from a UID/GID mismatch"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2354(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2358(para)
 msgid "Make sure you don't use numbers that are already used for some other user/group."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2358(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2362(para)
 msgid "Set the nova uid in <filename>/etc/passwd</filename> to the same number in all hosts (for example, 112)."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2364(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2368(para)
 msgid "Set the libvirt-qemu uid in <filename>/etc/passwd</filename> to the same number in all hosts (for example, 119)."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2370(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2374(para)
 msgid "Set the nova group in <filename>/etc/group</filename> file to the same number in all hosts (for example, 120)."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2376(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2380(para)
 msgid "Set the libvirtd group in <filename>/etc/group</filename> file to the same number in all hosts (for example, 119)."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2382(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2386(para)
 msgid "Stop the services on the compute node."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2386(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2390(para)
 msgid "Change all the files owned by user nova or by group nova. For example:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2392(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2396(para)
 msgid "Repeat the steps for the libvirt-qemu owned files if those were needed to change."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2396(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2400(para)
 msgid "Restart the services."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2399(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2403(para)
 msgid "Now you can run the <placeholder-1/> command to verify that all files using the correct identifiers."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2406(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2410(title)
 msgid "Compute disaster recovery process"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2407(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2411(para)
 msgid "In this section describes how to manage your cloud after a disaster, and how to easily back up the persistent storage volumes. Backups <emphasis role=\"bold\">are</emphasis> mandatory, even outside of disaster scenarios."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2412(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2416(para)
 msgid "For reference, you can find a DRP definition at <link href=\"http://en.wikipedia.org/wiki/Disaster_Recovery_Plan\">http://en.wikipedia.org/wiki/Disaster_Recovery_Plan</link>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2417(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2421(title)
 msgid "A- The disaster recovery process presentation"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2419(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2423(para)
 msgid "A disaster could happen to several components of your architecture: a disk crash, a network loss, a power cut, and so on. In this example, assume the following set up:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2425(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2429(para)
 msgid "A cloud controller (nova-api, nova-objecstore, nova-network)"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2429(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2433(para)
 msgid "A compute node (<systemitem class=\"service\">nova-compute</systemitem>)"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2434(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2438(para)
 msgid "A Storage Area Network used by <systemitem class=\"service\">cinder-volumes</systemitem> (aka SAN)"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2440(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2444(para)
 msgid "The disaster example is the worst one: a power loss. That power loss applies to the three components. <emphasis role=\"italic\">Let's see what runs and how it runs before the crash</emphasis>:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2447(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2451(para)
 msgid "From the SAN to the cloud controller, we have an active iscsi session (used for the \"cinder-volumes\" LVM's VG)."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2452(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2456(para)
 msgid "From the cloud controller to the compute node we also have active iscsi sessions (managed by <systemitem class=\"service\">cinder-volume</systemitem>)."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2458(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2462(para)
 msgid "For every volume an iscsi session is made (so 14 ebs volumes equals 14 sessions)."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2463(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2467(para)
 msgid "From the cloud controller to the compute node, we also have iptables/ ebtables rules which allows the access from the cloud controller to the running instance."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2470(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2474(para)
 msgid "And at least, from the cloud controller to the compute node ; saved into database, the current state of the instances (in that case \"running\" ), and their volumes attachment (mount point, volume id, volume status, and so on.)"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2478(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2482(para)
 msgid "Now, after the power loss occurs and all hardware components restart, the situation is as follows:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2483(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2487(para)
 msgid "From the SAN to the cloud, the ISCSI session no longer exists."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2487(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2491(para)
 msgid "From the cloud controller to the compute node, the ISCSI sessions no longer exist."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2492(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2496(para)
 msgid "From the cloud controller to the compute node, the iptables and ebtables are recreated, since, at boot, nova-network reapply the configurations."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2498(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2502(para)
 msgid "From the cloud controller, instances turn into a shutdown state (because they are no longer running)"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2503(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2507(para)
 msgid "Into the database, data was not updated at all, since Compute could not have guessed the crash."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2508(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2512(para)
 msgid "Before going further, and to prevent the admin to make fatal mistakes,<emphasis role=\"bold\"> the instances won't be lost</emphasis>, because no \"<placeholder-1/>\" or \"<placeholder-2/>\" command was invoked, so the files for the instances remain on the compute node."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2515(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2519(para)
 msgid "Perform these tasks in that exact order."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2516(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2520(para)
 msgid "<emphasis role=\"underline\">Any extra step would be dangerous at this stage</emphasis> :"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2521(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2525(para)
 msgid "Get the current relation from a volume to its instance, so that you can recreate the attachment."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2526(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2530(para)
 msgid "Update the database to clean the stalled state. (After that, you cannot perform the first step)."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2531(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2535(para)
 msgid "Restart the instances. In other words, go from a shutdown to running state."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2536(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2540(para)
 msgid "After the restart, you can reattach the volumes to their respective instances."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2541(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2545(para)
 msgid "That step, which is not a mandatory one, exists in an SSH into the instances to reboot them."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2549(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2553(title)
 msgid "B - Disaster recovery"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2551(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2555(title)
 msgid "To perform disaster recovery"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2553(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2557(title)
 msgid "Get the instance-to-volume relationship"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2555(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2559(para)
 msgid "You must get the current relationship from a volume to its instance, because we re-create the attachment."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2558(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2562(para)
 msgid "You can find this relationship by running <placeholder-1/>. Note that nova client includes the ability to get volume information from cinder."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2565(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2569(title)
 msgid "Update the database"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2566(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2570(para)
 msgid "Update the database to clean the stalled state. You must restore for every volume, uses these queries to clean up the database:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2575(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2579(para)
 msgid "Then, when you run <placeholder-1/> commands, all volumes appear."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2580(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2584(title)
 msgid "Restart instances"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2583(replaceable)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2587(replaceable)
 msgid "$instance"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2581(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2585(para)
 msgid "You can restart the instances through the <placeholder-1/>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2584(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2588(para)
 msgid "At that stage, depending on your image, some instances completely reboot and become reachable, while others stop on the \"plymouth\" stage."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2590(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2594(title)
 msgid "DO NOT reboot a second time"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2591(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2595(para)
 msgid "Do not reboot the ones that are stopped at that stage (<emphasis role=\"italic\">see the fourth step</emphasis>). In fact it depends on whether you added an <filename>/etc/fstab</filename> entry for that volume. Images built with the <package>cloud-init</package> package remain in a pending state, while others skip the missing volume and start. (More information is available on <link href=\"https://help.ubuntu.com/community/CloudInit\">help.ubuntu.com</link>.) The idea of that stage is only to ask nova to reboot every instance, so the stored state is preserved."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2608(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2612(title)
 msgid "Reattach volumes"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2609(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2613(para)
 msgid "After the restart, you can reattach the volumes to their respective instances. Now that nova has restored the right status, it is time to perform the attachments through a <placeholder-1/>"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2615(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2619(para)
 msgid "This simple snippet uses the created file:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2627(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2631(para)
 msgid "At that stage, instances that were pending on the boot sequence (<emphasis role=\"italic\">plymouth</emphasis>) automatically continue their boot, and restart normally, while the ones that booted see the volume."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2635(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2639(title)
 msgid "SSH into instances"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2636(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2640(para)
 msgid "If some services depend on the volume, or if a volume has an entry into fstab, it could be good to simply restart the instance. This restart needs to be made from the instance itself, not through nova. So, we SSH into the instance and perform a reboot:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2646(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2650(para)
 msgid "By completing this procedure, you can successfully recover your cloud."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2648(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2652(para)
 msgid "Follow these guidelines:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2651(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2655(para)
 msgid "Use the <parameter> errors=remount</parameter> parameter in the <filename>fstab</filename> file, which prevents data corruption."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2655(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2659(para)
 msgid "The system would lock any write to the disk if it detects an I/O error. This configuration option should be added into the <systemitem class=\"service\">cinder-volume</systemitem> server (the one which performs the ISCSI connection to the SAN), but also into the instances' <filename>fstab</filename> file."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2666(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2670(para)
 msgid "Do not add the entry for the SAN's disks to the <systemitem class=\"service\">cinder-volume</systemitem>'s <filename>fstab</filename> file."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2671(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2675(para)
 msgid "Some systems hang on that step, which means you could lose access to your cloud-controller. To re-run the session manually, you would run the following command before performing the mount: <placeholder-1/>"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2679(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2683(para)
 msgid "For your instances, if you have the whole <filename>/home/</filename> directory on the disk, instead of emptying the <filename>/home</filename> directory and map the disk on it, leave a user's directory with the user's bash files and the <filename>authorized_keys</filename> file."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2687(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2691(para)
 msgid "This enables you to connect to the instance, even without the volume attached, if you allow only connections through public keys."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2695(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2699(title)
 msgid "C - Scripted DRP"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2697(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2701(title)
 msgid "To use scripted DRP"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2698(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2702(para)
 msgid "You can download from <link href=\"https://github.com/Razique/BashStuff/blob/master/SYSTEMS/OpenStack/SCR_5006_V00_NUAC-OPENSTACK-DRP-OpenStack.sh\">here</link> a bash script which performs these steps:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2703(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2707(para)
 msgid "The \"test mode\" allows you to perform that whole sequence for only one instance."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2708(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2712(para)
 msgid "To reproduce the power loss, connect to the compute node which runs that same instance and close the iscsi session. <emphasis role=\"underline\">Do not detach the volume through <placeholder-1/></emphasis>, but instead manually close the iscsi session."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2719(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2723(para)
 msgid "In this example, the iscsi session is number 15 for that instance:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:2724(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:2728(para)
 msgid "Do not forget the <literal>-r</literal> flag. Otherwise, you close ALL sessions."
 msgstr ""
 

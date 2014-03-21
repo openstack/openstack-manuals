@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-03-20 06:23+0000\n"
+"POT-Creation-Date: 2014-03-21 06:25+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -985,191 +985,191 @@ msgstr ""
 msgid "To download an object from a container:"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:6(title)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:10(title)
 msgid "Store metadata on a configuration drive"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:7(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:11(para)
 msgid "You can configure OpenStack to write metadata to a special configuration drive that attaches to the instance when it boots. The instance can mount this drive and read files from it to get information that is normally available through the <link href=\"http://docs.openstack.org/admin-guide-cloud/content/section_metadata-service.html\">metadata service</link>."
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:14(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:18(para)
 msgid "One use case for the configuration drive is to pass a networking configuration when you do not use DHCP to assign IP addresses to instances. For example, you might pass the IP configuration for the instance through the configuration drive, which the instance can mount and access before you configure the network settings for the instance."
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:20(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:24(para)
 msgid "Any modern guest operating system that is capable of mounting an ISO9660 or VFAT file system can use the configuration drive."
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:24(title)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:28(title)
 msgid "Requirements and guidelines"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:26(title)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:30(title)
 msgid "Compute host requirements"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:28(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:32(para)
 msgid "The following hypervisors support the configuration drive: libvirt, xenserver, hyper-v, and vmware."
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:33(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:37(para)
 msgid "To use configuration drive with libvirt, xenserver, or vmware, you must first install the <package>genisoimage</package> package on each compute host. Otherwise, instances do not boot properly."
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:39(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:43(para)
 msgid "Use the <literal>mkisofs_cmd</literal> flag to set the path where you install the <package>genisoimage</package> program. If <package>genisoimage</package> is in same path as the <systemitem class=\"service\">nova-compute</systemitem> service, you do not need to set this flag."
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:47(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:51(para)
 msgid "By default, Ubuntu packages do not install this package. See bug <link href=\"https://bugs.launchpad.net/cloud-archive/+bug/1165174\">#1165174</link>."
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:54(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:58(para)
 msgid "To use configuration drive with hyper-v, you must set the <literal>mkisofs_cmd</literal> value to the full path to an <literal>mkisofs.exe</literal> installation. Additionally, you must set the <literal>qemu_img_cmd</literal> value in the <literal>hyperv</literal> configuration section to the full path to an <literal>qemu-img</literal> command installation."
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:67(title)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:71(title)
 msgid "Image requirements"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:69(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:73(para)
 msgid "An image built with a recent version of the <package>cloud-init</package> package can automatically access metadata passed through the configuration drive. The <package>cloud-init</package> package version 0.7.1 works with Ubuntu and Fedora-based images, such as RHEL."
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:78(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:82(para)
 msgid "If an image does not have the <package>cloud-init</package> package installed, you must customize the image to run a script that mounts the configuration drive on boot, reads the data from the drive, and takes appropriate action such as adding the public key to an account. See <xref linkend=\"config_drive_contents\"/> for details on how data is organized on the configuration drive."
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:90(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:94(para)
 msgid "If you use Xen with a configuration drive, use the <literal>xenapi_disable_agent</literal> configuration parameter to disable the agent."
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:97(title)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:101(title)
 msgid "Guidelines"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:99(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:103(para)
 msgid "Do not rely on the presence of the EC2 metadata present in the configuration drive, as this content might be removed in a future release. For example, do not rely on files in the <filename>ec2</filename> directory."
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:106(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:110(para)
 msgid "When you create images that access configuration drive data and multiple directories are under the <filename>openstack</filename> directory, always select the highest API version by date that your consumer supports. For example, if your guest image supports the 2012-03-05, 2012-08-05, 2013-04-13 versions, try 2013-04-13 first and fall back to a previous version if 2013-04-13 is not present."
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:119(title)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:123(title)
 msgid "Enable and access the configuration drive"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:122(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:126(para)
 msgid "To enable the configuration drive, pass the <literal>--config-drive=true</literal> parameter to the <placeholder-1/> command."
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:126(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:130(para)
 msgid "This example enables the configuration drive and passes user data, two files, and two key/value metadata pairs, all of which are accessible from the configuration drive:"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:131(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:135(para)
 msgid "You can also configure the Compute service to always create a configuration drive."
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:133(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:137(para)
 msgid "Set this option in the <filename>/etc/nova/nova.conf</filename> file:"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:138(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:142(para)
 msgid "If a user passes the <parameter>--config-drive=true</parameter> flag to the <placeholder-1/> command, an administrator cannot disable the configuration drive."
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:146(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:150(para)
 msgid "The configuration drive has the <literal>config-2</literal> volume label. If your guest operating system supports accessing disk by label, you can mount the configuration drive as the <filename>/dev/disk/by-label/config-2</filename> device."
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:153(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:157(para)
 msgid "For example:"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:157(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:161(para)
 msgid "Make sure that you use at least version 0.3.1 of CirrOS for configuration drive support."
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:160(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:164(para)
 msgid "If your guest operating system does not use <literal>udev</literal>, the <filename>/dev/disk/by-label</filename> directory is not present."
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:164(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:168(para)
 msgid "You can use the <placeholder-1/> command to identify the block device that corresponds to the configuration drive. For example, when you boot the CirrOS image with the <literal>m1.tiny</literal> flavor, the device is <filename>/dev/vdb</filename>:"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:172(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:176(para)
 msgid "Once identified, you can mount the device:"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:179(title)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:183(title)
 msgid "Configuration drive contents"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:180(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:184(para)
 msgid "In this example, the contents of the configuration drive are:"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:193(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:197(para)
 msgid "The files that appear on the configuration drive depend on the arguments that you pass to the <placeholder-1/> command."
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:198(title)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:202(title)
 msgid "OpenStack metadata format"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:199(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:203(para)
 msgid "The following example shows the contents of the <filename>openstack/2012-08-10/meta_data.json</filename> and <filename>openstack/latest/meta_data.json</filename> files. These files are identical. The file contents are formatted for readability:"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:206(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:210(para)
 msgid "Note the effect of the <literal>--file /etc/network/interfaces=/home/myuser/instance-interfaces</literal> argument that was passed to the <placeholder-1/> command. The contents of this file are contained in the <filename>openstack/content/0000</filename> file on the configuration drive, and the path is specified as <filename>/etc/network/interfaces</filename> in the <filename>meta_data.json</filename> file."
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:217(title)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:221(title)
 msgid "EC2 metadata format"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:218(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:222(para)
 msgid "The following example shows the contents of the <filename>ec2/2009-04-04/meta-data.json</filename>, <filename>latest/meta-data.json</filename> files. These files are identical. The file contents are formatted to improve readability:"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:226(title)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:230(title)
 msgid "User data"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:227(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:231(para)
 msgid "The <filename>openstack/2012-08-10/user_data</filename>, <filename>openstack/latest/user_data</filename>, <filename>ec2/2009-04-04/user-data</filename>, and <filename>ec2/latest/user-data</filename> file are present only if the <literal>--user-data</literal> flag and the contents of the user data file are passed to the <placeholder-1/> command."
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:237(title)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:241(title)
 msgid "Configuration drive format"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:238(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:242(para)
 msgid "The default format of the configuration drive as an ISO 9660 file system. To explicitly specify the ISO 9660 format, add the following line to the <filename>/etc/nova/nova.conf</filename> file:"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:244(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:248(para)
 msgid "By default, you cannot attach the configuration drive image as a CD drive instead of as a disk drive. To attach a CD drive, add this line to the <filename>/etc/nova/nova.conf</filename> file:"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:250(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:254(para)
 msgid "For legacy reasons, you can configure the configuration drive to use VFAT format instead of ISO 9660. It is unlikely that you would require VFAT format because ISO 9660 is widely supported across operating systems. However, to use the VFAT format, add the following line to the <filename>/etc/nova/nova.conf</filename> file:"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:259(para)
-msgid "If you choose VFAT, the configuration drive is 64 MBs."
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:263(para)
+msgid "If you choose VFAT, the configuration drive is 64 MB."
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:264(title)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:268(title)
 msgid "Configuration drive reference"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:265(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:269(para)
 msgid "The following table shows the configuration options for the configuration drive:"
 msgstr ""
 
