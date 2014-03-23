@@ -172,64 +172,76 @@
                             volume. Both FlexVols must be located within the same cluster.</para>
                     </listitem>
                 </itemizedlist>
-                <para>In order to use this feature, the Image Service must be configured as follows:</para>
+                <para>To use this feature, you must configure the
+                   Image Service, as follows:</para>
                 <itemizedlist>
                     <listitem>
-                        <para>The <option>default_store</option> configuration option should be set to
-                            <literal>file</literal></para>
+                        <para>Set the <option>default_store</option>
+                           configuration option to
+                           <literal>file</literal>.</para>
                     </listitem>
                     <listitem>
-                        <para>The <option>filesystem_store_datadir</option> configuration option should be set to
-                            the path to the the Image Service NFS export</para>
+                        <para>Set the <option>filesystem_store_datadir</option>
+                           configuration option to the
+                           path to the Image Service NFS export.</para>
                     </listitem>
                     <listitem>
-                        <para>The <option>show_image_direct_url</option> configuration option should be set to
-                            <literal>True</literal></para>
+                        <para>Set the <option>show_image_direct_url</option>
+                           configuration option to
+                           <literal>True</literal>.</para>
                     </listitem>
                     <listitem>
-                        <para>The <option>show_multiple_locations</option> configuration option should be set to
-                            <literal>True</literal></para>
+                        <para>Set the <option>show_multiple_locations</option>
+                           configuration option to
+                           <literal>True</literal>.</para>
                     </listitem>
                     <listitem>
-                        <para>The <option>filesystem_store_metadata_file</option> configuration option
-                            should refer to a metadata file. The metadata file should contain a
-                            JSON object that contains the correct information about the NFS export
-                            used by the Image Service, similar to:</para>
-                    </listitem>
-                </itemizedlist>
-                <programlisting language="ini">
-{
+                        <para>Set the <option>filesystem_store_metadata_file</option>
+                            configuration option to a
+                            metadata file. The metadata file should
+                            contain a JSON object that contains the
+                            correct information about the NFS export
+                            used by the Image Service, similar
+                            to:</para>
+                <programlisting language="ini">{
     "share_location": "<replaceable>nfs://192.168.0.1/myGlanceExport</replaceable>",
     "mount_point": "<replaceable>/var/lib/glance/images</replaceable>",
     "type": "nfs"
-}
-                </programlisting>
-                <para>In order to use this feature, the Block Storage Service must be configured as follows:</para>
+}</programlisting>
+                    </listitem>
+                </itemizedlist>
+                <para>To use this feature, you must configure the
+                    Block Storage service, as follows:</para>
                 <itemizedlist>
                     <listitem>
-                        <para>The <option>netapp_copyoffload_tool_path</option> configuration option should be set to
-                            the path to the NetApp Copy Offload binary</para>
+                        <para>Set the <option>netapp_copyoffload_tool_path</option>
+                           configuration option to
+                           the path to the NetApp Copy Offload binary.</para>
                     </listitem>
                     <listitem>
-                        <para>The <option>glance_api_version</option> configuration option should be set to
-                            <literal>2</literal></para>
+                        <para>Set the <option>glance_api_version</option>
+                            configuration option to
+                            <literal>2</literal>.</para>
                     </listitem>
                 </itemizedlist>
                 <important>
                     <para>This feature requires that:</para>
                     <itemizedlist>
                         <listitem>
-                            <para>The storage system must have Data ONTAP v8.2 or greater
-                                installed.</para>
+                            <para>The storage system must have Data
+                               ONTAP v8.2 or greater installed.</para>
                         </listitem>
                         <listitem>
-                            <para>The vStorage feature must be enabled on each storage virtual
-                                machine (SVM, also known as a Vserver) that is permitted to
-                                interact with the copy offload client.</para>
+                            <para>The vStorage feature must be enabled
+                               on each storage virtual machine (SVM, also
+                               known as a Vserver) that is permitted to
+                               interact with the copy offload
+                               client.</para>
                         </listitem>
                         <listitem>
-                            <para>NFS v4.0 or greater must be enabled and correctly exported
-                                from the SVM in order for the copy offload workflow to succeed.</para>
+                            <para>To configure the copy offload workflow,
+                               enable NFS v4.0 or greater
+                               and export it from the SVM.</para>
                         </listitem>
                     </itemizedlist>
                 </important>
