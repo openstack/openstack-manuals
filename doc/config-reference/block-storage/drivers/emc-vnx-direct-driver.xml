@@ -1,0 +1,217 @@
+<section xml:id="emc-vnx-direct-driver"
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+    <?dbhtml stop-chunking?>
+    <title>EMC VNX direct driver</title>
+    <para>Use the EMC VNX direct driver to create, attach, detach, and
+        delete volumes, create and delete snapshots, and so on. This driver
+        is based on the Cinder-defined <literal>ISCSIDriver</literal> driver.
+    </para>
+    <para>To complete volume operations, the driver uses the NaviSec
+        command-line interface (CLI) to communicate with back-end EMC VNX
+        storage.
+    </para>
+    <section xml:id="emc-vnx-direct-reqs">
+        <title>System requirements</title>
+        <itemizedlist>
+            <listitem>
+                <para>Flare version 5.32 or later.</para>
+            </listitem>
+            <listitem>
+                <para>You must activate VNX Snapshot and Clone license
+                    for the array. Ensure that all the iSCSI ports from the
+                    VNX are accessible through OpenStack hosts.</para>
+            </listitem>
+            <listitem>
+                <para>Navisphere CLI v7.32 or later.</para>
+            </listitem>
+        </itemizedlist>
+        <para>EMC storage VNX Series are supported.</para>
+    </section>
+    <section xml:id="emc-vnx-direct-supported-ops">
+        <title>Supported operations</title>
+        <itemizedlist>
+            <listitem>
+                <para>Create volume</para>
+            </listitem>
+            <listitem>
+                <para>Delete volume</para>
+            </listitem>
+            <listitem>
+                <para>Attach volume</para>
+            </listitem>
+            <listitem>
+                <para>Detach volume</para>
+            </listitem>
+            <listitem>
+                <para>Create snapshot</para>
+            </listitem>
+            <listitem>
+                <para>Delete snapshot</para>
+            </listitem>
+            <listitem>
+                <para>Create volume from snapshot</para>
+            </listitem>
+            <listitem>
+                <para>Create cloned volume</para>
+            </listitem>
+            <listitem>
+                <para>Copy image to volume</para>
+            </listitem>
+            <listitem>
+                <para>Copy volume to image</para>
+            </listitem>
+            <listitem>
+                <para>Extend volume</para>
+            </listitem>
+        </itemizedlist>
+    </section>
+    <section xml:id="emc-vnx-direct-prep">
+        <title>Set up the VNX direct driver</title>
+        <para>Complete these high-level tasks to set up the VNX direct driver:
+        </para>
+        <orderedlist>
+            <listitem>
+                <para>Install NaviSecCLI. You must install the NaviSecCLI
+                    tool on the controller node and all the Cinder nodes in
+                    an OpenStack deployment. See <xref
+                    linkend="install-naviseccli"/>.
+                </para>
+            </listitem>
+            <listitem>
+                <para>Register with VNX. See <xref
+                    linkend="register-vnx-direct-iscsi"/>
+                </para>
+            </listitem>
+        </orderedlist>
+        <section xml:id="install-naviseccli">
+            <title>Install NaviSecCLI</title>
+            <para>Log in to the <link xlink:href="https://support.emc.com/
+                downloads/5890_Navisphere-Agents-CLI---Linux">EMC's
+                support</link> web site (login is required), and download
+                the NaviSecCLI package. Then, install the package:
+            </para>
+            <para>On Ubuntu x64:</para>
+            <procedure>
+                <title>To install NaviSecCLI on Ubuntu x64</title>
+                <step>
+                    <para>Create the <filename>/opt/Navisphere/bin/</filename> directory:</para> <screen><prompt>#</prompt> <userinput>mkdir -f /opt/Navisphere/bin/</userinput></screen>
+                </step>
+                <step>
+                    <para>Copy the RPM package into the <filename>
+                        /opt/Navisphere/bin/</filename> directory.
+                    </para>
+                </step>
+                <step>
+                    <para>Use alien to install the RPM package on Ubuntu:</para>
+                    <screen><prompt>#</prompt> <userinput>cd /opt/Navisphere/bin</userinput>
+<prompt>#</prompt> <userinput>sudo apt-get install alien -y</userinput>
+<prompt>#</prompt> <userinput>sudo alien -i NaviCLI-Linux-64-x86-en_US-7.xx.xx.x.xx.x86_64.rpm</userinput></screen>
+                </step>
+            </procedure>
+            <para>For all the other variants of Linux, install the rpm as usual.
+            </para>
+        </section>
+        <section xml:id="register-vnx-direct-iscsi">
+            <title>Register with VNX</title>
+            <para>To export a VNX volume to a compute node or a volume node,
+                you must register the node with VNX.</para>
+            <procedure>
+                <title>To register the node</title>
+                <step><para>On the compute node or volume node <literal>1.1.1.1</literal>, do
+                    the following (assume <literal>10.10.61.35</literal>
+                    is the iSCSI target):</para>
+                    <screen><prompt>#</prompt> <userinput>/etc/init.d/open-iscsi start</userinput>
+<prompt>#</prompt> <userinput>iscsiadm -m discovery -t st -p 10.10.61.35</userinput>
+<prompt>#</prompt> <userinput>cd /etc/iscsi</userinput>
+<prompt>#</prompt> <userinput>more initiatorname.iscsi</userinput>
+<prompt>#</prompt> <userinput>iscsiadm -m node</userinput></screen></step>
+                <step><para>Log in to VNX from the node using the target
+                    corresponding to the SPA port:</para>
+                    <screen><prompt>#</prompt> <userinput>iscsiadm -m node -T iqn.1992-04.com.emc:cx.apm01234567890.a0 -p 10.10.61.35 -l</userinput></screen>
+                    <para>Where
+                        <literal>iqn.1992-04.com.emc:cx.apm01234567890.a0</literal>
+                        is the initiator name of the node. Login to
+                        Unisphere, go to
+                        <literal>VNX00000</literal>-&gt;Hosts-&gt;Initiators,
+                        Refresh and wait until initiator
+                        <literal>iqn.1992-04.com.emc:cx.apm01234567890.a0</literal>
+                        with SP Port <literal>A-8v0</literal> appears.</para></step>
+                <step><para>Click <guibutton>Register</guibutton>,
+                    select <guilabel>CLARiiON/VNX</guilabel>,
+                    and enter the host name <literal>myhost1</literal> and
+                    IP address <literal>myhost1</literal>. Click <guibutton>Register</guibutton>.
+                    Now host <literal>1.1.1.1</literal> also appears under
+                    Hosts-&gt;Host List.</para></step>
+                <step><para>Log out of VNX on the node:</para>
+                    <screen><prompt>#</prompt> <userinput>iscsiadm -m node -u</userinput></screen></step>
+                <step>
+                    <para>Log in to VNX from the node using the target
+                        corresponding to the SPB port:</para>
+                    <screen><prompt>#</prompt> <userinput>iscsiadm -m node -T iqn.1992-04.com.emc:cx.apm01234567890.b8 -p 10.10.10.11 -l</userinput></screen>
+                </step>
+                <step> <para>In Unisphere register the initiator with the SPB
+                    port.</para></step>
+                <step><para>Log out:</para>
+                    <screen><prompt>#</prompt> <userinput>iscsiadm -m node -u</userinput></screen></step>
+            </procedure>
+        </section>
+        <section xml:id="emc-vnx-direct-config-file">
+            <title><filename>cinder.conf</filename> configuration
+                file</title>
+            <para>Make the following changes in
+                    <filename>/etc/cinder/cinder.conf</filename>.</para>
+            <para>For the VNX iSCSI driver, add the following entries, where
+                <literal>10.10.61.35</literal> is the IP address
+                of the VNX iSCSI target, <literal>10.10.72.41</literal>
+                is the IP address of the VNX array,
+                <systemitem>default_timeout</systemitem> is the default
+                time out for CLI operations in minutes, and
+                <systemitem>max_luns_per_storage_group</systemitem> is
+                the default max number of LUNs in a storage group:</para>
+            <programlisting language="ini">
+iscsi_ip_address = 10.10.61.35
+san_ip = 10.10.72.41
+san_login = username
+san_password = password
+naviseccli_path = /opt/Navisphere/bin/naviseccli
+storage_vnx_pool_name = poolname
+default_timeout = 10
+max_luns_per_storage_group=256
+volume_driver=cinder.volume.drivers.emc.emc_cli_iscsi.EMCCLIISCSIDriver
+</programlisting>
+            <para>Restart the <systemitem class="service"
+                    >cinder-volume</systemitem> service.</para>
+        </section>
+        <section xml:id="emc-vnx-direct-volume-type">
+            <title>Volume type support</title>
+            <para>Volume type support allows user to choose thick/thin
+                provisioning capabilities.</para>
+            <para>Here is an example of how to setup volume type.
+                First create volume types. Then define extra specs for
+                each volume type.</para>
+            <procedure>
+                <title>To set up volume types</title>
+                <step>
+                    <para>Setup volume types:</para>
+                    <screen><prompt>$</prompt> <userinput>cinder type-create "TypeA"</userinput>
+<prompt>$</prompt> <userinput>cinder type-create "TypeB"</userinput></screen>
+                </step>
+                <step>
+                    <para>Setup volume type extra specs:</para>
+                    <screen><prompt>$</prompt> <userinput>cinder type-key "TypeA" set storagetype:provisioning=thick</userinput>
+<prompt>$</prompt> <userinput>cinder type-key "TypeB" set storagetype:provisioning=thin</userinput></screen>
+                </step>
+             </procedure>
+             <para>The previous example creates two volume types:
+                 <literal>TypeA</literal> and <literal>TypeB</literal>.
+                 For <literal>TypeA</literal>, <literal>storagetype:provisioning
+                 </literal> is set to <literal>thick</literal>. Similarly
+                 for <literal>TypeB</literal>, <literal>storagetype:provisioning
+                 </literal> is set to <literal>thin</literal>. If <literal>
+                 storagetype:provisioning</literal> is not specified, it will be
+                 default to <literal>thick</literal>.</para>
+        </section>
+    </section>
+</section>
