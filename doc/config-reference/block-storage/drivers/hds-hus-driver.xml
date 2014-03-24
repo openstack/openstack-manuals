@@ -8,8 +8,8 @@
          xmlns="http://docbook.org/ns/docbook"
          xmlns:xi="http://www.w3.org/2001/XInclude"
          xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
-        <title>HDS iSCSI volume driver</title>
-        <para>This Cinder volume driver provides iSCSI support for <link
+        <title>HDS HUS iSCSI driver</title>
+        <para>This Block Storage volume driver provides iSCSI support for <link
                         xlink:href="http://www.hds.com/products/storage-systems/hitachi-unified-storage-100-family.html"
                         >HUS (Hitachi Unified Storage) </link> arrays such as,
                 HUS-110, HUS-130, and HUS-150.</para>
@@ -19,11 +19,11 @@
                         communicate with an HUS array. You can download this
                         utility package from the HDS support site (<link
                                 xlink:href="https://HDSSupport.hds.com"
-                                >https://HDSSupport.hds.com</link>.</para>
+                                >https://HDSSupport.hds.com</link>).</para>
                 <para>Platform: Ubuntu 12.04LTS or newer.</para>
         </section>
         <section xml:id="hds-supported-operations">
-                <title>Supported Cinder operations</title>
+                <title>Supported operations</title>
                 <para>These operations are supported:</para>
                 <itemizedlist>
                         <listitem>
@@ -60,23 +60,18 @@
                                 <para>Create volume from snapshot</para>
                         </listitem>
                         <listitem>
-                                <para>get_volume_stats</para>
+                                <para>Get statistics</para>
                         </listitem>
                 </itemizedlist>
-                <para>Thin provisioning, also known as Hitachi Dynamic Pool
-                        (HDP), is supported for volume or snapshot creation.
-                        Cinder volumes and snapshots do not have to reside in the
-                        same pool.</para>
         </section>
         <section xml:id="hds-config">
                 <title>Configuration</title>
                 <para>The HDS driver supports the concept of differentiated
-                        services, where volume type can be associated with the
-                        fine-tuned performance characteristics of HDP&mdash;the
-                        the dynamic pool where volumes shall be created<footnote
-                                xml:id="hds-fn-svc-1">
+                        services, where a volume type can be associated with the
+                        fine-tuned performance characteristics of an HDP&mdash;
+                        the dynamic pool where volumes are created<footnote xml:id="hds-fn-svc-1">
                                 <para>Do not confuse differentiated services with the
-                                        Cinder volume service.</para>
+                                        OpenStack Block Storage volume services.</para>
                         </footnote>. For instance, an HDP can consist of fast SSDs
                         to provide speed. HDP can provide a certain reliability
                         based on things like its RAID level characteristics. HDS
@@ -93,23 +88,28 @@
                                                 back-end and for multi-back-end cases.</para>
                                 </listitem>
                                 <listitem>
-                                        <para>It is not recommended to manage a HUS array
-                                                simultaneously from multiple Cinder instances
+                                        <para>It is not recommended to manage an HUS array
+                                                simultaneously from multiple OpenStack Block Storage instances
                                                 or servers. <footnote
                                                         xml:id="hds-one-instance-only">
                                                         <para>It is okay to manage multiple HUS
-                                                                arrays by using multiple Cinder
+                                                                arrays by using multiple OpenStack Block Storage
                                                                 instances (or servers).</para>
                                                 </footnote></para>
                                 </listitem>
                         </itemizedlist>
                 </note>
-                <xi:include href="../../../common/tables/cinder-hds.xml"/>
+                <xi:include href="../../../common/tables/cinder-hds-hus.xml"/>
+                <simplesect>
+                        <title>HUS setup</title>
+                        <para>Before using iSCSI services, use the HUS UI to create an
+                            iSCSI domain for each EVS providing iSCSI services.</para>
+                </simplesect>
                 <simplesect>
                         <title>Single back-end</title>
-                        <para>In a single back-end deployment, only one Cinder
-                                instance runs on the Cinder server and controls one
-                                HUS array: this setup requires these configuration
+                        <para>In a single back-end deployment, only one OpenStack Block Storage
+                                instance runs on the OpenStack Block Storage server and controls one
+                                HUS array: this deployment requires these configuration
                                 files:</para>
                         <orderedlist>
                                 <listitem>
@@ -120,8 +120,8 @@
                                                 file to use the HDS volume driver. This option
                                                 points to a configuration file.<footnote
                                                         xml:id="hds-no-fixed-location-1">
-                                                        <para>The configuration file location is
-                                                                not fixed.</para>
+                                                        <para>The configuration file location
+                                                                may differ.</para>
                                                 </footnote></para>
                                         <programlisting language="ini">volume_driver = cinder.volume.drivers.hds.hds.HUSDriver
 hds_cinder_config_file = /opt/hds/hus/cinder_hds_conf.xml</programlisting>
@@ -134,31 +134,32 @@ hds_cinder_config_file = /opt/hds/hus/cinder_hds_conf.xml</programlisting>
                                                         <filename>/opt/hds/hus/cinder_hds_conf.xml</filename>:</para>
                                         <programlisting language="xml">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
 &lt;config&gt;
-&lt;mgmt_ip0&gt;172.17.44.16&lt;/mgmt_ip0&gt;
-&lt;mgmt_ip1&gt;172.17.44.17&lt;/mgmt_ip1&gt;
-&lt;username&gt;system&lt;/username&gt;
-&lt;password&gt;manager&lt;/password&gt;
-&lt;svc_0&gt;
-&lt;volume_type&gt;default&lt;/volume_type&gt;
-&lt;iscsi_ip&gt;172.17.39.132&lt;/iscsi_ip&gt;
-&lt;hdp&gt;9&lt;/hdp&gt;
-&lt;/svc_0&gt;
-&lt;snapshot&gt;
-&lt;hdp&gt;13&lt;/hdp&gt;
-&lt;/snapshot&gt;
-&lt;lun_start&gt;
-3000
-&lt;/lun_start&gt;
-&lt;lun_end&gt;
-4000
-&lt;/lun_end&gt;
+    &lt;mgmt_ip0&gt;172.17.44.16&lt;/mgmt_ip0&gt;
+    &lt;mgmt_ip1&gt;172.17.44.17&lt;/mgmt_ip1&gt;
+    &lt;hus_cmd&gt;hus-cmd&lt;/hus_cmd&gt;
+    &lt;username&gt;system&lt;/username&gt;
+    &lt;password&gt;manager&lt;/password&gt;
+    &lt;svc_0&gt;
+        &lt;volume_type&gt;default&lt;/volume_type&gt;
+        &lt;iscsi_ip&gt;172.17.39.132&lt;/iscsi_ip&gt;
+        &lt;hdp&gt;9&lt;/hdp&gt;
+    &lt;/svc_0&gt;
+    &lt;snapshot&gt;
+        &lt;hdp&gt;13&lt;/hdp&gt;
+    &lt;/snapshot&gt;
+    &lt;lun_start&gt;
+        3000
+    &lt;/lun_start&gt;
+    &lt;lun_end&gt;
+        4000
+    &lt;/lun_end&gt;
 &lt;/config&gt;</programlisting>
                                 </listitem>
                         </orderedlist>
                 </simplesect>
                 <simplesect>
                         <title>Multi back-end</title>
-                        <para>In a multi back-end deployment, more than one Cinder
+                        <para>In a multi back-end deployment, more than one OpenStack Block Storage
                                 instance runs on the same server. In this example, two
                                 HUS arrays are used, possibly providing different
                                 storage performance:</para>
@@ -176,10 +177,12 @@ hds_cinder_config_file = /opt/hds/hus/cinder_hds_conf.xml</programlisting>
                                                 each back-end to
                                                         <literal>cinder.volume.drivers.hds.hds.HUSDriver</literal></para>
                                         <programlisting language="ini">enabled_backends=hus1,hus2
+
 [hus1]
 volume_driver = cinder.volume.drivers.hds.hds.HUSDriver
 hds_cinder_config_file = /opt/hds/hus/cinder_hus1_conf.xml
 volume_backend_name=hus-1
+
 [hus2]
 volume_driver = cinder.volume.drivers.hds.hds.HUSDriver
 hds_cinder_config_file = /opt/hds/hus/cinder_hus2_conf.xml
@@ -190,24 +193,25 @@ volume_backend_name=hus-2</programlisting>
                                                         <filename>/opt/hds/hus/cinder_hus1_conf.xml</filename>:</para>
                                         <programlisting language="xml">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
 &lt;config&gt;
-&lt;mgmt_ip0&gt;172.17.44.16&lt;/mgmt_ip0&gt;
-&lt;mgmt_ip1&gt;172.17.44.17&lt;/mgmt_ip1&gt;
-&lt;username&gt;system&lt;/username&gt;
-&lt;password&gt;manager&lt;/password&gt;
-&lt;svc_0&gt;
-&lt;volume_type&gt;regular&lt;/volume_type&gt;
-&lt;iscsi_ip&gt;172.17.39.132&lt;/iscsi_ip&gt;
-&lt;hdp&gt;9&lt;/hdp&gt;
-&lt;/svc_0&gt;
-&lt;snapshot&gt;
-&lt;hdp&gt;13&lt;/hdp&gt;
-&lt;/snapshot&gt;
-&lt;lun_start&gt;
-3000
-&lt;/lun_start&gt;
-&lt;lun_end&gt;
-4000
-&lt;/lun_end&gt;
+    &lt;mgmt_ip0&gt;172.17.44.16&lt;/mgmt_ip0&gt;
+    &lt;mgmt_ip1&gt;172.17.44.17&lt;/mgmt_ip1&gt;
+    &lt;hus_cmd&gt;hus-cmd&lt;/hus_cmd&gt;
+    &lt;username&gt;system&lt;/username&gt;
+    &lt;password&gt;manager&lt;/password&gt;
+    &lt;svc_0&gt;
+        &lt;volume_type&gt;regular&lt;/volume_type&gt;
+        &lt;iscsi_ip&gt;172.17.39.132&lt;/iscsi_ip&gt;
+        &lt;hdp&gt;9&lt;/hdp&gt;
+    &lt;/svc_0&gt;
+    &lt;snapshot&gt;
+        &lt;hdp&gt;13&lt;/hdp&gt;
+    &lt;/snapshot&gt;
+    &lt;lun_start&gt;
+        3000
+    &lt;/lun_start&gt;
+    &lt;lun_end&gt;
+        4000
+    &lt;/lun_end&gt;
 &lt;/config&gt;</programlisting>
                                 </step>
                                 <step>
@@ -216,24 +220,25 @@ volume_backend_name=hus-2</programlisting>
                                                 file:</para>
                                         <programlisting language="xml">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
 &lt;config&gt;
-&lt;mgmt_ip0&gt;172.17.44.20&lt;/mgmt_ip0&gt;
-&lt;mgmt_ip1&gt;172.17.44.21&lt;/mgmt_ip1&gt;
-&lt;username&gt;system&lt;/username&gt;
-&lt;password&gt;manager&lt;/password&gt;
-&lt;svc_0&gt;
-&lt;volume_type&gt;platinum&lt;/volume_type&gt;
-&lt;iscsi_ip&gt;172.17.30.130&lt;/iscsi_ip&gt;
-&lt;hdp&gt;2&lt;/hdp&gt;
-&lt;/svc_0&gt;
-&lt;snapshot&gt;
-&lt;hdp&gt;3&lt;/hdp&gt;
-&lt;/snapshot&gt;
-&lt;lun_start&gt;
-2000
-&lt;/lun_start&gt;
-&lt;lun_end&gt;
-3000
-&lt;/lun_end&gt;
+    &lt;mgmt_ip0&gt;172.17.44.20&lt;/mgmt_ip0&gt;
+    &lt;mgmt_ip1&gt;172.17.44.21&lt;/mgmt_ip1&gt;
+    &lt;hus_cmd&gt;hus-cmd&lt;/hus_cmd&gt;
+    &lt;username&gt;system&lt;/username&gt;
+    &lt;password&gt;manager&lt;/password&gt;
+    &lt;svc_0&gt;
+        &lt;volume_type&gt;platinum&lt;/volume_type&gt;
+        &lt;iscsi_ip&gt;172.17.30.130&lt;/iscsi_ip&gt;
+        &lt;hdp&gt;2&lt;/hdp&gt;
+    &lt;/svc_0&gt;
+    &lt;snapshot&gt;
+        &lt;hdp&gt;3&lt;/hdp&gt;
+    &lt;/snapshot&gt;
+    &lt;lun_start&gt;
+        2000
+    &lt;/lun_start&gt;
+    &lt;lun_end&gt;
+        3000
+    &lt;/lun_end&gt;
 &lt;/config&gt;</programlisting>
                                 </step>
                         </procedure>
@@ -253,9 +258,9 @@ cinder type-key platinum set volume_backend_name=hus-2</programlisting>
                 </simplesect>
                 <simplesect>
                         <title>Non differentiated deployment of HUS arrays</title>
-                        <para>You can deploy multiple Cinder instances that each
+                        <para>You can deploy multiple OpenStack Block Storage instances that each
                                 control a separate HUS array. Each instance has no
-                                volume type associated with it. The Cinder filtering
+                                volume type associated with it. The OpenStack Block Storage filtering
                                 algorithm selects the HUS array with the largest
                                 available free space. In each configuration file, you
                                 must define the <literal>default</literal>
@@ -295,13 +300,13 @@ cinder type-key platinum set volume_backend_name=hus-2</programlisting>
                                 <para>An iSCSI port dedicated to the service.</para>
                         </listitem>
                 </orderedlist>
-                <para>Typically a Cinder volume instance has only one such
+                <para>Typically a OpenStack Block Storage volume instance has only one such
                         service label. For example, any <literal>svc_0</literal>,
                                 <literal>svc_1</literal>, <literal>svc_2</literal>, or
                                 <literal>svc_3</literal> can be associated with it.
                         But any mix of these service labels can be used in the
                         same instance <footnote xml:id="hds-stats-all-hdp">
-                                <para>get_volume_stats() always provides the available
+                                <para>The get_volume_stats() always provides the available
                                         capacity based on the combined sum of all the HDPs
                                         that are used in these services labels.</para>
                         </footnote>.</para>
@@ -334,6 +339,18 @@ cinder type-key platinum set volume_backend_name=hus-2</programlisting>
                                         <td><para>Required</para></td>
                                         <td><para/></td>
                                         <td><para>Management Port 1 IP address</para>
+                                        </td>
+                                </tr>
+                                <tr>
+                                        <td><para><option>hus_cmd</option></para>
+                                        </td>
+                                        <td><para>Optional</para></td>
+                                        <td><para/></td>
+                                        <td>
+                                                <para><option>hus_cmd</option> is the command used to
+                                                        communicate with the HUS array. If it is not
+                                                        set, the default value is
+                                                        <command>hus-cmd</command>.</para>
                                         </td>
                                 </tr>
                                 <tr>
