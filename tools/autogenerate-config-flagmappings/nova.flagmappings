@@ -6,8 +6,8 @@ allow_resize_to_same_host policy
 allow_same_net_traffic network
 allowed_direct_url_schemes glance
 allowed_rpc_exception_modules testing
-amqp_auto_delete rpc
-amqp_durable_queues rpc
+amqp_auto_delete rpc rpc_all
+amqp_durable_queues rpc rpc_all
 api_paste_config wsgi
 api_rate_limit authentication
 auth_strategy authentication
@@ -52,7 +52,7 @@ console_xvp_multiplex_port xen
 console_xvp_pid xen
 consoleauth_manager console
 consoleauth_topic common
-control_exchange rpc
+control_exchange rpc rpc_all
 cpu_allocation_ratio scheduling
 create_unique_mac_address_attempts network
 crl_file ca
@@ -128,6 +128,7 @@ host common
 image_cache_manager_interval compute
 image_cache_subdirectory_name compute
 image_decryption_dir s3
+image_handlers compute
 injected_network_template network
 instance_build_timeout compute
 instance_delete_interval compute
@@ -149,10 +150,11 @@ isolated_images scheduling
 key_file ca
 keys_path ca
 keystone_ec2_url ec2
-kombu_ssl_ca_certs kombu
-kombu_ssl_certfile kombu
-kombu_ssl_keyfile kombu
-kombu_ssl_version kombu
+kombu_reconnect_delay kombu rpc_all
+kombu_ssl_ca_certs kombu rpc_all
+kombu_ssl_certfile kombu rpc_all
+kombu_ssl_keyfile kombu rpc_all
+kombu_ssl_version kombu rpc_all
 l3_lib network
 ldap_dns_base_dn ldap
 ldap_dns_password ldap
@@ -171,17 +173,17 @@ lock_path common
 lockout_attempts ec2
 lockout_minutes ec2
 lockout_window ec2
-log-config-append logging
-log-date-format logging
-log-dir logging
-log-file logging
-log-format logging
+log_config_append logging
+log_date_format logging
+log_dir logging
+log_file logging
+log_format logging
 logging_context_format_string logging
 logging_debug_format_suffix logging
 logging_default_format_string logging
 logging_exception_prefix logging
-matchmaker_heartbeat_freq rpc
-matchmaker_heartbeat_ttl rpc
+matchmaker_heartbeat_freq rpc rpc_all
+matchmaker_heartbeat_ttl rpc rpc_all
 max_age policy
 max_header_line api
 max_instances_per_host scheduling
@@ -260,16 +262,16 @@ project_cert_subject ca
 public_interface network
 publish_errors logging
 pybasedir common
-qpid_heartbeat qpid
-qpid_hostname qpid
-qpid_hosts qpid
-qpid_password qpid
-qpid_port qpid
-qpid_protocol qpid
-qpid_sasl_mechanisms qpid
-qpid_tcp_nodelay qpid
-qpid_topology_version qpid
-qpid_username qpid
+qpid_heartbeat qpid rpc_all
+qpid_hostname qpid rpc_all
+qpid_hosts qpid rpc_all
+qpid_password qpid rpc_all
+qpid_port qpid rpc_all
+qpid_protocol qpid rpc_all
+qpid_sasl_mechanisms qpid rpc_all
+qpid_tcp_nodelay qpid rpc_all
+qpid_topology_version qpid rpc_all
+qpid_username qpid rpc_all
 quota_cores quota
 quota_driver quota
 quota_fixed_ips quota
@@ -283,17 +285,18 @@ quota_metadata_items quota
 quota_ram quota
 quota_security_group_rules quota
 quota_security_groups quota
-rabbit_ha_queues rabbitmq
-rabbit_host rabbitmq
-rabbit_hosts rabbitmq
-rabbit_max_retries rabbitmq
-rabbit_password rabbitmq
-rabbit_port rabbitmq
-rabbit_retry_backoff rabbitmq
-rabbit_retry_interval rabbitmq
-rabbit_use_ssl rabbitmq
-rabbit_userid rabbitmq
-rabbit_virtual_host rabbitmq
+rabbit_ha_queues rabbitmq rpc_all
+rabbit_host rabbitmq rpc_all
+rabbit_hosts rabbitmq rpc_all
+rabbit_login_method rabbitmq rpc_all
+rabbit_max_retries rabbitmq rpc_all
+rabbit_password rabbitmq rpc_all
+rabbit_port rabbitmq rpc_all
+rabbit_retry_backoff rabbitmq rpc_all
+rabbit_retry_interval rabbitmq rpc_all
+rabbit_use_ssl rabbitmq rpc_all
+rabbit_userid rabbitmq rpc_all
+rabbit_virtual_host rabbitmq rpc_all
 ram_allocation_ratio scheduling
 ram_weight_multiplier scheduling
 reboot_timeout compute
@@ -312,18 +315,18 @@ restrict_isolated_hosts_to_isolated_images scheduling
 resume_guests_state_on_host_boot compute
 rootwrap_config common
 routing_source_ip network
-rpc_backend rpc
-rpc_cast_timeout rpc
-rpc_conn_pool_size rpc
-rpc_response_timeout rpc
-rpc_thread_pool_size rpc
-rpc_zmq_bind_address zeromq
-rpc_zmq_contexts zeromq
-rpc_zmq_host zeromq
-rpc_zmq_ipc_dir zeromq
-rpc_zmq_matchmaker zeromq
-rpc_zmq_port zeromq
-rpc_zmq_topic_backlog zeromq
+rpc_backend rpc rpc_all
+rpc_cast_timeout rpc rpc_all
+rpc_conn_pool_size rpc rpc_all
+rpc_response_timeout rpc rpc_all
+rpc_thread_pool_size rpc rpc_all
+rpc_zmq_bind_address zeromq rpc_all
+rpc_zmq_contexts zeromq rpc_all
+rpc_zmq_host zeromq rpc_all
+rpc_zmq_ipc_dir zeromq rpc_all
+rpc_zmq_matchmaker zeromq rpc_all
+rpc_zmq_port zeromq rpc_all
+rpc_zmq_topic_backlog zeromq rpc_all
 run_external_periodic_tasks periodic
 running_deleted_instance_action compute
 running_deleted_instance_poll_interval compute
@@ -357,15 +360,13 @@ share_dhcp_address network
 shelved_offload_time compute
 shelved_poll_interval compute
 snapshot_name_template api
-sqlite_db db
-sqlite_synchronous db
 ssl_ca_file wsgi
 ssl_cert_file wsgi
 ssl_key_file wsgi
 state_path common
 stub_compute xen
 sync_power_state_interval compute
-syslog-log-facility logging
+syslog_log_facility logging
 tcp_keepidle wsgi
 teardown_unused_network_gateway network
 tempdir common
@@ -373,8 +374,6 @@ timeout_nbd hypervisor
 transport_url common
 until_refresh policy
 update_dns_entries network
-use-syslog logging
-use-syslog-rfc-format logging
 use_cow_images hypervisor
 use_forwarded_for api
 use_ipv6 ipv6
@@ -383,11 +382,15 @@ use_neutron_default_nets network
 use_project_ca ca
 use_single_default_gateway network
 use_stderr logging
+use_syslog logging
+use_syslog_rfc_format logging
 user_cert_subject ca
 vcpu_pin_set hypervisor
 vendordata_driver metadata
 vendordata_jsonfile_path metadata
 verbose logging
+vif_plugging_is_fatal compute
+vif_plugging_timeout compute
 virt_mkfs hypervisor
 vlan_interface network
 vlan_start network
@@ -461,7 +464,7 @@ cells/name cells
 cells/offset_weight_multiplier cells
 cells/ram_weight_multiplier scheduling
 cells/reserve_percent cells
-cells/rpc_driver_queue_base rpc
+cells/rpc_driver_queue_base rpc rpc_all
 cells/scheduler upgrade_levels
 cells/scheduler_filter_classes scheduling
 cells/scheduler_retries scheduling
@@ -476,16 +479,22 @@ database/backend db
 database/connection db
 database/connection_debug db
 database/connection_trace db
+database/db_inc_retry_interval db
+database/db_max_retries db
+database/db_max_retry_interval db
+database/db_retry_interval db
 database/idle_timeout db
 database/max_overflow db
 database/max_pool_size db
 database/max_retries db
 database/min_pool_size db
+database/mysql_sql_mode db
 database/pool_timeout db
 database/retry_interval db
 database/slave_connection db
-database/use_tpool api
-docker/registry_default_port docker
+database/sqlite_db db
+database/sqlite_synchronous db
+database/use_db_reconnect db
 hyperv/config_drive_cdrom configdrive
 hyperv/config_drive_inject_password configdrive
 hyperv/dynamic_memory_ratio hyperv
@@ -554,7 +563,7 @@ libvirt/volume_clear_size libvirt
 libvirt/volume_drivers libvirt
 libvirt/wait_soft_reboot_seconds libvirt
 libvirt/xen_hvmloader_path xen
-matchmaker_ring/ringfile rpc
+matchmaker_ring/ringfile rpc rpc_all
 metrics/required scheduling
 metrics/weight_multiplier scheduling
 metrics/weight_of_unavailable scheduling
@@ -581,7 +590,7 @@ trusted_computing/attestation_auth_timeout trustedcomputing
 trusted_computing/attestation_port trustedcomputing
 trusted_computing/attestation_server trustedcomputing
 trusted_computing/attestation_server_ca_file trustedcomputing
-upgrade_levels/baseapi rpc
+upgrade_levels/baseapi rpc rpc_all
 upgrade_levels/cells upgrade_levels
 upgrade_levels/cert upgrade_levels
 upgrade_levels/compute upgrade_levels

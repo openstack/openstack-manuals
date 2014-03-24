@@ -4,7 +4,7 @@
              The tool to do so lives in the tools directory of this
              repository -->
         <para xmlns="http://docbook.org/ns/docbook" version="5.0">
-        <table rules="all">
+        <table rules="all" xml:id="config_table_nova_compute">
           <caption>Description of configuration options for compute</caption>
            <col width="50%"/>
            <col width="50%"/>
@@ -75,6 +75,10 @@
                        <td>(StrOpt) Where cached images are stored under $instances_path. This is NOT the full path - just a folder name. For per-compute-host cached images, set to _base_$my_ip</td>
               </tr>
               <tr>
+                       <td>image_handlers = download</td>
+                       <td>(ListOpt) Specifies which image handler extension names to use for handling images. The first extension in the list which can handle the image with a suitable location will be used.</td>
+              </tr>
+              <tr>
                        <td>instance_build_timeout = 0</td>
                        <td>(IntOpt) Amount of time in seconds an instance can be in BUILD before going into ERROR status.Set to 0 to disable.</td>
               </tr>
@@ -137,6 +141,14 @@
               <tr>
                        <td>sync_power_state_interval = 600</td>
                        <td>(IntOpt) Interval to sync power states between the database and the hypervisor</td>
+              </tr>
+              <tr>
+                       <td>vif_plugging_is_fatal = True</td>
+                       <td>(BoolOpt) Fail instance boot if vif plugging fails</td>
+              </tr>
+              <tr>
+                       <td>vif_plugging_timeout = 300</td>
+                       <td>(IntOpt) Number of seconds to wait for neutron vif plugging events to arrive before continuing or failing (see vif_plugging_is_fatal). If this is set to zero and vif_plugging_is_fatal is False, events should not be expected to arrive at all.</td>
               </tr>
        </tbody>
         </table>
