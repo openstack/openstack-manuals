@@ -3,132 +3,126 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="configuring-keystone-for-ldap-backend">
-    <title>Configure the Identity Service with an LDAP back
-        end</title>
-    <para>As an alternative to the SQL database backing store, the
-        Identity Service can use a directory server to provide the
-        Identity Service. For example:</para>
-    <programlisting language="ini">dn: dc=AcmeExample,dc=org
-dc: AcmeExample
-objectClass: dcObject
-objectClass: organizationalUnit
-ou: AcmeExample
-
-dn: ou=Groups,dc=AcmeExample,dc=org
-objectClass: top
-objectClass: organizationalUnit
-ou: groups
-
-dn: ou=Users,dc=AcmeExample,dc=org
-objectClass: top
-objectClass: organizationalUnit
-ou: users
-
-dn: ou=Roles,dc=AcmeExample,dc=org
-objectClass: top
-objectClass: organizationalUnit
-ou: roles</programlisting>
-    <para>The corresponding entries in the
-            <filename>keystone.conf</filename> configuration file
-        are:</para>
-    <programlisting language="ini">[ldap]
+    <title>Integrate Identity with LDAP</title>
+    <para>Identity Service supports integration with an existing LDAP
+        directory for authentication and authorization
+        services.</para>
+    <important os="rhel;fedora;centos">
+        <para>For OpenStack Identity to access an LDAP back end, you must
+            enable the <option>authlogin_nsswitch_use_ldap</option> boolean
+            value for SELinux on the Identity server. To enable and
+            make the option persistent across reboots:</para>
+        <screen><prompt>#</prompt> <userinput>setsebool -P authlogin_nsswitch_use_ldap</userinput></screen>
+    </important>
+    <note>
+        <para>You can integrate Identity with a single LDAP
+            server.</para>
+    </note>
+    <para>To configure Identity, set options in the
+            <filename>/etc/keystone/keystone.conf</filename> file.
+        Modify these examples as needed.</para>
+    <procedure>
+        <title>To integrate Identity with LDAP</title>
+        <step>
+            <para>Enable the LDAP driver in the
+                    <filename>keystone.conf</filename> file:</para>
+            <programlisting language="ini">[identity]
+#driver = keystone.identity.backends.sql.Identity
+driver = keystone.identity.backends.ldap.Identity</programlisting>
+        </step>
+        <step>
+            <para>Define the destination LDAP server in the
+                    <filename>keystone.conf</filename> file:</para>
+            <programlisting language="ini">[ldap]
 url = ldap://localhost
-user = dc=Manager,dc=AcmeExample,dc=org
-password = badpassword
-suffix = dc=AcmeExample,dc=org
+user = dc=Manager,dc=example,dc=org
+password = samplepassword
+suffix = dc=example,dc=org
 use_dumb_member = False
-allow_subtree_delete = False
-
-user_tree_dn = ou=Users,dc=AcmeExample,dc=com
+allow_subtree_delete = False</programlisting>
+        </step>
+        <step>
+            <para>Create the organizational units (OU) in the LDAP
+                directory, and define their corresponding location in
+                the <filename>keystone.conf</filename> file:</para>
+            <programlisting language="ini">[ldap]
+user_tree_dn = ou=Users,dc=example,dc=org
 user_objectclass = inetOrgPerson
 
-tenant_tree_dn = ou=Groups,dc=AcmeExample,dc=com
+tenant_tree_dn = ou=Groups,dc=example,dc=org
 tenant_objectclass = groupOfNames
 
-role_tree_dn = ou=Roles,dc=AcmeExample,dc=com
+role_tree_dn = ou=Roles,dc=example,dc=org
 role_objectclass = organizationalRole</programlisting>
-    <para>The default object classes and attributes are intentionally
-        simple. They reflect the common standard objects according to
-        the LDAP RFCs. You can override object attributes to map to a
-        pre-existing schema. For example, RFC2307-compliant posixAccount
-        objects will commonly include the <emphasis>uid</emphasis>
-        and <emphasis>cn</emphasis> attributes. These fields can be
-        mapped to their corresponding entries in the
-        <filename>keystone.conf</filename> file:
-    </para>
-    <programlisting language="ini">[ldap]
-user_id_attribute = uidNumber
-user_name_attribute = cn</programlisting>
-    <para>Depending on your deployment, you can modify a set of
-        allowed actions for each object type. For example, you might
-        set these options:</para>
-    <programlisting language="ini">[ldap]
+            <note>
+                <para>These schema attributes are extensible for
+                    compatibility with various schemas. For example,
+                    this entry maps to the
+                        <systemitem>person</systemitem> attribute in
+                    Active Directory:</para>
+                <programlisting language="ini">user_objectclass = person</programlisting>
+            </note>
+        </step>
+        <step>
+            <para>A read-only implementation is recommended for LDAP
+                integration. These permissions are applied to object
+                types in the <filename>keystone.conf</filename>
+                file:</para>
+            <programlisting language="ini">[ldap]
 user_allow_create = False
 user_allow_update = False
 user_allow_delete = False
 
-tenant_allow_create = True
-tenant_allow_update = True
-tenant_allow_delete = True
+tenant_allow_create = False
+tenant_allow_update = False
+tenant_allow_delete = False
 
-role_allow_create = True
-role_allow_update = True
-role_allow_delete = True</programlisting>
-    <para>If the back end provides too much output, you can filter
-        users, tenants, and roles. For example:</para>
-    <programlisting language="ini">[ldap]
-user_filter = (memberof=CN=acme-users,OU=workgroups,DC=AcmeExample,DC=com)
+role_allow_create = False
+role_allow_update = False
+role_allow_delete = False</programlisting>
+        </step>
+        <step>
+            <para>Restart the Identity service:</para>
+            <screen><prompt>#</prompt> <userinput>service keystone restart</userinput></screen>
+            <warning><para>During service restart, authentication and
+            authorization are unavailable.</para></warning>
+        </step>
+    </procedure>
+    <formalpara>
+        <title>Additional LDAP integration settings</title>
+        <para>Set these options in the
+                <filename>keystone.conf</filename> file.</para>
+    </formalpara>
+    <variablelist>
+        <varlistentry>
+            <term>Filters</term>
+            <listitem>
+                <para>Use filters to control the scope of data
+                    presented through LDAP.</para>
+                <programlisting language="ini">[ldap]
+user_filter = (memberof=cn=openstack-users,ou=workgroups,dc=example,dc=org)
 tenant_filter =
 role_filter =</programlisting>
-    <para>If the directory server has not enabled the
-            <literal>boolean</literal> type for the user, you can use
-        configuration options to extract the value from an integer
-        attribute. For example, in an Active Directory, set these
-        configuration options:</para>
-    <programlisting language="ini">[ldap]
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term>LDAP Account Status</term>
+            <listitem>
+                <para>Mask account status values for compatibility
+                    with various directory services. Superfluous
+                    accounts are filtered with
+                        <systemitem>user_filter</systemitem>.</para>
+                <para>For example, you can mask Active Directory
+                    account status attributes in the
+                        <filename>keystone.conf</filename>
+                    file:</para>
+                <programlisting language="ini">[ldap]
 user_enabled_attribute = userAccountControl
 user_enabled_mask      = 2
 user_enabled_default   = 512</programlisting>
-    <para>The attribute is an integer. Bit 1 contains the enabled
-        attribute. If the <emphasis>user_enabled_mask</emphasis> mask
-        is not 0, it gets its value from the
-            <option>user_enabled_attribute</option> field and it
-        performs an ADD operation by using the
-            <emphasis>user_enabled_mask</emphasis> value. If the value
-        matches the mask, the account is disabled.</para>
-    <para>It also saves the value without mask to the
-            <literal>identity</literal> user in the
-            <option>enabled_nomask</option> attribute. In case you
-        must change it to enable or disable a user, you can use this
-        value because it contains more information than the status
-        such as, password expiration. The
-            <emphasis>user_enabled_mask</emphasis> value is required
-        to create a default value on the integer attribute (512 =
-        NORMAL ACCOUNT on AD).</para>
-    <para>If Active Directory classes and attributes do not match the
-        specified classes in the LDAP module, so you can modify them,
-        as follows:</para>
-    <programlisting language="ini">[ldap]
-user_objectclass         = person
-user_id_attribute        = cn
-user_name_attribute      = cn
-user_mail_attribute      = mail
-user_enabled_attribute   = userAccountControl
-user_enabled_mask        = 2
-user_enabled_default     = 512
-user_attribute_ignore    = tenant_id,tenants
-tenant_objectclass       = groupOfNames
-tenant_id_attribute      = cn
-tenant_member_attribute  = member
-tenant_name_attribute    = ou
-tenant_desc_attribute    = description
-tenant_enabled_attribute = extensionName
-tenant_attribute_ignore  =
-role_objectclass         = organizationalRole
-role_id_attribute        = cn
-role_name_attribute      = ou
-role_member_attribute    = roleOccupant
-role_attribute_ignore    =</programlisting>
-<xi:include href="section_keystone_config_ldap-assignments.xml"/>
-<xi:include href="section_keystone_config_ldap-hardening.xml"/>
+            </listitem>
+        </varlistentry>
+    </variablelist>
+    <xi:include href="section_keystone_config_ldap-assignments.xml"/>
+    <xi:include href="section_keystone_config_ldap-hardening.xml"/>
 </section>
