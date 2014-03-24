@@ -496,6 +496,21 @@ container_format=bare is_public=true \
         override the linked_clone mode on a per-image basis by using
         the <code>vmware_linked_clone</code> property in the OpenStack
         Image Service.</para>
+      <para>You can configure the <filename>nova.conf</filename> file
+        to automatically purge unused images after a specified period
+        of time. The relevant settings in the <literal>DEFAULT</literal>
+        section are:</para>
+      <itemizedlist>
+        <listitem><para><parameter>remove_unused_base_images</parameter>
+          - Set this parameter to <userinput>True</userinput> to
+          specify that unused images should be removed after the
+          duration specified in the <parameter>remove_unused_original_minimum_age_seconds</parameter> parameter.
+          The default is <userinput>True</userinput>.</para></listitem>
+        <listitem><para><parameter>remove_unused_original_minimum_age_seconds</parameter>
+          - Specifies the duration in seconds after which an unused
+          image is purged from the cache. The default is
+          <userinput>86400</userinput> (24 hours).</para></listitem>
+      </itemizedlist>
     </section>
   </section>
   <section xml:id="VMWare_networking">
