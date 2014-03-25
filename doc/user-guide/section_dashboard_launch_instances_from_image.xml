@@ -9,7 +9,7 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="dashboard_launch_instances_from_image">
-    <title>Launch an instance from an image</title>
+    <title>Launch an instance</title>
     <?dbhtml stop-chunking?>
     <para>When you launch an instance from an image, OpenStack creates
         a local copy of the image on the compute node where the
@@ -22,6 +22,10 @@
             <para>The dashboard shows the images that have been
                 uploaded to OpenStack Image Service and are available
                 for this project.</para>
+            <para>For details on creating images, see <link
+                xlink:href="http://docs.openstack.org/image-guide/content/ch_creating_images_manually.html">
+                Creating images manually</link> in the <citetitle>OpenStack Virtual
+                  Machine Image Guide</citetitle>.</para>
         </step>
         <step>
             <para>Select an image and click
@@ -30,10 +34,10 @@
         <step>
             <para>In the <guilabel>Launch Instance</guilabel> window,
                 specify the following values:</para>
-            <informaltable rules="all">
-                <col width="30%"/>
-                <col width="70%"/>
-                <thead>
+                <informaltable rules="all" width="75%">
+                  <col width="30%"/>
+                  <col width="70%"/>
+                  <thead>
                     <tr>
                         <th colspan="2" align="center"
                                 ><guilabel>Details</guilabel> tab</th>
@@ -41,15 +45,29 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><para><guilabel>Instance
-                                Source</guilabel></para></td>
-                        <td><para>Image or snapshot.</para></td>
+                        <td><para><guilabel>Availability Zone</guilabel></para></td>
+                        <td>
+                          <para>By default, this value is set to the availability
+                            zone given by the cloud provider (for example,
+                            <literal>us-west</literal> or <literal>apac-south</literal>).
+                            Though, it could be <literal>nova</literal> for most cases.
+                          </para>
+                        </td>
                     </tr>
                     <tr>
-                        <td><para><guilabel>Instance
-                                Name</guilabel></para></td>
-                        <td><para>The name to assign to the virtual
-                                machine.</para></td>
+                        <td><para><guilabel>Instance Name</guilabel></para></td>
+                        <td><para>The name to assign to the virtual machine.
+                          </para>
+                          <note>
+                          <para>The name you assign here becomes the initial host
+                            name of the server. After the server is built, if you
+                            change the server name in the API or change the host
+                            name directly, the names are not updated in the dashboard.</para>
+                          <para>Server names are not guaranteed to be unique when
+                            created so you could have two instances with the same
+                            host name.</para>
+                          </note>
+                        </td>
                     </tr>
                     <tr>
                         <td>
@@ -65,13 +83,83 @@
                             </para></td>
                     </tr>
                     <tr>
+                    <td>
+                      <para>
+                        <guilabel>Instance Boot Source</guilabel>
+                      </para>
+                    </td>
+                    <td><para>Your options are:</para>
+                          <itemizedlist>
+                            <listitem>
+                              <para>
+                                <guilabel>Boot from image</guilabel> - If you choose
+                                this option, a new field for <guilabel>Image Name</guilabel>
+                                  displays. You can select the image from the
+                                  dropdown list.
+                              </para>
+                            </listitem>
+                            <listitem>
+                              <para>
+                                <guilabel>Boot from snapshot</guilabel> - If you
+                                choose this option, a new field for <guilabel>Instance Snapshot</guilabel>
+                                  displays. You can select the snapshot from
+                                  the dropdown list.
+                              </para>
+                            </listitem>
+                            <listitem>
+                              <para>
+                                <guilabel>Boot from volume</guilabel> - If you
+                                choose this option, a new field for <guilabel>Volume</guilabel>
+                                  displays. You can select the volume from the
+                                  dropdown list.
+                              </para>
+                            </listitem>
+                            <listitem>
+                              <para>
+                                <guilabel>Boot from image (creates a new volume)
+                                  </guilabel> - With this option, you can boot from
+                                  an image and create a volume by entering the <guilabel>Device Size</guilabel>
+                                  and <guilabel>Device Name</guilabel> for your
+                                  volume.
+                              </para>
+                            </listitem>
+                            <listitem>
+                              <para>
+                                <guilabel>Boot from volume snapshot (creates a new
+                                  volume)</guilabel> - Using this option, you can
+                                  boot from a volume snapshot and create a new
+                                  volume by choosing <guilabel>Volume Snapshot</guilabel>
+                                  from a dropdown list and adding a <guilabel>Device Name</guilabel>
+                                  for your volume.
+                              </para>
+                            </listitem>
+                          </itemizedlist>
+                          <para>Since you are launching an instance from an image,
+                            <guilabel>Boot from image</guilabel> is chosen by
+                              default.</para>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <para>
+                          <guilabel>Image Name</guilabel>
+                        </para>
+                      </td>
+                      <td>
+                        <para>This field changes based on your previous selection.
+                          Since you have chosen to launch an instance using an image,
+                          the <guilabel>Image Name</guilabel> field displays.
+                          Select the image name from the dropdown list.</para>
+                          </td>
+                    </tr>
+                    <tr>
                         <th colspan="2" align="center"
                                 ><guilabel>Access &amp;
                                 Security</guilabel> tab</th>
                     </tr>
                     <tr>
                         <td><para><guilabel>Keypair</guilabel></para></td>
-                        <td><para>A keypair.</para>
+                        <td><para>Select a keypair from the dropdown list.</para>
                             <para>In case an image uses a static root
                                 password or a static key set (neither
                                 is recommended), you do not need to
@@ -81,7 +169,6 @@
                     <tr>
                         <td><para><guilabel>Security
                                 Groups</guilabel></para></td>
-
                         <td><para>Activate the security groups that
                                 you want to assign to the
                                 instance.</para>
@@ -98,24 +185,14 @@
                     </tr>
                     <tr>
                         <th colspan="2" align="center"
-                                ><guilabel>Volume Options</guilabel>
+                                ><guilabel>Networking</guilabel>
                             tab</th>
                     </tr>
                     <tr>
-                        <td><para><guilabel>Volume
-                                Options</guilabel></para></td>
-                        <td><para>Not applicable when you launch an
-                                instance from an image.</para><para>To
-                                launch from a volume or volume
-                                snapshot, select the appropriate
-                                option in the <guilabel>Volume
-                                   Options</guilabel> drop-down list.
-                                Then, choose the volume or
-                                snapshot.</para>
-                            <para>For information about how to create
-                                a bootable volume, see <xref
-                                   linkend="dashboard_launch_instances_from_volume"
-                                />.</para></td>
+                        <td><para><guilabel>Selected Networks</guilabel></para></td>
+                        <td><para>To add a network to the instance, click the
+                          <guibutton>+</guibutton> in the <guilabel>Available
+                            Networks</guilabel> field.</para></td>
                     </tr>
                     <tr>
                         <th colspan="2" align="center"
@@ -125,9 +202,8 @@
                     <tr>
                         <td><para><guilabel>Customization
                                    Script</guilabel></para></td>
-                        <td><para>A customization script that runs
-                                after your instance
-                            launches.</para></td>
+                        <td><para>A customization script that runs after your
+                          instance launches.</para></td>
                     </tr>
                 </tbody>
             </informaltable>
