@@ -1,0 +1,43 @@
+<section xmlns="http://docbook.org/ns/docbook"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+  xml:id="nova-network-initial-network">
+  <title>Create initial network</title>
+  <para>Before launching your first instance, you must create the necessary
+    virtual network infrastructure to which the instance will connect.
+    This network typically provides internet access
+    <emphasis>from</emphasis> instances. You can enable internet access
+    <emphasis>to</emphasis> individual instances using a
+    <glossterm>floating IP address</glossterm> and suitable
+    <glossterm>security group</glossterm> rules. The <literal>admin</literal>
+    tenant owns this network because it provides external network access
+    for multiple tenants.</para>
+  <para>This network shares the same <glossterm>subnet</glossterm>
+    associated with the physical network connected to the external
+    <glossterm>interface</glossterm> on the compute node. You should specify
+    an exclusive slice of this subnet to prevent interference with other
+    devices on the external network.</para>
+  <note>
+    <para>Perform these commands on the controller node.</para>
+  </note>
+  <procedure>
+    <title>To create the network:</title>
+    <step>
+      <para>Source the <literal>admin</literal> tenant credentials:</para>
+      <screen><prompt>$</prompt> <userinput>source admin-openrc.sh</userinput></screen>
+    </step>
+    <step>
+      <para>Create the network:</para>
+      <para>Replace <replaceable>NETWORK_CIDR</replaceable> with the subnet
+        associated with the physical network.</para>
+      <screen><prompt>$</prompt> <userinput>nova network-create demo-net --bridge br100 --multi-host T \
+  --fixed-range-v4 <replaceable>NETWORK_CIDR</replaceable></userinput></screen>
+      <para>For example, using an exclusive slice of
+        <literal>203.0.113.0/24</literal> with IP address range
+        <literal>203.0.113.24</literal> to <literal>203.0.113.32</literal>:
+      </para>
+      <screen><prompt>$</prompt> <userinput>nova network-create demo-net --bridge br100 --multi-host T \
+  --fixed-range-v4 203.0.113.24/29</userinput></screen>
+    </step>
+  </procedure>
+</section>
