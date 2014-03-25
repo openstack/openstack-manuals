@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-03-24 06:24+0000\n"
+"POT-Creation-Date: 2014-03-25 06:27+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -987,6 +987,54 @@ msgstr ""
 msgid "You can now get usage statistics for the various meters:"
 msgstr ""
 
+#: ./doc/install-guide/section_nova-networking-compute-node.xml:5(title)
+msgid "Configure networking"
+msgstr ""
+
+#: ./doc/install-guide/section_nova-networking-compute-node.xml:7(para) ./doc/install-guide/section_nova-boot.xml:7(para) ./doc/install-guide/ch_networking.xml:17(para) ./doc/install-guide/ch_neutron.xml:17(para) ./doc/install-guide/ch_basics.xml:8(para) ./doc/install-guide/ch_overview.xml:8(para)
+msgid "We are updating this material for Icehouse. You may find structure and/or content issues during this process."
+msgstr ""
+
+#: ./doc/install-guide/section_nova-networking-compute-node.xml:10(para)
+msgid "Configuring networking in OpenStack can be a bewildering experience. The following example shows the simplest production-ready configuration that is available: the legacy networking in OpenStack Compute, with a flat network, that takes care of DHCP."
+msgstr ""
+
+#: ./doc/install-guide/section_nova-networking-compute-node.xml:15(para)
+msgid "This set up uses multi-host functionality. Networking is configured to be highly available by distributing networking functionality across multiple hosts. As a result, no single network controller acts as a single point of failure. This process configures each compute node for networking."
+msgstr ""
+
+#: ./doc/install-guide/section_nova-networking-compute-node.xml:22(para)
+msgid "Install the appropriate packages for compute networking on the compute node only. These packages are not required on the controller node."
+msgstr ""
+
+#: ./doc/install-guide/section_nova-networking-compute-node.xml:25(para)
+msgid "So that the <systemitem class=\"service\">nova-network</systemitem> service can forward metadata requests on each compute node, each compute node must install the <systemitem class=\"service\">nova-api-metadata</systemitem> service, as follows:"
+msgstr ""
+
+#: ./doc/install-guide/section_nova-networking-compute-node.xml:35(para)
+msgid "Edit the <filename>nova.conf</filename> file to define the networking mode:"
+msgstr ""
+
+#: ./doc/install-guide/section_nova-networking-compute-node.xml:53(para) ./doc/install-guide/section_nova-controller.xml:113(para)
+msgid "Edit the <filename>/etc/nova/nova.conf</filename> file and add these lines to the <literal>[DEFAULT]</literal> section:"
+msgstr ""
+
+#: ./doc/install-guide/section_nova-networking-compute-node.xml:72(para)
+msgid "Provide a local metadata service that is reachable from instances on this compute node. Perform this step only on compute nodes that do not run the <systemitem class=\"service\">nova-api</systemitem> service."
+msgstr ""
+
+#: ./doc/install-guide/section_nova-networking-compute-node.xml:81(para)
+msgid "Restart the network service:"
+msgstr ""
+
+#: ./doc/install-guide/section_nova-networking-compute-node.xml:83(para)
+msgid "Start the network service and configure it to start when the system boots:"
+msgstr ""
+
+#: ./doc/install-guide/section_nova-networking-compute-node.xml:90(para)
+msgid "Create a network that virtual machines can use. Do this once for the entire installation and not on each compute node. Run the <placeholder-1/> command on the controller:"
+msgstr ""
+
 #: ./doc/install-guide/section_nova-controller.xml:5(title)
 msgid "Install Compute controller services"
 msgstr ""
@@ -1045,10 +1093,6 @@ msgstr ""
 
 #: ./doc/install-guide/section_nova-controller.xml:105(para)
 msgid "Set the <option>my_ip</option>, <option>vncserver_listen</option>, and <option>vncserver_proxyclient_address</option> configuration options to the internal IP address of the controller node:"
-msgstr ""
-
-#: ./doc/install-guide/section_nova-controller.xml:113(para) ./doc/install-guide/section_nova-network.xml:66(para)
-msgid "Edit the <filename>/etc/nova/nova.conf</filename> file and add these lines to the <literal>[DEFAULT]</literal> section:"
 msgstr ""
 
 #: ./doc/install-guide/section_nova-controller.xml:116(para)
@@ -1149,10 +1193,6 @@ msgstr ""
 
 #: ./doc/install-guide/section_nova-boot.xml:5(title)
 msgid "Launch an instance"
-msgstr ""
-
-#: ./doc/install-guide/section_nova-boot.xml:7(para) ./doc/install-guide/section_nova-network.xml:7(para) ./doc/install-guide/ch_neutron.xml:17(para) ./doc/install-guide/ch_basics.xml:8(para) ./doc/install-guide/ch_overview.xml:8(para)
-msgid "We are updating this material for Icehouse. You may find structure and/or content issues during this process."
 msgstr ""
 
 #: ./doc/install-guide/section_nova-boot.xml:10(para)
@@ -1851,6 +1891,18 @@ msgstr ""
 msgid "This use case represents a more advanced router scenario in which each tenant gets at least one router, and potentially has access to the Networking API to create additional routers. The tenant can create their own networks, potentially uplinking those networks to a router. This model enables tenant-defined, multi-tier applications, with each tier being a separate network behind the router. Because there are multiple routers, tenant subnets can overlap without conflicting, because access to external networks all happens through SNAT or floating IPs. Each router uplink and floating IP is allocated from the external network subnet."
 msgstr ""
 
+#: ./doc/install-guide/ch_networking.xml:6(title)
+msgid "Add a networking service"
+msgstr ""
+
+#: ./doc/install-guide/ch_networking.xml:21(title)
+msgid "Networking (neutron)"
+msgstr ""
+
+#: ./doc/install-guide/ch_networking.xml:29(title)
+msgid "Legacy networking"
+msgstr ""
+
 #: ./doc/install-guide/ch_horizon.xml:6(title)
 msgid "Add the dashboard"
 msgstr ""
@@ -2329,58 +2381,6 @@ msgstr ""
 
 #: ./doc/install-guide/section_ceilometer-cinder.xml:24(para)
 msgid "Restart the Block Storage services with their new settings:"
-msgstr ""
-
-#: ./doc/install-guide/section_nova-network.xml:5(title)
-msgid "Configure networking"
-msgstr ""
-
-#: ./doc/install-guide/section_nova-network.xml:10(para)
-msgid "Configuring networking in OpenStack can be a bewildering experience. The following example shows the simplest production-ready configuration that is available: the legacy networking in OpenStack Compute, with a flat network, that takes care of DHCP."
-msgstr ""
-
-#: ./doc/install-guide/section_nova-network.xml:15(para)
-msgid "This set up uses multi-host functionality. Networking is configured to be highly available by distributing networking functionality across multiple hosts. As a result, no single network controller acts as a single point of failure. This process configures each compute node for networking."
-msgstr ""
-
-#: ./doc/install-guide/section_nova-network.xml:21(para)
-msgid "Choose one of these options to configure networking in OpenStack:"
-msgstr ""
-
-#: ./doc/install-guide/section_nova-network.xml:24(para)
-msgid "Legacy networking in OpenStack Compute, which is described here."
-msgstr ""
-
-#: ./doc/install-guide/section_nova-network.xml:28(para)
-msgid "The full software-defined networking stack. See <xref linkend=\"ch_neutron\"/>."
-msgstr ""
-
-#: ./doc/install-guide/section_nova-network.xml:35(para)
-msgid "Install the appropriate packages for compute networking on the compute node only. These packages are not required on the controller node."
-msgstr ""
-
-#: ./doc/install-guide/section_nova-network.xml:38(para)
-msgid "So that the <systemitem class=\"service\">nova-network</systemitem> service can forward metadata requests on each compute node, each compute node must install the <systemitem class=\"service\">nova-api-metadata</systemitem> service, as follows:"
-msgstr ""
-
-#: ./doc/install-guide/section_nova-network.xml:48(para)
-msgid "Edit the <filename>nova.conf</filename> file to define the networking mode:"
-msgstr ""
-
-#: ./doc/install-guide/section_nova-network.xml:85(para)
-msgid "Provide a local metadata service that is reachable from instances on this compute node. Perform this step only on compute nodes that do not run the <systemitem class=\"service\">nova-api</systemitem> service."
-msgstr ""
-
-#: ./doc/install-guide/section_nova-network.xml:94(para)
-msgid "Restart the network service:"
-msgstr ""
-
-#: ./doc/install-guide/section_nova-network.xml:96(para)
-msgid "Start the network service and configure it to start when the system boots:"
-msgstr ""
-
-#: ./doc/install-guide/section_nova-network.xml:103(para)
-msgid "Create a network that virtual machines can use. Do this once for the entire installation and not on each compute node. Run the <placeholder-1/> command on the controller:"
 msgstr ""
 
 #: ./doc/install-guide/app_reserved_uids.xml:6(title) ./doc/install-guide/app_reserved_uids.xml:24(caption)
@@ -3807,13 +3807,13 @@ msgstr ""
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
-#: ./doc/install-guide/ch_overview.xml:95(None)
+#: ./doc/install-guide/ch_overview.xml:96(None)
 msgid "@@image: 'figures/installguide_arch-nova.png'; md5=30bd45144ade729234e157430f63b323"
 msgstr ""
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
-#: ./doc/install-guide/ch_overview.xml:146(None)
+#: ./doc/install-guide/ch_overview.xml:148(None)
 msgid "@@image: 'figures/installguide_arch-neutron.png'; md5=4c816c5cff6fb744cba492c2ad704992"
 msgstr ""
 
@@ -3861,7 +3861,7 @@ msgstr ""
 msgid "The basic <glossterm baseform=\"cloud controller node\">controller node</glossterm> runs the Identity service, Image Service, management portion of Compute, and the dashboard necessary to launch a simple instance. It also includes supporting services such as MySQL, <glossterm>AMQP</glossterm>, and <glossterm>NTP</glossterm>."
 msgstr ""
 
-#: ./doc/install-guide/ch_overview.xml:63(para) ./doc/install-guide/ch_overview.xml:108(para)
+#: ./doc/install-guide/ch_overview.xml:63(para) ./doc/install-guide/ch_overview.xml:109(para)
 msgid "Optionally, the controller node also runs portions of Block Storage, Object Storage, Database Service, Orchestration, and Telemetry. These components provide additional features for your environment."
 msgstr ""
 
@@ -3869,39 +3869,39 @@ msgstr ""
 msgid "The basic <glossterm>compute node</glossterm> runs the <glossterm>hypervisor</glossterm> portion of Compute, which operates <glossterm>tenant</glossterm><glossterm baseform=\"virtual machine (VM)\">virtual machines</glossterm> or instances. By default, Compute uses <glossterm baseform=\"kernel-based VM (KVM)\">KVM</glossterm> as the <glossterm>hypervisor</glossterm>. Compute also provisions and operates tenant networks and implements <glossterm baseform=\"security group\">security groups</glossterm>. You can run more than one compute node."
 msgstr ""
 
-#: ./doc/install-guide/ch_overview.xml:79(para) ./doc/install-guide/ch_overview.xml:130(para)
+#: ./doc/install-guide/ch_overview.xml:79(para) ./doc/install-guide/ch_overview.xml:131(para)
 msgid "Optionally, the compute node also runs the Telemetry agent. This component provides additional features for your environment."
 msgstr ""
 
 #: ./doc/install-guide/ch_overview.xml:85(para)
-msgid "When you implement this architecture, skip <xref linkend=\"ch_neutron\"/>. To use optional services, you might need to install additional nodes, as described in subsequent chapters."
+msgid "When you implement this architecture, skip <xref linkend=\"section_neutron-networking\"/> in <xref linkend=\"ch_networking\"/>. To use optional services, you might need to install additional nodes, as described in subsequent chapters."
 msgstr ""
 
-#: ./doc/install-guide/ch_overview.xml:91(title)
+#: ./doc/install-guide/ch_overview.xml:92(title)
 msgid "Two-node architecture with legacy networking"
 msgstr ""
 
-#: ./doc/install-guide/ch_overview.xml:101(para)
+#: ./doc/install-guide/ch_overview.xml:102(para)
 msgid "Three-node architecure with OpenStack Networking (neutron). See <xref linkend=\"example-architecture-with-neutron-networking\"/>."
 msgstr ""
 
-#: ./doc/install-guide/ch_overview.xml:104(para)
+#: ./doc/install-guide/ch_overview.xml:105(para)
 msgid "The basic controller node runs the Identity service, Image Service, management portions of Compute and Networking, Networking plug-in, and the dashboard. It also includes supporting services such as MySQL, AMQP, and NTP."
 msgstr ""
 
-#: ./doc/install-guide/ch_overview.xml:114(para)
+#: ./doc/install-guide/ch_overview.xml:115(para)
 msgid "The network node runs the Networking plug-in, layer 2 agent, and several layer 3 agents that provision and operate tenant networks. Layer 2 services include provisioning of virtual networks and tunnels. Layer 3 services include routing, <glossterm baseform=\"Network Address Translation (NAT)\">NAT</glossterm> , and <glossterm>DHCP</glossterm>. This node also handles external (internet) connectivity for tenant virtual machines or instances."
 msgstr ""
 
-#: ./doc/install-guide/ch_overview.xml:124(para)
+#: ./doc/install-guide/ch_overview.xml:125(para)
 msgid "The compute node runs the hypervisor portion of Compute, which operates tenant virtual machines or instances. By default Compute uses KVM as the hypervisor. The compute node also runs the Networking plug-in and layer 2 agent which operate tenant networks and implement security groups. You can run more than one compute node."
 msgstr ""
 
-#: ./doc/install-guide/ch_overview.xml:136(para)
-msgid "When you implement this architecture, skip <xref linkend=\"nova-network\"/> in <xref linkend=\"ch_nova\"/>. To use optional services, you might need to install additional nodes, as described in subsequent chapters."
+#: ./doc/install-guide/ch_overview.xml:137(para)
+msgid "When you implement this architecture, skip <xref linkend=\"section_nova-networking\"/> in <xref linkend=\"ch_networking\"/>. To use optional services, you might need to install additional nodes, as described in subsequent chapters."
 msgstr ""
 
-#: ./doc/install-guide/ch_overview.xml:142(title)
+#: ./doc/install-guide/ch_overview.xml:144(title)
 msgid "Three-node architecture with OpenStack Networking (neutron)"
 msgstr ""
 
