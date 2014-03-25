@@ -8,7 +8,6 @@
 <section xml:id="header">
 <title>Header</title>
 <para>
-..
       Copyright 2010-2011 United States Government as represented by the
       Administrator of the National Aeronautics and Space Administration.
       All Rights Reserved.
@@ -24,19 +23,16 @@
 </para>
 </section>
 <section xml:id="Cinder-System-Architecture">
-<title>Cinder-System-Architecture</title>
+<title>Block Storage System Architecture</title>
 <para>
-==========================
-The Cinder Block Storage Service is intended to be ran on one or more nodes.
-Cinder uses a sql-based central database that is shared by all Cinder services in the system.  The amount and depth of the data fits into a sql database quite well.  For small deployments this seems like an optimal solution.  For larger deployments, and especially if security is a concern, cinder will be moving towards multiple data stores with some kind of aggregation system.
+The OpenStack Block Storage Service is intended to run on one or more nodes.
+Block Storage uses a SQL-based central database that is shared by all Block Storage services in the system. The amount and depth of the data fits into a SQL database quite well. For small deployments this seems like an optimal solution.  For larger deployments, and especially if security is a concern, Block Storage will be moving towards multiple data stores with some kind of aggregation system.
 </para>
 </section>
 <section xml:id="Components">
 <title>Components</title>
 <para>
-----------
 Below you will a brief explanation of the different components.
-::
                                                   /- ( LDAP )
                               [ Auth Manager ] ---
                                      |            \- ( DB )
@@ -44,7 +40,7 @@ Below you will a brief explanation of the different components.
                                      |
                     cinderclient     |
                    /             \   |
- [ Web Dashboard ]-               -[ api ] -- [ AMQP ] -- [ scheduler ] -- [ volume ] -- ( iSCSI )
+ [ Web Dashboard ]-               -[ API ] -- [ AMQP ] -- [ scheduler ] -- [ volume ] -- ( iSCSI )
                    \             /   |
                     novaclient       |
                                      |
@@ -52,12 +48,30 @@ Below you will a brief explanation of the different components.
                                      |
                                   [ REST ]
 <itemizedlist>
-<listitem><para>DB: sql database for data storage. Used by all components (LINKS NOT SHOWN)</para></listitem>
-<listitem><para>Web Dashboard: potential external component that talks to the api</para></listitem>
-<listitem><para>api: component that receives http requests, converts commands and communicates with other components via the queue or http</para></listitem>
-<listitem><para>Auth Manager: component responsible for users/projects/and roles.  Can backend to DB or LDAP.  This is not a separate binary, but rather a python class that is used by most components in the system.</para></listitem>
-<listitem><para>scheduler: decides which host gets each volume</para></listitem>
-<listitem><para>volume: manages dynamically attachable block devices.</para></listitem>
+  <listitem>
+    <para>DB: SQL database for data storage. Used by all
+    components (LINKS NOT SHOWN)</para>
+  </listitem>
+  <listitem>
+  <para>Web Dashboard: potential external component that talks to the
+     API</para>
+  </listitem>
+  <listitem>
+  <para>API: component that receives HTTP requests, converts commands
+     and communicates with other components via the queue or HTTP</para>
+  </listitem>
+  <listitem>
+  <para>Auth Manager: component responsible for users/projects/and
+     roles. Can use as back-end a database or LDAP.  This is not a
+     separate binary, but rather a python class that is used by most
+     components in the system.</para>
+  </listitem>
+  <listitem>
+  <para>scheduler: decides which host gets each volume</para>
+  </listitem>
+  <listitem>
+    <para>volume: manages dynamically attachable block devices.</para>
+  </listitem>
 </itemizedlist>
 </para>
 </section>
