@@ -1,40 +1,29 @@
 <section xmlns="http://docbook.org/ns/docbook"
   xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
-  xml:id="nova-network">
-  <title>Configure networking</title>
-  <warning>
-    <para>We are updating this material for Icehouse. You may find structure
-      and/or content issues during this process.</para>
-  </warning>
-  <para>Configuring networking in OpenStack can be a bewildering experience. The
-    following example shows the simplest production-ready
-    configuration that is available: the legacy networking in
-    OpenStack Compute, with a flat network, that takes care of
-    DHCP.</para>
-  <para>This set up uses multi-host functionality. Networking is
-    configured to be highly available by distributing networking
-    functionality across multiple hosts. As a result, no single
-    network controller acts as a single point of failure. This process
-    configures each compute node for networking.</para>
+  xml:id="nova-networking-compute-node">
+  <title>Configure compute node</title>
+  <para>Legacy networking only involves compute nodes. This section covers
+    deployment of a simple <glossterm>flat network</glossterm> that provides
+    IP addresses to your instances via <glossterm>DHCP</glossterm>. If your
+    environment includes multiple compute nodes, the
+    <glossterm>multi-host</glossterm> feature provides redundancy by spreading
+    network functions across compute nodes.</para>
   <procedure>
+    <title>To use legacy networking:</title>
     <step>
-      <para>Install the appropriate packages for compute networking on the
-        compute node only. These packages are not required on the controller
-        node.</para>
-      <para os="ubuntu;debian">So that the <systemitem class="service"
-          >nova-network</systemitem> service can forward metadata requests on
-        each compute node, each compute node must install the <systemitem
-          class="service">nova-api-metadata</systemitem> service, as
-        follows:</para>
+      <para>Install the packages:</para>
       <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install nova-network nova-api-metadata</userinput></screen>
-      <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>yum install openstack-nova-network</userinput></screen>
-      <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-nova-network</userinput></screen>
+      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-nova-network openstack-nova-api</userinput></screen>
+      <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-nova-network openstack-nova-api</userinput></screen>
     </step>
-    <step>
-      <para>Edit the <filename>nova.conf</filename> file to define the
-        networking mode:</para>
-      <screen os="fedora;rhel;centos;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT \
+    <step os="rhel;centos;fedora;sles;opensuse">
+      <para>Configure parameters in the
+        <filename>/etc/nova/nova.conf</filename> file:</para>
+      <substeps>
+        <step>
+          <para>Under the <literal>[DEFAULT]</literal> section:</para>
+          <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT \
   network_manager nova.network.manager.FlatDHCPManager</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT \
   firewall_driver nova.virt.libvirt.firewall.IptablesFirewallDriver</userinput>
@@ -47,51 +36,44 @@
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT flat_interface eth1</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT flat_network_bridge br100</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT public_interface eth1</userinput></screen>
-      <screen os="opensuse;sles">
+          <screen os="opensuse;sles">
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT network_api_class nova.network.api.API</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT security_group_api nova</userinput></screen>
-      <para os="ubuntu;debian">Edit the
-          <filename>/etc/nova/nova.conf</filename> file and add these
-        lines to the <literal>[DEFAULT]</literal> section:</para>
-      <programlisting os="ubuntu;debian" language="ini">[DEFAULT]
-...
-
-network_manager=nova.network.manager.FlatDHCPManager
-firewall_driver=nova.virt.libvirt.firewall.IptablesFirewallDriver
-network_size=254
-allow_same_net_traffic=False
-multi_host=True
-send_arp_for_ha=True
-share_dhcp_address=True
-force_dhcp_release=True
-flat_network_bridge=br100
-flat_interface=eth1
-public_interface=eth1</programlisting>
+        </step>
+      </substeps>
     </step>
-    <step os="fedora;rhel;centos">
-      <para>Provide a local metadata service that is reachable from
-        instances on this compute node. Perform this step only on
-        compute nodes that do not run the <systemitem class="service"
-          >nova-api</systemitem> service.</para>
-      <screen><prompt>#</prompt> <userinput>yum install openstack-nova-api</userinput>
-<prompt>#</prompt> <userinput>service openstack-nova-metadata-api start</userinput>
-<prompt>#</prompt> <userinput>chkconfig openstack-nova-metadata-api on</userinput></screen>
+    <step os="ubuntu;debian">
+      <para>Edit the <filename>/etc/nova/nova.conf</filename> file:</para>
+      <substeps>
+        <step>
+          <para>Add the following keys under the <literal>[DEFAULT]</literal>
+            section:</para>
+          <programlisting language="ini">[DEFAULT]
+...
+network_manager = nova.network.manager.FlatDHCPManager
+firewall_driver = nova.virt.libvirt.firewall.IptablesFirewallDriver
+network_size = 254
+allow_same_net_traffic = False
+multi_host = True
+send_arp_for_ha = True
+share_dhcp_address = True
+force_dhcp_release = True
+flat_network_bridge = br100
+flat_interface = eth1
+public_interface = eth1</programlisting>
+        </step>
+      </substeps>
     </step>
     <step>
-      <para os="ubuntu;debian">Restart the network service:</para>
-      <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service nova-network restart</userinput></screen>
-      <para os="fedora;rhel;centos;opensuse;sles">Start the network
-        service and configure it to start when the system
-        boots:</para>
-      <screen os="centos;rhel;fedora;opensuse;sles"><prompt>#</prompt> <userinput>service openstack-nova-network start</userinput>
-<prompt>#</prompt> <userinput>chkconfig openstack-nova-network on</userinput></screen>
+      <para os="ubuntu;debian">Restart the services:</para>
+      <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service nova-network restart</userinput>
+<prompt>#</prompt> <userinput>service nova-api-metadata restart</userinput></screen>
+      <para os="rhel;centos;fedora;sles;opensuse">Start the services and
+        configure them to start when the system boots:</para>
+      <screen os="rhel;centos;fedora;sles;opensuse"><prompt>#</prompt> <userinput>service openstack-nova-network start</userinput>
+<prompt>#</prompt> <userinput>service openstack-nova-metadata-api start</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-nova-network on</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-nova-metadata-api on</userinput></screen>
     </step>
   </procedure>
-  <para>Create a network that virtual machines can use. Do this once
-    for the entire installation and not on each compute node. Run the
-      <command>nova network-create</command> command on the
-    controller:</para>
-  <screen><prompt>$</prompt> <userinput>source openrc.sh</userinput></screen>
-  <screen><prompt>$</prompt> <userinput>nova network-create vmnet --fixed-range-v4=10.0.0.0/24 \
-  --bridge=br100 --multi-host=T</userinput></screen>
 </section>
