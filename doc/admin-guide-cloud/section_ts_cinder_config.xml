@@ -10,24 +10,24 @@
     linkend="section_ts_cinder_config">
     <title xml:id="ts_block_config">Troubleshoot the Block Storage
         configuration</title>
-    <para>This section helps you solve some basic and common errors
-        that you might encounter during setup and configuration of the
-        Block Storage Service. The focus here is on failed
-        creation of volumes. The most important thing to know is where
-        to look in case of a failure.</para>
-    <para>Two log files are especially helpful for solving volume
-        creation failures, the <systemitem class="service"
-            >cinder-api</systemitem> log and the <systemitem
-            class="service">cinder-volume</systemitem> log. The
-            <systemitem class="service">cinder-api</systemitem> log is
-        useful for determining if you have endpoint or connectivity
-        issues. If you send a request to create a volume and it fails,
-       review the <systemitem class="service"
-            >cinder-api</systemitem> log to determine whether the request
-        made it to the Block Storage service. If the request is logged
-        and you see no errors or trace-backs, check the
-            <systemitem class="service">cinder-volume</systemitem> log
-        for errors or trace-backs.</para>
+    <para>Most Block Storage errors are caused by incorrect volume
+    configurations that result in volume creation failues. To resolve
+    these failures, review these logs:</para>
+    <itemizedlist>
+        <listitem><para><systemitem class="service">cinder-api</systemitem>
+        log (<filename>/var/log/cinder/api.log</filename>)</para></listitem>
+        <listitem><para><systemitem class="service">cinder-volume</systemitem>
+        log (<filename>/var/log/cinder/volume.log</filename>)</para></listitem>
+    </itemizedlist>
+    <para>The <systemitem class="service">cinder-api</systemitem> log
+    is useful for determining if you have endpoint or connectivity
+    issues. If you send a request to create a volume and it fails,
+    review the <systemitem class="service" >cinder-api</systemitem>
+    log to determine whether the request made it to the Block Storage
+    service. If the request is logged and you see no errors or
+    trace-backs, check the
+    <systemitem class="service">cinder-volume</systemitem> log for
+    errors or trace-backs.</para>
     <note>
         <para>Create commands are listed in the <systemitem
                 class="service">cinder-api</systemitem> log.</para>
