@@ -1,11 +1,11 @@
-<section xml:id="emc-smis-iscsi-driver"
+<section xml:id="emc-smis-driver"
     xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
     <?dbhtml stop-chunking?>
-    <title>EMC SMI-S iSCSI driver</title>
-    <para>The EMC volume driver, <literal>EMCSMISISCSIDriver</literal>
-        is based on the existing <literal>ISCSIDriver</literal>, with
+    <title>EMC SMI-S iSCSI and FC drivers</title>
+    <para>The EMC volume drivers, <literal>EMCSMISISCSIDriver</literal>
+        and <literal>EMCSMISFCDriver</literal>, has
         the ability to create/delete and attach/detach
         volumes and create/delete snapshots, and so on.</para>
     <para>The driver runs volume operations by communicating with the
@@ -21,10 +21,10 @@
         supports VMAX and VNX storage systems.</para>
     <section xml:id="emc-reqs">
         <title>System requirements</title>
-        <para>EMC SMI-S Provider V4.5.1 and higher is required. You
+        <para>EMC SMI-S Provider V4.6.1 and higher is required. You
             can download SMI-S from the
-            <link xlink:href="http://powerlink.emc.com">EMC
-                Powerlink</link> web site (login is required).
+            <link xlink:href="https://support.emc.com">EMC's
+                support</link> web site (login is required).
             See the EMC SMI-S Provider
             release notes for installation instructions.</para>
         <para>EMC storage VMAX Family and VNX Series are
@@ -62,18 +62,20 @@
                 <para>Copy volume to image</para>
             </listitem>
         </itemizedlist>
-        <para>Only VNX supports these operations:</para>
+        <para>Only VNX supports the following operations:</para>
         <itemizedlist>
             <listitem>
                 <para>Create volume from snapshot</para>
             </listitem>
+            <listitem>
+                <para>Extend volume</para>
+            </listitem>
         </itemizedlist>
-        <para>Only thin provisioning is supported.</para>
     </section>
     <section xml:id="emc-prep">
-        <title>Task flow</title>
+        <title>Set up the SMI-S drivers</title>
         <procedure>
-            <title>To set up the EMC SMI-S iSCSI driver</title>
+            <title>To set up the EMC SMI-S drivers</title>
             <step>
                 <para>Install the <package>python-pywbem</package>
                     package for your distribution. See <xref
@@ -87,7 +89,10 @@
             </step>
             <step>
                 <para>Register with VNX. See <xref
-                        linkend="register-emc"/>.</para>
+                    linkend="register-vnx-iscsi"/>
+                    for the VNX iSCSI driver and <xref
+                    linkend="register-vnx-fc"/>
+                    for the VNX FC driver.</para>
             </step>
             <step>
                 <para>Create a masking view on VMAX. See <xref
@@ -104,7 +109,7 @@
                             <screen><prompt>#</prompt> <userinput>apt-get install python-pywbem</userinput></screen>
                         </listitem>
                         <listitem>
-                            <para>On openSUSE:</para>
+                        <para>On openSUSE:</para>
                             <screen><prompt>#</prompt> <userinput>zypper install python-pywbem</userinput></screen>
                         </listitem>
                         <listitem>
@@ -117,11 +122,12 @@
             <title>Set up SMI-S</title>
             <para>You can install SMI-S on a non-OpenStack host.
                 Supported platforms include different flavors of
-                Windows, Red Hat, and SUSE Linux. The host can be
-                either a physical server or VM hosted by an ESX
-                server. See the EMC SMI-S Provider release notes for
-                supported platforms and installation
-                instructions.</para>
+                Windows, Red Hat, and SUSE Linux. SMI-S can be
+                installed on a physical server or a VM hosted by
+                an ESX server. Note that the supported hypervisor
+                for a VM running SMI-S is ESX only. See the EMC
+                SMI-S Provider release notes for more information
+                on supported platforms and installation instructions.</para>
             <note>
                 <para>You must discover storage arrays on the SMI-S
                     server before you can use the Cinder driver.
@@ -142,13 +148,13 @@
                 arrays are recognized by the SMI-S server before using
                 the EMC Cinder driver.</para>
         </section>
-        <section xml:id="register-emc">
-            <title>Register with VNX</title>
-            <para>To export a VNX volume to a compute node, you must
-                register the node with VNX.</para>
+        <section xml:id="register-vnx-iscsi">
+            <title>Register with VNX for the iSCSI driver</title>
+            <para>To export a VNX volume to a Compute node or a Volume node,
+                you must register the node with VNX.</para>
             <procedure>
                 <title>Register the node</title>
-                <step><para>On the compute node <literal>1.1.1.1</literal>, do
+                <step><para>On the Compute node or Volume node <literal>1.1.1.1</literal>, do
                     the following (assume <literal>10.10.61.35</literal>
                     is the iscsi target):</para>
                     <screen><prompt>#</prompt> <userinput>/etc/init.d/open-iscsi start</userinput>
@@ -156,12 +162,12 @@
 <prompt>#</prompt> <userinput>cd /etc/iscsi</userinput>
 <prompt>#</prompt> <userinput>more initiatorname.iscsi</userinput>
 <prompt>#</prompt> <userinput>iscsiadm -m node</userinput></screen></step>
-                <step><para>Log in to VNX from the compute node using the target
+                <step><para>Log in to VNX from the node using the target
                     corresponding to the SPA port:</para>
                     <screen><prompt>#</prompt> <userinput>iscsiadm -m node -T iqn.1992-04.com.emc:cx.apm01234567890.a0 -p 10.10.61.35 -l</userinput></screen>
                     <para>Where
                         <literal>iqn.1992-04.com.emc:cx.apm01234567890.a0</literal>
-                        is the initiator name of the compute node. Login to
+                        is the initiator name of the node. Login to
                         Unisphere, go to
                         <literal>VNX00000</literal>-&gt;Hosts-&gt;Initiators,
                         Refresh and wait until initiator
@@ -173,10 +179,10 @@
                     IP address <literal>myhost1</literal>. Click <guibutton>Register</guibutton>.
                     Now host <literal>1.1.1.1</literal> also appears under
                     Hosts-&gt;Host List.</para></step>
-                <step><para>Log out of VNX on the compute node:</para>
+                <step><para>Log out of VNX on the node:</para>
                     <screen><prompt>#</prompt> <userinput>iscsiadm -m node -u</userinput></screen></step>
                 <step>
-                    <para>Log in to VNX from the compute node using the target
+                    <para>Log in to VNX from the node using the target
                         corresponding to the SPB port:</para>
                     <screen><prompt>#</prompt> <userinput>iscsiadm -m node -T iqn.1992-04.com.emc:cx.apm01234567890.b8 -p 10.10.10.11 -l</userinput></screen>
                 </step>
@@ -186,33 +192,44 @@
                     <screen><prompt>#</prompt> <userinput>iscsiadm -m node -u</userinput></screen></step>
             </procedure>
         </section>
+        <section xml:id="register-vnx-fc">
+            <title>Register with VNX for the FC driver</title>
+            <para>For a VNX volume to be exported to a Compute node
+                or a Volume node, SAN zoning needs to be configured
+                on the node and WWNs of the node need to be registered with
+                VNX in Unisphere.</para>
+        </section>
         <section xml:id="create-masking">
             <title>Create a masking view on VMAX</title>
-            <para>For VMAX, you must set up the Unisphere for VMAX
-                server. On the Unisphere for VMAX server, create
-                initiator group, storage group, and port group and put
-                them in a masking view. initiator group contains the
-                initiator names of the OpenStack hosts. Storage group
-                must have at least six gatekeepers.</para>
+            <para>For VMAX iSCSI and FC drivers, you need to do initial
+                setup in Unisphere for VMAX. In Unisphere for VMAX, create
+                an initiator group, a storage group, and a port group. Put
+                them in a masking view. The initiator group contains the
+                initiator names of the OpenStack hosts. The storage group
+                will contain volumes provisioned by Block Storage.</para>
         </section>
         <section xml:id="emc-config-file">
             <title><filename>cinder.conf</filename> configuration
                 file</title>
             <para>Make the following changes in
                     <filename>/etc/cinder/cinder.conf</filename>.</para>
-            <para>For VMAX, add the following entries, where
+            <para>For VMAX iSCSI driver, add the following entries, where
                     <literal>10.10.61.45</literal> is the IP address
-                of the VMAX iscsi target:</para>
+                of the VMAX iSCSI target:</para>
             <programlisting language="ini">iscsi_target_prefix = iqn.1992-04.com.emc
 iscsi_ip_address = 10.10.61.45
 volume_driver = cinder.volume.drivers.emc.emc_smis_iscsi.EMCSMISISCSIDriver
 cinder_emc_config_file = /etc/cinder/cinder_emc_config.xml</programlisting>
-            <para>For VNX, add the following entries, where
+            <para>For VNX iSCSI driver, add the following entries, where
                     <literal>10.10.61.35</literal> is the IP address
-                of the VNX iscsi target:</para>
+                of the VNX iSCSI target:</para>
             <programlisting language="ini">iscsi_target_prefix = iqn.2001-07.com.vnx
 iscsi_ip_address = 10.10.61.35
 volume_driver = cinder.volume.drivers.emc.emc_smis_iscsi.EMCSMISISCSIDriver
+cinder_emc_config_file = /etc/cinder/cinder_emc_config.xml</programlisting>
+            <para>For VMAX and VNX FC drivers, add the following entries:</para>
+            <programlisting language="ini">
+volume_driver = cinder.volume.drivers.emc.emc_smis_fc.EMCSMISFCDriver
 cinder_emc_config_file = /etc/cinder/cinder_emc_config.xml</programlisting>
             <para>Restart the <systemitem class="service"
                     >cinder-volume</systemitem> service.</para>
@@ -232,8 +249,12 @@ cinder_emc_config_file = /etc/cinder/cinder_emc_config.xml</programlisting>
             <itemizedlist>
                 <listitem>
                     <para><systemitem>StorageType</systemitem> is the thin pool from which the user
-                        wants to create the volume. Only thin LUNs are supported by the plug-in.
-                        Thin pools can be created using Unisphere for VMAX and VNX.</para>
+                        wants to create the volume.
+                        Thin pools can be created using Unisphere for VMAX and VNX.
+                        If the <literal>StorageType</literal> tag is not defined,
+                        you have to define volume types and set the pool name in
+                        extra specs.
+                    </para>
                 </listitem>
                 <listitem>
                     <para><systemitem>EcomServerIp</systemitem> and
@@ -245,6 +266,12 @@ cinder_emc_config_file = /etc/cinder/cinder_emc_config.xml</programlisting>
                             <systemitem>EcomPassword</systemitem> are credentials for the ECOM
                         server.</para>
                 </listitem>
+                <listitem>
+                    <para><systemitem>Timeout</systemitem> specifies the maximum
+                        number of seconds you want to wait for an operation to
+                        finish.
+                    </para>
+                </listitem>
             </itemizedlist>
             <note>
                 <para>
@@ -255,6 +282,68 @@ cinder_emc_config_file = /etc/cinder/cinder_emc_config.xml</programlisting>
                   node that hosts the VM.
                 </para>
             </note>
+        </section>
+        <section xml:id="emc-volume-type">
+            <title>Volume type support</title>
+            <para>Volume type support enables a single instance of
+                <systemitem>cinder-volume</systemitem> to support multiple pools
+                and thick/thin provisioning.</para>
+            <para>When the <literal>StorageType</literal> tag in
+                <filename>cinder_emc_config.xml</filename> is used,
+                the pool name is specified in the tag.
+                Only thin provisioning is supported in this case.</para>
+            <para>When the <literal>StorageType</literal> tag is not used in
+                <filename>cinder_emc_config.xml</filename>, the volume type
+                needs to be used to define a pool name and a provisioning type.
+                The pool name is the name of a pre-created pool.
+                The provisioning type could be either <literal>thin</literal>
+                or <literal>thick</literal>.</para>
+            <para>Here is an example of how to set up volume type.
+                First create volume types. Then define extra specs for
+                each volume type.</para>
+            <procedure>
+                <title>Setup volume types</title>
+                <step>
+                    <para>Create the volume types:</para>
+                    <screen><prompt>$</prompt> <userinput>cinder type-create "High Performance"</userinput>
+<prompt>$</prompt> <userinput>cinder type-create "Standard Performance"</userinput>
+                    </screen>
+                </step>
+                <step>
+                    <para>Setup the volume type extra specs:</para>
+                    <screen><prompt>$</prompt> <userinput>cinder type-key "High Performance" set storagetype:pool=smi_pool</userinput>
+<prompt>$</prompt> <userinput>cinder type-key "High Performance" set storagetype:provisioning=thick</userinput>
+<prompt>$</prompt> <userinput>cinder type-key "Standard Performance" set storagetype:pool=smi_pool2</userinput>
+<prompt>$</prompt> <userinput>cinder type-key "Standard Performance" set storagetype:provisioning=thin</userinput>
+                    </screen>
+                 </step>
+             </procedure>
+             <para>In the above example, two volume types are created.
+                 They are <literal>High Performance</literal> and <literal>
+                 Standard Performance</literal>. For <literal>High Performance
+                 </literal>, <literal>storagetype:pool</literal> is set to
+                 <literal>smi_pool</literal> and <literal>storagetype:provisioning
+                 </literal> is set to <literal>thick</literal>. Similarly
+                 for <literal>Standard Performance</literal>, <literal>
+                 storagetype:pool</literal>. is set to <literal>smi_pool2</literal>
+                 and <literal>storagetype:provisioning</literal> is set to
+                 <literal>thin</literal>. If <literal>storagetype:provisioning
+                 </literal> is not specified, it will default to <literal>
+                 thin</literal>.</para>
+             <note><para>Volume type names <literal>High Performance</literal> and
+                 <literal>Standard Performance</literal> are user-defined and can
+                 be any names. Extra spec keys <literal>storagetype:pool</literal>
+                 and <literal>storagetype:provisioning</literal> have to be the
+                 exact names listed here. Extra spec value <literal>smi_pool
+                 </literal> is your pool name. The extra spec value for
+                 <literal>storagetype:provisioning</literal> has to be either
+                 <literal>thick</literal> or <literal>thin</literal>.
+                 The driver will look for a volume type first. If the volume type is
+                 specified when creating a volume, the driver will look for the volume
+                 type definition and find the matching pool and provisioning type.
+                 If the volume type is not specified, it will fall back to use the
+                 <literal>StorageType</literal> tag in <filename>
+                 cinder_emc_config.xml</filename>.</para></note>
         </section>
     </section>
 </section>
