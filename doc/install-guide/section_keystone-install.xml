@@ -218,15 +218,11 @@ admin_token = ADMIN_TOKEN
         tokens hourly.</para>
       <substeps>
         <step>
-          <para>Edit the crontab for the root user:</para>
-          <screen><prompt>#</prompt> <userinput>crontab -e</userinput></screen>
-        </step>
-        <step>
-          <para>Add the following line to purge expired tokens every
+          <para>Run the following command to purge expired tokens every
             hour and log the output to
-            <filename>/var/log/keystone/keystone-tokenflush.log</filename>:
-          </para>
-          <programlisting>@hourly /usr/bin/keystone-manage token_flush >/var/log/keystone/keystone-tokenflush.log 2>&amp;1</programlisting>
+            <filename>/var/log/keystone/keystone-tokenflush.log</filename>:</para>
+          <screen><prompt>#</prompt> <userinput>crontab -l | grep -q token_flush || \
+echo '@hourly /usr/bin/keystone-manage token_flush >/var/log/keystone/keystone-tokenflush.log 2>&amp;1' >> /var/spool/cron/root</userinput></screen>
         </step>
       </substeps>
     </step>
