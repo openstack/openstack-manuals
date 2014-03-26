@@ -8,10 +8,10 @@
     xmlns:xlink="http://www.w3.org/1999/xlink"
     version="5.0"
     xml:id="module003-ch007-cluster-architecture">
-    <title>Cluster Arch</title>
+    <title>Cluster architecture</title>
         <para><guilabel>Access Tier</guilabel></para>
     <figure>
-        <title>Swift Cluster Architecture</title>
+        <title>Object Storage cluster architecture</title>
         <mediaobject>
             <imageobject>
                 <imagedata fileref="figures/image47.png"/>
@@ -24,33 +24,33 @@
             moves data in and out of the system. This tier is composed
             of front-end load balancers, ssl- terminators,
             authentication services, and it runs the (distributed)
-            brain of the object storage system — the proxy server
+            brain of the Object Storage system — the proxy server
             processes.</para>
         <para>Having the access servers in their own tier enables
             read/write access to be scaled out independently of
             storage capacity. For example, if the cluster is on the
-            public Internet and requires ssl-termination and has high
+            public Internet and requires SSL-termination and has high
             demand for data access, many access servers can be
             provisioned. However, if the cluster is on a private
             network and it is being used primarily for archival
             purposes, fewer access servers are needed.</para>
-        <para>As this is an HTTP addressable storage service, a load
-            balancer can be incorporated into the access tier.</para>
+        <para>A load balancer can be incorporated into the access tier,
+            because this is an HTTP addressable storage service.</para>
         <para>Typically, this tier comprises a collection of 1U
             servers. These machines use a moderate amount of RAM and
-            are network I/O intensive. As these systems field each
-            incoming API request, it is wise to provision them with
-            two high-throughput (10GbE) interfaces. One interface is
+            are network I/O intensive. It is wise to provision them with
+            two high-throughput (10GbE) interfaces, because these systems
+            field each incoming API request. One interface is
             used for 'front-end' incoming requests and the other for
-            'back-end' access to the object storage nodes to put and
+            'back-end' access to the Object Storage nodes to put and
             fetch data.</para>
-            <para><guilabel>Factors to Consider</guilabel></para>
+            <para><guilabel>Factors to consider</guilabel></para>
             <para>For most publicly facing deployments as well as
                 private deployments available across a wide-reaching
-                corporate network, SSL will be used to encrypt traffic
+                corporate network, SSL is used to encrypt traffic
                 to the client. SSL adds significant processing load to
-                establish sessions between clients; more capacity in
-                the access layer will need to be provisioned. SSL may
+                establish sessions between clients; it adds more capacity to
+                the access layer that will need to be provisioned. SSL may
                 not be required for private deployments on trusted
                 networks.</para>
         <para><guilabel>Storage Nodes</guilabel></para>
@@ -63,14 +63,14 @@
         </mediaobject>
     </figure>
         <para>The next component is the storage servers themselves.
-            Generally, most configurations should have each of the
+            Generally, most configurations should provide each of the
             five Zones with an equal amount of storage capacity.
             Storage nodes use a reasonable amount of memory and CPU.
             Metadata needs to be readily available to quickly return
             objects. The object stores run services not only to field
             incoming requests from the Access Tier, but to also run
             replicators, auditors, and reapers. Object stores can be
-            provisioned with single gigabit or 10 gigabit network
+            provisioned with a single gigabit or a 10-gigabit network
             interface depending on expected workload and desired
             performance.</para>
         <para>Currently, a 2&nbsp;TB or 3&nbsp;TB SATA disk delivers
