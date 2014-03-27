@@ -12,12 +12,8 @@
     <note>
         <para>The Object Storage processes run under a separate user
             and group, set by configuration options, and referred to as
-            <literal> <phrase os="ubuntu;debian;rhel;centos;fedora"
-            >swift:swift</phrase><phrase os="opensuse;sles"
-            >openstack-swift:openstack-swift</phrase></literal>. The default
-            user is <literal><phrase os="ubuntu;debian;rhel;centos;fedora"
-            >swift</phrase><phrase os="opensuse;sles"
-            >openstack-swift</phrase></literal>.</para>
+            <literal>swift:swift</literal>. The default
+            user is <literal>swift</literal>.</para>
     </note>
     <procedure>
         <step>
@@ -57,8 +53,7 @@
                     <filename>/etc/swift/proxy-server.conf</filename>:</para>
             <programlisting language="ini">[DEFAULT]
 bind_port = 8080
-<phrase os="rhel;centos;fedora;ubuntu;debian">user = swift</phrase><phrase
-os="opensuse;sles">user = openstack-swift</phrase>
+user = swift
 
 [pipeline:main]
 pipeline = healthcheck cache authtoken keystoneauth proxy-server
@@ -176,8 +171,7 @@ use = egg:swift#healthcheck
         </step>
         <step>
             <para>Make sure the swift user owns all configuration files:</para>
-            <screen os="ubuntu;debian;rhel;centos;fedora"><prompt>#</prompt> <userinput>chown -R swift:swift /etc/swift</userinput></screen>
-            <screen os="opensuse;sles"><prompt>#</prompt> <userinput>chown -R openstack-swift:openstack-swift /etc/swift</userinput></screen>
+            <screen><prompt>#</prompt> <userinput>chown -R swift:swift /etc/swift</userinput></screen>
         </step>
         <step os="ubuntu;debian">
             <para>Restart the Proxy service:</para>

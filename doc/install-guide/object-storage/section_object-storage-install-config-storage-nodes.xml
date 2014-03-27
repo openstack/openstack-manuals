@@ -40,39 +40,15 @@
 <prompt>#</prompt> <userinput>echo "/dev/sdb1 /srv/node/sdb1 xfs noatime,nodiratime,nobarrier,logbufs=8 0 0" &gt;&gt; /etc/fstab</userinput>
 <prompt>#</prompt> <userinput>mkdir -p /srv/node/sdb1</userinput>
 <prompt>#</prompt> <userinput>mount /srv/node/sdb1</userinput>
-<phrase os="ubuntu;debian;rhel;centos;fedora"><prompt>#</prompt> <userinput>chown -R swift:swift /srv/node</userinput></phrase>
-<phrase os="opensuse;sles"><prompt>#</prompt> <userinput>chown -R openstack-swift:openstack-swift /srv/node</userinput></phrase></screen>
+<prompt>#</prompt> <userinput>chown -R swift:swift /srv/node</userinput></screen>
         </step>
         <step>
             <para os="ubuntu;debian;rhel;centos;fedora">Create
                 <filename>/etc/rsyncd.conf</filename>:</para>
             <para os="sles;opensuse">Replace the content of
                 <filename>/etc/rsyncd.conf</filename> with:</para>
-            <programlisting language="ini" os="ubuntu;debian;rhel;centos;fedora">uid = swift
+            <programlisting language="ini">uid = swift
 gid = swift
-log file = /var/log/rsyncd.log
-pid file = /var/run/rsyncd.pid
-address = <replaceable>STORAGE_LOCAL_NET_IP</replaceable>
-
-[account]
-max connections = 2
-path = /srv/node/
-read only = false
-lock file = /var/lock/account.lock
-
-[container]
-max connections = 2
-path = /srv/node/
-read only = false
-lock file = /var/lock/container.lock
-
-[object]
-max connections = 2
-path = /srv/node/
-read only = false
-lock file = /var/lock/object.lock</programlisting>
-            <programlisting language="ini" os="opensuse;sles">uid = openstack-swift
-gid = openstack-swift
 log file = /var/log/rsyncd.log
 pid file = /var/run/rsyncd.pid
 address = <replaceable>STORAGE_LOCAL_NET_IP</replaceable>
@@ -133,10 +109,8 @@ lock file = /var/lock/object.lock</programlisting>
         <step>
             <para>Create the swift recon cache directory and set its
                 permissions:</para>
-            <screen os="ubuntu;debian;rhel;centos;fedora"><prompt>#</prompt> <userinput>mkdir -p /var/swift/recon</userinput>
+            <screen><prompt>#</prompt> <userinput>mkdir -p /var/swift/recon</userinput>
 <prompt>#</prompt> <userinput>chown -R swift:swift /var/swift/recon</userinput></screen>
-            <screen os="opensuse;sles"><prompt>#</prompt> <userinput>mkdir -p /var/swift/recon</userinput>
-<prompt>#</prompt> <userinput>chown -R openstack-swift:openstack-swift /var/swift/recon</userinput></screen>
         </step>
     </procedure>
 </section>
