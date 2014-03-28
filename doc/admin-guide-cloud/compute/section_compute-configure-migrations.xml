@@ -13,11 +13,10 @@
       is configured to use cells, you can perform live migration
       within but not between cells.</para>
   </note>
-  <para>Migration enables an administrator to move a virtual machine
-    instance from one compute host to another. This feature is useful
-    when a compute host requires maintenance. Migration can also be
-    useful to redistribute the load when many VM instances are running
-    on a specific physical machine.</para>
+  <para>Migration enables an administrator to move a virtual-machine instance from one compute host
+    to another. This feature is useful when a compute host requires maintenance. Migration can also
+    be useful to redistribute the load when many VM instances are running on a specific physical
+    machine.</para>
   <para>The migration types are:</para>
   <itemizedlist>
     <listitem>
@@ -27,28 +26,28 @@
         another hypervisor.</para>
     </listitem>
     <listitem>
-      <para><emphasis role="bold">Live migration</emphasis> (or true
-        live migration). Almost no instance downtime. Useful when the
-        instances must be kept running during the migration.</para>
-    </listitem>
-  </itemizedlist>
-  <para>The types of <firstterm>live migration</firstterm> are:</para>
-  <itemizedlist>
-    <listitem>
-      <para><emphasis role="bold">Shared storage-based live
-          migration</emphasis>. Both hypervisors have access to shared
-        storage.</para>
-    </listitem>
-    <listitem>
-      <para><emphasis role="bold">Block live migration</emphasis>. No
-        shared storage is required.</para>
-    </listitem>
-    <listitem>
-      <para><emphasis role="bold">Volume-backed live
-          migration</emphasis>. When instances are backed by volumes
-        rather than ephemeral disk, no shared storage is required, and
-        migration is supported (currently only in libvirt-based
-        hypervisors).</para>
+      <para><emphasis role="bold">Live migration</emphasis> (or true live migration). Almost no
+        instance downtime. Useful when the instances must be kept running during the migration. The
+        types of <firstterm>live migration</firstterm> are:
+        <itemizedlist>
+          <listitem>
+            <para><emphasis role="bold">Shared storage-based live
+              migration</emphasis>. Both hypervisors have access to shared
+              storage.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Block live migration</emphasis>. No
+              shared storage is required.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="bold">Volume-backed live
+              migration</emphasis>. When instances are backed by volumes
+              rather than ephemeral disk, no shared storage is required, and
+              migration is supported (currently only in libvirt-based
+              hypervisors).</para>
+          </listitem>
+        </itemizedlist>
+      </para>
     </listitem>
   </itemizedlist>
   <para>The following sections describe how to configure your hosts
@@ -77,7 +76,6 @@
       </listitem>
     </itemizedlist>
     <note>
-      <title>Notes</title>
       <itemizedlist>
         <listitem>
           <para>Because the Compute service does not use the libvirt
@@ -102,35 +100,29 @@
         </listitem>
       </itemizedlist>
     </note>
-    <itemizedlist>
+    <section xml:id="section_example-compute-install">
       <title>Example Compute installation environment</title>
+    <itemizedlist>
       <listitem>
-        <para>Prepare at least three servers; for example,
-            <literal>HostA</literal>, <literal>HostB</literal>, and
-            <literal>HostC</literal>.</para>
-      </listitem>
-      <listitem>
-        <para><literal>HostA</literal> is the
-            <firstterm baseform="cloud controller">Cloud
-            Controller</firstterm>, and should run these services:
-            <systemitem class="service">nova-api</systemitem>,
-            <systemitem class="service">nova-scheduler</systemitem>,
-            <literal>nova-network</literal>, <systemitem
-            class="service">cinder-volume</systemitem>, and
-            <literal>nova-objectstore</literal>.</para>
-      </listitem>
-      <listitem>
-        <para><literal>HostB</literal> and <literal>HostC</literal>
-          are the <firstterm baseform="compute node">compute nodes</firstterm>
-          that run <systemitem class="service"
-          >nova-compute</systemitem>.</para>
-      </listitem>
-      <listitem>
-        <para>Ensure that
-              <literal><replaceable>NOVA-INST-DIR</replaceable></literal>
-          (set with <literal>state_path</literal> in the
-            <filename>nova.conf</filename> file) is the same on all
-          hosts.</para>
+        <para>Prepare at least three servers; for example, <literal>HostA</literal>,
+              <literal>HostB</literal>, and <literal>HostC</literal>: <itemizedlist>
+              <listitem>
+                <para><literal>HostA</literal> is the <firstterm baseform="cloud controller">Cloud
+                    Controller</firstterm>, and should run these services: <systemitem
+                    class="service">nova-api</systemitem>, <systemitem class="service"
+                    >nova-scheduler</systemitem>, <literal>nova-network</literal>, <systemitem
+                    class="service">cinder-volume</systemitem>, and
+                    <literal>nova-objectstore</literal>.</para>
+              </listitem>
+              <listitem>
+                <para><literal>HostB</literal> and <literal>HostC</literal> are the <firstterm
+                    baseform="compute node">compute nodes</firstterm> that run <systemitem
+                    class="service">nova-compute</systemitem>.</para>
+              </listitem>
+            </itemizedlist></para>
+          <para>Ensure that <literal><replaceable>NOVA-INST-DIR</replaceable></literal> (set with
+              <literal>state_path</literal> in the <filename>nova.conf</filename> file) is the same
+            on all hosts.</para>
       </listitem>
       <listitem>
         <para>In this example, <literal>HostA</literal> is the NFSv4
@@ -153,29 +145,23 @@
 <prompt>$</prompt> <userinput>ping HostC</userinput></screen>
       </step>
       <step>
-        <para>Ensure that the UID and GID of your nova and libvirt
-          users are identical between each of your servers. This
-          ensures that the permissions on the NFS mount works
-          correctly.</para>
+        <para>Ensure that the UID and GID of your Compute and libvirt users are identical between
+            each of your servers. This ensures that the permissions on the NFS mount works
+            correctly.</para>
       </step>
       <step>
-        <para>Follow the instructions at <link
-            xlink:href="https://help.ubuntu.com/community/SettingUpNFSHowTo"
-            >the Ubuntu NFS HowTo to setup an NFS server on
-              <literal>HostA</literal>, and NFS Clients on
-              <literal>HostB</literal> and
-            <literal>HostC</literal>.</link></para>
-        <para>The aim is to export
-              <filename><replaceable>NOVA-INST-DIR</replaceable>/instances</filename>
-          from <literal>HostA</literal>, and have it readable and
-          writable by the nova user on <literal>HostB</literal> and
-            <literal>HostC</literal>.</para>
+          <para>Export  <filename><replaceable>NOVA-INST-DIR</replaceable>/instances</filename> from
+              <literal>HostA</literal>, and have it readable and writable by the Compute user on
+              <literal>HostB</literal> and <literal>HostC</literal>.</para>
+        <para>For more information, see: <link
+          xlink:href="https://help.ubuntu.com/community/SettingUpNFSHowTo"
+          >SettingUpNFSHowTo</link> or <link
+          xlink:href="http://www.cyberciti.biz/faq/centos-fedora-rhel-nfs-v4-configuration/"
+            >CentOS / Redhat: Setup NFS v4.0 File Server</link></para>
       </step>
       <step>
-        <para>Using your knowledge from the Ubuntu documentation,
-          configure the NFS server at <literal>HostA</literal> by
-          adding this line to the <filename>/etc/exports</filename>
-          file:</para>
+        <para>Configure the NFS server at <literal>HostA</literal> by adding the following line to
+            the <filename>/etc/exports</filename> file:</para>
         <programlisting><replaceable>NOVA-INST-DIR</replaceable>/instances HostA/255.255.0.0(rw,sync,fsid=0,no_root_squash)</programlisting>
         <para>Change the subnet mask (<literal>255.255.0.0</literal>)
           to the appropriate value to include the IP addresses of
@@ -194,20 +180,18 @@
         <screen><prompt>$</prompt> <userinput>chmod o+x <replaceable>NOVA-INST-DIR</replaceable>/instances</userinput> </screen>
       </step>
       <step>
-        <para>Configure NFS at HostB and HostC by adding this line to
-          the <filename>/etc/fstab</filename> file:</para>
+        <para>Configure NFS at HostB and HostC by adding the following line to the
+              <filename>/etc/fstab</filename> file:</para>
         <programlisting>HostA:/ /<replaceable>NOVA-INST-DIR</replaceable>/instances nfs4 defaults 0 0</programlisting>
-        <para>Make sure that you can mount the exported directory can
-          be mounted:</para>
+        <para>Ensure that you can mount the exported directory can be mounted:</para>
         <screen><prompt>$</prompt> <userinput>mount -a -v</userinput></screen>
         <para>Check that HostA can see the
               "<filename><replaceable>NOVA-INST-DIR</replaceable>/instances/</filename>"
           directory:</para>
         <screen><prompt>$</prompt> <userinput>ls -ld <filename><replaceable>NOVA-INST-DIR</replaceable>/instances/</filename></userinput></screen>
         <screen><computeroutput>drwxr-xr-x 2 nova nova 4096 2012-05-19 14:34 nova-install-dir/instances/</computeroutput></screen>
-        <para>Perform the same check at HostB and HostC, paying
-          special attention to the permissions (nova should be able to
-          write):</para>
+        <para>Perform the same check at HostB and HostC, paying special attention to the permissions
+            (Compute should be able to write):</para>
         <screen><prompt>$</prompt> <userinput>ls -ld <filename><replaceable>NOVA-INST-DIR</replaceable>/instances/</filename></userinput></screen>
         <screen><computeroutput>drwxr-xr-x 2 nova nova 4096 2012-05-07 14:34 nova-install-dir/instances/</computeroutput></screen>
         <screen><prompt>$</prompt> <userinput>df -k</userinput></screen>
@@ -242,9 +226,12 @@ HostA:        921515008 101921792 772783104  12% /var/lib/nova/instances  ( &lt;
       <step>
         <para>Configure your firewall to allow libvirt to communicate
           between nodes.</para>
-        <para>For information about ports that are used with libvirt, see <link
-            xlink:href="http://libvirt.org/remote.html#Remote_libvirtd_configuration"
-            >the libvirt documentation</link> By default, libvirt listens on TCP port 16509 and an ephemeral TCP range from 49152 to 49261 is used for the KVM communications. Based on the secure remote access TCP configuration you chose, be careful choosing what ports you open and understand who has access.</para>
+        <para>By default, libvirt listens on TCP port 16509, and an ephemeral TCP range from 49152
+            to 49261 is used for the KVM communications. Based on the secure remote access TCP
+            configuration you chose, be careful choosing what ports you open and understand who has
+            access. For information about ports that are used with libvirt, see <link
+              xlink:href="http://libvirt.org/remote.html#Remote_libvirtd_configuration">the libvirt
+              documentation</link>.</para>
       </step>
       <step>
         <para>You can now configure options for live migration. In
@@ -252,7 +239,8 @@ HostA:        921515008 101921792 772783104  12% /var/lib/nova/instances  ( &lt;
           following chart is for advanced usage only.</para>
       </step>
     </procedure>
-    <xi:include href="../common/tables/nova-livemigration.xml"/>
+    <xi:include href="../../common/tables/nova-livemigration.xml"/>
+    </section>
     <section xml:id="true-live-migration-kvm-libvirt">
       <title>Enable true live migration</title>
       <para>By default, the Compute service does not use the libvirt
@@ -284,8 +272,8 @@ HostA:        921515008 101921792 772783104  12% /var/lib/nova/instances  ( &lt;
               Guide</citetitle>.</para>
         </listitem>
         <listitem>
-          <para><emphasis role="bold">Shared storage</emphasis>. An
-            NFS export, visible to all XenServer hosts.</para>
+          <para><emphasis role="bold">Shared storage</emphasis>. An NFS export, visible to all
+            XenServer hosts.</para>
           <note>
             <para>For the supported NFS versions, see the <link
                 xlink:href="http://docs.vmd.citrix.com/XenServer/6.0.0/1.0/en_gb/reference.html#id1002701"
@@ -357,11 +345,10 @@ HostA:        921515008 101921792 772783104  12% /var/lib/nova/instances  ( &lt;
         </listitem>
       </itemizedlist>
       <note>
-        <title>Notes</title>
         <itemizedlist>
           <listitem>
             <para>To use block migration, you must use the
-                <parameter>--block-migrate</parameter> parameter with
+     CHANGE THIS ==           <parameter>==block-migrate</parameter> parameter with
               the live migration command.</para>
           </listitem>
           <listitem>

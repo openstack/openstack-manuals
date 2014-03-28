@@ -4,18 +4,12 @@
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="default_ports">
     <title>Compute service node firewall requirements</title>
-    <para>
-        Virtual machine console connections, whether direct or
-        through a proxy, are received on ports <literal>5900</literal>
-        to <literal>5999</literal>.
-    </para>
-    <para>
-        You must configure the firewall on the service node to enable
-        network traffic on these ports. On the server that hosts the
-        Compute service, log in as <systemitem>root</systemitem> and
-        complete the following procedure:
-    </para>
+    <para>Console connections for virtual machines, whether direct or through a proxy, are received
+        on ports <literal>5900</literal> to <literal>5999</literal>. You must configure the firewall
+        on each Compute service node to enable network traffic on these ports.</para>
     <procedure>
+        <title>Configure the service-node firewall</title>
+        <step><para>On the server that hosts the Compute service, log in as <systemitem>root</systemitem>.</para></step>
         <step>
             <para>
                 Edit the <filename>/etc/sysconfig/iptables</filename>
@@ -48,9 +42,6 @@
 <screen><prompt>$</prompt> <userinput>service iptables restart</userinput></screen>
         </step>
     </procedure>
-    <para>
-        The <systemitem>iptables</systemitem> firewall
-        now enables incoming connections to the Compute
-        services. Repeat this process for each compute node.
-    </para>
+    <para>The <systemitem>iptables</systemitem> firewall now enables incoming connections to the
+        Compute services. Repeat this process for each Compute service node.</para>
     </section>
