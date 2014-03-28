@@ -1,75 +1,75 @@
 <chapter xmlns="http://docbook.org/ns/docbook"
   xmlns:xi="http://www.w3.org/2001/XInclude"
-  xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
-  xml:id="ch_basics">
+  xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0" xml:id="ch_basics">
   <?dbhtml-stop-chunking?>
   <title>Basic operating system configuration</title>
   <warning>
     <para>We are updating this material for Icehouse. You may find structure
       and/or content issues during this process.</para>
   </warning>
-  <para>This guide shows you how to create a controller node to host
-    most services and a compute node to run virtual machine instances.
-    Subsequent chapters create additional nodes to run more services.
-    OpenStack is flexible about how and where you run each service, so
-    other configurations are possible. However, you must configure
-    certain operating system settings on each node.</para>
-  <para>This chapter details a sample configuration for the controller
-    node and any additional nodes. You can configure the operating
-    system in other ways, but this guide assumes that your
-    configuration is compatible with the one described here.</para>
-  <para>All example commands assume you have administrative
-    privileges. Either run the commands as the root user or prefix
-    them with the <command>sudo</command> command.</para>
+  <para>This guide shows you how to create a controller node to host most
+    services and a compute node to run virtual machine instances. Subsequent
+    chapters create additional nodes to run more services. OpenStack is flexible
+    about how and where you run each service, so other configurations are
+    possible. However, you must configure certain operating system settings on
+    each node.</para>
+  <note>
+    <para>You can install OpenStack Object Storage with OpenStack Identity as a
+      starting point rather than installing OpenStack Compute. You cannot use
+      the OpenStack dashboard unless you also install Compute and the Image
+      Service. If object storage is your use case, you can skip these operating
+      system configuration requirements and refer to <link
+        linkend="object-storage-system-requirements"/> instead.</para>
+  </note>
+  <para>This chapter details a sample configuration for the controller node and
+    any additional nodes. You can configure the operating system in other ways,
+    but this guide assumes that your configuration is compatible with the one
+    described here.</para>
+  <para>All example commands assume you have administrative privileges. Either
+    run the commands as the root user or prefix them with the
+      <command>sudo</command> command.</para>
 
 
   <section xml:id="before-you-begin">
     <title>Before you begin</title>
 
     <para>We strongly recommend that you install a 64-bit operating system on
-        your compute nodes. If you use a 32-bit operating system,
-        attempting a start a virtual machine using a 64-bit image will fail
-        with an error.</para>
+      your compute nodes. If you use a 32-bit operating system, attempting a
+      start a virtual machine using a 64-bit image will fail with an
+      error.</para>
 
     <para>For more information about system requirements, see the <link
         xlink:href="http://docs.openstack.org/ops/">OpenStack Operations
-        Guide</link>.
-    </para>
+        Guide</link>.</para>
   </section>
-
   <section xml:id="basics-networking">
     <title>Networking</title>
-
-    <para>For an OpenStack production deployment, most nodes must have
-      these network interface cards:</para>
+    <para>For an OpenStack production deployment, most nodes must have these
+      network interface cards:</para>
     <itemizedlist>
       <listitem>
-        <para>One network interface card for external network traffic
-        </para>
+        <para>One network interface card for external network traffic.</para>
       </listitem>
       <listitem>
-        <para>Another card to communicate with other OpenStack
-          nodes.</para>
+        <para>Another card to communicate with other OpenStack nodes.</para>
       </listitem>
     </itemizedlist>
-    <para>For simple test cases, you can use machines with a single
-      network interface card.</para>
-    <para>The following example configures Networking on two networks
-      with <glossterm baseform="static IP address">static IP addresses</glossterm>
-      and manually manages a list of host
-      names on each machine. If you manage a large network, you might
-      already have systems in place to manage this. If so, you can
-      skip this section but note that the rest of this guide assumes
-      that each node can reach the other nodes on the internal network
-      by using the <literal>controller</literal> and
-        <literal>compute1</literal> host names.</para>
+    <para>For simple test cases, you can use machines with a single network
+      interface card.</para>
+    <para>The following example configures Networking on two networks with
+        <glossterm baseform="static IP address">static IP addresses</glossterm>
+      and manually manages a list of host names on each machine. If you manage a
+      large network, you might already have systems in place to manage this. If
+      so, you can skip this section but note that the rest of this guide assumes
+      that each node can reach the other nodes on the internal network by using
+      the <literal>controller</literal> and <literal>compute1</literal> host
+      names.</para>
     <!-- these fedora only paragraphs are confirmed not needed in centos -->
     <para os="fedora">Disable the <systemitem class="service"
-        >NetworkManager</systemitem> service and enable the
-        <systemitem class="service">network</systemitem> service. The
-        <systemitem class="service">network</systemitem> service is
-      more suitable for the static network configuration done in this
-      guide.</para>
+        >NetworkManager</systemitem> service and enable the <systemitem
+        class="service">network</systemitem> service. The <systemitem
+        class="service">network</systemitem> service is more suitable for the
+      static network configuration done in this guide.</para>
 
     <screen os="fedora"><prompt>#</prompt> <userinput>service NetworkManager stop</userinput>
 <prompt>#</prompt> <userinput>service network start</userinput>
@@ -77,47 +77,45 @@
 <prompt>#</prompt> <userinput>chkconfig network on</userinput></screen>
     <note os="fedora">
       <para>Since Fedora 19, <literal>firewalld</literal> replaces
-          <literal>iptables</literal> as the default firewall
-        system.</para>
-      <para>You can use <literal>firewalld</literal> successfully, but
-        this guide recommends and demonstrates the use of the default
+          <literal>iptables</literal> as the default firewall system.</para>
+      <para>You can use <literal>firewalld</literal> successfully, but this
+        guide recommends and demonstrates the use of the default
           <literal>iptables</literal>.</para>
-      <para>For Fedora 19 systems, run the following commands to
-        disable <literal>firewalld</literal> and enable
-          <literal>iptables</literal>:</para>
+      <para>For Fedora 19 systems, run the following commands to disable
+          <literal>firewalld</literal> and enable
+        <literal>iptables</literal>:</para>
       <screen><prompt>#</prompt> <userinput>service firewalld stop</userinput>
 <prompt>#</prompt> <userinput>service iptables start</userinput>
 <prompt>#</prompt> <userinput>chkconfig firewalld off</userinput>
 <prompt>#</prompt> <userinput>chkconfig iptables on</userinput></screen>
     </note>
-    <warning os="centos;rhel"><para>
-    RHEL and derivatives including CentOS and Scientific Linux enable a
-    restrictive <glossterm>firewall</glossterm> by default. During this
-    installation, certain steps
-    will fail unless you alter this setting or disable the firewall. For
-    further information about securing your installation, refer to the
-    <link xlink:href="http://docs.openstack.org/sec/">OpenStack Security Guide</link>.</para>
+    <warning os="centos;rhel">
+      <para>RHEL and derivatives including CentOS and Scientific Linux enable a
+        restrictive <glossterm>firewall</glossterm> by default. During this
+        installation, certain steps will fail unless you alter this setting or
+        disable the firewall. For further information about securing your
+        installation, refer to the <link
+          xlink:href="http://docs.openstack.org/sec/">OpenStack Security
+          Guide</link>.</para>
     </warning>
-    <para os="opensuse;sles">When you set up your system, use the
-      traditional network scripts and do not use <systemitem
-        class="service">NetworkManager</systemitem>. You can change
-      the settings after installation with the YaST network
-      module:</para>
+    <para os="opensuse;sles">When you set up your system, use the traditional
+      network scripts and do not use <systemitem class="service"
+        >NetworkManager</systemitem>. You can change the settings after
+      installation with the YaST network module:</para>
     <screen os="opensuse;sles"><prompt>#</prompt> <userinput>yast2 network</userinput></screen>
-    <para>Configure both <literal>eth0</literal> and
-        <literal>eth1</literal>. The examples in this guide use the
-          <literal>192.168.0.<replaceable>x</replaceable></literal> IP
-      addresses for the internal network and the
-          <literal>10.0.0.<replaceable>x</replaceable></literal> IP
-      addresses for the external network. Make sure to connect your
-      network devices to the correct network.</para>
+    <para>Configure both <literal>eth0</literal> and <literal>eth1</literal>.
+      The examples in this guide use the
+          <literal>192.168.0.<replaceable>x</replaceable></literal> IP addresses
+      for the internal network and the
+          <literal>10.0.0.<replaceable>x</replaceable></literal> IP addresses
+      for the external network. Make sure to connect your network devices to the
+      correct network.</para>
     <para>In this guide, the controller node uses the
-        <literal>192.168.0.10</literal> and
-        <literal>10.0.0.10</literal> IP addresses. When you create the
-      compute node, use the <literal>192.168.0.11</literal> and
-        <literal>10.0.0.11</literal> addresses instead. Additional
-      nodes that you add in subsequent chapters also follow this
-      pattern.</para>
+        <literal>192.168.0.10</literal> and <literal>10.0.0.10</literal> IP
+      addresses. When you create the compute node, use the
+        <literal>192.168.0.11</literal> and <literal>10.0.0.11</literal>
+      addresses instead. Additional nodes that you add in subsequent chapters
+      also follow this pattern.</para>
     <figure xml:id="basic-architecture-networking">
       <title>Basic architecture</title>
       <mediaobject>
@@ -149,22 +147,20 @@ NETMASK=255.255.255.0
 DEFROUTE=yes
 ONBOOT=yes</programlisting>
     </example>
-    <para os="opensuse;sles">To configure the network interfaces,
-      start the YaST network module, as follows:</para>
+    <para os="opensuse;sles">To configure the network interfaces, start the YaST
+      network module, as follows:</para>
     <screen os="opensuse;sles"><prompt>#</prompt> <userinput>yast2 network</userinput></screen>
     <itemizedlist os="opensuse;sles">
       <listitem>
-        <para>Use these parameters to set up the
-            <literal>eth0</literal> ethernet card for the internal
-          network:</para>
+        <para>Use these parameters to set up the <literal>eth0</literal>
+          Ethernet card for the internal network:</para>
         <programlisting>Statically assigned IP Address
 IP Address: 192.168.0.10
 Subnet Mask: 255.255.255.0</programlisting>
       </listitem>
       <listitem>
-        <para>Use these parameters to set up the
-            <literal>eth1</literal> ethernet card for the external
-          network:</para>
+        <para>Use these parameters to set up the <literal>eth1</literal>
+          Ethernet card for the external network:</para>
         <programlisting>Statically assigned IP Address
 IP Address: 10.0.0.10
 Subnet Mask: 255.255.255.0</programlisting>
@@ -188,227 +184,217 @@ iface eth1 inet static
     address 10.0.0.10
     netmask 255.255.255.0</programlisting>
     </example>
-
-    <para>After you configure the network, restart the daemon for
-      changes to take effect:</para>
-
+    <para>After you configure the network, restart the daemon for changes to
+      take effect:</para>
     <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service networking restart</userinput></screen>
     <screen os="fedora;rhel;centos;opensuse;sles"><prompt>#</prompt> <userinput>service network restart</userinput></screen>
-
     <para>Set the host name of each machine. Name the controller node
         <literal>controller</literal> and the first compute node
-        <literal>compute1</literal>. The examples in this guide use
-      these host names.</para>
+        <literal>compute1</literal>. The examples in this guide use these host
+      names.</para>
     <para os="ubuntu;debian;fedora;rhel;centos">Use the
         <command>hostname</command> command to set the host name:
       <screen><prompt>#</prompt> <userinput>hostname controller</userinput></screen></para>
-    <para os="opensuse;sles">Use <command>yast network</command> to
-      set the host name with YaST.</para>
-    <para os="rhel;fedora;centos">To have the host name change persist
-      when the system reboots, you must specify it in the proper
-      configuration file. In Red Hat Enterprise Linux, CentOS, and
-      older versions of Fedora, you set this in the file
-        <filename>/etc/sysconfig/network</filename>. Change the line
-      starting with <literal>HOSTNAME=</literal>.</para>
+    <para os="opensuse;sles">Use <command>yast network</command> to set the host
+      name with YaST.</para>
+    <para os="rhel;fedora;centos">To have the host name change persist when the
+      system reboots, you must specify it in the proper configuration file. In
+      Red Hat Enterprise Linux, CentOS, and older versions of Fedora, you set
+      this in the file <filename>/etc/sysconfig/network</filename>. Change the
+      line starting with <literal>HOSTNAME=</literal>.</para>
     <programlisting language="ini" os="rhel;fedora;centos">HOSTNAME=controller</programlisting>
     <para os="fedora">As of Fedora 18, Fedora uses the
-        <filename>/etc/hostname</filename> file, which contains a
-      single line with the host name.</para>
-    <para os="ubuntu;debian">To configure this host name to be
-      available when the system reboots, you must specify it in the
-        <filename>/etc/hostname</filename> file, which contains a
-      single line with the host name.</para>
-    <para>Finally, ensure that each node can reach the other nodes by
-      using host names. You must manually edit the
-        <filename>/etc/hosts</filename> file on each system. For
-      large-scale deployments, use DNS or a configuration management
-      system like Puppet.</para>
+        <filename>/etc/hostname</filename> file, which contains a single line
+      with the host name.</para>
+    <para os="ubuntu;debian">To configure this host name to be available when
+      the system reboots, you must specify it in the
+        <filename>/etc/hostname</filename> file, which contains a single line
+      with the host name.</para>
+    <para>Finally, ensure that each node can reach the other nodes by using host
+      names. You must manually edit the <filename>/etc/hosts</filename> file on
+      each system. For large-scale deployments, use DNS or a configuration
+      management system like Puppet.</para>
     <programlisting>127.0.0.1       localhost
 192.168.0.10    controller
 192.168.0.11    compute1</programlisting>
   </section>
   <section xml:id="basics-ntp">
     <title>Network Time Protocol (NTP)</title>
-    <para>To synchronize services across multiple machines, you must
-      install <glossterm baseform="Network Time Protocol (NTP)">NTP</glossterm>.
-      The examples in this guide configure the controller
-      node as the reference server and any additional nodes to set
-      their time from the controller node.</para>
-    <para>Install the <literal>ntp</literal> package on each system
-      running OpenStack services.</para>
+    <para>To synchronize services across multiple machines, you must install
+        <glossterm baseform="Network Time Protocol (NTP)">NTP</glossterm>. The
+      examples in this guide configure the controller node as the reference
+      server and any additional nodes to set their time from the controller
+      node.</para>
+    <para>Install the <literal>ntp</literal> package on each system running
+      OpenStack services.</para>
     <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install ntp</userinput></screen>
     <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>yum install ntp</userinput></screen>
     <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install ntp</userinput></screen>
-    <para os="rhel;fedora;centos;opensuse;sles">Set up the NTP server
-      on your controller node so that it receives data by modifying
-      the <filename>ntp.conf</filename> file and restarting the
-      service.</para>
+    <para os="rhel;fedora;centos;opensuse;sles">Set up the NTP server on your
+      controller node so that it receives data by modifying the
+        <filename>ntp.conf</filename> file and restarting the service.</para>
     <screen os="rhel;fedora;centos;opensuse;sles"><prompt>#</prompt> <userinput>service ntpd start</userinput>
 <prompt>#</prompt> <userinput>chkconfig ntpd on</userinput></screen>
     <screen os="opensuse;sles"><prompt>#</prompt> <userinput>service ntp start</userinput>
 <prompt>#</prompt> <userinput>chkconfig ntp on</userinput></screen>
-    <para>On additional nodes, it is advised that you configure the
-      other nodes to synchronize their time from the controller node
-      rather than from outside of your LAN. To do so, install the ntp
-      daemon as above, then edit <filename>/etc/ntp.conf</filename>
-      and change the <code>server</code> directive to use the
-      controller node as internet time source.</para>
+    <para>On additional nodes, it is advised that you configure the other nodes
+      to synchronize their time from the controller node rather than from
+      outside of your LAN. To do so, install the ntp daemon as above, then edit
+        <filename>/etc/ntp.conf</filename> and change the <code>server</code>
+      directive to use the controller node as internet time source.</para>
   </section>
-
-  <section xml:id="basics-passwords" os="ubuntu;rhel;fedora;centos;opensuse;sles">
+  <section xml:id="basics-passwords"
+    os="ubuntu;rhel;fedora;centos;opensuse;sles">
     <title>Passwords</title>
     <para>The various OpenStack services and the required software like the
       database and the messaging server have to be password protected. You use
       these passwords when configuring a service and then again to access the
-      service. You have to choose a password while configuring the
-      service and later remember to use the same password when accessing it.
-      Optionally, you can generate random passwords with the
-        <application>pwgen</application> program. Or, to create passwords one at a
-      time, use the output of this command repeatedly:
+      service. You have to choose a password while configuring the service and
+      later remember to use the same password when accessing it. Optionally, you
+      can generate random passwords with the <application>pwgen</application>
+      program. Or, to create passwords one at a time, use the output of this
+      command repeatedly:
       <screen><prompt>$</prompt> <userinput>openssl rand -hex 10</userinput></screen>
     </para>
-
     <para>This guide uses the convention that
-    <literal><replaceable>SERVICE_PASS</replaceable></literal> is
-    password to access the service <literal>SERVICE</literal> and
-    <literal><replaceable>SERVICE_DBPASS</replaceable></literal> is
-    the database password used by the service SERVICE to access the
-    database.
-    </para>
-
+          <literal><replaceable>SERVICE_PASS</replaceable></literal> is password
+      to access the service <literal>SERVICE</literal> and
+          <literal><replaceable>SERVICE_DBPASS</replaceable></literal> is the
+      database password used by the service SERVICE to access the database.</para>
     <para>The complete list of passwords you need to define in this guide are:
-    <table rules="all">
-      <caption>Passwords</caption>
-      <thead>
-        <tr>
-          <th>Password name</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Database password (no variable used)</td>
-          <td>Root password for the database</td>
-        </tr>
-        <tr os="ubuntu;opensuse;sles">
-          <td><literal><replaceable>RABBIT_PASS</replaceable></literal></td>
-          <td>Password of user guest of RabbitMQ</td>
-        </tr>
-        <tr>
-          <td><literal><replaceable>KEYSTONE_DBPASS</replaceable></literal></td>
-          <td>Database password of Identity service</td>
-        </tr>
-        <tr>
-          <td><literal><replaceable>ADMIN_PASS</replaceable></literal></td>
-          <td>Password of user <literal>admin</literal></td>
-        </tr>
-        <tr>
-          <td><literal><replaceable>GLANCE_DBPASS</replaceable></literal></td>
-          <td>Database password for Image Service</td>
-        </tr>
-        <tr>
-          <td><literal><replaceable>GLANCE_PASS</replaceable></literal></td>
-          <td>Password of Image Service user <literal>glance</literal></td>
-        </tr>
-        <tr>
-          <td><literal><replaceable>NOVA_DBPASS</replaceable></literal></td>
-          <td>Database password for Compute service</td>
-        </tr>
-        <tr>
-          <td><literal><replaceable>NOVA_PASS</replaceable></literal></td>
-          <td>Password of Compute service user <literal>nova</literal></td>
-        </tr>
-        <tr>
-          <td><literal><replaceable>DASH_DBPASS</replaceable></literal></td>
-          <td>Database password for the dashboard</td>
-        </tr>
-        <tr>
-          <td><literal><replaceable>CINDER_DBPASS</replaceable></literal></td>
-          <td>Database password for the Block Storage service</td>
-        </tr>
-        <tr>
-          <td><literal><replaceable>CINDER_PASS</replaceable></literal></td>
-          <td>Password of Block Storage service user <literal>cinder</literal></td>
-        </tr>
-        <tr>
-          <td><literal><replaceable>NEUTRON_DBPASS</replaceable></literal></td>
-          <td>Database password for the Networking service</td>
-        </tr>
-        <tr>
-          <td><literal><replaceable>NEUTRON_PASS</replaceable></literal></td>
-          <td>Password of Networking service user <literal>neutron</literal></td>
-        </tr>
-        <tr>
-          <td><literal><replaceable>HEAT_DBPASS</replaceable></literal></td>
-          <td>Database password for the Orchestration service</td>
-        </tr>
-        <tr>
-          <td><literal><replaceable>HEAT_PASS</replaceable></literal></td>
-          <td>Password of Orchestration service user <literal>heat</literal></td>
-        </tr>
-        <tr>
-          <td><literal><replaceable>CEILOMETER_DBPASS</replaceable></literal></td>
-          <td>Database password for the Telemetry service</td>
-        </tr>
-        <tr>
-          <td><literal><replaceable>CEILOMETER_PASS</replaceable></literal></td>
-          <td>Password of Telemetry service user <literal>ceilometer</literal></td>
-        </tr>
-      </tbody>
-    </table>
+        <table rules="all">
+        <caption>Passwords</caption>
+        <thead>
+          <tr>
+            <th>Password name</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Database password (no variable used)</td>
+            <td>Root password for the database</td>
+          </tr>
+          <tr os="ubuntu;opensuse;sles">
+            <td><literal><replaceable>RABBIT_PASS</replaceable></literal></td>
+            <td>Password of user guest of RabbitMQ</td>
+          </tr>
+          <tr>
+            <td><literal><replaceable>KEYSTONE_DBPASS</replaceable></literal></td>
+            <td>Database password of Identity service</td>
+          </tr>
+          <tr>
+            <td><literal><replaceable>ADMIN_PASS</replaceable></literal></td>
+            <td>Password of user <literal>admin</literal></td>
+          </tr>
+          <tr>
+            <td><literal><replaceable>GLANCE_DBPASS</replaceable></literal></td>
+            <td>Database password for Image Service</td>
+          </tr>
+          <tr>
+            <td><literal><replaceable>GLANCE_PASS</replaceable></literal></td>
+            <td>Password of Image Service user <literal>glance</literal></td>
+          </tr>
+          <tr>
+            <td><literal><replaceable>NOVA_DBPASS</replaceable></literal></td>
+            <td>Database password for Compute service</td>
+          </tr>
+          <tr>
+            <td><literal><replaceable>NOVA_PASS</replaceable></literal></td>
+            <td>Password of Compute service user <literal>nova</literal></td>
+          </tr>
+          <tr>
+            <td><literal><replaceable>DASH_DBPASS</replaceable></literal></td>
+            <td>Database password for the dashboard</td>
+          </tr>
+          <tr>
+            <td><literal><replaceable>CINDER_DBPASS</replaceable></literal></td>
+            <td>Database password for the Block Storage service</td>
+          </tr>
+          <tr>
+            <td><literal><replaceable>CINDER_PASS</replaceable></literal></td>
+            <td>Password of Block Storage service user
+              <literal>cinder</literal></td>
+          </tr>
+          <tr>
+            <td><literal><replaceable>NEUTRON_DBPASS</replaceable></literal></td>
+            <td>Database password for the Networking service</td>
+          </tr>
+          <tr>
+            <td><literal><replaceable>NEUTRON_PASS</replaceable></literal></td>
+            <td>Password of Networking service user
+              <literal>neutron</literal></td>
+          </tr>
+          <tr>
+            <td><literal><replaceable>HEAT_DBPASS</replaceable></literal></td>
+            <td>Database password for the Orchestration service</td>
+          </tr>
+          <tr>
+            <td><literal><replaceable>HEAT_PASS</replaceable></literal></td>
+            <td>Password of Orchestration service user
+              <literal>heat</literal></td>
+          </tr>
+          <tr>
+            <td><literal><replaceable>CEILOMETER_DBPASS</replaceable></literal></td>
+            <td>Database password for the Telemetry service</td>
+          </tr>
+          <tr>
+            <td><literal><replaceable>CEILOMETER_PASS</replaceable></literal></td>
+            <td>Password of Telemetry service user
+              <literal>ceilometer</literal></td>
+          </tr>
+        </tbody>
+      </table>
     </para>
   </section>
 
   <section xml:id="basics-database">
     <?dbhtml-stop-chunking?>
     <title>MySQL database</title>
-    <para os="ubuntu;debian;rhel;fedora;centos">Most OpenStack
-      services require a database to store information. These examples
-      use a MySQL database that runs on the controller node. You must
-      install the MySQL database on the controller node. You must
-      install MySQL client software on any additional nodes that
-      access MySQL.</para>
-    <para os="opensuse;sles">Most OpenStack services require a
-      database to store information. This guide uses a MySQL database
-      on SUSE Linux Enterprise Server and a compatible database on
-      openSUSE running on the controller node. This compatible
-      database for openSUSE is MariaDB. You must install the MariaDB
-      database on the controller node. You must install the MariaDB
-      client software on any nodes that access the MariaDB
-      database.</para>
+    <para os="ubuntu;debian;rhel;fedora;centos">Most OpenStack services require
+      a database to store information. These examples use a MySQL database that
+      runs on the controller node. You must install the MySQL database on the
+      controller node. You must install MySQL client software on any additional
+      nodes that access MySQL.</para>
+    <para os="opensuse;sles">Most OpenStack services require a database to store
+      information. This guide uses a MySQL database on SUSE Linux Enterprise
+      Server and a compatible database on openSUSE running on the controller
+      node. This compatible database for openSUSE is MariaDB. You must install
+      the MariaDB database on the controller node. You must install the MariaDB
+      client software on any nodes that access the MariaDB database.</para>
 
-      <section xml:id="basics-database-controller">
-        <title>Controller setup</title>
-        <para><phrase os="sles">For SUSE Linux Enterprise Server:
-          </phrase> On the controller node, install the MySQL client and
-          server packages, and the Python library.</para>
-        <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install mysql-client mysql python-mysql</userinput></screen>
-        <para os="opensuse">For openSUSE: On the controller node,
-          install the MariaDB client and database server packages,
-          and the MySQL Python library.</para>
-        <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install mariadb-client mariadb python-mysql</userinput></screen>
-        <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install python-mysqldb mysql-server</userinput></screen>
-        <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>yum install mysql mysql-server MySQL-python</userinput></screen>
-        <note os="ubuntu;debian">
-          <para>When you install the server package, you are prompted
-            for the root password for the database. Choose a strong
-            password and remember it.</para>
-        </note>
-        <para>The MySQL configuration requires some changes to work with
-          OpenStack.</para>
-        <procedure>
-          <step>
-            <para os="ubuntu;debian">Edit the
+    <section xml:id="basics-database-controller">
+      <title>Controller setup</title>
+      <para><phrase os="sles">For SUSE Linux Enterprise Server: </phrase> On the
+        controller node, install the MySQL client and server packages, and the
+        Python library.</para>
+      <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install mysql-client mysql python-mysql</userinput></screen>
+      <para os="opensuse">For openSUSE: On the controller node, install the
+        MariaDB client and database server packages, and the MySQL Python
+        library.</para>
+      <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install mariadb-client mariadb python-mysql</userinput></screen>
+      <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install python-mysqldb mysql-server</userinput></screen>
+      <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>yum install mysql mysql-server MySQL-python</userinput></screen>
+      <note os="ubuntu;debian">
+        <para>When you install the server package, you are prompted for the root
+          password for the database. Choose a strong password and remember
+          it.</para>
+      </note>
+      <para>The MySQL configuration requires some changes to work with
+        OpenStack.</para>
+      <procedure>
+        <step>
+          <para os="ubuntu;debian">Edit the
               <filename>/etc/mysql/my.cnf</filename> file:</para>
-            <para os="opensuse;sles;rhel;fedora;centos">Edit the
+          <para os="opensuse;sles;rhel;fedora;centos">Edit the
               <filename>/etc/my.cnf</filename> file:</para>
-            <substeps>
-              <step>
-                <para>Under the <literal>[mysqld]</literal> section, set the
+          <substeps>
+            <step>
+              <para>Under the <literal>[mysqld]</literal> section, set the
                   <literal>bind-address</literal> key to the management IP
-                  address of the controller node to enable access by other
-                  nodes via the management network:</para>
-                <programlisting>[mysqld]
+                address of the controller node to enable access by other nodes
+                via the management network:</para>
+              <programlisting>[mysqld]
 ...
 bind-address = 192.168.0.10</programlisting>
               </step>
@@ -422,168 +408,154 @@ default-storage-engine = innodb
 collation-server = utf8_general_ci
 init-connect = 'SET NAMES utf8'
 character-set-server = utf8</programlisting>
-              </step>
-            </substeps>
-          </step>
-        </procedure>
-        <para os="ubuntu;debian">Restart the MySQL service to apply
-          the changes:</para>
-        <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service mysql restart</userinput></screen>
-        <para os="rhel;centos;fedora;opensuse;sles">Start the <phrase
-        os="rhel;fedora;centos">MySQL</phrase>
-        <phrase os="opensuse;sles">MariaDB or MySQL</phrase> database
-        server and set it to start automatically when the system
-        boots.</para>
-        <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>service mysqld start</userinput>
+            </step>
+          </substeps>
+        </step>
+      </procedure>
+      <para os="ubuntu;debian">Restart the MySQL service to apply the
+        changes:</para>
+      <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service mysql restart</userinput></screen>
+      <para os="rhel;centos;fedora;opensuse;sles">Start the <phrase
+          os="rhel;fedora;centos">MySQL</phrase>
+        <phrase os="opensuse;sles">MariaDB or MySQL</phrase> database server and
+        set it to start automatically when the system boots.</para>
+      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>service mysqld start</userinput>
 <prompt>#</prompt> <userinput>chkconfig mysqld on</userinput></screen>
-        <screen os="opensuse;sles"><prompt>#</prompt> <userinput>service mysql start</userinput>
+      <screen os="opensuse;sles"><prompt>#</prompt> <userinput>service mysql start</userinput>
 <prompt>#</prompt> <userinput>chkconfig mysql on</userinput></screen>
-        <para os="rhel;centos;fedora;opensuse;sles">Finally, you should
-        set a root password for your <phrase os="rhel;fedora;centos"
-        >MySQL</phrase>
-        <phrase os="opensuse;sles">MariaDB or MySQL</phrase> database.
-        The OpenStack programs that set up databases and tables prompt
-        you for this password if it is set.</para>
-        <para os="ubuntu;debian;rhel;centos;fedora;opensuse;sles">You must
-        delete the anonymous users that are created when the database is
-        first started. Otherwise, database connection problems occur
-        when you follow the instructions in this guide. To do this, use
-        the <command>mysql_secure_installation</command> command.
-        Note that if <command>mysql_secure_installation</command> fails
-        you might need to use <command>mysql_install_db</command> first:</para>
-        <screen os="ubuntu;debian;rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>mysql_install_db</userinput>
+      <para os="rhel;centos;fedora;opensuse;sles">Finally, you should set a root
+        password for your <phrase os="rhel;fedora;centos">MySQL</phrase>
+        <phrase os="opensuse;sles">MariaDB or MySQL</phrase> database. The
+        OpenStack programs that set up databases and tables prompt you for this
+        password if it is set.</para>
+      <para os="ubuntu;debian;rhel;centos;fedora;opensuse;sles">You must delete
+        the anonymous users that are created when the database is first started.
+        Otherwise, database connection problems occur when you follow the
+        instructions in this guide. To do this, use the
+          <command>mysql_secure_installation</command> command. Note that if
+          <command>mysql_secure_installation</command> fails you might need to
+        use <command>mysql_install_db</command> first:</para>
+      <screen os="ubuntu;debian;rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>mysql_install_db</userinput>
 <prompt>#</prompt> <userinput>mysql_secure_installation</userinput></screen>
-        <para><phrase os="rhel;centos;fedora;opensuse;sles">If you have
-        not already set a root database password, press
-        <keycap>ENTER</keycap> when you are prompted for the
-        password.</phrase> This command presents a number of options
-        for you to secure your database installation. Respond
-        <userinput>yes</userinput> to all prompts unless you have a
-        good reason to do otherwise.</para>
-      </section>
+      <para><phrase os="rhel;centos;fedora;opensuse;sles">If you have not
+          already set a root database password, press <keycap>ENTER</keycap>
+          when you are prompted for the password.</phrase> This command presents
+        a number of options for you to secure your database installation.
+        Respond <userinput>yes</userinput> to all prompts unless you have a good
+        reason to do otherwise.</para>
+    </section>
 
-      <section xml:id="basics-database-node">
-        <title>Node setup</title>
-        <para>On all nodes other than the controller node, install the
-            <phrase os="ubuntu;debian;rhel;fedora;centos"
-            >MySQL</phrase>
-          <phrase os="opensuse">MariaDB (on openSUSE)</phrase> client
-          and the MySQL Python library on any system that does not
-          host a MySQL database:</para>
-        <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install python-mysqldb</userinput></screen>
-        <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>yum install mysql MySQL-python</userinput></screen>
-        <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install mariadb-client python-mysql</userinput></screen>
-        <para os="sles">For SUSE Linux Enterprise, install
-          MySQL:</para>
-        <screen os="sles"><prompt>#</prompt> <userinput>zypper install mysql-client python-mysql</userinput></screen>
-      </section>
+    <section xml:id="basics-database-node">
+      <title>Node setup</title>
+      <para>On all nodes other than the controller node, install the <phrase
+          os="ubuntu;debian;rhel;fedora;centos">MySQL</phrase>
+        <phrase os="opensuse">MariaDB (on openSUSE)</phrase> client and the
+        MySQL Python library on any system that does not host a MySQL
+        database:</para>
+      <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install python-mysqldb</userinput></screen>
+      <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>yum install mysql MySQL-python</userinput></screen>
+      <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install mariadb-client python-mysql</userinput></screen>
+      <para os="sles">For SUSE Linux Enterprise, install MySQL:</para>
+      <screen os="sles"><prompt>#</prompt> <userinput>zypper install mysql-client python-mysql</userinput></screen>
+    </section>
   </section>
 
   <section xml:id="basics-packages">
     <title>OpenStack packages</title>
-    <para>Distributions might release OpenStack packages as part of
-      their distribution or through other methods because the
-      OpenStack and distribution release times are independent of each
-      other.</para>
-    <para>This section describes the configuration you must
-      complete after you configure machines to install the latest
-      OpenStack packages.</para>
-    <para os="fedora;centos;rhel">The examples in this guide use the
-      OpenStack packages from the RDO repository. These packages work
-      on Red Hat Enterprise Linux 6, compatible versions of CentOS,
-      and Fedora 20. To enable the RDO repository, download and
-      install the <package>rdo-release-icehouse</package>
-      package.</para>
+    <para>Distributions might release OpenStack packages as part of their
+      distribution or through other methods because the OpenStack and
+      distribution release times are independent of each other.</para>
+    <para>This section describes the configuration you must complete after you
+      configure machines to install the latest OpenStack packages.</para>
+    <para os="fedora;centos;rhel">The examples in this guide use the OpenStack
+      packages from the RDO repository. These packages work on Red Hat
+      Enterprise Linux 6, compatible versions of CentOS, and Fedora 20. To
+      enable the RDO repository, download and install the
+        <package>rdo-release-icehouse</package> package.</para>
     <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>yum install http://repos.fedorapeople.org/repos/openstack/openstack-icehouse/rdo-release-icehouse-1.noarch.rpm</userinput></screen>
-    <para os="fedora;centos;rhel">The EPEL package includes GPG keys
-      for package signing and repository information. This should only
-      be installed on Red Hat Enterprise Linux and CentOS, not Fedora.
-      Install the latest <package>epel-release</package> package (see
-        <link
+    <para os="fedora;centos;rhel">The EPEL package includes GPG keys for package
+      signing and repository information. This should only be installed on Red
+      Hat Enterprise Linux and CentOS, not Fedora. Install the latest
+        <package>epel-release</package> package (see <link
         xlink:href="http://download.fedoraproject.org/pub/epel/6/x86_64/repoview/epel-release.html"
         >http://download.fedoraproject.org/pub/epel/6/x86_64/repoview/epel-release.html</link>).
       For example:</para>
     <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>yum install http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm</userinput></screen>
-    <para os="fedora;centos;rhel">The
-        <package>openstack-utils</package> package contains utility
-      programs that make installation and configuration easier. These
-      programs are used throughout this guide. Install
-        <package>openstack-utils</package>. This verifies that you can
-      access the RDO repository.</para>
+    <para os="fedora;centos;rhel">The <package>openstack-utils</package> package
+      contains utility programs that make installation and configuration easier.
+      These programs are used throughout this guide. Install
+        <package>openstack-utils</package>. This verifies that you can access
+      the RDO repository.</para>
     <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>yum install openstack-utils</userinput></screen>
-    <para os="opensuse;sles">Use the Open Build Service repositories
-      for <glossterm>Icehouse</glossterm> based on your openSUSE or
-      SUSE Linux Enterprise
-      Server version, for example if you run openSUSE 12.3 use:</para>
+    <para os="opensuse;sles">Use the Open Build Service repositories for
+        <glossterm>Icehouse</glossterm> based on your openSUSE or SUSE Linux
+      Enterprise Server version, for example if you run openSUSE 12.3
+      use:</para>
     <screen os="opensuse"><prompt>#</prompt> <userinput>zypper addrepo -f obs://Cloud:OpenStack:Icehouse/openSUSE_12.3 Icehouse</userinput></screen>
     <para os="opensuse">For openSUSE 13.1 use:</para>
     <screen os="opensuse"><prompt>#</prompt> <userinput>zypper addrepo -f obs://Cloud:OpenStack:Icehouse/openSUSE_13.1 Icehouse</userinput></screen>
-    <para os="sles">If you use SUSE Linux Enterprise Server 11 SP3,
-      use:</para>
+    <para os="sles">If you use SUSE Linux Enterprise Server 11 SP3, use:</para>
     <screen os="sles"><prompt>#</prompt> <userinput>zypper addrepo -f obs://Cloud:OpenStack:Icehouse/SLE_11_SP3 Icehouse</userinput></screen>
-    <para os="opensuse;sles">The <package>openstack-utils</package>
-      package contains utility programs that make installation and
-      configuration easier. These programs are used throughout this
-      guide. Install <package>openstack-utils</package>. This verifies
-      that you can access the Open Build Service repository:</para>
+    <para os="opensuse;sles">The <package>openstack-utils</package> package
+      contains utility programs that make installation and configuration easier.
+      These programs are used throughout this guide. Install
+        <package>openstack-utils</package>. This verifies that you can access
+      the Open Build Service repository:</para>
     <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-utils</userinput></screen>
     <warning os="fedora;centos;rhel;opensuse;sles">
-      <para>The <application>openstack-config</application> program
-        in the <package>openstack-utils</package> package uses
-        <application>crudini</application> to manipulate configuration
-        files. However, <application>crudini</application> version 0.3
-        does not support multi valued options. See
-          <link
+      <para>The <application>openstack-config</application> program in the
+          <package>openstack-utils</package> package uses
+          <application>crudini</application> to manipulate configuration files.
+        However, <application>crudini</application> version 0.3 does not support
+        multi valued options. See <link
           xlink:href="https://bugs.launchpad.net/openstack-manuals/+bug/1269271"
-          >https://bugs.launchpad.net/openstack-manuals/+bug/1269271</link>.
-        As a work around, you must manually set any multi valued
-        options or the new value overwrites the previous value instead
-        of creating a new option.</para>
+          >https://bugs.launchpad.net/openstack-manuals/+bug/1269271</link>. As
+        a work around, you must manually set any multi valued options or the new
+        value overwrites the previous value instead of creating a new
+        option.</para>
     </warning>
-    <para os="fedora;centos;rhel">The
-        <package>openstack-selinux</package> package includes the
-      policy files that are required to configure SELinux during
-      OpenStack installation.
-      Install <package>openstack-selinux</package>.</para>
+    <para os="fedora;centos;rhel">The <package>openstack-selinux</package>
+      package includes the policy files that are required to configure SELinux
+      during OpenStack installation. Install
+        <package>openstack-selinux</package>.</para>
     <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>yum install openstack-selinux</userinput></screen>
-    <para os="fedora;centos;rhel;opensuse;sles">Upgrade your system packages:</para>
+    <para os="fedora;centos;rhel;opensuse;sles">Upgrade your system
+      packages:</para>
     <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>yum upgrade</userinput></screen>
     <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper refresh</userinput>
 <prompt>#</prompt> <userinput>zypper update</userinput></screen>
     <para os="fedora;centos;rhel;opensuse;sles">If the upgrade included a new
-    kernel package, reboot the system to ensure the new kernel is running:</para>
+      kernel package, reboot the system to ensure the new kernel is
+      running:</para>
     <screen os="fedora;centos;rhel;opensuse;sles"><prompt>#</prompt> <userinput>reboot</userinput></screen>
     <procedure xml:id="ubuntu-cloud-archive" os="ubuntu">
       <title>To use the Ubuntu Cloud Archive for Icehouse</title>
       <para>The <link
-          xlink:href="https://wiki.ubuntu.com/ServerTeam/CloudArchive"
-          >Ubuntu Cloud Archive</link> is a special repository that
-        allows you to install newer releases of OpenStack on the
-        stable supported version of Ubuntu.</para>
+          xlink:href="https://wiki.ubuntu.com/ServerTeam/CloudArchive">Ubuntu
+          Cloud Archive</link> is a special repository that allows you to
+        install newer releases of OpenStack on the stable supported version of
+        Ubuntu.</para>
       <step>
         <para>Install the Ubuntu Cloud Archive for
-          <glossterm>Icehouse</glossterm>:
+            <glossterm>Icehouse</glossterm>:
           <screen><prompt>#</prompt> <userinput>apt-get install python-software-properties</userinput>
 <prompt>#</prompt> <userinput>add-apt-repository cloud-archive:icehouse</userinput></screen></para>
       </step>
       <step>
-        <para>Update the package database, upgrade your system, and reboot
-          for all changes to take effect:
+        <para>Update the package database, upgrade your system, and reboot for
+          all changes to take effect:
           <screen><prompt>#</prompt> <userinput>apt-get update &amp;&amp; apt-get dist-upgrade</userinput>
 <prompt>#</prompt> <userinput>reboot</userinput> </screen></para>
       </step>
     </procedure>
     <procedure xml:id="debian-cloud-archive" os="debian">
-      <title>To use the Debian Wheezy backports archive for
-        Icehouse</title>
-      <para>The <glossterm>Icehouse</glossterm> release is available
-        only in Debian Sid
-        (otherwise called Unstable). However, the Debian maintainers
-        of OpenStack also maintain a non-official Debian repository
-        for OpenStack containing Wheezy backports.</para>
+      <title>To use the Debian Wheezy backports archive for Icehouse</title>
+      <para>The <glossterm>Icehouse</glossterm> release is available only in
+        Debian Sid (otherwise called Unstable). However, the Debian maintainers
+        of OpenStack also maintain a non-official Debian repository for
+        OpenStack containing Wheezy backports.</para>
       <step>
-        <para>Install the Debian Wheezy backport repository
-          Icehouse:</para>
+        <para>Install the Debian Wheezy backport repository Icehouse:</para>
         <screen><prompt>#</prompt> <userinput>echo "deb http://archive.gplhost.com/debian icehouse-backports main" >>/etc/apt/sources.list</userinput></screen>
       </step>
       <step>
@@ -596,102 +568,90 @@ character-set-server = utf8</programlisting>
         <screen><prompt>#</prompt> <userinput>apt-get update &amp;&amp; apt-get install gplhost-archive-keyring</userinput></screen>
       </step>
       <step>
-        <para>Update the package database, upgrade your system, and reboot
-          for all changes to take effect:</para>
+        <para>Update the package database, upgrade your system, and reboot for
+          all changes to take effect:</para>
         <screen><prompt>#</prompt> <userinput>apt-get update &amp;&amp; apt-get dist-upgrade</userinput>
 <prompt>#</prompt> <userinput>reboot</userinput></screen>
       </step>
     </procedure>
-    <para os="debian">Numerous archive.gplhost.com mirrors are
-      available around the world. All are available with both FTP and
-      HTTP protocols (you should use the closest mirror). The list of
-      mirrors is available at <link
+    <para os="debian">Numerous archive.gplhost.com mirrors are available around
+      the world. All are available with both FTP and HTTP protocols (you should
+      use the closest mirror). The list of mirrors is available at <link
         xlink:href="http://archive.gplhost.com/readme.mirrors"
         >http://archive.gplhost.com/readme.mirrors</link>.</para>
   </section>
   <section xml:id="basics-argparse" os="debian">
     <title>Manually install python-argparse</title>
-    <para>The Debian OpenStack packages are maintained on Debian Sid
-      (also known as Debian Unstable) - the current development
-      version. Backported packages run correctly on Debian Wheezy with
-      one caveat:</para>
-    <para>All OpenStack packages are written in Python. Wheezy uses
-      Python 2.6 and 2.7, with Python 2.6 as the default interpreter;
-      Sid has only Python 2.7. There is one packaging change between
-      these two. In Python 2.6, you installed the
-        <package>python-argparse</package> package separately. In
-      Python 2.7, this package is installed by default. Unfortunately,
-      in Python 2.7, this package does not include <code>Provides:
-        python-argparse</code> directive.</para>
-    <para>Because the packages are maintained in Sid where the
-        <code>Provides: python-argparse</code> directive causes an
-      error, and the Debian OpenStack maintainer wants to maintain one
-      version of the OpenStack packages, you must manually install the
-        <package>python-argparse</package> on each OpenStack system
-      that runs Debian Wheezy before you install the other OpenStack
-      packages. Use the following command to install the
+    <para>The Debian OpenStack packages are maintained on Debian Sid (also known
+      as Debian Unstable) - the current development version. Backported packages
+      run correctly on Debian Wheezy with one caveat:</para>
+    <para>All OpenStack packages are written in Python. Wheezy uses Python 2.6
+      and 2.7, with Python 2.6 as the default interpreter; Sid has only Python
+      2.7. There is one packaging change between these two. In Python 2.6, you
+      installed the <package>python-argparse</package> package separately. In
+      Python 2.7, this package is installed by default. Unfortunately, in Python
+      2.7, this package does not include <code>Provides: python-argparse</code>
+      directive.</para>
+    <para>Because the packages are maintained in Sid where the <code>Provides:
+        python-argparse</code> directive causes an error, and the Debian
+      OpenStack maintainer wants to maintain one version of the OpenStack
+      packages, you must manually install the <package>python-argparse</package>
+      on each OpenStack system that runs Debian Wheezy before you install the
+      other OpenStack packages. Use the following command to install the
       package:</para>
     <screen><prompt>#</prompt> <userinput>apt-get install python-argparse</userinput></screen>
-    <para>This caveat applies to most OpenStack packages in
-      Wheezy.</para>
+    <para>This caveat applies to most OpenStack packages in Wheezy.</para>
   </section>
   <section xml:id="basics-queue">
     <title>Messaging server</title>
-    <para>On the controller node, install the messaging queue server.
-      Typically this is <phrase os="ubuntu;debian;opensuse;sles"
-        ><glossterm>RabbitMQ</glossterm></phrase>
+    <para>On the controller node, install the messaging queue server. Typically
+      this is <phrase os="ubuntu;debian;opensuse;sles"
+          ><glossterm>RabbitMQ</glossterm></phrase>
       <phrase os="centos;rhel;fedora">
-        <glossterm>Qpid</glossterm></phrase> but
-      <phrase os="ubuntu;debian;opensuse;sles"><glossterm>Qpid</glossterm></phrase>
-        <phrase os="centos;rhel;fedora"><glossterm>RabbitMQ</glossterm></phrase>
-    and <glossterm>ZeroMQ</glossterm> (0MQ) are also available.</para>
+        <glossterm>Qpid</glossterm></phrase> but <phrase
+        os="ubuntu;debian;opensuse;sles"><glossterm>Qpid</glossterm></phrase>
+      <phrase os="centos;rhel;fedora"><glossterm>RabbitMQ</glossterm></phrase>
+      and <glossterm>ZeroMQ</glossterm> (0MQ) are also available.</para>
     <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install rabbitmq-server</userinput></screen>
     <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install rabbitmq-server</userinput></screen>
     <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>yum install qpid-cpp-server</userinput></screen>
     <note os="ubuntu;debian;opensuse;sles">
       <title>Important security consideration</title>
-      <para>The <package>rabbitmq-server</package> package configures
-        the RabbitMQ service to start automatically and creates a
-          <literal>guest</literal> user with a default
-          <literal>guest</literal> password. The RabbitMQ examples in
-        this guide use the <literal>guest</literal> account, though it
-        is strongly advised to change its default password, especially
-        if you have IPv6 available: by default the RabbitMQ server
-        enables anyone to connect to it by using guest as login and
-        password, and with IPv6, it is reachable from the
+      <para>The <package>rabbitmq-server</package> package configures the
+        RabbitMQ service to start automatically and creates a
+          <literal>guest</literal> user with a default <literal>guest</literal>
+        password. The RabbitMQ examples in this guide use the
+          <literal>guest</literal> account, though it is strongly advised to
+        change its default password, especially if you have IPv6 available: by
+        default the RabbitMQ server enables anyone to connect to it by using
+        guest as login and password, and with IPv6, it is reachable from the
         outside.</para>
       <para>To change the default guest password of RabbitMQ:</para>
       <screen><prompt>#</prompt> <userinput>rabbitmqctl change_password guest <replaceable>RABBIT_PASS</replaceable></userinput></screen>
     </note>
-    <para os="fedora;centos;rhel">Disable Qpid authentication by
-      editing <filename>/etc/qpidd.conf</filename> file and changing
-      the <literal>auth</literal> option to
-      <literal>no</literal>.</para>
+    <para os="fedora;centos;rhel">Disable Qpid authentication by editing
+        <filename>/etc/qpidd.conf</filename> file and changing the
+        <literal>auth</literal> option to <literal>no</literal>.</para>
     <screen os="fedora;centos;rhel"> <userinput>auth=no</userinput></screen>
     <note os="fedora;centos;rhel">
-      <para>
-        To simplify configuration, the Qpid examples in this guide do not use
-        authentication. However, we strongly advise enabling authentication
-        for production deployments. For more information on securing Qpid
-        refer to the
-        <link xlink:href=
-            "http://qpid.apache.org/books/trunk/AMQP-Messaging-Broker-CPP-Book/html/chap-Messaging_User_Guide-Security.html"
-        >Qpid Documentation</link>.
-      </para>
-      <para>
-        After you enable Qpid authentication, you must update the configuration
-        file of each OpenStack service to ensure that the
-        <literal>qpid_username</literal> and <literal>qpid_password</literal>
+      <para>To simplify configuration, the Qpid examples in this guide do not
+        use authentication. However, we strongly advise enabling authentication
+        for production deployments. For more information on securing Qpid refer
+        to the <link
+          xlink:href="http://qpid.apache.org/books/trunk/AMQP-Messaging-Broker-CPP-Book/html/chap-Messaging_User_Guide-Security.html"
+          >Qpid Documentation</link>.</para>
+      <para>After you enable Qpid authentication, you must update the
+        configuration file of each OpenStack service to ensure that the
+          <literal>qpid_username</literal> and <literal>qpid_password</literal>
         configuration keys refer to a valid Qpid username and password,
-        respectively.
-      </para>
+        respectively.</para>
     </note>
-    <para os="fedora;centos;rhel">Start Qpid and set it to start
-      automatically when the system boots.</para>
+    <para os="fedora;centos;rhel">Start Qpid and set it to start automatically
+      when the system boots.</para>
     <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>service qpidd start</userinput>
 <prompt>#</prompt> <userinput>chkconfig qpidd on</userinput></screen>
-    <para os="opensuse;sles">Start the messaging service and set it to
-      start automatically when the system boots:</para>
+    <para os="opensuse;sles">Start the messaging service and set it to start
+      automatically when the system boots:</para>
     <screen os="opensuse;sles"><prompt>#</prompt> <userinput>service rabbitmq-server start</userinput>
 <prompt>#</prompt> <userinput>chkconfig rabbitmq-server on</userinput></screen>
     <para>Congratulations, now you are ready to install OpenStack
