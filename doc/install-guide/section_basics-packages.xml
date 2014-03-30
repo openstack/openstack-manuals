@@ -16,7 +16,7 @@
     on Red Hat Enterprise Linux 6, compatible versions of CentOS,
     and Fedora 20. To enable the RDO repository, download and
     install the <package>rdo-release-icehouse</package>
-    package.</para>
+    package:</para>
   <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>yum install http://repos.fedorapeople.org/repos/openstack/openstack-icehouse/rdo-release-icehouse-1.noarch.rpm</userinput></screen>
   <para os="fedora;centos;rhel">The EPEL package includes GPG keys
     for package signing and repository information. This should only
@@ -32,7 +32,7 @@
     programs that make installation and configuration easier. These
     programs are used throughout this guide. Install
     <package>openstack-utils</package>. This verifies that you can
-    access the RDO repository.</para>
+    access the RDO repository:</para>
   <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>yum install openstack-utils</userinput></screen>
   <para os="opensuse;sles">Use the Open Build Service repositories
     for <glossterm>Icehouse</glossterm> based on your openSUSE or
@@ -67,7 +67,7 @@
     <package>openstack-selinux</package> package includes the
     policy files that are required to configure SELinux during
     OpenStack installation.
-    Install <package>openstack-selinux</package>.</para>
+    Install <package>openstack-selinux</package>:</para>
   <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>yum install openstack-selinux</userinput></screen>
   <para os="fedora;centos;rhel;opensuse;sles">Upgrade your system packages:</para>
   <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>yum upgrade</userinput></screen>
@@ -90,10 +90,22 @@
 <prompt>#</prompt> <userinput>add-apt-repository cloud-archive:icehouse</userinput></screen></para>
     </step>
     <step>
-      <para>Update the package database, upgrade your system, and reboot
-        for all changes to take effect:
-      <screen><prompt>#</prompt> <userinput>apt-get update &amp;&amp; apt-get dist-upgrade</userinput>
-<prompt>#</prompt> <userinput>reboot</userinput> </screen></para>
+        <para>Update the package database and upgrade your system:</para>
+        <screen><prompt>#</prompt> <userinput>apt-get update</userinput>
+<prompt>#</prompt> <userinput>apt-get dist-upgrade</userinput>
+<prompt>#</prompt> <userinput>reboot</userinput></screen>
+    </step>
+    <step>
+        <para>If you intend to use OpenStack Networking with Ubuntu 12.04,
+            you should install a backported Linux kernel to improve the
+            stability of your system. This installation is not needed if you
+            intend to use the legacy networking service.</para>
+        <para>Install the Ubuntu 13.10 backported kernel:</para>
+        <screen><prompt>#</prompt> <userinput>apt-get install linux-image-generic-lts-saucy linux-headers-generic-lts-saucy</userinput></screen>
+    </step>
+    <step>
+        <para>Reboot the system for all changes to take effect:</para>
+        <screen><prompt>#</prompt> <userinput>reboot</userinput></screen>
     </step>
   </procedure>
   <procedure xml:id="debian-cloud-archive" os="debian">

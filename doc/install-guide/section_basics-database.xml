@@ -8,16 +8,16 @@
     services require a database to store information. These examples
     use a MySQL database that runs on the controller node. You must
     install the MySQL database on the controller node. You must
-    install MySQL client software on any additional nodes that
+    install the MySQL Python library on any additional nodes that
     access MySQL.</para>
   <para os="opensuse;sles">Most OpenStack services require a
     database to store information. This guide uses a MySQL database
     on SUSE Linux Enterprise Server and a compatible database on
     openSUSE running on the controller node. This compatible
     database for openSUSE is MariaDB. You must install the MariaDB
-    database on the controller node. You must install the MariaDB
-    client software on any nodes that access the MariaDB
-    database.</para>
+    database on the controller node. You must install the MySQL
+    Python library on any additional nodes that access MySQL or MariaDB.
+    </para>
   <section xml:id="basics-database-controller">
     <title>Controller setup</title>
     <para><phrase os="sles">For SUSE Linux Enterprise Server:
@@ -74,7 +74,7 @@ character-set-server = utf8</programlisting>
       os="rhel;fedora;centos">MySQL</phrase>
       <phrase os="opensuse;sles">MariaDB or MySQL</phrase> database
       server and set it to start automatically when the system
-      boots.</para>
+      boots:</para>
     <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>service mysqld start</userinput>
 <prompt>#</prompt> <userinput>chkconfig mysqld on</userinput></screen>
         <screen os="opensuse;sles"><prompt>#</prompt> <userinput>service mysql start</userinput>
@@ -105,16 +105,9 @@ character-set-server = utf8</programlisting>
   <section xml:id="basics-database-node">
     <title>Node setup</title>
     <para>On all nodes other than the controller node, install the
-      <phrase os="ubuntu;debian;rhel;fedora;centos"
-      >MySQL</phrase>
-      <phrase os="opensuse">MariaDB (on openSUSE)</phrase> client
-      and the MySQL Python library on any system that does not
-      host a MySQL database:</para>
+        MySQL Python library:</para>
     <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install python-mysqldb</userinput></screen>
-    <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>yum install mysql MySQL-python</userinput></screen>
-    <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install mariadb-client python-mysql</userinput></screen>
-    <para os="sles">For SUSE Linux Enterprise, install
-      MySQL:</para>
-    <screen os="sles"><prompt>#</prompt> <userinput>zypper install mysql-client python-mysql</userinput></screen>
+    <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>yum install MySQL-python</userinput></screen>
+    <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install python-mysql</userinput></screen>
   </section>
 </section>
