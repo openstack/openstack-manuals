@@ -30,7 +30,7 @@
    database connection mysql://keystone:<replaceable>KEYSTONE_DBPASS</replaceable>@<replaceable>controller</replaceable>/keystone</userinput></screen>
       <para os="ubuntu">Edit
           <filename>/etc/keystone/keystone.conf</filename> and change
-        the <literal>[database]</literal> section.</para>
+        the <literal>[database]</literal> section:</para>
       <programlisting os="ubuntu" language="ini">
 ...
 [database]
@@ -53,8 +53,9 @@ connection = mysql://keystone:<replaceable>KEYSTONE_DBPASS</replaceable>@<replac
       <para>By default, the Ubuntu packages create a SQLite database.
         Delete the <filename>keystone.db</filename> file created in
         the <filename>/var/lib/keystone/</filename> directory so that it
-        does not get used by mistake.</para>
-      </step>
+        does not get used by mistake:</para>
+      <screen><prompt>#</prompt> <userinput>rm /var/lib/keystone/keystone.db</userinput></screen>
+    </step>
     <step os="ubuntu">
       <para>Use the password that you set previously to log in as
         root. Create a <literal>keystone</literal> database
@@ -62,9 +63,10 @@ connection = mysql://keystone:<replaceable>KEYSTONE_DBPASS</replaceable>@<replac
       <screen><prompt>$</prompt> <userinput>mysql -u root -p</userinput>
 <prompt>mysql></prompt> <userinput>CREATE DATABASE keystone;</userinput>
 <prompt>mysql></prompt> <userinput>GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'localhost' \
-IDENTIFIED BY '<replaceable>KEYSTONE_DBPASS</replaceable>';</userinput>
+  IDENTIFIED BY '<replaceable>KEYSTONE_DBPASS</replaceable>';</userinput>
 <prompt>mysql></prompt> <userinput>GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'%' \
-IDENTIFIED BY '<replaceable>KEYSTONE_DBPASS</replaceable>';</userinput></screen>
+  IDENTIFIED BY '<replaceable>KEYSTONE_DBPASS</replaceable>';</userinput>
+<prompt>mysql></prompt> <userinput>exit</userinput></screen>
     </step>
     <step os="ubuntu">
       <para>Create the database tables for the Identity Service:</para>
@@ -180,7 +182,7 @@ admin_token = ADMIN_TOKEN
       <para os="ubuntu">Edit
           <filename>/etc/keystone/keystone.conf</filename> and change
         the <literal>[DEFAULT]</literal> section, replacing
-        ADMIN_TOKEN with the results of the command.</para>
+        ADMIN_TOKEN with the results of the command:</para>
       <programlisting os="ubuntu" language="ini">[DEFAULT]
 # A "shared secret" between keystone and other openstack services
 admin_token = ADMIN_TOKEN
