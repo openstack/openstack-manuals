@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-03-25 06:27+0000\n"
+"POT-Creation-Date: 2014-03-30 06:26+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -320,39 +320,39 @@ msgid "@@image: 'figures/image48.png'; md5=2aa7eb3bddcf6826f33469920dc2a9c3"
 msgstr ""
 
 #: ./doc/training-guides/module003-ch007-swift-cluster-architecture.xml:11(title)
-msgid "Cluster Arch"
+msgid "Cluster architecture"
 msgstr ""
 
 #: ./doc/training-guides/module003-ch007-swift-cluster-architecture.xml:12(guilabel)
 msgid "Access Tier"
 msgstr ""
 
-#: ./doc/training-guides/module003-ch007-swift-cluster-architecture.xml:14(title) ./doc/training-guides/bk002-ch013-operator-object-storage-node.xml:59(title)
-msgid "Swift Cluster Architecture"
+#: ./doc/training-guides/module003-ch007-swift-cluster-architecture.xml:14(title)
+msgid "Object Storage cluster architecture"
 msgstr ""
 
 #: ./doc/training-guides/module003-ch007-swift-cluster-architecture.xml:21(para)
-msgid "Large-scale deployments segment off an \"Access Tier\". This tier is the “Grand Central” of the Object Storage system. It fields incoming API requests from clients and moves data in and out of the system. This tier is composed of front-end load balancers, ssl- terminators, authentication services, and it runs the (distributed) brain of the object storage system — the proxy server processes."
+msgid "Large-scale deployments segment off an \"Access Tier\". This tier is the “Grand Central” of the Object Storage system. It fields incoming API requests from clients and moves data in and out of the system. This tier is composed of front-end load balancers, ssl- terminators, authentication services, and it runs the (distributed) brain of the Object Storage system — the proxy server processes."
 msgstr ""
 
 #: ./doc/training-guides/module003-ch007-swift-cluster-architecture.xml:29(para)
-msgid "Having the access servers in their own tier enables read/write access to be scaled out independently of storage capacity. For example, if the cluster is on the public Internet and requires ssl-termination and has high demand for data access, many access servers can be provisioned. However, if the cluster is on a private network and it is being used primarily for archival purposes, fewer access servers are needed."
+msgid "Having the access servers in their own tier enables read/write access to be scaled out independently of storage capacity. For example, if the cluster is on the public Internet and requires SSL-termination and has high demand for data access, many access servers can be provisioned. However, if the cluster is on a private network and it is being used primarily for archival purposes, fewer access servers are needed."
 msgstr ""
 
 #: ./doc/training-guides/module003-ch007-swift-cluster-architecture.xml:37(para)
-msgid "As this is an HTTP addressable storage service, a load balancer can be incorporated into the access tier."
+msgid "A load balancer can be incorporated into the access tier, because this is an HTTP addressable storage service."
 msgstr ""
 
 #: ./doc/training-guides/module003-ch007-swift-cluster-architecture.xml:39(para)
-msgid "Typically, this tier comprises a collection of 1U servers. These machines use a moderate amount of RAM and are network I/O intensive. As these systems field each incoming API request, it is wise to provision them with two high-throughput (10GbE) interfaces. One interface is used for 'front-end' incoming requests and the other for 'back-end' access to the object storage nodes to put and fetch data."
+msgid "Typically, this tier comprises a collection of 1U servers. These machines use a moderate amount of RAM and are network I/O intensive. It is wise to provision them with two high-throughput (10GbE) interfaces, because these systems field each incoming API request. One interface is used for 'front-end' incoming requests and the other for 'back-end' access to the Object Storage nodes to put and fetch data."
 msgstr ""
 
-#: ./doc/training-guides/module003-ch007-swift-cluster-architecture.xml:47(guilabel) ./doc/training-guides/module003-ch007-swift-cluster-architecture.xml:81(guilabel)
-msgid "Factors to Consider"
+#: ./doc/training-guides/module003-ch007-swift-cluster-architecture.xml:47(guilabel)
+msgid "Factors to consider"
 msgstr ""
 
 #: ./doc/training-guides/module003-ch007-swift-cluster-architecture.xml:48(para)
-msgid "For most publicly facing deployments as well as private deployments available across a wide-reaching corporate network, SSL will be used to encrypt traffic to the client. SSL adds significant processing load to establish sessions between clients; more capacity in the access layer will need to be provisioned. SSL may not be required for private deployments on trusted networks."
+msgid "For most publicly facing deployments as well as private deployments available across a wide-reaching corporate network, SSL is used to encrypt traffic to the client. SSL adds significant processing load to establish sessions between clients; it adds more capacity to the access layer that will need to be provisioned. SSL may not be required for private deployments on trusted networks."
 msgstr ""
 
 #: ./doc/training-guides/module003-ch007-swift-cluster-architecture.xml:56(guilabel)
@@ -364,11 +364,15 @@ msgid "Object Storage (Swift)"
 msgstr ""
 
 #: ./doc/training-guides/module003-ch007-swift-cluster-architecture.xml:65(para)
-msgid "The next component is the storage servers themselves. Generally, most configurations should have each of the five Zones with an equal amount of storage capacity. Storage nodes use a reasonable amount of memory and CPU. Metadata needs to be readily available to quickly return objects. The object stores run services not only to field incoming requests from the Access Tier, but to also run replicators, auditors, and reapers. Object stores can be provisioned with single gigabit or 10 gigabit network interface depending on expected workload and desired performance."
+msgid "The next component is the storage servers themselves. Generally, most configurations should provide each of the five Zones with an equal amount of storage capacity. Storage nodes use a reasonable amount of memory and CPU. Metadata needs to be readily available to quickly return objects. The object stores run services not only to field incoming requests from the Access Tier, but to also run replicators, auditors, and reapers. Object stores can be provisioned with a single gigabit or a 10-gigabit network interface depending on expected workload and desired performance."
 msgstr ""
 
 #: ./doc/training-guides/module003-ch007-swift-cluster-architecture.xml:76(para)
 msgid "Currently, a 2 TB or 3 TB SATA disk delivers good performance for the price. Desktop-grade drives can be used where there are responsive remote hands in the datacenter, and enterprise-grade drives can be used where this is not the case."
+msgstr ""
+
+#: ./doc/training-guides/module003-ch007-swift-cluster-architecture.xml:81(guilabel)
+msgid "Factors to Consider"
 msgstr ""
 
 #: ./doc/training-guides/module003-ch007-swift-cluster-architecture.xml:82(para)
@@ -499,7 +503,7 @@ msgid "To deploy OpenStack Networking, it is useful to understand the different 
 msgstr ""
 
 #: ./doc/training-guides/module002-ch001-networking-in-openstack.xml:142(para)
-msgid "OpenStack Networking is a standalone service, just like other OpenStack services such as OpenStack Compute, OpenStack Image service, OpenStack Identity service, and the OpenStack Dashboard. Like those services, a deployment of OpenStack Networking often involves deploying several processes on a variety of hosts."
+msgid "OpenStack Networking is a standalone service, just like other OpenStack services such as OpenStack Compute, OpenStack Image Service, OpenStack Identity service, and the OpenStack Dashboard. Like those services, a deployment of OpenStack Networking often involves deploying several processes on a variety of hosts."
 msgstr ""
 
 #: ./doc/training-guides/module002-ch001-networking-in-openstack.xml:148(para)
@@ -2091,7 +2095,7 @@ msgid "Nova RPC Mappings"
 msgstr ""
 
 #: ./doc/training-guides/module001-ch008-queues-messaging.xml:65(para)
-msgid "The figure below shows the internals of a message broker node (referred to as a RabbitMQ node in the diagrams) when a single instance is deployed and shared in an OpenStack cloud. Every Nova component connects to the message broker and, depending on its personality, such as a compute node or a network node, may use the queue either as an Invoker (such as API or Scheduler) or a Worker (such as Compute or Network). Invokers and Workers do not actually exist in the Nova object model, but we are going to use them as an abstraction for sake of clarity. An Invoker is a component that sends messages in the queuing system via two operations: 1) rpc.call and ii) rpc.cast; a Worker is a component that receives messages from the queuing system and reply accordingly to rcp.call operations."
+msgid "The figure below shows the internals of a message broker node (referred to as a RabbitMQ node in the diagrams) when a single instance is deployed and shared in an OpenStack cloud. Every component within Nova connects to the message broker and, depending on its personality, such as a compute node or a network node, may use the queue either as an Invoker (such as API or Scheduler) or a Worker (such as Compute or Network). Invokers and Workers do not actually exist in the Nova object model, but in this example they are used as an abstraction for the sake of clarity. An Invoker is a component that sends messages in the queuing system using <placeholder-1/> and <placeholder-2/>. A worker is a component that receives messages from the queuing system and replies accordingly to rcp.call operations."
 msgstr ""
 
 #: ./doc/training-guides/module001-ch008-queues-messaging.xml:78(para)
@@ -2099,31 +2103,31 @@ msgid "Figure 2 shows the following internal elements:"
 msgstr ""
 
 #: ./doc/training-guides/module001-ch008-queues-messaging.xml:81(para)
-msgid "<emphasis role=\"bold\">Topic Publisher:</emphasis>a Topic Publisher comes to life when an rpc.call or an rpc.cast operation is executed; this object is instantiated and used to push a message to the queuing system. Every publisher connects always to the same topic-based exchange; its life-cycle is limited to the message delivery."
+msgid "<emphasis role=\"bold\">Topic Publisher:</emphasis> A Topic Publisher comes to life when an rpc.call or an rpc.cast operation is executed; this object is instantiated and used to push a message to the queuing system. Every publisher connects always to the same topic-based exchange; its life-cycle is limited to the message delivery."
 msgstr ""
 
 #: ./doc/training-guides/module001-ch008-queues-messaging.xml:89(para)
-msgid "<emphasis role=\"bold\">Direct Consumer:</emphasis>a Direct Consumer comes to life if (an only if) a rpc.call operation is executed; this object is instantiated and used to receive a response message from the queuing system; Every consumer connects to a unique direct-based exchange via a unique exclusive queue; its life-cycle is limited to the message delivery; the exchange and queue identifiers are determined by a UUID generator, and are marshaled in the message sent by the Topic Publisher (only rpc.call operations)."
+msgid "<emphasis role=\"bold\">Direct Consumer:</emphasis> A Direct Consumer comes to life if (an only if) a rpc.call operation is executed; this object is instantiated and used to receive a response message from the queuing system; Every consumer connects to a unique direct-based exchange via a unique exclusive queue; its life-cycle is limited to the message delivery; the exchange and queue identifiers are determined by a UUID generator, and are marshaled in the message sent by the Topic Publisher (only rpc.call operations)."
 msgstr ""
 
 #: ./doc/training-guides/module001-ch008-queues-messaging.xml:100(para)
-msgid "<emphasis role=\"bold\">Topic Consumer:</emphasis>a Topic Consumer comes to life as soon as a Worker is instantiated and exists throughout its life-cycle; this object is used to receive messages from the queue and it invokes the appropriate action as defined by the Worker role. A Topic Consumer connects to the same topic-based exchange either via a shared queue or via a unique exclusive queue. Every Worker has two topic consumers, one that is addressed only during rpc.cast operations (and it connects to a shared queue whose exchange key is ‘topic’) and the other that is addressed only during rpc.call operations (and it connects to a unique queue whose exchange key is ‘topic.host’)."
+msgid "<emphasis role=\"bold\">Topic Consumer:</emphasis> A Topic Consumer comes to life as soon as a Worker is instantiated and exists throughout its life-cycle; this object is used to receive messages from the queue and it invokes the appropriate action as defined by the Worker role. A Topic Consumer connects to the same topic-based exchange either via a shared queue or via a unique exclusive queue. Every Worker has two topic consumers, one that is addressed only during rpc.cast operations (and it connects to a shared queue whose exchange key is ‘topic’) and the other that is addressed only during rpc.call operations (and it connects to a unique queue whose exchange key is ‘topic.host’)."
 msgstr ""
 
 #: ./doc/training-guides/module001-ch008-queues-messaging.xml:114(para)
-msgid "<emphasis role=\"bold\">Direct Publisher:</emphasis>a Direct Publisher comes to life only during rpc.call operations and it is instantiated to return the message required by the request/response operation. The object connects to a direct-based exchange whose identity is dictated by the incoming message."
+msgid "<emphasis role=\"bold\">Direct Publisher:</emphasis> A Direct Publisher comes to life only during rpc.call operations and it is instantiated to return the message required by the request/response operation. The object connects to a direct-based exchange whose identity is dictated by the incoming message."
 msgstr ""
 
 #: ./doc/training-guides/module001-ch008-queues-messaging.xml:122(para)
-msgid "<emphasis role=\"bold\">Topic Exchange:</emphasis>The Exchange is a routing table that exists in the context of a virtual host (the multi-tenancy mechanism provided by Qpid or RabbitMQ); its type (such as topic vs. direct) determines the routing policy; a message broker node will have only one topic-based exchange for every topic in Nova."
+msgid "<emphasis role=\"bold\">Topic Exchange:</emphasis> The Exchange is a routing table that exists in the context of a virtual host (the multi-tenancy mechanism provided by Qpid or RabbitMQ); its type (such as topic vs. direct) determines the routing policy; a message broker node will have only one topic-based exchange for every topic in Nova."
 msgstr ""
 
 #: ./doc/training-guides/module001-ch008-queues-messaging.xml:130(para)
-msgid "<emphasis role=\"bold\">Direct Exchange:</emphasis>this is a routing table that is created during rpc.call operations; there are many instances of this kind of exchange throughout the life-cycle of a message broker node, one for each rpc.call invoked."
+msgid "<emphasis role=\"bold\">Direct Exchange:</emphasis> This is a routing table that is created during rpc.call operations; there are many instances of this kind of exchange throughout the life-cycle of a message broker node, one for each rpc.call invoked."
 msgstr ""
 
 #: ./doc/training-guides/module001-ch008-queues-messaging.xml:137(para)
-msgid "<emphasis role=\"bold\">Queue Element:</emphasis>A Queue is a message bucket. Messages are kept in the queue until a Consumer (either Topic or Direct Consumer) connects to the queue and fetch it. Queues can be shared or can be exclusive. Queues whose routing key is ‘topic’ are shared amongst Workers of the same personality."
+msgid "<emphasis role=\"bold\">Queue Element:</emphasis> A Queue is a message bucket. Messages are kept in the queue until a Consumer (either Topic or Direct Consumer) connects to the queue and fetch it. Queues can be shared or can be exclusive. Queues whose routing key is ‘topic’ are shared amongst Workers of the same personality."
 msgstr ""
 
 #: ./doc/training-guides/module001-ch008-queues-messaging.xml:146(title) ./doc/training-guides/module001-ch008-queues-messaging.xml:181(title) ./doc/training-guides/module001-ch008-queues-messaging.xml:204(title) ./doc/training-guides/bk001-ch004-associate-controller-node-quiz.xml:280(para) ./doc/training-guides/lab001-control-node.xml:128(emphasis)
@@ -2259,15 +2263,15 @@ msgid "The following parameters are default:"
 msgstr ""
 
 #: ./doc/training-guides/module001-ch008-queues-messaging.xml:305(para)
-msgid "<emphasis role=\"bold\">Insist:</emphasis> insist on connecting to a server. In a configuration with multiple load-sharing servers, the Insist option tells the server that the client is insisting on a connection to the specified server. Default is False."
+msgid "<emphasis role=\"bold\">Insist:</emphasis> Insist on connecting to a server. In a configuration with multiple load-sharing servers, the Insist option tells the server that the client is insisting on a connection to the specified server. Default is False."
 msgstr ""
 
 #: ./doc/training-guides/module001-ch008-queues-messaging.xml:312(para)
-msgid "<emphasis role=\"bold\">Connect_timeout:</emphasis> the timeout in seconds before the client gives up connecting to the server. The default is no timeout."
+msgid "<emphasis role=\"bold\">Connect_timeout:</emphasis> The timeout in seconds before the client gives up connecting to the server. The default is no timeout."
 msgstr ""
 
 #: ./doc/training-guides/module001-ch008-queues-messaging.xml:317(para)
-msgid "<emphasis role=\"bold\">SSL:</emphasis> use SSL to connect to the server. The default is False."
+msgid "<emphasis role=\"bold\">SSL:</emphasis> Use SSL to connect to the server. The default is False."
 msgstr ""
 
 #: ./doc/training-guides/module001-ch008-queues-messaging.xml:321(para)
@@ -2275,71 +2279,71 @@ msgid "More precisely consumers need the following parameters:"
 msgstr ""
 
 #: ./doc/training-guides/module001-ch008-queues-messaging.xml:324(para)
-msgid "<emphasis role=\"bold\">Connection:</emphasis> the above mentioned Connection object."
+msgid "<emphasis role=\"bold\">Connection:</emphasis> The above mentioned Connection object."
 msgstr ""
 
 #: ./doc/training-guides/module001-ch008-queues-messaging.xml:328(para)
-msgid "<emphasis role=\"bold\">Queue:</emphasis>name of the queue."
+msgid "<emphasis role=\"bold\">Queue:</emphasis> Name of the queue."
 msgstr ""
 
 #: ./doc/training-guides/module001-ch008-queues-messaging.xml:332(para)
-msgid "<emphasis role=\"bold\">Exchange:</emphasis>name of the exchange the queue binds to."
+msgid "<emphasis role=\"bold\">Exchange:</emphasis> Name of the exchange the queue binds to."
 msgstr ""
 
 #: ./doc/training-guides/module001-ch008-queues-messaging.xml:336(para)
-msgid "<emphasis role=\"bold\">Routing_key:</emphasis>the interpretation of the routing key depends on the value of the exchange_type attribute."
+msgid "<emphasis role=\"bold\">Routing_key:</emphasis> The interpretation of the routing key depends on the value of the exchange_type attribute."
 msgstr ""
 
 #: ./doc/training-guides/module001-ch008-queues-messaging.xml:343(para)
-msgid "<emphasis role=\"bold\">Direct exchange:</emphasis>if the routing key property of the message and the routing_key attribute of the queue are identical, then the message is forwarded to the queue."
+msgid "<emphasis role=\"bold\">Direct exchange:</emphasis> If the routing key property of the message and the routing_key attribute of the queue are identical, then the message is forwarded to the queue."
 msgstr ""
 
 #: ./doc/training-guides/module001-ch008-queues-messaging.xml:349(para)
-msgid "<emphasis role=\"bold\">Fanout exchange:</emphasis>messages are forwarded to the queues bound the exchange, even if the binding does not have a key."
+msgid "<emphasis role=\"bold\">Fanout exchange:</emphasis> Messages are forwarded to the queues bound the exchange, even if the binding does not have a key."
 msgstr ""
 
 #: ./doc/training-guides/module001-ch008-queues-messaging.xml:354(para)
-msgid "<emphasis role=\"bold\">Topic exchange:</emphasis>if the routing key property of the message matches the routing key of the key according to a primitive pattern matching scheme, then the message is forwarded to the queue. The message routing key then consists of words separated by dots (”.”, like domain names), and two special characters are available; star (“”) and hash (“#”). The star matches any word, and the hash matches zero or more words. For example ”.stock.#” matches the routing keys “usd.stock” and “eur.stock.db” but not “stock.nasdaq”."
+msgid "<emphasis role=\"bold\">Topic exchange:</emphasis> If the routing key property of the message matches the routing key of the key according to a primitive pattern matching scheme, then the message is forwarded to the queue. The message routing key then consists of words separated by dots (”.”, like domain names), and two special characters are available; star (“”) and hash (“#”). The star matches any word, and the hash matches zero or more words. For example ”.stock.#” matches the routing keys “usd.stock” and “eur.stock.db” but not “stock.nasdaq”."
 msgstr ""
 
 #: ./doc/training-guides/module001-ch008-queues-messaging.xml:368(para)
-msgid "<emphasis role=\"bold\">Durable:</emphasis>this flag determines the durability of both exchanges and queues; durable exchanges and queues remain active when a RabbitMQ server restarts. Non-durable exchanges/queues (transient exchanges/queues) are purged when a server restarts. It is worth noting that AMQP specifies that durable queues cannot bind to transient exchanges. Default is True."
+msgid "<emphasis role=\"bold\">Durable:</emphasis> This flag determines the durability of both exchanges and queues; durable exchanges and queues remain active when a RabbitMQ server restarts. Non-durable exchanges/queues (transient exchanges/queues) are purged when a server restarts. It is worth noting that AMQP specifies that durable queues cannot bind to transient exchanges. Default is True."
 msgstr ""
 
 #: ./doc/training-guides/module001-ch008-queues-messaging.xml:377(para)
-msgid "<emphasis role=\"bold\">Auto_delete:</emphasis>if set, the exchange is deleted when all queues have finished using it. Default is False."
+msgid "<emphasis role=\"bold\">Auto_delete:</emphasis> If set, the exchange is deleted when all queues have finished using it. Default is False."
 msgstr ""
 
 #: ./doc/training-guides/module001-ch008-queues-messaging.xml:382(para)
-msgid "<emphasis role=\"bold\">Exclusive:</emphasis>exclusive queues (such as non-shared) may only be consumed from by the current connection. When exclusive is on, this also implies auto_delete. Default is False."
+msgid "<emphasis role=\"bold\">Exclusive:</emphasis> Exclusive queues (such as non-shared) may only be consumed from by the current connection. When exclusive is on, this also implies auto_delete. Default is False."
 msgstr ""
 
 #: ./doc/training-guides/module001-ch008-queues-messaging.xml:388(para)
-msgid "<emphasis role=\"bold\">Exchange_type:</emphasis>AMQP defines several default exchange types (routing algorithms) that covers most of the common messaging use cases."
+msgid "<emphasis role=\"bold\">Exchange_type:</emphasis> AMQP defines several default exchange types (routing algorithms) that covers most of the common messaging use cases."
 msgstr ""
 
 #: ./doc/training-guides/module001-ch008-queues-messaging.xml:393(para)
-msgid "<emphasis role=\"bold\">Auto_ack:</emphasis>acknowledgement is handled automatically once messages are received. By default auto_ack is set to False, and the receiver is required to manually handle acknowledgment."
+msgid "<emphasis role=\"bold\">Auto_ack:</emphasis> Acknowledgement is handled automatically once messages are received. By default auto_ack is set to False, and the receiver is required to manually handle acknowledgment."
 msgstr ""
 
 #: ./doc/training-guides/module001-ch008-queues-messaging.xml:399(para)
-msgid "<emphasis role=\"bold\">No_ack:</emphasis>it disable acknowledgement on the server-side. This is different from auto_ack in that acknowledgement is turned off altogether. This functionality increases performance but at the cost of reliability. Messages can get lost if a client dies before it can deliver them to the application."
+msgid "<emphasis role=\"bold\">No_ack:</emphasis> It disables acknowledgement on the server-side. This is different from auto_ack in that acknowledgement is turned off altogether. This functionality increases performance but at the cost of reliability. Messages can get lost if a client dies before it can deliver them to the application."
 msgstr ""
 
 #: ./doc/training-guides/module001-ch008-queues-messaging.xml:407(para)
-msgid "<emphasis role=\"bold\">Auto_declare:</emphasis>if this is True and the exchange name is set, the exchange will be automatically declared at instantiation. Auto declare is on by default. Publishers specify most the parameters of consumers (they do not specify a queue name), but they can also specify the following:"
+msgid "<emphasis role=\"bold\">Auto_declare:</emphasis> If this is True and the exchange name is set, the exchange will be automatically declared at instantiation. Auto declare is on by default. Publishers specify most the parameters of consumers (they do not specify a queue name), but they can also specify the following:"
 msgstr ""
 
 #: ./doc/training-guides/module001-ch008-queues-messaging.xml:415(para)
-msgid "<emphasis role=\"bold\">Delivery_mode:</emphasis>the default delivery mode used for messages. The value is an integer. The following delivery modes are supported by RabbitMQ:"
+msgid "<emphasis role=\"bold\">Delivery_mode:</emphasis> The default delivery mode used for messages. The value is an integer. The following delivery modes are supported by RabbitMQ:"
 msgstr ""
 
 #: ./doc/training-guides/module001-ch008-queues-messaging.xml:422(para)
-msgid "<emphasis role=\"bold\">1 or “transient”:</emphasis>the message is transient. Which means it is stored in memory only, and is lost if the server dies or restarts."
+msgid "<emphasis role=\"bold\">1 or “transient”:</emphasis> The message is transient. Which means it is stored in memory only, and is lost if the server dies or restarts."
 msgstr ""
 
 #: ./doc/training-guides/module001-ch008-queues-messaging.xml:427(para)
-msgid "<emphasis role=\"bold\">2 or “persistent”:</emphasis>the message is persistent. Which means the message is stored both in-memory, and on disk, and therefore preserved if the server dies or restarts."
+msgid "<emphasis role=\"bold\">2 or “persistent”:</emphasis> The message is persistent. Which means the message is stored both in-memory, and on disk, and therefore preserved if the server dies or restarts."
 msgstr ""
 
 #: ./doc/training-guides/module001-ch008-queues-messaging.xml:433(para)
@@ -2383,38 +2387,38 @@ msgid "Host-Only/ Bridged -- 192.168.100.51 (Guest) -- 192.168.100.xx (Host IP f
 msgstr ""
 
 #: ./doc/training-guides/training-cluster-by-script.xml:31(para)
-msgid "Bridged/NAT -- DHCP -- These Scripts should be run without internet connection after Pre-Install.sh. If your networking configuration is not exact a few command will not work. you need to change the Templates/* to the required IP Addresses for custom networks."
+msgid "Bridged/NAT -- DHCP -- These Scripts should be run without internet connection after Pre-Install.sh. The Templates/* should be changed to the required IP Addresses for custom networks."
 msgstr ""
 
-#: ./doc/training-guides/training-cluster-by-script.xml:40(title)
+#: ./doc/training-guides/training-cluster-by-script.xml:39(title)
 msgid "Test scripts individually"
 msgstr ""
 
-#: ./doc/training-guides/training-cluster-by-script.xml:41(para)
-msgid "Run the shell scripts in the <filename>Scripts</filename> folder to verify that they run correctly. You do not need to install Virtual Box, although it is recommended because your host machine might fail."
+#: ./doc/training-guides/training-cluster-by-script.xml:40(para)
+msgid "Run the shell scripts in the <filename>Scripts</filename> folder to verify they run correctly. Do not install Virtual Box, although it is recommended because your host machine might fail."
 msgstr ""
 
-#: ./doc/training-guides/training-cluster-by-script.xml:45(para)
-msgid "To test scripts, simply run them. Some scripts require input parameters. If you do not want to run them manually, run the <filename>Scripts/test_scripts.sh</filename> file. Virtual Box guest add-ons are not required to test the scripts as units."
+#: ./doc/training-guides/training-cluster-by-script.xml:43(para)
+msgid "To test the scripts, run them. Some scripts require input parameters. If you do not want to run them manually, run the <filename>Scripts/test_scripts.sh</filename> file. Virtual Box guest add-ons are not required to test the scripts as units."
 msgstr ""
 
-#: ./doc/training-guides/training-cluster-by-script.xml:52(title)
+#: ./doc/training-guides/training-cluster-by-script.xml:50(title)
 msgid "Test the entire system"
 msgstr ""
 
-#: ./doc/training-guides/training-cluster-by-script.xml:53(para)
+#: ./doc/training-guides/training-cluster-by-script.xml:51(para)
 msgid "You must install Virtual Box, Ubuntu Server 12.04 or 13.04, and the Virtual Box guest add-ons."
 msgstr ""
 
-#: ./doc/training-guides/training-cluster-by-script.xml:55(para)
+#: ./doc/training-guides/training-cluster-by-script.xml:53(para)
 msgid "To install Virtual Box guest add-ons, complete one of these steps:"
 msgstr ""
 
-#: ./doc/training-guides/training-cluster-by-script.xml:59(para)
+#: ./doc/training-guides/training-cluster-by-script.xml:57(para)
 msgid "Install the Virtual Box guest add-ons through ISO:"
 msgstr ""
 
-#: ./doc/training-guides/training-cluster-by-script.xml:67(para)
+#: ./doc/training-guides/training-cluster-by-script.xml:65(para)
 msgid "Install the Virtual Box guest add-ons through Ubuntu repositories:"
 msgstr ""
 
@@ -4119,7 +4123,7 @@ msgid "cinder(python-cinderclient)"
 msgstr ""
 
 #: ./doc/training-guides/module001-ch006-overview-horizon-cli.xml:885(para)
-msgid "Client for the Block Storage Service API. Use to create and manage volumes."
+msgid "Client for the Block Storage service API. Use to create and manage volumes."
 msgstr ""
 
 #: ./doc/training-guides/module001-ch006-overview-horizon-cli.xml:887(para)
@@ -4223,7 +4227,7 @@ msgid "swift. Object Storage API."
 msgstr ""
 
 #: ./doc/training-guides/module001-ch006-overview-horizon-cli.xml:952(para)
-msgid "cinder. Block Storage Service API."
+msgid "cinder. Block Storage service API."
 msgstr ""
 
 #: ./doc/training-guides/module001-ch006-overview-horizon-cli.xml:955(para)
@@ -7029,7 +7033,7 @@ msgid "A, C, D, E - You can track costs per month by showing metrics like number
 msgstr ""
 
 #: ./doc/training-guides/bk001-ch004-associate-controller-node-quiz.xml:330(para)
-msgid "A, D, E - The following command-line clients are available for the respective services' APIs: cinder(python-cinderclient) Client for the Block Storage Service API. Use to create and manage volumes. glance(python-glanceclient) Client for the Image Service API. Use to create and manage images. keystone(python-keystoneclient) Client for the Identity Service API. Use to create and manage users, tenants, roles, endpoints, and credentials. nova(python-novaclient) Client for the Compute API and its extensions. Use to create and manage images, instances, and flavors. neutron(python-neutronclient) Client for the Networking API. Use to configure networks for guest servers. This client was previously known as neutron. swift(python-swiftclient) Client for the Object Storage API. Use to gather statistics, list items, update metadata, upload, download and delete files stored by the object storage service. Provides access to a swift installation for ad hoc processing. heat(python-heatclient)"
+msgid "A, D, E - The following command-line clients are available for the respective services' APIs: cinder(python-cinderclient) Client for the Block Storage service API. Use to create and manage volumes. glance(python-glanceclient) Client for the Image Service API. Use to create and manage images. keystone(python-keystoneclient) Client for the Identity Service API. Use to create and manage users, tenants, roles, endpoints, and credentials. nova(python-novaclient) Client for the Compute API and its extensions. Use to create and manage images, instances, and flavors. neutron(python-neutronclient) Client for the Networking API. Use to configure networks for guest servers. This client was previously known as neutron. swift(python-swiftclient) Client for the Object Storage API. Use to gather statistics, list items, update metadata, upload, download and delete files stored by the object storage service. Provides access to a swift installation for ad hoc processing. heat(python-heatclient)"
 msgstr ""
 
 #: ./doc/training-guides/bk001-ch004-associate-controller-node-quiz.xml:346(para) ./doc/training-guides/bk001-ch004-associate-controller-node-quiz.xml:349(para) ./doc/training-guides/bk001-ch004-associate-controller-node-quiz.xml:367(para)
@@ -7106,6 +7110,10 @@ msgstr ""
 
 #: ./doc/training-guides/bk002-ch013-operator-object-storage-node.xml:52(title)
 msgid "More Swift Concepts"
+msgstr ""
+
+#: ./doc/training-guides/bk002-ch013-operator-object-storage-node.xml:59(title)
+msgid "Swift Cluster Architecture"
 msgstr ""
 
 #: ./doc/training-guides/bk002-ch013-operator-object-storage-node.xml:66(title)
@@ -7209,7 +7217,7 @@ msgid "OpenStack Networking is now called Quantum. (True or False)"
 msgstr ""
 
 #: ./doc/training-guides/bk001-ch002-associate-getting-started-quiz.xml:132(title)
-msgid "The Image service (Glance) in OpenStack provides: (Choose all that apply)"
+msgid "The Image Service (Glance) in OpenStack provides: (Choose all that apply)"
 msgstr ""
 
 #: ./doc/training-guides/bk001-ch002-associate-getting-started-quiz.xml:136(para)
@@ -7434,11 +7442,11 @@ msgid "A user can be assigned different roles in different tenants. For example,
 msgstr ""
 
 #: ./doc/training-guides/module001-ch007-keystone-arch.xml:179(para)
-msgid "The <filename>/etc/[SERVICE_CODENAME]/policy.json</filename> file controls what users are allowed to do for a given service. For example, <filename>/etc/nova/policy.json</filename> specifies the access policy for the Compute service, <filename>/etc/glance/policy.json</filename> specifies the access policy for the Image service, and <filename>/etc/keystone/policy.json</filename> specifies the access policy for the Identity service."
+msgid "The <filename>/etc/[SERVICE_CODENAME]/policy.json</filename> file controls what users are allowed to do for a given service. For example, <filename>/etc/nova/policy.json</filename> specifies the access policy for the Compute service, <filename>/etc/glance/policy.json</filename> specifies the access policy for the Image Service, and <filename>/etc/keystone/policy.json</filename> specifies the access policy for the Identity service."
 msgstr ""
 
 #: ./doc/training-guides/module001-ch007-keystone-arch.xml:189(para)
-msgid "The default policy.json files in the Compute, Identity, and Image service recognize only the admin role: all operations that do not require the admin role will be accessible by any user that has any role in a tenant."
+msgid "The default policy.json files in the Compute, Identity, and Image Service recognize only the admin role: all operations that do not require the admin role will be accessible by any user that has any role in a tenant."
 msgstr ""
 
 #: ./doc/training-guides/module001-ch007-keystone-arch.xml:194(para)
@@ -8151,7 +8159,7 @@ msgid "Install Cinder components:"
 msgstr ""
 
 #: ./doc/training-guides/lab001-control-node.xml:603(para)
-msgid "Configure the iscsi services:"
+msgid "Configure the iSCSI services:"
 msgstr ""
 
 #: ./doc/training-guides/lab001-control-node.xml:609(para)
@@ -9622,7 +9630,7 @@ msgstr ""
 msgid "Development.Environment"
 msgstr ""
 
-#: ./doc/training-guides/sources/cinder/development.environment.xml:9(title) ./doc/training-guides/sources/cinder/addmethod.openstackapi.xml:9(title) ./doc/training-guides/sources/cinder/unit_tests.xml:9(title) ./doc/training-guides/sources/cinder/architecture.xml:9(title) ./doc/training-guides/sources/cinder/threading.xml:9(title)
+#: ./doc/training-guides/sources/cinder/development.environment.xml:9(title) ./doc/training-guides/sources/cinder/unit_tests.xml:9(title) ./doc/training-guides/sources/cinder/architecture.xml:9(title) ./doc/training-guides/sources/cinder/threading.xml:9(title)
 msgid "Header"
 msgstr ""
 
@@ -9692,46 +9700,6 @@ msgstr ""
 
 #: ./doc/training-guides/sources/cinder/development.environment.xml:135(para)
 msgid "---------------------- Once your work is complete you may wish to contribute it to the project. Add your name and email address to the ``Authors`` file, and also to the ``.mailmap`` file if you use multiple email addresses. Your contributions can not be merged into trunk unless you are listed in the Authors file. Cinder uses the Gerrit code review system. For information on how to submit your branch to Gerrit, see GerritWorkflow_."
-msgstr ""
-
-#: ./doc/training-guides/sources/cinder/addmethod.openstackapi.xml:7(title)
-msgid "Addmethod.Openstackapi"
-msgstr ""
-
-#: ./doc/training-guides/sources/cinder/addmethod.openstackapi.xml:10(para)
-msgid ".. Copyright 2010-2011 OpenStack Foundation All Rights Reserved. Licensed under the Apache License, Version 2.0 (the \"License\"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License."
-msgstr ""
-
-#: ./doc/training-guides/sources/cinder/addmethod.openstackapi.xml:26(title)
-msgid "Adding-A-Method-To-The-Openstack-Api"
-msgstr ""
-
-#: ./doc/training-guides/sources/cinder/addmethod.openstackapi.xml:27(para)
-msgid "==================================== The interface is a mostly RESTful API. REST stands for Representational State Transfer and provides an architecture \"style\" for distributed systems using HTTP for transport. Figure out a way to express your request and response in terms of resources that are being created, modified, read, or destroyed."
-msgstr ""
-
-#: ./doc/training-guides/sources/cinder/addmethod.openstackapi.xml:33(title)
-msgid "Routing"
-msgstr ""
-
-#: ./doc/training-guides/sources/cinder/addmethod.openstackapi.xml:34(para)
-msgid "------- To map URLs to controllers+actions, OpenStack uses the Routes package, a clone of Rails routes for Python implementations. See http://routes.groovie.org/ for more information. URLs are mapped to \"action\" methods on \"controller\" classes in ``cinder/api/openstack/__init__/ApiRouter.__init__`` . See http://routes.groovie.org/manual.html for all syntax, but you'll probably just need these two: - mapper.connect() lets you map a single URL to a single action on a controller. - mapper.resource() connects many standard URLs to actions on a controller."
-msgstr ""
-
-#: ./doc/training-guides/sources/cinder/addmethod.openstackapi.xml:44(title)
-msgid "Controllers-And-Actions"
-msgstr ""
-
-#: ./doc/training-guides/sources/cinder/addmethod.openstackapi.xml:45(para)
-msgid "----------------------- Controllers live in ``cinder/api/openstack``, and inherit from cinder.wsgi.Controller. See ``cinder/api/openstack/servers.py`` for an example. Action methods take parameters that are sucked out of the URL by mapper.connect() or .resource(). The first two parameters are self and the WebOb request, from which you can get the req.environ, req.body, req.headers, etc."
-msgstr ""
-
-#: ./doc/training-guides/sources/cinder/addmethod.openstackapi.xml:53(title)
-msgid "Serialization"
-msgstr ""
-
-#: ./doc/training-guides/sources/cinder/addmethod.openstackapi.xml:54(para)
-msgid "------------- Actions return a dictionary, and wsgi.Controller serializes that to JSON or XML based on the request's content-type. If you define a new controller, you'll need to define a ``_serialization_metadata`` attribute on the class, to tell wsgi.Controller how to convert your dictionary to XML. It needs to know the singular form of any list tag such as ``[servers]`` list contains ``[server]`` tags, and which dictionary keys are to be XML attributes as opposed to subtags such as ``[server id=\"4\"/]`` instead of ``[server][id]4[/id][/server]``. See `cinder/api/openstack/servers.py` for an example. Faults ------ If you need to return a non-200, you should return faults.Fault(webob.exc.HTTPNotFound())"
 msgstr ""
 
 #: ./doc/training-guides/sources/cinder/drivers.xml:6(title)
@@ -9918,7 +9886,7 @@ msgid "Block Storage System Architecture"
 msgstr ""
 
 #: ./doc/training-guides/sources/cinder/architecture.xml:27(para)
-msgid "The OpenStack Block Storage Service is intended to run on one or more nodes. Block Storage uses a SQL-based central database that is shared by all Block Storage services in the system. The amount and depth of the data fits into a SQL database quite well. For small deployments this seems like an optimal solution. For larger deployments, and especially if security is a concern, Block Storage will be moving towards multiple data stores with some kind of aggregation system."
+msgid "The OpenStack Block Storage service is intended to run on one or more nodes. Block Storage uses a SQL-based central database that is shared by all Block Storage services in the system. The amount and depth of the data fits into a SQL database quite well. For small deployments this seems like an optimal solution. For larger deployments, and especially if security is a concern, Block Storage will be moving towards multiple data stores with some kind of aggregation system."
 msgstr ""
 
 #: ./doc/training-guides/sources/cinder/architecture.xml:33(title)

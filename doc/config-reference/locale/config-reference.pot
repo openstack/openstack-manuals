@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-03-25 06:27+0000\n"
+"POT-Creation-Date: 2014-03-30 06:25+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -350,15 +350,15 @@ msgid "Block Storage"
 msgstr ""
 
 #: ./doc/config-reference/ch_blockstorageconfigure.xml:11(para)
-msgid "The OpenStack Block Storage Service works with many different storage drivers that you can configure by using these instructions."
+msgid "The OpenStack Block Storage service works with many different storage drivers that you can configure by using these instructions."
 msgstr ""
 
-#: ./doc/config-reference/ch_blockstorageconfigure.xml:15(title) ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:199(title)
+#: ./doc/config-reference/ch_blockstorageconfigure.xml:15(title) ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:212(title) ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:161(title)
 msgid "<filename>cinder.conf</filename> configuration file"
 msgstr ""
 
 #: ./doc/config-reference/ch_blockstorageconfigure.xml:16(para)
-msgid "The <filename>cinder.conf</filename> file is installed in <filename>/etc/cinder</filename> by default. When you manually install the Block Storage Service, the options in the <filename>cinder.conf</filename> file are set to default values."
+msgid "The <filename>cinder.conf</filename> file is installed in <filename>/etc/cinder</filename> by default. When you manually install the Block Storage service, the options in the <filename>cinder.conf</filename> file are set to default values."
 msgstr ""
 
 #: ./doc/config-reference/ch_blockstorageconfigure.xml:20(para)
@@ -1977,7 +1977,7 @@ msgid "Verify that you are synchronized with a network time source. Instructions
 msgstr ""
 
 #: ./doc/config-reference/compute/section_nova-log-files.xml:6(title)
-msgid "Log files used by Compute"
+msgid "Compute log files"
 msgstr ""
 
 #: ./doc/config-reference/compute/section_nova-log-files.xml:7(para)
@@ -2270,7 +2270,7 @@ msgstr ""
 msgid "A <systemitem class=\"service\">nova-compute</systemitem> service can control one or more clusters containing multiple ESX hosts, making <systemitem class=\"service\">nova-compute</systemitem> a critical service from a high availability perspective. Because the host that runs <systemitem class=\"service\">nova-compute</systemitem> can fail while the vCenter and ESX still run, you must protect the <systemitem class=\"service\">nova-compute</systemitem> service against host failures."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:265(para) ./doc/config-reference/compute/section_hypervisor_vmware.xml:679(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:265(para) ./doc/config-reference/compute/section_hypervisor_vmware.xml:694(para)
 msgid "Many <filename>nova.conf</filename> options are relevant to libvirt but do not apply to this driver."
 msgstr ""
 
@@ -2446,135 +2446,147 @@ msgstr ""
 msgid "Even with a cached VMDK, there is still a copy operation from the cache location to the hypervisor file directory in the shared data store. To avoid this copy, boot the image in linked_clone mode. To learn how to enable this mode, see <xref linkend=\"VMWare_config\"/>. Note also that it is possible to override the linked_clone mode on a per-image basis by using the <code>vmware_linked_clone</code> property in the OpenStack Image Service."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:502(title)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:499(para)
+msgid "You can configure the <filename>nova.conf</filename> file to automatically purge unused images after a specified period of time. The relevant settings in the <literal>DEFAULT</literal> section are:"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:504(para)
+msgid "<parameter>remove_unused_base_images</parameter> - Set this parameter to <placeholder-1/> to specify that unused images should be removed after the duration specified in the <parameter>remove_unused_original_minimum_age_seconds</parameter> parameter. The default is <placeholder-2/>."
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:509(para)
+msgid "<parameter>remove_unused_original_minimum_age_seconds</parameter> - Specifies the duration in seconds after which an unused image is purged from the cache. The default is <placeholder-1/> (24 hours)."
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:517(title)
 msgid "Networking with VMware vSphere"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:503(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:518(para)
 msgid "The VMware driver supports networking with the <systemitem class=\"service\">nova-network</systemitem> service or the OpenStack Networking Service. Depending on your installation, complete these configuration steps before you provision VMs:"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:510(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:525(para)
 msgid "<emphasis role=\"bold\"> The <systemitem class=\"service\">nova-network</systemitem> service with the FlatManager or FlatDHCPManager</emphasis>. Create a port group with the same name as the <literal>flat_network_bridge</literal> value in the <filename>nova.conf</filename> file. The default value is <literal>br100</literal>. If you specify another value, the new value must be a valid linux bridge identifier that adheres to linux bridge naming conventions."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:519(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:534(para)
 msgid "All VM NICs are attached to this port group."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:520(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:535(para)
 msgid "Ensure that the flat interface of the node that runs the <systemitem class=\"service\">nova-network</systemitem> service has a path to this network."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:525(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:540(para)
 msgid "<emphasis role=\"bold\">The <systemitem class=\"service\">nova-network</systemitem> service with the VlanManager</emphasis>. Set the <literal>vlan_interface</literal> configuration option to match the ESX host interface that handles VLAN-tagged VM traffic."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:531(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:546(para)
 msgid "OpenStack Compute automatically creates the corresponding port groups."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:535(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:550(para)
 msgid "If you are using the OpenStack Networking Service: Before provisioning VMs, create a port group with the same name as the <literal>vmware.integration_bridge</literal> value in <filename>nova.conf</filename> (default is <literal>br-int</literal>). All VM NICs are attached to this port group for management by the OpenStack Networking plug-in."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:546(title)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:561(title)
 msgid "Volumes with VMware vSphere"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:547(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:562(para)
 msgid "The VMware driver supports attaching volumes from the OpenStack Block Storage service. The VMware VMDK driver for OpenStack Block Storage is recommended and should be used for managing volumes based on vSphere data stores. More information about the VMware VMDK driver can be found at: <link href=\"http://docs.openstack.org/trunk/config-reference/content/vmware-vmdk-driver.html\">VMware VMDK Driver</link>. Also an iscsi volume driver provides limited support and can be used only for attachments."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:558(title)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:573(title)
 msgid "vSphere 5.0 and earlier additional set up"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:559(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:574(para)
 msgid "Users of vSphere 5.0 or earlier must host their WSDL files locally. These steps are applicable for vCenter 5.0 or ESXi 5.0 and you can either mirror the WSDL from the vCenter or ESXi server that you intend to use or you can download the SDK directly from VMware. These workaround steps fix a <link href=\"http://kb.vmware.com/selfservice/microsites/search.do?cmd=displayKC&amp;externalId=2010507\">known issue</link> with the WSDL that was resolved in later versions."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:567(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:582(para)
 msgid "When setting the VMwareVCDriver configuration options, you must include the <code>wsdl_location</code> option. For more information, see <link linkend=\"VMWareVCDriver_configuration_options\">VMwareVCDriver configuration options</link> above."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:573(title)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:588(title)
 msgid "Mirror WSDL from vCenter (or ESXi)"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:575(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:590(para)
 msgid "Set the <code>VMWAREAPI_IP</code> shell variable to the IP address for your vCenter or ESXi host from where you plan to mirror files. For example:"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:581(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:596(para)
 msgid "Create a local file system directory to hold the WSDL files:"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:586(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:601(para)
 msgid "Change into the new directory. <placeholder-1/>"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:590(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:605(para)
 msgid "Use your OS-specific tools to install a command-line tool that can download files like <placeholder-1/>."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:595(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:610(para)
 msgid "Download the files to the local file cache:"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:605(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:620(para)
 msgid "Because the <filename>reflect-types.xsd</filename> and <filename>reflect-messagetypes.xsd</filename> files do not fetch properly, you must stub out these files. Use the following XML listing to replace the missing file content. The XML parser underneath Python can be very particular and if you put a space in the wrong place, it can break the parser. Copy the following contents and formatting carefully."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:622(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:637(para)
 msgid "Now that the files are locally present, tell the driver to look for the SOAP service WSDLs in the local file system and not on the remote vSphere server. Add the following setting to the <filename>nova.conf</filename> file for your <systemitem class=\"service\">nova-compute</systemitem> node:"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:632(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:647(para)
 msgid "Alternatively, download the version appropriate SDK from <link href=\"http://www.vmware.com/support/developer/vc-sdk/\">http://www.vmware.com/support/developer/vc-sdk/</link> and copy it to the <filename>/opt/stack/vmware</filename> file. Make sure that the WSDL is available, in for example <filename>/opt/stack/vmware/SDK/wsdl/vim25/vimService.wsdl</filename>. You must point <filename>nova.conf</filename> to fetch this WSDL file from the local file system by using a URL."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:641(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:656(para)
 msgid "When using the VMwareVCDriver (vCenter) with OpenStack Compute with vSphere version 5.0 or earlier, <filename>nova.conf</filename> must include the following extra config option:"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:649(title)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:664(title)
 msgid "VMware ESX driver"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:650(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:665(para)
 msgid "This section covers details of using the VMwareESXDriver. The ESX Driver has not been extensively tested and is not recommended. To configure the VMware vCenter driver instead, see <xref linkend=\"VMWareVCDriver_details\"/>."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:655(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:670(para)
 msgid "The VMWare ESX driver has been deprecated in the Icehouse release and will be removed with the Juno release."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:661(title)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:676(title)
 msgid "VMwareESXDriver configuration options"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:662(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:677(para)
 msgid "When you use the VMwareESXDriver (no vCenter) with OpenStack Compute, add the following VMware-specific configuration options to the <filename>nova.conf</filename> file:"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:674(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:689(para)
 msgid "Remember that you will have one <systemitem class=\"service\">nova-compute</systemitem> service for each ESXi host. It is recommended that this host run as a VM on the same ESXi host that it manages."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:684(title)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:699(title)
 msgid "Requirements and limitations"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:685(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:700(para)
 msgid "The ESXDriver cannot use many of the vSphere platform advanced capabilities, namely vMotion, high availability, and DRS."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:691(title) ./doc/config-reference/compute/section_compute-scheduler.xml:520(title)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:706(title) ./doc/config-reference/compute/section_compute-scheduler.xml:520(title)
 msgid "Configuration reference"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:692(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:707(para)
 msgid "To customize the VMware driver, use the configuration option settings documented in <xref linkend=\"config_table_nova_vmware\"/>."
 msgstr ""
 
@@ -3477,14 +3489,18 @@ msgid "Modular Layer 2 (ml2) Cisco Mechanism configuration options"
 msgstr ""
 
 #: ./doc/config-reference/networking/section_networking-plugins-ml2.xml:79(title)
-msgid "Modular Layer 2 (ml2) OpenDaylight Mechanism configuration options"
+msgid "Modular Layer 2 (ml2) Mellanox Mechanism configuration options"
 msgstr ""
 
 #: ./doc/config-reference/networking/section_networking-plugins-ml2.xml:84(title)
-msgid "Modular Layer 2 (ml2) L2 Population Mechanism configuration options"
+msgid "Modular Layer 2 (ml2) OpenDaylight Mechanism configuration options"
 msgstr ""
 
 #: ./doc/config-reference/networking/section_networking-plugins-ml2.xml:89(title)
+msgid "Modular Layer 2 (ml2) L2 Population Mechanism configuration options"
+msgstr ""
+
+#: ./doc/config-reference/networking/section_networking-plugins-ml2.xml:94(title)
 msgid "Modular Layer 2 (ml2) Tail-f NCS Mechanism configuration options"
 msgstr ""
 
@@ -3780,7 +3796,7 @@ msgstr ""
 msgid "Define a fabric group for each fabric using the fabric names used in <option>fc_fabric_names</option> configuration option as group name."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/section_fc-zoning.xml:57(title) ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:23(title) ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:16(title) ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:17(title) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:44(title)
+#: ./doc/config-reference/block-storage/section_fc-zoning.xml:57(title) ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:17(title) ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:23(title) ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:16(title) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:44(title) ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:16(title)
 msgid "System requirements"
 msgstr ""
 
@@ -3940,7 +3956,7 @@ msgstr ""
 msgid "The running vSphere VM is then automatically reconfigured to attach the VMDK file as an extra disk. Once attached, you can log in to the running vSphere VM to rescan and discover this extra disk."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/vmware-vmdk-driver.xml:28(title) ./doc/config-reference/block-storage/drivers/xen-sm-driver.xml:134(title) ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:72(title)
+#: ./doc/config-reference/block-storage/drivers/vmware-vmdk-driver.xml:28(title) ./doc/config-reference/block-storage/drivers/xen-sm-driver.xml:134(title) ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:68(title)
 msgid "Configuration"
 msgstr ""
 
@@ -4040,7 +4056,7 @@ msgstr ""
 msgid "Note: The VMware ESX VMDK driver ignores the extra spec entry and always creates a <literal>full</literal> clone."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/vmware-vmdk-driver.xml:140(title) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:11(title) ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:34(title) ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:42(title) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:68(title) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:327(title)
+#: ./doc/config-reference/block-storage/drivers/vmware-vmdk-driver.xml:140(title) ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:26(title) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:11(title) ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:34(title) ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:42(title) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:68(title) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:327(title) ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:33(title)
 msgid "Supported operations"
 msgstr ""
 
@@ -4048,7 +4064,7 @@ msgstr ""
 msgid "The following operations are supported by the VMware vCenter and ESX VMDK drivers:"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/vmware-vmdk-driver.xml:145(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:15(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:46(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:72(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:91(para) ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:38(para) ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:30(para)
+#: ./doc/config-reference/block-storage/drivers/vmware-vmdk-driver.xml:145(para) ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:30(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:15(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:46(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:72(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:91(para) ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:38(para) ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:36(para)
 msgid "Create volume"
 msgstr ""
 
@@ -4056,7 +4072,7 @@ msgstr ""
 msgid "Create volume from another source volume. (Supported only if source volume is not attached to an instance.)"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/vmware-vmdk-driver.xml:153(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:33(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:109(para) ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:68(para) ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:60(para)
+#: ./doc/config-reference/block-storage/drivers/vmware-vmdk-driver.xml:153(para) ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:60(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:33(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:109(para) ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:68(para) ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:54(para)
 msgid "Create volume from snapshot"
 msgstr ""
 
@@ -4068,7 +4084,7 @@ msgstr ""
 msgid "Attach volume (When a volume is attached to an instance, a reconfigure operation is performed on the instance to add the volume's VMDK to it. The user must manually rescan and mount the device from within the guest operating system.)"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/vmware-vmdk-driver.xml:166(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:24(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:55(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:81(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:100(para) ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:47(para) ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:39(para)
+#: ./doc/config-reference/block-storage/drivers/vmware-vmdk-driver.xml:166(para) ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:39(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:24(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:55(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:81(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:100(para) ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:47(para) ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:45(para)
 msgid "Detach volume"
 msgstr ""
 
@@ -4227,7 +4243,7 @@ msgid "Create a volume from a snapshot, copy an image to a volume, copy a volume
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:26(para)
-msgid "This document describes how to configure the OpenStack Block Storage Service for use with Coraid storage appliances."
+msgid "This document describes how to configure the OpenStack Block Storage service for use with Coraid storage appliances."
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:29(title)
@@ -4315,11 +4331,11 @@ msgid "Requirements"
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:73(para)
-msgid "To support the OpenStack Block Storage Service, your SAN must include an SRX for physical storage, a VSX running at least CorOS v2.0.6 for snapshot support, and an ESM running at least v2.1.1 for storage repository orchestration. Ensure that all storage appliances are installed and connected to your network before you configure OpenStack volumes."
+msgid "To support the OpenStack Block Storage service, your SAN must include an SRX for physical storage, a VSX running at least CorOS v2.0.6 for snapshot support, and an ESM running at least v2.1.1 for storage repository orchestration. Ensure that all storage appliances are installed and connected to your network before you configure OpenStack volumes."
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:79(para)
-msgid "So that the node can communicate with the SAN, you must install the Coraid AoE Linux driver on each compute node on the network that runs an OpenStack instance."
+msgid "In order for the node to communicate with the SAN, you must install the Coraid AoE Linux driver on each Compute node on the network that runs an OpenStack instance."
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:84(title)
@@ -4542,7 +4558,7 @@ msgstr ""
 msgid "ESM_IP_address"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:301(replaceable) ./doc/config-reference/block-storage/drivers/netapp-volume-driver.xml:59(replaceable) ./doc/config-reference/block-storage/drivers/netapp-volume-driver.xml:123(replaceable) ./doc/config-reference/block-storage/drivers/netapp-volume-driver.xml:342(replaceable) ./doc/config-reference/block-storage/drivers/netapp-volume-driver.xml:398(replaceable) ./doc/config-reference/block-storage/drivers/netapp-volume-driver.xml:458(replaceable) ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:340(option)
+#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:301(replaceable) ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:357(option) ./doc/config-reference/block-storage/drivers/netapp-volume-driver.xml:59(replaceable) ./doc/config-reference/block-storage/drivers/netapp-volume-driver.xml:123(replaceable) ./doc/config-reference/block-storage/drivers/netapp-volume-driver.xml:342(replaceable) ./doc/config-reference/block-storage/drivers/netapp-volume-driver.xml:398(replaceable) ./doc/config-reference/block-storage/drivers/netapp-volume-driver.xml:458(replaceable)
 msgid "username"
 msgstr ""
 
@@ -4550,7 +4566,7 @@ msgstr ""
 msgid "Access_Control_Group_name"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:303(replaceable) ./doc/config-reference/block-storage/drivers/netapp-volume-driver.xml:60(replaceable) ./doc/config-reference/block-storage/drivers/netapp-volume-driver.xml:124(replaceable) ./doc/config-reference/block-storage/drivers/netapp-volume-driver.xml:343(replaceable) ./doc/config-reference/block-storage/drivers/netapp-volume-driver.xml:399(replaceable) ./doc/config-reference/block-storage/drivers/netapp-volume-driver.xml:459(replaceable) ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:350(option)
+#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:303(replaceable) ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:367(option) ./doc/config-reference/block-storage/drivers/netapp-volume-driver.xml:60(replaceable) ./doc/config-reference/block-storage/drivers/netapp-volume-driver.xml:124(replaceable) ./doc/config-reference/block-storage/drivers/netapp-volume-driver.xml:343(replaceable) ./doc/config-reference/block-storage/drivers/netapp-volume-driver.xml:399(replaceable) ./doc/config-reference/block-storage/drivers/netapp-volume-driver.xml:459(replaceable)
 msgid "password"
 msgstr ""
 
@@ -4618,7 +4634,7 @@ msgstr ""
 msgid "Variable"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:358(th) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:309(th) ./doc/config-reference/block-storage/drivers/ibm-storwize-svc-driver.xml:206(th) ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:319(td) ./doc/config-reference/block-storage/drivers/ibm-gpfs-volume-driver.xml:80(th) ./doc/config-reference/dashboard/section_dashboard-log-files.xml:22(td)
+#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:358(th) ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:324(td) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:309(th) ./doc/config-reference/block-storage/drivers/ibm-storwize-svc-driver.xml:206(th) ./doc/config-reference/block-storage/drivers/ibm-gpfs-volume-driver.xml:80(th) ./doc/config-reference/dashboard/section_dashboard-log-files.xml:22(td)
 msgid "Description"
 msgstr ""
 
@@ -4784,6 +4800,306 @@ msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/xen-sm-driver.xml:193(para)
 msgid "Use the standard <placeholder-1/> or OpenStack API commands (such as volume extensions) to create, destroy, attach, or detach volumes."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:11(title)
+msgid "HDS HUS iSCSI driver"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:12(para)
+msgid "This Block Storage volume driver provides iSCSI support for <link href=\"http://www.hds.com/products/storage-systems/hitachi-unified-storage-100-family.html\">HUS (Hitachi Unified Storage) </link> arrays such as, HUS-110, HUS-130, and HUS-150."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:18(para)
+msgid "Use the HDS <placeholder-1/> command to communicate with an HUS array. You can download this utility package from the HDS support site (<link href=\"https://HDSSupport.hds.com\">https://HDSSupport.hds.com</link>)."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:23(para)
+msgid "Platform: Ubuntu 12.04LTS or newer."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:27(para)
+msgid "These operations are supported:"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:33(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:18(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:49(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:75(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:94(para) ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:41(para) ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:39(para)
+msgid "Delete volume"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:36(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:21(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:52(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:78(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:97(para) ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:44(para) ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:42(para)
+msgid "Attach volume"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:42(para)
+msgid "Clone volume"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:45(para) ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:71(para) ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:66(para)
+msgid "Extend volume"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:48(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:27(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:58(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:103(para) ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:50(para) ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:48(para)
+msgid "Create snapshot"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:51(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:30(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:61(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:106(para) ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:53(para) ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:51(para)
+msgid "Delete snapshot"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:54(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:39(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:64(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:84(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:115(para) ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:59(para) ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:60(para)
+msgid "Copy image to volume"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:57(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:42(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:67(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:87(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:118(para) ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:62(para) ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:63(para)
+msgid "Copy volume to image"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:63(para)
+msgid "Get statistics"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:73(para)
+msgid "Do not confuse differentiated services with the OpenStack Block Storage volume services."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:69(para)
+msgid "The HDS driver supports the concept of differentiated services, where a volume type can be associated with the fine-tuned performance characteristics of an HDP— the dynamic pool where volumes are created<placeholder-1/>. For instance, an HDP can consist of fast SSDs to provide speed. HDP can provide a certain reliability based on things like its RAID level characteristics. HDS driver maps volume type to the <option>volume_type</option> option in its configuration file."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:81(para)
+msgid "Configuration is read from an XML-format file. Examples are shown for single and multi back-end cases."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:86(para)
+msgid "Configuration is read from an XML file. This example shows the configuration for single back-end and for multi-back-end cases."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:95(para)
+msgid "It is okay to manage multiple HUS arrays by using multiple OpenStack Block Storage instances (or servers)."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:91(para)
+msgid "It is not recommended to manage an HUS array simultaneously from multiple OpenStack Block Storage instances or servers. <placeholder-1/>"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:104(title)
+msgid "HUS setup"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:105(para)
+msgid "Before using iSCSI services, use the HUS UI to create an iSCSI domain for each EVS providing iSCSI services."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:109(title)
+msgid "Single back-end"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:110(para)
+msgid "In a single back-end deployment, only one OpenStack Block Storage instance runs on the OpenStack Block Storage server and controls one HUS array: this deployment requires these configuration files:"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:123(para)
+msgid "The configuration file location may differ."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:116(para)
+msgid "Set the <option>hds_cinder_config_file</option> option in the <filename>/etc/cinder/cinder.conf</filename> file to use the HDS volume driver. This option points to a configuration file.<placeholder-1/>"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:130(para)
+msgid "Configure <option>hds_cinder_config_file</option> at the location specified previously. For example, <filename>/opt/hds/hus/cinder_hds_conf.xml</filename>:"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:161(title)
+msgid "Multi back-end"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:162(para)
+msgid "In a multi back-end deployment, more than one OpenStack Block Storage instance runs on the same server. In this example, two HUS arrays are used, possibly providing different storage performance:"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:168(para)
+msgid "Configure <filename>/etc/cinder/cinder.conf</filename>: the <literal>hus1</literal><option>hus2</option> configuration blocks are created. Set the <option>hds_cinder_config_file</option> option to point to an unique configuration file for each block. Set the <option>volume_driver</option> option for each back-end to <literal>cinder.volume.drivers.hds.hds.HUSDriver</literal>"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:192(para)
+msgid "Configure <filename>/opt/hds/hus/cinder_hus1_conf.xml</filename>:"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:218(para)
+msgid "Configure the <filename>/opt/hds/hus/cinder_hus2_conf.xml</filename> file:"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:247(title)
+msgid "Type extra specs: <option>volume_backend</option> and volume type"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:249(para)
+msgid "If you use volume types, you must configure them in the configuration file and set the <option>volume_backend_name</option> option to the appropriate back-end. In the previous multi back-end example, the <literal>platinum</literal> volume type is served by hus-2, and the <literal>regular</literal> volume type is served by hus-1."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:260(title)
+msgid "Non differentiated deployment of HUS arrays"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:261(para)
+msgid "You can deploy multiple OpenStack Block Storage instances that each control a separate HUS array. Each instance has no volume type associated with it. The OpenStack Block Storage filtering algorithm selects the HUS array with the largest available free space. In each configuration file, you must define the <literal>default</literal><option>volume_type</option> in the service labels."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:272(title)
+msgid "HDS iSCSI volume driver configuration options"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:279(para)
+msgid "There is no relative precedence or weight among these four labels."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:273(para)
+msgid "These details apply to the XML format configuration file that is read by HDS volume driver. These differentiated service labels are predefined: <literal>svc_0</literal>, <literal>svc_1</literal>, <literal>svc_2</literal>, and <literal>svc_3</literal><placeholder-1/>. Each respective service label associates with these parameters and tags:"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:285(para)
+msgid "<option>volume-types</option>: A create_volume call with a certain volume type shall be matched up with this tag. <literal>default</literal> is special in that any service associated with this type is used to create volume when no other labels match. Other labels are case sensitive and should exactly match. If no configured volume_types match the incoming requested type, an error occurs in volume creation."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:296(para)
+msgid "<option>HDP</option>, the pool ID associated with the service."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:300(para)
+msgid "An iSCSI port dedicated to the service."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:309(para)
+msgid "The get_volume_stats() always provides the available capacity based on the combined sum of all the HDPs that are used in these services labels."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:303(para)
+msgid "Typically a OpenStack Block Storage volume instance has only one such service label. For example, any <literal>svc_0</literal>, <literal>svc_1</literal>, <literal>svc_2</literal>, or <literal>svc_3</literal> can be associated with it. But any mix of these service labels can be used in the same instance <placeholder-1/>."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:314(caption) ./doc/config-reference/block-storage/drivers/xenapi-nfs.xml:86(title)
+msgid "Configuration options"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:321(td)
+msgid "Option"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:322(td) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:307(th) ./doc/config-reference/block-storage/drivers/ibm-storwize-svc-driver.xml:204(th)
+msgid "Type"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:323(td) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:308(th) ./doc/config-reference/block-storage/drivers/ibm-storwize-svc-driver.xml:205(th)
+msgid "Default"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:329(option)
+msgid "mgmt_ip0"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:331(para) ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:339(para) ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:396(para) ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:408(para) ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:425(para) ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:436(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:318(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:332(td) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:343(td) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:355(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:367(td) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:379(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:394(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:499(td) ./doc/config-reference/block-storage/drivers/ibm-storwize-svc-driver.xml:213(para) ./doc/config-reference/block-storage/drivers/ibm-storwize-svc-driver.xml:228(para) ./doc/config-reference/block-storage/drivers/ibm-storwize-svc-driver.xml:266(para)
+msgid "Required"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:333(para)
+msgid "Management Port 0 IP address"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:337(option)
+msgid "mgmt_ip1"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:341(para)
+msgid "Management Port 1 IP address"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:345(option)
+msgid "hus_cmd"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:347(para) ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:359(para) ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:369(para) ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:381(para) ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:447(para) ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:458(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:408(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:425(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:443(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:461(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:474(td) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:489(td) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:511(td) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:522(td) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:532(td) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:543(td) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:551(td) ./doc/config-reference/block-storage/drivers/ibm-storwize-svc-driver.xml:221(para) ./doc/config-reference/block-storage/drivers/ibm-storwize-svc-driver.xml:275(para) ./doc/config-reference/block-storage/drivers/ibm-storwize-svc-driver.xml:299(para) ./doc/config-reference/block-storage/drivers/ibm-storwize-svc-driver.xml:310(para) ./doc/config-reference/block-storage/drivers/ibm-storwize-svc-driver.xml:334(para) ./doc/config-reference/block-storage/drivers/ibm-storwize-svc-driver.xml:345(para) ./doc/config-reference/block-storage/drivers/ibm-storwize-svc-driver.xml:366(para) ./doc/config-reference/block-storage/drivers/ibm-storwize-svc-driver.xml:384(para) ./doc/config-reference/block-storage/drivers/ibm-storwize-svc-driver.xml:394(para) ./doc/config-reference/block-storage/drivers/ibm-storwize-svc-driver.xml:415(para) ./doc/config-reference/block-storage/drivers/ibm-storwize-svc-driver.xml:426(para) ./doc/config-reference/block-storage/drivers/ibm-storwize-svc-driver.xml:436(para) ./doc/config-reference/block-storage/drivers/ibm-storwize-svc-driver.xml:452(para)
+msgid "Optional"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:350(para)
+msgid "<option>hus_cmd</option> is the command used to communicate with the HUS array. If it is not set, the default value is <placeholder-1/>."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:362(para)
+msgid "Username is required only if secure mode is used"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:372(para)
+msgid "Password is required only if secure mode is used"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:378(option)
+msgid "svc_0, svc_1, svc_2, svc_3"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:382(para)
+msgid "(at least one label has to be defined)"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:385(para)
+msgid "Service labels: these four predefined names help four different sets of configuration options -- each can specify iSCSI port address, HDP and an unique volume type."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:394(option)
+msgid "snapshot"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:399(para)
+msgid "A service label which helps specify configuration for snapshots, such as, HDP."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:406(option)
+msgid "volume_type"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:411(para)
+msgid "<option>volume_type</option> tag is used to match volume type. <literal>Default</literal> meets any type of <option>volume_type</option>, or if it is not specified. Any other volume_type is selected if exactly matched during <literal>create_volume</literal>."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:423(option)
+msgid "iscsi_ip"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:428(para)
+msgid "iSCSI port IP address where volume attaches for this volume type."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:434(option)
+msgid "hdp"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:439(para)
+msgid "HDP, the pool number where volume, or snapshot should be created."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:445(option)
+msgid "lun_start"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:448(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:491(para) ./doc/config-reference/block-storage/drivers/ibm-storwize-svc-driver.xml:385(para)
+msgid "0"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:450(para)
+msgid "LUN allocation starts at this number."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:456(option)
+msgid "lun_end"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:459(para)
+msgid "4096"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:461(para)
+msgid "LUN allocation is up to, but not including, this number."
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/ibm-xiv-volume-driver.xml:5(title)
@@ -5154,32 +5470,8 @@ msgstr ""
 msgid "The Huawei driver supports the iSCSI and Fibre Channel connections and enables OceanStor T series unified storage, OceanStor Dorado high-performance storage, and OceanStor HVS high-end storage to provide block storage services for OpenStack."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:18(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:49(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:75(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:94(para) ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:41(para) ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:33(para)
-msgid "Delete volume"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:21(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:52(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:78(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:97(para) ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:44(para) ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:36(para)
-msgid "Attach volume"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:27(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:58(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:103(para) ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:50(para) ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:48(para)
-msgid "Create snapshot"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:30(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:61(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:106(para) ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:53(para) ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:51(para)
-msgid "Delete snapshot"
-msgstr ""
-
 #: ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:36(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:112(para)
 msgid "Create clone volume"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:39(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:64(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:84(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:115(para) ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:59(para) ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:54(para)
-msgid "Copy image to volume"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:42(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:67(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:87(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:118(para) ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:62(para) ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:57(para)
-msgid "Copy volume to image"
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:12(para)
@@ -5254,20 +5546,8 @@ msgstr ""
 msgid "Flag name"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:307(th) ./doc/config-reference/block-storage/drivers/ibm-storwize-svc-driver.xml:204(th) ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:317(td)
-msgid "Type"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:308(th) ./doc/config-reference/block-storage/drivers/ibm-storwize-svc-driver.xml:205(th) ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:318(td)
-msgid "Default"
-msgstr ""
-
 #: ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:315(option)
 msgid "Product"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:318(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:332(td) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:343(td) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:355(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:367(td) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:379(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:394(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:499(td) ./doc/config-reference/block-storage/drivers/ibm-storwize-svc-driver.xml:213(para) ./doc/config-reference/block-storage/drivers/ibm-storwize-svc-driver.xml:228(para) ./doc/config-reference/block-storage/drivers/ibm-storwize-svc-driver.xml:266(para) ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:326(para) ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:334(para) ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:379(para) ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:391(para) ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:408(para) ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:419(para)
-msgid "Required"
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:324(para)
@@ -5334,10 +5614,6 @@ msgstr ""
 msgid "LUNType"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:408(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:425(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:443(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:461(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:474(td) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:489(td) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:511(td) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:522(td) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:532(td) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:543(td) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:551(td) ./doc/config-reference/block-storage/drivers/ibm-storwize-svc-driver.xml:221(para) ./doc/config-reference/block-storage/drivers/ibm-storwize-svc-driver.xml:275(para) ./doc/config-reference/block-storage/drivers/ibm-storwize-svc-driver.xml:299(para) ./doc/config-reference/block-storage/drivers/ibm-storwize-svc-driver.xml:310(para) ./doc/config-reference/block-storage/drivers/ibm-storwize-svc-driver.xml:334(para) ./doc/config-reference/block-storage/drivers/ibm-storwize-svc-driver.xml:345(para) ./doc/config-reference/block-storage/drivers/ibm-storwize-svc-driver.xml:366(para) ./doc/config-reference/block-storage/drivers/ibm-storwize-svc-driver.xml:384(para) ./doc/config-reference/block-storage/drivers/ibm-storwize-svc-driver.xml:394(para) ./doc/config-reference/block-storage/drivers/ibm-storwize-svc-driver.xml:415(para) ./doc/config-reference/block-storage/drivers/ibm-storwize-svc-driver.xml:426(para) ./doc/config-reference/block-storage/drivers/ibm-storwize-svc-driver.xml:436(para) ./doc/config-reference/block-storage/drivers/ibm-storwize-svc-driver.xml:452(para) ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:342(para) ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:352(para) ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:364(para) ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:430(para) ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:441(para)
-msgid "Optional"
-msgstr ""
-
 #: ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:411(para)
 msgid "Thin"
 msgstr ""
@@ -5396,10 +5672,6 @@ msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:488(option)
 msgid "Prefetch Value"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:491(para) ./doc/config-reference/block-storage/drivers/ibm-storwize-svc-driver.xml:385(para) ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:431(para)
-msgid "0"
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:494(para)
@@ -5499,11 +5771,11 @@ msgid "The following table contains the configuration options supported by the G
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:6(title)
-msgid "EMC SMI-S iSCSI driver"
+msgid "EMC SMI-S iSCSI and FC drivers"
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:7(para)
-msgid "The EMC volume driver, <literal>EMCSMISISCSIDriver</literal> is based on the existing <literal>ISCSIDriver</literal>, with the ability to create/delete and attach/detach volumes and create/delete snapshots, and so on."
+msgid "The EMC volume drivers, <literal>EMCSMISISCSIDriver</literal> and <literal>EMCSMISFCDriver</literal>, has the ability to create/delete and attach/detach volumes and create/delete snapshots, and so on."
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:11(para)
@@ -5519,7 +5791,7 @@ msgid "The EMC SMI-S Provider supports the SNIA Storage Management Initiative (S
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:24(para)
-msgid "EMC SMI-S Provider V4.5.1 and higher is required. You can download SMI-S from the <link href=\"http://powerlink.emc.com\">EMC Powerlink</link> web site (login is required). See the EMC SMI-S Provider release notes for installation instructions."
+msgid "EMC SMI-S Provider V4.6.1 and higher is required. You can download SMI-S from the <link href=\"https://support.emc.com\">EMC's support</link> web site (login is required). See the EMC SMI-S Provider release notes for installation instructions."
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:30(para)
@@ -5530,188 +5802,240 @@ msgstr ""
 msgid "VMAX and VNX arrays support these operations:"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:56(para)
+#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:56(para) ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:57(para)
 msgid "Create cloned volume"
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:65(para)
-msgid "Only VNX supports these operations:"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:71(para)
-msgid "Only thin provisioning is supported."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:74(title)
-msgid "Task flow"
+msgid "Only VNX supports the following operations:"
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:76(title)
-msgid "To set up the EMC SMI-S iSCSI driver"
+msgid "Set up the SMI-S drivers"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:78(para)
+#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:78(title)
+msgid "To set up the EMC SMI-S drivers"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:80(para)
 msgid "Install the <package>python-pywbem</package> package for your distribution. See <xref linkend=\"install-pywbem\"/>."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:83(para)
+#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:85(para)
 msgid "Download SMI-S from PowerLink and install it. Add your VNX/VMAX arrays to SMI-S."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:85(para)
+#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:87(para)
 msgid "For information, see <xref linkend=\"setup-smi-s\"/> and the SMI-S release notes."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:89(para)
-msgid "Register with VNX. See <xref linkend=\"register-emc\"/>."
+#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:91(para)
+msgid "Register with VNX. See <xref linkend=\"register-vnx-iscsi\"/> for the VNX iSCSI driver and <xref linkend=\"register-vnx-fc\"/> for the VNX FC driver."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:93(para)
+#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:98(para)
 msgid "Create a masking view on VMAX. See <xref linkend=\"create-masking\"/>."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:98(title)
+#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:103(title)
 msgid "Install the <package>python-pywbem</package> package"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:99(para)
+#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:104(para)
 msgid "Install the <package>python-pywbem</package> package for your distribution, as follows:"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:103(para)
+#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:108(para)
 msgid "On Ubuntu:"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:107(para)
+#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:112(para)
 msgid "On openSUSE:"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:111(para)
+#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:116(para)
 msgid "On Fedora:"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:117(title)
+#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:122(title)
 msgid "Set up SMI-S"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:118(para)
-msgid "You can install SMI-S on a non-OpenStack host. Supported platforms include different flavors of Windows, Red Hat, and SUSE Linux. The host can be either a physical server or VM hosted by an ESX server. See the EMC SMI-S Provider release notes for supported platforms and installation instructions."
+#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:123(para)
+msgid "You can install SMI-S on a non-OpenStack host. Supported platforms include different flavors of Windows, Red Hat, and SUSE Linux. SMI-S can be installed on a physical server or a VM hosted by an ESX server. Note that the supported hypervisor for a VM running SMI-S is ESX only. See the EMC SMI-S Provider release notes for more information on supported platforms and installation instructions."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:126(para)
+#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:132(para)
 msgid "You must discover storage arrays on the SMI-S server before you can use the Cinder driver. Follow instructions in the SMI-S release notes."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:131(para)
+#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:137(para)
 msgid "SMI-S is usually installed at <filename>/opt/emc/ECIM/ECOM/bin</filename> on Linux and <filename>C:\\Program Files\\EMC\\ECIM\\ECOM\\bin</filename> on Windows. After you install and configure SMI-S, go to that directory and type <placeholder-1/>."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:138(para)
+#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:144(para)
 msgid "Use <placeholder-1/> in <placeholder-2/> to add an array. Use <placeholder-3/> and examine the output after the array is added. Make sure that the arrays are recognized by the SMI-S server before using the EMC Cinder driver."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:146(title)
-msgid "Register with VNX"
+#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:152(title)
+msgid "Register with VNX for the iSCSI driver"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:147(para)
-msgid "To export a VNX volume to a compute node, you must register the node with VNX."
+#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:153(para)
+msgid "To export a VNX volume to a Compute node or a Volume node, you must register the node with VNX."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:150(title)
+#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:156(title)
 msgid "Register the node"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:151(para)
-msgid "On the compute node <literal>1.1.1.1</literal>, do the following (assume <literal>10.10.61.35</literal> is the iscsi target):"
+#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:157(para)
+msgid "On the Compute node or Volume node <literal>1.1.1.1</literal>, do the following (assume <literal>10.10.61.35</literal> is the iscsi target):"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:159(para)
-msgid "Log in to VNX from the compute node using the target corresponding to the SPA port:"
+#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:165(para) ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:130(para)
+msgid "Log in to VNX from the node using the target corresponding to the SPA port:"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:162(para)
-msgid "Where <literal>iqn.1992-04.com.emc:cx.apm01234567890.a0</literal> is the initiator name of the compute node. Login to Unisphere, go to <literal>VNX00000</literal>-&gt;Hosts-&gt;Initiators, Refresh and wait until initiator <literal>iqn.1992-04.com.emc:cx.apm01234567890.a0</literal> with SP Port <literal>A-8v0</literal> appears."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:170(para)
-msgid "Click the <guibutton>Register</guibutton> button, select <guilabel>CLARiiON/VNX</guilabel>, and enter the host name <literal>myhost1</literal> and IP address <literal>myhost1</literal>. Click <guibutton>Register</guibutton>. Now host <literal>1.1.1.1</literal> also appears under Hosts-&gt;Host List."
+#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:168(para) ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:133(para)
+msgid "Where <literal>iqn.1992-04.com.emc:cx.apm01234567890.a0</literal> is the initiator name of the node. Login to Unisphere, go to <literal>VNX00000</literal>-&gt;Hosts-&gt;Initiators, Refresh and wait until initiator <literal>iqn.1992-04.com.emc:cx.apm01234567890.a0</literal> with SP Port <literal>A-8v0</literal> appears."
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:176(para)
-msgid "Log out of VNX on the compute node:"
+msgid "Click the <guibutton>Register</guibutton> button, select <guilabel>CLARiiON/VNX</guilabel>, and enter the host name <literal>myhost1</literal> and IP address <literal>myhost1</literal>. Click <guibutton>Register</guibutton>. Now host <literal>1.1.1.1</literal> also appears under Hosts-&gt;Host List."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:179(para)
-msgid "Log in to VNX from the compute node using the target corresponding to the SPB port:"
+#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:182(para) ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:147(para)
+msgid "Log out of VNX on the node:"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:183(para)
+#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:185(para) ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:150(para)
+msgid "Log in to VNX from the node using the target corresponding to the SPB port:"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:189(para) ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:154(para)
 msgid "In Unisphere register the initiator with the SPB port."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:185(para)
+#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:191(para) ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:156(para)
 msgid "Log out:"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:190(title)
+#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:196(title)
+msgid "Register with VNX for the FC driver"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:197(para)
+msgid "For a VNX volume to be exported to a Compute node or a Volume node, SAN zoning needs to be configured on the node and WWNs of the node need to be registered with VNX in Unisphere."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:203(title)
 msgid "Create a masking view on VMAX"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:191(para)
-msgid "For VMAX, you must set up the Unisphere for VMAX server. On the Unisphere for VMAX server, create initiator group, storage group, and port group and put them in a masking view. initiator group contains the initiator names of the OpenStack hosts. Storage group must have at least six gatekeepers."
+#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:204(para)
+msgid "For VMAX iSCSI and FC drivers, you need to do initial setup in Unisphere for VMAX. In Unisphere for VMAX, create an initiator group, a storage group, and a port group. Put them in a masking view. The initiator group contains the initiator names of the OpenStack hosts. The storage group will contain volumes provisioned by Block Storage."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:201(para)
+#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:214(para) ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:163(para)
 msgid "Make the following changes in <filename>/etc/cinder/cinder.conf</filename>."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:203(para)
-msgid "For VMAX, add the following entries, where <literal>10.10.61.45</literal> is the IP address of the VMAX iscsi target:"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:210(para)
-msgid "For VNX, add the following entries, where <literal>10.10.61.35</literal> is the IP address of the VNX iscsi target:"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:217(para)
-msgid "Restart the <systemitem class=\"service\">cinder-volume</systemitem> service."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:221(title)
-msgid "<filename>cinder_emc_config.xml</filename> configuration file"
+#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:216(para)
+msgid "For VMAX iSCSI driver, add the following entries, where <literal>10.10.61.45</literal> is the IP address of the VMAX iSCSI target:"
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:223(para)
+msgid "For VNX iSCSI driver, add the following entries, where <literal>10.10.61.35</literal> is the IP address of the VNX iSCSI target:"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:230(para)
+msgid "For VMAX and VNX FC drivers, add the following entries:"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:234(para) ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:184(para)
+msgid "Restart the <systemitem class=\"service\">cinder-volume</systemitem> service."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:238(title)
+msgid "<filename>cinder_emc_config.xml</filename> configuration file"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:240(para)
 msgid "Create the <filename>/etc/cinder/cinder_emc_config.xml</filename> file. You do not need to restart the service for this change."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:225(para)
+#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:242(para)
 msgid "For VMAX, add the following lines to the XML file:"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:228(para)
+#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:245(para)
 msgid "For VNX, add the following lines to the XML file:"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:231(para)
+#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:248(para)
 msgid "Where:"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:234(para)
-msgid "<systemitem>StorageType</systemitem> is the thin pool from which the user wants to create the volume. Only thin LUNs are supported by the plug-in. Thin pools can be created using Unisphere for VMAX and VNX."
+#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:251(para)
+msgid "<systemitem>StorageType</systemitem> is the thin pool from which the user wants to create the volume. Thin pools can be created using Unisphere for VMAX and VNX. If the <literal>StorageType</literal> tag is not defined, you have to define volume types and set the pool name in extra specs."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:239(para)
+#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:260(para)
 msgid "<systemitem>EcomServerIp</systemitem> and <systemitem>EcomServerPort</systemitem> are the IP address and port number of the ECOM server which is packaged with SMI-S."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:244(para)
+#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:265(para)
 msgid "<systemitem>EcomUserName</systemitem> and <systemitem>EcomPassword</systemitem> are credentials for the ECOM server."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:250(para)
+#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:270(para)
+msgid "<systemitem>Timeout</systemitem> specifies the maximum number of seconds you want to wait for an operation to finish."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:277(para)
 msgid "To attach VMAX volumes to an OpenStack VM, you must create a Masking View by using Unisphere for VMAX. The Masking View must have an Initiator Group that contains the initiator of the OpenStack compute node that hosts the VM."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:287(title) ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:188(title)
+msgid "Volume type support"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:288(para)
+msgid "Volume type support enables a single instance of <systemitem>cinder-volume</systemitem> to support multiple pools and thick/thin provisioning."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:291(para)
+msgid "When the <literal>StorageType</literal> tag in <filename>cinder_emc_config.xml</filename> is used, the pool name is specified in the tag. Only thin provisioning is supported in this case."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:295(para)
+msgid "When the <literal>StorageType</literal> tag is not used in <filename>cinder_emc_config.xml</filename>, the volume type needs to be used to define a pool name and a provisioning type. The pool name is the name of a pre-created pool. The provisioning type could be either <literal>thin</literal> or <literal>thick</literal>."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:301(para)
+msgid "Here is an example of how to set up volume type. First create volume types. Then define extra specs for each volume type."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:305(title)
+msgid "Setup volume types"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:307(para)
+msgid "Create the volume types:"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:313(para)
+msgid "Setup the volume type extra specs:"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:321(para)
+msgid "In the above example, two volume types are created. They are <literal>High Performance</literal> and <literal> Standard Performance</literal>. For <literal>High Performance </literal>, <literal>storagetype:pool</literal> is set to <literal>smi_pool</literal> and <literal>storagetype:provisioning </literal> is set to <literal>thick</literal>. Similarly for <literal>Standard Performance</literal>, <literal> storagetype:pool</literal>. is set to <literal>smi_pool2</literal> and <literal>storagetype:provisioning</literal> is set to <literal>thin</literal>. If <literal>storagetype:provisioning </literal> is not specified, it will default to <literal> thin</literal>."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:333(para)
+msgid "Volume type names <literal>High Performance</literal> and <literal>Standard Performance</literal> are user-defined and can be any names. Extra spec keys <literal>storagetype:pool</literal> and <literal>storagetype:provisioning</literal> have to be the exact names listed here. Extra spec value <literal>smi_pool </literal> is your pool name. The extra spec value for <literal>storagetype:provisioning</literal> has to be either <literal>thick</literal> or <literal>thin</literal>. The driver will look for a volume type first. If the volume type is specified when creating a volume, the driver will look for the volume type definition and find the matching pool and provisioning type. If the volume type is not specified, it will fall back to use the <literal>StorageType</literal> tag in <filename> cinder_emc_config.xml</filename>."
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:4(title)
@@ -5719,7 +6043,7 @@ msgid "HP 3PAR Fibre Channel and iSCSI drivers"
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:5(para)
-msgid "The <filename>HP3PARFCDriver</filename> and <filename>HP3PARISCSIDriver</filename> drivers, which are based on the Block Storage Service (Cinder) plug-in architecture, run volume operations by communicating with the HP 3PAR storage system over HTTP, HTTPS, and SSH connections. The HTTP and HTTPS communications use <package>hp3parclient</package>, which is part of the Python standard library."
+msgid "The <filename>HP3PARFCDriver</filename> and <filename>HP3PARISCSIDriver</filename> drivers, which are based on the Block Storage service (Cinder) plug-in architecture, run volume operations by communicating with the HP 3PAR storage system over HTTP, HTTPS, and SSH connections. The HTTP and HTTPS communications use <package>hp3parclient</package>, which is part of the Python standard library."
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:13(para)
@@ -5743,7 +6067,7 @@ msgid "One Common Provisioning Group (CPG)"
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:33(para)
-msgid "Additionally, you must install the <package>hp3parclient</package> version 3.0 or newer from the Python standard library on the system with the enabled Block Storage Service volume drivers."
+msgid "Additionally, you must install the <package>hp3parclient</package> version 3.0 or newer from the Python standard library on the system with the enabled Block Storage service volume drivers."
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:45(para)
@@ -5826,8 +6150,8 @@ msgstr ""
 msgid "Volumes that are cloned only support extra specs keys cpg, snap_cpg, provisioning and vvs. The others are ignored. In addition the comments section of the cloned volume in the HP 3PAR StoreServ storage array is not populated."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:118(para)
-msgid "If volume types are not used or a particular key is not set for a volume type, the following defaults are used."
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:118(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:168(para)
+msgid "If volume types are not used or a particular key is not set for a volume type, the following defaults are used:"
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:123(para)
@@ -5979,7 +6303,7 @@ msgid "Save the changes to the <filename>cinder.conf</filename> file and restart
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:388(para)
-msgid "The HP 3PAR Fibre Channel and iSCSI drivers are now enabled on your OpenStack system. If you experience problems, review the Block Storage Service log files for errors."
+msgid "The HP 3PAR Fibre Channel and iSCSI drivers are now enabled on your OpenStack system. If you experience problems, review the Block Storage service log files for errors."
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/dell-equallogic-driver.xml:6(title)
@@ -6586,10 +6910,6 @@ msgstr ""
 msgid "Remote configuration"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/xenapi-nfs.xml:86(title) ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:309(caption)
-msgid "Configuration options"
-msgstr ""
-
 #: ./doc/config-reference/block-storage/drivers/xenapi-nfs.xml:87(para)
 msgid "Assuming the following setup:"
 msgstr ""
@@ -6616,250 +6936,6 @@ msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/xenapi-nfs.xml:115(para)
 msgid "The following table shows the configuration options that the XenAPINFS driver supports:"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:11(title)
-msgid "HDS iSCSI volume driver"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:12(para)
-msgid "This Cinder volume driver provides iSCSI support for <link href=\"http://www.hds.com/products/storage-systems/hitachi-unified-storage-100-family.html\">HUS (Hitachi Unified Storage) </link> arrays such as, HUS-110, HUS-130, and HUS-150."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:18(para)
-msgid "Use the HDS <placeholder-1/> command to communicate with an HUS array. You can download this utility package from the HDS support site (<link href=\"https://HDSSupport.hds.com\">https://HDSSupport.hds.com</link>."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:23(para)
-msgid "Platform: Ubuntu 12.04LTS or newer."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:26(title)
-msgid "Supported Cinder operations"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:27(para)
-msgid "These operations are supported:"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:42(para)
-msgid "Clone volume"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:45(para)
-msgid "Extend volume"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:63(para)
-msgid "get_volume_stats"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:66(para)
-msgid "Thin provisioning, also known as Hitachi Dynamic Pool (HDP), is supported for volume or snapshot creation. Cinder volumes and snapshots do not have to reside in the same pool."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:78(para)
-msgid "Do not confuse differentiated services with the Cinder volume service."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:73(para)
-msgid "The HDS driver supports the concept of differentiated services, where volume type can be associated with the fine-tuned performance characteristics of HDP—the the dynamic pool where volumes shall be created<placeholder-1/>. For instance, an HDP can consist of fast SSDs to provide speed. HDP can provide a certain reliability based on things like its RAID level characteristics. HDS driver maps volume type to the <option>volume_type</option> option in its configuration file."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:86(para)
-msgid "Configuration is read from an XML-format file. Examples are shown for single and multi back-end cases."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:91(para)
-msgid "Configuration is read from an XML file. This example shows the configuration for single back-end and for multi-back-end cases."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:100(para)
-msgid "It is okay to manage multiple HUS arrays by using multiple Cinder instances (or servers)."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:96(para)
-msgid "It is not recommended to manage a HUS array simultaneously from multiple Cinder instances or servers. <placeholder-1/>"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:109(title)
-msgid "Single back-end"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:110(para)
-msgid "In a single back-end deployment, only one Cinder instance runs on the Cinder server and controls one HUS array: this setup requires these configuration files:"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:123(para)
-msgid "The configuration file location is not fixed."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:116(para)
-msgid "Set the <option>hds_cinder_config_file</option> option in the <filename>/etc/cinder/cinder.conf</filename> file to use the HDS volume driver. This option points to a configuration file.<placeholder-1/>"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:130(para)
-msgid "Configure <option>hds_cinder_config_file</option> at the location specified previously. For example, <filename>/opt/hds/hus/cinder_hds_conf.xml</filename>:"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:160(title)
-msgid "Multi back-end"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:161(para)
-msgid "In a multi back-end deployment, more than one Cinder instance runs on the same server. In this example, two HUS arrays are used, possibly providing different storage performance:"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:167(para)
-msgid "Configure <filename>/etc/cinder/cinder.conf</filename>: the <literal>hus1</literal><option>hus2</option> configuration blocks are created. Set the <option>hds_cinder_config_file</option> option to point to an unique configuration file for each block. Set the <option>volume_driver</option> option for each back-end to <literal>cinder.volume.drivers.hds.hds.HUSDriver</literal>"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:189(para)
-msgid "Configure <filename>/opt/hds/hus/cinder_hus1_conf.xml</filename>:"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:214(para)
-msgid "Configure the <filename>/opt/hds/hus/cinder_hus2_conf.xml</filename> file:"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:242(title)
-msgid "Type extra specs: <option>volume_backend</option> and volume type"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:244(para)
-msgid "If you use volume types, you must configure them in the configuration file and set the <option>volume_backend_name</option> option to the appropriate back-end. In the previous multi back-end example, the <literal>platinum</literal> volume type is served by hus-2, and the <literal>regular</literal> volume type is served by hus-1."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:255(title)
-msgid "Non differentiated deployment of HUS arrays"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:256(para)
-msgid "You can deploy multiple Cinder instances that each control a separate HUS array. Each instance has no volume type associated with it. The Cinder filtering algorithm selects the HUS array with the largest available free space. In each configuration file, you must define the <literal>default</literal><option>volume_type</option> in the service labels."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:267(title)
-msgid "HDS iSCSI volume driver configuration options"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:274(para)
-msgid "There is no relative precedence or weight among these four labels."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:268(para)
-msgid "These details apply to the XML format configuration file that is read by HDS volume driver. These differentiated service labels are predefined: <literal>svc_0</literal>, <literal>svc_1</literal>, <literal>svc_2</literal>, and <literal>svc_3</literal><placeholder-1/>. Each respective service label associates with these parameters and tags:"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:280(para)
-msgid "<option>volume-types</option>: A create_volume call with a certain volume type shall be matched up with this tag. <literal>default</literal> is special in that any service associated with this type is used to create volume when no other labels match. Other labels are case sensitive and should exactly match. If no configured volume_types match the incoming requested type, an error occurs in volume creation."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:291(para)
-msgid "<option>HDP</option>, the pool ID associated with the service."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:295(para)
-msgid "An iSCSI port dedicated to the service."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:304(para)
-msgid "get_volume_stats() always provides the available capacity based on the combined sum of all the HDPs that are used in these services labels."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:298(para)
-msgid "Typically a Cinder volume instance has only one such service label. For example, any <literal>svc_0</literal>, <literal>svc_1</literal>, <literal>svc_2</literal>, or <literal>svc_3</literal> can be associated with it. But any mix of these service labels can be used in the same instance <placeholder-1/>."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:316(td)
-msgid "Option"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:324(option)
-msgid "mgmt_ip0"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:328(para)
-msgid "Management Port 0 IP address"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:332(option)
-msgid "mgmt_ip1"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:336(para)
-msgid "Management Port 1 IP address"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:345(para)
-msgid "Username is required only if secure mode is used"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:355(para)
-msgid "Password is required only if secure mode is used"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:361(option)
-msgid "svc_0, svc_1, svc_2, svc_3"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:365(para)
-msgid "(at least one label has to be defined)"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:368(para)
-msgid "Service labels: these four predefined names help four different sets of configuration options -- each can specify iSCSI port address, HDP and an unique volume type."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:377(option)
-msgid "snapshot"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:382(para)
-msgid "A service label which helps specify configuration for snapshots, such as, HDP."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:389(option)
-msgid "volume_type"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:394(para)
-msgid "<option>volume_type</option> tag is used to match volume type. <literal>Default</literal> meets any type of <option>volume_type</option>, or if it is not specified. Any other volume_type is selected if exactly matched during <literal>create_volume</literal>."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:406(option)
-msgid "iscsi_ip"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:411(para)
-msgid "iSCSI port IP address where volume attaches for this volume type."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:417(option)
-msgid "hdp"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:422(para)
-msgid "HDP, the pool number where volume, or snapshot should be created."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:428(option)
-msgid "lun_start"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:433(para)
-msgid "LUN allocation starts at this number."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:439(option)
-msgid "lun_end"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:442(para)
-msgid "4096"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hds-volume-driver.xml:444(para)
-msgid "LUN allocation is up to, but not including, this number."
 msgstr ""
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
@@ -6973,7 +7049,7 @@ msgid "HP LeftHand/StoreVirtual driver"
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:5(para)
-msgid "The <filename>HPLeftHandISCSIDriver</filename> is based on the Block Storage Service (Cinder) plug-in architecture. Volume operations are run by communicating with the HP LeftHand/StoreVirtual system over HTTPS, or SSH connections. HTTPS communications use the <package>hplefthandclient</package>, which is part of the Python standard library."
+msgid "The <filename>HPLeftHandISCSIDriver</filename> is based on the Block Storage service (Cinder) plug-in architecture. Volume operations are run by communicating with the HP LeftHand/StoreVirtual system over HTTPS, or SSH connections. HTTPS communications use the <package>hplefthandclient</package>, which is part of the Python standard library."
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:15(para)
@@ -7005,7 +7081,7 @@ msgid "Create a cluster group."
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:59(para)
-msgid "Install the <package>hplefthandclient</package> version 1.0.2 from the Python Package Index on the system with the enabled Block Storage Service volume drivers."
+msgid "Install the <package>hplefthandclient</package> version 1.0.2 from the Python Package Index on the system with the enabled Block Storage service volume drivers."
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:71(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:330(para)
@@ -7088,10 +7164,6 @@ msgstr ""
 msgid "The HP LeftHand/StoreVirtual storage array must be able to support the Data Protection level specified by the extra spec."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:168(para)
-msgid "If volume types are not used or a particular key is not set for a volume type, the following defaults are used:"
-msgstr ""
-
 #: ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:172(para)
 msgid "Defaults to <parameter>thin</parameter> provisioning, the valid values are, <parameter>thin</parameter> and <parameter>full</parameter>"
 msgstr ""
@@ -7169,7 +7241,7 @@ msgid "If the <option>hplefthand_iscsi_chap_enabled</option> is set to <literal>
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:309(para)
-msgid "The HP LeftHand/StoreVirtual driver is now enabled in standard mode on your OpenStack system. If you experience problems, review the Block Storage Service log files for errors."
+msgid "The HP LeftHand/StoreVirtual driver is now enabled in standard mode on your OpenStack system. If you experience problems, review the Block Storage service log files for errors."
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:316(title)
@@ -7197,7 +7269,7 @@ msgid "10.10.0.141"
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:424(para)
-msgid "The HP LeftHand/StoreVirtual driver is now enabled in legacy mode on your OpenStack system. If you experience problems, review the Block Storage Service log files for errors."
+msgid "The HP LeftHand/StoreVirtual driver is now enabled in legacy mode on your OpenStack system. If you experience problems, review the Block Storage service log files for errors."
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:428(para)
@@ -7270,6 +7342,130 @@ msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/lvm-volume-driver.xml:16(para)
 msgid "and for the ISER transport:"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:6(title)
+msgid "EMC VNX direct driver"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:7(para)
+msgid "Use the EMC VNX direct driver to create, attach, detach, and delete volumes, create and delete snapshots, and so on. This driver is based on the Cinder-defined <literal>ISCSIDriver</literal> driver."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:11(para)
+msgid "To complete volume operations, the driver uses the NaviSec command-line interface (CLI) to communicate with back-end EMC VNX storage."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:19(para)
+msgid "Flare version 5.32 or later."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:22(para)
+msgid "You must activate VNX Snapshot and Clone license for the array. Ensure that all the iSCSI ports from the VNX are accessible through OpenStack hosts."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:27(para)
+msgid "Navisphere CLI v7.32 or later."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:30(para)
+msgid "EMC storage VNX Series are supported."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:71(title)
+msgid "Set up the VNX direct driver"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:72(para)
+msgid "Complete these high-level tasks to set up the VNX direct driver:"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:76(para)
+msgid "Install NaviSecCLI. You must install the NaviSecCLI tool on the controller node and all the Cinder nodes in an OpenStack deployment. See <xref linkend=\"install-naviseccli\"/>."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:83(para)
+msgid "Register with VNX. See <xref linkend=\"register-vnx-direct-iscsi\"/>"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:89(title)
+msgid "Install NaviSecCLI"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:90(para)
+msgid "Log in to the <link href=\"https://support.emc.com/                 downloads/5890_Navisphere-Agents-CLI---Linux\">EMC's support</link> web site (login is required), and download the NaviSecCLI package. Then, install the package:"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:95(para)
+msgid "On Ubuntu x64:"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:97(title)
+msgid "To install NaviSecCLI on Ubuntu x64"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:99(para)
+msgid "Create the <filename>/opt/Navisphere/bin/</filename> directory:"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:102(para)
+msgid "Copy the RPM package into the <filename> /opt/Navisphere/bin/</filename> directory."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:107(para)
+msgid "Use alien to install the RPM package on Ubuntu:"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:113(para)
+msgid "For all the other variants of Linux, install the rpm as usual."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:117(title)
+msgid "Register with VNX"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:118(para)
+msgid "To export a VNX volume to a compute node or a volume node, you must register the node with VNX."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:121(title)
+msgid "To register the node"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:122(para)
+msgid "On the compute node or volume node <literal>1.1.1.1</literal>, do the following (assume <literal>10.10.61.35</literal> is the iSCSI target):"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:141(para)
+msgid "Click <guibutton>Register</guibutton>, select <guilabel>CLARiiON/VNX</guilabel>, and enter the host name <literal>myhost1</literal> and IP address <literal>myhost1</literal>. Click <guibutton>Register</guibutton>. Now host <literal>1.1.1.1</literal> also appears under Hosts-&gt;Host List."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:165(para)
+msgid "For the VNX iSCSI driver, add the following entries, where <literal>10.10.61.35</literal> is the IP address of the VNX iSCSI target, <literal>10.10.72.41</literal> is the IP address of the VNX array, <systemitem>default_timeout</systemitem> is the default time out for CLI operations in minutes, and <systemitem>max_luns_per_storage_group</systemitem> is the default max number of LUNs in a storage group:"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:189(para)
+msgid "Volume type support allows user to choose thick/thin provisioning capabilities."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:191(para)
+msgid "Here is an example of how to setup volume type. First create volume types. Then define extra specs for each volume type."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:195(title)
+msgid "To set up volume types"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:197(para)
+msgid "Setup volume types:"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:202(para)
+msgid "Setup volume type extra specs:"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:207(para)
+msgid "The previous example creates two volume types: <literal>TypeA</literal> and <literal>TypeB</literal>. For <literal>TypeA</literal>, <literal>storagetype:provisioning </literal> is set to <literal>thick</literal>. Similarly for <literal>TypeB</literal>, <literal>storagetype:provisioning </literal> is set to <literal>thin</literal>. If <literal> storagetype:provisioning</literal> is not specified, it will be default to <literal>thick</literal>."
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/nfs-volume-driver.xml:4(title)
@@ -7405,7 +7601,7 @@ msgid "Enable the GPFS driver"
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/ibm-gpfs-volume-driver.xml:44(para)
-msgid "To use the Block Storage Service with the GPFS driver, first set the <literal>volume_driver</literal> in <filename>cinder.conf</filename>:"
+msgid "To use the Block Storage service with the GPFS driver, first set the <literal>volume_driver</literal> in <filename>cinder.conf</filename>:"
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/ibm-gpfs-volume-driver.xml:48(para)
@@ -7532,6 +7728,10 @@ msgstr ""
 msgid "xxxxxxxx"
 msgstr ""
 
+#: ./doc/config-reference/block-storage/drivers/samples/emc-vmax.xml:9(Timeout) ./doc/config-reference/block-storage/drivers/samples/emc-vnx.xml:8(Timeout)
+msgid "xx"
+msgstr ""
+
 #: ./doc/config-reference/block-storage/backup/tsm-backup-driver.xml:6(title)
 msgid "IBM Tivoli Storage Manager backup driver"
 msgstr ""
@@ -7577,7 +7777,7 @@ msgid "If incremental backups are used, multiple backups of the same volume are 
 msgstr ""
 
 #: ./doc/config-reference/block-storage/backup/ceph-backup-driver.xml:32(para)
-msgid "Block Storage Service enables you to:"
+msgid "Block Storage enables you to:"
 msgstr ""
 
 #: ./doc/config-reference/block-storage/backup/ceph-backup-driver.xml:35(para)
