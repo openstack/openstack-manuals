@@ -1,0 +1,112 @@
+<section xml:id="orchestration-configuring-rpc"
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:ns5="http://www.w3.org/1999/xhtml"
+    xmlns:ns4="http://www.w3.org/2000/svg"
+    xmlns:ns3="http://www.w3.org/1998/Math/MathML"
+    xmlns:ns="http://docbook.org/ns/docbook"
+    version="5.0">
+  <?dbhtml stop-chunking?>
+   <title>Configure the RPC messaging system</title>
+   <para>OpenStack projects use an open standard for messaging
+    middleware known as AMQP. This messaging middleware enables the
+    OpenStack services that run on multiple servers to talk to each
+    other. OpenStack Oslo RPC supports three implementations of AMQP:
+      <application>RabbitMQ</application>,
+      <application>Qpid</application>, and
+      <application>ZeroMQ</application>.</para>
+
+  <section xml:id="orchestration-configuration-rabbitmq">
+    <title>Configure RabbitMQ</title>
+
+    <para>OpenStack Oslo RPC uses <application>RabbitMQ</application>
+      by default. Use these options to configure the
+        <application>RabbitMQ</application> message system. The
+        <option>rpc_backend</option> option is optional as long as
+        <application>RabbitMQ</application> is the default messaging
+      system. However, if it is included in the configuration, you must
+      set it to
+        <literal>heat.openstack.common.rpc.impl_kombu</literal>.</para>
+
+
+    <programlisting language="ini">rpc_backend = heat.openstack.common.rpc.impl_kombu</programlisting>
+
+    <para>Use these options to configure the
+        <application>RabbitMQ</application> messaging system. You can
+      configure messaging communication for different installation
+      scenarios, tune retries for RabbitMQ, and define the size of the
+      RPC thread pool. To monitor notifications through RabbitMQ, you
+      must set the <option>notification_driver</option> option to
+        <literal>heat.notifier.rabbit_notifier</literal> in the
+        <filename>heat.conf</filename> file:</para>
+    <xi:include href="../../common/tables/heat-rabbitmq.xml"/>
+  </section>
+  <section xml:id="orchestration-configuration-qpid">
+    <title>Configure Qpid</title>
+    <para>Use these options to configure the
+        <application>Qpid</application> messaging system for OpenStack
+      Oslo RPC. <application>Qpid</application> is not the default
+      messaging system, so you must enable it by setting the
+        <option>rpc_backend</option> option in the
+        <filename>heat.conf</filename> file:</para>
+    <programlisting language="ini">rpc_backend=heat.openstack.common.rpc.impl_qpid</programlisting>
+    <para>This critical option points the compute nodes to the
+        <application>Qpid</application> broker (server). Set the
+        <option>qpid_hostname</option> option to the host name where
+      the broker runs in the <filename>heat.conf</filename>
+      file.</para>
+    <note>
+      <para>The <option>qpid_hostname</option> option accepts a host
+        name or IP address value.</para>
+    </note>
+    <programlisting language="ini">qpid_hostname = hostname.example.com</programlisting>
+
+    <para>If the <application>Qpid</application> broker listens on a
+      port other than the AMQP default of <literal>5672</literal>, you
+      must set the <option>qpid_port</option> option to that
+      value:</para>
+
+    <programlisting language="ini">qpid_port = 12345</programlisting>
+
+    <para>If you configure the <application>Qpid</application> broker
+      to require authentication, you must add a user name and password
+      to the configuration:</para>
+
+    <programlisting language="ini">qpid_username = username
+qpid_password = password</programlisting>
+    <para>By default, TCP is used as the transport. To enable SSL, set
+      the <option>qpid_protocol</option> option:</para>
+
+    <programlisting language="ini">qpid_protocol = ssl</programlisting>
+
+    <para>Use these additional options to configure the Qpid messaging
+      driver for OpenStack Oslo RPC. These options are used
+      infrequently.</para>
+
+    <xi:include href="../../common/tables/heat-qpid.xml"/>
+
+  </section>
+  <section xml:id="orchestration-configuration-zeromq">
+    <title>Configure ZeroMQ</title>
+    <para>Use these options to configure the
+        <application>ZeroMQ</application> messaging system for
+      OpenStack Oslo RPC. <application>ZeroMQ</application> is not the
+      default messaging system, so you must enable it by setting the
+        <option>rpc_backend</option> option in the
+        <filename>heat.conf</filename> file:</para>
+    <xi:include href="../../common/tables/heat-zeromq.xml"/>
+  </section>
+  <section xml:id="orchestration-common-messaging-configuration">
+    <title>Configure messaging</title>
+
+    <para>Use these common options to configure the
+        <application>RabbitMQ</application>,
+        <application>Qpid</application>, and
+        <application>ZeroMq</application> messaging drivers:</para>
+
+    <xi:include href="../../common/tables/heat-amqp.xml"/>
+    <xi:include href="../../common/tables/heat-rpc.xml"/>
+    <xi:include href="../../common/tables/heat-notification.xml"/>
+  </section>
+</section>
