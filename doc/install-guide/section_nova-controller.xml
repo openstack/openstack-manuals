@@ -74,6 +74,32 @@ rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT rabbit_host controller</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT rabbit_password <replaceable>RABBIT_PASS</replaceable></userinput></screen>
     </step>
+    <step>
+      <para>Set the <option>my_ip</option>,
+          <option>vncserver_listen</option>, and
+          <option>vncserver_proxyclient_address</option>
+        configuration options to the internal IP address of the
+        controller node:</para>
+      <screen os="fedora;rhel;centos;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT my_ip 192.168.0.10</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT vncserver_listen 192.168.0.10</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT vncserver_proxyclient_address 192.168.0.10</userinput></screen>
+      <para os="ubuntu">Edit the
+          <filename>/etc/nova/nova.conf</filename> file and add these
+        lines to the <literal>[DEFAULT]</literal> section:</para>
+      <para os="debian">In Debian, the <package>debconf</package>
+        package automatically sets up <literal>my_ip</literal>
+        parameter but you must edit the
+          <filename>/etc/nova/nova.conf</filename> file to configure
+        the <option>vncserver_listen</option> and
+          <option>vncserver_proxyclient_address</option> options,
+        which appear at the end of the file:</para>
+      <programlisting os="ubuntu;debian" language="ini">...
+[DEFAULT]
+...
+my_ip = 192.168.0.10
+vncserver_listen = 192.168.0.10
+vncserver_proxyclient_address = 192.168.0.10</programlisting>
+    </step>
 
     <step os="fedora;rhel;centos;opensuse;sles">
       <para>Run the <command>openstack-db</command> command to create
@@ -100,32 +126,6 @@ IDENTIFIED BY '<replaceable>NOVA_DBPASS</replaceable>';</userinput></screen>
     <step os="ubuntu">
       <para>Create the Compute service tables:</para>
       <screen><prompt>#</prompt> <userinput>nova-manage db sync</userinput></screen>
-    </step>
-    <step>
-      <para>Set the <option>my_ip</option>,
-          <option>vncserver_listen</option>, and
-          <option>vncserver_proxyclient_address</option>
-        configuration options to the internal IP address of the
-        controller node:</para>
-      <screen os="fedora;rhel;centos;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT my_ip 192.168.0.10</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT vncserver_listen 192.168.0.10</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT vncserver_proxyclient_address 192.168.0.10</userinput></screen>
-      <para os="ubuntu">Edit the
-          <filename>/etc/nova/nova.conf</filename> file and add these
-        lines to the <literal>[DEFAULT]</literal> section:</para>
-      <para os="debian">In Debian, the <package>debconf</package>
-        package automatically sets up <literal>my_ip</literal>
-        parameter but you must edit the
-          <filename>/etc/nova/nova.conf</filename> file to configure
-        the <option>vncserver_listen</option> and
-          <option>vncserver_proxyclient_address</option> options,
-        which appear at the end of the file:</para>
-      <programlisting os="ubuntu;debian" language="ini">...
-[DEFAULT]
-...
-my_ip=192.168.0.10
-vncserver_listen=192.168.0.10
-vncserver_proxyclient_address=192.168.0.10</programlisting>
     </step>
     <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
       <para>Create a <literal>nova</literal> user that Compute uses to
