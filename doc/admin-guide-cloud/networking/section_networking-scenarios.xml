@@ -312,7 +312,7 @@ bridge_mappings = physnet1:br-ex,physnet2:br-eth1</programlisting>
                 network.<screen><prompt>$</prompt> <userinput>tenant=$(keystone tenant-list|awk '/tenantA/ {print $2}')</userinput>
 <prompt>$</prompt> <userinput>neutron router-create --tenant-id $tenant router01</userinput>
 <prompt>$</prompt> <userinput>neutron router-gateway-set router01 public01</userinput></screen>
-                Then, define private network <literal>net01</literal> using VLAN ID 102 on the
+                Then, define private network <literal>net01</literal> using VLAN ID 101 on the
                 physical switch, along with its subnet, and connect it to the router.
                 <screen><prompt>$</prompt> <userinput>neutron net-create --tenant-id $tenant net01 \
           --provider:network_type vlan \
@@ -329,7 +329,7 @@ bridge_mappings = physnet1:br-ex,physnet2:br-eth1</programlisting>
           --provider:network_type vlan \
           --provider:physical_network physnet2 \
           --provider:segmentation_id 102</userinput>
-<prompt>$</prompt> <userinput>neutron subnet-create --tenant-id $tenant --name net02_subnet01 net01 192.168.101.0/24</userinput>
+<prompt>$</prompt> <userinput>neutron subnet-create --tenant-id $tenant --name net02_subnet01 net01 192.168.102.0/24</userinput>
 <prompt>$</prompt> <userinput>neutron router-interface-add router02 net02_subnet01</userinput></screen></para>
 
         <section xml:id="under_the_hood_openvswitch_scenario2_compute">
