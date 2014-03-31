@@ -1,0 +1,120 @@
+<section xmlns="http://docbook.org/ns/docbook"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+  xml:id="basics-database">
+  <?dbhtml-stop-chunking?>
+  <title>Database</title>
+  <para os="ubuntu;debian;rhel;fedora;centos">Most OpenStack
+    services require a database to store information. These examples
+    use a MySQL database that runs on the controller node. You must
+    install the MySQL database on the controller node. You must
+    install MySQL client software on any additional nodes that
+    access MySQL.</para>
+  <para os="opensuse;sles">Most OpenStack services require a
+    database to store information. This guide uses a MySQL database
+    on SUSE Linux Enterprise Server and a compatible database on
+    openSUSE running on the controller node. This compatible
+    database for openSUSE is MariaDB. You must install the MariaDB
+    database on the controller node. You must install the MariaDB
+    client software on any nodes that access the MariaDB
+    database.</para>
+  <section xml:id="basics-database-controller">
+    <title>Controller setup</title>
+    <para><phrase os="sles">For SUSE Linux Enterprise Server:
+      </phrase> On the controller node, install the MySQL client and
+      server packages, and the Python library.</para>
+    <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install mysql-client mysql python-mysql</userinput></screen>
+    <para os="opensuse">For openSUSE: On the controller node,
+      install the MariaDB client and database server packages,
+      and the MySQL Python library.</para>
+    <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install mariadb-client mariadb python-mysql</userinput></screen>
+    <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install python-mysqldb mysql-server</userinput></screen>
+    <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>yum install mysql mysql-server MySQL-python</userinput></screen>
+    <note os="ubuntu;debian">
+      <para>When you install the server package, you are prompted
+        for the root password for the database. Choose a strong
+        password and remember it.</para>
+    </note>
+    <para>The MySQL configuration requires some changes to work with
+      OpenStack.</para>
+    <procedure>
+      <step>
+        <para os="ubuntu;debian">Edit the
+          <filename>/etc/mysql/my.cnf</filename> file:</para>
+        <para os="opensuse;sles;rhel;fedora;centos">Edit the
+          <filename>/etc/my.cnf</filename> file:</para>
+        <substeps>
+          <step>
+            <para>Under the <literal>[mysqld]</literal> section, set the
+              <literal>bind-address</literal> key to the management IP
+              address of the controller node to enable access by other
+              nodes via the management network:</para>
+            <programlisting>[mysqld]
+...
+bind-address = 192.168.0.10</programlisting>
+          </step>
+          <step>
+            <para>Under the <literal>[mysqld]</literal> section, set the
+              following keys to enable InnoDB, UTF-8 character set, and
+              UTF-8 collation by default:</para>
+            <programlisting>[mysqld]
+...
+default-storage-engine = innodb
+collation-server = utf8_general_ci
+init-connect = 'SET NAMES utf8'
+character-set-server = utf8</programlisting>
+          </step>
+        </substeps>
+      </step>
+    </procedure>
+    <para os="ubuntu;debian">Restart the MySQL service to apply
+      the changes:</para>
+    <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service mysql restart</userinput></screen>
+    <para os="rhel;centos;fedora;opensuse;sles">Start the <phrase
+      os="rhel;fedora;centos">MySQL</phrase>
+      <phrase os="opensuse;sles">MariaDB or MySQL</phrase> database
+      server and set it to start automatically when the system
+      boots.</para>
+    <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>service mysqld start</userinput>
+<prompt>#</prompt> <userinput>chkconfig mysqld on</userinput></screen>
+        <screen os="opensuse;sles"><prompt>#</prompt> <userinput>service mysql start</userinput>
+<prompt>#</prompt> <userinput>chkconfig mysql on</userinput></screen>
+    <para os="rhel;centos;fedora;opensuse;sles">Finally, you should
+      set a root password for your <phrase os="rhel;fedora;centos"
+      >MySQL</phrase>
+      <phrase os="opensuse;sles">MariaDB or MySQL</phrase> database.
+      The OpenStack programs that set up databases and tables prompt
+      you for this password if it is set.</para>
+    <para os="ubuntu;debian;rhel;centos;fedora;opensuse;sles">You must
+      delete the anonymous users that are created when the database is
+      first started. Otherwise, database connection problems occur
+      when you follow the instructions in this guide. To do this, use
+      the <command>mysql_secure_installation</command> command.
+      Note that if <command>mysql_secure_installation</command> fails
+      you might need to use <command>mysql_install_db</command> first:</para>
+    <screen os="ubuntu;debian;rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>mysql_install_db</userinput>
+<prompt>#</prompt> <userinput>mysql_secure_installation</userinput></screen>
+    <para><phrase os="rhel;centos;fedora;opensuse;sles">If you have
+      not already set a root database password, press
+      <keycap>ENTER</keycap> when you are prompted for the
+      password.</phrase> This command presents a number of options
+      for you to secure your database installation. Respond
+      <userinput>yes</userinput> to all prompts unless you have a
+      good reason to do otherwise.</para>
+  </section>
+  <section xml:id="basics-database-node">
+    <title>Node setup</title>
+    <para>On all nodes other than the controller node, install the
+      <phrase os="ubuntu;debian;rhel;fedora;centos"
+      >MySQL</phrase>
+      <phrase os="opensuse">MariaDB (on openSUSE)</phrase> client
+      and the MySQL Python library on any system that does not
+      host a MySQL database:</para>
+    <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install python-mysqldb</userinput></screen>
+    <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>yum install mysql MySQL-python</userinput></screen>
+    <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install mariadb-client python-mysql</userinput></screen>
+    <para os="sles">For SUSE Linux Enterprise, install
+      MySQL:</para>
+    <screen os="sles"><prompt>#</prompt> <userinput>zypper install mysql-client python-mysql</userinput></screen>
+  </section>
+</section>

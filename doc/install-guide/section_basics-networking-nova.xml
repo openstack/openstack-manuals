@@ -1,0 +1,197 @@
+<section xmlns="http://docbook.org/ns/docbook"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+  xml:id="basics-networking-nova">
+  <?dbhtml-stop-chunking?>
+  <title>Legacy networking</title>
+  <para>The example architecture with legacy networking (nova) requires one
+    controller node and at least one compute node. The controller node
+    contains one network interface on the
+    <glossterm>management network</glossterm>. The compute node contains
+    one network interface on the management network and one on the
+    <glossterm>external network</glossterm>.</para>
+  <figure>
+    <title>Two-node architecture with legacy networking</title>
+    <mediaobject>
+      <imageobject>
+        <imagedata contentwidth="6in"
+          fileref="figures/installguide_arch-nova.png"/>
+        </imageobject>
+    </mediaobject>
+  </figure>
+  <para>Unless you intend to use the exact configuration provided in this
+    example architecture, you must modify the networks in this procedure to
+    match your environment. Also, each node must resolve the other nodes
+    by name in addition to IP address. For example, the
+    <replaceable>controller</replaceable> name must resolve to
+    <literal>10.0.0.11</literal>, the IP address of the management
+    interface on the controller node.</para>
+  <warning>
+    <para>Reconfiguring network interfaces will interrupt network
+      connectivity. We recommend using a local terminal session for these
+      procedures.</para>
+  </warning>
+  <section xml:id="basics-networking-nova-controller-node">
+    <title>Controller node</title>
+    <procedure>
+      <title>To configure networking:</title>
+      <step>
+        <para>Configure the management interface:</para>
+        <para>IP address: 10.0.0.11</para>
+        <para>Network mask: 255.255.255.0 (or /24)</para>
+        <para>Default gateway: 10.0.0.1</para>
+      </step>
+    </procedure>
+    <procedure>
+      <title>To configure name resolution:</title>
+      <step>
+        <para>Edit the <filename>/etc/hosts</filename> file to contain the
+          following:</para>
+        <programlisting># controller
+10.0.0.11       controller
+
+# compute1
+10.0.0.31       compute1</programlisting>
+        <warning os="ubuntu;debian">
+          <para>You must remove or comment the line beginning with
+            <literal>127.0.1.1</literal>.</para>
+        </warning>
+      </step>
+    </procedure>
+  </section>
+  <section xml:id="basics-networking-node-compute-node">
+    <title>Compute node</title>
+    <procedure>
+      <title>To configure networking:</title>
+      <step>
+        <para>Configure the management interface:</para>
+        <para>IP address: 10.0.0.31</para>
+        <para>Network mask: 255.255.255.0 (or /24)</para>
+        <para>Default gateway: 10.0.0.1</para>
+        <note>
+          <para>Additional compute nodes should use 10.0.0.32, 10.0.0.33,
+            and so on.</para>
+        </note>
+      </step>
+      <step>
+        <para>The external interface uses a special configuration without an
+          IP address assigned to it. Configure the external interface:</para>
+        <substeps>
+          <step os="ubuntu;debian">
+            <para>Edit the <filename>/etc/network/interfaces</filename> file
+              to contain the following:</para>
+            <programlisting># The external network interface
+auto eth1
+iface eth1 inet manual
+        up ip link set dev $IFACE up
+        down ip link set dev $IFACE down</programlisting>
+          </step>
+          <step os="rhel;centos;fedora">
+            <para>Edit the
+              <filename>/etc/sysconfig/network-scripts/ifcfg-eth1</filename>
+              file to contain the following:</para>
+            <para>Do not change the <literal>HWADDR</literal> and
+              <literal>UUID</literal> keys.</para>
+            <programlisting>DEVICE=eth1
+TYPE=Ethernet
+ONBOOT="yes"
+BOOTPROTO="none"</programlisting>
+          </step>
+          <step os="sles;opensuse">
+            <para>Edit the
+              <filename>/etc/sysconfig/network/ifcfg-eth1</filename> file to
+              contain the following:</para>
+            <programlisting>STARTMODE='auto'
+BOOTPROTO='static'</programlisting>
+              </step>
+            </substeps>
+          </step>
+          <step>
+        <para>Restart networking:</para>
+        <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service networking stop &amp;&amp; service networking start</userinput></screen>
+        <screen os="rhel;centos;fedora;sles;opensuse"><prompt>#</prompt> <userinput>service network restart</userinput></screen>
+      </step>
+    </procedure>
+    <procedure>
+      <title>To configure name resolution:</title>
+      <step>
+        <para>Edit the <filename>/etc/hosts</filename> file to contain the
+          following:</para>
+        <programlisting># compute1
+10.0.0.31       compute1
+
+# controller
+10.0.0.11       controller</programlisting>
+        <warning os="ubuntu;debian">
+          <para>You must remove or comment the line beginning with
+            <literal>127.0.1.1</literal>.</para>
+        </warning>
+      </step>
+    </procedure>
+  </section>
+  <section xml:id="basics-networking-nova-verify">
+  <title>Verify connectivity</title>
+    <para>We recommend that you verify network connectivity to the internet
+      and among the nodes before proceeding further.</para>
+    <procedure>
+      <step>
+        <para>From the <emphasis>controller</emphasis> node,
+          <command>ping</command> a site on the internet:</para>
+        <screen><prompt>#</prompt> <userinput>ping -c 4 openstack.org</userinput>
+<computeroutput>PING openstack.org (174.143.194.225) 56(84) bytes of data.
+64 bytes from 174.143.194.225: icmp_seq=1 ttl=54 time=18.3 ms
+64 bytes from 174.143.194.225: icmp_seq=2 ttl=54 time=17.5 ms
+64 bytes from 174.143.194.225: icmp_seq=3 ttl=54 time=17.5 ms
+64 bytes from 174.143.194.225: icmp_seq=4 ttl=54 time=17.4 ms
+
+--- openstack.org ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 3022ms
+rtt min/avg/max/mdev = 17.489/17.715/18.346/0.364 ms</computeroutput></screen>
+      </step>
+      <step>
+        <para>From the <emphasis>controller</emphasis> node,
+        <command>ping</command> the management interface on the
+        <emphasis>compute</emphasis> node:</para>
+        <screen><prompt>#</prompt> <userinput>ping -c 4 <replaceable>compute1</replaceable></userinput>
+<computeroutput>PING compute1 (10.0.0.31) 56(84) bytes of data.
+64 bytes from compute1 (10.0.0.31): icmp_seq=1 ttl=64 time=0.263 ms
+64 bytes from compute1 (10.0.0.31): icmp_seq=2 ttl=64 time=0.202 ms
+64 bytes from compute1 (10.0.0.31): icmp_seq=3 ttl=64 time=0.203 ms
+64 bytes from compute1 (10.0.0.31): icmp_seq=4 ttl=64 time=0.202 ms
+
+--- compute1 ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 3000ms
+rtt min/avg/max/mdev = 0.202/0.217/0.263/0.030 ms</computeroutput></screen>
+      </step>
+      <step>
+        <para>From the <emphasis>compute</emphasis> node,
+          <command>ping</command> a site on the internet:</para>
+        <screen><prompt>#</prompt> <userinput>ping -c 4 openstack.org</userinput>
+<computeroutput>PING openstack.org (174.143.194.225) 56(84) bytes of data.
+64 bytes from 174.143.194.225: icmp_seq=1 ttl=54 time=18.3 ms
+64 bytes from 174.143.194.225: icmp_seq=2 ttl=54 time=17.5 ms
+64 bytes from 174.143.194.225: icmp_seq=3 ttl=54 time=17.5 ms
+64 bytes from 174.143.194.225: icmp_seq=4 ttl=54 time=17.4 ms
+
+--- openstack.org ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 3022ms
+rtt min/avg/max/mdev = 17.489/17.715/18.346/0.364 ms</computeroutput></screen>
+      </step>
+      <step>
+        <para>From the <emphasis>compute</emphasis> node,
+          <command>ping</command> the management interface on the
+          <emphasis>controller</emphasis> node:</para>
+        <screen><prompt>#</prompt> <userinput>ping -c 4 <replaceable>controller</replaceable></userinput>
+<computeroutput>PING controller (10.0.0.11) 56(84) bytes of data.
+64 bytes from controller (10.0.0.11): icmp_seq=1 ttl=64 time=0.263 ms
+64 bytes from controller (10.0.0.11): icmp_seq=2 ttl=64 time=0.202 ms
+64 bytes from controller (10.0.0.11): icmp_seq=3 ttl=64 time=0.203 ms
+64 bytes from controller (10.0.0.11): icmp_seq=4 ttl=64 time=0.202 ms
+
+--- controller ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 3000ms
+rtt min/avg/max/mdev = 0.202/0.217/0.263/0.030 ms</computeroutput></screen>
+      </step>
+    </procedure>
+  </section>
+</section>

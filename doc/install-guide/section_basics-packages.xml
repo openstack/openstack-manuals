@@ -1,0 +1,160 @@
+<section xmlns="http://docbook.org/ns/docbook"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+  xml:id="basics-packages">
+  <?dbhtml-stop-chunking?>
+  <title>OpenStack packages</title>
+  <para>Distributions might release OpenStack packages as part of
+    their distribution or through other methods because the
+    OpenStack and distribution release times are independent of each
+    other.</para>
+  <para>This section describes the configuration you must
+    complete after you configure machines to install the latest
+    OpenStack packages.</para>
+  <para os="fedora;centos;rhel">The examples in this guide use the
+    OpenStack packages from the RDO repository. These packages work
+    on Red Hat Enterprise Linux 6, compatible versions of CentOS,
+    and Fedora 20. To enable the RDO repository, download and
+    install the <package>rdo-release-icehouse</package>
+    package.</para>
+  <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>yum install http://repos.fedorapeople.org/repos/openstack/openstack-icehouse/rdo-release-icehouse-1.noarch.rpm</userinput></screen>
+  <para os="fedora;centos;rhel">The EPEL package includes GPG keys
+    for package signing and repository information. This should only
+    be installed on Red Hat Enterprise Linux and CentOS, not Fedora.
+    Install the latest <package>epel-release</package> package (see
+    <link
+    xlink:href="http://download.fedoraproject.org/pub/epel/6/x86_64/repoview/epel-release.html"
+    >http://download.fedoraproject.org/pub/epel/6/x86_64/repoview/epel-release.html</link>).
+    For example:</para>
+  <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>yum install http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm</userinput></screen>
+  <para os="fedora;centos;rhel">The
+    <package>openstack-utils</package> package contains utility
+    programs that make installation and configuration easier. These
+    programs are used throughout this guide. Install
+    <package>openstack-utils</package>. This verifies that you can
+    access the RDO repository.</para>
+  <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>yum install openstack-utils</userinput></screen>
+  <para os="opensuse;sles">Use the Open Build Service repositories
+    for <glossterm>Icehouse</glossterm> based on your openSUSE or
+    SUSE Linux Enterprise
+    Server version, for example if you run openSUSE 12.3 use:</para>
+  <screen os="opensuse"><prompt>#</prompt> <userinput>zypper addrepo -f obs://Cloud:OpenStack:Icehouse/openSUSE_12.3 Icehouse</userinput></screen>
+  <para os="opensuse">For openSUSE 13.1 use:</para>
+  <screen os="opensuse"><prompt>#</prompt> <userinput>zypper addrepo -f obs://Cloud:OpenStack:Icehouse/openSUSE_13.1 Icehouse</userinput></screen>
+  <para os="sles">If you use SUSE Linux Enterprise Server 11 SP3,
+    use:</para>
+  <screen os="sles"><prompt>#</prompt> <userinput>zypper addrepo -f obs://Cloud:OpenStack:Icehouse/SLE_11_SP3 Icehouse</userinput></screen>
+  <para os="opensuse;sles">The <package>openstack-utils</package>
+    package contains utility programs that make installation and
+    configuration easier. These programs are used throughout this
+    guide. Install <package>openstack-utils</package>. This verifies
+    that you can access the Open Build Service repository:</para>
+  <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-utils</userinput></screen>
+  <warning os="fedora;centos;rhel;opensuse;sles">
+    <para>The <application>openstack-config</application> program
+      in the <package>openstack-utils</package> package uses
+      <application>crudini</application> to manipulate configuration
+      files. However, <application>crudini</application> version 0.3
+      does not support multi valued options. See
+      <link
+      xlink:href="https://bugs.launchpad.net/openstack-manuals/+bug/1269271"
+      >https://bugs.launchpad.net/openstack-manuals/+bug/1269271</link>.
+      As a work around, you must manually set any multi valued
+      options or the new value overwrites the previous value instead
+      of creating a new option.</para>
+  </warning>
+  <para os="fedora;centos;rhel">The
+    <package>openstack-selinux</package> package includes the
+    policy files that are required to configure SELinux during
+    OpenStack installation.
+    Install <package>openstack-selinux</package>.</para>
+  <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>yum install openstack-selinux</userinput></screen>
+  <para os="fedora;centos;rhel;opensuse;sles">Upgrade your system packages:</para>
+  <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>yum upgrade</userinput></screen>
+  <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper refresh</userinput>
+<prompt>#</prompt> <userinput>zypper update</userinput></screen>
+  <para os="fedora;centos;rhel;opensuse;sles">If the upgrade included a new
+    kernel package, reboot the system to ensure the new kernel is running:</para>
+  <screen os="fedora;centos;rhel;opensuse;sles"><prompt>#</prompt> <userinput>reboot</userinput></screen>
+  <procedure xml:id="ubuntu-cloud-archive" os="ubuntu">
+    <title>To use the Ubuntu Cloud Archive for Icehouse</title>
+    <para>The <link
+      xlink:href="https://wiki.ubuntu.com/ServerTeam/CloudArchive"
+      >Ubuntu Cloud Archive</link> is a special repository that
+      allows you to install newer releases of OpenStack on the
+      stable supported version of Ubuntu.</para>
+    <step>
+      <para>Install the Ubuntu Cloud Archive for
+        <glossterm>Icehouse</glossterm>:
+      <screen><prompt>#</prompt> <userinput>apt-get install python-software-properties</userinput>
+<prompt>#</prompt> <userinput>add-apt-repository cloud-archive:icehouse</userinput></screen></para>
+    </step>
+    <step>
+      <para>Update the package database, upgrade your system, and reboot
+        for all changes to take effect:
+      <screen><prompt>#</prompt> <userinput>apt-get update &amp;&amp; apt-get dist-upgrade</userinput>
+<prompt>#</prompt> <userinput>reboot</userinput> </screen></para>
+    </step>
+  </procedure>
+  <procedure xml:id="debian-cloud-archive" os="debian">
+    <title>To use the Debian Wheezy backports archive for
+      Icehouse</title>
+    <para>The <glossterm>Icehouse</glossterm> release is available
+      only in Debian Sid
+      (otherwise called Unstable). However, the Debian maintainers
+      of OpenStack also maintain a non-official Debian repository
+      for OpenStack containing Wheezy backports.</para>
+    <step>
+      <para>Install the Debian Wheezy backport repository
+        Icehouse:</para>
+      <screen><prompt>#</prompt> <userinput>echo "deb http://archive.gplhost.com/debian icehouse-backports main" >>/etc/apt/sources.list</userinput></screen>
+    </step>
+    <step>
+      <para>Install the Debian Wheezy OpenStack repository for
+        Icehouse:</para>
+      <screen><prompt>#</prompt> <userinput>echo "deb http://archive.gplhost.com/debian icehouse main" >>/etc/apt/sources.list</userinput></screen>
+    </step>
+    <step>
+      <para>Update the repository database and install the key:</para>
+      <screen><prompt>#</prompt> <userinput>apt-get update &amp;&amp; apt-get install gplhost-archive-keyring</userinput></screen>
+    </step>
+    <step>
+      <para>Update the package database, upgrade your system, and reboot
+        for all changes to take effect:</para>
+      <screen><prompt>#</prompt> <userinput>apt-get update &amp;&amp; apt-get dist-upgrade</userinput>
+<prompt>#</prompt> <userinput>reboot</userinput></screen>
+    </step>
+  </procedure>
+  <para os="debian">Numerous archive.gplhost.com mirrors are
+    available around the world. All are available with both FTP and
+    HTTP protocols (you should use the closest mirror). The list of
+    mirrors is available at <link
+    xlink:href="http://archive.gplhost.com/readme.mirrors"
+    >http://archive.gplhost.com/readme.mirrors</link>.</para>
+  <section xml:id="basics-argparse" os="debian">
+    <title>Manually install python-argparse</title>
+    <para>The Debian OpenStack packages are maintained on Debian Sid
+      (also known as Debian Unstable) - the current development
+      version. Backported packages run correctly on Debian Wheezy with
+      one caveat:</para>
+    <para>All OpenStack packages are written in Python. Wheezy uses
+      Python 2.6 and 2.7, with Python 2.6 as the default interpreter;
+      Sid has only Python 2.7. There is one packaging change between
+      these two. In Python 2.6, you installed the
+        <package>python-argparse</package> package separately. In
+      Python 2.7, this package is installed by default. Unfortunately,
+      in Python 2.7, this package does not include <code>Provides:
+        python-argparse</code> directive.</para>
+    <para>Because the packages are maintained in Sid where the
+        <code>Provides: python-argparse</code> directive causes an
+      error, and the Debian OpenStack maintainer wants to maintain one
+      version of the OpenStack packages, you must manually install the
+        <package>python-argparse</package> on each OpenStack system
+      that runs Debian Wheezy before you install the other OpenStack
+      packages. Use the following command to install the
+      package:</para>
+    <screen><prompt>#</prompt> <userinput>apt-get install python-argparse</userinput></screen>
+    <para>This caveat applies to most OpenStack packages in
+      Wheezy.</para>
+  </section>
+</section>

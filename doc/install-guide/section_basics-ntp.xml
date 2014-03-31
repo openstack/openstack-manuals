@@ -1,0 +1,31 @@
+<section xmlns="http://docbook.org/ns/docbook"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+  xml:id="basics-ntp">
+  <?dbhtml-stop-chunking?>
+  <title>Network Time Protocol (NTP)</title>
+  <para>To synchronize services across multiple machines, you must
+    install <glossterm baseform="Network Time Protocol (NTP)">NTP</glossterm>.
+    The examples in this guide configure the controller
+    node as the reference server and any additional nodes to set
+    their time from the controller node.</para>
+  <para>Install the <literal>ntp</literal> package on each system
+    running OpenStack services.</para>
+  <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install ntp</userinput></screen>
+  <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>yum install ntp</userinput></screen>
+  <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install ntp</userinput></screen>
+  <para os="rhel;fedora;centos;opensuse;sles">Set up the NTP server
+    on your controller node so that it receives data by modifying
+    the <filename>ntp.conf</filename> file and restarting the
+    service.</para>
+  <screen os="rhel;fedora;centos;opensuse;sles"><prompt>#</prompt> <userinput>service ntpd start</userinput>
+<prompt>#</prompt> <userinput>chkconfig ntpd on</userinput></screen>
+  <screen os="opensuse;sles"><prompt>#</prompt> <userinput>service ntp start</userinput>
+<prompt>#</prompt> <userinput>chkconfig ntp on</userinput></screen>
+  <para>On additional nodes, it is advised that you configure the
+    other nodes to synchronize their time from the controller node
+    rather than from outside of your LAN. To do so, install the ntp
+    daemon as above, then edit <filename>/etc/ntp.conf</filename>
+    and change the <code>server</code> directive to use the
+    controller node as internet time source.</para>
+</section>

@@ -1,0 +1,63 @@
+<section xmlns="http://docbook.org/ns/docbook"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+  xml:id="basics-prerequisites">
+  <?dbhtml-stop-chunking?>
+  <title>Before you begin</title>
+  <para>For a functional environment, OpenStack doesn't require a
+    significant amount of resources. We recommend that your environment meets
+    or exceeds the following minimum requirements which can support several
+    minimal <glossterm>CirrOS</glossterm> instances:</para>
+  <itemizedlist>
+    <listitem>
+      <para>Controller Node: 1 processor, 2 GB memory, and 5 GB
+        storage</para>
+    </listitem>
+    <listitem>
+      <para>Network Node: 1 processor, 512 MB memory, and 5 GB
+        storage</para>
+    </listitem>
+    <listitem>
+      <para>Compute Node: 1 processor, 2 GB memory, and 10 GB
+        storage</para>
+    </listitem>
+  </itemizedlist>
+  <para>To minimize clutter and provide more resources for OpenStack, we
+    recommend a minimal installation of your Linux distribution. Also, we
+    strongly recommend that you install a 64-bit version of your distribution
+    on at least the compute node. If you install a 32-bit version of your
+    distribution on the compute node, attempting to start an instance using
+    a 64-bit image will fail.</para>
+  <note>
+    <para>A single disk partition on each node works for most basic
+      installations. However, you should consider
+      <glossterm>Logical Volume Manager (LVM)</glossterm> for installations
+      with optional services such as Block Storage.</para>
+  </note>
+  <para>Many users build their test environments on
+    <glossterm baseform="virtual machine (VM)">virtual machines
+    (VMs)</glossterm>. The primary benefits of VMs include the
+    following:</para>
+  <itemizedlist>
+    <listitem>
+      <para>One physical server can support multiple nodes, each with almost
+        any number of network interfaces.</para>
+    </listitem>
+    <listitem>
+      <para>Ability to take periodic "snap shots" throughout the installation
+        process and "roll back" to a working configuration in the event of
+        a problem.</para>
+    </listitem>
+  </itemizedlist>
+  <para>However, VMs will reduce performance of your instances, particularly
+    if your hypervisor and/or processor lacks support for hardware
+    acceleration of nested VMs.</para>
+  <note>
+    <para>If you choose to install on VMs, make sure your hypervisor
+      permits <glossterm>promiscuous mode</glossterm> on the
+      <glossterm>external network</glossterm>.</para>
+  </note>
+  <para>For more information about system requirements, see the <link
+    xlink:href="http://docs.openstack.org/ops/">OpenStack Operations
+    Guide</link>.</para>
+</section>
