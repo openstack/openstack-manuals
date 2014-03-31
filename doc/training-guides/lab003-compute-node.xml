@@ -156,14 +156,14 @@ auth_tcp = "none"</programlisting></para>
       <para>Edit <filename>/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename></para>
       <para><programlisting>#Under the database section
 [database]
-connection = mysql://neutronUser:neutronPass@192.168.1.51/neutron
+connection = mysql://neutronUser:neutronPass@192.168.100.51/neutron
 #Under the OVS section
 [ovs]
 tenant_network_type = gre
 tunnel_id_ranges = 1:1000
 integration_bridge = br-int
 tunnel_bridge = br-tun
-local_ip = 10.0.0.11
+local_ip = 10.10.10.53
 enable_tunneling = True
 tunnel_type=gre
 [agent]
@@ -175,10 +175,10 @@ neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver</programli
     </listitem>
     <listitem>
       <para>Edit <filename>/etc/neutron/neutron.conf</filename></para>
-      <para><programlisting>rabbit_host = 192.168.1.51
+      <para><programlisting>rabbit_host = 192.168.100.51
 #And update the keystone_authtoken section
 [keystone_authtoken]
-auth_host = 192.168.1.51
+auth_host = 192.168.100.51
 auth_port = 35357
 auth_protocol = http
 admin_tenant_name = service
@@ -186,7 +186,7 @@ admin_user = quantum
 admin_password = service_pass
 signing_dir = /var/lib/quantum/keystone-signing
 [database]
-connection = mysql://neutronUser:neutronPass@192.168.1.51/neutron</programlisting></para>
+connection = mysql://neutronUser:neutronPass@192.168.100.51/neutron</programlisting></para>
     </listitem>
     <listitem>
       <para>Restart all the services:</para>
@@ -208,7 +208,7 @@ connection = mysql://neutronUser:neutronPass@192.168.1.51/neutron</programlistin
       <para>Edit <filename>/etc/nova/api-paste.ini</filename></para>
       <para><programlisting>[filter:authtoken]
 paste.filter_factory = keystoneclient.middleware.auth_token:filter_factory
-auth_host = 192.168.1.51
+auth_host = 192.168.100.51
 auth_port = 35357
 auth_protocol = http
 admin_tenant_name = service
@@ -236,30 +236,30 @@ lock_path=/run/lock/nova
 verbose=True
 api_paste_config=/etc/nova/api-paste.ini
 compute_scheduler_driver=nova.scheduler.simple.SimpleScheduler
-rabbit_host=192.168.1.51
-nova_url=http://192.168.1.51:8774/v1.1/
-sql_connection=mysql://novaUser:novaPass@192.168.1.51/nova
+rabbit_host=192.168.100.51
+nova_url=http://192.168.100.51:8774/v1.1/
+sql_connection=mysql://novaUser:novaPass@192.168.100.51/nova
 root_helper=sudo nova-rootwrap /etc/nova/rootwrap.conf
 # Auth
 use_deprecated_auth=false
 auth_strategy=keystone
 # Imaging service
-glance_api_servers=192.168.1.51:9292
+glance_api_servers=192.168.100.51:9292
 image_service=nova.image.glance.GlanceImageService
 # Vnc configuration
 novnc_enabled=true
-novncproxy_base_url=http://192.168.1.51:6080/vnc_auto.html
+novncproxy_base_url=http://192.168.100.51:6080/vnc_auto.html
 novncproxy_port=6080
-vncserver_proxyclient_address=10.0.0.11
+vncserver_proxyclient_address=10.10.10.53
 vncserver_listen=0.0.0.0
 # Network settings
 network_api_class=nova.network.neutronv2.api.API
-neutron_url=http://192.168.1.51:9696
+neutron_url=http://192.168.100.51:9696
 neutron_auth_strategy=keystone
 neutron_admin_tenant_name=service
 neutron_admin_username=neutron
 neutron_admin_password=service_pass
-neutron_admin_auth_url=http://192.168.1.51:35357/v2.0
+neutron_admin_auth_url=http://192.168.100.51:35357/v2.0
 libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtHybridOVSBridgeDriver
 linuxnet_interface_driver=nova.network.linux_net.LinuxOVSInterfaceDriver
 #If you want Neutron + Nova Security groups
