@@ -688,10 +688,8 @@ iface eth1 inet dhcp</programlisting>
                     </listitem>
                     <listitem><para>Ensure the NAT rules have been added to <systemitem>iptables</systemitem> on the node that
                             <systemitem>nova-network</systemitem> is running on, as root:</para>
-                        <screen><prompt>#</prompt> <userinput>iptables -L -nv</userinput>
-<computeroutput>-A nova-network-OUTPUT -d 68.99.26.170/32 -j DNAT --to-destination 10.0.0.3</computeroutput></screen>
                         <screen><prompt>#</prompt> <userinput>iptables -L -nv -t nat</userinput>
-<computeroutput>-A nova-network-PREROUTING -d 68.99.26.170/32 -j DNAT --to-destination10.0.0.3
+<computeroutput>-A nova-network-PREROUTING -d 68.99.26.170/32 -j DNAT --to-destination 10.0.0.3
 -A nova-network-floating-snat -s 10.0.0.3/32 -j SNAT --to-source 68.99.26.170</computeroutput></screen></listitem>
                     <listitem><para>Check that the public address, in this example "68.99.26.170", has been added to your public
                         interface. You should see the address in the listing when you enter "ip
