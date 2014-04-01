@@ -165,7 +165,7 @@
             <para>For the VNX iSCSI driver, add the following entries, where
                 <literal>10.10.61.35</literal> is the IP address
                 of the VNX iSCSI target, <literal>10.10.72.41</literal>
-                is the IP address of the VNX array,
+                is the IP address of the VNX array (SPA or SPB),
                 <systemitem>default_timeout</systemitem> is the default
                 time out for CLI operations in minutes, and
                 <systemitem>max_luns_per_storage_group</systemitem> is
@@ -173,7 +173,7 @@
             <programlisting language="ini">
 iscsi_ip_address = 10.10.61.35
 san_ip = 10.10.72.41
-san_login = username
+san_login = global_username
 san_password = password
 naviseccli_path = /opt/Navisphere/bin/naviseccli
 storage_vnx_pool_name = poolname
@@ -181,6 +181,12 @@ default_timeout = 10
 max_luns_per_storage_group=256
 volume_driver=cinder.volume.drivers.emc.emc_cli_iscsi.EMCCLIISCSIDriver
 </programlisting>
+            <note>
+                <para>To find out <literal>max_luns_per_storage_group
+                </literal> for each VNX model, refer to the
+                <link xlink:href="https://support.emc.com/search/?text=White%20Paper%20Introduction%20to%20the%20VNX%20Series">EMC's support</link> web site (login is required).
+                </para>
+            </note>
             <para>Restart the <systemitem class="service"
                     >cinder-volume</systemitem> service.</para>
         </section>
