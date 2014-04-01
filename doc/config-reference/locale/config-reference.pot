@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-03-31 06:26+0000\n"
+"POT-Creation-Date: 2014-04-01 06:25+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -87,6 +87,10 @@ msgstr ""
 
 #: ./doc/config-reference/ch_config-overview.xml:23(para)
 msgid "OpenStack Object Storage"
+msgstr ""
+
+#: ./doc/config-reference/ch_config-overview.xml:25(para) ./doc/config-reference/ch_orchestrationconfigure.xml:10(title)
+msgid "Orchestration"
 msgstr ""
 
 #: ./doc/config-reference/ch_databaseserviceconfigure.xml:11(para)
@@ -691,6 +695,18 @@ msgstr ""
 
 #: ./doc/config-reference/ch_networkingconfigure.xml:11(para)
 msgid "This chapter explains the OpenStack Networking configuration options. For installation prerequisites, steps, and use cases, see the <citetitle>OpenStack Installation Guide</citetitle> for your distribution (<link href=\"docs.openstack.org\">docs.openstack.org</link>) and <citetitle><link href=\"http://docs.openstack.org/admin-guide-cloud/content/\">Cloud Administrator Guide</link></citetitle>."
+msgstr ""
+
+#: ./doc/config-reference/ch_orchestrationconfigure.xml:11(para)
+msgid "The Orchestration service is designed to manage the lifecycle of infrastructure and applications within OpenStack clouds. Its various agents and services are configured in the <filename>/etc/heat/heat.conf</filename> file."
+msgstr ""
+
+#: ./doc/config-reference/ch_orchestrationconfigure.xml:15(para)
+msgid "To install Orchestration, see the <citetitle>OpenStack Installation Guide</citetitle> for your distribution (<link href=\"docs.openstack.org\">docs.openstack.org</link>)."
+msgstr ""
+
+#: ./doc/config-reference/ch_orchestrationconfigure.xml:19(para)
+msgid "The following tables provide a comprehensive list of the Orchestration configuration options."
 msgstr ""
 
 #: ./doc/config-reference/compute/section_compute-configure-xen.xml:10(title) ./doc/config-reference/compute/section_compute-configure-xen.xml:75(title)
@@ -3688,6 +3704,90 @@ msgstr ""
 msgid "metadata_agent.ini"
 msgstr ""
 
+#: ./doc/config-reference/orchestration/section_orchestration-rpc.xml:11(title) ./doc/config-reference/database-service/section-databaseservice-rpc.xml:11(title)
+msgid "Configure the RPC messaging system"
+msgstr ""
+
+#: ./doc/config-reference/orchestration/section_orchestration-rpc.xml:12(para)
+msgid "OpenStack projects use an open standard for messaging middleware known as AMQP. This messaging middleware enables the OpenStack services that run on multiple servers to talk to each other. OpenStack Oslo RPC supports three implementations of AMQP: <application>RabbitMQ</application>, <application>Qpid</application>, and <application>ZeroMQ</application>."
+msgstr ""
+
+#: ./doc/config-reference/orchestration/section_orchestration-rpc.xml:21(title) ./doc/config-reference/database-service/section-databaseservice-rpc.xml:21(title)
+msgid "Configure RabbitMQ"
+msgstr ""
+
+#: ./doc/config-reference/orchestration/section_orchestration-rpc.xml:23(para)
+msgid "OpenStack Oslo RPC uses <application>RabbitMQ</application> by default. Use these options to configure the <application>RabbitMQ</application> message system. The <option>rpc_backend</option> option is optional as long as <application>RabbitMQ</application> is the default messaging system. However, if it is included in the configuration, you must set it to <literal>heat.openstack.common.rpc.impl_kombu</literal>."
+msgstr ""
+
+#: ./doc/config-reference/orchestration/section_orchestration-rpc.xml:35(para)
+msgid "Use these options to configure the <application>RabbitMQ</application> messaging system. You can configure messaging communication for different installation scenarios, tune retries for RabbitMQ, and define the size of the RPC thread pool. To monitor notifications through RabbitMQ, you must set the <option>notification_driver</option> option to <literal>heat.notifier.rabbit_notifier</literal> in the <filename>heat.conf</filename> file:"
+msgstr ""
+
+#: ./doc/config-reference/orchestration/section_orchestration-rpc.xml:46(title) ./doc/config-reference/database-service/section-databaseservice-rpc.xml:28(title)
+msgid "Configure Qpid"
+msgstr ""
+
+#: ./doc/config-reference/orchestration/section_orchestration-rpc.xml:47(para)
+msgid "Use these options to configure the <application>Qpid</application> messaging system for OpenStack Oslo RPC. <application>Qpid</application> is not the default messaging system, so you must enable it by setting the <option>rpc_backend</option> option in the <filename>heat.conf</filename> file:"
+msgstr ""
+
+#: ./doc/config-reference/orchestration/section_orchestration-rpc.xml:54(para)
+msgid "This critical option points the compute nodes to the <application>Qpid</application> broker (server). Set the <option>qpid_hostname</option> option to the host name where the broker runs in the <filename>heat.conf</filename> file."
+msgstr ""
+
+#: ./doc/config-reference/orchestration/section_orchestration-rpc.xml:60(para)
+msgid "The <option>qpid_hostname</option> option accepts a host name or IP address value."
+msgstr ""
+
+#: ./doc/config-reference/orchestration/section_orchestration-rpc.xml:65(para)
+msgid "If the <application>Qpid</application> broker listens on a port other than the AMQP default of <literal>5672</literal>, you must set the <option>qpid_port</option> option to that value:"
+msgstr ""
+
+#: ./doc/config-reference/orchestration/section_orchestration-rpc.xml:72(para)
+msgid "If you configure the <application>Qpid</application> broker to require authentication, you must add a user name and password to the configuration:"
+msgstr ""
+
+#: ./doc/config-reference/orchestration/section_orchestration-rpc.xml:78(para)
+msgid "By default, TCP is used as the transport. To enable SSL, set the <option>qpid_protocol</option> option:"
+msgstr ""
+
+#: ./doc/config-reference/orchestration/section_orchestration-rpc.xml:83(para)
+msgid "Use these additional options to configure the Qpid messaging driver for OpenStack Oslo RPC. These options are used infrequently."
+msgstr ""
+
+#: ./doc/config-reference/orchestration/section_orchestration-rpc.xml:91(title)
+msgid "Configure ZeroMQ"
+msgstr ""
+
+#: ./doc/config-reference/orchestration/section_orchestration-rpc.xml:92(para)
+msgid "Use these options to configure the <application>ZeroMQ</application> messaging system for OpenStack Oslo RPC. <application>ZeroMQ</application> is not the default messaging system, so you must enable it by setting the <option>rpc_backend</option> option in the <filename>heat.conf</filename> file:"
+msgstr ""
+
+#: ./doc/config-reference/orchestration/section_orchestration-rpc.xml:101(title) ./doc/config-reference/database-service/section-databaseservice-rpc.xml:42(title)
+msgid "Configure messaging"
+msgstr ""
+
+#: ./doc/config-reference/orchestration/section_orchestration-rpc.xml:103(para) ./doc/config-reference/database-service/section-databaseservice-rpc.xml:44(para)
+msgid "Use these common options to configure the <application>RabbitMQ</application>, <application>Qpid</application>, and <application>ZeroMq</application> messaging drivers:"
+msgstr ""
+
+#: ./doc/config-reference/orchestration/section_orchestration-clients.xml:11(title)
+msgid "Configure Clients"
+msgstr ""
+
+#: ./doc/config-reference/orchestration/section_orchestration-clients.xml:12(para)
+msgid "The following options allow configuration of the clients that Orchestration uses to talk to other services."
+msgstr ""
+
+#: ./doc/config-reference/orchestration/section_orchestration-api.xml:11(title)
+msgid "Configure APIs"
+msgstr ""
+
+#: ./doc/config-reference/orchestration/section_orchestration-api.xml:12(para)
+msgid "The following options allow configuration of the APIs that Orchestration supports. Currently this includes compatibility APIs for CloudFormation and CloudWatch and a native API."
+msgstr ""
+
 #: ./doc/config-reference/block-storage/section_backup-drivers.xml:6(title)
 msgid "Backup drivers"
 msgstr ""
@@ -5966,7 +6066,7 @@ msgstr ""
 msgid "For VMAX and VNX FC drivers, add the following entries:"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:234(para) ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:184(para)
+#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:234(para) ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:190(para)
 msgid "Restart the <systemitem class=\"service\">cinder-volume</systemitem> service."
 msgstr ""
 
@@ -6010,7 +6110,7 @@ msgstr ""
 msgid "To attach VMAX volumes to an OpenStack VM, you must create a Masking View by using Unisphere for VMAX. The Masking View must have an Initiator Group that contains the initiator of the OpenStack compute node that hosts the VM."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:287(title) ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:188(title)
+#: ./doc/config-reference/block-storage/drivers/emc-volume-driver.xml:287(title) ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:194(title)
 msgid "Volume type support"
 msgstr ""
 
@@ -7449,30 +7549,34 @@ msgid "Click <guibutton>Register</guibutton>, select <guilabel>CLARiiON/VNX</gui
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:165(para)
-msgid "For the VNX iSCSI driver, add the following entries, where <literal>10.10.61.35</literal> is the IP address of the VNX iSCSI target, <literal>10.10.72.41</literal> is the IP address of the VNX array, <systemitem>default_timeout</systemitem> is the default time out for CLI operations in minutes, and <systemitem>max_luns_per_storage_group</systemitem> is the default max number of LUNs in a storage group:"
+msgid "For the VNX iSCSI driver, add the following entries, where <literal>10.10.61.35</literal> is the IP address of the VNX iSCSI target, <literal>10.10.72.41</literal> is the IP address of the VNX array (SPA or SPB), <systemitem>default_timeout</systemitem> is the default time out for CLI operations in minutes, and <systemitem>max_luns_per_storage_group</systemitem> is the default max number of LUNs in a storage group:"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:189(para)
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:185(para)
+msgid "To find out <literal>max_luns_per_storage_group </literal> for each VNX model, refer to the <link href=\"https://support.emc.com/search/?text=White%20Paper%20Introduction%20to%20the%20VNX%20Series\">EMC's support</link> web site (login is required)."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:195(para)
 msgid "Volume type support allows user to choose thick/thin provisioning capabilities."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:191(para)
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:197(para)
 msgid "Here is an example of how to setup volume type. First create volume types. Then define extra specs for each volume type."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:195(title)
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:201(title)
 msgid "To set up volume types"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:197(para)
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:203(para)
 msgid "Setup volume types:"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:202(para)
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:208(para)
 msgid "Setup volume type extra specs:"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:207(para)
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:213(para)
 msgid "The previous example creates two volume types: <literal>TypeA</literal> and <literal>TypeB</literal>. For <literal>TypeA</literal>, <literal>storagetype:provisioning </literal> is set to <literal>thick</literal>. Similarly for <literal>TypeB</literal>, <literal>storagetype:provisioning </literal> is set to <literal>thin</literal>. If <literal> storagetype:provisioning</literal> is not specified, it will be default to <literal>thick</literal>."
 msgstr ""
 
@@ -7828,24 +7932,12 @@ msgstr ""
 msgid "This example shows the default options for the Swift back-end backup driver."
 msgstr ""
 
-#: ./doc/config-reference/database-service/section-databaseservice-rpc.xml:11(title)
-msgid "Configure the RPC messaging system"
-msgstr ""
-
 #: ./doc/config-reference/database-service/section-databaseservice-rpc.xml:12(para)
 msgid "OpenStack projects use an open standard for messaging middleware known as AMQP. This messaging middleware enables the OpenStack services that run on multiple servers to talk to each other. OpenStack Trove RPC supports three implementations of AMQP: <application>RabbitMQ</application>, <application>Qpid</application>, and <application>ZeroMQ</application>."
 msgstr ""
 
-#: ./doc/config-reference/database-service/section-databaseservice-rpc.xml:21(title)
-msgid "Configure RabbitMQ"
-msgstr ""
-
 #: ./doc/config-reference/database-service/section-databaseservice-rpc.xml:22(para)
 msgid "Use these options to configure the <application>RabbitMQ</application> messaging system:"
-msgstr ""
-
-#: ./doc/config-reference/database-service/section-databaseservice-rpc.xml:28(title)
-msgid "Configure Qpid"
 msgstr ""
 
 #: ./doc/config-reference/database-service/section-databaseservice-rpc.xml:29(para)
@@ -7858,14 +7950,6 @@ msgstr ""
 
 #: ./doc/config-reference/database-service/section-databaseservice-rpc.xml:36(para)
 msgid "Use these options to configure the <application>ZeroMq</application> messaging system:"
-msgstr ""
-
-#: ./doc/config-reference/database-service/section-databaseservice-rpc.xml:42(title)
-msgid "Configure messaging"
-msgstr ""
-
-#: ./doc/config-reference/database-service/section-databaseservice-rpc.xml:44(para)
-msgid "Use these common options to configure the <application>RabbitMQ</application>, <application>Qpid</application>, and <application>ZeroMq</application> messaging drivers:"
 msgstr ""
 
 #: ./doc/config-reference/database-service/section-databaseservice-db.xml:11(title)

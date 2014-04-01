@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-03-31 06:26+0000\n"
+"POT-Creation-Date: 2014-04-01 06:24+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2592,87 +2592,87 @@ msgstr ""
 msgid "Ensure the NAT rules have been added to <systemitem>iptables</systemitem> on the node that <systemitem>nova-network</systemitem> is running on, as root:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-networking-nova.xml:696(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-networking-nova.xml:694(para)
 msgid "Check that the public address, in this example \"68.99.26.170\", has been added to your public interface. You should see the address in the listing when you enter \"ip addr\" at the command prompt."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-networking-nova.xml:706(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-networking-nova.xml:704(para)
 msgid "Note that you cannot SSH to an instance with a public IP from within the same server as the routing configuration won't allow it."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-networking-nova.xml:709(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-networking-nova.xml:707(para)
 msgid "You can use <placeholder-1/> to identify if packets are being routed to the inbound interface on the compute host. If the packets are reaching the compute hosts but the connection is failing, the issue may be that the packet is being dropped by reverse path filtering. Try disabling reverse-path filtering on the inbound interface. For example, if the inbound interface is <literal>eth2</literal>, as root, run:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-networking-nova.xml:715(replaceable)
+#: ./doc/admin-guide-cloud/compute/section_compute-networking-nova.xml:713(replaceable)
 msgid "eth2"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-networking-nova.xml:716(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-networking-nova.xml:714(para)
 msgid "If this solves your issue, add the following line to <filename>/etc/sysctl.conf</filename> so that the reverse-path filter is disabled the next time the compute host reboots: <placeholder-1/>"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-networking-nova.xml:723(title)
+#: ./doc/admin-guide-cloud/compute/section_compute-networking-nova.xml:721(title)
 msgid "Disable firewall"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-networking-nova.xml:724(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-networking-nova.xml:722(para)
 msgid "To help debug networking issues with reaching VMs, you can disable the firewall by setting the following option in <filename>/etc/nova/nova.conf</filename>:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-networking-nova.xml:729(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-networking-nova.xml:727(para)
 msgid "We strongly recommend you remove this line to re-enable the firewall once your networking issues have been resolved."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-networking-nova.xml:734(title)
+#: ./doc/admin-guide-cloud/compute/section_compute-networking-nova.xml:732(title)
 msgid "Packet loss from instances to nova-network server (VLANManager mode)"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-networking-nova.xml:736(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-networking-nova.xml:734(para)
 msgid "If you can SSH to your instances but you find that the network interactions to your instance is slow, or if you find that running certain operations are slower than they should be (for example, <placeholder-1/>), then there may be packet loss occurring on the connection to the instance."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-networking-nova.xml:743(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-networking-nova.xml:741(para)
 msgid "Packet loss can be caused by Linux networking configuration settings related to bridges. Certain settings can cause packets to be dropped between the VLAN interface (for example, <literal>vlan100</literal>) and the associated bridge interface (for example, <literal>br100</literal>) on the host running the <systemitem class=\"service\">nova-network</systemitem> service."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-networking-nova.xml:752(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-networking-nova.xml:750(para)
 msgid "One way to check whether this is the issue in your setup, is to open up three terminals and run the following commands:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-networking-nova.xml:757(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-networking-nova.xml:755(para)
 msgid "In the first terminal, on the host running nova-network, use <placeholder-1/> on the VLAN interface to monitor DNS-related traffic (UDP, port 53). As root, run:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-networking-nova.xml:762(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-networking-nova.xml:760(para)
 msgid "In the second terminal, also on the host running nova-network, use <placeholder-1/> to monitor DNS-related traffic on the bridge interface. As root, run:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-networking-nova.xml:766(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-networking-nova.xml:764(para)
 msgid "In the third terminal, SSH inside of the instance and generate DNS requests by using the <placeholder-1/> command:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-networking-nova.xml:770(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-networking-nova.xml:768(para)
 msgid "The symptoms may be intermittent, so try running <placeholder-1/> multiple times. If the network configuration is correct, the command should return immediately each time. If it is not functioning properly, the command hangs for several seconds."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-networking-nova.xml:776(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-networking-nova.xml:774(para)
 msgid "If the <placeholder-1/> command sometimes hangs, and there are packets that appear in the first terminal but not the second, then the problem may be due to filtering done on the bridges. Try to disable filtering, run the following commands as root:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-networking-nova.xml:783(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-networking-nova.xml:781(para)
 msgid "If this solves your issue, add the following line to <filename>/etc/sysctl.conf</filename> so that these changes take effect the next time the host reboots:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-networking-nova.xml:793(title)
+#: ./doc/admin-guide-cloud/compute/section_compute-networking-nova.xml:791(title)
 msgid "KVM: Network connectivity works initially, then fails"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-networking-nova.xml:795(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-networking-nova.xml:793(para)
 msgid "Some administrators have observed an issue with the KVM hypervisor where instances running Ubuntu 12.04 sometimes loses network connectivity after functioning properly for a period of time. Some users have reported success with loading the vhost_net kernel module as a workaround for this issue (see <link href=\"https://bugs.launchpad.net/ubuntu/+source/libvirt/+bug/997978/\">bug #997978</link>) . This kernel module may also <link href=\"http://www.linux-kvm.org/page/VhostNet\">improve network performance on KVM</link>. To load the kernel module, as root:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-networking-nova.xml:810(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-networking-nova.xml:808(para)
 msgid "Loading the module has no effect on running instances."
 msgstr ""
 
@@ -6173,6 +6173,12 @@ msgstr ""
 msgid "@@image: '../../common/figures/Neutron-PhysNet-Diagram.png'; md5=ea581fd58c57da1a6c9512b82027a195"
 msgstr ""
 
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: ./doc/admin-guide-cloud/networking/section_networking_arch.xml:199(None)
+msgid "@@image: '../../common/figures/NetworkTypes.png'; md5=32a77fe63881b8bd9871c0a086dfaf59"
+msgstr ""
+
 #: ./doc/admin-guide-cloud/networking/section_networking_arch.xml:4(title)
 msgid "Networking architecture"
 msgstr ""
@@ -6325,16 +6331,68 @@ msgstr ""
 msgid "Exposes all OpenStack APIs, including the Networking API, to tenants. IP addresses on this network should be reachable by anyone on the Internet. The API network might be the same as the external network, because it is possible to create an external-network subnet that is allocated IP ranges that use less than the full range of IP addresses in an IP block."
 msgstr ""
 
+#: ./doc/admin-guide-cloud/networking/section_networking_arch.xml:187(title) ./doc/admin-guide-cloud/networking/section_networking_arch.xml:195(title)
+msgid "Tenant and provider networks"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/networking/section_networking_arch.xml:188(para)
+msgid "The following diagram presents an overview of the tenant and provider network types, and illustrates how they interact within the overall Networking topology:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/networking/section_networking_arch.xml:205(title)
+msgid "Tenant networks"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/networking/section_networking_arch.xml:206(para)
+msgid "Tenant networks are created by users for connectivity within projects; they are fully isolated by default and are not shared with other projects. Networking supports a range of tenant network types:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/networking/section_networking_arch.xml:214(term)
+msgid "Flat"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/networking/section_networking_arch.xml:216(para)
+msgid "All instances reside on the same network, which can also be shared with the hosts. No VLAN tagging or other network segregation takes place."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/networking/section_networking_arch.xml:223(term)
+msgid "Local"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/networking/section_networking_arch.xml:225(para)
+msgid "Instances reside on the local compute host and are effectively isolated from any external networks."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/networking/section_networking_arch.xml:231(term)
+msgid "VLAN"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/networking/section_networking_arch.xml:233(para)
+msgid "Networking allows users to create multiple provider or tenant networks using VLAN IDs (802.1Q tagged) that correspond to VLANs present in the physical network. This allows instances to communicate with each other across the environment. They can also communicate with dedicated servers, firewalls, load balancers and other networking infrastructure on the same layer 2 VLAN."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/networking/section_networking_arch.xml:243(term)
+msgid "VXLAN and GRE"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/networking/section_networking_arch.xml:245(para)
+msgid "VXLAN and GRE use network overlays to support private communication between instances. A Networking router is required to enable traffic to traverse outside of the GRE or VXLAN tenant network. A router is also required to connect directly-connected tenant networks with external networks, including the Internet; the router provides the ability to connect to instances directly from an external network using floating IP addresses."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/networking/section_networking_arch.xml:258(title) ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:12(title)
+msgid "Provider networks"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/networking/section_networking_arch.xml:259(para)
+msgid "Provider networks are created by the OpenStack administrator and map directly to an existing physical network in the data center. Useful network types in this category are flat (untagged) and VLAN (802.1Q tagged). It is possible to allow provider networks to be shared among tenants as part of the network creation process."
+msgstr ""
+
 #: ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:6(title)
 msgid "Advanced features through API extensions"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:7(para)
 msgid "Several plug-ins implement API extensions that provide capabilities similar to what was available in nova-network: These plug-ins are likely to be of interest to the OpenStack community."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:12(title)
-msgid "Provider networks"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:13(para)
