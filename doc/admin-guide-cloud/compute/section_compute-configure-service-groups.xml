@@ -1,0 +1,102 @@
+<!DOCTYPE section [
+ <!-- Some useful entities borrowed from HTML -->
+<!ENTITY ndash  "&#x2013;">
+<!ENTITY mdash  "&#x2014;">
+<!ENTITY hellip "&#x2026;">
+]><section xml:id="configuring-compute-service-groups"
+         xmlns="http://docbook.org/ns/docbook"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns:xi="http://www.w3.org/2001/XInclude"
+         xmlns:ns5="http://www.w3.org/1999/xhtml"
+         xmlns:ns4="http://www.w3.org/2000/svg"
+         xmlns:ns3="http://www.w3.org/1998/Math/MathML"
+         xmlns:ns="http://docbook.org/ns/docbook"
+         version="5.0">
+  <title>Configure Compute service groups</title>
+  <para>To effectively manage and utilize compute nodes, the Compute service must know their
+        statuses. For example, when a user launches a new VM, the Compute scheduler sends the
+        request to a live node; the Compute service queries the ServiceGroup API to get information
+        about whether a node is alive.</para>
+  <para>When a compute worker (running the <systemitem class="service">nova-compute</systemitem>
+        daemon) starts, it calls the <systemitem>join</systemitem> API to join the compute group.
+        Any interested service (for example, the scheduler) can query the group's membership and the
+        status of its nodes. Internally, the <systemitem>ServiceGroup</systemitem> client driver
+        automatically updates the compute worker status.</para>
+  <para>The database, ZooKeeper, and Memcache drivers are available.</para>
+  <section xml:id="database-servicegroup-driver">
+   <title>Database ServiceGroup driver</title>
+   <para>By default, Compute uses the database driver to track node liveness. In a compute worker,
+            this driver periodically sends a <command>db update</command> command to the database,
+            saying <quote>I'm OK</quote> with a timestamp. Compute uses a pre-defined timeout
+                (<literal>service_down_time</literal>) to determine whether a node is dead.</para>
+   <para>The driver has limitations, which can be an issue depending on your setup. The more compute
+            worker nodes that you have, the more pressure you put on the database. By default, the
+            timeout is 60 seconds so it might take some time to detect node failures. You could
+            reduce the timeout value, but you must also make the database update more frequently,
+            which again increases the database workload.</para>
+   <para>The database contains data that is both transient (whether the node is alive) and persistent
+       (for example, entries for VM owners). With the ServiceGroup abstraction, Compute can treat
+        each type separately.</para>
+  </section>
+  <section xml:id="zookeeper-servicegroup-driver">
+   <title>ZooKeeper ServiceGroup driver</title>
+   <para>The ZooKeeper ServiceGroup driver works by using ZooKeeper
+   ephemeral nodes. ZooKeeper, in contrast to databases, is a
+   distributed system. Its load is divided among several servers.
+   At a compute worker node, after establishing a ZooKeeper session,
+   the driver creates an ephemeral znode in the group directory. Ephemeral
+   znodes have the same lifespan as the session. If the worker node
+   or the <systemitem class="service">nova-compute</systemitem> daemon crashes, or a network
+   partition is in place between the worker and the ZooKeeper server quorums,
+   the ephemeral znodes are removed automatically. The driver
+   gets the group membership by running the <command>ls</command> command in the group directory.</para>
+   <para>To use the ZooKeeper driver, you must install ZooKeeper servers and client libraries.
+            Setting up ZooKeeper servers is outside the scope of this guide (for more information,
+            see <link xlink:href="http://zookeeper.apache.org/"
+                >Apache Zookeeper</link>).</para>
+     <para>To use ZooKeeper, you must install client-side Python libraries on every nova node:
+                <literal>python-zookeeper</literal> &ndash; the official Zookeeper Python binding
+            and <literal>evzookeeper</literal> &ndash; the library to make the binding work with the
+            eventlet threading model.</para>
+        <para>The following example assumes the ZooKeeper server addresses and ports are
+                <literal>192.168.2.1:2181</literal>, <literal>192.168.2.2:2181</literal>, and
+                <literal>192.168.2.3:2181</literal>.</para>
+        <para>The following values in the <filename>/etc/nova/nova.conf</filename> file (on every
+            node) are required for the <systemitem>ZooKeeper</systemitem> driver:</para>
+<programlisting language="ini"># Driver for the ServiceGroup serice
+servicegroup_driver="zk"
+
+[zookeeper]
+address="192.168.2.1:2181,192.168.2.2:2181,192.168.2.3:2181"</programlisting>
+   <para>To customize the Compute Service groups, use the following configuration option
+       settings:</para>
+       <xi:include href="../../common/tables/nova-zookeeper.xml"/>
+  </section>
+    <section xml:id="memcache-servicegroup-driver">
+      <title>Memcache ServiceGroup driver</title>
+        <para>The <systemitem>memcache</systemitem> ServiceGroup driver uses memcached, which is a
+            distributed memory object caching system that is often used to increase site
+            performance. For more details, see <link xlink:href="http://memcached.org/"
+                >memcached.org</link>.</para>
+        <para>To use the <systemitem>memcache</systemitem> driver, you must install
+                <systemitem>memcached</systemitem>. However, because
+                <systemitem>memcached</systemitem> is often used for both OpenStack Object Storage
+            and OpenStack dashboard, it might already be installed. If
+                <systemitem>memcached</systemitem> is not installed, refer to the <link
+                xlink:href="http://docs.openstack.org/havana/install-guide/contents"
+                    ><citetitle>OpenStack Installation Guide</citetitle></link> for more
+            information.</para>
+        <para>The following values in the <filename>/etc/nova/nova.conf</filename> file (on every
+            node) are required for the <systemitem>memcache</systemitem> driver:</para>
+        <programlisting language="ini"># Driver for the ServiceGroup serice
+servicegroup_driver="mc"
+
+# Memcached servers. Use either a list of memcached servers to use for caching (list value),
+# or "&lt;None>" for in-process caching (default).
+memcached_servers=&lt;None>
+
+# Timeout; maximum time since last check-in for up service (integer value).
+# Helps to define whether a node is dead
+service_down_time=60</programlisting>
+  </section>
+ </section>
