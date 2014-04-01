@@ -183,4 +183,84 @@
                 </table>
             </para>
         </section>
+        <section xml:id="tenant-provider-networks">
+    <title>Tenant and provider networks</title>
+    <para>
+        The following diagram presents an overview of the tenant and provider
+        network types, and illustrates how they interact within the overall
+        Networking topology:
+    </para>
+    <para>
+    <figure>
+    <title>Tenant and provider networks</title>
+        <mediaobject>
+                <imageobject>
+                <imagedata scale="90"
+                fileref="../../common/figures/NetworkTypes.png"/>
+                </imageobject>
+        </mediaobject>
+    </figure>
+    </para>
+   <formalpara>
+        <title>Tenant networks</title>
+    <para>Tenant networks are created by users for connectivity within projects;
+    they are fully isolated by default and are not shared with other projects.
+    Networking supports a range of tenant network types:
+    </para>
+    </formalpara>
+    <para>
+        <variablelist>
+            <varlistentry>
+                <term>Flat</term>
+                <listitem>
+                    <para>All instances reside on the same network, which can
+                    also be shared with the hosts. No VLAN tagging or other
+                    network segregation takes place.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term>Local</term>
+                <listitem>
+                    <para>Instances reside on the local compute host and are
+                        effectively isolated from any external networks.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term>VLAN</term>
+                <listitem>
+                    <para>Networking allows users to create multiple provider
+                    or tenant networks using VLAN IDs (802.1Q tagged) that
+                    correspond to VLANs present in the physical network. This
+                    allows instances to communicate with each other across
+                    the environment. They can also communicate with dedicated
+                    servers, firewalls, load balancers and other networking
+                    infrastructure on the same layer 2 VLAN.</para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term>VXLAN and GRE</term>
+                <listitem>
+                    <para>VXLAN and GRE use network overlays to support private
+                    communication between instances. A Networking router is
+                    required to enable traffic to traverse outside of the GRE or
+                    VXLAN tenant network. A router is also required to connect
+                    directly-connected tenant networks with external networks,
+                    including the Internet; the router provides the ability to
+                    connect to instances directly from an external network using
+                    floating IP addresses.</para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </para>
+    <formalpara>
+    <title>Provider networks</title>
+    <para>Provider networks are created by the OpenStack administrator and map
+        directly to an existing physical network in the data center. Useful
+        network types in this category are flat (untagged) and VLAN (802.1Q
+        tagged). It is possible to allow provider networks to be shared among
+        tenants as part of the network creation process.</para>
+    </formalpara>
+</section>
     </section>
