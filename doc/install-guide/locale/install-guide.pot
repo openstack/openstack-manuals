@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-04-01 06:25+0000\n"
+"POT-Creation-Date: 2014-04-02 06:25+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -236,15 +236,15 @@ msgid "Configure the Image Service"
 msgstr ""
 
 #: ./doc/install-guide/ch_glance.xml:7(para)
-msgid "The OpenStack Image Service enables users to discover, register, and retrieve virtual machine images. Also known as the glance project, the Image Service offers a <glossterm baseform=\"RESTful\">REST</glossterm> API that enables you to query virtual machine image metadata and retrieve an actual image. Virtual machine images made available through the Image Service can be stored in a variety of locations from simple file systems to object-storage systems like OpenStack Object Storage."
+msgid "The OpenStack Image Service enables users to discover, register, and retrieve virtual machine images. Also known as the glance project, the Image Service offers a <glossterm baseform=\"RESTful\">REST</glossterm> API that enables you to query virtual machine image metadata and retrieve an actual image. You can store virtual machine images made available through the Image Service in a variety of locations from simple file systems to object-storage systems like OpenStack Object Storage."
 msgstr ""
 
-#: ./doc/install-guide/ch_glance.xml:17(para)
-msgid "For simplicity this guide configures the Image Service to use the <literal>file</literal> backend. This means that images uploaded to the Image Service will be stored in a directory on the same system that hosts the service. By default this directory is <filename>/var/lib/glance/images/</filename>."
+#: ./doc/install-guide/ch_glance.xml:16(para)
+msgid "For simplicity, this guide configures the Image Service to use the <literal>file</literal> back end. This means that images uploaded to the Image Service are stored in a directory on the same system that hosts the service. By default, this directory is <filename>/var/lib/glance/images/</filename>."
 msgstr ""
 
-#: ./doc/install-guide/ch_glance.xml:24(para)
-msgid "Ensure that the system has sufficient space available under this directory to store virtual machine images and snapshots before proceeding. At an absolute minimum several gigabytes of space should be available for use by the Image Service in a proof of concept deployment."
+#: ./doc/install-guide/ch_glance.xml:21(para)
+msgid "Before you proceed, ensure that the system has sufficient space available in this directory to store virtual machine images and snapshots. At an absolute minimum, several gigabytes of space should be available for use by the Image Service in a proof of concept deployment. To see requirements for other back ends, see <link href=\"http://docs.openstack.org/trunk/config-reference/content/ch_configuring-openstack-image-service.html\"><citetitle>Configuration Reference</citetitle></link>."
 msgstr ""
 
 #: ./doc/install-guide/ch_cinder.xml:6(title)
@@ -261,6 +261,266 @@ msgstr ""
 
 #: ./doc/install-guide/section_nova-kvm.xml:7(para)
 msgid "OpenStack Compute requires hardware virtualization support and certain kernel modules. Use the following procedure to determine whether your system has this support and the correct kernel modules and to enable KVM. In many cases, your distribution completes this installation and you do not need to perform any additional action."
+msgstr ""
+
+#: ./doc/install-guide/section_basics-passwords.xml:6(title)
+msgid "Passwords"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-passwords.xml:7(para)
+msgid "The various OpenStack services and the required software like the database and the messaging server have to be password protected. You use these passwords when configuring a service and then again to access the service. You have to choose a password while configuring the service and later remember to use the same password when accessing it. Optionally, you can generate random passwords with the <application>pwgen</application> program. Or, to create passwords one at a time, use the output of this command repeatedly: <placeholder-1/>"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-passwords.xml:17(para)
+msgid "This guide uses the convention that <literal><replaceable>SERVICE_PASS</replaceable></literal> is password to access the service <literal>SERVICE</literal> and <literal><replaceable>SERVICE_DBPASS</replaceable></literal> is the database password used by the service SERVICE to access the database."
+msgstr ""
+
+#: ./doc/install-guide/section_basics-passwords.xml:24(para)
+msgid "The complete list of passwords you need to define in this guide are: <table rules=\"all\"><caption>Passwords</caption><thead><tr><th>Password name</th><th>Description</th></tr></thead><tbody><tr><td>Database password (no variable used)</td><td>Root password for the database</td></tr><tr os=\"ubuntu;opensuse;sles\"><td><literal><replaceable>RABBIT_PASS</replaceable></literal></td><td>Password of user guest of RabbitMQ</td></tr><tr><td><literal><replaceable>KEYSTONE_DBPASS</replaceable></literal></td><td>Database password of Identity service</td></tr><tr><td><literal><replaceable>ADMIN_PASS</replaceable></literal></td><td>Password of user <literal>admin</literal></td></tr><tr><td><literal><replaceable>GLANCE_DBPASS</replaceable></literal></td><td>Database password for Image Service</td></tr><tr><td><literal><replaceable>GLANCE_PASS</replaceable></literal></td><td>Password of Image Service user <literal>glance</literal></td></tr><tr><td><literal><replaceable>NOVA_DBPASS</replaceable></literal></td><td>Database password for Compute service</td></tr><tr><td><literal><replaceable>NOVA_PASS</replaceable></literal></td><td>Password of Compute service user <literal>nova</literal></td></tr><tr><td><literal><replaceable>DASH_DBPASS</replaceable></literal></td><td>Database password for the dashboard</td></tr><tr><td><literal><replaceable>CINDER_DBPASS</replaceable></literal></td><td>Database password for the Block Storage service</td></tr><tr><td><literal><replaceable>CINDER_PASS</replaceable></literal></td><td>Password of Block Storage service user <literal>cinder</literal></td></tr><tr><td><literal><replaceable>NEUTRON_DBPASS</replaceable></literal></td><td>Database password for the Networking service</td></tr><tr><td><literal><replaceable>NEUTRON_PASS</replaceable></literal></td><td>Password of Networking service user <literal>neutron</literal></td></tr><tr><td><literal><replaceable>HEAT_DBPASS</replaceable></literal></td><td>Database password for the Orchestration service</td></tr><tr><td><literal><replaceable>HEAT_PASS</replaceable></literal></td><td>Password of Orchestration service user <literal>heat</literal></td></tr><tr><td><literal><replaceable>CEILOMETER_DBPASS</replaceable></literal></td><td>Database password for the Telemetry service</td></tr><tr><td><literal><replaceable>CEILOMETER_PASS</replaceable></literal></td><td>Password of Telemetry service user <literal>ceilometer</literal></td></tr></tbody></table>"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-database.xml:6(title)
+msgid "Database"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-database.xml:7(para)
+msgid "Most OpenStack services require a database to store information. These examples use a MySQL database that runs on the controller node. You must install the MySQL database on the controller node. You must install MySQL client software on any additional nodes that access MySQL."
+msgstr ""
+
+#: ./doc/install-guide/section_basics-database.xml:13(para)
+msgid "Most OpenStack services require a database to store information. This guide uses a MySQL database on SUSE Linux Enterprise Server and a compatible database on openSUSE running on the controller node. This compatible database for openSUSE is MariaDB. You must install the MariaDB database on the controller node. You must install the MariaDB client software on any nodes that access the MariaDB database."
+msgstr ""
+
+#: ./doc/install-guide/section_basics-database.xml:22(title)
+msgid "Controller setup"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-database.xml:23(para)
+msgid "<phrase os=\"sles\">For SUSE Linux Enterprise Server: </phrase> On the controller node, install the MySQL client and server packages, and the Python library."
+msgstr ""
+
+#: ./doc/install-guide/section_basics-database.xml:27(para)
+msgid "For openSUSE: On the controller node, install the MariaDB client and database server packages, and the MySQL Python library."
+msgstr ""
+
+#: ./doc/install-guide/section_basics-database.xml:34(para)
+msgid "When you install the server package, you are prompted for the root password for the database. Choose a strong password and remember it."
+msgstr ""
+
+#: ./doc/install-guide/section_basics-database.xml:38(para)
+msgid "The MySQL configuration requires some changes to work with OpenStack."
+msgstr ""
+
+#: ./doc/install-guide/section_basics-database.xml:42(para)
+msgid "Edit the <filename>/etc/mysql/my.cnf</filename> file:"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-database.xml:44(para)
+msgid "Edit the <filename>/etc/my.cnf</filename> file:"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-database.xml:48(para)
+msgid "Under the <literal>[mysqld]</literal> section, set the <literal>bind-address</literal> key to the management IP address of the controller node to enable access by other nodes via the management network:"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-database.xml:57(para)
+msgid "Under the <literal>[mysqld]</literal> section, set the following keys to enable InnoDB, UTF-8 character set, and UTF-8 collation by default:"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-database.xml:70(para)
+msgid "Restart the MySQL service to apply the changes:"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-database.xml:73(para)
+msgid "Start the <phrase os=\"rhel;fedora;centos\">MySQL</phrase><phrase os=\"opensuse;sles\">MariaDB or MySQL</phrase> database server and set it to start automatically when the system boots."
+msgstr ""
+
+#: ./doc/install-guide/section_basics-database.xml:82(para)
+msgid "Finally, you should set a root password for your <phrase os=\"rhel;fedora;centos\">MySQL</phrase><phrase os=\"opensuse;sles\">MariaDB or MySQL</phrase> database. The OpenStack programs that set up databases and tables prompt you for this password if it is set."
+msgstr ""
+
+#: ./doc/install-guide/section_basics-database.xml:88(para)
+msgid "You must delete the anonymous users that are created when the database is first started. Otherwise, database connection problems occur when you follow the instructions in this guide. To do this, use the <placeholder-1/> command. Note that if <placeholder-2/> fails you might need to use <placeholder-3/> first:"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-database.xml:97(para)
+msgid "<phrase os=\"rhel;centos;fedora;opensuse;sles\">If you have not already set a root database password, press <keycap>ENTER</keycap> when you are prompted for the password.</phrase> This command presents a number of options for you to secure your database installation. Respond <placeholder-1/> to all prompts unless you have a good reason to do otherwise."
+msgstr ""
+
+#: ./doc/install-guide/section_basics-database.xml:106(title)
+msgid "Node setup"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-database.xml:107(para)
+msgid "On all nodes other than the controller node, install the <phrase os=\"ubuntu;debian;rhel;fedora;centos\">MySQL</phrase><phrase os=\"opensuse\">MariaDB (on openSUSE)</phrase> client and the MySQL Python library on any system that does not host a MySQL database:"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-database.xml:116(para)
+msgid "For SUSE Linux Enterprise, install MySQL:"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-packages.xml:6(title)
+msgid "OpenStack packages"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-packages.xml:7(para)
+msgid "Distributions might release OpenStack packages as part of their distribution or through other methods because the OpenStack and distribution release times are independent of each other."
+msgstr ""
+
+#: ./doc/install-guide/section_basics-packages.xml:11(para)
+msgid "This section describes the configuration you must complete after you configure machines to install the latest OpenStack packages."
+msgstr ""
+
+#: ./doc/install-guide/section_basics-packages.xml:14(para)
+msgid "The examples in this guide use the OpenStack packages from the RDO repository. These packages work on Red Hat Enterprise Linux 6, compatible versions of CentOS, and Fedora 20. To enable the RDO repository, download and install the <package>rdo-release-icehouse</package> package."
+msgstr ""
+
+#: ./doc/install-guide/section_basics-packages.xml:21(para)
+msgid "The EPEL package includes GPG keys for package signing and repository information. This should only be installed on Red Hat Enterprise Linux and CentOS, not Fedora. Install the latest <package>epel-release</package> package (see <link href=\"http://download.fedoraproject.org/pub/epel/6/x86_64/repoview/epel-release.html\">http://download.fedoraproject.org/pub/epel/6/x86_64/repoview/epel-release.html</link>). For example:"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-packages.xml:30(para)
+msgid "The <package>openstack-utils</package> package contains utility programs that make installation and configuration easier. These programs are used throughout this guide. Install <package>openstack-utils</package>. This verifies that you can access the RDO repository."
+msgstr ""
+
+#: ./doc/install-guide/section_basics-packages.xml:37(para)
+msgid "Use the Open Build Service repositories for <glossterm>Icehouse</glossterm> based on your openSUSE or SUSE Linux Enterprise Server version, for example if you run openSUSE 12.3 use:"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-packages.xml:42(para)
+msgid "For openSUSE 13.1 use:"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-packages.xml:44(para)
+msgid "If you use SUSE Linux Enterprise Server 11 SP3, use:"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-packages.xml:47(para)
+msgid "The <package>openstack-utils</package> package contains utility programs that make installation and configuration easier. These programs are used throughout this guide. Install <package>openstack-utils</package>. This verifies that you can access the Open Build Service repository:"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-packages.xml:54(para)
+msgid "The <application>openstack-config</application> program in the <package>openstack-utils</package> package uses <application>crudini</application> to manipulate configuration files. However, <application>crudini</application> version 0.3 does not support multi valued options. See <link href=\"https://bugs.launchpad.net/openstack-manuals/+bug/1269271\">https://bugs.launchpad.net/openstack-manuals/+bug/1269271</link>. As a work around, you must manually set any multi valued options or the new value overwrites the previous value instead of creating a new option."
+msgstr ""
+
+#: ./doc/install-guide/section_basics-packages.xml:66(para)
+msgid "The <package>openstack-selinux</package> package includes the policy files that are required to configure SELinux during OpenStack installation. Install <package>openstack-selinux</package>."
+msgstr ""
+
+#: ./doc/install-guide/section_basics-packages.xml:72(para)
+msgid "Upgrade your system packages:"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-packages.xml:76(para)
+msgid "If the upgrade included a new kernel package, reboot the system to ensure the new kernel is running:"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-packages.xml:80(title)
+msgid "To use the Ubuntu Cloud Archive for Icehouse"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-packages.xml:81(para)
+msgid "The <link href=\"https://wiki.ubuntu.com/ServerTeam/CloudArchive\">Ubuntu Cloud Archive</link> is a special repository that allows you to install newer releases of OpenStack on the stable supported version of Ubuntu."
+msgstr ""
+
+#: ./doc/install-guide/section_basics-packages.xml:87(para)
+msgid "Install the Ubuntu Cloud Archive for <glossterm>Icehouse</glossterm>: <placeholder-1/>"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-packages.xml:93(para)
+msgid "Update the package database, upgrade your system, and reboot for all changes to take effect: <placeholder-1/>"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-packages.xml:100(title)
+msgid "To use the Debian Wheezy backports archive for Icehouse"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-packages.xml:102(para)
+msgid "The <glossterm>Icehouse</glossterm> release is available only in Debian Sid (otherwise called Unstable). However, the Debian maintainers of OpenStack also maintain a non-official Debian repository for OpenStack containing Wheezy backports."
+msgstr ""
+
+#: ./doc/install-guide/section_basics-packages.xml:108(para)
+msgid "Install the Debian Wheezy backport repository Icehouse:"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-packages.xml:113(para)
+msgid "Install the Debian Wheezy OpenStack repository for Icehouse:"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-packages.xml:118(para)
+msgid "Update the repository database and install the key:"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-packages.xml:122(para)
+msgid "Update the package database, upgrade your system, and reboot for all changes to take effect:"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-packages.xml:128(para)
+msgid "Numerous archive.gplhost.com mirrors are available around the world. All are available with both FTP and HTTP protocols (you should use the closest mirror). The list of mirrors is available at <link href=\"http://archive.gplhost.com/readme.mirrors\">http://archive.gplhost.com/readme.mirrors</link>."
+msgstr ""
+
+#: ./doc/install-guide/section_basics-packages.xml:135(title)
+msgid "Manually install python-argparse"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-packages.xml:136(para)
+msgid "The Debian OpenStack packages are maintained on Debian Sid (also known as Debian Unstable) - the current development version. Backported packages run correctly on Debian Wheezy with one caveat:"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-packages.xml:140(para)
+msgid "All OpenStack packages are written in Python. Wheezy uses Python 2.6 and 2.7, with Python 2.6 as the default interpreter; Sid has only Python 2.7. There is one packaging change between these two. In Python 2.6, you installed the <package>python-argparse</package> package separately. In Python 2.7, this package is installed by default. Unfortunately, in Python 2.7, this package does not include <code>Provides: python-argparse</code> directive."
+msgstr ""
+
+#: ./doc/install-guide/section_basics-packages.xml:148(para)
+msgid "Because the packages are maintained in Sid where the <code>Provides: python-argparse</code> directive causes an error, and the Debian OpenStack maintainer wants to maintain one version of the OpenStack packages, you must manually install the <package>python-argparse</package> on each OpenStack system that runs Debian Wheezy before you install the other OpenStack packages. Use the following command to install the package:"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-packages.xml:157(para)
+msgid "This caveat applies to most OpenStack packages in Wheezy."
+msgstr ""
+
+#: ./doc/install-guide/section_basics-networking.xml:6(title)
+msgid "Networking"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-networking.xml:7(para)
+msgid "After installing the operating system on each node for the architecture that you choose to deploy, you must configure the network interfaces. We recommend that you disable any automated network management tools and manually edit the appropriate configuration files for your distribution. For more information on how to configure networking on your distribution, see the <link os=\"ubuntu\" href=\"https://help.ubuntu.com/lts/serverguide/network-configuration.html\">documentation.</link><link os=\"debian\" href=\"https://wiki.debian.org/NetworkConfiguration\">documentation.</link><link os=\"rhel;centos;fedora\" href=\"https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Deployment_Guide/s1-networkscripts-interfaces.html\">documentation.</link><link os=\"sles\" href=\"https://www.suse.com/documentation/sles11/book_sle_admin/data/sec_basicnet_manconf.html\">documentation.</link><link os=\"opensuse\" href=\"http://activedoc.opensuse.org/book/opensuse-reference/chapter-13-basic-networking\">documentation.</link>"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-networking.xml:29(title)
+msgid "To disable <systemitem class=\"service\">NetworkManager</systemitem> and enable the <systemitem class=\"service\">network</systemitem> service:"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-networking.xml:40(title)
+msgid "To disable <systemitem class=\"service\">NetworkManager</systemitem> :"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-networking.xml:43(para)
+msgid "Use the YaST network module:"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-networking.xml:45(para)
+msgid "For more information, see the <link href=\"https://www.suse.com/documentation/sles11/book_sle_admin/data/sec_nm_activate.html\">documentation.</link>"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-networking.xml:47(para)
+msgid "For more information, see the <link href=\"http://activedoc.opensuse.org/book/opensuse-reference/chapter-13-basic-networking#sec.basicnet.yast.netcard.global\">documentation. </link>"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-networking.xml:52(para)
+msgid "RHEL and derivatives including CentOS and Scientific Linux enable a restrictive <glossterm>firewall</glossterm> by default. During this installation, certain steps will fail unless you alter or disable the firewall. For further information about securing your installation, refer to the <link href=\"http://docs.openstack.org/sec/\"> OpenStack Security Guide</link>."
+msgstr ""
+
+#: ./doc/install-guide/section_basics-networking.xml:59(para)
+msgid "On Fedora, <literal>firewalld</literal> replaces <literal>iptables</literal> as the default firewall system. While you can use <literal>firewalld</literal> successfully, this guide references <literal>iptables</literal> for compatibility with other distributions."
+msgstr ""
+
+#: ./doc/install-guide/section_basics-networking.xml:65(title)
+msgid "To disable <literal>firewalld</literal> and enable <literal>iptables</literal>:"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-networking.xml:74(para)
+msgid "Proceed to network configuration for the example <link linkend=\"basics-networking-neutron\">OpenStack Networking </link> or <link linkend=\"basics-networking-nova\">legacy networking</link> architecture."
 msgstr ""
 
 #: ./doc/install-guide/section_neutron-network-node.xml:8(title)
@@ -323,7 +583,7 @@ msgstr ""
 msgid "Set the <systemitem class=\"service\">neutron</systemitem> configuration for <systemitem class=\"service\">keystone</systemitem> authentication:"
 msgstr ""
 
-#: ./doc/install-guide/section_neutron-network-node.xml:100(replaceable) ./doc/install-guide/section_neutron-network-node.xml:102(replaceable) ./doc/install-guide/section_neutron-network-node.xml:133(replaceable) ./doc/install-guide/section_neutron-network-node.xml:134(replaceable) ./doc/install-guide/section_neutron-network-node.xml:148(replaceable) ./doc/install-guide/section_neutron-network-node.xml:159(replaceable) ./doc/install-guide/section_neutron-network-node.xml:168(replaceable) ./doc/install-guide/section_neutron-network-node.xml:392(replaceable) ./doc/install-guide/section_neutron-network-node.xml:397(replaceable) ./doc/install-guide/section_neutron-network-node.xml:402(replaceable) ./doc/install-guide/section_neutron-network-node.xml:412(replaceable) ./doc/install-guide/section_neutron-compute-node.xml:145(replaceable) ./doc/install-guide/section_neutron-compute-node.xml:147(replaceable) ./doc/install-guide/section_neutron-compute-node.xml:181(replaceable) ./doc/install-guide/section_neutron-compute-node.xml:182(replaceable) ./doc/install-guide/section_neutron-compute-node.xml:196(replaceable) ./doc/install-guide/section_neutron-compute-node.xml:207(replaceable) ./doc/install-guide/section_neutron-compute-node.xml:216(replaceable) ./doc/install-guide/section_neutron-compute-node.xml:234(replaceable) ./doc/install-guide/section_neutron-compute-node.xml:244(replaceable) ./doc/install-guide/section_neutron-compute-node.xml:255(replaceable) ./doc/install-guide/section_neutron-compute-node.xml:260(replaceable) ./doc/install-guide/section_ceilometer-install.xml:101(replaceable) ./doc/install-guide/section_ceilometer-install.xml:110(replaceable) ./doc/install-guide/section_ceilometer-install.xml:117(replaceable) ./doc/install-guide/section_ceilometer-install.xml:144(replaceable) ./doc/install-guide/section_ceilometer-install.xml:147(replaceable) ./doc/install-guide/section_ceilometer-install.xml:177(replaceable) ./doc/install-guide/section_ceilometer-install.xml:185(replaceable) ./doc/install-guide/section_ceilometer-install.xml:202(replaceable) ./doc/install-guide/section_ceilometer-install.xml:222(replaceable) ./doc/install-guide/section_ceilometer-install.xml:223(replaceable) ./doc/install-guide/section_ceilometer-install.xml:224(replaceable) ./doc/install-guide/section_nova-controller.xml:44(replaceable) ./doc/install-guide/section_nova-controller.xml:58(replaceable) ./doc/install-guide/section_nova-controller.xml:143(replaceable) ./doc/install-guide/section_nova-controller.xml:144(replaceable) ./doc/install-guide/section_nova-controller.xml:163(replaceable) ./doc/install-guide/section_nova-controller.xml:180(replaceable) ./doc/install-guide/section_nova-controller.xml:181(replaceable) ./doc/install-guide/section_nova-controller.xml:182(replaceable) ./doc/install-guide/section_keystone-services.xml:47(replaceable) ./doc/install-guide/section_keystone-services.xml:48(replaceable) ./doc/install-guide/section_keystone-services.xml:49(replaceable) ./doc/install-guide/section_neutron-per-tenant-routers-with-private-networks.xml:181(replaceable) ./doc/install-guide/section_neutron-per-tenant-routers-with-private-networks.xml:186(replaceable) ./doc/install-guide/section_neutron-per-tenant-routers-with-private-networks.xml:194(replaceable) ./doc/install-guide/section_neutron-per-tenant-routers-with-private-networks.xml:199(replaceable) ./doc/install-guide/section_neutron-per-tenant-routers-with-private-networks.xml:271(replaceable) ./doc/install-guide/section_neutron-per-tenant-routers-with-private-networks.xml:276(replaceable) ./doc/install-guide/section_neutron-per-tenant-routers-with-private-networks.xml:326(replaceable) ./doc/install-guide/section_neutron-per-tenant-routers-with-private-networks.xml:410(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:116(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:177(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:181(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:185(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:191(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:222(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:226(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:234(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:321(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:325(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:329(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:335(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:377(replaceable) ./doc/install-guide/section_ceilometer-glance.xml:17(replaceable) ./doc/install-guide/section_ceilometer-glance.xml:23(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:193(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:212(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:229(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:234(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:284(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:287(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:291(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:301(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:334(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:339(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:348(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:367(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:426(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:451(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:487(replaceable) ./doc/install-guide/section_neutron-controller-node.xml:58(replaceable) ./doc/install-guide/section_neutron-controller-node.xml:59(replaceable) ./doc/install-guide/section_neutron-controller-node.xml:60(replaceable) ./doc/install-guide/section_neutron-controller-node.xml:84(replaceable) ./doc/install-guide/section_neutron-controller-node.xml:101(replaceable) ./doc/install-guide/section_neutron-controller-node.xml:103(replaceable) ./doc/install-guide/section_neutron-controller-node.xml:136(replaceable) ./doc/install-guide/section_neutron-controller-node.xml:137(replaceable) ./doc/install-guide/section_neutron-controller-node.xml:164(replaceable) ./doc/install-guide/section_neutron-controller-node.xml:182(replaceable) ./doc/install-guide/section_neutron-controller-node.xml:232(replaceable) ./doc/install-guide/section_neutron-controller-node.xml:242(replaceable) ./doc/install-guide/section_neutron-controller-node.xml:253(replaceable) ./doc/install-guide/section_neutron-controller-node.xml:258(replaceable) ./doc/install-guide/section_cinder-node.xml:110(replaceable) ./doc/install-guide/section_cinder-node.xml:127(replaceable) ./doc/install-guide/section_cinder-node.xml:164(replaceable) ./doc/install-guide/section_cinder-node.xml:167(replaceable) ./doc/install-guide/section_cinder-controller.xml:47(replaceable) ./doc/install-guide/section_cinder-controller.xml:50(replaceable) ./doc/install-guide/section_cinder-controller.xml:89(replaceable) ./doc/install-guide/section_cinder-controller.xml:92(replaceable) ./doc/install-guide/section_cinder-controller.xml:108(replaceable) ./doc/install-guide/section_cinder-controller.xml:143(replaceable) ./doc/install-guide/section_cinder-controller.xml:144(replaceable) ./doc/install-guide/section_cinder-controller.xml:145(replaceable) ./doc/install-guide/section_cinder-controller.xml:154(replaceable) ./doc/install-guide/section_cinder-controller.xml:155(replaceable) ./doc/install-guide/section_cinder-controller.xml:156(replaceable) ./doc/install-guide/section_heat-install.xml:116(replaceable) ./doc/install-guide/section_heat-install.xml:121(replaceable) ./doc/install-guide/section_heat-install.xml:132(replaceable) ./doc/install-guide/section_heat-install.xml:133(replaceable) ./doc/install-guide/section_heat-install.xml:134(replaceable) ./doc/install-guide/section_heat-install.xml:139(replaceable) ./doc/install-guide/section_heat-install.xml:140(replaceable) ./doc/install-guide/section_heat-install.xml:141(replaceable) ./doc/install-guide/section_ceilometer-nova.xml:78(replaceable) ./doc/install-guide/section_ceilometer-nova.xml:84(replaceable) ./doc/install-guide/section_ceilometer-nova.xml:90(replaceable) ./doc/install-guide/section_ceilometer-nova.xml:106(replaceable) ./doc/install-guide/section_ceilometer-nova.xml:121(replaceable) ./doc/install-guide/section_nova-compute.xml:112(replaceable) ./doc/install-guide/section_nova-compute.xml:113(replaceable) ./doc/install-guide/section_nova-compute.xml:132(replaceable) ./doc/install-guide/section_nova-compute.xml:133(replaceable) ./doc/install-guide/section_nova-compute.xml:145(replaceable) ./doc/install-guide/section_nova-compute.xml:168(replaceable) ./doc/install-guide/section_nova-compute.xml:180(replaceable) ./doc/install-guide/section_nova-compute.xml:188(replaceable) ./doc/install-guide/section_nova-compute.xml:191(replaceable) ./doc/install-guide/section_glance-install.xml:57(replaceable) ./doc/install-guide/section_glance-install.xml:59(replaceable) ./doc/install-guide/section_glance-install.xml:70(replaceable) ./doc/install-guide/section_glance-install.xml:118(replaceable) ./doc/install-guide/section_glance-install.xml:120(replaceable) ./doc/install-guide/section_glance-install.xml:130(replaceable) ./doc/install-guide/section_glance-install.xml:132(replaceable) ./doc/install-guide/section_glance-install.xml:152(replaceable) ./doc/install-guide/section_glance-install.xml:153(replaceable) ./doc/install-guide/section_glance-install.xml:177(replaceable) ./doc/install-guide/section_glance-install.xml:178(replaceable) ./doc/install-guide/section_glance-install.xml:179(replaceable) ./doc/install-guide/section_keystone-install.xml:30(replaceable) ./doc/install-guide/section_keystone-install.xml:38(replaceable) ./doc/install-guide/object-storage/section_object-storage-install-config-proxy-node.xml:82(replaceable) ./doc/install-guide/object-storage/section_object-storage-install.xml:90(replaceable) ./doc/install-guide/object-storage/section_object-storage-install.xml:91(replaceable) ./doc/install-guide/object-storage/section_object-storage-install.xml:92(replaceable)
+#: ./doc/install-guide/section_neutron-network-node.xml:100(replaceable) ./doc/install-guide/section_neutron-network-node.xml:102(replaceable) ./doc/install-guide/section_neutron-network-node.xml:133(replaceable) ./doc/install-guide/section_neutron-network-node.xml:134(replaceable) ./doc/install-guide/section_neutron-network-node.xml:148(replaceable) ./doc/install-guide/section_neutron-network-node.xml:159(replaceable) ./doc/install-guide/section_neutron-network-node.xml:168(replaceable) ./doc/install-guide/section_neutron-network-node.xml:392(replaceable) ./doc/install-guide/section_neutron-network-node.xml:397(replaceable) ./doc/install-guide/section_neutron-network-node.xml:402(replaceable) ./doc/install-guide/section_neutron-network-node.xml:412(replaceable) ./doc/install-guide/section_neutron-compute-node.xml:145(replaceable) ./doc/install-guide/section_neutron-compute-node.xml:147(replaceable) ./doc/install-guide/section_neutron-compute-node.xml:181(replaceable) ./doc/install-guide/section_neutron-compute-node.xml:182(replaceable) ./doc/install-guide/section_neutron-compute-node.xml:196(replaceable) ./doc/install-guide/section_neutron-compute-node.xml:207(replaceable) ./doc/install-guide/section_neutron-compute-node.xml:216(replaceable) ./doc/install-guide/section_neutron-compute-node.xml:234(replaceable) ./doc/install-guide/section_neutron-compute-node.xml:244(replaceable) ./doc/install-guide/section_neutron-compute-node.xml:255(replaceable) ./doc/install-guide/section_neutron-compute-node.xml:260(replaceable) ./doc/install-guide/section_ceilometer-install.xml:101(replaceable) ./doc/install-guide/section_ceilometer-install.xml:110(replaceable) ./doc/install-guide/section_ceilometer-install.xml:117(replaceable) ./doc/install-guide/section_ceilometer-install.xml:144(replaceable) ./doc/install-guide/section_ceilometer-install.xml:147(replaceable) ./doc/install-guide/section_ceilometer-install.xml:177(replaceable) ./doc/install-guide/section_ceilometer-install.xml:185(replaceable) ./doc/install-guide/section_ceilometer-install.xml:202(replaceable) ./doc/install-guide/section_ceilometer-install.xml:222(replaceable) ./doc/install-guide/section_ceilometer-install.xml:223(replaceable) ./doc/install-guide/section_ceilometer-install.xml:224(replaceable) ./doc/install-guide/section_nova-controller.xml:44(replaceable) ./doc/install-guide/section_nova-controller.xml:58(replaceable) ./doc/install-guide/section_nova-controller.xml:143(replaceable) ./doc/install-guide/section_nova-controller.xml:144(replaceable) ./doc/install-guide/section_nova-controller.xml:163(replaceable) ./doc/install-guide/section_nova-controller.xml:180(replaceable) ./doc/install-guide/section_nova-controller.xml:181(replaceable) ./doc/install-guide/section_nova-controller.xml:182(replaceable) ./doc/install-guide/section_keystone-services.xml:47(replaceable) ./doc/install-guide/section_keystone-services.xml:48(replaceable) ./doc/install-guide/section_keystone-services.xml:49(replaceable) ./doc/install-guide/section_neutron-per-tenant-routers-with-private-networks.xml:181(replaceable) ./doc/install-guide/section_neutron-per-tenant-routers-with-private-networks.xml:186(replaceable) ./doc/install-guide/section_neutron-per-tenant-routers-with-private-networks.xml:194(replaceable) ./doc/install-guide/section_neutron-per-tenant-routers-with-private-networks.xml:199(replaceable) ./doc/install-guide/section_neutron-per-tenant-routers-with-private-networks.xml:271(replaceable) ./doc/install-guide/section_neutron-per-tenant-routers-with-private-networks.xml:276(replaceable) ./doc/install-guide/section_neutron-per-tenant-routers-with-private-networks.xml:326(replaceable) ./doc/install-guide/section_neutron-per-tenant-routers-with-private-networks.xml:410(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:116(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:177(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:181(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:185(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:191(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:222(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:226(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:234(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:321(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:325(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:329(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:335(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:377(replaceable) ./doc/install-guide/section_ceilometer-glance.xml:17(replaceable) ./doc/install-guide/section_ceilometer-glance.xml:23(replaceable) ./doc/install-guide/section_basics-networking-nova.xml:184(replaceable) ./doc/install-guide/section_basics-networking-neutron.xml:253(replaceable) ./doc/install-guide/section_basics-networking-neutron.xml:297(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:193(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:212(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:229(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:234(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:284(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:287(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:291(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:301(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:334(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:339(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:348(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:367(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:426(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:451(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:487(replaceable) ./doc/install-guide/section_neutron-controller-node.xml:58(replaceable) ./doc/install-guide/section_neutron-controller-node.xml:59(replaceable) ./doc/install-guide/section_neutron-controller-node.xml:60(replaceable) ./doc/install-guide/section_neutron-controller-node.xml:84(replaceable) ./doc/install-guide/section_neutron-controller-node.xml:101(replaceable) ./doc/install-guide/section_neutron-controller-node.xml:103(replaceable) ./doc/install-guide/section_neutron-controller-node.xml:136(replaceable) ./doc/install-guide/section_neutron-controller-node.xml:137(replaceable) ./doc/install-guide/section_neutron-controller-node.xml:164(replaceable) ./doc/install-guide/section_neutron-controller-node.xml:182(replaceable) ./doc/install-guide/section_neutron-controller-node.xml:232(replaceable) ./doc/install-guide/section_neutron-controller-node.xml:242(replaceable) ./doc/install-guide/section_neutron-controller-node.xml:253(replaceable) ./doc/install-guide/section_neutron-controller-node.xml:258(replaceable) ./doc/install-guide/section_cinder-node.xml:110(replaceable) ./doc/install-guide/section_cinder-node.xml:127(replaceable) ./doc/install-guide/section_cinder-node.xml:164(replaceable) ./doc/install-guide/section_cinder-node.xml:167(replaceable) ./doc/install-guide/section_cinder-controller.xml:47(replaceable) ./doc/install-guide/section_cinder-controller.xml:50(replaceable) ./doc/install-guide/section_cinder-controller.xml:89(replaceable) ./doc/install-guide/section_cinder-controller.xml:92(replaceable) ./doc/install-guide/section_cinder-controller.xml:108(replaceable) ./doc/install-guide/section_cinder-controller.xml:143(replaceable) ./doc/install-guide/section_cinder-controller.xml:144(replaceable) ./doc/install-guide/section_cinder-controller.xml:145(replaceable) ./doc/install-guide/section_cinder-controller.xml:154(replaceable) ./doc/install-guide/section_cinder-controller.xml:155(replaceable) ./doc/install-guide/section_cinder-controller.xml:156(replaceable) ./doc/install-guide/section_heat-install.xml:116(replaceable) ./doc/install-guide/section_heat-install.xml:121(replaceable) ./doc/install-guide/section_heat-install.xml:132(replaceable) ./doc/install-guide/section_heat-install.xml:133(replaceable) ./doc/install-guide/section_heat-install.xml:134(replaceable) ./doc/install-guide/section_heat-install.xml:139(replaceable) ./doc/install-guide/section_heat-install.xml:140(replaceable) ./doc/install-guide/section_heat-install.xml:141(replaceable) ./doc/install-guide/section_ceilometer-nova.xml:78(replaceable) ./doc/install-guide/section_ceilometer-nova.xml:84(replaceable) ./doc/install-guide/section_ceilometer-nova.xml:90(replaceable) ./doc/install-guide/section_ceilometer-nova.xml:106(replaceable) ./doc/install-guide/section_ceilometer-nova.xml:121(replaceable) ./doc/install-guide/section_nova-compute.xml:112(replaceable) ./doc/install-guide/section_nova-compute.xml:113(replaceable) ./doc/install-guide/section_nova-compute.xml:132(replaceable) ./doc/install-guide/section_nova-compute.xml:133(replaceable) ./doc/install-guide/section_nova-compute.xml:145(replaceable) ./doc/install-guide/section_nova-compute.xml:168(replaceable) ./doc/install-guide/section_nova-compute.xml:180(replaceable) ./doc/install-guide/section_nova-compute.xml:188(replaceable) ./doc/install-guide/section_nova-compute.xml:191(replaceable) ./doc/install-guide/section_glance-install.xml:57(replaceable) ./doc/install-guide/section_glance-install.xml:59(replaceable) ./doc/install-guide/section_glance-install.xml:70(replaceable) ./doc/install-guide/section_glance-install.xml:118(replaceable) ./doc/install-guide/section_glance-install.xml:120(replaceable) ./doc/install-guide/section_glance-install.xml:130(replaceable) ./doc/install-guide/section_glance-install.xml:132(replaceable) ./doc/install-guide/section_glance-install.xml:152(replaceable) ./doc/install-guide/section_glance-install.xml:153(replaceable) ./doc/install-guide/section_glance-install.xml:177(replaceable) ./doc/install-guide/section_glance-install.xml:178(replaceable) ./doc/install-guide/section_glance-install.xml:179(replaceable) ./doc/install-guide/section_keystone-install.xml:30(replaceable) ./doc/install-guide/section_keystone-install.xml:38(replaceable) ./doc/install-guide/object-storage/section_object-storage-install-config-proxy-node.xml:82(replaceable) ./doc/install-guide/object-storage/section_object-storage-install.xml:90(replaceable) ./doc/install-guide/object-storage/section_object-storage-install.xml:91(replaceable) ./doc/install-guide/object-storage/section_object-storage-install.xml:92(replaceable)
 msgid "controller"
 msgstr ""
 
@@ -343,7 +603,7 @@ msgstr ""
 msgid "Configure access to the <application>RabbitMQ</application> service:"
 msgstr ""
 
-#: ./doc/install-guide/section_neutron-network-node.xml:152(replaceable) ./doc/install-guide/section_neutron-network-node.xml:161(replaceable) ./doc/install-guide/section_neutron-compute-node.xml:200(replaceable) ./doc/install-guide/section_neutron-compute-node.xml:209(replaceable) ./doc/install-guide/section_ceilometer-install.xml:145(replaceable) ./doc/install-guide/section_ceilometer-install.xml:148(replaceable) ./doc/install-guide/section_nova-controller.xml:67(replaceable) ./doc/install-guide/section_nova-controller.xml:75(replaceable) ./doc/install-guide/section_neutron-per-tenant-routers-with-private-networks.xml:182(replaceable) ./doc/install-guide/section_neutron-per-tenant-routers-with-private-networks.xml:195(replaceable) ./doc/install-guide/section_neutron-per-tenant-routers-with-private-networks.xml:272(replaceable) ./doc/install-guide/section_neutron-per-tenant-routers-with-private-networks.xml:327(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:113(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:178(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:189(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:322(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:333(replaceable) ./doc/install-guide/section_ceilometer-glance.xml:18(replaceable) ./doc/install-guide/section_ceilometer-glance.xml:24(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:207(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:230(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:335(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:362(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:427(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:446(replaceable) ./doc/install-guide/ch_basics.xml:664(replaceable) ./doc/install-guide/section_neutron-controller-node.xml:156(replaceable) ./doc/install-guide/section_neutron-controller-node.xml:183(replaceable) ./doc/install-guide/section_cinder-node.xml:130(replaceable) ./doc/install-guide/section_cinder-node.xml:150(replaceable) ./doc/install-guide/section_cinder-controller.xml:111(replaceable) ./doc/install-guide/section_cinder-controller.xml:131(replaceable) ./doc/install-guide/section_heat-install.xml:93(replaceable) ./doc/install-guide/section_heat-install.xml:96(replaceable) ./doc/install-guide/section_ceilometer-nova.xml:75(replaceable) ./doc/install-guide/section_ceilometer-nova.xml:79(replaceable) ./doc/install-guide/section_nova-compute.xml:152(replaceable) ./doc/install-guide/section_nova-compute.xml:158(replaceable)
+#: ./doc/install-guide/section_neutron-network-node.xml:152(replaceable) ./doc/install-guide/section_neutron-network-node.xml:161(replaceable) ./doc/install-guide/section_neutron-compute-node.xml:200(replaceable) ./doc/install-guide/section_neutron-compute-node.xml:209(replaceable) ./doc/install-guide/section_ceilometer-install.xml:145(replaceable) ./doc/install-guide/section_ceilometer-install.xml:148(replaceable) ./doc/install-guide/section_nova-controller.xml:67(replaceable) ./doc/install-guide/section_nova-controller.xml:75(replaceable) ./doc/install-guide/section_neutron-per-tenant-routers-with-private-networks.xml:182(replaceable) ./doc/install-guide/section_neutron-per-tenant-routers-with-private-networks.xml:195(replaceable) ./doc/install-guide/section_neutron-per-tenant-routers-with-private-networks.xml:272(replaceable) ./doc/install-guide/section_neutron-per-tenant-routers-with-private-networks.xml:327(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:113(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:178(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:189(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:322(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:333(replaceable) ./doc/install-guide/section_ceilometer-glance.xml:18(replaceable) ./doc/install-guide/section_ceilometer-glance.xml:24(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:207(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:230(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:335(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:362(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:427(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:446(replaceable) ./doc/install-guide/section_neutron-controller-node.xml:156(replaceable) ./doc/install-guide/section_neutron-controller-node.xml:183(replaceable) ./doc/install-guide/section_cinder-node.xml:130(replaceable) ./doc/install-guide/section_cinder-node.xml:150(replaceable) ./doc/install-guide/section_cinder-controller.xml:111(replaceable) ./doc/install-guide/section_cinder-controller.xml:131(replaceable) ./doc/install-guide/section_basics-queue.xml:31(replaceable) ./doc/install-guide/section_heat-install.xml:93(replaceable) ./doc/install-guide/section_heat-install.xml:96(replaceable) ./doc/install-guide/section_ceilometer-nova.xml:75(replaceable) ./doc/install-guide/section_ceilometer-nova.xml:79(replaceable) ./doc/install-guide/section_nova-compute.xml:152(replaceable) ./doc/install-guide/section_nova-compute.xml:158(replaceable)
 msgid "RABBIT_PASS"
 msgstr ""
 
@@ -735,6 +995,18 @@ msgstr ""
 msgid "Install and configure the OpenStack clients"
 msgstr ""
 
+#: ./doc/install-guide/ch_clients.xml:7(para)
+msgid "The following sections contain information about working with the OpenStack clients. Recall: in the previous section, you used the <placeholder-1/> client."
+msgstr ""
+
+#: ./doc/install-guide/ch_clients.xml:10(para)
+msgid "You must install the client tools to complete the rest of the installation."
+msgstr ""
+
+#: ./doc/install-guide/ch_clients.xml:12(para)
+msgid "Configure the clients on your desktop rather than on the server so that you have a similar experience to your users."
+msgstr ""
+
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
 #: ./doc/install-guide/section_debconf-keystone_authtoken.xml:30(None)
@@ -1084,7 +1356,7 @@ msgstr ""
 msgid "Compute stores information in a database. In this guide, we use a MySQL database on the controller node. Configure Compute with the database location and credentials. Replace <replaceable>NOVA_DBPASS</replaceable> with the password for the database that you will create in a later step."
 msgstr ""
 
-#: ./doc/install-guide/section_nova-controller.xml:44(replaceable) ./doc/install-guide/section_nova-controller.xml:50(replaceable) ./doc/install-guide/section_nova-controller.xml:82(replaceable) ./doc/install-guide/section_nova-controller.xml:96(replaceable) ./doc/install-guide/section_nova-controller.xml:98(replaceable) ./doc/install-guide/section_nova-compute.xml:110(replaceable)
+#: ./doc/install-guide/section_nova-controller.xml:44(replaceable) ./doc/install-guide/section_nova-controller.xml:50(replaceable) ./doc/install-guide/section_nova-controller.xml:108(replaceable) ./doc/install-guide/section_nova-controller.xml:122(replaceable) ./doc/install-guide/section_nova-controller.xml:124(replaceable) ./doc/install-guide/section_nova-compute.xml:110(replaceable)
 msgid "NOVA_DBPASS"
 msgstr ""
 
@@ -1104,32 +1376,32 @@ msgstr ""
 msgid "Set these configuration keys to configure Compute to use the RabbitMQ message broker:"
 msgstr ""
 
-#: ./doc/install-guide/section_nova-controller.xml:79(para)
-msgid "Run the <placeholder-1/> command to create the Compute service database and tables and a <literal>nova</literal> database user."
-msgstr ""
-
-#: ./doc/install-guide/section_nova-controller.xml:85(para)
-msgid "By default, the Ubuntu packages create an SQLite database. Delete the <filename>nova.sqlite</filename> file created in the <filename>/var/lib/nova/</filename> directory so that it does not get used by mistake."
-msgstr ""
-
-#: ./doc/install-guide/section_nova-controller.xml:91(para)
-msgid "Use the password you created previously to log in as root. Create a <literal>nova</literal> database user:"
-msgstr ""
-
-#: ./doc/install-guide/section_nova-controller.xml:101(para)
-msgid "Create the Compute service tables:"
-msgstr ""
-
-#: ./doc/install-guide/section_nova-controller.xml:105(para)
+#: ./doc/install-guide/section_nova-controller.xml:78(para)
 msgid "Set the <option>my_ip</option>, <option>vncserver_listen</option>, and <option>vncserver_proxyclient_address</option> configuration options to the internal IP address of the controller node:"
 msgstr ""
 
-#: ./doc/install-guide/section_nova-controller.xml:113(para)
+#: ./doc/install-guide/section_nova-controller.xml:86(para)
 msgid "Edit the <filename>/etc/nova/nova.conf</filename> file and add these lines to the <literal>[DEFAULT]</literal> section:"
 msgstr ""
 
-#: ./doc/install-guide/section_nova-controller.xml:116(para)
+#: ./doc/install-guide/section_nova-controller.xml:89(para)
 msgid "In Debian, the <package>debconf</package> package automatically sets up <literal>my_ip</literal> parameter but you must edit the <filename>/etc/nova/nova.conf</filename> file to configure the <option>vncserver_listen</option> and <option>vncserver_proxyclient_address</option> options, which appear at the end of the file:"
+msgstr ""
+
+#: ./doc/install-guide/section_nova-controller.xml:105(para)
+msgid "Run the <placeholder-1/> command to create the Compute service database and tables and a <literal>nova</literal> database user."
+msgstr ""
+
+#: ./doc/install-guide/section_nova-controller.xml:111(para)
+msgid "By default, the Ubuntu packages create an SQLite database. Delete the <filename>nova.sqlite</filename> file created in the <filename>/var/lib/nova/</filename> directory so that it does not get used by mistake."
+msgstr ""
+
+#: ./doc/install-guide/section_nova-controller.xml:117(para)
+msgid "Use the password you created previously to log in as root. Create a <literal>nova</literal> database user:"
+msgstr ""
+
+#: ./doc/install-guide/section_nova-controller.xml:127(para)
+msgid "Create the Compute service tables:"
 msgstr ""
 
 #: ./doc/install-guide/section_nova-controller.xml:131(para)
@@ -1172,7 +1444,7 @@ msgstr ""
 msgid "To verify your configuration, list available images:"
 msgstr ""
 
-#: ./doc/install-guide/section_dashboard-system-reqs.xml:6(title) ./doc/install-guide/object-storage/section_object-storage-sys-requirements.xml:11(title)
+#: ./doc/install-guide/section_dashboard-system-reqs.xml:6(title)
 msgid "System requirements"
 msgstr ""
 
@@ -1228,7 +1500,7 @@ msgstr ""
 msgid "Launch an instance"
 msgstr ""
 
-#: ./doc/install-guide/section_nova-boot.xml:7(para) ./doc/install-guide/ch_networking.xml:17(para) ./doc/install-guide/ch_basics.xml:8(para) ./doc/install-guide/ch_overview.xml:8(para)
+#: ./doc/install-guide/section_nova-boot.xml:7(para) ./doc/install-guide/ch_networking.xml:17(para) ./doc/install-guide/ch_basics.xml:7(para) ./doc/install-guide/ch_overview.xml:8(para)
 msgid "We are updating this material for Icehouse. You may find structure and/or content issues during this process."
 msgstr ""
 
@@ -1416,11 +1688,11 @@ msgstr ""
 msgid "Verify that your admin account has authorization to perform administrative commands:"
 msgstr ""
 
-#: ./doc/install-guide/section_keystone-verify.xml:83(para)
+#: ./doc/install-guide/section_keystone-verify.xml:85(para)
 msgid "Seeing that the <literal>id</literal> in the output from the <placeholder-1/> command matches the <literal>user_id</literal> in the <placeholder-2/> command, and that the admin role is listed for that user, for the related tenant, this verifies that your user account has the <literal>admin</literal> role, which matches the role used in the Identity Service <filename>policy.json</filename> file."
 msgstr ""
 
-#: ./doc/install-guide/section_keystone-verify.xml:93(para)
+#: ./doc/install-guide/section_keystone-verify.xml:95(para)
 msgid "As long as you define your credentials and the Identity Service endpoint through the command line or environment variables, you can run all OpenStack client commands from any machine. For details, see <xref linkend=\"ch_clients\"/>."
 msgstr ""
 
@@ -1532,7 +1804,7 @@ msgstr ""
 msgid "The use case assumes the following:"
 msgstr ""
 
-#: ./doc/install-guide/section_neutron-per-tenant-routers-with-private-networks.xml:123(emphasis) ./doc/install-guide/section_neutron-single-flat.xml:102(emphasis)
+#: ./doc/install-guide/section_neutron-per-tenant-routers-with-private-networks.xml:123(emphasis) ./doc/install-guide/section_basics-networking-nova.xml:35(title) ./doc/install-guide/section_basics-networking-neutron.xml:38(title) ./doc/install-guide/section_neutron-single-flat.xml:102(emphasis)
 msgid "Controller node"
 msgstr ""
 
@@ -1560,7 +1832,7 @@ msgstr ""
 msgid "Additional services: <placeholder-1/>"
 msgstr ""
 
-#: ./doc/install-guide/section_neutron-per-tenant-routers-with-private-networks.xml:156(emphasis) ./doc/install-guide/section_neutron-single-flat.xml:139(emphasis)
+#: ./doc/install-guide/section_neutron-per-tenant-routers-with-private-networks.xml:156(emphasis) ./doc/install-guide/section_basics-networking-nova.xml:63(title) ./doc/install-guide/section_basics-networking-neutron.xml:143(title) ./doc/install-guide/section_neutron-single-flat.xml:139(emphasis)
 msgid "Compute node"
 msgstr ""
 
@@ -1940,7 +2212,7 @@ msgstr ""
 msgid "Networking (neutron)"
 msgstr ""
 
-#: ./doc/install-guide/ch_networking.xml:41(title)
+#: ./doc/install-guide/ch_networking.xml:41(title) ./doc/install-guide/section_basics-networking-nova.xml:6(title)
 msgid "Legacy networking"
 msgstr ""
 
@@ -2154,7 +2426,7 @@ msgstr ""
 msgid "Start the services:"
 msgstr ""
 
-#: ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:144(title)
+#: ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:144(title) ./doc/install-guide/section_basics-networking-neutron.xml:69(title)
 msgid "Network node"
 msgstr ""
 
@@ -2543,6 +2815,26 @@ msgstr ""
 msgid "Each user belongs to a user group with the same name as the user."
 msgstr ""
 
+#: ./doc/install-guide/section_basics-ntp.xml:6(title)
+msgid "Network Time Protocol (NTP)"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-ntp.xml:7(para)
+msgid "To synchronize services across multiple machines, you must install <glossterm baseform=\"Network Time Protocol (NTP)\">NTP</glossterm>. The examples in this guide configure the controller node as the reference server and any additional nodes to set their time from the controller node."
+msgstr ""
+
+#: ./doc/install-guide/section_basics-ntp.xml:12(para)
+msgid "Install the <literal>ntp</literal> package on each system running OpenStack services."
+msgstr ""
+
+#: ./doc/install-guide/section_basics-ntp.xml:17(para)
+msgid "Set up the NTP server on your controller node so that it receives data by modifying the <filename>ntp.conf</filename> file and restarting the service."
+msgstr ""
+
+#: ./doc/install-guide/section_basics-ntp.xml:25(para)
+msgid "On additional nodes, it is advised that you configure the other nodes to synchronize their time from the controller node rather than from outside of your LAN. To do so, install the ntp daemon as above, then edit <filename>/etc/ntp.conf</filename> and change the <code>server</code> directive to use the controller node as internet time source."
+msgstr ""
+
 #: ./doc/install-guide/section_ceilometer-glance.xml:6(title)
 msgid "Configure the Image Service for Telemetry"
 msgstr ""
@@ -2557,6 +2849,242 @@ msgstr ""
 
 #: ./doc/install-guide/section_ceilometer-glance.xml:31(para)
 msgid "Restart the Image Services with their new settings:"
+msgstr ""
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: ./doc/install-guide/section_basics-networking-nova.xml:18(None) ./doc/install-guide/ch_overview.xml:96(None)
+msgid "@@image: 'figures/installguide_arch-nova.png'; md5=30bd45144ade729234e157430f63b323"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-networking-nova.xml:7(para)
+msgid "The example architecture with legacy networking (nova) requires one controller node and at least one compute node. The controller node contains one network interface on the <glossterm>management network</glossterm>. The compute node contains one network interface on the management network and one on the <glossterm>external network</glossterm>."
+msgstr ""
+
+#: ./doc/install-guide/section_basics-networking-nova.xml:14(title) ./doc/install-guide/ch_overview.xml:92(title)
+msgid "Two-node architecture with legacy networking"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-networking-nova.xml:22(para) ./doc/install-guide/section_basics-networking-neutron.xml:25(para)
+msgid "Unless you intend to use the exact configuration provided in this example architecture, you must modify the networks in this procedure to match your environment. Also, each node must resolve the other nodes by name in addition to IP address. For example, the <replaceable>controller</replaceable> name must resolve to <literal>10.0.0.11</literal>, the IP address of the management interface on the controller node."
+msgstr ""
+
+#: ./doc/install-guide/section_basics-networking-nova.xml:30(para) ./doc/install-guide/section_basics-networking-neutron.xml:33(para)
+msgid "Reconfiguring network interfaces will interrupt network connectivity. We recommend using a local terminal session for these procedures."
+msgstr ""
+
+#: ./doc/install-guide/section_basics-networking-nova.xml:37(title) ./doc/install-guide/section_basics-networking-nova.xml:65(title) ./doc/install-guide/section_basics-networking-neutron.xml:40(title) ./doc/install-guide/section_basics-networking-neutron.xml:71(title) ./doc/install-guide/section_basics-networking-neutron.xml:145(title)
+msgid "To configure networking:"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-networking-nova.xml:39(para) ./doc/install-guide/section_basics-networking-nova.xml:67(para) ./doc/install-guide/section_basics-networking-neutron.xml:42(para) ./doc/install-guide/section_basics-networking-neutron.xml:73(para) ./doc/install-guide/section_basics-networking-neutron.xml:147(para)
+msgid "Configure the management interface:"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-networking-nova.xml:40(para) ./doc/install-guide/section_basics-networking-neutron.xml:43(para)
+msgid "IP address: 10.0.0.11"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-networking-nova.xml:41(para) ./doc/install-guide/section_basics-networking-nova.xml:69(para) ./doc/install-guide/section_basics-networking-neutron.xml:44(para) ./doc/install-guide/section_basics-networking-neutron.xml:75(para) ./doc/install-guide/section_basics-networking-neutron.xml:81(para) ./doc/install-guide/section_basics-networking-neutron.xml:149(para) ./doc/install-guide/section_basics-networking-neutron.xml:159(para)
+msgid "Network mask: 255.255.255.0 (or /24)"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-networking-nova.xml:42(para) ./doc/install-guide/section_basics-networking-nova.xml:70(para) ./doc/install-guide/section_basics-networking-neutron.xml:45(para) ./doc/install-guide/section_basics-networking-neutron.xml:76(para) ./doc/install-guide/section_basics-networking-neutron.xml:150(para)
+msgid "Default gateway: 10.0.0.1"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-networking-nova.xml:46(title) ./doc/install-guide/section_basics-networking-nova.xml:116(title) ./doc/install-guide/section_basics-networking-neutron.xml:49(title) ./doc/install-guide/section_basics-networking-neutron.xml:123(title) ./doc/install-guide/section_basics-networking-neutron.xml:167(title)
+msgid "To configure name resolution:"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-networking-nova.xml:48(para) ./doc/install-guide/section_basics-networking-nova.xml:118(para) ./doc/install-guide/section_basics-networking-neutron.xml:51(para) ./doc/install-guide/section_basics-networking-neutron.xml:125(para) ./doc/install-guide/section_basics-networking-neutron.xml:169(para)
+msgid "Edit the <filename>/etc/hosts</filename> file to contain the following:"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-networking-nova.xml:56(para) ./doc/install-guide/section_basics-networking-nova.xml:126(para) ./doc/install-guide/section_basics-networking-neutron.xml:62(para) ./doc/install-guide/section_basics-networking-neutron.xml:136(para) ./doc/install-guide/section_basics-networking-neutron.xml:180(para)
+msgid "You must remove or comment the line beginning with <literal>127.0.1.1</literal>."
+msgstr ""
+
+#: ./doc/install-guide/section_basics-networking-nova.xml:68(para) ./doc/install-guide/section_basics-networking-neutron.xml:148(para)
+msgid "IP address: 10.0.0.31"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-networking-nova.xml:72(para) ./doc/install-guide/section_basics-networking-neutron.xml:152(para)
+msgid "Additional compute nodes should use 10.0.0.32, 10.0.0.33, and so on."
+msgstr ""
+
+#: ./doc/install-guide/section_basics-networking-nova.xml:77(para) ./doc/install-guide/section_basics-networking-neutron.xml:84(para)
+msgid "The external interface uses a special configuration without an IP address assigned to it. Configure the external interface:"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-networking-nova.xml:81(para) ./doc/install-guide/section_basics-networking-neutron.xml:88(para)
+msgid "Edit the <filename>/etc/network/interfaces</filename> file to contain the following:"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-networking-nova.xml:90(para)
+msgid "Edit the <filename>/etc/sysconfig/network-scripts/ifcfg-eth1</filename> file to contain the following:"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-networking-nova.xml:93(para) ./doc/install-guide/section_basics-networking-neutron.xml:100(para)
+msgid "Do not change the <literal>HWADDR</literal> and <literal>UUID</literal> keys."
+msgstr ""
+
+#: ./doc/install-guide/section_basics-networking-nova.xml:101(para)
+msgid "Edit the <filename>/etc/sysconfig/network/ifcfg-eth1</filename> file to contain the following:"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-networking-nova.xml:110(para) ./doc/install-guide/section_basics-networking-neutron.xml:117(para)
+msgid "Restart networking:"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-networking-nova.xml:133(title) ./doc/install-guide/section_basics-networking-neutron.xml:187(title) ./doc/install-guide/section_neutron-initial-networks.xml:153(title)
+msgid "Verify connectivity"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-networking-nova.xml:134(para) ./doc/install-guide/section_basics-networking-neutron.xml:188(para)
+msgid "We recommend that you verify network connectivity to the internet and among the nodes before proceeding further."
+msgstr ""
+
+#: ./doc/install-guide/section_basics-networking-nova.xml:138(para) ./doc/install-guide/section_basics-networking-neutron.xml:192(para)
+msgid "From the <emphasis>controller</emphasis> node, <placeholder-1/> a site on the internet:"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-networking-nova.xml:152(para) ./doc/install-guide/section_basics-networking-neutron.xml:221(para)
+msgid "From the <emphasis>controller</emphasis> node, <placeholder-1/> the management interface on the <emphasis>compute</emphasis> node:"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-networking-nova.xml:155(replaceable) ./doc/install-guide/section_basics-networking-neutron.xml:224(replaceable)
+msgid "compute1"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-networking-nova.xml:167(para) ./doc/install-guide/section_basics-networking-neutron.xml:280(para)
+msgid "From the <emphasis>compute</emphasis> node, <placeholder-1/> a site on the internet:"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-networking-nova.xml:181(para) ./doc/install-guide/section_basics-networking-neutron.xml:294(para)
+msgid "From the <emphasis>compute</emphasis> node, <placeholder-1/> the management interface on the <emphasis>controller</emphasis> node:"
+msgstr ""
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: ./doc/install-guide/section_basics-networking-neutron.xml:21(None) ./doc/install-guide/ch_overview.xml:148(None)
+msgid "@@image: 'figures/installguide_arch-neutron.png'; md5=4c816c5cff6fb744cba492c2ad704992"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-networking-neutron.xml:6(title)
+msgid "OpenStack Networking"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-networking-neutron.xml:7(para)
+msgid "The example architecture with OpenStack Networking (neutron) requires one controller node, one network node, and at least one compute node. The controller node contains one network interface on the <glossterm>management network</glossterm>. The network node contains one network interface on the management network, one on the <glossterm>instance tunnels network</glossterm>, and one on the <glossterm>external network</glossterm>. The compute node contains one network interface on the management network and one on the instance tunnels network."
+msgstr ""
+
+#: ./doc/install-guide/section_basics-networking-neutron.xml:17(title)
+msgid "Three-node architecture with OpenStack Networking"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-networking-neutron.xml:74(para)
+msgid "IP address: 10.0.0.21"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-networking-neutron.xml:79(para) ./doc/install-guide/section_basics-networking-neutron.xml:157(para)
+msgid "Configure the instance tunnels interface:"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-networking-neutron.xml:80(para)
+msgid "IP address: 10.0.1.21"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-networking-neutron.xml:97(para)
+msgid "Edit the <filename>/etc/sysconfig/network-scripts/ifcfg-eth2</filename> file to contain the following:"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-networking-neutron.xml:108(para)
+msgid "Edit the <filename>/etc/sysconfig/network/ifcfg-eth2</filename> file to contain the following:"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-networking-neutron.xml:158(para)
+msgid "IP address: 10.0.1.31"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-networking-neutron.xml:161(para)
+msgid "Additional compute nodes should use 10.0.1.32, 10.0.1.33, and so on."
+msgstr ""
+
+#: ./doc/install-guide/section_basics-networking-neutron.xml:206(para)
+msgid "From the <emphasis>controller</emphasis> node, <placeholder-1/> the management interface on the <emphasis>network</emphasis> node:"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-networking-neutron.xml:209(replaceable)
+msgid "network"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-networking-neutron.xml:236(para)
+msgid "From the <emphasis>network</emphasis> node, <placeholder-1/> a site on the internet:"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-networking-neutron.xml:250(para)
+msgid "From the <emphasis>network</emphasis> node, <placeholder-1/> the management interface on the <emphasis>controller</emphasis> node:"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-networking-neutron.xml:265(para)
+msgid "From the <emphasis>network</emphasis> node, <placeholder-1/> the instance tunnels interface on the <emphasis>compute</emphasis> node:"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-networking-neutron.xml:309(para)
+msgid "From the <emphasis>compute</emphasis> node, <placeholder-1/> the instance tunnels interface on the <emphasis>network</emphasis> node:"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-prerequisites.xml:6(title) ./doc/install-guide/object-storage/section_object-storage-install.xml:23(title)
+msgid "Before you begin"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-prerequisites.xml:7(para)
+msgid "For a functional environment, OpenStack doesn't require a significant amount of resources. We recommend that your environment meets or exceeds the following minimum requirements which can support several minimal <glossterm>CirrOS</glossterm> instances:"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-prerequisites.xml:13(para)
+msgid "Controller Node: 1 processor, 2 GB memory, and 5 GB storage"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-prerequisites.xml:17(para)
+msgid "Network Node: 1 processor, 512 MB memory, and 5 GB storage"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-prerequisites.xml:21(para)
+msgid "Compute Node: 1 processor, 2 GB memory, and 10 GB storage"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-prerequisites.xml:25(para)
+msgid "To minimize clutter and provide more resources for OpenStack, we recommend a minimal installation of your Linux distribution. Also, we strongly recommend that you install a 64-bit version of your distribution on at least the compute node. If you install a 32-bit version of your distribution on the compute node, attempting to start an instance using a 64-bit image will fail."
+msgstr ""
+
+#: ./doc/install-guide/section_basics-prerequisites.xml:32(para)
+msgid "A single disk partition on each node works for most basic installations. However, you should consider <glossterm>Logical Volume Manager (LVM)</glossterm> for installations with optional services such as Block Storage."
+msgstr ""
+
+#: ./doc/install-guide/section_basics-prerequisites.xml:37(para)
+msgid "Many users build their test environments on <glossterm baseform=\"virtual machine (VM)\">virtual machines (VMs)</glossterm>. The primary benefits of VMs include the following:"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-prerequisites.xml:43(para)
+msgid "One physical server can support multiple nodes, each with almost any number of network interfaces."
+msgstr ""
+
+#: ./doc/install-guide/section_basics-prerequisites.xml:47(para)
+msgid "Ability to take periodic \"snap shots\" throughout the installation process and \"roll back\" to a working configuration in the event of a problem."
+msgstr ""
+
+#: ./doc/install-guide/section_basics-prerequisites.xml:52(para)
+msgid "However, VMs will reduce performance of your instances, particularly if your hypervisor and/or processor lacks support for hardware acceleration of nested VMs."
+msgstr ""
+
+#: ./doc/install-guide/section_basics-prerequisites.xml:56(para)
+msgid "If you choose to install on VMs, make sure your hypervisor permits <glossterm>promiscuous mode</glossterm> on the <glossterm>external network</glossterm>."
+msgstr ""
+
+#: ./doc/install-guide/section_basics-prerequisites.xml:60(para)
+msgid "For more information about system requirements, see the <link href=\"http://docs.openstack.org/ops/\">OpenStack Operations Guide</link>."
 msgstr ""
 
 #: ./doc/install-guide/section_debconf-concepts.xml:7(title)
@@ -2927,439 +3455,20 @@ msgstr ""
 msgid "Created VMs can have NICs on any of the shared or private networks that the tenant owns. This enables the creation of multi-tier topologies that use VMs with multiple NICs. It also enables a VM to act as a gateway so that it can provide services such as routing, NAT, and load balancing."
 msgstr ""
 
-#. When image changes, this message will be marked fuzzy or untranslated for you.
-#. It doesn't matter what you translate it to: it's not used at all.
-#: ./doc/install-guide/ch_basics.xml:126(None)
-msgid "@@image: 'figures/basic-architecture-networking.svg'; md5=1a9454b8cdb45af98a43fbff5dd58fe9"
+#: ./doc/install-guide/ch_basics.xml:5(title)
+msgid "Basic environment configuration"
 msgstr ""
 
-#: ./doc/install-guide/ch_basics.xml:6(title)
-msgid "Basic operating system configuration"
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:11(para)
-msgid "This guide shows you how to create a controller node to host most services and a compute node to run virtual machine instances. Subsequent chapters create additional nodes to run more services. OpenStack is flexible about how and where you run each service, so other configurations are possible. However, you must configure certain operating system settings on each node."
+#: ./doc/install-guide/ch_basics.xml:10(para)
+msgid "This chapter explains how to configure each node in the <link linkend=\"architecture_example-architectures\">example architectures</link> including the <link linkend=\"example-architecture-with-legacy-networking\"> two-node architecture with legacy networking</link> and <link linkend=\"example-architecture-with-neutron-networking\">three-node architecture with OpenStack Networking (neutron)</link>."
 msgstr ""
 
 #: ./doc/install-guide/ch_basics.xml:17(para)
-msgid "This chapter details a sample configuration for the controller node and any additional nodes. You can configure the operating system in other ways, but this guide assumes that your configuration is compatible with the one described here."
+msgid "Although most environments include OpenStack Identity, Image Service, Compute, at least one networking service, and the dashboard, OpenStack Object Storage can operate independently of most other services. If your use case only involves Object Storage, you can skip to <xref linkend=\"object-storage-system-requirements\"/>. However, the dashboard will not work without at least OpenStack Image Service and Compute."
 msgstr ""
 
-#: ./doc/install-guide/ch_basics.xml:21(para)
-msgid "All example commands assume you have administrative privileges. Either run the commands as the root user or prefix them with the <placeholder-1/> command."
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:27(title) ./doc/install-guide/object-storage/section_object-storage-install.xml:23(title)
-msgid "Before you begin"
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:29(para)
-msgid "We strongly recommend that you install a 64-bit operating system on your compute nodes. If you use a 32-bit operating system, attempting a start a virtual machine using a 64-bit image will fail with an error."
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:34(para)
-msgid "For more information about system requirements, see the <link href=\"http://docs.openstack.org/ops/\">OpenStack Operations Guide</link>."
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:41(title)
-msgid "Networking"
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:43(para)
-msgid "For an OpenStack production deployment, most nodes must have these network interface cards:"
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:47(para)
-msgid "One network interface card for external network traffic"
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:51(para)
-msgid "Another card to communicate with other OpenStack nodes."
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:55(para)
-msgid "For simple test cases, you can use machines with a single network interface card."
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:57(para)
-msgid "The following example configures Networking on two networks with <glossterm baseform=\"static IP address\">static IP addresses</glossterm> and manually manages a list of host names on each machine. If you manage a large network, you might already have systems in place to manage this. If so, you can skip this section but note that the rest of this guide assumes that each node can reach the other nodes on the internal network by using the <literal>controller</literal> and <literal>compute1</literal> host names."
-msgstr ""
-
-#. these fedora only paragraphs are confirmed not needed in centos
-#: ./doc/install-guide/ch_basics.xml:67(para)
-msgid "Disable the <systemitem class=\"service\">NetworkManager</systemitem> service and enable the <systemitem class=\"service\">network</systemitem> service. The <systemitem class=\"service\">network</systemitem> service is more suitable for the static network configuration done in this guide."
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:79(para)
-msgid "Since Fedora 19, <literal>firewalld</literal> replaces <literal>iptables</literal> as the default firewall system."
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:82(para)
-msgid "You can use <literal>firewalld</literal> successfully, but this guide recommends and demonstrates the use of the default <literal>iptables</literal>."
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:85(para)
-msgid "For Fedora 19 systems, run the following commands to disable <literal>firewalld</literal> and enable <literal>iptables</literal>:"
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:93(para)
-msgid "RHEL and derivatives including CentOS and Scientific Linux enable a restrictive <glossterm>firewall</glossterm> by default. During this installation, certain steps will fail unless you alter this setting or disable the firewall. For further information about securing your installation, refer to the <link href=\"http://docs.openstack.org/sec/\">OpenStack Security Guide</link>."
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:101(para)
-msgid "When you set up your system, use the traditional network scripts and do not use <systemitem class=\"service\">NetworkManager</systemitem>. You can change the settings after installation with the YaST network module:"
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:107(para)
-msgid "Configure both <literal>eth0</literal> and <literal>eth1</literal>. The examples in this guide use the <literal>192.168.0.<replaceable>x</replaceable></literal> IP addresses for the internal network and the <literal>10.0.0.<replaceable>x</replaceable></literal> IP addresses for the external network. Make sure to connect your network devices to the correct network."
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:114(para)
-msgid "In this guide, the controller node uses the <literal>192.168.0.10</literal> and <literal>10.0.0.10</literal> IP addresses. When you create the compute node, use the <literal>192.168.0.11</literal> and <literal>10.0.0.11</literal> addresses instead. Additional nodes that you add in subsequent chapters also follow this pattern."
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:122(title)
-msgid "Basic architecture"
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:131(filename)
-msgid "/etc/sysconfig/network-scripts/ifcfg-eth0"
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:142(filename)
-msgid "/etc/sysconfig/network-scripts/ifcfg-eth1"
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:152(para)
-msgid "To configure the network interfaces, start the YaST network module, as follows:"
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:157(para)
-msgid "Use these parameters to set up the <literal>eth0</literal> ethernet card for the internal network:"
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:165(para)
-msgid "Use these parameters to set up the <literal>eth1</literal> ethernet card for the external network:"
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:173(para)
-msgid "Set up a default route on the external network."
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:178(filename)
-msgid "/etc/network/interfaces"
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:192(para)
-msgid "After you configure the network, restart the daemon for changes to take effect:"
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:198(para)
-msgid "Set the host name of each machine. Name the controller node <literal>controller</literal> and the first compute node <literal>compute1</literal>. The examples in this guide use these host names."
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:202(para)
-msgid "Use the <placeholder-1/> command to set the host name: <placeholder-2/>"
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:205(para)
-msgid "Use <placeholder-1/> to set the host name with YaST."
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:207(para)
-msgid "To have the host name change persist when the system reboots, you must specify it in the proper configuration file. In Red Hat Enterprise Linux, CentOS, and older versions of Fedora, you set this in the file <filename>/etc/sysconfig/network</filename>. Change the line starting with <literal>HOSTNAME=</literal>."
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:214(para)
-msgid "As of Fedora 18, Fedora uses the <filename>/etc/hostname</filename> file, which contains a single line with the host name."
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:217(para)
-msgid "To configure this host name to be available when the system reboots, you must specify it in the <filename>/etc/hostname</filename> file, which contains a single line with the host name."
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:221(para)
-msgid "Finally, ensure that each node can reach the other nodes by using host names. You must manually edit the <filename>/etc/hosts</filename> file on each system. For large-scale deployments, use DNS or a configuration management system like Puppet."
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:231(title)
-msgid "Network Time Protocol (NTP)"
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:232(para)
-msgid "To synchronize services across multiple machines, you must install <glossterm baseform=\"Network Time Protocol (NTP)\">NTP</glossterm>. The examples in this guide configure the controller node as the reference server and any additional nodes to set their time from the controller node."
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:237(para)
-msgid "Install the <literal>ntp</literal> package on each system running OpenStack services."
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:242(para)
-msgid "Set up the NTP server on your controller node so that it receives data by modifying the <filename>ntp.conf</filename> file and restarting the service."
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:250(para)
-msgid "On additional nodes, it is advised that you configure the other nodes to synchronize their time from the controller node rather than from outside of your LAN. To do so, install the ntp daemon as above, then edit <filename>/etc/ntp.conf</filename> and change the <code>server</code> directive to use the controller node as internet time source."
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:259(title)
-msgid "Passwords"
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:260(para)
-msgid "The various OpenStack services and the required software like the database and the messaging server have to be password protected. You use these passwords when configuring a service and then again to access the service. You have to choose a password while configuring the service and later remember to use the same password when accessing it. Optionally, you can generate random passwords with the <application>pwgen</application> program. Or, to create passwords one at a time, use the output of this command repeatedly: <placeholder-1/>"
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:271(para)
-msgid "This guide uses the convention that <literal><replaceable>SERVICE_PASS</replaceable></literal> is password to access the service <literal>SERVICE</literal> and <literal><replaceable>SERVICE_DBPASS</replaceable></literal> is the database password used by the service SERVICE to access the database."
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:279(para)
-msgid "The complete list of passwords you need to define in this guide are: <table rules=\"all\"><caption>Passwords</caption><thead><tr><th>Password name</th><th>Description</th></tr></thead><tbody><tr><td>Database password (no variable used)</td><td>Root password for the database</td></tr><tr os=\"ubuntu;opensuse;sles\"><td><literal><replaceable>RABBIT_PASS</replaceable></literal></td><td>Password of user guest of RabbitMQ</td></tr><tr><td><literal><replaceable>KEYSTONE_DBPASS</replaceable></literal></td><td>Database password of Identity service</td></tr><tr><td><literal><replaceable>ADMIN_PASS</replaceable></literal></td><td>Password of user <literal>admin</literal></td></tr><tr><td><literal><replaceable>GLANCE_DBPASS</replaceable></literal></td><td>Database password for Image Service</td></tr><tr><td><literal><replaceable>GLANCE_PASS</replaceable></literal></td><td>Password of Image Service user <literal>glance</literal></td></tr><tr><td><literal><replaceable>NOVA_DBPASS</replaceable></literal></td><td>Database password for Compute service</td></tr><tr><td><literal><replaceable>NOVA_PASS</replaceable></literal></td><td>Password of Compute service user <literal>nova</literal></td></tr><tr><td><literal><replaceable>DASH_DBPASS</replaceable></literal></td><td>Database password for the dashboard</td></tr><tr><td><literal><replaceable>CINDER_DBPASS</replaceable></literal></td><td>Database password for the Block Storage service</td></tr><tr><td><literal><replaceable>CINDER_PASS</replaceable></literal></td><td>Password of Block Storage service user <literal>cinder</literal></td></tr><tr><td><literal><replaceable>NEUTRON_DBPASS</replaceable></literal></td><td>Database password for the Networking service</td></tr><tr><td><literal><replaceable>NEUTRON_PASS</replaceable></literal></td><td>Password of Networking service user <literal>neutron</literal></td></tr><tr><td><literal><replaceable>HEAT_DBPASS</replaceable></literal></td><td>Database password for the Orchestration service</td></tr><tr><td><literal><replaceable>HEAT_PASS</replaceable></literal></td><td>Password of Orchestration service user <literal>heat</literal></td></tr><tr><td><literal><replaceable>CEILOMETER_DBPASS</replaceable></literal></td><td>Database password for the Telemetry service</td></tr><tr><td><literal><replaceable>CEILOMETER_PASS</replaceable></literal></td><td>Password of Telemetry service user <literal>ceilometer</literal></td></tr></tbody></table>"
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:364(title)
-msgid "MySQL database"
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:365(para)
-msgid "Most OpenStack services require a database to store information. These examples use a MySQL database that runs on the controller node. You must install the MySQL database on the controller node. You must install MySQL client software on any additional nodes that access MySQL."
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:371(para)
-msgid "Most OpenStack services require a database to store information. This guide uses a MySQL database on SUSE Linux Enterprise Server and a compatible database on openSUSE running on the controller node. This compatible database for openSUSE is MariaDB. You must install the MariaDB database on the controller node. You must install the MariaDB client software on any nodes that access the MariaDB database."
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:381(title)
-msgid "Controller setup"
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:382(para)
-msgid "<phrase os=\"sles\">For SUSE Linux Enterprise Server: </phrase> On the controller node, install the MySQL client and server packages, and the Python library."
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:386(para)
-msgid "For openSUSE: On the controller node, install the MariaDB client and database server packages, and the MySQL Python library."
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:393(para)
-msgid "When you install the server package, you are prompted for the root password for the database. Choose a strong password and remember it."
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:397(para)
-msgid "The MySQL configuration requires some changes to work with OpenStack."
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:401(para)
-msgid "Edit the <filename>/etc/mysql/my.cnf</filename> file:"
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:403(para)
-msgid "Edit the <filename>/etc/my.cnf</filename> file:"
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:407(para)
-msgid "Under the <literal>[mysqld]</literal> section, set the <literal>bind-address</literal> key to the management IP address of the controller node to enable access by other nodes via the management network:"
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:416(para)
-msgid "Under the <literal>[mysqld]</literal> section, set the following keys to enable InnoDB, UTF-8 character set, and UTF-8 collation by default:"
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:429(para)
-msgid "Restart the MySQL service to apply the changes:"
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:432(para)
-msgid "Start the <phrase os=\"rhel;fedora;centos\">MySQL</phrase><phrase os=\"opensuse;sles\">MariaDB or MySQL</phrase> database server and set it to start automatically when the system boots."
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:441(para)
-msgid "Finally, you should set a root password for your <phrase os=\"rhel;fedora;centos\">MySQL</phrase><phrase os=\"opensuse;sles\">MariaDB or MySQL</phrase> database. The OpenStack programs that set up databases and tables prompt you for this password if it is set."
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:447(para)
-msgid "You must delete the anonymous users that are created when the database is first started. Otherwise, database connection problems occur when you follow the instructions in this guide. To do this, use the <placeholder-1/> command. Note that if <placeholder-2/> fails you might need to use <placeholder-3/> first:"
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:456(para)
-msgid "<phrase os=\"rhel;centos;fedora;opensuse;sles\">If you have not already set a root database password, press <keycap>ENTER</keycap> when you are prompted for the password.</phrase> This command presents a number of options for you to secure your database installation. Respond <placeholder-1/> to all prompts unless you have a good reason to do otherwise."
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:466(title)
-msgid "Node setup"
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:467(para)
-msgid "On all nodes other than the controller node, install the <phrase os=\"ubuntu;debian;rhel;fedora;centos\">MySQL</phrase><phrase os=\"opensuse\">MariaDB (on openSUSE)</phrase> client and the MySQL Python library on any system that does not host a MySQL database:"
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:476(para)
-msgid "For SUSE Linux Enterprise, install MySQL:"
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:483(title)
-msgid "OpenStack packages"
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:484(para)
-msgid "Distributions might release OpenStack packages as part of their distribution or through other methods because the OpenStack and distribution release times are independent of each other."
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:488(para)
-msgid "This section describes the configuration you must complete after you configure machines to install the latest OpenStack packages."
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:491(para)
-msgid "The examples in this guide use the OpenStack packages from the RDO repository. These packages work on Red Hat Enterprise Linux 6, compatible versions of CentOS, and Fedora 20. To enable the RDO repository, download and install the <package>rdo-release-icehouse</package> package."
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:498(para)
-msgid "The EPEL package includes GPG keys for package signing and repository information. This should only be installed on Red Hat Enterprise Linux and CentOS, not Fedora. Install the latest <package>epel-release</package> package (see <link href=\"http://download.fedoraproject.org/pub/epel/6/x86_64/repoview/epel-release.html\">http://download.fedoraproject.org/pub/epel/6/x86_64/repoview/epel-release.html</link>). For example:"
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:507(para)
-msgid "The <package>openstack-utils</package> package contains utility programs that make installation and configuration easier. These programs are used throughout this guide. Install <package>openstack-utils</package>. This verifies that you can access the RDO repository."
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:514(para)
-msgid "Use the Open Build Service repositories for <glossterm>Icehouse</glossterm> based on your openSUSE or SUSE Linux Enterprise Server version, for example if you run openSUSE 12.3 use:"
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:519(para)
-msgid "For openSUSE 13.1 use:"
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:521(para)
-msgid "If you use SUSE Linux Enterprise Server 11 SP3, use:"
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:524(para)
-msgid "The <package>openstack-utils</package> package contains utility programs that make installation and configuration easier. These programs are used throughout this guide. Install <package>openstack-utils</package>. This verifies that you can access the Open Build Service repository:"
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:531(para)
-msgid "The <application>openstack-config</application> program in the <package>openstack-utils</package> package uses <application>crudini</application> to manipulate configuration files. However, <application>crudini</application> version 0.3 does not support multi valued options. See <link href=\"https://bugs.launchpad.net/openstack-manuals/+bug/1269271\">https://bugs.launchpad.net/openstack-manuals/+bug/1269271</link>. As a work around, you must manually set any multi valued options or the new value overwrites the previous value instead of creating a new option."
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:543(para)
-msgid "The <package>openstack-selinux</package> package includes the policy files that are required to configure SELinux during OpenStack installation. Install <package>openstack-selinux</package>."
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:549(para)
-msgid "Upgrade your system packages:"
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:553(para)
-msgid "If the upgrade included a new kernel package, reboot the system to ensure the new kernel is running:"
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:557(title)
-msgid "To use the Ubuntu Cloud Archive for Icehouse"
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:558(para)
-msgid "The <link href=\"https://wiki.ubuntu.com/ServerTeam/CloudArchive\">Ubuntu Cloud Archive</link> is a special repository that allows you to install newer releases of OpenStack on the stable supported version of Ubuntu."
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:564(para)
-msgid "Install the Ubuntu Cloud Archive for <glossterm>Icehouse</glossterm>: <placeholder-1/>"
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:570(para)
-msgid "Update the package database, upgrade your system, and reboot for all changes to take effect: <placeholder-1/>"
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:577(title)
-msgid "To use the Debian Wheezy backports archive for Icehouse"
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:579(para)
-msgid "The <glossterm>Icehouse</glossterm> release is available only in Debian Sid (otherwise called Unstable). However, the Debian maintainers of OpenStack also maintain a non-official Debian repository for OpenStack containing Wheezy backports."
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:585(para)
-msgid "Install the Debian Wheezy backport repository Icehouse:"
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:590(para)
-msgid "Install the Debian Wheezy OpenStack repository for Icehouse:"
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:595(para)
-msgid "Update the repository database and install the key:"
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:599(para)
-msgid "Update the package database, upgrade your system, and reboot for all changes to take effect:"
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:605(para)
-msgid "Numerous archive.gplhost.com mirrors are available around the world. All are available with both FTP and HTTP protocols (you should use the closest mirror). The list of mirrors is available at <link href=\"http://archive.gplhost.com/readme.mirrors\">http://archive.gplhost.com/readme.mirrors</link>."
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:613(title)
-msgid "Manually install python-argparse"
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:614(para)
-msgid "The Debian OpenStack packages are maintained on Debian Sid (also known as Debian Unstable) - the current development version. Backported packages run correctly on Debian Wheezy with one caveat:"
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:618(para)
-msgid "All OpenStack packages are written in Python. Wheezy uses Python 2.6 and 2.7, with Python 2.6 as the default interpreter; Sid has only Python 2.7. There is one packaging change between these two. In Python 2.6, you installed the <package>python-argparse</package> package separately. In Python 2.7, this package is installed by default. Unfortunately, in Python 2.7, this package does not include <code>Provides: python-argparse</code> directive."
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:626(para)
-msgid "Because the packages are maintained in Sid where the <code>Provides: python-argparse</code> directive causes an error, and the Debian OpenStack maintainer wants to maintain one version of the OpenStack packages, you must manually install the <package>python-argparse</package> on each OpenStack system that runs Debian Wheezy before you install the other OpenStack packages. Use the following command to install the package:"
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:635(para)
-msgid "This caveat applies to most OpenStack packages in Wheezy."
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:639(title)
-msgid "Messaging server"
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:640(para)
-msgid "On the controller node, install the messaging queue server. Typically this is <phrase os=\"ubuntu;debian;opensuse;sles\"><glossterm>RabbitMQ</glossterm></phrase><phrase os=\"centos;rhel;fedora\"><glossterm>Qpid</glossterm></phrase> but <phrase os=\"ubuntu;debian;opensuse;sles\"><glossterm>Qpid</glossterm></phrase><phrase os=\"centos;rhel;fedora\"><glossterm>RabbitMQ</glossterm></phrase> and <glossterm>ZeroMQ</glossterm> (0MQ) are also available."
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:652(title)
-msgid "Important security consideration"
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:653(para)
-msgid "The <package>rabbitmq-server</package> package configures the RabbitMQ service to start automatically and creates a <literal>guest</literal> user with a default <literal>guest</literal> password. The RabbitMQ examples in this guide use the <literal>guest</literal> account, though it is strongly advised to change its default password, especially if you have IPv6 available: by default the RabbitMQ server enables anyone to connect to it by using guest as login and password, and with IPv6, it is reachable from the outside."
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:663(para)
-msgid "To change the default guest password of RabbitMQ:"
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:666(para)
-msgid "Disable Qpid authentication by editing <filename>/etc/qpidd.conf</filename> file and changing the <literal>auth</literal> option to <literal>no</literal>."
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:672(para)
-msgid "To simplify configuration, the Qpid examples in this guide do not use authentication. However, we strongly advise enabling authentication for production deployments. For more information on securing Qpid refer to the <link href=\"http://qpid.apache.org/books/trunk/AMQP-Messaging-Broker-CPP-Book/html/chap-Messaging_User_Guide-Security.html\">Qpid Documentation</link>."
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:681(para)
-msgid "After you enable Qpid authentication, you must update the configuration file of each OpenStack service to ensure that the <literal>qpid_username</literal> and <literal>qpid_password</literal> configuration keys refer to a valid Qpid username and password, respectively."
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:689(para)
-msgid "Start Qpid and set it to start automatically when the system boots."
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:693(para)
-msgid "Start the messaging service and set it to start automatically when the system boots:"
-msgstr ""
-
-#: ./doc/install-guide/ch_basics.xml:697(para)
-msgid "Congratulations, now you are ready to install OpenStack services!"
+#: ./doc/install-guide/ch_basics.xml:26(para)
+msgid "You must use an account with administrative privileges to configure each node. Either run the commands as the <literal>root</literal> user or configure the <literal>sudo</literal> utility."
 msgstr ""
 
 #: ./doc/install-guide/section_neutron-controller-node.xml:8(title)
@@ -3789,18 +3898,6 @@ msgstr ""
 msgid "@@image: '../common/figures/openstack_havana_conceptual_arch.png'; md5=96e1d5492d4c865fc9145710bb294a91"
 msgstr ""
 
-#. When image changes, this message will be marked fuzzy or untranslated for you.
-#. It doesn't matter what you translate it to: it's not used at all.
-#: ./doc/install-guide/ch_overview.xml:96(None)
-msgid "@@image: 'figures/installguide_arch-nova.png'; md5=30bd45144ade729234e157430f63b323"
-msgstr ""
-
-#. When image changes, this message will be marked fuzzy or untranslated for you.
-#. It doesn't matter what you translate it to: it's not used at all.
-#: ./doc/install-guide/ch_overview.xml:148(None)
-msgid "@@image: 'figures/installguide_arch-neutron.png'; md5=4c816c5cff6fb744cba492c2ad704992"
-msgstr ""
-
 #: ./doc/install-guide/ch_overview.xml:6(title)
 msgid "Architecture"
 msgstr ""
@@ -3859,10 +3956,6 @@ msgstr ""
 
 #: ./doc/install-guide/ch_overview.xml:85(para)
 msgid "When you implement this architecture, skip <xref linkend=\"section_neutron-networking\"/> in <xref linkend=\"ch_networking\"/>. To use optional services, you might need to install additional nodes, as described in subsequent chapters."
-msgstr ""
-
-#: ./doc/install-guide/ch_overview.xml:92(title)
-msgid "Two-node architecture with legacy networking"
 msgstr ""
 
 #: ./doc/install-guide/ch_overview.xml:102(para)
@@ -4001,6 +4094,50 @@ msgstr ""
 msgid "Login with credentials for any user that you created with the OpenStack Identity Service."
 msgstr ""
 
+#: ./doc/install-guide/section_basics-queue.xml:6(title)
+msgid "Messaging server"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-queue.xml:7(para)
+msgid "On the controller node, install the messaging queue server. Typically this is <phrase os=\"ubuntu;debian;opensuse;sles\"><glossterm>RabbitMQ</glossterm></phrase><phrase os=\"centos;rhel;fedora\"><glossterm>Qpid</glossterm></phrase> but <phrase os=\"ubuntu;debian;opensuse;sles\"><glossterm>Qpid</glossterm></phrase><phrase os=\"centos;rhel;fedora\"><glossterm>RabbitMQ</glossterm></phrase> and <glossterm>ZeroMQ</glossterm> (0MQ) are also available."
+msgstr ""
+
+#: ./doc/install-guide/section_basics-queue.xml:19(title)
+msgid "Important security consideration"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-queue.xml:20(para)
+msgid "The <package>rabbitmq-server</package> package configures the RabbitMQ service to start automatically and creates a <literal>guest</literal> user with a default <literal>guest</literal> password. The RabbitMQ examples in this guide use the <literal>guest</literal> account, though it is strongly advised to change its default password, especially if you have IPv6 available: by default the RabbitMQ server enables anyone to connect to it by using guest as login and password, and with IPv6, it is reachable from the outside."
+msgstr ""
+
+#: ./doc/install-guide/section_basics-queue.xml:30(para)
+msgid "To change the default guest password of RabbitMQ:"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-queue.xml:33(para)
+msgid "Disable Qpid authentication by editing <filename>/etc/qpidd.conf</filename> file and changing the <literal>auth</literal> option to <literal>no</literal>."
+msgstr ""
+
+#: ./doc/install-guide/section_basics-queue.xml:39(para)
+msgid "To simplify configuration, the Qpid examples in this guide do not use authentication. However, we strongly advise enabling authentication for production deployments. For more information on securing Qpid refer to the <link href=\"http://qpid.apache.org/books/trunk/AMQP-Messaging-Broker-CPP-Book/html/chap-Messaging_User_Guide-Security.html\">Qpid Documentation</link>."
+msgstr ""
+
+#: ./doc/install-guide/section_basics-queue.xml:48(para)
+msgid "After you enable Qpid authentication, you must update the configuration file of each OpenStack service to ensure that the <literal>qpid_username</literal> and <literal>qpid_password</literal> configuration keys refer to a valid Qpid username and password, respectively."
+msgstr ""
+
+#: ./doc/install-guide/section_basics-queue.xml:56(para)
+msgid "Start Qpid and set it to start automatically when the system boots."
+msgstr ""
+
+#: ./doc/install-guide/section_basics-queue.xml:60(para)
+msgid "Start the messaging service and set it to start automatically when the system boots:"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-queue.xml:64(para)
+msgid "Congratulations, now you are ready to install OpenStack services!"
+msgstr ""
+
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
 #: ./doc/install-guide/section_neutron-initial-networks.xml:25(None)
@@ -4121,10 +4258,6 @@ msgstr ""
 
 #: ./doc/install-guide/section_neutron-initial-networks.xml:146(para)
 msgid "Attach the router to the external network by setting it as the gateway:"
-msgstr ""
-
-#: ./doc/install-guide/section_neutron-initial-networks.xml:153(title)
-msgid "Verify connectivity"
 msgstr ""
 
 #: ./doc/install-guide/section_neutron-initial-networks.xml:154(para)
@@ -4899,6 +5032,12 @@ msgstr ""
 msgid "Start the Proxy service and configure it to start when the system boots:"
 msgstr ""
 
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: ./doc/install-guide/object-storage/section_object-storage-network-planning.xml:35(None)
+msgid "@@image: '../figures/networking-interactions-swift.png'; md5=2190892da42f344e407b4cef71b8f3cf"
+msgstr ""
+
 #: ./doc/install-guide/object-storage/section_object-storage-network-planning.xml:6(title)
 msgid "Plan networking for Object Storage"
 msgstr ""
@@ -4908,7 +5047,7 @@ msgid "For both conserving network resources and ensuring that network administr
 msgstr ""
 
 #: ./doc/install-guide/object-storage/section_object-storage-network-planning.xml:15(para)
-msgid "A mandatory public network. Connects to the Proxy server."
+msgid "A mandatory public network. Connects to the proxy server."
 msgstr ""
 
 #: ./doc/install-guide/object-storage/section_object-storage-network-planning.xml:19(para)
@@ -4916,7 +5055,7 @@ msgid "A mandatory storage network. Not accessible from outside the cluster. All
 msgstr ""
 
 #: ./doc/install-guide/object-storage/section_object-storage-network-planning.xml:23(para)
-msgid "An optional replication network. Not accessible from outside the cluster. Dedicated to replication traffic among Storage nodes. Must be configured in the Ring."
+msgid "An optional replication network. Not accessible from outside the cluster. Dedicated to replication traffic among storage nodes. Must be configured in the Ring."
 msgstr ""
 
 #: ./doc/install-guide/object-storage/section_object-storage-network-planning.xml:13(para)
@@ -4924,57 +5063,61 @@ msgid "This guide describes the following networks:<placeholder-1/>"
 msgstr ""
 
 #: ./doc/install-guide/object-storage/section_object-storage-network-planning.xml:28(para)
-msgid "By default, all of the OpenStack Object Storage services, as well as the rsync daemon on the Storage nodes, are configured to listen on their <literal>STORAGE_LOCAL_NET</literal> IP addresses."
+msgid "This figure shows the basic architecture for the public network, the storage network, and the optional replication network."
 msgstr ""
 
-#: ./doc/install-guide/object-storage/section_object-storage-network-planning.xml:32(para)
-msgid "If you configure a replication network in the Ring, the Account, Container and Object servers listen on both the <literal>STORAGE_LOCAL_NET</literal> and <literal>STORAGE_REPLICATION_NET</literal> IP addresses. The rsync daemon only listens on the <literal>STORAGE_REPLICATION_NET</literal> IP address."
-msgstr ""
-
-#: ./doc/install-guide/object-storage/section_object-storage-network-planning.xml:40(term)
-msgid "Public Network (Publicly routable IP range)"
+#: ./doc/install-guide/object-storage/section_object-storage-network-planning.xml:38(para)
+msgid "By default, all of the OpenStack Object Storage services, as well as the rsync daemon on the storage nodes, are configured to listen on their <literal>STORAGE_LOCAL_NET</literal> IP addresses."
 msgstr ""
 
 #: ./doc/install-guide/object-storage/section_object-storage-network-planning.xml:42(para)
-msgid "Provides public IP accessibility to the API endpoints within the cloud infrastructure."
+msgid "If you configure a replication network in the Ring, the Account, Container and Object servers listen on both the <literal>STORAGE_LOCAL_NET</literal> and <literal>STORAGE_REPLICATION_NET</literal> IP addresses. The rsync daemon only listens on the <literal>STORAGE_REPLICATION_NET</literal> IP address."
 msgstr ""
 
-#: ./doc/install-guide/object-storage/section_object-storage-network-planning.xml:44(para)
-msgid "Minimum size: one IP address for each proxy server."
-msgstr ""
-
-#: ./doc/install-guide/object-storage/section_object-storage-network-planning.xml:49(term)
-msgid "Storage Network (RFC1918 IP Range, not publicly routable)"
+#: ./doc/install-guide/object-storage/section_object-storage-network-planning.xml:50(term)
+msgid "Public Network (Publicly routable IP range)"
 msgstr ""
 
 #: ./doc/install-guide/object-storage/section_object-storage-network-planning.xml:52(para)
-msgid "Manages all inter-server communications within the Object Storage infrastructure."
+msgid "Provides public IP accessibility to the API endpoints within the cloud infrastructure."
 msgstr ""
 
 #: ./doc/install-guide/object-storage/section_object-storage-network-planning.xml:54(para)
+msgid "Minimum size: one IP address for each proxy server."
+msgstr ""
+
+#: ./doc/install-guide/object-storage/section_object-storage-network-planning.xml:59(term)
+msgid "Storage Network (RFC1918 IP Range, not publicly routable)"
+msgstr ""
+
+#: ./doc/install-guide/object-storage/section_object-storage-network-planning.xml:62(para)
+msgid "Manages all inter-server communications within the Object Storage infrastructure."
+msgstr ""
+
+#: ./doc/install-guide/object-storage/section_object-storage-network-planning.xml:64(para)
 msgid "Minimum size: one IP address for each storage node and proxy server."
 msgstr ""
 
-#: ./doc/install-guide/object-storage/section_object-storage-network-planning.xml:56(para)
+#: ./doc/install-guide/object-storage/section_object-storage-network-planning.xml:66(para)
 msgid "Recommended size: as above, with room for expansion to the largest your cluster size. For example, 255 or CIDR /24."
 msgstr ""
 
-#: ./doc/install-guide/object-storage/section_object-storage-network-planning.xml:62(term)
+#: ./doc/install-guide/object-storage/section_object-storage-network-planning.xml:72(term)
 msgid "Replication Network (RFC1918 IP Range, not publicly routable)"
 msgstr ""
 
-#: ./doc/install-guide/object-storage/section_object-storage-network-planning.xml:65(para)
+#: ./doc/install-guide/object-storage/section_object-storage-network-planning.xml:75(para)
 msgid "Manages replication-related communications among storage servers within the Object Storage infrastructure."
 msgstr ""
 
-#: ./doc/install-guide/object-storage/section_object-storage-network-planning.xml:67(para)
+#: ./doc/install-guide/object-storage/section_object-storage-network-planning.xml:77(para)
 msgid "Recommended size: as for <literal>STORAGE_LOCAL_NET</literal>."
 msgstr ""
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
-#: ./doc/install-guide/object-storage/section_object-storage-example-install-arch.xml:45(None)
-msgid "@@image: '../figures/swift_install_arch.png'; md5=c6519fb969c1184afa22e024de9bd2a6"
+#: ./doc/install-guide/object-storage/section_object-storage-example-install-arch.xml:52(None)
+msgid "@@image: '../figures/swift_install_arch.png'; md5=bbda527d20235d54a95eb29279ba2680"
 msgstr ""
 
 #: ./doc/install-guide/object-storage/section_object-storage-example-install-arch.xml:6(title)
@@ -4986,11 +5129,11 @@ msgid "node. A host machine that runs one or more OpenStack Object Storage servi
 msgstr ""
 
 #: ./doc/install-guide/object-storage/section_object-storage-example-install-arch.xml:13(para)
-msgid "Proxy node. Runs Proxy services."
+msgid "Proxy node. Runs proxy services."
 msgstr ""
 
 #: ./doc/install-guide/object-storage/section_object-storage-example-install-arch.xml:16(para)
-msgid "Storage node. Runs Account, Container, and Object services."
+msgid "Storage node. Runs account, container, and object services. Contains the SQLite databases."
 msgstr ""
 
 #: ./doc/install-guide/object-storage/section_object-storage-example-install-arch.xml:20(para)
@@ -5006,10 +5149,14 @@ msgid "Zone. A logically separate section of the cluster, related to independent
 msgstr ""
 
 #: ./doc/install-guide/object-storage/section_object-storage-example-install-arch.xml:32(para)
+msgid "Region (optional). A logically separate section of the cluster, representing distinct physical locations such as cities or countries. Similar to zones but representing physical locations of portions of the cluster rather than logical segments."
+msgstr ""
+
+#: ./doc/install-guide/object-storage/section_object-storage-example-install-arch.xml:39(para)
 msgid "To increase reliability and performance, you can add additional proxy servers."
 msgstr ""
 
-#: ./doc/install-guide/object-storage/section_object-storage-example-install-arch.xml:34(para)
+#: ./doc/install-guide/object-storage/section_object-storage-example-install-arch.xml:41(para)
 msgid "This document describes each storage node as a separate zone in the ring. At a minimum, five zones are recommended. A zone is a group of nodes that is as isolated as possible from other nodes (separate servers, network, power, even geography). The ring guarantees that every replica is stored in a separate zone. This diagram shows one possible configuration for a minimal installation:"
 msgstr ""
 
@@ -5106,11 +5253,11 @@ msgid "Install and configure storage nodes"
 msgstr ""
 
 #: ./doc/install-guide/object-storage/section_object-storage-install-config-storage-nodes.xml:8(para)
-msgid "Object Storage works on any file system that supports Extended Attributes (XATTRS). XFS shows the best overall performance for the swift use case after considerable testing and benchmarking at Rackspace. It is also the only file system that has been thoroughly tested. See the <link href=\"http://docs.openstack.org/havana/config-reference/content/\"><citetitle>OpenStack Configuration Reference</citetitle></link> for additional recommendations."
+msgid "Object Storage works on any file system that supports Extended Attributes (XATTRS). XFS shows the best overall performance for the swift use case after considerable testing and benchmarking at Rackspace. It is also the only file system that has been thoroughly tested. See the <link href=\"http://docs.openstack.org/trunk/config-reference/content/\"><citetitle>OpenStack Configuration Reference</citetitle></link> for additional recommendations."
 msgstr ""
 
 #: ./doc/install-guide/object-storage/section_object-storage-install-config-storage-nodes.xml:20(para)
-msgid "Install Storage node packages:"
+msgid "Install storage node packages:"
 msgstr ""
 
 #: ./doc/install-guide/object-storage/section_object-storage-install-config-storage-nodes.xml:29(para)
@@ -5155,6 +5302,10 @@ msgstr ""
 
 #: ./doc/install-guide/object-storage/section_object-storage-install-config-storage-nodes.xml:110(para)
 msgid "Create the swift recon cache directory and set its permissions:"
+msgstr ""
+
+#: ./doc/install-guide/object-storage/section_object-storage-sys-requirements.xml:11(title)
+msgid "System requirements for Object Storage"
 msgstr ""
 
 #: ./doc/install-guide/object-storage/section_object-storage-sys-requirements.xml:12(para)
