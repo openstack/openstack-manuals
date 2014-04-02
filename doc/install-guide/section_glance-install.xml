@@ -60,15 +60,11 @@
       <para os="ubuntu;debian">Edit
           <filename>/etc/glance/glance-api.conf</filename> and
           <filename>/etc/glance/glance-registry.conf</filename> and
-        change the <literal>[database]</literal> section.</para>
+        add the <literal>[database]</literal> section at the end of each
+        file:</para>
       <programlisting os="ubuntu;debian" language="ini">...
 [database]
-...
-# SQLAlchemy connection string for the reference implementation
-# registry server. Any valid SQLAlchemy connection string is fine.
-# See: http://www.sqlalchemy.org/docs/05/reference/sqlalchemy/connections.html#sqlalchemy.create_engine
-connection = mysql://glance:GLANCE_DBPASS@<replaceable>controller</replaceable>/glance
-...</programlisting>
+connection = mysql://glance:GLANCE_DBPASS@<replaceable>controller</replaceable>/glance</programlisting>
     </step>
     <step os="rhel;centos;fedora;opensuse;sles">
       <para>Use the <command>openstack-db</command> command to create
@@ -80,8 +76,9 @@ connection = mysql://glance:GLANCE_DBPASS@<replaceable>controller</replaceable>/
       <para>By default, the Ubuntu packages create an SQLite database.
         Delete the <filename>glance.sqlite</filename> file created in
         the <filename>/var/lib/glance/</filename> directory so that it
-        does not get used by mistake.</para>
-      </step>
+        does not get used by mistake:</para>
+      <screen><prompt>#</prompt> <userinput>rm /var/lib/glance/glance.sqlite</userinput></screen>
+    </step>
     <step os="ubuntu">
       <para>Use the password you created to log in as root and create
         a <literal>glance</literal> database user:</para>
@@ -102,7 +99,7 @@ IDENTIFIED BY '<replaceable>GLANCE_DBPASS</replaceable>';</userinput></screen>
         Choose a password and specify an email address for the
           <literal>glance</literal> user. Use the
           <literal>service</literal> tenant and give the user the
-          <literal>admin</literal> role.</para>
+          <literal>admin</literal> role:</para>
       <screen><prompt>$</prompt> <userinput>keystone user-create --name=glance --pass=<replaceable>GLANCE_PASS</replaceable> \
    --email=<replaceable>glance@example.com</replaceable></userinput>
 <prompt>$</prompt> <userinput>keystone user-role-add --user=glance --tenant=service --role=admin</userinput></screen>
@@ -145,10 +142,9 @@ IDENTIFIED BY '<replaceable>GLANCE_DBPASS</replaceable>';</userinput></screen>
         for the <literal>glance</literal> user in the Identity Service.</para>
       <substeps os="ubuntu">
         <step>
-          <para>Add the following keys under the
+          <para>Add or modify the following keys under the
             <literal>[keystone_authtoken]</literal> section:</para>
           <programlisting language="ini">[keystone_authtoken]
-...
 auth_uri = http://<replaceable>controller</replaceable>:5000
 auth_host = <replaceable>controller</replaceable>
 auth_port = 35357
@@ -158,7 +154,7 @@ admin_user = glance
 admin_password = <replaceable>GLANCE_PASS</replaceable></programlisting>
         </step>
         <step>
-          <para>Add the following key under the
+          <para>Modify the following key under the
             <literal>[paste_deploy]</literal> section:</para>
           <programlisting language="ini">[paste_deploy]
 ...
@@ -180,7 +176,7 @@ flavor = keystone</programlisting>
     </step>
     <step os="ubuntu">
       <para>Restart the <systemitem class="service">glance</systemitem>
-        service with its new settings.</para>
+        service with its new settings:</para>
       <screen><prompt>#</prompt> <userinput>service glance-registry restart</userinput>
 <prompt>#</prompt> <userinput>service glance-api restart</userinput></screen>
     </step>
