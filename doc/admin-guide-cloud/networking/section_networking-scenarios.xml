@@ -373,7 +373,80 @@ bridge_mappings = physnet1:br-ex,physnet2:br-eth1</programlisting>
                 Since there is no connectivity between the two networks, and so each router is
                 implemented by a separate namespace.</para>
         </section>
-        </section>
+    </section>
+    <section xml:id="under_the_hood_openvswitch_tunneling">
+            <title>Configure Open vSwitch tunneling</title>
+            <para>Tunneling encapsulates network traffic between physical
+            Networking hosts and allows VLANs to span multiple physical hosts.
+            Instances communicate as if they share the same layer 2 network.
+            Open vSwitch supports tunneling with the VXLAN and GRE encapsulation
+            protocols.</para>
+                <figure>
+                    <title>Example VXLAN tunnel</title>
+                    <mediaobject>
+                        <imageobject>
+                            <imagedata fileref="../../common/figures/OVStunneling.png" contentwidth="6in"/>
+                        </imageobject>
+                        <textobject>
+                        <phrase>Example VXLAN tunnel</phrase>
+                    </textobject>
+                    </mediaobject>
+                </figure>
+        <para>This diagram shows two instances running on separate hosts
+        connected by a VXLAN tunnel. The required physical and virtual
+        components are also illustrated. The following procedure creates a
+        VXLAN or GRE tunnel between two Open vSwitches running on separate
+        Networking hosts:</para>
+            <procedure>
+                <title>Example tunnel configuration</title>
+                <step>
+                    <para>Create a virtual bridge named OVS-BR0 on each
+                    participating host:</para>
+                    <para>
+                        <programlisting>
+ovs-vsctl add-br OVS-BR0
+                        </programlisting>
+                        </para>
+                </step>
+                <step>
+                    <para>Create a tunnel to link the OVS-BR0 virtual bridges.
+                    Run the ovs-vsctl command on HOST1 to create the tunnel and
+                    link it to the bridge on HOST2:</para>
+                    <para><emphasis role="bold"> GRE tunnel command: </emphasis></para>
+                    <para>
+                        <programlisting>
+ovs-vsctl add-port OVS-BR0 gre1 -- set Interface gre1 type=gre options:remote_ip=192.168.1.11
+                </programlisting>
+                        </para>
+                        <para><emphasis role="bold">VXLAN tunnel command: </emphasis></para>
+                        <para>
+                            <programlisting>
+ovs-vsctl add-port OVS-BR0 vxlan1 -- set Interface vxlan1 type=vxlan options:remote_ip=192.168.1.11
+                </programlisting>
+                        </para>
+                    </step>
+                    <step>
+                        <para>
+                        Run the ovs-vsctl command on HOST1 to create the tunnel
+                        and link it to the bridge on HOST2.
+                        </para>
+                        <para><emphasis role="bold"> GRE tunnel command: </emphasis></para>
+                        <para>
+                            <programlisting>
+ovs-vsctl add-port OVS-BR0 gre1 -- set Interface gre1 type=gre options:remote_ip=192.168.1.10
+                </programlisting>
+                        </para>
+                        <para><emphasis role="bold"> VXLAN tunnel command: </emphasis></para>
+                        <para>
+                            <programlisting>
+ovs-vsctl add-port OVS-BR0 vxlan1 -- set Interface vxlan1 type=vxlan options:remote_ip=192.168.1.10
+                </programlisting>
+                        </para>
+                    </step>
+                </procedure>
+                <para>Successful completion of these steps results in the two
+                instances sharing a layer 2 network.</para>
+    </section>
     </section>
     <section xml:id="under_the_hood_linuxbridge">
         <title>Linux Bridge</title>
