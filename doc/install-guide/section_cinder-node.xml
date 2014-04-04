@@ -149,7 +149,7 @@ rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
       <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>openstack-config --set /etc/cinder/cinder.conf \
   DEFAULT rpc_backend cinder.openstack.common.rpc.impl_qpid</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/cinder/cinder.conf \
-  DEFAULT qpid_hostname controller</userinput></screen>
+    DEFAULT qpid_hostname <replaceable>controller</replaceable></userinput></screen>
     </step>
     <step os="sles;opensuse">
       <para>Configure Block Storage to use the RabbitMQ message
@@ -158,7 +158,7 @@ rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
       <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/cinder/cinder.conf \
   DEFAULT rpc_backend cinder.openstack.common.rpc.impl_kombu</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/cinder/cinder.conf \
-  DEFAULT rabbit_host controller</userinput>
+    DEFAULT rabbit_host <replaceable>controller</replaceable></userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/cinder/cinder.conf \
   DEFAULT rabbit_port 5672</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/cinder/cinder.conf \
@@ -182,6 +182,18 @@ connection = mysql://cinder:<replaceable>CINDER_DBPASS</replaceable>@<replaceabl
           You must add this section header to the end of the file
           before you proceed.</para>
       </note>
+    </step>
+    <step>
+      <para>Configure Block Storage to use the Image Service. Block Storage
+        needs access to images to create bootable volumes. Edit the
+        <filename>/etc/cinder/cinder.conf</filename> file and update the
+        <option>glance_host</option> option in the <literal>[DEFAULT]</literal>
+        section:</para>
+      <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/cinder/cinder.conf \
+  DEFAULT glance_host <replaceable>controller</replaceable></userinput></screen>
+      <programlisting os="ubuntu;debian" language="ini">[DEFAULT]
+...
+glance_host = <replaceable>controller</replaceable></programlisting>
     </step>
     <step os="ubuntu">
       <para>Restart the Block Storage services with the new
