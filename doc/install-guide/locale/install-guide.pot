@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-04-03 06:26+0000\n"
+"POT-Creation-Date: 2014-04-04 06:30+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -272,7 +272,7 @@ msgid "The various OpenStack services and the required software like the databas
 msgstr ""
 
 #: ./doc/install-guide/section_basics-passwords.xml:17(para)
-msgid "This guide uses the convention that <literal><replaceable>SERVICE_PASS</replaceable></literal> is password to access the service <literal>SERVICE</literal> and <literal><replaceable>SERVICE_DBPASS</replaceable></literal> is the database password used by the service SERVICE to access the database."
+msgid "This guide uses the convention that <literal><replaceable>SERVICE_PASS</replaceable></literal> is the password to access the service <literal>SERVICE</literal> and <literal><replaceable>SERVICE_DBPASS</replaceable></literal> is the database password used by the service SERVICE to access the database."
 msgstr ""
 
 #: ./doc/install-guide/section_basics-passwords.xml:24(para)
@@ -284,11 +284,11 @@ msgid "Database"
 msgstr ""
 
 #: ./doc/install-guide/section_basics-database.xml:7(para)
-msgid "Most OpenStack services require a database to store information. These examples use a MySQL database that runs on the controller node. You must install the MySQL database on the controller node. You must install MySQL client software on any additional nodes that access MySQL."
+msgid "Most OpenStack services require a database to store information. These examples use a MySQL database that runs on the controller node. You must install the MySQL database on the controller node. You must install the MySQL Python library on any additional nodes that access MySQL."
 msgstr ""
 
 #: ./doc/install-guide/section_basics-database.xml:13(para)
-msgid "Most OpenStack services require a database to store information. This guide uses a MySQL database on SUSE Linux Enterprise Server and a compatible database on openSUSE running on the controller node. This compatible database for openSUSE is MariaDB. You must install the MariaDB database on the controller node. You must install the MariaDB client software on any nodes that access the MariaDB database."
+msgid "Most OpenStack services require a database to store information. This guide uses a MySQL database on SUSE Linux Enterprise Server and a compatible database on openSUSE running on the controller node. This compatible database for openSUSE is MariaDB. You must install the MariaDB database on the controller node. You must install the MySQL Python library on any additional nodes that access MySQL or MariaDB."
 msgstr ""
 
 #: ./doc/install-guide/section_basics-database.xml:22(title)
@@ -332,7 +332,7 @@ msgid "Restart the MySQL service to apply the changes:"
 msgstr ""
 
 #: ./doc/install-guide/section_basics-database.xml:73(para)
-msgid "Start the <phrase os=\"rhel;fedora;centos\">MySQL</phrase><phrase os=\"opensuse;sles\">MariaDB or MySQL</phrase> database server and set it to start automatically when the system boots."
+msgid "Start the <phrase os=\"rhel;fedora;centos\">MySQL</phrase><phrase os=\"opensuse;sles\">MariaDB or MySQL</phrase> database server and set it to start automatically when the system boots:"
 msgstr ""
 
 #: ./doc/install-guide/section_basics-database.xml:82(para)
@@ -352,11 +352,7 @@ msgid "Node setup"
 msgstr ""
 
 #: ./doc/install-guide/section_basics-database.xml:107(para)
-msgid "On all nodes other than the controller node, install the <phrase os=\"ubuntu;debian;rhel;fedora;centos\">MySQL</phrase><phrase os=\"opensuse\">MariaDB (on openSUSE)</phrase> client and the MySQL Python library on any system that does not host a MySQL database:"
-msgstr ""
-
-#: ./doc/install-guide/section_basics-database.xml:116(para)
-msgid "For SUSE Linux Enterprise, install MySQL:"
+msgid "On all nodes other than the controller node, install the MySQL Python library:"
 msgstr ""
 
 #: ./doc/install-guide/section_basics-packages.xml:6(title)
@@ -372,7 +368,7 @@ msgid "This section describes the configuration you must complete after you conf
 msgstr ""
 
 #: ./doc/install-guide/section_basics-packages.xml:14(para)
-msgid "The examples in this guide use the OpenStack packages from the RDO repository. These packages work on Red Hat Enterprise Linux 6, compatible versions of CentOS, and Fedora 20. To enable the RDO repository, download and install the <package>rdo-release-icehouse</package> package."
+msgid "The examples in this guide use the OpenStack packages from the RDO repository. These packages work on Red Hat Enterprise Linux 6, compatible versions of CentOS, and Fedora 20. To enable the RDO repository, download and install the <package>rdo-release-icehouse</package> package:"
 msgstr ""
 
 #: ./doc/install-guide/section_basics-packages.xml:21(para)
@@ -380,7 +376,7 @@ msgid "The EPEL package includes GPG keys for package signing and repository inf
 msgstr ""
 
 #: ./doc/install-guide/section_basics-packages.xml:30(para)
-msgid "The <package>openstack-utils</package> package contains utility programs that make installation and configuration easier. These programs are used throughout this guide. Install <package>openstack-utils</package>. This verifies that you can access the RDO repository."
+msgid "The <package>openstack-utils</package> package contains utility programs that make installation and configuration easier. These programs are used throughout this guide. Install <package>openstack-utils</package>. This verifies that you can access the RDO repository:"
 msgstr ""
 
 #: ./doc/install-guide/section_basics-packages.xml:37(para)
@@ -404,7 +400,7 @@ msgid "The <application>openstack-config</application> program in the <package>o
 msgstr ""
 
 #: ./doc/install-guide/section_basics-packages.xml:66(para)
-msgid "The <package>openstack-selinux</package> package includes the policy files that are required to configure SELinux during OpenStack installation. Install <package>openstack-selinux</package>."
+msgid "The <package>openstack-selinux</package> package includes the policy files that are required to configure SELinux during OpenStack installation. Install <package>openstack-selinux</package>:"
 msgstr ""
 
 #: ./doc/install-guide/section_basics-packages.xml:72(para)
@@ -428,54 +424,66 @@ msgid "Install the Ubuntu Cloud Archive for <glossterm>Icehouse</glossterm>: <pl
 msgstr ""
 
 #: ./doc/install-guide/section_basics-packages.xml:93(para)
-msgid "Update the package database, upgrade your system, and reboot for all changes to take effect: <placeholder-1/>"
+msgid "Update the package database and upgrade your system:"
 msgstr ""
 
-#: ./doc/install-guide/section_basics-packages.xml:100(title)
-msgid "To use the Debian Wheezy backports archive for Icehouse"
+#: ./doc/install-guide/section_basics-packages.xml:98(para)
+msgid "If you intend to use OpenStack Networking with Ubuntu 12.04, you should install a backported Linux kernel to improve the stability of your system. This installation is not needed if you intend to use the legacy networking service."
 msgstr ""
 
 #: ./doc/install-guide/section_basics-packages.xml:102(para)
-msgid "The <glossterm>Icehouse</glossterm> release is available only in Debian Sid (otherwise called Unstable). However, the Debian maintainers of OpenStack also maintain a non-official Debian repository for OpenStack containing Wheezy backports."
+msgid "Install the Ubuntu 13.10 backported kernel:"
 msgstr ""
 
-#: ./doc/install-guide/section_basics-packages.xml:108(para)
-msgid "Install the Debian Wheezy backport repository Icehouse:"
+#: ./doc/install-guide/section_basics-packages.xml:106(para)
+msgid "Reboot the system for all changes to take effect:"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-packages.xml:111(title)
+msgid "To use the Debian Wheezy backports archive for Icehouse"
 msgstr ""
 
 #: ./doc/install-guide/section_basics-packages.xml:113(para)
+msgid "The <glossterm>Icehouse</glossterm> release is available only in Debian Sid (otherwise called Unstable). However, the Debian maintainers of OpenStack also maintain a non-official Debian repository for OpenStack containing Wheezy backports."
+msgstr ""
+
+#: ./doc/install-guide/section_basics-packages.xml:119(para)
+msgid "Install the Debian Wheezy backport repository Icehouse:"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-packages.xml:124(para)
 msgid "Install the Debian Wheezy OpenStack repository for Icehouse:"
 msgstr ""
 
-#: ./doc/install-guide/section_basics-packages.xml:118(para)
+#: ./doc/install-guide/section_basics-packages.xml:129(para)
 msgid "Update the repository database and install the key:"
 msgstr ""
 
-#: ./doc/install-guide/section_basics-packages.xml:122(para)
+#: ./doc/install-guide/section_basics-packages.xml:133(para)
 msgid "Update the package database, upgrade your system, and reboot for all changes to take effect:"
 msgstr ""
 
-#: ./doc/install-guide/section_basics-packages.xml:128(para)
+#: ./doc/install-guide/section_basics-packages.xml:139(para)
 msgid "Numerous archive.gplhost.com mirrors are available around the world. All are available with both FTP and HTTP protocols (you should use the closest mirror). The list of mirrors is available at <link href=\"http://archive.gplhost.com/readme.mirrors\">http://archive.gplhost.com/readme.mirrors</link>."
 msgstr ""
 
-#: ./doc/install-guide/section_basics-packages.xml:135(title)
+#: ./doc/install-guide/section_basics-packages.xml:146(title)
 msgid "Manually install python-argparse"
 msgstr ""
 
-#: ./doc/install-guide/section_basics-packages.xml:136(para)
+#: ./doc/install-guide/section_basics-packages.xml:147(para)
 msgid "The Debian OpenStack packages are maintained on Debian Sid (also known as Debian Unstable) - the current development version. Backported packages run correctly on Debian Wheezy with one caveat:"
 msgstr ""
 
-#: ./doc/install-guide/section_basics-packages.xml:140(para)
+#: ./doc/install-guide/section_basics-packages.xml:151(para)
 msgid "All OpenStack packages are written in Python. Wheezy uses Python 2.6 and 2.7, with Python 2.6 as the default interpreter; Sid has only Python 2.7. There is one packaging change between these two. In Python 2.6, you installed the <package>python-argparse</package> package separately. In Python 2.7, this package is installed by default. Unfortunately, in Python 2.7, this package does not include <code>Provides: python-argparse</code> directive."
 msgstr ""
 
-#: ./doc/install-guide/section_basics-packages.xml:148(para)
+#: ./doc/install-guide/section_basics-packages.xml:159(para)
 msgid "Because the packages are maintained in Sid where the <code>Provides: python-argparse</code> directive causes an error, and the Debian OpenStack maintainer wants to maintain one version of the OpenStack packages, you must manually install the <package>python-argparse</package> on each OpenStack system that runs Debian Wheezy before you install the other OpenStack packages. Use the following command to install the package:"
 msgstr ""
 
-#: ./doc/install-guide/section_basics-packages.xml:157(para)
+#: ./doc/install-guide/section_basics-packages.xml:168(para)
 msgid "This caveat applies to most OpenStack packages in Wheezy."
 msgstr ""
 
@@ -583,7 +591,7 @@ msgstr ""
 msgid "Set the <systemitem class=\"service\">neutron</systemitem> configuration for <systemitem class=\"service\">keystone</systemitem> authentication:"
 msgstr ""
 
-#: ./doc/install-guide/section_neutron-network-node.xml:100(replaceable) ./doc/install-guide/section_neutron-network-node.xml:102(replaceable) ./doc/install-guide/section_neutron-network-node.xml:133(replaceable) ./doc/install-guide/section_neutron-network-node.xml:134(replaceable) ./doc/install-guide/section_neutron-network-node.xml:148(replaceable) ./doc/install-guide/section_neutron-network-node.xml:159(replaceable) ./doc/install-guide/section_neutron-network-node.xml:168(replaceable) ./doc/install-guide/section_neutron-network-node.xml:392(replaceable) ./doc/install-guide/section_neutron-network-node.xml:397(replaceable) ./doc/install-guide/section_neutron-network-node.xml:402(replaceable) ./doc/install-guide/section_neutron-network-node.xml:412(replaceable) ./doc/install-guide/section_neutron-compute-node.xml:145(replaceable) ./doc/install-guide/section_neutron-compute-node.xml:147(replaceable) ./doc/install-guide/section_neutron-compute-node.xml:181(replaceable) ./doc/install-guide/section_neutron-compute-node.xml:182(replaceable) ./doc/install-guide/section_neutron-compute-node.xml:196(replaceable) ./doc/install-guide/section_neutron-compute-node.xml:207(replaceable) ./doc/install-guide/section_neutron-compute-node.xml:216(replaceable) ./doc/install-guide/section_neutron-compute-node.xml:234(replaceable) ./doc/install-guide/section_neutron-compute-node.xml:244(replaceable) ./doc/install-guide/section_neutron-compute-node.xml:255(replaceable) ./doc/install-guide/section_neutron-compute-node.xml:260(replaceable) ./doc/install-guide/section_ceilometer-install.xml:101(replaceable) ./doc/install-guide/section_ceilometer-install.xml:110(replaceable) ./doc/install-guide/section_ceilometer-install.xml:117(replaceable) ./doc/install-guide/section_ceilometer-install.xml:144(replaceable) ./doc/install-guide/section_ceilometer-install.xml:147(replaceable) ./doc/install-guide/section_ceilometer-install.xml:177(replaceable) ./doc/install-guide/section_ceilometer-install.xml:185(replaceable) ./doc/install-guide/section_ceilometer-install.xml:202(replaceable) ./doc/install-guide/section_ceilometer-install.xml:222(replaceable) ./doc/install-guide/section_ceilometer-install.xml:223(replaceable) ./doc/install-guide/section_ceilometer-install.xml:224(replaceable) ./doc/install-guide/section_nova-controller.xml:44(replaceable) ./doc/install-guide/section_nova-controller.xml:58(replaceable) ./doc/install-guide/section_nova-controller.xml:143(replaceable) ./doc/install-guide/section_nova-controller.xml:144(replaceable) ./doc/install-guide/section_nova-controller.xml:163(replaceable) ./doc/install-guide/section_nova-controller.xml:180(replaceable) ./doc/install-guide/section_nova-controller.xml:181(replaceable) ./doc/install-guide/section_nova-controller.xml:182(replaceable) ./doc/install-guide/section_keystone-services.xml:47(replaceable) ./doc/install-guide/section_keystone-services.xml:48(replaceable) ./doc/install-guide/section_keystone-services.xml:49(replaceable) ./doc/install-guide/section_neutron-per-tenant-routers-with-private-networks.xml:181(replaceable) ./doc/install-guide/section_neutron-per-tenant-routers-with-private-networks.xml:186(replaceable) ./doc/install-guide/section_neutron-per-tenant-routers-with-private-networks.xml:194(replaceable) ./doc/install-guide/section_neutron-per-tenant-routers-with-private-networks.xml:199(replaceable) ./doc/install-guide/section_neutron-per-tenant-routers-with-private-networks.xml:271(replaceable) ./doc/install-guide/section_neutron-per-tenant-routers-with-private-networks.xml:276(replaceable) ./doc/install-guide/section_neutron-per-tenant-routers-with-private-networks.xml:326(replaceable) ./doc/install-guide/section_neutron-per-tenant-routers-with-private-networks.xml:410(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:116(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:177(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:181(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:185(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:191(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:222(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:226(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:234(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:321(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:325(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:329(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:335(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:377(replaceable) ./doc/install-guide/section_ceilometer-glance.xml:17(replaceable) ./doc/install-guide/section_ceilometer-glance.xml:23(replaceable) ./doc/install-guide/section_basics-networking-nova.xml:184(replaceable) ./doc/install-guide/section_basics-networking-neutron.xml:253(replaceable) ./doc/install-guide/section_basics-networking-neutron.xml:297(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:193(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:212(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:229(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:234(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:284(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:287(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:291(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:301(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:334(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:339(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:348(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:367(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:426(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:451(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:487(replaceable) ./doc/install-guide/section_neutron-controller-node.xml:58(replaceable) ./doc/install-guide/section_neutron-controller-node.xml:59(replaceable) ./doc/install-guide/section_neutron-controller-node.xml:60(replaceable) ./doc/install-guide/section_neutron-controller-node.xml:84(replaceable) ./doc/install-guide/section_neutron-controller-node.xml:101(replaceable) ./doc/install-guide/section_neutron-controller-node.xml:103(replaceable) ./doc/install-guide/section_neutron-controller-node.xml:136(replaceable) ./doc/install-guide/section_neutron-controller-node.xml:137(replaceable) ./doc/install-guide/section_neutron-controller-node.xml:164(replaceable) ./doc/install-guide/section_neutron-controller-node.xml:182(replaceable) ./doc/install-guide/section_neutron-controller-node.xml:232(replaceable) ./doc/install-guide/section_neutron-controller-node.xml:242(replaceable) ./doc/install-guide/section_neutron-controller-node.xml:253(replaceable) ./doc/install-guide/section_neutron-controller-node.xml:258(replaceable) ./doc/install-guide/section_cinder-node.xml:110(replaceable) ./doc/install-guide/section_cinder-node.xml:127(replaceable) ./doc/install-guide/section_cinder-node.xml:164(replaceable) ./doc/install-guide/section_cinder-node.xml:167(replaceable) ./doc/install-guide/section_cinder-controller.xml:47(replaceable) ./doc/install-guide/section_cinder-controller.xml:50(replaceable) ./doc/install-guide/section_cinder-controller.xml:89(replaceable) ./doc/install-guide/section_cinder-controller.xml:92(replaceable) ./doc/install-guide/section_cinder-controller.xml:108(replaceable) ./doc/install-guide/section_cinder-controller.xml:143(replaceable) ./doc/install-guide/section_cinder-controller.xml:144(replaceable) ./doc/install-guide/section_cinder-controller.xml:145(replaceable) ./doc/install-guide/section_cinder-controller.xml:154(replaceable) ./doc/install-guide/section_cinder-controller.xml:155(replaceable) ./doc/install-guide/section_cinder-controller.xml:156(replaceable) ./doc/install-guide/section_heat-install.xml:116(replaceable) ./doc/install-guide/section_heat-install.xml:121(replaceable) ./doc/install-guide/section_heat-install.xml:132(replaceable) ./doc/install-guide/section_heat-install.xml:133(replaceable) ./doc/install-guide/section_heat-install.xml:134(replaceable) ./doc/install-guide/section_heat-install.xml:139(replaceable) ./doc/install-guide/section_heat-install.xml:140(replaceable) ./doc/install-guide/section_heat-install.xml:141(replaceable) ./doc/install-guide/section_ceilometer-nova.xml:78(replaceable) ./doc/install-guide/section_ceilometer-nova.xml:84(replaceable) ./doc/install-guide/section_ceilometer-nova.xml:90(replaceable) ./doc/install-guide/section_ceilometer-nova.xml:106(replaceable) ./doc/install-guide/section_ceilometer-nova.xml:121(replaceable) ./doc/install-guide/section_nova-compute.xml:112(replaceable) ./doc/install-guide/section_nova-compute.xml:113(replaceable) ./doc/install-guide/section_nova-compute.xml:132(replaceable) ./doc/install-guide/section_nova-compute.xml:133(replaceable) ./doc/install-guide/section_nova-compute.xml:145(replaceable) ./doc/install-guide/section_nova-compute.xml:168(replaceable) ./doc/install-guide/section_nova-compute.xml:180(replaceable) ./doc/install-guide/section_nova-compute.xml:188(replaceable) ./doc/install-guide/section_nova-compute.xml:191(replaceable) ./doc/install-guide/section_glance-install.xml:57(replaceable) ./doc/install-guide/section_glance-install.xml:59(replaceable) ./doc/install-guide/section_glance-install.xml:70(replaceable) ./doc/install-guide/section_glance-install.xml:118(replaceable) ./doc/install-guide/section_glance-install.xml:120(replaceable) ./doc/install-guide/section_glance-install.xml:130(replaceable) ./doc/install-guide/section_glance-install.xml:132(replaceable) ./doc/install-guide/section_glance-install.xml:152(replaceable) ./doc/install-guide/section_glance-install.xml:153(replaceable) ./doc/install-guide/section_glance-install.xml:177(replaceable) ./doc/install-guide/section_glance-install.xml:178(replaceable) ./doc/install-guide/section_glance-install.xml:179(replaceable) ./doc/install-guide/section_keystone-install.xml:30(replaceable) ./doc/install-guide/section_keystone-install.xml:38(replaceable) ./doc/install-guide/object-storage/section_object-storage-install-config-proxy-node.xml:82(replaceable) ./doc/install-guide/object-storage/section_object-storage-install.xml:90(replaceable) ./doc/install-guide/object-storage/section_object-storage-install.xml:91(replaceable) ./doc/install-guide/object-storage/section_object-storage-install.xml:92(replaceable)
+#: ./doc/install-guide/section_neutron-network-node.xml:100(replaceable) ./doc/install-guide/section_neutron-network-node.xml:102(replaceable) ./doc/install-guide/section_neutron-network-node.xml:133(replaceable) ./doc/install-guide/section_neutron-network-node.xml:134(replaceable) ./doc/install-guide/section_neutron-network-node.xml:148(replaceable) ./doc/install-guide/section_neutron-network-node.xml:159(replaceable) ./doc/install-guide/section_neutron-network-node.xml:168(replaceable) ./doc/install-guide/section_neutron-network-node.xml:392(replaceable) ./doc/install-guide/section_neutron-network-node.xml:397(replaceable) ./doc/install-guide/section_neutron-network-node.xml:402(replaceable) ./doc/install-guide/section_neutron-network-node.xml:412(replaceable) ./doc/install-guide/section_neutron-compute-node.xml:145(replaceable) ./doc/install-guide/section_neutron-compute-node.xml:147(replaceable) ./doc/install-guide/section_neutron-compute-node.xml:181(replaceable) ./doc/install-guide/section_neutron-compute-node.xml:182(replaceable) ./doc/install-guide/section_neutron-compute-node.xml:196(replaceable) ./doc/install-guide/section_neutron-compute-node.xml:207(replaceable) ./doc/install-guide/section_neutron-compute-node.xml:216(replaceable) ./doc/install-guide/section_neutron-compute-node.xml:234(replaceable) ./doc/install-guide/section_neutron-compute-node.xml:244(replaceable) ./doc/install-guide/section_neutron-compute-node.xml:255(replaceable) ./doc/install-guide/section_neutron-compute-node.xml:260(replaceable) ./doc/install-guide/section_ceilometer-install.xml:101(replaceable) ./doc/install-guide/section_ceilometer-install.xml:110(replaceable) ./doc/install-guide/section_ceilometer-install.xml:117(replaceable) ./doc/install-guide/section_ceilometer-install.xml:144(replaceable) ./doc/install-guide/section_ceilometer-install.xml:147(replaceable) ./doc/install-guide/section_ceilometer-install.xml:177(replaceable) ./doc/install-guide/section_ceilometer-install.xml:185(replaceable) ./doc/install-guide/section_ceilometer-install.xml:202(replaceable) ./doc/install-guide/section_ceilometer-install.xml:222(replaceable) ./doc/install-guide/section_ceilometer-install.xml:223(replaceable) ./doc/install-guide/section_ceilometer-install.xml:224(replaceable) ./doc/install-guide/section_nova-controller.xml:44(replaceable) ./doc/install-guide/section_nova-controller.xml:58(replaceable) ./doc/install-guide/section_nova-controller.xml:143(replaceable) ./doc/install-guide/section_nova-controller.xml:144(replaceable) ./doc/install-guide/section_nova-controller.xml:163(replaceable) ./doc/install-guide/section_nova-controller.xml:180(replaceable) ./doc/install-guide/section_nova-controller.xml:181(replaceable) ./doc/install-guide/section_nova-controller.xml:182(replaceable) ./doc/install-guide/section_keystone-services.xml:47(replaceable) ./doc/install-guide/section_keystone-services.xml:48(replaceable) ./doc/install-guide/section_keystone-services.xml:49(replaceable) ./doc/install-guide/section_neutron-per-tenant-routers-with-private-networks.xml:181(replaceable) ./doc/install-guide/section_neutron-per-tenant-routers-with-private-networks.xml:186(replaceable) ./doc/install-guide/section_neutron-per-tenant-routers-with-private-networks.xml:194(replaceable) ./doc/install-guide/section_neutron-per-tenant-routers-with-private-networks.xml:199(replaceable) ./doc/install-guide/section_neutron-per-tenant-routers-with-private-networks.xml:271(replaceable) ./doc/install-guide/section_neutron-per-tenant-routers-with-private-networks.xml:276(replaceable) ./doc/install-guide/section_neutron-per-tenant-routers-with-private-networks.xml:326(replaceable) ./doc/install-guide/section_neutron-per-tenant-routers-with-private-networks.xml:410(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:116(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:177(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:181(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:185(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:191(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:222(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:226(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:234(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:321(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:325(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:329(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:335(replaceable) ./doc/install-guide/section_neutron-provider-router-with-private_networks.xml:377(replaceable) ./doc/install-guide/section_ceilometer-glance.xml:17(replaceable) ./doc/install-guide/section_ceilometer-glance.xml:23(replaceable) ./doc/install-guide/section_basics-networking-nova.xml:184(replaceable) ./doc/install-guide/section_basics-networking-neutron.xml:253(replaceable) ./doc/install-guide/section_basics-networking-neutron.xml:297(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:193(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:212(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:229(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:234(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:284(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:287(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:291(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:301(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:334(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:339(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:348(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:367(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:426(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:451(replaceable) ./doc/install-guide/section_neutron-single-flat.xml:487(replaceable) ./doc/install-guide/section_neutron-controller-node.xml:58(replaceable) ./doc/install-guide/section_neutron-controller-node.xml:59(replaceable) ./doc/install-guide/section_neutron-controller-node.xml:60(replaceable) ./doc/install-guide/section_neutron-controller-node.xml:84(replaceable) ./doc/install-guide/section_neutron-controller-node.xml:101(replaceable) ./doc/install-guide/section_neutron-controller-node.xml:103(replaceable) ./doc/install-guide/section_neutron-controller-node.xml:136(replaceable) ./doc/install-guide/section_neutron-controller-node.xml:137(replaceable) ./doc/install-guide/section_neutron-controller-node.xml:164(replaceable) ./doc/install-guide/section_neutron-controller-node.xml:182(replaceable) ./doc/install-guide/section_neutron-controller-node.xml:232(replaceable) ./doc/install-guide/section_neutron-controller-node.xml:242(replaceable) ./doc/install-guide/section_neutron-controller-node.xml:253(replaceable) ./doc/install-guide/section_neutron-controller-node.xml:258(replaceable) ./doc/install-guide/section_cinder-node.xml:110(replaceable) ./doc/install-guide/section_cinder-node.xml:127(replaceable) ./doc/install-guide/section_cinder-node.xml:164(replaceable) ./doc/install-guide/section_cinder-node.xml:167(replaceable) ./doc/install-guide/section_cinder-controller.xml:47(replaceable) ./doc/install-guide/section_cinder-controller.xml:50(replaceable) ./doc/install-guide/section_cinder-controller.xml:89(replaceable) ./doc/install-guide/section_cinder-controller.xml:92(replaceable) ./doc/install-guide/section_cinder-controller.xml:108(replaceable) ./doc/install-guide/section_cinder-controller.xml:143(replaceable) ./doc/install-guide/section_cinder-controller.xml:144(replaceable) ./doc/install-guide/section_cinder-controller.xml:145(replaceable) ./doc/install-guide/section_cinder-controller.xml:154(replaceable) ./doc/install-guide/section_cinder-controller.xml:155(replaceable) ./doc/install-guide/section_cinder-controller.xml:156(replaceable) ./doc/install-guide/section_heat-install.xml:116(replaceable) ./doc/install-guide/section_heat-install.xml:121(replaceable) ./doc/install-guide/section_heat-install.xml:132(replaceable) ./doc/install-guide/section_heat-install.xml:133(replaceable) ./doc/install-guide/section_heat-install.xml:134(replaceable) ./doc/install-guide/section_heat-install.xml:139(replaceable) ./doc/install-guide/section_heat-install.xml:140(replaceable) ./doc/install-guide/section_heat-install.xml:141(replaceable) ./doc/install-guide/section_ceilometer-nova.xml:78(replaceable) ./doc/install-guide/section_ceilometer-nova.xml:84(replaceable) ./doc/install-guide/section_ceilometer-nova.xml:90(replaceable) ./doc/install-guide/section_ceilometer-nova.xml:106(replaceable) ./doc/install-guide/section_ceilometer-nova.xml:121(replaceable) ./doc/install-guide/section_nova-compute.xml:112(replaceable) ./doc/install-guide/section_nova-compute.xml:113(replaceable) ./doc/install-guide/section_nova-compute.xml:132(replaceable) ./doc/install-guide/section_nova-compute.xml:133(replaceable) ./doc/install-guide/section_nova-compute.xml:145(replaceable) ./doc/install-guide/section_nova-compute.xml:168(replaceable) ./doc/install-guide/section_nova-compute.xml:180(replaceable) ./doc/install-guide/section_nova-compute.xml:188(replaceable) ./doc/install-guide/section_nova-compute.xml:191(replaceable) ./doc/install-guide/section_glance-install.xml:57(replaceable) ./doc/install-guide/section_glance-install.xml:59(replaceable) ./doc/install-guide/section_glance-install.xml:67(replaceable) ./doc/install-guide/section_glance-install.xml:115(replaceable) ./doc/install-guide/section_glance-install.xml:117(replaceable) ./doc/install-guide/section_glance-install.xml:127(replaceable) ./doc/install-guide/section_glance-install.xml:129(replaceable) ./doc/install-guide/section_glance-install.xml:148(replaceable) ./doc/install-guide/section_glance-install.xml:149(replaceable) ./doc/install-guide/section_glance-install.xml:173(replaceable) ./doc/install-guide/section_glance-install.xml:174(replaceable) ./doc/install-guide/section_glance-install.xml:175(replaceable) ./doc/install-guide/section_keystone-install.xml:30(replaceable) ./doc/install-guide/section_keystone-install.xml:38(replaceable) ./doc/install-guide/object-storage/section_object-storage-install-config-proxy-node.xml:82(replaceable) ./doc/install-guide/object-storage/section_object-storage-install.xml:90(replaceable) ./doc/install-guide/object-storage/section_object-storage-install.xml:91(replaceable) ./doc/install-guide/object-storage/section_object-storage-install.xml:92(replaceable)
 msgid "controller"
 msgstr ""
 
@@ -2824,15 +2832,15 @@ msgid "To synchronize services across multiple machines, you must install <gloss
 msgstr ""
 
 #: ./doc/install-guide/section_basics-ntp.xml:12(para)
-msgid "Install the <literal>ntp</literal> package on each system running OpenStack services."
+msgid "Install the <literal>ntp</literal> package on each system running OpenStack services:"
 msgstr ""
 
 #: ./doc/install-guide/section_basics-ntp.xml:17(para)
-msgid "Set up the NTP server on your controller node so that it receives data by modifying the <filename>ntp.conf</filename> file and restarting the service."
+msgid "Set up the NTP server on your controller node so that it receives data by modifying the <filename>ntp.conf</filename> file and restarting the service:"
 msgstr ""
 
 #: ./doc/install-guide/section_basics-ntp.xml:25(para)
-msgid "On additional nodes, it is advised that you configure the other nodes to synchronize their time from the controller node rather than from outside of your LAN. To do so, install the ntp daemon as above, then edit <filename>/etc/ntp.conf</filename> and change the <code>server</code> directive to use the controller node as internet time source."
+msgid "It is advised that you configure additional nodes to synchronize their time from the controller node rather than from outside of your LAN. To do so, install the ntp daemon as above, then edit <filename>/etc/ntp.conf</filename> and change the <code>server</code> directive to use the controller node as internet time source."
 msgstr ""
 
 #: ./doc/install-guide/section_ceilometer-glance.xml:6(title)
@@ -4554,71 +4562,71 @@ msgstr ""
 msgid "Configure the location of the database. The Image Service provides the <systemitem class=\"service\">glance-api</systemitem> and <systemitem class=\"service\">glance-registry</systemitem> services, each with its own configuration file. You must update both configuration files throughout this section. Replace <replaceable>GLANCE_DBPASS</replaceable> with your Image Service database password."
 msgstr ""
 
-#: ./doc/install-guide/section_glance-install.xml:57(replaceable) ./doc/install-guide/section_glance-install.xml:59(replaceable) ./doc/install-guide/section_glance-install.xml:77(replaceable) ./doc/install-guide/section_glance-install.xml:91(replaceable) ./doc/install-guide/section_glance-install.xml:93(replaceable)
+#: ./doc/install-guide/section_glance-install.xml:57(replaceable) ./doc/install-guide/section_glance-install.xml:59(replaceable) ./doc/install-guide/section_glance-install.xml:73(replaceable) ./doc/install-guide/section_glance-install.xml:88(replaceable) ./doc/install-guide/section_glance-install.xml:90(replaceable)
 msgid "GLANCE_DBPASS"
 msgstr ""
 
 #: ./doc/install-guide/section_glance-install.xml:60(para)
-msgid "Edit <filename>/etc/glance/glance-api.conf</filename> and <filename>/etc/glance/glance-registry.conf</filename> and change the <literal>[database]</literal> section."
+msgid "Edit <filename>/etc/glance/glance-api.conf</filename> and <filename>/etc/glance/glance-registry.conf</filename> and add the <literal>[database]</literal> section at the end of each file:"
 msgstr ""
 
-#: ./doc/install-guide/section_glance-install.xml:74(para)
+#: ./doc/install-guide/section_glance-install.xml:70(para)
 msgid "Use the <placeholder-1/> command to create the Image Service database and tables and a <literal>glance</literal> database user:"
 msgstr ""
 
-#: ./doc/install-guide/section_glance-install.xml:80(para)
-msgid "By default, the Ubuntu packages create an SQLite database. Delete the <filename>glance.sqlite</filename> file created in the <filename>/var/lib/glance/</filename> directory so that it does not get used by mistake."
+#: ./doc/install-guide/section_glance-install.xml:76(para)
+msgid "By default, the Ubuntu packages create an SQLite database. Delete the <filename>glance.sqlite</filename> file created in the <filename>/var/lib/glance/</filename> directory so that it does not get used by mistake:"
 msgstr ""
 
-#: ./doc/install-guide/section_glance-install.xml:86(para)
+#: ./doc/install-guide/section_glance-install.xml:83(para)
 msgid "Use the password you created to log in as root and create a <literal>glance</literal> database user:"
 msgstr ""
 
-#: ./doc/install-guide/section_glance-install.xml:96(para)
+#: ./doc/install-guide/section_glance-install.xml:93(para)
 msgid "Create the database tables for the Image Service:"
 msgstr ""
 
-#: ./doc/install-guide/section_glance-install.xml:100(para)
-msgid "Create a <literal>glance</literal> user that the Image Service can use to authenticate with the Identity Service. Choose a password and specify an email address for the <literal>glance</literal> user. Use the <literal>service</literal> tenant and give the user the <literal>admin</literal> role."
+#: ./doc/install-guide/section_glance-install.xml:97(para)
+msgid "Create a <literal>glance</literal> user that the Image Service can use to authenticate with the Identity Service. Choose a password and specify an email address for the <literal>glance</literal> user. Use the <literal>service</literal> tenant and give the user the <literal>admin</literal> role:"
 msgstr ""
 
-#: ./doc/install-guide/section_glance-install.xml:106(replaceable) ./doc/install-guide/section_glance-install.xml:126(replaceable) ./doc/install-guide/section_glance-install.xml:138(replaceable) ./doc/install-guide/section_glance-install.xml:158(replaceable)
+#: ./doc/install-guide/section_glance-install.xml:103(replaceable) ./doc/install-guide/section_glance-install.xml:123(replaceable) ./doc/install-guide/section_glance-install.xml:135(replaceable) ./doc/install-guide/section_glance-install.xml:154(replaceable)
 msgid "GLANCE_PASS"
 msgstr ""
 
-#: ./doc/install-guide/section_glance-install.xml:107(replaceable)
+#: ./doc/install-guide/section_glance-install.xml:104(replaceable)
 msgid "glance@example.com"
 msgstr ""
 
-#: ./doc/install-guide/section_glance-install.xml:111(para)
+#: ./doc/install-guide/section_glance-install.xml:108(para)
 msgid "Configure the Image Service to use the Identity Service for authentication."
 msgstr ""
 
-#: ./doc/install-guide/section_glance-install.xml:113(para)
+#: ./doc/install-guide/section_glance-install.xml:110(para)
 msgid "Run the following commands and replace <replaceable>GLANCE_PASS</replaceable> with the password you chose for the <literal>glance</literal> user in the Identity Service:"
 msgstr ""
 
-#: ./doc/install-guide/section_glance-install.xml:141(para)
+#: ./doc/install-guide/section_glance-install.xml:138(para)
 msgid "Edit the <filename>/etc/glance/glance-api.conf</filename> and <filename>/etc/glance/glance-registry.conf</filename> files. Replace <replaceable>GLANCE_PASS</replaceable> with the password you chose for the <literal>glance</literal> user in the Identity Service."
 msgstr ""
 
-#: ./doc/install-guide/section_glance-install.xml:148(para)
-msgid "Add the following keys under the <literal>[keystone_authtoken]</literal> section:"
+#: ./doc/install-guide/section_glance-install.xml:145(para)
+msgid "Add or modify the following keys under the <literal>[keystone_authtoken]</literal> section:"
 msgstr ""
 
-#: ./doc/install-guide/section_glance-install.xml:161(para)
-msgid "Add the following key under the <literal>[paste_deploy]</literal> section:"
+#: ./doc/install-guide/section_glance-install.xml:157(para)
+msgid "Modify the following key under the <literal>[paste_deploy]</literal> section:"
 msgstr ""
 
-#: ./doc/install-guide/section_glance-install.xml:170(para)
+#: ./doc/install-guide/section_glance-install.xml:166(para)
 msgid "Register the Image Service with the Identity Service so that other OpenStack services can locate it. Register the service and create the endpoint:"
 msgstr ""
 
-#: ./doc/install-guide/section_glance-install.xml:182(para)
-msgid "Restart the <systemitem class=\"service\">glance</systemitem> service with its new settings."
+#: ./doc/install-guide/section_glance-install.xml:178(para)
+msgid "Restart the <systemitem class=\"service\">glance</systemitem> service with its new settings:"
 msgstr ""
 
-#: ./doc/install-guide/section_glance-install.xml:188(para)
+#: ./doc/install-guide/section_glance-install.xml:184(para)
 msgid "Start the <systemitem class=\"service\">glance-api</systemitem> and <systemitem class=\"service\">glance-registry</systemitem> services and configure them to start when the system boots:"
 msgstr ""
 
