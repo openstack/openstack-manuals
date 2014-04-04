@@ -53,10 +53,10 @@
         throughout this section. Replace
           <replaceable>GLANCE_DBPASS</replaceable> with your Image
         Service database password.</para>
-      <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf \
-   database connection mysql://glance:<replaceable>GLANCE_DBPASS</replaceable>@<replaceable>controller</replaceable>/glance</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-registry.conf \
-   database connection mysql://glance:<replaceable>GLANCE_DBPASS</replaceable>@<replaceable>controller</replaceable>/glance</userinput></screen>
+      <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf database \
+  connection mysql://glance:<replaceable>GLANCE_DBPASS</replaceable>@<replaceable>controller</replaceable>/glance</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-registry.conf database \
+  connection mysql://glance:<replaceable>GLANCE_DBPASS</replaceable>@<replaceable>controller</replaceable>/glance</userinput></screen>
       <para os="ubuntu;debian">Edit
           <filename>/etc/glance/glance-api.conf</filename> and
           <filename>/etc/glance/glance-registry.conf</filename> and
@@ -66,6 +66,54 @@
 [database]
 connection = mysql://glance:GLANCE_DBPASS@<replaceable>controller</replaceable>/glance</programlisting>
     </step>
+
+
+    <step os="fedora;rhel;centos">
+      <para>Set these configuration keys to configure the Image Service to use
+        the Qpid message broker:</para>
+      <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf DEFAULT \
+  rpc_backend glance.openstack.common.rpc.impl_qpid</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf DEFAULT \
+  qpid_hostname <replaceable>controller</replaceable></userinput></screen>
+      <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-registry.conf DEFAULT \
+  rpc_backend glance.openstack.common.rpc.impl_qpid</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-registry.conf DEFAULT \
+  qpid_hostname <replaceable>controller</replaceable></userinput></screen>
+    </step>
+    <step os="ubuntu">
+      <para>Configure the Image service to use the RabbitMQ message broker by
+        setting these configuration keys in the <literal>[DEFAULT]</literal>
+        configuration group of the <filename>/etc/glance/glance-api.conf</filename>
+        and <filename>/etc/glance/glance-registry.conf</filename>
+        files:</para>
+      <para>Replace <replaceable>RABBIT_PASS</replaceable> with the password
+        you chose for the <literal>guest</literal> account in
+        <application>RabbitMQ</application>.</para>
+      <programlisting language="ini">rpc_backend = glance.rpc.impl_kombu
+rabbit_host = <replaceable>controller</replaceable>
+rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
+    </step>
+    <step os="opensuse;sles">
+      <para>Set these configuration keys to configure the Identity service to use
+        the RabbitMQ message broker:</para>
+      <para>Replace <replaceable>RABBIT_PASS</replaceable> with the password
+        you chose for the <literal>guest</literal> account in
+        <application>RabbitMQ</application>.</para>
+      <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf DEFAULT \
+  rpc_backend glance.rpc.impl_kombu</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf DEFAULT \
+  rabbit_host <replaceable>controller</replaceable></userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf DEFAULT \
+  rabbit_password <replaceable>RABBIT_PASS</replaceable></userinput></screen>
+      <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-registry.conf DEFAULT \
+  rpc_backend glance.rpc.impl_kombu</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-registry.conf DEFAULT \
+  rabbit_host <replaceable>controller</replaceable></userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-registry.conf DEFAULT \
+  rabbit_password <replaceable>RABBIT_PASS</replaceable></userinput></screen>
+    </step>
+
+
     <step os="rhel;centos;fedora;opensuse;sles">
       <para>Use the <command>openstack-db</command> command to create
         the Image Service database and tables and a
@@ -95,7 +143,7 @@ IDENTIFIED BY '<replaceable>GLANCE_DBPASS</replaceable>';</userinput></screen>
     </step>
     <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
       <para>Create a <literal>glance</literal> user that the Image
-        Service can use to authenticate with the Identity Service.
+        Service can use to authenticate with the Identity service.
         Choose a password and specify an email address for the
           <literal>glance</literal> user. Use the
           <literal>service</literal> tenant and give the user the
@@ -112,34 +160,34 @@ IDENTIFIED BY '<replaceable>GLANCE_DBPASS</replaceable>';</userinput></screen>
         you chose for the <literal>glance</literal> user in the Identity
         Service:</para>
       <screen os="rhel;centos;fedora;sles;opensuse"><prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf keystone_authtoken \
-   auth_uri http://<replaceable>controller</replaceable>:5000</userinput>
+  auth_uri http://<replaceable>controller</replaceable>:5000</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf keystone_authtoken \
-   auth_host <replaceable>controller</replaceable></userinput>
+  auth_host <replaceable>controller</replaceable></userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf keystone_authtoken \
-   admin_tenant_name service</userinput>
+  admin_tenant_name service</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf keystone_authtoken \
-   admin_user glance</userinput>
+  admin_user glance</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf keystone_authtoken \
-   admin_password <replaceable>GLANCE_PASS</replaceable></userinput>
+  admin_password <replaceable>GLANCE_PASS</replaceable></userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf paste_deploy \
-   flavor keystone</userinput>
+  flavor keystone</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-registry.conf keystone_authtoken \
-   auth_uri http://<replaceable>controller</replaceable>:5000</userinput>
+  auth_uri http://<replaceable>controller</replaceable>:5000</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-registry.conf keystone_authtoken \
-   auth_host <replaceable>controller</replaceable></userinput>
+  auth_host <replaceable>controller</replaceable></userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-registry.conf keystone_authtoken \
-   admin_tenant_name service</userinput>
+  admin_tenant_name service</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-registry.conf keystone_authtoken \
-   admin_user glance</userinput>
+  admin_user glance</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-registry.conf keystone_authtoken \
-   admin_password <replaceable>GLANCE_PASS</replaceable></userinput>
+  admin_password <replaceable>GLANCE_PASS</replaceable></userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-registry.conf paste_deploy \
-   flavor keystone</userinput></screen>
+  flavor keystone</userinput></screen>
       <para os="ubuntu">Edit the
         <filename>/etc/glance/glance-api.conf</filename> and
         <filename>/etc/glance/glance-registry.conf</filename> files. Replace
         <replaceable>GLANCE_PASS</replaceable> with the password you chose
-        for the <literal>glance</literal> user in the Identity Service.</para>
+        for the <literal>glance</literal> user in the Identity service.</para>
       <substeps os="ubuntu">
         <step>
           <para>Add or modify the following keys under the
@@ -163,7 +211,7 @@ flavor = keystone</programlisting>
       </substeps>
     </step>
     <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
-      <para>Register the Image Service with the Identity Service so
+      <para>Register the Image Service with the Identity service so
         that other OpenStack services can locate it. Register the
         service and create the endpoint:</para>
       <screen><prompt>$</prompt> <userinput>keystone service-create --name=glance --type=image \
