@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="iso-support" xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+    <title>Support for ISO images</title>
+    <para>You can load ISO images into the Image Service. You can
+        subsequently boot an ISO image using Compute.</para>
+    <procedure>
+        <title>To load an ISO image to an Image Service data
+            store</title>
+        <step>
+            <para>Obtain the ISO image. For example,
+                <filename>ubuntu-13.04-server-amd64.iso</filename>.</para>
+        </step>
+        <step>
+            <para>In the Image Service, run the following
+                command:</para>
+            <screen><prompt>$</prompt> <userinput>glance image-create --name ubuntu.iso \
+   --is-public=True --container-format=bare \
+   --disk-format=iso &lt; ubuntu-13.04-server-amd64.iso</userinput></screen>
+            <para>In this command, <literal>ubuntu.iso</literal> is
+                the name for the ISO image after it is loaded to the
+                Image Service, and
+                    <literal>ubuntu-13.04-server-amd64.iso</literal>
+                is the name of the source ISO image.</para>
+        </step>
+        <step>
+            <para>Optionally, confirm the upload in Compute.</para>
+            <para>Run this command:</para>
+            <screen><prompt>$</prompt> <userinput>nova image-list</userinput></screen>
+        </step>
+    </procedure>
+    <procedure>
+        <title>To boot an instance from an ISO image</title>
+        <step>
+            <para>Run this command:</para>
+            <screen><prompt>$</prompt> <userinput>nova boot --image ubuntu.iso \
+  --flavor 1 instance_name</userinput></screen>
+            <para>In this command, <literal>ubuntu.iso</literal> is
+                the ISO image, and <literal>instance_name</literal> is
+                the name of the new instance.</para>
+        </step>
+    </procedure>
+</section>
