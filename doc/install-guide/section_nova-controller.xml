@@ -62,7 +62,9 @@ connection = mysql://nova:<replaceable>NOVA_DBPASS</replaceable>@controller/nova
         setting these configuration keys in the <literal>[DEFAULT]</literal>
         configuration group of the <filename>/etc/nova/nova.conf</filename>
         file:</para>
-      <programlisting language="ini">rpc_backend = nova.rpc.impl_kombu
+      <programlisting language="ini">[DEFAULT]
+...
+rpc_backend = rabbit
 rabbit_host = controller
 rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
     </step>
@@ -93,8 +95,7 @@ rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
         the <option>vncserver_listen</option> and
           <option>vncserver_proxyclient_address</option> options,
         which appear at the end of the file:</para>
-      <programlisting os="ubuntu;debian" language="ini">...
-[DEFAULT]
+      <programlisting os="ubuntu;debian" language="ini">[DEFAULT]
 ...
 my_ip = 192.168.0.10
 vncserver_listen = 192.168.0.10
@@ -111,7 +112,8 @@ vncserver_proxyclient_address = 192.168.0.10</programlisting>
       <para>By default, the Ubuntu packages create an SQLite database.
         Delete the <filename>nova.sqlite</filename> file created in
         the <filename>/var/lib/nova/</filename> directory so that it
-        does not get used by mistake.</para>
+        does not get used by mistake:</para>
+      <screen><prompt>#</prompt> <userinput>rm /var/lib/nova/nova.sqlite</userinput></screen>
     </step>
     <step os="ubuntu">
       <para>Use the password you created previously to log in as root.
@@ -154,7 +156,7 @@ IDENTIFIED BY '<replaceable>NOVA_DBPASS</replaceable>';</userinput></screen>
       <programlisting os="ubuntu;debian" language="ini">
 [DEFAULT]
 ...
-auth_strategy=keystone</programlisting>
+auth_strategy = keystone</programlisting>
       <para os="ubuntu;debian">Add these keys to the
         <literal>[keystone_authtoken]</literal> section:</para>
       <programlisting os="ubuntu;debian" language="ini">
