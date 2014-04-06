@@ -1,4 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE section [
+ <!-- Some useful entities borrowed from HTML -->
+<!ENTITY ndash  "&#x2013;">
+<!ENTITY mdash  "&#x2014;">
+<!ENTITY hellip "&#x2026;">
+]>
 <section xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
@@ -42,6 +47,33 @@
                 <literal>logfile</literal> option to enable logging.
             Alternatively you can set <literal>use_syslog=1</literal>
             so that the nova daemon logs to syslog.</para>
+    </section>
+    <section xml:id="section_compute-GuruMed-reports">
+        <title>Guru Meditation reports</title>
+        <para>A Guru Meditation report is sent by the Compute Service upon receipt of the
+                <systemitem>SIGUSR1</systemitem> signal. This report is a general-purpose error
+            report, including a complete report of the service's current state, and is sent to
+                <systemitem>stderr</systemitem>.</para>
+        <para>For example, if you redirect error output to <filename>nova-api-err.log</filename>
+            using <command>nova-api 2&gt;/var/log/nova/nova-api-err.log</command>, resulting in the
+            process ID 8675, you can then run:</para>
+        <screen><prompt>#</prompt> <userinput>kill -USR1 8675</userinput></screen>
+        <para>This command triggers the Guru Meditation report to be printed to
+            <filename>/var/log/nova/nova-api-err.log</filename>.</para>
+        <para>The report has the following sections:
+            <itemizedlist>
+                <listitem><para>Package &mdash; Displays information about the package to which
+                    the process belongs, including version information.</para></listitem>
+                <listitem><para>Threads &mdash; Displays stack traces and thread IDs for each of the threads within the
+                        process.</para></listitem>
+                <listitem><para>Green Threads &mdash; Displays stack traces for each of the green
+                    threads within the process (green threads do not have thread IDs).</para></listitem>
+                <listitem><para>Configuration &mdash; Lists all configuration options currently accessible through the CONF
+                        object for the current process.</para></listitem>
+             </itemizedlist></para>
+        <para>For more information, see <link
+            xlink:href="http://docs.openstack.org/developer/nova/devref/gmr.html"
+            >Guru Meditation Reports</link>.</para>
     </section>
     <section xml:id="section_compute-common-errors-and-fixes">
         <title>Common errors and fixes for Compute</title>
