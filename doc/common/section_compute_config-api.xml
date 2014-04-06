@@ -77,11 +77,7 @@
             </listitem>
         </itemizedlist>
         <para>Rate limits are applied in relative order to the HTTP
-            method, going from least to most specific. For example,
-            although the default threshold for POST to */servers is 50
-            each day, you cannot POST to */servers more than 10 times
-            in a single minute because the rate limits for any POST is
-            10 each minute.</para>
+            method, going from least to most specific.</para>
     </simplesect>
     <simplesect>
         <title>Default limits</title>
@@ -102,31 +98,37 @@
                     <td>POST</td>
                     <td>any URI (*)</td>
                     <td>.*</td>
-                    <td>10 per minute</td>
+                    <td>120 per minute</td>
                 </tr>
                 <tr>
                     <td>POST</td>
                     <td>/servers</td>
                     <td>^/servers</td>
-                    <td>50 per day</td>
+                    <td>120 per minute</td>
                 </tr>
                 <tr>
                     <td>PUT</td>
                     <td>any URI (*)</td>
                     <td>.*</td>
-                    <td>10 per minute</td>
+                    <td>120 per minute</td>
                 </tr>
                 <tr>
                     <td>GET</td>
                     <td>*changes-since*</td>
                     <td>.*changes-since.*</td>
-                    <td>3 per minute</td>
+                    <td>120 per minute</td>
                 </tr>
                 <tr>
                     <td>DELETE</td>
                     <td>any URI (*)</td>
                     <td>.*</td>
-                    <td>100 per minute</td>
+                    <td>120 per minute</td>
+                </tr>
+                <tr>
+                    <td>GET</td>
+                    <td>*/os-fping</td>
+                    <td>^/os-fping</td>
+                    <td>12 per minute</td>
                 </tr>
             </tbody>
         </table>
@@ -175,7 +177,7 @@ paste.filter_factory = nova.api.openstack.compute.limits:RateLimitingMiddleware.
             values:</para>
         <programlisting language="ini">[filter:ratelimit]
 paste.filter_factory = nova.api.openstack.compute.limits:RateLimitingMiddleware.factory
-limits =(POST, "*", .*, 10, MINUTE);(POST, "*/servers", ^/servers, 50, DAY);(PUT, "*", .*, 10, MINUTE);(GET, "*changes-since*", .*changes-since.*, 3, MINUTE);(DELETE, "*", .*, 100, MINUTE)</programlisting>
+limits =(POST, "*", .*, 120, MINUTE);(POST, "*/servers", ^/servers, 120, MINUTE);(PUT, "*", .*, 120, MINUTE);(GET, "*changes-since*", .*changes-since.*, 120, MINUTE);(DELETE, "*", .*, 120, MINUTE);(GET, "*/os-fping", ^/os-fping, 12, MINUTE)</programlisting>
     </simplesect>
     <simplesect xml:id="compute_config_options">
         <title>Configuration reference</title>
