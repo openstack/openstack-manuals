@@ -11,7 +11,34 @@
 
   <screen><prompt>$</prompt> <userinput>source demo-openrc.sh</userinput></screen>
 
-  <para>Next, create some stacks by using the samples.</para>
-  <xi:include href="../user-guide/section_cli_heat.xml"/>
+  <para>The Orchestration Module uses templates to describe stacks. To learn
+      about the template languages, see <link
+          xlink:href="http://docs.openstack.org/developer/heat/template_guide/index.html"
+          >the Template Guide</link> in the <link
+          xlink:href="http://docs.openstack.org/developer/heat/">Heat developer
+          documentation</link>.</para>
+  <para>Create a test template in the <filename>test-stack.yml</filename>
+      file with the following content:</para>
+  <programlisting language="yml"><xi:include parse="text" href="samples/test-stack.yml"/></programlisting>
+
+  <para>Use the <command>heat stack-create</command> command to create a stack
+      from this template:</para>
+  <screen><prompt>$</prompt> <userinput>NET_ID=$(neutron net-list | awk '/ demo-net / { print $2 }')</userinput>
+<prompt>$</prompt> <userinput>SUBNET_ID=$(neutron subnet-list | awk '/ demo-subnet / { print $2 }')</userinput>
+<prompt>$</prompt> <userinput>heat stack-create -f test-stack.yml \
+  -P "ImageID=cirros-0.3.2-x86_64;NetID=$NET_ID;SubNetID=$SUBNET_ID" testStack</userinput>
+<computeroutput>+--------------------------------------+------------+--------------------+----------------------+
+| id                                   | stack_name | stack_status       | creation_time        |
++--------------------------------------+------------+--------------------+----------------------+
+| 477d96b4-d547-4069-938d-32ee990834af | testStack  | CREATE_IN_PROGRESS | 2014-04-06T15:11:01Z |
++--------------------------------------+------------+--------------------+----------------------+</computeroutput></screen>
+
+  <para>Verify that the stack was created successfully with the <command>heat stack-list</command> command:</para>
+  <screen><prompt>$</prompt> <userinput>heat stack-list</userinput>
+<computeroutput>+--------------------------------------+------------+-----------------+----------------------+
+| id                                   | stack_name | stack_status    | creation_time        |
++--------------------------------------+------------+-----------------+----------------------+
+| 477d96b4-d547-4069-938d-32ee990834af | testStack  | CREATE_COMPLETE | 2014-04-06T15:11:01Z |
++--------------------------------------+------------+-----------------+----------------------+</computeroutput></screen>
 
 </section>
