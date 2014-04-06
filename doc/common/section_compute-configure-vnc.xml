@@ -40,13 +40,13 @@
         continues to proxy until the session ends.</para>
     </listitem>
   </orderedlist>
-  <para>The proxy also tunnels the VNC protocol over WebSockets so
-    that the noVNC client can talk VNC.</para>
-  <para>In general, the VNC proxy:</para>
+  <para>The proxy also tunnels the VNC protocol over WebSockets so that the
+      <systemitem>noVNC</systemitem> client can talk to VNC servers. In general, the VNC
+    proxy:</para>
   <itemizedlist>
     <listitem>
-      <para>Bridges between the public network where the clients live
-        and the private network where vncservers live.</para>
+      <para>Bridges between the public network where the clients live and the private network where
+        VNC servers live.</para>
     </listitem>
     <listitem>
       <para>Mediates token authentication.</para>
@@ -118,8 +118,8 @@
   </section>
   <section xml:id="vnc-configuration-options">
     <title>VNC configuration options</title>
-    <para>To customize the VNC console, use the configuration option settings
-        documented in <xref linkend="config_table_nova_vnc"/>.</para>
+    <para>To customize the VNC console, use the following configuration options:</para>
+    <xi:include href="../common/tables/nova-vnc.xml"/>
     <note>
       <para>To support <link
           xlink:href="http://docs.openstack.org/trunk/config-reference/content/configuring-openstack-compute-basics.html#section_configuring-compute-migrations"
@@ -128,29 +128,33 @@
         IP address does not exist on the destination host.</para>
     </note>
     <note>
-      <para>The <literal>vncserver_proxyclient_address</literal>
-        defaults to <literal>127.0.0.1</literal>, which is the address
-        of the compute host that nova instructs proxies to use when
-        connecting to instance servers.</para>
-      <para>For all-in-one XenServer domU deployments, set this to
-        169.254.0.1.</para>
-      <para>For multi-host XenServer domU deployments, set to a dom0
-        management IP on the same network as the proxies.</para>
-      <para>For multi-host libvirt deployments, set to a host
-        management IP on the same network as the proxies.</para>
+      <para>
+        <itemizedlist>
+          <listitem>
+            <para>The <literal>vncserver_proxyclient_address</literal> defaults to
+                  <literal>127.0.0.1</literal>, which is the address of the compute host that
+                Compute instructs proxies to use when connecting to instance servers.
+            </para>
+          </listitem>
+          <listitem><para>For all-in-one XenServer domU deployments, set this to 169.254.0.1.</para></listitem>
+          <listitem><para>For multi-host XenServer domU deployments, set to a dom0 management IP on the
+            same network as the proxies.</para></listitem>
+          <listitem><para>For multi-host libvirt deployments, set to a host management IP on the same
+            network as the proxies.</para></listitem>
+        </itemizedlist>
+      </para>
     </note>
   </section>
   <section xml:id="nova-vncproxy-replaced-with-nova-novncproxy">
     <info>
       <title>nova-novncproxy (noVNC)</title>
     </info>
-    <para>You must install the noVNC package, which contains the
-        <systemitem class="service">nova-novncproxy</systemitem>
-      service.</para>
-    <para>As root, run the following command:</para>
+    <para>You must install the <package>noVNC</package> package, which contains the <systemitem
+        class="service">nova-novncproxy</systemitem> service. As root, run the following
+      command:</para>
     <programlisting language="bash" role="gutter: false"><prompt>#</prompt> <userinput>apt-get install novnc</userinput></programlisting>
     <para>The service starts automatically on installation.</para>
-    <para>To restart it, run the following command:</para>
+    <para>To restart the service, run:</para>
     <programlisting language="bash" role="gutter: false"><prompt>#</prompt> <userinput>service novnc restart</userinput></programlisting>
     <para>The configuration option parameter should point to your
         <filename>nova.conf</filename> file, which includes the
@@ -158,9 +162,8 @@
     <para>By default, <systemitem class="service"
         >nova-novncproxy</systemitem> binds on
         <literal>0.0.0.0:6080</literal>.</para>
-    <para>To connect the service to your nova deployment, add the
-      following configuration options to your
-        <filename>nova.conf</filename> file:</para>
+    <para>To connect the service to your Compute deployment, add the following configuration options
+      to your <filename>nova.conf</filename> file:</para>
     <itemizedlist>
       <listitem>
         <para>
@@ -181,9 +184,8 @@
           <literal>vncserver_ proxyclient_ address
             </literal>=<replaceable>127.0.0.1</replaceable>
         </para>
-        <para>The address of the compute host that nova instructs
-          proxies to use when connecting to instance
-            <literal>vncservers</literal>.</para>
+        <para>The address of the compute host that Compute instructs proxies to use when connecting
+          to instance <literal>vncservers</literal>.</para>
       </listitem>
     </itemizedlist>
   </section>
@@ -198,24 +200,22 @@
               <literal>nova-xvpvncproxy</literal> and <systemitem
               class="service">nova-novncproxy</systemitem>?</emphasis>
         </para>
-        <para>A: <literal>nova-xvpvncproxy</literal>, which ships with
-          nova, is a proxy that supports a simple Java client.
-            <systemitem class="service">nova-novncproxy</systemitem>
-          uses noVNC to provide VNC support through a web
+        <para>A: <literal>nova-xvpvncproxy</literal>, which ships with OpenStack Compute, is a proxy
+          that supports a simple Java client. <systemitem class="service"
+            >nova-novncproxy</systemitem> uses noVNC to provide VNC support through a web
           browser.</para>
       </listitem>
       <listitem>
-        <para><emphasis role="bold">Q: I want VNC support in the
-            Dashboard. What services do I need? </emphasis></para>
+        <para><emphasis role="bold">Q: I want VNC support in the OpenStack dashboard. What services
+            do I need? </emphasis></para>
         <para>A: You need <systemitem class="service"
             >nova-novncproxy</systemitem>, <systemitem class="service"
             >nova-consoleauth</systemitem>, and correctly configured
           compute hosts.</para>
       </listitem>
       <listitem>
-        <para><emphasis role="bold">Q: When I use <command>nova
-              get-vnc-console</command> or click on the VNC tab of the
-            Dashboard, it hangs. Why? </emphasis></para>
+        <para><emphasis role="bold">Q: When I use <command>nova get-vnc-console</command> or click
+            on the VNC tab of the OpenStack dashboard, it hangs. Why? </emphasis></para>
         <para>A: Make sure you are running <systemitem class="service"
             >nova-consoleauth</systemitem> (in addition to <systemitem
             class="service">nova-novncproxy</systemitem>). The proxies
