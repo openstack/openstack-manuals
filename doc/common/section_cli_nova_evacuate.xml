@@ -4,34 +4,26 @@
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="nova_cli_evacuate">
     <title>Evacuate instances</title>
-    <para>If a cloud compute node fails due to a hardware malfunction
-        or another reason, you can evacuate instances to make them
-        available again.</para>
-    <para>You can choose evacuation parameters for your use
-        case.</para>
-    <para>To preserve user data on server disk, you must configure
-        shared storage on the target host. Also, you must validate
-        that the current VM host is down. Otherwise the evacuation
+    <para>If a cloud compute node fails due to a hardware malfunction or another reason, you can
+        evacuate instances to make them available again. You can choose evacuation parameters for
+        your use case.</para>
+    <para>To preserve user data on server disk, you must configure shared storage on the target
+        host. Also, you must validate that the current VM host is down; otherwise, the evacuation
         fails with an error.</para>
     <procedure xml:id="evacuate_shared">
         <step>
-            <para>To find a different host for the evacuated instance,
-                run this command to list hosts:</para>
+            <para>To list hosts and find a different host for the evacuated instance, run:</para>
             <screen><prompt>$</prompt> <userinput>nova host-list</userinput></screen>
         </step>
         <step>
-            <para>You can pass the instance password to the command by
-                using the <literal>--password &lt;pwd&gt;</literal>
-                option. If you do not specify a password, one is
-                generated and printed after the command finishes
-                successfully. The following command evacuates a server
-                without shared storage:</para>
+            <para>Evacuate the instance. You can pass the instance password to the command by using
+                the <literal>--password &lt;pwd&gt;</literal> option. If you do not specify a
+                password, one is generated and printed after the command finishes successfully. The
+                following command evacuates a server without shared storage from a host that is down
+                to the specified <replaceable>host_b</replaceable>:</para>
             <screen><prompt>$</prompt> <userinput>nova evacuate <replaceable>evacuated_server_name</replaceable> <replaceable>host_b</replaceable></userinput> </screen>
-            <para>The command evacuates an instance from a down host
-                to a specified host. The instance is booted from a new
-                disk, but preserves its configuration including its
-                ID, name, uid, IP address, and so on. The command
-                returns a password:</para>
+            <para>The instance is booted from a new disk, but preserves its configuration including
+                its ID, name, uid, IP address, and so on. The command returns a password:</para>
             <screen><computeroutput><?db-font-size 70%?>+-----------+--------------+
 | Property  |    Value     |
 +-----------+--------------+
@@ -39,14 +31,12 @@
 +-----------+--------------+</computeroutput></screen>
         </step>
         <step>
-            <para>To preserve the user disk data on the evacuated
-                server, deploy OpenStack Compute with shared file
-                system. To configure your system, see <link
+            <para>To preserve the user disk data on the evacuated server, deploy OpenStack Compute
+                with a shared file system. To configure your system, see <link
                     xlink:href="http://docs.openstack.org/havana/config-reference/content/configuring-openstack-compute-basics.html#section_configuring-compute-migrations"
-                    >Configure migrations</link> in
-                    <citetitle>OpenStack Configuration
-                    Reference</citetitle>. In this example, the
-                password remains unchanged.</para>
+                    >Configure migrations</link> in <citetitle>OpenStack Configuration
+                    Reference</citetitle>. In the following example, the password remains
+                unchanged:</para>
             <screen><prompt>$</prompt> <userinput>nova evacuate <replaceable>evacuated_server_name</replaceable> <replaceable>host_b</replaceable> --on-shared-storage</userinput>    </screen>
         </step>
     </procedure>
