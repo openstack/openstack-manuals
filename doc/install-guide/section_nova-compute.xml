@@ -119,10 +119,9 @@ dpkg-statoverride --update --add root root 0644 /boot/vmlinuz-${version}</progra
     <para os="ubuntu;debian">Edit the
           <filename>/etc/nova/nova.conf</filename> configuration file and add these
         lines to the appropriate sections:</para>
-      <programlisting os="ubuntu;debian" language="ini">...
-[DEFAULT]
+      <programlisting os="ubuntu;debian" language="ini">[DEFAULT]
 ...
-auth_strategy=keystone
+auth_strategy = keystone
 ...
 [database]
 # The SQLAlchemy connection string used to connect to the database
@@ -147,7 +146,9 @@ admin_password = <replaceable>NOVA_PASS</replaceable></programlisting>
         the RabbitMQ message broker by setting these configuration
         keys in the <literal>[DEFAULT]</literal> configuration group of
         the <filename>/etc/nova/nova.conf</filename> file:</para>
-      <programlisting os="ubuntu" language="ini">rpc_backend = nova.rpc.impl_kombu
+      <programlisting os="ubuntu" language="ini">[DEFAULT]
+...
+rpc_backend = rabbit
 rabbit_host = controller
 rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
       <para os="opensuse;sles">Configure the Compute service to use the RabbitMQ message broker
@@ -188,14 +189,14 @@ novncproxy_base_url=http://<replaceable>controller</replaceable>:6080/vnc_auto.h
       <screen os="fedora;rhel;centos;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT glance_host <replaceable>controller</replaceable></userinput></screen>
       <programlisting os="ubuntu;debian" language="ini">[DEFAULT]
 ...
-glance_host=<replaceable>controller</replaceable></programlisting>
+glance_host = <replaceable>controller</replaceable></programlisting>
     </step>
     <step>
       <para>If you install Compute on a virtual machine for testing
         purposes, you must determine whether your hypervisor and/or CPU
         support nested hardware acceleration using the following
         command:</para>
-      <screen><prompt>#</prompt> <userinput>egrep -c '(vmx|svm)' /proc/cpuinfo</userinput></screen>
+      <screen><prompt>$</prompt> <userinput>egrep -c '(vmx|svm)' /proc/cpuinfo</userinput></screen>
       <para>If this command returns a value of
         <emphasis>one or greater</emphasis>, your hypervisor and/or CPU
         support nested hardware acceleration which requires no
@@ -217,11 +218,15 @@ virt_type = qemu</programlisting>
         Configure <literal>libvirt</literal> to use QEMU:</para>
       <screen os="rhel;centos;fedora;sles;opensuse"><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf libvirt virt_type qemu</userinput></screen>
     </step>
+    <step os="ubuntu">
+      <para>Remove the SQLite database created by the packages:</para>
+      <screen><prompt>#</prompt> <userinput>rm /var/lib/nova/nova.sqlite</userinput></screen>
+    </step>
     <step>
       <para os="fedora;rhel;centos;opensuse;sles">Start the Compute
         service and configure it to start when the system
-        boots.</para>
-      <para os="ubuntu;debian">Restart the Compute service.</para>
+        boots:</para>
+      <para os="ubuntu;debian">Restart the Compute service:</para>
       <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service nova-compute restart</userinput></screen>
       <screen os="fedora;rhel;centos"><prompt>#</prompt> <userinput>service libvirtd start</userinput>
 <prompt>#</prompt> <userinput>service messagebus start</userinput>
@@ -233,10 +238,6 @@ virt_type = qemu</programlisting>
 <prompt>#</prompt> <userinput>chkconfig libvirtd on</userinput>
 <prompt>#</prompt> <userinput>service openstack-nova-compute start</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-nova-compute on</userinput></screen>
-    </step>
-    <step os="ubuntu">
-      <para>Remove the SQLite database created by the packages:</para>
-      <screen><prompt>#</prompt> <userinput>rm /var/lib/nova/nova.sqlite</userinput></screen>
     </step>
   </procedure>
 </section>
