@@ -69,47 +69,40 @@ connection = mysql://glance:GLANCE_DBPASS@<replaceable>controller</replaceable>/
 
 
     <step os="fedora;rhel;centos">
-      <para>Set these configuration keys to configure the Image Service to use
-        the Qpid message broker:</para>
+      <para>Configure the Image Service to use the message broker:</para>
       <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf DEFAULT \
-  rpc_backend glance.openstack.common.rpc.impl_qpid</userinput>
+  rpc_backend qpid</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf DEFAULT \
-  qpid_hostname <replaceable>controller</replaceable></userinput></screen>
-      <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-registry.conf DEFAULT \
-  rpc_backend glance.openstack.common.rpc.impl_qpid</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-registry.conf DEFAULT \
   qpid_hostname <replaceable>controller</replaceable></userinput></screen>
     </step>
     <step os="ubuntu">
-      <para>Configure the Image service to use the RabbitMQ message broker by
-        setting these configuration keys in the <literal>[DEFAULT]</literal>
-        configuration group of the <filename>/etc/glance/glance-api.conf</filename>
-        and <filename>/etc/glance/glance-registry.conf</filename>
-        files:</para>
-      <para>Replace <replaceable>RABBIT_PASS</replaceable> with the password
-        you chose for the <literal>guest</literal> account in
-        <application>RabbitMQ</application>.</para>
-      <programlisting language="ini">rpc_backend = glance.rpc.impl_kombu
+      <para>Configure the Image Service to use the message broker:</para>
+      <substeps>
+        <step>
+          <para>Edit the <filename>/etc/glance/glance-api.conf</filename>
+            file and add the following keys to the
+            <literal>[DEFAULT]</literal> section:</para>
+          <para>Replace <replaceable>RABBIT_PASS</replaceable> with the
+            password you chose for the <literal>guest</literal> account in
+            <application>RabbitMQ</application>.</para>
+          <programlisting language="ini">[DEFAULT]
+...
+rpc_backend = rabbit
 rabbit_host = <replaceable>controller</replaceable>
 rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
+        </step>
+      </substeps>
     </step>
     <step os="opensuse;sles">
-      <para>Set these configuration keys to configure the Identity service to use
-        the RabbitMQ message broker:</para>
+      <para>Configure the Image Service to use the message broker:</para>
       <para>Replace <replaceable>RABBIT_PASS</replaceable> with the password
         you chose for the <literal>guest</literal> account in
         <application>RabbitMQ</application>.</para>
       <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf DEFAULT \
-  rpc_backend glance.rpc.impl_kombu</userinput>
+  rpc_backend rabbit</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf DEFAULT \
   rabbit_host <replaceable>controller</replaceable></userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf DEFAULT \
-  rabbit_password <replaceable>RABBIT_PASS</replaceable></userinput></screen>
-      <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-registry.conf DEFAULT \
-  rpc_backend glance.rpc.impl_kombu</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-registry.conf DEFAULT \
-  rabbit_host <replaceable>controller</replaceable></userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-registry.conf DEFAULT \
   rabbit_password <replaceable>RABBIT_PASS</replaceable></userinput></screen>
     </step>
 
