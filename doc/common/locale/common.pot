@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-04-06 06:26+0000\n"
+"POT-Creation-Date: 2014-04-07 06:27+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -744,15 +744,11 @@ msgid "The proxy initiates the connection to VNC server and continues to proxy u
 msgstr ""
 
 #: ./doc/common/section_compute-configure-vnc.xml:43(para)
-msgid "The proxy also tunnels the VNC protocol over WebSockets so that the noVNC client can talk VNC."
-msgstr ""
-
-#: ./doc/common/section_compute-configure-vnc.xml:45(para)
-msgid "In general, the VNC proxy:"
+msgid "The proxy also tunnels the VNC protocol over WebSockets so that the <systemitem>noVNC</systemitem> client can talk to VNC servers. In general, the VNC proxy:"
 msgstr ""
 
 #: ./doc/common/section_compute-configure-vnc.xml:48(para)
-msgid "Bridges between the public network where the clients live and the private network where vncservers live."
+msgid "Bridges between the public network where the clients live and the private network where VNC servers live."
 msgstr ""
 
 #: ./doc/common/section_compute-configure-vnc.xml:52(para)
@@ -808,111 +804,107 @@ msgid "VNC configuration options"
 msgstr ""
 
 #: ./doc/common/section_compute-configure-vnc.xml:121(para)
-msgid "To customize the VNC console, use the configuration option settings documented in <xref linkend=\"config_table_nova_vnc\"/>."
+msgid "To customize the VNC console, use the following configuration options:"
 msgstr ""
 
 #: ./doc/common/section_compute-configure-vnc.xml:124(para)
 msgid "To support <link href=\"http://docs.openstack.org/trunk/config-reference/content/configuring-openstack-compute-basics.html#section_configuring-compute-migrations\">live migration</link>, you cannot specify a specific IP address for <literal>vncserver_listen</literal>, because that IP address does not exist on the destination host."
 msgstr ""
 
-#: ./doc/common/section_compute-configure-vnc.xml:131(para)
-msgid "The <literal>vncserver_proxyclient_address</literal> defaults to <literal>127.0.0.1</literal>, which is the address of the compute host that nova instructs proxies to use when connecting to instance servers."
-msgstr ""
-
-#: ./doc/common/section_compute-configure-vnc.xml:135(para)
-msgid "For all-in-one XenServer domU deployments, set this to 169.254.0.1."
-msgstr ""
-
-#: ./doc/common/section_compute-configure-vnc.xml:137(para)
-msgid "For multi-host XenServer domU deployments, set to a dom0 management IP on the same network as the proxies."
+#: ./doc/common/section_compute-configure-vnc.xml:134(para)
+msgid "The <literal>vncserver_proxyclient_address</literal> defaults to <literal>127.0.0.1</literal>, which is the address of the compute host that Compute instructs proxies to use when connecting to instance servers."
 msgstr ""
 
 #: ./doc/common/section_compute-configure-vnc.xml:139(para)
+msgid "For all-in-one XenServer domU deployments, set this to 169.254.0.1."
+msgstr ""
+
+#: ./doc/common/section_compute-configure-vnc.xml:140(para)
+msgid "For multi-host XenServer domU deployments, set to a dom0 management IP on the same network as the proxies."
+msgstr ""
+
+#: ./doc/common/section_compute-configure-vnc.xml:142(para)
 msgid "For multi-host libvirt deployments, set to a host management IP on the same network as the proxies."
 msgstr ""
 
-#: ./doc/common/section_compute-configure-vnc.xml:145(title)
+#: ./doc/common/section_compute-configure-vnc.xml:150(title)
 msgid "nova-novncproxy (noVNC)"
 msgstr ""
 
-#: ./doc/common/section_compute-configure-vnc.xml:147(para)
-msgid "You must install the noVNC package, which contains the <systemitem class=\"service\">nova-novncproxy</systemitem> service."
-msgstr ""
-
-#: ./doc/common/section_compute-configure-vnc.xml:150(para)
-msgid "As root, run the following command:"
-msgstr ""
-
 #: ./doc/common/section_compute-configure-vnc.xml:152(para)
+msgid "You must install the <package>noVNC</package> package, which contains the <systemitem class=\"service\">nova-novncproxy</systemitem> service. As root, run the following command:"
+msgstr ""
+
+#: ./doc/common/section_compute-configure-vnc.xml:156(para)
 msgid "The service starts automatically on installation."
 msgstr ""
 
-#: ./doc/common/section_compute-configure-vnc.xml:153(para)
-msgid "To restart it, run the following command:"
+#: ./doc/common/section_compute-configure-vnc.xml:157(para)
+msgid "To restart the service, run:"
 msgstr ""
 
-#: ./doc/common/section_compute-configure-vnc.xml:155(para)
+#: ./doc/common/section_compute-configure-vnc.xml:159(para)
 msgid "The configuration option parameter should point to your <filename>nova.conf</filename> file, which includes the message queue server address and credentials."
 msgstr ""
 
-#: ./doc/common/section_compute-configure-vnc.xml:158(para)
+#: ./doc/common/section_compute-configure-vnc.xml:162(para)
 msgid "By default, <systemitem class=\"service\">nova-novncproxy</systemitem> binds on <literal>0.0.0.0:6080</literal>."
 msgstr ""
 
-#: ./doc/common/section_compute-configure-vnc.xml:161(para)
-msgid "To connect the service to your nova deployment, add the following configuration options to your <filename>nova.conf</filename> file:"
-msgstr ""
-
-#: ./doc/common/section_compute-configure-vnc.xml:166(para)
-msgid "<literal>vncserver_listen</literal>=<replaceable>0.0.0.0</replaceable>"
+#: ./doc/common/section_compute-configure-vnc.xml:165(para)
+msgid "To connect the service to your Compute deployment, add the following configuration options to your <filename>nova.conf</filename> file:"
 msgstr ""
 
 #: ./doc/common/section_compute-configure-vnc.xml:169(para)
+msgid "<literal>vncserver_listen</literal>=<replaceable>0.0.0.0</replaceable>"
+msgstr ""
+
+#: ./doc/common/section_compute-configure-vnc.xml:172(para)
 msgid "Specifies the address on which the VNC service should bind. Make sure it is assigned one of the compute node interfaces. This address is the one used by your domain file."
 msgstr ""
 
-#: ./doc/common/section_compute-configure-vnc.xml:175(para)
+#: ./doc/common/section_compute-configure-vnc.xml:178(para)
 msgid "To use live migration, use the <replaceable>0.0.0.0</replaceable> address."
 msgstr ""
 
-#: ./doc/common/section_compute-configure-vnc.xml:180(para)
+#: ./doc/common/section_compute-configure-vnc.xml:183(para)
 msgid "<literal>vncserver_ proxyclient_ address </literal>=<replaceable>127.0.0.1</replaceable>"
 msgstr ""
 
-#: ./doc/common/section_compute-configure-vnc.xml:184(para)
-msgid "The address of the compute host that nova instructs proxies to use when connecting to instance <literal>vncservers</literal>."
+#: ./doc/common/section_compute-configure-vnc.xml:187(para)
+msgid "The address of the compute host that Compute instructs proxies to use when connecting to instance <literal>vncservers</literal>."
 msgstr ""
 
-#: ./doc/common/section_compute-configure-vnc.xml:192(title)
+#: ./doc/common/section_compute-configure-vnc.xml:194(title)
 msgid "Frequently asked questions about VNC access to virtual machines"
 msgstr ""
 
-#: ./doc/common/section_compute-configure-vnc.xml:198(literal)
+#: ./doc/common/section_compute-configure-vnc.xml:200(literal)
 msgid "nova-xvpvncproxy"
 msgstr ""
 
-#: ./doc/common/section_compute-configure-vnc.xml:199(systemitem)
+#: ./doc/common/section_compute-configure-vnc.xml:201(systemitem)
 msgid "nova-novncproxy"
 msgstr ""
 
-#: ./doc/common/section_compute-configure-vnc.xml:197(emphasis)
+#: ./doc/common/section_compute-configure-vnc.xml:199(emphasis)
 msgid "Q: What is the difference between <placeholder-1/> and <placeholder-2/>?"
 msgstr ""
 
-#: ./doc/common/section_compute-configure-vnc.xml:201(para)
-msgid "A: <literal>nova-xvpvncproxy</literal>, which ships with nova, is a proxy that supports a simple Java client. <systemitem class=\"service\">nova-novncproxy</systemitem> uses noVNC to provide VNC support through a web browser."
+#: ./doc/common/section_compute-configure-vnc.xml:203(para)
+msgid "A: <literal>nova-xvpvncproxy</literal>, which ships with OpenStack Compute, is a proxy that supports a simple Java client. <systemitem class=\"service\">nova-novncproxy</systemitem> uses noVNC to provide VNC support through a web browser."
 msgstr ""
 
-#: ./doc/common/section_compute-configure-vnc.xml:208(emphasis)
-msgid "Q: I want VNC support in the Dashboard. What services do I need?"
+#: ./doc/common/section_compute-configure-vnc.xml:209(emphasis)
+msgid "Q: I want VNC support in the OpenStack dashboard. What services do I need?"
 msgstr ""
 
-#: ./doc/common/section_compute-configure-vnc.xml:210(para)
+#: ./doc/common/section_compute-configure-vnc.xml:211(para)
 msgid "A: You need <systemitem class=\"service\">nova-novncproxy</systemitem>, <systemitem class=\"service\">nova-consoleauth</systemitem>, and correctly configured compute hosts."
 msgstr ""
 
-#: ./doc/common/section_compute-configure-vnc.xml:216(emphasis)
-msgid "Q: When I use <placeholder-1/> or click on the VNC tab of the Dashboard, it hangs. Why?"
+#: ./doc/common/section_compute-configure-vnc.xml:217(emphasis)
+msgid "Q: When I use <placeholder-1/> or click on the VNC tab of the OpenStack dashboard, it hangs. Why?"
 msgstr ""
 
 #: ./doc/common/section_compute-configure-vnc.xml:219(para)
@@ -11984,7 +11976,7 @@ msgid "VNC must be explicitly disabled to get access to the SPICE console. Set t
 msgstr ""
 
 #: ./doc/common/section_compute-configure-spice.xml:22(para)
-msgid "<xref linkend=\"config_table_nova_spice\"/> documents the options to configure SPICE as the console for OpenStack Compute."
+msgid "Use the following options to configure SPICE as the console for OpenStack Compute:"
 msgstr ""
 
 #: ./doc/common/section_dashboard-configure.xml:6(title)
@@ -17864,7 +17856,7 @@ msgstr ""
 msgid "rabbit_ha_queues = False"
 msgstr ""
 
-#: ./doc/common/tables/nova-rpc_all.xml:103(td) ./doc/common/tables/cinder-rpc.xml:135(td) ./doc/common/tables/glance-rabbitmq.xml:51(td) ./doc/common/tables/ceilometer-rabbitmq.xml:43(td) ./doc/common/tables/nova-rabbitmq.xml:23(td)
+#: ./doc/common/tables/nova-rpc_all.xml:103(td) ./doc/common/tables/cinder-rpc.xml:135(td) ./doc/common/tables/glance-rabbitmq.xml:51(td) ./doc/common/tables/neutron-rabbitmq.xml:23(td) ./doc/common/tables/ceilometer-rabbitmq.xml:43(td) ./doc/common/tables/nova-rabbitmq.xml:23(td)
 msgid "(BoolOpt) Use HA queues in RabbitMQ (x-ha-policy: all). If you change this option, you must wipe the RabbitMQ database."
 msgstr ""
 
@@ -18453,7 +18445,7 @@ msgid "auto_sync_on_failure = True"
 msgstr ""
 
 #: ./doc/common/tables/neutron-ml2_bigswitch.xml:86(td) ./doc/common/tables/neutron-bigswitch.xml:86(td)
-msgid "(BoolOpt) If neutron fails to create a resource because the backend controller doesn't know of a dependency, automatically trigger a full data synchronization to the controller."
+msgid "(BoolOpt) If neutron fails to create a resource because the backend controller doesn't know of a dependency, the plugin automatically triggers a full data synchronization to the controller."
 msgstr ""
 
 #: ./doc/common/tables/neutron-ml2_bigswitch.xml:89(td) ./doc/common/tables/neutron-bigswitch.xml:89(td)
@@ -18493,7 +18485,7 @@ msgid "server_auth = None"
 msgstr ""
 
 #: ./doc/common/tables/neutron-ml2_bigswitch.xml:106(td) ./doc/common/tables/neutron-bigswitch.xml:106(td)
-msgid "(StrOpt) The username and password for authenticating against the BigSwitch or Floodlight controller."
+msgid "(StrOpt) The username and password for authenticating against the Big Switch or Floodlight controller."
 msgstr ""
 
 #: ./doc/common/tables/neutron-ml2_bigswitch.xml:109(td) ./doc/common/tables/neutron-bigswitch.xml:109(td)
@@ -18501,7 +18493,7 @@ msgid "server_ssl = True"
 msgstr ""
 
 #: ./doc/common/tables/neutron-ml2_bigswitch.xml:110(td) ./doc/common/tables/neutron-bigswitch.xml:110(td)
-msgid "(BoolOpt) If True, Use SSL when connecting to the BigSwitch or Floodlight controller."
+msgid "(BoolOpt) If True, Use SSL when connecting to the Big Switch or Floodlight controller."
 msgstr ""
 
 #: ./doc/common/tables/neutron-ml2_bigswitch.xml:113(td) ./doc/common/tables/neutron-bigswitch.xml:113(td)
@@ -18517,7 +18509,7 @@ msgid "servers = localhost:8800"
 msgstr ""
 
 #: ./doc/common/tables/neutron-ml2_bigswitch.xml:118(td) ./doc/common/tables/neutron-bigswitch.xml:118(td)
-msgid "(ListOpt) A comma separated list of BigSwitch or Floodlight servers and port numbers. The plugin proxies the requests to the BigSwitch/Floodlight server, which performs the networking configuration. Only oneserver is needed per deployment, but you may wish todeploy multiple servers to support failover."
+msgid "(ListOpt) A comma separated list of Big Switch or Floodlight servers and port numbers. The plugin proxies the requests to the Big Switch/Floodlight server, which performs the networking configuration. Only oneserver is needed per deployment, but you may wish todeploy multiple servers to support failover."
 msgstr ""
 
 #: ./doc/common/tables/neutron-ml2_bigswitch.xml:121(td) ./doc/common/tables/neutron-bigswitch.xml:121(td)
@@ -19056,11 +19048,11 @@ msgstr ""
 msgid "(StrOpt) DEPRECATED. A logging.Formatter log message format string which may use any of the available logging.LogRecord attributes. This option is deprecated. Please use logging_context_format_string and logging_default_format_string instead."
 msgstr ""
 
-#: ./doc/common/tables/trove-logging.xml:54(td) ./doc/common/tables/glance-logging.xml:62(td) ./doc/common/tables/ceilometer-logging.xml:62(td) ./doc/common/tables/neutron-logging.xml:62(td) ./doc/common/tables/heat-logging.xml:54(td) ./doc/common/tables/cinder-common.xml:94(td)
+#: ./doc/common/tables/trove-logging.xml:54(td) ./doc/common/tables/glance-logging.xml:62(td) ./doc/common/tables/ceilometer-logging.xml:62(td) ./doc/common/tables/neutron-logging.xml:62(td) ./doc/common/tables/heat-logging.xml:54(td) ./doc/common/tables/nova-logging.xml:66(td) ./doc/common/tables/cinder-common.xml:94(td)
 msgid "logging_context_format_string = %(asctime)s.%(msecs)03d %(process)d %(levelname)s %(name)s [%(request_id)s %(user_identity)s] %(instance)s%(message)s"
 msgstr ""
 
-#: ./doc/common/tables/trove-logging.xml:55(td) ./doc/common/tables/neutron-logging.xml:63(td) ./doc/common/tables/heat-logging.xml:55(td) ./doc/common/tables/nova-logging.xml:67(td)
+#: ./doc/common/tables/trove-logging.xml:55(td) ./doc/common/tables/neutron-logging.xml:63(td) ./doc/common/tables/heat-logging.xml:55(td)
 msgid "(StrOpt) format string to use for log messages with context"
 msgstr ""
 
@@ -19068,7 +19060,7 @@ msgstr ""
 msgid "logging_debug_format_suffix = %(funcName)s %(pathname)s:%(lineno)d"
 msgstr ""
 
-#: ./doc/common/tables/trove-logging.xml:59(td) ./doc/common/tables/neutron-logging.xml:67(td) ./doc/common/tables/heat-logging.xml:59(td) ./doc/common/tables/nova-logging.xml:71(td)
+#: ./doc/common/tables/trove-logging.xml:59(td) ./doc/common/tables/neutron-logging.xml:67(td) ./doc/common/tables/heat-logging.xml:59(td)
 msgid "(StrOpt) data to append to log format when level is DEBUG"
 msgstr ""
 
@@ -19076,7 +19068,7 @@ msgstr ""
 msgid "logging_default_format_string = %(asctime)s.%(msecs)03d %(process)d %(levelname)s %(name)s [-] %(instance)s%(message)s"
 msgstr ""
 
-#: ./doc/common/tables/trove-logging.xml:63(td) ./doc/common/tables/neutron-logging.xml:71(td) ./doc/common/tables/heat-logging.xml:63(td) ./doc/common/tables/nova-logging.xml:75(td)
+#: ./doc/common/tables/trove-logging.xml:63(td) ./doc/common/tables/neutron-logging.xml:71(td) ./doc/common/tables/heat-logging.xml:63(td)
 msgid "(StrOpt) format string to use for log messages without context"
 msgstr ""
 
@@ -19084,7 +19076,7 @@ msgstr ""
 msgid "logging_exception_prefix = %(asctime)s.%(msecs)03d %(process)d TRACE %(name)s %(instance)s"
 msgstr ""
 
-#: ./doc/common/tables/trove-logging.xml:67(td) ./doc/common/tables/neutron-logging.xml:75(td) ./doc/common/tables/heat-logging.xml:67(td) ./doc/common/tables/nova-logging.xml:79(td)
+#: ./doc/common/tables/trove-logging.xml:67(td) ./doc/common/tables/neutron-logging.xml:75(td) ./doc/common/tables/heat-logging.xml:67(td)
 msgid "(StrOpt) prefix each line of exception output with this format"
 msgstr ""
 
@@ -19096,7 +19088,7 @@ msgstr ""
 msgid "publish_errors = False"
 msgstr ""
 
-#: ./doc/common/tables/trove-logging.xml:75(td) ./doc/common/tables/heat-notification.xml:27(td) ./doc/common/tables/neutron-logging.xml:79(td) ./doc/common/tables/nova-logging.xml:83(td)
+#: ./doc/common/tables/trove-logging.xml:75(td) ./doc/common/tables/heat-notification.xml:27(td) ./doc/common/tables/neutron-logging.xml:79(td)
 msgid "(BoolOpt) publish error events"
 msgstr ""
 
@@ -19104,7 +19096,7 @@ msgstr ""
 msgid "syslog-log-facility = LOG_USER"
 msgstr ""
 
-#: ./doc/common/tables/trove-logging.xml:79(td) ./doc/common/tables/neutron-logging.xml:83(td) ./doc/common/tables/heat-logging.xml:71(td) ./doc/common/tables/nova-logging.xml:87(td)
+#: ./doc/common/tables/trove-logging.xml:79(td) ./doc/common/tables/neutron-logging.xml:83(td) ./doc/common/tables/heat-logging.xml:71(td)
 msgid "(StrOpt) syslog facility to receive log lines"
 msgstr ""
 
@@ -19516,7 +19508,7 @@ msgstr ""
 msgid "(StrOpt) Certificate file to use when starting the server securely."
 msgstr ""
 
-#: ./doc/common/tables/nova-ca.xml:73(td) ./doc/common/tables/heat-clients_nova.xml:38(td) ./doc/common/tables/heat-cfn_api.xml:49(td) ./doc/common/tables/heat-cfn_api.xml:72(td) ./doc/common/tables/heat-clients.xml:45(td) ./doc/common/tables/heat-clients_heat.xml:38(td) ./doc/common/tables/heat-clients_swift.xml:38(td) ./doc/common/tables/heat-cloudwatch_api.xml:45(td) ./doc/common/tables/heat-cloudwatch_api.xml:68(td) ./doc/common/tables/heat-clients_ceilometer.xml:38(td) ./doc/common/tables/heat-clients_trove.xml:38(td) ./doc/common/tables/heat-clients_cinder.xml:38(td) ./doc/common/tables/cinder-ssl.xml:30(td) ./doc/common/tables/heat-api.xml:115(td) ./doc/common/tables/heat-api.xml:149(td) ./doc/common/tables/neutron-ssl.xml:45(td) ./doc/common/tables/heat-clients_neutron.xml:38(td) ./doc/common/tables/trove-ssl.xml:30(td) ./doc/common/tables/glance-ssl.xml:30(td) ./doc/common/tables/heat-clients_keystone.xml:38(td) ./doc/common/tables/neutron-nec.xml:42(td) ./doc/common/tables/ceilometer-ssl.xml:30(td)
+#: ./doc/common/tables/nova-ca.xml:73(td) ./doc/common/tables/heat-clients_nova.xml:38(td) ./doc/common/tables/heat-cfn_api.xml:49(td) ./doc/common/tables/heat-cfn_api.xml:72(td) ./doc/common/tables/heat-clients.xml:45(td) ./doc/common/tables/heat-clients_heat.xml:38(td) ./doc/common/tables/heat-clients_swift.xml:38(td) ./doc/common/tables/heat-cloudwatch_api.xml:45(td) ./doc/common/tables/heat-cloudwatch_api.xml:68(td) ./doc/common/tables/heat-clients_ceilometer.xml:38(td) ./doc/common/tables/heat-clients_trove.xml:38(td) ./doc/common/tables/heat-clients_cinder.xml:38(td) ./doc/common/tables/cinder-ssl.xml:30(td) ./doc/common/tables/heat-api.xml:115(td) ./doc/common/tables/heat-api.xml:149(td) ./doc/common/tables/neutron-ssl.xml:45(td) ./doc/common/tables/heat-clients_neutron.xml:38(td) ./doc/common/tables/trove-ssl.xml:30(td) ./doc/common/tables/glance-ssl.xml:30(td) ./doc/common/tables/heat-clients_keystone.xml:38(td) ./doc/common/tables/neutron-nec.xml:46(td) ./doc/common/tables/ceilometer-ssl.xml:30(td)
 msgid "key_file = None"
 msgstr ""
 
@@ -20244,8 +20236,8 @@ msgstr ""
 msgid "(StrOpt) SSL key file (valid only if SSL enabled)"
 msgstr ""
 
-#: ./doc/common/tables/neutron-kombu.xml:35(td) ./doc/common/tables/heat-rabbitmq.xml:35(td) ./doc/common/tables/trove-amqp.xml:55(td)
-msgid "(StrOpt) SSL version to use (valid only if SSL enabled). valid values are TLSv1, SSLv23 and SSLv3. SSLv2 may be available on some distributions"
+#: ./doc/common/tables/neutron-kombu.xml:35(td) ./doc/common/tables/ceilometer-rabbitmq.xml:39(td)
+msgid "(StrOpt) If SSL is enabled, the SSL version to use. Valid values are TLSv1, SSLv23 and SSLv3. SSLv2 might be available on some distributions."
 msgstr ""
 
 #: ./doc/common/tables/trove-redis.xml:38(td) ./doc/common/tables/heat-rpc.xml:62(td) ./doc/common/tables/ceilometer-redis.xml:53(td) ./doc/common/tables/neutron-rpc.xml:77(td)
@@ -21676,7 +21668,7 @@ msgstr ""
 msgid "Description of configuration options for rabbitmq"
 msgstr ""
 
-#: ./doc/common/tables/trove-rabbitmq.xml:23(td) ./doc/common/tables/heat-rabbitmq.xml:39(td) ./doc/common/tables/neutron-rabbitmq.xml:23(td)
+#: ./doc/common/tables/trove-rabbitmq.xml:23(td) ./doc/common/tables/heat-rabbitmq.xml:39(td)
 msgid "(BoolOpt) use H/A queues in RabbitMQ (x-ha-policy: all).You need to wipe RabbitMQ database when changing this option."
 msgstr ""
 
@@ -21688,11 +21680,11 @@ msgstr ""
 msgid "(ListOpt) RabbitMQ HA cluster host:port pairs"
 msgstr ""
 
-#: ./doc/common/tables/trove-rabbitmq.xml:35(td) ./doc/common/tables/heat-rabbitmq.xml:51(td) ./doc/common/tables/neutron-rabbitmq.xml:35(td)
+#: ./doc/common/tables/trove-rabbitmq.xml:35(td) ./doc/common/tables/heat-rabbitmq.xml:51(td)
 msgid "(IntOpt) maximum retries with trying to connect to RabbitMQ (the default of 0 implies an infinite retry count)"
 msgstr ""
 
-#: ./doc/common/tables/trove-rabbitmq.xml:39(td) ./doc/common/tables/heat-rabbitmq.xml:55(td) ./doc/common/tables/neutron-rabbitmq.xml:39(td)
+#: ./doc/common/tables/trove-rabbitmq.xml:39(td) ./doc/common/tables/heat-rabbitmq.xml:55(td)
 msgid "(StrOpt) the RabbitMQ password"
 msgstr ""
 
@@ -21700,23 +21692,23 @@ msgstr ""
 msgid "(IntOpt) The RabbitMQ broker port where a single node is used"
 msgstr ""
 
-#: ./doc/common/tables/trove-rabbitmq.xml:47(td) ./doc/common/tables/heat-rabbitmq.xml:63(td) ./doc/common/tables/neutron-rabbitmq.xml:47(td)
+#: ./doc/common/tables/trove-rabbitmq.xml:47(td) ./doc/common/tables/heat-rabbitmq.xml:63(td)
 msgid "(IntOpt) how long to backoff for between retries when connecting to RabbitMQ"
 msgstr ""
 
-#: ./doc/common/tables/trove-rabbitmq.xml:51(td) ./doc/common/tables/heat-rabbitmq.xml:67(td) ./doc/common/tables/neutron-rabbitmq.xml:51(td)
+#: ./doc/common/tables/trove-rabbitmq.xml:51(td) ./doc/common/tables/heat-rabbitmq.xml:67(td)
 msgid "(IntOpt) how frequently to retry connecting with RabbitMQ"
 msgstr ""
 
-#: ./doc/common/tables/trove-rabbitmq.xml:55(td) ./doc/common/tables/heat-rabbitmq.xml:71(td) ./doc/common/tables/neutron-rabbitmq.xml:55(td)
+#: ./doc/common/tables/trove-rabbitmq.xml:55(td) ./doc/common/tables/heat-rabbitmq.xml:71(td)
 msgid "(BoolOpt) connect over SSL for RabbitMQ"
 msgstr ""
 
-#: ./doc/common/tables/trove-rabbitmq.xml:59(td) ./doc/common/tables/heat-rabbitmq.xml:75(td) ./doc/common/tables/neutron-rabbitmq.xml:59(td)
+#: ./doc/common/tables/trove-rabbitmq.xml:59(td) ./doc/common/tables/heat-rabbitmq.xml:75(td)
 msgid "(StrOpt) the RabbitMQ userid"
 msgstr ""
 
-#: ./doc/common/tables/trove-rabbitmq.xml:63(td) ./doc/common/tables/heat-rabbitmq.xml:79(td) ./doc/common/tables/neutron-rabbitmq.xml:63(td)
+#: ./doc/common/tables/trove-rabbitmq.xml:63(td) ./doc/common/tables/heat-rabbitmq.xml:79(td)
 msgid "(StrOpt) the RabbitMQ virtual host"
 msgstr ""
 
@@ -22844,8 +22836,8 @@ msgstr ""
 msgid "backdoor_port = None"
 msgstr ""
 
-#: ./doc/common/tables/nova-testing.xml:27(td)
-msgid "(StrOpt) Enable eventlet backdoor. Acceptable values are 0, &lt;port&gt; and &lt;start&gt;:&lt;end&gt;, where 0 results in listening on a random tcp port number, &lt;port&gt; results in listening on the specified port number and not enabling backdoorif it is in use and &lt;start&gt;:&lt;end&gt; results in listening on the smallest unused port number within the specified range of port numbers. The chosen port is displayed in the service's log file."
+#: ./doc/common/tables/nova-testing.xml:27(td) ./doc/common/tables/trove-debug.xml:23(td) ./doc/common/tables/cinder-api.xml:31(td) ./doc/common/tables/heat-debug.xml:23(td) ./doc/common/tables/ceilometer-common.xml:23(td) ./doc/common/tables/neutron-testing.xml:23(td)
+msgid "(StrOpt) Enable eventlet backdoor. Acceptable values are 0, &lt;port&gt;, and &lt;start&gt;:&lt;end&gt;, where 0 results in listening on a random tcp port number; &lt;port&gt; results in listening on the specified port number (and not enabling backdoor if that port is in use); and &lt;start&gt;:&lt;end&gt; results in listening on the smallest unused port number within the specified range of port numbers. The chosen port is displayed in the service's log file."
 msgstr ""
 
 #: ./doc/common/tables/nova-testing.xml:30(td)
@@ -22976,10 +22968,6 @@ msgstr ""
 msgid "Description of configuration options for debug"
 msgstr ""
 
-#: ./doc/common/tables/trove-debug.xml:23(td) ./doc/common/tables/cinder-api.xml:31(td) ./doc/common/tables/heat-debug.xml:23(td) ./doc/common/tables/ceilometer-common.xml:23(td) ./doc/common/tables/neutron-testing.xml:23(td)
-msgid "(StrOpt) Enable eventlet backdoor. Acceptable values are 0, &lt;port&gt;, and &lt;start&gt;:&lt;end&gt;, where 0 results in listening on a random tcp port number; &lt;port&gt; results in listening on the specified port number (and not enabling backdoor if that port is in use); and &lt;start&gt;:&lt;end&gt; results in listening on the smallest unused port number within the specified range of port numbers. The chosen port is displayed in the service's log file."
-msgstr ""
-
 #: ./doc/common/tables/trove-debug.xml:27(td) ./doc/common/tables/neutron-wsgi.xml:23(td) ./doc/common/tables/cinder-log.xml:23(td)
 msgid "(IntOpt) Number of backlog requests to configure the socket with"
 msgstr ""
@@ -22996,7 +22984,7 @@ msgstr ""
 msgid "fatal_deprecations = False"
 msgstr ""
 
-#: ./doc/common/tables/trove-debug.xml:39(td) ./doc/common/tables/heat-debug.xml:35(td) ./doc/common/tables/neutron-logging.xml:31(td) ./doc/common/tables/nova-logging.xml:31(td)
+#: ./doc/common/tables/trove-debug.xml:39(td) ./doc/common/tables/heat-debug.xml:35(td) ./doc/common/tables/neutron-logging.xml:31(td)
 msgid "(BoolOpt) make deprecations fatal"
 msgstr ""
 
@@ -23220,7 +23208,7 @@ msgstr ""
 msgid "(StrOpt) Password for Redis server (optional)."
 msgstr ""
 
-#: ./doc/common/tables/cinder-rpc.xml:91(td) ./doc/common/tables/glance-logging.xml:79(td) ./doc/common/tables/ceilometer-logging.xml:79(td)
+#: ./doc/common/tables/cinder-rpc.xml:91(td) ./doc/common/tables/glance-logging.xml:79(td) ./doc/common/tables/ceilometer-logging.xml:79(td) ./doc/common/tables/nova-logging.xml:83(td)
 msgid "(BoolOpt) Publish error events"
 msgstr ""
 
@@ -23804,11 +23792,11 @@ msgstr ""
 msgid "(IntOpt) Minimum number of SQL connections to keep open in a pool"
 msgstr ""
 
-#: ./doc/common/tables/nova-db.xml:88(td) ./doc/common/tables/glance-db.xml:74(td)
+#: ./doc/common/tables/nova-db.xml:88(td)
 msgid "mysql_sql_mode = None"
 msgstr ""
 
-#: ./doc/common/tables/nova-db.xml:89(td) ./doc/common/tables/glance-db.xml:75(td)
+#: ./doc/common/tables/nova-db.xml:89(td)
 msgid "(StrOpt) The SQL mode to be used for MySQL sessions (default is empty, meaning do not override any server-side SQL mode setting)"
 msgstr ""
 
@@ -23888,31 +23876,31 @@ msgstr ""
 msgid "default_log_levels = amqp=WARN, amqplib=WARN, boto=WARN, qpid=WARN, sqlalchemy=WARN, suds=INFO, iso8601=WARN, requests.packages.urllib3.connectionpool=WARN"
 msgstr ""
 
-#: ./doc/common/tables/glance-logging.xml:27(td) ./doc/common/tables/ceilometer-logging.xml:27(td) ./doc/common/tables/cinder-common.xml:35(td)
+#: ./doc/common/tables/glance-logging.xml:27(td) ./doc/common/tables/ceilometer-logging.xml:27(td) ./doc/common/tables/nova-logging.xml:27(td) ./doc/common/tables/cinder-common.xml:35(td)
 msgid "(ListOpt) List of logger=LEVEL pairs"
 msgstr ""
 
-#: ./doc/common/tables/glance-logging.xml:31(td) ./doc/common/tables/cinder-common.xml:51(td) ./doc/common/tables/ceilometer-common.xml:31(td)
+#: ./doc/common/tables/glance-logging.xml:31(td) ./doc/common/tables/nova-logging.xml:31(td) ./doc/common/tables/cinder-common.xml:51(td) ./doc/common/tables/ceilometer-common.xml:31(td)
 msgid "(BoolOpt) Make deprecations fatal"
 msgstr ""
 
-#: ./doc/common/tables/glance-logging.xml:63(td) ./doc/common/tables/ceilometer-logging.xml:63(td) ./doc/common/tables/cinder-common.xml:95(td)
+#: ./doc/common/tables/glance-logging.xml:63(td) ./doc/common/tables/ceilometer-logging.xml:63(td) ./doc/common/tables/nova-logging.xml:67(td) ./doc/common/tables/cinder-common.xml:95(td)
 msgid "(StrOpt) Format string to use for log messages with context"
 msgstr ""
 
-#: ./doc/common/tables/glance-logging.xml:67(td) ./doc/common/tables/ceilometer-logging.xml:67(td) ./doc/common/tables/cinder-common.xml:99(td)
+#: ./doc/common/tables/glance-logging.xml:67(td) ./doc/common/tables/ceilometer-logging.xml:67(td) ./doc/common/tables/nova-logging.xml:71(td) ./doc/common/tables/cinder-common.xml:99(td)
 msgid "(StrOpt) Data to append to log format when level is DEBUG"
 msgstr ""
 
-#: ./doc/common/tables/glance-logging.xml:71(td) ./doc/common/tables/ceilometer-logging.xml:71(td) ./doc/common/tables/cinder-common.xml:103(td)
+#: ./doc/common/tables/glance-logging.xml:71(td) ./doc/common/tables/ceilometer-logging.xml:71(td) ./doc/common/tables/nova-logging.xml:75(td) ./doc/common/tables/cinder-common.xml:103(td)
 msgid "(StrOpt) Format string to use for log messages without context"
 msgstr ""
 
-#: ./doc/common/tables/glance-logging.xml:75(td) ./doc/common/tables/ceilometer-logging.xml:75(td) ./doc/common/tables/cinder-common.xml:107(td)
+#: ./doc/common/tables/glance-logging.xml:75(td) ./doc/common/tables/ceilometer-logging.xml:75(td) ./doc/common/tables/nova-logging.xml:79(td) ./doc/common/tables/cinder-common.xml:107(td)
 msgid "(StrOpt) Prefix each line of exception output with this format"
 msgstr ""
 
-#: ./doc/common/tables/glance-logging.xml:83(td) ./doc/common/tables/ceilometer-logging.xml:83(td) ./doc/common/tables/cinder-common.xml:195(td)
+#: ./doc/common/tables/glance-logging.xml:83(td) ./doc/common/tables/ceilometer-logging.xml:83(td) ./doc/common/tables/nova-logging.xml:87(td) ./doc/common/tables/cinder-common.xml:195(td)
 msgid "(StrOpt) Syslog facility to receive log lines"
 msgstr ""
 
@@ -24262,6 +24250,10 @@ msgstr ""
 
 #: ./doc/common/tables/heat-clients_heat.xml:43(td)
 msgid "(StrOpt) Optional heat url in format like http://0.0.0.0:8004/v1/%(tenant_id)s."
+msgstr ""
+
+#: ./doc/common/tables/heat-rabbitmq.xml:35(td) ./doc/common/tables/trove-amqp.xml:55(td)
+msgid "(StrOpt) SSL version to use (valid only if SSL enabled). valid values are TLSv1, SSLv23 and SSLv3. SSLv2 may be available on some distributions"
 msgstr ""
 
 #: ./doc/common/tables/ceilometer-logging.xml:30(td) ./doc/common/tables/neutron-notifier.xml:22(td) ./doc/common/tables/heat-amqp.xml:34(td) ./doc/common/tables/trove-common.xml:42(td) ./doc/common/tables/nova-compute.xml:54(td)
@@ -25096,11 +25088,11 @@ msgstr ""
 msgid "default_log_levels = amqp=WARN, amqplib=WARN, boto=WARN, qpid=WARN, sqlalchemy=WARN, suds=INFO, iso8601=WARN"
 msgstr ""
 
-#: ./doc/common/tables/neutron-logging.xml:27(td) ./doc/common/tables/heat-logging.xml:23(td) ./doc/common/tables/nova-logging.xml:27(td) ./doc/common/tables/trove-common.xml:35(td)
+#: ./doc/common/tables/neutron-logging.xml:27(td) ./doc/common/tables/heat-logging.xml:23(td) ./doc/common/tables/trove-common.xml:35(td)
 msgid "(ListOpt) list of logger=LEVEL pairs"
 msgstr ""
 
-#: ./doc/common/tables/neutron-logging.xml:86(td) ./doc/common/tables/neutron-nec.xml:54(td)
+#: ./doc/common/tables/neutron-logging.xml:86(td) ./doc/common/tables/neutron-nec.xml:58(td)
 msgid "use_ssl = False"
 msgstr ""
 
@@ -25565,7 +25557,7 @@ msgid "vif_driver = nova.virt.libvirt.vif.LibvirtGenericVIFDriver"
 msgstr ""
 
 #: ./doc/common/tables/nova-libvirt.xml:78(td)
-msgid "(StrOpt) The libvirt VIF driver to configure the VIFs."
+msgid "(StrOpt) DEPRECATED. The libvirt VIF driver to configure the VIFs.This option is deprecated and will be removed in the Juno release."
 msgstr ""
 
 #: ./doc/common/tables/nova-libvirt.xml:81(td)
@@ -27301,7 +27293,7 @@ msgid "(StrOpt) Optional VIM Service WSDL Location e.g http://&lt;server&gt;/vim
 msgstr ""
 
 #: ./doc/common/tables/nova-logging.xml:26(td)
-msgid "default_log_levels = amqp=WARN, amqplib=WARN, boto=WARN, qpid=WARN, sqlalchemy=WARN, suds=INFO, oslo.messaging=INFO, iso8601=WARN"
+msgid "default_log_levels = amqp=WARN, amqplib=WARN, boto=WARN, qpid=WARN, sqlalchemy=WARN, suds=INFO, oslo.messaging=INFO, iso8601=WARN, requests.packages.urllib3.connectionpool=WARN"
 msgstr ""
 
 #: ./doc/common/tables/nova-logging.xml:34(td) ./doc/common/tables/cinder-common.xml:54(td)
@@ -27310,10 +27302,6 @@ msgstr ""
 
 #: ./doc/common/tables/nova-logging.xml:35(td)
 msgid "(BoolOpt) Make exception message format errors fatal"
-msgstr ""
-
-#: ./doc/common/tables/nova-logging.xml:66(td)
-msgid "logging_context_format_string = %(asctime)s.%(msecs)03d %(process)d %(levelname)s %(name)s [%(request_id)s %(user)s %(tenant)s] %(instance)s%(message)s"
 msgstr ""
 
 #: ./doc/common/tables/nova-xen.xml:8(caption)
@@ -29720,7 +29708,7 @@ msgstr ""
 msgid "Description of configuration options for fwaas"
 msgstr ""
 
-#: ./doc/common/tables/neutron-fwaas.xml:19(th) ./doc/common/tables/neutron-nec.xml:69(th)
+#: ./doc/common/tables/neutron-fwaas.xml:19(th) ./doc/common/tables/neutron-nec.xml:73(th)
 msgid "[fwaas]"
 msgstr ""
 
@@ -31640,6 +31628,34 @@ msgstr ""
 msgid "(StrOpt) configuration file for HDS cinder plugin for HUS"
 msgstr ""
 
+#: ./doc/common/tables/neutron-rabbitmq.xml:35(td) ./doc/common/tables/ceilometer-rabbitmq.xml:55(td)
+msgid "(IntOpt) Maximum number of RabbitMQ connection retries. Default is 0 (infinite retry count)"
+msgstr ""
+
+#: ./doc/common/tables/neutron-rabbitmq.xml:39(td) ./doc/common/tables/ceilometer-rabbitmq.xml:59(td)
+msgid "(StrOpt) The RabbitMQ password"
+msgstr ""
+
+#: ./doc/common/tables/neutron-rabbitmq.xml:47(td) ./doc/common/tables/ceilometer-rabbitmq.xml:67(td)
+msgid "(IntOpt) How long to backoff for between retries when connecting to RabbitMQ"
+msgstr ""
+
+#: ./doc/common/tables/neutron-rabbitmq.xml:51(td) ./doc/common/tables/ceilometer-rabbitmq.xml:71(td)
+msgid "(IntOpt) How frequently to retry connecting with RabbitMQ"
+msgstr ""
+
+#: ./doc/common/tables/neutron-rabbitmq.xml:55(td) ./doc/common/tables/ceilometer-rabbitmq.xml:75(td)
+msgid "(BoolOpt) Connect over SSL for RabbitMQ"
+msgstr ""
+
+#: ./doc/common/tables/neutron-rabbitmq.xml:59(td) ./doc/common/tables/ceilometer-rabbitmq.xml:79(td)
+msgid "(StrOpt) The RabbitMQ userid"
+msgstr ""
+
+#: ./doc/common/tables/neutron-rabbitmq.xml:63(td) ./doc/common/tables/ceilometer-rabbitmq.xml:83(td)
+msgid "(StrOpt) The RabbitMQ virtual host"
+msgstr ""
+
 #: ./doc/common/tables/swift-proxy-server-filter-container-quotas.xml:7(literal)
 msgid "[filter:container-quotas]"
 msgstr ""
@@ -32274,6 +32290,14 @@ msgstr ""
 
 #: ./doc/common/tables/nova-apiv3.xml:31(td)
 msgid "(ListOpt) If the list is not empty then a v3 API extension will only be loaded if it exists in this list. Specify the extension aliases here."
+msgstr ""
+
+#: ./doc/common/tables/glance-db.xml:74(td)
+msgid "mysql_sql_mode = TRADITIONAL"
+msgstr ""
+
+#: ./doc/common/tables/glance-db.xml:75(td)
+msgid "(StrOpt) The SQL mode to be used for MySQL sessions. This option, including the default, overrides any server-set SQL mode. To use whatever SQL mode is set by the server configuration, set this to no value. Example: mysql_sql_mode="
 msgstr ""
 
 #: ./doc/common/tables/glance-db.xml:86(td)
@@ -33512,88 +33536,64 @@ msgstr ""
 msgid "(StrOpt) Host to connect to"
 msgstr ""
 
-#: ./doc/common/tables/neutron-nec.xml:43(td)
-msgid "(StrOpt) Key file"
+#: ./doc/common/tables/neutron-nec.xml:42(td)
+msgid "insecure_ssl = False"
 msgstr ""
 
-#: ./doc/common/tables/neutron-nec.xml:46(td)
-msgid "path_prefix ="
+#: ./doc/common/tables/neutron-nec.xml:43(td)
+msgid "(BoolOpt) Disable SSL certificate verification"
 msgstr ""
 
 #: ./doc/common/tables/neutron-nec.xml:47(td)
-msgid "(StrOpt) Base URL of OFC REST API. It is prepended to each API request."
+msgid "(StrOpt) Key file"
 msgstr ""
 
 #: ./doc/common/tables/neutron-nec.xml:50(td)
-msgid "port = 8888"
+msgid "path_prefix ="
 msgstr ""
 
 #: ./doc/common/tables/neutron-nec.xml:51(td)
-msgid "(StrOpt) Port to connect to"
+msgid "(StrOpt) Base URL of OFC REST API. It is prepended to each API request."
+msgstr ""
+
+#: ./doc/common/tables/neutron-nec.xml:54(td)
+msgid "port = 8888"
 msgstr ""
 
 #: ./doc/common/tables/neutron-nec.xml:55(td)
+msgid "(StrOpt) Port to connect to"
+msgstr ""
+
+#: ./doc/common/tables/neutron-nec.xml:59(td)
 msgid "(BoolOpt) Use SSL to connect"
 msgstr ""
 
-#: ./doc/common/tables/neutron-nec.xml:58(th)
+#: ./doc/common/tables/neutron-nec.xml:62(th)
 msgid "[PROVIDER]"
 msgstr ""
 
-#: ./doc/common/tables/neutron-nec.xml:61(td)
+#: ./doc/common/tables/neutron-nec.xml:65(td)
 msgid "default_router_provider = l3-agent"
 msgstr ""
 
-#: ./doc/common/tables/neutron-nec.xml:62(td)
+#: ./doc/common/tables/neutron-nec.xml:66(td)
 msgid "(StrOpt) Default router provider to use."
 msgstr ""
 
-#: ./doc/common/tables/neutron-nec.xml:65(td)
+#: ./doc/common/tables/neutron-nec.xml:69(td)
 msgid "router_providers = l3-agent, openflow"
 msgstr ""
 
-#: ./doc/common/tables/neutron-nec.xml:66(td)
+#: ./doc/common/tables/neutron-nec.xml:70(td)
 msgid "(ListOpt) List of enabled router providers."
 msgstr ""
 
-#: ./doc/common/tables/neutron-nec.xml:72(td)
+#: ./doc/common/tables/neutron-nec.xml:76(td)
 msgid "driver ="
 msgstr ""
 
-#: ./doc/common/tables/neutron-nec.xml:73(td)
+#: ./doc/common/tables/neutron-nec.xml:77(td)
 msgid "(StrOpt) Name of the FWaaS Driver"
-msgstr ""
-
-#: ./doc/common/tables/ceilometer-rabbitmq.xml:39(td)
-msgid "(StrOpt) If SSL is enabled, the SSL version to use. Valid values are TLSv1, SSLv23 and SSLv3. SSLv2 might be available on some distributions."
-msgstr ""
-
-#: ./doc/common/tables/ceilometer-rabbitmq.xml:55(td)
-msgid "(IntOpt) Maximum number of RabbitMQ connection retries. Default is 0 (infinite retry count)"
-msgstr ""
-
-#: ./doc/common/tables/ceilometer-rabbitmq.xml:59(td)
-msgid "(StrOpt) The RabbitMQ password"
-msgstr ""
-
-#: ./doc/common/tables/ceilometer-rabbitmq.xml:67(td)
-msgid "(IntOpt) How long to backoff for between retries when connecting to RabbitMQ"
-msgstr ""
-
-#: ./doc/common/tables/ceilometer-rabbitmq.xml:71(td)
-msgid "(IntOpt) How frequently to retry connecting with RabbitMQ"
-msgstr ""
-
-#: ./doc/common/tables/ceilometer-rabbitmq.xml:75(td)
-msgid "(BoolOpt) Connect over SSL for RabbitMQ"
-msgstr ""
-
-#: ./doc/common/tables/ceilometer-rabbitmq.xml:79(td)
-msgid "(StrOpt) The RabbitMQ userid"
-msgstr ""
-
-#: ./doc/common/tables/ceilometer-rabbitmq.xml:83(td)
-msgid "(StrOpt) The RabbitMQ virtual host"
 msgstr ""
 
 #: ./doc/common/tables/swift-object-expirer-object-expirer.xml:7(literal)
