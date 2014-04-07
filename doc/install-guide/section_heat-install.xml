@@ -37,20 +37,20 @@
           <replaceable>HEAT_DBPASS</replaceable> with the password for
         the database user:</para>
       <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/heat/heat.conf \
-  database connection mysql://heat:<replaceable>HEAT_DBPASS</replaceable>@controller/heat</userinput></screen>
+  database connection mysql://heat:<replaceable>HEAT_DBPASS</replaceable>@<replaceable>controller</replaceable>/heat</userinput></screen>
       <para os="ubuntu;debian">Edit
-          <filename>/etc/heat/heat.conf</filename> and change the
-          <literal>[DEFAULT]</literal> section.</para>
+          <filename>/etc/heat/heat.conf</filename> and modify the
+          <literal>[database]</literal> section:</para>
       <programlisting os="ubuntu;debian" language="ini">[database]
 # The SQLAlchemy connection string used to connect to the database
-connection = mysql://heat:<replaceable>HEAT_DBPASS</replaceable>@controller/heat
-...</programlisting>
+connection = mysql://heat:<replaceable>HEAT_DBPASS</replaceable>@<replaceable>controller</replaceable>/heat</programlisting>
     </step>
     <step os="ubuntu">
       <para>By default, the Ubuntu packages create an SQLite database.
         Delete the <filename>heat.sqlite</filename> file that was created in
         the <filename>/var/lib/heat/</filename> directory so that it
-        does not get used by mistake.</para>
+        does not get used by mistake:</para>
+      <screen><prompt>#</prompt> <userinput>rm /var/lib/heat/heat.sqlite</userinput></screen>
     </step>
     <step>
       <para>Use the password that you set previously to log in as <literal>root</literal> and
@@ -89,10 +89,10 @@ log_dir=/var/log/heat</programlisting>
         message broker.</para>
       <para os="ubuntu">Edit <filename>/etc/heat/heat.conf</filename>
         and modify the <literal>[DEFAULT]</literal> section:</para>
-      <programlisting os="ubuntu" language="ini">rabbit_host = controller
+      <programlisting os="ubuntu" language="ini">rabbit_host = <replaceable>controller</replaceable>
 rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
       <para os="opensuse;sles">Run the following commands:</para>
-      <screen os="opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/heat/heat.conf DEFAULT rabbit_host controller</userinput>
+      <screen os="opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/heat/heat.conf DEFAULT rabbit_host <replaceable>controller</replaceable></userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/heat/heat.conf DEFAULT rabbit_password <replaceable>RABBIT_PASS</replaceable></userinput></screen>
     </step>
     <step>
@@ -110,21 +110,22 @@ rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
           <literal>[ec2authtoken]</literal> sections to add
         credentials to the Orchestration Service:</para>
       <programlisting language="ini">[keystone_authtoken]
-auth_host = controller
+auth_host = <replaceable>controller</replaceable>
 auth_port = 35357
 auth_protocol = http
 auth_uri = http://<replaceable>controller</replaceable>:5000/v2.0
 admin_tenant_name = service
 admin_user = heat
 admin_password = <replaceable>HEAT_PASS</replaceable>
+
 [ec2authtoken]
 auth_uri = http://<replaceable>controller</replaceable>:5000/v2.0</programlisting>
     </step>
     <step>
       <para>Register the Heat and CloudFormation APIs with the
         Identity Service so that other OpenStack services can locate
-        these APIs. Register the service and specify the
-        endpoint:</para>
+        these APIs. Register the services and specify the
+        endpoints:</para>
       <screen><prompt>$</prompt> <userinput>keystone service-create --name=heat --type=orchestration \
   --description="Orchestration"</userinput>
 <prompt>$</prompt> <userinput>keystone endpoint-create \
