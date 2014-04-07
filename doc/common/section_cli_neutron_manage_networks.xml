@@ -104,23 +104,42 @@ export OS_AUTH_URL=http://localhost:5000/v2.0</programlisting>
 | network_id       | 2d627131-c841-4e3a-ace6-f2dd75773b6d             |
 | tenant_id        | 3671f46ec35e4bbca6ef92ab7975e463                 |
 +------------------+--------------------------------------------------+</computeroutput></screen>
-                <para>In the previous command, <literal>net1</literal>
-                    is the network name,
-                        <literal>192.168.2.0/24</literal> is the
-                    subnet's CIDR. They are positional arguments.
-                        <literal>--name subnet1</literal> is an
-                    unknown option, which specifies the subnet's
-                    name.</para>
+                <para>The <command>subnet-create</command> command
+                    has the following positional and optional
+                    parameters:</para>
+                <itemizedlist>
+                    <listitem>
+                        <para>The name or ID of the network to which
+                            the subnet belongs.</para>
+                        <para>In this example, <literal>net1</literal>
+                            is a positional argument that specifies
+                            the network name.</para>
+                    </listitem>
+                    <listitem>
+                        <para>The CIDR of the subnet.</para>
+                        <para>In this example,
+                                <literal>192.168.2.0/24</literal> is a
+                            positional argument that specifies the
+                            CIDR.</para>
+                    </listitem>
+                    <listitem>
+                        <para>The subnet name, which is
+                            optional.</para>
+                        <para>In this example, <literal>--name
+                                subnet1</literal> specifies the name
+                            of the subnet.</para>
+                    </listitem>
+                </itemizedlist>
             </step>
         </procedure>
     </section>
     <section xml:id="cli_routers">
-      <title>Create routers</title>
-      <procedure>
-        <step>
-          <para>Create a new router:</para>
-<screen><prompt>$</prompt> <userinput>neutron router-create <replaceable>router1</replaceable></userinput></screen>
-<screen><computeroutput>Created a new router:
+        <title>Create routers</title>
+        <procedure>
+            <step>
+                <para>Create a router:</para>
+                <screen><prompt>$</prompt> <userinput>neutron router-create <replaceable>router1</replaceable></userinput></screen>
+                <screen><computeroutput>Created a new router:
 +-----------------------+--------------------------------------+
 | Field                 | Value                                |
 +-----------------------+--------------------------------------+
