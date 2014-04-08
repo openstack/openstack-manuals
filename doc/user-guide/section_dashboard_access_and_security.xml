@@ -11,39 +11,62 @@
     xml:id="Launching_Instances_using_Dashboard">
     <title>Configure access and security for instances</title>
     <?dbhtml stop-chunking?>
-    <para>Before you launch a virtual machine, you can add security
-        group rules to enable users to ping and SSH to the instances.
-        To do so, you either add rules to the default security group
-        or add a security group with rules.</para>
-    <para>Keypairs are SSH credentials that are injected into images
-        when they are launched. For this to work, the image must
-        contain the <literal>cloud-init</literal> package. Create at
-        least one keypair for each project. For information, see <xref
+    <para>Before you launch an instance, you should add security group
+        rules to enable users to ping and use SSH to connect to the
+        instance. To do so, you either <link
+            xlink:href="#security_groups_add_rule">add rules to the
+            default security group</link> or add a security group with
+        rules.</para>
+    <para>Key pairs are SSH credentials that are injected into an
+        instance when it is launched. To use key pair injection, the
+        image that the instance is based on must contain the
+            <literal>cloud-init</literal> package. Each project should
+        have at least one key pair. For more information, see <xref
             linkend="keypair_add"/>.</para>
-    <para>If you have generated a keypair with an external tool, you
-        can import it into OpenStack. The keypair can be used for
-        multiple instances that belong to a project. For information,
-        see <xref linkend="dashboard_import_keypair"/>.</para>
+    <para>If you have generated a key pair with an external tool, you
+        can import it into OpenStack. The key pair can be used for
+        multiple instances that belong to a project. For more
+        information, see <xref linkend="dashboard_import_keypair"
+        />.</para>
+    <para>When an instance is created in OpenStack, it is automatically
+        assigned a fixed IP address in the network to which the
+        instance is assigned. This IP address is permanently
+        associated with the instance until the instance is terminated.
+        However, in addition to the fixed IP address, a floating IP
+        address can also be attached to an instance. Unlike fixed IP
+        addresses, floating IP addresses are able to have their
+        associations modified at any time, regardless of the state of
+        the instances involved.</para>
     <section xml:id="security_groups_add_rule">
-        <title>Add rules to the default security group</title>
+        <title>Add a rule to the default security group</title>
+        <para>This procedure enables SSH and ICMP (ping) access to
+            instances. The rules apply to all instances within a given
+            project, and should be set for every project unless there
+            is a reason to prohibit SSH or ICMP access to the
+            instances.</para>
+        <para>This procedure can be adjusted as necessary to add
+            additional security group rules to a project, if your
+            cloud requires them.</para>
         <procedure>
             <step>
-                <para>Log in to the dashboard, choose a project, and click the
-                        <guilabel>Access &amp; Security</guilabel> category.
-                    The dashboard shows the security groups that are
-                    available for this project.</para>
+                <para>Log in to the dashboard, choose a project, and
+                    click <guilabel>Access &amp; Security</guilabel>.
+                    The <guilabel>Security Groups</guilabel> tab shows
+                    the security groups that are available for this
+                    project.</para>
             </step>
             <step>
-                <para>Select the default security group and click
-                        <guibutton>Edit Rules</guibutton>.</para>
+                <para>Select the <guilabel>default</guilabel> security
+                    group and click <guibutton>Edit
+                    Rules</guibutton>.</para>
             </step>
             <step>
-                <para>To allow ssh access, click <guibutton>Add
+                <para>To allow SSH access, click <guibutton>Add
                         Rule</guibutton>.</para>
             </step>
             <step>
-                <para>In the <guilabel>Add Rule</guilabel> window,
-                    enter the following values:</para>
+                <para>In the Add Rule dialog box, enter the following
+                    values:</para>
                 <informaltable rules="all" width="75%">
 <col width="50%"/>
 <col width="50%"/>
@@ -77,16 +100,16 @@
             </step>
             <step>
                 <para>Click <guibutton>Add</guibutton>.</para>
-                <para>The ssh port 22 is now open for requests from any IP
-                    address.</para>
+                <para>Instances will now have SSH port 22 open for
+                    requests from any IP address.</para>
             </step>
             <step>
                 <para>To add an ICMP rule, click <guibutton>Add
                         Rule</guibutton>.</para>
             </step>
             <step>
-                <para>In the <guilabel>Add Rule</guilabel> window,
-                    enter the following values:</para>
+                <para>In the Add Rule dialog box, enter the following
+                    values:</para>
                 <informaltable rules="all" width="75%">
                     <col width="50%"/>
                     <col width="50%"/>
@@ -110,92 +133,97 @@
             </step>
             <step>
                 <para>Click <guibutton>Add</guibutton>.</para>
+                <para>Instances will now accept all incoming ICMP
+                    packets.</para>
             </step>
         </procedure>
     </section>
     <section xml:id="keypair_add">
-        <title>Add a keypair</title>
-        <para>Create at least one keypair for each project.</para>
+        <title>Add a key pair</title>
+        <para>Create at least one key pair for each project.</para>
         <procedure>
             <step>
-                <para>Log in to the dashboard, choose a
-                    project, and click the <guilabel>Access &amp;
-                        Security</guilabel> category.</para>
+                <para>Log in to the dashboard, choose a project, and
+                    click <guilabel>Access &amp;
+                    Security</guilabel>.</para>
             </step>
             <step>
-                <para>The <guilabel>Keypairs</guilabel> tab shows the
-                    keypairs that are available for this
-                    project.</para>
+                <para>Click the <guilabel>Keypairs</guilabel> tab,
+                    which shows the key pairs that are available for
+                    this project.</para>
             </step>
             <step>
                 <para>Click <guibutton>Create
                     Keypair</guibutton>.</para>
             </step>
             <step>
-                <para>In the <guilabel>Create Keypair</guilabel>
-                    window, enter a name for your keypair, and click
-                        <guibutton>Create Keypair</guibutton>.</para>
+                <para>In the Create Keypair
+                    dialog box, enter a name for your key pair, and
+                    click <guibutton>Create
+                    Keypair</guibutton>.</para>
             </step>
             <step>
-                <para>Respond to the prompt to download the
-                    keypair.</para>
+                <para>Respond to the prompt to download the key
+                    pair.</para>
             </step>
         </procedure>
     </section>
     <section xml:id="dashboard_import_keypair">
-        <title>Import a keypair</title>
+        <title>Import a key pair</title>
         <procedure>
             <step>
                 <para>Log in to the dashboard, choose a project, and
-                    click the <guilabel>Access &amp;
-                        Security</guilabel> category.</para>
+                    click <guilabel>Access &amp;
+                    Security</guilabel>.</para>
             </step>
             <step>
-                <para>The <guilabel>Keypairs</guilabel> tab shows the
-                    keypairs that are available for this
-                    project.</para>
+                <para>Click the <guilabel>Keypairs</guilabel> tab,
+                    which shows the key pairs that are available for
+                    this project.</para>
             </step>
             <step>
                 <para>Click <guibutton>Import
                     Keypair</guibutton>.</para>
             </step>
             <step>
-                <para>In the <guilabel>Import Keypair</guilabel>
-                    window, enter the name of your keypair. In the
-                        <guilabel>Public Key</guilabel> box, copy the
-                    public key. Then, click <guibutton>Import
-                        Keypair</guibutton>.</para>
+                <para>In the Import Keypair
+                    dialog box, enter the name of your key pair, copy
+                    the public key into the <guilabel>Public
+                        Key</guilabel> box, and then click
+                        <guibutton>Import Keypair</guibutton>.</para>
             </step>
             <step>
                 <para>Save the <filename>*.pem</filename> file
-                    locally. To change its permissions so that only
+                    locally.</para></step>
+            <step><para>To change its permissions so that only
                     you can read and write to the file, run the
                     following command:</para>
-                <screen><prompt>$</prompt> <userinput>chmod 0600 <replaceable>MY_PRIV_KEY</replaceable>.pem</userinput></screen>
+                <screen><prompt>$</prompt> <userinput>chmod 0600 <replaceable>yourPrivateKey</replaceable>.pem</userinput></screen>
                 <note>
                     <para>If you are using the dashboard from a
-                        Windows-based computer, use puttygen to load
-                        the <filename>*.pem</filename> and convert and
-                        save as <filename>*.ppk</filename>. Refer to
-                            <link
+                        Windows computer, use PuTTYgen to load the
+                            <filename>*.pem</filename> file and
+                        convert and save it as
+                            <filename>*.ppk</filename>. For more
+                        information see the <link
                             xlink:href="http://winscp.net/eng/docs/ui_puttygen"
-                            >WinSCP information</link> for more
-                        details.</para>
+                            >WinSCP web page for
+                        PuTTYgen</link>.</para>
                 </note>
             </step>
             <step>
-                <para>To make the keypair known to SSH, run the
-                        <command>ssh-add</command> command:</para>
-                <screen><prompt>$</prompt> <userinput>ssh-add <replaceable>MY_PRIV_KEY</replaceable>.pem</userinput></screen>
+                <para>To make the key pair known to SSH, run the
+                        <command>ssh-add</command> command.</para>
+                <screen><prompt>$</prompt> <userinput>ssh-add <replaceable>yourPrivateKey</replaceable>.pem</userinput></screen>
             </step>
         </procedure>
-        <para>The Compute database registers the public key of the
-            keypair.</para>
-        <para>The dashboard lists the keypair in the <guilabel>Access
-                &amp; Security</guilabel> category.</para>
+        <para>The Compute database registers the public key of the key
+            pair.</para>
+        <para>The dashboard lists the key pair on the <guilabel>Access
+                &amp; Security</guilabel> tab.</para>
     </section>
     <section xml:id="add_floating_ip">
-      <title>Allocating floating IP addresses to instances</title>
+      <title>Allocate a floating IP address to an instance</title>
       <para>When an instance is created in OpenStack, it is
          automatically assigned a fixed IP address in the network to
          which the instance is assigned. This IP address is
@@ -203,80 +231,69 @@
          is terminated.
       </para>
       <para>However, in addition to the fixed IP address, a floating
-         IP address can also be attached to an instance. Unlike fixed
-         IP addresses, floating IP addresses are able to have their
-         associations modified at any time, regardless of the state of
-         the instances involved. This procedure details the
-         reservation of a floating IP address from an existing pool of
-         addresses and the association of that address with a specific
-         instance.
-      </para>
+            IP address can also be attached to an instance. Unlike
+            fixed IP addresses, floating IP addresses can have their
+            associations modified at any time, regardless of the state
+            of the instances involved. This procedure details the
+            reservation of a floating IP address from an existing pool
+            of addresses and the association of that address with a
+            specific instance.</para>
       <procedure>
         <step>
-          <para>Log in to the dashboard, choose a project, and
-            click the <guilabel>Access &amp; Security</guilabel> category.
-          </para>
+          <para>Log in to the dashboard, choose a project, and click
+                        <guilabel>Access &amp; Security</guilabel>.</para>
         </step>
         <step>
-          <para>The <guilabel>Access &amp; Security</guilabel> window opens to
-             the <guilabel>Security Groups</guilabel> tab by default.
-          </para>
-          <para>Click on the <guilabel>Floating IPs</guilabel> tab. The
-             <guilabel>Floating IPs</guilabel> tab shows the floating
-             IP addresses allocated to instances.
-          </para>
+                <para>Click the <guilabel>Floating IPs</guilabel> tab,
+                    which shows the floating IP addresses allocated to
+                    instances.</para>
         </step>
         <step>
-          <para>Click the <guibutton>Allocate IP to Project</guibutton> button.
-          </para>
+          <para>Click <guibutton>Allocate IP to Project</guibutton>.</para>
       </step>
       <step>
-        <para>Choose the <guilabel>Pool</guilabel> from which the IP address
-        should be picked.</para>
+        <para>Choose the pool from which to pick the IP
+                    address.</para>
       </step>
       <step>
-        <para>Click the <guibutton>Allocate IP</guibutton> button.</para>
+        <para>Click <guibutton>Allocate IP</guibutton>.</para>
       </step>
       <step>
-        <para>In the <guilabel>Floating IPs</guilabel> list, click the
-           <guibutton> Associate</guibutton> button. The <guilabel>Manage
-           Floating IP Associations</guilabel> window opens.
-        </para>
+        <para>In the <guilabel>Floating IPs</guilabel> list, click
+                        <guibutton> Associate</guibutton>.</para>
       </step>
       <step>
-        <para>In the <guilabel>Manage Floating IP
-           Associations</guilabel> window, choose the following options:
-          <orderedlist>
-            <listitem>
-              <para>The <guilabel>IP Address</guilabel> field is
-                 filled automatically.
-              </para>
-              <para>You can choose to add a new IP address by using the
-                <guibutton>+</guibutton> button.</para>
-            </listitem>
-            <listitem>
-              <para>In the <guilabel>Ports to be associated</guilabel> field,
-              select a port from the dropdown list.</para>
-              <para>The dropdown lists all the instances with their respective
-                fixed IP addresses.
-              </para>
-            </listitem>
-          </orderedlist>
-        </para>
+        <para>In the Manage Floating IP
+                        Associations dialog box, choose the
+                    following options: <itemizedlist>
+                        <listitem>
+                            <para>The <guilabel>IP Address</guilabel>
+                                field is filled automatically, but you
+                                can add a new IP address by clicking
+                                the <guibutton>+</guibutton>
+                                button.</para>
+                        </listitem>
+                        <listitem>
+                            <para>In the <guilabel>Ports to be
+                                   associated</guilabel> field, select
+                                a port from the list.</para>
+                            <para>The list shows all the instances
+                                with their fixed IP addresses.</para>
+                        </listitem>
+                    </itemizedlist>
+                </para>
       </step>
       <step>
-        <para>Click the <guibutton>Associate</guibutton> button.
-        </para>
+        <para>Click <guibutton>Associate</guibutton>.</para>
       </step>
       </procedure>
       <note>
-        <para>To disassociate the IP address from an instance, click the
-          <guibutton>Disassociate</guibutton> button.</para>
+        <para>To disassociate an IP address from an instance, click
+                the <guibutton>Disassociate</guibutton> button.</para>
         <para>To release the floating IP address back into the pool of
-           addresses, click the <guibutton>More</guibutton> dropdown
-           button and select <guilabel>Release Floating IP</guilabel>
-           option.
-        </para>
+                addresses, click the <guibutton>More</guibutton>
+                button and select the <guilabel>Release Floating
+                    IP</guilabel> option.</para>
       </note>
     </section>
 </section>

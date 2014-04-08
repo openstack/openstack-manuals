@@ -3,43 +3,47 @@
   xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
   xml:id="dashboard_manage_images">
-  <title>Create and manage images</title>
-  <para>The cloud operator assigns roles to users. Roles determine
-    who can upload and manage images. Operators might restrict the
-    upload and management of images to cloud administrators or
-    operators only.</para>
-  <para>If you have admin privileges, you can use the dashboard to
-    create and manage images in the <guilabel>admin</guilabel>
-    project.</para>
+  <title>Upload and manage images</title>
+  <para>A virtual machine image, referred to in this document simply
+    as an image, is a single file that contains a virtual disk that
+    has a bootable operating system installed on it. Images are used
+    to create virtual machine instances within the cloud. For
+    information about creating image files, see the <link
+      xlink:href="http://docs.openstack.org/image-guide/content/"
+        ><citetitle>OpenStack Virtual Machine Image
+      Guide</citetitle></link>.</para>
+  <para>Depending on your role, you may have permission to upload and
+    manage virtual machine images. Operators might restrict the upload
+    and management of images to cloud administrators or operators
+    only. If you have the appropriate privileges, you can use the
+    dashboard to upload and manage images in the
+      <guilabel>admin</guilabel> project.</para>
   <note>
-    <title>Manage images by using clients and APIs</title>
     <para>You can also use the <command>glance</command> and
         <command>nova</command> command-line clients or the Image
       Service and Compute APIs to manage images. See <xref
         linkend="cli_manage_images"/>.</para>
   </note>
   <section xml:id="dashboard_create_images">
-    <title>Create images</title>
-    <para>For details about image creation, see the <link
-        xlink:href="http://docs.openstack.org/image-guide/content/"
-          ><citetitle>Virtual Machine Image
-      Guide</citetitle></link>.</para>
+    <title>Upload an image</title>
+    <para>Follow this procedure to upload an image to a
+      project.</para>
     <procedure>
       <step>
         <para>Log in to the dashboard.</para>
-        <para>Choose the <guilabel>admin</guilabel> project from the
-            <guilabel>CURRENT PROJECT</guilabel> drop-down
-          list.</para>
       </step>
       <step>
-        <para>On the <guilabel>Project</guilabel> tab, click the
-            <guilabel>Images &amp; Snapshots</guilabel>
-          category.</para>
+        <para>From the <guilabel>CURRENT PROJECT</guilabel> on the
+            <guilabel>Project</guilabel> tab, select the appropriate
+          project.</para>
       </step>
       <step>
-        <para>Click <guibutton>Create Image</guibutton>. The
-            <guilabel>Create An Image</guilabel> window
-          appears:</para>
+        <para>On the <guilabel>Project</guilabel> tab, click
+            <guilabel>Images &amp; Snapshots</guilabel>.</para>
+      </step>
+      <step>
+        <para>Click <guibutton>Create Image</guibutton>.</para>
+        <para>The Create An Image dialog box appears.</para>
         <informalfigure>
           <mediaobject>
             <imageobject>
@@ -51,63 +55,88 @@
         </informalfigure>
       </step>
       <step>
-        <para>In the <guilabel>Create An Image</guilabel> window,
-          enter or select the following values:</para>
+        <para>Enter the following values:</para>
         <informaltable rules="all" width="75%">
           <col width="25%"/>
           <col width="75%"/>
           <tbody>
             <tr>
-              <td><para><guilabel>Name</guilabel></para></td>
-              <td><para>Enter a name for the image.</para></td>
+              <td>
+                <para><guilabel>Name</guilabel></para>
+              </td>
+              <td>
+                <para>Enter a name for the image.</para>
+              </td>
             </tr>
             <tr>
-              <td><para><guilabel>Description</guilabel></para></td>
-              <td><para>Enter a brief description about the
-                  image.</para></td>
+              <td>
+                <para><guilabel>Description</guilabel></para>
+              </td>
+              <td>
+                <para>Optionally, enter a brief description of the
+                  image.</para>
+              </td>
             </tr>
             <tr>
-              <td><para><guilabel>Image
-                Source</guilabel></para></td>
-                <td>
-                  <para>Choose the image source from the dropdown list. Your
-                    choices are <guilabel>Image Location</guilabel> and
+              <td>
+                <para><guilabel>Image Source</guilabel></para>
+              </td>
+              <td>
+                <para>Choose the image source from the list. Your
+                  choices are <guilabel>Image Location</guilabel> and
                     <guilabel>Image File</guilabel>.</para>
-                </td>
-            </tr>
-            <tr>
-            <td>
-              <para>
-                  <guilabel>Image File</guilabel> or
-                  <guilabel>Image Location</guilabel></para></td>
-                  <td>
-                    <para>Based on your selection, there is an
-                      <guilabel>Image File</guilabel> or <guilabel>Image Location</guilabel>
-                      field. You can include the location URL or browse to the
-                      image file on your file system and add it.</para>
-                  </td>
-            </tr>
-            <tr>
-              <td><para><guilabel>Format</guilabel></para></td>
-              <td><para>Select the correct type from the drop-down menu
-                (for example, QCOW2).</para>
               </td>
             </tr>
             <tr>
-              <td><para><guilabel>Minimum Disk (GB)</guilabel> and
-                    <guilabel>Minimum RAM (MB)</guilabel></para></td>
-              <td><para>Leave these fields empty.</para>
+              <td>
+                <para>
+                  <guilabel>Image File</guilabel> or <guilabel>Image
+                    Location</guilabel></para>
+              </td>
+              <td>
+                <para>Based on your selection for <guilabel>Image
+                    Source</guilabel>, you either enter the location
+                  URL of the image in the <guilabel>Image
+                    Location</guilabel> field. or browse to the image
+                  file on your system and add it.</para>
               </td>
             </tr>
             <tr>
-              <td><para><guilabel>Public</guilabel></para></td>
-              <td><para>Select this option to make the image public to
-                  all users.</para></td>
+              <td>
+                <para><guilabel>Format</guilabel></para>
+              </td>
+              <td>
+                <para>Select the correct format (for example, QCOW2)
+                  for the image.</para>
+              </td>
             </tr>
             <tr>
-              <td><para><guilabel>Protected</guilabel></para></td>
-              <td><para>Select this option to ensure that only users
-                  with permissions can delete it.</para></td>
+              <td>
+                <para><guilabel>Minimum Disk (GB)</guilabel> and
+                    <guilabel>Minimum RAM (MB)</guilabel></para>
+              </td>
+              <td>
+                <para>Leave these optional fields empty.</para>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <para><guilabel>Public</guilabel></para>
+              </td>
+              <td>
+                <para>Select this check box to make the image public
+                  to all users with access to the current
+                  project.</para>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <para><guilabel>Protected</guilabel></para>
+              </td>
+              <td>
+                <para>Select this check box to ensure that only users
+                  with permissions can delete the image.</para>
+              </td>
             </tr>
           </tbody>
         </informaltable>
@@ -115,35 +144,49 @@
       <step>
         <para>Click <guibutton>Create Image</guibutton>.</para>
         <para>The image is queued to be uploaded. It might take some
-          time before the status changes from queued to active.</para>
+          time before the status changes from Queued to Active.</para>
       </step>
     </procedure>
   </section>
   <section xml:id="dashboard_update_images">
-    <title>Update images</title>
+    <title>Update an image</title>
+    <para>Follow this procedure to update an existing image.</para>
     <procedure>
       <step>
         <para>Log in to the dashboard.</para>
-        <para>Choose the <guilabel>admin</guilabel> project from the
-            <guilabel>CURRENT PROJECT</guilabel> drop-down
-          list.</para>
       </step>
       <step>
-        <para>On the <guilabel>Project</guilabel> tab, click the
-            <guilabel>Images &amp; Snapshots</guilabel>
-          category.</para>
+        <para>From the <guilabel>CURRENT PROJECT</guilabel> on the
+            <guilabel>Project</guilabel> tab, select the appropriate
+          project.</para>
       </step>
       <step>
-        <para>Select the image that you want to edit. In the
-            <guilabel>More</guilabel> drop-down list, click
-            <guilabel>Edit</guilabel>.</para>
+        <para>On the <guilabel>Project</guilabel> tab, click
+            <guilabel>Images &amp; Snapshots</guilabel>.</para>
       </step>
       <step>
-        <para>In the <guilabel>Update Image</guilabel> window, you can
-          change the name for the image. Select the
-            <guilabel>Public</guilabel> check box to make the image
-          public. Clear this check box to make the image
-          private.</para>
+        <para>Select the image that you want to edit.</para>
+      </step>
+      <step>
+        <para>In the <guilabel>Actions</guilabel> column, click
+            <guilabel>More</guilabel> and then select
+            <guilabel>Edit</guilabel> from the list.</para>
+      </step>
+      <step>
+        <para>In the Update Image dialog box, you can perform the
+          following actions: <itemizedlist>
+            <listitem>
+              <para>Change the name of the image.</para>
+            </listitem>
+            <listitem>
+              <para>Select the <guilabel>Public</guilabel> check box
+                to make the image public.</para>
+            </listitem>
+            <listitem>
+              <para>Clear the <guilabel>Public</guilabel> check box to
+                make the image private.</para>
+            </listitem>
+          </itemizedlist></para>
       </step>
       <step>
         <para>Click <guibutton>Update Image</guibutton>.</para>
@@ -151,18 +194,22 @@
     </procedure>
   </section>
   <section xml:id="dashboard_delete_images">
-    <title>Delete images</title>
+    <title>Delete an image</title>
+    <para>Deletion of images is permanent and <emphasis role="bold"
+        >cannot</emphasis> be reversed. Only users with the
+      appropriate permissions can delete images.</para>
     <procedure>
       <step>
         <para>Log in to the dashboard.</para>
-        <para>Choose the <guilabel>admin</guilabel> project from the
-            <guilabel>CURRENT PROJECT</guilabel> drop-down
-          list.</para>
       </step>
       <step>
-        <para>On the <guilabel>Project</guilabel> tab, click the
-            <guilabel>Images &amp; Snapshots</guilabel>
-          category.</para>
+        <para>From the <guilabel>CURRENT PROJECT</guilabel> on the
+            <guilabel>Project</guilabel> tab, select the appropriate
+          project.</para>
+      </step>
+      <step>
+        <para>On the <guilabel>Project</guilabel> tab, click
+            <guilabel>Images &amp; Snapshots</guilabel>.</para>
       </step>
       <step>
         <para>Select the images that you want to delete.</para>
@@ -171,9 +218,9 @@
         <para>Click <guibutton>Delete Images</guibutton>.</para>
       </step>
       <step>
-        <para>In the <guilabel>Confirm Delete Image</guilabel> window,
-          click <guibutton>Delete Images</guibutton> to confirm the
-          deletion. You cannot undo this action.</para>
+        <para>In the Confirm Delete Image dialog box, click
+            <guibutton>Delete Images</guibutton> to confirm the
+          deletion.</para>
       </step>
     </procedure>
   </section>
