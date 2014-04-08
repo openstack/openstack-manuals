@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-04-07 06:26+0000\n"
+"POT-Creation-Date: 2014-04-08 06:26+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2850,6 +2850,382 @@ msgstr ""
 msgid "The following values in the <filename>/etc/nova/nova.conf</filename> file (on every node) are required for the <systemitem>memcache</systemitem> driver:"
 msgstr ""
 
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:7(title)
+msgid "Recover from a failed compute node"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:8(para)
+msgid "If you deployed Compute with a shared file system, you can quickly recover from a failed compute node. Of the two methods covered in these sections, evacuating is the preferred method even in the absence of shared storage. Evacuating provides many benefits over manual recovery, such as re-attachment of volumes and floating IPs."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:14(title)
+msgid "Manual recovery"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:15(para)
+msgid "To recover a KVM/libvirt compute node, see the previous section. Use the following procedure for all other hypervisors."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:18(title)
+msgid "Review host information"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:20(para)
+msgid "Identify the VMs on the affected hosts, using tools such as a combination of <literal>nova list</literal> and <literal>nova show</literal> or <literal>euca-describe-instances</literal>. For example, the following output displays information about instance <systemitem>i-000015b9</systemitem> that is running on node <systemitem>np-rcc54</systemitem>:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:29(para)
+msgid "Review the status of the host by querying the Compute database. Some of the important information is highlighted below. The following example converts an EC2 API instance ID into an OpenStack ID; if you used the <literal>nova</literal> commands, you can substitute the ID directly. You can find the credentials for your database in <filename>/etc/nova.conf</filename>."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:55(title)
+msgid "Recover the VM"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:57(para)
+msgid "After you have determined the status of the VM on the failed host, decide to which compute host the affected VM should be moved. For example, run the following database command to move the VM to <systemitem>np-rcc46</systemitem>:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:64(para)
+msgid "If using a hypervisor that relies on libvirt (such as KVM), it is a good idea to update the <literal>libvirt.xml</literal> file (found in <literal>/var/lib/nova/instances/[instance ID]</literal>). The important changes to make are:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:71(para)
+msgid "Change the <literal>DHCPSERVER</literal> value to the host IP address of the compute host that is now the VM's new home."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:76(para)
+msgid "Update the VNC IP, if it isn't already updated, to: <literal>0.0.0.0</literal>."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:83(para)
+msgid "Reboot the VM:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:87(para)
+msgid "In theory, the above database update and <literal>nova reboot</literal> command are all that is required to recover a VM from a failed host. However, if further problems occur, consider looking at recreating the network filter configuration using <literal>virsh</literal>, restarting the Compute services or updating the <literal>vm_state</literal> and <literal>power_state</literal> in the Compute database."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:95(title)
+msgid "Recover from a UID/GID mismatch"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:96(para)
+msgid "When running OpenStack Compute, using a shared file system or an automated configuration tool, you could encounter a situation where some files on your compute node are using the wrong UID or GID. This causes a number of errors, such as being unable to do live migration or start virtual machines."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:100(para)
+msgid "The following procedure runs on <systemitem class=\"service\">nova-compute</systemitem> hosts, based on the KVM hypervisor, and could help to restore the situation:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:104(title)
+msgid "To recover from a UID/GID mismatch"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:106(para)
+msgid "Ensure you do not use numbers that are already used for some other user/group."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:110(para)
+msgid "Set the nova uid in <filename>/etc/passwd</filename> to the same number in all hosts (for example, 112)."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:114(para)
+msgid "Set the libvirt-qemu uid in <filename>/etc/passwd</filename> to the same number in all hosts (for example, 119)."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:120(para)
+msgid "Set the nova group in <filename>/etc/group</filename> file to the same number in all hosts (for example, 120)."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:126(para)
+msgid "Set the libvirtd group in <filename>/etc/group</filename> file to the same number in all hosts (for example, 119)."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:132(para)
+msgid "Stop the services on the compute node."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:136(para)
+msgid "Change all the files owned by user <systemitem>nova</systemitem> or by group <systemitem>nova</systemitem>. For example:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:142(para)
+msgid "Repeat the steps for the libvirt-qemu owned files if those needed to change."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:146(para)
+msgid "Restart the services."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:149(para)
+msgid "Now you can run the <placeholder-1/> command to verify that all files using the correct identifiers."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:156(title)
+msgid "Recover cloud after disaster"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:157(para)
+msgid "Use the following procedures to manage your cloud after a disaster, and to easily back up its persistent storage volumes. Backups <emphasis role=\"bold\">are</emphasis> mandatory, even outside of disaster scenarios."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:160(para)
+msgid "For a DRP definition, see <link href=\"http://en.wikipedia.org/wiki/Disaster_Recovery_Plan\">http://en.wikipedia.org/wiki/Disaster_Recovery_Plan</link>."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:164(title)
+msgid "Disaster recovery example"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:165(para)
+msgid "A disaster could happen to several components of your architecture (for example, a disk crash, a network loss, or a power cut). In this example, the following components are configured:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:170(para)
+msgid "A cloud controller (<systemitem>nova-api</systemitem>, <systemitem>nova-objectstore</systemitem>, <systemitem>nova-network</systemitem>)"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:175(para)
+msgid "A compute node (<systemitem class=\"service\">nova-compute</systemitem>)"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:180(para)
+msgid "A Storage Area Network (SAN) used by OpenStack Block Storage (<systemitem class=\"service\">cinder-volumes</systemitem>)"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:184(para)
+msgid "The worst disaster for a cloud is a power loss, which applies to all three components. Before a power loss:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:188(para)
+msgid "From the SAN to the cloud controller, we have an active iSCSI session (used for the \"cinder-volumes\" LVM's VG)."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:192(para)
+msgid "From the cloud controller to the compute node, we also have active iSCSI sessions (managed by <systemitem class=\"service\">cinder-volume</systemitem>)."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:197(para)
+msgid "For every volume, an iSCSI session is made (so 14 ebs volumes equals 14 sessions)."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:201(para)
+msgid "From the cloud controller to the compute node, we also have iptables/ ebtables rules which allow access from the cloud controller to the running instance."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:206(para)
+msgid "And at least, from the cloud controller to the compute node; saved into database, the current state of the instances (in that case \"running\" ), and their volumes attachment (mount point, volume ID, volume status, and so on.)"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:212(para)
+msgid "After the power loss occurs and all hardware components restart:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:215(para)
+msgid "From the SAN to the cloud, the iSCSI session no longer exists."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:218(para)
+msgid "From the cloud controller to the compute node, the iSCSI sessions no longer exist."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:222(para)
+msgid "From the cloud controller to the compute node, the iptables and ebtables are recreated, since at boot, <systemitem>nova-network</systemitem> reapplies configurations."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:227(para)
+msgid "From the cloud controller, instances are in a shutdown state (because they are no longer running)."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:231(para)
+msgid "In the database, data was not updated at all, since Compute could not have anticipated the crash."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:235(para)
+msgid "Before going further, and to prevent the administrator from making fatal mistakes,<emphasis role=\"bold\"> instances won't be lost</emphasis>, because no \"<placeholder-1/>\" or \"<placeholder-2/>\" command was invoked, so the files for the instances remain on the compute node."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:240(para)
+msgid "Do not add any extra steps at this stage."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:239(para)
+msgid "Perform these tasks in the following order. <placeholder-1/>"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:244(para)
+msgid "Get the current relation from a volume to its instance, so that you can recreate the attachment."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:249(para)
+msgid "Update the database to clean the stalled state. (After that, you cannot perform the first step)."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:254(para)
+msgid "Restart the instances. In other words, go from a shutdown to running state."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:259(para)
+msgid "After the restart, reattach the volumes to their respective instances (optional)."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:263(para)
+msgid "SSH into the instances to reboot them."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:269(title)
+msgid "Recover after a disaster"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:271(title)
+msgid "To perform disaster recovery"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:273(title)
+msgid "Get the instance-to-volume relationship"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:275(para)
+msgid "You must determine the current relationship from a volume to its instance, because you will re-create the attachment."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:277(para)
+msgid "You can find this relationship by running <placeholder-1/>. Note that the <placeholder-2/> client includes the ability to get volume information from OpenStack Block Storage."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:283(title)
+msgid "Update the database"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:284(para)
+msgid "Update the database to clean the stalled state. You must restore for every volume, using these queries to clean up the database:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:291(para)
+msgid "You can then run <placeholder-1/> commands to list all volumes."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:295(title)
+msgid "Restart instances"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:297(replaceable)
+msgid "$instance"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:296(para)
+msgid "Restart the instances using the <placeholder-1/> command."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:298(para)
+msgid "At this stage, depending on your image, some instances completely reboot and become reachable, while others stop on the \"plymouth\" stage."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:303(title)
+msgid "DO NOT reboot a second time"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:304(para)
+msgid "Do not reboot instances that are stopped at this point. Instance state depends on whether you added an <filename>/etc/fstab</filename> entry for that volume. Images built with the <package>cloud-init</package> package remain in a pending state, while others skip the missing volume and start. The idea of that stage is only to ask Compute to reboot every instance, so the stored state is preserved. For more information about <package>cloud-init</package>, see <link href=\"https://help.ubuntu.com/community/CloudInit\">help.ubuntu.com/community/CloudInit</link>."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:315(title)
+msgid "Reattach volumes"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:316(para)
+msgid "After the restart, and Compute has restored the right status, you can reattach the volumes to their respective instances using the <placeholder-1/> command. The following snippet uses a file of listed volumes to reattach them:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:330(para)
+msgid "At this stage, instances that were pending on the boot sequence (<application>plymouth</application>) automatically continue their boot, and restart normally, while the ones that booted see the volume."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:335(title)
+msgid "SSH into instances"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:336(para)
+msgid "If some services depend on the volume, or if a volume has an entry into <systemitem>fstab</systemitem>, you should now simply restart the instance. This restart needs to be made from the instance itself, not through <placeholder-1/>."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:340(para)
+msgid "SSH into the instance and perform a reboot:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:344(para)
+msgid "By completing this procedure, you can successfully recover your cloud."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:347(para)
+msgid "Follow these guidelines:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:350(para)
+msgid "Use the <parameter> errors=remount</parameter> parameter in the <filename>fstab</filename> file, which prevents data corruption."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:353(para)
+msgid "The system locks any write to the disk if it detects an I/O error. This configuration option should be added into the <systemitem class=\"service\">cinder-volume</systemitem> server (the one which performs the iSCSI connection to the SAN), but also into the instances' <filename>fstab</filename> file."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:360(para)
+msgid "Do not add the entry for the SAN's disks to the <systemitem class=\"service\">cinder-volume</systemitem>'s <filename>fstab</filename> file."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:363(para)
+msgid "Some systems hang on that step, which means you could lose access to your cloud-controller. To re-run the session manually, run the following command before performing the mount: <placeholder-1/>"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:369(para)
+msgid "For your instances, if you have the whole <filename>/home/</filename> directory on the disk, leave a user's directory with the user's bash files and the <filename>authorized_keys</filename> file (instead of emptying the <filename>/home</filename> directory and mapping the disk on it)."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:374(para)
+msgid "This enables you to connect to the instance, even without the volume attached, if you allow only connections through public keys."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:381(title)
+msgid "Script the DRP"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:382(para)
+msgid "You can download from <link href=\"https://github.com/Razique/BashStuff/blob/master/SYSTEMS/OpenStack/SCR_5006_V00_NUAC-OPENSTACK-DRP-OpenStack.sh\">here</link> a bash script which performs the following steps:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:386(para)
+msgid "An array is created for instances and their attached volumes."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:387(para)
+msgid "The MySQL database is updated."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:388(para)
+msgid "Using <systemitem>euca2ools</systemitem>, all instances are restarted."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:389(para)
+msgid "The volume attachment is made."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:390(para)
+msgid "An SSH connection is performed into every instance using Compute credentials."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:392(para)
+msgid "The \"test mode\" allows you to perform that whole sequence for only one instance."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:395(para)
+msgid "To reproduce the power loss, connect to the compute node which runs that same instance and close the iSCSI session. Do not detach the volume using the <placeholder-1/> command; instead, manually close the iSCSI session. For the following example command uses an iSCSI session with the number 15:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:400(para)
+msgid "Do not forget the <literal>-r</literal> flag. Otherwise, you close ALL sessions."
+msgstr ""
+
 #: ./doc/admin-guide-cloud/compute/section_compute-instance-mgt-tools.xml:7(title)
 msgid "Instance management tools"
 msgstr ""
@@ -3266,364 +3642,12 @@ msgstr ""
 msgid "Ensure instances are migrated successfully with <placeholder-1/>. If instances are still running on HostB, check log files (src/dest <systemitem class=\"service\">nova-compute</systemitem> and <systemitem class=\"service\">nova-scheduler</systemitem>) to determine why. <placeholder-2/>"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:504(title)
-msgid "Recover from a failed compute node"
+#: ./doc/admin-guide-cloud/compute/section_compute-security.xml:10(title)
+msgid "Security hardening"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:505(para)
-msgid "If you have deployed Compute with a shared file system, you can quickly recover from a failed compute node. Of the two methods covered in these sections, the evacuate API is the preferred method even in the absence of shared storage. The evacuate API provides many benefits over manual recovery, such as re-attachment of volumes and floating IPs."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:514(title)
-msgid "Manual recovery"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:515(para)
-msgid "For KVM/libvirt compute node recovery, see the previous section. Use the following procedure for all other hypervisors."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:518(title)
-msgid "To work with host information"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:520(para)
-msgid "Identify the VMs on the affected hosts, using tools such as a combination of <literal>nova list</literal> and <literal>nova show</literal> or <literal>euca-describe-instances</literal>. Here's an example using the EC2 API - instance i-000015b9 that is running on node np-rcc54:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:527(para)
-msgid "You can review the status of the host by using the Compute database. Some of the important information is highlighted below. This example converts an EC2 API instance ID into an OpenStack ID; if you used the <literal>nova</literal> commands, you can substitute the ID directly. You can find the credentials for your database in <filename>/etc/nova.conf</filename>."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:554(title)
-msgid "To recover the VM"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:556(para)
-msgid "When you know the status of the VM on the failed host, determine to which compute host the affected VM should be moved. For example, run the following database command to move the VM to np-rcc46:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:562(para)
-msgid "If using a hypervisor that relies on libvirt (such as KVM), it is a good idea to update the <literal>libvirt.xml</literal> file (found in <literal>/var/lib/nova/instances/[instance ID]</literal>). The important changes to make are:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:569(para)
-msgid "Change the <literal>DHCPSERVER</literal> value to the host IP address of the compute host that is now the VM's new home."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:574(para)
-msgid "Update the VNC IP if it isn't already to: <literal>0.0.0.0</literal>."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:581(para)
-msgid "Reboot the VM:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:585(para)
-msgid "In theory, the above database update and <literal>nova reboot</literal> command are all that is required to recover a VM from a failed host. However, if further problems occur, consider looking at recreating the network filter configuration using <literal>virsh</literal>, restarting the Compute services or updating the <literal>vm_state</literal> and <literal>power_state</literal> in the Compute database."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:594(title)
-msgid "Recover from a UID/GID mismatch"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:595(para)
-msgid "When running OpenStack compute, using a shared file system or an automated configuration tool, you could encounter a situation where some files on your compute node are using the wrong UID or GID. This causes a raft of errors, such as being unable to live migrate, or start virtual machines."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:601(para)
-msgid "The following procedure runs on <systemitem class=\"service\">nova-compute</systemitem> hosts, based on the KVM hypervisor, and could help to restore the situation:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:605(title)
-msgid "To recover from a UID/GID mismatch"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:607(para)
-msgid "Ensure you don't use numbers that are already used for some other user/group."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:611(para)
-msgid "Set the nova uid in <filename>/etc/passwd</filename> to the same number in all hosts (for example, 112)."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:615(para)
-msgid "Set the libvirt-qemu uid in <filename>/etc/passwd</filename> to the same number in all hosts (for example, 119)."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:621(para)
-msgid "Set the nova group in <filename>/etc/group</filename> file to the same number in all hosts (for example, 120)."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:627(para)
-msgid "Set the libvirtd group in <filename>/etc/group</filename> file to the same number in all hosts (for example, 119)."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:633(para)
-msgid "Stop the services on the compute node."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:637(para)
-msgid "Change all the files owned by user nova or by group nova. For example:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:643(para)
-msgid "Repeat the steps for the libvirt-qemu owned files if those needed to change."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:647(para)
-msgid "Restart the services."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:650(para)
-msgid "Now you can run the <placeholder-1/> command to verify that all files using the correct identifiers."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:657(title)
-msgid "Compute disaster recovery process"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:658(para)
-msgid "Use the following procedures to manage your cloud after a disaster, and to easily back up its persistent storage volumes. Backups <emphasis role=\"bold\">are</emphasis> mandatory, even outside of disaster scenarios."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:661(para)
-msgid "For a DRP definition, see <link href=\"http://en.wikipedia.org/wiki/Disaster_Recovery_Plan\">http://en.wikipedia.org/wiki/Disaster_Recovery_Plan</link>."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:665(title)
-msgid "A- The disaster recovery process presentation"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:667(para)
-msgid "A disaster could happen to several components of your architecture: a disk crash, a network loss, a power cut, and so on. In this example, assume the following set up:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:673(para)
-msgid "A cloud controller (<systemitem>nova-api</systemitem>, <systemitem>nova-objecstore</systemitem>, <systemitem>nova-network</systemitem>)"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:678(para)
-msgid "A compute node (<systemitem class=\"service\">nova-compute</systemitem>)"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:683(para)
-msgid "A Storage Area Network used by <systemitem class=\"service\">cinder-volumes</systemitem> (aka SAN)"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:689(para)
-msgid "The disaster example is the worst one: a power loss. That power loss applies to the three components. <emphasis role=\"italic\">Let's see what runs and how it runs before the crash</emphasis>:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:696(para)
-msgid "From the SAN to the cloud controller, we have an active iscsi session (used for the \"cinder-volumes\" LVM's VG)."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:701(para)
-msgid "From the cloud controller to the compute node, we also have active iscsi sessions (managed by <systemitem class=\"service\">cinder-volume</systemitem>)."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:706(para)
-msgid "For every volume, an iscsi session is made (so 14 ebs volumes equals 14 sessions)."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:710(para)
-msgid "From the cloud controller to the compute node, we also have iptables/ ebtables rules which allow access from the cloud controller to the running instance."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:715(para)
-msgid "And at least, from the cloud controller to the compute node; saved into database, the current state of the instances (in that case \"running\" ), and their volumes attachment (mount point, volume ID, volume status, and so on.)"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:721(para)
-msgid "Now, after the power loss occurs and all hardware components restart, the situation is as follows:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:726(para)
-msgid "From the SAN to the cloud, the ISCSI session no longer exists."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:730(para)
-msgid "From the cloud controller to the compute node, the ISCSI sessions no longer exist."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:735(para)
-msgid "From the cloud controller to the compute node, the iptables and ebtables are recreated, since, at boot, <systemitem>nova-network</systemitem> reapplies the configurations."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:741(para)
-msgid "From the cloud controller, instances are in a shutdown state (because they are no longer running)"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:745(para)
-msgid "In the database, data was not updated at all, since Compute could not have anticipated the crash."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:749(para)
-msgid "Before going further, and to prevent the administrator from making fatal mistakes,<emphasis role=\"bold\"> the instances won't be lost</emphasis>, because no \"<placeholder-1/>\" or \"<placeholder-2/>\" command was invoked, so the files for the instances remain on the compute node."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:754(para)
-msgid "Perform these tasks in this exact order. <emphasis role=\"underline\">Any extra step would be dangerous at this stage</emphasis> :"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:759(para)
-msgid "Get the current relation from a volume to its instance, so that you can recreate the attachment."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:764(para)
-msgid "Update the database to clean the stalled state. (After that, you cannot perform the first step)."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:769(para)
-msgid "Restart the instances. In other words, go from a shutdown to running state."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:774(para)
-msgid "After the restart, reattach the volumes to their respective instances (optional)."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:778(para)
-msgid "SSH into the instances to reboot them."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:784(title)
-msgid "B - Disaster recovery"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:786(title)
-msgid "To perform disaster recovery"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:788(title)
-msgid "Get the instance-to-volume relationship"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:790(para)
-msgid "You must get the current relationship from a volume to its instance, because you will re-create the attachment."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:792(para)
-msgid "You can find this relationship by running <placeholder-1/>. Note that the <placeholder-2/> client includes the ability to get volume information from Block Storage."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:797(title)
-msgid "Update the database"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:798(para)
-msgid "Update the database to clean the stalled state. You must restore for every volume, using these queries to clean up the database:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:805(para)
-msgid "Then, when you run <placeholder-1/> commands, all volumes appear in the listing."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:809(title)
-msgid "Restart instances"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:811(replaceable)
-msgid "$instance"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:810(para)
-msgid "Restart the instances using the <placeholder-1/> command."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:812(para)
-msgid "At this stage, depending on your image, some instances completely reboot and become reachable, while others stop on the \"plymouth\" stage."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:817(title)
-msgid "DO NOT reboot a second time"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:818(para)
-msgid "Do not reboot instances that are stopped at this point. Instance state depends on whether you added an <filename>/etc/fstab</filename> entry for that volume. Images built with the <package>cloud-init</package> package remain in a pending state, while others skip the missing volume and start. The idea of that stage is only to ask nova to reboot every instance, so the stored state is preserved. For more information about <package>cloud-init</package>, see <link href=\"https://help.ubuntu.com/community/CloudInit\">help.ubuntu.com/community/CloudInit</link>."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:829(title)
-msgid "Reattach volumes"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:830(para)
-msgid "After the restart, you can reattach the volumes to their respective instances. Now that <placeholder-1/> has restored the right status, it is time to perform the attachments through a <placeholder-2/>"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:834(para)
-msgid "This simple snippet uses the created file:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:846(para)
-msgid "At that stage, instances that were pending on the boot sequence (<emphasis role=\"italic\">plymouth</emphasis>) automatically continue their boot, and restart normally, while the ones that booted see the volume."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:854(title)
-msgid "SSH into instances"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:855(para)
-msgid "If some services depend on the volume, or if a volume has an entry into <systemitem>fstab</systemitem>, it could be good to simply restart the instance. This restart needs to be made from the instance itself, not through <placeholder-1/>. So, we SSH into the instance and perform a reboot:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:863(para)
-msgid "By completing this procedure, you can successfully recover your cloud."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:866(para)
-msgid "Follow these guidelines:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:869(para)
-msgid "Use the <parameter> errors=remount</parameter> parameter in the <filename>fstab</filename> file, which prevents data corruption."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:872(para)
-msgid "The system locks any write to the disk if it detects an I/O error. This configuration option should be added into the <systemitem class=\"service\">cinder-volume</systemitem> server (the one which performs the ISCSI connection to the SAN), but also into the instances' <filename>fstab</filename> file."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:879(para)
-msgid "Do not add the entry for the SAN's disks to the <systemitem class=\"service\">cinder-volume</systemitem>'s <filename>fstab</filename> file."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:882(para)
-msgid "Some systems hang on that step, which means you could lose access to your cloud-controller. To re-run the session manually, you would run the following command before performing the mount: <placeholder-1/>"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:888(para)
-msgid "For your instances, if you have the whole <filename>/home/</filename> directory on the disk, instead of emptying the <filename>/home</filename> directory and map the disk on it, leave a user's directory with the user's bash files and the <filename>authorized_keys</filename> file."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:893(para)
-msgid "This enables you to connect to the instance, even without the volume attached, if you allow only connections through public keys."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:900(title)
-msgid "C - Scripted DRP"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:902(title)
-msgid "To use scripted DRP"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:903(para)
-msgid "You can download from <link href=\"https://github.com/Razique/BashStuff/blob/master/SYSTEMS/OpenStack/SCR_5006_V00_NUAC-OPENSTACK-DRP-OpenStack.sh\">here</link> a bash script which performs these steps:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:908(para)
-msgid "The \"test mode\" allows you to perform that whole sequence for only one instance."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:913(para)
-msgid "To reproduce the power loss, connect to the compute node which runs that same instance and close the iscsi session. <emphasis role=\"underline\">Do not detach the volume through <placeholder-1/></emphasis>, but instead manually close the iscsi session."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:924(para)
-msgid "In this example, the iscsi session is number 15 for that instance:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:929(para)
-msgid "Do not forget the <literal>-r</literal> flag. Otherwise, you close ALL sessions."
+#: ./doc/admin-guide-cloud/compute/section_compute-security.xml:11(para)
+msgid "OpenStack Compute can be integrated with various third-party technologies to increase security. For more information, see the <link href=\"http://docs.openstack.org/sec/\"><citetitle>OpenStack Security Guide</citetitle></link>."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:10(title)

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-04-07 06:27+0000\n"
+"POT-Creation-Date: 2014-04-08 06:26+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -7578,14 +7578,6 @@ msgstr ""
 msgid "These services communicate by using the standard OpenStack messaging bus. Only the collector and API server have access to the data store."
 msgstr ""
 
-#: ./doc/common/section_compute-configure-quotas.xml:9(title)
-msgid "Configure quotas"
-msgstr ""
-
-#: ./doc/common/section_compute-configure-quotas.xml:10(para)
-msgid "To prevent system capacities from being exhausted without notification, you can set up quotas. Quotas are operational limits. For example, the number of gigabytes allowed per tenant can be controlled so that cloud resources are optimized. Quotas are currently enforced at the tenant (or project) level, rather than by user."
-msgstr ""
-
 #: ./doc/common/section_xen-install.xml:6(title)
 msgid "Install XenServer and XCP"
 msgstr ""
@@ -9261,7 +9253,7 @@ msgstr ""
 msgid "CERT_BEHAVIOR"
 msgstr ""
 
-#: ./doc/common/section_keystone_config_ldap-hardening.xml:83(para)
+#: ./doc/common/section_keystone_config_ldap-hardening.xml:83(para) ./doc/common/section_trusted-compute-pools.xml:78(para)
 msgid "Where:"
 msgstr ""
 
@@ -11343,39 +11335,35 @@ msgid "Evacuate instances"
 msgstr ""
 
 #: ./doc/common/section_cli_nova_evacuate.xml:7(para)
-msgid "If a cloud compute node fails due to a hardware malfunction or another reason, you can evacuate instances to make them available again."
+msgid "If a cloud compute node fails due to a hardware malfunction or another reason, you can evacuate instances to make them available again. You can choose evacuation parameters for your use case."
 msgstr ""
 
 #: ./doc/common/section_cli_nova_evacuate.xml:10(para)
-msgid "You can choose evacuation parameters for your use case."
+msgid "To preserve user data on server disk, you must configure shared storage on the target host. Also, you must validate that the current VM host is down; otherwise, the evacuation fails with an error."
 msgstr ""
 
-#: ./doc/common/section_cli_nova_evacuate.xml:12(para)
-msgid "To preserve user data on server disk, you must configure shared storage on the target host. Also, you must validate that the current VM host is down. Otherwise the evacuation fails with an error."
+#: ./doc/common/section_cli_nova_evacuate.xml:15(para)
+msgid "To list hosts and find a different host for the evacuated instance, run:"
 msgstr ""
 
-#: ./doc/common/section_cli_nova_evacuate.xml:18(para)
-msgid "To find a different host for the evacuated instance, run this command to list hosts:"
+#: ./doc/common/section_cli_nova_evacuate.xml:19(para)
+msgid "Evacuate the instance. You can pass the instance password to the command by using the <literal>--password &lt;pwd&gt;</literal> option. If you do not specify a password, one is generated and printed after the command finishes successfully. The following command evacuates a server without shared storage from a host that is down to the specified <replaceable>host_b</replaceable>:"
 msgstr ""
 
-#: ./doc/common/section_cli_nova_evacuate.xml:23(para)
-msgid "You can pass the instance password to the command by using the <literal>--password &lt;pwd&gt;</literal> option. If you do not specify a password, one is generated and printed after the command finishes successfully. The following command evacuates a server without shared storage:"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_evacuate.xml:29(replaceable) ./doc/common/section_cli_nova_evacuate.xml:50(replaceable)
+#: ./doc/common/section_cli_nova_evacuate.xml:24(replaceable) ./doc/common/section_cli_nova_evacuate.xml:40(replaceable)
 msgid "evacuated_server_name"
 msgstr ""
 
-#: ./doc/common/section_cli_nova_evacuate.xml:29(replaceable) ./doc/common/section_cli_nova_evacuate.xml:50(replaceable)
+#: ./doc/common/section_cli_nova_evacuate.xml:24(replaceable) ./doc/common/section_cli_nova_evacuate.xml:40(replaceable)
 msgid "host_b"
 msgstr ""
 
-#: ./doc/common/section_cli_nova_evacuate.xml:30(para)
-msgid "The command evacuates an instance from a down host to a specified host. The instance is booted from a new disk, but preserves its configuration including its ID, name, uid, IP address, and so on. The command returns a password:"
+#: ./doc/common/section_cli_nova_evacuate.xml:25(para)
+msgid "The instance is booted from a new disk, but preserves its configuration including its ID, name, uid, IP address, and so on. The command returns a password:"
 msgstr ""
 
-#: ./doc/common/section_cli_nova_evacuate.xml:42(para)
-msgid "To preserve the user disk data on the evacuated server, deploy OpenStack Compute with shared file system. To configure your system, see <link href=\"http://docs.openstack.org/havana/config-reference/content/configuring-openstack-compute-basics.html#section_configuring-compute-migrations\">Configure migrations</link> in <citetitle>OpenStack Configuration Reference</citetitle>. In this example, the password remains unchanged."
+#: ./doc/common/section_cli_nova_evacuate.xml:34(para)
+msgid "To preserve the user disk data on the evacuated server, deploy OpenStack Compute with a shared file system. To configure your system, see <link href=\"http://docs.openstack.org/havana/config-reference/content/configuring-openstack-compute-basics.html#section_configuring-compute-migrations\">Configure migrations</link> in <citetitle>OpenStack Configuration Reference</citetitle>. In the following example, the password remains unchanged:"
 msgstr ""
 
 #: ./doc/common/section_cli_cinder_read-only-volumes.xml:9(title)
@@ -11455,82 +11443,106 @@ msgid "Create a subnet:"
 msgstr ""
 
 #: ./doc/common/section_cli_neutron_manage_networks.xml:107(para)
-msgid "In the previous command, <literal>net1</literal> is the network name, <literal>192.168.2.0/24</literal> is the subnet's CIDR. They are positional arguments. <literal>--name subnet1</literal> is an unknown option, which specifies the subnet's name."
+msgid "The <placeholder-1/> command has the following positional and optional parameters:"
 msgstr ""
 
-#: ./doc/common/section_cli_neutron_manage_networks.xml:118(title)
+#: ./doc/common/section_cli_neutron_manage_networks.xml:112(para)
+msgid "The name or ID of the network to which the subnet belongs."
+msgstr ""
+
+#: ./doc/common/section_cli_neutron_manage_networks.xml:114(para)
+msgid "In this example, <literal>net1</literal> is a positional argument that specifies the network name."
+msgstr ""
+
+#: ./doc/common/section_cli_neutron_manage_networks.xml:119(para)
+msgid "The CIDR of the subnet."
+msgstr ""
+
+#: ./doc/common/section_cli_neutron_manage_networks.xml:120(para)
+msgid "In this example, <literal>192.168.2.0/24</literal> is a positional argument that specifies the CIDR."
+msgstr ""
+
+#: ./doc/common/section_cli_neutron_manage_networks.xml:126(para)
+msgid "The subnet name, which is optional."
+msgstr ""
+
+#: ./doc/common/section_cli_neutron_manage_networks.xml:128(para)
+msgid "In this example, <literal>--name subnet1</literal> specifies the name of the subnet."
+msgstr ""
+
+#: ./doc/common/section_cli_neutron_manage_networks.xml:137(title)
 msgid "Create routers"
 msgstr ""
 
-#: ./doc/common/section_cli_neutron_manage_networks.xml:121(para)
-msgid "Create a new router:"
+#: ./doc/common/section_cli_neutron_manage_networks.xml:140(para)
+msgid "Create a router:"
 msgstr ""
 
-#: ./doc/common/section_cli_neutron_manage_networks.xml:122(replaceable)
+#: ./doc/common/section_cli_neutron_manage_networks.xml:141(replaceable)
 msgid "router1"
 msgstr ""
 
-#: ./doc/common/section_cli_neutron_manage_networks.xml:134(para)
+#: ./doc/common/section_cli_neutron_manage_networks.xml:153(para)
 msgid "Take note of the unique router identifier returned, this will be required in subsequent steps."
 msgstr ""
 
-#: ./doc/common/section_cli_neutron_manage_networks.xml:138(para)
+#: ./doc/common/section_cli_neutron_manage_networks.xml:157(para)
 msgid "Link the router to the external provider network:"
 msgstr ""
 
-#: ./doc/common/section_cli_neutron_manage_networks.xml:139(replaceable) ./doc/common/section_cli_neutron_manage_networks.xml:146(replaceable)
+#: ./doc/common/section_cli_neutron_manage_networks.xml:158(replaceable) ./doc/common/section_cli_neutron_manage_networks.xml:165(replaceable)
 msgid "ROUTER"
 msgstr ""
 
-#: ./doc/common/section_cli_neutron_manage_networks.xml:139(replaceable)
+#: ./doc/common/section_cli_neutron_manage_networks.xml:158(replaceable)
 msgid "NETWORK"
 msgstr ""
 
-#: ./doc/common/section_cli_neutron_manage_networks.xml:140(para)
+#: ./doc/common/section_cli_neutron_manage_networks.xml:159(para)
 msgid "Replace <replaceable>ROUTER</replaceable> with the unique identifier of the router, replace <replaceable>NETWORK</replaceable> with the unique identifier of the external provider network."
 msgstr ""
 
-#: ./doc/common/section_cli_neutron_manage_networks.xml:145(para)
+#: ./doc/common/section_cli_neutron_manage_networks.xml:164(para)
 msgid "Link the router to the subnet:"
 msgstr ""
 
-#: ./doc/common/section_cli_neutron_manage_networks.xml:146(replaceable)
+#: ./doc/common/section_cli_neutron_manage_networks.xml:165(replaceable)
 msgid "SUBNET"
 msgstr ""
 
-#: ./doc/common/section_cli_neutron_manage_networks.xml:147(para)
+#: ./doc/common/section_cli_neutron_manage_networks.xml:166(para)
 msgid "Replace <replaceable>ROUTER</replaceable> with the unique identifier of the router, replace <replaceable>SUBNET</replaceable> with the unique identifier of the subnet."
 msgstr ""
 
-#: ./doc/common/section_cli_neutron_manage_networks.xml:154(title)
+#: ./doc/common/section_cli_neutron_manage_networks.xml:173(title)
 msgid "Create ports"
 msgstr ""
 
-#: ./doc/common/section_cli_neutron_manage_networks.xml:157(para)
+#: ./doc/common/section_cli_neutron_manage_networks.xml:176(para)
 msgid "Create a port with specified IP address:"
 msgstr ""
 
-#: ./doc/common/section_cli_neutron_manage_networks.xml:176(para)
+#: ./doc/common/section_cli_neutron_manage_networks.xml:195(para)
 msgid "In the previous command, <literal>net1</literal> is the network name, which is a positional argument. <literal>--fixed-ip ip_address=192.168.2.40</literal> is an option, which specifies the port's fixed IP address we wanted."
 msgstr ""
 
-#: ./doc/common/section_cli_neutron_manage_networks.xml:184(para)
+#: ./doc/common/section_cli_neutron_manage_networks.xml:203(para)
 msgid "Create a port without specified IP address:"
 msgstr ""
 
-#: ./doc/common/section_cli_neutron_manage_networks.xml:204(para)
+#: ./doc/common/section_cli_neutron_manage_networks.xml:223(para)
 msgid "We can see that the system will allocate one IP address if we do not specify the IP address in command line."
 msgstr ""
 
-#: ./doc/common/section_cli_neutron_manage_networks.xml:209(para)
+#: ./doc/common/section_cli_neutron_manage_networks.xml:228(para)
 msgid "Query ports with specified fixed IP addresses:"
 msgstr ""
 
-#: ./doc/common/section_cli_neutron_manage_networks.xml:218(para)
+#: ./doc/common/section_cli_neutron_manage_networks.xml:237(para)
 msgid "<literal>--fixed-ips ip_address=192.168.2.2 ip_address=192.168.2.40</literal> is one unknown option."
 msgstr ""
 
-#: ./doc/common/section_cli_neutron_manage_networks.xml:221(para)
+#: ./doc/common/section_cli_neutron_manage_networks.xml:240(para)
 msgid "<emphasis role=\"bold\">How to find unknown options?</emphasis> The unknown options can be easily found by watching the output of <literal>create_xxx</literal> or <literal>show_xxx</literal> command. For example, in the port creation command, we see the fixed_ips fields, which can be used as an unknown option."
 msgstr ""
 
@@ -11580,13 +11592,13 @@ msgstr ""
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
-#: ./doc/common/section_trusted-compute-pools.xml:48(None) ./doc/common/section_trusted-compute-pools.xml:53(None)
+#: ./doc/common/section_trusted-compute-pools.xml:45(None) ./doc/common/section_trusted-compute-pools.xml:50(None)
 msgid "@@image: 'figures/OpenStackTrustedComputePool1.png'; md5=858fbd6148b927723cea5ad2c88d54bd"
 msgstr ""
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
-#: ./doc/common/section_trusted-compute-pools.xml:163(None) ./doc/common/section_trusted-compute-pools.xml:168(None)
+#: ./doc/common/section_trusted-compute-pools.xml:150(None) ./doc/common/section_trusted-compute-pools.xml:155(None)
 msgid "@@image: 'figures/OpenStackTrustedComputePool2.png'; md5=077261c595464638c4b3fcc92b6afb9a"
 msgstr ""
 
@@ -11595,119 +11607,119 @@ msgid "Trusted compute pools"
 msgstr ""
 
 #: ./doc/common/section_trusted-compute-pools.xml:7(para)
-msgid "Trusted compute pools enable administrators to designate a group of compute hosts as trusted. These hosts use hardware-based security features, such as the Intel Trusted Execution Technology (TXT), to provide an additional level of security. Combined with an external stand-alone web-based remote attestation server, cloud providers can ensure that the compute node runs only software with verified measurements and can ensure a secure cloud stack."
+msgid "Trusted compute pools enable administrators to designate a group of compute hosts as trusted. These hosts use hardware-based security features, such as the Intel Trusted Execution Technology (TXT), to provide an additional level of security. Combined with an external stand-alone, web-based remote attestation server, cloud providers can ensure that the compute node runs only software with verified measurements and can ensure a secure cloud stack."
+msgstr ""
+
+#: ./doc/common/section_trusted-compute-pools.xml:13(para)
+msgid "Using the trusted compute pools, cloud subscribers can request services to run on verified compute nodes."
 msgstr ""
 
 #: ./doc/common/section_trusted-compute-pools.xml:15(para)
-msgid "Through the trusted compute pools, cloud subscribers can request services to run on verified compute nodes."
-msgstr ""
-
-#: ./doc/common/section_trusted-compute-pools.xml:17(para)
 msgid "The remote attestation server performs node verification as follows:"
 msgstr ""
 
-#: ./doc/common/section_trusted-compute-pools.xml:21(para)
+#: ./doc/common/section_trusted-compute-pools.xml:19(para)
 msgid "Compute nodes boot with Intel TXT technology enabled."
 msgstr ""
 
-#: ./doc/common/section_trusted-compute-pools.xml:25(para)
+#: ./doc/common/section_trusted-compute-pools.xml:23(para)
 msgid "The compute node BIOS, hypervisor, and OS are measured."
 msgstr ""
 
-#: ./doc/common/section_trusted-compute-pools.xml:29(para)
-msgid "Measured data is sent to the attestation server when challenged by attestation server."
+#: ./doc/common/section_trusted-compute-pools.xml:27(para)
+msgid "Measured data is sent to the attestation server when challenged by the attestation server."
 msgstr ""
 
-#: ./doc/common/section_trusted-compute-pools.xml:33(para)
-msgid "The attestation server verifies those measurements against a good and known database to determine nodes' trustworthiness."
+#: ./doc/common/section_trusted-compute-pools.xml:31(para)
+msgid "The attestation server verifies those measurements against a good and known database to determine node trustworthiness."
 msgstr ""
 
-#: ./doc/common/section_trusted-compute-pools.xml:38(para)
+#: ./doc/common/section_trusted-compute-pools.xml:35(para)
 msgid "A description of how to set up an attestation service is beyond the scope of this document. For an open source project that you can use to implement an attestation service, see the <link href=\"https://github.com/OpenAttestation/OpenAttestation\">Open Attestation</link> project."
 msgstr ""
 
-#: ./doc/common/section_trusted-compute-pools.xml:57(title)
+#: ./doc/common/section_trusted-compute-pools.xml:54(title)
 msgid "Configure Compute to use trusted compute pools"
 msgstr ""
 
-#: ./doc/common/section_trusted-compute-pools.xml:60(para)
-msgid "Configure the Compute service with the connection information for the attestation service."
+#: ./doc/common/section_trusted-compute-pools.xml:57(para)
+msgid "Enable scheduling support for trusted compute pools by adding the following lines in the <literal>DEFAULT</literal> section in the <filename>/etc/nova/nova.conf</filename> file:"
 msgstr ""
 
-#: ./doc/common/section_trusted-compute-pools.xml:63(para)
-msgid "Specify these connection options in the <literal>trusted_computing</literal> section in the <filename>nova.conf</filename> configuration file:"
+#: ./doc/common/section_trusted-compute-pools.xml:66(para)
+msgid "Specify the connection information for your attestation service by adding the following lines to the <literal>trusted_computing</literal> section in the <filename>/etc/nova/nova.conf</filename> file:"
 msgstr ""
 
-#: ./doc/common/section_trusted-compute-pools.xml:69(term)
+#: ./doc/common/section_trusted-compute-pools.xml:81(term)
 msgid "server"
 msgstr ""
 
-#: ./doc/common/section_trusted-compute-pools.xml:71(para)
-msgid "Host name or IP address of the host that runs the attestation service"
+#: ./doc/common/section_trusted-compute-pools.xml:83(para)
+msgid "Host name or IP address of the host that runs the attestation service."
 msgstr ""
 
-#: ./doc/common/section_trusted-compute-pools.xml:77(term)
+#: ./doc/common/section_trusted-compute-pools.xml:88(term)
 msgid "port"
 msgstr ""
 
-#: ./doc/common/section_trusted-compute-pools.xml:79(para)
-msgid "HTTPS port for the attestation service"
+#: ./doc/common/section_trusted-compute-pools.xml:90(para)
+msgid "HTTPS port for the attestation service."
 msgstr ""
 
-#: ./doc/common/section_trusted-compute-pools.xml:84(term)
+#: ./doc/common/section_trusted-compute-pools.xml:94(term)
 msgid "server_ca_file"
 msgstr ""
 
-#: ./doc/common/section_trusted-compute-pools.xml:86(para)
+#: ./doc/common/section_trusted-compute-pools.xml:96(para)
 msgid "Certificate file used to verify the attestation server's identity."
 msgstr ""
 
-#: ./doc/common/section_trusted-compute-pools.xml:91(term)
+#: ./doc/common/section_trusted-compute-pools.xml:101(term)
 msgid "api_url"
 msgstr ""
 
-#: ./doc/common/section_trusted-compute-pools.xml:93(para)
-msgid "The attestation service URL path."
+#: ./doc/common/section_trusted-compute-pools.xml:103(para)
+msgid "The attestation service's URL path."
 msgstr ""
 
-#: ./doc/common/section_trusted-compute-pools.xml:98(term)
+#: ./doc/common/section_trusted-compute-pools.xml:107(term)
 msgid "auth_blob"
 msgstr ""
 
-#: ./doc/common/section_trusted-compute-pools.xml:100(para)
+#: ./doc/common/section_trusted-compute-pools.xml:109(para)
 msgid "An authentication blob, which is required by the attestation service."
 msgstr ""
 
-#: ./doc/common/section_trusted-compute-pools.xml:108(para)
-msgid "To enable scheduling support for trusted compute pools, add the following lines to the <literal>DEFAULT</literal> and <literal>trusted_computing</literal> sections in the <filename>/etc/nova/nova.conf</filename> file. Edit the details in the <literal>trusted_computing</literal> section based on the details of your attestation service:"
-msgstr ""
-
-#: ./doc/common/section_trusted-compute-pools.xml:133(para)
+#: ./doc/common/section_trusted-compute-pools.xml:117(para)
 msgid "Restart the <systemitem class=\"service\">nova-compute</systemitem> and <systemitem class=\"service\">nova-scheduler</systemitem> services."
 msgstr ""
 
-#: ./doc/common/section_trusted-compute-pools.xml:140(title) ./doc/common/section_compute_config-api.xml:181(title)
+#: ./doc/common/section_trusted-compute-pools.xml:124(title) ./doc/common/section_compute_config-api.xml:183(title)
 msgid "Configuration reference"
 msgstr ""
 
-#: ./doc/common/section_trusted-compute-pools.xml:141(para)
-msgid "To customize the trusted compute pools, use the configuration option settings documented in <xref linkend=\"config_table_nova_trustedcomputing\"/>."
+#: ./doc/common/section_trusted-compute-pools.xml:125(para)
+msgid "To customize the trusted compute pools, use the following configuration option settings:"
 msgstr ""
 
-#: ./doc/common/section_trusted-compute-pools.xml:147(title)
+#: ./doc/common/section_trusted-compute-pools.xml:132(title)
 msgid "Specify trusted flavors"
 msgstr ""
 
-#: ./doc/common/section_trusted-compute-pools.xml:148(para)
-msgid "You must configure one or more flavors as trusted. Users can request trusted nodes by specifying a trusted flavor when they boot an instance."
+#: ./doc/common/section_trusted-compute-pools.xml:133(para)
+msgid "To designate hosts as trusted:"
 msgstr ""
 
-#: ./doc/common/section_trusted-compute-pools.xml:152(para)
-msgid "Use the <placeholder-1/> command to set a flavor as trusted. For example, to set the <literal>m1.tiny</literal> flavor as trusted:"
+#: ./doc/common/section_trusted-compute-pools.xml:136(para)
+msgid "Configure one or more flavors as trusted by using the <placeholder-1/> command. For example, to set the <literal>m1.tiny</literal> flavor as trusted:"
 msgstr ""
 
-#: ./doc/common/section_trusted-compute-pools.xml:156(para)
-msgid "To request that their instances run on a trusted host, users can specify a trusted flavor on the <placeholder-1/> command:"
+#: ./doc/common/section_trusted-compute-pools.xml:141(para)
+msgid "Request that your instance be run on a trusted host, by specifying a trusted flavor when booting the instance. For example:"
+msgstr ""
+
+#: ./doc/common/section_trusted-compute-pools.xml:145(title)
+msgid "Trusted compute pool"
 msgstr ""
 
 #: ./doc/common/section_compute-configure-ec2.xml:9(title)
@@ -13510,163 +13522,203 @@ msgstr ""
 msgid "A persistent error state may prevent the deletion of an object or container. If this happens, you will see a message such as <code>“Account &lt;name&gt; has not been reaped since &lt;date&gt;”</code> in the log. You can control when this is logged with the <code>reap_warn_after</code> value in the <code>[account-reaper]</code> section of the account-server.conf file. The default value is 30 days."
 msgstr ""
 
-#: ./doc/common/section_support-compute.xml:6(title)
+#: ./doc/common/section_support-compute.xml:11(title)
 msgid "Troubleshoot Compute"
 msgstr ""
 
-#: ./doc/common/section_support-compute.xml:7(para)
+#: ./doc/common/section_support-compute.xml:12(para)
 msgid "Common problems for Compute typically involve misconfigured networking or credentials that are not sourced properly in the environment. Also, most flat networking configurations do not enable <placeholder-1/> or <placeholder-2/> from a compute node to the instances that run on that node. Another common problem is trying to run 32-bit images on a 64-bit compute node. This section shows you how to troubleshoot Compute."
 msgstr ""
 
-#: ./doc/common/section_support-compute.xml:16(title)
+#: ./doc/common/section_support-compute.xml:21(title)
 msgid "Compute service logging"
 msgstr ""
 
-#: ./doc/common/section_support-compute.xml:17(para)
+#: ./doc/common/section_support-compute.xml:22(para)
 msgid "Compute stores a log file for each service in <filename>/var/log/nova</filename>. For example, <filename>nova-compute.log</filename> is the log for the <systemitem class=\"service\">nova-compute</systemitem> service. You can set the following options to format log strings for the nova.log module in the <filename>nova.conf</filename> file:"
 msgstr ""
 
-#: ./doc/common/section_support-compute.xml:26(literal)
+#: ./doc/common/section_support-compute.xml:31(literal)
 msgid "logging_context_format_string"
 msgstr ""
 
-#: ./doc/common/section_support-compute.xml:29(literal)
+#: ./doc/common/section_support-compute.xml:34(literal)
 msgid "logging_default_format_string"
 msgstr ""
 
-#: ./doc/common/section_support-compute.xml:32(para)
+#: ./doc/common/section_support-compute.xml:37(para)
 msgid "If the log level is set to <literal>debug</literal>, you can also specify <literal>logging_debug_format_suffix</literal> to append extra formatting. For information about what variables are available for the formatter see: <link href=\"http://docs.python.org/library/logging.html#formatter\">http://docs.python.org/library/logging.html#formatter</link>."
 msgstr ""
 
-#: ./doc/common/section_support-compute.xml:39(para)
+#: ./doc/common/section_support-compute.xml:44(para)
 msgid "You have two options for logging for OpenStack Compute based on configuration settings. In <filename>nova.conf</filename>, include the <literal>logfile</literal> option to enable logging. Alternatively you can set <literal>use_syslog=1</literal> so that the nova daemon logs to syslog."
 msgstr ""
 
-#: ./doc/common/section_support-compute.xml:47(title)
-msgid "Common errors and fixes for Compute"
+#: ./doc/common/section_support-compute.xml:52(title)
+msgid "Guru Meditation reports"
 msgstr ""
 
-#: ./doc/common/section_support-compute.xml:48(para)
-msgid "The <link href=\"ask.openstack.org\">ask.openstack.org</link> site offers a place to ask and answer questions, and you can also mark questions as frequently asked questions. This section describes some errors people have posted previously. Bugs are constantly being fixed, so online resources are a great way to get the most up-to-date errors and fixes."
+#: ./doc/common/section_support-compute.xml:53(para)
+msgid "A Guru Meditation report is sent by the Compute Service upon receipt of the <systemitem>SIGUSR1</systemitem> signal. This report is a general-purpose error report, including a complete report of the service's current state, and is sent to <systemitem>stderr</systemitem>."
 msgstr ""
 
-#: ./doc/common/section_support-compute.xml:56(title)
-msgid "Credential errors, 401, and 403 forbidden errors"
+#: ./doc/common/section_support-compute.xml:57(para)
+msgid "For example, if you redirect error output to <filename>nova-api-err.log</filename> using <placeholder-1/>, resulting in the process ID 8675, you can then run:"
+msgstr ""
+
+#: ./doc/common/section_support-compute.xml:61(para)
+msgid "This command triggers the Guru Meditation report to be printed to <filename>/var/log/nova/nova-api-err.log</filename>."
+msgstr ""
+
+#: ./doc/common/section_support-compute.xml:65(para)
+msgid "Package — Displays information about the package to which the process belongs, including version information."
+msgstr ""
+
+#: ./doc/common/section_support-compute.xml:67(para)
+msgid "Threads — Displays stack traces and thread IDs for each of the threads within the process."
+msgstr ""
+
+#: ./doc/common/section_support-compute.xml:69(para)
+msgid "Green Threads — Displays stack traces for each of the green threads within the process (green threads do not have thread IDs)."
+msgstr ""
+
+#: ./doc/common/section_support-compute.xml:71(para)
+msgid "Configuration — Lists all configuration options currently accessible through the CONF object for the current process."
 msgstr ""
 
 #: ./doc/common/section_support-compute.xml:63(para)
-msgid "<emphasis role=\"bold\">Manual method</emphasis>. Get get the <filename>novarc</filename> file from the project ZIP file, save existing credentials in case of override. and manually source the <filename>novarc</filename> file."
+msgid "The report has the following sections: <placeholder-1/>"
 msgstr ""
 
-#: ./doc/common/section_support-compute.xml:73(para)
-msgid "<emphasis role=\"bold\">Script method</emphasis>. Generates <filename>novarc</filename> from the project ZIP file and sources it for you."
+#: ./doc/common/section_support-compute.xml:74(para)
+msgid "For more information, see <link href=\"http://docs.openstack.org/developer/nova/devref/gmr.html\">Guru Meditation Reports</link>."
 msgstr ""
 
-#: ./doc/common/section_support-compute.xml:58(para)
-msgid "Missing credentials cause a <errorcode>403</errorcode><errortext>forbidden</errortext> error. To resolve this issue, use one of these methods:<placeholder-1/>"
+#: ./doc/common/section_support-compute.xml:79(title)
+msgid "Common errors and fixes for Compute"
 msgstr ""
 
 #: ./doc/common/section_support-compute.xml:80(para)
+msgid "The <link href=\"ask.openstack.org\">ask.openstack.org</link> site offers a place to ask and answer questions, and you can also mark questions as frequently asked questions. This section describes some errors people have posted previously. Bugs are constantly being fixed, so online resources are a great way to get the most up-to-date errors and fixes."
+msgstr ""
+
+#: ./doc/common/section_support-compute.xml:88(title)
+msgid "Credential errors, 401, and 403 forbidden errors"
+msgstr ""
+
+#: ./doc/common/section_support-compute.xml:95(para)
+msgid "<emphasis role=\"bold\">Manual method</emphasis>. Get get the <filename>novarc</filename> file from the project ZIP file, save existing credentials in case of override. and manually source the <filename>novarc</filename> file."
+msgstr ""
+
+#: ./doc/common/section_support-compute.xml:105(para)
+msgid "<emphasis role=\"bold\">Script method</emphasis>. Generates <filename>novarc</filename> from the project ZIP file and sources it for you."
+msgstr ""
+
+#: ./doc/common/section_support-compute.xml:90(para)
+msgid "Missing credentials cause a <errorcode>403</errorcode><errortext>forbidden</errortext> error. To resolve this issue, use one of these methods:<placeholder-1/>"
+msgstr ""
+
+#: ./doc/common/section_support-compute.xml:112(para)
 msgid "When you run <systemitem class=\"service\">nova-api</systemitem> the first time, it generates the certificate authority information, including <filename>openssl.cnf</filename>. If you start the CA services before this, you might not be able to create your ZIP file. Restart the services. When your CA information is available, create your ZIP file."
 msgstr ""
 
-#: ./doc/common/section_support-compute.xml:88(para)
+#: ./doc/common/section_support-compute.xml:120(para)
 msgid "Also, check your HTTP proxy settings to see whether they cause problems with <filename>novarc</filename> creation."
 msgstr ""
 
-#: ./doc/common/section_support-compute.xml:93(title)
+#: ./doc/common/section_support-compute.xml:125(title)
 msgid "Instance errors"
 msgstr ""
 
-#: ./doc/common/section_support-compute.xml:94(para)
+#: ./doc/common/section_support-compute.xml:126(para)
 msgid "Sometimes a particular instance shows <literal>pending</literal> or you cannot SSH to it. Sometimes the image itself is the problem. For example, when you use flat manager networking, you do not have a DHCP server and certain images do not support interface injection; you cannot connect to them. The fix for this problem is to use an image that does support this method, such as Ubuntu, which obtains an IP address correctly with FlatManager network settings."
 msgstr ""
 
-#: ./doc/common/section_support-compute.xml:104(para)
+#: ./doc/common/section_support-compute.xml:136(para)
 msgid "To troubleshoot other possible problems with an instance, such as an instance that stays in a spawning state, check the directory for the particular instance under <filename>/var/lib/nova/instances</filename> on the <systemitem class=\"service\">nova-compute</systemitem> host and make sure that these files are present:"
 msgstr ""
 
-#: ./doc/common/section_support-compute.xml:113(filename)
+#: ./doc/common/section_support-compute.xml:145(filename)
 msgid "libvirt.xml"
 msgstr ""
 
-#: ./doc/common/section_support-compute.xml:116(filename)
+#: ./doc/common/section_support-compute.xml:148(filename)
 msgid "disk"
 msgstr ""
 
-#: ./doc/common/section_support-compute.xml:119(filename)
+#: ./doc/common/section_support-compute.xml:151(filename)
 msgid "disk-raw"
 msgstr ""
 
-#: ./doc/common/section_support-compute.xml:122(filename)
+#: ./doc/common/section_support-compute.xml:154(filename)
 msgid "kernel"
 msgstr ""
 
-#: ./doc/common/section_support-compute.xml:125(filename)
+#: ./doc/common/section_support-compute.xml:157(filename)
 msgid "ramdisk"
 msgstr ""
 
-#: ./doc/common/section_support-compute.xml:128(para)
+#: ./doc/common/section_support-compute.xml:160(para)
 msgid "After the instance starts, <filename>console.log</filename>"
 msgstr ""
 
-#: ./doc/common/section_support-compute.xml:132(para)
+#: ./doc/common/section_support-compute.xml:164(para)
 msgid "If any files are missing, empty, or very small, the <systemitem class=\"service\">nova-compute</systemitem> service did not successfully download the images from the Image Service."
 msgstr ""
 
-#: ./doc/common/section_support-compute.xml:137(para)
+#: ./doc/common/section_support-compute.xml:169(para)
 msgid "Also check <filename>nova-compute.log</filename> for exceptions. Sometimes they do not appear in the console output."
 msgstr ""
 
-#: ./doc/common/section_support-compute.xml:140(para)
+#: ./doc/common/section_support-compute.xml:172(para)
 msgid "Next, check the log file for the instance in the <filename>/var/log/libvirt/qemu</filename> directory to see if it exists and has any useful error messages in it."
 msgstr ""
 
-#: ./doc/common/section_support-compute.xml:144(para)
+#: ./doc/common/section_support-compute.xml:176(para)
 msgid "Finally, from the <filename>/var/lib/nova/instances</filename> directory for the instance, see if this command returns an error:"
 msgstr ""
 
-#: ./doc/common/section_support-compute.xml:151(title)
+#: ./doc/common/section_support-compute.xml:183(title)
 msgid "Empty log output for Linux instances"
 msgstr ""
 
-#: ./doc/common/section_support-compute.xml:152(para)
+#: ./doc/common/section_support-compute.xml:184(para)
 msgid "You can view the log output of running instances from either the <guilabel>Log</guilabel> tab of the dashboard or the output of <placeholder-1/>. In some cases, the log output of a running Linux instance will be empty or only display a single character (for example, the <keycap>?</keycap> character)."
 msgstr ""
 
-#: ./doc/common/section_support-compute.xml:159(para)
+#: ./doc/common/section_support-compute.xml:191(para)
 msgid "This occurs when the Compute service attempts to retrieve the log output of the instance via a serial console while the instance itself is not configured to send output to the console. To rectify this, append the following parameters to kernel arguments specified in the instance's boot loader:"
 msgstr ""
 
-#: ./doc/common/section_support-compute.xml:166(para)
+#: ./doc/common/section_support-compute.xml:198(para)
 msgid "Upon rebooting, the instance will be configured to send output to the Compute service."
 msgstr ""
 
-#: ./doc/common/section_support-compute.xml:171(title)
+#: ./doc/common/section_support-compute.xml:203(title)
 msgid "Reset the state of an instance"
 msgstr ""
 
-#: ./doc/common/section_support-compute.xml:172(para)
+#: ./doc/common/section_support-compute.xml:204(para)
 msgid "If an instance remains in an intermediate state, such as <literal>deleting</literal>, you can use the <placeholder-1/> command to manually reset the state of an instance to an error state. You can then delete the instance. For example:"
 msgstr ""
 
-#: ./doc/common/section_support-compute.xml:179(para)
+#: ./doc/common/section_support-compute.xml:211(para)
 msgid "You can also use the <parameter>--active</parameter> parameter to force the instance back to an active state instead of an error state. For example:"
 msgstr ""
 
-#: ./doc/common/section_support-compute.xml:185(title)
+#: ./doc/common/section_support-compute.xml:217(title)
 msgid "Injection problems"
 msgstr ""
 
-#: ./doc/common/section_support-compute.xml:186(para)
+#: ./doc/common/section_support-compute.xml:218(para)
 msgid "If instances do not boot or boot slowly, investigate file injection as a cause."
 msgstr ""
 
-#: ./doc/common/section_support-compute.xml:188(para)
+#: ./doc/common/section_support-compute.xml:220(para)
 msgid "To disable injection in libvirt, set <option>libvirt_inject_partition</option> to <literal>-2</literal>."
 msgstr ""
 
-#: ./doc/common/section_support-compute.xml:192(para)
+#: ./doc/common/section_support-compute.xml:224(para)
 msgid "If you have not enabled the configuration drive and you want to make user-specified files available from the metadata server for to improve performance and avoid boot failure if injection fails, you must disable injection."
 msgstr ""
 
@@ -16534,130 +16586,130 @@ msgid "An <emphasis role=\"bold\">interval</emphasis> that specifies time frame 
 msgstr ""
 
 #: ./doc/common/section_compute_config-api.xml:79(para)
-msgid "Rate limits are applied in relative order to the HTTP method, going from least to most specific. For example, although the default threshold for POST to */servers is 50 each day, you cannot POST to */servers more than 10 times in a single minute because the rate limits for any POST is 10 each minute."
+msgid "Rate limits are applied in relative order to the HTTP method, going from least to most specific."
 msgstr ""
 
-#: ./doc/common/section_compute_config-api.xml:87(title)
+#: ./doc/common/section_compute_config-api.xml:83(title)
 msgid "Default limits"
 msgstr ""
 
-#: ./doc/common/section_compute_config-api.xml:88(para)
+#: ./doc/common/section_compute_config-api.xml:84(para)
 msgid "Normally, you install OpenStack Compute with the following limits enabled:"
 msgstr ""
 
-#: ./doc/common/section_compute_config-api.xml:91(caption)
+#: ./doc/common/section_compute_config-api.xml:87(caption)
 msgid "Default API rate limits"
 msgstr ""
 
-#: ./doc/common/section_compute_config-api.xml:94(th) ./doc/common/section_compute_config-api.xml:159(para)
+#: ./doc/common/section_compute_config-api.xml:90(th) ./doc/common/section_compute_config-api.xml:161(para)
 msgid "HTTP method"
 msgstr ""
 
-#: ./doc/common/section_compute_config-api.xml:95(th)
+#: ./doc/common/section_compute_config-api.xml:91(th)
 msgid "API URI"
 msgstr ""
 
-#: ./doc/common/section_compute_config-api.xml:96(th)
+#: ./doc/common/section_compute_config-api.xml:92(th)
 msgid "API regular expression"
 msgstr ""
 
-#: ./doc/common/section_compute_config-api.xml:97(th)
+#: ./doc/common/section_compute_config-api.xml:93(th)
 msgid "Limit"
 msgstr ""
 
-#: ./doc/common/section_compute_config-api.xml:102(td) ./doc/common/section_compute_config-api.xml:108(td)
+#: ./doc/common/section_compute_config-api.xml:98(td) ./doc/common/section_compute_config-api.xml:104(td)
 msgid "POST"
 msgstr ""
 
-#: ./doc/common/section_compute_config-api.xml:103(td) ./doc/common/section_compute_config-api.xml:115(td) ./doc/common/section_compute_config-api.xml:127(td)
+#: ./doc/common/section_compute_config-api.xml:99(td) ./doc/common/section_compute_config-api.xml:111(td) ./doc/common/section_compute_config-api.xml:123(td)
 msgid "any URI (*)"
 msgstr ""
 
-#: ./doc/common/section_compute_config-api.xml:104(td) ./doc/common/section_compute_config-api.xml:116(td) ./doc/common/section_compute_config-api.xml:128(td)
+#: ./doc/common/section_compute_config-api.xml:100(td) ./doc/common/section_compute_config-api.xml:112(td) ./doc/common/section_compute_config-api.xml:124(td)
 msgid ".*"
 msgstr ""
 
-#: ./doc/common/section_compute_config-api.xml:105(td) ./doc/common/section_compute_config-api.xml:117(td)
-msgid "10 per minute"
+#: ./doc/common/section_compute_config-api.xml:101(td) ./doc/common/section_compute_config-api.xml:107(td) ./doc/common/section_compute_config-api.xml:113(td) ./doc/common/section_compute_config-api.xml:119(td) ./doc/common/section_compute_config-api.xml:125(td)
+msgid "120 per minute"
 msgstr ""
 
-#: ./doc/common/section_compute_config-api.xml:109(td)
+#: ./doc/common/section_compute_config-api.xml:105(td)
 msgid "/servers"
 msgstr ""
 
-#: ./doc/common/section_compute_config-api.xml:110(td)
+#: ./doc/common/section_compute_config-api.xml:106(td)
 msgid "^/servers"
 msgstr ""
 
-#: ./doc/common/section_compute_config-api.xml:111(td)
-msgid "50 per day"
-msgstr ""
-
-#: ./doc/common/section_compute_config-api.xml:114(td)
+#: ./doc/common/section_compute_config-api.xml:110(td)
 msgid "PUT"
 msgstr ""
 
-#: ./doc/common/section_compute_config-api.xml:120(td)
+#: ./doc/common/section_compute_config-api.xml:116(td) ./doc/common/section_compute_config-api.xml:128(td)
 msgid "GET"
 msgstr ""
 
-#: ./doc/common/section_compute_config-api.xml:121(td)
+#: ./doc/common/section_compute_config-api.xml:117(td)
 msgid "*changes-since*"
 msgstr ""
 
-#: ./doc/common/section_compute_config-api.xml:122(td)
+#: ./doc/common/section_compute_config-api.xml:118(td)
 msgid ".*changes-since.*"
 msgstr ""
 
-#: ./doc/common/section_compute_config-api.xml:123(td)
-msgid "3 per minute"
-msgstr ""
-
-#: ./doc/common/section_compute_config-api.xml:126(td)
+#: ./doc/common/section_compute_config-api.xml:122(td)
 msgid "DELETE"
 msgstr ""
 
 #: ./doc/common/section_compute_config-api.xml:129(td)
-msgid "100 per minute"
+msgid "*/os-fping"
 msgstr ""
 
-#: ./doc/common/section_compute_config-api.xml:135(title)
+#: ./doc/common/section_compute_config-api.xml:130(td)
+msgid "^/os-fping"
+msgstr ""
+
+#: ./doc/common/section_compute_config-api.xml:131(td)
+msgid "12 per minute"
+msgstr ""
+
+#: ./doc/common/section_compute_config-api.xml:137(title)
 msgid "Configure and change limits"
 msgstr ""
 
-#: ./doc/common/section_compute_config-api.xml:136(para)
+#: ./doc/common/section_compute_config-api.xml:138(para)
 msgid "As part of the WSGI pipeline, the <filename>etc/nova/api-paste.ini</filename> file defines the actual limits."
 msgstr ""
 
-#: ./doc/common/section_compute_config-api.xml:139(para)
+#: ./doc/common/section_compute_config-api.xml:141(para)
 msgid "To enable limits, include the <option>ratelimit</option>' filter in the API pipeline specification. If the <option>ratelimit</option> filter is removed from the pipeline, limiting is disabled. You must also define the rate limit filter. The lines appear as follows:"
 msgstr ""
 
-#: ./doc/common/section_compute_config-api.xml:153(para)
+#: ./doc/common/section_compute_config-api.xml:155(para)
 msgid "To modify the limits, add a <literal>limits</literal> specification to the <literal>[filter:ratelimit]</literal> section of the file. Specify the limits in this order:"
 msgstr ""
 
-#: ./doc/common/section_compute_config-api.xml:162(para)
+#: ./doc/common/section_compute_config-api.xml:164(para)
 msgid "friendly URI"
 msgstr ""
 
-#: ./doc/common/section_compute_config-api.xml:165(para)
+#: ./doc/common/section_compute_config-api.xml:167(para)
 msgid "regex"
 msgstr ""
 
-#: ./doc/common/section_compute_config-api.xml:168(para)
+#: ./doc/common/section_compute_config-api.xml:170(para)
 msgid "limit"
 msgstr ""
 
-#: ./doc/common/section_compute_config-api.xml:171(para)
+#: ./doc/common/section_compute_config-api.xml:173(para)
 msgid "interval"
 msgstr ""
 
-#: ./doc/common/section_compute_config-api.xml:174(para)
+#: ./doc/common/section_compute_config-api.xml:176(para)
 msgid "The following example shows the default rate-limiting values:"
 msgstr ""
 
-#: ./doc/common/section_compute_config-api.xml:182(para)
+#: ./doc/common/section_compute_config-api.xml:184(para)
 msgid "The Compute API configuration options are documented in <xref linkend=\"config_table_nova_api\"/>."
 msgstr ""
 
