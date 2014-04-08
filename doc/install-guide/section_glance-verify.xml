@@ -26,7 +26,7 @@
                 <command>curl</command>:</para>
             <screen><prompt>$</prompt> <userinput>mkdir images</userinput>
 <prompt>$</prompt> <userinput>cd images/</userinput>
-<prompt>$</prompt> <userinput>wget http://cdn.download.cirros-cloud.net/0.3.1/cirros-0.3.1-x86_64-disk.img</userinput></screen>
+<prompt>$</prompt> <userinput>wget http://cdn.download.cirros-cloud.net/0.3.2/cirros-0.3.2-x86_64-disk.img</userinput></screen>
         </step>
         <step>
             <para>Upload the image to the Image Service:</para>
@@ -57,8 +57,8 @@
                                 <literal>ami</literal>.</para>
                         <para>You can verify the format using the
                                 <command>file</command> command:
-                            <screen><prompt>$</prompt> <userinput>file cirros-0.3.1-x86_64-disk.img</userinput>
-<computeroutput>cirros-0.3.1-x86_64-disk.img: QEMU QCOW Image (v2), 41126400 bytes</computeroutput></screen></para>
+                            <screen><prompt>$</prompt> <userinput>file cirros-0.3.2-x86_64-disk.img</userinput>
+<computeroutput>cirros-0.3.2-x86_64-disk.img: QEMU QCOW Image (v2), 41126400 bytes</computeroutput></screen></para>
                     </listitem>
                 </varlistentry>
                 <varlistentry>
@@ -107,14 +107,14 @@
             </variablelist>
             <para>For example:</para>
             <screen><prompt>$</prompt> <userinput>source openrc.sh</userinput>
-<prompt>$</prompt> <userinput>glance image-create --name="CirrOS 0.3.1" --disk-format=qcow2 \
-  --container-format=bare --is-public=true &lt; cirros-0.3.1-x86_64-disk.img</userinput>
+<prompt>$</prompt> <userinput>glance image-create --name="CirrOS 0.3.2" --disk-format=qcow2 \
+  --container-format=bare --is-public=true &lt; cirros-0.3.2-x86_64-disk.img</userinput>
 <computeroutput>+------------------+--------------------------------------+
 | Property         | Value                                |
 +------------------+--------------------------------------+
-| checksum         | d972013792949d0d3ba628fbe8685bce     |
+| checksum         | 64d7c1cd2b6f60c92c14662941cb7913     |
 | container_format | bare                                 |
-| created_at       | 2013-10-08T18:59:18                  |
+| created_at       | 2014-04-08T18:59:18                  |
 | deleted          | False                                |
 | deleted_at       | None                                 |
 | disk_format      | qcow2                                |
@@ -122,12 +122,12 @@
 | is_public        | True                                 |
 | min_disk         | 0                                    |
 | min_ram          | 0                                    |
-| name             | CirrOS 0.3.1                         |
+| name             | CirrOS 0.3.2                         |
 | owner            | efa984b0a914450e9a47788ad330699d     |
 | protected        | False                                |
-| size             | 13147648                             |
+| size             | 13167616                             |
 | status           | active                               |
-| updated_at       | 2013-05-08T18:59:18                  |
+| updated_at       | 2014-01-08T18:59:18                  |
 +------------------+--------------------------------------+</computeroutput></screen>
             <note>
                 <para>Because the returned image ID is generated
@@ -142,32 +142,32 @@
             <screen><computeroutput>+--------------------------------------+-----------------+-------------+------------------+----------+--------+
 | ID                                   | Name            | Disk Format | Container Format | Size     | Status |
 +--------------------------------------+-----------------+-------------+------------------+----------+--------+
-| acafc7c0-40aa-4026-9673-b879898e1fc2 | CirrOS 0.3.1    | qcow2       | bare             | 13147648 | active |
+| acafc7c0-40aa-4026-9673-b879898e1fc2 | CirrOS 0.3.2    | qcow2       | bare             |  13167616| active |
 +--------------------------------------+-----------------+-------------+------------------+----------+--------+</computeroutput></screen>
         </step>
     </procedure>
     <para>Alternatively, the upload to the Image Service can be done without having to use local disk space to store the file, by use of the <parameter>--copy-from</parameter> parameter.</para>
     <para>For example:</para>
-    <screen><prompt>$</prompt> <userinput>glance image-create --name="CirrOS 0.3.1" --disk-format=qcow2 \
+    <screen><prompt>$</prompt> <userinput>glance image-create --name="CirrOS 0.3.2" --disk-format=qcow2 \
   --container-format=bare --is-public=true \
-  --copy-from http://cdn.download.cirros-cloud.net/0.3.1/cirros-0.3.1-x86_64-disk.img</userinput>
+  --copy-from http://cdn.download.cirros-cloud.net/0.3.2/cirros-0.3.2-x86_64-disk.img</userinput>
 <computeroutput>+------------------+--------------------------------------+
 | Property         | Value                                |
 +------------------+--------------------------------------+
-| checksum         | d972013792949d0d3ba628fbe8685bce     |
+| checksum         | 64d7c1cd2b6f60c92c14662941cb7913     |
 | container_format | bare                                 |
-| created_at       | 2014-03-05T06:13:18                  |
+| created_at       | 2014-04-08T06:13:18                  |
 | deleted          | False                                |
 | disk_format      | qcow2                                |
 | id               | 3cce1e32-0971-4958-9719-1f92064d4f54 |
 | is_public        | True                                 |
 | min_disk         | 0                                    |
 | min_ram          | 0                                    |
-| name             | CirrOS 0.3.1                         |
+| name             | CirrOS 0.3.2                         |
 | owner            | e519b772cb43474582fa303da62559e5     |
 | protected        | False                                |
-| size             | 13147648                             |
+| size             | 13167616                             |
 | status           | active                               |
-| updated_at       | 2014-03-05T06:13:20                  |
+| updated_at       | 2014-04-08T06:13:20                  |
 +------------------+--------------------------------------+</computeroutput></screen>
 </section>
