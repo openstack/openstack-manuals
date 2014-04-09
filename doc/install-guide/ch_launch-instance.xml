@@ -3,212 +3,27 @@
   xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
   xml:id="launch-instance">
   <title>Launch an instance</title>
-  <para>An instance is a virtual machine that OpenStack provisions on
-    a Compute server. This example shows you how to launch a
-    low-resource instance by using a downloaded image.</para>
-  <para>If you followed the step-by-step instructions in this guide,
-    you can launch an instance after you meet these
-    prerequisites:</para>
-  <itemizedlist>
-    <listitem>
-      <para>Installed the nova client library on the machine on which
-        you will run the commands (log on the controller if you are
-        not sure).</para>
-    </listitem>
-    <listitem>
-      <para>Set environment variables to specify your credentials. See
-          <xref linkend="keystone-verify"/>.</para>
-    </listitem>
-    <listitem>
-      <para>Downloaded an image. See <xref linkend="glance-verify"
-        />.</para>
-    </listitem>
-    <listitem>
-      <para>Configured networking. See <xref linkend="ch_networking"
-        />.</para>
-    </listitem>
-  </itemizedlist>
-  <procedure>
-    <step>
-      <para>Generate a keypair that consists of a private and public
-        key to be able to launch instances on OpenStack. These keys
-        are injected into the instances to make password-less SSH
-        access to the instance. This depends on the way the necessary
-        tools are bundled into the images. For more details, see the
-          <link
-          xlink:href="http://docs.openstack.org/user-guide-admin/content/cli_manage_images.html"
-            ><citetitle>OpenStack Admin User
-        Guide</citetitle></link>.</para>
-      <screen><prompt>$</prompt> <userinput>ssh-keygen</userinput>
-<prompt>$</prompt> <userinput>nova keypair-add --pub-key ~/.id_rsa.pub mykey</userinput></screen>
-      <para>You have just created the <literal>mykey</literal>
-        keypair. The <literal>id_rsa</literal> private key is saved
-        locally in <filename>~/.ssh</filename>, which you can use to
-        connect to an instance launched by using mykey as the keypair.
-        To view available keypairs:</para>
-      <screen><prompt>$</prompt> <userinput>nova keypair-list</userinput>
-<computeroutput>+--------+-------------------------------------------------+
-|  Name  |                   Fingerprint                   |
-+--------+-------------------------------------------------+
-| mykey  | b0:18:32:fa:4e:d4:3c:1b:c4:6c:dd:cb:53:29:13:82 |
-+--------+-------------------------------------------------+</computeroutput></screen>
-    </step>
-    <step>
-      <para>To launch an instance, you must specify the ID for the
-        flavor you want to use for the instance. A flavor is a
-        resource allocation profile. For example, it specifies how
-        many virtual CPUs and how much RAM your instance gets. To see
-        a list of the available profiles:</para>
-      <screen><prompt>$</prompt> <userinput>nova flavor-list</userinput>
-<computeroutput>+----+-----------+-----------+------+-----------+------+-------+-------------+-----------+
-| ID | Name      | Memory_MB | Disk | Ephemeral | Swap | VCPUs | RXTX_Factor | Is_Public |
-+----+-----------+-----------+------+-----------+------+-------+-------------+-----------+
-| 1  | m1.tiny   | 512       | 1    | 0         |      | 1     | 1.0         | True      |
-| 2  | m1.small  | 2048      | 20   | 0         |      | 1     | 1.0         | True      |
-| 3  | m1.medium | 4096      | 40   | 0         |      | 2     | 1.0         | True      |
-| 4  | m1.large  | 8192      | 80   | 0         |      | 4     | 1.0         | True      |
-| 5  | m1.xlarge | 16384     | 160  | 0         |      | 8     | 1.0         | True      |
-+----+-----------+-----------+------+-----------+------+-------+-------------+-----------+</computeroutput></screen>
-    </step>
-    <step>
-      <para>Get the name of the image to use for the instance:</para>
-      <screen><prompt>$</prompt> <userinput>nova image-list</userinput>
-<computeroutput>+--------------------------------------+--------------+--------+--------+
-| ID                                   | Name         | Status | Server |
-+--------------------------------------+--------------+--------+--------+
-| 9e5c2bee-0373-414c-b4af-b91b0246ad3b | CirrOS 0.3.2 | ACTIVE |        |
-+--------------------------------------+--------------+--------+--------+</computeroutput></screen>
-    </step>
-    <step>
-      <para>To use SSH and ping, you must configure security group
-        rules. See the <link
-          xlink:href="http://docs.openstack.org/user-guide/content/"
-            ><citetitle>OpenStack User
-        Guide</citetitle></link>.</para>
-      <screen><prompt>$</prompt> <userinput>nova secgroup-add-rule <replaceable>default</replaceable> tcp 22 22 0.0.0.0/0</userinput></screen>
-      <screen><prompt>$</prompt> <userinput>nova secgroup-add-rule <replaceable>default</replaceable> icmp -1 -1 0.0.0.0/0</userinput></screen>
-    </step>
-    <step>
-      <para>Use a command like this to launch the instance:</para>
-      <screen><prompt>$</prompt> <userinput>nova boot --flavor <replaceable>flavorType</replaceable> --key-name <replaceable>keypairName</replaceable> --image <replaceable>ID</replaceable> <replaceable>newInstanceName</replaceable></userinput> </screen>
-      <para>Create an instance by using flavor 1 or 2. For
-        example:</para>
-      <screen><prompt>$</prompt> <userinput>nova boot --flavor 1 --key-name mykey --image "CirrOS 0.3.2" --security-group default</userinput>
-<computeroutput>+--------------------------------------+--------------------------------------+
-| Property                             | Value                                |
-+--------------------------------------+--------------------------------------+
-| OS-EXT-STS:task_state                | scheduling                           |
-| image                                | CirrOS 0.3.2                         |
-| OS-EXT-STS:vm_state                  | building                             |
-| OS-EXT-SRV-ATTR:instance_name        | instance-00000001                    |
-| OS-SRV-USG:launched_at               | None                                 |
-| flavor                               | m1.tiny                              |
-| id                                   | 3bdf98a0-c767-4247-bf41-2d147e4aa043 |
-| security_groups                      | [{u'name': u'default'}]              |
-| user_id                              | 530166901fa24d1face95cda82cfae56     |
-| OS-DCF:diskConfig                    | MANUAL                               |
-| accessIPv4                           |                                      |
-| accessIPv6                           |                                      |
-| progress                             | 0                                    |
-| OS-EXT-STS:power_state               | 0                                    |
-| OS-EXT-AZ:availability_zone          | nova                                 |
-| config_drive                         |                                      |
-| status                               | BUILD                                |
-| updated                              | 2013-10-10T06:47:26Z                 |
-| hostId                               |                                      |
-| OS-EXT-SRV-ATTR:host                 | None                                 |
-| OS-SRV-USG:terminated_at             | None                                 |
-| key_name                             | mykey                                |
-| OS-EXT-SRV-ATTR:hypervisor_hostname  | None                                 |
-| name                                 | cirrOS                               |
-| adminPass                            | DWCDW6FnsKNq                         |
-| tenant_id                            | e66d97ac1b704897853412fc8450f7b9     |
-| created                              | 2013-10-10T06:47:23Z                 |
-| os-extended-volumes:volumes_attached | []                                   |
-| metadata                             | {}                                   |
-+--------------------------------------+--------------------------------------+</computeroutput></screen>
-      <note>
-        <para>If sufficient RAM is not available for the instance,
-          Compute creates, but does not start, the instance and sets
-          the status for the instance to
-          <literal>ERROR</literal>.</para>
-      </note>
-    </step>
-    <step>
-      <para>After the instance launches, use the <command>nova
-          list</command> to view its status. The status changes from
-          <literal>BUILD</literal> to
-        <literal>ACTIVE</literal>:</para>
-      <screen><prompt>$</prompt> <userinput>nova list</userinput>
-<computeroutput>+--------------------------------------+-----------+--------+------------+-------------+----------------+
-| ID                                   | Name      | Status | Task State | Power State | Networks       |
-+--------------------------------------+-----------+--------+------------+-------------+----------------+
-| dcc4a894-869b-479a-a24a-659eef7a54bd | cirrOS    | BUILD  | spawning   | NOSTATE     | vmnet=10.0.0.3 |
-+--------------------------------------+-----------+--------+------------+-------------+----------------+
-</computeroutput><prompt>$</prompt> <userinput>nova list</userinput>
-<computeroutput>+--------------------------------------+-----------+--------+------------+-------------+----------------+
-| ID                                   | Name      | Status | Task State | Power State | Networks       |
-+--------------------------------------+-----------+--------+------------+-------------+----------------+
-| dcc4a894-869b-479a-a24a-659eef7a54bd | cirrOS    | ACTIVE | None       | Running     | vmnet=10.0.0.3 |
-+--------------------------------------+-----------+--------+------------+-------------+----------------+</computeroutput>
-</screen>
-      <note>
-        <para>To show details for a specified instance:</para>
-        <screen><prompt>$</prompt> <userinput>nova show dcc4a894-869b-479a-a24a-659eef7a54bd</userinput>
-<computeroutput>+--------------------------------------+----------------------------------------------------------+
-| Property                             | Value                                                    |
-+--------------------------------------+----------------------------------------------------------+
-| status                               | ACTIVE                                                   |
-| updated                              | 2013-10-16T21:55:24Z                                     |
-| OS-EXT-STS:task_state                | None                                                     |
-| OS-EXT-SRV-ATTR:host                 | compute-node                                             |
-| key_name                             | mykey                                                    |
-| image                                | cirros (918a1017-8a1b-41ff-8809-6106ba45366e)            |
-| vmnet network                        | 10.0.0.3                                                 |
-| hostId                               | 306d7c693911170ad4e5218f626f531cc68caa45f3a0f70f1aeba94d |
-| OS-EXT-STS:vm_state                  | active                                                   |
-| OS-EXT-SRV-ATTR:instance_name        | instance-0000000a                                        |
-| OS-SRV-USG:launched_at               | 2013-10-16T21:55:24.000000                               |
-| OS-EXT-SRV-ATTR:hypervisor_hostname  | compute-node                                             |
-| flavor                               | m1.tiny (1)                                              |
-| id                                   | dcc4a894-869b-479a-a24a-659eef7a54bd                     |
-| security_groups                      | [{u'name': u'default'}]                                  |
-| OS-SRV-USG:terminated_at             | None                                                     |
-| user_id                              | 887ac8736b5b473b9dc3c5430a88b15f                         |
-| name                                 | cirrOS                                                   |
-| created                              | 2013-10-16T21:54:52Z                                     |
-| tenant_id                            | 43ab520b2b484578bb6924c0ea926190                         |
-| OS-DCF:diskConfig                    | MANUAL                                                   |
-| metadata                             | {}                                                       |
-| os-extended-volumes:volumes_attached | []                                                       |
-| accessIPv4                           |                                                          |
-| accessIPv6                           |                                                          |
-| progress                             | 0                                                        |
-| OS-EXT-STS:power_state               | 1                                                        |
-| OS-EXT-AZ:availability_zone          | nova                                                     |
-| config_drive                         |                                                          |
-+--------------------------------------+----------------------------------------------------------+</computeroutput></screen>
-      </note>
-    </step>
-    <step>
-      <para>After the instance boots and initializes and you have
-        configured security groups, you can <command>ssh</command>
-        into the instance without a password by using the keypair you
-        specified in the <command>nova boot</command> command. Use the
-          <command>nova list</command> command to get the IP address
-        for the instance. You do not need to specify the private key
-        because it was stored in the default location,
-        <filename>~/.ssh/id_rsa</filename>, for the
-          <command>ssh</command> client.</para>
-      <note>
-        <para>If using a CirrOS image to spawn an instance you must
-          log in as the <literal>cirros</literal>, and not the
-            <literal>root</literal>, user.</para>
-        <para>You can also log in to the <literal>cirros</literal>
-          account without an ssh key by using the
-            <literal>cubswin:)</literal> password:</para>
-        <screen><prompt>$</prompt> <userinput>ssh cirros@10.0.0.3</userinput></screen>
-      </note>
-    </step>
-  </procedure>
+  <para>An instance is a VM that OpenStack provisions on a compute node.
+    This guide shows you how to launch a minimal instance using the
+    <glossterm>CirrOS</glossterm> image that you added to your environment
+    in the <xref linkend="ch_glance"/> chapter. In these steps, you use the
+    command-line interface (CLI) on your controller node or any system with
+    the appropriate OpenStack client libraries. To use the dashboard, see the
+    <link
+      xlink:href="http://docs.openstack.org/user-guide/content/ch_dashboard.html">
+    <citetitle>OpenStack User Guide</citetitle></link>.</para>
+  <para>Launch an instance using
+    <link linkend="launch-instance-neutron">Networking (neutron)</link> or
+    <link linkend="launch-instance-nova">legacy networking (nova-network)</link>. For more
+    information, see the
+    <link
+      xlink:href="http://docs.openstack.org/user-guide/content/cli_launch_instances.html">
+    <citetitle>OpenStack User Guide</citetitle></link>.</para>
+  <note>
+    <para>These steps reference example components created in previous
+      chapters. You must adjust certain values such as IP addresses to
+      match your environment.</para>
+  </note>
+  <xi:include href="section_launch-instance-neutron.xml"/>
+  <xi:include href="section_launch-instance-nova.xml"/>
 </chapter>

@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+  xml:id="launch-instance-neutron">
+  <title>Launch an instance with Networking (neutron)</title>
+  <procedure>
+    <title>To generate a keypair</title>
+    <para>Most cloud images support
+      <glossterm>public key authentication</glossterm> rather than conventional
+      username/password authentication. Before launching an instance, you must
+      generate a public/private key pair using <command>ssh-keygen</command>
+      and add the public key to your OpenStack environment.</para>
+    <step>
+      <para>Source the <literal>demo</literal> tenant credentials:</para>
+      <screen><prompt>$</prompt> <userinput>source demo-openrc.sh</userinput></screen>
+    </step>
+    <step>
+      <para>Generate a key pair:</para>
+      <screen><prompt>$</prompt> <userinput>ssh-keygen</userinput></screen>
+    </step>
+    <step>
+      <para>Add the public key to your OpenStack environment:</para>
+      <screen><prompt>$</prompt> <userinput>nova keypair-add --pub-key ~/.ssh/id_rsa.pub demo-key</userinput></screen>
+      <note>
+        <para>This command provides no output.</para>
+      </note>
+    </step>
+    <step>
+      <para>Verify addition of the public key:</para>
+      <screen><prompt>$</prompt> <userinput>nova keypair-list</userinput>
+<computeroutput>+----------+-------------------------------------------------+
+| Name     | Fingerprint                                     |
++----------+-------------------------------------------------+
+| demo-key | 6c:74:ec:3a:08:05:4e:9e:21:22:a6:dd:b2:62:b8:28 |
++----------+-------------------------------------------------+</computeroutput></screen>
+    </step>
+  </procedure>
+  <procedure>
+    <title>To launch an instance</title>
+    <para>To launch an instance, you must at least specify the flavor, image
+      name, network, security group, key, and instance name.</para>
+    <step>
+      <para>A flavor specifies a virtual resource allocation profile which
+        includes processor, memory, and storage.</para>
+      <para>List available flavors:</para>
+      <screen><prompt>$</prompt> <userinput>nova flavor-list</userinput>
+<computeroutput>+----+-----------+-----------+------+-----------+------+-------+-------------+-----------+
+| ID | Name      | Memory_MB | Disk | Ephemeral | Swap | VCPUs | RXTX_Factor | Is_Public |
++----+-----------+-----------+------+-----------+------+-------+-------------+-----------+
+| 1  | m1.tiny   | 512       | 1    | 0         |      | 1     | 1.0         | True      |
+| 2  | m1.small  | 2048      | 20   | 0         |      | 1     | 1.0         | True      |
+| 3  | m1.medium | 4096      | 40   | 0         |      | 2     | 1.0         | True      |
+| 4  | m1.large  | 8192      | 80   | 0         |      | 4     | 1.0         | True      |
+| 5  | m1.xlarge | 16384     | 160  | 0         |      | 8     | 1.0         | True      |
++----+-----------+-----------+------+-----------+------+-------+-------------+-----------+</computeroutput></screen>
+    <para>Your first instance uses the <literal>m1.tiny</literal>
+      flavor.</para>
+    <note>
+      <para>You can also reference a flavor by ID.</para>
+    </note>
+    </step>
+    <step>
+      <para>List available images:</para>
+      <screen><prompt>$</prompt> <userinput>nova image-list</userinput>
+<computeroutput>+--------------------------------------+---------------------+--------+--------+
+| ID                                   | Name                | Status | Server |
++--------------------------------------+---------------------+--------+--------+
+| e4d5edea-f07e-4faa-8390-b71e9b747267 | cirros-0.3.2-x86_64 | ACTIVE |        |
++--------------------------------------+---------------------+--------+--------+</computeroutput></screen>
+      <para>Your first instance uses the
+        <literal>cirros-0.3.2-x86_64</literal> image.</para>
+    </step>
+    <step>
+      <para>List available networks:</para>
+      <screen><prompt>$</prompt> <userinput>neutron net-list</userinput>
+<computeroutput>+--------------------------------------+----------+-------------------------------------------------------+
+| id                                   | name     | subnets                                               |
++--------------------------------------+----------+-------------------------------------------------------+
+| 3c612b5a-d1db-498a-babb-a4c50e344cb1 | demo-net | 20bcd3fd-5785-41fe-ac42-55ff884e3180 192.168.1.0/24   |
+| 9bce64a3-a963-4c05-bfcd-161f708042d1 | ext-net  | b54a8d85-b434-4e85-a8aa-74873841a90d 203.0.113.0/24   |
++--------------------------------------+----------+-------------------------------------------------------+</computeroutput></screen>
+      <para>Your first instance uses the <literal>demo-net</literal> tenant
+        network. However, you must reference this network using the ID instead
+        of the name.</para>
+    </step>
+    <step>
+      <para>List available security groups:</para>
+      <screen><prompt>$</prompt> <userinput>nova secgroup-list</userinput>
+<computeroutput>+--------------------------------------+---------+-------------+
+| Id                                   | Name    | Description |
++--------------------------------------+---------+-------------+
+| ad8d4ea5-3cad-4f7d-b164-ada67ec59473 | default | default     |
++--------------------------------------+---------+-------------+</computeroutput></screen>
+      <para>Your first instance uses the <literal>default</literal> security
+        group. By default, this security group implements a firewall that
+        blocks remote access to instances. If you would like to permit
+        remote access to your instance, launch it and then
+        <link linkend="launch-instance-neutron-remoteaccess">
+          configure remote access</link>.</para>
+    </step>
+    <step>
+      <para>Launch the instance:</para>
+      <para>Replace <replaceable>DEMO_NET_ID</replaceable> with the ID of the
+        <literal>demo-net</literal> tenant network.</para>
+      <screen><prompt>$</prompt> <userinput>nova boot --flavor m1.tiny --image cirros-0.3.2-x86_64 --nic net-id=<replaceable>DEMO_NET_ID</replaceable> \
+  --security-group default --key-name demo-key <replaceable>demo-instance1</replaceable></userinput>
+<computeroutput>+--------------------------------------+------------------------------------------------------------+
+| Property                             | Value                                                      |
++--------------------------------------+------------------------------------------------------------+
+| OS-DCF:diskConfig                    | MANUAL                                                     |
+| OS-EXT-AZ:availability_zone          | nova                                                       |
+| OS-EXT-STS:power_state               | 0                                                          |
+| OS-EXT-STS:task_state                | scheduling                                                 |
+| OS-EXT-STS:vm_state                  | building                                                   |
+| OS-SRV-USG:launched_at               | -                                                          |
+| OS-SRV-USG:terminated_at             | -                                                          |
+| accessIPv4                           |                                                            |
+| accessIPv6                           |                                                            |
+| adminPass                            | vFW7Bp8PQGNo                                               |
+| config_drive                         |                                                            |
+| created                              | 2014-04-09T19:24:27Z                                       |
+| flavor                               | m1.tiny (1)                                                |
+| hostId                               |                                                            |
+| id                                   | 05682b91-81a1-464c-8f40-8b3da7ee92c5                       |
+| image                                | cirros-0.3.1-x86_64 (e4d5edea-f07e-4faa-8390-b71e9b747267) |
+| key_name                             | demo-key                                                   |
+| metadata                             | {}                                                         |
+| name                                 | demo-instance1                                             |
+| os-extended-volumes:volumes_attached | []                                                         |
+| progress                             | 0                                                          |
+| security_groups                      | default                                                    |
+| status                               | BUILD                                                      |
+| tenant_id                            | 7cf50047f8df4824bc76c2fdf66d11ec                           |
+| updated                              | 2014-04-09T19:24:27Z                                       |
+| user_id                              | 0e47686e72114d7182f7569d70c519c9                           |
++--------------------------------------+------------------------------------------------------------+</computeroutput></screen>
+    </step>
+    <step>
+      <para>Check the status of your instance:</para>
+      <screen><prompt>$</prompt> <userinput>nova list</userinput>
+<computeroutput>+--------------------------------------+----------------+--------+------------+-------------+-------------------------+
+| ID                                   | Name           | Status | Task State | Power State | Networks                |
++--------------------------------------+----------------+--------+------------+-------------+-------------------------+
+| 05682b91-81a1-464c-8f40-8b3da7ee92c5 | demo-instance1 | ACTIVE | -          | Running     | demo-net=192.168.1.3    |
++--------------------------------------+----------------+--------+------------+-------------+-------------------------+</computeroutput></screen>
+      <para>The status changes from <literal>BUILD</literal> to
+        <literal>ACTIVE</literal> when your instance finishes the build
+        process.</para>
+    </step>
+  </procedure>
+  <procedure>
+    <title>To access your instance using a virtual console</title>
+    <step>
+      <para>Obtain a <glossterm>Virtual Network Computing (VNC)</glossterm>
+        session URL for your instance and access it from a web browser:</para>
+      <screen><prompt>$</prompt> <userinput>nova get-vnc-console <replaceable>demo-instance1</replaceable> novnc</userinput>
+<computeroutput>+-------+------------------------------------------------------------------------------------+
+| Type  | Url                                                                                |
++-------+------------------------------------------------------------------------------------+
+| novnc | http://controller:6080/vnc_auto.html?token=2f6dd985-f906-4bfc-b566-e87ce656375b    |
++-------+------------------------------------------------------------------------------------+</computeroutput></screen>
+      <note>
+        <para>If your web browser runs on a host that cannot resolve the
+          <replaceable>controller</replaceable> host name, you can replace
+          <replaceable>controller</replaceable> with the IP address of the
+          management interface on your controller node.</para>
+      </note>
+      <para>The CirrOS image includes conventional username/password
+        authentication and provides these credentials at the login prompt.
+        After logging into CirrOS, we recommend that you verify network
+        connectivity using <command>ping</command>.</para>
+      <para>Verify the <literal>demo-net</literal> tenant network
+        gateway:</para>
+      <screen><prompt>$</prompt> <userinput>ping -c 4 192.168.1.1</userinput>
+<computeroutput>PING 192.168.1.1 (192.168.1.1) 56(84) bytes of data.
+64 bytes from 192.168.1.1: icmp_req=1 ttl=64 time=0.357 ms
+64 bytes from 192.168.1.1: icmp_req=2 ttl=64 time=0.473 ms
+64 bytes from 192.168.1.1: icmp_req=3 ttl=64 time=0.504 ms
+64 bytes from 192.168.1.1: icmp_req=4 ttl=64 time=0.470 ms
+
+--- 192.168.1.1 ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 2998ms
+rtt min/avg/max/mdev = 0.357/0.451/0.504/0.055 ms</computeroutput></screen>
+      <para>Verify the <literal>ext-net</literal> external network:</para>
+      <screen><prompt>$</prompt> <userinput>ping -c 4 openstack.org</userinput>
+<computeroutput>PING openstack.org (174.143.194.225) 56(84) bytes of data.
+64 bytes from 174.143.194.225: icmp_req=1 ttl=53 time=17.4 ms
+64 bytes from 174.143.194.225: icmp_req=2 ttl=53 time=17.5 ms
+64 bytes from 174.143.194.225: icmp_req=3 ttl=53 time=17.7 ms
+64 bytes from 174.143.194.225: icmp_req=4 ttl=53 time=17.5 ms
+
+--- openstack.org ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 3003ms
+rtt min/avg/max/mdev = 17.431/17.575/17.734/0.143 ms</computeroutput></screen>
+    </step>
+  </procedure>
+  <procedure xml:id="launch-instance-neutron-remoteaccess">
+    <title>To access your instance remotely</title>
+    <step>
+      <para>Add rules to the <literal>default</literal> security group:</para>
+      <substeps>
+        <step>
+          <para>Permit <glossterm>ICMP</glossterm> (ping):</para>
+          <screen><prompt>$</prompt> <userinput>nova secgroup-add-rule default icmp -1 -1 0.0.0.0/0</userinput>
+<computeroutput>+-------------+-----------+---------+-----------+--------------+
+| IP Protocol | From Port | To Port | IP Range  | Source Group |
++-------------+-----------+---------+-----------+--------------+
+| icmp        | -1        | -1      | 0.0.0.0/0 |              |
++-------------+-----------+---------+-----------+--------------+</computeroutput></screen>
+        </step>
+        <step>
+          <para>Permit secure shell (SSH) access:</para>
+          <screen><prompt>$</prompt> <userinput>nova secgroup-add-rule default tcp 22 22 0.0.0.0/0</userinput>
+<computeroutput>+-------------+-----------+---------+-----------+--------------+
+| IP Protocol | From Port | To Port | IP Range  | Source Group |
++-------------+-----------+---------+-----------+--------------+
+| tcp         | 22        | 22      | 0.0.0.0/0 |              |
++-------------+-----------+---------+-----------+--------------+</computeroutput></screen>
+        </step>
+      </substeps>
+    </step>
+    <step>
+      <para>Create a <glossterm>floating IP address</glossterm> on the
+        <literal>ext-net</literal> external network:</para>
+      <screen><prompt>$</prompt> <userinput>neutron floatingip-create ext-net</userinput>
+<computeroutput>Created a new floatingip:
++---------------------+--------------------------------------+
+| Field               | Value                                |
++---------------------+--------------------------------------+
+| fixed_ip_address    |                                      |
+| floating_ip_address | 203.0.113.102                        |
+| floating_network_id | 9bce64a3-a963-4c05-bfcd-161f708042d1 |
+| id                  | 05e36754-e7f3-46bb-9eaa-3521623b3722 |
+| port_id             |                                      |
+| router_id           |                                      |
+| status              | DOWN                                 |
+| tenant_id           | 7cf50047f8df4824bc76c2fdf66d11ec     |
++---------------------+--------------------------------------+</computeroutput></screen>
+    </step>
+    <step>
+      <para>Associate the floating IP address with your instance:</para>
+      <screen><prompt>$</prompt> <userinput>nova floating-ip-associate demo-instance1 203.0.113.102</userinput></screen>
+      <note>
+        <para>This command provides no output.</para>
+      </note>
+    </step>
+    <step>
+      <para>Check the status of your floating IP address:</para>
+      <screen><prompt>$</prompt> <userinput>nova list</userinput>
+<computeroutput>+--------------------------------------+----------------+--------+------------+-------------+-----------------------------------------+
+| ID                                   | Name           | Status | Task State | Power State | Networks                                |
++--------------------------------------+----------------+--------+------------+-------------+-----------------------------------------+
+| 05682b91-81a1-464c-8f40-8b3da7ee92c5 | demo-instance1 | ACTIVE | -          | Running     | demo-net=192.168.1.3, 203.0.113.102     |
++--------------------------------------+----------------+--------+------------+-------------+-----------------------------------------+</computeroutput></screen>
+    </step>
+    <step>
+      <para>Verify network connectivity using <command>ping</command> from the
+        controller node or any host on the external network:</para>
+      <screen><prompt>$</prompt> <userinput>ping -c 4 203.0.113.102</userinput>
+<computeroutput>PING 203.0.113.102 (203.0.113.112) 56(84) bytes of data.
+64 bytes from 203.0.113.102: icmp_req=1 ttl=63 time=3.18 ms
+64 bytes from 203.0.113.102: icmp_req=2 ttl=63 time=0.981 ms
+64 bytes from 203.0.113.102: icmp_req=3 ttl=63 time=1.06 ms
+64 bytes from 203.0.113.102: icmp_req=4 ttl=63 time=0.929 ms
+
+--- 203.0.113.102 ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 3002ms
+rtt min/avg/max/mdev = 0.929/1.539/3.183/0.951 ms</computeroutput></screen>
+    </step>
+    <step>
+      <para>Access your instance using SSH from the controller node or any
+        host on the external network:</para>
+      <screen><prompt>$</prompt> <userinput>ssh cirros@203.0.113.102</userinput>
+<computeroutput>The authenticity of host '203.0.113.102 (203.0.113.102)' can't be established.
+RSA key fingerprint is ed:05:e9:e7:52:a0:ff:83:68:94:c7:d1:f2:f8:e2:e9.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added '203.0.113.102' (RSA) to the list of known hosts.
+$</computeroutput></screen>
+      <note>
+        <para>If your host does not contain the public/private key pair created
+        in an earlier step, SSH prompts for the default password associated
+        with the <literal>cirros</literal> user.</para>
+      </note>
+    </step>
+  </procedure>
+  <para>If your instance does not launch or seem to work as you expect, see the
+    <link xlink:href="http://docs.openstack.org/ops">
+     <citetitle>OpenStack Operations Guide</citetitle></link> for more
+    information or use one of the
+    <link linkend="app_community_support">many other options</link> to seek
+    assistance. We want your environment to work!</para>
+</section>
