@@ -3,9 +3,8 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="1.0">
     <title>Configure a multiple-storage back-end</title>
-    <para>This section presents the multi back-end storage feature
-        introduced with the Grizzly release. Multi back-end allows the
-        creation of several back-end storage solutions serving the
+    <para>With multiple storage back-ends configured, you can create
+        several back-end storage solutions serving the
         same OpenStack Compute configuration. Basically, multi
         back-end launches one <systemitem class="service"
             >cinder-volume</systemitem> for each back-end.</para>
@@ -95,15 +94,6 @@ volume_backend_name=LVM_iSCSI_b</programlisting>
             pick the best back-end to handle the request, and
             explicitly creates volumes on specific back-ends through
             the use of volume types.</para>
-        <note>
-            <para>To enable the filter scheduler, add this line to the
-                    <filename>cinder.conf</filename> configuration
-                file:</para>
-            <programlisting language="ini">scheduler_driver=cinder.scheduler.filter_scheduler.FilterScheduler</programlisting>
-            <para>While the Block Storage Scheduler defaults to
-                    <option>filter_scheduler</option> in Grizzly, this
-                setting is not required.</para>
-        </note>
         <!-- TODO: when filter/weighing scheduler documentation will be up, a ref should be added here -->
     </simplesect>
     <simplesect>
