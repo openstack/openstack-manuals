@@ -14,8 +14,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenStack Manuals\n"
-"POT-Creation-Date: 2014-04-08 18:10+0000\n"
-"PO-Revision-Date: 2014-04-08 18:11+0000\n"
+"POT-Creation-Date: 2014-04-10 03:22+0000\n"
+"PO-Revision-Date: 2014-04-09 06:56+0000\n"
 "Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
 "Language-Team: Korean (Korea) (http://www.transifex.com/projects/p/openstack/language/ko_KR/)\n"
 "MIME-Version: 1.0\n"
@@ -415,6 +415,22 @@ msgid ""
 "services. The following sections introduce Block Storage service components "
 "and concepts and show you how to configure and install the Block Storage "
 "service."
+msgstr ""
+
+#: ./doc/install-guide/ch_cinder.xml19(title)
+#: ./doc/install-guide/ch_swift.xml30(title)
+#: ./doc/install-guide/ch_networking.xml63(title)
+#: ./doc/install-guide/ch_horizon.xml38(title)
+#: ./doc/install-guide/ch_ceilometer.xml18(title)
+#: ./doc/install-guide/ch_heat.xml14(title)
+msgid "Next steps"
+msgstr ""
+
+#: ./doc/install-guide/ch_cinder.xml20(para)
+msgid ""
+"Your OpenStack environment now includes Block Storage. You can <link linkend"
+"=\"launch-instance\">launch an instance</link> or add more services to your "
+"environment in the following chapters."
 msgstr ""
 
 #: ./doc/install-guide/section_nova-kvm.xml5(title)
@@ -2085,12 +2101,19 @@ msgstr "데비안 오픈스택 꾸러미는 이에 대한 자동화를 제공하
 msgid "Add Object Storage"
 msgstr "오브젝트 스토리지 추가"
 
-#: ./doc/install-guide/ch_swift.xml8(para)
+#: ./doc/install-guide/ch_swift.xml7(para)
 msgid ""
 "The OpenStack Object Storage services work together to provide object "
 "storage and retrieval through a REST API. For this example architecture, you"
 " must have already installed the Identity Service, also known as Keystone."
 msgstr "오픈스택 오브젝트 저장소 서비스는 오픈스택 저장소를 제공하고 REST API를 통해 가져다 주기 위해 서로 함께 동작합니다. 이 예제 아키텍처에서는 키스톤으로 알려진 인증 서비스를 먼저 설치해야 합니다."
+
+#: ./doc/install-guide/ch_swift.xml31(para)
+msgid ""
+"Your OpenStack environment now includes Object Storage. You can <link "
+"linkend=\"launch-instance\">launch an instance</link> or add more services "
+"to your environment in the following chapters."
+msgstr ""
 
 #: ./doc/install-guide/section_neutron-concepts.xml8(title)
 msgid "Neutron concepts"
@@ -2793,6 +2816,173 @@ msgid ""
 "respectively."
 msgstr "noVNC를 지원하는 브라우저 정보는 <link href=\"https://github.com/kanaka/noVNC/blob/master/README.md\">https://github.com/kanaka/noVNC/blob/master/README.md</link>와 <link href=\"https://github.com/kanaka/noVNC/wiki/Browser-support\">https://github.com/kanaka/noVNC/wiki/Browser-support</link>를 각각 참고하십시오."
 
+#: ./doc/install-guide/ch_launch-instance.xml5(title)
+#: ./doc/install-guide/section_nova-boot.xml5(title)
+msgid "Launch an instance"
+msgstr "인스턴스 실행"
+
+#: ./doc/install-guide/ch_launch-instance.xml6(para)
+msgid ""
+"An instance is a virtual machine that OpenStack provisions on a Compute "
+"server. This example shows you how to launch a low-resource instance by "
+"using a downloaded image."
+msgstr ""
+
+#: ./doc/install-guide/ch_launch-instance.xml9(para)
+msgid ""
+"If you followed the step-by-step instructions in this guide, you can launch "
+"an instance after you meet these prerequisites:"
+msgstr ""
+
+#: ./doc/install-guide/ch_launch-instance.xml14(para)
+#: ./doc/install-guide/section_nova-boot.xml19(para)
+msgid ""
+"Installed the nova client library on the machine on which you will run the "
+"commands (log on the controller if you are not sure)."
+msgstr "여러분이 (확실하지 않으면 controller에 로그온하세요) 명령을 실행하는 머신에 Nova 클라이언트 라이브러리를 설치했습니다."
+
+#: ./doc/install-guide/ch_launch-instance.xml19(para)
+#: ./doc/install-guide/section_nova-boot.xml24(para)
+msgid ""
+"Set environment variables to specify your credentials. See <xref linkend"
+"=\"keystone-verify\"/>."
+msgstr "인증 정보를 지정하는 환경 변수를 설정하십시오. <xref linkend=\"keystone-verify\"/>을(를) 참조하십시오."
+
+#: ./doc/install-guide/ch_launch-instance.xml23(para)
+#: ./doc/install-guide/section_nova-boot.xml28(para)
+msgid "Downloaded an image. See <xref linkend=\"glance-verify\"/>."
+msgstr "이미지를 다운로드 했습니다. <xref linkend=\"glance-verify\"/>을(를) 참조하십시오."
+
+#: ./doc/install-guide/ch_launch-instance.xml27(para)
+#: ./doc/install-guide/section_nova-boot.xml32(para)
+msgid "Configured networking. See <xref linkend=\"ch_networking\"/>."
+msgstr ""
+
+#: ./doc/install-guide/ch_launch-instance.xml33(para)
+#: ./doc/install-guide/section_nova-boot.xml39(para)
+msgid ""
+"Generate a keypair that consists of a private and public key to be able to "
+"launch instances on OpenStack. These keys are injected into the instances to"
+" make password-less SSH access to the instance. This depends on the way the "
+"necessary tools are bundled into the images. For more details, see the <link"
+" href=\"http://docs.openstack.org/user-guide-"
+"admin/content/cli_manage_images.html\"><citetitle>OpenStack Admin User "
+"Guide</citetitle></link>."
+msgstr "오픈스택에서 인스턴스를 실행할 수 있게 하려면 개인키 공용키로 이루어진 키 쌍을 만드십시오. 이 키는 암호를 사용하지 않는 인스턴스로의 SSH 접근을 가능케 하도록 인스턴스에 들어갑니다. 이미지에 딸려들어간 필수 도구에 따라 달려있습니다. 자세한 내용은 <link href=\"http://docs.openstack.org/user-guide-admin/content/cli_manage_images.html\"><citetitle>오픈스택 관리 사용자 안내서</citetitle></link>를 살펴보십시오."
+
+#: ./doc/install-guide/ch_launch-instance.xml44(para)
+#: ./doc/install-guide/section_nova-boot.xml50(para)
+msgid ""
+"You have just created the <literal>mykey</literal> keypair. The "
+"<literal>id_rsa</literal> private key is saved locally in "
+"<filename>~/.ssh</filename>, which you can use to connect to an instance "
+"launched by using mykey as the keypair. To view available keypairs:"
+msgstr "<literal>mykey</literal> 키 쌍을 만들었습니다. <literal>id_rsa</literal> 개인키는  mykey를 키 쌍으로 사용하여 실행하는 인스턴스에 연결하는데 사용할 수 있도록 <filename>~/.ssh</filename> 로컬 디렉터리에 저장했습니다. 존재하는 키 쌍을 보려면:"
+
+#: ./doc/install-guide/ch_launch-instance.xml57(para)
+#: ./doc/install-guide/section_nova-boot.xml63(para)
+msgid ""
+"To launch an instance, you must specify the ID for the flavor you want to "
+"use for the instance. A flavor is a resource allocation profile. For "
+"example, it specifies how many virtual CPUs and how much RAM your instance "
+"gets. To see a list of the available profiles:"
+msgstr "인스턴스를 실행하려면. 인스턴스에 사용하려는 가상 머신 인스턴스 형식(flavor)에 대한 ID를 지정해야 합니다. 가상 머신 인스턴스 형식(flavor)은 자원 할당 프로파일입니다. 예를 들어 가상 CPU를 몇개 사용할 것인지, 인스턴스에서 사용할 RAM 용량이 어느정도 될지를 지정합니다. 가용 프로파일 목록을 보려면:"
+
+#: ./doc/install-guide/ch_launch-instance.xml74(para)
+msgid "Get the name of the image to use for the instance:"
+msgstr ""
+
+#: ./doc/install-guide/ch_launch-instance.xml83(para)
+#: ./doc/install-guide/section_nova-boot.xml89(para)
+msgid ""
+"To use SSH and ping, you must configure security group rules. See the <link "
+"href=\"http://docs.openstack.org/user-guide/content/\"><citetitle>OpenStack "
+"User Guide</citetitle></link>."
+msgstr "SSH와 ping을 사용하려면 보안 그룹 규칙을 설정해야 합니다. link href=\"http://docs.openstack.org/user-guide/content/\"><citetitle>오픈스택 사용자 안내서</citetitle></link>를 참조하십시오."
+
+#: ./doc/install-guide/ch_launch-instance.xml88(replaceable)
+#: ./doc/install-guide/ch_launch-instance.xml89(replaceable)
+#: ./doc/install-guide/section_nova-boot.xml94(replaceable)
+#: ./doc/install-guide/section_nova-boot.xml95(replaceable)
+msgid "default"
+msgstr "기본"
+
+#: ./doc/install-guide/ch_launch-instance.xml92(para)
+msgid "Use a command like this to launch the instance:"
+msgstr ""
+
+#: ./doc/install-guide/ch_launch-instance.xml93(replaceable)
+#: ./doc/install-guide/section_nova-boot.xml99(replaceable)
+msgid "flavorType"
+msgstr "flavorType"
+
+#: ./doc/install-guide/ch_launch-instance.xml93(replaceable)
+#: ./doc/install-guide/section_nova-boot.xml99(replaceable)
+msgid "keypairName"
+msgstr "keypairName"
+
+#: ./doc/install-guide/ch_launch-instance.xml93(replaceable)
+#: ./doc/install-guide/section_nova-boot.xml99(replaceable)
+#: ./doc/install-guide/app_reserved_uids.xml29(th)
+msgid "ID"
+msgstr "ID"
+
+#: ./doc/install-guide/ch_launch-instance.xml93(replaceable)
+#: ./doc/install-guide/section_nova-boot.xml99(replaceable)
+msgid "newInstanceName"
+msgstr "newInstanceName"
+
+#: ./doc/install-guide/ch_launch-instance.xml94(para)
+#: ./doc/install-guide/section_nova-boot.xml100(para)
+msgid "Create an instance by using flavor 1 or 2. For example:"
+msgstr "취향 1 또는 2를 사용하여 인스턴스를 다음과 같이 만드십시오:"
+
+#: ./doc/install-guide/ch_launch-instance.xml131(para)
+#: ./doc/install-guide/section_nova-boot.xml137(para)
+msgid ""
+"If sufficient RAM is not available for the instance, Compute creates, but "
+"does not start, the instance and sets the status for the instance to "
+"<literal>ERROR</literal>."
+msgstr "인스턴스에 충분한 RAM이 없다면, 처리 노드를 만들지만, 시작할 수 없으며, 인스턴스와 인스턴스의 설정 상태는 <literal>ERROR</literal>가 됩니다."
+
+#: ./doc/install-guide/ch_launch-instance.xml138(para)
+#: ./doc/install-guide/section_nova-boot.xml144(para)
+msgid ""
+"After the instance launches, use the <placeholder-1/> to view its status. "
+"The status changes from <literal>BUILD</literal> to "
+"<literal>ACTIVE</literal>:"
+msgstr "인스턴스를 실행하고 나서 상태를 보려면 <placeholder-1/>을(를) 사용하십시오. <literal>BUILD</literal> 상태에서 <literal>ACTIVE</literal> 상태로 바뀝니다:"
+
+#: ./doc/install-guide/ch_launch-instance.xml156(para)
+#: ./doc/install-guide/section_nova-boot.xml162(para)
+msgid "To show details for a specified instance:"
+msgstr "지정 인스턴스의 세부 사항을 표시하려면:"
+
+#: ./doc/install-guide/ch_launch-instance.xml194(para)
+msgid ""
+"After the instance boots and initializes and you have configured security "
+"groups, you can <placeholder-1/> into the instance without a password by "
+"using the keypair you specified in the <placeholder-2/> command. Use the "
+"<placeholder-3/> command to get the IP address for the instance. You do not "
+"need to specify the private key because it was stored in the default "
+"location, <filename>~/.ssh/id_rsa</filename>, for the <placeholder-4/> "
+"client."
+msgstr ""
+
+#: ./doc/install-guide/ch_launch-instance.xml204(para)
+#: ./doc/install-guide/section_nova-boot.xml210(para)
+msgid ""
+"If using a CirrOS image to spawn an instance you must log in as the "
+"<literal>cirros</literal>, and not the <literal>root</literal>, user."
+msgstr "인스턴스를 배포하는데 CirrOS 이미지를 사용한다면, <literal>root</literal> 사용자가 아닌 <literal>cirros</literal> 사용자로 로그인해야 합니다."
+
+#: ./doc/install-guide/ch_launch-instance.xml207(para)
+#: ./doc/install-guide/section_nova-boot.xml213(para)
+msgid ""
+"You can also log in to the <literal>cirros</literal> account without an ssh "
+"key by using the <literal>cubswin:)</literal> password:"
+msgstr "<literal>cubswin:)</literal> 암호를 사용하여 ssh 키 없이 <literal>cirros</literal> 계정에 로그인 할 수도 있습니다."
+
 #: ./doc/install-guide/section_neutron-ml2-controller-node.xml8(title)
 #: ./doc/install-guide/section_neutron-controller-node.xml8(title)
 msgid "Configure controller node"
@@ -3203,10 +3393,6 @@ msgstr "네트워킹 서비스를 시작하고 시스템을 부팅할 때 시작
 msgid "Restart the Networking service:"
 msgstr "네트워킹 서비스를 다시 시작하십시오:"
 
-#: ./doc/install-guide/section_nova-boot.xml5(title)
-msgid "Launch an instance"
-msgstr "인스턴스 실행"
-
 #: ./doc/install-guide/section_nova-boot.xml7(para)
 #: ./doc/install-guide/ch_networking.xml17(para)
 #: ./doc/install-guide/ch_basics.xml7(para)
@@ -3228,111 +3414,13 @@ msgstr "처리부 서비스를 설정하고 나면 인스턴스를 실행할 수
 msgid "This procedure assumes you have:"
 msgstr "이 과정에서는 다음 사항을 가정합니다:"
 
-#: ./doc/install-guide/section_nova-boot.xml19(para)
-msgid ""
-"Installed the nova client library on the machine on which you will run the "
-"commands (log on the controller if you are not sure)."
-msgstr "여러분이 (확실하지 않으면 controller에 로그온하세요) 명령을 실행하는 머신에 Nova 클라이언트 라이브러리를 설치했습니다."
-
-#: ./doc/install-guide/section_nova-boot.xml24(para)
-msgid ""
-"Set environment variables to specify your credentials. See <xref linkend"
-"=\"keystone-verify\"/>."
-msgstr "인증 정보를 지정하는 환경 변수를 설정하십시오. <xref linkend=\"keystone-verify\"/>을(를) 참조하십시오."
-
-#: ./doc/install-guide/section_nova-boot.xml28(para)
-msgid "Downloaded an image. See <xref linkend=\"glance-verify\"/>."
-msgstr "이미지를 다운로드 했습니다. <xref linkend=\"glance-verify\"/>을(를) 참조하십시오."
-
-#: ./doc/install-guide/section_nova-boot.xml32(para)
-msgid "Configured networking. See <xref linkend=\"ch_networking\"/>."
-msgstr ""
-
-#: ./doc/install-guide/section_nova-boot.xml39(para)
-msgid ""
-"Generate a keypair that consists of a private and public key to be able to "
-"launch instances on OpenStack. These keys are injected into the instances to"
-" make password-less SSH access to the instance. This depends on the way the "
-"necessary tools are bundled into the images. For more details, see the <link"
-" href=\"http://docs.openstack.org/user-guide-"
-"admin/content/cli_manage_images.html\"><citetitle>OpenStack Admin User "
-"Guide</citetitle></link>."
-msgstr "오픈스택에서 인스턴스를 실행할 수 있게 하려면 개인키 공용키로 이루어진 키 쌍을 만드십시오. 이 키는 암호를 사용하지 않는 인스턴스로의 SSH 접근을 가능케 하도록 인스턴스에 들어갑니다. 이미지에 딸려들어간 필수 도구에 따라 달려있습니다. 자세한 내용은 <link href=\"http://docs.openstack.org/user-guide-admin/content/cli_manage_images.html\"><citetitle>오픈스택 관리 사용자 안내서</citetitle></link>를 살펴보십시오."
-
-#: ./doc/install-guide/section_nova-boot.xml50(para)
-msgid ""
-"You have just created the <literal>mykey</literal> keypair. The "
-"<literal>id_rsa</literal> private key is saved locally in "
-"<filename>~/.ssh</filename>, which you can use to connect to an instance "
-"launched by using mykey as the keypair. To view available keypairs:"
-msgstr "<literal>mykey</literal> 키 쌍을 만들었습니다. <literal>id_rsa</literal> 개인키는  mykey를 키 쌍으로 사용하여 실행하는 인스턴스에 연결하는데 사용할 수 있도록 <filename>~/.ssh</filename> 로컬 디렉터리에 저장했습니다. 존재하는 키 쌍을 보려면:"
-
-#: ./doc/install-guide/section_nova-boot.xml63(para)
-msgid ""
-"To launch an instance, you must specify the ID for the flavor you want to "
-"use for the instance. A flavor is a resource allocation profile. For "
-"example, it specifies how many virtual CPUs and how much RAM your instance "
-"gets. To see a list of the available profiles:"
-msgstr "인스턴스를 실행하려면. 인스턴스에 사용하려는 가상 머신 인스턴스 형식(flavor)에 대한 ID를 지정해야 합니다. 가상 머신 인스턴스 형식(flavor)은 자원 할당 프로파일입니다. 예를 들어 가상 CPU를 몇개 사용할 것인지, 인스턴스에서 사용할 RAM 용량이 어느정도 될지를 지정합니다. 가용 프로파일 목록을 보려면:"
-
 #: ./doc/install-guide/section_nova-boot.xml80(para)
 msgid "Get the ID of the image to use for the instance:"
 msgstr "인스턴스에 사용할 이미지 ID를 가져오려면:"
 
-#: ./doc/install-guide/section_nova-boot.xml89(para)
-msgid ""
-"To use SSH and ping, you must configure security group rules. See the <link "
-"href=\"http://docs.openstack.org/user-guide/content/\"><citetitle>OpenStack "
-"User Guide</citetitle></link>."
-msgstr "SSH와 ping을 사용하려면 보안 그룹 규칙을 설정해야 합니다. link href=\"http://docs.openstack.org/user-guide/content/\"><citetitle>오픈스택 사용자 안내서</citetitle></link>를 참조하십시오."
-
-#: ./doc/install-guide/section_nova-boot.xml94(replaceable)
-#: ./doc/install-guide/section_nova-boot.xml95(replaceable)
-msgid "default"
-msgstr "기본"
-
 #: ./doc/install-guide/section_nova-boot.xml98(para)
 msgid "Launch the instance:"
 msgstr "인스턴스를 실행하십시오:"
-
-#: ./doc/install-guide/section_nova-boot.xml99(replaceable)
-msgid "flavorType"
-msgstr "flavorType"
-
-#: ./doc/install-guide/section_nova-boot.xml99(replaceable)
-msgid "keypairName"
-msgstr "keypairName"
-
-#: ./doc/install-guide/section_nova-boot.xml99(replaceable)
-#: ./doc/install-guide/app_reserved_uids.xml29(th)
-msgid "ID"
-msgstr "ID"
-
-#: ./doc/install-guide/section_nova-boot.xml99(replaceable)
-msgid "newInstanceName"
-msgstr "newInstanceName"
-
-#: ./doc/install-guide/section_nova-boot.xml100(para)
-msgid "Create an instance by using flavor 1 or 2. For example:"
-msgstr "취향 1 또는 2를 사용하여 인스턴스를 다음과 같이 만드십시오:"
-
-#: ./doc/install-guide/section_nova-boot.xml137(para)
-msgid ""
-"If sufficient RAM is not available for the instance, Compute creates, but "
-"does not start, the instance and sets the status for the instance to "
-"<literal>ERROR</literal>."
-msgstr "인스턴스에 충분한 RAM이 없다면, 처리 노드를 만들지만, 시작할 수 없으며, 인스턴스와 인스턴스의 설정 상태는 <literal>ERROR</literal>가 됩니다."
-
-#: ./doc/install-guide/section_nova-boot.xml144(para)
-msgid ""
-"After the instance launches, use the <placeholder-1/> to view its status. "
-"The status changes from <literal>BUILD</literal> to "
-"<literal>ACTIVE</literal>:"
-msgstr "인스턴스를 실행하고 나서 상태를 보려면 <placeholder-1/>을(를) 사용하십시오. <literal>BUILD</literal> 상태에서 <literal>ACTIVE</literal> 상태로 바뀝니다:"
-
-#: ./doc/install-guide/section_nova-boot.xml162(para)
-msgid "To show details for a specified instance:"
-msgstr "지정 인스턴스의 세부 사항을 표시하려면:"
 
 #: ./doc/install-guide/section_nova-boot.xml200(para)
 msgid ""
@@ -3344,18 +3432,6 @@ msgid ""
 "location, <filename>~/.ssh/.id_rsa</filename>, for the <placeholder-4/> "
 "client."
 msgstr "인스턴스를 부팅하고 초기화가 끝난 후 보안 그룹을 설정하고 나면 <placeholder-2/> 명령으로 정의한 키 쌍을 사용하여 암호 없이 인스턴스에 <placeholder-1/> 할 수 있습니다. 인스턴스의 IP 주소를 가져오려면 <placeholder-3/> 명령을 사용하십시오. placeholder-4/> 클라이언트에 대해 <filename>~/.ssh/.id_rsa</filename> 기본 위치에 개인 키를 저장하였기 때문에 개인키를 따로 지정할 필요가 없습니다."
-
-#: ./doc/install-guide/section_nova-boot.xml210(para)
-msgid ""
-"If using a CirrOS image to spawn an instance you must log in as the "
-"<literal>cirros</literal>, and not the <literal>root</literal>, user."
-msgstr "인스턴스를 배포하는데 CirrOS 이미지를 사용한다면, <literal>root</literal> 사용자가 아닌 <literal>cirros</literal> 사용자로 로그인해야 합니다."
-
-#: ./doc/install-guide/section_nova-boot.xml213(para)
-msgid ""
-"You can also log in to the <literal>cirros</literal> account without an ssh "
-"key by using the <literal>cubswin:)</literal> password:"
-msgstr "<literal>cubswin:)</literal> 암호를 사용하여 ssh 키 없이 <literal>cirros</literal> 계정에 로그인 할 수도 있습니다."
 
 #: ./doc/install-guide/section_keystone-services.xml4(title)
 msgid "Define services and API endpoints"
@@ -4222,6 +4298,14 @@ msgstr ""
 msgid "Legacy networking"
 msgstr "레거시 네트워킹"
 
+#: ./doc/install-guide/ch_networking.xml64(para)
+msgid ""
+"Your OpenStack environment now includes the core components necessary to "
+"launch a basic instance. You can <link linkend=\"launch-instance\">launch an"
+" instance</link> or add more services to your environment in the following "
+"chapters."
+msgstr ""
+
 #: ./doc/install-guide/ch_horizon.xml6(title)
 msgid "Add the dashboard"
 msgstr "대시보드 추가"
@@ -4268,6 +4352,13 @@ msgid ""
 "sessions\"/>."
 msgstr "대시보드의 세션 스토리지를 설정하십시오. <xref linkend=\"dashboard-sessions\"/>을 참조하십시오."
 
+#: ./doc/install-guide/ch_horizon.xml39(para)
+msgid ""
+"Your OpenStack environment now includes the dashboard. You can <link linkend"
+"=\"launch-instance\">launch an instance</link> or add more services to your "
+"environment in the following chapters."
+msgstr ""
+
 #: ./doc/install-guide/section_heat-verify.xml6(title)
 msgid "Verify the Orchestration service installation"
 msgstr "오케스트레이션 서비스 설치 확인"
@@ -4287,11 +4378,18 @@ msgstr "다음, 샘플을 활용하여 몇가지 스택을 만드십시오."
 msgid "Add the Telemetry module"
 msgstr "Telemetry 모듈 추가"
 
-#: ./doc/install-guide/ch_ceilometer.xml8(para)
+#: ./doc/install-guide/ch_ceilometer.xml7(para)
 msgid ""
 "Telemetry provides a framework for monitoring and metering the OpenStack "
 "cloud. It is also known as the Ceilometer project."
 msgstr "텔레메트리는 오픈스택 클라우드 상태를 감시하고 측정하는 프레임워크를 제공합니다. 세일로메터 프로젝트로도 알려져있습니다."
+
+#: ./doc/install-guide/ch_ceilometer.xml19(para)
+msgid ""
+"Your OpenStack environment now includes Telemetry. You can <link linkend"
+"=\"launch-instance\">launch an instance</link> or add more services to your "
+"environment in the previous chapters."
+msgstr ""
 
 #: ./doc/install-guide/ch_keystone.xml6(title)
 msgid "Configure the Identity Service"
@@ -4306,6 +4404,13 @@ msgid ""
 "Use the Orchestration module to create cloud resources using a template "
 "language called HOT. The integrated project name is Heat."
 msgstr "HOT라고 하는 양식 언어를 사용하여 클라우드 자원을 만들려면 오케스트레이션 모듈을 사용하십시오. 통합 프로젝트 이름은 Heat입니다."
+
+#: ./doc/install-guide/ch_heat.xml15(para)
+msgid ""
+"Your OpenStack environment now includes Orchestration. You can <link linkend"
+"=\"launch-instance\">launch an instance</link> or add more services to your "
+"environment in the following chapters."
+msgstr ""
 
 #. When image changes, this message will be marked fuzzy or untranslated for
 #. you.
