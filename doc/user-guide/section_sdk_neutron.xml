@@ -5,108 +5,163 @@
     xml:id="sdk_neutron_apis">
     <title>Networking</title>
     <?dbhtml stop-chunking?>
-  <para>To use the information in this section, you should
-    have a general understanding of OpenStack Networking,
-    OpenStack Compute, and the integration between the two. You
-    should also have access to a plug-in that implements the
-    Networking API v2.0.</para>
+    <para>To use the information in this section, you should have a
+        general understanding of OpenStack Networking, OpenStack
+        Compute, and the integration between the two. You should also
+        have access to a plug-in that implements the Networking API
+        v2.0.</para>
     <section xml:id="sdk_neutron_env">
-      <title>Set environment variables</title>
-      <para>Make sure that you set the relevant environment variables
-      appropriately.</para>
-    <para>As an example, see the sample shell file that sets the
-      variables used to get credentials:</para>
-      <programlisting language="bash">export OS_USERNAME="<replaceable>admin</replaceable>"
+        <title>Set environment variables</title>
+        <para>Make sure that you set the relevant environment
+            variables.</para>
+        <para>As an example, see the sample shell file that sets these
+            variables to get credentials:</para>
+        <programlisting language="bash">export OS_USERNAME="admin"
 export OS_PASSWORD="<replaceable>password</replaceable>"
 export OS_TENANT_NAME="admin"
 export OS_AUTH_URL="http://<replaceable>IPADDRESS</replaceable>/v2.0"</programlisting>
     </section>
-    <section xml:id="sdk_neutron_common_code">
-      <title>Get credentials</title>
-      <para>The examples in this section use the following common <code>get_credentials</code> method:</para>
-      <programlisting language="python">def get_credentials():
+    <section xml:id="sdk_neutron_get_credentials">
+        <title>Get credentials</title>
+        <para>The examples in this section use the
+                <code>get_credentials</code> method:</para>
+        <programlisting language="python">def get_credentials():
     d = {}
     d['username'] = os.environ['OS_USERNAME']
     d['password'] = os.environ['OS_PASSWORD']
     d['auth_url'] = os.environ['OS_AUTH_URL']
     d['tenant_name'] = os.environ['OS_TENANT_NAME']
     return d</programlisting>
-      <para>This code is assumed to exist in the <filename>credentials.py</filename> file, which all
-      samples import.</para>
+        <para>This code resides in the
+                <filename>credentials.py</filename> file, which all
+            samples import.</para>
+        <para>Use the <code>get_credentials()</code> method to
+            populate and get a dictionary:</para>
+        <programlisting language="python">credentials = get_credentials()</programlisting>
     </section>
-    <?hard-pagebreak?>
-    <section xml:id="sdk_neutron_create_network">
-      <title>Create network</title>
-      <para>The following program creates a network:</para>
-      <programlisting language="python">from neutronclient.v2_0 import client
-from credentials import get_credentials
-from utils import print_networks
+     <section xml:id="sdk_neutron_get_nova_credentials">
+        <title>Get Nova Credentials</title>
+        <para>Few examples in this section use the
+                <code>get_nova_credentials</code> method:</para>
+        <programlisting language="python">def get_nova_credentials():
+    d = {}
+    d['username'] = os.environ['OS_USERNAME']
+    d['api_key'] = os.environ['OS_PASSWORD']
+    d['auth_url'] = os.environ['OS_AUTH_URL']
+    d['project_id'] = os.environ['OS_TENANT_NAME']
+    return d</programlisting>
+        <para>This code resides in the
+                <filename>credentials.py</filename> file, which all
+            samples import.</para>
+        <para>Use the <code>get_nova_credentials()</code> method to
+            populate and get a dictionary:</para>
+        <programlisting language="python">nova_credentials = get_nova_credentials()
+        </programlisting>
+    </section>
+     <section xml:id="sdk_neutron_print_values">
+        <title>Print Values</title>
+        <para>The examples in this section use the
+            <code>print_values</code> and <code>print_values_server</code>
+            methods:</para>
+        <programlisting language="python">def print_values(val, type):
+    if type == 'ports':
+        val_list = val['ports']
+    if type == 'networks':
+        val_list = val['networks']
+    if type == 'routers':
+        val_list = val['routers']
+    for p in val_list:
+        for k, v in p.items():
+            print("%s : %s" % (k, v))
+        print('\n')
 
-network_name = "sample_network"
+
+def print_values_server(val, server_id, type):
+    if type == 'ports':
+        val_list = val['ports']
+
+    if type == 'networks':
+        val_list = val['networks']
+    for p in val_list:
+        bool = False
+        for k, v in p.items():
+            if k == 'device_id' and v == server_id:
+                bool = True
+        if bool:
+            for k, v in p.items():
+                print("%s : %s" % (k, v))
+            print('\n')</programlisting>
+        <para>This code resides in the
+        <filename>utils.py</filename> file, which all samples import.</para>
+    </section>
+    <section xml:id="sdk_neutron_create_network">
+        <title>Create network</title>
+        <para>The following program creates a network:</para>
+        <programlisting language="python">#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+from neutronclient.v2_0 import client
+from credentials import get_credentials
+
+network_name = 'sample_network'
 credentials = get_credentials()
 neutron = client.Client(**credentials)
 try:
-    body_sample = {
-        "network":
-        {
-           "name": network_name,
-           "admin_state_up": True
-        }
-       }
+    body_sample = {'network': {'name': network_name,
+                   'admin_state_up': True}}
+
     netw = neutron.create_network(body=body_sample)
     net_dict = netw['network']
     network_id = net_dict['id']
-    print "Network %s created" % network_id
+    print('Network %s created' % network_id)
 
-    body_create_subnet = {
-      "subnets":[
-          {
-             "cidr":"192.168.199.0/24",
-             "ip_version":4,
-             "network_id": network_id
-          }
-      ]
-    }
+    body_create_subnet = {'subnets': [{'cidr': '192.168.199.0/24',
+                          'ip_version': 4, 'network_id': network_id}]}
 
     subnet = neutron.create_subnet(body=body_create_subnet)
-    print "Created subnet %s" % subnet
+    print('Created subnet %s' % subnet)
 finally:
-    print "Execution completed"
-    #neutron.delete_network(network_id)
-    #print "Deleted Network %s" %network_id</programlisting>
+    print("Execution completed")</programlisting>
     </section>
     <section xml:id="sdk_neutron_list_networks">
-      <title>List networks</title>
-      <para>The following program lists networks:</para>
-      <programlisting language="python">from neutronclient.v2_0 import client
+        <title>List networks</title>
+        <para>The following program lists networks:</para>
+        <programlisting language="python">#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+from neutronclient.v2_0 import client
 from credentials import get_credentials
 from utils import print_values
-
 
 credentials = get_credentials()
 neutron = client.Client(**credentials)
 netw = neutron.list_networks()
 
 print_values(netw, 'networks')</programlisting>
+        <para>For <code>print_values</code> see <xref
+          linkend="sdk_neutron_print_values"/>.
+        </para>
     </section>
     <section xml:id="sdk_neutron_create_port">
-      <title>Create port</title>
-      <para>The following program creates a port:</para>
-      <programlisting language="python">from neutronclient.v2_0 import client
+        <title>Create ports</title>
+        <para>The following program creates a port:</para>
+        <programlisting language="python">#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+from neutronclient.v2_0 import client
 import novaclient.v1_1.client as nvclient
 from credentials import get_credentials
-from utils import print_values_server
 from credentials import get_nova_credentials
 
 credentials = get_nova_credentials()
 nova_client = nvclient.Client(**credentials)
 
-#replace with server_id and network_id from your environment
+# Replace with server_id and network_id from your environment
 
 server_id = '9a52795a-a70d-49a8-a5d0-5b38d78bd12d'
 network_id = 'ce5d204a-93f5-43ef-bd89-3ab99ad09a9a'
 server_detail = nova_client.servers.get(server_id)
-print server_detail.id
+print(server_detail.id)
 
 if server_detail != None:
     credentials = get_credentials()
@@ -121,31 +176,382 @@ if server_detail != None:
                       }
                  }
     response = neutron.create_port(body=body_value)
-    print response</programlisting>
+    print(response)</programlisting>
+    <para>For <code>get_nova_credentials</code> see <xref
+          linkend="sdk_neutron_get_nova_credentials"/>.
+    </para>
+     <para>For <code>get_credentials</code> see <xref
+          linkend="sdk_neutron_get_credentials"/>.
+     </para>
     </section>
     <section xml:id="sdk_neutron_list_ports">
-      <title>List ports</title>
-      <para>The following program lists ports:</para>
-      <programlisting language="python">from neutronclient.v2_0 import client
+        <title>List ports</title>
+        <para>The following program lists ports:</para>
+        <programlisting language="python">#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+from neutronclient.v2_0 import client
 from credentials import get_credentials
 from utils import print_values
 
 credentials = get_credentials()
 neutron = client.Client(**credentials)
 ports = neutron.list_ports()
-print print_values(ports, 'ports')</programlisting>
+print_values(ports, 'ports')</programlisting>
+    <para>For <code>get_credentials</code> see <xref
+          linkend="sdk_neutron_get_credentials"/>.
+    </para>
+    <para>For <code>print_values</code> see <xref
+          linkend="sdk_neutron_print_values"/>.
+    </para>
     </section>
     <section xml:id="sdk_neutron_list_server_ports">
-      <title>List server ports</title>
-      <para>The following program lists the ports for a server:</para>
-      <programlisting language="python">from neutronclient.v2_0 import client
-from credentials import get_credentials
-from utils import print_values
+        <title>List server ports</title>
+        <para>The following program lists the ports for a
+            server:</para>
+        <programlisting language="python">#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
+from neutronclient.v2_0 import client
+import novaclient.v1_1.client as nvclient
+from credentials import get_credentials
+from credentials import get_nova_credentials
+from utils import print_values_server
+
+credentials = get_nova_credentials()
+nova_client = nvclient.Client(**credentials)
+
+# change these values according to your environment
+
+server_id = '9a52795a-a70d-49a8-a5d0-5b38d78bd12d'
+network_id = 'ce5d204a-93f5-43ef-bd89-3ab99ad09a9a'
+server_detail = nova_client.servers.get(server_id)
+print(server_detail.id)
+
+if server_detail is not None:
+    credentials = get_credentials()
+    neutron = client.Client(**credentials)
+    ports = neutron.list_ports()
+
+    print_values_server(ports, server_id, 'ports')
+    body_value = {'port': {
+        'admin_state_up': True,
+        'device_id': server_id,
+        'name': 'port1',
+        'network_id': network_id,
+        }}
+
+    response = neutron.create_port(body=body_value)
+    print(response)</programlisting>
+    </section>
+    <section xml:id="create-router-add-port-to-subnet">
+        <title>Create router and add port to subnet</title>
+        <para>This example queries OpenStack Networking to create a
+            router and add a port to a subnet.</para>
+        <procedure>
+            <title>To create a router and add a port to a
+                subnet</title>
+            <step>
+                <para>Import the following modules:</para>
+                <programlisting language="python">from neutronclient.v2_0 import client
+import novaclient.v1_1.client as nvclient
+from credentials import get_credentials
+from credentials import get_nova_credentials
+from utils import print_values_server</programlisting>
+            </step>
+            <step>
+                <para>Get Nova Credentials. See <xref
+                        linkend="sdk_neutron_get_nova_credentials"
+                    />.</para>
+            </step>
+            <step>
+                <para>Instantiate the <literal>nova_client</literal>
+                    client object by using the
+                        <literal>credentials</literal> dictionary
+                    object:</para>
+                <programlisting language="python">nova_client = nvclient.Client(**credentials)</programlisting>
+            </step>
+            <step>
+                <para>Create a router and add a port to the
+                    subnet:</para>
+                <programlisting language="python"># Replace with server_id and network_id from your environment
+
+router_id = '72cf1682-60a8-4890-b0ed-6bad7d9f5466'
+network_id = '81bf592a-9e3f-4f84-a839-ae87df188dc1'
 
 credentials = get_credentials()
 neutron = client.Client(**credentials)
-ports = neutron.list_ports()
-print print_values(ports, 'ports')</programlisting>
+router = neutron.show_router(router_id)
+print(router)
+body_value = {'port': {
+    'admin_state_up': True,
+    'device_id': router_id,
+    'name': 'port1',
+    'network_id': network_id,
+    }}
+
+response = neutron.create_port(body=body_value)
+print(response)
+print("Execution Completed")</programlisting>
+            </step>
+        </procedure>
+        <example>
+            <title>Create router: complete code listing</title>
+            <programlisting language="python">#!/usr/bin/python
+# -*- coding: utf-8 -*-
+from neutronclient.v2_0 import client
+import novaclient.v1_1.client as nvclient
+from credentials import get_credentials
+from credentials import get_nova_credentials
+from utils import print_values_server
+
+credentials = get_nova_credentials()
+nova_client = nvclient.Client(**credentials)
+
+# Replace with server_id and network_id from your environment
+
+router_id = '72cf1682-60a8-4890-b0ed-6bad7d9f5466'
+network_id = '81bf592a-9e3f-4f84-a839-ae87df188dc1'
+try:
+    credentials = get_credentials()
+    neutron = client.Client(**credentials)
+    router = neutron.show_router(router_id)
+    print(router)
+    body_value = {'port': {
+        'admin_state_up': True,
+        'device_id': router_id,
+        'name': 'port1',
+        'network_id': network_id,
+        }}
+
+    response = neutron.create_port(body=body_value)
+    print(response)
+finally:
+    print("Execution completed")</programlisting>
+        </example>
     </section>
-  </section>
+    <section xml:id="delete-network">
+        <title>Delete a network</title>
+        <para>This example queries OpenStack Networking to delete a
+            network.</para>
+        <procedure>
+            <title>To delete a network</title>
+            <step>
+                <para>Import the following modules:</para>
+                <programlisting language="python">from neutronclient.v2_0 import client
+from credentials import get_credentials</programlisting>
+            </step>
+            <step>
+                <para>Get credentials. See <xref
+                        linkend="sdk_neutron_get_credentials"/>.
+                </para>
+            </step>
+            <step>
+                <para>Instantiate the <literal>neutron</literal>
+                    client object by using the
+                        <literal>credentials</literal> dictionary
+                    object:</para>
+                <programlisting language="python">neutron = client.Client(**credentials)</programlisting>
+            </step>
+            <step>
+                <para>Delete the network:</para>
+                <programlisting language="python">body_sample = {'network': {'name': network_name,
+               'admin_state_up': True}}
+
+netw = neutron.create_network(body=body_sample)
+net_dict = netw['network']
+network_id = net_dict['id']
+print('Network %s created' % network_id)
+
+body_create_subnet = {'subnets': [{'cidr': '192.168.199.0/24',
+                      'ip_version': 4, 'network_id': network_id}]}
+
+subnet = neutron.create_subnet(body=body_create_subnet)
+print('Created subnet %s' % subnet)
+
+neutron.delete_network(network_id)
+print('Deleted Network %s' % network_id)
+
+print("Execution completed")</programlisting>
+            </step>
+        </procedure>
+        <example>
+            <title>Delete network: complete code listing</title>
+            <programlisting language="python">#!/usr/bin/python
+# -*- coding: utf-8 -*-
+from neutronclient.v2_0 import client
+from credentials import get_credentials
+
+network_name = 'temp_network'
+credentials = get_credentials()
+neutron = client.Client(**credentials)
+try:
+    body_sample = {'network': {'name': network_name,
+                   'admin_state_up': True}}
+
+    netw = neutron.create_network(body=body_sample)
+    net_dict = netw['network']
+    network_id = net_dict['id']
+    print('Network %s created' % network_id)
+
+    body_create_subnet = {'subnets': [{'cidr': '192.168.199.0/24',
+                          'ip_version': 4, 'network_id': network_id}]}
+
+    subnet = neutron.create_subnet(body=body_create_subnet)
+    print('Created subnet %s' % subnet)
+
+    neutron.delete_network(network_id)
+    print('Deleted Network %s' % network_id)
+finally:
+    print("Execution Completed")</programlisting>
+        </example>
+    </section>
+    <section xml:id="list_routers">
+        <title>List routers</title>
+        <para>This example queries OpenStack Networking to list all
+            routers.</para>
+        <procedure>
+            <title>To list routers</title>
+            <step>
+                <para>Import the following modules:</para>
+                <programlisting language="python">from neutronclient.v2_0 import client
+from credentials import get_credentials
+from utils import print_values</programlisting>
+            </step>
+            <step>
+                <para>Get credentials. See <xref
+                        linkend="sdk_neutron_get_credentials"
+                    />.</para>
+            </step>
+            <step>
+                <para>Instantiate the <literal>neutron</literal>
+                    client object by using the
+                        <literal>credentials</literal> dictionary
+                    object:</para>
+                <programlisting language="python">neutron = client.Client(**credentials)</programlisting>
+            </step>
+            <step>
+                <para>List the routers</para>
+                <programlisting language="python">routers_list = neutron.list_routers(retrieve_all=True)
+print_values(routers_list, 'routers')
+print("Execution completed")</programlisting>
+                <para>For <code>print_values</code> see <xref
+                        linkend="sdk_neutron_print_values"
+                    />.</para>
+            </step>
+        </procedure>
+        <example>
+            <title>List routers: complete code listing</title>
+            <programlisting language="python">#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+from neutronclient.v2_0 import client
+from credentials import get_credentials
+from utils import print_values
+
+try:
+    credentials = get_credentials()
+    neutron = client.Client(**credentials)
+    routers_list = neutron.list_routers(retrieve_all=True)
+    print_values(routers_list, 'routers')
+finally:
+    print("Execution completed")</programlisting>
+        </example>
+    </section>
+    <section xml:id="list_security_groups">
+        <title>List security groups</title>
+        <para>This example queries OpenStack Networking to list
+            security groups.</para>
+        <procedure>
+            <title>To list security groups</title>
+            <step>
+                <para>Import the following modules:</para>
+                <programlisting language="python">from neutronclient.v2_0 import client
+from credentials import get_credentials
+from utils import print_values</programlisting>
+            </step>
+            <step>
+                <para>Get credentials. See <xref
+                        linkend="sdk_neutron_get_credentials"
+                    />.</para>
+            </step>
+            <step>
+                <para>Instantiate the <literal>neutron</literal>
+                    client object by using the
+                        <literal>credentials</literal> dictionary
+                    object:</para>
+                <programlisting language="python">neutron = client.Client(**credentials)</programlisting>
+            </step>
+            <step>
+                <para>List Security groups</para>
+                <programlisting language="python">sg = neutron.list_security_groups()
+print(sg)</programlisting>
+            </step>
+        </procedure>
+        <example>
+            <title>List security groups: complete code listing</title>
+            <programlisting language="python">#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+from neutronclient.v2_0 import client
+from credentials import get_credentials
+from utils import print_values
+
+credentials = get_credentials()
+neutron = client.Client(**credentials)
+sg = neutron.list_security_groups()
+print(sg)</programlisting>
+        </example>
+        <note>
+            <para>OpenStack Networking security groups are
+                case-sensitive while the <systemitem class="service"
+                    >nova-network</systemitem> security groups are
+                case-insensitive.</para>
+        </note>
+    </section>
+    <section xml:id="list_subnets">
+        <title>List subnets</title>
+        <para>This example queries OpenStack Networking to list
+            subnets.</para>
+        <procedure>
+            <title>To list subnets</title>
+            <step>
+                <para>Import the following modules:</para>
+                <programlisting language="python">from neutronclient.v2_0 import client
+from credentials import get_credentials
+from utils import print_values</programlisting>
+            </step>
+            <step>
+                <para>Get credentials. See <xref
+                        linkend="sdk_neutron_get_credentials"
+                    />.</para>
+            </step>
+            <step>
+                <para>Instantiate the <literal>neutron</literal>
+                    client object by using the
+                        <literal>credentials</literal> dictionary
+                    object:</para>
+                <programlisting language="python">neutron = client.Client(**credentials)</programlisting>
+            </step>
+            <step>
+                <para>List subnets:</para>
+                <programlisting language="python">subnets = neutron.list_subnets()
+print(subnets)</programlisting>
+            </step>
+        </procedure>
+        <example>
+            <title>List subnets: complete code listing</title>
+            <programlisting language="python">#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+from neutronclient.v2_0 import client
+from credentials import get_credentials
+from utils import print_values
+
+credentials = get_credentials()
+neutron = client.Client(**credentials)
+subnets = neutron.list_subnets()
+print(subnets)</programlisting>
+        </example>
+    </section>
+</section>
