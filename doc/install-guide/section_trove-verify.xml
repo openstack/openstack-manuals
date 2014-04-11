@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="trove-verify" xmlns="http://docbook.org/ns/docbook"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+  <title>Verify the Database service installation</title>
+  <para>To verify that the Database service is installed and configured correctly, try executing a Trove command:</para>
+<procedure>
+      <step>
+      <para>Source the <filename>demo-openrc.sh</filename> file.</para>
+      <screen><prompt>$</prompt> <userinput>source ~/demo-openrc.sh</userinput></screen>
+      </step>
+        <step>
+          <para>Retrieve the Trove instances list:</para>
+          <screen><prompt>$</prompt> <userinput>trove list</userinput></screen>
+          <para>You should see output similar to this:</para>
+          <screen><computeroutput>+----+------+-----------+-------------------+--------+-----------+------+
+| id | name | datastore | datastore_version | status | flavor_id | size |
++----+------+-----------+-------------------+--------+-----------+------+
++----+------+-----------+-------------------+--------+-----------+------+</computeroutput></screen>
+          </step>
+           <step>
+        <para>Assuming you have created an image for the type of database you want, and have updated the datastore to use that image, you can now create a Trove instance (database). To do this, use the trove <command>create</command> command.</para>
+        <para>This example shows you how to create a MySQL 5.5 database:</para>
+          <screen><prompt>$</prompt> <userinput>trove create <replaceable>name</replaceable> 2 --size=2 --databases=<replaceable>dbname</replaceable> \
+  --users <replaceable>user</replaceable>:<replaceable>pass</replaceable> --datastore_version mysql-5.5 \
+  --datastore mysql</userinput></screen>
+</step>
+  </procedure>
+</section>
