@@ -22,7 +22,7 @@ net.ipv4.conf.default.rp_filter=0</programlisting>
     </step>
   </procedure>
   <procedure>
-    <title>To install the Networking components:</title>
+    <title>To install the Networking components</title>
     <step>
       <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install neutron-common neutron-plugin-ml2 neutron-plugin-openvswitch-agent \
   openvswitch-datapath-dkms</userinput></screen>
@@ -39,9 +39,9 @@ net.ipv4.conf.default.rp_filter=0</programlisting>
     </step>
   </procedure>
   <procedure>
-    <title>To configure the Networking common components:</title>
+    <title>To configure the Networking common components</title>
     <para>The Networking common component configuration includes the
-      authentication mechanism, messaging service, and plug-in.</para>
+      authentication mechanism, message broker, and plug-in.</para>
     <step os="debian">
       <para>Respond to prompts for
         <link linkend="debconf-dbconfig-common">database management</link>,
@@ -49,7 +49,7 @@ net.ipv4.conf.default.rp_filter=0</programlisting>
         credentials</link>,
         <link linkend="debconf-api-endpoints">service endpoint
         registration</link>, and
-        <link linkend="debconf-rabbitqm">messaging service
+        <link linkend="debconf-rabbitqm">message broker
         credentials</link>.</para>
     </step>
     <step os="rhel;centos;fedora;sles;opensuse">
@@ -104,7 +104,7 @@ admin_password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
       </substeps>
     </step>
     <step os="opensuse;sles">
-      <para>Configure Networking to use the messaging service:</para>
+      <para>Configure Networking to use the message broker:</para>
       <para>Replace <replaceable>RABBIT_PASS</replaceable> with the password
         you chose for the <literal>guest</literal> account in
         <application>RabbitMQ</application>.</para>
@@ -118,7 +118,7 @@ admin_password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
   rabbit_password <replaceable>RABBIT_PASS</replaceable></userinput></screen>
     </step>
     <step os="rhel;centos;fedora">
-      <para>Configure Networking to use the messaging service:</para>
+      <para>Configure Networking to use the message broker:</para>
       <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf DEFAULT \
   rpc_backend neutron.openstack.common.rpc.impl_qpid</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf DEFAULT \
@@ -131,7 +131,7 @@ admin_password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
   qpid_password <replaceable>guest</replaceable></userinput></screen>
     </step>
     <step os="ubuntu">
-      <para>Configure Networking to use the messaging service:</para>
+      <para>Configure Networking to use the message broker:</para>
       <substeps>
         <step>
           <para>Edit the <filename>/etc/neutron/neutron.conf</filename> file
@@ -152,9 +152,9 @@ rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
       <para>Configure Networking to use the Modular Layer 2 (ML2) plug-in
         and associated services:</para>
         <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf DEFAULT \
-  core_plugin neutron.plugins.ml2.plugin.Ml2Plugin</userinput>
+  core_plugin ml2</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf DEFAULT \
-  service_plugins neutron.services.l3_router.l3_router_plugin.L3RouterPlugin</userinput></screen>
+  service_plugins router</userinput></screen>
       <warning>
         <para>You must comment out any lines in the
           <literal>[service_providers]</literal> section.</para>
@@ -194,7 +194,7 @@ allow_overlapping_ips = True</programlisting>
     </step>
   </procedure>
   <procedure>
-    <title>To configure the Modular Layer 2 (ML2) plug-in:</title>
+    <title>To configure the Modular Layer 2 (ML2) plug-in</title>
     <para>The ML2 plug-in uses the Open vSwitch (OVS) mechanism (agent) to
       build the virtual networking framework for instances.</para>
     <step os="rhel;centos;fedora;sles;opensuse">
@@ -253,16 +253,12 @@ enable_tunneling = True</programlisting>
         following keys to it:</para>
       <programlisting language="ini">[securitygroup]
 ...
-firewall_driver=neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver</programlisting>
-      <para>Add the following key to the
-        <literal>[securitygroup]</literal> section:</para>
-      <programlisting language="ini">[securitygroup]
-...
+firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver
 enable_security_group = True</programlisting>
     </step>
   </procedure>
   <procedure>
-    <title>To configure the Open vSwitch (OVS) service:</title>
+    <title>To configure the Open vSwitch (OVS) service</title>
     <para>The OVS service provides the underlying virtual networking framework
       for instances. The integration bridge <literal>br-int</literal> handles
       internal instance network traffic within OVS.</para>
@@ -292,7 +288,7 @@ enable_security_group = True</programlisting>
     </step>
   </procedure>
   <procedure>
-    <title>To configure Compute to use Networking:</title>
+    <title>To configure Compute to use Networking</title>
     <para>By default, most distributions configure Compute to use legacy
       networking. You must reconfigure Compute to manage networks through
       OpenStack Networking.</para>
@@ -357,7 +353,7 @@ security_group_api = neutron</programlisting>
     </step>
   </procedure>
   <procedure>
-    <title>To finalize the installation:</title>
+    <title>To finalize the installation</title>
     <step os="rhel;centos;fedora">
       <para>The Networking service initialization scripts expect a symbolic
         link <filename>/etc/neutron/plugin.ini</filename> pointing to the

@@ -42,14 +42,30 @@
       <para>Perform these commands on the controller node.</para>
     </note>
     <procedure>
-      <title>To create the external network:</title>
+      <title>To create the external network</title>
       <step>
         <para>Source the <literal>admin</literal> tenant credentials:</para>
         <screen><prompt>$</prompt> <userinput>source admin-openrc.sh</userinput></screen>
       </step>
       <step>
         <para>Create the network:</para>
-        <screen><prompt>$</prompt> <userinput>neutron net-create ext-net --shared --router:external=True</userinput></screen>
+        <screen><prompt>$</prompt> <userinput>neutron net-create ext-net --shared --router:external=True</userinput>
+<computeroutput>Created a new network:
++---------------------------+--------------------------------------+
+| Field                     | Value                                |
++---------------------------+--------------------------------------+
+| admin_state_up            | True                                 |
+| id                        | 893aebb9-1c1e-48be-8908-6b947f3237b3 |
+| name                      | ext-net                              |
+| provider:network_type     | gre                                  |
+| provider:physical_network |                                      |
+| provider:segmentation_id  | 1                                    |
+| router:external           | True                                 |
+| shared                    | True                                 |
+| status                    | ACTIVE                               |
+| subnets                   |                                      |
+| tenant_id                 | 54cd044c64d5408b83f843d63624e0d8     |
++---------------------------+--------------------------------------+</computeroutput></screen>
       </step>
     </procedure>
     <para>Like a physical network, a virtual network requires a
@@ -70,7 +86,7 @@
       instances do not connect directly to the external network and floating
       IP addresses require manual assignment.</para>
     <procedure>
-      <title>To create a subnet on the external network:</title>
+      <title>To create a subnet on the external network</title>
       <step>
         <para>Create the subnet:</para>
         <screen><prompt>$</prompt> <userinput>neutron subnet-create ext-net --name ext-subnet \
@@ -81,7 +97,25 @@
           <literal>203.0.113.200</literal>:</para>
         <screen><prompt>$</prompt> <userinput>neutron subnet-create ext-net --name ext-subnet \
   --allocation-pool start=203.0.113.101,end=203.0.113.200 \
-  --disable-dhcp --gateway 203.0.113.1 203.0.113.0/24</userinput></screen>
+  --disable-dhcp --gateway 203.0.113.1 203.0.113.0/24</userinput>
+<computeroutput>Created a new subnet:
++-------------------+------------------------------------------------------+
+| Field             | Value                                                |
++-------------------+------------------------------------------------------+
+| allocation_pools  | {"start": "203.0.113.101", "end": "203.0.113.200"}   |
+| cidr              | 203.0.113.0/24                                       |
+| dns_nameservers   |                                                      |
+| enable_dhcp       | False                                                |
+| gateway_ip        | 203.0.113.1                                          |
+| host_routes       |                                                      |
+| id                | 9159f0dc-2b63-41cf-bd7a-289309da1391                 |
+| ip_version        | 4                                                    |
+| ipv6_address_mode |                                                      |
+| ipv6_ra_mode      |                                                      |
+| name              | ext-subnet                                           |
+| network_id        | 893aebb9-1c1e-48be-8908-6b947f3237b3                 |
+| tenant_id         | 54cd044c64d5408b83f843d63624e0d8                     |
++-------------------+------------------------------------------------------+</computeroutput></screen>
       </step>
     </procedure>
   </section>
@@ -95,14 +129,26 @@
       <para>Perform these commands on the controller node.</para>
     </note>
     <procedure>
-      <title>To create the tenant network:</title>
+      <title>To create the tenant network</title>
       <step>
         <para>Source the <literal>demo</literal> tenant credentials:</para>
         <screen><prompt>$</prompt> <userinput>source demo-openrc.sh</userinput></screen>
       </step>
       <step>
         <para>Create the network:</para>
-        <screen><prompt>$</prompt> <userinput>neutron net-create demo-net</userinput></screen>
+        <screen><prompt>$</prompt> <userinput>neutron net-create demo-net</userinput>
+<computeroutput>Created a new network:
++----------------+--------------------------------------+
+| Field          | Value                                |
++----------------+--------------------------------------+
+| admin_state_up | True                                 |
+| id             | ac108952-6096-4243-adf4-bb6615b3de28 |
+| name           | demo-net                             |
+| shared         | False                                |
+| status         | ACTIVE                               |
+| subnets        |                                      |
+| tenant_id      | cdef0071a0194d19ac6bb63802dc9bae     |
++----------------+--------------------------------------+</computeroutput></screen>
       </step>
     </procedure>
     <para>Like the external network, your tenant network also requires
@@ -115,14 +161,32 @@
       default, this subnet will use DHCP so your instances can obtain IP
       addresses.</para>
     <procedure>
-      <title>To create a subnet on the tenant network:</title>
+      <title>To create a subnet on the tenant network</title>
       <step>
         <para>Create the subnet:</para>
         <screen><prompt>$</prompt> <userinput>neutron subnet-create demo-net --name demo-subnet \
   --gateway <replaceable>TENANT_NETWORK_GATEWAY</replaceable> <replaceable>TENANT_NETWORK_CIDR</replaceable></userinput></screen>
         <para>Example using <literal>192.168.1.0/24</literal>:</para>
         <screen><prompt>$</prompt> <userinput>neutron subnet-create demo-net --name demo-subnet \
-  --gateway 192.168.1.1 192.168.1.0/24</userinput></screen>
+  --gateway 192.168.1.1 192.168.1.0/24</userinput>
+<computeroutput>Created a new subnet:
++-------------------+------------------------------------------------------+
+| Field             | Value                                                |
++-------------------+------------------------------------------------------+
+| allocation_pools  | {"start": "192.168.1.2", "end": "192.168.1.254"}     |
+| cidr              | 192.168.1.0/24                                       |
+| dns_nameservers   |                                                      |
+| enable_dhcp       | True                                                 |
+| gateway_ip        | 192.168.1.1                                          |
+| host_routes       |                                                      |
+| id                | 69d38773-794a-4e49-b887-6de6734e792d                 |
+| ip_version        | 4                                                    |
+| ipv6_address_mode |                                                      |
+| ipv6_ra_mode      |                                                      |
+| name              | demo-subnet                                          |
+| network_id        | ac108952-6096-4243-adf4-bb6615b3de28                 |
+| tenant_id         | cdef0071a0194d19ac6bb63802dc9bae                     |
++-------------------+------------------------------------------------------+</computeroutput></screen>
       </step>
     </procedure>
     <para>A virtual router passes network traffic between two or more virtual
@@ -132,20 +196,33 @@
       a router and attach your tenant and external networks to it.</para>
     <procedure>
       <title>To create a router on the tenant network and attach the external
-        and tenant networks to it:</title>
+        and tenant networks to it</title>
       <step>
         <para>Create the router:</para>
-        <screen><prompt>$</prompt> <userinput>neutron router-create demo-router</userinput></screen>
+        <screen><prompt>$</prompt> <userinput>neutron router-create demo-router</userinput>
+<computeroutput>Created a new router:
++-----------------------+--------------------------------------+
+| Field                 | Value                                |
++-----------------------+--------------------------------------+
+| admin_state_up        | True                                 |
+| external_gateway_info |                                      |
+| id                    | 635660ae-a254-4feb-8993-295aa9ec6418 |
+| name                  | demo-router                          |
+| status                | ACTIVE                               |
+| tenant_id             | cdef0071a0194d19ac6bb63802dc9bae     |
++-----------------------+--------------------------------------+</computeroutput></screen>
       </step>
       <step>
         <para>Attach the router to the <literal>demo</literal> tenant
           subnet:</para>
-        <screen><prompt>$</prompt> <userinput>neutron router-interface-add demo-router demo-subnet</userinput></screen>
+        <screen><prompt>$</prompt> <userinput>neutron router-interface-add demo-router demo-subnet</userinput>
+<computeroutput>Added interface b1a894fd-aee8-475c-9262-4342afdc1b58 to router demo-router.</computeroutput></screen>
       </step>
       <step>
         <para>Attach the router to the external network by setting it as
           the gateway:</para>
-        <screen><prompt>$</prompt> <userinput>neutron router-gateway-set demo-router ext-net</userinput></screen>
+        <screen><prompt>$</prompt> <userinput>neutron router-gateway-set demo-router ext-net</userinput>
+<computeroutput>Set gateway for router demo-router</computeroutput></screen>
       </step>
     </procedure>
   </section>
@@ -165,7 +242,7 @@
       external network.</para>
     </note>
     <procedure>
-      <title>To verify network connectivity:</title>
+      <title>To verify network connectivity</title>
       <step>
         <para>Ping the tenant router gateway:</para>
         <screen><prompt>$</prompt> <userinput>ping -c 4 203.0.113.101</userinput>

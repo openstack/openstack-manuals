@@ -21,7 +21,7 @@
     <para>Perform these commands on the controller node.</para>
   </note>
   <procedure>
-    <title>To create the network:</title>
+    <title>To create the network</title>
     <step>
       <para>Source the <literal>admin</literal> tenant credentials:</para>
       <screen><prompt>$</prompt> <userinput>source admin-openrc.sh</userinput></screen>
@@ -38,6 +38,18 @@
       </para>
       <screen><prompt>$</prompt> <userinput>nova network-create demo-net --bridge br100 --multi-host T \
   --fixed-range-v4 203.0.113.24/29</userinput></screen>
+      <note>
+        <para>This command provides no output.</para>
+      </note>
+    </step>
+    <step>
+      <para>Verify creation of the network:</para>
+      <screen><prompt>$</prompt> <userinput>nova net-list</userinput>
+<computeroutput>+--------------------------------------+----------+------------------+
+| ID                                   | Label    | CIDR             |
++--------------------------------------+----------+------------------+
+| 84b34a65-a762-44d6-8b5e-3b461a53f513 | demo-net | 203.0.113.24/29  |
++--------------------------------------+----------+------------------+</computeroutput></screen>
     </step>
   </procedure>
 </section>
