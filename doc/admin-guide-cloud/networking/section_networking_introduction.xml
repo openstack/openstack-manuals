@@ -1368,7 +1368,11 @@ interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver</programlist
                     node</title>
                 <step>
                     <para>Install the agent by running:</para>
-                    <screen><prompt>#</prompt> <userinput>apt-get install neutron-plugin-metering-agent</userinput></screen>
+                    <screen><prompt>#</prompt> <userinput>apt-get install neutron-metering-agent</userinput></screen>
+                    <note><title>Package name prior to Icehouse</title>
+                       <para>In releases of Neutron prior to Icehouse, this
+                       package was named neutron-plugin-metering-agent.</para>
+                    </note>
                 </step>
                 <step>
                     <para>If you use one of the following plugins, you need to configure the metering agent with these lines as well:</para>
@@ -1480,8 +1484,8 @@ interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver</programlist
                 </step>
                 <step>
                     <para>To use the reference implementation, you
-                        must also add a FWaaS driver configuration to
-                        the <filename>neutron.conf</filename> file on
+                        must also update the FWaaS driver configuration in
+                        the <filename>fwaas_driver.ini</filename> file on
                         every node where the Neutron L3 agent is
                         deployed:</para>
                     <programlisting language="ini">[fwaas]
