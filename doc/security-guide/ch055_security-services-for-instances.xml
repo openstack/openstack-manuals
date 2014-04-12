@@ -27,22 +27,19 @@
     <section xml:id="ch055_security-services-for-instances-idp128240">
       <title>Scheduling Instances to Nodes</title>
       <para>Before an instance is created, a host for the image instantiation must be selected. This selection is performed by the <systemitem class="service">nova-scheduler</systemitem> which determines how to dispatch compute and volume requests.</para>
-      <para>The default nova scheduler in Grizzly is the Filter
-      Scheduler, although other schedulers exist (see the section
-      <link
-      xlink:href="http://docs.openstack.org/trunk/config-reference/content/section_compute-scheduler.html">Scheduling</link>
-      in the <citetitle>OpenStack Configuration
-      Reference</citetitle>). The filter scheduler works in
-      collaboration with 'filters' to decide where an instance should
-      be started. This process of host selection allows administrators
-      to fulfill many different security requirements. Depending on the
-      cloud deployment type for example, one could choose to have
-      tenant instances reside on the same hosts whenever possible if
-      data isolation was a primary concern, conversely one could
-      attempt to have instances for a tenant reside on as many
-      different hosts as possible for availability or fault tolerance
-      reasons. The following diagram demonstrates how the filter
-      scheduler works:</para>
+      <para>The filter scheduler is the default scheduler for OpenStack Compute,
+      although other schedulers exist (see the section <link
+        xlink:href="http://docs.openstack.org/trunk/config-reference/content/section_compute-scheduler.html"
+        >Scheduling</link> in the <citetitle>OpenStack Configuration
+        Reference</citetitle>). The filter scheduler works in collaboration with
+      'filters' to decide where an instance should be started. This process of
+      host selection allows administrators to fulfill many different security
+      requirements. Depending on the cloud deployment type for example, one
+      could choose to have tenant instances reside on the same hosts whenever
+      possible if data isolation was a primary concern, conversely one could
+      attempt to have instances for a tenant reside on as many different hosts
+      as possible for availability or fault tolerance reasons. The following
+      diagram demonstrates how the filter scheduler works:</para>
       <para><inlinemediaobject><imageobject role="html">
             <imagedata contentdepth="400" contentwidth="550" fileref="static/filteringWorkflow1.png" format="PNG" scalefit="1"/>
           </imageobject>
