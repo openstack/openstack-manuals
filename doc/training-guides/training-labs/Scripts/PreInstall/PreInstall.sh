@@ -43,7 +43,7 @@ configure_networks(){
     if [ "$1" == "single-node" ]; then
         # Copy Single Node interfaces file to /etc/network/
         echo "Configuring Network for Single Node"
-        cp --no-preserve=mode,ownsership Templates/interfaces-single /etc/network/interfaces
+        cp --no-preserve=mode,ownership Templates/interfaces-single /etc/network/interfaces
 
     else
         if [ "$1" == "multi-node" ]; then
