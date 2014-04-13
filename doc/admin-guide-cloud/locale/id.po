@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenStack Manuals\n"
-"POT-Creation-Date: 2014-04-11 05:35+0000\n"
-"PO-Revision-Date: 2014-04-10 21:08+0000\n"
+"POT-Creation-Date: 2014-04-12 17:13+0000\n"
+"PO-Revision-Date: 2014-04-12 17:14+0000\n"
 "Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
 "Language-Team: Indonesian (http://www.transifex.com/projects/p/openstack/language/id/)\n"
 "MIME-Version: 1.0\n"
@@ -1394,7 +1394,7 @@ msgid "2013"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/bk-admin-guide-cloud.xml25(releaseinfo)
-msgid "havana"
+msgid "icehouse"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/bk-admin-guide-cloud.xml26(productname)
@@ -1937,14 +1937,13 @@ msgstr ""
 
 #: ./doc/admin-guide-cloud/section_multi_backend.xml6(para)
 msgid ""
-"This section presents the multi back-end storage feature introduced with the"
-" Grizzly release. Multi back-end allows the creation of several back-end "
+"With multiple storage back-ends configured, you can create several back-end "
 "storage solutions serving the same OpenStack Compute configuration. "
 "Basically, multi back-end launches one <systemitem class=\"service\">cinder-"
 "volume</systemitem> for each back-end."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_multi_backend.xml12(para)
+#: ./doc/admin-guide-cloud/section_multi_backend.xml11(para)
 msgid ""
 "In a multi back-end configuration, each back-end has a name "
 "(<literal>volume_backend_name</literal>). Several back-ends can have the "
@@ -1952,7 +1951,7 @@ msgid ""
 "volume has to be created in."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_multi_backend.xml17(para)
+#: ./doc/admin-guide-cloud/section_multi_backend.xml16(para)
 msgid ""
 "The name of the back-end is declared as an extra-specification of a volume "
 "type (such as, <literal>volume_backend_name=LVM_iSCSI</literal>). When a "
@@ -1960,11 +1959,11 @@ msgid ""
 "the request, according to the volume type specified by the user."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_multi_backend.xml24(title)
+#: ./doc/admin-guide-cloud/section_multi_backend.xml23(title)
 msgid "Enable multi back-end"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_multi_backend.xml25(para)
+#: ./doc/admin-guide-cloud/section_multi_backend.xml24(para)
 msgid ""
 "To enable a multi back-end configuration, you must set the "
 "<option>enabled_backends</option> flag in the "
@@ -1974,13 +1973,13 @@ msgid ""
 " as, <literal>[lvmdriver-1]</literal>)."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_multi_backend.xml33(para)
+#: ./doc/admin-guide-cloud/section_multi_backend.xml32(para)
 msgid ""
 "The configuration group name is not related to the "
 "<literal>volume_backend_name</literal>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_multi_backend.xml36(para)
+#: ./doc/admin-guide-cloud/section_multi_backend.xml35(para)
 msgid ""
 "The options for a configuration group must be defined in the group (or "
 "default options are used). All the standard Block Storage configuration "
@@ -1989,11 +1988,11 @@ msgid ""
 "the <literal>[DEFAULT]</literal> configuration group are not used."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_multi_backend.xml44(para)
+#: ./doc/admin-guide-cloud/section_multi_backend.xml43(para)
 msgid "These examples show three back-ends:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_multi_backend.xml59(para)
+#: ./doc/admin-guide-cloud/section_multi_backend.xml58(para)
 msgid ""
 "In this configuration, <literal>lvmdriver-1</literal> and "
 "<literal>lvmdriver-2</literal> have the same "
@@ -2006,24 +2005,24 @@ msgid ""
 "<literal>lvmdriver-3</literal> back-end."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_multi_backend.xml72(title)
+#: ./doc/admin-guide-cloud/section_multi_backend.xml71(title)
 msgid "Configure Block Storage scheduler multi back-end"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_multi_backend.xml73(para)
+#: ./doc/admin-guide-cloud/section_multi_backend.xml72(para)
 msgid ""
 "You must enable the <option>filter_scheduler</option> option to use multi "
 "back-end. Filter scheduler acts in two steps:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_multi_backend.xml78(para)
+#: ./doc/admin-guide-cloud/section_multi_backend.xml77(para)
 msgid ""
 "The filter scheduler filters the available back-ends. By default, "
 "<literal>AvailabilityZoneFilter</literal>, <literal>CapacityFilter</literal>"
 " and <literal>CapabilitiesFilter</literal> are enabled."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_multi_backend.xml86(para)
+#: ./doc/admin-guide-cloud/section_multi_backend.xml85(para)
 msgid ""
 "The filter scheduler weighs the previously filtered back-ends. By default, "
 "<literal>CapacityWeigher</literal> is enabled. The "
@@ -2031,62 +2030,50 @@ msgid ""
 "with the most available."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_multi_backend.xml94(para)
+#: ./doc/admin-guide-cloud/section_multi_backend.xml93(para)
 msgid ""
 "The scheduler uses the filtering and weighing process to pick the best back-"
 "end to handle the request, and explicitly creates volumes on specific back-"
 "ends through the use of volume types."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_multi_backend.xml99(para)
-msgid ""
-"To enable the filter scheduler, add this line to the "
-"<filename>cinder.conf</filename> configuration file:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_multi_backend.xml103(para)
-msgid ""
-"While the Block Storage Scheduler defaults to "
-"<option>filter_scheduler</option> in Grizzly, this setting is not required."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_multi_backend.xml110(title)
+#: ./doc/admin-guide-cloud/section_multi_backend.xml100(title)
 msgid "Volume type"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_multi_backend.xml111(para)
+#: ./doc/admin-guide-cloud/section_multi_backend.xml101(para)
 msgid ""
 "Before using it, a volume type has to be declared to Block Storage. This can"
 " be done by the following command:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_multi_backend.xml114(para)
+#: ./doc/admin-guide-cloud/section_multi_backend.xml104(para)
 msgid ""
 "Then, an extra-specification has to be created to link the volume type to a "
 "back-end name. Run this command:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_multi_backend.xml118(para)
+#: ./doc/admin-guide-cloud/section_multi_backend.xml108(para)
 msgid ""
 "This example creates a <literal>lvm</literal> volume type with "
 "<literal>volume_backend_name=LVM_iSCSI</literal> as extra-specifications."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_multi_backend.xml121(para)
+#: ./doc/admin-guide-cloud/section_multi_backend.xml111(para)
 msgid "Create another volume type:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_multi_backend.xml124(para)
+#: ./doc/admin-guide-cloud/section_multi_backend.xml114(para)
 msgid ""
 "This second volume type is named <literal>lvm_gold</literal> and has "
 "<literal>LVM_iSCSI_b</literal> as back-end name."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_multi_backend.xml129(para)
+#: ./doc/admin-guide-cloud/section_multi_backend.xml119(para)
 msgid "To list the extra-specifications, use this command:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_multi_backend.xml134(para)
+#: ./doc/admin-guide-cloud/section_multi_backend.xml124(para)
 msgid ""
 "If a volume type points to a <literal>volume_backend_name</literal> that "
 "does not exist in the Block Storage configuration, the "
@@ -2094,11 +2081,11 @@ msgid ""
 "valid host with the suitable back-end."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_multi_backend.xml143(title)
+#: ./doc/admin-guide-cloud/section_multi_backend.xml133(title)
 msgid "Usage"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_multi_backend.xml144(para)
+#: ./doc/admin-guide-cloud/section_multi_backend.xml134(para)
 msgid ""
 "When you create a volume, you must specify the volume type. The extra-"
 "specifications of the volume type are used to determine which back-end has "
@@ -2107,7 +2094,7 @@ msgid ""
 "<literal>lvmdriver-1</literal> or <literal>lvmdriver-2</literal>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_multi_backend.xml153(para)
+#: ./doc/admin-guide-cloud/section_multi_backend.xml143(para)
 msgid "This second volume is created on <literal>lvmdriver-3</literal>."
 msgstr ""
 
@@ -2138,12 +2125,11 @@ msgstr ""
 
 #: ./doc/admin-guide-cloud/section_volume-migration.xml7(para)
 msgid ""
-"The Havana release of OpenStack introduces the ability to migrate volumes "
-"between back-ends. Migrating a volume transparently moves its data from the "
-"current back-end for the volume to a new one. This is an administrator "
-"function, and can be used for functions including storage evacuation (for "
-"maintenance or decommissioning), or manual optimizations (for example, "
-"performance, reliability, or cost)."
+"OpenStack has the ability to migrate volumes between back-ends. Migrating a "
+"volume transparently moves its data from the current back-end for the volume"
+" to a new one. This is an administrator function, and can be used for "
+"functions including storage evacuation (for maintenance or decommissioning),"
+" or manual optimizations (for example, performance, reliability, or cost)."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/section_volume-migration.xml14(para)
@@ -6771,7 +6757,7 @@ msgid "NEC OpenFlow Plug-in"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml317(link)
-msgid "http://wiki.openstack.org/Quantum-NEC-OpenFlow-Plugin"
+msgid "https://wiki.openstack.org/wiki/Neutron/NEC_OpenFlow_Plugin"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml320(emphasis)
@@ -7781,36 +7767,46 @@ msgstr ""
 msgid "Install the agent by running:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml1374(para)
+#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml1372(title)
+msgid "Package name prior to Icehouse"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml1373(para)
+msgid ""
+"In releases of Neutron prior to Icehouse, this package was named neutron-"
+"plugin-metering-agent."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml1378(para)
 msgid ""
 "If you use one of the following plugins, you need to configure the metering "
 "agent with these lines as well:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml1377(para)
+#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml1381(para)
 msgid "An OVS-based plug-in such as OVS, NSX, Ryu, NEC, BigSwitch/Floodlight:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml1383(para)
+#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml1387(para)
 msgid "A plug-in that uses LinuxBridge:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml1389(para)
+#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml1393(para)
 msgid "To use the reference implementation, you must set:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml1394(para)
-#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml1475(para)
+#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml1398(para)
+#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml1479(para)
 msgid ""
 "Set this parameter in the <filename>neutron.conf</filename> file on the host"
 " that runs <systemitem class=\"service\">neutron-server</systemitem>:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml1402(title)
+#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml1406(title)
 msgid "Configure Load-Balancing-as-a-Service (LBaaS)"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml1403(para)
+#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml1407(para)
 msgid ""
 "Configure Load-Balancing-as-a-Service (LBaas) with the Open vSwitch or Linux"
 " Bridge plug-in. The Open vSwitch LBaaS driver is required when enabling "
@@ -7818,85 +7814,85 @@ msgid ""
 " Ryu."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml1410(para)
+#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml1414(para)
 msgid "Install the agent:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml1414(para)
+#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml1418(para)
 msgid ""
 "Enable the <productname>HAProxy</productname> plug-in using the "
 "<option>service_provider</option> parameter in the "
 "<filename>/etc/neutron/neutron.conf</filename> file:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml1421(para)
+#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml1425(para)
 msgid ""
 "Enable the load balancer plugin using <option>service_plugin</option> in the"
 " <filename>/etc/neutron/neutron.conf</filename> file:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml1426(para)
+#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml1430(para)
 msgid ""
 "Enable the <productname>HAProxy</productname> load balancer in the "
 "<filename>/etc/neutron/lbaas_agent.ini</filename> file:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml1431(para)
+#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml1435(para)
 msgid ""
 "Select the required driver in the "
 "<filename>/etc/neutron/lbaas_agent.ini</filename> file:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml1433(para)
+#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml1437(para)
 msgid "Enable the Open vSwitch LBaaS driver:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml1435(para)
+#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml1439(para)
 msgid "Or enable the Linux Bridge LBaaS driver:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml1437(para)
+#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml1441(para)
 msgid ""
 "Apply the new settings by restarting the <systemitem>neutron-"
 "server</systemitem> and <systemitem>neutron-lbaas-agent</systemitem> "
 "services."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml1441(title)
+#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml1445(title)
 msgid "Upgrade from Havana to Icehouse"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml1442(para)
+#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml1446(para)
 msgid ""
 "There were changes in LBaaS server-agent communications in Icehouse so "
 "during Havana to Icehouse transition make sure to upgrade both server and "
 "agent sides before actual use of the load balancing service."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml1450(para)
+#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml1454(para)
 msgid ""
 "Enable Load Balancing in the <guimenu>Project</guimenu> section of the "
 "Dashboard user interface:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml1452(para)
+#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml1456(para)
 msgid ""
 "Change the <option>enable_lb</option> option to <parameter>True</parameter> "
 "in the <filename>/etc/openstack-dashboard/local_settings</filename> file:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml1457(para)
+#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml1461(para)
 msgid ""
 "Apply the new settings by restarting the <systemitem>httpd</systemitem> "
 "service. You can now view the Load Balancer management options in "
 "dashboard's <guimenu>Project</guimenu> view."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml1465(title)
+#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml1469(title)
 msgid "Configure FWaaS agent"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml1466(para)
+#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml1470(para)
 msgid ""
 "The Firewall-as-a-Service (FWaaS) agent is co-located with the Neutron L3 "
 "agent and does not require any additional packages apart from those required"
@@ -7904,15 +7900,15 @@ msgid ""
 " the configuration, as follows."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml1473(title)
+#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml1477(title)
 msgid "To configure FWaaS service and agent"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml1482(para)
+#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml1486(para)
 msgid ""
-"To use the reference implementation, you must also add a FWaaS driver "
-"configuration to the <filename>neutron.conf</filename> file on every node "
-"where the Neutron L3 agent is deployed:"
+"To use the reference implementation, you must also update the FWaaS driver "
+"configuration in the <filename>fwaas_driver.ini</filename> file on every "
+"node where the Neutron L3 agent is deployed:"
 msgstr ""
 
 #. When image changes, this message will be marked fuzzy or untranslated for
@@ -8823,7 +8819,7 @@ msgid ""
 "compute node itself, rather than a dedicated networking node. OpenStack "
 "Networking now support running multiple l3-agent and dhcp-agents with load "
 "being split across those agents, but the tight coupling of that scheduling "
-"with the location of the VM is not supported in Grizzly. The Havana release "
+"with the location of the VM is not supported in Icehouse. The Juno release "
 "is expected to include an exact replacement for the --multi_host flag in "
 "nova-network."
 msgstr ""
@@ -13792,14 +13788,13 @@ msgstr ""
 
 #: ./doc/admin-guide-cloud/image/section_glance-property-protection.xml11(para)
 msgid ""
-"With the Havana release, any such property can be protected through "
-"configuration. When you put protections on a property, it limits the users "
-"who can perform CRUD operations on the property based on their user role. "
-"The use case is to enable the cloud provider to maintain extra properties on"
-" images. Typically this would be performed by an administrator who has "
-"access to protected properties, managed in the "
-"<filename>policy.json</filename> file. The extra property could be licensing"
-" information or billing information, for example."
+"Any such property can be protected through configuration. When you put "
+"protections on a property, it limits the users who can perform CRUD "
+"operations on the property based on their user role. The use case is to "
+"enable the cloud provider to maintain extra properties on images. Typically "
+"this would be performed by an administrator who has access to protected "
+"properties, managed in the <filename>policy.json</filename> file. The extra "
+"property could be licensing information or billing information, for example."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/image/section_glance-property-protection.xml20(para)
