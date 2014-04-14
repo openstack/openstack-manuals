@@ -34,14 +34,20 @@
                         &amp; Security</guibutton>.</para>
             </step>
             <step>
-                <para>Click on the API Access tab.
-                Click <guibutton>Download OpenStack RC File</guibutton>
-                and save the file.</para>
+                <para>
+                  Click on the API Access tab.  Click
+                  <guibutton>Download OpenStack RC File</guibutton>
+                  and save the file. The filename will be of the form
+                  <filename><replaceable>PROJECT</replaceable>-openrc.sh</filename>
+                  where <replaceable>PROJECT</replaceable> is the name
+                  of the project for which you downloaded the file.
+                </para>
             </step>
             <step>
-                <para>Copy the <filename>openrc.sh</filename> file to
-                    the machine from where you want to run OpenStack
-                    commands.</para>
+                <para>Copy the
+                <filename><replaceable>PROJECT</replaceable>-openrc.sh</filename>
+                file to the machine from where you want to run
+                OpenStack commands.</para>
                 <para>For example, copy the file to the machine from
                     where you want to upload an image with a glance
                     client command.</para>
@@ -49,8 +55,8 @@
             <step>
                 <para>On any shell from where you want to run
                     OpenStack commands, source the
-                        <filename>openrc.sh</filename> file for the
-                    respective project.</para>
+                    <filename><replaceable>PROJECT</replaceable>-openrc.sh</filename>
+                    file for the respective project.</para>
                 <para>In this example, you source the
                         <filename>demo-openrc.sh</filename> file for
                     the demo project:</para>
@@ -59,18 +65,19 @@
             <step>
                 <para>When you are prompted for an OpenStack password,
                     enter the password for the user who downloaded the
-                        <filename>openrc.sh</filename> file.</para>
+                    <filename><replaceable>PROJECT</replaceable>-openrc.sh</filename>
+                file.</para>
             </step>
         </procedure>
     </section>
     <section xml:id="openrc-create">
         <title>Create and source the OpenStack RC file</title>
         <para audience="enduser">Alternatively, you can create the
-                <filename>openrc.sh</filename> file from
+                <filename><replaceable>PROJECT</replaceable>-openrc.sh</filename> file from
             scratch.</para>
         <procedure>
             <step>
-                <para>Create the <filename>openrc.sh</filename> file
+                <para>Create the <filename><replaceable>PROJECT</replaceable>-openrc.sh</filename> file
                     and add the authentication information:</para>
                 <programlisting language="bash" audience="enduser">export OS_USERNAME=<replaceable>USERNAME</replaceable>
 export OS_PASSWORD=<replaceable>PASSWORD</replaceable>
@@ -87,15 +94,19 @@ export OS_AUTH_URL=http://<replaceable>controller</replaceable>:35357/v2.0</prog
             <step>
                 <para>On any shell from where you want to run
                     OpenStack commands, source the
-                        <filename>openrc.sh</filename> file for the
-                    respective project:</para>
-                <screen><prompt>$</prompt> <userinput>source openrc.sh</userinput></screen>
+                    <filename><replaceable>PROJECT</replaceable>-openrc.sh</filename>
+                    file for the
+                    respective project. In this example, you source the
+                        <filename>admin-openrc.sh</filename> file for
+                    the <replaceable>admin</replaceable> project:</para>
+                <screen><prompt>$</prompt> <userinput>source admin-openrc.sh</userinput></screen>
             </step>
         </procedure>
         <note audience="enduser">
             <para>You are not prompted for the password with this
                 method. The password lives in clear text format in the
-                    <filename>openrc.sh</filename> file. Restrict the
+                <filename><replaceable>PROJECT</replaceable>-openrc.sh</filename>
+                file. Restrict the
                 permissions on this file to avoid security problems.
                 You can also remove the <literal>OS_PASSWORD</literal>
                 variable from the file, and use the
@@ -110,7 +121,8 @@ export OS_AUTH_URL=http://<replaceable>controller</replaceable>:35357/v2.0</prog
             that are listed at the end of the <command>nova
                 help</command> output. For example, you can override
             the <option>OS_PASSWORD</option> setting in the
-                <filename>openrc.sh</filename> file by specifying a
+                <filename><replaceable>PROJECT</replaceable>-openrc.sh</filename>
+            file by specifying a
             password on a <command>nova</command> command, as follows:</para>
         <screen><prompt>$</prompt> <userinput>nova --password &lt;password> image-list</userinput></screen>
         <para>Where <parameter>password</parameter> is your
