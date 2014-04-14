@@ -11,7 +11,7 @@
     <title>Orchestration command-line client</title>
     <para>The <command>heat</command> client is the command-line interface
          (CLI) for the Orchestration API and its extensions. This chapter documents
-         <command>heat</command> version 0.2.8.
+         <command>heat</command> version 0.2.9.
     </para>
     <para>For help on a specific <command>heat</command>
        command, enter:
@@ -21,12 +21,13 @@
     <section xml:id="heatclient_command_usage">
        <title>heat usage</title>
         <screen><computeroutput>usage: heat [--version] [-d] [-v] [-k] [--cert-file CERT_FILE]
-            [--key-file KEY_FILE] [--ca-file CA_FILE] [--timeout TIMEOUT]
-            [--os-username OS_USERNAME] [--os-password OS_PASSWORD]
-            [--os-tenant-id OS_TENANT_ID] [--os-tenant-name OS_TENANT_NAME]
-            [--os-auth-url OS_AUTH_URL] [--os-region-name OS_REGION_NAME]
-            [--os-auth-token OS_AUTH_TOKEN] [--os-no-client-auth]
-            [--heat-url HEAT_URL] [--heat-api-version HEAT_API_VERSION]
+            [--key-file KEY_FILE] [--ca-file CA_FILE]
+            [--api-timeout API_TIMEOUT] [--os-username OS_USERNAME]
+            [--os-password OS_PASSWORD] [--os-tenant-id OS_TENANT_ID]
+            [--os-tenant-name OS_TENANT_NAME] [--os-auth-url OS_AUTH_URL]
+            [--os-region-name OS_REGION_NAME] [--os-auth-token OS_AUTH_TOKEN]
+            [--os-no-client-auth] [--heat-url HEAT_URL]
+            [--heat-api-version HEAT_API_VERSION]
             [--os-service-type OS_SERVICE_TYPE]
             [--os-endpoint-type OS_ENDPOINT_TYPE] [--include-password]
             &lt;subcommand&gt; ...
@@ -242,6 +243,14 @@
     </listitem>
   </varlistentry>
   <varlistentry>
+    <term><command>stack-preview</command></term>
+    <listitem>
+      <para>
+        Preview the stack.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
     <term><command>stack-show</command></term>
     <listitem>
       <para>
@@ -377,10 +386,11 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--timeout TIMEOUT</command></term>
+    <term><command>--api-timeout API_TIMEOUT</command></term>
     <listitem>
       <para>
-        Number of seconds to wait for a response.
+      Number of seconds to wait for an API response,
+      defaults to system socket timeout
       </para>
     </listitem>
   </varlistentry>
@@ -832,7 +842,7 @@ Abandon the stack.
     <section xml:id="heatclient_subcommand_stack-adopt">
         <title>heat stack-adopt command</title>
         <screen><computeroutput>usage: heat stack-adopt [-f &lt;FILE&gt;] [-e &lt;FILE or URL&gt;] [-u &lt;URL&gt;] [-o &lt;URL&gt;]
-                        [-c &lt;TIMEOUT&gt;] [-a &lt;FILE or URL&gt;] [-r]
+                        [-c &lt;TIMEOUT&gt;] [-t &lt;TIMEOUT&gt;] [-a &lt;FILE or URL&gt;] [-r]
                         [-P &lt;KEY1=VALUE1;KEY2=VALUE2...&gt;]
                         &lt;STACK_NAME&gt;
         </computeroutput></screen>
@@ -887,7 +897,16 @@ Adopt a stack.
     <term><command>-c &lt;TIMEOUT&gt;, --create-timeout &lt;TIMEOUT&gt;</command></term>
     <listitem>
       <para>
-      Stack creation timeout in minutes. Default: 60.
+      Stack creation timeout in minutes. <emphasis>DEPRECATED</emphasis> use
+      --timeout instead.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>-t &lt;TIMEOUT&gt;, --timeout &lt;TIMEOUT&gt;</command></term>
+    <listitem>
+      <para>
+      Stack creation timeout in minutes.
       </para>
     </listitem>
   </varlistentry>
@@ -922,7 +941,8 @@ Adopt a stack.
     <section xml:id="heatclient_subcommand_stack-create">
         <title>heat stack-create command</title>
         <screen><computeroutput>usage: heat stack-create [-f &lt;FILE&gt;] [-e &lt;FILE or URL&gt;] [-u &lt;URL&gt;] [-o &lt;URL&gt;]
-                         [-c &lt;TIMEOUT&gt;] [-r] [-P &lt;KEY1=VALUE1;KEY2=VALUE2...&gt;]
+                         [-c &lt;TIMEOUT&gt;] [-t &lt;TIMEOUT&gt;] [-r]
+                         [-P &lt;KEY1=VALUE1;KEY2=VALUE2...&gt;]
                          &lt;STACK_NAME&gt;
         </computeroutput></screen>
         <para>
@@ -976,7 +996,16 @@ Create the stack.
     <term><command>-c &lt;TIMEOUT&gt;, --create-timeout &lt;TIMEOUT&gt;</command></term>
     <listitem>
       <para>
-      Stack creation timeout in minutes. Default: 60.
+      Stack creation timeout in minutes. <emphasis>DEPRECATED</emphasis> use
+      --timeout instead.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>-t &lt;TIMEOUT&gt;, --timeout &lt;TIMEOUT&gt;</command></term>
+    <listitem>
+      <para>
+      Stack creation timeout in minutes.
       </para>
     </listitem>
   </varlistentry>
@@ -1056,6 +1085,88 @@ List the user's stacks.
   </varlistentry>
  </variablelist>
     </section>
+    <section xml:id="heatclient_subcommand_stack-preview">
+        <title>heat stack-preview command</title>
+        <screen><computeroutput>usage: heat stack-preview [-f &lt;FILE&gt;] [-e &lt;FILE or URL&gt;] [-u &lt;URL&gt;] [-o &lt;URL&gt;]
+                          [-c &lt;TIMEOUT&gt;] [-r]
+                          [-P &lt;KEY1=VALUE1;KEY2=VALUE2...&gt;]
+                          &lt;STACK_NAME&gt;
+        </computeroutput></screen>
+        <para>
+Preview the stack.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;STACK_NAME&gt;</command></term>
+    <listitem>
+      <para>
+        Name of the stack to preview.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-f &lt;FILE&gt;, --template-file &lt;FILE&gt;</command></term>
+    <listitem>
+      <para>
+      Path to the template.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>-e &lt;FILE or URL&gt;, --environment-file &lt;FILE or URL&gt;</command></term>
+    <listitem>
+      <para>
+      Path to the environment.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>-u &lt;URL&gt;, --template-url &lt;URL&gt;</command></term>
+    <listitem>
+      <para>
+      URL of template.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>-o &lt;URL&gt;, --template-object &lt;URL&gt;</command></term>
+    <listitem>
+      <para>
+      URL to retrieve template object (e.g from swift)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>-c &lt;TIMEOUT&gt;, --create-timeout &lt;TIMEOUT&gt;</command></term>
+    <listitem>
+      <para>
+      Stack timeout in minutes. Default: 60
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>-r, --enable-rollback</command></term>
+    <listitem>
+      <para>
+      Enable rollback on failure
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>-P &lt;KEY1=VALUE1;KEY2=VALUE2...&gt;, --parameters &lt;KEY1=VALUE1;KEY2=VALUE2...&gt;</command></term>
+    <listitem>
+      <para>
+      Parameter values used to preview the stack. This can
+      be specified multiple times, or once with parameters
+      separated by semicolon.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
     <section xml:id="heatclient_subcommand_stack-show">
         <title>heat stack-show command</title>
         <screen><computeroutput>usage: heat stack-show &lt;NAME or ID&gt;
@@ -1077,7 +1188,7 @@ Describe the stack.
     <section xml:id="heatclient_subcommand_stack-update">
         <title>heat stack-update command</title>
         <screen><computeroutput>usage: heat stack-update [-f &lt;FILE&gt;] [-e &lt;FILE or URL&gt;] [-u &lt;URL&gt;] [-o &lt;URL&gt;]
-                         [-P &lt;KEY1=VALUE1;KEY2=VALUE2...&gt;]
+                         [-t &lt;TIMEOUT&gt;] [-P &lt;KEY1=VALUE1;KEY2=VALUE2...&gt;]
                          &lt;NAME or ID&gt;
         </computeroutput></screen>
         <para>
@@ -1124,6 +1235,14 @@ Update the stack.
     <listitem>
       <para>
       URL to retrieve template object (e.g. from swift).
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>-t &lt;TIMEOUT&gt;, --timeout &lt;TIMEOUT&gt;</command></term>
+    <listitem>
+      <para>
+      Stack update timeout in minutes.
       </para>
     </listitem>
   </varlistentry>
