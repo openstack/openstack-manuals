@@ -52,7 +52,7 @@ def patternmatch(directory, docs_location, rstfile):
     except IOError:
         #if file is a directory then recurse
         print("patternmatch:in IOError:directory:" + directory + ", docs_location: " + docs_location + ", rstfile: " + rstfile)
-        os.mkdir(os.path.expanduser("./openstack-manuals/doc/training-guide/sources/" + directory + rstfile))
+        os.mkdir(os.path.expanduser("./openstack-manuals/doc/training-guides/sources/" + directory + rstfile))
         walkdirectories(directory + docs_location, rstfile +"/")
         #docs_location and rstfile are both directories in this case
         return
@@ -78,7 +78,7 @@ def patternmatch(directory, docs_location, rstfile):
         if good_file_found == "false":
             #jump out of called routine
             return
-        outfile = open("./openstack-manuals/doc/training-guide/sources/" +
+        outfile = open("./openstack-manuals/doc/training-guides/sources/" +
                        directory[0] + "/" + docs_location + outfilename[-1] + ".xml", "w+")
         print(directory[0] + "/" + docs_location + outfilename[-1] + ".xml")
     else:
@@ -99,7 +99,7 @@ def patternmatch(directory, docs_location, rstfile):
         if good_file_found == "false":
             #jump out of called routine
             return
-        outfile = open("./openstack-manuals/doc/training-guide/sources/" +
+        outfile = open("./openstack-manuals/doc/training-guides/sources/" +
                        directory + outfilename[-1] + ".xml", "w+")
         print(directory + outfilename[-1] + ".xml")
     #header of new xml file
@@ -195,10 +195,10 @@ def walkdirectories(projectdirectory, sourcedirectory):
 def convert_rst_docbook5(repository_hash):
     for item in repository_hash:
         print("convert_rst_docbook5:start convert rst: " + item + repository_hash[item])
-        os.system("rm -R ./openstack-manuals/doc/training-guide/sources/" + item)
+        os.system("rm -R ./openstack-manuals/doc/training-guides/sources/" + item)
         try:
             #use try for when the remove directory fails
-            os.mkdir("./openstack-manuals/doc/training-guide/sources/" + item)
+            os.mkdir("./openstack-manuals/doc/training-guides/sources/" + item)
         except OSError:
             pass
         walkdirectories(item, repository_hash[item])

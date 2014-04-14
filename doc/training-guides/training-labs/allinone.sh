@@ -8,7 +8,7 @@
 # will cause deployment errors
 #
 # See the remaining OpenStack Training Labs code for more details at GitHub:
-# https://github.com/openstack/openstack-manuals/tree/master/doc/training-guide/training-labs
+# https://github.com/openstack/openstack-manuals/tree/master/doc/training-guides/training-labs
 
 #Change to the root user
 sudo su -
