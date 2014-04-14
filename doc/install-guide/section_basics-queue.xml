@@ -15,21 +15,6 @@
   <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install rabbitmq-server</userinput></screen>
   <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install rabbitmq-server</userinput></screen>
   <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>yum install qpid-cpp-server</userinput></screen>
-  <note os="ubuntu;debian;opensuse;sles">
-    <title>Important security consideration</title>
-    <para>The <package>rabbitmq-server</package> package configures
-      the RabbitMQ service to start automatically and creates a
-      <literal>guest</literal> user with a default
-      <literal>guest</literal> password. The RabbitMQ examples in
-      this guide use the <literal>guest</literal> account, though it
-      is strongly advised to change its default password, especially
-      if you have IPv6 available: by default the RabbitMQ server
-      enables anyone to connect to it by using guest as login and
-      password, and with IPv6, it is reachable from the
-      outside.</para>
-    <para>To change the default guest password of RabbitMQ:</para>
-    <screen><prompt>#</prompt> <userinput>rabbitmqctl change_password guest <replaceable>RABBIT_PASS</replaceable></userinput></screen>
-  </note>
   <para os="fedora;centos;rhel">Disable Qpid authentication by
     editing <filename>/etc/qpidd.conf</filename> file and changing
     the <literal>auth</literal> option to
@@ -61,6 +46,21 @@
     start automatically when the system boots:</para>
   <screen os="opensuse;sles"><prompt>#</prompt> <userinput>service rabbitmq-server start</userinput>
 <prompt>#</prompt> <userinput>chkconfig rabbitmq-server on</userinput></screen>
+  <note os="ubuntu;debian;opensuse;sles">
+    <title>Important security consideration</title>
+    <para>The <package>rabbitmq-server</package> package configures
+      the RabbitMQ service to start automatically and creates a
+      <literal>guest</literal> user with a default
+      <literal>guest</literal> password. The RabbitMQ examples in
+      this guide use the <literal>guest</literal> account, though it
+      is strongly advised to change its default password, especially
+      if you have IPv6 available: by default the RabbitMQ server
+      enables anyone to connect to it by using guest as login and
+      password, and with IPv6, it is reachable from the
+      outside.</para>
+    <para>To change the default guest password of RabbitMQ:</para>
+    <screen><prompt>#</prompt> <userinput>rabbitmqctl change_password guest <replaceable>RABBIT_PASS</replaceable></userinput></screen>
+  </note>
   <para>Congratulations, now you are ready to install OpenStack
     services!</para>
 </section>
