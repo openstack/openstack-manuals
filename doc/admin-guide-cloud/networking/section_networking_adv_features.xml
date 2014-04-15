@@ -181,51 +181,28 @@
             <title>Provider extension API operations</title>
             <para>To use the provider extension with the default policy settings, you must have the
                 administrative role.</para>
-            <para>This table shows example neutron commands that enable you to complete basic
+            <para>This list shows example neutron commands that enable you to complete basic
                 provider extension API operations:</para>
-            <table rules="all">
-                <caption>Basic provider extension API operations</caption>
-                <col width="40%"/>
-                <col width="60%"/>
-                <thead>
-                    <tr>
-                        <th>Operation</th>
-                        <th>Command</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
+        <itemizedlist>
+          <listitem>
                             <para>Shows all attributes of a network, including provider
-                                attributes.</para>
-                        </td>
-                        <td>
+                                attributes:</para>
                             <screen><prompt>$</prompt> <userinput>neutron net-show &lt;name or net-id&gt;</userinput></screen>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <para>Creates a local provider network.</para>
-                        </td>
-                        <td>
+          </listitem>
+          <listitem>
+                            <para>Creates a local provider network:</para>
                             <screen><prompt>$</prompt> <userinput>neutron net-create &lt;name&gt; --tenant_id &lt;tenant-id&gt; --provider:network_type local</userinput></screen>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <para>Creates a flat provider network. When you create flat networks,
+          </listitem>
+          <listitem>
+                            <para>When you create flat networks,
                                 &lt;phys-net-name&gt; must be known to the plug-in. See the
                                     <citetitle xmlns:svg="http://www.w3.org/2000/svg"
                                     xmlns:html="http://www.w3.org/1999/xhtml">OpenStack
-                                    Configuration Reference</citetitle> for details.</para>
-                        </td>
-                        <td>
+                                    Configuration Reference</citetitle> for details. Creates a flat provider network:</para>
                             <screen><prompt>$</prompt> <userinput>neutron net-create &lt;name&gt; --tenant_id &lt;tenant-id&gt; --provider:network_type flat --provider:physical_network &lt;phys-net-name&gt;</userinput></screen>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <para>Creates a VLAN provider network. When you create VLAN networks,
+          </listitem>
+          <listitem>
+                            <para>When you create VLAN networks,
                                 &lt;phys-net-name&gt; must be known to the plug-in. See the
                                     <citetitle xmlns:svg="http://www.w3.org/2000/svg"
                                     xmlns:html="http://www.w3.org/1999/xhtml">OpenStack
@@ -233,28 +210,20 @@
                                 network_vlan_ranges to identify all physical networks. When you
                                 create VLAN networks, &lt;VID&gt; can fall either within or outside
                                 any configured ranges of VLAN IDs from which tenant networks are
-                                allocated.</para>
-                        </td>
-                        <td>
+                                allocated. Creates a VLAN provider network:</para>
                             <screen><prompt>$</prompt> <userinput>neutron net-create &lt;name&gt; --tenant_id &lt;tenant-id&gt; --provider:network_type vlan --provider:physical_network &lt;phys-net-name&gt; --provider:segmentation_id &lt;VID&gt;</userinput></screen>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <para>Creates a GRE provider network. When you create GRE networks,
+          </listitem>
+          <listitem>
+                            <para>When you create GRE networks,
                                 &lt;tunnel-id&gt; can be either inside or outside any tunnel ID
                                 ranges from which tenant networks are allocated.</para>
                             <para>After you create provider networks, you can allocate subnets,
                                 which you can use in the same way as other virtual networks, subject
                                 to authorization policy based on the specified
-                                &lt;tenant_id&gt;.</para>
-                        </td>
-                        <td>
+                                &lt;tenant_id&gt;. Creates a GRE provider network:</para>
                             <screen><prompt>$</prompt> <userinput>neutron net-create &lt;name&gt; --tenant_id &lt;tenant-id&gt; --provider:network_type gre --provider:segmentation_id &lt;tunnel-id&gt;</userinput></screen>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+          </listitem>
+        </itemizedlist>
         </section>
     </section>
     <section xml:id="section_l3_router_and_nat">
@@ -845,21 +814,10 @@
                 balancers. The Havana release offers a reference implementation that is based on the
                 HAProxy software load balancer.</para>
         </note>
-        <para>This table shows example neutron commands that enable you to complete basic LBaaS
+        <para>This list shows example neutron commands that enable you to complete basic LBaaS
             operations:</para>
-        <table rules="all">
-            <caption>Basic LBaaS operations</caption>
-            <col width="40%"/>
-            <col width="60%"/>
-            <thead>
-                <tr>
-                    <th>Operation</th>
-                    <th>Command</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
+        <itemizedlist>
+          <listitem>
                         <para>Creates a load balancer pool by using specific provider.</para>
                         <para><parameter>--provider</parameter> is an optional argument. If not
                             used, the pool is created with default provider for LBaaS service. You
@@ -868,48 +826,28 @@
                                 <filename>neutron.conf</filename> file. If no default provider is
                             specified for LBaaS, the <parameter>--provider</parameter> option is
                             required for pool creation.</para>
-                    </td>
-                    <td>
                         <screen><prompt>$</prompt> <userinput>neutron lb-pool-create --lb-method ROUND_ROBIN --name mypool --protocol HTTP --subnet-id &lt;subnet-uuid&gt; <parameter>--provider &lt;provider_name&gt;</parameter></userinput></screen>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
+          </listitem>
+          <listitem>
                         <para>Associates two web servers with pool.</para>
-                    </td>
-                    <td>
                         <screen><prompt>$</prompt> <userinput>neutron lb-member-create --address  &lt;webserver one IP&gt; --protocol-port 80 mypool</userinput>
 <prompt>$</prompt> <userinput>neutron lb-member-create --address  &lt;webserver two IP&gt; --protocol-port 80 mypool</userinput></screen>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
+          </listitem>
+          <listitem>
                         <para>Creates a health monitor which checks to make sure our instances are
                             still running on the specified protocol-port.</para>
-                    </td>
-                    <td>
                         <screen><prompt>$</prompt> <userinput>neutron lb-healthmonitor-create --delay 3 --type HTTP --max-retries 3 --timeout 3</userinput></screen>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
+          </listitem>
+          <listitem>
                         <para>Associates a health monitor with pool.</para>
-                    </td>
-                    <td>
                         <screen><prompt>$</prompt> <userinput>neutron lb-healthmonitor-associate  &lt;healthmonitor-uuid&gt; mypool</userinput></screen>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
+          </listitem>
+          <listitem>
                         <para>Creates a virtual IP (VIP) address that, when accessed through the
                             load balancer, directs the requests to one of the pool members.</para>
-                    </td>
-                    <td>
                         <screen><prompt>$</prompt> <userinput>neutron lb-vip-create --name myvip --protocol-port 80 --protocol HTTP --subnet-id &lt;subnet-uuid&gt; mypool</userinput></screen>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+          </listitem>
+        </itemizedlist>
     </section>
     <?hard-pagebreak?>
     <section xml:id="fwaas">
