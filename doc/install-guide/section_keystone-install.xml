@@ -181,9 +181,10 @@ admin_token = ADMIN_TOKEN
     </step>
     <step os="rhel;centos;fedora;opensuse;sles">
       <para>By default, Keystone uses PKI tokens. Create the signing
-        keys and certificates:</para>
+        keys and certificates and restrict access to the generated data:</para>
       <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>keystone-manage pki_setup --keystone-user keystone --keystone-group keystone</userinput>
-<prompt>#</prompt> <userinput>chown -R keystone:keystone /etc/keystone/* /var/log/keystone/keystone*.log</userinput></screen>
+<prompt>#</prompt> <userinput>chown -R keystone:keystone /etc/keystone/ssl</userinput>
+<prompt>#</prompt> <userinput>chmod -R o-rwx /etc/keystone/ssl</userinput></screen>
     </step>
     <step os="ubuntu">
       <para>Configure the log directory. Edit the
