@@ -1,0 +1,36 @@
+heat_template_version: 2013-05-23
+
+description: Test Template
+
+parameters:
+  ImageID:
+    type: string
+    description: Image use to boot a server
+  NetID:
+    type: string
+    description: Network ID for the server
+  SubNetID:
+    type: string
+    description: Subnet ID for the server
+
+resources:
+  server1:
+    type: OS::Nova::Server
+    properties:
+      name: "Test server"
+      image: { get_param: ImageID }
+      flavor: "m1.tiny"
+      networks:
+        - port: { get_resource: server1_port }
+
+  server1_port:
+    type: OS::Neutron::Port
+    properties:
+      network_id: { get_param: NetID }
+      fixed_ips:
+        - subnet_id: { get_param: SubNetID }
+
+outputs:
+  server1_private_ip:
+    description: IP address of the server in the private network
+    value: { get_attr: [ server1, first_address ] }
