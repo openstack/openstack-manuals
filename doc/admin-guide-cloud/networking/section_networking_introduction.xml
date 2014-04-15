@@ -232,6 +232,113 @@
                 </tbody>
             </table>
     </section>
+    <section xml:id="install_neutron-fwaas-agent">
+        <title>Firewall-as-a-Service (FWaaS) overview</title>
+        <para>The <glossterm>Firewall-as-a-Service (FWaaS)</glossterm> plug-in
+        adds perimeter firewall management to Networking. FWaaS uses iptables to
+        apply firewall policy to all Networking routers within a project. FWaaS
+        supports one firewall policy and logical firewall instance per
+        project.</para>
+        <para>Whereas security groups operate at the instance-level, FWaaS
+        operates at the perimeter by filtering traffic at the neutron
+        router.</para>
+        <note>
+            <para>FWaaS is currently in technical preview; untested operation
+            is not recommended.</para>
+        </note>
+        <para>The example diagram below illustrates the flow of ingress and
+        egress traffic for the VM2 instance:</para>
+        <figure>
+            <title>FWaaS architecture</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="../../common/figures/fwaas.png" format="PNG" contentwidth="7in"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        <formalpara>
+            <title>Enable FWaaS</title>
+            <para>Enable the FWaaS plugin in the <filename>neutron.conf</filename> file:</para>
+        </formalpara>
+        <programlisting language="ini">service_plugins = neutron.services.firewall.fwaas_plugin.FirewallPlugin
+[fwaas]
+driver = neutron.services.firewall.drivers.linux.iptables_fwaas.IptablesFwaasDriver
+enabled = True</programlisting>
+        <para>FWaaS management options are available in OpenStack dashboard. Enable the option in the
+        file typically located on the controller node:
+        <filename>/usr/share/openstack-dashboard/openstack_dashboard/local/local_settings.py</filename>
+        </para>
+        <programlisting language="ini">'enable_firewall' = True</programlisting>
+        <procedure>
+            <title>Configure Firewall-as-a-Service</title>
+            <para>First create the firewall rules and create a policy that contains them, then
+                create a firewall that applies the policy:</para>
+            <step>
+                <para>Create a firewall rule:</para>
+                <screen><prompt>$</prompt> <userinput>neutron firewall-rule-create --protocol &lt;tcp|udp|icmp|any&gt; --destination-port &lt;port-range&gt; --action &lt;allow|deny&gt;</userinput></screen>
+                <para>The CLI requires a protocol value; if the rule is
+                protocol agnostic, the 'any' value can be used.</para>
+            </step>
+            <step>
+                <para>Create a firewall policy:</para>
+                <screen><prompt>$</prompt> <userinput>neutron firewall-policy-create --firewall-rules  "&lt;firewall-rule IDs or names separated by space&gt;" myfirewallpolicy</userinput></screen>
+                <para>The order of the rules specified above is important.You
+                can create a firewall policy without and rules and add rules
+                later either with the update operation (when adding multiple
+                rules) or with the insert-rule operations (when adding a single
+                rule). Please <link
+              xlink:href="http://docs.openstack.org/cli-reference/content/neutronclient_commands.html#neutronclient_subcommand_firewall-policy-create">check the CLI Reference</link>
+                for more details on these operations.</para>
+                <note>
+                    <para>FWaaS always adds a default <option>deny all</option>
+                    rule at the lowest precedence of each policy. Consequently,
+                    a firewall policy with no rules blocks all traffic by
+                    default.</para>
+                </note>
+            </step>
+            <step>
+                <para>Create a firewall:</para>
+                <screen><prompt>$</prompt> <userinput>neutron firewall-create  &lt;firewall-policy-uuid&gt;</userinput></screen>
+                <note><para>The firewall remains in
+                 <guilabel>PENDING_CREATE</guilabel> state until a Networking
+                 router is created, and an interface is attached.</para></note>
+            </step>
+        </procedure>
+        <formalpara>
+            <title>Allowed-address-pairs</title><para></para>
+        </formalpara>
+        <para>
+            <option>Allowed-address-pairs</option> allow you to specify
+            mac_address/ip_address(cidr) pairs that pass through a port
+            regardless of subnet. This enables the use of protocols such as
+            VRRP, which floats an IP address between two instances to enable
+            fast data plane failover.</para>
+        <note>
+            <para>The allowed-address-pairs extension is currently only
+            supported by these plug-ins: ML2, Open vSwitch, and VMware
+            NSX.</para>
+        </note>
+        <formalpara>
+            <title>Basic allowed-address-pairs operations</title><para></para>
+        </formalpara>
+        <itemizedlist>
+            <listitem>
+                <para>Create a port with a specific allowed-address-pairs:</para>
+                <screen><prompt>$</prompt> <userinput>neutron port-create net1 --allowed-address-pairs type=dict list=true mac_address=&lt;mac_address&gt;,ip_address=&lt;ip_cidr&gt;</userinput></screen>
+            </listitem>
+            <listitem>
+                <para>Update a port adding allowed-address-pairs:</para>
+                <screen><prompt>$</prompt> <userinput>neutron port-update  &lt;port-uuid&gt; --allowed-address-pairs type=dict list=true mac_address=&lt;mac_address&gt;,ip_address=&lt;ip_cidr&gt;</userinput></screen>
+            </listitem>
+        </itemizedlist>
+        <note>
+            <para>OpenStack Networking prevents setting an allowed-address-pair
+            that matches the mac_address and ip_address of a port. This is
+            because that would have no effect since traffic matching the
+            mac_address and ip_address is already allowed to pass through the
+            port.</para>
+        </note>
+    </section>
     <section xml:id="section_plugin-arch">
         <title>Plug-in architecture</title>
         <para>The original Compute network implementation assumed a
@@ -1462,35 +1569,6 @@ interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver</programlist
                         <systemitem>httpd</systemitem> service.  You can
                         now view the Load Balancer management options in
                         dashboard's <guimenu>Project</guimenu> view.</para>
-                </step>
-            </procedure>
-        </section>
-        <section xml:id="install_neutron-fwaas-agent">
-            <title>Configure FWaaS agent</title>
-            <para>The Firewall-as-a-Service (FWaaS) agent is
-                co-located with the Neutron L3 agent and does not
-                require any additional packages apart from those
-                required for the Neutron L3 agent. You can enable the
-                FWaaS functionality by setting the configuration, as
-                follows.</para>
-            <procedure>
-                <title>To configure FWaaS service and agent</title>
-                <step>
-                    <para>Set this parameter in the
-                            <filename>neutron.conf</filename> file on
-                        the host that runs <systemitem class="service"
-                            >neutron-server</systemitem>:</para>
-                    <programlisting language="ini">service_plugins = neutron.services.firewall.fwaas_plugin.FirewallPlugin</programlisting>
-                </step>
-                <step>
-                    <para>To use the reference implementation, you
-                        must also update the FWaaS driver configuration in
-                        the <filename>fwaas_driver.ini</filename> file on
-                        every node where the Neutron L3 agent is
-                        deployed:</para>
-                    <programlisting language="ini">[fwaas]
-driver = neutron.services.firewall.drivers.linux.iptables_fwaas.IptablesFwaasDriver
-enabled = True</programlisting>
                 </step>
             </procedure>
         </section>
