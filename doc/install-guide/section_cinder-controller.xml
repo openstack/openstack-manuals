@@ -42,13 +42,7 @@ connection = mysql://cinder:<replaceable>CINDER_DBPASS</replaceable>@<replaceabl
         <literal>[database]</literal> section header. You must add this
         section header to the end of the file before you proceed.</para>
       </note></step>
-    <step os="rhel;centos;fedora;opensuse;sles">
-      <para>To create the Block Storage service database and tables
-        and a <literal>cinder</literal> database user, run the
-          <command>openstack-db</command> command.</para>
-      <screen><prompt>#</prompt> <userinput>openstack-db --init --service cinder --password <replaceable>CINDER_DBPASS</replaceable></userinput></screen>
-    </step>
-    <step os="ubuntu">
+    <step os="ubuntu;rhel;centos;fedora;opensuse;sles">
       <para>Use the password that you set to log in as root to create
         a <literal>cinder</literal> database:</para>
       <screen><prompt>#</prompt> <userinput>mysql -u root -p</userinput></screen>
@@ -56,7 +50,7 @@ connection = mysql://cinder:<replaceable>CINDER_DBPASS</replaceable>@<replaceabl
 <screen><prompt>mysql></prompt> <userinput>GRANT ALL PRIVILEGES ON cinder.* TO 'cinder'@'localhost' IDENTIFIED BY '<replaceable>CINDER_DBPASS</replaceable>';</userinput></screen>
       <screen><prompt>mysql></prompt> <userinput>GRANT ALL PRIVILEGES ON cinder.* TO 'cinder'@'%' IDENTIFIED BY '<replaceable>CINDER_DBPASS</replaceable>';</userinput></screen>
     </step>
-    <step os="ubuntu">
+    <step os="ubuntu;rhel;centos;fedora;opensuse;sles">
       <para>Create the database tables for the Block Storage
         service:</para>
       <screen><prompt>#</prompt> <userinput>cinder-manage db sync</userinput></screen>

@@ -102,12 +102,6 @@ vncserver_listen = 10.0.0.11
 vncserver_proxyclient_address = 10.0.0.11</programlisting>
     </step>
 
-    <step os="fedora;rhel;centos;opensuse;sles">
-      <para>Run the <command>openstack-db</command> command to create
-        the Compute service database and tables and a
-          <literal>nova</literal> database user.</para>
-      <screen os="fedora;rhel;centos;opensuse;sles"><prompt>#</prompt> <userinput>openstack-db --init --service nova --password <replaceable>NOVA_DBPASS</replaceable></userinput></screen>
-    </step>
     <step os="ubuntu">
       <para>By default, the Ubuntu packages create an SQLite database.
         Delete the <filename>nova.sqlite</filename> file created in
@@ -115,7 +109,7 @@ vncserver_proxyclient_address = 10.0.0.11</programlisting>
         does not get used by mistake:</para>
       <screen><prompt>#</prompt> <userinput>rm /var/lib/nova/nova.sqlite</userinput></screen>
     </step>
-    <step os="ubuntu">
+    <step os="ubuntu;rhel;centos;fedora;opensuse;sles">
       <para>Use the password you created previously to log in as root.
         Create a <literal>nova</literal> database user:</para>
       <screen><prompt>$</prompt> <userinput>mysql -u root -p</userinput>
@@ -125,7 +119,7 @@ IDENTIFIED BY '<replaceable>NOVA_DBPASS</replaceable>';</userinput>
 <prompt>mysql></prompt> <userinput>GRANT ALL PRIVILEGES ON nova.* TO 'nova'@'%' \
 IDENTIFIED BY '<replaceable>NOVA_DBPASS</replaceable>';</userinput></screen>
     </step>
-    <step os="ubuntu">
+    <step os="ubuntu;rhel;centos;fedora;opensuse;sles">
       <para>Create the Compute service tables:</para>
       <screen><prompt>#</prompt> <userinput>nova-manage db sync</userinput></screen>
     </step>

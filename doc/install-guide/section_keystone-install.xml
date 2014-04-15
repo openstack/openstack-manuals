@@ -40,15 +40,6 @@ connection = mysql://keystone:<replaceable>KEYSTONE_DBPASS</replaceable>@<replac
       </programlisting>
     </step>
 
-    <step os="rhel;centos;fedora;opensuse;sles">
-      <para>Use the <command>openstack-db</command> command to create
-        the database and tables, as well as a database user called
-          <literal>keystone</literal> to connect to the database.
-        Replace
-          <literal><replaceable>KEYSTONE_DBPASS</replaceable></literal>
-        with the same password used in the previous step.</para>
-      <screen><prompt>#</prompt> <userinput>openstack-db --init --service keystone --password <replaceable>KEYSTONE_DBPASS</replaceable></userinput></screen>
-    </step>
     <step os="ubuntu">
       <para>By default, the Ubuntu packages create a SQLite database.
         Delete the <filename>keystone.db</filename> file created in
@@ -56,7 +47,7 @@ connection = mysql://keystone:<replaceable>KEYSTONE_DBPASS</replaceable>@<replac
         does not get used by mistake:</para>
       <screen><prompt>#</prompt> <userinput>rm /var/lib/keystone/keystone.db</userinput></screen>
     </step>
-    <step os="ubuntu">
+    <step os="ubuntu;rhel;centos;fedora;opensuse;sles">
       <para>Use the password that you set previously to log in as
         root. Create a <literal>keystone</literal> database
         user:</para>
@@ -68,7 +59,7 @@ connection = mysql://keystone:<replaceable>KEYSTONE_DBPASS</replaceable>@<replac
   IDENTIFIED BY '<replaceable>KEYSTONE_DBPASS</replaceable>';</userinput>
 <prompt>mysql></prompt> <userinput>exit</userinput></screen>
     </step>
-    <step os="ubuntu">
+    <step os="ubuntu;rhel;centos;fedora;opensuse;sles">
       <para>Create the database tables for the Identity Service:</para>
       <screen><prompt>#</prompt> <userinput>keystone-manage db_sync</userinput></screen>
     </step>

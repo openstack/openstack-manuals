@@ -106,13 +106,6 @@ rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
   rabbit_password <replaceable>RABBIT_PASS</replaceable></userinput></screen>
     </step>
 
-
-    <step os="rhel;centos;fedora;opensuse;sles">
-      <para>Use the <command>openstack-db</command> command to create
-        the Image Service database and tables and a
-          <literal>glance</literal> database user:</para>
-      <screen><prompt>#</prompt> <userinput>openstack-db --init --service glance --password <replaceable>GLANCE_DBPASS</replaceable></userinput></screen>
-    </step>
     <step os="ubuntu">
       <para>By default, the Ubuntu packages create an SQLite database.
         Delete the <filename>glance.sqlite</filename> file created in
@@ -120,7 +113,7 @@ rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
         does not get used by mistake:</para>
       <screen><prompt>#</prompt> <userinput>rm /var/lib/glance/glance.sqlite</userinput></screen>
     </step>
-    <step os="ubuntu">
+    <step os="ubuntu;rhel;centos;fedora;opensuse;sles">
       <para>Use the password you created to log in as root and create
         a <literal>glance</literal> database user:</para>
       <screen><prompt>$</prompt> <userinput>mysql -u root -p</userinput>
@@ -130,7 +123,7 @@ IDENTIFIED BY '<replaceable>GLANCE_DBPASS</replaceable>';</userinput>
 <prompt>mysql></prompt> <userinput>GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'%' \
 IDENTIFIED BY '<replaceable>GLANCE_DBPASS</replaceable>';</userinput></screen>
     </step>
-    <step os="ubuntu">
+    <step os="ubuntu;rhel;centos;fedora;opensuse;sles">
       <para>Create the database tables for the Image Service:</para>
       <screen><prompt>#</prompt> <userinput>glance-manage db_sync</userinput></screen>
     </step>
