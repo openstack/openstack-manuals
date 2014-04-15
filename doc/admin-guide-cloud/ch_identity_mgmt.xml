@@ -149,14 +149,14 @@ pipeline = [...] json_body stats_reporting ec2_extension [...] admin_service</pr
         <literal>tenant-create</literal> can be invoked as
       follows:</para>
     <programlisting language="bash"><?db-font-size 65%?># Using token auth env variables
-export SERVICE_ENDPOINT=http://127.0.0.1:5000/v2.0/
-export SERVICE_TOKEN=secrete_token
+export OS_SERVICE_ENDPOINT=http://127.0.0.1:5000/v2.0/
+export OS_SERVICE_TOKEN=secrete_token
 keystone user-list
 keystone tenant-create --name=demo
 
 # Using token auth flags
-keystone --token=secrete --endpoint=http://127.0.0.1:5000/v2.0/ user-list
-keystone --token=secrete --endpoint=http://127.0.0.1:5000/v2.0/ tenant-create --name=demo
+keystone --os-token=secrete --os-endpoint=http://127.0.0.1:5000/v2.0/ user-list
+keystone --os-token=secrete --os-endpoint=http://127.0.0.1:5000/v2.0/ tenant-create --name=demo
 
 # Using user + password + tenant_name env variables
 export OS_USERNAME=admin
