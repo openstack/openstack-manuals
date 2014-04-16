@@ -196,11 +196,6 @@ rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
     <step os="rhel;centos;fedora;sles;opensuse">
       <para>Configure Networking to notify Compute about network topology
         changes:</para>
-      <para>Replace <replaceable>SERVICE_TENANT_ID</replaceable> with the
-        <literal>service</literal> tenant identifier (id) in the Identity
-        service and <replaceable>NOVA_PASS</replaceable> with the password
-        you chose for the <literal>nova</literal> user in the Identity
-        service.</para>
       <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf DEFAULT \
   notify_nova_on_port_status_changes True</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf DEFAULT \
@@ -210,25 +205,11 @@ rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf DEFAULT \
   nova_admin_username nova</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf DEFAULT \
-  nova_admin_tenant_id <replaceable>SERVICE_TENANT_ID</replaceable></userinput>
+  nova_admin_tenant_id $(keystone tenant-list | awk '/ service / { print $2 }')</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf DEFAULT \
   nova_admin_password <replaceable>NOVA_PASS</replaceable></userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf DEFAULT \
   nova_admin_auth_url http://<replaceable>controller</replaceable>:35357/v2.0</userinput></screen>
-      <note>
-        <para>To obtain the <literal>service</literal> tenant
-          identifier (id):</para>
-        <screen><prompt>$</prompt> <userinput>source admin-openrc.sh</userinput>
-<prompt>$</prompt> <userinput>keystone tenant-get service</userinput>
-<computeroutput>+-------------+----------------------------------+
-|   Property  |              Value               |
-+-------------+----------------------------------+
-| description |          Service Tenant          |
-|   enabled   |               True               |
-|      id     | f727b5ec2ceb4d71bad86dfc414449bf |
-|     name    |             service              |
-+-------------+----------------------------------+</computeroutput></screen>
-      </note>
     </step>
     <step os="ubuntu;debian">
       <para>Configure Networking to notify Compute about network topology
@@ -276,10 +257,6 @@ nova_admin_auth_url = http://<replaceable>controller</replaceable>:35357/v2.0</p
   core_plugin ml2</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf DEFAULT \
   service_plugins router</userinput></screen>
-      <warning>
-        <para>You must comment out any lines in the
-          <literal>[service_providers]</literal> section.</para>
-      </warning>
       <note>
         <para>We recommend adding <literal>verbose = True</literal> to
           the <literal>[DEFAULT]</literal> section in
@@ -300,18 +277,18 @@ nova_admin_auth_url = http://<replaceable>controller</replaceable>:35357/v2.0</p
 core_plugin = ml2
 service_plugins = router
 allow_overlapping_ips = True</programlisting>
+          <note>
+            <para>We recommend adding <literal>verbose = True</literal> to
+              the <literal>[DEFAULT]</literal> section in
+              <filename>/etc/neutron/neutron.conf</filename> to assist with
+              troubleshooting.</para>
+          </note>
         </step>
       </substeps>
-      <warning>
-        <para>You must comment out any lines in the
+    </step>
+    <step>
+      <para>Comment out any lines in the
           <literal>[service_providers]</literal> section.</para>
-      </warning>
-      <note>
-        <para>We recommend adding <literal>verbose = True</literal> to
-          the <literal>[DEFAULT]</literal> section in
-          <filename>/etc/neutron/neutron.conf</filename> to assist with
-          troubleshooting.</para>
-      </note>
     </step>
   </procedure>
   <procedure>
@@ -434,8 +411,7 @@ security_group_api = neutron</programlisting>
         <filename>/etc/neutron/plugins/ml2/ml2_conf.ini</filename>.
         If this symbolic link does not exist, create it using the
         following commands:</para>
-      <screen><prompt>#</prompt> <userinput>cd /etc/neutron</userinput>
-<prompt>#</prompt> <userinput>ln -s plugins/ml2/ml2_conf.ini plugin.ini</userinput></screen>
+    <screen><prompt>#</prompt> <userinput>ln -s plugins/ml2/ml2_conf.ini /etc/neutron/plugin.ini</userinput></screen>
     </step>
     <step os="sles;opensuse">
       <para>The Networking service initialization scripts expect the variable

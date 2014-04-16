@@ -152,10 +152,6 @@ rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
   core_plugin ml2</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf DEFAULT \
   service_plugins router</userinput></screen>
-      <warning>
-        <para>You must comment any lines in the
-          <literal>[service_providers]</literal> section.</para>
-      </warning>
       <note>
         <para>We recommend adding <literal>verbose = True</literal> to
           the <literal>[DEFAULT]</literal> section in
@@ -176,18 +172,18 @@ rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
 core_plugin = ml2
 service_plugins = router
 allow_overlapping_ips = True</programlisting>
+          <note>
+            <para>We recommend adding <literal>verbose = True</literal> to
+              the <literal>[DEFAULT]</literal> section in
+              <filename>/etc/neutron/neutron.conf</filename> to assist with
+              troubleshooting.</para>
+          </note>
         </step>
       </substeps>
-      <warning>
-        <para>You must comment any lines in the
+    </step>
+    <step>
+      <para>Comment out any lines in the
           <literal>[service_providers]</literal> section.</para>
-      </warning>
-      <note>
-        <para>We recommend adding <literal>verbose = True</literal> to
-          the <literal>[DEFAULT]</literal> section in
-          <filename>/etc/neutron/neutron.conf</filename> to assist with
-          troubleshooting.</para>
-      </note>
     </step>
   </procedure>
   <procedure>
@@ -483,8 +479,7 @@ enable_security_group = True</programlisting>
         <filename>/etc/neutron/plugins/ml2/ml2_conf.ini</filename>.
         If this symbolic link does not exist, create it using the
         following commands:</para>
-      <screen><prompt>#</prompt> <userinput>cd /etc/neutron</userinput>
-<prompt>#</prompt> <userinput>ln -s plugins/ml2/ml2_conf.ini plugin.ini</userinput></screen>
+    <screen><prompt>#</prompt> <userinput>ln -s plugins/ml2/ml2_conf.ini /etc/neutron/plugin.ini</userinput></screen>
 <!-- https://bugzilla.redhat.com/show_bug.cgi?id=1087647 -->
       <para>Due to a packaging bug, the Open vSwitch agent initialization
         script explicitly looks for the Open vSwitch plug-in configuration
@@ -493,7 +488,7 @@ enable_security_group = True</programlisting>
         plug-in configuration file. Run the following commands to resolve this
         issue:</para>
       <screen><prompt>#</prompt> <userinput>cp /etc/init.d/neutron-openvswitch-agent /etc/init.d/neutron-openvswitch-agent.orig</userinput>
-<prompt>#</prompt> <userinput>sed -i 's/plugins\/openvswitch\/ovs_neutron_plugin.ini/plugin.ini/g' /etc/init.d/neutron-openvswitch-agent</userinput></screen>
+<prompt>#</prompt> <userinput>sed -i 's,plugins/openvswitch/ovs_neutron_plugin.ini,plugin.ini,g' /etc/init.d/neutron-openvswitch-agent</userinput></screen>
     </step>
     <step os="sles;opensuse">
       <para>The Networking service initialization scripts expect the variable
