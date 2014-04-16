@@ -317,6 +317,12 @@ metadata_proxy_shared_secret = <replaceable>METADATA_SECRET</replaceable></progr
           troubleshooting.</para>
       </note>
     </step>
+    <step>
+      <note>
+        <para>Perform the next two steps on the
+        <emphasis>controller</emphasis> node.</para>
+      </note>
+    </step>
     <step os="rhel;centos;fedora;sles;opensuse">
       <para>On the <emphasis>controller</emphasis> node, configure Compute to
         use the metadata service:</para>
@@ -355,8 +361,11 @@ neutron_metadata_proxy_shared_secret = <replaceable>METADATA_SECRET</replaceable
       <para>Run the following commands:</para>
       <para>Replace
         <replaceable>INSTANCE_TUNNELS_INTERFACE_IP_ADDRESS</replaceable>
-        with the IP address of the instance tunnels network interface on
-        your network node.</para>
+        with the IP address of the instance tunnels network interface
+        on your network node. This guide uses
+        <literal>10.0.1.21</literal> for the IP address of the
+        instance tunnels network interface on the network
+        node.</para>
       <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/plugins/ml2/ml2_conf.ini ml2 \
   type_drivers gre</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/plugins/ml2/ml2_conf.ini ml2 \
