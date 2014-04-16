@@ -45,10 +45,12 @@ connection = mysql://cinder:<replaceable>CINDER_DBPASS</replaceable>@<replaceabl
     <step os="ubuntu;rhel;centos;fedora;opensuse;sles">
       <para>Use the password that you set to log in as root to create
         a <literal>cinder</literal> database:</para>
-      <screen><prompt>#</prompt> <userinput>mysql -u root -p</userinput></screen>
-<screen><prompt>mysql></prompt> <userinput>CREATE DATABASE cinder;</userinput></screen>
-<screen><prompt>mysql></prompt> <userinput>GRANT ALL PRIVILEGES ON cinder.* TO 'cinder'@'localhost' IDENTIFIED BY '<replaceable>CINDER_DBPASS</replaceable>';</userinput></screen>
-      <screen><prompt>mysql></prompt> <userinput>GRANT ALL PRIVILEGES ON cinder.* TO 'cinder'@'%' IDENTIFIED BY '<replaceable>CINDER_DBPASS</replaceable>';</userinput></screen>
+      <screen><prompt>#</prompt> <userinput>mysql -u root -p</userinput>
+<prompt>mysql></prompt> <userinput>CREATE DATABASE cinder;</userinput>
+<prompt>mysql></prompt> <userinput>GRANT ALL PRIVILEGES ON cinder.* TO 'cinder'@'localhost' \
+  IDENTIFIED BY '<replaceable>CINDER_DBPASS</replaceable>';</userinput>
+<prompt>mysql></prompt> <userinput>GRANT ALL PRIVILEGES ON cinder.* TO 'cinder'@'%' \
+  IDENTIFIED BY '<replaceable>CINDER_DBPASS</replaceable>';</userinput></screen>
     </step>
     <step os="ubuntu;rhel;centos;fedora;opensuse;sles">
       <para>Create the database tables for the Block Storage
