@@ -19,7 +19,8 @@
         node:</para>
       <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install ceilometer-api ceilometer-collector ceilometer-agent-central \
   ceilometer-alarm-evaluator ceilometer-alarm-notifier python-ceilometerclient</userinput></screen>
-      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-ceilometer-api openstack-ceilometer-collector openstack-ceilometer-central python-ceilometerclient</userinput></screen>
+      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-ceilometer-api openstack-ceilometer-collector \
+  openstack-ceilometer-central openstack-ceilometer-alarm python-ceilometerclient</userinput></screen>
       <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-ceilometer-api openstack-ceilometer-collector \
   openstack-ceilometer-agent-central python-ceilometerclient \
   openstack-ceilometer-alarm-evaluator openstack-ceilometer-alarm-notifier</userinput></screen>
@@ -74,7 +75,7 @@
         </para>
       </note>
     </step>
-    <step os="ubuntu;debian;sles;opensuse">
+    <step>
       <para>Configure MongoDB to make it listen on the controller management IP
       address. Edit the <filename>/etc/mongodb.conf</filename> file and modify the
       <literal>bind_ip</literal> key:</para>
@@ -185,7 +186,7 @@ log_dir = /var/log/ceilometer</programlisting>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf \
   keystone_authtoken admin_password <replaceable>CEILOMETER_PASS</replaceable></userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf \
-    service_credentials os_auth_url http://<replaceable>controller</replaceable>:5000/v2.0</userinput>
+  service_credentials os_auth_url http://<replaceable>controller</replaceable>:5000/v2.0</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf \
   service_credentials os_username ceilometer</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf \
@@ -245,19 +246,23 @@ os_password = <replaceable>CEILOMETER_PASS</replaceable></programlisting>
       <screen os="opensuse;sles"><prompt>#</prompt> <userinput>service openstack-ceilometer-api start</userinput>
 <prompt>#</prompt> <userinput>service openstack-ceilometer-agent-central start</userinput>
 <prompt>#</prompt> <userinput>service openstack-ceilometer-collector start</userinput>
+<prompt>#</prompt> <userinput>service openstack-ceilometer-alarm-evaluator start</userinput>
+<prompt>#</prompt> <userinput>service openstack-ceilometer-alarm-notifier start</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-api on</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-agent-central on</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-collector on</userinput>
-<prompt>#</prompt> <userinput>service openstack-ceilometer-alarm-evaluator start</userinput>
-<prompt>#</prompt> <userinput>service openstack-ceilometer-alarm-notifier start</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-alarm-evaluator on</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-alarm-notifier on</userinput></screen>
       <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>service openstack-ceilometer-api start</userinput>
 <prompt>#</prompt> <userinput>service openstack-ceilometer-central start</userinput>
 <prompt>#</prompt> <userinput>service openstack-ceilometer-collector start</userinput>
+<prompt>#</prompt> <userinput>service openstack-ceilometer-alarm-evaluator start</userinput>
+<prompt>#</prompt> <userinput>service openstack-ceilometer-alarm-notifier start</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-api on</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-central on</userinput>
-<prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-collector on</userinput></screen>
+<prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-collector on</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-alarm-evaluator on</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-alarm-notifier on</userinput></screen>
     </step>
   </procedure>
 </section>
