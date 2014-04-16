@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<section xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="trove-install" version="5.0">
+  <title>Install the Database service</title>
+  <para>This procedure installs the Database module on the controller
+  node.</para>
+  <formalpara>
+    <title>Prerequisites</title>
+    <para>This chapter assumes that you already have a working
+      OpenStack environment with at least the following components
+      installed: Compute, Image Service, Identity.</para>
+  </formalpara>
+  <note os="ubuntu">
+        <title>Ubuntu 14.04 Only</title>
+        <para>The Database module is only available under Ubuntu 14.04.
+        Packages are not available for 12.04, or via the Ubuntu Cloud
+        Archive.</para>
+  </note>
+  <para>To install the Database module on the controller:</para>
+  <procedure>
+         <step>
+         <para>Install required packages:</para>
+          <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install python-trove python-troveclient python-glanceclient \
+  trove-common trove-api trove-taskmanager</userinput></screen>
+          <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-trove FIXME</userinput></screen>
+          <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-trove python-troveclient</userinput></screen>
+          </step>
+      <step><para>Prepare OpenStack:</para>
+    <substeps>
+      <step>
+      <para>Source the <filename>admin-openrc.sh</filename> file.</para>
+      <screen><prompt>$</prompt> <userinput>source ~/admin-openrc.sh</userinput></screen>
+      </step>
+
+    <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
+      <para>Create a <literal>trove</literal> user that Compute uses to
+        authenticate with the Identity service. Use the
+          <literal>service</literal> tenant and give the user the
+          <literal>admin</literal> role:</para>
+      <screen><prompt>$</prompt> <userinput>keystone user-create --name=trove --pass=<replaceable>TROVE_PASS</replaceable> --email=<replaceable>trove@example.com</replaceable></userinput>
+<prompt>$</prompt> <userinput>keystone user-role-add --user=trove --tenant=service --role=admin</userinput></screen>
+    </step>
+
+        </substeps>
+     </step>
+      <step>
+        <para>Edit the the following configuration files, taking the below
+        actions for each file:</para>
+        <itemizedlist>
+        <listitem><para><filename>trove.conf</filename></para></listitem>
+        <listitem><para><filename>trove-taskmanager.conf</filename></para></listitem>
+        <listitem><para><filename>trove-conductor.conf</filename></para></listitem>
+        </itemizedlist>
+    <substeps>
+       <step><para>Edit the <literal>[DEFAULT]</literal> section of each file
+        for the, client URLs and logging configuration</para>
+        <programlisting language="ini">[DEFAULT]
+log_dir=/var/log/trove
+trove_auth_url = http://controller:5000/v2.0
+nova_compute_url = http://controller:8774/v2
+cinder_url = http://controller:8776/v1
+swift_url = http://controller:8080/v1/AUTH_
+        </programlisting>
+        </step>
+    <step os="fedora;rhel;centos">
+      <para>Set these configuration keys to configure thee Database
+        module to use the Qpid message broker:</para>
+      <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/trove/trove-api.conf \
+  DEFAULT rpc_backend rabbit</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/trove/trove-taskmaster.conf \
+  DEFAULT rpc_backend rabbit</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/trove/trove-conductor.conf \
+  DEFAULT rpc_backend rabbit</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/trove/trove-api.conf DEFAULT qpid_hostname <replaceable>controller</replaceable></userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/trove/trove-taskmaster.conf DEFAULT qpid_hostname <replaceable>controller</replaceable></userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/trove/trove-conductor.conf DEFAULT qpid_hostname <replaceable>controller</replaceable></userinput>
+    </screen>
+    </step>
+    <step os="ubuntu">
+      <para>Configure the Database module to use the RabbitMQ message broker by
+        setting these configuration keys in the <literal>[DEFAULT]</literal>
+        configuration group of each file:</para>
+      <programlisting language="ini">[DEFAULT]
+...
+rpc_backend = rabbit
+rabbit_host = controller
+rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
+    </step>
+    <step os="opensuse;sles">
+      <para>Set these configuration keys to configure the Database module to use
+        the RabbitMQ message broker:</para>
+      <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/trove/trove-api.conf \
+  DEFAULT rpc_backend rabbit</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/trove/trove-taskmaster.conf \
+  DEFAULT rpc_backend rabbit</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/trove/trove-conductor.conf \
+  DEFAULT rpc_backend rabbit</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/trove/trove-api.conf DEFAULT rabbit_host controller</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/trove/trove-taskmaster.conf DEFAULT rabbit_host controller</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/trove/trove-conductor.conf DEFAULT rabbit_host controller</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/trove/trove-api.conf DEFAULT rabbit_password <replaceable>RABBIT_PASS</replaceable></userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/trove/trove-taskmaster.conf DEFAULT rabbit_password <replaceable>RABBIT_PASS</replaceable></userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/trove/trove-conductor.conf DEFAULT rabbit_password <replaceable>RABBIT_PASS</replaceable></userinput></screen>
+    </step>
+
+        <step>
+        <para>Edit the <literal>[keystone_authtoken]</literal> section of each file so it matches the listing shown below:</para>
+        <programlisting language="ini">
+[keystone_authtoken]
+auth_host = controller
+auth_port = 35357
+auth_protocol = http
+admin_user = trove
+admin_password = TROVE_PASS
+admin_tenant_name = service
+auth_uri = https://controller:5000/v2.0</programlisting>
+        </step>
+        <step>
+        <para>Edit the <literal>[database]</literal> section of each file,
+        adding it if necessary, so it matches the listing shown below:</para>
+        <programlisting language="ini">[database]
+connection = mysql://trove:<literal>TROVE_DBPASS</literal>@controller/trove
+        </programlisting>
+        </step>
+       </substeps>
+       </step>
+        <step><para>Edit the <filename>trove.conf</filename> file so it matches
+        the listing shown below:</para>
+        <programlisting language="ini">[DEFAULT]
+default_datastore = mysql
+....
+# Config option for showing the IP address that nova doles out
+add_addresses = True
+network_label_regex = ^NETWORK_LABEL$
+....
+# ============ notifer queue kombu connection options ========================
+notifier_queue_hostname = controller</programlisting>
+        </step>
+        <step>
+        <para>Edit the <filename>trove-taskmanager.conf</filename> file so it matches the listing shown below:</para>
+        <programlisting language="ini">[DEFAULT]
+....
+# Configuration options for talking to nova via the novaclient.
+# These options are for an admin user in your keystone config.
+# It proxy's the token received from the user to send to nova via this admin users creds,
+# basically acting like the client via that proxy token.
+nova_proxy_admin_user = admin
+nova_proxy_admin_pass = ADMIN_PASSS
+nova_proxy_admin_tenant_name = service
+....
+# ============ notifer queue kombu connection options ========================
+notifier_queue_hostname = controller
+...</programlisting>
+        </step>
+        <step>
+        <para>Create a <filename>trove_nolog.conf</filename> file:</para>
+        <screen><prompt>#</prompt> <userinput>cp /etc/trove/trove.conf /etc/trove/trove_nolog.conf</userinput></screen>
+        <para>Edit the <filename>trove_nolog.conf</filename> file:</para>
+<programlisting language="ini"># remove line starting with logdir and add
+use_syslog=False</programlisting>
+        </step>
+      <step>
+        <para>Prepare the trove admin database:</para>
+          <screen><prompt>$</prompt> <userinput>mysql -u root -p</userinput>
+<prompt>mysql&gt;</prompt> <userinput>CREATE DATABASE trove;</userinput>
+<prompt>mysql&gt;</prompt> <userinput>GRANT ALL PRIVILEGES ON trove.* TO trove@'localhost' IDENTIFIED BY 'TROVE_DBPASS';</userinput>
+<prompt>mysql&gt;</prompt> <userinput>GRANT ALL PRIVILEGES ON trove.* TO trove@'%' IDENTIFIED BY 'TROVE_DBPASS';</userinput></screen>
+    </step>
+
+      <step><para>Prepare the Database service:</para>
+    <substeps>
+      <step>
+        <para>Initialize the database:</para>
+        <screen><prompt>$</prompt> <userinput>trove-manage --config-file=/etc/trove/trove_nolog.conf db_sync</userinput></screen>
+        </step>
+      <step>
+        <para>Create a datastore. You need to create a separate datastore for
+         each type of database you want to use, for example, MySQL, MongoDB, Cassandra.
+         This example shows you how to create a datastore for a MySQL database:</para>
+        <screen><prompt>$</prompt> <userinput>trove-manage --config-file=/etc/trove/trove_nolog.conf datastore_update mysql ""</userinput></screen>
+        </step>
+        </substeps>
+     </step>
+     <step>
+     <para>Create a trove image.</para>
+     <para>Create an image for the type of database you want to use, for example, MySQL, MongoDB, Cassandra.</para>
+     <para>This image must have the trove guest agent installed, and it must have the <filename>trove-guestagent.conf</filename> file configured to connect to your OpenStack environment. To correctly configure the <filename>trove-guestagent.conf</filename> file, do these steps on the guest instance you are using to build your image:</para>
+<substeps>
+      <step>
+        <para>Add the following lines to <filename>trove-guestagent.conf</filename>:</para>
+        <programlisting language="ini">rabbit_host = controller
+rabbit_password = <replaceable>RABBIT_PASS</replaceable>
+
+nova_proxy_admin_user = admin
+nova_proxy_admin_pass = ADMIN_PASSS
+nova_proxy_admin_tenant_name = service
+trove_auth_url = http://controller:35357/v2.0</programlisting>
+        </step>
+        </substeps>
+         </step>
+           <step>
+        <para>Update the datastore to use the new image, using the <command>trove-manage</command> command.</para>
+        <para>This example shows you how to create a MySQL 5.5 datastore:</para>
+          <screen><prompt>#</prompt> <userinput>trove-manage --config-file=/etc/trove/trove.conf datastore_version_update \
+  mysql mysql-5.5 mysql <replaceable>glance_image_ID</replaceable> mysql-server-5.5 1</userinput></screen>
+</step>
+
+    <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
+      <para>You must register the Database module with the Identity service so
+        that other OpenStack services can locate it. Register the
+        service and specify the endpoint:</para>
+      <screen><prompt>$</prompt> <userinput>keystone service-create --name=trove --type=database \
+  --description="OpenStack Database Service"</userinput>
+<prompt>$</prompt> <userinput>keystone endpoint-create \
+  --service-id=$(keystone service-list | awk '/ trove / {print $2}') \
+  --publicurl=http://<replaceable>controller</replaceable>:8779/v1.0/%\(tenant_id\)s \
+  --internalurl=http://<replaceable>controller</replaceable>:8779/v1.0/%\(tenant_id\)s \
+  --adminurl=http://<replaceable>controller</replaceable>:8779/v1.0/%\(tenant_id\)s</userinput></screen>
+    </step>
+    <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
+      <para os="centos;fedora;rhel;opensuse;sles">Start Database
+        services and configure them to start when the system
+        boots:</para>
+      <para os="ubuntu">Restart Database services:</para>
+      <screen os="ubuntu"><prompt>#</prompt> <userinput>service trove-api restart</userinput>
+<prompt>#</prompt> <userinput>service trove-taskmanager restart</userinput>
+<prompt>#</prompt> <userinput>service trove-conductor restart</userinput></screen>
+      <screen os="centos;rhel;fedora;opensuse;sles"><prompt>#</prompt> <userinput>service openstack-trove-api start</userinput>
+<prompt>#</prompt> <userinput>service openstack-trove-taskmanager start</userinput>
+<prompt>#</prompt> <userinput>service openstack-trove-conductor start</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-trove-api on</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-trove-taskmanager on</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-trove-conductor on</userinput></screen>
+    </step>
+  </procedure>
+</section>
