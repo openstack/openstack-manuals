@@ -23,10 +23,9 @@
 
   <para>Use the <command>heat stack-create</command> command to create a stack
       from this template:</para>
-  <screen><prompt>$</prompt> <userinput>NET_ID=$(neutron net-list | awk '/ demo-net / { print $2 }')</userinput>
-<prompt>$</prompt> <userinput>SUBNET_ID=$(neutron subnet-list | awk '/ demo-subnet / { print $2 }')</userinput>
+  <screen><prompt>$</prompt> <userinput>NET_ID=$(nova net-list | awk '/ demo-net / { print $2 }')</userinput>
 <prompt>$</prompt> <userinput>heat stack-create -f test-stack.yml \
-  -P "ImageID=cirros-0.3.2-x86_64;NetID=$NET_ID;SubNetID=$SUBNET_ID" testStack</userinput>
+  -P "ImageID=cirros-0.3.2-x86_64;NetID=$NET_ID" testStack</userinput>
 <computeroutput>+--------------------------------------+------------+--------------------+----------------------+
 | id                                   | stack_name | stack_status       | creation_time        |
 +--------------------------------------+------------+--------------------+----------------------+

@@ -9,9 +9,6 @@ parameters:
   NetID:
     type: string
     description: Network ID for the server
-  SubNetID:
-    type: string
-    description: Subnet ID for the server
 
 resources:
   server1:
@@ -21,14 +18,7 @@ resources:
       image: { get_param: ImageID }
       flavor: "m1.tiny"
       networks:
-        - port: { get_resource: server1_port }
-
-  server1_port:
-    type: OS::Neutron::Port
-    properties:
-      network_id: { get_param: NetID }
-      fixed_ips:
-        - subnet_id: { get_param: SubNetID }
+      - network: { get_param: NetID }
 
 outputs:
   server1_private_ip:
