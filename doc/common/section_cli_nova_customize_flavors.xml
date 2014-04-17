@@ -1,26 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<section xml:id="customize-flavors"
-    xmlns="http://docbook.org/ns/docbook"
-    xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+<!DOCTYPE section[
+ <!-- Some useful entities borrowed from HTML -->
+<!ENTITY ndash  "&#x2013;">
+<!ENTITY mdash  "&#x2014;">
+<!ENTITY hellip "&#x2026;">
+]>
+<section xml:id="customize-flavors" xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
     <title>Flavors</title>
-    <para>Authorized users can use the <command>nova
-            flavor-create</command> command to create flavors. To see
-        the available flavor-related commands, run:</para>
+    <para>Admin users can use the <command>nova flavor-</command> commands to customize and manage
+        flavors. To see the available flavor-related commands, run:</para>
     <screen><prompt>$</prompt> <userinput>nova help | grep flavor-</userinput>
-<computeroutput>    flavor-access-add   Add flavor access for the given tenant.
+<computeroutput>   flavor-access-add   Add flavor access for the given tenant.
     flavor-access-list  Print access information about the given flavor.
     flavor-access-remove
-                    Remove flavor access for the given tenant.
+                        Remove flavor access for the given tenant.
     flavor-create       Create a new flavor
     flavor-delete       Delete a specific flavor
     flavor-key          Set or unset extra_spec for a flavor.
     flavor-list         Print a list of available 'flavors' (sizes of
     flavor-show         Show details about the given flavor.</computeroutput></screen>
     <note>
-        <para>To modify an existing flavor in the dashboard, you must
-            delete the flavor and create a modified one with the same
-            name.</para>
+        <itemizedlist>
+            <listitem><para>Configuration rights can be delegated to additional users
+                by redefining the access controls for <option>compute_extension:flavormanage</option>
+                in <filename>/etc/nova/policy.json</filename> on the
+                <systemitem class="server">nova-api</systemitem> server.</para></listitem>
+            <listitem><para>To modify an existing flavor in the dashboard, you must
+                delete the flavor and create a modified one with the same
+                name.</para></listitem>
+        </itemizedlist>
     </note>
     <para>Flavors define these elements:</para>
     <table rules="all" width="75%">
@@ -88,122 +96,169 @@
             </tr>
             <tr>
                 <td><literal>extra_specs</literal></td>
-                <td>Key and value pairs that define on which compute
+                <td><para>Key and value pairs that define on which compute
                     nodes a flavor can run. These pairs must match
                     corresponding pairs on the compute nodes. Use to
                     implement special resources, such as flavors that
-                    run on only compute nodes with GPU hardware.</td>
+                    run on only compute nodes with GPU hardware.</para></td>
             </tr>
         </tbody>
     </table>
-    <para>Flavor customization can be limited by the hypervisor in
-        use, for example the libvirt driver enables quotas on CPUs
-        available to a VM, disk tuning, bandwidth I/O, and instance
-        VIF traffic control.</para>
-    <para>You can configure the CPU limits with control parameters
-        with the nova tool. For example, to configure the I/O
-        limit:</para>
-    <screen><prompt>$</prompt> <userinput>nova flavor-key m1.small set quota:read_bytes_sec=10240000</userinput>
+    <para>Flavor customization can be limited by the hypervisor in use. For example the
+            <systemitem>libvirt</systemitem> driver enables quotas on CPUs available to a VM, disk
+        tuning, bandwidth I/O, watchdog behavior, and instance VIF traffic control.</para>
+        <variablelist>
+            <varlistentry><term>CPU limits</term>
+                <listitem><para>You can configure the CPU limits with control parameters with the <command>nova</command>
+                        client. For example, to configure the I/O limit, use:</para>
+                    <screen><prompt>$</prompt> <userinput>nova flavor-key m1.small set quota:read_bytes_sec=10240000</userinput>
 <prompt>$</prompt> <userinput>nova flavor-key m1.small set quota:write_bytes_sec=10240000</userinput></screen>
-    <para>There are CPU control parameters for weight shares,
-        enforcement intervals for runtime quotas, and a quota for
-        maximum allowed bandwidth.</para>
-    <para>The optional <literal>cpu_shares</literal> element specifies
-        the proportional weighted share for the domain. If this
-        element is omitted, the service defaults to the OS provided
-        defaults. There is no unit for the value. It is a relative
-        measure based on the setting of other VMs. For example, a VM
-        configured with value 2048 gets twice as much CPU time as a VM
-        configured with value 1024.</para>
-    <para>The optional <literal>cpu_period</literal> element specifies
-        the enforcement interval (unit: microseconds) for QEMU and LXC
-        hypervisors. Within a period, each VCPU of the domain is not
-        allowed to consume more than the quota worth of runtime. The
-        value should be in range <literal>[1000, 1000000]</literal>. A
-        period with value 0 means no value.</para>
-    <para>The optional <literal>cpu_quota</literal> element specifies
-        the maximum allowed bandwidth (unit: microseconds). A domain
-        with a quota with a negative value indicates that the domain
-        has infinite bandwidth, which means that it is not bandwidth
-        controlled. The value should be in range <literal>[1000,
-            18446744073709551]</literal> or less than 0. A quota with
-        value 0 means no value. You can use this feature to ensure
-        that all vcpus run at the same speed. For example:</para>
-    <screen><prompt>$</prompt> <userinput>nova flavor-key m1.low_cpu set quota:cpu_quota=10000</userinput>
+                    <para>There are optional CPU control parameters for weight shares, enforcement
+                        intervals for runtime quotas, and a quota for maximum allowed
+                        bandwidth:</para>
+                    <para>
+                        <itemizedlist>
+                            <listitem>
+                                <para><literal>cpu_shares</literal> specifies the proportional
+                                    weighted share for the domain. If this element is omitted, the
+                                    service defaults to the OS provided defaults. There is no unit
+                                    for the value; it is a relative measure based on the setting of
+                                    other VMs. For example, a VM configured with value 2048 gets
+                                    twice as much CPU time as a VM configured with value
+                                    1024.</para>
+                            </listitem>
+                            <listitem>
+                                <para><literal>cpu_period</literal> specifies the enforcement
+                                    interval (unit: microseconds) for QEMU and LXC hypervisors.
+                                    Within a period, each VCPU of the domain is not allowed to
+                                    consume more than the quota worth of runtime. The value should
+                                    be in range <literal>[1000, 1000000]</literal>. A period with
+                                    value 0 means no value.</para>
+                            </listitem>
+                            <listitem>
+                                <para><literal>cpu_quota</literal> specifies the maximum allowed
+                                bandwidth (unit: microseconds). A domain with a negative-value quota
+                                indicates that the domain has infinite bandwidth, which means that
+                                it is not bandwidth controlled. The value should be in range
+                                    <literal>[1000, 18446744073709551]</literal> or less than 0. A
+                                quota with value 0 means no value. You can use this feature to
+                                ensure that all vCPUs run at the same speed. For example:</para>
+                                <screen><prompt>$</prompt> <userinput>nova flavor-key m1.low_cpu set quota:cpu_quota=10000</userinput>
 <prompt>$</prompt> <userinput>nova flavor-key m1.low_cpu set quota:cpu_period=20000</userinput></screen>
-    <para>In this example, the instance of
-            <literal>m1.low_cpu</literal> can only consume a maximum
-        of 50% CPU of a physical CPU computing capability.</para>
-    <para>Through disk I/O quotas, you can set maximum disk write to
-        10 MB per second for a VM user. For example:</para>
-    <screen><prompt>$</prompt> <userinput>nova flavor-key m1.medium set disk_write_bytes_sec=10485760</userinput></screen>
-    <para>The disk I/O options are:</para>
-    <itemizedlist>
-        <listitem>
-            <para>disk_read_bytes_sec</para>
-        </listitem>
-        <listitem>
-            <para>disk_read_iops_sec</para>
-        </listitem>
-        <listitem>
-            <para>disk_write_bytes_sec</para>
-        </listitem>
-        <listitem>
-            <para>disk_write_iops_sec</para>
-        </listitem>
-        <listitem>
-            <para>disk_total_bytes_sec</para>
-        </listitem>
-        <listitem>
-            <para>disk_total_iops_sec</para>
-        </listitem>
-    </itemizedlist>
-    <para>The vif I/O options are:</para>
-    <itemizedlist>
-        <listitem>
-            <para>vif_inbound_ average</para>
-        </listitem>
-        <listitem>
-            <para>vif_inbound_burst</para>
-        </listitem>
-        <listitem>
-            <para>vif_inbound_peak</para>
-        </listitem>
-        <listitem>
-            <para>vif_outbound_ average</para>
-        </listitem>
-        <listitem>
-            <para>vif_outbound_burst</para>
-        </listitem>
-        <listitem>
-            <para>vif_outbound_peak</para>
-        </listitem>
-    </itemizedlist>
-    <para>Incoming and outgoing traffic can be shaped independently.
-        The bandwidth element can have at most one inbound and at most
-        one outbound child element. Leaving any of these children
-        element out result in no quality of service (QoS) applied on
-        that traffic direction. So, when you want to shape only the
-        network's incoming traffic, use inbound only, and vice versa.
-        Each of these elements have one mandatory attribute
-        average.</para>
-    <para>It specifies average bit rate on the interface being shaped.
-        Then there are two optional attributes: peak, which specifies
-        maximum rate at which bridge can send data, and burst, amount
-        of bytes that can be burst at peak speed. Accepted values for
-        attributes are integer numbers, The units for average and peak
-        attributes are kilobytes per second, and for the burst just
-        kilobytes. The rate is shared equally within domains connected
-        to the network.</para>
-    <para>This example configures a bandwidth limit for instance
-        network traffic:</para>
-    <screen><prompt>$</prompt> <userinput>nova flavor-key m1.small set quota:inbound_average=10240</userinput>
-<prompt>$</prompt> <userinput>nova flavor-key m1.small set quota:outbound_average=10240</userinput></screen>
-    <para>Flavors can also be assigned to particular projects. By
-        default, a flavor is public and available to all projects.
-        Private flavors are only accessible to those on the access
-        list and are invisible to other projects. To create and assign
-        a private flavor to a project, run these commands:</para>
-    <screen><prompt>$</prompt> <userinput>nova flavor-create --is-public false p1.medium auto 512 40 4</userinput>
-<prompt>$</prompt> <userinput>nova flavor-access-add 259d06a0-ba6d-4e60-b42d-ab3144411d58 86f94150ed744e08be565c2ff608eef9</userinput></screen>
+                                <para>In this example, the instance of
+                                    <literal>m1.low_cpu</literal> can only consume a maximum
+                                    of 50% CPU of a physical CPU computing capability.</para>
+                            </listitem>
+                        </itemizedlist>
+                    </para>
+                    </listitem>
+            </varlistentry>
+            <varlistentry><term>Disk tuning</term>
+                <listitem><para>Using disk I/O quotas, you can set maximum disk write to 10 MB per second for a VM user. For
+                        example:</para>
+                    <screen><prompt>$</prompt> <userinput>nova flavor-key m1.medium set disk_write_bytes_sec=10485760</userinput></screen>
+                    <para>The disk I/O options are:</para>
+                    <itemizedlist>
+                        <listitem>
+                            <para>disk_read_bytes_sec</para>
+                        </listitem>
+                        <listitem>
+                            <para>disk_read_iops_sec</para>
+                        </listitem>
+                        <listitem>
+                            <para>disk_write_bytes_sec</para>
+                        </listitem>
+                        <listitem>
+                            <para>disk_write_iops_sec</para>
+                        </listitem>
+                        <listitem>
+                            <para>disk_total_bytes_sec</para>
+                        </listitem>
+                        <listitem>
+                            <para>disk_total_iops_sec</para>
+                        </listitem>
+                    </itemizedlist>
+                    <para>The vif I/O options are:</para>
+                    <itemizedlist>
+                        <listitem>
+                            <para>vif_inbound_ average</para>
+                        </listitem>
+                        <listitem>
+                            <para>vif_inbound_burst</para>
+                        </listitem>
+                        <listitem>
+                            <para>vif_inbound_peak</para>
+                        </listitem>
+                        <listitem>
+                            <para>vif_outbound_ average</para>
+                        </listitem>
+                        <listitem>
+                            <para>vif_outbound_burst</para>
+                        </listitem>
+                        <listitem>
+                            <para>vif_outbound_peak</para>
+                        </listitem>
+                    </itemizedlist></listitem>
+            </varlistentry>
+            <varlistentry><term>Bandwidth I/O</term>
+                <listitem><para>Incoming and outgoing traffic can be shaped independently. The bandwidth element can have at
+                    most one inbound and at most one outbound child element. If you leave any of
+                    these children element out,  no quality of service (QoS) is applied on that
+                    traffic direction. So, if you want to shape only the network's incoming traffic,
+                    use inbound only (and vice versa). Each element has one mandatory attribute
+                    average, which specifies the average bit rate on the interface being shaped.</para>
+                <para>There are also two optional attributes (integer): <option>peak</option>, which
+                    specifies maximum rate at which bridge can send data (kilobytes/second), and
+                        <option>burst</option>, the amount of bytes that can be burst at peak speed
+                    (kilobytes). The rate is shared equally within domains connected to the
+                    network.</para>
+                    <para>The following example configures a bandwidth limit for instance network
+                        traffic:</para>
+                    <screen><prompt>$</prompt> <userinput>nova flavor-key m1.small set quota:inbound_average=10240</userinput>
+<prompt>$</prompt> <userinput>nova flavor-key m1.small set quota:outbound_average=10240</userinput></screen></listitem>
+            </varlistentry>
+            <varlistentry><term>Watchdog behavior</term>
+                <listitem><para>For the <systemitem>libvirt</systemitem> driver, you can enable and set the behavior of a
+                    virtual hardware watchdog device for each flavor. Watchdog devices keep an eye
+                    on the guest server, and carry out the configured action if the server hangs.
+                    The watchdog uses the i6300esb device (emulating a PCI Intel 6300ESB). If
+                        <literal>hw_watchdog_action</literal> is not specified, the watchdog is
+                    disabled.</para>
+                <para>To set the behavior, use:</para>
+                <screen><prompt>$</prompt> <userinput>nova flavor-key <replaceable>flavorName</replaceable> set hw_watchdog_action=<replaceable>action</replaceable></userinput></screen>
+                <para>Valid <replaceable>action</replaceable> values are:</para>
+                <itemizedlist>
+                           <listitem>
+                               <para><literal>disabled</literal>&mdash;(default) The device is not
+                                   attached.</para></listitem>
+                            <listitem>
+                                <para><literal>reset</literal>&mdash;Forcefully reset the guest.
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para><literal>poweroff</literal>&mdash;Forcefully power off the
+                                    guest.</para>
+                            </listitem>
+                            <listitem>
+                                <para><literal>pause</literal>&mdash;Pause the guest.</para>
+                            </listitem>
+                            <listitem>
+                                <para><literal>none</literal>&mdash;Only enable the watchdog; do
+                            nothing if the server hangs.</para>
+                            </listitem>
+                    </itemizedlist>
+                    <note><para>Watchdog behavior set using a specific image's properties will override behavior set using
+                            flavors.</para></note>
+                </listitem>
+            </varlistentry>
+            <varlistentry><term>Instance VIF traffic control</term>
+                <listitem><para>Flavors can also be assigned to particular projects. By
+                    default, a flavor is public and available to all projects.
+                    Private flavors are only accessible to those on the access
+                    list and are invisible to other projects. To create and assign
+                    a private flavor to a project, run these commands:</para>
+                    <screen><prompt>$</prompt> <userinput>nova flavor-create --is-public false p1.medium auto 512 40 4</userinput>
+<prompt>$</prompt> <userinput>nova flavor-access-add 259d06a0-ba6d-4e60-b42d-ab3144411d58 86f94150ed744e08be565c2ff608eef9</userinput></screen></listitem>
+            </varlistentry>
+        </variablelist>
 </section>
