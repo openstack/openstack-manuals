@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="cinder-verify" xmlns="http://docbook.org/ns/docbook"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+  <title>Verify the Block Storage installation</title>
+  <para>To verify that the Block Storage is installed and configured properly,
+       create a new volume.</para>
+  <para>For more information about how to manage volumes, see the <link
+      xlink:href="http://docs.openstack.org/user-guide/content/index.html"
+         ><citetitle>OpenStack User Guide</citetitle></link>.</para>
+  <procedure>
+    <step>
+      <para>Source the <filename>demo-openrc.sh</filename> file:</para>
+      <screen><prompt>$</prompt> <userinput>source demo-openrc.sh</userinput></screen>
+    </step>
+
+    <step>
+      <para>Use the <command>cinder create</command> command to create a new volume:</para>
+      <screen><prompt>$</prompt> <userinput>cinder create --display-name myVolume 1</userinput>
+<computeroutput>+---------------------+--------------------------------------+
+|       Property      |                Value                 |
++---------------------+--------------------------------------+
+|     attachments     |                  []                  |
+|  availability_zone  |                 nova                 |
+|       bootable      |                false                 |
+|      created_at     |      2014-04-17T10:28:19.615050      |
+| display_description |                 None                 |
+|     display_name    |               myVolume               |
+|      encrypted      |                False                 |
+|          id         | 5e691b7b-12e3-40b6-b714-7f17550db5d1 |
+|       metadata      |                  {}                  |
+|         size        |                  1                   |
+|     snapshot_id     |                 None                 |
+|     source_volid    |                 None                 |
+|        status       |               creating               |
+|     volume_type     |                 None                 |
++---------------------+--------------------------------------+</computeroutput></screen>
+    </step>
+    <step>
+      <para>Make sure that the volume has been correctly created with the
+          <command>cinder list</command> command:</para>
+      <screen><prompt>$</prompt> <userinput>cinder list</userinput>
+<computeroutput>--------------------------------------+-----------+--------------+------+-------------+----------+-------------+
+|                  ID                  |   Status  | Display Name | Size | Volume Type | Bootable | Attached to |
++--------------------------------------+-----------+--------------+------+-------------+----------+-------------+
+| 5e691b7b-12e3-40b6-b714-7f17550db5d1 | available |   myVolume   |  1   |     None    |  false   |             |
++--------------------------------------+-----------+--------------+------+-------------+----------+-------------+</computeroutput></screen>
+      <para>If the status value is not <literal>available</literal>, the volume
+          creation failed. Check the log files in the
+          <filename>/var/log/cinder/</filename> directory on the controller and
+          volume nodes to get information about the failure.</para>
+    </step>
+  </procedure>
+</section>
