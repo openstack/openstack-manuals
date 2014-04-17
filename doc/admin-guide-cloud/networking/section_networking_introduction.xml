@@ -261,6 +261,8 @@
             <para>Enable the FWaaS plugin in the <filename>neutron.conf</filename> file:</para>
         </formalpara>
         <programlisting language="ini">service_plugins = neutron.services.firewall.fwaas_plugin.FirewallPlugin
+[service_providers]
+service_provider=LOADBALANCER:Haproxy:neutron.services.loadbalancer.drivers.haproxy.plugin_driver.HaproxyOnHostPluginDriver:default
 [fwaas]
 driver = neutron.services.firewall.drivers.linux.iptables_fwaas.IptablesFwaasDriver
 enabled = True</programlisting>
