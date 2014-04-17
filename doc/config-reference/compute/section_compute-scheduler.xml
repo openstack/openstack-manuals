@@ -2,6 +2,7 @@
 <!DOCTYPE section [
 <!-- Some useful entities borrowed from HTML -->
 <!ENTITY nbsp "&#160;">
+<!ENTITY mdash "&#x2014;">
 ]>
 <section xml:id="section_compute-scheduler"
     xmlns="http://docbook.org/ns/docbook"
@@ -490,19 +491,159 @@ isolated_images=342b492c-128f-4a42-8d3a-c5088cf27d13,ebd267a6-ca86-4d6c-9a0e-bd1
     <section xml:id="weights">
         <title>Weights</title>
         <?dbhtml stop-chunking?>
-        <para>The Filter Scheduler weighs hosts based on the config
-            option <literal>scheduler_weight_classes</literal>, this
-            defaults to
-                <literal>nova.scheduler.weights.all_weighers</literal>,
-            which selects the only weigher available -- the
-            RamWeigher. Hosts are then weighed and sorted with the
-            largest weight winning.</para>
-        <programlisting language="ini">scheduler_weight_classes=nova.scheduler.weights.all_weighers
-ram_weight_multiplier=1.0</programlisting>
-        <para>The default is to spread instances across all hosts
-            evenly. Set the <literal>ram_weight_multiplier</literal>
-            option to a negative number if you prefer stacking instead
-            of spreading.</para>
+        <para>When resourcing instances, the Filter Scheduler filters and weighs each host in the
+            list of acceptable hosts. Each time the scheduler selects a host, it virtually consumes
+            resources on it, and subsequent selections are adjusted accordingly. This process is
+            useful when the customer asks for the same large amount of instances, because weight is
+            computed for each requested instance.</para>
+        <para>All weights are normalized before being summed up; the host with the largest weight is
+            given the highest priority.</para>
+        <figure xml:id="figure_weighing-hosts">
+            <title>Weighing hosts</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="../../common/figures/nova-weighting-hosts.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        <para>If cells are used, cells are weighted by the scheduler in the same manner as hosts.</para>
+        <para>Hosts and cells are weighed based on the following options in the
+                <filename>/etc/nova/nova.conf</filename> file:</para>
+        <table rules="all" xml:id="table_host-weighting-options">
+            <caption>Host Weighting options</caption>
+            <col width="10%" title="Section"/>
+            <col width="25%" title="Option"/>
+            <col width="60%" title="Description"/>
+            <thead>
+                <tr>
+                    <th>Section</th>
+                    <th>Option</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr valign="top">
+                    <td>[DEFAULT]</td>
+                    <td><literal>ram_weight_multiplier</literal></td>
+                    <td>By default, the scheduler spreads instances across all hosts evenly. Set the
+                                <option>ram_weight_multiplier</option> option to
+                        a negative number if you prefer stacking instead of spreading. Use a
+                        floating-point value.</td>
+                </tr>
+                <tr valign="top">
+                    <td>[DEFAULT]</td>
+                    <td><literal>scheduler_host_subset_size</literal></td>
+                    <td>New instances are scheduled on a host that is chosen randomly from a subset
+                        of the N best hosts. This property defines the subset size from which a host
+                        is chosen. A value of 1 chooses the first host returned by the weighing
+                        functions.This value must be at least 1. A value less than 1 is ignored, and
+                        1 is used instead. Use an integer value.</td>
+                </tr>
+                <tr valign="top">
+                    <td>[DEFAULT]</td>
+                    <td><literal>scheduler_weight_classes</literal></td>
+                    <td>Defaults to <literal>nova.scheduler.weights.all_weighers</literal>, which
+                        selects the only available weigher, the RamWeigher. Hosts are then weighed
+                        and sorted with the largest weight winning.</td>
+                </tr>
+                <tr valign="top">
+                    <td>[metrics]</td>
+                    <td><literal>weight_multiplier</literal></td>
+                    <td>Multiplier for weighing metrices. Use a floating-point value.</td>
+                </tr>
+                <tr valign="top">
+                    <td>[metrics]</td>
+                    <td><literal>weight_setting</literal></td>
+                    <td>Determines how metrics are weighed. Use a comma-separated list of
+                        metricName=ratio. For example: "name1=1.0, name2=-1.0" results in:
+                            <literal>name1.value * 1.0 + name2.value * -1.0</literal>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <td>[metrics]</td>
+                    <td><literal>required</literal></td>
+                    <td><para>Specifies how to treat unavailable metrics:<itemizedlist>
+                        <listitem><para>True&mdash;Raises an exception. To avoid the raised exception, you should use the scheduler
+                                        filter <literal>MetricFilter</literal> to filter out hosts
+                                        with unavailable metrics.</para></listitem>
+                        <listitem><para>False&mdash;Treated as a negative factor in the weighing process (uses the
+                                            <option>weight_of_unavailable</option> option).</para></listitem>
+                    </itemizedlist></para></td>
+                </tr>
+                <tr valign="top">
+                    <td>[metrics]</td>
+                    <td><literal>weight_of_unavailable</literal></td>
+                    <td>If <option>required</option> is set to False, and any one of the metrics set
+                        by <option>weight_setting</option> is unavailable, the
+                            <option>weight_of_unavailable</option> value is returned to the
+                        scheduler.</td>
+                </tr>
+            </tbody>
+        </table>
+        <para>For example:</para>
+        <programlisting language="ini">[DEFAULT]
+scheduler_host_subset_size=1
+scheduler_weight_classes=nova.scheduler.weights.all_weighers
+ram_weight_multiplier=1.0
+[metrics]
+weight_multiplier=1.0
+weight_setting=name1=1.0, name2=-1.0
+required=false
+weight_of_unavailable=-10000.0</programlisting>
+        <table rules="all" xml:id="table_cell-weighting-options">
+        <caption>Cell weighting options</caption>
+        <col width="10%" title="Section"/>
+        <col width="25%" title="Option"/>
+        <col width="60%" title="Description"/>
+        <thead>
+            <tr>
+                <th>Section</th>
+                <th>Option</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr valign="top">
+                <td>[cells]</td>
+                <td><literal>mute_weight_multiplier</literal></td>
+                <td>Multiplier to weigh mute children (hosts which have not sent capacity or
+                        capacity updates for some time). Use a negative, floating-point value.</td>
+            </tr>
+            <tr valign="top">
+                <td>[cells]</td>
+                <td><literal>mute_weight_value</literal></td>
+                <td>Weight value assigned to mute children. Use a positive, floating-point value
+                        with a maximum of '1.0'.</td>
+            </tr>
+            <tr valign="top">
+                <td>[cells]</td>
+                <td><literal>offset_weight_multiplier</literal></td>
+                <td>Multiplier to weigh cells, so you can specify a preferred cell. Use a floating
+                        point value.</td>
+            </tr>
+            <tr valign="top">
+                <td>[cells]</td>
+                <td><literal>ram_weight_multiplier</literal></td>
+                <td>By default, the scheduler spreads instances across all cells evenly. Set the
+                            <option>ram_weight_multiplier</option> option to a negative number if
+                        you prefer stacking instead of spreading. Use a floating-point value.</td>
+            </tr>
+            <tr valign="top">
+                <td>[cells]</td>
+                <td><literal>scheduler_weight_classes</literal></td>
+                <td>Defaults to <literal>nova.cells.weights.all_weighers</literal>, which maps to
+                        all cell weighers included with Compute. Cells are then weighed and sorted
+                        with the largest weight winning.</td>
+            </tr>
+            </tbody>
+    </table>
+        <para>For example:</para>
+        <programlisting language="ini">[cells]
+scheduler_weight_classes=nova.cells.weights.all_weighers
+mute_weight_multiplier=-10.0
+mute_weight_value=1000.0
+ram_weight_multiplier=1.0
+offset_weight_multiplier=1.0</programlisting>
     </section>
     <section xml:id="chance-scheduler">
         <title>Chance scheduler</title>
