@@ -1,28 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<section xml:id="install-neutron"
+<section xml:id="neutron-concepts"
   xmlns="http://docbook.org/ns/docbook"
   xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:xlink="http://www.w3.org/1999/xlink"
   xmlns:svg="http://www.w3.org/2000/svg"
   xmlns:html="http://www.w3.org/1999/xhtml" version="5.0">
-  <title>Neutron concepts</title>
-  <para>Like Nova Networking, Neutron manages software-defined
-    networking for your OpenStack installation. However, unlike Nova
-    Networking, you can configure Neutron for advanced virtual network
-    topologies, such as per-tenant private networks and more.</para>
-  <para>Neutron has the following object abstractions: networks,
+  <title>Networking concepts</title>
+  <para>OpenStack Networking (neutron) manages all of the networking facets for
+    the Virtual Networking Infrastructure (VNI) and the access layer aspects
+    of the Physical Networking Infrastructure (PNI) in your OpenStack
+    environment. OpenStack Networking allows tenants to create advanced virtual
+    network topologies including services such as
+    <glossterm baseform="firewall">firewalls</glossterm>,
+    <glossterm baseform="load balancer">load balancers</glossterm>, and
+    <glossterm baseform="virtual private network (VPN)">
+      virtual private networks (VPNs)</glossterm>.</para>
+  <para>Networking provides the following object abstractions: networks,
     subnets, and routers. Each has functionality that mimics its
     physical counterpart: networks contain subnets, and routers route
     traffic between different subnet and networks.</para>
-  <para>Any given Neutron set up has at least one external network.
+  <para>Any given Networking set up has at least one external network.
     This network, unlike the other networks, is not merely a virtually
     defined network. Instead, it represents the view into a slice of
     the external network that is accessible outside the OpenStack
-    installation. IP addresses on the Neutron external network are
+    installation. IP addresses on the Networking external network are
     accessible by anybody physically on the outside network. Because
     this network merely represents a slice of the outside network,
     DHCP is disabled on this network.</para>
-  <para>In addition to external networks, any Neutron set up has one
+  <para>In addition to external networks, any Networking set up has one
     or more internal networks. These software-defined networks connect
     directly to the VMs. Only the VMs on any given internal network,
     or those on subnets connected through interfaces to a similar
@@ -39,70 +44,16 @@
     connected to a subnet, that connection is called a port. You can
     associate external network IP addresses with ports to VMs. This
     way, entities on the outside network can access VMs.</para>
-  <para>Neutron also supports <emphasis role="italic">security
+  <para>Networking also supports <emphasis role="italic">security
       groups</emphasis>. Security groups enable administrators to
     define firewall rules in groups. A VM can belong to one or more
-    security groups, and Neutron applies the rules in those security
+    security groups, and Networking applies the rules in those security
     groups to block or unblock ports, port ranges, or traffic types
     for that VM.</para>
-  <para>Each plug-in that Neutron uses has its own concepts. While not
-    vital to operating Neutron, understanding these concepts can help
-    you set up Neutron. All Neutron installations use a core plug-in
+  <para>Each plug-in that Networking uses has its own concepts. While not
+    vital to operating Networking, understanding these concepts can help
+    you set up Networking. All Networking installations use a core plug-in
     and a security group plug-in (or just the No-Op security group
     plug-in). Additionally, Firewall-as-a-service (FWaaS) and
     Load-balancing-as-a-service (LBaaS) plug-ins are available.</para>
-  <section xml:id="concepts-neutron.openvswitch">
-    <title>Open vSwitch concepts</title>
-    <para>The Open vSwitch plug-in is one of the most popular core
-      plug-ins. Open vSwitch configurations consists of bridges and
-      ports. Ports represent connections to other things, such as
-      physical interfaces and patch cables. Packets from any given
-      port on a bridge are shared with all other ports on that bridge.
-      Bridges can be connected through Open vSwitch virtual patch
-      cables or through Linux virtual Ethernet cables
-        (<literal>veth</literal>). Additionally, bridges appear as
-      network interfaces to Linux, so you can assign IP addresses to
-      them.</para>
-    <para>In Neutron, the integration bridge, called
-        <literal>br-int</literal>, connects directly to the VMs and
-      associated services. The external bridge, called
-        <literal>br-ex</literal>, connects to the external network.
-      Finally, the VLAN configuration of the Open vSwitch plug-in uses
-      bridges associated with each physical network.</para>
-    <para>In addition to defining bridges, Open vSwitch has OpenFlow,
-      which enables you to define networking flow rules. Certain
-      configurations use these rules to transfer packets between
-      VLANs.</para>
-    <para>Finally, some configurations of Open vSwitch use network
-      namespaces that enable Linux to group adapters into unique
-      namespaces that are not visible to other namespaces, which
-      allows the same network node to manage multiple Neutron
-      routers.</para>
-    <para>With Open vSwitch, you can use two different technologies to
-      create the virtual networks: GRE or VLANs.</para>
-    <para>Generic Routing Encapsulation (GRE) is the technology used
-      in many VPNs. It wraps IP packets to create entirely new packets
-      with different routing information. When the new packet reaches
-      its destination, it is unwrapped, and the underlying packet is
-      routed. To use GRE with Open vSwitch, Neutron creates GRE
-      tunnels. These tunnels are ports on a bridge and enable bridges
-      on different systems to act as though they were one bridge,
-      which allows the compute and network nodes to act as one for the
-      purposes of routing.</para>
-    <para>Virtual LANs (VLANs), on the other hand, use a special
-      modification to the Ethernet header. They add a 4-byte VLAN tag
-      that ranges from 1 to 4094 (the 0 tag is special, and the 4095
-      tag, made of all ones, is equivalent to an untagged packet).
-      Special NICs, switches, and routers know how to interpret the
-      VLAN tags, as does Open vSwitch. Packets tagged for one VLAN are
-      only shared with other devices configured to be on that VLAN,
-      even though all devices are on the same physical
-      network.</para>
-    <para>The most common security group driver used with Open vSwitch
-      is the Hybrid IPTables/Open vSwitch plug-in. It uses a
-      combination for IPTables and OpenFlow rules. Use the IPTables
-      tool to create firewalls and set up NATs on Linux. This tool
-      uses a complex rule system and chains of rules to accommodate
-      the complex rules required by Neutron security groups.</para>
-  </section>
 </section>

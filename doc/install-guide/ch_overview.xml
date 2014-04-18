@@ -46,62 +46,16 @@
       architectures:</para>
     <itemizedlist>
       <listitem>
-        <para>Two-node architecture with legacy networking. See <xref linkend="example-architecture-with-legacy-networking"/>.</para>
-        <itemizedlist>
-          <listitem>
-            <para>The basic
-              <glossterm  baseform="cloud controller node">controller node</glossterm>
-              runs the Identity service, Image Service, management portion of
-              Compute, and the dashboard necessary to launch a simple instance.
-              It also includes supporting services such as MySQL,
-              <glossterm>AMQP</glossterm>, and
-              <glossterm>NTP</glossterm>.</para>
-            <para>Optionally, the controller node also runs portions of
-              Block Storage, Object Storage, Database Service, Orchestration,
-              and Telemetry. These components provide additional features for
-              your environment.</para>
-          </listitem>
-          <listitem>
-            <para>The basic <glossterm>compute node</glossterm> runs the
-              <glossterm>hypervisor</glossterm> portion of Compute,
-              which operates <glossterm>tenant</glossterm>
-              <glossterm baseform="virtual machine (VM)">virtual machines</glossterm>
-              or instances. By default, Compute uses
-              <glossterm baseform="kernel-based VM (KVM)">KVM</glossterm>
-              as the <glossterm>hypervisor</glossterm>. Compute also
-              provisions and operates tenant networks and implements
-              <glossterm baseform="security group">security groups</glossterm>.
-              You can run more than one compute node.</para>
-            <para>Optionally, the compute node also runs the Telemetry
-              agent. This component provides additional features for
-              your environment.</para>
-          </listitem>
-        </itemizedlist>
-        <note>
-          <para>When you implement this architecture, skip
-            <xref linkend="section_neutron-networking" /> in
-            <xref linkend="ch_networking" />. To use optional services, you
-            might need to install additional nodes, as described in
-            subsequent chapters.</para>
-        </note>
-        <figure xml:id="example-architecture-with-legacy-networking">
-          <title>Two-node architecture with legacy networking</title>
-          <mediaobject>
-            <imageobject>
-              <imagedata contentwidth="6in"
-                fileref="figures/installguide_arch-nova.png"/>
-            </imageobject>
-          </mediaobject>
-        </figure>
-      </listitem>
-      <listitem>
         <para>Three-node architecture with OpenStack Networking (neutron). See <xref linkend="example-architecture-with-neutron-networking"/>.</para>
         <itemizedlist>
           <listitem>
             <para>The basic controller node runs the Identity service, Image
               Service, management portions of Compute and Networking,
               Networking plug-in, and the dashboard. It also includes
-              supporting services such as MySQL, AMQP, and NTP.</para>
+              supporting services such as a database,
+              <glossterm>message broker</glossterm>, and
+              <glossterm>Network Time Protocol (NTP)</glossterm>.
+            </para>
             <para>Optionally, the controller node also runs portions of
               Block Storage, Object Storage, Database Service, Orchestration,
               and Telemetry. These components provide additional features for
@@ -142,6 +96,55 @@
             <imageobject>
               <imagedata contentwidth="6in"
                 fileref="figures/installguide_arch-neutron.png"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+      </listitem>
+      <listitem>
+        <para>Two-node architecture with legacy networking (nova-network). See
+          <xref linkend="example-architecture-with-legacy-networking"/>.</para>
+        <itemizedlist>
+          <listitem>
+            <para>The basic
+              <glossterm  baseform="cloud controller node">controller node</glossterm>
+              runs the Identity service, Image Service, management portion of
+              Compute, and the dashboard necessary to launch a simple instance.
+              It also includes supporting services such as a database, message
+              broker, and NTP.</para>
+            <para>Optionally, the controller node also runs portions of
+              Block Storage, Object Storage, Database Service, Orchestration,
+              and Telemetry. These components provide additional features for
+              your environment.</para>
+          </listitem>
+          <listitem>
+            <para>The basic <glossterm>compute node</glossterm> runs the
+              <glossterm>hypervisor</glossterm> portion of Compute,
+              which operates <glossterm>tenant</glossterm>
+              <glossterm baseform="virtual machine (VM)">virtual machines</glossterm>
+              or instances. By default, Compute uses
+              <glossterm baseform="kernel-based VM (KVM)">KVM</glossterm>
+              as the <glossterm>hypervisor</glossterm>. Compute also
+              provisions and operates tenant networks and implements
+              <glossterm baseform="security group">security groups</glossterm>.
+              You can run more than one compute node.</para>
+            <para>Optionally, the compute node also runs the Telemetry
+              agent. This component provides additional features for
+              your environment.</para>
+          </listitem>
+        </itemizedlist>
+        <note>
+          <para>When you implement this architecture, skip
+            <xref linkend="section_neutron-networking" /> in
+            <xref linkend="ch_networking" />. To use optional services, you
+            might need to install additional nodes, as described in
+            subsequent chapters.</para>
+        </note>
+        <figure xml:id="example-architecture-with-legacy-networking">
+          <title>Two-node architecture with legacy networking (nova-network)</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata contentwidth="6in"
+                fileref="figures/installguide_arch-nova.png"/>
             </imageobject>
           </mediaobject>
         </figure>
