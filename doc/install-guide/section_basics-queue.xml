@@ -4,63 +4,108 @@
   xml:id="basics-queue">
   <?dbhtml-stop-chunking?>
   <title>Messaging server</title>
-  <para>On the controller node, install the messaging queue server.
-    Typically this is <phrase os="ubuntu;debian;opensuse;sles"
-    ><glossterm>RabbitMQ</glossterm></phrase>
-    <phrase os="centos;rhel;fedora">
-    <glossterm>Qpid</glossterm></phrase> but
-    <phrase os="ubuntu;debian;opensuse;sles"><glossterm>Qpid</glossterm></phrase>
-    <phrase os="centos;rhel;fedora"><glossterm>RabbitMQ</glossterm></phrase>
-    and <glossterm>ZeroMQ</glossterm> (0MQ) are also available:</para>
-  <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install rabbitmq-server</userinput></screen>
-  <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install rabbitmq-server</userinput></screen>
-  <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>yum install qpid-cpp-server</userinput></screen>
-  <para os="fedora;centos;rhel">Disable Qpid authentication by
-    editing <filename>/etc/qpidd.conf</filename> file and changing
-    the <literal>auth</literal> option to
-    <literal>no</literal>:</para>
-  <screen os="fedora;centos;rhel"> <userinput>auth=no</userinput></screen>
-  <note os="fedora;centos;rhel">
-    <para>
-      To simplify configuration, the Qpid examples in this guide do not use
-      authentication. However, we strongly advise enabling authentication
-      for production deployments. For more information on securing Qpid
-      refer to the
-      <link xlink:href=
-      "http://qpid.apache.org/books/trunk/AMQP-Messaging-Broker-CPP-Book/html/chap-Messaging_User_Guide-Security.html"
-      >Qpid Documentation</link>.
-    </para>
-    <para>
-      After you enable Qpid authentication, you must update the configuration
-      file of each OpenStack service to ensure that the
-      <literal>qpid_username</literal> and <literal>qpid_password</literal>
-      configuration keys refer to a valid Qpid username and password,
-      respectively.
-    </para>
-  </note>
-  <para os="fedora;centos;rhel">Start Qpid and set it to start
-    automatically when the system boots:</para>
-  <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>service qpidd start</userinput>
+  <para>OpenStack uses a <glossterm>message broker</glossterm> to coordinate
+    operations and status information among services. The message broker
+    service typically runs on the controller node. OpenStack supports several
+    message brokers including <application>RabbitMQ</application>,
+    <application>Qpid</application>, and <application>ZeroMQ</application>.
+    However, most distributions that package OpenStack support a particular
+    message broker. This guide covers the message broker supported by each
+    distribution. If you prefer to implement a different message broker,
+    consult the documentation associated with it.</para>
+  <itemizedlist>
+    <listitem>
+      <para><link xlink:href="http://www.rabbitmq.com">RabbitMQ</link></para>
+    </listitem>
+    <listitem>
+      <para><link xlink:href="http://qpid.apache.org">Qpid</link></para>
+    </listitem>
+    <listitem>
+      <para><link xlink:href="http://zeromq.org">ZeroMQ</link></para>
+    </listitem>
+  </itemizedlist>
+  <procedure>
+    <title>To install the message broker service</title>
+    <step os="ubuntu;debian">
+      <para>Ubuntu and Debian use <application>RabbitMQ</application>.</para>
+      <screen><prompt>#</prompt> <userinput>apt-get install rabbitmq-server</userinput></screen>
+    </step>
+    <step os="rhel;centos;fedora">
+      <para>Red Hat Enterprise Linux (RHEL), CentOS, Scientific Linux, and
+        Fedora use <application>Qpid</application>.
+      </para>
+      <screen><prompt>#</prompt> <userinput>yum install qpid-cpp-server</userinput></screen>
+    </step>
+    <step os="sles;opensuse">
+      <para>SUSE Linux Enterprise Server (SLES) and openSUSE use
+        <application>RabbitMQ</application>.</para>
+      <screen><prompt>#</prompt> <userinput>zypper install rabbitmq-server</userinput></screen>
+    </step>
+  </procedure>
+  <procedure>
+    <title>To configure the message broker service</title>
+    <step os="rhel;centos;fedora">
+      <para>To simplify installation of your test environment, we recommend
+        that you disable authentication.</para>
+      <para>Edit the <filename>/etc/qpidd.conf</filename> file and change
+        the following key:</para>
+      <programlisting>auth=no</programlisting>
+      <note>
+        <para>For production environments, you should enable authentication.
+          For more information on securing the message broker, see the
+        <link xlink:href=
+          "http://qpid.apache.org/books/trunk/AMQP-Messaging-Broker-CPP-Book/html/chap-Messaging_User_Guide-Security.html"
+          >documentation</link>.</para>
+        <para>If you decide to enable authentication for your test
+          environment, you must configure the <literal>qpid_username</literal>
+          and <literal>qpid_password</literal> keys in the configuration file
+          of each OpenStack service that uses the message broker.</para>
+      </note>
+    </step>
+    <step os="sles;opensuse">
+      <para>Start the message broker service:</para>
+      <screen><prompt>#</prompt> <userinput>service rabbitmq-server start</userinput></screen>
+    </step>
+    <step os="ubuntu;debian;sles;opensuse">
+      <para>The message broker creates a default account that uses
+        <literal>guest</literal> for the username and password. To simplify
+        installation of your test environment, we recommend that you use this
+        account, but change the password for it.</para>
+      <para>Run the following command:</para>
+      <para>Replace <replaceable>RABBIT_PASS</replaceable> with a suitable
+        password.</para>
+      <screen><prompt>#</prompt> <userinput>rabbitmqctl change_password guest <replaceable>RABBIT_PASS</replaceable></userinput></screen>
+      <para>You must configure the <literal>rabbit_password</literal> key
+        in the configuration file for each OpenStack service that uses the
+        message broker.</para>
+      <note>
+        <para>For production environments, you should create a unique account
+          with suitable password. For more information on securing the
+          message broker, see the
+        <link xlink:href="https://www.rabbitmq.com/man/rabbitmqctl.1.man.html"
+          >documentation</link>.</para>
+        <para>If you decide to create a unique account with suitable password
+          for your test environment, you must configure the
+          <literal>rabbit_userid</literal> and
+          <literal>rabbit_password</literal> keys in the configuration file
+          of each OpenStack service that uses the message broker.</para>
+      </note>
+    </step>
+  </procedure>
+  <procedure os="rhel;centos;fedora;sles;opensuse">
+    <title>To finalize installation</title>
+    <step os="rhel;centos;fedora">
+      <para>Start the message broker service and configure it to start when
+        the system boots:</para>
+      <screen><prompt>#</prompt> <userinput>service qpidd start</userinput>
 <prompt>#</prompt> <userinput>chkconfig qpidd on</userinput></screen>
-  <para os="opensuse;sles">Start the messaging service and set it to
-    start automatically when the system boots:</para>
-  <screen os="opensuse;sles"><prompt>#</prompt> <userinput>service rabbitmq-server start</userinput>
-<prompt>#</prompt> <userinput>chkconfig rabbitmq-server on</userinput></screen>
-  <note os="ubuntu;debian;opensuse;sles">
-    <title>Important security consideration</title>
-    <para>The <package>rabbitmq-server</package> package configures
-      the RabbitMQ service to start automatically and creates a
-      <literal>guest</literal> user with a default
-      <literal>guest</literal> password. The RabbitMQ examples in
-      this guide use the <literal>guest</literal> account, though it
-      is strongly advised to change its default password, especially
-      if you have IPv6 available: by default the RabbitMQ server
-      enables anyone to connect to it by using guest as login and
-      password, and with IPv6, it is reachable from the
-      outside.</para>
-    <para>To change the default guest password of RabbitMQ:</para>
-    <screen><prompt>#</prompt> <userinput>rabbitmqctl change_password guest <replaceable>RABBIT_PASS</replaceable></userinput></screen>
-  </note>
+    </step>
+    <step os="sles;opensuse">
+      <para>Configure the message broker service to start when the system
+        boots:</para>
+      <screen><prompt>#</prompt> <userinput>chkconfig rabbitmq-server on</userinput></screen>
+    </step>
+  </procedure>
   <para>Congratulations, now you are ready to install OpenStack
     services!</para>
 </section>
