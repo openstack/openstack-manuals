@@ -29,9 +29,17 @@
     </step>
     <step os="ubuntu;rhel;centos;fedora;opensuse;sles">
       <para>Configure Block Storage to use your database.</para>
-      <para>In the
-        <filename>/etc/cinder/cinder.conf</filename> file, add this key in the <literal>[database]</literal> section and replace <replaceable>CINDER_DBPASS</replaceable> with the password
-        for the Block Storage database that you will create in a later step:</para>
+      <para os="rhel;centos;fedora;opensuse;sles">Run the following command
+        to set <literal>connection</literal> option in the
+        <literal>[database]</literal> section, which is in the
+        <filename>/etc/cinder/cinder.conf</filename> file, replace
+        <replaceable>CINDER_DBPASS</replaceable> with the password for the
+        Block Storage database that you will create in a later step:</para>
+      <para os="ubuntu">In the <filename>/etc/cinder/cinder.conf</filename>
+        file, set the <literal>connection</literal> option in the
+        <literal>[database]</literal> section and replace
+        <replaceable>CINDER_DBPASS</replaceable> with the password for the
+        Block Storage database that you will create in a later step:</para>
       <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/cinder/cinder.conf \
   database connection mysql://cinder:<replaceable>CINDER_DBPASS</replaceable>@<replaceable>controller</replaceable>/cinder</userinput></screen>
       <programlisting os="ubuntu" language="ini">[database]
