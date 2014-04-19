@@ -4,9 +4,11 @@
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="cli_openrc">
     <?dbhtml stop-chunking?>
-    <title>The OpenStack RC file</title>
+    <title>Set environment variables using the OpenStack RC
+        file</title>
     <para>To set the required environment variables for the OpenStack
-        command-line clients, you must create an environment
+        command-line clients, you must create an environment file
+        called an OpenStack rc file, or <filename>openrc.sh</filename>
             file.<phrase audience="enduser"> If your OpenStack
             installation provides it, you can download the file from
             the OpenStack dashboard as an administrative user or any
@@ -18,11 +20,10 @@
         commands to communicate with the OpenStack services that run
         in the cloud.</para>
     <note>
-        <title>Environment variables on Microsoft Windows</title>
         <para>Defining environment variables using an environment file is not a
         common practice on Microsoft Windows. Environment variables are usually
-        defined in the <literal>Advanced</literal> tab of the <literal>System
-        Properties</literal> dialog.</para>
+        defined in the <guilabel>Advanced</guilabel> tab of the System
+        Properties dialog box.</para>
     </note>
     <section xml:id="openrc-dashboard" audience="enduser">
         <title>Download and source the OpenStack RC file</title>
@@ -34,32 +35,32 @@
                         &amp; Security</guibutton>.</para>
             </step>
             <step>
-                <para>
-                  Click on the API Access tab.  Click
-                  <guibutton>Download OpenStack RC File</guibutton>
-                  and save the file. The filename will be of the form
-                  <filename><replaceable>PROJECT</replaceable>-openrc.sh</filename>
-                  where <replaceable>PROJECT</replaceable> is the name
-                  of the project for which you downloaded the file.
-                </para>
+                <para>On the API Access tab, click <guibutton>Download
+                        OpenStack RC File</guibutton> and save the
+                    file. The filename will be of the form
+                            <filename><replaceable>PROJECT</replaceable>-openrc.sh</filename>
+                    where <replaceable>PROJECT</replaceable> is the
+                    name of the project for which you downloaded the
+                    file.</para>
             </step>
             <step>
                 <para>Copy the
-                <filename><replaceable>PROJECT</replaceable>-openrc.sh</filename>
-                file to the machine from where you want to run
-                OpenStack commands.</para>
-                <para>For example, copy the file to the machine from
-                    where you want to upload an image with a glance
-                    client command.</para>
+                            <filename><replaceable>PROJECT</replaceable>-openrc.sh</filename>
+                    file to the computer from which you want to run
+                    OpenStack commands.</para>
+                <para>For example, copy the file to the computer from
+                    which you want to upload an image with a
+                        <command>glance</command> client
+                    command.</para>
             </step>
             <step>
-                <para>On any shell from where you want to run
+                <para>On any shell from which you want to run
                     OpenStack commands, source the
-                    <filename><replaceable>PROJECT</replaceable>-openrc.sh</filename>
+                            <filename><replaceable>PROJECT</replaceable>-openrc.sh</filename>
                     file for the respective project.</para>
-                <para>In this example, you source the
-                        <filename>demo-openrc.sh</filename> file for
-                    the demo project:</para>
+                <para>In the following example, the
+                        <filename>demo-openrc.sh</filename> file is
+                    sourced for the demo project:</para>
                 <screen><prompt>$</prompt> <userinput>source demo-openrc.sh</userinput></screen>
             </step>
             <step>
@@ -73,45 +74,54 @@
     <section xml:id="openrc-create">
         <title>Create and source the OpenStack RC file</title>
         <para audience="enduser">Alternatively, you can create the
-                <filename><replaceable>PROJECT</replaceable>-openrc.sh</filename> file from
-            scratch.</para>
+                    <filename><replaceable>PROJECT</replaceable>-openrc.sh</filename>
+            file from scratch, if for some reason you cannot download
+            the file from the dashboard.</para>
         <procedure>
             <step>
-                <para>Create the <filename><replaceable>PROJECT</replaceable>-openrc.sh</filename> file
-                    and add the authentication information:</para>
-                <programlisting language="bash" audience="enduser">export OS_USERNAME=<replaceable>USERNAME</replaceable>
-export OS_PASSWORD=<replaceable>PASSWORD</replaceable>
-export OS_TENANT_NAME=<replaceable>PROJECT_NAME</replaceable>
-export OS_AUTH_URL=<replaceable>https://IDENTITY_HOST:PORT/v2.0</replaceable>
+                <para>In a text editor, create a file named
+                            <filename><replaceable>PROJECT</replaceable>-openrc.sh</filename>
+                    file and add the following authentication
+                    information:</para>
+                <programlisting language="bash" audience="enduser">export OS_USERNAME=<replaceable>username</replaceable>
+export OS_PASSWORD=<replaceable>password</replaceable>
+export OS_TENANT_NAME=<replaceable>projectName</replaceable>
+export OS_AUTH_URL=<replaceable>https://identityHost:portNumber/v2.0</replaceable>
 # The following lines can be omitted
-export OS_TENANT_ID=<replaceable>9d792532ffce494583138c495801d164</replaceable>
-export OS_REGION_NAME=<replaceable>RegionOne</replaceable></programlisting>
+export OS_TENANT_ID=<replaceable>tenantIDString</replaceable>
+export OS_REGION_NAME=<replaceable>regionName</replaceable></programlisting>
+                <para>The following example shows the information for
+                    a project called <literal>admin</literal>, where
+                    the OS username is also <literal>admin</literal>,
+                    and the identity host is located at
+                        <literal>controller</literal>.</para>
                 <programlisting language="bash" audience="installer">export OS_USERNAME=admin
 export OS_PASSWORD=<replaceable>ADMIN_PASS</replaceable>
 export OS_TENANT_NAME=admin
-export OS_AUTH_URL=http://<replaceable>controller</replaceable>:35357/v2.0</programlisting>
+export OS_AUTH_URL=http://controller:35357/v2.0</programlisting>
             </step>
             <step>
-                <para>On any shell from where you want to run
+                <para>On any shell from which you want to run
                     OpenStack commands, source the
-                    <filename><replaceable>PROJECT</replaceable>-openrc.sh</filename>
-                    file for the
-                    respective project. In this example, you source the
+                            <filename><replaceable>PROJECT</replaceable>-openrc.sh</filename>
+                    file for the respective project. In this example,
+                    you source the
                         <filename>admin-openrc.sh</filename> file for
-                    the <replaceable>admin</replaceable> project:</para>
+                    the <replaceable>admin</replaceable>
+                    project:</para>
                 <screen><prompt>$</prompt> <userinput>source admin-openrc.sh</userinput></screen>
             </step>
         </procedure>
         <note audience="enduser">
             <para>You are not prompted for the password with this
                 method. The password lives in clear text format in the
-                <filename><replaceable>PROJECT</replaceable>-openrc.sh</filename>
-                file. Restrict the
-                permissions on this file to avoid security problems.
-                You can also remove the <literal>OS_PASSWORD</literal>
-                variable from the file, and use the
-                    <parameter>--password</parameter> parameter with
-                OpenStack client commands.</para>
+                        <filename><replaceable>PROJECT</replaceable>-openrc.sh</filename>
+                file. Restrict the permissions on this file to avoid
+                security problems. You can also remove the
+                    <literal>OS_PASSWORD</literal> variable from the
+                file, and use the <parameter>--password</parameter>
+                parameter with OpenStack client commands
+                instead.</para>
         </note>
     </section>
     <section xml:id="override-variables">
@@ -122,11 +132,9 @@ export OS_AUTH_URL=http://<replaceable>controller</replaceable>:35357/v2.0</prog
             of the various client commands. For example, you can override
             the <option>OS_PASSWORD</option> setting in the
             <filename><replaceable>PROJECT</replaceable>-openrc.sh</filename>
-            file by specifying a
-            password on a <command>keystone</command> command, as
+            file by specifying a password on a <command>keystone</command> command, as
             follows:</para>
         <screen><prompt>$</prompt> <userinput>keystone --os-password <replaceable>PASSWORD</replaceable> service-list</userinput></screen>
-        <para>Where <replaceable>PASSWORD</replaceable> is your
-            password.</para>
+        <para>Where <replaceable>PASSWORD</replaceable> is your password.</para>
     </section>
 </section>

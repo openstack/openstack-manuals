@@ -9,19 +9,19 @@
         who can upload and manage images. The operator might restrict
         image upload and management to only cloud administrators or
         operators.</para>
-    <para>You can upload images through the glance client or the Image Service API. You can also use
-        the nova client to list images, set, and delete image metadata, delete images, and take a
-        snapshot of a running instance to create an image. After you upload an image, you cannot
-        change it.</para>
+    <para>You can upload images through the <command>glance</command> client or the Image Service
+        API. You can also use the <command>nova</command> client to list images, set and delete
+        image metadata, delete images, and take a snapshot of a running instance to create an image.
+        After you upload an image, you cannot change it.</para>
     <para>For details about image creation, see the <link
             xlink:href="http://docs.openstack.org/image-guide/content/"
                 ><citetitle>Virtual Machine Image
             Guide</citetitle></link>.</para>
     <section xml:id="glance-image-list">
         <title>List or get details for images (glance)</title>
-        <procedure>
-            <step>
-                <para>To list the available images:</para>
+        <para>To get a list of images and to then get further details about a single image,
+                    use <command>glance image-list</command> and <command>glance
+                        image-show</command>.</para>
                 <screen><prompt>$</prompt> <userinput>glance image-list</userinput>
 <computeroutput>+--------------------------------------+---------------------------------+-------------+------------------+----------+--------+
 | ID                                   | Name                            | Disk Format | Container Format | Size     | Status |
@@ -31,17 +31,9 @@
 | 3cf852bd-2332-48f4-9ae4-7d926d50945e | cirros-0.3.2-x86_64-uec-ramdisk | ari         | ari              | 3714968  | active |
 | 7e5142af-1253-4634-bcc6-89482c5f2e8a | myCirrosImage                   | ami         | ami              | 14221312 | active |
 +--------------------------------------+---------------------------------+-------------+------------------+----------+--------+</computeroutput></screen>
-                <para>You can use grep to filter the list, as
-                    follows:</para>
-                <screen><prompt>$</prompt> <userinput>glance image-list | grep 'cirros'</userinput>
-<computeroutput>| 397e713c-b95b-4186-ad46-6126863ea0a9 | cirros-0.3.2-x86_64-uec         | ami         | ami              | 25165824 | active |
-| df430cc2-3406-4061-b635-a51c16e488ac | cirros-0.3.2-x86_64-uec-kernel  | aki         | aki              | 4955792  | active |
-| 3cf852bd-2332-48f4-9ae4-7d926d50945e | cirros-0.3.2-x86_64-uec-ramdisk | ari         | ari              | 3714968  | active |</computeroutput></screen>
-            </step>
-            <step>
-                <para>To get image details, by name or ID:</para>
-                <screen><prompt>$</prompt> <userinput>glance image-show myCirrosImage</userinput>
-<?db-font-size 45%?><computeroutput>+---------------------------------------+--------------------------------------+
+        <screen><prompt>$</prompt> <userinput>glance image-show myCirrosImage</userinput>
+<?db-font-size 45%?>
+<computeroutput>+---------------------------------------+--------------------------------------+
 | Property                              | Value                                |
 +---------------------------------------+--------------------------------------+
 | Property 'base_image_ref'             | 397e713c-b95b-4186-ad46-6126863ea0a9 |
@@ -79,6 +71,12 @@
 | status                                | active                               |
 | updated_at                            | 2013-07-22T19:46:42                  |
 +---------------------------------------+--------------------------------------+</computeroutput></screen>
+        <para>When viewing a list of images, you can also use <command>grep</command> to filter the
+            list, as follows:</para>
+        <screen><prompt>$</prompt> <userinput>glance image-list | grep 'cirros'</userinput>
+<computeroutput>| 397e713c-b95b-4186-ad46-6126863ea0a9 | cirros-0.3.2-x86_64-uec         | ami         | ami              | 25165824 | active |
+| df430cc2-3406-4061-b635-a51c16e488ac | cirros-0.3.2-x86_64-uec-kernel  | aki         | aki              | 4955792  | active |
+| 3cf852bd-2332-48f4-9ae4-7d926d50945e | cirros-0.3.2-x86_64-uec-ramdisk | ari         | ari              | 3714968  | active |</computeroutput></screen>
                 <note><para>To store location metadata for images, which enables direct file
                         access for a client, update the
                             <filename>/etc/glance/glance.conf</filename>
@@ -89,17 +87,13 @@
                                 <para><code>show_multiple_locations = True</code></para>
                             </listitem>
                             <listitem>
-                                <para><code>filesystem_store_metadata_file
-                                   =
-                                   <replaceable>filePath</replaceable></code>,
-                                   where
-                                   <replaceable>filePath</replaceable>
-                                   points to a JSON file that defines
-                                   the mount point for OpenStack
-                                   images on your system and a unique
-                                   ID. For example:
-                                   <programlisting language="json">[{
-    "id": "b9d69795-5951-4cb0-bb5c-29491e1e2daf",
+                                <para><code>filesystem_store_metadata_file =
+                                            <replaceable>filePath</replaceable></code>, where
+                                        <replaceable>filePath</replaceable> points to a JSON file
+                                    that defines the mount point for OpenStack images on your system
+                                    and a unique ID. For example:
+                                    <programlisting language="json">[{
+    "id": "2d9bb53f-70ea-4066-a68b-67960eaae673",
     "mountpoint": "/var/lib/glance/images/"
 }]</programlisting></para>
                             </listitem>
@@ -107,178 +101,188 @@
                    </para>
                     <para>After you restart the Image Service, you can use the following syntax to view the image's location information:</para>
                     <screen><prompt>$</prompt> <userinput>glance --os-image-api-version=2 image-show <replaceable>imageID</replaceable></userinput></screen>
-                    <para>For example:</para>
+                    <para>For example, using the image ID shown above, you would issue the command
+                        as follows:</para>
                     <screen><prompt>$</prompt> <userinput>glance --os-image-api-version=2 image-show 2d9bb53f-70ea-4066-a68b-67960eaae673</userinput></screen></note>
-            </step>
-        </procedure>
     </section>
     <section xml:id="glance_add_image">
         <title>Create or update an image (glance)</title>
-        <procedure>
-            <step>
-                <para>To upload a CentOS 6.3 image in qcow2 format and
-                    configure it for public access:</para>
+        <para>To create an image, use <command>glance image-create</command>:</para>
+        <screen><prompt>$</prompt> <userinput>glance image-create <replaceable>imageName</replaceable></userinput></screen>
+        <para>To update an image by name or ID, use <command>glance image-update</command>:</para>
+        <para>
+            <screen><prompt>$</prompt> <userinput>glance image-update <replaceable>imageName</replaceable></userinput></screen>
+        </para>
+        <para>The following table lists the optional arguments that you can use with the
+                <command>create</command> and <command>update</command> commands to modify image
+            properties. For more information, refer to Image Service chapter in the <link
+                xlink:href="http://docs.openstack.org/cli-reference/content/index.html">OpenStack
+            Command-Line Interface Reference</link>.</para>
+        <informaltable>
+            <col width="40%"/>
+            <col width="60%"/>
+            <tr>
+                <td>
+                    <para><parameter>--name NAME</parameter></para>
+                </td>
+                <td>
+                    <para>The name of the image.</para>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <para><parameter>--disk-format DISK_FORMAT</parameter></para>
+                </td>
+                <td>
+                    <para>The disk format of the image. Acceptable formats are ami, ari, aki, vhd,
+                        vmdk, raw, qcow2, vdi, and iso.</para>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <para><parameter>--container-format CONTAINER_FORMAT</parameter></para>
+                </td>
+                <td>
+                    <para>The container format of the image. Acceptable formats are ami, ari, aki,
+                        bare, and ovf.</para>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <para><parameter>--owner TENANT_ID</parameter></para>
+                </td>
+                <td>
+                    <para>The tenant who should own the image.</para>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <para><parameter>--size SIZE</parameter></para>
+                </td>
+                <td>
+                    <para>The size of image data, in bytes.</para>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <para><parameter>--min-disk DISK_GB</parameter></para>
+                </td>
+                <td>
+                    <para>The minimum size of the disk needed to boot the image, in
+                        gigabytes.</para>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <para><parameter>--min-ram DISK_RAM</parameter></para>
+                </td>
+                <td>
+                    <para>The minimum amount of RAM needed to boot the image, in megabytes.</para>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <para><parameter>--location IMAGE_URL</parameter></para>
+                </td>
+                <td>
+                    <para>The URL where the data for this image resides. For example, if the image
+                        data is stored in swift, you could specify
+                            <literal>swift://account:key@example.com/container/obj</literal>.</para>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <para><parameter>--file FILE</parameter></para>
+                </td>
+                <td>
+                    <para>Local file that contains the disk image to be uploaded during the update.
+                        Alternatively, you can pass images to the client through stdin.</para>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <para><parameter>--checksum CHECKSUM</parameter></para>
+                </td>
+                <td>
+                    <para>Hash of image data to use for verification.</para>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <para><parameter>--copy-from IMAGE_URL</parameter></para>
+                </td>
+                <td>
+                    <para>Similar to <parameter>--location</parameter> in usage, but indicates that
+                        the image server should immediately copy the data and store it in its
+                        configured image store.</para>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <para><parameter>--is-public [True|False]</parameter></para>
+                </td>
+                <td>
+                    <para>Makes an image accessible for all the tenants.</para>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <para><parameter>--is-protected [True|False]</parameter></para>
+                </td>
+                <td>
+                    <para>Prevents an image from being deleted.</para>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <para><parameter>--property KEY=VALUE</parameter></para>
+                </td>
+                <td>
+                    <para>Arbitrary property to associate with image. This option can be used
+                        multiple times.</para>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <para><parameter>--purge-props</parameter></para>
+                </td>
+                <td>
+                    <para>Deletes all image properties that are not explicitly set in the update
+                        request. Otherwise, those properties not referenced are preserved.</para>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <para><parameter>--human-readable</parameter></para>
+                </td>
+                <td>
+                    <para>Prints the image size in a human-friendly format.</para>
+                </td>
+            </tr>
+        </informaltable>
+        <para>The following example shows the command that you would use to upload a CentOS
+            6.3 image in qcow2 format and configure it for public access:</para>
                 <screen><prompt>$</prompt> <userinput>glance image-create --name centos63-image --disk-format=qcow2 \
   --container-format=bare --is-public=True --file=./centos63.qcow2</userinput></screen>
-            </step>
-            <step>
-                <para>To update an image by name or ID:</para>
-                <para><screen><prompt>$</prompt> <userinput>glance image-update <replaceable>IMAGE</replaceable></userinput></screen></para>
-                <para>To modify image properties, use the following
-                    optional arguments:</para>
-                <informaltable>
-                    <col width="40%"/>
-                    <col width="60%"/>
-                    <tr>
-                        <td><para><parameter>--name
-                                   <replaceable>NAME</replaceable></parameter></para></td>
-                        <td><para>The name of the image.</para>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><para><parameter>--disk-format
-                                   <replaceable>DISK_FORMAT</replaceable></parameter></para></td>
-                        <td><para>The disk format of the image.
-                                Acceptable formats are ami, ari, aki,
-                                vhd, vmdk, raw, qcow2, vdi, and
-                                iso.</para>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><para><parameter>--container-format
-                                   <replaceable>CONTAINER_FORMAT</replaceable></parameter></para></td>
-                        <td><para>The container format of the image.
-                                Acceptable formats are ami, ari, aki,
-                                bare, and ovf.</para>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><para><parameter>--owner
-                                   <replaceable>TENANT_ID</replaceable></parameter></para></td>
-                        <td><para>The tenant who should own the
-                                image.</para>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><para><parameter>--size
-                                   <replaceable>SIZE</replaceable></parameter></para></td>
-                        <td><para>The size of image data, in
-                                bytes.</para>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><para><parameter>--min-disk
-                                   <replaceable>DISK_GB</replaceable></parameter></para></td>
-                        <td><para>The minimum size of disk needed to
-                                boot image, in gigabytes.</para>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><para><parameter>--min-ram
-                                   <replaceable>DISK_RAM</replaceable></parameter></para></td>
-                        <td><para>The minimum amount of ram needed to
-                                boot image, in megabytes.</para>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><para><parameter>--location
-                                   <replaceable>IMAGE_URL</replaceable></parameter></para></td>
-                        <td><para>The URL where the data for this
-                                image resides. For example, if the
-                                image data is stored in swift, you
-                                could specify
-                                   <literal>swift://account:key@example.com/container/obj</literal>.</para>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><para><parameter>--file
-                                   <replaceable>FILE</replaceable></parameter></para></td>
-                        <td><para>Local file that contains disk image
-                                to be uploaded during update.
-                                Alternatively, you can pass images to
-                                the client through stdin.</para>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><para><parameter>--checksum
-                                   <replaceable>CHECKSUM</replaceable></parameter></para></td>
-                        <td><para>Hash of image data to use for
-                                verification.</para>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><para><parameter>--copy-from
-                                   <replaceable>IMAGE_URL</replaceable></parameter></para></td>
-                        <td><para>Similar to
-                                   <parameter>--location</parameter>
-                                in usage, but indicates that the
-                                Image server should immediately copy
-                                the data and store it in its
-                                configured image store.</para>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><para><parameter>--is-public
-                                   [True|False]</parameter></para></td>
-                        <td><para>Makes an image accessible to the
-                                public.</para>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><para><parameter>--is-protected
-                                   [True|False]</parameter></para></td>
-                        <td><para>Prevents an image from being
-                                deleted.</para>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><para><parameter>--property
-                                   <replaceable>KEY</replaceable>=<replaceable>VALUE</replaceable></parameter></para></td>
-                        <td><para>Arbitrary property to associate with
-                                image. Can be used multiple
-                                times.</para>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><para><parameter>--purge-props</parameter></para></td>
-                        <td><para>Deletes all image properties that
-                                are not explicitly set in the update
-                                request. Otherwise, those properties
-                                not referenced are preserved.</para>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><para><parameter>--human-readable</parameter></para></td>
-                        <td><para>Prints image size in a
-                                human-friendly format.</para>
-                        </td>
-                    </tr>
-                </informaltable>
-            </step>
-            <step>
-                <para>To annotate an image with a property that describes the <literal>disk_bus</literal>, <literal>cdrom_bus</literal>,
-                    and <literal>vif_model</literal>:</para>
+                <para>The following example shows how to update an existing image with a properties
+            that describe the disk bus, the CD-ROM bus, and the VIF model:</para>
                 <screen><prompt>$</prompt> <userinput>glance image-update \
     --property hw_disk_bus=scsi \
     --property hw_cdrom_bus=ide \
     --property hw_vif_model=e1000 \
     f16-x86_64-openstack-sda</userinput></screen>
-                <para>Currently libvirt will determine the disk/cdrom/vif device models based on the
-                    configured hypervisor type (<literal>libvirt_type</literal> in
-                        <literal>/etc/nova/nova.conf</literal>). For the sake of optimal
-                    performance, it will default to using virtio for both disk and VIF (NIC) models.
-                    The downside of this approach is that it is not possible to run operating
-                    systems that lack virtio drivers, for example, BSD, Solaris, old Linux, and old
-                    Windows.</para>
+                <para>Currently the libvirt virtualization tool determines the disk, CD-ROM, and VIF
+            device models based on the configured hypervisor type (<literal>libvirt_type</literal>
+            in <filename>/etc/nova/nova.conf</filename>). For the sake of optimal performance, libvirt
+            defaults to using virtio for both disk and VIF (NIC) models. The disadvantage of this
+            approach is that it is not possible to run operating systems that lack virtio drivers,
+            for example, BSD, Solaris, and older versions of Linux and Windows.</para>
                 <para>If you specify a disk or CD-ROM bus model that is not supported, see <xref
                         linkend="bus_models"/>. If you specify a VIF model that is not supported,
                     the instance fails to launch. See <xref linkend="vif_models"/>.</para>
-            </step>
-        </procedure>
         <?hard-pagebreak?>
-        <para>The valid model values depend on the
-                <literal>libvirt_type</literal> setting, as shown in
-            the following tables:</para>
+        <para>The valid model values depend on the <literal>libvirt_type</literal> setting, as shown
+            in the following tables.</para>
         <table xml:id="bus_models" rules="all" width="50%">
             <caption>Disk and CD-ROM bus model values</caption>
             <col width="40%"/>
@@ -407,6 +411,8 @@
     <xi:include href="section_cli_nova_manage_images.xml"/>
     <section xml:id="troubleshoot">
         <title>Troubleshoot image creation</title>
+        <para>If you encounter problems in creating an image in Image Service or Compute, the
+            following information may help you troubleshoot the creation process.</para>
         <itemizedlist>
             <listitem>
                 <para>You cannot create a snapshot from an instance
@@ -414,11 +420,9 @@
                     create the image, and re-mount the volume.</para>
             </listitem>
             <listitem>
-                <para>Make sure the version of qemu you are using is
-                    version 0.14 or greater. Older versions of qemu
-                    result in an "<literal>unknown option
-                    -s</literal>" error message in the
-                        <filename>nova-compute.log</filename>.</para>
+                <para>Ensure that the version of qemu you are using is version 0.14 or later.
+                    Earlier versions of qemu result in an <literal>unknown option -s</literal> error
+                    message in the <filename>nova-compute.log</filename> file.</para>
             </listitem>
             <listitem>
                 <para>Examine the
