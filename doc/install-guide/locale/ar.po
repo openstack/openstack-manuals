@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenStack Manuals\n"
-"POT-Creation-Date: 2014-04-19 04:10+0000\n"
-"PO-Revision-Date: 2014-04-19 04:11+0000\n"
+"POT-Creation-Date: 2014-04-20 05:49+0000\n"
+"PO-Revision-Date: 2014-04-20 01:15+0000\n"
 "Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
 "Language-Team: Arabic (http://www.transifex.com/projects/p/openstack/language/ar/)\n"
 "MIME-Version: 1.0\n"
@@ -420,7 +420,7 @@ msgstr ""
 
 #: ./doc/install-guide/ch_cinder.xml20(title)
 #: ./doc/install-guide/ch_swift.xml30(title)
-#: ./doc/install-guide/ch_networking.xml66(title)
+#: ./doc/install-guide/ch_networking.xml37(title)
 #: ./doc/install-guide/ch_horizon.xml38(title)
 #: ./doc/install-guide/ch_ceilometer.xml18(title)
 #: ./doc/install-guide/ch_heat.xml14(title)
@@ -909,8 +909,9 @@ msgstr ""
 #: ./doc/install-guide/section_basics-networking.xml75(para)
 msgid ""
 "Proceed to network configuration for the example <link linkend=\"basics-"
-"networking-neutron\">OpenStack Networking </link> or <link linkend=\"basics-"
-"networking-nova\">legacy networking</link> architecture."
+"networking-neutron\">OpenStack Networking (neutron) </link> or <link linkend"
+"=\"basics-networking-nova\">legacy networking (nova-network)</link> "
+"architecture."
 msgstr ""
 
 #: ./doc/install-guide/section_cinder-verify.xml5(title)
@@ -1265,19 +1266,19 @@ msgstr ""
 #: ./doc/install-guide/section_cinder-node.xml186(replaceable)
 #: ./doc/install-guide/section_cinder-node.xml202(replaceable)
 #: ./doc/install-guide/section_cinder-node.xml205(replaceable)
-#: ./doc/install-guide/section_cinder-controller.xml36(replaceable)
-#: ./doc/install-guide/section_cinder-controller.xml39(replaceable)
-#: ./doc/install-guide/section_cinder-controller.xml75(replaceable)
-#: ./doc/install-guide/section_cinder-controller.xml77(replaceable)
-#: ./doc/install-guide/section_cinder-controller.xml93(replaceable)
-#: ./doc/install-guide/section_cinder-controller.xml94(replaceable)
-#: ./doc/install-guide/section_cinder-controller.xml112(replaceable)
-#: ./doc/install-guide/section_cinder-controller.xml145(replaceable)
-#: ./doc/install-guide/section_cinder-controller.xml146(replaceable)
-#: ./doc/install-guide/section_cinder-controller.xml147(replaceable)
+#: ./doc/install-guide/section_cinder-controller.xml44(replaceable)
+#: ./doc/install-guide/section_cinder-controller.xml47(replaceable)
+#: ./doc/install-guide/section_cinder-controller.xml83(replaceable)
+#: ./doc/install-guide/section_cinder-controller.xml85(replaceable)
+#: ./doc/install-guide/section_cinder-controller.xml101(replaceable)
+#: ./doc/install-guide/section_cinder-controller.xml102(replaceable)
+#: ./doc/install-guide/section_cinder-controller.xml120(replaceable)
+#: ./doc/install-guide/section_cinder-controller.xml153(replaceable)
+#: ./doc/install-guide/section_cinder-controller.xml154(replaceable)
 #: ./doc/install-guide/section_cinder-controller.xml155(replaceable)
-#: ./doc/install-guide/section_cinder-controller.xml156(replaceable)
-#: ./doc/install-guide/section_cinder-controller.xml157(replaceable)
+#: ./doc/install-guide/section_cinder-controller.xml163(replaceable)
+#: ./doc/install-guide/section_cinder-controller.xml164(replaceable)
+#: ./doc/install-guide/section_cinder-controller.xml165(replaceable)
 #: ./doc/install-guide/section_neutron-ml2-network-node.xml67(replaceable)
 #: ./doc/install-guide/section_neutron-ml2-network-node.xml69(replaceable)
 #: ./doc/install-guide/section_neutron-ml2-network-node.xml99(replaceable)
@@ -1693,46 +1694,50 @@ msgid ""
 msgstr ""
 
 #: ./doc/install-guide/section_neutron-concepts.xml8(title)
-msgid "Neutron concepts"
+msgid "Networking concepts"
 msgstr ""
 
 #: ./doc/install-guide/section_neutron-concepts.xml9(para)
 msgid ""
-"Like Nova Networking, Neutron manages software-defined networking for your "
-"OpenStack installation. However, unlike Nova Networking, you can configure "
-"Neutron for advanced virtual network topologies, such as per-tenant private "
-"networks and more."
+"OpenStack Networking (neutron) manages all of the networking facets for the "
+"Virtual Networking Infrastructure (VNI) and the access layer aspects of the "
+"Physical Networking Infrastructure (PNI) in your OpenStack environment. "
+"OpenStack Networking allows tenants to create advanced virtual network "
+"topologies including services such as <glossterm "
+"baseform=\"firewall\">firewalls</glossterm>, <glossterm baseform=\"load "
+"balancer\">load balancers</glossterm>, and <glossterm baseform=\"virtual "
+"private network (VPN)\"> virtual private networks (VPNs)</glossterm>."
 msgstr ""
 
-#: ./doc/install-guide/section_neutron-concepts.xml13(para)
+#: ./doc/install-guide/section_neutron-concepts.xml18(para)
 msgid ""
-"Neutron has the following object abstractions: networks, subnets, and "
-"routers. Each has functionality that mimics its physical counterpart: "
+"Networking provides the following object abstractions: networks, subnets, "
+"and routers. Each has functionality that mimics its physical counterpart: "
 "networks contain subnets, and routers route traffic between different subnet"
 " and networks."
 msgstr ""
 
-#: ./doc/install-guide/section_neutron-concepts.xml17(para)
+#: ./doc/install-guide/section_neutron-concepts.xml22(para)
 msgid ""
-"Any given Neutron set up has at least one external network. This network, "
-"unlike the other networks, is not merely a virtually defined network. "
+"Any given Networking set up has at least one external network. This network,"
+" unlike the other networks, is not merely a virtually defined network. "
 "Instead, it represents the view into a slice of the external network that is"
-" accessible outside the OpenStack installation. IP addresses on the Neutron "
-"external network are accessible by anybody physically on the outside "
-"network. Because this network merely represents a slice of the outside "
-"network, DHCP is disabled on this network."
+" accessible outside the OpenStack installation. IP addresses on the "
+"Networking external network are accessible by anybody physically on the "
+"outside network. Because this network merely represents a slice of the "
+"outside network, DHCP is disabled on this network."
 msgstr ""
 
-#: ./doc/install-guide/section_neutron-concepts.xml25(para)
+#: ./doc/install-guide/section_neutron-concepts.xml30(para)
 msgid ""
-"In addition to external networks, any Neutron set up has one or more "
+"In addition to external networks, any Networking set up has one or more "
 "internal networks. These software-defined networks connect directly to the "
 "VMs. Only the VMs on any given internal network, or those on subnets "
 "connected through interfaces to a similar router, can access VMs connected "
 "to that network directly."
 msgstr ""
 
-#: ./doc/install-guide/section_neutron-concepts.xml30(para)
+#: ./doc/install-guide/section_neutron-concepts.xml35(para)
 msgid ""
 "For the outside network to access VMs, and vice versa, routers between the "
 "networks are needed. Each router has one gateway that is connected to a "
@@ -1742,7 +1747,7 @@ msgid ""
 "gateway for the router."
 msgstr ""
 
-#: ./doc/install-guide/section_neutron-concepts.xml37(para)
+#: ./doc/install-guide/section_neutron-concepts.xml42(para)
 msgid ""
 "Additionally, you can allocate IP addresses on external networks to ports on"
 " the internal network. Whenever something is connected to a subnet, that "
@@ -1751,100 +1756,23 @@ msgid ""
 "VMs."
 msgstr ""
 
-#: ./doc/install-guide/section_neutron-concepts.xml42(para)
+#: ./doc/install-guide/section_neutron-concepts.xml47(para)
 msgid ""
-"Neutron also supports <emphasis role=\"italic\">security groups</emphasis>. "
-"Security groups enable administrators to define firewall rules in groups. A "
-"VM can belong to one or more security groups, and Neutron applies the rules "
-"in those security groups to block or unblock ports, port ranges, or traffic "
-"types for that VM."
+"Networking also supports <emphasis role=\"italic\">security "
+"groups</emphasis>. Security groups enable administrators to define firewall "
+"rules in groups. A VM can belong to one or more security groups, and "
+"Networking applies the rules in those security groups to block or unblock "
+"ports, port ranges, or traffic types for that VM."
 msgstr ""
 
-#: ./doc/install-guide/section_neutron-concepts.xml48(para)
+#: ./doc/install-guide/section_neutron-concepts.xml53(para)
 msgid ""
-"Each plug-in that Neutron uses has its own concepts. While not vital to "
-"operating Neutron, understanding these concepts can help you set up Neutron."
-" All Neutron installations use a core plug-in and a security group plug-in "
-"(or just the No-Op security group plug-in). Additionally, Firewall-"
-"as-a-service (FWaaS) and Load-balancing-as-a-service (LBaaS) plug-ins are "
-"available."
-msgstr ""
-
-#: ./doc/install-guide/section_neutron-concepts.xml55(title)
-msgid "Open vSwitch concepts"
-msgstr ""
-
-#: ./doc/install-guide/section_neutron-concepts.xml56(para)
-msgid ""
-"The Open vSwitch plug-in is one of the most popular core plug-ins. Open "
-"vSwitch configurations consists of bridges and ports. Ports represent "
-"connections to other things, such as physical interfaces and patch cables. "
-"Packets from any given port on a bridge are shared with all other ports on "
-"that bridge. Bridges can be connected through Open vSwitch virtual patch "
-"cables or through Linux virtual Ethernet cables (<literal>veth</literal>). "
-"Additionally, bridges appear as network interfaces to Linux, so you can "
-"assign IP addresses to them."
-msgstr ""
-
-#: ./doc/install-guide/section_neutron-concepts.xml66(para)
-msgid ""
-"In Neutron, the integration bridge, called <literal>br-int</literal>, "
-"connects directly to the VMs and associated services. The external bridge, "
-"called <literal>br-ex</literal>, connects to the external network. Finally, "
-"the VLAN configuration of the Open vSwitch plug-in uses bridges associated "
-"with each physical network."
-msgstr ""
-
-#: ./doc/install-guide/section_neutron-concepts.xml72(para)
-msgid ""
-"In addition to defining bridges, Open vSwitch has OpenFlow, which enables "
-"you to define networking flow rules. Certain configurations use these rules "
-"to transfer packets between VLANs."
-msgstr ""
-
-#: ./doc/install-guide/section_neutron-concepts.xml76(para)
-msgid ""
-"Finally, some configurations of Open vSwitch use network namespaces that "
-"enable Linux to group adapters into unique namespaces that are not visible "
-"to other namespaces, which allows the same network node to manage multiple "
-"Neutron routers."
-msgstr ""
-
-#: ./doc/install-guide/section_neutron-concepts.xml81(para)
-msgid ""
-"With Open vSwitch, you can use two different technologies to create the "
-"virtual networks: GRE or VLANs."
-msgstr ""
-
-#: ./doc/install-guide/section_neutron-concepts.xml83(para)
-msgid ""
-"Generic Routing Encapsulation (GRE) is the technology used in many VPNs. It "
-"wraps IP packets to create entirely new packets with different routing "
-"information. When the new packet reaches its destination, it is unwrapped, "
-"and the underlying packet is routed. To use GRE with Open vSwitch, Neutron "
-"creates GRE tunnels. These tunnels are ports on a bridge and enable bridges "
-"on different systems to act as though they were one bridge, which allows the"
-" compute and network nodes to act as one for the purposes of routing."
-msgstr ""
-
-#: ./doc/install-guide/section_neutron-concepts.xml92(para)
-msgid ""
-"Virtual LANs (VLANs), on the other hand, use a special modification to the "
-"Ethernet header. They add a 4-byte VLAN tag that ranges from 1 to 4094 (the "
-"0 tag is special, and the 4095 tag, made of all ones, is equivalent to an "
-"untagged packet). Special NICs, switches, and routers know how to interpret "
-"the VLAN tags, as does Open vSwitch. Packets tagged for one VLAN are only "
-"shared with other devices configured to be on that VLAN, even though all "
-"devices are on the same physical network."
-msgstr ""
-
-#: ./doc/install-guide/section_neutron-concepts.xml101(para)
-msgid ""
-"The most common security group driver used with Open vSwitch is the Hybrid "
-"IPTables/Open vSwitch plug-in. It uses a combination for IPTables and "
-"OpenFlow rules. Use the IPTables tool to create firewalls and set up NATs on"
-" Linux. This tool uses a complex rule system and chains of rules to "
-"accommodate the complex rules required by Neutron security groups."
+"Each plug-in that Networking uses has its own concepts. While not vital to "
+"operating Networking, understanding these concepts can help you set up "
+"Networking. All Networking installations use a core plug-in and a security "
+"group plug-in (or just the No-Op security group plug-in). Additionally, "
+"Firewall-as-a-service (FWaaS) and Load-balancing-as-a-service (LBaaS) plug-"
+"ins are available."
 msgstr ""
 
 #: ./doc/install-guide/section_ceilometer-install.xml10(title)
@@ -2018,8 +1946,8 @@ msgstr ""
 #: ./doc/install-guide/section_neutron-single-flat.xml446(replaceable)
 #: ./doc/install-guide/section_cinder-node.xml153(replaceable)
 #: ./doc/install-guide/section_cinder-node.xml174(replaceable)
-#: ./doc/install-guide/section_cinder-controller.xml115(replaceable)
-#: ./doc/install-guide/section_cinder-controller.xml137(replaceable)
+#: ./doc/install-guide/section_cinder-controller.xml123(replaceable)
+#: ./doc/install-guide/section_cinder-controller.xml145(replaceable)
 #: ./doc/install-guide/section_neutron-ml2-network-node.xml121(replaceable)
 #: ./doc/install-guide/section_neutron-ml2-network-node.xml144(replaceable)
 #: ./doc/install-guide/section_neutron-ml2-compute-node.xml118(replaceable)
@@ -3039,7 +2967,7 @@ msgid ""
 msgstr ""
 
 #: ./doc/install-guide/section_launch-instance-neutron.xml6(title)
-msgid "Launch an instance with Networking (neutron)"
+msgid "Launch an instance with OpenStack Networking (neutron)"
 msgstr ""
 
 #: ./doc/install-guide/section_launch-instance-neutron.xml95(para)
@@ -3092,15 +3020,15 @@ msgstr ""
 
 #: ./doc/install-guide/ch_launch-instance.xml15(para)
 msgid ""
-"Launch an instance using <link linkend=\"launch-instance-"
-"neutron\">Networking (neutron)</link> or <link linkend=\"launch-instance-"
-"nova\">legacy networking (nova-network)</link>. For more information, see "
+"Launch an instance using <link linkend=\"launch-instance-neutron\">OpenStack"
+" Networking (neutron) </link> or <link linkend=\"launch-instance-"
+"nova\">legacy networking (nova-network) </link>. For more information, see "
 "the <link href=\"http://docs.openstack.org/user-"
 "guide/content/cli_launch_instances.html\"><citetitle>OpenStack User "
 "Guide</citetitle></link>."
 msgstr ""
 
-#: ./doc/install-guide/ch_launch-instance.xml23(para)
+#: ./doc/install-guide/ch_launch-instance.xml25(para)
 msgid ""
 "These steps reference example components created in previous chapters. You "
 "must adjust certain values such as IP addresses to match your environment."
@@ -3114,8 +3042,8 @@ msgstr ""
 
 #: ./doc/install-guide/section_neutron-ml2-controller-node.xml11(para)
 msgid ""
-"Before you configure Networking, you must create a database and Identity "
-"service credentials including a user and service."
+"Before you configure OpenStack Networking (neutron), you must create a "
+"database and Identity service credentials including a user and service."
 msgstr ""
 
 #: ./doc/install-guide/section_neutron-ml2-controller-node.xml15(para)
@@ -3418,8 +3346,7 @@ msgstr ""
 #: ./doc/install-guide/section_neutron-ml2-compute-node.xml285(para)
 msgid ""
 "By default, most distributions configure Compute to use legacy networking. "
-"You must reconfigure Compute to manage networks through OpenStack "
-"Networking."
+"You must reconfigure Compute to manage networks through Networking."
 msgstr ""
 
 #: ./doc/install-guide/section_neutron-ml2-controller-node.xml370(para)
@@ -4302,14 +4229,7 @@ msgstr ""
 msgid "Add a networking service"
 msgstr ""
 
-#: ./doc/install-guide/ch_networking.xml17(para)
-#: ./doc/install-guide/ch_basics.xml7(para)
-msgid ""
-"We are updating this material for Icehouse. You may find structure and/or "
-"content issues during this process."
-msgstr ""
-
-#: ./doc/install-guide/ch_networking.xml20(para)
+#: ./doc/install-guide/ch_networking.xml7(para)
 msgid ""
 "Configuring networking in OpenStack can be a bewildering experience. This "
 "guide provides step-by-step instructions for both OpenStack Networking "
@@ -4324,37 +4244,21 @@ msgid ""
 "information."
 msgstr ""
 
-#: ./doc/install-guide/ch_networking.xml33(title)
-msgid "Networking (neutron)"
+#: ./doc/install-guide/ch_networking.xml20(title)
+#: ./doc/install-guide/section_basics-networking-neutron.xml6(title)
+msgid "OpenStack Networking (neutron)"
 msgstr ""
 
-#: ./doc/install-guide/ch_networking.xml36(title)
+#: ./doc/install-guide/ch_networking.xml23(title)
 msgid "Modular Layer 2 (ML2) plug-in"
 msgstr ""
 
-#: ./doc/install-guide/ch_networking.xml38(para)
-msgid ""
-"We primarily tested the Modular Layer 2 (ML2) plug-in on Icehouse and "
-"suggest that you implement it instead of the traditional Open vSwitch (OVS) "
-"plug-in."
-msgstr ""
-
-#: ./doc/install-guide/ch_networking.xml47(title)
-msgid "Open vSwitch (OVS) plug-in"
-msgstr ""
-
-#: ./doc/install-guide/ch_networking.xml49(para)
-msgid ""
-"We suggest that you implement the Modular Layer 2 (ML2) plug-in on Icehouse "
-"until we completely test the traditional Open vSwitch (OVS) plug-in."
-msgstr ""
-
-#: ./doc/install-guide/ch_networking.xml60(title)
+#: ./doc/install-guide/ch_networking.xml31(title)
 #: ./doc/install-guide/section_basics-networking-nova.xml6(title)
-msgid "Legacy networking"
+msgid "Legacy networking (nova-network)"
 msgstr ""
 
-#: ./doc/install-guide/ch_networking.xml67(para)
+#: ./doc/install-guide/ch_networking.xml38(para)
 msgid ""
 "Your OpenStack environment now includes the core components necessary to "
 "launch a basic instance. You can <link linkend=\"launch-instance\">launch an"
@@ -5478,7 +5382,7 @@ msgstr ""
 #. you.
 #. It doesn't matter what you translate it to: it's not used at all.
 #: ./doc/install-guide/section_basics-networking-nova.xml18(None)
-#: ./doc/install-guide/ch_overview.xml92(None)
+#: ./doc/install-guide/ch_overview.xml147(None)
 msgid ""
 "@@image: 'figures/installguide_arch-nova.png'; "
 "md5=30bd45144ade729234e157430f63b323"
@@ -5486,7 +5390,7 @@ msgstr ""
 
 #: ./doc/install-guide/section_basics-networking-nova.xml7(para)
 msgid ""
-"The example architecture with legacy networking (nova) requires one "
+"The example architecture with legacy networking (nova-network) requires a "
 "controller node and at least one compute node. The controller node contains "
 "one network interface on the <glossterm>management network</glossterm>. The "
 "compute node contains one network interface on the management network and "
@@ -5494,8 +5398,8 @@ msgid ""
 msgstr ""
 
 #: ./doc/install-guide/section_basics-networking-nova.xml14(title)
-#: ./doc/install-guide/ch_overview.xml88(title)
-msgid "Two-node architecture with legacy networking"
+#: ./doc/install-guide/ch_overview.xml143(title)
+msgid "Two-node architecture with legacy networking (nova-network)"
 msgstr ""
 
 #: ./doc/install-guide/section_basics-networking-nova.xml22(para)
@@ -5681,14 +5585,10 @@ msgstr ""
 #. you.
 #. It doesn't matter what you translate it to: it's not used at all.
 #: ./doc/install-guide/section_basics-networking-neutron.xml21(None)
-#: ./doc/install-guide/ch_overview.xml144(None)
+#: ./doc/install-guide/ch_overview.xml98(None)
 msgid ""
 "@@image: 'figures/installguide_arch-neutron.png'; "
 "md5=4c816c5cff6fb744cba492c2ad704992"
-msgstr ""
-
-#: ./doc/install-guide/section_basics-networking-neutron.xml6(title)
-msgid "OpenStack Networking"
 msgstr ""
 
 #: ./doc/install-guide/section_basics-networking-neutron.xml7(para)
@@ -5704,7 +5604,8 @@ msgid ""
 msgstr ""
 
 #: ./doc/install-guide/section_basics-networking-neutron.xml17(title)
-msgid "Three-node architecture with OpenStack Networking"
+#: ./doc/install-guide/ch_overview.xml94(title)
+msgid "Three-node architecture with OpenStack Networking (neutron)"
 msgstr ""
 
 #: ./doc/install-guide/section_basics-networking-neutron.xml74(para)
@@ -6768,7 +6669,7 @@ msgstr ""
 msgid "Basic environment configuration"
 msgstr ""
 
-#: ./doc/install-guide/ch_basics.xml10(para)
+#: ./doc/install-guide/ch_basics.xml6(para)
 msgid ""
 "This chapter explains how to configure each node in the <link linkend"
 "=\"architecture_example-architectures\">example architectures</link> "
@@ -6778,7 +6679,7 @@ msgid ""
 "with OpenStack Networking (neutron)</link>."
 msgstr ""
 
-#: ./doc/install-guide/ch_basics.xml17(para)
+#: ./doc/install-guide/ch_basics.xml13(para)
 msgid ""
 "Although most environments include OpenStack Identity, Image Service, "
 "Compute, at least one networking service, and the dashboard, OpenStack "
@@ -6788,7 +6689,7 @@ msgid ""
 "without at least OpenStack Image Service and Compute."
 msgstr ""
 
-#: ./doc/install-guide/ch_basics.xml26(para)
+#: ./doc/install-guide/ch_basics.xml22(para)
 msgid ""
 "You must use an account with administrative privileges to configure each "
 "node. Either run the commands as the <literal>root</literal> user or "
@@ -6923,22 +6824,22 @@ msgstr ""
 
 #: ./doc/install-guide/section_cinder-node.xml125(replaceable)
 #: ./doc/install-guide/section_cinder-node.xml137(replaceable)
-#: ./doc/install-guide/section_cinder-controller.xml66(replaceable)
-#: ./doc/install-guide/section_cinder-controller.xml87(replaceable)
-#: ./doc/install-guide/section_cinder-controller.xml99(replaceable)
+#: ./doc/install-guide/section_cinder-controller.xml74(replaceable)
+#: ./doc/install-guide/section_cinder-controller.xml95(replaceable)
+#: ./doc/install-guide/section_cinder-controller.xml107(replaceable)
 msgid "CINDER_PASS"
 msgstr ""
 
 #: ./doc/install-guide/section_cinder-node.xml126(para)
-#: ./doc/install-guide/section_cinder-controller.xml88(para)
+#: ./doc/install-guide/section_cinder-controller.xml96(para)
 msgid ""
 "Edit the <filename>/etc/cinder/cinder.conf</filename> configuration file and"
 " add this section for keystone credentials:"
 msgstr ""
 
 #: ./doc/install-guide/section_cinder-node.xml140(para)
-#: ./doc/install-guide/section_cinder-controller.xml102(para)
-#: ./doc/install-guide/section_cinder-controller.xml126(para)
+#: ./doc/install-guide/section_cinder-controller.xml110(para)
+#: ./doc/install-guide/section_cinder-controller.xml134(para)
 msgid "Configure Block Storage to use the RabbitMQ message broker."
 msgstr ""
 
@@ -6951,7 +6852,7 @@ msgid ""
 msgstr ""
 
 #: ./doc/install-guide/section_cinder-node.xml156(para)
-#: ./doc/install-guide/section_cinder-controller.xml118(para)
+#: ./doc/install-guide/section_cinder-controller.xml126(para)
 msgid "Configure Block Storage to use the Qpid message broker:"
 msgstr ""
 
@@ -6973,15 +6874,15 @@ msgstr ""
 
 #: ./doc/install-guide/section_cinder-node.xml183(replaceable)
 #: ./doc/install-guide/section_cinder-node.xml186(replaceable)
-#: ./doc/install-guide/section_cinder-controller.xml36(replaceable)
-#: ./doc/install-guide/section_cinder-controller.xml39(replaceable)
-#: ./doc/install-guide/section_cinder-controller.xml51(replaceable)
-#: ./doc/install-guide/section_cinder-controller.xml53(replaceable)
+#: ./doc/install-guide/section_cinder-controller.xml44(replaceable)
+#: ./doc/install-guide/section_cinder-controller.xml47(replaceable)
+#: ./doc/install-guide/section_cinder-controller.xml59(replaceable)
+#: ./doc/install-guide/section_cinder-controller.xml61(replaceable)
 msgid "CINDER_DBPASS"
 msgstr ""
 
 #: ./doc/install-guide/section_cinder-node.xml188(para)
-#: ./doc/install-guide/section_cinder-controller.xml40(para)
+#: ./doc/install-guide/section_cinder-controller.xml48(para)
 msgid ""
 "In some distributions, the <filename>/etc/cinder/cinder.conf</filename> file"
 " does not include the <literal>[database]</literal> section header. You must"
@@ -6998,7 +6899,7 @@ msgid ""
 msgstr ""
 
 #: ./doc/install-guide/section_cinder-node.xml208(para)
-#: ./doc/install-guide/section_cinder-controller.xml160(para)
+#: ./doc/install-guide/section_cinder-controller.xml168(para)
 msgid "Restart the Block Storage services with the new settings:"
 msgstr ""
 
@@ -7011,7 +6912,7 @@ msgid ""
 msgstr ""
 
 #: ./doc/install-guide/section_cinder-node.xml221(para)
-#: ./doc/install-guide/section_cinder-controller.xml166(para)
+#: ./doc/install-guide/section_cinder-controller.xml174(para)
 msgid ""
 "Start and configure the Block Storage services to start when the system "
 "boots:"
@@ -7052,48 +6953,58 @@ msgstr ""
 
 #: ./doc/install-guide/section_cinder-controller.xml32(para)
 msgid ""
-"In the <filename>/etc/cinder/cinder.conf</filename> file, add this key in "
-"the <literal>[database]</literal> section and replace "
+"Run the following command to set <literal>connection</literal> option in the"
+" <literal>[database]</literal> section, which is in the "
+"<filename>/etc/cinder/cinder.conf</filename> file, replace "
 "<replaceable>CINDER_DBPASS</replaceable> with the password for the Block "
 "Storage database that you will create in a later step:"
 msgstr ""
 
-#: ./doc/install-guide/section_cinder-controller.xml46(para)
+#: ./doc/install-guide/section_cinder-controller.xml38(para)
+msgid ""
+"In the <filename>/etc/cinder/cinder.conf</filename> file, set the "
+"<literal>connection</literal> option in the <literal>[database]</literal> "
+"section and replace <replaceable>CINDER_DBPASS</replaceable> with the "
+"password for the Block Storage database that you will create in a later "
+"step:"
+msgstr ""
+
+#: ./doc/install-guide/section_cinder-controller.xml54(para)
 msgid ""
 "Use the password that you set to log in as root to create a "
 "<literal>cinder</literal> database:"
 msgstr ""
 
-#: ./doc/install-guide/section_cinder-controller.xml56(para)
+#: ./doc/install-guide/section_cinder-controller.xml64(para)
 msgid "Create the database tables for the Block Storage service:"
 msgstr ""
 
-#: ./doc/install-guide/section_cinder-controller.xml61(para)
+#: ./doc/install-guide/section_cinder-controller.xml69(para)
 msgid "Create a <literal>cinder</literal> user."
 msgstr ""
 
-#: ./doc/install-guide/section_cinder-controller.xml62(para)
+#: ./doc/install-guide/section_cinder-controller.xml70(para)
 msgid ""
 "The Block Storage service uses this user to authenticate with the Identity "
 "service."
 msgstr ""
 
-#: ./doc/install-guide/section_cinder-controller.xml64(para)
+#: ./doc/install-guide/section_cinder-controller.xml72(para)
 msgid ""
 "Use the <literal>service</literal> tenant and give the user the "
 "<literal>admin</literal> role:"
 msgstr ""
 
-#: ./doc/install-guide/section_cinder-controller.xml66(replaceable)
+#: ./doc/install-guide/section_cinder-controller.xml74(replaceable)
 msgid "cinder@example.com"
 msgstr ""
 
-#: ./doc/install-guide/section_cinder-controller.xml70(para)
+#: ./doc/install-guide/section_cinder-controller.xml78(para)
 msgid ""
 "Edit the <filename>/etc/cinder/cinder.conf</filename> configuration file:"
 msgstr ""
 
-#: ./doc/install-guide/section_cinder-controller.xml104(para)
+#: ./doc/install-guide/section_cinder-controller.xml112(para)
 msgid ""
 "In the <literal>[DEFAULT]</literal> section in the "
 "<filename>/etc/cinder/cinder.conf</filename> file, set these configuration "
@@ -7101,19 +7012,19 @@ msgid ""
 "you chose for RabbitMQ:"
 msgstr ""
 
-#: ./doc/install-guide/section_cinder-controller.xml128(para)
+#: ./doc/install-guide/section_cinder-controller.xml136(para)
 msgid ""
 "Replace <replaceable>RABBIT_PASS</replaceable> with the password you chose "
 "for RabbitMQ:"
 msgstr ""
 
-#: ./doc/install-guide/section_cinder-controller.xml140(para)
+#: ./doc/install-guide/section_cinder-controller.xml148(para)
 msgid ""
 "Register the Block Storage service with the Identity service so that other "
 "OpenStack services can locate it:"
 msgstr ""
 
-#: ./doc/install-guide/section_cinder-controller.xml150(para)
+#: ./doc/install-guide/section_cinder-controller.xml158(para)
 msgid ""
 "Register a service and endpoint for version 2 of the Block Storage service "
 "API:"
@@ -7183,10 +7094,10 @@ msgid ""
 "The OpenStack® system consists of several key projects that you install "
 "separately but that work together depending on your cloud needs. These "
 "projects include Compute, Identity Service, Networking, Image Service, Block"
-" Storage, Object Storage, Telemetry, and Orchestration. You can install any "
-"of these projects separately and configure them stand-alone or as connected "
-"entities. <phrase os=\"debian\">This guide walks through an installation by "
-"using packages available through Debian 7.0 (code name: "
+" Storage, Object Storage, Telemetry, Orchestration, and Database. You can "
+"install any of these projects separately and configure them stand-alone or "
+"as connected entities. <phrase os=\"debian\">This guide walks through an "
+"installation by using packages available through Debian 7.0 (code name: "
 "Wheezy).</phrase><phrase os=\"ubuntu\">This guide walks through an "
 "installation by using packages available through Ubuntu 12.04 (LTS) or 14.04"
 " (LTS).</phrase><phrase os=\"rhel;centos;fedora\">This guide shows you how "
@@ -7293,8 +7204,8 @@ msgstr ""
 #: ./doc/install-guide/section_neutron-ml2-network-node.xml11(para)
 #: ./doc/install-guide/section_neutron-ml2-compute-node.xml11(para)
 msgid ""
-"Before you configure Networking, you must enable certain kernel networking "
-"functions."
+"Before you configure OpenStack Networking, you must enable certain kernel "
+"networking functions."
 msgstr ""
 
 #: ./doc/install-guide/section_neutron-ml2-network-node.xml14(para)
@@ -7710,21 +7621,21 @@ msgstr ""
 
 #: ./doc/install-guide/ch_overview.xml49(para)
 msgid ""
-"Two-node architecture with legacy networking. See <xref linkend=\"example-"
-"architecture-with-legacy-networking\"/>."
+"Three-node architecture with OpenStack Networking (neutron). See <xref "
+"linkend=\"example-architecture-with-neutron-networking\"/>."
 msgstr ""
 
 #: ./doc/install-guide/ch_overview.xml52(para)
 msgid ""
-"The basic <glossterm baseform=\"cloud controller node\">controller "
-"node</glossterm> runs the Identity service, Image Service, management "
-"portion of Compute, and the dashboard necessary to launch a simple instance."
-" It also includes supporting services such as MySQL, "
-"<glossterm>AMQP</glossterm>, and <glossterm>NTP</glossterm>."
+"The basic controller node runs the Identity service, Image Service, "
+"management portions of Compute and Networking, Networking plug-in, and the "
+"dashboard. It also includes supporting services such as a database, "
+"<glossterm>message broker</glossterm>, and <glossterm>Network Time Protocol "
+"(NTP)</glossterm>."
 msgstr ""
 
 #: ./doc/install-guide/ch_overview.xml59(para)
-#: ./doc/install-guide/ch_overview.xml105(para)
+#: ./doc/install-guide/ch_overview.xml114(para)
 msgid ""
 "Optionally, the controller node also runs portions of Block Storage, Object "
 "Storage, Database Service, Orchestration, and Telemetry. These components "
@@ -7732,6 +7643,56 @@ msgid ""
 msgstr ""
 
 #: ./doc/install-guide/ch_overview.xml65(para)
+msgid ""
+"The network node runs the Networking plug-in, layer 2 agent, and several "
+"layer 3 agents that provision and operate tenant networks. Layer 2 services "
+"include provisioning of virtual networks and tunnels. Layer 3 services "
+"include routing, <glossterm baseform=\"Network Address Translation "
+"(NAT)\">NAT</glossterm> , and <glossterm>DHCP</glossterm>. This node also "
+"handles external (internet) connectivity for tenant virtual machines or "
+"instances."
+msgstr ""
+
+#: ./doc/install-guide/ch_overview.xml75(para)
+msgid ""
+"The compute node runs the hypervisor portion of Compute, which operates "
+"tenant virtual machines or instances. By default Compute uses KVM as the "
+"hypervisor. The compute node also runs the Networking plug-in and layer 2 "
+"agent which operate tenant networks and implement security groups. You can "
+"run more than one compute node."
+msgstr ""
+
+#: ./doc/install-guide/ch_overview.xml81(para)
+#: ./doc/install-guide/ch_overview.xml130(para)
+msgid ""
+"Optionally, the compute node also runs the Telemetry agent. This component "
+"provides additional features for your environment."
+msgstr ""
+
+#: ./doc/install-guide/ch_overview.xml87(para)
+msgid ""
+"When you implement this architecture, skip <xref linkend=\"section_nova-"
+"networking\"/> in <xref linkend=\"ch_networking\"/>. To use optional "
+"services, you might need to install additional nodes, as described in "
+"subsequent chapters."
+msgstr ""
+
+#: ./doc/install-guide/ch_overview.xml104(para)
+msgid ""
+"Two-node architecture with legacy networking (nova-network). See <xref "
+"linkend=\"example-architecture-with-legacy-networking\"/>."
+msgstr ""
+
+#: ./doc/install-guide/ch_overview.xml108(para)
+msgid ""
+"The basic <glossterm baseform=\"cloud controller node\">controller "
+"node</glossterm> runs the Identity service, Image Service, management "
+"portion of Compute, and the dashboard necessary to launch a simple instance."
+" It also includes supporting services such as a database, message broker, "
+"and NTP."
+msgstr ""
+
+#: ./doc/install-guide/ch_overview.xml120(para)
 msgid ""
 "The basic <glossterm>compute node</glossterm> runs the "
 "<glossterm>hypervisor</glossterm> portion of Compute, which operates "
@@ -7743,65 +7704,12 @@ msgid ""
 "group\">security groups</glossterm>. You can run more than one compute node."
 msgstr ""
 
-#: ./doc/install-guide/ch_overview.xml75(para)
-#: ./doc/install-guide/ch_overview.xml127(para)
-msgid ""
-"Optionally, the compute node also runs the Telemetry agent. This component "
-"provides additional features for your environment."
-msgstr ""
-
-#: ./doc/install-guide/ch_overview.xml81(para)
+#: ./doc/install-guide/ch_overview.xml136(para)
 msgid ""
 "When you implement this architecture, skip <xref linkend=\"section_neutron-"
 "networking\"/> in <xref linkend=\"ch_networking\"/>. To use optional "
 "services, you might need to install additional nodes, as described in "
 "subsequent chapters."
-msgstr ""
-
-#: ./doc/install-guide/ch_overview.xml98(para)
-msgid ""
-"Three-node architecture with OpenStack Networking (neutron). See <xref "
-"linkend=\"example-architecture-with-neutron-networking\"/>."
-msgstr ""
-
-#: ./doc/install-guide/ch_overview.xml101(para)
-msgid ""
-"The basic controller node runs the Identity service, Image Service, "
-"management portions of Compute and Networking, Networking plug-in, and the "
-"dashboard. It also includes supporting services such as MySQL, AMQP, and "
-"NTP."
-msgstr ""
-
-#: ./doc/install-guide/ch_overview.xml111(para)
-msgid ""
-"The network node runs the Networking plug-in, layer 2 agent, and several "
-"layer 3 agents that provision and operate tenant networks. Layer 2 services "
-"include provisioning of virtual networks and tunnels. Layer 3 services "
-"include routing, <glossterm baseform=\"Network Address Translation "
-"(NAT)\">NAT</glossterm> , and <glossterm>DHCP</glossterm>. This node also "
-"handles external (internet) connectivity for tenant virtual machines or "
-"instances."
-msgstr ""
-
-#: ./doc/install-guide/ch_overview.xml121(para)
-msgid ""
-"The compute node runs the hypervisor portion of Compute, which operates "
-"tenant virtual machines or instances. By default Compute uses KVM as the "
-"hypervisor. The compute node also runs the Networking plug-in and layer 2 "
-"agent which operate tenant networks and implement security groups. You can "
-"run more than one compute node."
-msgstr ""
-
-#: ./doc/install-guide/ch_overview.xml133(para)
-msgid ""
-"When you implement this architecture, skip <xref linkend=\"section_nova-"
-"networking\"/> in <xref linkend=\"ch_networking\"/>. To use optional "
-"services, you might need to install additional nodes, as described in "
-"subsequent chapters."
-msgstr ""
-
-#: ./doc/install-guide/ch_overview.xml140(title)
-msgid "Three-node architecture with OpenStack Networking (neutron)"
 msgstr ""
 
 #: ./doc/install-guide/section_dashboard-install.xml13(title)
@@ -8567,7 +8475,7 @@ msgstr ""
 
 #: ./doc/install-guide/section_nova-compute.xml36(para)
 msgid ""
-"If you run legacy networking (nova-compute), do not configure "
+"If you run legacy networking (nova-network), do not configure "
 "<literal>eth1</literal> with a static IP address. The networking component "
 "of OpenStack assigns and configures an IP address. For details, see the "
 "instructions in <xref linkend=\"basics-networking-node-compute-node\"/>."
@@ -8614,7 +8522,7 @@ msgstr ""
 #: ./doc/install-guide/section_nova-compute.xml78(para)
 msgid ""
 "To use the meta-packages and install other components on your compute node, "
-"such as OVS Networking and Ceilometer agents, run this command:"
+"such as OpenStack Networking and Ceilometer agents, run this command:"
 msgstr ""
 
 #: ./doc/install-guide/section_nova-compute.xml82(para)
