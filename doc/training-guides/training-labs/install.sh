@@ -1,23 +1,22 @@
 #!/bin/bash
 #
-# About:Setup Dependences for Virtual Box Sandbox
-#       meant for OpenStack Labs.
+# About: Set up dependencies for VirtualBox sandbox meant for OpenStack Labs.
 #
 # Contact: pranav@aptira.com
-# Copyright : Aptira @aptira,aptira.com
+# Copyright: Aptira @aptira,aptira.com
 # License: Apache Software License (ASL) 2.0
 ###############################################################################
 #                                                                             #
-# This Script will ask the user for type of OpenStack install...              #
-# and it will configure the VM 				                    		      #
+# This script will ask the user for the type of OpenStack install and it will #
+# configure the VM                                                            #
 #                                                                             #
 ###############################################################################
 
-# Check for kvm-ok >> Virtual Box >>
+# Check for kvm-ok >> VirtualBox >>
 
-# Colors and Decorations (Ignore)
+# Colors and decorations (ignore)
 
-RCol='\e[0m'    # Text Reset
+RCol='\e[0m'    # Text reset
 
 #Regular            #Bold               #Underline          #High Intensity     #BoldHigh Intens    #Background         #High Intensity Backgrounds
 
@@ -34,14 +33,14 @@ echo -e "${On_Bla}"
 
 echo -e "
 ${IWhi}##################################################
-  ${BIRed}Note: ${BIblu}You need internet for this script to run
+  ${BIRed}Note: ${BIblu}You need Internet access for this script to run
 ${IWhi}##################################################"
 
 echo -e "${IYel}"
 echo -e "${RCol}"
 
 end(){
-    echo -e "${BBlu}Program Terminating"
+    echo -e "${BBlu}Program terminating"
     echo -e "${RCol}"
     exit
 }
@@ -51,10 +50,10 @@ check (){
         echo -e "${BBlu}... $1 Success ..."
     else
         if [$2 -eq 1 ]; then
-            echo -e "${BIRed}Failed Terminating"
+            echo -e "${BIRed}Failed. Terminating"
             end
         else
-            echo -e "${BIRed}$2 Failed !!! Please Recheck"
+            echo -e "${BIRed}$2 Failed! Please recheck"
             end
         fi
     fi
@@ -65,7 +64,7 @@ read single_node_install
 
 if [ "$single_node_install" == "Y" -o "$single_node_install" == "y" ]; then
 
-    echo "Configuring VirtualBox VM's for Single Node Deployment"
+    echo "Configuring VirtualBox VMs for single node deployment"
     ./singlenode.sh
 
 else
@@ -75,7 +74,7 @@ else
 
     if [ "$multi_node_install" == "Y" -o "$multi_node_install" == "y" ]; then
 
-        echo "Configuring VirtualBox VM's for Multi Node Deployment"
+        echo "Configuring VirtualBox VMs for multi node deployment"
         ./multinode.sh
     fi
 fi

@@ -1,60 +1,60 @@
 #!/bin/bash
 #
-# This script is for testing Scripts inside this folder.
+# This script is for testing scripts inside this folder.
 #
 # Contact: pranav@aptira.com
-# Copyright : Aptira @aptira,aptira.com
+# Copyright: Aptira @aptira,aptira.com
 # License: Apache Software License (ASL) 2.0
 ###############################################################################
 #                                                                             #
-# Testing the Scripts				                                          #
+# Testing the scripts                                                         #
 #                                                                             #
 ###############################################################################
 
-# Ignore the above content its for decorations
 source Keystone/Scripts/Credentials.sh
-echo -e "
-    Run this script from inside your Virtual Machine or test machine
-    this script is meant for testing the Scripts related to OpenStack and
-    not related to Virtual Box.
+echo "
+    Run this script from inside your virtual machine or test machine.
+    This script is meant for testing the scripts related to OpenStack and
+    not related to VirtualBox.
 
-    The sole aim of this script is to test all of the given OpenStack Scripts
-    present in the sub folder which deploys OpenStack as it is very important
-    that thee scripts install and configure OpenStack properly with a touch
-    of reliability otherwise one mite as well use DevStack ;).
+    The sole aim of this script is to test all of the OpenStack scripts
+    present in the sub folder which deploys OpenStack, as it is very important
+    that the scripts install and configure OpenStack properly with a touch
+    of reliability otherwise one might as well use DevStack ;).
     "
 
-echo -e "Warning!!! This may break your Operating System."
+echo "Warning!!! This may break your operating system."
 
-echo -e "Do you want to continue(y/N)?"
+echo -n "Do you want to continue (y/N)? "
 read cont
 
 if [ "$cont" == "Y" -o "$cont" == "y" ]; then
 
     # Missing Exception Handlers :((, would have been very handy here
-    echo "You Pressed Yes."
-    echo -e "Testing PreInstall"
+    echo "You pressed Yes."
+    echo "Testing PreInstall.sh"
     bash PreInstall/PreInstall.sh "single-node" > Logs/PreInstall.log
 
-    echo -e "Testing Keystone"
+    echo "Testing Keystone.sh"
     bash Keystone/Keystone.sh > Logs/Keystone.log
 
-    echo -e "Testing Glance"
+    echo "Testing Glance.sh"
     bash Glance/Glance.sh > Logs/Glance.log
 
-    echo -e "Testing Cinder"
+    echo "Testing Cinder.sh"
     bash Cinder/Cinder.sh > Logs/Cinder.log
 
-    echo -e "Testing Neutron"
+    echo "Testing Neutron.sh"
     bash Neutron/Neutron.sh > Logs/Neutron.log
 
-    echo -e "Testing Nova"
+    echo "Testing Nova.sh"
     bash Nova/Nova.sh > Logs/Nova.log
 
-    echo -e "Testing Horizon"
+    echo "Testing Horizon.sh"
     bash Horizon/Horizon.sh > Logs/Horizon.log
 
-    echo -e "Testing PostInstall"
+    echo "Testing PostInstall.sh"
     bash PostInstall/PostInstall.sh > Logs/PostInstall.log
 fi
-echo -e "Mostly the tests run fine ... although Im not sure !!! Please Read the Terminal Messages Carefully."
+echo "Mostly the tests run fine ... although I'm not sure."
+echo "Please read the terminal messages carefully."

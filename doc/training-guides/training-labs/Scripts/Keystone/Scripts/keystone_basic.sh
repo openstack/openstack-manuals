@@ -1,15 +1,13 @@
 #!/bin/bash
 #
-# About:Setup Dependences for Virtual Box Sandbox
-#       meant for OpenStack Labs.
+# About: Set up dependencies for VirtualBox sandbox meant for OpenStack Labs.
 #
 # Contact: pranav@aptira.com
 # License: Apache Software License (ASL) 2.0
 # Inspired by https://github.com/mseknibilel/OpenStack-Grizzly-Install-Guide
 ###############################################################################
 #                                                                             #
-# This Script will pupolate database and configure keystone related packages  #
-# and after installaion, itbase.                                              #
+# This script adds users and grants them roles                                #
 #                                                                             #
 ###############################################################################
 
@@ -38,12 +36,12 @@ ADMIN_ROLE=$(get_id keystone role-create --name=admin)
 KEYSTONEADMIN_ROLE=$(get_id keystone role-create --name=KeystoneAdmin)
 KEYSTONESERVICE_ROLE=$(get_id keystone role-create --name=KeystoneServiceAdmin)
 
-# Add Roles to Users in Tenants
+# Add roles to users in tenants
 keystone user-role-add --user-id $ADMIN_USER --role-id $ADMIN_ROLE --tenant-id $ADMIN_TENANT
 keystone user-role-add --user-id $ADMIN_USER --role-id $KEYSTONEADMIN_ROLE --tenant-id $ADMIN_TENANT
 keystone user-role-add --user-id $ADMIN_USER --role-id $KEYSTONESERVICE_ROLE --tenant-id $ADMIN_TENANT
 
-# The Member role is used by Horizon and Swift
+# The member role is used by horizon and swift
 MEMBER_ROLE=$(get_id keystone role-create --name=Member)
 
 # Configure service users/roles

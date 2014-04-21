@@ -1,15 +1,13 @@
 #!/bin/bash
 #
-# About:Setup Dependences for Virtual Box Sandbox
-#       meant for OpenStack Labs.
+# About: Set up dependencies for VirtualBox sandbox meant for OpenStack Labs.
 #
 # Contact: pranav@aptira.com
 # License: Apache Software License (ASL) 2.0
 # Inspired by https://github.com/mseknibilel/OpenStack-Grizzly-Install-Guide
 ###############################################################################
 #                                                                             #
-# This Script will pupolate database and configure keystone related packages  #
-# and after installaion, itbase.                                              #
+# This script creates keystone services and endpoints                         #
 #                                                                             #
 ###############################################################################
 

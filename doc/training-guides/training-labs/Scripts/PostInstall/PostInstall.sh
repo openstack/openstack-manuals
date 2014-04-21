@@ -1,56 +1,54 @@
-#!/bin/sh
+#!/bin/bash
 #
-# About:Setup Dependences for Virtual Box Sandbox
-#       meant for OpenStack Labs.
+# About: Set up dependencies for VirtualBox sandbox meant for OpenStack Labs.
 #
 # Contact: pranav@aptira.com
-# Copyright : Aptira @aptira,aptira.com
+# Copyright: Aptira @aptira,aptira.com
 # License: Apache Software License (ASL) 2.0
-#################################################################################
-#                                                                               #
-# This Script will carry out few tasks after installing OpenStack.		        #
-#                                                                               #
-#################################################################################
+################################################################################
+#                                                                              #
+# This script will carry out few tasks after installing OpenStack.             #
+#                                                                              #
+################################################################################
 SCRIPT_DIR=$(cd $(dirname "$0") && pwd)
 
-# Create Tenant
+# Create tenant
 keystone tenant-create --name Os_Training
 
-echo "Enter Tenant ID"
-read Tenant_ID
+echo -n "Enter tenant id: "
+read TENANT_ID
 
-#Create User and assign required role
-keystone user-create --name=trainee --pass=cloud --tenant-id $Tenant_ID --email=user_one@domain.com
-echo "Enter User ID"
-read User_ID
+# Create user and assign required role
+keystone user-create --name=trainee --pass=cloud --tenant-id $TENANT_ID --email=user_one@domain.com
+echo -n "Enter user id: "
+read USER_ID
 keystone role-list
-echo "Enter Role ID"
-read Role_ID
-keystone user-role-add --tenant-id $Tenant_ID  --user-id $User_ID --role-id $Role_ID
+echo -n "Enter role id: "
+read ROLE_ID
+keystone user-role-add --tenant-id $TENANT_ID  --user-id $USER_ID --role-id $ROLE_ID
 
-# Create Networks
-quantum net-create --tenant-id $Tenant_ID training_network
+# Create network
+quantum net-create --tenant-id $TENANT_ID training_network
 
-# Add Subnet
-quantum subnet-create --tenant-id $Tenant_ID training_network 25.25.25.0/24
-echo "Enter Subnet ID"
-read Subnet_ID
+# Add subnet
+quantum subnet-create --tenant-id $TENANT_ID training_network 25.25.25.0/24
+echo -n "Enter subnet id: "
+read SUBNET_ID
 
-# Create Router
-quantum router-create --tenant-id $Tenant_ID training_router
-echo "Enter Router ID"
-read training_router
+# Create router
+quantum router-create --tenant-id $TENANT_ID training_router
+echo -n "Enter router id: "
+read ROUTER_ID
 
-# Add Router to L3 Agent
+# Add router to L3 agent
 quantum agent-list # to get the l3 agent ID
-echo "Enter L3 agent ID"
-read l3_agent_ID
-quantum l3-agent-router-add $l3_agent_ID $training_router
+echo -n "Enter L3 agent id: "
+read L3_AGENT_ID
+quantum l3-agent-router-add $L3_AGENT_ID $ROUTER_ID
 
-# Add Router To Subnet
-quantum router-interface-add $training_router $Subnet_ID
+# Add router to subnet
+quantum router-interface-add $ROUTER_ID $SUBNET_ID
 
-
-echo "For Logging into your Cloud Via. Dashboard, use the following Credentials :"
-echo "User Name: trainee"
+echo "For logging into your cloud via Dashboard, use the following credentials:"
+echo "User name: trainee"
 echo "Password: cloud"

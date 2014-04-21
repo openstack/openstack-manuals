@@ -1,30 +1,29 @@
 #!/bin/sh
 #
-# About:Setup Dependences for Virtual Box Sandbox
-#       meant for OpenStack Labs.
+# About: Set up dependencies for VirtualBox sandbox meant for OpenStack Labs.
 #
 # Contact: pranav@aptira.com
-# Copyright : Aptira @aptira,aptira.com
+# Copyright: Aptira @aptira,aptira.com
 # License: Apache Software License (ASL) 2.0
 ###############################################################################
 #                                                                             #
-# This Script will install Horizon related packages.                          #
+# This script will install Horizon related packages.                          #
 #                                                                             #
 ###############################################################################
 
-# Note: You DoNot Need Internet for this due to the magic of --download-only
+# Note: No Internet access required -- packages downloaded by PreInstall.sh
 echo "Internet connection is not required for this script to run"
 SCRIPT_DIR=$(cd $(dirname "$0") && pwd)
 
-Install_Horizon() {
+install_horizon() {
 
     # 1. Install Horizon
     apt-get install -y openstack-dashboard memcached
 
-    # 2. Restart Apache2 and Memcached
+    # 2. Restart apache2 and memcached
     service apache2 restart
     service memcached restart
 
-    echo " You are done with OpenStack Installation "
+    echo " You are done with the OpenStack installation "
 }
-Install_Horizon
+install_horizon
