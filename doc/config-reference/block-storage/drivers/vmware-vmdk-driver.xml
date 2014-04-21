@@ -6,40 +6,39 @@
     <title>VMware VMDK driver</title>
     <para>Use the VMware VMDK driver to enable management of the
         OpenStack Block Storage volumes on vCenter-managed data
-        stores. Volumes are backed by VMDK files on data stores using
-        any VMware-compatible storage technology such as NFS, iSCSI,
-        FiberChannel, and vSAN.</para>
+        stores. Volumes are backed by VMDK files on data stores that
+        use any VMware-compatible storage technology such as NFS,
+        iSCSI, FiberChannel, and vSAN.</para>
     <warning>
-       <para>
-         The VMware ESX VMDK driver is deprecated as of the Icehouse release
-         and may be removed in Juno or a subsequent release. The VMware
-         vCenter VMDK driver continues to be fully supported.
-       </para>
+        <para>The VMware ESX VMDK driver is deprecated as of the
+            Icehouse release and might be removed in Juno or a
+            subsequent release. The VMware vCenter VMDK driver
+            continues to be fully supported.</para>
     </warning>
-    <simplesect>
+    <section xml:id="vmdk_functional_context">
         <title>Functional context</title>
         <para>The VMware VMDK driver connects to vCenter, through
-            which it can dynamically access all the datastores visible
-            from the ESX hosts in the managed cluster.</para>
+            which it can dynamically access all the data stores
+            visible from the ESX hosts in the managed cluster.</para>
         <para>When you create a volume, the VMDK driver creates a VMDK
-            file on demand. The creation of this VMDK file is
-            completed only when the volume is subsequently attached to
-            an instance, because the set of datastores visible to the
-            instance determines where to place the volume.</para>
-        <para>The running vSphere VM is then automatically
-            reconfigured to attach the VMDK file as an extra disk.
-            Once attached, you can log in to the running vSphere VM to
-            rescan and discover this extra disk.</para>
-    </simplesect>
-    <simplesect>
+            file on demand. The VMDK file creation completes only when
+            the volume is subsequently attached to an instance,
+            because the set of data stores visible to the instance
+            determines where to place the volume.</para>
+        <para>The running vSphere VM is automatically reconfigured to
+            attach the VMDK file as an extra disk. Once attached, you
+            can log in to the running vSphere VM to rescan and
+            discover this extra disk.</para>
+    </section>
+    <section xml:id="vmdk_configuration">
         <title>Configuration</title>
-        <para>The recommended volume driver for OpenStack Block Storage is
-            the VMware vCenter VMDK driver. When you configure the
-            driver, you must match it with the appropriate OpenStack
-            Compute driver from VMware and both drivers must point to
-            the same server.</para>
-        <para>For example, in the <filename>nova.conf</filename> file,
-            use this option to define the Compute driver:</para>
+        <para>The recommended volume driver for OpenStack Block
+            Storage is the VMware vCenter VMDK driver. When you
+            configure the driver, you must match it with the
+            appropriate OpenStack Compute driver from VMware and both
+            drivers must point to the same server.</para>
+        <para>In the <filename>nova.conf</filename> file, use this
+            option to define the Compute driver:</para>
         <programlisting>compute_driver=vmwareapi.VMwareVCDriver</programlisting>
         <para>In the <filename>cinder.conf</filename> file, use this
             option to define the volume driver:</para>
@@ -48,15 +47,16 @@
             drivers support for the OpenStack Block Storage
             configuration (<filename>cinder.conf</filename>):</para>
         <xi:include href="../../../common/tables/cinder-vmware.xml"/>
-    </simplesect>
-    <simplesect>
+    </section>
+    <section xml:id="vmdk_disk_type">
         <title>VMDK disk type</title>
         <para>The VMware VMDK drivers support the creation of VMDK
-            disk files of type <literal>thin</literal>, <literal>thick</literal>,
-            or <literal>eagerZeroedThick</literal>. Use the
-            <code>vmware:vmdk_type</code> extra spec key with the
-            appropriate value to specify the VMDK disk file type.
-            The following table captures the mapping between the extra
+            disk files of type <literal>thin</literal>,
+                <literal>thick</literal>, or
+                <literal>eagerZeroedThick</literal>. Use the
+                <code>vmware:vmdk_type</code> extra spec key with the
+            appropriate value to specify the VMDK disk file type. The
+            following table captures the mapping between the extra
             spec entry and the VMDK disk file type:</para>
         <table rules="all">
             <caption>Extra spec entry to VMDK disk file type
@@ -86,28 +86,25 @@
                 </tr>
             </tbody>
         </table>
-        <para>If no <code>vmdk_type</code> extra spec entry is
-            specified, the default disk file type is
+        <para>If you do not specify a <code>vmdk_type</code> extra
+            spec entry, the default disk file type is
                 <literal>thin</literal>.</para>
-        <para>The example below shows how to create a
-                <code>thick</code> VMDK volume using the appropriate
-                <code>vmdk_type</code>:</para>
-        <screen>
-        <prompt>$</prompt> <userinput>cinder type-create thick_volume</userinput>
-        <prompt>$</prompt> <userinput>cinder type-key thick_volume set vmware:vmdk_type=thick</userinput>
-        <prompt>$</prompt> <userinput>cinder create --volume-type thick_volume --display-name volume1 1</userinput>
-</screen>
-    </simplesect>
-    <simplesect>
+        <para>The following example shows how to create a
+                <code>thick</code> VMDK volume by using the
+            appropriate <code>vmdk_type</code>:</para>
+        <screen><prompt>$</prompt> <userinput>cinder type-create thick_volume</userinput>
+<prompt>$</prompt> <userinput>cinder type-key thick_volume set vmware:vmdk_type=thick</userinput>
+<prompt>$</prompt> <userinput>cinder create --volume-type thick_volume --display-name volume1 1</userinput></screen>
+    </section>
+    <section xml:id="vmdk_clone_type">
         <title>Clone type</title>
         <para>With the VMware VMDK drivers, you can create a volume
-            from another source volume or from a snapshot point. The
-            VMware vCenter VMDK driver supports clone types
-                <literal>full</literal> and
-                <literal>linked/fast</literal>. The clone type is
-            specified using the <code>vmware:clone_type</code> extra
-            spec key with the appropriate value. The following table
-            captures the mapping for clone types:</para>
+            from another source volume or a snapshot point. The VMware
+            vCenter VMDK driver supports the <literal>full</literal>
+            and <literal>linked/fast</literal> clone types. Use the
+                <code>vmware:clone_type</code> extra spec key to
+            specify the clone type. The following table captures the
+            mapping for clone types:</para>
         <table rules="all">
             <caption>Extra spec entry to clone type mapping</caption>
             <thead>
@@ -130,23 +127,109 @@
                 </tr>
             </tbody>
         </table>
-        <para>If not specified, the default clone type is
+        <para>If you do not specify the clone type, the default is
                 <literal>full</literal>.</para>
-        <para>The following is an example of linked cloning from
-            another source volume:</para>
-        <screen>
-        <prompt>$</prompt> <userinput>cinder type-create fast_clone</userinput>
-        <prompt>$</prompt> <userinput>cinder type-key fast_clone set vmware:clone_type=linked</userinput>
-        <prompt>$</prompt> <userinput>cinder create --volume-type fast_clone --source-volid 25743b9d-3605-462b-b9eb-71459fe2bb35 --display-name volume1 1</userinput>
-</screen>
-        <para>Note: The VMware ESX VMDK driver ignores the extra spec
-            entry and always creates a <literal>full</literal>
-            clone.</para>
-    </simplesect>
-    <simplesect>
+        <para>The following example shows linked cloning from another
+            source volume:</para>
+        <screen><prompt>$</prompt> <userinput>cinder type-create fast_clone</userinput>
+<prompt>$</prompt> <userinput>cinder type-key fast_clone set vmware:clone_type=linked</userinput>
+<prompt>$</prompt> <userinput>cinder create --volume-type fast_clone --source-volid 25743b9d-3605-462b-b9eb-71459fe2bb35 --display-name volume1 1</userinput></screen>
+        <note>
+            <para>The VMware ESX VMDK driver ignores the extra spec
+                entry and always creates a <literal>full</literal>
+                clone.</para>
+        </note>
+    </section>
+    <section xml:id="vcenter_storage_policies">
+        <title>Use vCenter storage policies to specify back-end data
+            stores</title>
+        <?dbhtml stop-chunking?>
+        <para>This section describes how to configure back-end data
+            stores using storage policies. In vCenter, you can create
+            one or more storage policies and expose them as a Block
+            Storage volume-type to a vmdk volume. The storage policies
+            are exposed to the vmdk driver through the extra spec
+            property with the
+                <literal>vmware:storage_profile</literal> key.</para>
+        <para>For example, assume a storage policy in vCenter named
+                <literal>gold_policy.</literal> and a Block Storage
+            volume type named <literal>vol1</literal> with the extra
+            spec key <literal>vmware:storage_profile</literal> set to
+            the value <literal>gold_policy</literal>. Any Block
+            Storage volume creation that uses the
+                <literal>vol1</literal> volume type places the volume
+            only in data stores that match the
+                <literal>gold_policy</literal> storage policy.</para>
+        <para>The Block Storage back-end configuration for vSphere
+            data stores is automatically determined based on the
+            vCenter configuration. If you configure a connection to
+            connect to vCenter version 5.5 or later in the
+                <filename>cinder.conf</filename> file, the use of
+            storage policies to configure back-end data stores is
+            automatically supported.</para>
+        <note>
+            <para>You must configure any data stores that you
+                configure for the Block Storage service for the
+                Compute service.</para>
+        </note>
+        <procedure>
+            <title>To configure back-end data stores by using storage
+                policies</title>
+            <step>
+                <para>In vCenter, tag the data stores to be used for
+                    the back end.</para>
+                <para>OpenStack also supports policies that are
+                    created by using vendor-specific capabilities; for
+                    example vSAN-specific storage policies.</para>
+                <note>
+                    <para>The tag value serves as the policy. For
+                        details, see <xref linkend="vmware-spbm"
+                        />.</para>
+                </note>
+            </step>
+            <step>
+                <para>Set the extra spec key
+                        <literal>vmware:storage_profile</literal> in
+                    the desired Block Storage volume types to the
+                    policy name that you created in the previous
+                    step.</para>
+            </step>
+            <step>
+                <para>Optionally, for the
+                        <parameter>vmware_host_version</parameter>
+                    parameter, enter the version number of your
+                    vSphere platform. For example,
+                        <userinput>5.5</userinput>.</para>
+                <para>This setting overrides the default location for
+                    the corresponding WSDL file. Among other
+                    scenarios, you can use this setting to prevent
+                    WSDL error messages during the development phase
+                    or to work with a newer version of vCenter.</para>
+            </step>
+            <step>
+                <para>Complete the other vCenter configuration
+                    parameters as appropriate.</para>
+            </step>
+        </procedure>
+        <note>
+            <para>The following considerations apply to configuring
+                SPBM for the Block Storage service:</para>
+            <itemizedlist>
+                <listitem>
+                    <para>Any volume that is created without an
+                        associated policy (that is to say, without an
+                        associated volume type that specifies
+                            <literal>vmware:storage_profile</literal>
+                        extra spec), there is no policy-based
+                        placement for that volume.</para>
+                </listitem>
+            </itemizedlist>
+        </note>
+    </section>
+    <section xml:id="vmdk_supported_operations">
         <title>Supported operations</title>
-        <para>The following operations are supported by the VMware
-            vCenter and ESX VMDK drivers:</para>
+        <para>The VMware vCenter and ESX VMDK drivers support these
+            operations:</para>
         <itemizedlist>
             <listitem>
                 <para>Create volume</para>
@@ -189,17 +272,101 @@
             <para>Although the VMware ESX VMDK driver supports these
                 operations, it has not been extensively tested.</para>
         </note>
-    </simplesect>
-    <simplesect>
+    </section>
+
+    <section xml:id="vmware-spbm">
+        <title>Storage policy-based configuration in vCenter</title>
+        <para>You can configure Storage Policy-Based Management (SPBM)
+            profiles for vCenter data stores supporting the Compute,
+            Image Service, and Block Storage components of an OpenStack
+            implementation.</para>
+        <para>In a vSphere OpenStack deployment, SPBM enables you to
+            delegate several data stores for storage, which reduces
+            the risk of running out of storage space. The policy logic
+            selects the data store based on accessibility and
+            available storage space.</para>
+    </section>
+    <section xml:id="vmdk_prereqs">
+        <title>Prerequisites</title>
+        <itemizedlist>
+            <listitem>
+                <para>Determine the data stores to be used by the SPBM
+                    policy.</para>
+            </listitem>
+            <listitem>
+                <para>Determine the tag that identifies the data
+                    stores in the OpenStack component
+                    configuration.</para>
+            </listitem>
+            <listitem>
+                <para>Create separate policies or sets of data stores
+                    for separate OpenStack components.</para>
+            </listitem>
+        </itemizedlist>
+    </section>
+    <section xml:id="vmdk_storage_policies">
+        <title>Create storage policies in vCenter</title>
+        <procedure>
+            <title>To create storage policies in vCenter</title>
+            <step>
+                <para>In vCenter, create the tag that identifies the
+                    data stores:</para>
+                <substeps>
+                    <step>
+                        <para>From the Home screen, click
+                                <guimenuitem>Tags</guimenuitem>.</para>
+                    </step>
+                    <step>
+                        <para>Specify a name for the tag.</para>
+                    </step>
+                    <step>
+                        <para>Specify a tag category. For example,
+                                <filename>spbm-cinder</filename>.</para>
+                    </step>
+                </substeps>
+            </step>
+            <step>
+                <para>Apply the tag to the data stores to be used by
+                    the SPBM policy.</para>
+                <note>
+                    <para>For details about creating tags in vSphere,
+                        see the <link
+                            xlink:href="http://pubs.vmware.com/vsphere-55/index.jsp#com.vmware.vsphere.vcenterhost.doc/GUID-379F40D3-8CD6-449E-89CB-79C4E2683221.html"
+                            >vSphere documentation</link>.</para>
+                </note>
+            </step>
+            <step>
+                <para>In vCenter, create a tag-based storage policy
+                    that uses one or more tags to identify a set of
+                    data stores.</para>
+                <note>
+                    <para>You use this tag name and category when you
+                        configure the <filename>*.conf</filename> file
+                        for the OpenStack component. For details about
+                        creating tags in vSphere, see the <link
+                            xlink:href="http://pubs.vmware.com/vsphere-55/index.jsp#com.vmware.vsphere.storage.doc/GUID-89091D59-D844-46B2-94C2-35A3961D23E7.html"
+                            >vSphere documentation</link>.</para>
+                </note>
+            </step>
+        </procedure>
+    </section>
+    <section xml:id="data_store_selection">
         <title>Data store selection</title>
-        <para>When creating a volume, the driver chooses a data store
-            which is connected to maximum number of hosts. This is
-            meant to reduce the number of volume migrations while
-            attaching the volume to instances. The volume needs to be
-            migrated if the instance's ESX host cannot access the
-            data store containing the volume. In case of ties, the
-            data store with lowest space utilization is selected, where
-            space utilization is defined by the metric
-            <literal>(1 - freespace/totalspace)</literal>.</para>
-    </simplesect>
+        <para>If storage policy is enabled, the driver initially
+            selects all the data stores that match the associated
+            storage policy.</para>
+        <para>If two or more data stores match the storage policy, the
+            driver chooses a data store that is connected to the
+            maximum number of hosts.</para>
+        <para>In case of ties, the driver chooses the data store with
+            lowest space utilization, where space utilization is
+            defined by the
+                <literal>(1-freespace/totalspace)</literal>
+            metric.</para>
+        <para>These actions reduce the number of volume migrations
+            while attaching the volume to instances.</para>
+        <para>The volume must be migrated if the ESX host for the
+            instance cannot access the data store that contains the
+            volume.</para>
+    </section>
 </section>
