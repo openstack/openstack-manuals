@@ -6,7 +6,7 @@
     <?dbhtml stop-chunking?>
     <title>Manage project security</title>
     <para>Security groups are sets of IP filter rules that are applied
-        to all project instances, and which define networking access
+        to all project instances, which define networking access
         to the instance. Group rules are project specific; project
         members can edit the default rules for their group and add new
         rule sets.</para>
@@ -22,7 +22,7 @@
     </note>
     <para>You can use the <code>allow_same_net_traffic</code> option
         in the <filename>/etc/nova/nova.conf</filename> file to
-        globally control whether the rules applies to hosts which
+        globally control whether the rules apply to hosts which
         share a network.</para>
     <para>If set to:</para>
     <itemizedlist>
@@ -50,12 +50,12 @@
     <procedure>
         <title>List and view current security groups</title>
         <para>From the command line you can get a list of security
-            groups for the project you're acting in using the nova
+            groups for the project, using the nova
             command:</para>
         <step>
             <para>Ensure your system variables are set for the user
                 and tenant for which you are checking security group
-                rules. For example:</para>
+                rules for. For example:</para>
                 <programlisting language="bash">export OS_USERNAME=demo00
 export OS_TENANT_NAME=tenant01</programlisting>
         </step>
@@ -83,7 +83,7 @@ export OS_TENANT_NAME=tenant01</programlisting>
  +-------------+-----------+---------+-----------+--------------+ </computeroutput></screen>
             <para>These rules are allow type rules as the default is
                 deny. The first column is the IP protocol (one of
-                icmp, tcp, or udp) the second and third columns
+                icmp, tcp, or udp). The second and third columns
                 specify the affected port range. The third column
                 specifies the IP range in CIDR format. This example
                 shows the full port range for all protocols allowed
@@ -101,12 +101,12 @@ export OS_TENANT_NAME=tenant01</programlisting>
         <step>
             <para>Ensure your system variables are set for the user
                 and tenant for which you are checking security group
-                rules.</para>
+                rules for.</para>
         </step>
         <step>
             <para>Add the new security group, as follows:</para>
             <para>
-                <screen><prompt>$</prompt> <userinput>nova secgroup-create <replaceable>GroupName Description</replaceable></userinput></screen>
+                <screen><prompt>$</prompt> <userinput>nova secgroup-create <replaceable>Group Name Description</replaceable></userinput></screen>
             </para>
             <para>For example:</para>
             <para>
@@ -166,7 +166,7 @@ export OS_TENANT_NAME=tenant01</programlisting>
         <step>
             <para>Ensure your system variables are set for the user
                 and tenant for which you are deleting a security
-                group.</para>
+                group for.</para>
         </step>
         <step>
             <para>Delete the new security group, as follows:</para>
@@ -178,16 +178,16 @@ export OS_TENANT_NAME=tenant01</programlisting>
     <procedure>
         <title>Create security group rules for a cluster of
             instances</title>
-        <para>SourceGroups are a special, dynamic way of defining the
-            CIDR of allowed sources. The user specifies a SourceGroup
+        <para>Source Groups are a special, dynamic way of defining the
+            CIDR of allowed sources. The user specifies a Source Group
             (Security Group name), and all the users' other Instances
-            using the specified SourceGroup are selected dynamically.
+            using the specified Source Group are selected dynamically.
             This alleviates the need for individual rules to allow
             each new member of the cluster.</para>
         <step>
             <para>Make sure to set the system variables for the user
                 and tenant for which you are deleting a security
-                group.</para>
+                group for.</para>
         </step>
         <step>
             <para>Add a source group, as follows:</para>
