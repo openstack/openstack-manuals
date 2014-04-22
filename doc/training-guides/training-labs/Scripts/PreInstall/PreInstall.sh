@@ -34,6 +34,9 @@ apt-get -y --download-only upgrade
 apt-get -y --download-only dist-upgrade
 apt-get install -y --download-only ubuntu-cloud-keyring python-software-properties software-properties-common python-keyring
 
+# Download CirrOS images for use in Glance.sh
+wget --directory-prefix="$SCRIPT_DIR/../Glance" http://download.cirros-cloud.net/0.3.2/cirros-0.3.2-x86_64-disk.img
+
 # Configure the Network Interfaces by using the templates in the networking
 # part of this folder.
 
