@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="sdk_compute_apis">
+    <title>Compute</title>
+    <?dbhtml stop-chunking?>
+    <para>To use the information in this section, you should have a
+        general understanding of OpenStack Compute.</para>
+    <section xml:id="sdk_compute_env">
+        <title>Set environment variables</title>
+        <para>Please see <xref linkend="sdk_auth"/> on how to setup environmental variables
+and authenticate against Compute API endpoints.</para>
+    </section>
+    <section xml:id="sdk_compute_get_nova_credentials_v2">
+        <title>Get nova credentials v2</title>
+        <para>The examples in this section use the
+                <code>get_nova_credentials_v2</code> method:</para>
+        <programlisting language="python">def get_nova_credentials_v2():
+    d = {}
+    d['version'] = '2'
+    d['username'] = os.environ['OS_USERNAME']
+    d['api_key'] = os.environ['OS_PASSWORD']
+    d['auth_url'] = os.environ['OS_AUTH_URL']
+    d['project_id'] = os.environ['OS_TENANT_NAME']
+    return d</programlisting>
+        <para>This code resides in the
+                <filename>credentials.py</filename> file, which all
+            samples import.</para>
+        <para>Use the <code>get_nova_credentials_v2()</code> method to
+            populate and get a dictionary:</para>
+        <programlisting language="python">credentials = get_nova_credentials_v2()</programlisting>
+    </section>
+
+    <section xml:id="sdk_compute_list_servers">
+        <title>List servers v2</title>
+        <para>The following program lists servers using the v2 APIs:</para>
+        <procedure>
+            <title>To list the servers</title>
+            <step>
+                <para>Import the following modules:</para>
+                <programlisting language="python">from credentials import get_nova_credentials_v2
+from novaclient.client import Client</programlisting>
+            </step>
+            <step>
+                <para>Get Nova Credentials. See <xref
+                        linkend="sdk_compute_get_nova_credentials_v2"
+                    />.</para>
+            </step>
+            <step>
+                <para>Instantiate the <literal>nova_client</literal>
+                    client object by using the
+                        <literal>credentials</literal> dictionary
+                    object:</para>
+                <programlisting language="python">
+nova_client = Client(**credentials)</programlisting>
+            </step>
+            <step>
+                <para>Get the list of servers by calling <literal>servers.list</literal> on
+                <literal>nova_client</literal> object:</para>
+                <programlisting language="python">print(nova_client.servers.list())</programlisting>
+            </step>
+        </procedure>
+        <example>
+            <title>List servers: complete code listing</title>
+            <programlisting language="python">#!/usr/bin/python
+# -*- coding: utf-8 -*-
+from credentials import get_nova_credentials_v2
+from novaclient.client import Client
+
+credentials = get_nova_credentials_v2()
+nova_client = Client(**credentials)
+
+print(nova_client.servers.list())</programlisting>
+        </example>
+    </section>
+    <section xml:id="sdk_compute_create_server_v2">
+        <title>Create a server v2</title>
+        <para>The following program creates a server (VM) using the v2 APIs:</para>
+        <procedure>
+            <title>To create a server</title>
+            <step>
+                <para>Import the following modules:</para>
+                <programlisting language="python">import time
+from credentials import get_nova_credentials_v2
+from novaclient.client import Client</programlisting>
+            </step>
+            <step>
+                <para>Get Nova Credentials. See <xref
+                        linkend="sdk_compute_get_nova_credentials_v2"
+                    />.</para>
+            </step>
+            <step>
+                <para>Instantiate the <literal>nova_client</literal>
+                    client object by using the
+                        <literal>credentials</literal> dictionary
+                    object:</para>
+                <programlisting language="python">
+nova_client = Client(**credentials)</programlisting>
+            </step>
+            <step>
+                <para>In this step, search for the flavor and image to be used for creating a server.
+                The following code assumes <literal>
+                cirros</literal> image and <literal>m1.tiny</literal> are being used.</para>
+                <programlisting language="python">image = nova_client.images.find(name="cirros")
+flavor = nova_client.flavors.find(name="m1.tiny")</programlisting>
+            </step>
+            <step>
+                <para></para>
+                <programlisting language="python">image = nova_client.images.find(name="cirros")
+flavor = nova_client.flavors.find(name="m1.tiny")</programlisting>
+            </step>
+            <step>
+                <para>In this step determine the network with which the server is going to
+                be attached. Use this along with flavor and image to create the server.
+                </para>
+                <programlisting language="python">net_id = 'd05a7729-4bcf-4149-9d8f-6a4764520a04'
+nic_d = [{'net-id': net_id}]
+instance = nova_client.servers.create(name="vm2", image=image,
+                                      flavor=flavor, key_name="keypair-1", nics=nic_d)</programlisting>
+            </step>
+            <step>
+                <para>Sleep for 5 secs and check if the server/vm got created by calling
+                <literal>nova_client.servers.list()</literal>
+                </para>
+                <programlisting language="python">print("Sleeping for 5s after create command")
+time.sleep(5)
+print("List of VMs")
+print(nova_client.servers.list)</programlisting>
+            </step>
+        </procedure>
+        <example>
+            <title>Create server: complete code listing</title>
+            <programlisting language="python">#!/usr/bin/python
+# -*- coding: utf-8 -*-
+import time
+from credentials import get_nova_credentials_v2
+from novaclient.client import Client
+
+try:
+    credentials = get_nova_credentials_v2()
+    nova_client = Client(**credentials)
+
+    image = nova_client.images.find(name="cirros")
+    flavor = nova_client.flavors.find(name="m1.tiny")
+    net_id = 'd05a7729-4bcf-4149-9d8f-6a4764520a04'
+    nic_d = [{'net-id': net_id}]
+    instance = nova_client.servers.create(name="vm2", image=image,
+                                      flavor=flavor, key_name="keypair-1", nics=nic_d)
+    print("Sleeping for 5s after create command")
+    time.sleep(5)
+    print("List of VMs")
+    print(nova_client.servers.list())
+finally:
+    print("Execution Completed")</programlisting>
+        </example>
+    </section>
+        <section xml:id="sdk_compute_delete_server_v2">
+        <title>Delete server v2</title>
+        <para>The following program deletes a Server (VM) using the v2 API:</para>
+        <procedure>
+            <title>To Delete a Server</title>
+            <step>
+                <para>Import the following modules:</para>
+                <programlisting language="python">import time
+from credentials import get_nova_credentials_v2
+from novaclient.client import Client</programlisting>
+            </step>
+            <step>
+                <para>Get Nova Credentials. See <xref
+                        linkend="sdk_compute_get_nova_credentials_v2"
+                    />.</para>
+            </step>
+            <step>
+                <para>Instantiate the <literal>nova_client</literal>
+                    client object by using the
+                        <literal>credentials</literal> dictionary
+                    object:</para>
+                <programlisting language="python">
+nova_client = Client(**credentials)</programlisting>
+            </step>
+            <step>
+                <para>Check if the server <literal>"vm1"</literal> exists using the following steps</para>
+                <procedure>
+                    <step><para>Get the list of servers: <literal>servers_list</literal></para></step>
+                    <step><para>Iterate over the <literal>servers_list</literal> and compare name with <literal>"vm1"
+                    </literal></para></step>
+                    <step><para>If true set the variable name <literal>server_exists</literal> as
+                        <literal>True</literal> and break from the for loop</para>
+                    </step>
+                </procedure>
+                <programlisting language="python">servers_list = nova_client.servers.list()
+server_del = "vm1"
+server_exists = False
+
+for s in servers_list:
+    if s.name == server_del:
+        print("This server %s exists" % server_del)
+        server_exists = True
+        break</programlisting>
+            </step>
+            <step>
+                <para>If the server exists execute <literal>delete</literal> method of
+                <literal>nova_client.servers</literal> object.</para>
+                <programlisting language="python">nova_client.servers.delete(s)</programlisting>
+            </step>
+
+        </procedure>
+        <example>
+            <title>Delete: complete code listing</title>
+            <programlisting language="python">#!/usr/bin/python
+# -*- coding: utf-8 -*-
+from credentials import get_nova_credentials_v2
+from novaclient.client import Client
+
+credentials = get_nova_credentials_v2()
+nova_client = Client(**credentials)
+
+servers_list = nova_client.servers.list()
+server_del = "vm1"
+server_exists = False
+
+for s in servers_list:
+    if s.name == server_del:
+        print("This server %s exists" % server_del)
+        server_exists = True
+        break
+if not server_exists:
+    print("server %s does not exist" % server_del)
+else:
+    print("deleting server..........")
+    nova_client.servers.delete(s)
+    print("server %s deleted" % server_del)</programlisting>
+        </example>
+    </section>
+
+</section>
