@@ -11,6 +11,7 @@
 # This Script will carry out few tasks after installing OpenStack.		        #
 #                                                                               #
 #################################################################################
+SCRIPT_DIR=$(cd $(dirname "$0") && pwd)
 
 # Create Tenant
 keystone tenant-create --name Os_Training

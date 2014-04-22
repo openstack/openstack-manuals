@@ -15,6 +15,7 @@
 
 # Note: You DoNot Need Internet for this due to the magic of --download-only
 echo "Internet connection is not required for this script to run"
+SCRIPT_DIR=$(cd $(dirname "$0") && pwd)
 
 Install_Cinder() {
 
@@ -29,8 +30,8 @@ Install_Cinder() {
     service open-iscsi start
 
     # 4. Configure the templates
-    cp --no-preserve=mode,ownership Templates/api-paste.ini /etc/cinder/api-paste.ini
-    cp --no-preserve=mode,ownership Templates/cinder.conf /etc/cinder/cinder.conf
+    cp --no-preserve=mode,ownership "$SCRIPT_DIR/Templates/api-paste.ini" /etc/cinder/api-paste.ini
+    cp --no-preserve=mode,ownership "$SCRIPT_DIR/Templates/cinder.conf" /etc/cinder/cinder.conf
 
     # 5. MySQL database
     cinder-manage db sync

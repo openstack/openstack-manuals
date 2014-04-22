@@ -14,6 +14,7 @@
 
 # Note: You DoNot Need Internet for this due to the magic of --download-only
 echo "Internet connection is not required for this script to run"
+SCRIPT_DIR=$(cd $(dirname "$0") && pwd)
 
 Install_Horizon() {
 
