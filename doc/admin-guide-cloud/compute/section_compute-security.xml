@@ -13,4 +13,33 @@
       <link xlink:href="http://docs.openstack.org/sec/"><citetitle>OpenStack
       Security Guide</citetitle></link>.</para>
   <xi:include href="../../common/section_trusted-compute-pools.xml"/>
+  <section xml:id="section_compute_metadata_https">
+    <title>Encrypt Compute metadata traffic</title>
+    <para>OpenStack Juno supports encrypting Compute metadata traffic with
+    HTTPS. Enable SSL encryption in the <filename>metadata_agent.ini</filename>
+    file:<orderedlist>
+        <listitem>
+          <para>Enable the HTTPS protocol:
+            <programlisting>nova_metadata_protocol = https</programlisting>
+          </para>
+        </listitem>
+        <listitem>
+          <para>Determine whether insecure SSL connections are accepted for
+          Compute metadata server requests. The default value is
+          <option>False</option>:
+          <programlisting>nova_metadata_insecure = False</programlisting></para>
+        </listitem>
+        <listitem>
+          <para>Specify the path to the client certificate:
+            <programlisting>
+nova_client_cert = <replaceable>PATH_TO_CERT</replaceable></programlisting></para>
+        </listitem>
+        <listitem>
+          <para>Specify the path to the private key:
+            <programlisting>
+nova_client_priv_key = <replaceable>PATH_TO_KEY</replaceable></programlisting></para>
+        </listitem>
+      </orderedlist></para>
+  </section>
 </section>
+
