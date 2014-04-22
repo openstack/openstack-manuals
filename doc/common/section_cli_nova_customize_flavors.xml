@@ -46,7 +46,7 @@
             <tr>
                 <td><literal>Name</literal></td>
                 <td>A descriptive name.
-                        <replaceable>xx</replaceable>.<replaceable>size_name</replaceable>
+                        <replaceable>XX</replaceable>.<replaceable>SIZE_NAME</replaceable>
                     is typically not required, though some third party
                     tools may rely on it.</td>
             </tr>
@@ -106,7 +106,8 @@
     </table>
     <para>Flavor customization can be limited by the hypervisor in use. For example the
             <systemitem>libvirt</systemitem> driver enables quotas on CPUs available to a VM, disk
-        tuning, bandwidth I/O, watchdog behavior, and instance VIF traffic control.</para>
+        tuning, bandwidth I/O, watchdog behavior, random number generator device control, and
+        instance VIF traffic control.</para>
         <variablelist>
             <varlistentry><term>CPU limits</term>
                 <listitem><para>You can configure the CPU limits with control parameters with the <command>nova</command>
@@ -225,8 +226,8 @@
                         <literal>hw_watchdog_action</literal> is not specified, the watchdog is
                     disabled.</para>
                 <para>To set the behavior, use:</para>
-                <screen><prompt>$</prompt> <userinput>nova flavor-key <replaceable>flavorName</replaceable> set hw_watchdog_action=<replaceable>action</replaceable></userinput></screen>
-                <para>Valid <replaceable>action</replaceable> values are:</para>
+                <screen><prompt>$</prompt> <userinput>nova flavor-key <replaceable>FLAVOR-NAME</replaceable> set hw_watchdog_action=<replaceable>ACTION</replaceable></userinput></screen>
+                <para>Valid <replaceable>ACTION</replaceable> values are:</para>
                 <itemizedlist>
                            <listitem>
                                <para><literal>disabled</literal>&mdash;(default) The device is not
@@ -249,6 +250,26 @@
                     </itemizedlist>
                     <note><para>Watchdog behavior set using a specific image's properties will override behavior set using
                             flavors.</para></note>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term>Random-number generator</term>
+                <listitem><para>If a random-number generator device has been added to the instance through its image
+                    properties, the device can be enabled and configured using:</para>
+                    <screen><prompt>$</prompt> <userinput>nova flavor-key <replaceable>FLAVOR-NAME</replaceable> set hw_rng:allowed=True</userinput>
+<prompt>$</prompt> <userinput>nova flavor-key <replaceable>FLAVOR-NAME</replaceable> set hw_rng:rate_bytes=<replaceable>RATE-BYTES</replaceable></userinput>
+<prompt>$</prompt> <userinput>nova flavor-key <replaceable>FLAVOR-NAME</replaceable> set hw_rng:rate_period=<replaceable>RATE-PERIOD</replaceable></userinput></screen>
+                    <para>Where:</para>
+                <itemizedlist>
+                    <listitem>
+                        <para><replaceable>RATE-BYTES</replaceable>&mdash;(Integer) Allowed amount of
+                            bytes that the guest can read from the host's entropy per period.</para>
+                    </listitem>
+                    <listitem>
+                        <para><replaceable>RATE-PERIOD</replaceable>&mdash;(Integer) Duration of the
+                            read period in seconds.</para>
+                    </listitem>
+                </itemizedlist>
                 </listitem>
             </varlistentry>
             <varlistentry><term>Instance VIF traffic control</term>
