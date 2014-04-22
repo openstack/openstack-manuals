@@ -28,7 +28,7 @@
     <programlisting language="ini">scheduler_driver=nova.scheduler.multi.MultiScheduler
 compute_scheduler_driver=nova.scheduler.filter_scheduler.FilterScheduler
 scheduler_available_filters=nova.scheduler.filters.all_filters
-scheduler_default_filters=RetryFilter,AvailabilityZoneFilter,RamFilter,ComputeFilter,ComputeCapabilitiesFilter,ImagePropertiesFilter</programlisting>
+scheduler_default_filters=RetryFilter,AvailabilityZoneFilter,RamFilter,ComputeFilter,ComputeCapabilitiesFilter,ImagePropertiesFilter,ServerGroupAntiAffinityFilter,ServerGroupAffinityFilter</programlisting>
     <para>By default, the scheduler_driver is configured as a filter
         scheduler, as described in the next section. In the default
         configuration, this scheduler considers hosts that meet all
@@ -114,13 +114,11 @@ scheduler_default_filters=RetryFilter,AvailabilityZoneFilter,RamFilter,ComputeFi
             contain:</para>
         <programlisting language="ini">scheduler_available_filters=nova.scheduler.filters.all_filters
 scheduler_available_filters=myfilter.MyFilter</programlisting>
-        <para>The <literal>scheduler_default_filters</literal>
-            configuration option in <filename>nova.conf</filename>
-            defines the list of filters that are applied by the
-                <systemitem class="service"
-                >nova-scheduler</systemitem> service. As mentioned,
-            the default filters are:</para>
-        <programlisting language="ini">scheduler_default_filters=AvailabilityZoneFilter,RamFilter,ComputeFilter</programlisting>
+        <para>The <literal>scheduler_default_filters</literal> configuration option in
+                <filename>nova.conf</filename> defines the list of filters that are applied by the
+                <systemitem class="service">nova-scheduler</systemitem> service. The default filters
+            are:</para>
+        <programlisting language="ini">scheduler_default_filters=RetryFilter,AvailabilityZoneFilter,RamFilter,ComputeFilter,ComputeCapabilitiesFilter,ImagePropertiesFilter,ServerGroupAntiAffinityFilter,ServerGroupAffinityFilter</programlisting>
         <para>The following sections describe the available
             filters.</para>
         <section xml:id="aggregatecorefilter">
@@ -130,6 +128,52 @@ scheduler_available_filters=myfilter.MyFilter</programlisting>
                     <literal>cpu_allocation_ratio</literal>. If the
                 per-aggregate value is not found, the value falls back
                 to the global setting.</para>
+        </section>
+        <section xml:id="aggregateimagepropertiesisolationfilter">
+            <title>AggregateImagePropertiesIsolation</title>
+            <para>Matches properties defined in an image's metadata against those of aggregates to
+                determine host matches:</para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>If a host belongs to an aggregate and the aggregate defines one or
+                            more metadata that match an image's properties, that host is a candidate
+                            to boot the image's instance.</para>
+                    </listitem>
+                    <listitem>
+                        <para>If a host does not belong to any aggregate, it can boot instances from
+                            all images.</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>For example, the following aggregate <systemitem>myWinAgg</systemitem> has the
+                Windows operating system as metadata (named 'windows'):</para>
+            <screen><prompt>$</prompt> <userinput>nova aggregate-details MyWinAgg</userinput>
+<computeroutput>+----+----------+-------------------+------------+---------------+
+| Id | Name     | Availability Zone | Hosts      | Metadata      |
++----+----------+-------------------+------------+---------------+
+| 1  | MyWinAgg | None              | 'sf-devel' | 'os=windows'  |
++----+----------+-------------------+------------+---------------+</computeroutput></screen>
+<para>In this example, because the following Win-2012 image has the <property>windows</property>
+                property, it would boot on the <systemitem>sf-devel</systemitem> host (all other
+                filters being equal):</para>
+       <screen><prompt>$</prompt> <userinput>glance image-show Win-2012</userinput>
+<computeroutput>+------------------+--------------------------------------+
+| Property         | Value                                |
++------------------+--------------------------------------+
+| Property 'os'    | windows                              |
+| checksum         | f8a2eeee2dc65b3d9b6e63678955bd83     |
+| container_format | ami                                  |
+| created_at       | 2013-11-14T13:24:25                  |
+| ...</computeroutput></screen>
+<para>You can configure the <systemitem>AggregateImagePropertiesIsolation</systemitem> filter using
+  the following options in the <filename>nova.conf</filename> file:
+</para>
+<programlisting language="ini"># Considers only keys matching the given namespace (string).
+aggregate_image_properties_isolation_namespace=&lt;None>
+
+# Separator used between the namespace and keys (string).
+aggregate_image_properties_isolation_separator=.</programlisting>
         </section>
         <section xml:id="aggregateinstanceextraspecsfilter">
             <title>AggregateInstanceExtraSpecsFilter</title>
