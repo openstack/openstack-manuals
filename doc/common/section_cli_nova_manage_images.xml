@@ -3,27 +3,25 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="nova_manage_images">
-    <title>Create image (nova)</title>
-    <para>You can use the nova client to list images, set and delete
-        image metadata, delete images, and take a snapshot of a
+    <title>Create an image (nova)</title>
+    <para>You can use the <command>nova</command> client to take a snapshot of a
         running instance to create an image.</para>
-    <para>The safest approach is to shut down the instance before you
-        take a snapshot.</para>
-    <para>You cannot create a snapshot from an instance that has an
-        attached volume. Detach the volume, create the image, and
-        re-mount the volume.</para>
+    <para>To minimize the potential for data loss and ensure that you create an
+        accurate image, you should shut down the instance before you take a
+        snapshot.</para>
+    <para>You cannot create a snapshot from an instance that has an attached
+        volume. Detach the volume, create the image, and remount the
+        volume.</para>
     <procedure>
         <step>
             <para>Write any buffered data to disk.</para>
-            <para>For more information, see <link
-                    xlink:href="http://docs.openstack.org/trunk/openstack-ops/content/snapshots.html"
+            <para>For more information, see <link xlink:href="http://docs.openstack.org/trunk/openstack-ops/content/snapshots.html"
                     >Taking Snapshots</link> in the
                     <citetitle>OpenStack Operations
                 Guide</citetitle>.</para>
         </step>
         <step>
-            <para>To create the image, list instances to get the
-                server ID:</para>
+            <para>List instances to get the server name:</para>
             <screen><prompt>$</prompt> <userinput>nova list</userinput>
 <?db-font-size 50%?><computeroutput>+--------------------------------------+----------------------+--------+------------+-------------+------------------+
 | ID                                   | Name                 | Status | Task State | Power State | Networks         |
@@ -31,17 +29,16 @@
 | 84c6e57d-a6b1-44b6-81eb-fcb36afd31b5 | myCirrosServer       | ACTIVE | None       | Running     | private=10.0.0.3 |
 +--------------------------------------+----------------------+--------+------------+-------------+------------------+</computeroutput></screen>
             <para>In this example, the server is named
-                    <literal>myCirrosServer</literal>. Use this server
-                to create a snapshot, as follows:
+                    <literal>myCirrosServer</literal>.</para></step>
+        <step><para>Use this server to create a snapshot:
                 <screen><prompt>$</prompt> <userinput>nova image-create myCirrosServer myCirrosImage</userinput></screen>The
-                command creates a qemu snapshot and automatically
-                uploads the image to your repository. Only the tenant
-                that creates the image has access to it.</para>
+                command creates a qemu snapshot and automatically uploads the
+                image to your repository. Only the tenant that creates the image
+                has access to it.</para>
         </step>
         <step>
-            <para>Get details for your image to check its
-                status:</para>
-            <screen><prompt>$</prompt> <userinput>nova image-show <replaceable>IMAGE</replaceable></userinput>
+            <para>Get details for your image to check its status:</para>
+            <screen><prompt>$</prompt> <userinput>nova image-show myCirrosImage</userinput>
 <?db-font-size 50%?><computeroutput>+-------------------------------------+--------------------------------------+
 | Property                            | Value                                |
 +-------------------------------------+--------------------------------------+
@@ -80,9 +77,9 @@
                     <literal>ACTIVE</literal>. Only the tenant who
                 creates the image has access to it.</para>
         </step>
-        <step>
-            <para>To launch an instance from your image, include the
-                image ID and flavor ID, as follows:</para>
+    </procedure>
+            <para>To launch an instance from your image, include the image ID
+        and flavor ID, as in the following example:</para>
             <screen><prompt>$</prompt> <userinput>nova boot newServer --image 7e5142af-1253-4634-bcc6-89482c5f2e8a \
    --flavor 3</userinput>
 <?db-font-size 50%?><computeroutput>+-------------------------------------+--------------------------------------+
@@ -115,6 +112,4 @@
 | created                             | 2013-07-22T19:58:33Z                 |
 | metadata                            | {}                                   |
 +-------------------------------------+--------------------------------------+</computeroutput></screen>
-        </step>
-    </procedure>
 </section>

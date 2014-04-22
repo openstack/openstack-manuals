@@ -5,7 +5,6 @@
 <!ENTITY mdash  "&#x2014;">
 <!ENTITY hellip "&#x2026;">
 <!ENTITY plusmn "&#xB1;">
-
 ]>
 <section xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
@@ -15,13 +14,11 @@
     <title>Install the OpenStack command-line clients</title>
     <para>Install the prerequisite software and the Python package for
         each OpenStack client.</para>
-    <note>
-        <para>For each command, replace
-                <replaceable>PROJECT</replaceable> with the lower case
-            name of the client to install, such as
-                <literal>nova</literal>. Repeat for each
-            client.</para>
-    </note>
+    <section xml:id="install_prereq_software">
+        <title>Install the prerequisite software</title>
+        <para>The following table lists the software that you need to
+            have to run the command-line clients, and provides
+            installation instructions as needed.</para>
     <table rules="all" width="75%">
         <caption>Prerequisite software</caption>
         <col width="15%"/>
@@ -35,7 +32,7 @@
         <tbody>
             <tr>
                 <td valign="top">
-                    <para>Python 2.6 or newer</para>
+                    <para>Python 2.6 or later</para>
                 </td>
                 <td>
                     <para>Currently, the clients do not support Python
@@ -71,168 +68,186 @@
             <tr>
                 <td valign="top"><package>pip</package> package</td>
                 <td>
-                    <para>To install the clients on a Linux, Mac OS X or Microsoft
-                        Windows system, use <package>pip</package>. It
-                        is easy to use, ensures that you get the
-                        latest version of the clients from the <link
-                            xlink:href="http://pypi.python.org/pypi/python-novaclient/"
-                            >Python Package Index</link>, and lets you
-                        update or remove the packages later on.</para>
+                    <para>To install the clients on a Linux, Mac OS X,
+                            or Microsoft Windows system, use
+                                <package>pip</package>. It is easy to
+                            use, ensures that you get the latest
+                            version of the clients from the <link
+                                xlink:href="http://pypi.python.org/pypi/python-novaclient/"
+                                >Python Package Index</link>, and lets
+                            you update or remove the packages later
+                            on.</para>
                     <para>Install <package>pip</package> through the
                         package manager for your system:</para>
                     <formalpara>
-                        <title>Mac OS X</title>
-                        <para>
-                            <screen><prompt>#</prompt> <userinput>easy_install pip</userinput></screen></para>
+                        <title>MacOS</title>
+                        <para><screen><prompt>#</prompt> <userinput>easy_install pip</userinput></screen></para>
                     </formalpara>
                     <formalpara>
                         <title>Microsoft Windows</title>
-                        <para>Make sure that the
-                            <filename>C:\Python27\Scripts</filename> directory
-                            is defined in the <literal>PATH</literal>
-                            environment variable, and use the
-                            <command>easy_install</command> command from the
-                            <package>setuptools</package> package:
-                            <screen><prompt>C:\></prompt><userinput>easy_install pip</userinput></screen>
-                            Another option is to use the unofficial binary
-                            installer provided by Christoph Gohlke (<link
-                            xlink:href="http://www.lfd.uci.edu/~gohlke/pythonlibs/#pip"
-                            >http://www.lfd.uci.edu/~gohlke/pythonlibs/#pip</link>).</para>
+                        <para>Ensure that the
+                                   <filename>C:\Python27\Scripts</filename>
+                                directory is defined in the
+                                   <literal>PATH</literal> environment
+                                variable, and use the
+                                   <command>easy_install</command>
+                                command from the
+                                   <package>setuptools</package>
+                                package:
+                                <screen><prompt>C:\></prompt><userinput>easy_install pip</userinput></screen>Another
+                                option is to use the unofficial binary
+                                installer provided by Christoph Gohlke
+                                   (<link
+                                   xlink:href="http://www.lfd.uci.edu/~gohlke/pythonlibs/#pip"
+                                   >http://www.lfd.uci.edu/~gohlke/pythonlibs/#pip</link>).</para>
                     </formalpara>
                     <formalpara>
-                        <title>Ubuntu 12.04</title>
+                        <title>Ubuntu 12.04/14.04</title>
                         <para>A packaged version enables you to use
-                                <package>dpkg</package> or
-                                <package>aptitude</package> to install
-                            the
-                            <package>python-novaclient</package>:<screen><prompt>#</prompt> <userinput>aptitude install python-novaclient</userinput></screen></para>
+                                   <package>dpkg</package> or
+                                   <package>aptitude</package> to
+                                install the
+                                   <package>python-novaclient</package>:
+                                <screen><prompt>#</prompt> <userinput>aptitude install python-novaclient</userinput> </screen></para>
                     </formalpara>
                     <formalpara>
                         <title>Ubuntu and Debian</title>
                         <para><screen><prompt>#</prompt> <userinput>aptitude install python-pip</userinput></screen></para>
-                    </formalpara>
+                            </formalpara>
                     <formalpara>
-                        <title>RHEL, CentOS, or Fedora</title>
+                        <title>Red Hat Enterprise Linux, CentOS, or Fedora</title>
                         <para>A packaged version available in <link
-                                xlink:href="http://openstack.redhat.com/"
-                                >RDO</link> enables you to use
-                                <package>yum</package> to install the
-                            clients:
-                            <screen><prompt>#</prompt> <userinput>yum install python-<replaceable>PROJECT</replaceable>client</userinput></screen></para>
-                    </formalpara>
-                    <para>Alternatively, install
+                            xlink:href="http://openstack.redhat.com/">RDO</link>
+                            enables you to use <package>yum</package>
+                            to install the clients, or you can install
                             <package>pip</package> and use it to
-                        manage client installation:</para>
-                    <screen><prompt>#</prompt> <userinput>yum install python-pip</userinput></screen>
+                            manage client installation: <screen><prompt>#</prompt> <userinput>yum install python-pip</userinput></screen></para>
+                    </formalpara>
                     <formalpara>
                         <title>openSUSE 12.2 and earlier</title>
                         <para>A <link
-                                xlink:href="https://build.opensuse.org/package/show?package=python-novaclient&amp;project=Cloud:OpenStack:Master"
-                                >packaged version available in the
-                                Open Build Service</link> enables you
-                            to use <package>rpm</package> or
-                                <package>zypper</package> to install
-                            the
-                            python-novaclient:<screen><prompt>#</prompt> <userinput>zypper install python-<replaceable>PROJECT</replaceable></userinput></screen></para>
-                    </formalpara><para>Alternatively, install
-                            <package>pip</package> and use it to
-                        manage client installation:
-                        <screen><prompt>#</prompt> <userinput>zypper install python-pip</userinput></screen></para>
+                            xlink:href="https://build.opensuse.org/package/show?package=python-novaclient&amp;project=Cloud:OpenStack:Master">packaged
+                            version available in the Open Build
+                            Service</link> enables you to use
+                            <package>rpm</package> or
+                            <package>zypper</package> to install the
+                            clients, or you can install
+                            <package>pip</package> and use it to manage client installation:
+                            <screen><prompt>#</prompt> <userinput>zypper install python-pip</userinput></screen></para>
+                    </formalpara>
                     <formalpara>
-                        <title>openSUSE 12.3 and newer</title>
+                        <title>openSUSE 12.3 and later</title>
                         <para>A packaged version enables you to use
-                                <package>rpm</package> or
-                                <package>zypper</package> to install
-                            the clients:
-                            <screen><prompt>#</prompt> <userinput>zypper install python-<replaceable>PROJECT</replaceable>client</userinput></screen></para>
+                            <package>rpm</package> or
+                            <package>zypper</package> to install the
+                            clients. See <xref linkend="cli_clients_install"/></para>
                     </formalpara>
                 </td>
             </tr>
         </tbody>
     </table>
+    </section>
     <section xml:id="cli_clients_install">
         <title>Install the clients</title>
-        <para>Use <package>pip</package> to install the OpenStack
-            clients on a Linux, Mac OS X or Microsoft Windows system. It is
-            easy and ensures that you get the latest version of the client
-            from the <link xlink:href="http://pypi.python.org/pypi">Python
-                Package Index</link>. Also, <package>pip</package>
-            lets you update or remove a package. After you install the
-            clients, you must source an <filename
-                xmlns:raxm="http://docs.rackspace.com/api/metadata"
-                ><replaceable>PROJECT</replaceable>-openrc.sh</filename>
-            file to set required environment
-            variables before you can request OpenStack services
-            through the clients or the APIs.</para>
-        <procedure>
-            <step>
-                <para>Install each client separately using:</para>
-                <itemizedlist>
-                    <listitem><para>For Mac OS X or Linux:</para>
-                        <screen><prompt>#</prompt> <userinput>pip install python-<replaceable>PROJECT</replaceable>client</userinput></screen></listitem>
-                    <listitem><para>For Microsoft Windows:</para>
-                        <screen><prompt>C:\></prompt><userinput>pip install python-<replaceable>PROJECT</replaceable>client</userinput></screen></listitem>
-                </itemizedlist>
-                <para>Where <replaceable>PROJECT</replaceable> is the
-                    project name and has one of the following
-                    values:</para>
-                <itemizedlist>
-                    <listitem>
-                        <para><literal>ceilometer</literal> - Telemetry API.</para>
-                    </listitem>
-                    <listitem>
-                        <para><literal>cinder</literal> - Block Storage
-                            API and extensions.</para>
-                    </listitem>
-                    <listitem>
-                        <para><literal>glance</literal> - Image Service
-                            API.</para>
-                    </listitem>
-                    <listitem>
-                        <para><literal>heat</literal> - Orchestration
-                            API.</para>
-                    </listitem>
-                    <listitem>
-                        <para><literal>keystone</literal> - Identity
-                            service API and extensions.</para>
-                    </listitem>
-                    <listitem>
-                        <para><literal>neutron</literal> - Networking
-                            API.</para>
-                    </listitem>
-                    <listitem>
-                        <para><literal>nova</literal> - Compute API and
-                            extensions.</para>
-                    </listitem>
-                    <listitem>
-                        <para><literal>swift</literal> - Object Storage
-                            API.</para>
-                    </listitem>
-                    <listitem>
-                        <para><literal>trove</literal> - Database Service
-                            API.</para>
-                    </listitem>
-                </itemizedlist>
-                <para>For example, to install the nova client, run
-                    this command:</para>
-                <screen><prompt>#</prompt> <userinput>pip install python-novaclient</userinput></screen>
-                <para>To remove the nova client, run this
-                    command:</para>
-                <screen><prompt>#</prompt> <userinput>pip uninstall python-novaclient</userinput></screen>
-               <note> <para>To upgrade a package, add the
+        <para>When following the instructions in this section, replace
+                <replaceable>PROJECT</replaceable> with the lowercase
+            name of the client to install, such as
+                <command>nova</command>. Repeat for each client. The
+            following values are valid:</para>
+        <itemizedlist>
+            <listitem>
+                <para><literal>ceilometer</literal> - Telemetry
+                    API</para>
+            </listitem>
+            <listitem>
+                <para><literal>cinder</literal> - Block Storage API
+                    and extensions</para>
+            </listitem>
+            <listitem>
+                <para><literal>glance</literal> - Image Service
+                    API</para>
+            </listitem>
+            <listitem>
+                <para><literal>heat</literal> - Orchestration
+                    API</para>
+            </listitem>
+            <listitem>
+                <para><literal>keystone</literal> - Identity service
+                    API and extensions</para>
+            </listitem>
+            <listitem>
+                <para><literal>neutron</literal> - Networking
+                    API</para>
+            </listitem>
+            <listitem>
+                <para><literal>nova</literal> - Compute API and
+                    extensions</para>
+            </listitem>
+            <listitem>
+                <para><literal>swift</literal> - Object Storage
+                    API</para>
+            </listitem>
+            <listitem>
+                <para><literal>trove</literal> - Database Service
+                    API</para>
+            </listitem>
+        </itemizedlist>
+        <para>The following example shows the command for installing
+            the nova client with
+            <replaceable>pip</replaceable>.</para>
+        <screen><prompt>#</prompt> <userinput>pip install python-novaclient</userinput></screen>
+        <section xml:id="cli_clients_install_pip">
+            <title>Installing with pip</title>
+            <para>Use <package>pip</package> to install the OpenStack
+                clients on a Linux, Mac OS X, or Microsoft Windows
+                system. It is easy to use and ensures that you get the
+                latest version of the client from the <link
+                    xlink:href="http://pypi.python.org/pypi">Python
+                    Package Index</link>. Also, <package>pip</package>
+                enables you to update or remove a package.</para>
+            <para>Install each client separately by using the
+                following command:</para>
+            <itemizedlist>
+                <listitem><para>For Mac OS X or Linux:</para>
+                    <screen><prompt>#</prompt> <userinput>pip install python-<replaceable>PROJECT</replaceable>client</userinput></screen></listitem>
+                <listitem><para>For Microsoft Windows:</para>
+                    <screen><prompt>C:\></prompt><userinput>pip install python-<replaceable>PROJECT</replaceable>client</userinput></screen></listitem>
+            </itemizedlist>
+        </section>
+        <section xml:id="cli_clients_install_packages">
+            <title>Installing from packages</title>
+            <para>RDO and openSUSE have client packages that can be
+                installed without <filename>pip</filename>.</para>
+            <para>On Red Hat Enterprise Linux, CentOS, or Fedora, use
+                    <command>yum</command> to install the clients from
+                the packaged versions available in <link
+                    xlink:href="http://openstack.redhat.com/"
+                    >RDO</link>:
+                <screen><prompt>#</prompt> <userinput>yum install python-<replaceable>PROJECT</replaceable>client</userinput></screen></para>
+            <para>For openSUSE, use <package>rpm</package> or
+                    <package>zypper</package> to install the clients
+                from the packaged versions available in <link
+                    xlink:href="https://build.opensuse.org/package/show?package=python-novaclient&amp;project=Cloud:OpenStack:Master"
+                    >the Open Build
+                Service</link>:<screen><prompt>#</prompt> <userinput>zypper install python-<replaceable>PROJECT</replaceable></userinput></screen></para>
+        </section>
+    </section>
+    <section xml:id="cli_clients_remove_upgrade">
+        <title>Upgrade or remove clients</title>
+        <para>To upgrade a client, add the
                 <literal>--upgrade</literal> option to the
-                <command>pip</command> command.</para>
-                <para>For example, to update the <systemitem>nova</systemitem> client, run this
-                        command:</para>
-                <screen><prompt>#</prompt> <userinput>pip install --upgrade python-novaclient</userinput></screen></note>
-            </step>
-            <step audience="enduser">
-                <para>Before you can run client commands, you must
-                    create and source the
-                    <filename><replaceable>PROJECT</replaceable>-openrc.sh</filename>
-                    file to set environment variables. See <xref
-                        linkend="cli_openrc"/>.</para>
-            </step>
-        </procedure>
+                <command>pip install</command> command:</para>
+        <screen><prompt>#</prompt> <userinput>pip install --upgrade python-<replaceable>PROJECT</replaceable>client</userinput></screen>
+        <para>To remove the a client, run the <command>pip
+                uninstall</command> command:</para>
+        <screen><prompt>#</prompt> <userinput>pip uninstall python-<replaceable>PROJECT</replaceable>client</userinput></screen>
+    </section>
+    <section xml:id="cli_clients_install_nextsteps" audience="enduser">
+        <title>What's next</title>
+        <para>Before you can run client commands, you must create
+                and source the
+                        <filename><replaceable>PROJECT</replaceable>-openrc.sh</filename>
+                file to set environment variables. See <xref
+                    linkend="cli_openrc"/>.</para>
     </section>
 </section>
