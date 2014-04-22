@@ -34,194 +34,197 @@
     <procedure>
         <step>
             <para>Log in to the dashboard, choose a project, and click
-                    <guilabel>Images &amp; Snapshot</guilabel>.</para>
+              <guilabel>Images</guilabel>.</para>
             <para>The dashboard shows the images that have been uploaded to
-                OpenStack Image Service and are available for this
-                project.</para>
+              OpenStack Image Service and are available for this
+              project.</para>
             <para>For details on creating images, see <link
-                    xlink:href="http://docs.openstack.org/image-guide/content/ch_creating_images_manually.html"
-                    >Creating images manually</link> in the <citetitle>OpenStack
-                    Virtual Machine Image Guide</citetitle>.</para>
+              xlink:href="http://docs.openstack.org/image-guide/content/ch_creating_images_manually.html"
+              >Creating images manually</link> in the <citetitle>OpenStack
+              Virtual Machine Image Guide</citetitle>.</para>
         </step>
         <step>
-            <para>Select an image and click
-                <guibutton>Launch</guibutton>.</para>
+            <para>Select an image and click <guibutton>Launch</guibutton>.</para>
         </step>
         <step>
             <para>In the Launch Instance dialog box, specify the following
-                values:</para>
+            values:</para>
             <informaltable rules="all" width="75%">
-                <col width="30%"/>
-                <col width="70%"/>
-                <thead>
-                    <tr>
-                        <th colspan="2" align="center"
-                                ><guilabel>Details</guilabel> tab</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><para><guilabel>Availability
-                            Zone</guilabel></para></td>
-                        <td>
-                            <para>By default, this value is set to the
-                                availability zone given by the cloud provider
-                                (for example, <literal>us-west</literal> or
-                                    <literal>apac-south</literal>). For most
-                                cases, it could be
-                                <literal>nova</literal>.</para>
+              <col width="30%"/>
+              <col width="70%"/>
+              <thead>
+                <tr>
+                  <th colspan="2" align="center"><guilabel>Details</guilabel> tab</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><para><guilabel>Availability Zone</guilabel></para></td>
+                  <td>
+                    <para>By default, this value is set to the availability zone
+                    given by the cloud provider (for example, <literal>us-west</literal>
+                    or <literal>apac-south</literal>). For some cases, it could be
+                    <literal>nova</literal>.</para>
+                  </td>
+                </tr>
+                <tr>
+                  <td><para><guilabel>Instance Name</guilabel></para></td>
+                  <td><para>Assign a name to the virtual machine.</para>
+                  <note><para>The name you assign here becomes the initial host
+                    name of the server. After the server is built, if you change
+                    the server name in the API or change the host name directly,
+                    the names are not updated in the dashboard.</para>
+                    <para>Server names are not guaranteed to be unique when
+                    created so you could have two instances with the same host
+                    name.</para>
+                  </note>
+                  </td>
+                </tr>
+                <tr>
+                  <td><para><guilabel>Flavor</guilabel></para></td>
+                  <td><para>Specify the size of the instance to launch.</para>
+                  <note><para>The flavor is selected based on the size of the
+                    image selected for launching an instance. For example, while
+                    creating an image, if you have entered the value in the
+                    <guilabel>Minimun RAM (MB)</guilabel> field as 2048, then on
+                    selecting the image, the default flavor is
+                    <guilabel>m1.small</guilabel>.</para>
+                  </note>
+                  </td>
+                </tr>
+                <tr>
+                  <td><para><guilabel>Instance Count</guilabel></para></td>
+                  <td><para>To launch multiple instances, enter a value greater
+                    than 1. The default is 1.</para></td>
+                </tr>
+                <tr>
+                  <td><para><guilabel>Instance Boot Source</guilabel></para></td>
+                  <td><para>Your options are:</para>
+                    <variablelist>
+                      <varlistentry>
+                        <term><guilabel>Boot from image</guilabel></term>
+                        <listitem><para>If you choose this option, a new field
+                          for <guilabel>Image Name</guilabel> displays. You can
+                          select the image from the list.</para></listitem>
+                      </varlistentry>
+                      <varlistentry>
+                        <term><guilabel>Boot from snapshot</guilabel></term>
+                        <listitem><para>If you choose this option, a new field for
+                          <guilabel>Instance Snapshot</guilabel> displays. You
+                          can select the snapshot from the list.</para></listitem>
+                      </varlistentry>
+                      <varlistentry>
+                        <term><guilabel>Boot from volume</guilabel></term>
+                        <listitem><para>If you choose this option, a new field for
+                          <guilabel>Volume</guilabel> displays. You can select
+                          the volume from the list.</para></listitem>
+                      </varlistentry>
+                      <varlistentry>
+                        <term><guilabel>Boot from image (creates a new volume)</guilabel></term>
+                        <listitem><para>With this option, you can boot from an
+                          image and create a volume by entering the
+                          <guilabel>Device Size</guilabel> and <guilabel>Device Name</guilabel>
+                          for your volume. Click the <guilabel>Delete on Terminate</guilabel>
+                          option to delete the volume on terminating the instance.
+                          </para></listitem>
+                      </varlistentry>
+                      <varlistentry>
+                        <term><guilabel>Boot from volume snapshot (creates a new
+                          volume)</guilabel></term>
+                        <listitem><para>Using this option, you can boot from a
+                          volume snapshot and create a new volume by choosing
+                          <guilabel>Volume Snapshot</guilabel> from a list and
+                          adding a <guilabel>Device Name</guilabel> for your volume.
+                          Click the <guilabel>Delete on Terminate</guilabel> option
+                          to delete the volume on terminating the instance.
+                          </para></listitem>
+                      </varlistentry>
+                    </variablelist>
+                      <para>Since you are launching an instance from an
+                      image, <guilabel>Boot from image</guilabel> is
+                      chosen by default.</para>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><para><guilabel>Image Name</guilabel></para></td>
+                    <td><para>This field changes based on your previous selection.
+                      Since you have chosen to launch an instance using an image,
+                      the <guilabel>Image Name</guilabel> field displays. Select
+                      the image name from the dropdown list.</para>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th colspan="2" align="center"><guilabel>Access &amp; Security
+                      </guilabel> tab</th>
+                  </tr>
+                  <tr>
+                    <td><para><guilabel>Keypair</guilabel></para></td>
+                    <td><para>Specify a key pair.</para>
+                      <para>If the image uses a static root password or a
+                      static key set (neither is recommended), you do
+                      not need to provide a key pair to launch the instance.</para></td>
+                  </tr>
+                  <tr>
+                    <td><para><guilabel>Security Groups</guilabel></para></td>
+                    <td><para>Activate the security groups that you want to
+                      assign to the instance.</para>
+                      <para>Security groups are a kind of cloud firewall that
+                        define which incoming network traffic is forwarded to
+                        instances. For details, see <xref linkend="security_groups_add_rule"/>.
+                      </para>
+                      <para>If you have not created any security groups, you can
+                        assign only the default security group to the instance.
+                      </para></td>
+                  </tr>
+                  <tr>
+                    <th colspan="2" align="center"><guilabel>Networking</guilabel> tab</th>
+                  </tr>
+                  <tr>
+                    <td><para><guilabel>Selected Networks</guilabel></para></td>
+                    <td><para>To add a network to the instance, click the
+                      <guibutton>+</guibutton> in the <guilabel>Available Networks</guilabel>
+                      field.</para>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th colspan="2" align="center"><guilabel>Post-Creation</guilabel> tab</th>
+                  </tr>
+                  <tr>
+                    <td><para><guilabel>Customization Script</guilabel></para></td>
+                    <td><para>Specify a customization script that runs after your
+                      instance launches.</para></td>
+                  </tr>
+                  <tr>
+                    <th colspan="2" align="center"><guilabel>Advanced Options</guilabel> tab</th>
+                  </tr>
+                  <tr>
+                    <td><para><guilabel>Disk Partition</guilabel></para></td>
+                    <td><para>Select the type of disk partition from the dropdown
+                      list.</para>
+                        <variablelist>
+                          <varlistentry>
+                            <term><guilabel>Automatic</guilabel></term>
+                            <listitem>
+                              <para>Entire disk is single partition and
+                                automatically resizes.</para></listitem>
+                          </varlistentry>
+                          <varlistentry>
+                            <term><guilabel>Manual</guilabel></term>
+                            <listitem>
+                              <para>Faster build times but requires
+                              manual partitioning.</para></listitem>
+                          </varlistentry>
+                        </variablelist>
+                          <!--Currently this tab is displayed all the time. As a
+                          part of LP#1306302, this will be available only when the
+                          nova_diskconfig setting is enabled. Will remove the
+                          comment and include this note when the bug is backported
+                          to Icehouse.
+                          <note>
+                            <para>This tab is displayed only if you have enabled
+                              the nova_diskconfig extension.</para>
+                          </note>-->
                         </td>
-                    </tr>
-                    <tr>
-                        <td><para><guilabel>Instance Name</guilabel></para></td>
-                        <td><para>Assign a name to the virtual machine.</para>
-                            <note>
-                                <para>The name you assign here becomes the
-                                    initial host name of the server. After the
-                                    server is built, if you change the server
-                                    name in the API or change the host name
-                                    directly, the names are not updated in the
-                                    dashboard.</para>
-                                <para>Server names are not guaranteed to be
-                                    unique when created so you could have two
-                                    instances with the same host name.</para>
-                            </note>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <para><guilabel>Flavor</guilabel></para></td>
-                        <td><para>Specify the size of the instance to
-                                launch.</para></td>
-                    </tr>
-                    <tr>
-                        <td><para><guilabel>Instance
-                            Count</guilabel></para></td>
-                        <td><para>To launch multiple instances, enter a value
-                                greater than 1. The default is 1.</para></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <para>
-                                <guilabel>Instance Boot Source</guilabel>
-                            </para>
-                        </td>
-                        <td><para>Your options are:</para>
-                            <itemizedlist>
-                                <listitem>
-                                    <para>
-                                        <guilabel>Boot from
-                                        image</guilabel>&mdash;If you choose
-                                        this option, a new field for
-                                        <guilabel>Image Name</guilabel>
-                                        displays. You can select the image from
-                                        the list.</para>
-                                </listitem>
-                                <listitem>
-                                    <para>
-                                        <guilabel>Boot from
-                                        snapshot</guilabel>&mdash;If you choose
-                                        this option, a new field for
-                                        <guilabel>Instance Snapshot</guilabel>
-                                        displays. You can select the snapshot
-                                        from the list.</para>
-                                </listitem>
-                                <listitem>
-                                    <para>
-                                        <guilabel>Boot from
-                                        volume</guilabel>&mdash;If you choose
-                                        this option, a new field for
-                                        <guilabel>Volume</guilabel> displays.
-                                        You can select the volume from the
-                                        list.</para>
-                                </listitem>
-                                <listitem>
-                                    <para>
-                                        <guilabel>Boot from image (creates a new
-                                        volume) </guilabel>&mdash;With this
-                                        option, you can boot from an image and
-                                        create a volume by entering the
-                                        <guilabel>Device Size</guilabel> and
-                                        <guilabel>Device Name</guilabel> for
-                                        your volume.</para>
-                                </listitem>
-                                <listitem>
-                                    <para>
-                                        <guilabel>Boot from volume snapshot
-                                        (creates a new volume)</guilabel>&mdash;
-                                        Using this option, you can boot from a
-                                        volume snapshot and create a new volume
-                                        by choosing <guilabel>Volume
-                                        Snapshot</guilabel> from a list and
-                                        adding a <guilabel>Device
-                                        Name</guilabel> for your volume.</para>
-                                </listitem>
-                            </itemizedlist>
-                            <para>Since you are launching an instance from an
-                                image, <guilabel>Boot from image</guilabel> is
-                                chosen by default.</para>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <para>
-                                <guilabel>Image Name</guilabel>
-                            </para>
-                        </td>
-                        <td>
-                            <para>This field changes based on your previous
-                                selection. Since you have chosen to launch an
-                                instance using an image, the <guilabel>Image
-                                    Name</guilabel> field displays. Select the
-                                image name from the dropdown list.</para>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th colspan="2" align="center"><guilabel>Access &amp;
-                                Security</guilabel> tab</th>
-                    </tr>
-                    <tr>
-                        <td><para><guilabel>Keypair</guilabel></para></td>
-                        <td><para>Specify a key pair.</para>
-                            <para>If the image uses a static root password or a
-                                static key set (neither is recommended), you do
-                                not need to provide a key pair to launch the
-                                instance.</para></td>
-                    </tr>
-                    <tr>
-                        <td><para><guilabel>Security
-                            Groups</guilabel></para></td>
-                        <td><para>Activate the security groups that you want to
-                                assign to the instance.</para>
-                            <para>Security groups are a kind of cloud firewall
-                                that define which incoming network traffic is
-                                forwarded to instances. For details, see <xref
-                                    linkend="security_groups_add_rule"/>.</para>
-                            <para>If you have not created any security groups,
-                                you can assign only the default security group
-                                to the instance.</para></td>
-                    </tr>
-                    <tr>
-                        <th colspan="2" align="center"
-                                ><guilabel>Networking</guilabel> tab</th>
-                    </tr>
-                    <tr>
-                        <td><para><guilabel>Selected
-                            Networks</guilabel></para></td>
-                        <td><para>To add a network to the instance, click the
-                                    <guibutton>+</guibutton> in the
-                                    <guilabel>Available Networks</guilabel>
-                                field.</para></td>
-                    </tr>
-                    <tr>
-                        <th colspan="2" align="center"
-                                ><guilabel>Post-Creation</guilabel> tab</th>
-                    </tr>
-                    <tr>
-                        <td><para><guilabel>Customization
-                                Script</guilabel></para></td>
-                        <td><para>Specify a customization script that runs after
-                                your instance launches.</para></td>
                     </tr>
                 </tbody>
             </informaltable>
