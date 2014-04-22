@@ -6,14 +6,9 @@
     xmlns:html="http://www.w3.org/1999/xhtml" version="5.0"
     xml:id="ceilometer_cli_commands">
     <title>Measure cloud resources</title>
-    <para>Telemetry measures cloud resources in
-        OpenStack.</para>
-    <para>It collects information about how much, who, what, and when
-        with regards to billing. Currently, metering is available
-        through only the <command>ceilometer</command> command-line
-        client.</para>
-    <para>To model data, Telemetry uses these
-        abstractions:</para>
+    <para>Telemetry measures cloud resources in OpenStack. It collects data related to billing. Currently, this metering service is available through
+        only the <command>ceilometer</command> command-line client.</para>
+    <para>To model data, Telemetry uses the following abstractions:</para>
     <variablelist wordsize="10">
         <varlistentry>
             <term><emphasis role="bold">Meter</emphasis></term>
@@ -31,18 +26,15 @@
                 <para>A meter has the following attributes:</para>
                 <itemizedlist>
                     <listitem>
-                        <para>String name.</para>
+                        <para>String name</para>
                     </listitem>
                     <listitem>
-                        <para>A unit of measurement.</para>
+                        <para>A unit of measurement</para>
                     </listitem>
                     <listitem>
-                        <para>A type. Indicates whether values
-                            increase monotonically (cumulative), are
-                            interpreted as a change from the previous
-                            value (delta), or are standalone and
-                            relate only to the current duration
-                            (gauge).</para>
+                        <para>A type, which indicates whether values increase monotonically (cumulative), are
+                            interpreted as a change from the previous value (delta), or are stand-alone and relate only
+                            to the current duration (gauge)</para>
                     </listitem>
                 </itemizedlist>
             </listitem>
@@ -50,21 +42,16 @@
         <varlistentry>
             <term><emphasis role="bold">Sample</emphasis></term>
             <listitem>
-                <para>An individual data point that is associated with
-                    a specific meter. Has the same attributes as the
-                    meter, with the addition of timestamp and value
-                    attributes. The value attribute is also known as
-                    the sample <emphasis role="italic"
-                        >volume</emphasis>.</para>
+                <para>An individual data point that is associated with a specific meter. A sample has the same
+                    attributes as the associated meter, with the addition of time stamp and value attributes. The value
+                    attribute is also known as the sample <emphasis role="italic">volume</emphasis>.</para>
             </listitem>
         </varlistentry>
         <varlistentry>
             <term><emphasis role="bold">Statistic</emphasis></term>
             <listitem>
-                <para>A set of data point aggregates over a time
-                    duration. (In contrast, a sample represents a
-                    single data point.) The Telemetry service employs
-                    these aggregation functions:</para>
+                <para>A set of data point aggregates over a time duration. (In contrast, a sample represents a single
+                    data point.) The Telemetry service employs the following aggregation functions:</para>
                 <itemizedlist>
                     <listitem>
                         <para><emphasis role="bold">count</emphasis>.
@@ -97,22 +84,13 @@
         <varlistentry>
             <term><emphasis role="bold">Alarm</emphasis></term>
             <listitem>
-                <para>A set of rules that define a monitor and a
-                    current state, with edge-triggered actions
-                    associated with target states. Provides
-                    user-oriented Monitoring-as-a-Service and a
-                    general purpose utility for OpenStack.
-                    Orchestration auto scaling is a typical use-case.
-                    Alarms follow a tristate model of
-                        <literal>ok</literal>,
-                        <literal>alarm</literal>, and
-                        <literal>insufficient data</literal>. For
-                    conventional threshold-oriented alarms, a static
-                    threshold value and comparison operator govern
-                    state transitions. The comparison operator
-                    compares a selected meter statistic against an
-                    evaluation window of configurable length into the
-                    recent past.</para>
+                <para>A set of rules that define a monitor and a current state, with edge-triggered actions associated
+                    with target states. Alarms provide user-oriented Monitoring-as-a-Service and a general purpose
+                    utility for OpenStack. Orchestration auto scaling is a typical use case. Alarms follow a tristate
+                    model of <literal>ok</literal>, <literal>alarm</literal>, and <literal>insufficient data</literal>.
+                    For conventional threshold-oriented alarms, a static threshold value and comparison operator govern
+                    state transitions. The comparison operator compares a selected meter statistic against an evaluation
+                    window of configurable length into the recent past.</para>
             </listitem>
         </varlistentry>
     </variablelist>
@@ -122,7 +100,9 @@
         resources.</para>
     <procedure>
         <step>
-            <para>Create an auto-scaling stack:</para>
+            <para>Create an auto-scaling stack by running the following command. The <literal>-f</literal> option
+                specifies the name of the stack template file, and the <literal>-P</literal> option specifies the
+                    <literal>KeyName</literal> parameter as <literal>heat_key</literal>.</para>
             <screen><prompt>$</prompt> <userinput>heat stack-create -f cfn/F17/AutoScalingCeilometer.yaml -P "KeyName=heat_key"</userinput></screen>
         </step>
         <step>

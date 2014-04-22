@@ -8,20 +8,16 @@
     xml:id="cli_manage_volumes">
     <?dbhtml stop-chunking?>
     <title>Manage volumes</title>
-    <para>A volume is a detachable block storage device, similar to a
-        USB hard drive. You can attach a volume to only one instance.
-        To create and manage volumes, you use a combination of nova
-        and cinder client commands.</para>
-    <para audience="enduser">This example creates a
-            <literal>my-new-volume</literal> volume based on an
-        image.</para>
+    <para>A volume is a detachable block storage device, similar to a USB hard drive. You can attach a volume to only one
+        instance. To create and manage volumes, you use a combination of <command>nova</command> and <command>cinder</command>
+        client commands.</para>
     <section xml:id="cli_migrate_volumes" audience="adminuser">
         <title>Migrate a volume</title>
         <para>As an administrator, you can migrate a volume with its
             data from one location to another in a manner that is
             transparent to users and workloads. You can migrate only
             detached volumes with no snapshots.</para>
-        <para>Possible use cases for data migration:</para>
+        <para>Possible use cases for data migration include:</para>
         <itemizedlist>
             <listitem>
                 <para>Bring down a physical storage device for
@@ -35,25 +31,21 @@
                     end.</para>
             </listitem>
         </itemizedlist>
-        <para>Migrate a volume, as follows:</para>
+        <para>Migrate a volume with the <command>cinder migrate</command> command, as shown in the following example:</para>
         <screen><prompt>$</prompt> <userinput>cinder migrate <replaceable>volumeID</replaceable> <replaceable>destinationHost</replaceable> --force-host-copy=<replaceable>True|False</replaceable></userinput></screen>
-        <para>Where <literal>--force-host-copy=True</literal> forces
-            the generic host-based migration mechanism and bypasses
-            any driver optimizations.</para>
+        <para>In this example, <literal>--force-host-copy=True</literal> forces the generic host-based migration mechanism and
+            bypasses any driver optimizations.</para>
         <note>
-            <para>If the volume is in use or has snapshots, the
-                specified host destination cannot accept the
-                volume.</para>
-            <para>If the user is not an administrator, the migration
-                fails.</para>
+            <para>If the volume is in use or has snapshots, the specified host destination cannot accept the volume. If the user
+                is not an administrator, the migration fails.</para>
         </note>
     </section>
     <section xml:id="cli_list_volumes" audience="enduser">
         <title>Create a volume</title>
+        <para>This example creates a my-new-volume volume based on an image.</para>
         <procedure>
             <step>
-                <para>List images, and note the ID of the image to use
-                    for your volume:</para>
+                <para>List images, and note the ID of the image that you want to use for your volume:</para>
                 <screen><prompt>$</prompt> <userinput>nova image-list</userinput></screen>
                 <screen><?db-font-size 65%?><computeroutput>+--------------------------------------+---------------------------------+--------+--------------------------------------+
 | ID                                   | Name                            | Status | Server                               |
@@ -66,8 +58,7 @@
 +--------------------------------------+---------------------------------+--------+--------------------------------------+</computeroutput></screen>
             </step>
             <step>
-                <para>List the availability zones, and note the ID of
-                    the availability zone in which to create your
+                <para>List the availability zones, and note the ID of the availability zone in which you want to create your
                     volume:</para>
                 <screen><prompt>$</prompt> <userinput>nova availability-zone-list</userinput></screen>
                 <screen><?db-font-size 65%?><computeroutput>+-----------------------+----------------------------------------+
@@ -86,8 +77,7 @@
 +-----------------------+----------------------------------------+</computeroutput></screen>
             </step>
             <step>
-                <para>Create a volume with 8&nbsp;GB of space. Specify the
-                    availability zone and image:</para>
+                <para>Create a volume with 8&nbsp;GB of space, and specify the availability zone and image:</para>
                 <screen><prompt>$</prompt> <userinput>cinder create 8 --display-name my-new-volume --image-id 397e713c-b95b-4186-ad46-6126863ea0a9 --availability-zone nova</userinput></screen>
                 <screen><?db-font-size 65%?><computeroutput>+---------------------+--------------------------------------+
 |       Property      |                Value                 |
@@ -129,7 +119,7 @@
         <title>Attach a volume to an instance</title>
         <procedure>
             <step>
-                <para>Attach your volume to a server:</para>
+                <para>Attach your volume to a server, specifying the server ID and the volume ID:</para>
                 <screen><prompt>$</prompt> <userinput>nova volume-attach 84c6e57d-a6b1-44b6-81eb-fcb36afd31b5  573e024d-5235-49ce-8332-be1576d323f8 /dev/vdb</userinput></screen>
                 <screen><?db-font-size 65%?><computeroutput>+----------+--------------------------------------+
 | Property | Value                                |
@@ -144,6 +134,9 @@
             <step>
                 <para>Show information for your volume:</para>
                 <screen><prompt>$</prompt> <userinput>cinder show 573e024d-5235-49ce-8332-be1576d323f8</userinput></screen>
+                <para>The output shows that the volume is attached to the server with ID
+                        <literal>84c6e57d-a6b1-44b6-81eb-fcb36afd31b5</literal>, is in the nova availability zone, and is
+                    bootable.</para>
                 <screen><?db-font-size 65%?><computeroutput>+------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |           Property           |                                                                                                      Value                                                                                                       |
 +------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -164,11 +157,6 @@
 |    volume_image_metadata     | {u'kernel_id': u'df430cc2-3406-4061-b635-a51c16e488ac', u'image_id': u'397e713c-b95b-4186-ad46-6126863ea0a9', u'ramdisk_id': u'3cf852bd-2332-48f4-9ae4-7d926d50945e', u'image_name': u'cirros-0.3.2-x86_64-uec'} |
 |         volume_type          |                                                                                                       None                                                                                                       |
 +------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+</computeroutput></screen>
-                <para>The output shows that the volume is attached to
-                    the server with ID
-                        <literal>84c6e57d-a6b1-44b6-81eb-fcb36afd31b5</literal>,
-                    is in the nova availability zone, and is
-                    bootable.</para>
             </step>
         </procedure>
     </section>
@@ -178,8 +166,7 @@
             <step>
                 <para>To resize your volume, you must first detach it
                     from the server.</para>
-                <para>To detach the volume from your server, pass the
-                    server ID and volume ID to the command:</para>
+                <para>To detach the volume from your server, pass the server ID and volume ID to the following command:</para>
                 <screen><prompt>$</prompt> <userinput>nova volume-detach 84c6e57d-a6b1-44b6-81eb-fcb36afd31b5 573e024d-5235-49ce-8332-be1576d323f8</userinput></screen>
                 <para>The <command>volume-detach</command> command
                     does not return any output.</para>
@@ -199,7 +186,7 @@
                 <para>Resize the volume by passing the volume ID and
                     the new size (a value greater than the old one) as
                     parameters:</para>
-                <screen><prompt>$</prompt> <userinput>cinder extend <replaceable>573e024d-5235-49ce-8332-be1576d323f8</replaceable> <replaceable>10</replaceable></userinput></screen>
+                <screen><prompt>$</prompt> <userinput>cinder extend 573e024d-5235-49ce-8332-be1576d323f8 10</userinput></screen>
                 <para>The <command>extend</command> command does not
                     return any output.</para>
             </step>
@@ -211,13 +198,11 @@
             <step>
                 <para>To delete your volume, you must first detach it
                     from the server.</para>
-                <para>To detach the volume from your server and check
-                    for the list of existing volumes, see steps 1 and
-                    2 mentioned in <xref linkend="cli_extend_volumes"
-                    />.</para>
+                <para>To detach the volume from your server and check for the list of existing volumes, see steps 1 and 2 in <xref
+                        linkend="cli_extend_volumes"/>.</para>
             </step>
             <step>
-                <para>Delete the volume:</para>
+                <para>Delete the volume using either the volume name or ID:</para>
                 <screen><prompt>$</prompt> <userinput>cinder delete my-new-volume</userinput></screen>
                 <para>The delete command does not return any
                     output.</para>
@@ -259,9 +244,7 @@
         <para>Use cases include:</para>
         <itemizedlist>
             <listitem>
-                <para>Create a custom bootable volume or a volume with
-                    a large data set and transfer it to the end
-                    customer.</para>
+                <para>Create a custom bootable volume or a volume with a large data set and transfer it to a customer.</para>
             </listitem>
             <listitem>
                 <para>For bulk import of data to the cloud, the data
@@ -274,8 +257,7 @@
             <title>Create a volume transfer request</title>
             <procedure>
                 <step>
-                    <para>While logged in as the volume donor, list
-                        available volumes:</para>
+                    <para>While logged in as the volume donor, list the available volumes:</para>
                     <screen><prompt>$</prompt> <userinput>cinder list</userinput></screen>
                     <screen><computeroutput>+--------------------------------------+-----------+--------------+------+-------------+----------+-------------+
 |                  ID                  |   Status  | Display Name | Size | Volume Type | Bootable | Attached to |
@@ -289,14 +271,12 @@
                         transfer authorization code for a specific
                         volume:</para>
                     <screen><prompt>$</prompt> <userinput>cinder transfer-create <replaceable>volumeID</replaceable></userinput></screen>
-                    <para>The volume must be in an ‘available’ state
-                        or the request will be denied. If the transfer
-                        request is valid in the database (that is, it
-                        has not expired or been deleted), the volume
-                        is placed in an <literal>awaiting
-                            transfer</literal> state. For
-                        example:</para>
+                    <para>The volume must be in an <literal>available</literal> state or the request will be denied. If the
+                        transfer request is valid in the database (that is, it has not expired or been deleted), the volume is
+                        placed in an <literal>awaiting transfer</literal> state. For example:</para>
                     <screen><prompt>$</prompt> <userinput>cinder transfer-create a1cdace0-08e4-4dc7-b9dc-457e9bcfe25f</userinput></screen>
+                    <para>The output shows the volume transfer ID in the <literal>id</literal> row and the authorization
+                        key.</para>
                     <screen><computeroutput>+------------+--------------------------------------+
 |  Property  |                Value                 |
 +------------+--------------------------------------+
@@ -349,8 +329,7 @@
                         from the original owner.</para>
                 </step>
                 <step>
-                    <para>Display the transfer request details using
-                        the ID:</para>
+                    <para>Display the transfer request details by using the ID:</para>
                     <screen><prompt>$</prompt> <userinput>cinder transfer-show <replaceable>transferID</replaceable></userinput></screen>
                     <para>For example:</para>
                     <screen><prompt>$</prompt> <userinput>cinder transfer-show 6e4e9aa4-bed5-4f94-8f76-df43232f44dc</userinput></screen>
@@ -414,8 +393,7 @@
                     <screen><prompt>$</prompt> <userinput>cinder transfer-delete a6da6888-7cdf-4291-9c08-8c1f22426b8a</userinput></screen>
                 </step>
                 <step>
-                    <para>The transfer list is now empty and the
-                        volume is again available for transfer:</para>
+                    <para>Verify that transfer list is now empty and that the volume is again available for transfer:</para>
                     <screen><prompt>$</prompt> <userinput>cinder transfer-list</userinput></screen>
                     <screen><computeroutput>+----+-----------+------+
 | ID | Volume ID | Name |

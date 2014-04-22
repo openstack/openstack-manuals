@@ -7,22 +7,31 @@
     xml:id="heat-stack-create">
     <?dbhtml stop-chunking?>
     <title>Create and manage stacks</title>
-    <para>The template languages are described in
-        <link
-        xlink:href="http://docs.openstack.org/developer/heat/template_guide/index.html"
-        >the Template Guide</link> in the <link
-        xlink:href="http://docs.openstack.org/developer/heat/">Heat
-        developer documentation</link>.</para>
+    <para>The Orchestration module enables you to orchestrate multiple composite cloud applications.
+        This module supports use of both the Amazon Web Services (AWS) CloudFormation template
+        format through both a Query API that is compatible with CloudFormation and the native
+        OpenStack <glossterm>Heat Orchestration Template (HOT)</glossterm> format through a REST
+        API.</para>
+    <para>These flexible template languages
+        enable application developers to describe and automate the deployment of infrastructure,
+        services, and applications. The templates enable creation of most OpenStack resource types,
+        such as instances, floating IP addresses, volumes, security groups, and users. The
+        resources, once created, are referred to as stacks.</para>
+    <para>The template languages are described
+        in <link xlink:href="http://docs.openstack.org/developer/heat/template_guide/index.html">the
+            Template Guide</link> in the <link
+            xlink:href="http://docs.openstack.org/developer/heat/">Heat developer
+            documentation</link>.</para>
     <section xml:id="create_stack">
         <title>Create a stack from an example template file</title>
-        <procedure>
-            <step>
+        <itemizedlist>
+            <listitem>
                 <para>To create a stack, or template, from an <link
                         xlink:href="https://github.com/openstack/heat-templates"
                         >example template file</link>, run the following
                     command:</para>
                 <screen><prompt>$</prompt> <userinput>heat stack-create mystack --template-file=/<replaceable>PATH_TO_HEAT_TEMPLATES</replaceable>/WordPress_Single_Instance.template</userinput>
-     <userinput>--parameters="InstanceType=m1.large;DBUsername=<replaceable>USERNAME</replaceable>;DBPassword=<replaceable>PASSWORD</replaceable>;KeyName=<replaceable>HEAT_KEY</replaceable>;LinuxDistribution=F17"</userinput></screen>
+   <userinput>--parameters="InstanceType=m1.large;DBUsername=<replaceable>USERNAME</replaceable>;DBPassword=<replaceable>PASSWORD</replaceable>;KeyName=<replaceable>HEAT_KEY</replaceable>;LinuxDistribution=F17"</userinput></screen>
                 <para>The <literal>--parameters</literal> values that
                     you specify depend on the parameters that are defined
                     in the template. If a website hosts the template file, you can specify the URL with the
@@ -35,8 +44,8 @@
 +--------------------------------------+---------------+--------------------+----------------------+
 | 4c712026-dcd5-4664-90b8-0915494c1332 | mystack       | CREATE_IN_PROGRESS | 2013-04-03T23:22:08Z |
 +--------------------------------------+---------------+--------------------+----------------------+</computeroutput></screen>
-            </step>
-            <step>
+            </listitem>
+            <listitem>
                 <para>You can also use the
                         <command>stack-create</command> command to
                     validate a template file without creating a stack
@@ -45,8 +54,8 @@
                 <screen><prompt>$</prompt> <userinput>heat stack-create mystack --template-file=/<replaceable>PATH_TO_HEAT_TEMPLATES</replaceable>/WordPress_Single_Instance.template</userinput></screen>
                 <para>If validation fails, the response returns an
                     error message.</para>
-            </step>
-        </procedure>
+            </listitem>
+        </itemizedlist>
     </section>
     <section xml:id="stack_info">
         <title>Get information about stacks</title>
@@ -70,10 +79,8 @@
                 <screen><prompt>$</prompt> <userinput>heat stack-show mystack</userinput></screen>
             </listitem>
             <listitem>
-                <para>A stack consists of a collection of
-                    resources.</para>
-                <para>To list the resources and their status, run the
-                    following command:</para>
+                <para>A stack consists of a collection of resources. To list the resources and their
+                    status, run the following command:</para>
                 <screen><prompt>$</prompt> <userinput>heat resource-list mystack</userinput>
 <computeroutput>+---------------------+--------------------+-----------------+----------------------+
 | logical_resource_id | resource_type      | resource_status | updated_time         |
@@ -82,18 +89,16 @@
 +---------------------+--------------------+-----------------+----------------------+</computeroutput></screen>
             </listitem>
             <listitem>
-                <para>To show the details for the specified resource
-                    in a stack, run the following command:</para>
-                <screen><prompt>$</prompt> <userinput>heat resource-show mystack WikiDatabase</userinput></screen>
-                <para>Some resources have associated metadata which
-                    can change throughout the life-cycle of a
-                    resource:</para>
+                <para>To show the details for a specific resource in a stack, run the following
+                    command:</para>
+                <screen><prompt>$</prompt> <userinput>heat resource-show mystack WikiDatabase</userinput></screen></listitem>
+                <listitem><para>Some resources have associated metadata which can change throughout the life cycle of a
+                    resource. Show the metadata by running the following command:</para>
                 <screen><prompt>$</prompt> <userinput>heat resource-metadata mystack WikiDatabase</userinput></screen>
             </listitem>
             <listitem>
-                <para>A series of events is generated during the
-                    life-cycle of a stack.</para>
-                <para>To display life-cycle events, run:</para>
+                <para>A series of events is generated during the life cycle of a stack. To display
+                    life cycle events, run the following command::</para>
                 <screen><prompt>$</prompt> <userinput>heat event-list mystack</userinput>
 <computeroutput>+---------------------+----+------------------------+-----------------+----------------------+
 | logical_resource_id | id | resource_status_reason | resource_status | event_time           |
@@ -111,9 +116,7 @@
     </section>
     <section xml:id="update_stack">
         <title>Update a stack</title>
-        <procedure xml:id="heat-stack-update">
-            <step>
-                <para>To update an existing stack from a modified
+                <para xml:id="heat-stack-update">To update an existing stack from a modified
                     template file, run a command like the following
                     command:</para>
                 <screen><prompt>$</prompt> <userinput>heat stack-update mystack --template-file=/path/to/heat/templates/WordPress_Single_Instance_v2.template</userinput>
@@ -126,7 +129,5 @@
 +--------------------------------------+---------------+-----------------+----------------------+</computeroutput></screen>
                 <para>Some resources are updated in-place, while
                     others are replaced with new resources.</para>
-            </step>
-        </procedure>
     </section>
 </section>

@@ -5,12 +5,12 @@
     xml:id="managing-openstack-object-storage-with-swift-cli">
     <title>Manage objects and containers</title>
     <?dbhtml stop-chunking?>
-    <para>The OpenStack Object Storage Service provides the
-            <command>swift</command> client, which is a command-line
-        interface (CLI). Use this client to list objects and
-        containers, upload objects to containers, and download or
-        delete objects from containers. You can also gather statistics
-        and update metadata for accounts, containers, and objects.</para>
+    <para>The OpenStack Object Storage service provides the
+      <command>swift</command> client, which is a command-line interface (CLI).
+    Use this client to list objects and containers, upload objects to
+    containers, and download or delete objects from containers. You can also
+    gather statistics and update metadata for accounts, containers, and
+    objects.</para>
     <para>This client is based on the native swift client library,
             <literal>client.py</literal>, which seamlessly
         re-authenticates if the current token expires during
@@ -18,45 +18,21 @@
         processing concurrency of 10.</para>
     <section xml:id="cli_create_containers">
       <title>Create and manage containers</title>
-      <procedure>
-      <step>
-        <para>To create a container:
-        </para>
-        <screen><prompt>$</prompt> <userinput>swift post <replaceable>CONTAINER</replaceable></userinput></screen>
-        <para>Replace <replaceable>CONTAINER</replaceable> with the name of your container.</para>
-        <para>Users have roles on accounts. For example, a user with the
-          admin role has full access to all containers and objects in an
-          account. You can set access control lists (ACLs) at the
-          container level and support lists for read and write access,
-            which you set with the <literal>X-Container-Read</literal> and
-              <literal>X-Container-Write</literal> header,
-                respectively.</para>
-        <para>To give a user read access, use the <command>swift
-            post</command> command with the <parameter>-r</parameter>
-        parameter. To give a user write access, use the
-            <parameter>-w</parameter> parameter.</para>
-    <para>The following example enables the
-            <literal>testuser</literal> user to read objects in the
-        container:</para>
-    <screen><prompt>$</prompt> <userinput>swift post -r 'testuser'</userinput></screen>
-    <para>You can also use this command with a list of users.</para>
-    <para>If you use StaticWeb middleware to enable Object Storage to
-        serve public web content, use <literal>.r:</literal>, followed
-        by a list of allowed referrers.</para>
-    <para>The following command gives object access to all referring
-        domains:</para>
-    <screen><prompt>$</prompt> <userinput>swift post -r '.r:*'</userinput></screen>
-      </step>
-    <step>
-      <para>To list all containers:
-      </para>
+      <itemizedlist>
+      <listitem>
+        <para>To create a container, run the following command and replace
+            <replaceable>CONTAINER</replaceable> with the name of your
+          container.</para>
+        <screen><prompt>$</prompt> <userinput>swift post <replaceable>CONTAINER</replaceable></userinput></screen></listitem>
+    <listitem>
+      <para>To list all containers: run the following command:</para>
       <screen><prompt>$</prompt> <userinput>swift list</userinput></screen>
-    </step>
-      <step>
-        <para>To check the status of containers:
-        </para>
-        <screen><prompt>$</prompt> <userinput>swift stat</userinput>
-<computeroutput>Account: AUTH_7b5970fbe7724bf9b74c245e77c03bcg
+    </listitem>
+      <listitem>
+        <para>To check the status of containers, run the following
+          command:</para>
+        <screen><prompt>$</prompt> <userinput>swift stat</userinput></screen>
+<screen><computeroutput>Account: AUTH_7b5970fbe7724bf9b74c245e77c03bcg
 Containers: 2
 Objects: 3
 Bytes: 268826
@@ -66,8 +42,8 @@ Content-Type: text/plain; charset=utf-8</computeroutput></screen>
         <para>You can also use the <command>swift stat</command> command with the
         <replaceable>ACCOUNT</replaceable> or <replaceable>CONTAINER</replaceable>
         names as parameters.</para>
-        <screen><prompt>$</prompt> <userinput>swift stat <replaceable>CONTAINER</replaceable></userinput>
-<computeroutput>Account: AUTH_7b5970fbe7724bf9b74c245e77c03bcg
+        <screen><prompt>$</prompt> <userinput>swift stat <replaceable>CONTAINER</replaceable></userinput></screen>
+<screen><computeroutput>Account: AUTH_7b5970fbe7724bf9b74c245e77c03bcg
 Container: storage1
 Objects: 2
 Bytes: 240221
@@ -78,24 +54,52 @@ Sync Key:
 Accept-Ranges: bytes
 X-Timestamp: 1392683866.20180
 Content-Type: text/plain; charset=utf-8</computeroutput></screen>
-      </step>
-    </procedure>
+      </listitem>
+      </itemizedlist>
+    </section>
+  <section xml:id="cli_manage_access_swift">
+    <title>Manage access</title>
+    <itemizedlist>
+      <listitem>
+        <para>Users have roles on accounts. For example, a user with the admin
+          role has full access to all containers and objects in an account. You
+          can set access control lists (ACLs) at the container level and support
+          lists for read and write access, which you set with the
+            <literal>X-Container-Read</literal> and
+            <literal>X-Container-Write</literal> headers.</para>
+        <para>To give a user read access, use the <command>swift post</command>
+          command with the <parameter>-r</parameter> parameter. To give a user
+          write access, use the <parameter>-w</parameter> parameter.</para>
+        <para>The following example enables the <literal>testuser</literal> user
+          to read objects in the container:</para>
+        <screen><prompt>$</prompt> <userinput>swift post -r 'testuser'</userinput></screen>
+        <para>You can also use this command with a list of users.</para>
+      </listitem>
+      <listitem>
+        <para>If you use StaticWeb middleware to enable Object Storage to serve
+          public web content, use <literal>.r:</literal>, followed by a list of
+          allowed referrers.</para>
+        <para>The following command gives object access to all referring
+          domains:</para>
+        <screen><prompt>$</prompt> <userinput>swift post -r '.r:*'</userinput></screen>
+      </listitem>
+    </itemizedlist>
   </section>
     <section xml:id="cli_manage_objects">
       <title>Manage objects</title>
-      <procedure>
-        <step>
-        <para>To upload an object to a container:
-        </para>
+      <itemizedlist>
+        <listitem>
+        <para>To upload an object to a container, run the following
+          command:</para>
       <screen><prompt>$</prompt> <userinput>swift upload <replaceable>CONTAINER</replaceable> <replaceable>OBJECT_FILENAME</replaceable></userinput></screen>
-        <para>To upload in chunks, for large files:
-        </para>
+        <para>To upload in chunks, for large files, run the following command:</para>
       <screen><prompt>$</prompt> <userinput>swift upload -S <replaceable>CHUNK_SIZE</replaceable> <replaceable>CONTAINER</replaceable> <replaceable>OBJECT_FILENAME</replaceable></userinput></screen>
-      </step>
-      <step>
-        <para>To check the status of the object:</para>
-      <screen><prompt>$</prompt> <userinput>swift stat <replaceable>CONTAINER</replaceable> <replaceable>OBJECT_FILENAME</replaceable></userinput>
-<computeroutput>Account: AUTH_7b5970fbe7724bf9b74c245e77c03bcg
+      </listitem>
+      <listitem>
+        <para>To check the status of the object, run the following
+          command:</para>
+      <screen><prompt>$</prompt> <userinput>swift stat <replaceable>CONTAINER</replaceable> <replaceable>OBJECT_FILENAME</replaceable></userinput></screen>
+<screen><computeroutput>Account: AUTH_7b5970fbe7724bf9b74c245e77c03bcg
 Container: storage1
 Object: images
 Content Type: application/octet-stream
@@ -105,17 +109,16 @@ ETag: 82169623d55158f70a0d720f238ec3ef
 Meta Orig-Filename: images.jpg
 Accept-Ranges: bytes
 X-Timestamp: 1392684036.33306</computeroutput></screen>
-    </step>
-      <step>
-        <para>To list objects in a container:
-        </para>
+    </listitem>
+      <listitem>
+        <para>To list the objects in a container, run the following command:</para>
         <screen><prompt>$</prompt> <userinput>swift list <replaceable>CONTAINER</replaceable> <replaceable>OBJECT_FILENAME</replaceable></userinput></screen>
-        </step>
-      <step>
-        <para>To download an object from a container:
-        </para>
+        </listitem>
+      <listitem>
+        <para>To download an object from a container:, run the following
+          command:</para>
     <screen><prompt>$</prompt> <userinput>swift download <replaceable>CONTAINER</replaceable> <replaceable>OBJECT_FILENAME</replaceable></userinput></screen>
-      </step>
-    </procedure>
+      </listitem>
+    </itemizedlist>
   </section>
 </section>
