@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="vmware-glance-backend">
+    <title>Configure vCenter data stores for the Image Service back
+        end</title>
+    <?dbhtml stop-chunking?>
+    <para>To use vCenter data stores for the Image Service back end,
+        you must update the <filename>glance-api.conf</filename> file,
+        as follows:</para>
+    <itemizedlist>
+        <listitem>
+            <para>Add data store parameters to the <literal>VMware
+                    Datastore Store Options</literal> section.</para>
+        </listitem>
+        <listitem>
+            <para>Specify vSphere as the back end.</para>
+        </listitem>
+    </itemizedlist>
+    <note>
+        <para>You must configure any configured Image Service data
+            stores for the Compute service.</para>
+    </note>
+    <para>You can specify vCenter data stores directly by using the
+        data store name or Storage Policy Based Management (SPBM),
+        which requires vCenter Server 5.5 or later. For details, see
+            <xref linkend="glance-backend-DS"/>. <note>
+            <para>If you intend to use multiple data stores for the
+                back end, use the SPBM feature.</para>
+        </note></para>
+    <para>In the <literal>DEFAULT</literal> section, set the
+            <parameter>default_store</parameter> parameter to
+            <userinput>vsphere</userinput>, as shown in this code
+        sample:</para>
+    <programlisting language="ini">[DEFAULT]
+# Which back end scheme should Glance use by default is not specified
+# in a request to add a new image to Glance? Known schemes are determined
+# by the known_stores option below.
+# Default: 'file'
+default_store = vsphere</programlisting>
+    <para>The following table describes the parameters in the
+            <literal>VMware Datastore Store Options</literal>
+        section:</para>
+    <xi:include href="../../common/tables/glance-vmware.xml"/>
+    <para>The following block of text shows a sample
+        configuration:</para>
+    <programlisting language="ini"># ============ VMware Datastore Store Options =====================
+# ESX/ESXi or vCenter Server target system.
+# The server value can be an IP address or a DNS name
+# e.g. 127.0.0.1, 127.0.0.1:443, www.vmware-infra.com
+vmware_server_host = 192.168.0.10
+
+# Server username (string value)
+vmware_server_username = <replaceable>ADMINISTRATOR</replaceable>
+
+# Server password (string value)
+vmware_server_password = <replaceable>password</replaceable>
+
+# Inventory path to a datacenter (string value)
+# Value optional when vmware_server_ip is an ESX/ESXi host: if specified
+# should be `ha-datacenter`.
+vmware_datacenter_path = <replaceable>DATACENTER</replaceable>
+
+# Datastore associated with the datacenter (string value)
+vmware_datastore_name = <replaceable>datastore1</replaceable>
+
+# PBM service WSDL file location URL. e.g.
+# file:///opt/SDK/spbm/wsdl/pbmService.wsdl Not setting this
+# will disable storage policy based placement of images.
+# (string value)
+#vmware_pbm_wsdl_location =
+
+# The PBM policy. If `pbm_wsdl_location` is set, a PBM policy needs
+# to be specified. This policy will be used to select the datastore
+# in which the images will be stored.
+#vmware_pbm_policy =
+
+# The interval used for polling remote tasks
+# invoked on VMware ESX/VC server in seconds (integer value)
+vmware_task_poll_interval = <replaceable>5</replaceable>
+
+# Absolute path of the folder containing the images in the datastore
+# (string value)
+vmware_store_image_dir = <replaceable>/openstack_glance</replaceable>
+
+# Allow to perform insecure SSL requests to the target system (boolean value)
+vmware_api_insecure = <replaceable>False</replaceable></programlisting>
+    <section xml:id="glance-backend-DS">
+        <title>Configure vCenter data stores for the back end</title>
+        <para>You can specify a vCenter data store for the back end by
+            setting the <parameter>vmware_datastore_name</parameter>
+            parameter value to the vCenter name of the data store.
+            This configuration limits the back end to a single data
+            store.</para>
+        <para>Alternatively, you can specify a SPBM policy, which can
+            comprise multiple vCenter data stores. Both approaches are
+            described.</para>
+        <note>
+            <para>SPBM requires vCenter Server 5.5 or later.</para>
+        </note>
+        <procedure>
+            <title>To configure a single data store</title>
+            <step>
+                <para>If present, comment or delete the
+                        <parameter>vmware_pbm_wsdl_location</parameter>
+                    and <parameter>vmware_pbm_policy</parameter>
+                    parameters.</para>
+            </step>
+            <step>
+                <para>Uncomment and define the
+                        <parameter>vmware_datastore_name</parameter>
+                    parameter with the name of the vCenter data
+                    store.</para>
+            </step>
+            <step>
+                <para>Complete the other vCenter configuration
+                    parameters as appropriate.</para>
+            </step>
+        </procedure>
+        <procedure>
+            <title>To configure multiple data stores using
+                SPBM</title>
+            <step>
+                <para>In vCenter, tag the data stores to be used for
+                    the back end.</para>
+                <note>
+                    <para>For details about creating tags in vSphere,
+                        see the <link
+                            xlink:href="http://pubs.vmware.com/vsphere-55/index.jsp#com.vmware.vsphere.storage.doc/GUID-89091D59-844-46B2-94C2-35A3961D23E7.html"
+                            >vSphere documentation</link>.</para>
+                </note>
+            </step>
+            <step>
+                <para>Return to the
+                        <filename>glance-api.conf</filename>
+                    file.</para>
+            </step>
+            <step>
+                <para>Comment or delete the
+                        <parameter>vmware_datastore_name</parameter>
+                    parameter.</para>
+            </step>
+            <step>
+                <para>Uncomment and define the
+                        <parameter>vmware_pbm_policy</parameter>
+                    parameter by entering the same value as the tag
+                    you defined and applied to the data stores in
+                    vCenter.</para>
+            </step>
+            <step>
+                <para>Uncomment and define the
+                        <parameter>vmware_pbm_wsdl_location</parameter>
+                    parameter by entering the location of the PBM
+                    service WSDL file. For example,
+                        <filename>file:///opt/SDK/spbm/wsdl/pbmService.wsdl</filename>.</para>
+                <note>
+                    <para>If you do not set this parameter, the
+                        storage policy cannot be used to place images
+                        in the data store.</para>
+                </note>
+                <para>Complete the other vCenter configuration
+                    parameters as appropriate.</para>
+            </step>
+        </procedure>
+    </section>
+</section>
