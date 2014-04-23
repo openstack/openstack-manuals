@@ -198,6 +198,12 @@ export OS_AUTH_URL=http://localhost:5000/v2.0</programlisting>
                         ip_address=192.168.2.40</literal> is an
                     option, which specifies the port's fixed IP
                     address we wanted.</para>
+                <note>
+                    <para>When creating a port, you can specify any unallocated
+                        IP in the subnet even if the address is not in a
+                        pre-defined pool of allocated IP addresses (set by your
+                        cloud provider).</para>
+                </note>
             </step>
             <step>
                 <para>Create a port without specified IP
@@ -220,9 +226,10 @@ export OS_AUTH_URL=http://localhost:5000/v2.0</programlisting>
 | status               | DOWN                                                                               |
 | tenant_id            | 3671f46ec35e4bbca6ef92ab7975e463                                                   |
 +----------------------+------------------------------------------------------------------------------------+</computeroutput></screen>
-                <para>We can see that the system will allocate one IP
-                    address if we do not specify the IP address in
-                    command line.</para>
+                <note>
+                    <para>Note that the system allocates one IP address if you
+                        do not specify an IP address in the <command>neutron
+                            port-create</command> command.</para></note>
             </step>
             <step>
                 <para>Query ports with specified fixed IP
