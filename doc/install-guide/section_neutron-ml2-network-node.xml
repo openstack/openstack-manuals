@@ -456,8 +456,11 @@ enable_security_group = True</programlisting>
     </step>
     <step>
       <para>Add a port to the external bridge that connects to the physical
-        external network interface (eth2):</para>
-      <screen><prompt>#</prompt> <userinput>ovs-vsctl add-port br-ex eth2</userinput></screen>
+        external network interface:</para>
+      <para>Replace <replaceable>INTERFACE_NAME</replaceable> with the
+        actual interface name. For example, <emphasis>eth2</emphasis> or
+        <emphasis>ens256</emphasis>.</para>
+      <screen><prompt>#</prompt> <userinput>ovs-vsctl add-port br-ex <replaceable>INTERFACE_NAME</replaceable></userinput></screen>
       <note>
         <para>Depending on your network interface driver, you may need to
           disable <glossterm>Generic Receive Offload (GRO)</glossterm> to
@@ -465,7 +468,7 @@ enable_security_group = True</programlisting>
           network.</para>
         <para>To temporarily disable GRO on the external network interface
           while testing your environment:</para>
-        <screen><prompt>#</prompt> <userinput>ethtool -K eth2 gro off</userinput></screen>
+        <screen><prompt>#</prompt> <userinput>ethtool -K <replaceable>INTERFACE_NAME</replaceable> gro off</userinput></screen>
       </note>
     </step>
   </procedure>

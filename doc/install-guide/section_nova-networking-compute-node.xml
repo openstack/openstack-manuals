@@ -21,6 +21,9 @@
     <title>To configure legacy networking</title>
     <step os="rhel;centos;fedora;sles;opensuse">
       <para>Run the following commands:</para>
+      <para>Replace <replaceable>INTERFACE_NAME</replaceable> with the
+        actual interface name for the external network. For example,
+        <emphasis>eth1</emphasis> or <emphasis>ens224</emphasis>.</para>
       <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT \
   network_api_class nova.network.api.API</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT \
@@ -42,15 +45,18 @@
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT \
   force_dhcp_release True</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT \
-  flat_interface eth1</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT \
   flat_network_bridge br100</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT \
-  public_interface eth1</userinput></screen>
+  flat_interface <replaceable>INTERFACE_NAME</replaceable></userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT \
+  public_interface <replaceable>INTERFACE_NAME</replaceable></userinput></screen>
     </step>
     <step os="ubuntu;debian">
       <para>Edit the <filename>/etc/nova/nova.conf</filename> file and add the
         following keys to the <literal>[DEFAULT]</literal> section:</para>
+      <para>Replace <replaceable>INTERFACE_NAME</replaceable> with the
+        actual interface name for the external network. For example,
+        <emphasis>eth1</emphasis> or <emphasis>ens224</emphasis>.</para>
       <programlisting language="ini">[DEFAULT]
 ...
 network_api_class = nova.network.api.API
@@ -64,8 +70,8 @@ send_arp_for_ha = True
 share_dhcp_address = True
 force_dhcp_release = True
 flat_network_bridge = br100
-flat_interface = eth1
-public_interface = eth1</programlisting>
+flat_interface = <replaceable>INTERFACE_NAME</replaceable>
+public_interface = <replaceable>INTERFACE_NAME</replaceable></programlisting>
     </step>
     <step>
       <para os="ubuntu;debian">Restart the services:</para>
