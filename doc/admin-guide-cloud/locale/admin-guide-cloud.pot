@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-04-19 06:22+0000\n"
+"POT-Creation-Date: 2014-04-24 06:22+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3730,6 +3730,38 @@ msgstr ""
 msgid "OpenStack Compute can be integrated with various third-party technologies to increase security. For more information, see the <link href=\"http://docs.openstack.org/sec/\"><citetitle>OpenStack Security Guide</citetitle></link>."
 msgstr ""
 
+#: ./doc/admin-guide-cloud/compute/section_compute-security.xml:17(title)
+msgid "Encrypt Compute metadata traffic"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-security.xml:22(para)
+msgid "Enable the HTTPS protocol: <placeholder-1/>"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-security.xml:27(para)
+msgid "Determine whether insecure SSL connections are accepted for Compute metadata server requests. The default value is <option>False</option>: <placeholder-1/>"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-security.xml:35(replaceable)
+msgid "PATH_TO_CERT"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-security.xml:33(para)
+msgid "Specify the path to the client certificate: <placeholder-1/>"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-security.xml:40(replaceable)
+msgid "PATH_TO_KEY"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-security.xml:38(para)
+msgid "Specify the path to the private key: <placeholder-1/>"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-security.xml:18(para)
+msgid "OpenStack Juno supports encrypting Compute metadata traffic with HTTPS. Enable SSL encryption in the <filename>metadata_agent.ini</filename> file:<placeholder-1/>"
+msgstr ""
+
 #: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:10(title)
 msgid "Configure migrations"
 msgstr ""
@@ -6073,13 +6105,13 @@ msgstr ""
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
-#: ./doc/admin-guide-cloud/networking/section_networking-scenarios.xml:694(None)
+#: ./doc/admin-guide-cloud/networking/section_networking-scenarios.xml:698(None)
 msgid "@@image: '../../common/figures/ml2_without_l2pop_full_mesh.png'; md5=881485c0686f20b82967d5b817932952"
 msgstr ""
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
-#: ./doc/admin-guide-cloud/networking/section_networking-scenarios.xml:709(None)
+#: ./doc/admin-guide-cloud/networking/section_networking-scenarios.xml:713(None)
 msgid "@@image: '../../common/figures/ml2_without_l2pop_partial_mesh.png'; md5=66fe83560a3e1880ffe3a85d80538f83"
 msgstr ""
 
@@ -6431,55 +6463,59 @@ msgstr ""
 msgid "Previously, Networking deployments were only able to use the plug-in that had been selected at implementation time. For example, a deployment running the Open vSwitch plug-in was only able to use Open vSwitch exclusively; it wasn't possible to simultaneously run another plug-in such as Linux Bridge. This was found to be a limitation in environments with heterogeneous requirements."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-scenarios.xml:682(title)
+#: ./doc/admin-guide-cloud/networking/section_networking-scenarios.xml:681(para)
+msgid "Disabling a ML2 type driver and re-enabling it later may lead to database inconsistencies if ML2 is reconfigured without support for that type."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/networking/section_networking-scenarios.xml:686(title)
 msgid "ML2 with L2 population mechanism driver"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-scenarios.xml:683(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-scenarios.xml:687(para)
 msgid "The L2 Population driver enables broadcast, multicast, and unicast traffic to scale out on large overlay networks. This traffic is sent to the relevant agent via encapsulation as a targeted unicast."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-scenarios.xml:687(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-scenarios.xml:691(para)
 msgid "Current <emphasis>Open vSwitch</emphasis> and <emphasis>Linux Bridge</emphasis> tunneling implementations broadcast to every agent, even if they don’t host the corresponding network as illustrated below."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-scenarios.xml:697(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-scenarios.xml:701(para)
 msgid "As broadcast emulation on overlay is costly, it may be better to avoid its use for MAC learning and ARP resolution. This supposes the use of proxy ARP on the agent to answer VM requests, and to populate forwarding table. Currently only the <emphasis>Linux Bridge</emphasis> Agent implements an ARP proxy. The prepopulation limits L2 broadcasts in overlay, however it may anyway be necessary to provide broadcast emulation. This is achieved by broadcasting packets via unicast only to the relevant agents as illustrated below.<placeholder-1/>The partial-mesh is available with the <emphasis>Open vSwitch</emphasis> and <emphasis>Linux Bridge</emphasis> agents. The following scenarios will use the L2 population mechanism driver with an <emphasis>Open vSwitch</emphasis> agent and a <emphasis>Linux Bridge</emphasis> agent. Enable the l2 population driver by adding it to the list of mechanism drivers. In addition, a tunneling driver must be selected. Supported options are GRE, VXLAN, or a combination of both. Configuration settings are enabled in <filename>ml2_conf.ini</filename>:<placeholder-2/>"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-scenarios.xml:726(title)
+#: ./doc/admin-guide-cloud/networking/section_networking-scenarios.xml:730(title)
 msgid "Scenario 1: L2 population with Open vSwitch agent"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-scenarios.xml:732(replaceable) ./doc/admin-guide-cloud/networking/section_networking-scenarios.xml:746(replaceable)
+#: ./doc/admin-guide-cloud/networking/section_networking-scenarios.xml:736(replaceable) ./doc/admin-guide-cloud/networking/section_networking-scenarios.xml:750(replaceable)
 msgid "192.168.1.10"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-scenarios.xml:735(replaceable) ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:141(literal) ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:145(literal) ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:157(literal)
+#: ./doc/admin-guide-cloud/networking/section_networking-scenarios.xml:739(replaceable) ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:141(literal) ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:145(literal) ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:157(literal)
 msgid "gre"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-scenarios.xml:735(replaceable)
+#: ./doc/admin-guide-cloud/networking/section_networking-scenarios.xml:739(replaceable)
 msgid "vxlan"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-scenarios.xml:727(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-scenarios.xml:731(para)
 msgid "Enable the l2 population extension in the <emphasis>Open vSwitch</emphasis> agent, and configure the <option>local_ip</option> and <option>tunnel_types</option> parameters in the <filename>ml2_conf.ini</filename> file: <placeholder-1/>"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-scenarios.xml:739(title)
+#: ./doc/admin-guide-cloud/networking/section_networking-scenarios.xml:743(title)
 msgid "Scenario 2: L2 population with <emphasis>Linux Bridge</emphasis> agent"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-scenarios.xml:740(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-scenarios.xml:744(para)
 msgid "Enable the l2 population extension on the <emphasis>Linux Bridge</emphasis> agent. Enable VXLAN and configure the local_ip parameter in <filename>ml2_conf.ini</filename>. <placeholder-1/>"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-scenarios.xml:750(title)
+#: ./doc/admin-guide-cloud/networking/section_networking-scenarios.xml:754(title)
 msgid "Enable security group API"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-scenarios.xml:751(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-scenarios.xml:755(para)
 msgid "Since the ML2 plug-in can concurrently support different L2 agents (or other mechanisms) with different configuration files, the actual <option>firewall_driver </option> value in the <filename>ml2_conf.ini</filename> file does not matter in the server, but <option>firewall_driver</option> must be set to a non-default value in the ml2 configuration to enable the securitygroup extension. To enable securitygroup API, edit the <filename>ml2_conf.ini</filename> file:<placeholder-1/> Each L2 agent configuration file (such as <filename>ovs_neutron_plugin.ini</filename> or <filename>linuxbridge_conf.ini</filename>) should contain the appropriate <option>firewall_driver</option> value for that agent. To disable securitygroup API, edit the<filename>ml2_conf.ini</filename> file:<placeholder-2/> Also, each L2 agent configuration file (such as <filename>ovs_neutron_plugin.ini</filename> or <filename>linuxbridge_conf.ini</filename>) should contain this value in <option>firewall_driver</option> parameter for that agent."
 msgstr ""
 
