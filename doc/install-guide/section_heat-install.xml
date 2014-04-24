@@ -141,6 +141,41 @@ auth_uri = http://<replaceable>controller</replaceable>:5000/v2.0</programlistin
   --internalurl=http://<replaceable>controller</replaceable>:8000/v1 \
   --adminurl=http://<replaceable>controller</replaceable>:8000/v1</userinput></screen>
     </step>
+    <step>
+      <para>Create the <literal>heat_stack_user</literal> role.</para>
+      <para>This role is used as the default role for users created by the
+          Orchestration module.</para>
+      <para>Run the following command to create the
+          <literal>heat_stack_user</literal> role:</para>
+      <screen><prompt>$</prompt> <userinput>keystone role-create --name heat_stack_user</userinput></screen>
+    </step>
+    <step>
+      <para>Configure the metadata and waitcondition servers' URLs.</para>
+      <para os="debian;ubuntu">Edit the <filename>/etc/heat/heat.conf</filename> file
+          and modify the following options in the <literal>[DEFAULT]</literal>
+          section:</para>
+      <programlisting os="debian;ubuntu" language="ini">[DEFAULT]
+...
+# URL of the Heat metadata server. (string value)
+heat_metadata_server_url = http://<replaceable>10.0.0.11</replaceable>:8000
+
+# URL of the Heat waitcondition server. (string value)
+heat_waitcondition_server_url = http://<replaceable>10.0.0.11</replaceable>:8000/v1/waitcondition</programlisting>
+      <para os="centos;rhel;fedora;sles;opensuse">Run the following commands to modify the
+        <literal>[DEFAULT]</literal> section of the
+        <filename>/etc/heat/heat.conf</filename> file:</para>
+      <screen os="centos;rhel;fedora;sles;opensuse"><prompt>#</prompt> <userinput>openstack-config --set /etc/heat/heat.conf \
+  DEFAULT heat_metadata_server_url http://<replaceable>10.0.0.11</replaceable>:8000</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/heat/heat.conf \
+  DEFAULT heat_waitcondition_server_url http://<replaceable>10.0.0.11</replaceable>:8000/v1/waitcondition</userinput></screen>
+      <note>
+          <para>The example uses the IP address of the controller (10.0.0.11)
+            instead of the <literal>controller</literal> host name since our
+            example architecture does not include a DNS setup. Make sure that
+            the instances can resolve the controller host name if you choose to
+            use it in the URLs.</para>
+      </note>
+    </step>
     <step os="ubuntu">
       <para>Restart the service with its new settings:</para>
       <screen><prompt>#</prompt> <userinput>service heat-api restart</userinput>
