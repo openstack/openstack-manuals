@@ -23,9 +23,10 @@
         means a physical node that has a <systemitem class="service"
             >nova-compute</systemitem> service running on it. You can
         configure the scheduler through a variety of options.</para>
-    <para>Compute is configured with the following default scheduler
-        options:</para>
+    <para>Compute is configured with the following default scheduler options in the
+            <filename>/etc/nova/nova.conf</filename> file:</para>
     <programlisting language="ini">scheduler_driver=nova.scheduler.multi.MultiScheduler
+scheduler_driver_task_period=60
 compute_scheduler_driver=nova.scheduler.filter_scheduler.FilterScheduler
 scheduler_available_filters=nova.scheduler.filters.all_filters
 scheduler_default_filters=RetryFilter,AvailabilityZoneFilter,RamFilter,ComputeFilter,ComputeCapabilitiesFilter,ImagePropertiesFilter,ServerGroupAntiAffinityFilter,ServerGroupAffinityFilter</programlisting>
@@ -62,6 +63,17 @@ scheduler_default_filters=RetryFilter,AvailabilityZoneFilter,RamFilter,ComputeFi
                     (<literal>ImagePropertiesFilter</literal>).</para>
         </listitem>
     </itemizedlist>
+    <para>The scheduler caches its list of available hosts; you can
+        specify how often the list is updated by modifying the
+        <option>scheduler_driver_task_period</option> value.
+    </para>
+
+    <note>
+      <para>Do not configure <option>service_down_time</option> to be
+          much smaller than <option>scheduler_driver_task_period</option>;
+          otherwise, hosts will appear to be dead while the host list is
+          being cached.</para>
+    </note>
     <para>For information on the volume scheduler, refer the Block
         Storage section of <link
             xlink:href="http://docs.openstack.org/admin-guide-cloud/content/managing-volumes.html">
