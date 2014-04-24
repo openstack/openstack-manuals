@@ -7,24 +7,10 @@
   <para>You change the size of a server by changing its flavor.</para>
   <procedure>
     <step>
-      <para>List the available flavors:</para>
-      <screen><prompt>$</prompt> <userinput>nova flavor-list</userinput></screen>
-      <screen><computeroutput>+----+-----------+-----------+------+-----------+------+-------+-------------+-----------+
-| ID | Name      | Memory_MB | Disk | Ephemeral | Swap | VCPUs | RXTX_Factor | Is_Public |
-+----+-----------+-----------+------+-----------+------+-------+-------------+-----------+
-| 1  | m1.tiny   | 512       | 0    | 0         |      | 1     | 1.0         | True      |
-| 2  | m1.small  | 2048      | 20   | 0         |      | 1     | 1.0         | True      |
-| 3  | m1.medium | 4096      | 40   | 0         |      | 2     | 1.0         | True      |
-| 4  | m1.large  | 8192      | 80   | 0         |      | 4     | 1.0         | True      |
-| 5  | m1.xlarge | 16384     | 160  | 0         |      | 8     | 1.0         | True      |
-+----+-----------+-----------+------+-----------+------+-------+-------------+-----------+</computeroutput></screen>
-    </step>
-    <step>
-      <para>Show information about your server, including its
-        size:</para>
-
-      <screen><prompt>$</prompt> <userinput>nova show myCirrosServer</userinput></screen>
-      <screen><computeroutput>+-------------------------------------+----------------------------------------------------------------+
+      <para>Show information about your server, including its size, which is shown as the value of the flavor
+        property.</para>
+      <screen><prompt>$</prompt> <userinput>nova show myCirrosServer</userinput>
+        <computeroutput>+-------------------------------------+----------------------------------------------------------------+
 | Property                            | Value                                                          |
 +-------------------------------------+----------------------------------------------------------------+
 | status                              | ACTIVE                                                         |
@@ -54,13 +40,24 @@
 | OS-EXT-AZ:availability_zone         | nova                                                           |
 | config_drive                        |                                                                |
 +-------------------------------------+----------------------------------------------------------------+</computeroutput></screen>
-      <para>The size of the server is <literal>m1.small
-        (2)</literal>.</para>
+      <para>The size (flavor) of the server is <literal>m1.small (2)</literal>.</para>
     </step>
     <step>
-      <para>To resize the server, pass the server ID and the desired
-        flavor to the nova <command>resize</command> command. Include
-        the <literal>--poll</literal> parameter to report the resize
+      <para>List the available flavors with the following command:</para>
+      <screen><prompt>$</prompt> <userinput>nova flavor-list</userinput>
+<computeroutput>+----+-----------+-----------+------+-----------+------+-------+-------------+-----------+
+| ID | Name      | Memory_MB | Disk | Ephemeral | Swap | VCPUs | RXTX_Factor | Is_Public |
++----+-----------+-----------+------+-----------+------+-------+-------------+-----------+
+| 1  | m1.tiny   | 512       | 0    | 0         |      | 1     | 1.0         | True      |
+| 2  | m1.small  | 2048      | 20   | 0         |      | 1     | 1.0         | True      |
+| 3  | m1.medium | 4096      | 40   | 0         |      | 2     | 1.0         | True      |
+| 4  | m1.large  | 8192      | 80   | 0         |      | 4     | 1.0         | True      |
+| 5  | m1.xlarge | 16384     | 160  | 0         |      | 8     | 1.0         | True      |
++----+-----------+-----------+------+-----------+------+-------+-------------+-----------+</computeroutput></screen>
+    </step>
+    <step>
+      <para>To resize the server, pass the server ID or name and the new flavor to the <command>nova
+          resize</command> command. Include the <literal>--poll</literal> parameter to report the resize
         progress.</para>
       <screen><prompt>$</prompt> <userinput>nova resize myCirrosServer 4 --poll</userinput></screen>
       <screen><computeroutput>Instance resizing... 100% complete
@@ -68,24 +65,23 @@ Finished</computeroutput>   </screen>
     </step>
     <step>
       <para>Show the status for your server:</para>
-      <screen><prompt>$</prompt> <userinput>nova list</userinput></screen>
-      <screen><computeroutput>+--------------------------------------+-------------+--------+-----------------------------------------+
-| ID                                   | Name        | Status | Networks                                |
-+--------------------------------------+-------------+--------+-----------------------------------------+
-| 970e4ca0-f9b7-4c44-80ed-bf0152c96ae1 | resize-demo | RESIZE | private=172.16.101.6, public=10.4.113.6 |
-+--------------------------------------+-------------+--------+-----------------------------------------+</computeroutput></screen>
+      <screen><prompt>$</prompt> <userinput>nova list</userinput>
+<computeroutput>+--------------------------------------+----------------+--------+-----------------------------------------+
+| ID                                   | Name           | Status | Networks                                |
++--------------------------------------+----------------+--------+-----------------------------------------+
+| 84c6e57d-a6b1-44b6-81eb-fcb36afd31b5 | myCirrosServer | RESIZE | private=172.16.101.6, public=10.4.113.6 |
++--------------------------------------+----------------+--------+-----------------------------------------+</computeroutput></screen>
+      <para>When the resize completes, the status becomes VERIFY_RESIZE.</para>
     </step>
     <step>
-      <para>When the resize completes, the status becomes
-          <literal>VERIFY_RESIZE</literal>. To confirm the
-        resize:</para>
-      <screen><prompt>$</prompt> <userinput>nova resize-confirm 6beefcf7-9de6-48b3-9ba9-e11b343189b3</userinput></screen>
+      <para>Confirm the resize:</para>
+      <screen><prompt>$</prompt> <userinput>nova resize-confirm 84c6e57d-a6b1-44b6-81eb-fcb36afd31b5</userinput></screen>
       <para>The server status becomes ACTIVE.</para>
     </step>
     <step>
       <para>If the resize fails or does not work as expected, you can
         revert the resize:</para>
-      <screen><prompt>$</prompt> <userinput>nova resize-revert 6beefcf7-9de6-48b3-9ba9-e11b343189b3</userinput></screen>
+      <screen><prompt>$</prompt> <userinput>nova resize-revert 84c6e57d-a6b1-44b6-81eb-fcb36afd31b5</userinput></screen>
       <para>The server status becomes ACTIVE.</para>
     </step>
   </procedure>
