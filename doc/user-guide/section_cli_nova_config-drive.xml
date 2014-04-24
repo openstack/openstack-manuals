@@ -9,36 +9,35 @@
     xml:id="config-drive">
     <title>Store metadata on a configuration drive</title>
     <para>You can configure OpenStack to write metadata to a special
-        configuration drive that attaches to the instance when it
-        boots. The instance can mount this drive and read files from
-        it to get information that is normally available through the
-            <link
+        configuration drive that attaches to the instance when it boots. The
+        instance can mount this drive and read files from it to get information
+        that is normally available through the <link
             xlink:href="http://docs.openstack.org/admin-guide-cloud/content/section_metadata-service.html"
-            >metadata service</link>.</para>
-    <para>One use case for the configuration drive is to pass a
-        networking configuration when you do not use DHCP to assign IP
-        addresses to instances. For example, you might pass the IP
-        configuration for the instance through the configuration
-        drive, which the instance can mount and access before you
-        configure the network settings for the instance.</para>
-    <para>Any modern guest operating system that is capable of
-        mounting an ISO9660 or VFAT file system can use the
-        configuration drive.</para>
+            >metadata service</link>. This metadata is different from the user
+        data.</para>
+    <para>One use case for using the configuration drive is to pass a networking
+        configuration when you do not use DHCP to assign IP addresses to
+        instances. For example, you might pass the IP address configuration for
+        the instance through the configuration drive, which the instance can
+        mount and access before you configure the network settings for the
+        instance.</para>
+    <para>Any modern guest operating system that is capable of mounting an ISO
+        9660 or VFAT file system can use the configuration drive.</para>
     <section xml:id="requirements">
         <title>Requirements and guidelines</title>
+        <para>To use the configuration drive, you must follow the following
+            requirements for the compute host and image.</para>
         <itemizedlist>
             <title>Compute host requirements</title>
             <listitem>
-                <para>The following hypervisors support the
-                    configuration drive: libvirt, xenserver, hyper-v,
-                    and vmware.</para>
+                <para>The following hypervisors support the configuration drive:
+                    libvirt, XenServer, Hyper-V, and VMWare.</para>
             </listitem>
             <listitem>
-                <para>To use configuration drive with libvirt,
-                    xenserver, or vmware, you must first install the
-                        <package>genisoimage</package> package on each
-                    compute host. Otherwise, instances do not boot
-                    properly.</para>
+                <para>To use configuration drive with libvirt, XenServer, or
+                    VMWare, you must first install the
+                        <package>genisoimage</package> package on each compute
+                    host. Otherwise, instances do not boot properly.</para>
 
                 <para>Use the <literal>mkisofs_cmd</literal> flag to
                     set the path where you install the
@@ -49,15 +48,13 @@
                     need to set this flag.</para>
             </listitem>
             <listitem>
-                <para>To use configuration drive with hyper-v, you
-                    must set the <literal>mkisofs_cmd</literal> value
-                    to the full path to an
-                        <literal>mkisofs.exe</literal> installation.
+                <para>To use configuration drive with Hyper-V, you must set the
+                        <literal>mkisofs_cmd</literal> value to the full path to
+                    an <literal>mkisofs.exe</literal> installation.
                     Additionally, you must set the
                         <literal>qemu_img_cmd</literal> value in the
-                        <literal>hyperv</literal> configuration
-                    section to the full path to an
-                        <literal>qemu-img</literal> command
+                        <literal>hyperv</literal> configuration section to the
+                    full path to an <literal>qemu-img</literal> command
                     installation.</para>
             </listitem>
         </itemizedlist>
@@ -67,21 +64,18 @@
                 <para>An image built with a recent version of the
                         <package>cloud-init</package> package can
                     automatically access metadata passed through the
-                    configuration drive. The
-                        <package>cloud-init</package> package version
-                    0.7.1 works with Ubuntu and Fedora-based images,
-                    such as RHEL.</para>
+                    configuration drive. The <package>cloud-init</package>
+                    package version 0.7.1 works with Ubuntu and Fedora based
+                    images, such as Red Hat Enterprise Linux.</para>
             </listitem>
             <listitem>
                 <para>If an image does not have the
-                        <package>cloud-init</package> package
-                    installed, you must customize the image to run a
-                    script that mounts the configuration drive on
-                    boot, reads the data from the drive, and takes
-                    appropriate action such as adding the public key
-                    to an account. See <xref
-                        linkend="config_drive_contents"/> for details
-                    on how data is organized on the configuration
+                        <package>cloud-init</package> package installed, you
+                    must customize the image to run a script that mounts the
+                    configuration drive on boot, reads the data from the drive,
+                    and takes appropriate action such as adding the public key
+                    to an account. See <xref linkend="config_drive_contents"/>
+                    for details about how data is organized on the configuration
                     drive.</para>
             </listitem>
             <listitem>
@@ -94,21 +88,19 @@
         <itemizedlist>
             <title>Guidelines</title>
             <listitem>
-                <para>Do not rely on the presence of the EC2 metadata
-                    present in the configuration drive, as this
-                    content might be removed in a future release. For
-                    example, do not rely on files in the
-                        <filename>ec2</filename> directory.</para>
+                <para>Do not rely on the presence of the EC2 metadata in the
+                    configuration drive, because this content might be removed
+                    in a future release. For example, do not rely on files in
+                    the <filename>ec2</filename> directory.</para>
             </listitem>
             <listitem>
-                <para>When you create images that access configuration
-                    drive data and multiple directories are under the
-                        <filename>openstack</filename> directory,
-                    always select the highest API version by date that
-                    your consumer supports. For example, if your guest
-                    image supports the 2012-03-05, 2012-08-05,
-                    2013-04-13 versions, try 2013-04-13 first and fall
-                    back to a previous version if 2013-04-13 is not
+                <para>When you create images that access configuration drive
+                    data and multiple directories are under the
+                        <filename>openstack</filename> directory, always select
+                    the highest API version by date that your consumer supports.
+                    For example, if your guest image supports the 2012-03-05,
+                    2012-08-05, and 2013-04-13 versions, try 2013-04-13 first
+                    and fall back to a previous version if 2013-04-13 is not
                     present.</para>
             </listitem>
         </itemizedlist>
@@ -121,39 +113,34 @@
                         <literal>--config-drive=true</literal>
                     parameter to the <command>nova boot</command>
                     command.</para>
-                <para>This example enables the configuration drive and
-                    passes user data, two files, and two key/value
-                    metadata pairs, all of which are accessible from
-                    the configuration drive:</para>
+                <para>The following example enables the configuration drive and
+                    passes user data, two files, and two key/value metadata
+                    pairs, all of which are accessible from the configuration
+                    drive:</para>
                 <screen><prompt>$</prompt> <userinput>nova boot --config-drive=true --image my-image-name --key-name mykey --flavor 1 --user-data ./my-user-data.txt myinstance --file /etc/network/interfaces=/home/myuser/instance-interfaces --file known_hosts=/home/myuser/.ssh/known_hosts --meta role=webservers --meta essential=false</userinput></screen>
-                <para>You can also configure the Compute service to
-                    always create a configuration drive.</para>
-                <para>Set this option in the
-                        <filename>/etc/nova/nova.conf</filename>
-                    file:</para>
+                <para>You can also configure the Compute service to always
+                    create a configuration drive by setting the following option
+                    in the <filename>/etc/nova/nova.conf</filename> file:</para>
                 <programlisting language="ini">force_config_drive=true</programlisting>
                 <note>
                     <para>If a user passes the
-                            <parameter>--config-drive=true</parameter>
-                        flag to the <command>nova boot</command>
-                        command, an administrator cannot disable the
-                        configuration drive.</para>
+                            <literal>--config-drive=true</literal> flag to the
+                            <command>nova boot</command> command, an
+                        administrator cannot disable the configuration
+                        drive.</para>
                 </note>
             </step>
             <step>
-                <para>The configuration drive has the
-                        <literal>config-2</literal> volume label. If
-                    your guest operating system supports accessing
-                    disk by label, you can mount the configuration
-                    drive as the
-                        <filename>/dev/disk/by-label/config-2</filename>
-                    device.</para>
-                <para>For example:</para>
+                <para>If your guest operating system supports accessing disk by
+                    label, you can mount the configuration drive as the
+                            <filename>/dev/disk/by-label/<replaceable>configurationDriveVolumeLabel</replaceable></filename>
+                    device. In the following example, the configuration drive
+                    has the <filename>config-2</filename> volume label.</para>
                 <screen><prompt>#</prompt> <userinput>mkdir -p /mnt/config</userinput>
 <prompt>#</prompt> <userinput>mount /dev/disk/by-label/config-2 /mnt/config</userinput></screen>
                 <note>
-                    <para>Make sure that you use at least version 0.3.1
-                        of CirrOS for configuration drive support.</para>
+                    <para>Ensure that you use at least version 0.3.1 of CirrOS
+                        for configuration drive support.</para>
                 </note>
                 <para>If your guest operating system does not use
                         <literal>udev</literal>, the
@@ -175,8 +162,8 @@
         </procedure>
         <simplesect xml:id="config_drive_contents">
             <title>Configuration drive contents</title>
-            <para>In this example, the contents of the configuration
-                drive are:</para>
+            <para>In this example, the contents of the configuration drive are
+                as follows:</para>
             <screen><computeroutput>ec2/2009-04-04/meta-data.json
 ec2/2009-04-04/user-data
 ec2/latest/meta-data.json
@@ -195,11 +182,10 @@ openstack/latest/user_data</computeroutput></screen>
         <simplesect xml:id="os_metadata_format">
             <title>OpenStack metadata format</title>
             <para>The following example shows the contents of the
-                    <filename>openstack/2012-08-10/meta_data.json</filename>
-                and
-                    <filename>openstack/latest/meta_data.json</filename>
-                files. These files are identical. The file contents
-                are formatted for readability:</para>
+                    <filename>openstack/2012-08-10/meta_data.json</filename> and
+                    <filename>openstack/latest/meta_data.json</filename> files.
+                These files are identical. The file contents are formatted for
+                readability.</para>
             <programlisting language="json"><xi:include parse="text" href="samples/meta_data.json"/></programlisting>
             <para>Note the effect of the <literal>--file
                     /etc/network/interfaces=/home/myuser/instance-interfaces</literal>
@@ -214,10 +200,10 @@ openstack/latest/user_data</computeroutput></screen>
         <simplesect xml:id="ec2_metadata_format">
             <title>EC2 metadata format</title>
             <para>The following example shows the contents of the
-                    <filename>ec2/2009-04-04/meta-data.json</filename>,
-                    <filename>latest/meta-data.json</filename> files.
-                These files are identical. The file contents are
-                formatted to improve readability:</para>
+                    <filename>ec2/2009-04-04/meta-data.json</filename> and the
+                    <filename>ec2/latest/meta-data.json</filename> files. These
+                files are identical. The file contents are formatted to improve
+                readability.</para>
             <programlisting language="json"><xi:include href="samples/meta_data_ec2.json" parse="text"/></programlisting>
         </simplesect>
         <simplesect xml:id="user_data">
@@ -239,11 +225,10 @@ openstack/latest/user_data</computeroutput></screen>
                     <filename>/etc/nova/nova.conf</filename>
                 file:</para>
             <programlisting language="ini">config_drive_format=iso9660</programlisting>
-            <para>By default, you cannot attach the configuration
-                drive image as a CD drive instead of as a disk drive.
-                To attach a CD drive, add this line to the
-                    <filename>/etc/nova/nova.conf</filename>
-                file:</para>
+            <para>By default, you cannot attach the configuration drive image as
+                a CD drive instead of as a disk drive. To attach a CD drive, add
+                the following  line to the
+                    <filename>/etc/nova/nova.conf</filename> file:</para>
             <programlisting language="ini">config_drive_cdrom=true</programlisting>
             <para>For legacy reasons, you can configure the
                 configuration drive to use VFAT format instead of ISO
@@ -260,8 +245,8 @@ openstack/latest/user_data</computeroutput></screen>
     </section>
     <section xml:id="config_reference">
         <title>Configuration drive reference</title>
-        <para>The following table shows the configuration options for
-            the configuration drive:</para>
+        <para>The following table shows the configuration options for the
+            configuration drive.</para>
         <xi:include href="../common/tables/nova-configdrive.xml"/>
     </section>
 </section>
