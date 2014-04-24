@@ -3,17 +3,23 @@
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0" xml:id="usage_statistics">
         <title>Show usage statistics for hosts and instances</title><para xlink:href="http://graphite.wikidot.com">You can show basic
         statistics on resource usage for hosts and instances.</para>
-   <note> <para xlink:href="http://graphite.wikidot.com">For more sophisticated
+   <note>
+       <para xlink:href="http://graphite.wikidot.com">For more sophisticated
             monitoring, see the <link
                 xlink:href="https://launchpad.net/ceilometer"
                 >Ceilometer</link> project, which is under
             development. You can also use tools, such as <link
                 xlink:href="http://ganglia.info/">Ganglia</link> or
                 <link xlink:href="http://graphite.wikidot.com/"
-                >Graphite</link>, to gather more detailed data.</para></note>
-        <procedure xml:id="host_usage_statistics">
-            <title>To show host usage statistics</title>
-            <step><para>List the hosts and the nova-related services that run on
+                >Graphite</link>, to gather more detailed data.</para>
+   </note>
+        <section xml:id="host_usage_statistics">
+            <title>Show host usage statistics</title>
+        <para>The following examples show the host usage statistics for a host
+            called <filename>devstack</filename>.</para>
+            <itemizedlist>
+                <listitem>
+                    <para>List the hosts and the nova-related services that run on
                 them:</para><screen><prompt>$</prompt> <userinput>nova host-list</userinput>
 <computeroutput>+-----------+-------------+----------+
 | host_name | service     | zone     |
@@ -24,12 +30,11 @@
 | devstack  | network     | internal |
 | devstack  | scheduler   | internal |
 | devstack  | consoleauth | internal |
-+-----------+-------------+----------+</computeroutput></screen>
-        </step>
-        <step><para>Get a summary of resource usage of all of the instances running
-                on the host.</para>
-                <screen><prompt>$</prompt> <userinput>nova host-describe <replaceable>devstack</replaceable></userinput>
-<computeroutput>+-----------+----------------------------------+-----+-----------+---------+
++-----------+-------------+----------+</computeroutput></screen></listitem>
+        <listitem><para>Get a summary of resource usage of all of the instances running on
+            the host:</para>
+                <screen><prompt>$</prompt> <userinput>nova host-describe devstack</userinput>
+ <computeroutput>+-----------+----------------------------------+-----+-----------+---------+
 | HOST     | PROJECT                          | cpu | memory_mb | disk_gb |
 +----------+----------------------------------+-----+-----------+---------+
 | devstack | (total)                          | 2   | 4003      | 157     |
@@ -40,38 +45,43 @@
 +----------+----------------------------------+-----+-----------+---------+</computeroutput></screen>
             <para>The <literal>cpu</literal> column shows the sum of
                 the virtual CPUs for instances running on the host.</para>
-            <para>The <literal>memory_mb</literal> column shows the
-                sum of the memory (in MB) allocated to the instances
-                that run on the hosts.</para>
-            <para>The <literal>disk_gb</literal> column shows the sum
-                of the root and ephemeral disk sizes (in GB) of the
-                instances that run on the hosts.</para>
-            <para>The <literal>used_now</literal> row shows the sum
-                of the resources allocated to the instances
-                that run on the host plus the resources allocated to
-                the virtual machine of the host itself.</para>
-            <para>The <literal>used_max</literal> row shows the sum
-                of the resources allocated to the instances
-                that run on the host.</para>
-           <note> <para>These values are computed by using only information
-                about the flavors of the instances that run on the
-                hosts. This command does not query the CPU usage,
-                memory usage, or hard disk usage of the physical
-                host.</para>  </note>   </step> </procedure>
-        <procedure xml:id="instance_usage_statistics">
-            <title>To show instance usage statistics</title>
-            <step>
-            <para>Get CPU, memory, I/O, and network statistics for an
+            <para>The <literal>memory_mb</literal> column shows the sum of the
+                    memory (in MB) allocated to the instances that run on the
+                    host.</para>
+            <para>The <literal>disk_gb</literal> column shows the sum of the
+                    root and ephemeral disk sizes (in GB) of the instances that
+                    run on the host.</para>
+            <para>The row that has the value <literal>used_now</literal> in the
+                        <literal>PROJECT</literal> column shows the sum of the
+                    resources allocated to the instances that run on the host,
+                    plus the resources allocated to the virtual machine of the
+                    host itself.</para>
+            <para>The row that has the value <literal>used_max</literal> row in
+                    the <literal>PROJECT</literal> column shows the sum of the
+                    resources allocated to the instances that run on the
+                    host.</para></listitem>
+            </itemizedlist>
+            <note>
+                  <para>These values are computed by using information about the flavors of the
+                instances that run on the hosts. This command does not query the
+                CPU usage, memory usage, or hard disk usage of the physical
+                host.</para>
+              </note>
+        </section>
+        <section xml:id="instance_usage_statistics">
+            <title>Show instance usage statistics</title>
+            <itemizedlist>
+                <listitem><para>Get CPU, memory, I/O, and network statistics for an
                 instance.</para>
-            <para>First, list instances:</para>
+            <orderedlist><listitem><para>List instances:</para>
             <screen><prompt>$</prompt> <userinput>nova list</userinput>
 <computeroutput>+--------------------------------------+----------------------+--------+------------+-------------+------------------+
 | ID                                   | Name                 | Status | Task State | Power State | Networks         |
 +--------------------------------------+----------------------+--------+------------+-------------+------------------+
 | 84c6e57d-a6b1-44b6-81eb-fcb36afd31b5 | myCirrosServer       | ACTIVE | None       | Running     | private=10.0.0.3 |
 | 8a99547e-7385-4ad1-ae50-4ecfaaad5f42 | myInstanceFromVolume | ACTIVE | None       | Running     | private=10.0.0.4 |
-+--------------------------------------+----------------------+--------+------------+-------------+------------------+</computeroutput></screen>
-            <para>Then, get diagnostic statistics:</para>
++--------------------------------------+----------------------+--------+------------+-------------+------------------+</computeroutput></screen></listitem>
+            <listitem><para>Get diagnostic statistics:</para>
             <screen><prompt>$</prompt> <userinput>nova diagnostics myCirrosServer</userinput>
 <computeroutput>+------------------+----------------+
 | Property         | Value          |
@@ -91,9 +101,8 @@
 | vnet1_rx_packets | 5485           |
 | vda_read_req     | 0              |
 | vda_errors       | -1             |
-+------------------+----------------+</computeroutput></screen>
-        </step>
-       <step> <para>Get summary statistics for each tenant:</para>
++------------------+----------------+</computeroutput></screen></listitem></orderedlist></listitem>
+        <listitem><para>Get summary statistics for each tenant:</para>
        <screen><prompt>$</prompt> <userinput>nova usage-list</userinput>
 <computeroutput>Usage from 2013-06-25 to 2013-07-24:
 +----------------------------------+-----------+--------------+-----------+---------------+
@@ -101,7 +110,6 @@
 +----------------------------------+-----------+--------------+-----------+---------------+
 | b70d90d65e464582b6b2161cf3603ced | 1         | 344064.44    | 672.00    | 0.00          |
 | 66265572db174a7aa66eba661f58eb9e | 3         | 671626.76    | 327.94    | 6558.86       |
-+----------------------------------+-----------+--------------+-----------+---------------+</computeroutput></screen>
-       </step>
-     </procedure>
++----------------------------------+-----------+--------------+-----------+---------------+</computeroutput></screen></listitem></itemizedlist>
+     </section>
 </section>
