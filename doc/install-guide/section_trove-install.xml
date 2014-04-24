@@ -39,7 +39,8 @@
           <literal>service</literal> tenant and give the user the
           <literal>admin</literal> role:
           </para>
-          <screen><prompt>$</prompt> <userinput>keystone user-create --name=trove --pass=<replaceable>TROVE_PASS</replaceable> --email=<replaceable>trove@example.com</replaceable></userinput>
+          <screen><prompt>$</prompt> <userinput>keystone user-create --name=trove --pass=<replaceable>TROVE_PASS</replaceable> \
+  --email=<replaceable>trove@example.com</replaceable></userinput>
 <prompt>$</prompt> <userinput>keystone user-role-add --user=trove --tenant=service --role=admin</userinput></screen>
         </step>
 
@@ -79,10 +80,12 @@ notifier_queue_hostname = <replaceable>controller</replaceable></programlisting>
   DEFAULT rpc_backend rabbit</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/trove/trove-conductor.conf \
   DEFAULT rpc_backend rabbit</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/trove/trove-api.conf DEFAULT qpid_hostname <replaceable>controller</replaceable></userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/trove/trove-taskmaster.conf DEFAULT qpid_hostname <replaceable>controller</replaceable></userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/trove/trove-conductor.conf DEFAULT qpid_hostname <replaceable>controller</replaceable></userinput>
-          </screen>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/trove/trove-api.conf DEFAULT \
+  qpid_hostname <replaceable>controller</replaceable></userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/trove/trove-taskmaster.conf DEFAULT \
+  qpid_hostname <replaceable>controller</replaceable></userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/trove/trove-conductor.conf DEFAULT \
+  qpid_hostname <replaceable>controller</replaceable></userinput></screen>
         </step>
 
         <step os="ubuntu">
@@ -104,12 +107,18 @@ rabbit_password = <replaceable>RABBIT_PASS</replaceable>
   DEFAULT rpc_backend rabbit</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/trove/trove-conductor.conf \
   DEFAULT rpc_backend rabbit</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/trove/trove-api.conf DEFAULT rabbit_host <replaceable>controller</replaceable></userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/trove/trove-taskmaster.conf DEFAULT rabbit_host <replaceable>controller</replaceable></userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/trove/trove-conductor.conf DEFAULT rabbit_host <replaceable>controller</replaceable></userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/trove/trove-api.conf DEFAULT rabbit_password <replaceable>RABBIT_PASS</replaceable></userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/trove/trove-taskmaster.conf DEFAULT rabbit_password <replaceable>RABBIT_PASS</replaceable></userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/trove/trove-conductor.conf DEFAULT rabbit_password <replaceable>RABBIT_PASS</replaceable></userinput></screen>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/trove/trove-api.conf DEFAULT \
+  rabbit_host <replaceable>controller</replaceable></userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/trove/trove-taskmaster.conf DEFAULT \
+  rabbit_host <replaceable>controller</replaceable></userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/trove/trove-conductor.conf DEFAULT \
+  rabbit_host <replaceable>controller</replaceable></userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/trove/trove-api.conf DEFAULT \
+  rabbit_password <replaceable>RABBIT_PASS</replaceable></userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/trove/trove-taskmaster.conf DEFAULT \
+  rabbit_password <replaceable>RABBIT_PASS</replaceable></userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/trove/trove-conductor.conf DEFAULT \
+  rabbit_password <replaceable>RABBIT_PASS</replaceable></userinput></screen>
         </step>
       </substeps>
     </step>
@@ -170,13 +179,13 @@ nova_proxy_admin_tenant_name = service
       <substeps>
         <step>
           <para>Initialize the database:</para>
-          <screen><prompt>$</prompt> <userinput>sudo su -s /bin/sh -c "trove-manage db_sync" trove</userinput></screen>
+          <screen><prompt>#</prompt> <userinput>su -s /bin/sh -c "trove-manage db_sync" trove</userinput></screen>
         </step>
         <step>
           <para>Create a datastore. You need to create a separate datastore for
           each type of database you want to use, for example, MySQL, MongoDB, Cassandra.
           This example shows you how to create a datastore for a MySQL database:</para>
-          <screen><prompt>$</prompt> <userinput>sudo su -s /bin/sh -c "trove-manage datastore_update mysql ''" trove</userinput></screen>
+          <screen><prompt>#</prompt> <userinput>su -s /bin/sh -c "trove-manage datastore_update mysql ''" trove</userinput></screen>
         </step>
       </substeps>
     </step>
