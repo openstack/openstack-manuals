@@ -79,6 +79,14 @@ scheduler_default_filters=RetryFilter,AvailabilityZoneFilter,RamFilter,ComputeFi
             xlink:href="http://docs.openstack.org/admin-guide-cloud/content/managing-volumes.html">
             <citetitle>OpenStack Cloud Administrator
             Guide</citetitle></link> for information.</para>
+    <para>The choice of a new host on instance migration is done by the
+        scheduler.</para>
+    <para>When evacuating instances from a host, the scheduler service does not
+        pick the next host. Instances are evacuated to the host explicitly
+        defined by the administrator. For information about instance evacuation,
+        refer to the <link
+            xlink:href="http://docs.openstack.org/admin-guide-cloud/content/nova_cli_evacuate.html">Evacuate
+        instances</link> section of the <citetitle>Cloud Administrator Guide</citetitle>.</para>
     <section xml:id="filter-scheduler">
         <title>Filter scheduler</title>
         <para>The Filter Scheduler
@@ -110,13 +118,13 @@ scheduler_default_filters=RetryFilter,AvailabilityZoneFilter,RamFilter,ComputeFi
                 </mediaobject>
             </figure>
         </para>
-        <para>The <literal>scheduler_available_filters</literal>
+        <para>The <option>scheduler_available_filters</option>
             configuration option in <filename>nova.conf</filename>
             provides the Compute service with the list of the filters
             that are used by the scheduler. The default setting
             specifies all of the filter that are included with the
             Compute service:</para>
-        <programlisting language="ini">scheduler_available_filters=nova.scheduler.filters.all_filters</programlisting>
+        <programlisting language="ini">scheduler_available_filters = nova.scheduler.filters.all_filters</programlisting>
         <para>This configuration option can be specified multiple
             times. For example, if you implemented your own custom
             filter in Python called
@@ -317,6 +325,9 @@ aggregate_image_properties_isolation_separator=.</programlisting>
         </section>
         <section xml:id="groupaffinityfilter">
             <title>GroupAffinityFilter</title>
+            <note><para>This filter is deprecated in favor of <link
+                        linkend="servergroupantiaffinityfilter">ServerGroupAffinityFilter</link>.</para>
+            </note>
             <para>The GroupAffinityFilter ensures that an instance is
                 scheduled on to a host from a set of group hosts. To
                 take advantage of this filter, the requester must pass
@@ -325,11 +336,17 @@ aggregate_image_properties_isolation_separator=.</programlisting>
                     <command>nova</command> command-line tool, use the
                     <literal>--hint</literal> flag. For
                 example:</para>
-            <screen><prompt>$</prompt> <userinput>nova boot --image cedef40a-ed67-4d10-800e-17455edce175 --flavor 1 \
-  --hint group=foo server-1</userinput></screen>
+            <screen><prompt>$</prompt> <userinput>nova boot --image <replaceable>IMAGE_ID</replaceable> --flavor 1 --hint group=foo server-1</userinput></screen>
+            <para>This filter should not be enabled at the same time as <link
+                    linkend="groupantiaffinityfilter">GroupAntiAffinityFilter</link>
+                or neither filter will work properly.</para>
         </section>
         <section xml:id="groupantiaffinityfilter">
             <title>GroupAntiAffinityFilter</title>
+            <note><para>This filter is deprecated in favor of
+                <link
+                    linkend="servergroupantiaffinityfilter">ServerGroupAntiAffinityFilter</link>.</para>
+            </note>
             <para>The GroupAntiAffinityFilter ensures that each
                 instance in a group is on a different host. To take
                 advantage of this filter, the requester must pass a
@@ -338,8 +355,10 @@ aggregate_image_properties_isolation_separator=.</programlisting>
                     <command>nova</command> command-line tool, use the
                     <literal>--hint</literal> flag. For
                 example:</para>
-            <screen><prompt>$</prompt> <userinput>nova boot --image cedef40a-ed67-4d10-800e-17455edce175 --flavor 1 \
-  --hint group=foo server-1</userinput></screen>
+            <screen><prompt>$</prompt> <userinput>nova boot --image <replaceable>IMAGE_ID</replaceable> --flavor 1 --hint group=foo server-1</userinput></screen>
+            <para>This filter should not be enabled at the same time as <link
+                    linkend="groupaffinityfilter">GroupAffinityFilter</link> or
+                neither filter will work properly.</para>
         </section>
         <section xml:id="imagepropertiesfilter">
             <title>ImagePropertiesFilter</title>
@@ -502,6 +521,34 @@ isolated_images=342b492c-128f-4a42-8d3a-c5088cf27d13,ebd267a6-ca86-4d6c-9a0e-bd1
             <para>With the API, use the
                     <literal>os:scheduler_hints</literal> key:</para>
             <programlisting language="json"><xi:include href="../../common/samples/server-scheduler-hints3.json" parse="text"/></programlisting>
+        </section>
+        <section xml:id="servergroupaffinityfilter">
+            <title>ServerGroupAffinityFilter</title>
+            <para>The ServerGroupAffinityFilter ensures that an instance is
+                scheduled on to a host from a set of group hosts. To
+                take advantage of this filter, the requester must create a
+                server group with an <literal>affinity</literal> policy, and
+                pass a scheduler hint, using <literal>group</literal> as the key
+                and the server group UUID as the value. Using the
+                    <command>nova</command> command-line tool, use the
+                    <literal>--hint</literal> flag. For
+                example:</para>
+            <screen><prompt>$</prompt> <userinput>nova server-group-create --policy affinity group-1</userinput>
+<prompt>$</prompt> <userinput>nova boot --image <replaceable>IMAGE_ID</replaceable> --flavor 1 --hint group=<replaceable>SERVER_GROUP_UUID</replaceable> server-1</userinput></screen>
+        </section>
+        <section xml:id="servergroupantiaffinityfilter">
+            <title>ServerGroupAntiAffinityFilter</title>
+            <para>The ServerGroupAntiAffinityFilter ensures that each instance in
+                a group is on a different host. To take advantage of this
+                filter, the requester must create a server group with an
+                <literal>anti-affinity</literal> policy, and pass a scheduler
+                hint, using <literal>group</literal> as the key and the server
+                group UUID as the value. Using the
+                    <command>nova</command> command-line tool, use the
+                    <literal>--hint</literal> flag. For
+                example:</para>
+            <screen><prompt>$</prompt> <userinput>nova server-group-create --policy anti-affinity group-1</userinput>
+<prompt>$</prompt> <userinput>nova boot --image <replaceable>IMAGE_ID</replaceable> --flavor 1 --hint group=<replaceable>SERVER_GROUP_UUID</replaceable> server-1</userinput></screen>
         </section>
         <section xml:id="simplecidraffinityfilter">
             <title>SimpleCIDRAffinityFilter</title>
