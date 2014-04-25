@@ -15,6 +15,7 @@
 
 # Note: You DoNot Need Internet for this due to the magic of --download-only
 echo "Internet connection is not required for this script to run"
+SCRIPT_DIR=$(cd $(dirname "$0") && pwd)
 
 Nova_SingleNode() {
 
@@ -22,13 +23,13 @@ Nova_SingleNode() {
     apt-get install -y kvm libvirt-bin pm-utils nova-api nova-cert novnc nova-consoleauth nova-scheduler nova-novncproxy nova-doc nova-conductor nova-compute-kvm    
 
     # 2. Configure Nova Configuration files
-    cp --no-preserve=mode,ownership Templates/SingleNode/nova/api-paste.ini /etc/nova/api-paste.ini
-    cp --no-preserve=mode,ownership Templates/SingleNode/nova/nova.conf /etc/nova/nova.conf
-    cp --no-preserve=mode,ownership Templates/SingleNode/libvirt/qemu.conf /etc/libvirt/qemu.conf
-    cp --no-preserve=mode,ownership Templates/SingleNode/libvirt/libvirtd.conf /etc/libvirt/libvirtd.conf
-    cp --no-preserve=mode,ownership Templates/SingleNode/libvirt/libvirt-bin.conf /etc/init/libvirt-bin.conf
-    cp --no-preserve=mode,ownership Templates/SingleNode/libvirt/libvirt-bin /etc/default/libvirt-bin
-    cp --no-preserve=mode,ownership Templates/SingleNode/nova/nova-compute.conf /etc/nova/nova-compute.conf 
+    cp --no-preserve=mode,ownership "$SCRIPT_DIR/Templates/SingleNode/nova/api-paste.ini" /etc/nova/api-paste.ini
+    cp --no-preserve=mode,ownership "$SCRIPT_DIR/Templates/SingleNode/nova/nova.conf" /etc/nova/nova.conf
+    cp --no-preserve=mode,ownership "$SCRIPT_DIR/Templates/SingleNode/libvirt/qemu.conf" /etc/libvirt/qemu.conf
+    cp --no-preserve=mode,ownership "$SCRIPT_DIR/Templates/SingleNode/libvirt/libvirtd.conf" /etc/libvirt/libvirtd.conf
+    cp --no-preserve=mode,ownership "$SCRIPT_DIR/Templates/SingleNode/libvirt/libvirt-bin.conf" /etc/init/libvirt-bin.conf
+    cp --no-preserve=mode,ownership "$SCRIPT_DIR/Templates/SingleNode/libvirt/libvirt-bin" /etc/default/libvirt-bin
+    cp --no-preserve=mode,ownership "$SCRIPT_DIR/Templates/SingleNode/nova/nova-compute.conf" /etc/nova/nova-compute.conf
     # Destroy Default Virtual Bridges
     virsh net-destroy default
     virsh net-undefine default

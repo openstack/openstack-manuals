@@ -18,6 +18,8 @@
 # switched on/VM has internet connection.
 # Internet is required for this script to run.
 
+SCRIPT_DIR=$(cd $(dirname "$0") && pwd)
+
 # Add a Few required packages
 apt-get install -y ubuntu-cloud-keyring python-software-properties software-properties-common python-keyring
 # Update apt-get
@@ -43,7 +45,7 @@ configure_networks(){
     if [ "$1" == "single-node" ]; then
         # Copy Single Node interfaces file to /etc/network/
         echo "Configuring Network for Single Node"
-        cp --no-preserve=mode,ownership Templates/interfaces-single /etc/network/interfaces
+        cp --no-preserve=mode,ownership "$SCRIPT_DIR/Templates/interfaces-single" /etc/network/interfaces
 
     else
         if [ "$1" == "multi-node" ]; then
@@ -52,18 +54,18 @@ configure_networks(){
                 "control")
                     ## Configure network for control node
                     echo "Configuring Network for Control Node"
-                    cp --no-preserve=mode,ownership Templates/interfaces-control /etc/network/interfaces
+                    cp --no-preserve=mode,ownership "$SCRIPT_DIR/Templates/interfaces-control" /etc/network/interfaces
                     ;;
 
                 "compute")
                     ## Configure network for compute node.
                     echo "Configuring Network for Compute Node"
-                    cp --no-preserve=mode,ownership Templates/interfaces-compute /etc/network/interfaces
+                    cp --no-preserve=mode,ownership "$SCRIPT_DIR/Templates/interfaces-compute" /etc/network/interfaces
                     ;;
                 "network")
                     ## Configure network for network node.
                     echo "Configuring Network for Network Node"
-                    cp --no-preserve=mode,ownership Templates/interfaces-network /etc/network/interfaces
+                    cp --no-preserve=mode,ownership "$SCRIPT_DIR/Templates/interfaces-network" /etc/network/interfaces
                     ;;
                 *)
                     echo "Invalid Input, cannot figure out which node this is. Error!!!"

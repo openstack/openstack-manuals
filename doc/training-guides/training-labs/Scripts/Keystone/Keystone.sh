@@ -15,6 +15,7 @@
 
 # Note: You Do Not Need Internet for this due to the magic of --download-only
 echo "Internet connection is not required for this script to run"
+SCRIPT_DIR=$(cd $(dirname "$0") && pwd)
 
 pre_keystone(){
 
@@ -58,7 +59,7 @@ keystone_conf() {
     mysql -u "root" -p"$MySQL_RPaSS" -e "GRANT ALL ON cinder.* TO 'cinderUser'@'%' IDENTIFIED BY 'cinderPass';"
 
     # 2. Configure keystone scripts (copy the template file)
-    cp --no-preserve=mode,ownership Templates/Keystone.conf /etc/keystone/keystone.conf
+    cp --no-preserve=mode,ownership "$SCRIPT_DIR/Templates/Keystone.conf" /etc/keystone/keystone.conf
 
     # 3. Restart The Keystone Services
     service keystone restart
@@ -67,11 +68,11 @@ keystone_conf() {
     keystone-manage db_sync
 
     # Create User and grant access to the user
-    sh Scripts/keystone_basic.sh
-    sh Scripts/keystone_endpoints_basic.sh
+    sh "$SCRIPT_DIR/Scripts/keystone_basic.sh"
+    sh "$SCRIPT_DIR/Scripts/keystone_endpoints_basic.sh"
 
     # Load the Auth Creds
-    source Scripts/Credentials.sh
+    source "$SCRIPT_DIR/Scripts/Credentials.sh"
 
     # List keystone users
     keystone user-list
