@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-04-23 06:23+0000\n"
+"POT-Creation-Date: 2014-04-25 06:24+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1057,155 +1057,151 @@ msgstr ""
 msgid "Use the <literal>mkisofs_cmd</literal> flag to set the path where you install the <package>genisoimage</package> program. If <package>genisoimage</package> is in same path as the <systemitem class=\"service\">nova-compute</systemitem> service, you do not need to set this flag."
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:51(para)
-msgid "By default, Ubuntu packages do not install this package. See bug <link href=\"https://bugs.launchpad.net/cloud-archive/+bug/1165174\">#1165174</link>."
-msgstr ""
-
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:58(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:52(para)
 msgid "To use configuration drive with hyper-v, you must set the <literal>mkisofs_cmd</literal> value to the full path to an <literal>mkisofs.exe</literal> installation. Additionally, you must set the <literal>qemu_img_cmd</literal> value in the <literal>hyperv</literal> configuration section to the full path to an <literal>qemu-img</literal> command installation."
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:71(title)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:65(title)
 msgid "Image requirements"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:73(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:67(para)
 msgid "An image built with a recent version of the <package>cloud-init</package> package can automatically access metadata passed through the configuration drive. The <package>cloud-init</package> package version 0.7.1 works with Ubuntu and Fedora-based images, such as RHEL."
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:82(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:76(para)
 msgid "If an image does not have the <package>cloud-init</package> package installed, you must customize the image to run a script that mounts the configuration drive on boot, reads the data from the drive, and takes appropriate action such as adding the public key to an account. See <xref linkend=\"config_drive_contents\"/> for details on how data is organized on the configuration drive."
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:94(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:88(para)
 msgid "If you use Xen with a configuration drive, use the <literal>xenapi_disable_agent</literal> configuration parameter to disable the agent."
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:101(title)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:95(title)
 msgid "Guidelines"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:103(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:97(para)
 msgid "Do not rely on the presence of the EC2 metadata present in the configuration drive, as this content might be removed in a future release. For example, do not rely on files in the <filename>ec2</filename> directory."
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:110(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:104(para)
 msgid "When you create images that access configuration drive data and multiple directories are under the <filename>openstack</filename> directory, always select the highest API version by date that your consumer supports. For example, if your guest image supports the 2012-03-05, 2012-08-05, 2013-04-13 versions, try 2013-04-13 first and fall back to a previous version if 2013-04-13 is not present."
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:123(title)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:117(title)
 msgid "Enable and access the configuration drive"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:126(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:120(para)
 msgid "To enable the configuration drive, pass the <literal>--config-drive=true</literal> parameter to the <placeholder-1/> command."
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:130(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:124(para)
 msgid "This example enables the configuration drive and passes user data, two files, and two key/value metadata pairs, all of which are accessible from the configuration drive:"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:135(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:129(para)
 msgid "You can also configure the Compute service to always create a configuration drive."
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:137(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:131(para)
 msgid "Set this option in the <filename>/etc/nova/nova.conf</filename> file:"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:142(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:136(para)
 msgid "If a user passes the <parameter>--config-drive=true</parameter> flag to the <placeholder-1/> command, an administrator cannot disable the configuration drive."
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:150(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:144(para)
 msgid "The configuration drive has the <literal>config-2</literal> volume label. If your guest operating system supports accessing disk by label, you can mount the configuration drive as the <filename>/dev/disk/by-label/config-2</filename> device."
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:157(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:151(para)
 msgid "For example:"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:161(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:155(para)
 msgid "Make sure that you use at least version 0.3.1 of CirrOS for configuration drive support."
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:164(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:158(para)
 msgid "If your guest operating system does not use <literal>udev</literal>, the <filename>/dev/disk/by-label</filename> directory is not present."
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:168(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:162(para)
 msgid "You can use the <placeholder-1/> command to identify the block device that corresponds to the configuration drive. For example, when you boot the CirrOS image with the <literal>m1.tiny</literal> flavor, the device is <filename>/dev/vdb</filename>:"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:176(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:170(para)
 msgid "Once identified, you can mount the device:"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:183(title)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:177(title)
 msgid "Configuration drive contents"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:184(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:178(para)
 msgid "In this example, the contents of the configuration drive are:"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:197(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:191(para)
 msgid "The files that appear on the configuration drive depend on the arguments that you pass to the <placeholder-1/> command."
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:202(title)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:196(title)
 msgid "OpenStack metadata format"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:203(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:197(para)
 msgid "The following example shows the contents of the <filename>openstack/2012-08-10/meta_data.json</filename> and <filename>openstack/latest/meta_data.json</filename> files. These files are identical. The file contents are formatted for readability:"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:210(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:204(para)
 msgid "Note the effect of the <literal>--file /etc/network/interfaces=/home/myuser/instance-interfaces</literal> argument that was passed to the <placeholder-1/> command. The contents of this file are contained in the <filename>openstack/content/0000</filename> file on the configuration drive, and the path is specified as <filename>/etc/network/interfaces</filename> in the <filename>meta_data.json</filename> file."
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:221(title)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:215(title)
 msgid "EC2 metadata format"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:222(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:216(para)
 msgid "The following example shows the contents of the <filename>ec2/2009-04-04/meta-data.json</filename>, <filename>latest/meta-data.json</filename> files. These files are identical. The file contents are formatted to improve readability:"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:230(title)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:224(title)
 msgid "User data"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:231(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:225(para)
 msgid "The <filename>openstack/2012-08-10/user_data</filename>, <filename>openstack/latest/user_data</filename>, <filename>ec2/2009-04-04/user-data</filename>, and <filename>ec2/latest/user-data</filename> file are present only if the <literal>--user-data</literal> flag and the contents of the user data file are passed to the <placeholder-1/> command."
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:241(title)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:235(title)
 msgid "Configuration drive format"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:242(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:236(para)
 msgid "The default format of the configuration drive as an ISO 9660 file system. To explicitly specify the ISO 9660 format, add the following line to the <filename>/etc/nova/nova.conf</filename> file:"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:248(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:242(para)
 msgid "By default, you cannot attach the configuration drive image as a CD drive instead of as a disk drive. To attach a CD drive, add this line to the <filename>/etc/nova/nova.conf</filename> file:"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:254(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:248(para)
 msgid "For legacy reasons, you can configure the configuration drive to use VFAT format instead of ISO 9660. It is unlikely that you would require VFAT format because ISO 9660 is widely supported across operating systems. However, to use the VFAT format, add the following line to the <filename>/etc/nova/nova.conf</filename> file:"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:263(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:257(para)
 msgid "If you choose VFAT, the configuration drive is 64 MB."
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:268(title)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:262(title)
 msgid "Configuration drive reference"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:269(para)
+#: ./doc/user-guide/section_cli_nova_config-drive.xml:263(para)
 msgid "The following table shows the configuration options for the configuration drive:"
 msgstr ""
 
@@ -1231,6 +1227,134 @@ msgstr ""
 
 #: ./doc/user-guide/section_sdk_auth_neutron.xml:18(para)
 msgid "You can also authenticate by explicitly specifying the endpoint and token:"
+msgstr ""
+
+#: ./doc/user-guide/section_sdk_nova.xml:6(title)
+msgid "Compute"
+msgstr ""
+
+#: ./doc/user-guide/section_sdk_nova.xml:8(para)
+msgid "To use the information in this section, you should have a general understanding of OpenStack Compute."
+msgstr ""
+
+#: ./doc/user-guide/section_sdk_nova.xml:11(title) ./doc/user-guide/section_sdk_neutron.xml:14(title)
+msgid "Set environment variables"
+msgstr ""
+
+#: ./doc/user-guide/section_sdk_nova.xml:12(para)
+msgid "Please see <xref linkend=\"sdk_auth\"/> on how to setup environmental variables and authenticate against Compute API endpoints."
+msgstr ""
+
+#: ./doc/user-guide/section_sdk_nova.xml:16(title)
+msgid "Get nova credentials v2"
+msgstr ""
+
+#: ./doc/user-guide/section_sdk_nova.xml:17(para)
+msgid "The examples in this section use the <code>get_nova_credentials_v2</code> method:"
+msgstr ""
+
+#: ./doc/user-guide/section_sdk_nova.xml:27(para) ./doc/user-guide/section_sdk_neutron.xml:35(para) ./doc/user-guide/section_sdk_neutron.xml:53(para)
+msgid "This code resides in the <filename>credentials.py</filename> file, which all samples import."
+msgstr ""
+
+#: ./doc/user-guide/section_sdk_nova.xml:30(para)
+msgid "Use the <code>get_nova_credentials_v2()</code> method to populate and get a dictionary:"
+msgstr ""
+
+#: ./doc/user-guide/section_sdk_nova.xml:36(title)
+msgid "List servers v2"
+msgstr ""
+
+#: ./doc/user-guide/section_sdk_nova.xml:37(para)
+msgid "The following program lists servers using the v2 APIs:"
+msgstr ""
+
+#: ./doc/user-guide/section_sdk_nova.xml:39(title)
+msgid "To list the servers"
+msgstr ""
+
+#: ./doc/user-guide/section_sdk_nova.xml:41(para) ./doc/user-guide/section_sdk_nova.xml:83(para) ./doc/user-guide/section_sdk_nova.xml:164(para) ./doc/user-guide/section_sdk_neutron.xml:255(para) ./doc/user-guide/section_sdk_neutron.xml:340(para) ./doc/user-guide/section_sdk_neutron.xml:416(para) ./doc/user-guide/section_sdk_neutron.xml:468(para) ./doc/user-guide/section_sdk_neutron.xml:519(para)
+msgid "Import the following modules:"
+msgstr ""
+
+#: ./doc/user-guide/section_sdk_nova.xml:46(para) ./doc/user-guide/section_sdk_nova.xml:89(para) ./doc/user-guide/section_sdk_nova.xml:170(para)
+msgid "Get Nova Credentials. See <xref linkend=\"sdk_compute_get_nova_credentials_v2\"/>."
+msgstr ""
+
+#: ./doc/user-guide/section_sdk_nova.xml:51(para) ./doc/user-guide/section_sdk_nova.xml:94(para) ./doc/user-guide/section_sdk_nova.xml:175(para) ./doc/user-guide/section_sdk_neutron.xml:268(para)
+msgid "Instantiate the <literal>nova_client</literal> client object by using the <literal>credentials</literal> dictionary object:"
+msgstr ""
+
+#: ./doc/user-guide/section_sdk_nova.xml:59(para)
+msgid "Get the list of servers by calling <literal>servers.list</literal> on <literal>nova_client</literal> object:"
+msgstr ""
+
+#: ./doc/user-guide/section_sdk_nova.xml:65(title)
+msgid "List servers: complete code listing"
+msgstr ""
+
+#: ./doc/user-guide/section_sdk_nova.xml:78(title)
+msgid "Create a server v2"
+msgstr ""
+
+#: ./doc/user-guide/section_sdk_nova.xml:79(para)
+msgid "The following program creates a server (VM) using the v2 APIs:"
+msgstr ""
+
+#: ./doc/user-guide/section_sdk_nova.xml:81(title)
+msgid "To create a server"
+msgstr ""
+
+#: ./doc/user-guide/section_sdk_nova.xml:102(para)
+msgid "In this step, search for the flavor and image to be used for creating a server. The following code assumes <literal> cirros</literal> image and <literal>m1.tiny</literal> are being used."
+msgstr ""
+
+#: ./doc/user-guide/section_sdk_nova.xml:114(para)
+msgid "In this step determine the network with which the server is going to be attached. Use this along with flavor and image to create the server."
+msgstr ""
+
+#: ./doc/user-guide/section_sdk_nova.xml:123(para)
+msgid "Sleep for 5 secs and check if the server/vm got created by calling <literal>nova_client.servers.list()</literal>"
+msgstr ""
+
+#: ./doc/user-guide/section_sdk_nova.xml:133(title)
+msgid "Create server: complete code listing"
+msgstr ""
+
+#: ./doc/user-guide/section_sdk_nova.xml:159(title)
+msgid "Delete server v2"
+msgstr ""
+
+#: ./doc/user-guide/section_sdk_nova.xml:160(para)
+msgid "The following program deletes a Server (VM) using the v2 API:"
+msgstr ""
+
+#: ./doc/user-guide/section_sdk_nova.xml:162(title)
+msgid "To Delete a Server"
+msgstr ""
+
+#: ./doc/user-guide/section_sdk_nova.xml:183(para)
+msgid "Check if the server <literal>\"vm1\"</literal> exists using the following steps"
+msgstr ""
+
+#: ./doc/user-guide/section_sdk_nova.xml:185(para)
+msgid "Get the list of servers: <literal>servers_list</literal>"
+msgstr ""
+
+#: ./doc/user-guide/section_sdk_nova.xml:186(para)
+msgid "Iterate over the <literal>servers_list</literal> and compare name with <literal>\"vm1\" </literal>"
+msgstr ""
+
+#: ./doc/user-guide/section_sdk_nova.xml:188(para)
+msgid "If true set the variable name <literal>server_exists</literal> as <literal>True</literal> and break from the for loop"
+msgstr ""
+
+#: ./doc/user-guide/section_sdk_nova.xml:203(para)
+msgid "If the server exists execute <literal>delete</literal> method of <literal>nova_client.servers</literal> object."
+msgstr ""
+
+#: ./doc/user-guide/section_sdk_nova.xml:210(title)
+msgid "Delete: complete code listing"
 msgstr ""
 
 #: ./doc/user-guide/section_cli_ceilometer.xml:8(title)
@@ -1354,7 +1478,7 @@ msgid "Each instance can have a private, or fixed, IP address and a public, or f
 msgstr ""
 
 #: ./doc/user-guide/section_cli_nova_floating_ips.xml:9(para)
-msgid "Private IP addresses are used for communication between instances, and public ones are used for communication with the outside world."
+msgid "Private IP addresses are used for communication between instances, and public ones are used for communication with networks outside the cloud, including the Internet."
 msgstr ""
 
 #: ./doc/user-guide/section_cli_nova_floating_ips.xml:12(para)
@@ -1362,79 +1486,63 @@ msgid "When you launch an instance, it is automatically assigned a private IP ad
 msgstr ""
 
 #: ./doc/user-guide/section_cli_nova_floating_ips.xml:16(para)
-msgid "A pool of floating IPs, configured by the cloud operator, is available in OpenStack Compute."
+msgid "A pool of floating IP addresses, configured by the cloud operator, is available in OpenStack Compute. You can allocate a certain number of these IP addresses to a project. The maximum number of floating IP addresses per project is defined by the quota."
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_floating_ips.xml:18(para)
-msgid "You can allocate a certain number of these to a project: The maximum number of floating IP addresses per project is defined by the quota."
+#: ./doc/user-guide/section_cli_nova_floating_ips.xml:20(para)
+msgid "After you allocate floating IP addresses to a project, you can add a floating IP address from this set to an instance of the project. You can assign a floating IP address to one instance at a time. Floating IP addresses can be disassociated from an instance and associated with another instance of the same project at any time."
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_floating_ips.xml:21(para)
-msgid "You can add a floating IP address from this set to an instance of the project. Floating IP addresses can be dynamically disassociated and associated with other instances of the same project at any time."
-msgstr ""
-
-#: ./doc/user-guide/section_cli_nova_floating_ips.xml:25(para)
-msgid "Before you can assign a floating IP address to an instance, you first must allocate floating IPs to a project. After floating IP addresses have been allocated to the current project, you can assign them to running instances."
-msgstr ""
-
-#: ./doc/user-guide/section_cli_nova_floating_ips.xml:29(para)
-msgid "You can assign a floating IP address to one instance at a time."
-msgstr ""
-
-#: ./doc/user-guide/section_cli_nova_floating_ips.xml:32(title)
+#: ./doc/user-guide/section_cli_nova_floating_ips.xml:26(title)
 msgid "List floating IP address information"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_floating_ips.xml:35(para)
-msgid "To list all floating IP addresses:"
+#: ./doc/user-guide/section_cli_nova_floating_ips.xml:29(para)
+msgid "To list all floating IP addresses, run the following command:"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_floating_ips.xml:63(para)
-msgid "To list all pools that provide floating IP addresses:"
+#: ./doc/user-guide/section_cli_nova_floating_ips.xml:58(para)
+msgid "To list all pools that provide floating IP addresses, run the following command:"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_floating_ips.xml:76(title)
+#: ./doc/user-guide/section_cli_nova_floating_ips.xml:71(title)
 msgid "Assign floating IP addresses"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_floating_ips.xml:77(para)
-msgid "You can assign floating IP addresses to a project or an instance."
+#: ./doc/user-guide/section_cli_nova_floating_ips.xml:72(para)
+msgid "You can assign floating IP addresses to a project and to an instance."
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_floating_ips.xml:81(para)
-msgid "Allocate a floating IP address to the current project. If more than one IP address pool is available, you can specify the pool from which to allocate the IP address. This example specifies the <literal>public</literal> pool:"
+#: ./doc/user-guide/section_cli_nova_floating_ips.xml:76(para)
+msgid "Run the following command to allocate a floating IP address to the current project. If more than one IP address pool is available, you can specify the pool from which to allocate the IP address. This example specifies the <literal>public</literal> pool:"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_floating_ips.xml:94(para)
-msgid "To release a floating IP address from the current project:"
+#: ./doc/user-guide/section_cli_nova_floating_ips.xml:89(para)
+msgid "After at least one floating IP address is allocated to the project, assign an IP address to an instance in the project, as follows:"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_floating_ips.xml:96(replaceable) ./doc/user-guide/section_cli_nova_floating_ips.xml:108(replaceable) ./doc/user-guide/section_cli_nova_floating_ips.xml:118(replaceable)
-msgid "FLOATING_IP"
-msgstr ""
-
-#: ./doc/user-guide/section_cli_nova_floating_ips.xml:97(para)
-msgid "The IP address is returned to the pool of IP addresses that are available for all projects. If an IP address is assigned to a running instance, it is disassociated from the instance."
-msgstr ""
-
-#: ./doc/user-guide/section_cli_nova_floating_ips.xml:103(para)
-msgid "To associate an IP address with an instance, at least one floating IP address must be allocated to the current project."
-msgstr ""
-
-#: ./doc/user-guide/section_cli_nova_floating_ips.xml:106(para)
-msgid "To assign a floating IP address to an instance:"
-msgstr ""
-
-#: ./doc/user-guide/section_cli_nova_floating_ips.xml:108(replaceable) ./doc/user-guide/section_cli_nova_floating_ips.xml:118(replaceable)
+#: ./doc/user-guide/section_cli_nova_floating_ips.xml:92(replaceable) ./doc/user-guide/section_cli_nova_floating_ips.xml:102(replaceable)
 msgid "INSTANCE_NAME_OR_ID"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_floating_ips.xml:109(para)
+#: ./doc/user-guide/section_cli_nova_floating_ips.xml:92(replaceable) ./doc/user-guide/section_cli_nova_floating_ips.xml:102(replaceable) ./doc/user-guide/section_cli_nova_floating_ips.xml:107(replaceable)
+msgid "FLOATING_IP"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_floating_ips.xml:93(para)
 msgid "After you assign the IP address and configure security group rules for the instance, the instance is publicly available at the floating IP address."
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_floating_ips.xml:115(para)
-msgid "To remove a floating IP address from an instance, specify the same arguments that you used to assign the IP address:"
+#: ./doc/user-guide/section_cli_nova_floating_ips.xml:99(para)
+msgid "To remove a floating IP address from an instance, specify the same arguments that you used to assign the IP address, but run the following command:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_floating_ips.xml:105(para)
+msgid "To release a floating IP address from the current project, run the following command:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_floating_ips.xml:108(para)
+msgid "The IP address is returned to the pool of IP addresses that are available for all projects. If an IP address is assigned to a running instance, it is disassociated from the instance."
 msgstr ""
 
 #: ./doc/user-guide/section_sdk_auth_glance.xml:6(title)
@@ -1451,10 +1559,6 @@ msgstr ""
 
 #: ./doc/user-guide/section_sdk_neutron.xml:8(para)
 msgid "To use the information in this section, you should have a general understanding of OpenStack Networking, OpenStack Compute, and the integration between the two. You should also have access to a plug-in that implements the Networking API v2.0."
-msgstr ""
-
-#: ./doc/user-guide/section_sdk_neutron.xml:14(title)
-msgid "Set environment variables"
 msgstr ""
 
 #: ./doc/user-guide/section_sdk_neutron.xml:15(para)
@@ -1479,10 +1583,6 @@ msgstr ""
 
 #: ./doc/user-guide/section_sdk_neutron.xml:26(para)
 msgid "The examples in this section use the <code>get_credentials</code> method:"
-msgstr ""
-
-#: ./doc/user-guide/section_sdk_neutron.xml:35(para) ./doc/user-guide/section_sdk_neutron.xml:53(para)
-msgid "This code resides in the <filename>credentials.py</filename> file, which all samples import."
 msgstr ""
 
 #: ./doc/user-guide/section_sdk_neutron.xml:38(para)
@@ -1577,16 +1677,8 @@ msgstr ""
 msgid "To create a router and add a port to a subnet"
 msgstr ""
 
-#: ./doc/user-guide/section_sdk_neutron.xml:255(para) ./doc/user-guide/section_sdk_neutron.xml:340(para) ./doc/user-guide/section_sdk_neutron.xml:416(para) ./doc/user-guide/section_sdk_neutron.xml:468(para) ./doc/user-guide/section_sdk_neutron.xml:519(para)
-msgid "Import the following modules:"
-msgstr ""
-
 #: ./doc/user-guide/section_sdk_neutron.xml:263(para)
 msgid "Get Nova Credentials. See <xref linkend=\"sdk_neutron_get_nova_credentials\"/>."
-msgstr ""
-
-#: ./doc/user-guide/section_sdk_neutron.xml:268(para)
-msgid "Instantiate the <literal>nova_client</literal> client object by using the <literal>credentials</literal> dictionary object:"
 msgstr ""
 
 #: ./doc/user-guide/section_sdk_neutron.xml:275(para)
@@ -2161,8 +2253,12 @@ msgstr ""
 msgid "Manage instances and hosts"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_manage_instances.xml:7(para) ./doc/user-guide/section_dashboard_launch_instances.xml:13(para)
-msgid "Instances are virtual machines that run inside the cloud."
+#: ./doc/user-guide/section_cli_nova_manage_instances.xml:7(para)
+msgid "Instances are virtual machines that run inside the cloud on physical compute nodes. The Compute service manages instances. A host is the node on which a group of instances resides."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_manage_instances.xml:11(para)
+msgid "This section describes how to perform the different tasks involved in instance management, such as adding floating IP addresses, stopping and starting instances, and terminating instances. This section also discusses node management tasks."
 msgstr ""
 
 #: ./doc/user-guide/section_sdk_auth_keystone.xml:6(title)
@@ -2187,6 +2283,10 @@ msgstr ""
 
 #: ./doc/user-guide/section_dashboard_launch_instances.xml:12(title)
 msgid "Launch and manage instances"
+msgstr ""
+
+#: ./doc/user-guide/section_dashboard_launch_instances.xml:13(para)
+msgid "Instances are virtual machines that run inside the cloud."
 msgstr ""
 
 #: ./doc/user-guide/section_dashboard_launch_instances.xml:15(para)
