@@ -37,8 +37,8 @@ glance_conf(){
 
     #4. Upload Cirros Image to Glance
     source "$SCRIPT_DIR/../Keystone/Scripts/Credentials.sh"
-    wget --directory-prefix="$SCRIPT_DIR" http://download.cirros-cloud.net/0.3.1/cirros-0.3.1-x86_64-disk.img
-    glance image-create --name myFirstImage --is-public true --container-format bare --disk-format qcow2 < "$SCRIPT_DIR/cirros-0.3.1-x86_64-disk.img"
+    # CirrOS image downloaded in PreInstall.sh
+    glance image-create --name myFirstImage --is-public true --container-format bare --disk-format qcow2 < "$SCRIPT_DIR"/cirros-*-x86_64-disk.img
 
     #5. Check The Image
     glance image-list
