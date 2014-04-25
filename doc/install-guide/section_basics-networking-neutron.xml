@@ -13,6 +13,14 @@
     <glossterm>external network</glossterm>. The compute node contains
     one network interface on the management network and one on the
     instance tunnels network.</para>
+  <note>
+    <para>Network interface names vary by distribution. Traditionally,
+      interfaces use "eth" followed by a sequential number. To cover all
+      variations, this guide simply refers to the first interface as the
+      interface with the lowest number, the second interface as the
+      interface with the middle number, and the third interface as the
+      interface with the highest number.</para>
+  </note>
   <figure>
     <title>Three-node architecture with OpenStack Networking (neutron)</title>
     <mediaobject>
@@ -39,7 +47,7 @@
     <procedure>
       <title>To configure networking:</title>
       <step>
-        <para>Configure the management interface:</para>
+        <para>Configure the first interface as the management interface:</para>
         <para>IP address: 10.0.0.11</para>
         <para>Network mask: 255.255.255.0 (or /24)</para>
         <para>Default gateway: 10.0.0.1</para>
@@ -70,43 +78,48 @@
     <procedure>
       <title>To configure networking:</title>
       <step>
-        <para>Configure the management interface:</para>
+        <para>Configure the first interface as the management interface:</para>
         <para>IP address: 10.0.0.21</para>
         <para>Network mask: 255.255.255.0 (or /24)</para>
         <para>Default gateway: 10.0.0.1</para>
       </step>
       <step>
-        <para>Configure the instance tunnels interface:</para>
+        <para>Configure the second interface as the instance tunnels
+          interface:</para>
         <para>IP address: 10.0.1.21</para>
         <para>Network mask: 255.255.255.0 (or /24)</para>
       </step>
       <step>
         <para>The external interface uses a special configuration without an
-          IP address assigned to it. Configure the external interface:</para>
+          IP address assigned to it. Configure the third interface as the
+          external interface:</para>
+        <para>Replace <replaceable>INTERFACE_NAME</replaceable> with the
+          actual interface name. For example, <emphasis>eth2</emphasis> or
+          <emphasis>ens256</emphasis>.</para>
         <substeps>
           <step os="ubuntu;debian">
             <para>Edit the <filename>/etc/network/interfaces</filename> file
               to contain the following:</para>
             <programlisting># The external network interface
-auto eth2
-iface eth2 inet manual
+auto <replaceable>INTERFACE_NAME</replaceable>
+iface <replaceable>INTERFACE_NAME</replaceable> inet manual
         up ip link set dev $IFACE up
         down ip link set dev $IFACE down</programlisting>
           </step>
           <step os="rhel;centos;fedora">
             <para>Edit the
-              <filename>/etc/sysconfig/network-scripts/ifcfg-eth2</filename>
+              <filename>/etc/sysconfig/network-scripts/ifcfg-<replaceable>INTERFACE_NAME</replaceable></filename>
               file to contain the following:</para>
             <para>Do not change the <literal>HWADDR</literal> and
               <literal>UUID</literal> keys.</para>
-            <programlisting>DEVICE=eth2
+            <programlisting>DEVICE=<replaceable>INTERFACE_NAME</replaceable>
 TYPE=Ethernet
 ONBOOT="yes"
 BOOTPROTO="none"</programlisting>
           </step>
           <step os="sles;opensuse">
             <para>Edit the
-              <filename>/etc/sysconfig/network/ifcfg-eth2</filename> file to
+              <filename>/etc/sysconfig/network/ifcfg-<replaceable>INTERFACE_NAME</replaceable></filename> file to
               contain the following:</para>
             <programlisting>STARTMODE='auto'
 BOOTPROTO='static'</programlisting>
@@ -144,7 +157,7 @@ BOOTPROTO='static'</programlisting>
     <procedure>
       <title>To configure networking:</title>
       <step>
-        <para>Configure the management interface:</para>
+        <para>Configure the first interface as the management interface:</para>
         <para>IP address: 10.0.0.31</para>
         <para>Network mask: 255.255.255.0 (or /24)</para>
         <para>Default gateway: 10.0.0.1</para>
@@ -154,7 +167,8 @@ BOOTPROTO='static'</programlisting>
         </note>
       </step>
       <step>
-        <para>Configure the instance tunnels interface:</para>
+        <para>Configure the second interface as the instance tunnels
+          interface:</para>
         <para>IP address: 10.0.1.31</para>
         <para>Network mask: 255.255.255.0 (or /24)</para>
         <note>

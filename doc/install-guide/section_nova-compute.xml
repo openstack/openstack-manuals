@@ -15,60 +15,7 @@
     guide uses KVM.</para>
   <procedure>
     <step>
-      <para>
-        Configure the system.  Use the instructions in <xref
-        linkend="ch_basics"/>, but note the following differences from
-        the controller node:</para>
-      <itemizedlist>
-        <listitem>
-          <para>Use different IP addresses when you configure
-              <filename>eth0</filename>. This guide uses
-              <literal>10.0.0.31</literal> for the management
-            network of the first compute node.
-            </para>
-            <para>
-              If you run OpenStack Networking (neutron), configure
-              <literal>eth1</literal> as instance tunnels interface
-              with IP address <literal>10.0.1.31</literal> for the
-              first compute node. For details, see the instructions in
-              <xref linkend="basics-neutron-networking-compute-node"/>
-          </para>
-            <para>
-              If you run legacy networking (nova-network), do not
-              configure <literal>eth1</literal> with a static IP
-              address. The networking component of OpenStack assigns
-              and configures an IP address. For details, see the
-              instructions in <xref
-              linkend="basics-networking-node-compute-node"/>.
-            </para>
-        </listitem>
-        <listitem>
-          <para>Set the host name to <literal>compute1</literal>. To
-            verify, use the <code>uname -n</code> parameter. Ensure
-            that the IP addresses and host names for both nodes are
-            listed in the <filename>/etc/hosts</filename> file on each
-            system.</para>
-        </listitem>
-        <listitem>
-          <para>Synchronize from the controller node. Follow the
-            instructions in <xref linkend="basics-ntp"/>.</para>
-        </listitem>
-        <listitem>
-          <para>Install the MySQL client libraries. You do not need to
-            install the MySQL database server or start the MySQL
-            service.</para>
-        </listitem>
-        <listitem>
-          <para>Enable the OpenStack packages for the distribution
-            that you are using. See <xref linkend="basics-packages"
-            />.</para>
-        </listitem>
-      </itemizedlist>
-    </step>
-    <step>
-      <para>After you configure the operating system, install the
-        appropriate packages for the Compute service.</para>
-      <para os="ubuntu;debian">Run this command:</para>
+      <para>Install the Compute packages:</para>
       <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install nova-compute-kvm python-guestfs</userinput></screen>
       <para os="ubuntu;debian">When prompted to create a
           <literal>supermin</literal> appliance, respond
