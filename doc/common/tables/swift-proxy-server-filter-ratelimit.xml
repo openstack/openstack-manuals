@@ -1,79 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
-     <!-- The tool that generated this table lives in the
-          tools directory of this repository. As it was a one-time
-          generation, you can edit this file. -->
-     <para xmlns="http://docbook.org/ns/docbook" version="5.0">
-     <table rules="all">
-     <caption>Description of configuration options for <literal>[filter:ratelimit]</literal> in <literal>proxy-server.conf-sample</literal></caption>
-     <col width="50%"/>
-     <col width="50%"/>
-     <thead>
+    <!-- The tool that generated this table lives in the
+         openstack-doc-tools repository. The editions made in
+         this file will *not* be lost if you run the script again. -->
+    <para xmlns="http://docbook.org/ns/docbook" version="5.0">
+    <table rules="all">
+    <caption>Description of configuration options for <literal>[filter:ratelimit]</literal> in <literal>proxy-server.conf-sample</literal></caption>
+    <col width="50%"/>
+    <col width="50%"/>
+    <thead>
         <tr>
-             <th>Configuration option = Default value</th>
-             <th>Description</th>
+            <th>Configuration option = Default value</th>
+            <th>Description</th>
         </tr>
-     </thead>
-     <tbody>
-                    <tr>
-                        <td>use = egg:swift#ratelimit</td><td>Entry point of paste.deploy in the server</td>
-              </tr>
-                    <tr>
-                        <td>set log_name = ratelimit</td><td>Label to use when logging</td>
-              </tr>
-                    <tr>
-                        <td>set log_facility = LOG_LOCAL0</td><td>Syslog log facility</td>
-              </tr>
-                    <tr>
-                        <td>set log_level = INFO</td><td>Log level</td>
-              </tr>
-                    <tr>
-                        <td>set log_headers = false</td><td>If True, log headers in each request</td>
-              </tr>
-                    <tr>
-                        <td>set log_address = /dev/log</td><td>No help text available for this option</td>
-              </tr>
-                    <tr>
-                        <td>clock_accuracy = 1000</td><td>Represents how accurate the proxy servers' system clocks are with each other. 1000 means that all the proxies' clock are accurate to each other within 1 millisecond. No ratelimit should be higher than the clock accuracy.</td>
-              </tr>
-                    <tr>
-                        <td>max_sleep_time_seconds = 60</td><td>App will immediately return a 498 response if the necessary sleep time ever exceeds the given max_sleep_time_seconds.</td>
-              </tr>
-                    <tr>
-                        <td>log_sleep_time_seconds = 0</td><td>To allow visibility into rate limiting set this value &gt; 0 and all sleeps greater than the number will be logged.</td>
-              </tr>
-                    <tr>
-                        <td>rate_buffer_seconds = 5</td><td>Number of seconds the rate counter can drop and be allowed to catch up (at a faster than listed rate). A larger number will result in larger spikes in rate but better average accuracy.</td>
-              </tr>
-                    <tr>
-                        <td>account_ratelimit = 0</td><td>If set, will limit PUT and DELETE requests to /account_name/container_name. Number is in requests per second.</td>
-              </tr>
-                    <tr>
-                        <td>account_whitelist = a,b</td><td>Comma separated lists of account names that will not be rate limited.</td>
-              </tr>
-                    <tr>
-                        <td>account_blacklist = c,d</td><td>Comma separated lists of account names that will not be allowed. Returns a 497 response. r: for containers of size x, limit requests per second to r. Will limit PUT, DELETE, and POST requests to /a/c/o. container_listing_ratelimit_x  =  r: for containers of size x, limit listing requests per second to r. Will limit GET requests to /a/c.</td>
-              </tr>
-                    <tr>
-                        <td>with container_limit_x = r</td><td>No help text available for this option</td>
-              </tr>
-                    <tr>
-                        <td>container_ratelimit_0 = 100</td><td>No help text available for this option</td>
-              </tr>
-                    <tr>
-                        <td>container_ratelimit_10 = 50</td><td>No help text available for this option</td>
-              </tr>
-                    <tr>
-                        <td>container_ratelimit_50 = 20</td><td>No help text available for this option</td>
-              </tr>
-                    <tr>
-                        <td>container_listing_ratelimit_0 = 100</td><td>No help text available for this option</td>
-              </tr>
-                    <tr>
-                        <td>container_listing_ratelimit_10 = 50</td><td>No help text available for this option</td>
-              </tr>
-                    <tr>
-                        <td>container_listing_ratelimit_50 = 20</td><td>No help text available for this option</td>
-              </tr>
-             </tbody>
-                        </table>
-                        </para>
+    </thead>
+    <tbody>
+        <tr>
+            <td>use = egg:swift#ratelimit</td><td>Entry point of paste.deploy in the server</td>
+        </tr>
+        <tr>
+            <td>set log_name = ratelimit</td><td>Label to use when logging</td>
+        </tr>
+        <tr>
+            <td>set log_facility = LOG_LOCAL0</td><td>Syslog log facility</td>
+        </tr>
+        <tr>
+            <td>set log_level = INFO</td><td>Log level</td>
+        </tr>
+        <tr>
+            <td>set log_headers = false</td><td>If True, log headers in each request</td>
+        </tr>
+        <tr>
+            <td>set log_address = /dev/log</td><td>Location where syslog sends the logs to</td>
+        </tr>
+        <tr>
+            <td>clock_accuracy = 1000</td><td>Represents how accurate the proxy servers' system clocks are with each other. 1000 means that all the proxies' clock are accurate to each other within 1 millisecond. No ratelimit should be higher than the clock accuracy.</td>
+        </tr>
+        <tr>
+            <td>max_sleep_time_seconds = 60</td><td>App will immediately return a 498 response if the necessary sleep time ever exceeds the given max_sleep_time_seconds.</td>
+        </tr>
+        <tr>
+            <td>log_sleep_time_seconds = 0</td><td>To allow visibility into rate limiting set this value > 0 and all sleeps greater than the number will be logged.</td>
+        </tr>
+        <tr>
+            <td>rate_buffer_seconds = 5</td><td>Number of seconds the rate counter can drop and be allowed to catch up (at a faster than listed rate). A larger number will result in larger spikes in rate but better average accuracy.</td>
+        </tr>
+        <tr>
+            <td>account_ratelimit = 0</td><td>If set, will limit PUT and DELETE requests to /account_name/container_name. Number is in requests per second.</td>
+        </tr>
+        <tr>
+            <td>account_whitelist = a,b</td><td>Comma separated lists of account names that will not be rate limited.</td>
+        </tr>
+        <tr>
+            <td>account_blacklist = c,d</td><td>Comma separated lists of account names that will not be allowed. Returns a 497 response. r: for containers of size x, limit requests per second to r. Will limit PUT, DELETE, and POST requests to /a/c/o. container_listing_ratelimit_x  =  r: for containers of size x, limit listing requests per second to r. Will limit GET requests to /a/c.</td>
+        </tr>
+        <tr>
+            <td>with container_limit_x = r</td><td>No help text available for this option.</td>
+        </tr>
+        <tr>
+            <td>container_ratelimit_0 = 100</td><td>No help text available for this option.</td>
+        </tr>
+        <tr>
+            <td>container_ratelimit_10 = 50</td><td>No help text available for this option.</td>
+        </tr>
+        <tr>
+            <td>container_ratelimit_50 = 20</td><td>No help text available for this option.</td>
+        </tr>
+        <tr>
+            <td>container_listing_ratelimit_0 = 100</td><td>No help text available for this option.</td>
+        </tr>
+        <tr>
+            <td>container_listing_ratelimit_10 = 50</td><td>No help text available for this option.</td>
+        </tr>
+        <tr>
+            <td>container_listing_ratelimit_50 = 20</td><td>No help text available for this option.</td>
+        </tr>
+    </tbody>
+    </table>
+    </para>
