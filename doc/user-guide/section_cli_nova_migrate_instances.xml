@@ -4,83 +4,73 @@
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="cli_migrate_instances">
     <?dbhtml stop-chunking?>
-    <title>Use snapshots to migrate instance</title>
+    <title>Use snapshots to migrate instances</title>
+    <para>To use snapshots to migrate instances from OpenStack projects to clouds, complete these steps.</para>
+    <procedure>
+    <step>
+        <para>In the source project, perform the following steps:</para>
+        <orderedlist>
+        <listitem>
+            <para><link xlink:href="#create_snapshot">Create a snapshot of the instance.</link></para>
+        </listitem>
+        <listitem>
+            <para><link xlink:href="#download_snapshot">Download the snapshot as an image.</link></para>
+        </listitem>
+    </orderedlist></step>
+    <step>
+        <para>In the destination project, perform the following steps:</para>
+        <orderedlist>
+    <listitem>
+            <para><link xlink:href="#import_snapshot">Import the snapshot to the new environment.</link></para>
+        </listitem>
+        <listitem>
+            <para><link xlink:href="#boot_from_snapshot">Boot a new instance from the snapshot.</link></para>
+        </listitem>
+    </orderedlist></step>
+</procedure>
     <note>
-        <para>Some cloud providers allow only administrators to
-            perform these steps.</para>
-    </note>
-    <para>To use snapshots to migrate instances from OpenStack
-        projects to clouds, complete these steps:</para>
-    <orderedlist>
-        <listitem>
-            <para>Create a snapshot of the instance.</para>
-        </listitem>
-        <listitem>
-            <para>Download the snapshot as an image.</para>
-        </listitem>
-        <listitem>
-            <para>Import the snapshot to the new environment.</para>
-        </listitem>
-        <listitem>
-            <para>Boot a new instance from the snapshot.</para>
-        </listitem>
-    </orderedlist>
-    <note>
-        <para>Perform the <xref linkend="create_snapshot"/> and <xref
-                linkend="download_snapshot"/> procedures in the source
-            project.</para>
-        <para>Perform the <xref linkend="import_snapshot"/> and <xref
-                linkend="boot_from_snapshot"/> in the destination
-            project.</para>
+        <para>Some cloud providers allow only administrators to perform this task.</para>
     </note>
     <section xml:id="create_snapshot">
         <title>Create a snapshot of the instance</title>
         <procedure>
             <step>
-                <para>Always shut down the source VM before you take the
-                    snapshot to make sure that all data is flushed to
-                    disk.</para>
+                <para>Shut down the source VM before you take the snapshot to ensure that all data is flushed to disk.
+                    If necessary, list the instances to view get the instance name.</para>
                 <screen><prompt>$</prompt> <userinput>nova list</userinput>
-                <computeroutput>+--------------------------------------+------------+--------+------------------------------+
-                    | ID                                   | Name       | Status | Networks                     |
-                    +--------------------------------------+------------+--------+------------------------------+
-                    | c41f3074-c82a-4837-8673-fa7e9fea7e11 | example    | ACTIVE | private=10.0.0.3             |
-                    +--------------------------------------+------------+--------+------------------------------+</computeroutput></screen>
+<computeroutput>+--------------------------------------+------------+--------+------------------------------+
+| ID                                   | Name       | Status | Networks                     |
++--------------------------------------+------------+--------+------------------------------+
+| c41f3074-c82a-4837-8673-fa7e9fea7e11 | myInstance | ACTIVE | private=10.0.0.3             |
++--------------------------------------+------------+--------+------------------------------+</computeroutput></screen>
                 <screen><prompt>$</prompt> <userinput>nova stop example</userinput></screen>
             </step>
             <step>
-                <para>Confirm that the instance shows a <literal>SHUTOFF</literal>
-                    status.</para>
+                <para>Use the <command>nova list</command> command to confirm that the instance shows a
+                        <literal>SHUTOFF</literal> status.</para>
                 <screen><prompt>$</prompt> <userinput>nova list</userinput>
-                <computeroutput>+--------------------------------------+------------+---------+------------------------------+
-                    | ID                                   | Name       | Status  | Networks                     |
-                    +--------------------------------------+------------+---------+------------------------------+
-                    | c41f3074-c82a-4837-8673-fa7e9fea7e11 | example    | SHUTOFF | private=10.0.0.3             |
-                    +--------------------------------------+------------+---------+------------------------------+</computeroutput></screen>
-                <para/>
+<computeroutput>+--------------------------------------+------------+---------+------------------------------+
+| ID                                   | Name       | Status  | Networks                     |
++--------------------------------------+------------+---------+------------------------------+
+| c41f3074-c82a-4837-8673-fa7e9fea7e11 | myInstance | SHUTOFF | private=10.0.0.3             |
++--------------------------------------+------------+---------+------------------------------+</computeroutput></screen>
             </step>
             <step>
                 <para>Use the <command>nova
                     image-create</command> command to take a snapshot. Use the <command>nova
                         image-list</command> command to check the status until the status
                     is <literal>ACTIVE</literal>:</para>
-                <screen><prompt>$</prompt> <userinput>nova list</userinput>
-                <computeroutput>+--------------------------------------+------------+---------+------------------------------+
-                    | ID                                   | Name       | Status  | Networks                     |
-                    +--------------------------------------+------------+---------+------------------------------+
-                    | c41f3074-c82a-4837-8673-fa7e9fea7e11 | example    | SHUTOFF | private=10.0.0.3             |
-                    +--------------------------------------+------------+---------+------------------------------+</computeroutput></screen>
-                <screen><prompt>$</prompt> <userinput>nova image-create --poll <replaceable>example</replaceable> <replaceable>examplesnapshot</replaceable></userinput>
-                <computeroutput>Instance snapshotting... 50% complete</computeroutput></screen>
+                <screen><prompt>$</prompt> <userinput>nova image-create --poll myInstance myInstanceSnapshot</userinput>
+<computeroutput>Instance snapshotting... 50% complete</computeroutput></screen>
                 <screen><prompt>$</prompt> <userinput>nova image-list</userinput>
-                <computeroutput>+--------------------------------------+---------------------------------+--------+--------+
-                    | ID                                   | Name                            | Status | Server |
-                    +--------------------------------------+---------------------------------+--------+--------+
-                    | 657ebb01-6fae-47dc-986a-e49c4dd8c433 | cirros-0.3.2-x86_64-uec         | ACTIVE |        |
-                    | 72074c6d-bf52-4a56-a61c-02a17bf3819b | cirros-0.3.2-x86_64-uec-kernel  | ACTIVE |        |
-                    | 3c5e5f06-637b-413e-90f6-ca7ed015ec9e | cirros-0.3.2-x86_64-uec-ramdisk | ACTIVE |        |
-                    | f30b204e-1ce6-40e7-b8d9-b353d4d84e7d | examplesnapshot                 | ACTIVE |        |
-                    +--------------------------------------+---------------------------------+--------+--------+</computeroutput></screen>
+<computeroutput>+--------------------------------------+---------------------------------+--------+--------+
+| ID                                   | Name                            | Status | Server |
++--------------------------------------+---------------------------------+--------+--------+
+| 657ebb01-6fae-47dc-986a-e49c4dd8c433 | cirros-0.3.2-x86_64-uec         | ACTIVE |        |
+| 72074c6d-bf52-4a56-a61c-02a17bf3819b | cirros-0.3.2-x86_64-uec-kernel  | ACTIVE |        |
+| 3c5e5f06-637b-413e-90f6-ca7ed015ec9e | cirros-0.3.2-x86_64-uec-ramdisk | ACTIVE |        |
+| f30b204e-1ce6-40e7-b8d9-b353d4d84e7d | myInstanceSnapshot              | ACTIVE |        |
++--------------------------------------+---------------------------------+--------+--------+</computeroutput></screen>
             </step>
         </procedure>
     </section>
@@ -90,16 +80,16 @@
             <step>
                 <para>Get the image ID:</para>
                 <screen><prompt>$</prompt> <userinput>nova image-list</userinput>
-<computeroutput>+--------------------------------------+------------------+--------+--------------------------------------+
-| ID                                   | Name             | Status | Server                               |
-+--------------------------------------+------------------+--------+--------------------------------------+
-| f30b204e-1ce6-40e7-b8d9-b353d4d84e7d | examplesnapshot  | ACTIVE | c41f3074-c82a-4837-8673-fa7e9fea7e11 |
-+--------------------------------------+------------------+--------+--------------------------------------+</computeroutput></screen>
+<computeroutput>+--------------------------------------+-------------------+--------+--------------------------------------+
+| ID                                   | Name              | Status | Server                               |
++--------------------------------------+-------------------+--------+--------------------------------------+
+| f30b204e-1ce6-40e7-b8d9-b353d4d84e7d | myInstanceSnapshot| ACTIVE | c41f3074-c82a-4837-8673-fa7e9fea7e11 |
++--------------------------------------+-------------------+--------+--------------------------------------+</computeroutput></screen>
             </step>
             <step>
                 <para>Download the snapshot by using the image ID that
                     was returned in the previous step:</para>
-                <screen><prompt>$</prompt> <userinput>glance image-download --file <replaceable>snapshot.raw</replaceable> <replaceable>f30b204e-1ce6-40e7-b8d9-b353d4d84e7d</replaceable></userinput>           </screen>
+                <screen><prompt>$</prompt> <userinput>glance image-download --file snapshot.raw f30b204e-1ce6-40e7-b8d9-b353d4d84e7d</userinput></screen>
                 <note>
                     <para>The <command>glance image-download</command>
                         command requires the image ID and cannot use
@@ -110,30 +100,21 @@
                 </note>
             </step>
             <step>
-                <para>Make the image available to the new environment,
-                    either through http or with direct upload to a
+                <para>Make the image available to the new environment, either through HTTP or with direct upload to a
                     machine (<command>scp</command>).</para>
             </step>
         </procedure>
     </section>
     <section xml:id="import_snapshot">
         <title>Import the snapshot to new environment</title>
-        <procedure>
-            <step>
                 <para>In the new project or cloud environment, import
                     the snapshot:</para>
-                <screen><prompt>$</prompt> <userinput>glance image-create --copy-from <replaceable>IMAGE_URL</replaceable></userinput>            </screen>
-            </step>
-        </procedure>
+        <screen><prompt>$</prompt> <userinput>glance image-create --copy-from <replaceable>IMAGE_URL</replaceable></userinput></screen>
     </section>
     <section xml:id="boot_from_snapshot">
         <title>Boot a new instance from the snapshot</title>
-        <procedure>
-            <step>
                 <para>In the new project or cloud environment, use the
                     snapshot to create the new instance:</para>
-                <screen><prompt>$</prompt> <userinput>nova boot --flavor m1.tiny --image <replaceable>EXAMPLE_SNAPSHOT</replaceable> <replaceable>NEW_INSTANCE</replaceable></userinput></screen>
-            </step>
-        </procedure>
+                <screen><prompt>$</prompt> <userinput>nova boot --flavor m1.tiny --image myInstanceSnapshot myNewInstance</userinput></screen>
     </section>
 </section>
