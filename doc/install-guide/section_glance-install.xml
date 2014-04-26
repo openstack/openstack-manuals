@@ -21,7 +21,7 @@
     <step>
       <para>Install the Image Service on the controller node:</para>
       <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install glance python-glanceclient</userinput></screen>
-      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-glance</userinput></screen>
+      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-glance python-glanceclient</userinput></screen>
       <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-glance python-glanceclient</userinput></screen>
     </step>
 
@@ -150,6 +150,10 @@ IDENTIFIED BY '<replaceable>GLANCE_DBPASS</replaceable>';</userinput></screen>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf keystone_authtoken \
   auth_host <replaceable>controller</replaceable></userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf keystone_authtoken \
+  auth_port 35357</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf keystone_authtoken \
+  auth_protocol http</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf keystone_authtoken \
   admin_tenant_name service</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf keystone_authtoken \
   admin_user glance</userinput>
@@ -161,6 +165,10 @@ IDENTIFIED BY '<replaceable>GLANCE_DBPASS</replaceable>';</userinput></screen>
   auth_uri http://<replaceable>controller</replaceable>:5000</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-registry.conf keystone_authtoken \
   auth_host <replaceable>controller</replaceable></userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-registry.conf keystone_authtoken \
+  auth_port 35357</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-registry.conf keystone_authtoken \
+  auth_protocol http</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-registry.conf keystone_authtoken \
   admin_tenant_name service</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-registry.conf keystone_authtoken \
