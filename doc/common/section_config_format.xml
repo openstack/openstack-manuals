@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="config_format"
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+
+  <title>Configuration file format</title>
+
+  <para>
+    OpenStack uses the <glossterm>INI</glossterm> file format for
+    configuration files. An INI file is a simple text file that
+    specifies options as <literal>key=value</literal> pairs,
+    grouped into sections. The <literal>DEFAULT</literal> section
+    contains most of the configuration options. Lines starting with a
+    hash sign (<literal>#</literal>) are comment lines.  For example:
+  </para>
+        <programlisting language="ini">[DEFAULT]
+# Print debugging output (set logging level to DEBUG instead
+# of default WARNING level). (boolean value)
+debug=true
+# Print more verbose output (set logging level to INFO instead
+# of default WARNING level). (boolean value)
+verbose=true</programlisting>
+
+  <para>
+    Options can have different type for values. The comments in the
+    sample config files always mention these. The following types are
+    used by OpenStack:
+  </para>
+  <variablelist>
+    <varlistentry>
+      <term>boolean value</term>
+      <listitem>
+        <para>
+          Enables or disables an option. The allowed values are
+          <literal>true</literal> and <literal>false</literal>.
+        </para>
+<programlisting language="ini"># Enable the experimental use of database reconnect on
+# connection lost (boolean value)
+use_db_reconnect=false</programlisting>
+      </listitem>
+    </varlistentry>
+      <varlistentry>
+        <term>floating point value</term>
+        <listitem>
+          <para>A floating point number like <literal>0.25</literal>
+          or <literal>1000</literal>.
+          </para>
+<programlisting language="ini"># Sleep time in seconds for polling an ongoing async task
+# (floating point value)
+task_poll_interval=0.5</programlisting>
+        </listitem>
+      </varlistentry>
+    <varlistentry>
+      <term>integer value</term>
+      <listitem>
+        <para>
+          An integer number is a number without fractional components,
+          like <literal>0</literal> or <literal>42</literal>.
+        </para>
+<programlisting language="ini"># The port which the OpenStack Compute service listens on.
+# (integer value)
+compute_port=8774</programlisting>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>list value</term>
+      <listitem>
+        <para>
+          Represents values of other types, separated by commas. As an
+          example, the following sets
+          <option>allowed_rpc_exception_modules</option> to a list
+          containing the four elements
+          <literal>oslo.messaging.exceptions</literal>,
+          <literal>nova.exception</literal>,
+          <literal>cinder.exception</literal>, and
+          <literal>exceptions</literal>:
+        </para>
+        <programlisting language="ini"># Modules of exceptions that are permitted to be recreated
+# upon receiving exception data from an rpc call. (list value)
+allowed_rpc_exception_modules=oslo.messaging.exceptions,nova.exception,cinder.exception,exceptions</programlisting>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>multi valued</term>
+      <listitem>
+        <para>
+          A multi-valued option is a string value and can be given
+          more than once, all values will be used.
+        </para>
+<programlisting language="ini"># Driver or drivers to handle sending notifications. (multi
+# valued)
+notification_driver = nova.openstack.common.notifier.rpc_notifier
+notification_driver = ceilometer.compute.nova_notifier</programlisting>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>string value</term>
+      <listitem>
+        <para>
+          Strings can be optionally enclosed with single or double
+          quotes.
+        </para>
+<programlisting language="ini"># onready allows you to send a notification when the process
+# is ready to serve. For example, to have it notify using
+# systemd, one could set shell command: "onready = systemd-
+# notify --ready" or a module with notify() method: "onready =
+# keystone.common.systemd". (string value)
+onready=systemd-notify --ready
+
+# If an instance is passed with the log message, format it
+# like this (string value)
+instance_format="[instance: %(uuid)s] "</programlisting>
+      </listitem>
+    </varlistentry>
+  </variablelist>
+
+  <section xml:id="config_format_substitution">
+    <title>Substitution</title>
+
+    <para>
+      Option values may reference other values using <link
+      xlink:href="http://legacy.python.org/dev/peps/pep-0292/">PEP
+      292</link> string substitution. An option can be referenced by
+      adding a <literal>$</literal> in front of its name, like
+      <literal>$OPTION</literal>. To avoid substitution, use
+      <literal>$$</literal>, it is replaced by a single
+      <literal>$</literal>.
+    </para>
+    <para>
+      The following example uses the values of
+      <literal>rabbit_host</literal> and
+      <literal>rabbit_port</literal> to define the value of the
+      <literal>rabbit_hosts</literal> option, in this case as
+      <literal>controller:5672</literal>.
+    </para>
+<programlisting language="ini"># The RabbitMQ broker address where a single node is used.
+# (string value)
+rabbit_host=controller
+
+# The RabbitMQ broker port where a single node is used.
+# (integer value)
+rabbit_port=5672
+
+# RabbitMQ HA cluster host:port pairs. (list value)
+rabbit_hosts=$rabbit_host:$rabbit_port</programlisting>
+
+  </section>
+
+</section>
