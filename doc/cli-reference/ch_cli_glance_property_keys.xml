@@ -221,13 +221,21 @@
                     </itemizedlist>
                 </td>
             </tr>
-            <tr>
-                <td>libvirt API driver</td>
-                <td>hw_rng_model</td>
-                <td>Adds a random-number generator device to the image's instances. The cloud
+            <tr valign="top">
+                <td><para>libvirt API driver</para></td>
+                <td><para>hw_rng_model</para></td>
+                <td><para>Adds a random-number generator device to the image's instances. The cloud
                     administrator can enable and control device behavior by configuring the
-                    instance's flavor. By default, the generator device is disabled.</td>
-                <td><literal>virtio</literal></td>
+                    instance's flavor. By default:</para>
+                    <itemizedlist>
+                        <listitem><para>The generator device is disabled.</para></listitem>
+                        <listitem><para><systemitem>/dev/random</systemitem> is used as the default entropy source. To specify a
+                                physical HW RNG device, use the following option in the
+                                    <filename>nova.conf</filename> file:
+                                <programlisting language="ini">rng_dev_path=/dev/hwrng</programlisting></para></listitem>
+                    </itemizedlist>
+                </td>
+                <td><para><literal>virtio</literal>, or other supported device.</para></td>
             </tr>
             <tr valign="top">
                 <td>libvirt API driver</td>
