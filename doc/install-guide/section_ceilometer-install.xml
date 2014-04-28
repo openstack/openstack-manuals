@@ -150,7 +150,7 @@ rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
     </step>
 
     <step os="opensuse;sles">
-        <para>Configure collector dispatcher:</para>
+        <para>Configure the collector dispatcher:</para>
         <screen os="opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf \
   collector dispatcher database</userinput></screen>
     </step>
@@ -170,6 +170,18 @@ log_dir = /var/log/ceilometer</programlisting>
         the user the <literal>admin</literal> role:</para>
       <screen><prompt>$</prompt> <userinput>keystone user-create --name=ceilometer --pass=<replaceable>CEILOMETER_PASS</replaceable> --email=<replaceable>ceilometer@example.com</replaceable></userinput>
 <prompt>$</prompt> <userinput>keystone user-role-add --user=ceilometer --tenant=service --role=admin</userinput></screen>
+    </step>
+    <step>
+      <para>Configure the Telemetry service to authenticate with the Identity
+          Service.</para>
+      <para>Set the <option>auth_strategy</option> value to
+          <literal>keystone</literal> in the
+          <filename>/etc/ceilometer/ceilometer.conf</filename> file:</para>
+      <screen os="centos;rhel;fedora;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf \
+  DEFAULT auth_strategy keystone</userinput></screen>
+      <programlisting language="ini" os="debian;ubuntu">[DEFAULT]
+...
+auth_strategy = keystone</programlisting>
     </step>
     <step>
       <para>Add the credentials to the configuration files for the
