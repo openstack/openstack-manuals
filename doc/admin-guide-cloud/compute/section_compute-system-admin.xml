@@ -83,94 +83,6 @@
             </listitem>
             </itemizedlist>
     </para>
-        <section xml:id="section_compute-service-arch">
-            <title>Compute service architecture</title>
-            <para>The following basic categories describe the service architecture and what's going
-            on within the cloud controller.</para>
-            <simplesect>
-                <title>API server</title>
-                <para>At the heart of the cloud framework is an API server. This API server makes
-                command and control of the hypervisor, storage, and networking programmatically
-                available to users.</para>
-                <para>The API endpoints are basic HTTP web services
-                    which handle authentication, authorization, and
-                    basic command and control functions using various
-                    API interfaces under the Amazon, Rackspace, and
-                    related models. This enables API compatibility
-                    with multiple existing tool sets created for
-                    interaction with offerings from other vendors.
-                    This broad compatibility prevents vendor
-                    lock-in.</para>
-            </simplesect>
-            <simplesect>
-                <title>Message queue</title>
-                <para>A messaging queue brokers the interaction
-                    between compute nodes (processing), the networking
-                    controllers (software which controls network
-                    infrastructure), API endpoints, the scheduler
-                    (determines which physical hardware to allocate to
-                    a virtual resource), and similar components.
-                    Communication to and from the cloud controller is
-                    by HTTP requests through multiple API
-                    endpoints.</para>
-                <para>A typical message passing event begins with the API server receiving a request
-                from a user. The API server authenticates the user and ensures that the user is
-                permitted to issue the subject command. The availability of objects implicated in
-                the request is evaluated and, if available, the request is routed to the queuing
-                engine for the relevant workers. Workers continually listen to the queue based on
-                their role, and occasionally their type host name. When an applicable work request
-                arrives on the queue, the worker takes assignment of the task and begins its
-                execution. Upon completion, a response is dispatched to the queue which is received
-                by the API server and relayed to the originating user. Database entries are queried,
-                added, or removed as necessary throughout the process.</para>
-            </simplesect>
-            <simplesect>
-                <title>Compute worker</title>
-                <para>Compute workers manage computing instances on
-                    host machines. The API dispatches commands to
-                    compute workers to complete these tasks:</para>
-                <itemizedlist>
-                    <listitem>
-                        <para>Run instances</para>
-                    </listitem>
-                    <listitem>
-                        <para>Terminate instances</para>
-                    </listitem>
-                    <listitem>
-                        <para>Reboot instances</para>
-                    </listitem>
-                    <listitem>
-                        <para>Attach volumes</para>
-                    </listitem>
-                    <listitem>
-                        <para>Detach volumes</para>
-                    </listitem>
-                    <listitem>
-                        <para>Get console output</para>
-                    </listitem>
-                </itemizedlist>
-            </simplesect>
-            <simplesect>
-                <title>Network Controller</title>
-                <para>The Network Controller manages the networking
-                    resources on host machines. The API server
-                    dispatches commands through the message queue,
-                    which are subsequently processed by Network
-                    Controllers. Specific operations include:</para>
-                <itemizedlist>
-                    <listitem>
-                        <para>Allocate fixed IP addresses</para>
-                    </listitem>
-                    <listitem>
-                        <para>Configuring VLANs for projects</para>
-                    </listitem>
-                    <listitem>
-                        <para>Configuring networks for compute
-                            nodes</para>
-                    </listitem>
-                </itemizedlist>
-            </simplesect>
-        </section>
         <section xml:id="section_manage-compute-users">
             <title>Manage Compute users</title>
             <para>Access to the Euca2ools (ec2) API is controlled by
@@ -182,6 +94,82 @@
             <para>To begin using Compute, you must create a user with
                 the Identity Service.</para>
         </section>
+        <xi:include href="../../common/section_cli_nova_volumes.xml"/>
+        <xi:include href="../../common/section_cli_nova_customize_flavors.xml"/>
+    <xi:include href="../../common/section_compute_config-firewalls.xml"/>
+    <section xml:id="admin-password-injection">
+        <?dbhtml stop-chunking?>
+        <title>Inject administrator password</title>
+        <para>You can configure Compute to generate a random administrator (root) password and
+            inject that password into the instance. If this feature is enabled, a user can
+            <command>ssh</command> to an instance without an <command>ssh</command> keypair. The
+            random password appears in the output of the <command>nova boot</command> command. You
+            can also view and set the <literal>admin</literal> password from the dashboard.</para>
+        <simplesect>
+            <title>Dashboard</title>
+            <para>The dashboard is configured by default to display the <literal>admin</literal>
+                password and allow the user to modify it.</para>
+            <para>If you do not want to support password injection, we
+                recommend disabling the password fields by editing
+                your Dashboard <filename>local_settings</filename>
+                file (file location will vary by Linux distribution,
+                on Fedora/RHEL/CentOS: <filename>
+                    /etc/openstack-dashboard/local_settings</filename>,
+                on Ubuntu and Debian:
+                <filename>/etc/openstack-dashboard/local_settings.py</filename>
+                and on openSUSE and SUSE Linux Enterprise Server:
+                <filename>/srv/www/openstack-dashboard/openstack_dashboard/local/local_settings.py</filename>)
+                <programlisting language="ini">OPENSTACK_HYPERVISOR_FEATURE = {
+...
+    'can_set_password': False,
+}</programlisting></para>
+        </simplesect>
+        <simplesect>
+            <title>Libvirt-based hypervisors (KVM, QEMU, LXC)</title>
+            <para>For hypervisors such as KVM that use the libvirt backend, <literal>admin</literal>
+                password injection is disabled by default. To enable it, set the following option in
+                <filename>/etc/nova/nova.conf</filename>:</para>
+            <para>
+                <programlisting language="ini">[libvirt]
+inject_password=true</programlisting>
+            </para>
+            <para>When enabled, Compute will modify the password of
+                the root account by editing the
+                <filename>/etc/shadow</filename> file inside of
+                the virtual machine instance.</para>
+            <note>
+                <para>Users can only ssh to the instance by using the
+                    admin password if:</para>
+                <itemizedlist>
+                    <listitem>
+                        <para>The virtual machine image is a Linux
+                            distribution</para>
+                    </listitem>
+                    <listitem>
+                        <para>The virtual machine has been configured to allow users to
+                            <command>ssh</command> as the root user. This is not the case for
+                            <link xlink:href="http://cloud-images.ubuntu.com/">Ubuntu cloud
+                                images</link>, which disallow <command>ssh</command> to the root
+                            account by default.</para>
+                    </listitem>
+                </itemizedlist>
+            </note>
+        </simplesect>
+        <simplesect>
+            <title>XenAPI (XenServer/XCP)</title>
+            <para>Compute uses the XenAPI agent to inject passwords into guests when using the
+                XenAPI hypervisor backend. The virtual-machine image must be configured with the
+                agent for password injection to work.</para>
+        </simplesect>
+        <simplesect>
+            <title>Windows images (all hypervisors)</title>
+            <para>To support the <literal>admin</literal> password for Windows virtual machines, you
+                must configure the Windows image to retrieve the <literal>admin</literal> password
+                on boot by installing an agent such as <link
+                    xlink:href="https://github.com/cloudbase/cloudbase-init"
+                    >cloudbase-init</link>.</para>
+        </simplesect>
+    </section>
         <section xml:id="section_manage-the-cloud">
             <title>Manage the cloud</title>
             <para>A system administrator can use the <command>nova</command> client and the
@@ -250,16 +238,15 @@
                     </para>
                 </step>
             </procedure>
-            <simplesect>
+            <section xml:id="section_euca2ools">
                 <title>Use the euca2ools commands</title>
                 <para>For a command-line interface to EC2 API calls, use the
                     <command>euca2ools</command> command-line tool. See <link
                     xlink:href="http://open.eucalyptus.com/wiki/Euca2oolsGuide_v1.3"
                     >http://open.eucalyptus.com/wiki/Euca2oolsGuide_v1.3</link></para>
-            </simplesect>
+            </section>
+            <xi:include href="../../common/section_cli_nova_usage_statistics.xml"/>
         </section>
-    <xi:include
-            href="../../common/section_cli_nova_usage_statistics.xml"/>
         <section xml:id="section_manage-logs">
             <title>Manage logs</title>
             <simplesect>
