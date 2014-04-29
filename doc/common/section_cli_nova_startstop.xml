@@ -41,4 +41,34 @@
       </listitem>
     </itemizedlist>
   </section>
+  <section xml:id="shelve_server">
+    <title>Shelve and unshelve an instance</title>
+    <para>Shelving is useful if you have an instance that you are not using, but would like retain in
+      your list of servers. For example, you can stop an instance at the end of a work week, and
+      resume work again at the start of the next week. All associated data and resources are kept;
+      however, anything still in memory is not retained. If a shelved instance is no longer needed,
+      it can also be entirely removed.</para>
+      <para>You can complete the following shelving tasks:</para>
+      <variablelist>
+        <varlistentry><term>Shelve an instance</term>
+           <listitem><para>Shuts down the instance, and stores it together with associated data and resources (a snapshot
+            is taken if not volume backed). Anything in memory is lost. Use the following
+            command:</para>
+            <screen><prompt>$</prompt> <userinput>nova shelve <replaceable>SERVERNAME</replaceable></userinput></screen>
+           </listitem>
+        </varlistentry>
+        <varlistentry><term>Unshelve an instance</term>
+           <listitem><para>Restores the instance:</para>
+            <screen><prompt>$</prompt> <userinput>nova unshelve <replaceable>SERVERNAME</replaceable></userinput></screen>
+           </listitem>
+        </varlistentry>
+        <varlistentry><term>Remove a shelved instance</term>
+           <listitem><para>Removes the instance from the server; data and resource associations are deleted. If an
+            instance is no longer needed, you can move that instance off the hypervisor in order to
+            minimize resource usage:</para>
+            <screen><prompt>$</prompt> <userinput>nova shelve-offload <replaceable>SERVERNAME</replaceable></userinput></screen>
+           </listitem>
+        </varlistentry>
+      </variablelist>
+  </section>
 </section>
