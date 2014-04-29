@@ -41,7 +41,7 @@
         </imageobject>
       </mediaobject>
     </step>
-    <step>
+    <step os="ubuntu;rhel;centos;fedora;opensuse;sles">
       <para>The Image Service stores information about images in a
         database. The examples in this guide use the MySQL database
         that is used by other OpenStack services.</para>
@@ -57,12 +57,12 @@
   connection mysql://glance:<replaceable>GLANCE_DBPASS</replaceable>@<replaceable>controller</replaceable>/glance</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-registry.conf database \
   connection mysql://glance:<replaceable>GLANCE_DBPASS</replaceable>@<replaceable>controller</replaceable>/glance</userinput></screen>
-      <para os="ubuntu;debian">Edit
+      <para os="ubuntu">Edit
           <filename>/etc/glance/glance-api.conf</filename> and
           <filename>/etc/glance/glance-registry.conf</filename> and
         edit the <literal>[database]</literal> section of each
         file:</para>
-      <programlisting os="ubuntu;debian" language="ini">...
+      <programlisting os="ubuntu" language="ini">...
 [database]
 connection = mysql://glance:GLANCE_DBPASS@<replaceable>controller</replaceable>/glance</programlisting>
     </step>
@@ -216,7 +216,7 @@ flavor = keystone</programlisting>
   --internalurl=http://<replaceable>controller</replaceable>:9292 \
   --adminurl=http://<replaceable>controller</replaceable>:9292</userinput></screen>
     </step>
-    <step os="ubuntu;debian">
+    <step os="ubuntu">
       <para>Restart the <systemitem class="service">glance</systemitem>
         service with its new settings:</para>
       <screen><prompt>#</prompt> <userinput>service glance-registry restart</userinput>
