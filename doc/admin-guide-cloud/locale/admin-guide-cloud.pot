@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-04-24 06:22+0000\n"
+"POT-Creation-Date: 2014-04-30 06:22+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1486,15 +1486,15 @@ msgstr ""
 msgid "You can use the <placeholder-1/> command to see the status of the migration. While migrating, the <literal>migstat</literal> attribute shows states such as <literal>migrating</literal> or <literal>completing</literal>. On error, <literal>migstat</literal> is set to <literal>None</literal> and the <literal>host</literal> attribute shows the original host. On success, in this example, the output looks like:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_volume-migration.xml:154(para)
+#: ./doc/admin-guide-cloud/section_volume-migration.xml:153(para)
 msgid "Note that <literal>migstat</literal> is None, <literal>host</literal> is the new host, and <literal>name_id</literal> holds the ID of the volume created by the migration. If you look at the second LVM back end, you find the logical volume <literal>volume-133d1f56-9ffc-4f57-8798-d5217d851862</literal>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_volume-migration.xml:161(para)
+#: ./doc/admin-guide-cloud/section_volume-migration.xml:160(para)
 msgid "The migration is not visible to non-admin users (for example, through the volume <literal>status</literal>). However, some operations are not allowed while a migration is taking place, such as attaching/detaching a volume and deleting a volume. If a user performs such an action during a migration, an error is returned."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_volume-migration.xml:169(para)
+#: ./doc/admin-guide-cloud/section_volume-migration.xml:168(para)
 msgid "Migrating volumes that have snapshots are currently not allowed."
 msgstr ""
 
@@ -1586,7 +1586,7 @@ msgstr ""
 msgid "This command also makes the Boolean persistent across reboots. Run this command on all client hosts that require access to NFS volumes on an instance. This includes all Compute nodes."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_dashboard.xml:6(title) ./doc/admin-guide-cloud/ch_compute.xml:407(title)
+#: ./doc/admin-guide-cloud/ch_dashboard.xml:6(title) ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:109(title)
 msgid "Dashboard"
 msgstr ""
 
@@ -1674,288 +1674,316 @@ msgstr ""
 msgid "Compute uses a messaging-based, <literal>shared nothing</literal> architecture. All major components exist on multiple servers, including the compute,volume, and network controllers, and the object store or image service. The state of the entire system is stored in a database. The cloud controller communicates with the internal object store using HTTP, but it communicates with the scheduler, network controller, and volume controller using AMQP (advanced message queueing protocol). To avoid blocking a component while waiting for a response, Compute uses asynchronous calls, with a callback that is triggered when a response is received."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:71(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:70(title)
 msgid "Hypervisors"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:72(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:71(para)
 msgid "Compute controls hypervisors through an API server. Selecting the best hypervisor to use can be difficult, and you must take budget, resource constraints, supported features, and required technical specifications into account. However, the majority of OpenStack development is done on systems using KVM and Xen-based hypervisors. For a detailed list of features and support across different hypervisors, see <link href=\"http://wiki.openstack.org/HypervisorSupportMatrix\">http://wiki.openstack.org/HypervisorSupportMatrix</link>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:79(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:78(para)
 msgid "You can also orchestrate clouds using multiple hypervisors in different availability zones. Compute supports the following hypervisors:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:84(link)
+#: ./doc/admin-guide-cloud/ch_compute.xml:83(link)
 msgid "Baremetal"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:88(link)
+#: ./doc/admin-guide-cloud/ch_compute.xml:87(link)
 msgid "Docker"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:93(link) ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:495(th)
+#: ./doc/admin-guide-cloud/ch_compute.xml:92(link) ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:495(th)
 msgid "Hyper-V"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:97(link)
+#: ./doc/admin-guide-cloud/ch_compute.xml:96(link)
 msgid "Kernel-based Virtual Machine (KVM)"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:102(link)
+#: ./doc/admin-guide-cloud/ch_compute.xml:101(link)
 msgid "Linux Containers (LXC)"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:106(link)
+#: ./doc/admin-guide-cloud/ch_compute.xml:105(link)
 msgid "Quick Emulator (QEMU)"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:110(link)
+#: ./doc/admin-guide-cloud/ch_compute.xml:109(link)
 msgid "User Mode Linux (UML)"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:117(link)
+#: ./doc/admin-guide-cloud/ch_compute.xml:116(link)
 msgid "VMWare vSphere"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:121(link)
+#: ./doc/admin-guide-cloud/ch_compute.xml:120(link)
 msgid "Xen"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:125(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:124(para)
 msgid "For more information about hypervisors, see the <link href=\"http://docs.openstack.org/trunk/config-reference/content/section_compute-hypervisors.html\">Hypervisors</link> section in the <citetitle>OpenStack Configuration Reference</citetitle>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:132(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:131(title)
 msgid "Tenants, users, and roles"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:133(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:132(para)
 msgid "The Compute system is designed to be used by different consumers in the form of tenants on a shared system, and role-based access assignments. Roles control the actions that a user is allowed to perform."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:137(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:136(para)
 msgid "Tenants are isolated resource containers that form the principal organizational structure within the Compute service. They consist of an individual VLAN, and volumes, instances, images, keys, and users. A user can specify the tenant by appending <literal>:project_id</literal> to their access key. If no tenant is specified in the API request, Compute attempts to use a tenant with the same ID as the user."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:145(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:144(para)
 msgid "For tenants, you can use quota controls to limit the:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:148(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:147(para)
 msgid "Number of volumes that may be launched."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:151(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:150(para)
 msgid "Number of processor cores and the amount of RAM that can be allocated."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:154(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:153(para)
 msgid "Floating IP addresses assigned to any instance when it launches. This allows instances to have the same publicly accessible IP addresses."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:158(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:157(para)
 msgid "Fixed IP addresses assigned to the same instance when it launches. This allows instances to have the same publicly or privately accessible IP addresses."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:162(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:161(para)
 msgid "Roles control the actions a user is allowed to perform. By default, most actions do not require a particular role, but you can configure them by editing the <filename>policy.json</filename> file for user roles. For example, a rule can be defined so that a user must have the <parameter>admin</parameter> role in order to be able to allocate a public IP address."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:169(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:168(para)
 msgid "A tenant limits users' access to particular images. Each user is assigned a username and password. Keypairs granting access to an instance are enabled for each user, but quotas are set, so that each tenant can control resource consumption across available hardware resources."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:176(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:175(para)
 msgid "Earlier versions of OpenStack used the term <systemitem class=\"service\">project</systemitem> instead of <systemitem class=\"service\">tenant</systemitem>. Because of this legacy terminology, some command-line tools use <parameter>--project_id</parameter> where you would normally expect to enter a tenant ID."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:188(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:185(title)
 msgid "Block storage"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:189(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:186(para)
 msgid "OpenStack provides two classes of block storage: ephemeral storage and persistent volumes. Volumes are persistent virtualized block devices independent of any particular instance."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:193(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:190(para)
 msgid "Ephemeral storage is associated with a single unique instance, and it exists only for the life of that instance. The amount of ephemeral storage is defined by the flavor of the instance. Generally, the root file system for an instance will be stored on ephemeral storage. It persists across reboots of the guest operating system, but when the instance is deleted, the ephemeral storage is also removed."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:201(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:198(para)
 msgid "In addition to the ephemeral root volume, all flavors except the smallest, <filename>m1.tiny</filename>, also provide an additional ephemeral block device of between 20 and 160 GB. These sizes can be configured to suit your environment. This is presented as a raw block device with no partition table or file system. Cloud-aware operating system images can discover, format, and mount these storage devices. For example, the <systemitem class=\"service\">cloud-init</systemitem> package included in Ubuntu's stock cloud images format this space as an <filename>ext3</filename> file system and mount it on <filename>/mnt</filename>. This is a feature of the guest operating system you are using, and is not an OpenStack mechanism. OpenStack only provisions the raw storage."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:216(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:213(para)
 msgid "Persistent volumes are created by users and their size is limited only by the user's quota and availability limits. Upon initial creation, volumes are raw block devices without a partition table or a file system. To partition or format volumes, you must attach them to an instance. Once they are attached to an instance, you can use persistent volumes in much the same way as you would use external hard disk drive. You can attach volumes to only one instance at a time, although you can detach and reattach volumes to as many different instances as you like."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:227(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:224(para)
 msgid "You can configure persistent volumes as bootable and use them to provide a persistent virtual instance similar to traditional non-cloud-based virtualization systems. Typically, the resulting instance can also still have ephemeral storage depending on the flavor selected, but the root file system can be on the persistent volume and its state maintained even if the instance is shut down. For more information about this type of configuration, see the <link href=\"http://docs.openstack.org/trunk/config-reference/content/\"><citetitle>OpenStack Configuration Reference</citetitle></link>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:237(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:234(para)
 msgid "Persistent volumes do not provide concurrent access from multiple instances. That type of configuration requires a traditional network file system like NFS or CIFS, or a cluster file system such as GlusterFS. These systems can be built within an OpenStack cluster or provisioned outside of it, but OpenStack software does not provide these features."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:247(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:244(title)
 msgid "EC2 compatibility API"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:248(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:245(para)
 msgid "In addition to the native compute API, OpenStack provides an EC2-compatible API. This API allows EC2 legacy workflows built for EC2 to work with OpenStack. The <link href=\"http://docs.openstack.org/trunk/config-reference/content/\"><citetitle>OpenStack Configuration Reference</citetitle></link> lists configuration options for customizing this compatibility API on your OpenStack cloud."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:255(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:252(para)
 msgid "Numerous third-party tools and language-specific SDKs can be used to interact with OpenStack clouds, using both native and compatibility APIs. Some of the more popular third-party tools are:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:261(term)
+#: ./doc/admin-guide-cloud/ch_compute.xml:258(term)
 msgid "Euca2ools"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:263(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:260(para)
 msgid "A popular open source command-line tool for interacting with the EC2 API. This is convenient for multi-cloud environments where EC2 is the common API, or for transitioning from EC2-based clouds to OpenStack. For more information, see the <link href=\"http://open.eucalyptus.com/wiki/Euca2oolsGuide\">euca2ools site</link>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:274(term)
+#: ./doc/admin-guide-cloud/ch_compute.xml:271(term)
 msgid "Hybridfox"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:276(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:273(para)
 msgid "A Firefox browser add-on that provides a graphical interface to many popular public and private cloud technologies, including OpenStack. For more information, see the <link href=\"http://code.google.com/p/hybridfox/\"> hybridfox site</link>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:285(term)
+#: ./doc/admin-guide-cloud/ch_compute.xml:282(term)
 msgid "boto"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:287(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:284(para)
 msgid "A Python library for interacting with Amazon Web Services. It can be used to access OpenStack through the EC2 compatibility API. For more information, see the <link href=\"https://github.com/boto/boto\"> boto project page on GitHub</link>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:296(term)
+#: ./doc/admin-guide-cloud/ch_compute.xml:293(term)
 msgid "fog"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:298(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:295(para)
 msgid "A Ruby cloud services library. It provides methods for interacting with a large number of cloud and virtualization platforms, including OpenStack. For more information, see the <link href=\"https://rubygems.org/gems/fog\"> fog site</link>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:307(term)
+#: ./doc/admin-guide-cloud/ch_compute.xml:304(term)
 msgid "php-opencloud"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:309(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:306(para)
 msgid "A PHP SDK designed to work with most OpenStack- based cloud deployments, as well as Rackspace public cloud. For more information, see the <link href=\"http://www.php-opencloud.com\"> php-opencloud site</link>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:320(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:317(title)
 msgid "Building blocks"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:321(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:318(para)
 msgid "In OpenStack the base operating system is usually copied from an image stored in the OpenStack Image Service. This is the most common case and results in an ephemeral instance that starts from a known template state and loses all accumulated states on shutdown. It is also possible to put an operating system on a persistent volume in the Nova-Volume or Cinder volume system. This gives a more traditional persistent system that accumulates states, which are preserved across restarts. To get a list of available images on your system run: <placeholder-1/>"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:340(para) ./doc/admin-guide-cloud/compute/section_compute-instance-building-blocks.xml:24(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:337(para) ./doc/admin-guide-cloud/compute/section_compute-instance-building-blocks.xml:24(para)
 msgid "The displayed image attributes are:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:343(literal) ./doc/admin-guide-cloud/compute/section_compute-instance-building-blocks.xml:27(literal)
+#: ./doc/admin-guide-cloud/ch_compute.xml:340(literal) ./doc/admin-guide-cloud/compute/section_compute-instance-building-blocks.xml:27(literal)
 msgid "ID"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:345(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:342(para)
 msgid "Automatically generated UUID of the image"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:350(literal) ./doc/admin-guide-cloud/compute/section_compute-instance-building-blocks.xml:33(literal)
+#: ./doc/admin-guide-cloud/ch_compute.xml:347(literal) ./doc/admin-guide-cloud/compute/section_compute-instance-building-blocks.xml:33(literal)
 msgid "Name"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:352(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:349(para)
 msgid "Free form, human-readable name for image"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:357(literal) ./doc/admin-guide-cloud/compute/section_compute-instance-building-blocks.xml:39(literal)
+#: ./doc/admin-guide-cloud/ch_compute.xml:354(literal) ./doc/admin-guide-cloud/compute/section_compute-instance-building-blocks.xml:39(literal)
 msgid "Status"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:359(para) ./doc/admin-guide-cloud/compute/section_compute-instance-building-blocks.xml:41(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:356(para) ./doc/admin-guide-cloud/compute/section_compute-instance-building-blocks.xml:41(para)
 msgid "The status of the image. Images marked <literal>ACTIVE</literal> are available for use."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:365(literal) ./doc/admin-guide-cloud/compute/section_compute-instance-building-blocks.xml:47(literal)
+#: ./doc/admin-guide-cloud/ch_compute.xml:362(literal) ./doc/admin-guide-cloud/compute/section_compute-instance-building-blocks.xml:47(literal)
 msgid "Server"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:367(para) ./doc/admin-guide-cloud/compute/section_compute-instance-building-blocks.xml:49(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:364(para) ./doc/admin-guide-cloud/compute/section_compute-instance-building-blocks.xml:49(para)
 msgid "For images that are created as snapshots of running instances, this is the UUID of the instance the snapshot derives from. For uploaded images, this field is blank."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:375(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:371(para)
 msgid "Virtual hardware templates are called <literal>flavors</literal>. The default installation provides five flavors. By default, these are configurable by admin users, however that behavior can be changed by redefining the access controls for <parameter>compute_extension:flavormanage</parameter> in <filename>/etc/nova/policy.json</filename> on the <filename>compute-api</filename> server."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:383(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:379(para)
 msgid "For a list of flavors that are available on your system:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:400(title)
-msgid "Admin password injection"
+#: ./doc/admin-guide-cloud/ch_compute.xml:394(title)
+msgid "Compute service architecture"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:401(para)
-msgid "You can configure Compute to generate a random administrator (root) password and inject that password into the instance. If this feature is enabled, a user can <placeholder-1/> to an instance without an <placeholder-2/> keypair. The random password appears in the output of the <placeholder-3/> command. You can also view and set the <literal>admin</literal> password from the dashboard."
+#: ./doc/admin-guide-cloud/ch_compute.xml:395(para)
+msgid "The following basic categories describe the service architecture and what's going on within the cloud controller."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:408(para)
-msgid "The dashboard is configured by default to display the <literal>admin</literal> password and allow the user to modify it."
+#: ./doc/admin-guide-cloud/ch_compute.xml:398(title)
+msgid "API server"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:410(para)
-msgid "If you do not want to support password injection, we recommend disabling the password fields by editing your Dashboard <filename>local_settings</filename> file (file location will vary by Linux distribution, on Fedora/RHEL/CentOS: <filename> /etc/openstack-dashboard/local_settings</filename>, on Ubuntu and Debian: <filename>/etc/openstack-dashboard/local_settings.py</filename> and on openSUSE and SUSE Linux Enterprise Server: <filename>/srv/www/openstack-dashboard/openstack_dashboard/local/local_settings.py</filename>) <placeholder-1/>"
+#: ./doc/admin-guide-cloud/ch_compute.xml:399(para)
+msgid "At the heart of the cloud framework is an API server. This API server makes command and control of the hypervisor, storage, and networking programmatically available to users."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:426(title)
-msgid "Libvirt-based hypervisors (KVM, QEMU, LXC)"
+#: ./doc/admin-guide-cloud/ch_compute.xml:402(para)
+msgid "The API endpoints are basic HTTP web services which handle authentication, authorization, and basic command and control functions using various API interfaces under the Amazon, Rackspace, and related models. This enables API compatibility with multiple existing tool sets created for interaction with offerings from other vendors. This broad compatibility prevents vendor lock-in."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:427(para)
-msgid "For hypervisors such as KVM that use the libvirt backend, <literal>admin</literal> password injection is disabled by default. To enable it, set the following option in <filename>/etc/nova/nova.conf</filename>:"
+#: ./doc/admin-guide-cloud/ch_compute.xml:413(title)
+msgid "Message queue"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:434(para)
-msgid "When enabled, Compute will modify the password of the root account by editing the <filename>/etc/shadow</filename> file inside of the virtual machine instance."
+#: ./doc/admin-guide-cloud/ch_compute.xml:414(para)
+msgid "A messaging queue brokers the interaction between compute nodes (processing), the networking controllers (software which controls network infrastructure), API endpoints, the scheduler (determines which physical hardware to allocate to a virtual resource), and similar components. Communication to and from the cloud controller is by HTTP requests through multiple API endpoints."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:439(para)
-msgid "Users can only ssh to the instance by using the admin password if:"
+#: ./doc/admin-guide-cloud/ch_compute.xml:423(para)
+msgid "A typical message passing event begins with the API server receiving a request from a user. The API server authenticates the user and ensures that the user is permitted to issue the subject command. The availability of objects implicated in the request is evaluated and, if available, the request is routed to the queuing engine for the relevant workers. Workers continually listen to the queue based on their role, and occasionally their type host name. When an applicable work request arrives on the queue, the worker takes assignment of the task and begins its execution. Upon completion, a response is dispatched to the queue which is received by the API server and relayed to the originating user. Database entries are queried, added, or removed as necessary throughout the process."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:443(para)
-msgid "The virtual machine image is a Linux distribution"
+#: ./doc/admin-guide-cloud/ch_compute.xml:435(title)
+msgid "Compute worker"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/ch_compute.xml:436(para)
+msgid "Compute workers manage computing instances on host machines. The API dispatches commands to compute workers to complete these tasks:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/ch_compute.xml:441(para)
+msgid "Run instances"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/ch_compute.xml:444(para)
+msgid "Terminate instances"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/ch_compute.xml:447(para)
-msgid "The virtual machine has been configured to allow users to <placeholder-1/> as the root user. This is not the case for <link href=\"http://cloud-images.ubuntu.com/\">Ubuntu cloud images</link>, which disallow <placeholder-2/> to the root account by default."
+msgid "Reboot instances"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:457(title)
-msgid "XenAPI (XenServer/XCP)"
+#: ./doc/admin-guide-cloud/ch_compute.xml:450(para)
+msgid "Attach volumes"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:458(para)
-msgid "Compute uses the XenAPI agent to inject passwords into guests when using the XenAPI hypervisor backend. The virtual-machine image must be configured with the agent for password injection to work."
+#: ./doc/admin-guide-cloud/ch_compute.xml:453(para)
+msgid "Detach volumes"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:463(title)
-msgid "Windows images (all hypervisors)"
+#: ./doc/admin-guide-cloud/ch_compute.xml:456(para)
+msgid "Get console output"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:464(para)
-msgid "To support the <literal>admin</literal> password for Windows virtual machines, you must configure the Windows image to retrieve the <literal>admin</literal> password on boot by installing an agent such as <link href=\"https://github.com/cloudbase/cloudbase-init\">cloudbase-init</link>."
+#: ./doc/admin-guide-cloud/ch_compute.xml:461(title)
+msgid "Network Controller"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/ch_compute.xml:462(para)
+msgid "The Network Controller manages the networking resources on host machines. The API server dispatches commands through the message queue, which are subsequently processed by Network Controllers. Specific operations include:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/ch_compute.xml:469(para)
+msgid "Allocate fixed IP addresses"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/ch_compute.xml:472(para)
+msgid "Configuring VLANs for projects"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/ch_compute.xml:475(para)
+msgid "Configuring networks for compute nodes"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/compute/section_compute-instance-building-blocks.xml:7(title)
@@ -3379,346 +3407,318 @@ msgid "Some services have drivers that change how the service implements the cor
 msgstr ""
 
 #: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:87(title)
-msgid "Compute service architecture"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:88(para)
-msgid "The following basic categories describe the service architecture and what's going on within the cloud controller."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:91(title)
-msgid "API server"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:92(para)
-msgid "At the heart of the cloud framework is an API server. This API server makes command and control of the hypervisor, storage, and networking programmatically available to users."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:95(para)
-msgid "The API endpoints are basic HTTP web services which handle authentication, authorization, and basic command and control functions using various API interfaces under the Amazon, Rackspace, and related models. This enables API compatibility with multiple existing tool sets created for interaction with offerings from other vendors. This broad compatibility prevents vendor lock-in."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:106(title)
-msgid "Message queue"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:107(para)
-msgid "A messaging queue brokers the interaction between compute nodes (processing), the networking controllers (software which controls network infrastructure), API endpoints, the scheduler (determines which physical hardware to allocate to a virtual resource), and similar components. Communication to and from the cloud controller is by HTTP requests through multiple API endpoints."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:116(para)
-msgid "A typical message passing event begins with the API server receiving a request from a user. The API server authenticates the user and ensures that the user is permitted to issue the subject command. The availability of objects implicated in the request is evaluated and, if available, the request is routed to the queuing engine for the relevant workers. Workers continually listen to the queue based on their role, and occasionally their type host name. When an applicable work request arrives on the queue, the worker takes assignment of the task and begins its execution. Upon completion, a response is dispatched to the queue which is received by the API server and relayed to the originating user. Database entries are queried, added, or removed as necessary throughout the process."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:128(title)
-msgid "Compute worker"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:129(para)
-msgid "Compute workers manage computing instances on host machines. The API dispatches commands to compute workers to complete these tasks:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:134(para)
-msgid "Run instances"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:137(para)
-msgid "Terminate instances"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:140(para)
-msgid "Reboot instances"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:143(para)
-msgid "Attach volumes"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:146(para)
-msgid "Detach volumes"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:149(para)
-msgid "Get console output"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:154(title)
-msgid "Network Controller"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:155(para)
-msgid "The Network Controller manages the networking resources on host machines. The API server dispatches commands through the message queue, which are subsequently processed by Network Controllers. Specific operations include:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:162(para)
-msgid "Allocate fixed IP addresses"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:165(para)
-msgid "Configuring VLANs for projects"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:168(para)
-msgid "Configuring networks for compute nodes"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:175(title)
 msgid "Manage Compute users"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:176(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:88(para)
 msgid "Access to the Euca2ools (ec2) API is controlled by an access and secret key. The user’s access key needs to be included in the request, and the request must be signed with the secret key. Upon receipt of API requests, Compute verifies the signature and runs commands on behalf of the user."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:182(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:94(para)
 msgid "To begin using Compute, you must create a user with the Identity Service."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:186(title)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:102(title)
+msgid "Inject administrator password"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:103(para)
+msgid "You can configure Compute to generate a random administrator (root) password and inject that password into the instance. If this feature is enabled, a user can <placeholder-1/> to an instance without an <placeholder-2/> keypair. The random password appears in the output of the <placeholder-3/> command. You can also view and set the <literal>admin</literal> password from the dashboard."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:110(para)
+msgid "The dashboard is configured by default to display the <literal>admin</literal> password and allow the user to modify it."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:112(para)
+msgid "If you do not want to support password injection, we recommend disabling the password fields by editing your Dashboard <filename>local_settings</filename> file (file location will vary by Linux distribution, on Fedora/RHEL/CentOS: <filename> /etc/openstack-dashboard/local_settings</filename>, on Ubuntu and Debian: <filename>/etc/openstack-dashboard/local_settings.py</filename> and on openSUSE and SUSE Linux Enterprise Server: <filename>/srv/www/openstack-dashboard/openstack_dashboard/local/local_settings.py</filename>) <placeholder-1/>"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:128(title)
+msgid "Libvirt-based hypervisors (KVM, QEMU, LXC)"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:129(para)
+msgid "For hypervisors such as KVM that use the libvirt backend, <literal>admin</literal> password injection is disabled by default. To enable it, set the following option in <filename>/etc/nova/nova.conf</filename>:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:136(para)
+msgid "When enabled, Compute will modify the password of the root account by editing the <filename>/etc/shadow</filename> file inside of the virtual machine instance."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:141(para)
+msgid "Users can only ssh to the instance by using the admin password if:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:145(para)
+msgid "The virtual machine image is a Linux distribution"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:149(para)
+msgid "The virtual machine has been configured to allow users to <placeholder-1/> as the root user. This is not the case for <link href=\"http://cloud-images.ubuntu.com/\">Ubuntu cloud images</link>, which disallow <placeholder-2/> to the root account by default."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:159(title)
+msgid "XenAPI (XenServer/XCP)"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:160(para)
+msgid "Compute uses the XenAPI agent to inject passwords into guests when using the XenAPI hypervisor backend. The virtual-machine image must be configured with the agent for password injection to work."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:165(title)
+msgid "Windows images (all hypervisors)"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:166(para)
+msgid "To support the <literal>admin</literal> password for Windows virtual machines, you must configure the Windows image to retrieve the <literal>admin</literal> password on boot by installing an agent such as <link href=\"https://github.com/cloudbase/cloudbase-init\">cloudbase-init</link>."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:174(title)
 msgid "Manage the cloud"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:187(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:175(para)
 msgid "A system administrator can use the <placeholder-1/> client and the <placeholder-2/> commands to manage the cloud."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:189(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:177(para)
 msgid "Both nova client and euca2ools can be used by all users, though specific commands might be restricted by Role Based Access Control in the Identity Service."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:192(title)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:180(title)
 msgid "To use the nova client"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:194(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:182(para)
 msgid "Installing the <package>python-novaclient</package> package gives you a <code>nova</code> shell command that enables Compute API interactions from the command line. Install the client, and then provide your user name and password (typically set as environment variables for convenience), and then you have the ability to send commands to your cloud on the command line."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:199(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:187(para)
 msgid "To install <package>python-novaclient</package>, download the tarball from <link href=\"http://pypi.python.org/pypi/python-novaclient/2.6.3#downloads\">http://pypi.python.org/pypi/python-novaclient/2.6.3#downloads</link> and then install it in your favorite python environment."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:207(para) ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:663(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:195(para) ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:663(para)
 msgid "As <systemitem class=\"username\">root</systemitem> execute:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:211(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:199(para)
 msgid "Confirm the installation by running:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:226(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:214(para)
 msgid "This command returns a list of <placeholder-1/> commands and parameters. To obtain help for a subcommand, run:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:228(replaceable)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:216(replaceable)
 msgid "subcommand"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:229(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:217(para)
 msgid "You can also refer to the <link href=\"http://docs.openstack.org/cli-reference/content/\"><citetitle>OpenStack Command-Line Reference</citetitle></link> for a complete listing of <placeholder-1/> commands and parameters."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:236(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:224(para)
 msgid "Set the required parameters as environment variables to make running commands easier. For example, you can add <parameter>--os-username</parameter> as a <placeholder-1/> option, or set it as an environment variable. To set the user name, password, and tenant as environment variables, use:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:245(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:233(para)
 msgid "Using the Identity Service, you are supplied with an authentication endpoint, which Compute recognizes as the <literal>OS_AUTH_URL</literal>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:254(title)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:242(title)
 msgid "Use the euca2ools commands"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:255(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:243(para)
 msgid "For a command-line interface to EC2 API calls, use the <placeholder-1/> command-line tool. See <link href=\"http://open.eucalyptus.com/wiki/Euca2oolsGuide_v1.3\">http://open.eucalyptus.com/wiki/Euca2oolsGuide_v1.3</link>"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:264(title)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:251(title)
 msgid "Manage logs"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:266(title)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:253(title)
 msgid "Logging module"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:267(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:254(para)
 msgid "To specify a configuration file to change the logging behavior, add this line to the <filename>/etc/nova/nova.conf</filename> file . To change the logging level, such as <literal>DEBUG</literal>, <literal>INFO</literal>, <literal>WARNING</literal>, <literal>ERROR</literal>), use: <placeholder-1/>"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:272(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:259(para)
 msgid "The logging configuration file is an ini-style configuration file, which must contain a section called <literal>logger_nova</literal>, which controls the behavior of the logging facility in the <literal>nova-*</literal> services. For example:<placeholder-1/>"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:282(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:269(para)
 msgid "For more details on the logging configuration syntax, including the meaning of the <literal>handlers</literal> and <literal>quaname</literal> variables, see the <link href=\"http://docs.python.org/release/2.7/library/logging.html#configuration-file-format\">Python documentation on logging configuration file format </link>f."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:290(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:277(para)
 msgid "For an example <filename>logging.conf</filename> file with various defined handlers, see the <link href=\"http://docs.openstack.org/trunk/config-reference/content/\"><citetitle>OpenStack Configuration Reference</citetitle></link>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:279(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:266(para)
 msgid "This example sets the debugging level to <literal>INFO</literal> (which less verbose than the default <literal>DEBUG</literal> setting). <placeholder-1/>"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:299(title)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:286(title)
 msgid "Syslog"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:300(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:287(para)
 msgid "You can configure OpenStack Compute services to send logging information to <systemitem>syslog</systemitem>. This is useful if you want to use <systemitem>rsyslog</systemitem>, which forwards the logs to a remote machine. You need to separately configure the Compute service (nova), the Identity service (keystone), the Image Service (glance), and, if you are using it, the Block Storage service (cinder) to send log messages to <systemitem>syslog</systemitem>. To do so, add the following lines to:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:309(filename)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:296(filename)
 msgid "/etc/nova/nova.conf"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:312(filename)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:299(filename)
 msgid "/etc/keystone/keystone.conf"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:315(filename)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:302(filename)
 msgid "/etc/glance/glance-api.conf"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:318(filename)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:305(filename)
 msgid "/etc/glance/glance-registry.conf"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:321(filename)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:308(filename)
 msgid "/etc/cinder/cinder.conf"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:330(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:317(para)
 msgid "Although the example above uses the same local facility for each service (<literal>LOG_LOCAL0</literal>, which corresponds to <systemitem>syslog</systemitem> facility <literal>LOCAL0</literal>), we recommend that you configure a separate local facility for each service, as this provides better isolation and more flexibility. For example, you may want to capture logging information at different severity levels for different services. <systemitem>syslog</systemitem> allows you to define up to seven local facilities, <literal>LOCAL0, LOCAL1, ..., LOCAL7</literal>. For more details, see the <systemitem>syslog</systemitem> documentation."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:328(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:315(para)
 msgid "In addition to enabling <systemitem>syslog</systemitem>, these settings also turn off more verbose output and debugging output from the log.<placeholder-1/>"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:343(title)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:330(title)
 msgid "Rsyslog"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:344(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:331(para)
 msgid "<systemitem>rsyslog</systemitem> is a useful tool for setting up a centralized log server across multiple machines. We briefly describe the configuration to set up an <systemitem>rsyslog</systemitem> server; a full treatment of <systemitem>rsyslog</systemitem> is beyond the scope of this document. We assume <systemitem>rsyslog</systemitem> has already been installed on your hosts (default for most Linux distributions)."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:350(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:337(para)
 msgid "This example provides a minimal configuration for <filename>/etc/rsyslog.conf</filename> on the log server host, which receives the log files:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:356(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:343(para)
 msgid "Add a filter rule to <filename>/etc/rsyslog.conf</filename> which looks for a host name. The example below uses <replaceable>compute-01</replaceable> as an example of a compute host name:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:359(replaceable)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:346(replaceable)
 msgid "compute-01"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:360(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:347(para)
 msgid "On each compute host, create a file named <filename>/etc/rsyslog.d/60-nova.conf</filename>, with the following content:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:367(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:354(para)
 msgid "Once you have created this file, restart your <systemitem>rsyslog</systemitem> daemon. Error-level log messages on the compute hosts should now be sent to your log server."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:375(title)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:362(title)
 msgid "Migrate instances"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:376(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:363(para)
 msgid "Before starting migrations, review the <link linkend=\"section_configuring-compute-migrations\">Configure migrations section</link>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:377(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:364(para)
 msgid "Migration provides a scheme to migrate running instances from one OpenStack Compute server to another OpenStack Compute server."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:381(title)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:368(title)
 msgid "To migrate instances"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:383(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:370(para)
 msgid "Look at the running instances, to get the ID of the instance you wish to migrate."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:394(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:381(para)
 msgid "Look at information associated with that instance. This example uses 'vm1' from above."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:410(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:397(para)
 msgid "In this example, vm1 is running on HostB."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:413(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:400(para)
 msgid "Select the server to which instances will be migrated:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:426(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:413(para)
 msgid "In this example, HostC can be picked up because <systemitem class=\"service\">nova-compute</systemitem> is running on it."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:431(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:418(para)
 msgid "Ensure that HostC has enough resources for migration."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:446(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:433(para)
 msgid "<emphasis role=\"bold\">cpu:</emphasis>the number of cpu"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:451(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:438(para)
 msgid "<emphasis role=\"bold\">memory_mb:</emphasis>total amount of memory (in MB)"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:455(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:442(para)
 msgid "<emphasis role=\"bold\">disk_gb:</emphasis>total amount of space for NOVA-INST-DIR/instances (in GB)"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:459(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:446(para)
 msgid "<emphasis role=\"bold\">1st line shows </emphasis>total amount of resources for the physical server."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:463(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:450(para)
 msgid "<emphasis role=\"bold\">2nd line shows </emphasis>currently used resources."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:467(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:454(para)
 msgid "<emphasis role=\"bold\">3rd line shows </emphasis>maximum used resources."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:471(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:458(para)
 msgid "<emphasis role=\"bold\">4th line and under</emphasis> shows the resource for each project."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:479(replaceable)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:466(replaceable)
 msgid "server"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:479(replaceable)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:466(replaceable)
 msgid "host_name"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:478(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:465(para)
 msgid "Use the <placeholder-1/> command to migrate the instances:<placeholder-2/>"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:480(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:467(para)
 msgid "Where <replaceable>server</replaceable> can be either the server's ID or name. For example:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:488(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:475(para)
 msgid "Although the <placeholder-1/> command is called <placeholder-2/>, under the default Compute configuration options the instances are suspended before migration."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:492(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:479(para)
 msgid "For more details, see <link href=\"http://docs.openstack.org/trunk/config-reference/content/configuring-openstack-compute-basics.html\">Configure migrations</link> in <citetitle>OpenStack Configuration Reference</citetitle>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:484(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:471(para)
 msgid "Ensure instances are migrated successfully with <placeholder-1/>. If instances are still running on HostB, check log files (src/dest <systemitem class=\"service\">nova-compute</systemitem> and <systemitem class=\"service\">nova-scheduler</systemitem>) to determine why. <placeholder-2/>"
 msgstr ""
 
@@ -5258,7 +5258,7 @@ msgstr ""
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:32(None)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:31(None)
 msgid "@@image: '../../common/figures/demo_multiple_dhcp_agents.png'; md5=7e9abc4226d6b6cb9a6a3b3ec7435805"
 msgstr ""
 
@@ -5274,231 +5274,231 @@ msgstr ""
 msgid "Use the <placeholder-1/> client command to check if these extensions are enabled: <placeholder-2/>"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:47(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:46(para)
 msgid "Runs the Neutron, Keystone, and Nova services that are required to deploy VMs. The node must have at least one network interface that is connected to the Management Network."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:52(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:51(para)
 msgid "Note that <systemitem class=\"service\">nova-network</systemitem> should not be running because it is replaced by Neutron."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:35(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:34(para)
 msgid "There will be three hosts in the setup. <table rules=\"all\"><caption>Hosts for demo</caption><thead><tr><th>Host</th><th>Description</th></tr></thead><tbody><tr><td>OpenStack Controller host - controlnode</td><placeholder-1/></tr><tr><td>HostA</td><td>Runs Nova compute, the Neutron L2 agent and DHCP agent</td></tr><tr><td>HostB</td><td>Same as HostA</td></tr></tbody></table>"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:71(title) ./doc/admin-guide-cloud/networking/section_networking-scenarios.xml:16(title) ./doc/admin-guide-cloud/networking/section_networking-scenarios.xml:458(title) ./doc/admin-guide-cloud/networking/section_networking-config-identity.xml:146(th) ./doc/admin-guide-cloud/networking/section_networking-config-identity.xml:221(td) ./doc/admin-guide-cloud/networking/section_networking-config-identity.xml:256(td)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:70(title) ./doc/admin-guide-cloud/networking/section_networking-scenarios.xml:16(title) ./doc/admin-guide-cloud/networking/section_networking-scenarios.xml:458(title) ./doc/admin-guide-cloud/networking/section_networking-config-identity.xml:146(th) ./doc/admin-guide-cloud/networking/section_networking-config-identity.xml:221(td) ./doc/admin-guide-cloud/networking/section_networking-config-identity.xml:256(td)
 msgid "Configuration"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:73(title)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:72(title)
 msgid "controlnode: Neutron Server"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:75(para) ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:100(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:74(para) ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:99(para)
 msgid "Neutron configuration file <filename>/etc/neutron/neutron.conf</filename>:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:85(para) ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:109(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:84(para) ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:108(para)
 msgid "Update the plug-in configuration file <filename>/etc/neutron/plugins/linuxbridge/linuxbridge_conf.ini</filename>:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:98(title)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:97(title)
 msgid "HostA and HostB: L2 Agent"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:121(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:120(para)
 msgid "Update the nova configuration file <filename>/etc/nova/nova.conf</filename>:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:136(title)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:135(title)
 msgid "HostA and HostB: DHCP Agent"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:138(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:137(para)
 msgid "Update the DHCP configuration file <filename>/etc/neutron/dhcp_agent.ini</filename>:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:146(title)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:145(title)
 msgid "Commands in agent management and scheduler extensions"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:148(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:147(para)
 msgid "The following commands require the tenant running the command to have an admin role."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:151(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:150(para)
 msgid "Ensure that the following environment variables are set. These are used by the various clients to access Keystone."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:160(title) ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:68(caption)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:159(title) ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:68(caption)
 msgid "Settings"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:161(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:160(para)
 msgid "To experiment, you need VMs and a neutron network:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:181(title)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:180(title)
 msgid "Manage agents in neutron deployment"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:182(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:181(para)
 msgid "Every agent which supports these extensions will register itself with the neutron server when it starts up."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:186(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:185(para)
 msgid "List all agents:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:197(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:196(para)
 msgid "The output shows information for four agents. The <literal>alive</literal> field shows <literal>:-)</literal> if the agent reported its state within the period defined by the <option>agent_down_time</option> option in the <filename>neutron.conf</filename> file. Otherwise the <option>alive</option> is <literal>xxx</literal>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:209(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:208(para)
 msgid "List the DHCP agents that host a specified network"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:211(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:210(para)
 msgid "In some deployments, one DHCP agent is not enough to hold all network data. In addition, you must have a backup for it even when the deployment is small. The same network can be assigned to more than one DHCP agent and one DHCP agent can host more than one network."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:218(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:217(para)
 msgid "List DHCP agents that host a specified network:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:229(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:227(para)
 msgid "List the networks hosted by a given DHCP agent."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:231(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:229(para)
 msgid "This command is to show which networks a given dhcp agent is managing."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:242(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:239(para)
 msgid "Show agent details."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:243(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:240(para)
 msgid "The <placeholder-1/> command shows details for a specified agent:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:271(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:267(para)
 msgid "In this output, <literal>heartbeat_timestamp</literal> is the time on the neutron server. You do not need to synchronize all agents to this time for this extension to run correctly. <literal>configurations</literal> describes the static configuration for the agent or run time data. This agent is a DHCP agent and it hosts one network, one subnet, and three ports."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:281(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:277(para)
 msgid "Different types of agents show different details. The following output shows information for a Linux bridge agent:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:306(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:302(para)
 msgid "The output shows <literal>bridge-mapping</literal> and the number of virtual network devices on this L2 agent."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:313(title)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:309(title)
 msgid "Manage assignment of networks to DHCP agent"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:314(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:310(para)
 msgid "Now that you have run the <placeholder-1/> and <placeholder-2/> commands, you can add a network to a DHCP agent and remove one from it."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:320(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:316(para)
 msgid "Default scheduling."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:321(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:317(para)
 msgid "When you create a network with one port, you can schedule it to an active DHCP agent. If many active DHCP agents are running, select one randomly. You can design more sophisticated scheduling algorithms in the same way as <systemitem class=\"service\">nova-schedule</systemitem> later on."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:339(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:335(para)
 msgid "It is allocated to DHCP agent on HostA. If you want to validate the behavior through the <placeholder-1/> command, you must create a subnet for the network because the DHCP agent starts the <systemitem class=\"service\">dnsmasq</systemitem> service only if there is a DHCP."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:349(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:345(para)
 msgid "Assign a network to a given DHCP agent."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:351(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:347(para)
 msgid "To add another DHCP agent to host the network, run this command:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:362(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:358(para)
 msgid "Both DHCP agents host the <literal>net2</literal> network."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:367(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:363(para)
 msgid "Remove a network from a specified DHCP agent."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:369(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:365(para)
 msgid "This command is the sibling command for the previous one. Remove <literal>net2</literal> from the DHCP agent for HostA:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:381(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:377(para)
 msgid "You can see that only the DHCP agent for HostB is hosting the <literal>net2</literal> network."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:388(title)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:384(title)
 msgid "HA of DHCP agents"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:389(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:385(para)
 msgid "Boot a VM on net2. Let both DHCP agents host <literal>net2</literal>. Fail the agents in turn to see if the VM can still get the desired IP."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:394(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:390(para)
 msgid "Boot a VM on net2."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:415(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:411(para)
 msgid "Make sure both DHCP agents hosting 'net2'."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:417(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:413(para)
 msgid "Use the previous commands to assign the network to agents."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:429(title)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:425(title)
 msgid "Test the HA"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:431(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:427(para)
 msgid "Log in to the <literal>myserver4</literal> VM, and run <literal>udhcpc</literal>, <literal>dhclient</literal> or other DHCP client."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:438(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:434(para)
 msgid "Stop the DHCP agent on HostA. Besides stopping the <code>neutron-dhcp-agent</code> binary, you must stop the <placeholder-1/> processes."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:446(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:442(para)
 msgid "Run a DHCP client in VM to see if it can get the wanted IP."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:451(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:447(para)
 msgid "Stop the DHCP agent on HostB too."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:455(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:451(para)
 msgid "Run <placeholder-1/> in the VM; it cannot get the wanted IP."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:460(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:456(para)
 msgid "Start DHCP agent on HostB. The VM gets the wanted IP again."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:465(title)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:461(title)
 msgid "Disable and remove an agent"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:466(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:462(para)
 msgid "An administrator might want to disable an agent if a system hardware or software upgrade is planned. Some agents that support scheduling also support disabling and enabling agents, such as L3 and DHCP agents. After the agent is disabled, the scheduler does not schedule new resources to the agent. After the agent is disabled, you can safely remove the agent. Remove the resources on the agent before you delete the agent."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:475(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:471(para)
 msgid "To run the following commands, you must stop the DHCP agent on HostA."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:497(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:493(para)
 msgid "After deletion, if you restart the DHCP agent, it appears on the agent list again."
 msgstr ""
 
@@ -5721,7 +5721,7 @@ msgstr ""
 msgid "A driver needs to be configured that matches the plug-in running on the service. <table rules=\"all\"><caption>Basic settings</caption><col width=\"50%\"/><col width=\"50%\"/><thead><tr><th>Parameter</th><th>Value</th></tr></thead><tbody><tr><td><emphasis role=\"bold\">Open vSwitch</emphasis></td><td/></tr><tr><td>interface_driver ($NEUTRON_CONF_DIR/dhcp_agent.ini)</td><td>neutron.agent.linux.interface.OVSInterfaceDriver</td></tr><tr><td><emphasis role=\"bold\">Linux Bridge</emphasis></td><td/></tr><tr><td>interface_driver ($NEUTRON_CONF_DIR/dhcp_agent.ini)</td><td>neutron.agent.linux.interface.BridgeInterfaceDriver</td></tr></tbody></table>"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:175(title) ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:264(title) ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:386(title)
+#: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:175(title) ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:264(title) ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:385(title)
 msgid "Namespace"
 msgstr ""
 
@@ -5777,119 +5777,119 @@ msgstr ""
 msgid "To configure it, you need to run the OpenStack Networking service and create a router, and then set an ID of the router created to <emphasis>router_id</emphasis> in the L3 agent configuration file."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:305(title)
+#: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:304(title)
 msgid "Multiple floating IP pools"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:306(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:305(para)
 msgid "The L3 API in OpenStack Networking supports multiple floating IP pools. In OpenStack Networking, a floating IP pool is represented as an external network and a floating IP is allocated from a subnet associated with the external network. Since each L3 agent can be associated with at most one external network, we need to invoke multiple L3 agent to define multiple floating IP pools. <emphasis role=\"bold\">'gateway_external_network_id'</emphasis> in L3 agent configuration file indicates the external network that the L3 agent handles. You can run multiple L3 agent instances on one host."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:318(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:317(para)
 msgid "In addition, when you run multiple L3 agents, make sure that <emphasis role=\"bold\">handle_internal_only_routers</emphasis> is set to <emphasis role=\"bold\">True</emphasis> only for one L3 agent in an OpenStack Networking deployment and set to <emphasis role=\"bold\">False</emphasis> for all other L3 agents. Since the default value of this parameter is True, you need to configure it carefully."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:327(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:326(para)
 msgid "Before starting L3 agents, you need to create routers and external networks, then update the configuration files with UUID of external networks and start L3 agents."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:331(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:330(para)
 msgid "For the first agent, invoke it with the following l3_agent.ini where handle_internal_only_routers is True."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:340(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:339(para)
 msgid "For the second (or later) agent, invoke it with the following l3_agent.ini where handle_internal_only_routers is False."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:349(title)
+#: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:348(title)
 msgid "L3 Metering Agent"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:350(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:349(para)
 msgid "There is an option to run a L3 metering agent that will enable layer 3 traffic metering. In general case the metering agent should be launched on all nodes that run the L3 agent:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:355(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:354(para)
 msgid "A driver needs to be configured that matches the plug-in running on the service. The driver is used to add metering to the routing interface.<table rules=\"all\"><caption>Basic settings</caption><col width=\"50%\"/><col width=\"50%\"/><thead><tr><th>Parameter</th><th>Value</th></tr></thead><tbody><tr><td><emphasis role=\"bold\">Open vSwitch</emphasis></td><td/></tr><tr><td>interface_driver ($NEUTRON_CONF_DIR/metering_agent.ini)</td><td>neutron.agent.linux.interface.OVSInterfaceDriver</td></tr><tr><td><emphasis role=\"bold\">Linux Bridge</emphasis></td><td/></tr><tr><td>interface_driver ($NEUTRON_CONF_DIR/metering_agent.ini)</td><td>neutron.agent.linux.interface.BridgeInterfaceDriver</td></tr></tbody></table>"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:387(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:386(para)
 msgid "The metering agent and the L3 agent have to have the same configuration regarding to the network namespaces setting."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:389(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:388(para)
 msgid "If the Linux installation does not support network namespace, you must disable using network namespace in the L3 metering config file (The default value of <option>use_namespaces</option> is <code>True</code>)."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:396(title)
+#: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:395(title)
 msgid "L3 metering driver"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:397(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:396(para)
 msgid "A driver which implements the metering abstraction needs to be configured. Currently there is only one implementation which is based on iptables."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:402(title)
+#: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:401(title)
 msgid "L3 metering service driver"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:403(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:402(para)
 msgid "To enable L3 metering you have to be sure to set the following parameter in <filename>neutron.conf</filename> on the host that runs <systemitem class=\"service\">neutron-server</systemitem>:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:410(title)
+#: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:409(title)
 msgid "Limitations"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:413(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:412(para)
 msgid "<emphasis>No equivalent for nova-network --multi_host flag:</emphasis> Nova-network has a model where the L3, NAT, and DHCP processing happen on the compute node itself, rather than a dedicated networking node. OpenStack Networking now support running multiple l3-agent and dhcp-agents with load being split across those agents, but the tight coupling of that scheduling with the location of the VM is not supported in Icehouse. The Juno release is expected to include an exact replacement for the --multi_host flag in nova-network."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:427(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:426(para)
 msgid "<emphasis>Linux network namespace required on nodes running <systemitem class=\"                         service\">neutron-l3-agent</systemitem> or <systemitem class=\"                         service\">neutron-dhcp-agent</systemitem> if overlapping IPs are in use: </emphasis>. In order to support overlapping IP addresses, the OpenStack Networking DHCP and L3 agents use Linux network namespaces by default. The hosts running these processes must support network namespaces. To support network namespaces, the following are required:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:445(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:444(para)
 msgid "Linux kernel 2.6.24 or newer (with CONFIG_NET_NS=y in kernel configuration) and"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:450(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:449(para)
 msgid "iproute2 utilities ('ip' command) version 3.1.0 (aka 20111117) or newer"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:455(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:454(para)
 msgid "To check whether your host supports namespaces try running the following as root:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:459(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:458(para)
 msgid "If the preceding commands do not produce errors, your platform is likely sufficient to use the dhcp-agent or l3-agent with namespace. In our experience, Ubuntu 12.04 or later support namespaces as does Fedora 17 and new, but some older RHEL platforms do not by default. It may be possible to upgrade the iproute2 package on a platform that does not support namespaces by default."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:468(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:467(para)
 msgid "If you need to disable namespaces, make sure the <filename>neutron.conf</filename> used by neutron-server has the following setting:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:472(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:471(para)
 msgid "and that the dhcp_agent.ini and l3_agent.ini have the following setting:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:476(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:475(para)
 msgid "If the host does not support namespaces then the <systemitem class=\"service\">neutron-l3-agent</systemitem> and <systemitem class=\"service\">neutron-dhcp-agent</systemitem> should be run on different hosts. This is due to the fact that there is no isolation between the IP addresses created by the L3 agent and by the DHCP agent. By manipulating the routing the user can ensure that these networks have access to one another."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:488(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:487(para)
 msgid "If you run both L3 and DHCP services on the same node, you should enable namespaces to avoid conflicts with routes:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:496(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:495(para)
 msgid "<emphasis>No IPv6 support for L3 agent:</emphasis> The <systemitem class=\"                     service\">neutron-l3-agent</systemitem>, used by many plug-ins to implement L3 forwarding, supports only IPv4 forwarding. Currently, there are no errors provided if you configure IPv6 addresses via the API."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:507(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:506(para)
 msgid "<emphasis>ZeroMQ support is experimental</emphasis>: Some agents, including <systemitem class=\"service\">neutron-dhcp-agent</systemitem>, <systemitem class=\"service\">neutron-openvswitch-agent</systemitem>, and <systemitem class=\"service\">neutron-linuxbridge-agent</systemitem> use RPC to communicate. ZeroMQ is an available option in the configuration file, but has not been tested and should be considered experimental. In particular, issues might occur with ZeroMQ and the dhcp agent."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:522(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:521(para)
 msgid "<emphasis>MetaPlugin is experimental</emphasis>: This release includes a MetaPlugin that is intended to support multiple plug-ins at the same time for different API requests, based on the content of those API requests. The core team has not thoroughly reviewed or tested this functionality. Consider this functionality to be experimental until further validation is performed."
 msgstr ""
 
