@@ -147,8 +147,8 @@ rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
     <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
       <para>Register the Block Storage service with the Identity
         service so that other OpenStack services can locate it:</para>
-      <screen><prompt>$</prompt> <userinput>keystone service-create --name=cinder --type=volume --description="OpenStack Block Storage"</userinput></screen>
-<screen><prompt>$</prompt> <userinput>keystone endpoint-create \
+      <screen><prompt>$</prompt> <userinput>keystone service-create --name=cinder --type=volume --description="OpenStack Block Storage"</userinput>
+<prompt>$</prompt> <userinput>keystone endpoint-create \
   --service-id=$(keystone service-list | awk '/ volume / {print $2}') \
   --publicurl=http://<replaceable>controller</replaceable>:8776/v1/%\(tenant_id\)s \
   --internalurl=http://<replaceable>controller</replaceable>:8776/v1/%\(tenant_id\)s \
@@ -157,8 +157,8 @@ rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
     <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
       <para>Register a service and endpoint for version 2 of the Block
         Storage service API:</para>
-      <screen><prompt>$</prompt> <userinput>keystone service-create --name=cinderv2 --type=volumev2 --description="OpenStack Block Storage v2"</userinput></screen>
-<screen><prompt>$</prompt> <userinput>keystone endpoint-create \
+      <screen><prompt>$</prompt> <userinput>keystone service-create --name=cinderv2 --type=volumev2 --description="OpenStack Block Storage v2"</userinput>
+<prompt>$</prompt> <userinput>keystone endpoint-create \
   --service-id=$(keystone service-list | awk '/ volumev2 / {print $2}') \
   --publicurl=http://<replaceable>controller</replaceable>:8776/v2/%\(tenant_id\)s \
   --internalurl=http://<replaceable>controller</replaceable>:8776/v2/%\(tenant_id\)s \
