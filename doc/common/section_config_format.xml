@@ -4,6 +4,7 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
 
+  <?dbhtml stop-chunking?>
   <title>Configuration file format</title>
 
   <para>
@@ -17,10 +18,16 @@
         <programlisting language="ini">[DEFAULT]
 # Print debugging output (set logging level to DEBUG instead
 # of default WARNING level). (boolean value)
-debug=true
+debug = true
 # Print more verbose output (set logging level to INFO instead
 # of default WARNING level). (boolean value)
-verbose=true</programlisting>
+verbose = true
+
+[database]
+# The SQLAlchemy connection string used to connect to the
+# database (string value)
+connection = mysql://keystone:<replaceable>KEYSTONE_DBPASS</replaceable>@<replaceable>controller</replaceable>/keystone</programlisting>
+
 
   <para>
     Options can have different type for values. The comments in the
@@ -37,7 +44,7 @@ verbose=true</programlisting>
         </para>
 <programlisting language="ini"># Enable the experimental use of database reconnect on
 # connection lost (boolean value)
-use_db_reconnect=false</programlisting>
+use_db_reconnect = false</programlisting>
       </listitem>
     </varlistentry>
       <varlistentry>
@@ -48,7 +55,7 @@ use_db_reconnect=false</programlisting>
           </para>
 <programlisting language="ini"># Sleep time in seconds for polling an ongoing async task
 # (floating point value)
-task_poll_interval=0.5</programlisting>
+task_poll_interval = 0.5</programlisting>
         </listitem>
       </varlistentry>
     <varlistentry>
@@ -60,7 +67,7 @@ task_poll_interval=0.5</programlisting>
         </para>
 <programlisting language="ini"># The port which the OpenStack Compute service listens on.
 # (integer value)
-compute_port=8774</programlisting>
+compute_port = 8774</programlisting>
       </listitem>
     </varlistentry>
     <varlistentry>
@@ -78,7 +85,7 @@ compute_port=8774</programlisting>
         </para>
         <programlisting language="ini"># Modules of exceptions that are permitted to be recreated
 # upon receiving exception data from an rpc call. (list value)
-allowed_rpc_exception_modules=oslo.messaging.exceptions,nova.exception,cinder.exception,exceptions</programlisting>
+allowed_rpc_exception_modules = oslo.messaging.exceptions,nova.exception,cinder.exception,exceptions</programlisting>
       </listitem>
     </varlistentry>
     <varlistentry>
@@ -106,26 +113,56 @@ notification_driver = ceilometer.compute.nova_notifier</programlisting>
 # systemd, one could set shell command: "onready = systemd-
 # notify --ready" or a module with notify() method: "onready =
 # keystone.common.systemd". (string value)
-onready=systemd-notify --ready
+onready = systemd-notify --ready
 
 # If an instance is passed with the log message, format it
 # like this (string value)
-instance_format="[instance: %(uuid)s] "</programlisting>
+instance_format = "[instance: %(uuid)s] "</programlisting>
       </listitem>
     </varlistentry>
   </variablelist>
+
+
+  <section xml:id="config_format_sections">
+    <title>Sections</title>
+        <para>
+          Configuration options are grouped by section. Most
+          configuration file supports at least the following sections:
+
+          <variablelist>
+            <varlistentry>
+              <term><literal>[DEFAULT]</literal></term>
+              <listitem>
+                <para>
+                  Contains most configuration options. If the
+                  documentation for a configuration option does not
+                  specify its section, assume that it appears in this
+                  section.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term><literal>[database]</literal></term>
+              <listitem>
+                <para>
+                  Configuration options for the database that stores
+                  the state of the OpenStack service.
+                </para>
+              </listitem>
+            </varlistentry>
+          </variablelist>
+        </para>
+  </section>
 
   <section xml:id="config_format_substitution">
     <title>Substitution</title>
 
     <para>
-      Option values may reference other values using <link
-      xlink:href="http://legacy.python.org/dev/peps/pep-0292/">PEP
-      292</link> string substitution. An option can be referenced by
-      adding a <literal>$</literal> in front of its name, like
-      <literal>$OPTION</literal>. To avoid substitution, use
-      <literal>$$</literal>, it is replaced by a single
-      <literal>$</literal>.
+      The configuration file supports variable substitution.  After
+      you set a configuration option, it can be referenced in later
+      configuration values when you precede it with a
+      <literal>$</literal>, like
+      <literal>$OPTION</literal>.
     </para>
     <para>
       The following example uses the values of
@@ -136,15 +173,51 @@ instance_format="[instance: %(uuid)s] "</programlisting>
     </para>
 <programlisting language="ini"># The RabbitMQ broker address where a single node is used.
 # (string value)
-rabbit_host=controller
+rabbit_host = controller
 
 # The RabbitMQ broker port where a single node is used.
 # (integer value)
-rabbit_port=5672
+rabbit_port = 5672
 
 # RabbitMQ HA cluster host:port pairs. (list value)
-rabbit_hosts=$rabbit_host:$rabbit_port</programlisting>
+rabbit_hosts = $rabbit_host:$rabbit_port</programlisting>
 
+    <para>
+      To avoid substitution, use <literal>$$</literal>, it is replaced
+      by a single <literal>$</literal>.  For example, if your LDAP DNS
+      password is <literal>$xkj432</literal>, specify it, as follows:
+      <programlisting language="ini">ldap_dns_password = $$xkj432</programlisting>
+    </para>
+    <para>
+       The code uses the Python
+       <literal>string.Template.safe_substitute()</literal> method to
+       implement variable substitution. For more details on how
+       variable substitution is resolved, see <link
+       xlink:href="http://docs.python.org/2/library/string.html#template-strings"
+       >http://docs.python.org/2/library/string.html#template-strings</link>
+       and <link xlink:href="http://www.python.org/dev/peps/pep-0292/"
+       >PEP 292</link>.
+    </para>
+
+  </section>
+  <section xml:id="config_format_whitespace">
+    <title>Whitespace</title>
+    <para>
+      To include whitespace in a configuration value, use a quoted
+      string. For example:</para>
+      <programlisting language="ini">ldap_dns_passsword='a password with spaces'</programlisting>
+  </section>
+  <section xml:id="config_format_alternate_location">
+        <title>Define an alternate location for a config file</title>
+        <para>
+          Most services and the and the <command>*-manage</command>
+          command-line clients load the configuration file. To define
+          an alternate location for the configuration file, pass the
+          <parameter>--config-file
+          <replaceable>CONFIG_FILE</replaceable></parameter> parameter
+          when you start a service or call a
+          <command>*-manage</command> command.
+        </para>
   </section>
 
 </section>
