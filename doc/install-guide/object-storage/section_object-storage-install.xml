@@ -4,50 +4,52 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
     <title>Install Object Storage</title>
-    <para>Though you can install OpenStack Object Storage for
-        development or testing purposes on one server, a
-        multiple-server installation enables the high availability and
-        redundancy you want in a production distributed object storage
-        system.</para>
-    <para>To perform a single-node installation for development
-        purposes from source code, use the Swift All In One
-        instructions (Ubuntu) or DevStack (multiple distros). See
-            <link
+    <para>Though you can install OpenStack Object Storage for development or
+        testing purposes on one server, a multiple-server installation enables
+        the high availability and redundancy you want in a production
+        distributed object storage system.</para>
+    <para>To perform a single-node installation for development purposes from
+        source code, use the Swift All In One instructions (Ubuntu) or DevStack
+        (multiple distros). See <link
             xlink:href="http://swift.openstack.org/development_saio.html"
-            >http://swift.openstack.org/development_saio.html</link>
-        for manual instructions or <link
-            xlink:href="http://devstack.org"
-            >http://devstack.org</link> for all-in-one including
-        authentication with the Identity Service (keystone).</para>
+            >http://swift.openstack.org/development_saio.html</link> for manual
+        instructions or <link xlink:href="http://devstack.org"
+            >http://devstack.org</link> for all-in-one including authentication
+        with the Identity Service (keystone) v2.0 API.</para>
+    <warning>
+        <para>In this guide we recommend installing and configuring the Identity
+            service so that it implements Identity API v2.0. The Object Storage
+            service is unaware of domains when implementing Access Control Lists
+            (ACLs), so you must use the v2.0 API to avoid having identical user
+            names in different domains, which would enable two users to access
+            the same objects.</para>
+    </warning>
     <section xml:id="before-you-begin-swift-install">
         <title>Before you begin</title>
-        <para>Have a copy of the operating system installation media
-            available if you are installing on a new server.</para>
-        <para>These steps assume you have set up repositories for
-            packages for your operating system as shown in <link
-                linkend="basics-packages">OpenStack
-            Packages</link>.</para>
-        <para>This document demonstrates how to install a cluster by
-            using the following types of nodes:</para>
+        <para>Have a copy of the operating system installation media available
+            if you are installing on a new server.</para>
+        <para>These steps assume you have set up repositories for packages for
+            your operating system as shown in <link linkend="basics-packages"
+                >OpenStack Packages</link>.</para>
+        <para>This document demonstrates how to install a cluster by using the
+            following types of nodes:</para>
         <itemizedlist>
             <listitem>
                 <para>One proxy node which runs the swift-proxy-server
-                    processes. The proxy server proxies requests to
-                    the appropriate storage nodes.</para>
+                    processes. The proxy server proxies requests to the
+                    appropriate storage nodes.</para>
             </listitem>
             <listitem>
-                <para>Five storage nodes that run the
-                    swift-account-server, swift-container-server, and
-                    swift-object-server processes which control
-                    storage of the account databases, the container
-                    databases, as well as the actual stored
+                <para>Five storage nodes that run the swift-account-server,
+                    swift-container-server, and swift-object-server processes
+                    which control storage of the account databases, the
+                    container databases, as well as the actual stored
                     objects.</para>
             </listitem>
         </itemizedlist>
         <note>
-            <para>Fewer storage nodes can be used initially, but a
-                minimum of five is recommended for a production
-                cluster.</para>
+            <para>Fewer storage nodes can be used initially, but a minimum of
+                five is recommended for a production cluster.</para>
         </note>
     </section>
     <section xml:id="general-installation-steps-swift">
@@ -55,17 +57,18 @@
         <procedure>
             <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
                 <para>Create a <literal>swift</literal> user that the Object
-                    Storage Service can use to authenticate with the Identity Service.
-                    Choose a password and specify an email address for the
-                    <literal>swift</literal> user. Use the
-                    <literal>service</literal> tenant and give the user the
-                    <literal>admin</literal> role:</para>
+                    Storage Service can use to authenticate with the Identity
+                    Service. Choose a password and specify an email address for
+                    the <literal>swift</literal> user. Use the
+                        <literal>service</literal> tenant and give the user the
+                        <literal>admin</literal> role:</para>
                 <screen><prompt>$</prompt> <userinput>keystone user-create --name=swift --pass=<replaceable>SWIFT_PASS</replaceable> \
   --email=<replaceable>swift@example.com</replaceable></userinput>
 <prompt>$</prompt> <userinput>keystone user-role-add --user=swift --tenant=service --role=admin</userinput></screen>
             </step>
             <step>
-                <para>Create a service entry for the Object Storage Service:</para>
+                <para>Create a service entry for the Object Storage
+                    Service:</para>
                 <screen><prompt>$</prompt> <userinput>keystone service-create --name=swift --type=object-store \
   --description="OpenStack Object Storage"</userinput>
 <computeroutput>+-------------+----------------------------------+
@@ -76,15 +79,17 @@
 |     name    |              swift               |
 |     type    |           object-store           |
 +-------------+----------------------------------+</computeroutput></screen>
-                <note><para>The service ID is randomly generated and is different from
-                    the one shown here.</para></note>
+                <note>
+                    <para>The service ID is randomly generated and is different
+                        from the one shown here.</para>
+                </note>
             </step>
             <step>
-                <para>Specify an API endpoint for the Object Storage Service by using
-                    the returned service ID. When you specify an endpoint, you
-                    provide URLs for the public API, internal API, and admin API.
-                    In this guide, the <literal>controller</literal> host name is
-                    used:</para>
+                <para>Specify an API endpoint for the Object Storage Service by
+                    using the returned service ID. When you specify an endpoint,
+                    you provide URLs for the public API, internal API, and admin
+                    API. In this guide, the <literal>controller</literal> host
+                    name is used:</para>
                 <screen><prompt>$</prompt> <userinput>keystone endpoint-create \
   --service-id=$(keystone service-list | awk '/ object-store / {print $2}') \
   --publicurl='http://<replaceable>controller</replaceable>:8080/v1/AUTH_%(tenant_id)s' \
@@ -102,27 +107,22 @@
 +-------------+---------------------------------------------------+</computeroutput></screen>
             </step>
             <step>
-                <para>Create the configuration directory on
-                    all nodes:</para>
+                <para>Create the configuration directory on all nodes:</para>
                 <screen><prompt>#</prompt> <userinput>mkdir -p /etc/swift</userinput></screen>
             </step>
             <step>
-                <para>Create
-                        <filename>/etc/swift/swift.conf</filename> on
-                    all nodes:</para>
+                <para>Create <filename>/etc/swift/swift.conf</filename> on all
+                    nodes:</para>
                 <programlisting language="ini"><xi:include parse="text" href="../samples/swift.conf.txt"/></programlisting>
             </step>
         </procedure>
         <note>
-            <para>The suffix value in
-                    <filename>/etc/swift/swift.conf</filename> should
-                be set to some random string of text to be used as a
-                salt when hashing to determine mappings in the ring.
-                This file must be the same on every node in the
-                cluster!</para>
+            <para>The suffix value in <filename>/etc/swift/swift.conf</filename>
+                should be set to some random string of text to be used as a salt
+                when hashing to determine mappings in the ring. This file must
+                be the same on every node in the cluster!</para>
         </note>
-        <para>Next, set up your storage nodes and proxy node. This
-            example uses the Identity Service for the common
-            authentication piece.</para>
+        <para>Next, set up your storage nodes and proxy node. This example uses
+            the Identity Service for the common authentication piece.</para>
     </section>
 </section>
