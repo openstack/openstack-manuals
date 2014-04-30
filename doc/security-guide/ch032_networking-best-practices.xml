@@ -9,7 +9,7 @@
       <section xml:id="ch032_networking-best-practices-idp46832">
         <title>VLANs</title>
         <para>VLANs are realized as packets on a specific physical network containing IEEE 802.1Q headers with a specific VLAN ID (VID) field value. VLAN networks sharing the same physical network are isolated from each other at L2, and can even have overlapping IP address spaces. Each distinct physical network supporting VLAN networks is treated as a separate VLAN trunk, with a distinct space of VID values. Valid VID values are 1 through 4094.</para>
-        <para>VLAN configuration complexity depends on your OpenStack design requirements. In order to allow OpenStack Networking to efficiently use VLANs, you must allocate a VLAN range (one for each tenant) and turn each compute node physical switch port into a VLAN trunk port.</para>
+        <para>VLAN configuration complexity depends on your OpenStack design requirements. In order to allow OpenStack Networking to efficiently use VLANs, you must allocate a VLAN range (one for each tenant) and turn each compute node physical switch port into a VLAN trunk port.</para>
         <note>
           <para>NOTE: If you intend for your network to support more than 4094 tenants VLAN is probably not the correct option for you as multiple 'hacks' are required to extend the VLAN tags to more than 4094 tenants.</para>
         </note>
@@ -39,7 +39,7 @@
       </section>
       <section xml:id="ch032_networking-best-practices-idp62880">
         <title>Quality of Service (QoS)</title>
-        <para>The ability to set QoS on the virtual interface ports of tenant instances is a current deficiency for OpenStack Networking. The application of QoS for traffic shaping and rate-limiting at the physical network edge device is insufficient due to the dynamic nature of workloads in an OpenStack deployment and can not be leveraged in the traditional way.  QoS-as-a-Service (QoSaaS) is currently in development for the OpenStack Networking Havana release as an experimental feature. QoSaaS is planning to provide the following services:</para>
+        <para>The ability to set QoS on the virtual interface ports of tenant instances is a current deficiency for OpenStack Networking. The application of QoS for traffic shaping and rate-limiting at the physical network edge device is insufficient due to the dynamic nature of workloads in an OpenStack deployment and can not be leveraged in the traditional way. QoS-as-a-Service (QoSaaS) is currently in development for the OpenStack Networking Havana release as an experimental feature. QoSaaS is planning to provide the following services:</para>
         <itemizedlist><listitem>
             <para>Traffic shaping via DSCP markings</para>
           </listitem>
@@ -57,11 +57,11 @@
       </section>
       <section xml:id="ch032_networking-best-practices-idp69408">
         <title>Load Balancing</title>
-        <para>An experimental feature in the Grizzly release of OpenStack Networking is Load-Balancer-as-a-service (LBaaS). The LBaaS API gives early adopters and vendors a chance to build implementations of the technology. The reference implementation however, is still experimental and should likely not be run in a production environment. The current reference implementation is based on HA-Proxy. There are third-party plug-ins in development for extensions in OpenStack Networking to provide extensive L4-L7 functionality for virtual interface ports.</para>
+        <para>An experimental feature in the Grizzly release of OpenStack Networking is Load-Balancer-as-a-service (LBaaS). The LBaaS API gives early adopters and vendors a chance to build implementations of the technology. The reference implementation however, is still experimental and should likely not be run in a production environment. The current reference implementation is based on HA-Proxy. There are third-party plug-ins in development for extensions in OpenStack Networking to provide extensive L4-L7 functionality for virtual interface ports.</para>
       </section>
       <section xml:id="ch032_networking-best-practices-idp71664">
         <title>Firewalls</title>
-        <para>FW-as-a-Service (FWaaS) is currently in development for the OpenStack Networking Havana release as an experimental feature. FWaaS will address the need to manage and leverage the rich set of security features provided by typical firewall products which are typically far more comprehensive than what is currently provided by security groups. There are third-party plug-ins in development for extensions in OpenStack Networking to support this.</para>
+        <para>FW-as-a-Service (FWaaS) is currently in development for the OpenStack Networking Havana release as an experimental feature. FWaaS will address the need to manage and leverage the rich set of security features provided by typical firewall products which are typically far more comprehensive than what is currently provided by security groups. There are third-party plug-ins in development for extensions in OpenStack Networking to support this.</para>
         <para>It is critical during the design of an OpenStack Networking infrastructure to understand the current features and limitations of network services that are available. Understanding where the boundaries of your virtual and physical networks will help you add the required security controls in your environment.</para>
       </section>
     </section>

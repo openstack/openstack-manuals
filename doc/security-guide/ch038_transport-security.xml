@@ -9,7 +9,7 @@
       <section xml:id="ch038_transport-security-idp40512">
         <title>RabbitMQ Server SSL Configuration</title>
         <para>The following lines should be added to the system-wide RabbitMQ configuration file, typically /etc/rabbitmq/rabbitmq.config:</para>
-        <screen> 
+        <screen>
 [
   {rabbit, [
      {tcp_listeners, [] },
@@ -49,10 +49,10 @@
       <section xml:id="ch038_transport-security-idp52640">
         <title>Authentication Configuration Example - RabbitMQ</title>
         <para>On the RabbitMQ server, delete the default 'guest' user:</para>
-        <screen> 
+        <screen>
 rabbitmqctl delete_user quest</screen>
         <para>On the RabbitMQ server, for each OpenStack service or node that communicates with the message queue set up user accounts and privileges:</para>
-        <screen> 
+        <screen>
 rabbitmqctl add_user compute01 password
 rabbitmqctl set_permissions compute01 ".*"".*"".*"</screen>
         <para>For additional configuration information see:</para>
@@ -117,7 +117,7 @@ qpid_sasl_mechanisms=&lt;space separated list of SASL mechanisms to use for auth
       <section xml:id="ch038_transport-security-idp70304">
         <title>Namespaces</title>
         <para>Network namespaces are highly recommended for all services running on OpenStack Compute Hypervisors. This will help prevent against the bridging of network traffic between VM guests and the management network.</para>
-        <para>When using ZeroMQ messaging, each host must run at least one ZeroMQ message receiver to receive messages from the network and forward messages to local processes via IPC. It is possible and advisable to run an independent message receiver per project within an IPC namespace, along with other services within the same project.</para>
+        <para>When using ZeroMQ messaging, each host must run at least one ZeroMQ message receiver to receive messages from the network and forward messages to local processes via IPC. It is possible and advisable to run an independent message receiver per project within an IPC namespace, along with other services within the same project.</para>
       </section>
       <section xml:id="ch038_transport-security-idp72736">
         <title>Network Policy</title>

@@ -5,7 +5,7 @@
     <section xml:id="ch042_database-overview-idp44624">
       <title>OpenStack Database Access Model</title>
       <para>All of the services within an OpenStack project access a single database. There are presently no reference policies for creating table or row based access restrictions to the database.</para>
-      <para>There are no general provisions for granular control of database operations in OpenStack. Access and privileges are granted simply based on whether a node has access to the database or not.  In this scenario, nodes with access to the database may have full privileges to DROP, INSERT, or UPDATE functions.</para>
+      <para>There are no general provisions for granular control of database operations in OpenStack. Access and privileges are granted simply based on whether a node has access to the database or not. In this scenario, nodes with access to the database may have full privileges to DROP, INSERT, or UPDATE functions.</para>
       <section xml:id="ch042_database-overview-idp46912">
         <title>Granular Access Control</title>
         <para>By default, each of the OpenStack services and their processes access the database using a shared set of credentials. This makes auditing database operations and revoking access privileges from a service and its processes to the database particularly difficult.</para>
@@ -45,7 +45,7 @@
     </section>
     <section xml:id="ch042_database-overview-idp83456">
       <title>Database Authentication and Access Control</title>
-      <para>Given the risks around access to the database, we strongly recommend that unique database user accounts be created per node needing access to the database. Doing this facilitates better analysis and auditing for ensuring compliance or in the event of a compromise of a node allows you to isolate the compromised host by removing access for that node to the database upon detection. When creating these per service endpoint database user accounts, care should be taken to ensure that they are configured to require SSL.  Alternatively, for increased security it is recommended that the database accounts be configured using X.509 certificate authentication in addition to usernames and passwords.</para>
+      <para>Given the risks around access to the database, we strongly recommend that unique database user accounts be created per node needing access to the database. Doing this facilitates better analysis and auditing for ensuring compliance or in the event of a compromise of a node allows you to isolate the compromised host by removing access for that node to the database upon detection. When creating these per service endpoint database user accounts, care should be taken to ensure that they are configured to require SSL. Alternatively, for increased security it is recommended that the database accounts be configured using X.509 certificate authentication in addition to usernames and passwords.</para>
       <section xml:id="ch042_database-overview-idp85888">
         <title>Privileges</title>
         <para>A separate database administrator (DBA) account should be created and protected that has full privileges to create/drop databases, create user accounts, and update user privileges. This simple means of separation of responsibility helps prevent accidental misconfiguration, lowers risk and lowers scope of compromise.</para>
@@ -56,13 +56,13 @@
       <title>Require User Accounts to Require SSL Transport</title>
       <section xml:id="ch042_database-overview-idp88784">
         <title>Configuration Example #1: (MySQL)</title>
-        <screen> 
+        <screen>
 GRANT ALL ON dbname.* to 'compute01'@'hostname' IDENTIFIED BY 'password' REQUIRE SSL;</screen>
       </section>
       <section xml:id="ch042_database-overview-idp90096">
         <title>Configuration Example #2: (PostgreSQL)</title>
         <para>In file pg_hba.conf:</para>
-        <screen> 
+        <screen>
 hostssl dbname compute01 hostname md5</screen>
         <para>Note this command only adds the ability to communicate over SSL and is non-exclusive. Other access methods that may allow unencrypted transport should be disabled so that SSL is the sole access method.</para>
         <para>The 'md5' parameter defines the authentication method as a hashed password. We provide a secure authentication example in the section below.</para>
@@ -70,17 +70,17 @@ hostssl dbname compute01 hostname md5</screen>
     </section>
     <section xml:id="ch042_database-overview-idp93120">
       <title>Authentication with X.509 Certificates</title>
-      <para>Security may be enhanced by requiring X.509 client certificates for authentication.  Authenticating to the database in this manner provides greater identity assurance of the client making the connection to the database and ensures that the communications are encrypted.</para>
+      <para>Security may be enhanced by requiring X.509 client certificates for authentication. Authenticating to the database in this manner provides greater identity assurance of the client making the connection to the database and ensures that the communications are encrypted.</para>
       <section xml:id="ch042_database-overview-idp94704">
         <title>Configuration Example #1: (MySQL)</title>
-        <screen> 
+        <screen>
 GRANT ALL on dbname.* to 'compute01'@'hostname' IDENTIFIED BY 'password' REQUIRE SUBJECT
 '/C=XX/ST=YYY/L=ZZZZ/O=cloudycloud/CN=compute01' AND ISSUER
 '/C=XX/ST=YYY/L=ZZZZ/O=cloudycloud/CN=cloud-ca';</screen>
       </section>
       <section xml:id="ch042_database-overview-idp96192">
         <title>Configuration Example #2: (PostgreSQL)</title>
-        <screen> 
+        <screen>
 hostssl dbname compute01 hostname cert</screen>
       </section>
     </section>
@@ -109,7 +109,7 @@ charset=utf8&amp;ssl_ca=/etc/mysql/cacert.pem&amp;ssl_cert=/etc/mysql/server-cer
       <para>Note, as <systemitem class="service">nova-conductor</systemitem> only applies to OpenStack Compute, direct database access from compute hosts may still be necessary for the operation of other OpenStack components such as Telemetry (Ceilometer), Networking, and Block Storage.</para>
       <para>Implementors should weigh the benefits and risks of both configurations before enabling or disabling the <systemitem class="service">nova-conductor</systemitem> service. We are not yet prepared to recommend the use of <systemitem class="service">nova-conductor</systemitem> in the Grizzly release. However, we do believe that this recommendation will change as additional features are added into OpenStack.</para>
       <para>To disable the <systemitem class="service">nova-conductor</systemitem>, place the following into your <filename>nova.conf</filename> file (on your compute hosts):</para>
-      <screen> 
+      <screen>
 [conductor]
 use_local = true</screen>
     </section>

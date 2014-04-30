@@ -5,12 +5,12 @@
     <section xml:id="ch021_paste-and-middleware-idp38176">
       <title>Internal API Communications</title>
       <para>OpenStack provides both public facing and private API endpoints. By default, OpenStack components use the publicly defined endpoints. The recommendation is to configure these components to use the API endpoint within the proper security domain.</para>
-      <para>Services select their respective API endpoints based on the OpenStack service catalog.  The issue here is these services may not obey the listed public or internal API end point values. This can lead to internal management traffic being routed to external API endpoints.</para>
+      <para>Services select their respective API endpoints based on the OpenStack service catalog. The issue here is these services may not obey the listed public or internal API end point values. This can lead to internal management traffic being routed to external API endpoints.</para>
       <section xml:id="ch021_paste-and-middleware-idp40496">
         <title>Configure Internal URLs in Identity Service Catalog</title>
         <para>The Identity Service catalog should be aware of your internal URLs. While this feature is not utilized by default, it may be leveraged through configuration. Additionally, it should be forward-compatible with expectant changes once this behavior becomes the default.</para>
         <para>To register an internal URL for an endpoint:</para>
-        <screen> 
+        <screen>
 $ keystone endpoint-create \
  --region RegionOne \
  --service-id=1ff4ece13c3e48d8a6461faebd9cd38f \
@@ -20,11 +20,11 @@ $ keystone endpoint-create \
       </section>
       <section xml:id="ch021_paste-and-middleware-idp43360">
         <title>Configure Applications for Internal URLs</title>
-        <para>Some services can be forced to use specific API endpoints.  Therefore, it is recommended that each OpenStack service communicating to the API of another service must be explicitly configured to access the proper internal API endpoint.</para>
+        <para>Some services can be forced to use specific API endpoints. Therefore, it is recommended that each OpenStack service communicating to the API of another service must be explicitly configured to access the proper internal API endpoint.</para>
         <para>Each project may present an inconsistent way of defining target API endpoints. Future releases of OpenStack seek to resolve these inconsistencies through consistent use of the Identity Service catalog.</para>
         <section xml:id="ch021_paste-and-middleware-idp45520">
           <title>Configuration Example #1: Nova</title>
-          <screen> 
+          <screen>
 [DEFAULT]
 cinder_catalog_info='volume:cinder:internalURL'
 glance_protocol='https'
@@ -56,13 +56,13 @@ glance_host='https://glance-server'</screen>
       </section>
       <section xml:id="ch021_paste-and-middleware-idp55232">
         <title>Network Policy</title>
-        <para>API endpoints typically bridge multiple security domains, as such particular attention should be paid to the compartmentalization of the API processes.  See the <emphasis>Security Domain Bridging</emphasis> section for additional information in this area.</para>
+        <para>API endpoints typically bridge multiple security domains, as such particular attention should be paid to the compartmentalization of the API processes. See the <emphasis>Security Domain Bridging</emphasis> section for additional information in this area.</para>
         <para>With careful modeling, network ACLs and IDS technologies can be use to enforce explicit point to point communication between network services. As critical cross domain service, this type of explicit enforcement works well for OpenStack's message queue service.</para>
         <para>Policy enforcement can be implemented through the configuration of services, host-based firewalls (such as IPTables), local policy (SELinux or AppArmor), and optionally enforced through global network policy.</para>
       </section>
       <section xml:id="ch021_paste-and-middleware-idp58704">
         <title>Mandatory Access Controls</title>
-        <para>API endpoint processes should be isolated from each other and other processes on a machine. The configuration for those processes should be restricted to those processes not only by Discretionary Access Controls, but through Mandatory Access Controls. The goal of these enhanced access control is to aid in the containment and escalation of API endpoint security breaches.  With mandatory access controls, such breaches will severely limit access to resources and provide earlier alerting on such events.</para>
+        <para>API endpoint processes should be isolated from each other and other processes on a machine. The configuration for those processes should be restricted to those processes not only by Discretionary Access Controls, but through Mandatory Access Controls. The goal of these enhanced access control is to aid in the containment and escalation of API endpoint security breaches. With mandatory access controls, such breaches will severely limit access to resources and provide earlier alerting on such events.</para>
       </section>
     </section>
   </chapter>
