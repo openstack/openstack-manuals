@@ -14,9 +14,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenStack Manuals\n"
-"POT-Creation-Date: 2014-04-28 11:56+0000\n"
-"PO-Revision-Date: 2014-04-28 18:40+0000\n"
-"Last-Translator: ujuc Gang <potopro@gmail.com>\n"
+"POT-Creation-Date: 2014-05-01 05:30+0000\n"
+"PO-Revision-Date: 2014-04-30 23:00+0000\n"
+"Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
 "Language-Team: Korean (Korea) (http://www.transifex.com/projects/p/openstack-manuals-i18n/language/ko_KR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1373,9 +1373,9 @@ msgstr ""
 #: ./doc/install-guide/section_keystone-install.xml30(replaceable)
 #: ./doc/install-guide/section_keystone-install.xml38(replaceable)
 #: ./doc/install-guide/object-storage/section_object-storage-install-config-proxy-node.xml82(replaceable)
-#: ./doc/install-guide/object-storage/section_object-storage-install.xml90(replaceable)
-#: ./doc/install-guide/object-storage/section_object-storage-install.xml91(replaceable)
-#: ./doc/install-guide/object-storage/section_object-storage-install.xml92(replaceable)
+#: ./doc/install-guide/object-storage/section_object-storage-install.xml95(replaceable)
+#: ./doc/install-guide/object-storage/section_object-storage-install.xml96(replaceable)
+#: ./doc/install-guide/object-storage/section_object-storage-install.xml97(replaceable)
 msgid "controller"
 msgstr "controller"
 
@@ -3492,7 +3492,7 @@ msgid "Create a service entry for the Identity Service:"
 msgstr "인증 서비스에 대한 서비스 항목을 만드십시오:"
 
 #: ./doc/install-guide/section_keystone-services.xml36(para)
-#: ./doc/install-guide/object-storage/section_object-storage-install.xml79(para)
+#: ./doc/install-guide/object-storage/section_object-storage-install.xml83(para)
 msgid ""
 "The service ID is randomly generated and is different from the one shown "
 "here."
@@ -5751,7 +5751,7 @@ msgid ""
 msgstr ""
 
 #: ./doc/install-guide/section_basics-prerequisites.xml6(title)
-#: ./doc/install-guide/object-storage/section_object-storage-install.xml23(title)
+#: ./doc/install-guide/object-storage/section_object-storage-install.xml28(title)
 msgid "Before you begin"
 msgstr "시작 전 주의사항"
 
@@ -7614,7 +7614,7 @@ msgstr ""
 
 #: ./doc/install-guide/section_neutron-ml2-compute-node.xml380(para)
 #: ./doc/install-guide/section_ceilometer-nova.xml53(para)
-#: ./doc/install-guide/section_nova-compute.xml191(para)
+#: ./doc/install-guide/section_nova-compute.xml208(para)
 msgid "Restart the Compute service:"
 msgstr "Compute 서비스를 재시작하십시오:"
 
@@ -8067,6 +8067,8 @@ msgid ""
 msgstr ""
 
 #: ./doc/install-guide/section_basics-queue.xml74(para)
+#: ./doc/install-guide/section_nova-compute.xml159(para)
+#: ./doc/install-guide/section_nova-compute.xml178(para)
 msgid "Run the following command:"
 msgstr "다음 명령을 실행하십시오:"
 
@@ -8662,40 +8664,57 @@ msgstr "이미지 서비스를 실행할 호스트를 지정하십시오. <phras
 
 #: ./doc/install-guide/section_nova-compute.xml157(para)
 msgid ""
-"If you install Compute on a virtual machine for testing purposes, you must "
-"determine whether your hypervisor and/or CPU support nested hardware "
-"acceleration using the following command:"
-msgstr "시험 목적으로 가상 머신에 처리부를 설치한다면, 다음 명령을 사용하여 어떤 하이퍼바이저와 CPU 지원 중첩 하드웨어 가속 기능을 사용할지 결정해야 합니다:"
-
-#: ./doc/install-guide/section_nova-compute.xml162(para)
-msgid ""
-"If this command returns a value of <emphasis>one or greater</emphasis>, your"
-" hypervisor and/or CPU support nested hardware acceleration which requires "
-"no additional configuration."
-msgstr "이 명령이 <emphasis>하나 이상</emphasis>의 값을 반환했다면, 하이퍼바이저 또는 CPU 지원 중첩 하드웨어 가속 기능에 대해 추가 설정이 필요하지 않습니다."
-
-#: ./doc/install-guide/section_nova-compute.xml166(para)
-msgid ""
-"If this command returns a value of <emphasis>zero</emphasis>, your "
-"hypervisor and/or CPU do not support nested hardware acceleration and "
-"<literal>libvirt</literal> must use QEMU instead of KVM. Edit the "
-"<literal>[libvirt]</literal> section in the <filename>/etc/nova/nova-"
-"compute.conf</filename> file to modify this key:"
+"You must determine whether your system's processor and/or hypervisor support"
+" hardware acceleration for virtual machines."
 msgstr ""
 
-#: ./doc/install-guide/section_nova-compute.xml176(para)
+#: ./doc/install-guide/section_nova-compute.xml161(para)
 msgid ""
-"If this command returns a value of <emphasis>zero</emphasis>, your "
-"hypervisor and/or CPU do not support nested hardware acceleration and "
-"<literal>libvirt</literal> must use QEMU instead of KVM. Configure "
-"<literal>libvirt</literal> to use QEMU:"
-msgstr "이 명령이 <emphasis>zero</emphasis> 값을 반환한다면, 하이퍼바이저와 CPU에서 중첩 하드웨어 가속을 지원하지 않으며<literal>libvirt</literal>는 KVM 대신에 QEMU를 사용해야 합니다. QEMU를 사용하도록 <literal>libvirt</literal>를 설정하십시오:"
+"If this command returns a value of <emphasis>one or greater</emphasis>, your"
+" system supports hardware acceleration which typically requires no "
+"additional configuration."
+msgstr ""
 
-#: ./doc/install-guide/section_nova-compute.xml184(para)
+#: ./doc/install-guide/section_nova-compute.xml165(para)
+msgid ""
+"If this command returns a value of <emphasis>zero</emphasis>, your system "
+"does not support hardware acceleration and you must configure "
+"<literal>libvirt</literal> to use QEMU instead of KVM."
+msgstr ""
+
+#: ./doc/install-guide/section_nova-compute.xml170(para)
+msgid ""
+"Edit the <literal>[libvirt]</literal> section in the <filename>/etc/nova"
+"/nova-compute.conf</filename> file to modify this key:"
+msgstr ""
+
+#: ./doc/install-guide/section_nova-compute.xml183(para)
+msgid ""
+"On Ubuntu 12.04, kernels backported from newer releases may not "
+"automatically load the KVM modules for hardware acceleration when the system"
+" boots. In this case, launching an instance will fail with the following "
+"message in the <filename>/var/log/nova/nova-compute.log</filename> file:"
+msgstr ""
+
+#: ./doc/install-guide/section_nova-compute.xml189(para)
+msgid ""
+"As a workaround for this issue, you must add the appropriate module for your"
+" system to the <filename>/etc/modules</filename> file."
+msgstr ""
+
+#: ./doc/install-guide/section_nova-compute.xml192(para)
+msgid "For systems with Intel processors, run the following command:"
+msgstr ""
+
+#: ./doc/install-guide/section_nova-compute.xml195(para)
+msgid "For systems with AMD processors, run the following command:"
+msgstr ""
+
+#: ./doc/install-guide/section_nova-compute.xml201(para)
 msgid "Remove the SQLite database created by the packages:"
 msgstr "꾸러미가 만든 SQLite 데이터베이스를 제거하십시오:"
 
-#: ./doc/install-guide/section_nova-compute.xml188(para)
+#: ./doc/install-guide/section_nova-compute.xml205(para)
 msgid ""
 "Start the Compute service and configure it to start when the system boots:"
 msgstr "Compute 서비스를 시작하고 시스템 부팅할 때 시작하도록 설정합니다:"
@@ -9336,7 +9355,7 @@ msgid ""
 msgstr "<filename>/etc/swift/proxy-server.conf</filename>를 <phrase os=\"ubuntu;debian\">만드십시오</phrase><phrase os=\"rhel;centos;fedora;opensuse;sles\">편집하십시오</phrase>:"
 
 #: ./doc/install-guide/object-storage/section_object-storage-install-config-proxy-node.xml88(replaceable)
-#: ./doc/install-guide/object-storage/section_object-storage-install.xml63(replaceable)
+#: ./doc/install-guide/object-storage/section_object-storage-install.xml65(replaceable)
 msgid "SWIFT_PASS"
 msgstr "SWIFT_PASS"
 
@@ -9688,7 +9707,7 @@ msgid ""
 "storage system."
 msgstr "개발 및 시험 목적으로 하나의 서버에 오픈스택 오브젝트 저장소를 설치할 수 있지만 여러대의 서버를 설치하면 분산 오브젝트 저장소 시스템 상용화에 있어 원하는 만큼의 고가용성과 중복성을 가능케 할 수 있습니다."
 
-#: ./doc/install-guide/object-storage/section_object-storage-install.xml12(para)
+#: ./doc/install-guide/object-storage/section_object-storage-install.xml11(para)
 msgid ""
 "To perform a single-node installation for development purposes from source "
 "code, use the Swift All In One instructions (Ubuntu) or DevStack (multiple "
@@ -9696,35 +9715,44 @@ msgid ""
 "href=\"http://swift.openstack.org/development_saio.html\">http://swift.openstack.org/development_saio.html</link>"
 " for manual instructions or <link "
 "href=\"http://devstack.org\">http://devstack.org</link> for all-in-one "
-"including authentication with the Identity Service (keystone)."
-msgstr "개발 목적으로 소스코드를 통해 단일 노드 설치를 수행하려면 스위프트 일체형 명령 (우분투) 또는 데브스택(여러 배포판)을 사용하십시오. 직접 설치하려면 <link href=\"http://swift.openstack.org/development_saio.html\">http://swift.openstack.org/development_saio.html</link>를 보시고, 인증 및 인증 서비스(키스톤)를 포함한 일체형 방식으로 설치하려면 <link href=\"http://devstack.org\">http://devstack.org</link>를 보십시오."
+"including authentication with the Identity Service (keystone) v2.0 API."
+msgstr ""
 
-#: ./doc/install-guide/object-storage/section_object-storage-install.xml24(para)
+#: ./doc/install-guide/object-storage/section_object-storage-install.xml20(para)
+msgid ""
+"In this guide we recommend installing and configuring the Identity service "
+"so that it implements Identity API v2.0. The Object Storage service is "
+"unaware of domains when implementing Access Control Lists (ACLs), so you "
+"must use the v2.0 API to avoid having identical user names in different "
+"domains, which would enable two users to access the same objects."
+msgstr ""
+
+#: ./doc/install-guide/object-storage/section_object-storage-install.xml29(para)
 msgid ""
 "Have a copy of the operating system installation media available if you are "
 "installing on a new server."
 msgstr "새로운 서버에 설치하는 경우에는 설치 미디어 사본을 준비하십시오."
 
-#: ./doc/install-guide/object-storage/section_object-storage-install.xml26(para)
+#: ./doc/install-guide/object-storage/section_object-storage-install.xml31(para)
 msgid ""
 "These steps assume you have set up repositories for packages for your "
 "operating system as shown in <link linkend=\"basics-packages\">OpenStack "
 "Packages</link>."
 msgstr "이 단계는 <link linkend=\"basics-packages\">OpenStack 패키지</link>와 같이 OS 패키지에 대한 저장소를 설정했다고 가정합니다."
 
-#: ./doc/install-guide/object-storage/section_object-storage-install.xml30(para)
+#: ./doc/install-guide/object-storage/section_object-storage-install.xml34(para)
 msgid ""
 "This document demonstrates how to install a cluster by using the following "
 "types of nodes:"
 msgstr "이 문서는 다음 형태의 노드를 이용해서 클러스터를 설치하는 법을 보여줍니다."
 
-#: ./doc/install-guide/object-storage/section_object-storage-install.xml34(para)
+#: ./doc/install-guide/object-storage/section_object-storage-install.xml38(para)
 msgid ""
 "One proxy node which runs the swift-proxy-server processes. The proxy server"
 " proxies requests to the appropriate storage nodes."
 msgstr "switt-proxy-server 프로세스를 실행하는 하나의 프록시 노드에서는,  스토리지 노드 사용을 위한 요청을 대신 처리합니다."
 
-#: ./doc/install-guide/object-storage/section_object-storage-install.xml39(para)
+#: ./doc/install-guide/object-storage/section_object-storage-install.xml43(para)
 msgid ""
 "Five storage nodes that run the swift-account-server, swift-container-"
 "server, and swift-object-server processes which control storage of the "
@@ -9732,17 +9760,17 @@ msgid ""
 "objects."
 msgstr "계정 데이터베이스, 컨테이너 데이터베이스, 실제 오브젝트를 저장하는 스토리지를 관리하는 swift-account-server, swift-container-server, swift-object-server 프로세스가 작동하는 다섯대의 스토리지 노드."
 
-#: ./doc/install-guide/object-storage/section_object-storage-install.xml48(para)
+#: ./doc/install-guide/object-storage/section_object-storage-install.xml51(para)
 msgid ""
 "Fewer storage nodes can be used initially, but a minimum of five is "
 "recommended for a production cluster."
 msgstr "처음에는 적은 수의 스토리지를 사용할 수 있으나 상용 클러스터에서는 최소 5개를 권장합니다."
 
-#: ./doc/install-guide/object-storage/section_object-storage-install.xml54(title)
+#: ./doc/install-guide/object-storage/section_object-storage-install.xml56(title)
 msgid "General installation steps"
 msgstr "일반적인 설치 과정"
 
-#: ./doc/install-guide/object-storage/section_object-storage-install.xml57(para)
+#: ./doc/install-guide/object-storage/section_object-storage-install.xml59(para)
 msgid ""
 "Create a <literal>swift</literal> user that the Object Storage Service can "
 "use to authenticate with the Identity Service. Choose a password and specify"
@@ -9751,15 +9779,15 @@ msgid ""
 "<literal>admin</literal> role:"
 msgstr "오브젝트 저장소 서비스가 인증 서비스에 인증할 때 사용할 <literal>swift</literal> 사용자를 만들고 <literal>swift</literal> 사용자의 이메일 주소를 지정하십시오. <literal>service</literal> 테넌트를 사용하고 <literal>admin</literal> 역할을 부여하십시오:"
 
-#: ./doc/install-guide/object-storage/section_object-storage-install.xml64(replaceable)
+#: ./doc/install-guide/object-storage/section_object-storage-install.xml66(replaceable)
 msgid "swift@example.com"
 msgstr "swift@example.com"
 
-#: ./doc/install-guide/object-storage/section_object-storage-install.xml68(para)
+#: ./doc/install-guide/object-storage/section_object-storage-install.xml70(para)
 msgid "Create a service entry for the Object Storage Service:"
 msgstr "오브젝트 스토리지 서비스 항목을 작성하십시오:"
 
-#: ./doc/install-guide/object-storage/section_object-storage-install.xml83(para)
+#: ./doc/install-guide/object-storage/section_object-storage-install.xml88(para)
 msgid ""
 "Specify an API endpoint for the Object Storage Service by using the returned"
 " service ID. When you specify an endpoint, you provide URLs for the public "
@@ -9767,15 +9795,15 @@ msgid ""
 "<literal>controller</literal> host name is used:"
 msgstr "돌려 받은 서비스 ID로 오브젝트 저장소 서비스용 API 엔드 포인트를 지정하십시오. 엔드 포인트를 지정할 때 공용 API, 내부 API, 관리 API에 대한 URL을 제공하십시오. 이 안내서에서는 호스트 이름으로 <literal>controller</literal>를 사용합니다:"
 
-#: ./doc/install-guide/object-storage/section_object-storage-install.xml105(para)
+#: ./doc/install-guide/object-storage/section_object-storage-install.xml110(para)
 msgid "Create the configuration directory on all nodes:"
 msgstr "모든 노드에 구성 디렉터리를 만드십시오:"
 
-#: ./doc/install-guide/object-storage/section_object-storage-install.xml110(para)
+#: ./doc/install-guide/object-storage/section_object-storage-install.xml114(para)
 msgid "Create <filename>/etc/swift/swift.conf</filename> on all nodes:"
 msgstr "모든 노드에 <filename>/etc/swift/swift.conf</filename> 파일을 만드십시오:"
 
-#: ./doc/install-guide/object-storage/section_object-storage-install.xml117(para)
+#: ./doc/install-guide/object-storage/section_object-storage-install.xml120(para)
 msgid ""
 "The suffix value in <filename>/etc/swift/swift.conf</filename> should be set"
 " to some random string of text to be used as a salt when hashing to "
@@ -9783,7 +9811,7 @@ msgid ""
 "the cluster!"
 msgstr "<filename>/etc/swift/swift.conf</filename>의 접미사 값은 해싱 펑션에서 링 매핑을 결정할 때 salt 처럼 사용할 임의의 텍스트 문자열 값으로 설정해야 합니다. 이 파일은 클러스터의 모든 노드에 동일하게 들어가야 합니다."
 
-#: ./doc/install-guide/object-storage/section_object-storage-install.xml124(para)
+#: ./doc/install-guide/object-storage/section_object-storage-install.xml125(para)
 msgid ""
 "Next, set up your storage nodes and proxy node. This example uses the "
 "Identity Service for the common authentication piece."
