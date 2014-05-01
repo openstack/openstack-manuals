@@ -48,7 +48,7 @@
           </imageobject>
 </inlinemediaobject></para>
       <para>The use of scheduler filters may be used to segregate customers, data, or even discard machines of the cloud that cannot be attested as secure. This generally applies to all OpenStack projects offering a scheduler. When building a cloud, you may choose to implement scheduling filters for a variety of security-related purposes.</para>
-      <para>Below we highlight a few of the filters that may be useful in a security context, depending on your requirements, the full set of filter documentation is documented in the <link xlink:href="http://docs.openstack.org/trunk/config-reference/content/filter-scheduler.html">Filter Scheduler</link> section of the <citetitle>OpenStack Configuration Reference</citetitle>.</para>
+      <para>Below we highlight a few of the filters that may be useful in a security context, depending on your requirements, the full set of filter documentation is documented in the <link xlink:href="http://docs.openstack.org/trunk/config-reference/content/filter-scheduler.html">Filter Scheduler</link> section of the <citetitle>OpenStack Configuration Reference</citetitle>.</para>
       <para><emphasis role="bold">Tenant Driven Whole Host Reservation</emphasis></para>
       <para>There currently exists a <link xlink:href="https://blueprints.launchpad.net/nova/+spec/whole-host-allocation">blueprint for whole host reservation</link> -  This would allow a tenant to exclusively reserve hosts for only it's instances, incurring extra costs.</para>
       <section xml:id="ch055_security-services-for-instances-idp140080">
@@ -73,7 +73,7 @@
       </section>
       <section xml:id="ch055_security-services-for-instances-idp146208">
         <title>GroupAntiAffinityFilter</title>
-        <para>The GroupAntiAffinityFilter ensures that each instance in a group is on a different host. To take advantage of this filter, the requester must pass a scheduler hint, using <literal>group</literal> as the key and a list of instance uuids as the value.</para>
+        <para>The GroupAntiAffinityFilter ensures that each instance in a group is on a different host. To take advantage of this filter, the requester must pass a scheduler hint, using <literal>group</literal> as the key and a list of instance uuids as the value.</para>
       </section>
       <section xml:id="ch055_security-services-for-instances-idp148000">
         <title>Trusted Compute Pools</title>
@@ -88,18 +88,18 @@
         <title>Image Creation Process</title>
         <para>The OpenStack Documentation provides guidance on how to create and upload an image to Glance. Additionally it is assumed that you have a process by which you install and harden operating systems. Thus, the following items will provide additional guidance on how to ensure your images are built securely prior to upload. There are a variety of options for obtaining images. Each has specific steps that help validate the image's provenance.</para>
         <para>The first option is to obtain boot media from a trusted source.</para>
-        <screen> 
+        <screen>
 mkdir -p /tmp/download_directorycd /tmp/download_directory
 
 wget http://mirror.anl.gov/pub/ubuntu-iso/CDs/precise/ubuntu-12.04.2-server-amd64.iso
 wget http://mirror.anl.gov/pub/ubuntu-iso/CDs/precise/SHA256SUMS
 wget http://mirror.anl.gov/pub/ubuntu-iso/CDs/precise/SHA256SUMS.gpg
-gpg --keyserver hkp://keyserver.ubuntu.com --recv-keys 0xFBB75451
+gpg --keyserver hkp://keyserver.ubuntu.com --recv-keys 0xFBB75451
 gpg --verify SHA256SUMS.gpg SHA256SUMSsha256sum -c SHA256SUMS 2&gt;&amp;1 | grep OK
         </screen>
         <para>The second option is to use the <link xlink:href="http://docs.openstack.org/trunk/image-guide/content/"><citetitle>OpenStack Virtual Machine Image Guide</citetitle></link>. In this case, you will want to follow your organizations OS hardening guidelines or those provided by a trusted third-party such as the <link xlink:href="http://iase.disa.mil/stigs/os/unix/red_hat.html">RHEL6 STIG</link>.</para>
         <para>The final option is to use an automated image builder. The following example uses the Oz image builder. The OpenStack community has recently created a newer tool worth investigating: disk-image-builder. We have not evaluated this tool from a security perspective.</para>
-        <para>Example of RHEL 6 CCE-26976-1 which will help implement NIST 800-53 Section <emphasis>AC-19(d) in</emphasis> Oz.</para>
+        <para>Example of RHEL 6 CCE-26976-1 which will help implement NIST 800-53 Section<emphasis>AC-19(d) in</emphasis> Oz.</para>
         <screen>
 &lt;template&gt;
 &lt;name&gt;centos64&lt;/name&gt;
@@ -198,7 +198,7 @@ gpg --verify SHA256SUMS.gpg SHA256SUMSsha256sum -c SHA256SUMS 2&gt;&amp;1 | grep
         <section xml:id="ch055_security-services-for-instances-idp187568">
           <title>Disable Live Migration</title>
           <para>At this time, live migration is enabled in OpenStack by default. Live migrations can be disabled by adding the following lines to the nova policy.json file:</para>
-          <screen> 
+          <screen>
 "compute_extension:admin_actions:migrate": "!",
 "compute_extension:admin_actions:migrateLive": "!",</screen>
         </section>

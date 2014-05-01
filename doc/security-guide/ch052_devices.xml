@@ -14,7 +14,7 @@
         </listitem>
 </itemizedlist>
       <note>
-        <para>The IOMMU feature is marketed as VT-d by Intel and AMD-Vi by AMD.</para>
+        <para>The IOMMU feature is marketed as VT-d by Intel and AMD-Vi by AMD.</para>
       </note>
       <para>A hardware infection occurs when an instance makes a malicious modification to the firmware or some other part of a device. As this device is used by other instances, or even the host OS, the malicious code can spread into these systems. The end result is that one instance can run code outside of its security domain. This is a potential problem in any hardware sharing scenario. The problem is specific to this scenario because it is harder to reset the state of physical hardware than virtual hardware.</para>
       <para>Solutions to the hardware infection problem are domain specific. The strategy is to identify how an instance can modify hardware state then determine how to reset any modifications when the instance is done using the hardware. For example, one option could be to re-flash the firmware after use. Clearly there is a need to balance hardware longevity with security as some firmwares will fail after a large number of writes. TPM technology, described in <literal>link:Management/Node Bootstrapping</literal>, provides a solution for detecting unauthorized firmware changes. Regardless of the strategy selected, it is important to understand the risks associated with this kind of hardware sharing so that they can be properly mitigated for a given deployment scenario.</para>
@@ -47,10 +47,10 @@
         <title>Minimizing the Qemu Code base</title>
         <para>One classic security principle is to remove any unused components from your system. QEMU provides support for many different virtual hardware devices. However, only a small number of devices are needed for a given instance. Most instances will use the virtio devices. However, some legacy instances will need access to specific hardware, which can be specified using glance metadata:</para>
         <screen>glance image-update \
-    --property hw_disk_bus=ide \
-    --property hw_cdrom_bus=ide \
-    --property hw_vif_model=e1000 \
-    f16-x86_64-openstack-sda</screen>
+    --property hw_disk_bus=ide \
+    --property hw_cdrom_bus=ide \
+    --property hw_vif_model=e1000 \
+    f16-x86_64-openstack-sda</screen>
         <para>A cloud architect should decide what devices to make available to cloud users. Anything that is not needed should be removed from QEMU. This step requires recompiling QEMU after modifying the options passed to the QEMU configure script. For a complete list of up-to-date options simply run <literal>./configure --help</literal> from within the QEMU source directory. Decide what is needed for your deployment, and disable the remaining options.</para>
       </section>
       <section xml:id="ch052_devices-idp494336">
@@ -67,7 +67,7 @@
             <para><emphasis>Never eXecute (NX)</emphasis>: Also known as Data Execution Prevention (DEP), ensures that data sections of the executable can not be executed.</para>
           </listitem>
 <listitem>
-            <para><emphasis>Position Independent Executable (PIE)</emphasis>: Produces a position independent executable, which is necessary for ASLR.  </para>
+            <para><emphasis>Position Independent Executable (PIE)</emphasis>: Produces a position independent executable, which is necessary for ASLR.</para>
           </listitem>
 <listitem>
             <para><emphasis>Address Space Layout Randomization (ASLR)</emphasis> : This ensures that both code and data regions will be randomized. Enabled by the kernel (all modern linux kernels support ASLR), when the executable is built with PIE.</para>
@@ -134,7 +134,7 @@ CFLAGS="-arch x86_64 -fstack-protector-all -Wstack-protector --param ssp-buffer-
             <imagedata contentdepth="100%" fileref="static/sVirt Diagram 1.png" format="PNG" scalefit="1" width="100%"/>
           </imageobject>
 </inlinemediaobject></para>
-      <para>As shown above, sVirt isolation is provided regardless of the guest Operating System running inside the virtual machine -- Linux or Windows VMs can be used. Additionally, many Linux distributions provide SELinux within the operating system, allowing the virtual machine to protect internal virtual resources from threats. </para>
+      <para>As shown above, sVirt isolation is provided regardless of the guest Operating System running inside the virtual machine -- Linux or Windows VMs can be used. Additionally, many Linux distributions provide SELinux within the operating system, allowing the virtual machine to protect internal virtual resources from threats.</para>
       <section xml:id="ch052_devices-idp523744">
         <title>Labels and Categories</title>
         <para>KVM-based virtual machine instances are labelled with their own SELinux data type, known as svirt_image_t. Kernel level protections prevent unauthorized system processes, such as malware, from manipulating the virtual machine image files on disk. When virtual machines are powered off, images are stored as svirt_image_t as shown below:</para>
@@ -159,7 +159,7 @@ system_u:object_r:svirt_image_t:s0:419,c172 image2</screen>
             <tbody>
               <tr>
                 <td><para><emphasis role="bold">sVirt SELinux Boolean</emphasis></para></td>
-                <td><para><emphasis role="bold"> Description</emphasis></para></td>
+                <td><para><emphasis role="bold">Description</emphasis></para></td>
               </tr>
               <tr>
                 <td><para>virt_use_common</para></td>

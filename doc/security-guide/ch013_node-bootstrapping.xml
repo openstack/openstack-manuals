@@ -84,7 +84,7 @@
         as iPXE, provide this support. Typically this involves
         building the PXE firmware with knowledge of the allowed SSL
         certificate chain(s) so that it can properly validate the
-        server certificate.  This raises the bar for an attacker by
+        server certificate. This raises the bar for an attacker by
         limiting the number of insecure, plain text network
         operations.</para>
     </section>
@@ -100,7 +100,7 @@
         In both cases, the first step is to measure each piece of code
         before it is run. In this context, a measurement is
         effectively a SHA-1 hash of the code, taken before it is
-        executed.  The hash is stored in a platform configuration
+        executed. The hash is stored in a platform configuration
         register (PCR) in the TPM.</para>
       <para>Note: SHA-1 is used here because this is what the TPM
         chips support.</para>
@@ -143,50 +143,50 @@
           </tr>
           <tr>
             <td><para>PCR-02</para></td>
-            <td><para>Option ROM Code </para></td>
+            <td><para>Option ROM Code</para></td>
             <td><para>Hardware</para></td>
           </tr>
           <tr>
             <td><para>PCR-03</para></td>
-            <td><para>Option ROM Configuration and Data </para></td>
-            <td><para>Hardware </para></td>
+            <td><para>Option ROM Configuration and Data</para></td>
+            <td><para>Hardware</para></td>
           </tr>
           <tr>
             <td><para>PCR-04</para></td>
             <td><para>Initial Program Loader (IPL) Code. For example,
                 master boot record.</para></td>
-            <td><para>Software </para></td>
+            <td><para>Software</para></td>
           </tr>
           <tr>
             <td><para>PCR-05</para></td>
-            <td><para>IPL Code Configuration and Data </para></td>
-            <td><para>Software </para></td>
+            <td><para>IPL Code Configuration and Data</para></td>
+            <td><para>Software</para></td>
           </tr>
           <tr>
             <td><para>PCR-06</para></td>
-            <td><para>State Transition and Wake Events </para></td>
-            <td><para>Software </para></td>
+            <td><para>State Transition and Wake Events</para></td>
+            <td><para>Software</para></td>
           </tr>
           <tr>
             <td><para>PCR-07</para></td>
-            <td><para>Host Platform Manufacturer Control </para></td>
-            <td><para>Software </para></td>
+            <td><para>Host Platform Manufacturer Control</para></td>
+            <td><para>Software</para></td>
           </tr>
           <tr>
             <td><para>PCR-08</para></td>
             <td><para>Platform specific, often Kernel, Kernel
                 Extensions, and Drivers</para></td>
-            <td><para>Software </para></td>
+            <td><para>Software</para></td>
           </tr>
           <tr>
             <td><para>PCR-09</para></td>
             <td><para>Platform specific, often Initramfs</para></td>
-            <td><para>Software </para></td>
+            <td><para>Software</para></td>
           </tr>
           <tr>
             <td><para>PCR-10 to PCR-23</para></td>
-            <td><para>Platform specific </para></td>
-            <td><para>Software </para></td>
+            <td><para>Platform specific</para></td>
+            <td><para>Software</para></td>
           </tr>
         </tbody>
       </informaltable>
@@ -201,12 +201,12 @@
         validation. Typically the PCR values listed under the software
         context in the table above are the ones that a cloud architect
         has direct control over. But even these may change as the
-        software in the cloud is upgraded.  Configuration management
+        software in the cloud is upgraded. Configuration management
         should be linked into the PCR policy engine to ensure that the
         validation is always up to date.</para>
       <para>Each manufacturer must provide the BIOS and firmware code
         for their servers. Different servers, hypervisors, and
-        operating systems will choose to populate different PCRs.  In
+        operating systems will choose to populate different PCRs. In
         most real world deployments, it will be impossible to validate
         every PCR against a known good quantity ("golden
         measurement"). Experience has shown that, even within a single
@@ -245,8 +245,8 @@
         correct kernel and underlying components. There are many paths
         for hardening a given operating system deployment. The
         specifics on these steps are outside of the scope of this
-        book.  We recommend following the guidance from a hardening
-        guide specific to your operating system.  For example, the
+        book. We recommend following the guidance from a hardening
+        guide specific to your operating system. For example, the
           <link xlink:href="http://iase.disa.mil/stigs/">security
           technical implementation guides</link> (STIG) and the <link
           xlink:href="http://www.nsa.gov/ia/mitigation_guidance/security_configuration_guides/"
@@ -257,14 +257,14 @@
       <itemizedlist>
         <listitem>
           <para>Use a read-only file system where possible. Ensure
-            that writeable file systems do not permit execution.  This
+            that writeable file systems do not permit execution. This
             can be handled through the mount options provided in
               <literal>/etc/fstab</literal>.</para>
         </listitem>
         <listitem>
           <para>Use a mandatory access control policy to contain the
             instances, the node services, and any other critical
-            processes and data on the node.  See the discussions on
+            processes and data on the node. See the discussions on
             sVirt / SELinux and AppArmor below.</para>
         </listitem>
         <listitem>
@@ -384,7 +384,7 @@
         <listitem>
           <para>In some deployments it may be required to add
             host-based IDS on sensitive components on security domain
-            bridges.  A host-based IDS may detect anomalous activity
+            bridges. A host-based IDS may detect anomalous activity
             by compromised or unauthorized processes on the component.
             The IDS should transmit alert and log information on the
             Management network.</para>
