@@ -3,8 +3,8 @@
     xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
-    <title>Troubleshoot the Identity Service</title>
-    <para>To troubleshoot the Identity Service, review the logs in the
+    <title>Troubleshoot the Identity service</title>
+    <para>To troubleshoot the Identity service, review the logs in the
             <filename>/var/log/keystone.log</filename> file.</para>
     <note>
         <para>Use the <filename>/etc/keystone/logging.conf</filename>
@@ -24,9 +24,9 @@
             from UUID tokens to PKI tokens in the Grizzly release.
             Learn how to troubleshoot this error.</para>
         <para>The PKI-based token validation scheme relies on
-            certificates from the Identity Service that are fetched
-            through HTTP and stored in a local directory. The location
-            for this directory is specified by the
+            certificates from Identity that are fetched through HTTP
+            and stored in a local directory. The location for this
+            directory is specified by the
                 <literal>signing_dir</literal> configuration option.
             In your services configuration file, look for a section
             like this:</para>
@@ -63,9 +63,9 @@ drwxr-xr-x. 4 root root 4096 Nov 7 2012 ..
 -rw-r-----. 1 ayoung ayoung 4518 Jul 22 10:58 signing_cert.pem</computeroutput></screen>
         <para>This directory contains two certificates and the token
             revocation list. If these files are not present, your
-            service cannot fetch them from the Identity Service. To
-            troubleshoot, try to talk to the Identity Service to make
-            sure it is serving out the files, as follows:</para>
+            service cannot fetch them from Identity. To troubleshoot,
+            try to talk to Identity to make sure it correctly serves
+            files, as follows:</para>
         <screen><prompt>$</prompt> <userinput>curl http://localhost:35357/v2.0/certificates/signing</userinput></screen>
         <para>This command fetches the signing certificate:</para>
         <programlisting>Certificate:
@@ -86,12 +86,11 @@ Not After : Jul 20 14:57:31 2023 GMT</programlisting>
             certificates are the wrong files or garbage. You can
             remove these files and run another command against your
             server: They are fetched on demand.</para>
-        <para>The Identity Service log should show the access of the
+        <para>The Identity service log should show the access of the
             certificate files. You might have to turn up your logging
             levels. Set <literal>debug = True</literal> and
                 <literal>verbose = True</literal> in your Identity
-            Service configuration file and restart the Identity
-            Service server.</para>
+            configuration file and restart the Identity server.</para>
         <programlisting>(keystone.common.wsgi): 2013-07-24 12:18:11,461 DEBUG wsgi __call__
 arg_dict: {}
 (access): 2013-07-24 12:18:11,462 INFO core __call__ 127.0.0.1 - - [24/Jul/2013:16:18:11 +0000]
@@ -101,7 +100,7 @@ arg_dict: {}
         <itemizedlist>
             <listitem>
                 <para>Your service is configured incorrectly and
-                    cannot talk to the Identity Service. Check the
+                    cannot talk to Identity. Check the
                         <literal>auth_port</literal> and
                         <literal>auth_host</literal> values and make
                     sure that you can talk to that service through
@@ -120,12 +119,12 @@ arg_dict: {}
                     directory.</para>
             </listitem>
         </itemizedlist>
-        <para>SELinux troubles often occur when you use Fedora/RHEL-based
-            packages and you choose configuration options that do not
-            match the standard policy. Run the <command>setenforce
-                permissive</command> command. If that makes a
-            difference, you should relabel the directory. If you are
-            using a sub-directory of the
+        <para>SELinux troubles often occur when you use
+            Fedora/RHEL-based packages and you choose configuration
+            options that do not match the standard policy. Run the
+                <command>setenforce permissive</command> command. If
+            that makes a difference, you should relabel the directory.
+            If you are using a sub-directory of the
                 <filename>/var/cache/</filename> directory, run the
             following command:</para>
         <screen><prompt>#</prompt> <userinput>restorecon /var/cache/</userinput></screen>
@@ -137,9 +136,9 @@ arg_dict: {}
             confirm that your changes solve the problem.</para>
         <para>If your certificates are fetched on demand, the PKI
             validation is working properly. Most likely, the token
-            from the Identity Service is not valid for the operation
-            you are attempting to perform, and your user needs a
-            different role for the operation.</para>
+            from Identity is not valid for the operation you are
+            attempting to perform, and your user needs a different
+            role for the operation.</para>
     </section>
     <section xml:id="debugging-signing-key-file">
         <title>Debug signing key file errors</title>
@@ -148,13 +147,13 @@ arg_dict: {}
                 <command>keystone-manage pki_setup</command> command
             to generate certificates and keys did not use the correct
             user. When you run the <command>keystone-manage
-                pki_setup</command> command, the Identity Service
-            generates a set of certificates and keys in
+                pki_setup</command> command, Identity generates a set
+            of certificates and keys in
                 <filename>/etc/keystone/ssl*</filename>, which is
             owned by root:root.</para>
         <para>This can present a problem when you run the Identity
-            Service daemon under the keystone user account (nologin)
-            when you try to run PKI. Unless you run the
+            daemon under the keystone user account (nologin) when you
+            try to run PKI. Unless you run the
                 <command>chown</command> command against the files
             keystone:keystone or run the <command>keystone-manage
                 pki_setup</command> command with the
@@ -167,5 +166,19 @@ arg_dict: {}
 denied:bss_file.c:398:fopen('/etc/keystone/ssl/private/signing_key.pem','r')
 140380567730016:error:20074002:BIO routines:FILE_CTRL:system lib:bss_file.c:400:
 unable to load signing key file</computeroutput></screen>
+    </section>
+    <section
+        xml:id="flushing-expired-tokens-from-token-database-table">
+        <title>Flush expired tokens from the token database
+            table</title>
+        <para>As you generate tokens, the token database table on the
+            Identity server grows. To clear the token table, an
+            administrative user must run the <command>keystone-manage
+                token_flush</command> command to flush the tokens.
+            When you flush tokens, expired tokens are deleted and
+            traceability is eliminated.</para>
+        <para>Use <command>cron</command> to schedule this command to
+            run frequently based on your workload. For large
+            workloads, running it every minute is recommended.</para>
     </section>
 </section>
