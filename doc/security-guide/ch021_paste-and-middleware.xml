@@ -10,13 +10,12 @@
         <title>Configure Internal URLs in Identity Service Catalog</title>
         <para>The Identity Service catalog should be aware of your internal URLs. While this feature is not utilized by default, it may be leveraged through configuration. Additionally, it should be forward-compatible with expectant changes once this behavior becomes the default.</para>
         <para>To register an internal URL for an endpoint:</para>
-        <screen>
-$ keystone endpoint-create \
+        <screen><prompt>$</prompt> <userinput>keystone endpoint-create \
  --region RegionOne \
  --service-id=1ff4ece13c3e48d8a6461faebd9cd38f \
  --publicurl='https://public-ip:8776/v1/%(tenant_id)s' \
  --internalurl='https://management-ip:8776/v1/%(tenant_id)s' \
- --adminurl='https://management-ip:8776/v1/%(tenant_id)s'</screen>
+ --adminurl='https://management-ip:8776/v1/%(tenant_id)s'</userinput></screen>
       </section>
       <section xml:id="ch021_paste-and-middleware-idp43360">
         <title>Configure Applications for Internal URLs</title>
@@ -24,19 +23,17 @@ $ keystone endpoint-create \
         <para>Each project may present an inconsistent way of defining target API endpoints. Future releases of OpenStack seek to resolve these inconsistencies through consistent use of the Identity Service catalog.</para>
         <section xml:id="ch021_paste-and-middleware-idp45520">
           <title>Configuration Example #1: Nova</title>
-          <screen>
-[DEFAULT]
+          <programlisting language="ini">[DEFAULT]
 cinder_catalog_info='volume:cinder:internalURL'
 glance_protocol='https'
 neutron_url='https://neutron-host:9696'
 neutron_admin_auth_url='https://neutron-host:9696'
 s3_host='s3-host'
-s3_use_ssl=True</screen>
+s3_use_ssl=True</programlisting>
         </section>
         <section xml:id="ch021_paste-and-middleware-idp47184">
           <title>Configuration Example #2: Cinder</title>
-          <screen>
-glance_host='https://glance-server'</screen>
+          <programlisting language="ini">glance_host='https://glance-server'</programlisting>
         </section>
       </section>
     </section>

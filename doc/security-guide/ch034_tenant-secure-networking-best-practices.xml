@@ -40,10 +40,13 @@
     </section>
     <section xml:id="ch034_tenant-secure-networking-best-practices-idp58016">
       <title>Quotas</title>
-      <para>Quotas provide the ability to limit the number of network resources available to tenants. You can enforce default quotas for all tenants.</para>
-      <screen>
-/etc/neutron/neutron.conf
-[QUOTAS]
+
+      <para>Quotas provide the ability to limit the number of network
+      resources available to tenants. You can enforce default quotas
+      for all tenants. The
+      <filename>/etc/neutron/neutron.conf</filename> includes these
+      options for quota:</para>
+      <programlisting language="ini">[QUOTAS]
 # resource name(s) that are supported in quota features
 quota_items = network,subnet,port
 
@@ -66,9 +69,11 @@ quota_security_group = 10
 quota_security_group_rule = 100
 
 # default driver to use for quota checks
-quota_driver = neutron.quota.ConfDriver</screen>
-      <para>OpenStack Networking also supports per-tenant quotas limit via a quota extension API. To enable per-tenant quotas, you need to set <literal>quota_driver</literal> in <literal>neutron.conf</literal>.</para>
-      <screen>
-quota_driver = neutron.db.quota_db.DbQuotaDriver</screen>
+quota_driver = neutron.quota.ConfDriver</programlisting>
+      <para>OpenStack Networking also supports per-tenant quotas limit
+      via a quota extension API. To enable per-tenant quotas, you must
+      set the <literal>quota_driver</literal> option in
+      <filename>neutron.conf</filename>.</para>
+      <programlisting language="ini">quota_driver = neutron.db.quota_db.DbQuotaDriver</programlisting>
     </section>
   </chapter>

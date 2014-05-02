@@ -88,20 +88,16 @@
         <title>Image Creation Process</title>
         <para>The OpenStack Documentation provides guidance on how to create and upload an image to Glance. Additionally it is assumed that you have a process by which you install and harden operating systems. Thus, the following items will provide additional guidance on how to ensure your images are built securely prior to upload. There are a variety of options for obtaining images. Each has specific steps that help validate the image's provenance.</para>
         <para>The first option is to obtain boot media from a trusted source.</para>
-        <screen>
-mkdir -p /tmp/download_directorycd /tmp/download_directory
-
-wget http://mirror.anl.gov/pub/ubuntu-iso/CDs/precise/ubuntu-12.04.2-server-amd64.iso
-wget http://mirror.anl.gov/pub/ubuntu-iso/CDs/precise/SHA256SUMS
-wget http://mirror.anl.gov/pub/ubuntu-iso/CDs/precise/SHA256SUMS.gpg
-gpg --keyserver hkp://keyserver.ubuntu.com --recv-keys 0xFBB75451
-gpg --verify SHA256SUMS.gpg SHA256SUMSsha256sum -c SHA256SUMS 2&gt;&amp;1 | grep OK
-        </screen>
+        <screen><prompt>$</prompt> <userinput>mkdir -p /tmp/download_directorycd /tmp/download_directory</userinput>
+<prompt>$</prompt> <userinput>wget http://mirror.anl.gov/pub/ubuntu-iso/CDs/precise/ubuntu-12.04.2-server-amd64.iso</userinput>
+<prompt>$</prompt> <userinput>wget http://mirror.anl.gov/pub/ubuntu-iso/CDs/precise/SHA256SUMS</userinput>
+<prompt>$</prompt> <userinput>wget http://mirror.anl.gov/pub/ubuntu-iso/CDs/precise/SHA256SUMS.gpg</userinput>
+<prompt>$</prompt> <userinput>gpg --keyserver hkp://keyserver.ubuntu.com --recv-keys 0xFBB75451</userinput>
+<prompt>$</prompt> <userinput>gpg --verify SHA256SUMS.gpg SHA256SUMSsha256sum -c SHA256SUMS 2&gt;&amp;1 | grep OK</userinput></screen>
         <para>The second option is to use the <link xlink:href="http://docs.openstack.org/trunk/image-guide/content/"><citetitle>OpenStack Virtual Machine Image Guide</citetitle></link>. In this case, you will want to follow your organizations OS hardening guidelines or those provided by a trusted third-party such as the <link xlink:href="http://iase.disa.mil/stigs/os/unix/red_hat.html">RHEL6 STIG</link>.</para>
         <para>The final option is to use an automated image builder. The following example uses the Oz image builder. The OpenStack community has recently created a newer tool worth investigating: disk-image-builder. We have not evaluated this tool from a security perspective.</para>
         <para>Example of RHEL 6 CCE-26976-1 which will help implement NIST 800-53 Section<emphasis>AC-19(d) in</emphasis> Oz.</para>
-        <screen>
-&lt;template&gt;
+        <programlisting>&lt;template&gt;
 &lt;name&gt;centos64&lt;/name&gt;
 &lt;os&gt;
   &lt;name&gt;RHEL-6&lt;/name&gt;
@@ -135,7 +131,7 @@ gpg --verify SHA256SUMS.gpg SHA256SUMSsha256sum -c SHA256SUMS 2&gt;&amp;1 | grep
   service autofs stop
   &lt;/command&gt;
 &lt;/commands&gt;
-&lt;/template&gt;</screen>
+&lt;/template&gt;</programlisting>
         <para>Note, it is the recommendation of this guide to shy away from the manual image building process as it is complex and prone to error. Further, using an automated system like Oz or disk-image-builder for image building, or a configuration management utility like Chef or Puppet for post boot image hardening gives you the ability to produce a consistent image as well as track compliance of your base image to its respective hardening guidelines over time.</para>
         <para>If subscribing to a public cloud service, you should check with the cloud provider for an outline of the process used to produce their default images. If the provider allows you to upload your own images, you will want to ensure that you are able to verify that your image was not modified before you spin it up. To do this, refer to the following section on Image Provenance.</para>
       </section>
@@ -198,9 +194,8 @@ gpg --verify SHA256SUMS.gpg SHA256SUMSsha256sum -c SHA256SUMS 2&gt;&amp;1 | grep
         <section xml:id="ch055_security-services-for-instances-idp187568">
           <title>Disable Live Migration</title>
           <para>At this time, live migration is enabled in OpenStack by default. Live migrations can be disabled by adding the following lines to the nova policy.json file:</para>
-          <screen>
-"compute_extension:admin_actions:migrate": "!",
-"compute_extension:admin_actions:migrateLive": "!",</screen>
+          <programlisting>"compute_extension:admin_actions:migrate": "!",
+"compute_extension:admin_actions:migrateLive": "!",</programlisting>
         </section>
         <section xml:id="ch055_security-services-for-instances-idp189488">
           <title>Migration Network</title>

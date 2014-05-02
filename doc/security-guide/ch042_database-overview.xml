@@ -56,14 +56,12 @@
       <title>Require User Accounts to Require SSL Transport</title>
       <section xml:id="ch042_database-overview-idp88784">
         <title>Configuration Example #1: (MySQL)</title>
-        <screen>
-GRANT ALL ON dbname.* to 'compute01'@'hostname' IDENTIFIED BY 'password' REQUIRE SSL;</screen>
+        <programlisting>GRANT ALL ON dbname.* to 'compute01'@'hostname' IDENTIFIED BY 'password' REQUIRE SSL;</programlisting>
       </section>
       <section xml:id="ch042_database-overview-idp90096">
         <title>Configuration Example #2: (PostgreSQL)</title>
         <para>In file pg_hba.conf:</para>
-        <screen>
-hostssl dbname compute01 hostname md5</screen>
+        <programlisting>hostssl dbname compute01 hostname md5</programlisting>
         <para>Note this command only adds the ability to communicate over SSL and is non-exclusive. Other access methods that may allow unencrypted transport should be disabled so that SSL is the sole access method.</para>
         <para>The 'md5' parameter defines the authentication method as a hashed password. We provide a secure authentication example in the section below.</para>
       </section>
@@ -73,24 +71,21 @@ hostssl dbname compute01 hostname md5</screen>
       <para>Security may be enhanced by requiring X.509 client certificates for authentication. Authenticating to the database in this manner provides greater identity assurance of the client making the connection to the database and ensures that the communications are encrypted.</para>
       <section xml:id="ch042_database-overview-idp94704">
         <title>Configuration Example #1: (MySQL)</title>
-        <screen>
-GRANT ALL on dbname.* to 'compute01'@'hostname' IDENTIFIED BY 'password' REQUIRE SUBJECT
+        <programlisting>GRANT ALL on dbname.* to 'compute01'@'hostname' IDENTIFIED BY 'password' REQUIRE SUBJECT
 '/C=XX/ST=YYY/L=ZZZZ/O=cloudycloud/CN=compute01' AND ISSUER
-'/C=XX/ST=YYY/L=ZZZZ/O=cloudycloud/CN=cloud-ca';</screen>
+'/C=XX/ST=YYY/L=ZZZZ/O=cloudycloud/CN=cloud-ca';</programlisting>
       </section>
       <section xml:id="ch042_database-overview-idp96192">
         <title>Configuration Example #2: (PostgreSQL)</title>
-        <screen>
-hostssl dbname compute01 hostname cert</screen>
+        <programlisting>hostssl dbname compute01 hostname cert</programlisting>
       </section>
     </section>
     <section xml:id="ch042_database-overview-idp97536">
       <title>OpenStack Service Database Configuration</title>
       <para>If your database server is configured to require X.509 certificates for authentication you will need to specify the appropriate SQLAlchemy query parameters for the database backend. These parameters specify the certificate, private key, and certificate authority information for use with the initial connection string.</para>
       <para>Example of an <literal>:sql_connection</literal> string for X.509 certificate authentication to MySQL:</para>
-      <screen>
-sql_connection = mysql://compute01:password@localhost/nova?
-charset=utf8&amp;ssl_ca=/etc/mysql/cacert.pem&amp;ssl_cert=/etc/mysql/server-cert.pem&amp;ssl_key=/etc/mysql/server-key.pem</screen>
+      <programlisting language="ini">sql_connection = mysql://compute01:password@localhost/nova?
+charset=utf8&amp;ssl_ca=/etc/mysql/cacert.pem&amp;ssl_cert=/etc/mysql/server-cert.pem&amp;ssl_key=/etc/mysql/server-key.pem</programlisting>
     </section>
     <section xml:id="ch042_database-overview-idp100688">
       <title>Nova Conductor</title>
@@ -109,8 +104,7 @@ charset=utf8&amp;ssl_ca=/etc/mysql/cacert.pem&amp;ssl_cert=/etc/mysql/server-cer
       <para>Note, as <systemitem class="service">nova-conductor</systemitem> only applies to OpenStack Compute, direct database access from compute hosts may still be necessary for the operation of other OpenStack components such as Telemetry (Ceilometer), Networking, and Block Storage.</para>
       <para>Implementors should weigh the benefits and risks of both configurations before enabling or disabling the <systemitem class="service">nova-conductor</systemitem> service. We are not yet prepared to recommend the use of <systemitem class="service">nova-conductor</systemitem> in the Grizzly release. However, we do believe that this recommendation will change as additional features are added into OpenStack.</para>
       <para>To disable the <systemitem class="service">nova-conductor</systemitem>, place the following into your <filename>nova.conf</filename> file (on your compute hosts):</para>
-      <screen>
-[conductor]
-use_local = true</screen>
+      <programlisting language="ini">[conductor]
+use_local = true</programlisting>
     </section>
   </chapter>
