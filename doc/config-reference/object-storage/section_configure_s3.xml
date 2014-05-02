@@ -39,11 +39,7 @@
     <para>To use this middleware, first download the latest
         version from its repository to your proxy
         server(s).</para>
-    <screen><prompt>$</prompt> <userinput>git clone https://github.com/fujita/swift3.git</userinput></screen>
-    <para>Optional: To use this middleware with Object Storage 1.7.0 and previous versions, you must
-        use the v1.7 tag of the fujita/swift3 repository. Clone the repository, as shown previously,
-        and run this command:</para>
-    <screen><prompt>$</prompt> <userinput>cd swift3; git checkout v1.7</userinput></screen>
+    <screen><prompt>$</prompt> <userinput>git clone https://github.com/stackforge/swift3.git</userinput></screen>
     <para>Then, install it using standard python mechanisms, such
         as:</para>
     <screen><prompt>#</prompt> <userinput>python setup.py install</userinput></screen>
@@ -68,17 +64,18 @@ use = egg:swift3#swift3</programlisting>
     <literallayout class="monospaced">my @endpoints = ( '1.2.3.4');</literallayout>
     <para>Now you can send commands to the endpoint, such
         as:</para>
-    <screen><prompt>$</prompt> <userinput>./s3curl.pl - 'myacc:myuser' -key mypw -get - -s -v http://1.2.3.4:8080</userinput>
+    <screen><prompt>$</prompt> <userinput>./s3curl.pl - 'a7811544507ebaf6c9a7a8804f47ea1c' -key 'a7d8e981-e296-d2ba-cb3b-db7dd23159bd' -get - -s -v http://1.2.3.4:8080</userinput>
         </screen>
-    <para>To set up your client, the access key will be the concatenation of the account and user
-        strings that should look like test:tester, and the secret access key is the account
-        password. The host should also point to the Object Storage storage node's hostname. It also
+    <para>To set up your client, ensure you are using the ec2 credentials,
+        which can be downloaded from the <guilabel>API Endpoints</guilabel> tab
+of the dashboard.
+        The host should also point to the Object Storage storage node's hostname. It also
         will have to use the old-style calling format, and not the hostname-based container format.
         Here is an example client setup using the Python boto library on a locally installed
         all-in-one Object Storage installation.</para>
     <programlisting>connection = boto.s3.Connection(
-    aws_access_key_id='test:tester',
-    aws_secret_access_key='testing',
+    aws_access_key_id='a7811544507ebaf6c9a7a8804f47ea1c',
+    aws_secret_access_key='a7d8e981-e296-d2ba-cb3b-db7dd23159bd',
     port=8080,
     host='127.0.0.1',
     is_secure=False,
