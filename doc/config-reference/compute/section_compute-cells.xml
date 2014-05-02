@@ -25,12 +25,13 @@
         between cells and selects cells for new instances. This service is required for every cell.
         Communication between cells is pluggable, and currently the only option is communication through
         RPC.</para>
-    <para>Cells scheduling is separate from host scheduling. <systemitem class="service">nova-cells</systemitem> first picks a
-        cell (now randomly, but future releases plan to add filtering/weighing functionality, and
-        decisions will be based on broadcasts of capacity/capabilities). Once a cell is
-        selected and the new build request reaches its <systemitem class="service">nova-cells</systemitem> service, it is sent
-        over to the host scheduler in that cell and the build proceeds as it would have without
-        cells.</para>
+    <para>Cells scheduling is separate from host scheduling. <systemitem
+        class="service">nova-cells</systemitem>
+        first picks a cell. Once a cell is selected and the new build
+        request reaches its <systemitem
+        class="service">nova-cells</systemitem> service, it is sent
+        over to the host scheduler in that cell and the build proceeds
+        as it would have without cells.</para>
         <warning>
             <para>Cell functionality is currently considered experimental.</para>
         </warning>
@@ -165,11 +166,16 @@ rabbit_username=cell1_user
 rabbit_password=cell1_passwd
 rabbit_virtual_host=cell1_vhost</programlisting></para>
         <para>We would run this in the API cell, as
-            root.<screen><prompt>#</prompt> <userinput>nova-manage cell create --name=cell1 --cell_type=child --username=cell1_user --password=cell1_passwd --hostname=10.0.1.10 --port=5673 --virtual_host=cell1_vhost --woffset=1.0 --wscale=1.0</userinput></screen></para>
+            root.<screen><prompt>#</prompt> <userinput>nova-manage cell create --name=cell1 --cell_type=child \
+  --username=cell1_user --password=cell1_passwd --hostname=10.0.1.10 \
+  --port=5673 --virtual_host=cell1_vhost --woffset=1.0 --wscale=1.0</userinput></screen>
+        </para>
         <para>Repeat the above for all child cells.</para>
         <para>In the child cell, we would run the following, as
-            root:<screen><prompt>#</prompt> <userinput>nova-manage cell create --name=api --cell_type=parent --username=api1_user --password=api1_passwd --hostname=10.0.0.10 --port=5672 --virtual_host=api_vhost --woffset=1.0 --wscale=1.0
-</userinput></screen></para>
+            root:<screen><prompt>#</prompt> <userinput>nova-manage cell create --name=api --cell_type=parent \
+  --username=api_user --password=api_passwd --hostname=10.0.0.10 \
+  --port=5672 --virtual_host=api_vhost --woffset=1.0 --wscale=1.0</userinput></screen>
+        </para>
         <para>To customize the Compute cells, use the configuration option
             settings documented in <xref
                 linkend="config_table_nova_cells"/>.</para>
@@ -185,7 +191,7 @@ rabbit_virtual_host=cell1_vhost</programlisting></para>
                     <para><code>scheduler_filter_classes</code> - Specifies the list of filter
                         classes. By default <code>nova.cells.weights.all_filters</code> is
                         specified, which maps to all cells filters included with Compute (see
-                        <xref linkend="scheduler-filters"/>.</para>
+                        <xref linkend="scheduler-filters"/>).</para>
                 </listitem>
                 <listitem>
                     <para><code>scheduler_weight_classes</code> - Specifies the list of weight
@@ -251,9 +257,7 @@ rabbit_virtual_host=cell1_vhost</programlisting></para>
                 <code>transport_url</code> field, instead of
                 <code>username</code>, <code>password</code>, and so on. The
                 <code>transport_url</code> has the following form:</para>
-            <programlisting>
-rabbit://&lt;username>:&lt;password>@&lt;hostname>:&lt;port>/&lt;virtual_host>
-            </programlisting>
+            <programlisting>rabbit://<replaceable>USERNAME</replaceable>:<replaceable>PASSWORD</replaceable>@<replaceable>HOSTNAME</replaceable>:<replaceable>PORT</replaceable>/<replaceable>VIRTUAL_HOST</replaceable></programlisting>
         <para>The scheme can be either <literal>qpid</literal> or <literal>rabbit</literal>, as shown previously. The following sample shows this optional configuration:</para>
         <programlisting language="json"><xi:include href="samples/cells-resp.json" parse="text"/></programlisting>
     </section>
