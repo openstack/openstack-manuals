@@ -1,185 +1,245 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<section
-    xmlns="http://docbook.org/ns/docbook"
+<section xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xlink="http://www.w3.org/1999/xlink"
-    version="5.0"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="nova_cli_security_groups">
-         <title>Add security group and rules</title>
-        <para>The following procedure shows you how to add security
-        groups and add rules to the default security group.</para>
-<section xml:id="secgroup_add-delete">
-    <title>Add or delete a security group</title>
-            <para>Security groups can be added with <command>nova
-                    secgroup-create</command>.</para>
-            <para>The following example shows the creation of the
-                security group <literal>secure1</literal>. After the
-                group is created, it can be viewed in the security
-                group list.</para>
-    <para>
+    <title>Add security group and rules</title>
+    <para>The following procedure shows you how to add security groups
+        and add rules to the default security group.</para>
+    <section xml:id="secgroup_add-delete">
+        <title>Add or delete a security group</title>
+        <para>Use the <command>nova secgroup-create</command> command
+            to add security groups.</para>
+        <para>The following example shows how to create the
+                <literal>secure1</literal> security group:</para>
         <screen><prompt>$</prompt> <userinput>nova secgroup-create secure1 "Test security group"</userinput>
 <computeroutput>+---------+---------------------+
 |   Name  |     Description     |
 +---------+---------------------+
 | secure1 | Test security group |
-+---------+---------------------+
-</computeroutput>
-<prompt>$</prompt> <userinput>nova secgroup-list</userinput>
++---------+---------------------+</computeroutput></screen>
+        <para>After you create the security group, you can view it in
+            the security group list:</para>
+        <screen><prompt>$</prompt> <userinput>nova secgroup-list</userinput>
 <computeroutput>+---------+---------------------+
 |   Name  |     Description     |
 +---------+---------------------+
 | default |       default       |
 | secure1 | Test security group |
 +---------+---------------------+</computeroutput></screen>
-</para>
-<para>Security groups can be deleted with <command>nova secgroup-delete</command>. The default
-                security group cannot be deleted. The default security group contains these initial
-                settings:<itemizedlist>
-                    <listitem>
-                        <para>All the traffic originated by the instances (outbound traffic) is
-                            allowed</para>
-                    </listitem>
-                    <listitem>
-                        <para>All the traffic destined to instances
-                            (inbound traffic) is denied</para>
-                    </listitem>
-                    <listitem>
-                        <para>All the instances inside the group are allowed to talk to each
-                            other</para>
-                    </listitem>
-                </itemizedlist>
-    <note>
-        <para>You can add extra rules into the default security group for handling the egress
-                        traffic. Rules are ingress only at this time.</para>
-    </note>
-           </para>
-            <para>In the following example, the group
-                    <literal>secure1</literal> is deleted. When you
-                view the security group list, it no longer
-                appears.</para>
-            <para>
-                <screen><prompt>$</prompt> <userinput>nova secgroup-delete secure1</userinput>
+        <para>Use the <command>nova secgroup-delete</command> command
+            to delete security groups. You cannot delete the default
+            security group. The default security group has these
+            initial settings:</para>
+        <itemizedlist>
+            <listitem>
+                <para>All the traffic originated by the instances
+                    (outbound traffic) is allowed</para>
+            </listitem>
+            <listitem>
+                <para>All the traffic destined to instances (inbound
+                    traffic) is denied</para>
+            </listitem>
+            <listitem>
+                <para>All the instances inside the group are allowed
+                    to talk to each other</para>
+            </listitem>
+        </itemizedlist>
+        <note>
+            <para>You can add extra rules into the default security
+                group for handling the egress traffic. Rules are
+                ingress only at this time.</para>
+        </note>
+        <para>The following example deletes the
+                <literal>secure1</literal> group. When you view the
+            security group list, it no longer appears:</para>
+        <screen><prompt>$</prompt> <userinput>nova secgroup-delete secure1</userinput>
 <prompt>$</prompt> <userinput>nova secgroup-list</userinput>
 <computeroutput>+---------+-------------+
 |   Name  | Description |
 +---------+-------------+
 | default |   default   |
 +---------+-------------+</computeroutput></screen>
-           </para>
-</section>
-        <section xml:id="secgroup_rules">
-            <title>Modify security group rules</title>
-        <para>The security group rules control the incoming traffic that is allowed to the instances
-                in the group, while all outbound traffic is automatically allowed. <note>
-                    <para>It is not possible to change the default outbound behaviour.</para>
-                </note>Every security group rule is a policy which allows you to specify inbound
-                connections that are allowed to access the instance, by source address, destination
-                port and IP protocol,(TCP, UDP or ICMP). Currently, ipv6 and other protocols cannot
-                be managed with the security rules, making them permitted by default. To manage
-                such, you can deploy a firewall in front of your OpenStack cloud to control other
-                types of traffic. The command requires the following arguments for both TCP and UDP
-                rules : <itemizedlist>
-                    <listitem>
-                        <para>&lt;secgroup&gt; ID of security group.</para>
-                    </listitem>
-                    <listitem>
-                        <para>&lt;ip_proto&gt; IP protocol (icmp, tcp, udp).</para>
-                    </listitem>
-                    <listitem>
-                        <para>&lt;from_port&gt; Port at start of range.</para>
-                    </listitem>
-                    <listitem>
-                        <para>&lt;to_port&gt; Port at end of range.</para>
-                    </listitem>
-                    <listitem>
-                        <para>&lt;cidr&gt; CIDR for address range.</para>
-                    </listitem>
-                </itemizedlist></para>
-            <para>For ICMP rules, instead of specifying a begin and end port, you specify the
-                allowed ICMP code and ICMP type: <itemizedlist>
-                    <listitem>
-                        <para>&lt;secgroup&gt; ID of security group.</para>
-                    </listitem>
-                    <listitem>
-                        <para>&lt;ip_proto&gt; IP protocol (with icmp specified).</para>
-                    </listitem>
-                    <listitem>
-                        <para>&lt;ICMP_code&gt; The ICMP code.</para>
-                    </listitem>
-                    <listitem>
-                        <para>&lt;ICMP_type&gt; The ICMP type.</para>
-                    </listitem>
-                    <listitem>
-                        <para>&lt;cidr&gt; CIDR for the source address range.</para>
-                    </listitem>
-                </itemizedlist>
-                <note>
-                    <para>Entering "-1" for both code and type
-                        indicates that all ICMP codes and types should
-                        be allowed.</para>
-                </note>
-           </para>
-            <para>
-                <note>
-                    <title>The CIDR notation</title>
-                    <para>That notation allows you to specify a base IP address and a suffix that
-                        designates the number of significant bits in the IP address used to identify
-                        the network. For example, by specifying a 88.170.60.32/27, you specify
-                        88.170.60.32 as the <emphasis role="bold">base IP</emphasis> and 27 as the
-                            <emphasis role="bold">suffix</emphasis>. Since you use an IPV4 format,
-                        there are only 5 bits available for the host part (32 minus 27). The
-                        0.0.0.0/0 notation means you allow the entire IPV4 range, meaning allowing
-                        all  addresses.</para>
-                </note></para>
-
-            <para>For example, in order to allow any IP address to
-                access a web server running on one of your instances
-                inside the default security
-                group:<screen><prompt>$</prompt> <userinput>nova secgroup-add-rule default tcp 80 80 0.0.0.0/0</userinput>
+    </section>
+    <section xml:id="secgroup_rules">
+        <title>Modify security group rules</title>
+        <para>The security group rules control the incoming traffic
+            that can access the instances in the group, while all
+            outbound traffic is automatically allowed. <note>
+                <para>You cannot change the default outbound
+                    behavior.</para>
+            </note>Every security group rule is a policy that allows
+            you to specify inbound connections that can access the
+            instance by source address, destination port, and IP
+            protocol (TCP, UDP or ICMP). Currently, you cannot manage
+            ipv6 and other protocols through the security rules,
+            making them permitted by default. To manage such
+            protocols, you can deploy a firewall in front of your
+            OpenStack cloud to control other types of traffic. The
+            command requires the following arguments for both TCP and
+            UDP rules:</para>
+        <variablelist wordsize="10">
+            <varlistentry>
+                <term><emphasis role="bold"
+                        >&lt;secgroup&gt;</emphasis></term>
+                <listitem>
+                    <para>ID of security group.</para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><emphasis role="bold"
+                        >&lt;ip_proto&gt;</emphasis></term>
+                <listitem>
+                    <para>IP protocol (icmp, tcp, udp).</para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><emphasis role="bold"
+                        >&lt;from_port&gt;</emphasis></term>
+                <listitem>
+                    <para>Port at start of range.</para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><emphasis role="bold"
+                    >&lt;to_port&gt;</emphasis></term>
+                <listitem>
+                    <para>Port at end of range.</para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><emphasis role="bold"
+                    >&lt;cidr&gt;</emphasis></term>
+                <listitem>
+                    <para>CIDR for address range.</para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <para>For ICMP rules, instead of specifying a begin and end
+            port, you specify the allowed ICMP code and ICMP
+            type:</para>
+        <variablelist wordsize="10">
+            <varlistentry>
+                <term><emphasis role="bold"
+                        >&lt;secgroup&gt;</emphasis></term>
+                <listitem>
+                    <para>ID of security group.</para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><emphasis role="bold"
+                        >&lt;ip_proto&gt;</emphasis></term>
+                <listitem>
+                    <para>IP protocol (with icmp specified).</para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><emphasis role="bold"
+                        >&lt;ICMP_code&gt;</emphasis></term>
+                <listitem>
+                    <para>The ICMP code.</para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><emphasis role="bold"
+                        >&lt;ICMP_type&gt;</emphasis></term>
+                <listitem>
+                    <para>The ICMP type.</para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><emphasis role="bold"
+                    >&lt;cidr&gt;</emphasis></term>
+                <listitem>
+                    <para>CIDR for the source address range.</para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <note>
+            <para>Entering <literal>-1</literal> for both code and
+                type indicates that all ICMP codes and types are
+                allowed.</para>
+        </note>
+        <note>
+            <title>The CIDR notation</title>
+            <para>That notation allows you to specify a base IP
+                address and a suffix that designates the number of
+                significant bits in the IP address used to identify
+                the network. For example, by specifying a
+                    <literal>88.170.60.32/27</literal>, you specify
+                    <literal>88.170.60.32</literal> as the <emphasis
+                    role="bold">base IP</emphasis> and
+                    <literal>27</literal> as the <emphasis role="bold"
+                    >suffix</emphasis>. Because you use an IPV4
+                format, only 5 bits are available for the host part
+                (32 minus 27). The <literal>0.0.0.0/0</literal>
+                notation means you allow the entire IPV4 range, which
+                allows all addresses.</para>
+        </note>
+        <para>For example, to allow any IP address to access a web
+            server running on one of your instances inside the default
+            security group:</para>
+        <screen><prompt>$</prompt> <userinput>nova secgroup-add-rule default tcp 80 80 0.0.0.0/0</userinput>
 <computeroutput>+-------------+-----------+---------+-----------+--------------+
 | IP Protocol | From Port | To Port |  IP Range | Source Group |
 +-------------+-----------+---------+-----------+--------------+
 |     tcp     |     80    |    80   | 0.0.0.0/0 |              |
 +-------------+-----------+---------+-----------+--------------+</computeroutput></screen>
-           </para>
-            <para>In order to allow any IP address to ping an instance
-                inside the default security group (Code 0, Type 8 for
-                the ECHO
-                request.):<screen><prompt>$</prompt> <userinput>nova secgroup-add-rule default icmp 0 8 0.0.0.0/0</userinput>
+        <para>To allow any IP address to ping an instance inside the
+            default security group (Code 0, Type 8 for the ECHO
+            request):</para>
+        <screen><prompt>$</prompt> <userinput>nova secgroup-add-rule default icmp 0 8 0.0.0.0/0</userinput>
 <computeroutput>+-------------+-----------+---------+-----------+--------------+
 | IP Protocol | From Port | To Port |  IP Range | Source Group |
 +-------------+-----------+---------+-----------+--------------+
 |     icmp    |     0     |    8    | 0.0.0.0/0 |              |
 +-------------+-----------+---------+-----------+--------------+</computeroutput></screen>
-           </para>
-            <para>
-                <screen><prompt>$</prompt> <userinput>nova secgroup-list-rules default</userinput>
+        <screen><prompt>$</prompt> <userinput>nova secgroup-list-rules default</userinput>
 <computeroutput>+-------------+-----------+---------+-----------+--------------+
 | IP Protocol | From Port | To Port |  IP Range | Source Group |
 +-------------+-----------+---------+-----------+--------------+
 |     tcp     |     80    |    80   | 0.0.0.0/0 |              |
 |     icmp    |     0     |    8    | 0.0.0.0/0 |              |
 +-------------+-----------+---------+-----------+--------------+</computeroutput></screen>
-               </para>
-            <para>In order to delete a rule, you need to specify the exact same arguments you used
-                to create it:<itemizedlist>
-                    <listitem>
-                        <para>&lt;secgroup&gt; ID of security group.</para>
-                    </listitem>
-                    <listitem>
-                        <para>&lt;ip_proto&gt; IP protocol (icmp, tcp, udp).</para>
-                    </listitem>
-                    <listitem>
-                        <para>&lt;from_port&gt; Port at start of range.</para>
-                    </listitem>
-                    <listitem>
-                        <para>&lt;to_port&gt; Port at end of range.</para>
-                    </listitem>
-                    <listitem>
-                        <para>&lt;cidr&gt; CIDR for address range.</para>
-                    </listitem>
-                </itemizedlist><screen><prompt>$</prompt> <userinput>nova secgroup-delete-rule default tcp 80 80 0.0.0.0/0</userinput></screen>
-           </para>
-        </section>
-
+        <para>To delete a rule, you must specify exactly the same
+            arguments that you used to create it:</para>
+        <variablelist wordsize="10">
+            <varlistentry>
+                <term><emphasis role="bold"
+                        >&lt;secgroup&gt;</emphasis></term>
+                <listitem>
+                    <para>ID of security group.</para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><emphasis role="bold"
+                        >&lt;ip_proto&gt;</emphasis></term>
+                <listitem>
+                    <para>IP protocol (icmp, tcp, udp).</para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><emphasis role="bold"
+                        >&lt;from_port&gt;</emphasis></term>
+                <listitem>
+                    <para>Port at start of range.</para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><emphasis role="bold"
+                    >&lt;to_port&gt;</emphasis></term>
+                <listitem>
+                    <para>Port at end of range.</para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><emphasis role="bold"
+                    >&lt;cidr&gt;</emphasis></term>
+                <listitem>
+                    <para>CIDR for address range.</para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <screen><prompt>$</prompt> <userinput>nova secgroup-delete-rule default tcp 80 80 0.0.0.0/0</userinput></screen>
+    </section>
 </section>
