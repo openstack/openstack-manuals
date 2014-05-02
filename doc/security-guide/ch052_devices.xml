@@ -46,11 +46,11 @@
       <section xml:id="ch052_devices-idp490976">
         <title>Minimizing the Qemu Code base</title>
         <para>One classic security principle is to remove any unused components from your system. QEMU provides support for many different virtual hardware devices. However, only a small number of devices are needed for a given instance. Most instances will use the virtio devices. However, some legacy instances will need access to specific hardware, which can be specified using glance metadata:</para>
-        <screen>glance image-update \
+        <screen><prompt>$</prompt> <userinput>glance image-update \
     --property hw_disk_bus=ide \
     --property hw_cdrom_bus=ide \
     --property hw_vif_model=e1000 \
-    f16-x86_64-openstack-sda</screen>
+    f16-x86_64-openstack-sda</userinput></screen>
         <para>A cloud architect should decide what devices to make available to cloud users. Anything that is not needed should be removed from QEMU. This step requires recompiling QEMU after modifying the options passed to the QEMU configure script. For a complete list of up-to-date options simply run <literal>./configure --help</literal> from within the QEMU source directory. Decide what is needed for your deployment, and disable the remaining options.</para>
       </section>
       <section xml:id="ch052_devices-idp494336">
@@ -74,8 +74,7 @@
           </listitem>
 </itemizedlist>
         <para>Putting this all together, and adding in some additional useful protections, we recommend the following compiler options for gcc when compiling QEMU:</para>
-        <screen>
-CFLAGS="-arch x86_64 -fstack-protector-all -Wstack-protector --param ssp-buffer-size=4 -pie -fPIE -ftrapv -D_FORTIFY_SOURCE=2 -O2 -Wl,-z,relro,-z,now"</screen>
+        <programlisting>CFLAGS="-arch x86_64 -fstack-protector-all -Wstack-protector --param ssp-buffer-size=4 -pie -fPIE -ftrapv -D_FORTIFY_SOURCE=2 -O2 -Wl,-z,relro,-z,now"</programlisting>
         <para>We recommend testing your QEMU executable file after it is compiled to ensure that the compiler hardening worked properly.</para>
         <para>Most cloud deployments will not want to build software such as QEMU by hand. It is better to use packaging to ensure that the process is repeatable and to ensure that the end result can be easily deployed throughout the cloud. The references below provide some additional details on applying compiler hardening options to existing packages.</para>
         <itemizedlist><listitem>
@@ -138,15 +137,14 @@ CFLAGS="-arch x86_64 -fstack-protector-all -Wstack-protector --param ssp-buffer-
       <section xml:id="ch052_devices-idp523744">
         <title>Labels and Categories</title>
         <para>KVM-based virtual machine instances are labelled with their own SELinux data type, known as svirt_image_t. Kernel level protections prevent unauthorized system processes, such as malware, from manipulating the virtual machine image files on disk. When virtual machines are powered off, images are stored as svirt_image_t as shown below:</para>
-        <screen>
-system_u:object_r:svirt_image_t:SystemLow image1
+        <programlisting>system_u:object_r:svirt_image_t:SystemLow image1
 system_u:object_r:svirt_image_t:SystemLow image2
 system_u:object_r:svirt_image_t:SystemLow image3
-system_u:object_r:svirt_image_t:SystemLow image4</screen>
+system_u:object_r:svirt_image_t:SystemLow image4</programlisting>
         <para>The svirt_image_t label uniquely identifies image files on disk, allowing for the SELinux policy to restrict access. When a KVM-based Compute image is powered on, sVirt appends a random numerical identifier to the image. sVirt is technically capable of assigning numerical identifiers to 524,288 virtual machines per hypervisor node, however OpenStack deployments are highly unlikely to encounter this limitation.</para>
         <para>This example shows the sVirt category identifier:</para>
-        <screen>system_u:object_r:svirt_image_t:s0:c87,c520 image1
-system_u:object_r:svirt_image_t:s0:419,c172 image2</screen>
+        <programlisting>system_u:object_r:svirt_image_t:s0:c87,c520 image1
+system_u:object_r:svirt_image_t:s0:419,c172 image2</programlisting>
       </section>
       <section xml:id="ch052_devices-idp527632">
         <title>Booleans</title>

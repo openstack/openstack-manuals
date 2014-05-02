@@ -8,16 +8,14 @@
       <section xml:id="ch043_database-transport-security-idp39696">
         <title>Restricting Bind Address for MySQL</title>
         <para>In my.cnf:</para>
-        <screen>
-[mysqld]
+        <programlisting>[mysqld]
 ...
-bind-address &lt;ip address or hostname of management network interface&gt;</screen>
+bind-address &lt;ip address or hostname of management network interface&gt;</programlisting>
       </section>
       <section xml:id="ch043_database-transport-security-idp41568">
         <title>Restricting Listen Address for PostgreSQL</title>
         <para>In postgresql.conf:</para>
-        <screen>
-listen_addresses = &lt;ip address or hostname of management network interface&gt;</screen>
+        <programlisting>listen_addresses = &lt;ip address or hostname of management network interface&gt;</programlisting>
       </section>
     </section>
     <section xml:id="ch043_database-transport-security-idp43520">
@@ -31,25 +29,21 @@ listen_addresses = &lt;ip address or hostname of management network interface&gt
       <title>MySQL SSL Configuration</title>
       <para>The following lines should be added in the system-wide MySQL configuration file:</para>
       <para>In my.cnf:</para>
-      <screen>
-[[mysqld]]
+      <programlisting>[[mysqld]]
 ...
 ssl-ca=/path/to/ssl/cacert.pem
 ssl-cert=/path/to/ssl/server-cert.pem
-ssl-key=/path/to/ssl/server-key.pem</screen>
+ssl-key=/path/to/ssl/server-key.pem</programlisting>
       <para>Optionally, if you wish to restrict the set of SSL ciphers
       used for the encrypted connection. See <link xlink:href="http://www.openssl.org/docs/apps/ciphers.html">http://www.openssl.org/docs/apps/ciphers.html</link> for a list of ciphers and the syntax for specifying the cipher string:</para>
-      <screen>
-ssl-cipher='cipher:list'</screen>
+      <programlisting>ssl-cipher='cipher:list'</programlisting>
     </section>
     <section xml:id="ch043_database-transport-security-idp50288">
       <title>PostgreSQL SSL Configuration</title>
       <para>The following lines should be added in the system-wide PostgreSQL configuration file, <literal>postgresql.conf</literal>.</para>
-      <screen>
-ssl = true</screen>
+      <programlisting>ssl = true</programlisting>
       <para>Optionally, if you wish to restrict the set of SSL ciphers used for the encrypted connection. See <link xlink:href="http://www.openssl.org/docs/apps/ciphers.html">http://www.openssl.org/docs/apps/ciphers.html</link> for a list of ciphers and the syntax for specifying the cipher string:</para>
-      <screen>
-ssl-ciphers = 'cipher:list'</screen>
+      <programlisting>ssl-ciphers = 'cipher:list'</programlisting>
       <para>The server certificate, key, and certificate authority (CA) files should be placed in the $PGDATA directory in the following files:</para>
       <itemizedlist><listitem>
           <para>$PGDATA/server.crt - Server certificate</para>

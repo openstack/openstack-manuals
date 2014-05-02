@@ -8,9 +8,11 @@
       <para>We highly recommend enabling transport-level cryptography for your message queue. Using SSL for the messaging client connections provides protection of the communications from tampering and eavesdropping in-transit to the messaging server. Below is guidance on how SSL is typically configured for the two popular messaging servers Qpid and RabbitMQ. When configuring the trusted certificate authority (CA) bundle that your messaging server uses to verify client connections, it is recommended that this be limited to only the CA used for your nodes, preferably an internally managed CA. The bundle of trusted CAs will determine which client certificates will be authorized and pass the client-server verification step of the setting up the SSL connection. Note, when installing the certificate and key files, ensure that the file permissions are restricted, for example chmod 0600, and the ownership is restricted to the messaging server daemon user to prevent unauthorized access by other processes and users on the messaging server.</para>
       <section xml:id="ch038_transport-security-idp40512">
         <title>RabbitMQ Server SSL Configuration</title>
-        <para>The following lines should be added to the system-wide RabbitMQ configuration file, typically /etc/rabbitmq/rabbitmq.config:</para>
-        <screen>
-[
+        <para>The following lines should be added to the system-wide
+        RabbitMQ configuration file, typically
+        <filename>/etc/rabbitmq/rabbitmq.config</filename>:
+        </para>
+        <programlisting>[
   {rabbit, [
      {tcp_listeners, [] },
      {ssl_listeners, [{"&lt;ip address or hostname of management network interface", 5671}] },
@@ -20,11 +22,17 @@
                     {verify,verify_peer},
                     {fail_if_no_peer_cert,true}]}
    ]}
-].</screen>
-        <para>Note, the 'tcp_listeners' option is set to '[]' to prevent it from listening an on non-SSL port. 'ssl_listeners' option should be restricted to only listen on the management network for the services.</para>
+].</programlisting>
+        <para>Note, the <literal>tcp_listeners</literal> option is set
+        to <literal>[]</literal> to prevent it from listening an on
+        non-SSL port. The <literal>ssl_listeners</literal> option
+        should be restricted to only listen on the management network
+        for the services.</para>
         <para>For more information on RabbitMQ SSL configuration see:</para>
         <itemizedlist><listitem>
-            <para><link xlink:href="http://www.rabbitmq.com/configure.html">RabbitMQ Configuration</link></para>
+            <para>
+              <link xlink:href="http://www.rabbitmq.com/configure.html">RabbitMQ Configuration</link>
+            </para>
           </listitem>
 <listitem>
             <para><link xlink:href="http://www.rabbitmq.com/ssl.html">RabbitMQ SSL</link></para>
@@ -45,16 +53,20 @@
       <para>RabbitMQ and Qpid offer authentication and access control mechanisms for controlling access to queues. ZeroMQ offers no such mechanisms.</para>
       <para>Simple Authentication and Security Layer (SASL) is a framework for authentication and data security in Internet protocols. Both RabbitMQ and Qpid offer SASL and other pluggable authentication mechanisms beyond simple usernames and passwords that allow for increased authentication security. While RabbitMQ supports SASL, support in OpenStack does not currently allow for requesting a specific SASL authentication mechanism. RabbitMQ support in OpenStack allows for either username and password authentication over an unencrypted connection or username and password in conjunction with X.509 client certificates to establish the secure SSL connection.</para>
       <para>We recommend configuring X.509 client certificates on all the OpenStack service nodes for client connections to the messaging queue and where possible (currently only Qpid) perform authentication with X.509 client certificates. When using usernames and passwords, accounts should be created per-service and node for finer grained auditability of access to the queue.</para>
-      <para>The SSL libraries in use by these queuing servers should also be considered prior to deployment. Qpid uses Mozilla's NSS library, whereas RabbitMQ uses Erlang's SSL module which uses OpenSSL.</para>
+      <para>
+        Before deployment, consider the SSL libraries that the queuing
+        servers use. Qpid uses Mozilla's NSS library, whereas RabbitMQ
+        uses Erlang's SSL module which uses OpenSSL.</para>
       <section xml:id="ch038_transport-security-idp52640">
         <title>Authentication Configuration Example - RabbitMQ</title>
-        <para>On the RabbitMQ server, delete the default 'guest' user:</para>
-        <screen>
-rabbitmqctl delete_user quest</screen>
-        <para>On the RabbitMQ server, for each OpenStack service or node that communicates with the message queue set up user accounts and privileges:</para>
-        <screen>
-rabbitmqctl add_user compute01 password
-rabbitmqctl set_permissions compute01 ".*"".*"".*"</screen>
+        <para>On the RabbitMQ server, delete the default
+        <literal>guest</literal> user:</para>
+        <screen><prompt>#</prompt> <userinput>rabbitmqctl delete_user quest</userinput></screen>
+        <para>On the RabbitMQ server, for each OpenStack service or
+        node that communicates with the message queue set up user
+        accounts and privileges:</para>
+        <screen><prompt>#</prompt> <userinput>rabbitmqctl add_user compute01 password</userinput>
+<prompt>#</prompt> <userinput>rabbitmqctl set_permissions compute01 ".*"".*"".*"</userinput></screen>
         <para>For additional configuration information see:</para>
         <itemizedlist><listitem>
             <para><link xlink:href="http://www.rabbitmq.com/access-control.html">RabbitMQ Access Control</link></para>
@@ -72,8 +84,7 @@ rabbitmqctl set_permissions compute01 ".*"".*"".*"</screen>
       </section>
       <section xml:id="ch038_transport-security-idp59648">
         <title>OpenStack Service Configuration - RabbitMQ</title>
-        <screen>
-[DEFAULT]
+        <programlisting language="ini">[DEFAULT]
 rpc_backend=nova.openstack.common.rpc.impl_kombu
 rabbit_use_ssl=True
 rabbit_host=
@@ -82,7 +93,7 @@ rabbit_user=compute01
 rabbit_password=password
 kombu_ssl_keyfile=/etc/ssl/node-key.pem
 kombu_ssl_certfile=/etc/ssl/node-cert.pem
-kombu_ssl_ca_certs=/etc/ssl/cacert.pem</screen>
+kombu_ssl_ca_certs=/etc/ssl/cacert.pem</programlisting>
       </section>
       <section xml:id="ch038_transport-security-idp62112">
         <title>Authentication Configuration Example - Qpid</title>
@@ -97,17 +108,16 @@ kombu_ssl_ca_certs=/etc/ssl/cacert.pem</screen>
       </section>
       <section xml:id="ch038_transport-security-idp65584">
         <title>OpenStack Service Configuration - Qpid</title>
-        <screen>
+        <programlisting language="ini">
 [DEFAULT]
 rpc_backend=nova.openstack.common.rpc.impl_qpid
 qpid_protocol=ssl
 qpid_hostname=&lt;ip or hostname of management network interface of messaging server&gt;
 qpid_port=5671qpid_username=compute01
 
-qpid_password=password</screen>
+qpid_password=password</programlisting>
         <para>Optionally, if using SASL with Qpid specify the SASL mechanisms in use by adding:</para>
-        <screen>
-qpid_sasl_mechanisms=&lt;space separated list of SASL mechanisms to use for auth&gt;</screen>
+        <programlisting language="ini">qpid_sasl_mechanisms=&lt;space separated list of SASL mechanisms to use for auth&gt;</programlisting>
       </section>
     </section>
     <section xml:id="ch038_transport-security-idp68512">

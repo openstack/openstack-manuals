@@ -94,8 +94,7 @@ ciphers = "kEECDH:kEDH:kRSA:HIGH:!RC4:!MD5:!aNULL:!eNULL:!EXP:!LOW:!MEDIUM"
  </variablelist>
       <section xml:id="ch020_ssl-everywhere-idp45712">
         <title>Pound - with AES-NI acceleration</title>
-        <screen>
-## see pound(8) for details
+        <programlisting>## see pound(8) for details
 daemon      1
 ######################################################################
 ## global options:
@@ -143,13 +142,12 @@ ListenHTTPS
             Port    80
         End
     End
-End</screen>
+End</programlisting>
       </section>
       <section xml:id="ch020_ssl-everywhere-idp50320">
         <title>Stud</title>
         <para>This stud example enables SSL v3 for client compatibility. The ciphers line can be tweaked based on your needs, however this is a reasonable starting place.</para>
-        <screen>
-# SSL x509 certificate file.
+        <programlisting># SSL x509 certificate file.
 pem-file = "
 # SSL protocol.
 ssl = on
@@ -181,14 +179,13 @@ syslog-facility = "daemon"
 daemon = off
 # Report client address using SENDPROXY protocol for haproxy
 # Disabling this until we upgrade to HAProxy 1.5
-write-proxy = off</screen>
+write-proxy = off</programlisting>
       </section>
     </section>
     <section xml:id="ch020_ssl-everywhere-idp53424">
       <title>nginx</title>
       <para>This nginx example requires TLS v1.1 or v1.2 for maximum security. The ssl_ciphers line can be tweaked based on your needs, however this is a reasonable starting place.</para>
-      <screen>
-server {
+      <programlisting>server {
     listen : ssl;
     ssl_certificate ;
     ssl_certificate_key ;
@@ -201,11 +198,10 @@ server {
     location / {
 
     }
-}</screen>
+}</programlisting>
       <section xml:id="ch020_ssl-everywhere-idp55264">
         <title>Apache</title>
-        <screen>
-&lt;VirtualHost &lt;ip address&gt;:80&gt;
+        <programlisting>&lt;VirtualHost &lt;ip address&gt;:80&gt;
   ServerName &lt;site FQDN&gt;
   RedirectPermanent / https://&lt;site FQDN&gt;/
 &lt;/VirtualHost&gt;
@@ -228,11 +224,10 @@ server {
     # Or, in Apache http server 2.4 and later:
     # Require all granted
   &lt;/Directory&gt;
-&lt;/VirtualHost&gt;</screen>
+&lt;/VirtualHost&gt;</programlisting>
         <para>Compute API SSL endpoint in Apache2, which needs to be paired with
         a short WSGI script.</para>
-        <screen>
-&lt;VirtualHost &lt;ip address&gt;:8447&gt;
+        <programlisting>&lt;VirtualHost &lt;ip address&gt;:8447&gt;
   ServerName &lt;site FQDN&gt;
   SSLEngine On
   SSLProtocol +SSLv3 +TLSv1 +TLSv1.1 +TLSv1.2,
@@ -250,14 +245,13 @@ server {
     # Or, in Apache http server 2.4 and later:
     # Require all granted
   &lt;/Directory&gt;
-&lt;/VirtualHost&gt;</screen>
+&lt;/VirtualHost&gt;</programlisting>
       </section>
     </section>
     <section xml:id="ch020_ssl-everywhere-idp59152">
       <title>HTTP Strict Transport Security</title>
       <para>We recommend that all production deployments use HSTS. This header prevents browsers from making insecure connections after they have made a single secure one. If you have deployed your HTTP services on a public or an untrusted domain, HSTS is especially important. To enable HSTS, configure your web server to send a header like this with all requests:</para>
-      <screen>
-Strict-Transport-Security: max-age=31536000; includeSubDomains</screen>
+      <screen><computeroutput>Strict-Transport-Security: max-age=31536000; includeSubDomains</computeroutput></screen>
       <para>Start with a short timeout of 1 day during testing, and raise it to one year after testing has shown that you haven't introduced problems for users. Note that once this header is set to a large timeout, it is (by design) very difficult to disable.</para>
     </section>
   </chapter>
