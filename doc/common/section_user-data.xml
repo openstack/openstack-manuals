@@ -90,17 +90,19 @@
                 >Ubuntu community documentation</link> for details
             about how to use <package>cloud-init</package>. Some basic
             examples are provided here.</para>
-        <para><package>cloud-init</package> supports several different
-            input formats for user data. Two commonly used formats are:<itemizedlist>
-                <listitem>
-                    <para>Shell scripts (starts with
-                            <literal>#!</literal>)</para>
-                </listitem>
-                <listitem>
-                    <para>Cloud config files (starts with
-                            <literal>#cloud-config</literal>)</para>
-                </listitem>
-            </itemizedlist></para>
+        <para><package>cloud-init</package> supports several input
+            formats for user data. Two commonly used formats
+            are:</para>
+        <itemizedlist>
+            <listitem>
+                <para>Shell scripts (starts with
+                    <literal>#!</literal>)</para>
+            </listitem>
+            <listitem>
+                <para>Cloud config files (starts with
+                        <literal>#cloud-config</literal>)</para>
+            </listitem>
+        </itemizedlist>
     </simplesect>
     <simplesect>
         <title>Run a shell script on boot</title>
@@ -137,7 +139,7 @@ adduser --disabled-password --gecos "" clouduser</programlisting>
 hostname: mynode
 fqdn: mynode.example.com
 manage_etc_hosts: true</programlisting>
-       </para>
+        </para>
     </simplesect>
     <simplesect>
         <title>Example: Configure instances with Puppet</title>
@@ -146,9 +148,9 @@ manage_etc_hosts: true</programlisting>
                 xlink:href="http://bazaar.launchpad.net/~cloud-init-dev/cloud-init/trunk/view/head:/doc/examples/cloud-config-puppet.txt"
                 >doc/examples/cloud-config-puppet.txt</link>, would
             configure the instance to contact a Puppet server at
-            puppetmaster.example.org and verify its identity using a
-            certificate.
-            <programlisting>#cloud-config
+            puppetmaster.example.org and verify its identity by using
+            a certificate.</para>
+        <programlisting>#cloud-config
 puppet:
  conf:
    agent:
@@ -166,7 +168,7 @@ puppet:
      SIb3DQEBBQUAA4GBAH/rxlUIjwNb3n7TXJcDJ6MMHUlwjr03BDJXKb34Ulndkpaf
      +GAlzPXWa7bO908M9I8RnPfvtKnteLbvgTK+h+zX1XCty+S2EQWk29i2AdoqOTxb
      hppiGMp0tT5Havu4aceCXiy2crVcudj3NFciy8X66SoECemW9UYDCb9T5D0d
-     -----END CERTIFICATE-----</programlisting></para>
+     -----END CERTIFICATE-----</programlisting>
     </simplesect>
     <simplesect>
         <title>Example: Configure instances with Chef</title>
@@ -177,8 +179,8 @@ puppet:
             intended for use in an Ubuntu image, adds the Chef apt
             repository, installs Chef, connects to a Chef server at
                 <literal>https://chefserver.example.com:4000</literal>,
-            and installs
-            Apache:<programlisting>#cloud-config
+            and installs Apache:</para>
+        <programlisting>#cloud-config
 apt_sources:
  - source: "deb http://apt.opscode.com/ $RELEASE-0.10 main"
    key: |
@@ -230,7 +232,6 @@ chef:
     apache:
       prefork:
         maxclients: 100
-      keepalive: "off"</programlisting></para>
-
+      keepalive: "off"</programlisting>
     </simplesect>
 </section>
