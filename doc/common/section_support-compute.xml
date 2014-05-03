@@ -45,7 +45,7 @@
             based on configuration settings. In
                 <filename>nova.conf</filename>, include the
                 <literal>logfile</literal> option to enable logging.
-            Alternatively you can set <literal>use_syslog=1</literal>
+            Alternatively you can set <literal>use_syslog = 1</literal>
             so that the nova daemon logs to syslog.</para>
     </section>
     <section xml:id="section_compute-GuruMed-reports">
@@ -217,9 +217,10 @@
         <title>Injection problems</title>
         <para>If instances do not boot or boot slowly, investigate
             file injection as a cause.</para>
-        <para>To disable injection in libvirt, set
-                <option>libvirt_inject_partition</option> to
-                <literal>-2</literal>.</para>
+        <para>To disable injection in libvirt, set the following in
+            <filename>nova.conf</filename>:</para>
+        <programlisting language="ini">[libvirt]
+inject_partition = -2</programlisting>
         <note>
             <para>If you have not enabled the configuration drive and
                 you want to make user-specified files available from

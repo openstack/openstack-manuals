@@ -22,10 +22,11 @@
                     virtualization for guests.</para>
             </listitem>
         </itemizedlist></para>
-    <para>
-        To enable QEMU, add these settings to
-        <filename>nova.conf</filename>:<programlisting language="ini">compute_driver=libvirt.LibvirtDriver
-libvirt_type=qemu</programlisting></para>
+    <para>To enable QEMU, add these settings to
+        <filename>nova.conf</filename>:<programlisting language="ini">compute_driver = libvirt.LibvirtDriver
+
+[libvirt]
+virt_type = qemu</programlisting></para>
     <para>
     For some operations you may also have to install the <command>guestmount</command> utility:</para>
     <para>On Ubuntu:
@@ -62,7 +63,7 @@ libvirt_type=qemu</programlisting></para>
             with no overcommit.</para>
         <note><para>The second command, <command>setsebool</command>, may take a while.
        </para></note>
-        <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT libvirt_type qemu</userinput>
+        <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf libvirt virt_type qemu</userinput>
 <prompt>#</prompt> <userinput>setsebool -P virt_use_execmem on</userinput>
 <prompt>#</prompt> <userinput>ln -s /usr/libexec/qemu-kvm /usr/bin/qemu-system-x86_64</userinput>
 <prompt>#</prompt> <userinput>service libvirtd restart</userinput></screen>

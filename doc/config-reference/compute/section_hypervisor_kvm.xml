@@ -14,8 +14,10 @@
     </note>
     <para>To enable KVM explicitly, add the following configuration options to the
             <filename>/etc/nova/nova.conf</filename> file:</para>
-    <programlisting language="ini">compute_driver=libvirt.LibvirtDriver
-libvirt_type=kvm</programlisting>
+    <programlisting language="ini">compute_driver = libvirt.LibvirtDriver
+
+[libvirt]
+virt_type = kvm</programlisting>
     <para>The KVM hypervisor supports the following virtual machine image formats:</para>
     <itemizedlist>
         <listitem>
@@ -93,17 +95,18 @@ libvirt_type=kvm</programlisting>
             CPU model names. These models are defined in the
                 <filename>/usr/share/libvirt/cpu_map.xml</filename> file. Check this file to
             determine which models are supported by your local installation.</para>
-        <para>Two Compute configuration options define which type of CPU model is exposed to the
-            hypervisor when using KVM: <literal>libvirt_cpu_mode</literal> and
-                <literal>libvirt_cpu_model</literal>.</para>
-        <para>The <literal>libvirt_cpu_mode</literal> option can take one of the following values:
+        <para>Two Compute configuration options in the <literal>[libvirt]</literal> group of
+                <filename>nova.conf</filename> define which type of CPU model is exposed to the
+            hypervisor when using KVM: <literal>cpu_mode</literal> and
+            <literal>cpu_model</literal>.</para>
+        <para>The <literal>cpu_mode</literal> option can take one of the following values:
                 <literal>none</literal>, <literal>host-passthrough</literal>,
                 <literal>host-model</literal>, and <literal>custom</literal>.</para>
         <simplesect>
             <title>Host model (default for KVM &amp; QEMU)</title>
             <para>If your <filename>nova.conf</filename> file contains
-                    <literal>libvirt_cpu_mode=host-model</literal>, libvirt identifies the CPU model
-                in <filename>/usr/share/libvirt/cpu_map.xml</filename> file that most closely
+                    <literal>cpu_mode=host-model</literal>, libvirt identifies the CPU model in
+                    <filename>/usr/share/libvirt/cpu_map.xml</filename> file that most closely
                 matches the host, and requests additional CPU flags to complete the match. This
                 configuration provides the maximum functionality and performance and maintains good
                 reliability and compatibility if the guest is migrated to another host with slightly
@@ -112,29 +115,30 @@ libvirt_type=kvm</programlisting>
         <simplesect>
             <title>Host pass through</title>
             <para>If your <filename>nova.conf</filename> file contains
-                    <literal>libvirt_cpu_mode=host-passthrough</literal>, libvirt tells KVM to pass
-                through the host CPU with no modifications. The difference to host-model, instead of
-                just matching feature flags, every last detail of the host CPU is matched. This
-                gives absolutely best performance, and can be important to some apps which check low
-                level CPU details, but it comes at a cost with respect to migration: the guest can
-                only be migrated to an exactly matching host CPU.</para>
+                    <literal>cpu_mode=host-passthrough</literal>, libvirt tells KVM to pass through
+                the host CPU with no modifications. The difference to host-model, instead of just
+                matching feature flags, every last detail of the host CPU is matched. This gives
+                absolutely best performance, and can be important to some apps which check low level
+                CPU details, but it comes at a cost with respect to migration: the guest can only be
+                migrated to an exactly matching host CPU.</para>
         </simplesect>
         <simplesect>
             <title>Custom</title>
             <para>If your <filename>nova.conf</filename> file contains
-                    <literal>libvirt_cpu_mode=custom</literal>, you can explicitly specify one of
-                the supported named model using the libvirt_cpu_model configuration option. For
-                example, to configure the KVM guests to expose Nehalem CPUs, your
-                    <filename>nova.conf</filename> file should contain:</para>
-            <programlisting language="ini">libvirt_cpu_mode=custom
-libvirt_cpu_model=Nehalem</programlisting>
+                    <literal>cpu_mode=custom</literal>, you can explicitly specify one of the
+                supported named model using the cpu_model configuration option. For example, to
+                configure the KVM guests to expose Nehalem CPUs, your <filename>nova.conf</filename>
+                file should contain:</para>
+            <programlisting language="ini">[libvirt]
+cpu_mode = custom
+cpu_model = Nehalem</programlisting>
         </simplesect>
         <simplesect>
             <title>None (default for all libvirt-driven hypervisors other than KVM &amp;
                 QEMU)</title>
             <para>If your <filename>nova.conf</filename> file contains
-                    <literal>libvirt_cpu_mode=none</literal>, libvirt does not specify a CPU model.
-                Instead, the hypervisor chooses the default model.</para>
+                    <literal>cpu_mode=none</literal>, libvirt does not specify a CPU model. Instead,
+                the hypervisor chooses the default model.</para>
         </simplesect>
     </section>
     <section xml:id="kvm-guest-agent-support">
