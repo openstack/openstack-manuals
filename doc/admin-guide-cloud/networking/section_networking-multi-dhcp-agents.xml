@@ -42,8 +42,8 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>OpenStack Controller host - controlnode</td>
-                    <td><para>Runs the Neutron, Keystone, and Nova
+                    <td>OpenStack controller host - controlnode</td>
+                    <td><para>Runs the Networking, Identity, and Compute
                             services that are required to deploy VMs.
                             The node must have at least one network
                             interface that is connected to the
@@ -56,8 +56,9 @@
                 </tr>
                 <tr>
                     <td>HostA</td>
-                    <td>Runs Nova compute, the Neutron L2 agent and
-                        DHCP agent</td>
+                    <td>Runs <systemitem
+                      class="service">nova-compute</systemitem>, the
+                      Neutron L2 agent and DHCP agent</td>
                 </tr>
                 <tr>
                     <td>HostB</td>
@@ -69,7 +70,7 @@
     <section xml:id="multi_agent_demo_configuration">
         <title>Configuration</title>
         <procedure>
-            <title>controlnode: Neutron Server</title>
+            <title>controlnode: neutron server</title>
                 <step>
                         <para>Neutron configuration file
                                 <filename>/etc/neutron/neutron.conf</filename>:</para>
@@ -94,7 +95,7 @@ physical_interface_mappings = physnet1:eth0</programlisting>
                     </step>
                 </procedure>
             <procedure>
-                <title>HostA and HostB: L2 Agent</title>
+                <title>HostA and Hostb: L2 agent</title>
                 <step>
                         <para>Neutron configuration file
                                 <filename>/etc/neutron/neutron.conf</filename>:</para>
@@ -132,7 +133,7 @@ firewall_driver=nova.virt.firewall.NoopFirewallDriver</programlisting>
                     </step>
             </procedure>
             <procedure>
-                <title>HostA and HostB: DHCP Agent</title>
+                <title>HostA and HostB: DHCP agent</title>
                 <step>
                         <para>Update the DHCP configuration file
                                 <filename>/etc/neutron/dhcp_agent.ini</filename>:</para>
@@ -149,7 +150,7 @@ interface_driver = neutron.agent.linux.interface.BridgeInterfaceDriver</programl
         <note>
             <para>Ensure that the following environment variables are
                 set. These are used by the various clients to access
-                Keystone.</para>
+                the Identity Service.</para>
             <programlisting language="bash">export OS_USERNAME=admin
 export OS_PASSWORD=adminpassword
 export OS_TENANT_NAME=admin
