@@ -70,7 +70,6 @@ dpkg-statoverride --update --add root root 0644 /boot/vmlinuz-${version}</progra
         <filename>/etc/nova/nova.conf</filename> configuration file:
       </para>
       <screen os="fedora;rhel;centos;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf database connection mysql://nova:<replaceable>NOVA_DBPASS</replaceable>@controller/nova</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT auth_strategy keystone</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf keystone_authtoken auth_uri http://<replaceable>controller</replaceable>:5000</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf keystone_authtoken auth_host <replaceable>controller</replaceable></userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf keystone_authtoken auth_protocol http</userinput>
@@ -82,9 +81,6 @@ dpkg-statoverride --update --add root root 0644 /boot/vmlinuz-${version}</progra
           <filename>/etc/nova/nova.conf</filename> configuration file and add these
         lines to the appropriate sections:</para>
       <programlisting os="ubuntu;debian" language="ini">[DEFAULT]
-...
-auth_strategy = keystone
-...
 [database]
 # The SQLAlchemy connection string used to connect to the database
 connection = mysql://nova:NOVA_DBPASS@controller/nova
