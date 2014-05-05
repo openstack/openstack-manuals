@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://docbook.org/ns/docbook" xmlns:db="http://docbook.org/ns/docbook" version="5.0" xml:id="ch018_case-studies-pkissl"><?dbhtml stop-chunking?>
-    <title>Case Studies: PKI and Certificate Management</title>
+<chapter xmlns:xi="http://www.w3.org/2001/XInclude"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns="http://docbook.org/ns/docbook"
+         version="5.0"
+         xml:id="ch018_case-studies-pkissl">
+  <?dbhtml stop-chunking?>
+    <title>Case studies: PKI and certificate management</title>
     <para>In this case study we discuss how Alice and Bob would address deployment of PKI certification authorities (CA) and certificate management.</para>
     <section xml:id="ch018_case-studies-pkissl-idp44432">
-      <title>Alice's Private Cloud</title>
+      <title>Alice's private cloud</title>
       <para>Alice as a cloud architect within a government agency knows that her agency operates its own certification authority. Alice contacts the PKI office in her agency that manages her PKI and certificate issuance. Alice obtains certificates issued by this CA and configures the services within both the public and management security domains to use these certificates. Since Alice's OpenStack deployment exists entirely on a disconnected from the Internet network, she makes sure to remove all default CA bundles that contain external public CA providers to ensure the OpenStack services only accept client certificates issued by her agency's CA.</para>
     </section>
     <section xml:id="ch018_case-studies-pkissl-idp46480">
-      <title>Bob's Public Cloud</title>
+      <title>Bob's public cloud</title>
       <para>Bob is architecting a public cloud and needs to ensure that the publicly facing OpenStack services are using certificates issued by a major public CA. Bob acquires certificates for his public OpenStack services and configures the services to use PKI and SSL and includes the public CAs in his trust bundle for the services. Additionally, Bob also wants to further isolate the internal communications amongst the services within the management security domain. Bob contacts the team within his organization that is responsible for managing his organizations PKI and issuance of certificates using their own internal CA. Bob obtains certificates issued by this internal CA and configures the services that communicate within the management security domain to use these certificates and configures the services to only accept client certificates issued by his internal CA.</para>
     </section>
   </chapter>

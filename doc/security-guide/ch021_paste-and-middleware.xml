@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://docbook.org/ns/docbook" xmlns:db="http://docbook.org/ns/docbook" version="5.0" xml:id="ch021_paste-and-middleware"><?dbhtml stop-chunking?>
-    <title>API Endpoint Configuration Recommendations</title>
+<chapter xmlns:xi="http://www.w3.org/2001/XInclude"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns="http://docbook.org/ns/docbook"
+         version="5.0"
+         xml:id="ch021_paste-and-middleware">
+  <?dbhtml stop-chunking?>
+    <title>API endpoint configuration recommendations</title>
     <para>This chapter provides recommendations for improving the security of both public and internal endpoints.</para>
     <section xml:id="ch021_paste-and-middleware-idp38176">
-      <title>Internal API Communications</title>
+      <title>Internal API communications</title>
       <para>OpenStack provides both public facing and private API endpoints. By default, OpenStack components use the publicly defined endpoints. The recommendation is to configure these components to use the API endpoint within the proper security domain.</para>
       <para>Services select their respective API endpoints based on the OpenStack service catalog. The issue here is these services may not obey the listed public or internal API end point values. This can lead to internal management traffic being routed to external API endpoints.</para>
       <section xml:id="ch021_paste-and-middleware-idp40496">
-        <title>Configure Internal URLs in Identity Service Catalog</title>
+        <title>Configure internal URLs in Identity service catalog</title>
         <para>The Identity Service catalog should be aware of your internal URLs. While this feature is not utilized by default, it may be leveraged through configuration. Additionally, it should be forward-compatible with expectant changes once this behavior becomes the default.</para>
         <para>To register an internal URL for an endpoint:</para>
         <screen><prompt>$</prompt> <userinput>keystone endpoint-create \
@@ -18,11 +23,11 @@
  --adminurl='https://management-ip:8776/v1/%(tenant_id)s'</userinput></screen>
       </section>
       <section xml:id="ch021_paste-and-middleware-idp43360">
-        <title>Configure Applications for Internal URLs</title>
+        <title>Configure applications for internal URLs</title>
         <para>Some services can be forced to use specific API endpoints. Therefore, it is recommended that each OpenStack service communicating to the API of another service must be explicitly configured to access the proper internal API endpoint.</para>
         <para>Each project may present an inconsistent way of defining target API endpoints. Future releases of OpenStack seek to resolve these inconsistencies through consistent use of the Identity Service catalog.</para>
         <section xml:id="ch021_paste-and-middleware-idp45520">
-          <title>Configuration Example #1: Nova</title>
+          <title>Configuration example #1: nova</title>
           <programlisting language="ini">[DEFAULT]
 cinder_catalog_info='volume:cinder:internalURL'
 glance_protocol='https'
@@ -32,33 +37,33 @@ s3_host='s3-host'
 s3_use_ssl=True</programlisting>
         </section>
         <section xml:id="ch021_paste-and-middleware-idp47184">
-          <title>Configuration Example #2: Cinder</title>
+          <title>Configuration example #2: cinder</title>
           <programlisting language="ini">glance_host='https://glance-server'</programlisting>
         </section>
       </section>
     </section>
     <section xml:id="ch021_paste-and-middleware-idp48768">
-      <title>Paste and Middleware</title>
+      <title>Paste and middleware</title>
       <para>Most API endpoints and other HTTP services in OpenStack utilize the Python Paste Deploy library. This is important to understand from a security perspective as it allows for manipulation of the request filter pipeline through the application's configuration. Each element in this chain is referred to as <emphasis>middleware</emphasis>. Changing the order of filters in the pipeline or adding additional middleware may have unpredictable security impact.</para>
       <para>It is not uncommon that implementors will choose to add additional middleware to extend OpenStack's base functionality. We recommend implementors make careful consideration of the potential exposure introduced by the addition of non-standard software components to their HTTP request pipeline.</para>
       <para>Additional information on Paste Deploy may be found at
       <link xlink:href="http://pythonpaste.org/deploy/">http://pythonpaste.org/deploy/</link>.</para>
     </section>
     <section xml:id="ch021_paste-and-middleware-idp52496">
-      <title>API Endpoint Process Isolation &amp; Policy</title>
+      <title>API endpoint process isolation and policy</title>
       <para>API endpoint processes, especially those that reside within the public security domain should be isolated as much as possible. Where deployments allow, API endpoints should be deployed on separate hosts for increased isolation.</para>
       <section xml:id="ch021_paste-and-middleware-idp53840">
         <title>Namespaces</title>
         <para>Many operating systems now provide compartmentalization support. Linux supports namespaces to assign processes into independent domains. System compartmentalization is covered in more detail in other parts of the guide.</para>
       </section>
       <section xml:id="ch021_paste-and-middleware-idp55232">
-        <title>Network Policy</title>
+        <title>Network policy</title>
         <para>API endpoints typically bridge multiple security domains, as such particular attention should be paid to the compartmentalization of the API processes. See the <emphasis>Security Domain Bridging</emphasis> section for additional information in this area.</para>
         <para>With careful modeling, network ACLs and IDS technologies can be use to enforce explicit point to point communication between network services. As critical cross domain service, this type of explicit enforcement works well for OpenStack's message queue service.</para>
         <para>Policy enforcement can be implemented through the configuration of services, host-based firewalls (such as IPTables), local policy (SELinux or AppArmor), and optionally enforced through global network policy.</para>
       </section>
       <section xml:id="ch021_paste-and-middleware-idp58704">
-        <title>Mandatory Access Controls</title>
+        <title>Mandatory access controls</title>
         <para>API endpoint processes should be isolated from each other and other processes on a machine. The configuration for those processes should be restricted to those processes not only by Discretionary Access Controls, but through Mandatory Access Controls. The goal of these enhanced access control is to aid in the containment and escalation of API endpoint security breaches. With mandatory access controls, such breaches will severely limit access to resources and provide earlier alerting on such events.</para>
       </section>
     </section>

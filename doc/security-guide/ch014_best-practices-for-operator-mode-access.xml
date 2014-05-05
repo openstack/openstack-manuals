@@ -5,33 +5,39 @@
          version="5.0"
          xml:id="ch014_best-practices-for-operator-mode-access">
   <?dbhtml stop-chunking?>
-    <title>Management Interfaces</title>
+    <title>Management interfaces</title>
     <para>It is necessary for administrators to perform command and
     control over the cloud for various operational functions. It is
     important these command and control facilities are understood and
     secured.</para>
     <para>OpenStack provides several management interfaces for operators and tenants:</para>
     <itemizedlist><listitem>
-        <para>OpenStack dashboard (Horizon)</para>
+        <para>OpenStack dashboard (horizon)</para>
       </listitem>
-<listitem>
+      <listitem>
         <para>OpenStack API</para>
       </listitem>
-<listitem>
-        <para>Secure Shell (SSH)</para>
+      <listitem>
+        <para>Secure shell (SSH)</para>
       </listitem>
-<listitem>
-        <para>OpenStack Management Utilities (for example,
+      <listitem>
+        <para>OpenStack management utilities (for example,
         <systemitem class="service">nova-manage</systemitem>,
         <systemitem class="service">glance-manage</systemitem>)</para>
       </listitem>
-<listitem>
-        <para>Out-of-Band Management Interfaces (IPMI, etc.)</para>
+      <listitem>
+        <para>Out-of-band management interfaces, such as IPMI</para>
       </listitem>
-</itemizedlist>
+    </itemizedlist>
     <section xml:id="ch014_best-practices-for-operator-mode-access-idp49280">
       <title>Dashboard</title>
-      <para>The OpenStack dashboard (Horizon) provides administrators and tenants a web-based graphical interface to provision and access cloud-based resources. The dashboard communicates with the back-end services via calls to the OpenStack API (discussed above).</para>
+      <para>
+        The OpenStack dashboard (horizon) provides administrators and
+        tenants with a web-based graphical interface to provision and
+        access cloud-based resources. The dashboard communicates with
+        the back-end services via calls to the OpenStack API
+        (discussed above).
+      </para>
       <section xml:id="ch014_best-practices-for-operator-mode-access-idp50608">
         <title>Capabilities</title>
         <itemizedlist><listitem>
@@ -52,7 +58,7 @@
 </itemizedlist>
       </section>
       <section xml:id="ch014_best-practices-for-operator-mode-access-idp56400">
-        <title>Security Considerations</title>
+        <title>Security considerations</title>
         <itemizedlist><listitem>
             <para>The dashboard requires cookies and JavaScript to be enabled in the web browser.</para>
           </listitem>
@@ -60,15 +66,26 @@
             <para>The web server that hosts dashboard should be configured for SSL to ensure data is encrypted.</para>
           </listitem>
 <listitem>
-            <para>Both the Horizon web service and the OpenStack API it uses to communicate with the back-end are susceptible to web attack vectors such as denial of service and must be monitored.</para>
+            <para>Both the horizon web service and the OpenStack API it uses to communicate with the back-end are susceptible to web attack vectors such as denial of service and must be monitored.</para>
           </listitem>
-<listitem>
-            <para>It is now possible (though there are numerous deployment/security implications) to upload an image file directly from a user’s hard disk to OpenStack Image Service through the dashboard. For multi-GB images it is still strongly recommended that the upload be done using the Glance CLI</para>
+          <listitem>
+            <para>
+              It is now possible (though there are numerous
+              deployment/security implications) to upload an image
+              file directly from a user’s hard disk to OpenStack Image
+              Service through the dashboard. For multi-gigabyte images it is
+              still strongly recommended that the upload be done using
+              the <command>glance</command> CLI.
+            </para>
           </listitem>
-<listitem>
-            <para>Create and manage security groups through dashboard. The security groups allows L3-L4 packet filtering for security policies to protect virtual machines</para>
+          <listitem>
+            <para>
+              Create and manage security groups through dashboard. The
+              security groups allows L3-L4 packet filtering for
+              security policies to protect virtual machines.
+            </para>
           </listitem>
-</itemizedlist>
+        </itemizedlist>
       </section>
       <section xml:id="ch014_best-practices-for-operator-mode-access-idp62384">
         <title>References</title>
@@ -98,7 +115,7 @@
 </itemizedlist>
       </section>
       <section xml:id="ch014_best-practices-for-operator-mode-access-idp68272">
-        <title>Security Considerations</title>
+        <title>Security considerations</title>
         <itemizedlist><listitem>
             <para>The API service should be configured for SSL to ensure data is encrypted.</para>
           </listitem>
@@ -109,10 +126,10 @@
       </section>
     </section>
     <section xml:id="ch014_best-practices-for-operator-mode-access-idp71184">
-      <title>Secure Shell (SSH)</title>
+      <title>Secure shell (SSH)</title>
       <para>It has become industry practice to use secure shell (SSH) access for the management of Linux and Unix systems. SSH uses secure cryptographic primitives for communication. With the scope and importance of SSH in typical OpenStack deployments, it is important to understand best practices for deploying SSH.</para>
       <section xml:id="ch014_best-practices-for-operator-mode-access-idp72528">
-        <title>Host Key Fingerprints</title>
+        <title>Host key fingerprints</title>
         <para>Often overlooked is the need for key management for SSH hosts. As most or all hosts in an OpenStack deployment will provide an SSH service, it is important to have confidence in connections to these hosts. It cannot be understated that failing to provide a reasonably secure and accessible method to verify SSH host key fingerprints is ripe for abuse and exploitation.</para>
         <para>All SSH daemons have private host keys and, upon connection, offer a host key fingerprint. This host key fingerprint is the hash of an unsigned public key. It is important these host key fingerprints are known in advance of making SSH connections to those hosts. Verification of host key fingerprints is instrumental in detecting man-in-the-middle attacks.</para>
         <para>Typically, when an SSH daemon is installed, host keys will be generated. It is necessary that the hosts have sufficient entropy during host key generation. Insufficient entropy during host key generation can result in the possibility to eavesdrop on SSH sessions.</para>
@@ -120,7 +137,7 @@
       </section>
     </section>
     <section xml:id="ch014_best-practices-for-operator-mode-access-idp76272">
-      <title>Management Utilities</title>
+      <title>Management utilities</title>
       <para>The OpenStack Management Utilities are open-source Python
       command-line clients that make API calls. There is a client for
       each OpenStack service (for example, <systemitem
@@ -131,7 +148,7 @@
       dedicated management utilities are slowly being
       deprecated.</para>
       <section xml:id="ch014_best-practices-for-operator-mode-access-idp77728">
-        <title>Security Considerations</title>
+        <title>Security considerations</title>
         <itemizedlist><listitem>
             <para>The dedicated management utilities (*-manage) in some cases use the direct database connection.</para>
           </listitem>
@@ -147,7 +164,7 @@
       </section>
     </section>
     <section xml:id="ch014_best-practices-for-operator-mode-access-idp82336">
-      <title>Out-of-Band Management Interface</title>
+      <title>Out-of-band management interface</title>
       <para>OpenStack management relies on out-of-band management
       interfaces such as the IPMI protocol to access into nodes
       running OpenStack components. IPMI is a very popular
@@ -155,7 +172,7 @@
       whether the operating system is running or the system has
       crashed.</para>
       <section xml:id="ch014_best-practices-for-operator-mode-access-idp83712">
-        <title>Security Considerations</title>
+        <title>Security considerations</title>
         <itemizedlist><listitem>
             <para>Use strong passwords and safeguard them, or use client-side SSL authentication.</para>
           </listitem>

@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://docbook.org/ns/docbook" xmlns:db="http://docbook.org/ns/docbook" version="5.0" xml:id="ch047_data-encryption"><?dbhtml stop-chunking?>
-    <title>Data Encryption</title>
+<chapter xmlns:xi="http://www.w3.org/2001/XInclude"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns="http://docbook.org/ns/docbook"
+         version="5.0"
+         xml:id="ch047_data-encryption">
+  <?dbhtml stop-chunking?>
+    <title>Data encryption</title>
     <para>The option exists for implementors to encrypt tenant data wherever it is stored on disk or transported over a network. This is above and beyond the general recommendation that users encrypt their own data before sending it to their provider.</para>
     <para>The importance of encrypting data on behalf of tenants is largely related to the risk assumed by a provider that an attacker could access tenant data. There may be requirements here in government, as well as requirements per-policy, in private contract, or even in case law in regard to private contracts for public cloud providers. It is recommended that a risk assessment and legal consul advised before choosing tenant encryption policies.</para>
     <para>Per-instance or per-object encryption is preferable over, in descending order, over per-project, per-tenant, per-host, and per-cloud aggregations. This recommendation is inverse to the complexity and difficulty of implementation. Presently, in some projects it is difficult or impossible to implement encryption as loosely granular as even per-tenant. We recommend implementors make a best-effort in encrypting tenant data.</para>
@@ -10,26 +15,26 @@
         <para>Object Storage objects</para>
       </listitem>
 <listitem>
-        <para>Block Storage volumes &amp; Instance Ephemeral Filesystems</para>
+        <para>Block Storage volumes and instance ephemeral filesystems</para>
       </listitem>
 <listitem>
         <para>Network data</para>
       </listitem>
 </itemizedlist>
     <section xml:id="ch047_data-encryption-idp50112">
-      <title>Object Storage Objects</title>
+      <title>Object Storage objects</title>
       <para>The ability to encrypt objects in Object Storage is presently limited to disk-level encryption per node. However, there does exist third-party extensions and modules for per-object encryption. These modules have been proposed upstream, but have not per this writing been formally accepted. Below are some pointers:</para>
       <para><link xmlns:xl="http://www.w3.org/1999/xlink" xl:href="https://github.com/Mirantis/swift-encrypt">https://github.com/Mirantis/swift-encrypt</link></para>
       <para><link xmlns:xl="http://www.w3.org/1999/xlink" xl:href="http://www.mirantis.com/blog/on-disk-encryption-prototype-for-openstack-swift/">http://www.mirantis.com/blog/on-disk-encryption-prototype-for-openstack-swift/</link></para>
     </section>
     <section xml:id="ch047_data-encryption-idp53616">
-      <title>Block Storage Volumes &amp; Instance Ephemeral Filesystems</title>
+      <title>Block Storage volumes and instance ephemeral filesystems</title>
       <para>The ability to encrypt volumes depends on the service backends chosen. Some backends may not support this at all.</para>
       <para>As both block storage and compute support LVM backed storage, we can easily provide an example applicable to both systems. In deployments using LVM, encryption may be performed against the backing physical volumes. An encrypted block device would be created using the standard Linux tools, with the LVM physical volume (PV) created on top of the decrypted block device using pvcreate. Then, the vgcreate or vgmodify tool may be used to add the encrypted physical volume to an LVM volume group (VG).</para>
       <para>A feature aimed for the Havana release provides encryption of the VM's data before it is written to disk. This allows the privacy of data to be maintained while residing on the storage device. The idea is similar to how self-encrypting drives work. This feature presents a normal block storage device to the VM but encrypts the bytes in the virtualization host before writing them to the disk. The block server operates exactly as it does when reading and writing unencrypted blocks, except special handling will be required for Block Storage features such as snapshots and live migration. Note that this feature uses an independent key manager.</para>
     </section>
     <section xml:id="ch047_data-encryption-idp57488">
-      <title>Network Data</title>
+      <title>Network data</title>
       <para>Tenant data for compute could be encrypted over IPSec or
       other tunnels. This is not functionality common or standard in
       OpenStack, but is an option available to motivated and

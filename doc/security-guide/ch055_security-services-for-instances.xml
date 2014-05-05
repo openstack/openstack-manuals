@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://docbook.org/ns/docbook" xmlns:db="http://docbook.org/ns/docbook" version="5.0" xml:id="ch055_security-services-for-instances"><?dbhtml stop-chunking?>
-    <title>Security Services for Instances</title>
+<chapter xmlns:xi="http://www.w3.org/2001/XInclude"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns="http://docbook.org/ns/docbook"
+         version="5.0"
+         xml:id="ch055_security-services-for-instances">
+  <?dbhtml stop-chunking?>
+    <title>Security services for instances</title>
     <para>One of the virtues of running instances in a virtualized environment is that it opens up new opportunities for security controls that are not typically available when deploying onto bare metal. There are several technologies that can be applied to the virtualization stack that bring improved information assurance for cloud tenants.</para>
     <para>Deployers or users of OpenStack with strong security requirements may want to consider deploying these technologies. Not all are applicable in every situation, indeed in some cases technologies may be ruled out for use in a cloud because of prescriptive business requirements. Similarly some technologies inspect instance data such as run state which may be undesirable to the users of the system.</para>
     <para>In this chapter we explore these technologies and describe the situations where they can be used to enhance security for instances or underlying instances. We also seek to highlight where privacy concerns may exist. These include data pass through, introspection, or providing a source of entropy. In this section we highlight the following additional security services:</para>
@@ -18,14 +23,14 @@
       </listitem>
 </itemizedlist>
     <section xml:id="ch055_security-services-for-instances-idp122544">
-      <title>Entropy To Instances</title>
+      <title>Entropy to instances</title>
       <para>We consider entropy to refer to the quality and source of random data that is available to an instance. Cryptographic technologies typically rely heavily on randomness, requiring a high quality pool of entropy to draw from. It is typically hard for a virtual machine to get enough entropy to support these operations. Entropy starvation can manifest in instances as something seemingly unrelated for example, slow boot times because the instance is waiting for ssh key generation. Entropy starvation may also motivate users to employ poor quality entropy sources from within the instance, making applications running in the cloud less secure overall.</para>
       <para>Fortunately, a cloud architect may address these issues by providing a high quality source of entropy to the cloud instances. This can be done by having enough hardware random number generators (HRNG) in the cloud to support the instances. In this case, "enough" is somewhat domain specific. For everyday operations, a modern HRNG is likely to produce enough entropy to support 50-100 compute nodes. High bandwidth HRNGs, such as the RdRand instruction available with Intel Ivy Bridge and newer processors could potentially handle more nodes. For a given cloud, an architect needs to understand the application requirements to ensure that sufficient entropy is available.</para>
       <para>Once the entropy is available in the cloud, the next step is getting that entropy into the instances. Tools such as the entropy gathering daemon (<link xlink:href="http://egd.sourceforge.net/">EGD</link>) provide a way to fairly and securely distribute entropy through a distributed system. Support exists for using the EGD as an entropy source for LibVirt.</para>
       <para>Compute support for these features is not generally available, but it would only require a moderate amount of work for implementors to integrate this functionality.</para>
     </section>
     <section xml:id="ch055_security-services-for-instances-idp128240">
-      <title>Scheduling Instances to Nodes</title>
+      <title>Scheduling instances to nodes</title>
       <para>Before an instance is created, a host for the image instantiation must be selected. This selection is performed by the <systemitem class="service">nova-scheduler</systemitem> which determines how to dispatch compute and volume requests.</para>
       <para>The filter scheduler is the default scheduler for OpenStack Compute,
       although other schedulers exist (see the section <link
@@ -52,7 +57,7 @@
       <para><emphasis role="bold">Tenant Driven Whole Host Reservation</emphasis></para>
       <para>There currently exists a <link xlink:href="https://blueprints.launchpad.net/nova/+spec/whole-host-allocation">blueprint for whole host reservation</link> -  This would allow a tenant to exclusively reserve hosts for only it's instances, incurring extra costs.</para>
       <section xml:id="ch055_security-services-for-instances-idp140080">
-        <title>Host Aggregates</title>
+        <title>Host aggregates</title>
         <para>While not a filter in themselves, host aggregates allow
         administrators to assign key-value pairs to groups of
         machines. This allows cloud administrators, not users, to
@@ -76,17 +81,26 @@
         <para>The GroupAntiAffinityFilter ensures that each instance in a group is on a different host. To take advantage of this filter, the requester must pass a scheduler hint, using <literal>group</literal> as the key and a list of instance uuids as the value.</para>
       </section>
       <section xml:id="ch055_security-services-for-instances-idp148000">
-        <title>Trusted Compute Pools</title>
+        <title>Trusted compute pools</title>
         <para>There exists a scheduler filter which integrates with the <link xlink:href="https://github.com/OpenAttestation/OpenAttestation">Open Attestation Project</link> (OATS) to define scheduler behavior according to the attestation of PCRs received from a system using Intel TXT.</para>
         <para>It is unclear if this feature is compatible with AMD's similar SEM, although the OpenAttestation agent relies on the vendor-agnostic <link xlink:href="http://trousers.sourceforge.net/">TrouSerS library</link>.</para>
       </section>
     </section>
     <section xml:id="ch055_security-services-for-instances-idp150416">
-      <title>Trusted Images</title>
+      <title>Trusted images</title>
       <para>With regards to images, users will be working with pre-installed images or images that they upload themselves. In both cases, users will want to ensure that the image they are ultimately running has not been tampered with. This requires some source of truth such as a checksum for the known good version of an image as well as verification of the running image. This section describes the current best practices around image handling, while also calling out some of the existing gaps in this space.</para>
       <section xml:id="ch055_security-services-for-instances-idp151952">
-        <title>Image Creation Process</title>
-        <para>The OpenStack Documentation provides guidance on how to create and upload an image to Glance. Additionally it is assumed that you have a process by which you install and harden operating systems. Thus, the following items will provide additional guidance on how to ensure your images are built securely prior to upload. There are a variety of options for obtaining images. Each has specific steps that help validate the image's provenance.</para>
+        <title>Image creation process</title>
+        <para>
+          The OpenStack Documentation provides guidance on how to
+          create and upload an image to the Image
+          Service. Additionally it is assumed that you have a process
+          by which you install and harden operating systems. Thus, the
+          following items will provide additional guidance on how to
+          ensure your images are built securely prior to upload. There
+          are a variety of options for obtaining images. Each has
+          specific steps that help validate the image's provenance.
+        </para>
         <para>The first option is to obtain boot media from a trusted source.</para>
         <screen><prompt>$</prompt> <userinput>mkdir -p /tmp/download_directorycd /tmp/download_directory</userinput>
 <prompt>$</prompt> <userinput>wget http://mirror.anl.gov/pub/ubuntu-iso/CDs/precise/ubuntu-12.04.2-server-amd64.iso</userinput>
@@ -136,14 +150,14 @@
         <para>If subscribing to a public cloud service, you should check with the cloud provider for an outline of the process used to produce their default images. If the provider allows you to upload your own images, you will want to ensure that you are able to verify that your image was not modified before you spin it up. To do this, refer to the following section on Image Provenance.</para>
       </section>
       <section xml:id="ch055_security-services-for-instances-idp166272">
-        <title>Image Provenance and Validation</title>
+        <title>Image provenance and validation</title>
         <para>Unfortunately, it is not currently possible to force Compute to validate an image hash immediately prior to starting an instance. To understand the situation, we begin with a brief overview of how images are handled around the time of image launch.</para>
         <para>Images come from the glance service to the nova service on a node. This transfer should be protected by running over SSL. Once the image is on the node, it is verified with a basic checksum and then it's disk is expanded based on the size of the instance being launched. If, at a later time, the same image is launched with the same instance size on this node, it will be launched from the same expanded image. Since this expanded image is not re-verified before launching, it could be tampered with and the user would not have any way of knowing, beyond a manual inspection of the files in the resulting image.</para>
         <para>We hope that future versions of Compute and/or the Image Service will offer support for validating the image hash before each instance launch. An alternative option that would be even more powerful would be allow users to sign an image and then have the signature validated when the instance is launched.</para>
       </section>
     </section>
     <section xml:id="ch055_security-services-for-instances-idp170576">
-      <title>Instance Migrations</title>
+      <title>Instance migrations</title>
       <para>
       OpenStack and the underlying virtualization layers provide for
       the live migration of images between OpenStack nodes allowing
@@ -162,7 +176,7 @@
           <listitem><para>Start the guest</para> </listitem>
       </orderedlist>
       <section xml:id="ch055_security-services-for-instances-idp177552">
-        <title>Live Migration Risks</title>
+        <title>Live migration risks</title>
         <para>At various stages of the live migration process the contents of an instances run time memory and disk are transmitted over the network in plain text. Thus there are several risks that need to be addressed when using live migration. The following in-exhaustive list details some of these risks:</para>
         <itemizedlist><listitem>
             <para><emphasis>Denial of Service (DoS)</emphasis> : If something fails during the migration process, the instance could be lost.</para>
@@ -179,7 +193,7 @@
 </itemizedlist>
       </section>
       <section xml:id="ch055_security-services-for-instances-idp183744">
-        <title>Live Migration Mitigations</title>
+        <title>Live migration mitigations</title>
         <para>There are several methods to mitigate some of the risk associated with live migrations, the following list details some of these:</para>
         <itemizedlist><listitem>
             <para>Disable Live Migration</para>
@@ -192,17 +206,17 @@
           </listitem>
 </itemizedlist>
         <section xml:id="ch055_security-services-for-instances-idp187568">
-          <title>Disable Live Migration</title>
+          <title>Disable live migration</title>
           <para>At this time, live migration is enabled in OpenStack by default. Live migrations can be disabled by adding the following lines to the nova policy.json file:</para>
           <programlisting>"compute_extension:admin_actions:migrate": "!",
 "compute_extension:admin_actions:migrateLive": "!",</programlisting>
         </section>
         <section xml:id="ch055_security-services-for-instances-idp189488">
-          <title>Migration Network</title>
+          <title>Migration network</title>
           <para>As a general practice, live migration traffic should be restricted to the management security domain. Indeed live migration traffic, due to its plain text nature and the fact that you are transferring the contents of disk and memory of a running instance, it is recommended you further separate live migration traffic onto a dedicated network. Isolating the traffic to a dedicated network can reduce the risk of exposure.</para>
         </section>
         <section xml:id="ch055_security-services-for-instances-idp191072">
-          <title>Encrypted Live Migration</title>
+          <title>Encrypted live migration</title>
           <para>If your use case involves keeping live migration enabled, then libvirtd can provide tunneled, encrypted live migrations. That said, this feature is not currently exposed in OpenStack Dashboard, nor the nova-client commands and can only be accessed through manual configuration of libvirtd. Encrypted live migration modifies the live migration process by first copying the instance data from the running hypervisor to libvirtd. From there an encrypted tunnel is created between the libvirtd processes on both hosts. Finally, the destination libvirtd process copies the instance back to the underlying hypervisor.</para>
         </section>
       </section>

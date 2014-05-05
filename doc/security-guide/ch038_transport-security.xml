@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://docbook.org/ns/docbook" xmlns:db="http://docbook.org/ns/docbook" version="5.0" xml:id="ch038_transport-security"><?dbhtml stop-chunking?>
-    <title>Messaging Security</title>
+<chapter xmlns:xi="http://www.w3.org/2001/XInclude"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns="http://docbook.org/ns/docbook"
+         version="5.0"
+         xml:id="ch038_transport-security">
+  <?dbhtml stop-chunking?>
+    <title>Messaging security</title>
     <para>This chapter discusses security hardening approaches for the three most common message queuing solutions use in OpenStack: RabbitMQ, Qpid, and ZeroMQ.</para>
     <section xml:id="ch038_transport-security-idp37712">
-      <title>Messaging Transport Security</title>
+      <title>Messaging transport security</title>
       <para>AMQP based solutions (Qpid and RabbitMQ) support transport-level security using SSL. ZeroMQ messaging does not natively support SSL, but transport-level security is possible using labelled IPSec or CIPSO network labels.</para>
       <para>We highly recommend enabling transport-level cryptography for your message queue. Using SSL for the messaging client connections provides protection of the communications from tampering and eavesdropping in-transit to the messaging server. Below is guidance on how SSL is typically configured for the two popular messaging servers Qpid and RabbitMQ. When configuring the trusted certificate authority (CA) bundle that your messaging server uses to verify client connections, it is recommended that this be limited to only the CA used for your nodes, preferably an internally managed CA. The bundle of trusted CAs will determine which client certificates will be authorized and pass the client-server verification step of the setting up the SSL connection. Note, when installing the certificate and key files, ensure that the file permissions are restricted, for example chmod 0600, and the ownership is restricted to the messaging server daemon user to prevent unauthorized access by other processes and users on the messaging server.</para>
       <section xml:id="ch038_transport-security-idp40512">
-        <title>RabbitMQ Server SSL Configuration</title>
+        <title>RabbitMQ server SSL configuration</title>
         <para>The following lines should be added to the system-wide
         RabbitMQ configuration file, typically
         <filename>/etc/rabbitmq/rabbitmq.config</filename>:
@@ -40,7 +45,7 @@
 </itemizedlist>
       </section>
       <section xml:id="ch038_transport-security-idp46320">
-        <title>Qpid Server SSL Configuration</title>
+        <title>Qpid server SSL configuration</title>
         <para>The Apache Foundation has a messaging security guide for Qpid. See:</para>
         <itemizedlist><listitem>
             <para><link xlink:href="http://qpid.apache.org/books/0.22/AMQP-Messaging-Broker-CPP-Book/html/chap-Messaging_User_Guide-Security.html#sect-Messaging_User_Guide-Security-Encryption_using_SSL">Apache Qpid SSL</link></para>
@@ -49,7 +54,7 @@
       </section>
     </section>
     <section xml:id="ch038_transport-security-idp48960">
-      <title>Queue Authentication and Access Control</title>
+      <title>Queue authentication and access control</title>
       <para>RabbitMQ and Qpid offer authentication and access control mechanisms for controlling access to queues. ZeroMQ offers no such mechanisms.</para>
       <para>Simple Authentication and Security Layer (SASL) is a framework for authentication and data security in Internet protocols. Both RabbitMQ and Qpid offer SASL and other pluggable authentication mechanisms beyond simple usernames and passwords that allow for increased authentication security. While RabbitMQ supports SASL, support in OpenStack does not currently allow for requesting a specific SASL authentication mechanism. RabbitMQ support in OpenStack allows for either username and password authentication over an unencrypted connection or username and password in conjunction with X.509 client certificates to establish the secure SSL connection.</para>
       <para>We recommend configuring X.509 client certificates on all the OpenStack service nodes for client connections to the messaging queue and where possible (currently only Qpid) perform authentication with X.509 client certificates. When using usernames and passwords, accounts should be created per-service and node for finer grained auditability of access to the queue.</para>
@@ -58,7 +63,7 @@
         servers use. Qpid uses Mozilla's NSS library, whereas RabbitMQ
         uses Erlang's SSL module which uses OpenSSL.</para>
       <section xml:id="ch038_transport-security-idp52640">
-        <title>Authentication Configuration Example - RabbitMQ</title>
+        <title>Authentication configuration example: RabbitMQ</title>
         <para>On the RabbitMQ server, delete the default
         <literal>guest</literal> user:</para>
         <screen><prompt>#</prompt> <userinput>rabbitmqctl delete_user quest</userinput></screen>
@@ -83,7 +88,7 @@
 </itemizedlist>
       </section>
       <section xml:id="ch038_transport-security-idp59648">
-        <title>OpenStack Service Configuration - RabbitMQ</title>
+        <title>OpenStack service configuration: RabbitMQ</title>
         <programlisting language="ini">[DEFAULT]
 rpc_backend=nova.openstack.common.rpc.impl_kombu
 rabbit_use_ssl=True
@@ -96,7 +101,7 @@ kombu_ssl_certfile=/etc/ssl/node-cert.pem
 kombu_ssl_ca_certs=/etc/ssl/cacert.pem</programlisting>
       </section>
       <section xml:id="ch038_transport-security-idp62112">
-        <title>Authentication Configuration Example - Qpid</title>
+        <title>Authentication configuration example: Qpid</title>
         <para>For configuration information see:</para>
         <itemizedlist><listitem>
             <para><link xlink:href="http://qpid.apache.org/books/0.22/AMQP-Messaging-Broker-CPP-Book/html/chap-Messaging_User_Guide-Security.html#sect-Messaging_User_Guide-Security-User_Authentication">Apache Qpid Authentication</link></para>
@@ -107,7 +112,7 @@ kombu_ssl_ca_certs=/etc/ssl/cacert.pem</programlisting>
 </itemizedlist>
       </section>
       <section xml:id="ch038_transport-security-idp65584">
-        <title>OpenStack Service Configuration - Qpid</title>
+        <title>OpenStack service configuration: Qpid</title>
         <programlisting language="ini">
 [DEFAULT]
 rpc_backend=nova.openstack.common.rpc.impl_qpid
@@ -121,7 +126,7 @@ qpid_password=password</programlisting>
       </section>
     </section>
     <section xml:id="ch038_transport-security-idp68512">
-      <title>Message Queue Process Isolation &amp; Policy</title>
+      <title>Message queue process isolation and policy</title>
       <para>Each project provides a number of services which send and consume messages. Each binary which sends a message is expected to consume messages, if only replies, from the queue.</para>
       <para>Message queue service processes should be isolated from each other and other processes on a machine.</para>
       <section xml:id="ch038_transport-security-idp70304">
@@ -130,12 +135,12 @@ qpid_password=password</programlisting>
         <para>When using ZeroMQ messaging, each host must run at least one ZeroMQ message receiver to receive messages from the network and forward messages to local processes via IPC. It is possible and advisable to run an independent message receiver per project within an IPC namespace, along with other services within the same project.</para>
       </section>
       <section xml:id="ch038_transport-security-idp72736">
-        <title>Network Policy</title>
+        <title>Network policy</title>
         <para>Queue servers should only accept connections from the management network. This applies to all implementations. This should be implemented through configuration of services and optionally enforced through global network policy.</para>
         <para>When using ZeroMQ messaging, each project should run a separate ZeroMQ receiver process on a port dedicated to services belonging to that project. This is equivalent to the AMQP concept of control exchanges.</para>
       </section>
       <section xml:id="ch038_transport-security-idp74736">
-        <title>Mandatory Access Controls</title>
+        <title>Mandatory access controls</title>
         <para>The configuration for these processes should be restricted to those processes, not only by Directory Access Controls, but through Mandatory Access Controls. The goal of such restrictions is to prevent isolation from other processes running on the same machine(s).</para>
       </section>
     </section>

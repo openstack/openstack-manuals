@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://docbook.org/ns/docbook" xmlns:db="http://docbook.org/ns/docbook" version="5.0" xml:id="ch020_ssl-everywhere"><?dbhtml stop-chunking?>
-    <title>SSL Proxies and HTTP Services</title>
+<chapter xmlns:xi="http://www.w3.org/2001/XInclude"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns="http://docbook.org/ns/docbook"
+         version="5.0"
+         xml:id="ch020_ssl-everywhere">
+  <?dbhtml stop-chunking?>
+    <title>SSL proxies and HTTP services</title>
     <para>OpenStack endpoints are HTTP services providing APIs to both end-users on public networks and to other OpenStack services within the same deployment operating over the management network. It is highly recommended these requests, both those internal and external, operate over SSL.</para>
     <para>In order for API requests to be encrypted by SSL it's necessary to position the API services behind a proxy that will establish and terminate SSL sessions. The following table offers a non-exhaustive list of software services that can proxy SSL traffic for API requests:</para>
     <itemizedlist><listitem>
@@ -249,7 +254,7 @@ write-proxy = off</programlisting>
       </section>
     </section>
     <section xml:id="ch020_ssl-everywhere-idp59152">
-      <title>HTTP Strict Transport Security</title>
+      <title>HTTP strict transport security</title>
       <para>We recommend that all production deployments use HSTS. This header prevents browsers from making insecure connections after they have made a single secure one. If you have deployed your HTTP services on a public or an untrusted domain, HSTS is especially important. To enable HSTS, configure your web server to send a header like this with all requests:</para>
       <screen><computeroutput>Strict-Transport-Security: max-age=31536000; includeSubDomains</computeroutput></screen>
       <para>Start with a short timeout of 1 day during testing, and raise it to one year after testing has shown that you haven't introduced problems for users. Note that once this header is set to a large timeout, it is (by design) very difficult to disable.</para>
