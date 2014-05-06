@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenStack Manuals\n"
-"POT-Creation-Date: 2014-05-02 18:33+0000\n"
-"PO-Revision-Date: 2014-05-01 19:28+0000\n"
+"POT-Creation-Date: 2014-05-06 05:56+0000\n"
+"PO-Revision-Date: 2014-05-05 18:59+0000\n"
 "Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
 "Language-Team: Tamil (http://www.transifex.com/projects/p/openstack-manuals-i18n/language/ta/)\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +19,7 @@ msgstr ""
 
 #: ./doc/admin-guide-cloud/ch_identity_mgmt.xml7(para)
 msgid ""
-"The OpenStack Identity Service, code-named Keystone, is the default identity"
+"The OpenStack Identity Service, code-named keystone, is the default identity"
 " management system for OpenStack. After you install the Identity Service, "
 "you configure it through the <filename>etc/keystone.conf</filename> "
 "configuration file and, possibly, a separate logging configuration file. You"
@@ -366,209 +366,6 @@ msgid ""
 "selected)."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_volume-backups.xml6(title)
-msgid "Back up and restore volumes"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_volume-backups.xml7(para)
-msgid ""
-"The <placeholder-1/> command-line interface provides the tools for creating "
-"a volume backup. You can restore a volume from a backup as long as the "
-"backup's associated database information (or backup metadata) is intact in "
-"the Block Storage database."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_volume-backups.xml13(para)
-msgid "Run this command to create a backup of a volume:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_volume-backups.xml14(replaceable)
-msgid "VOLUME"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_volume-backups.xml15(para)
-msgid ""
-"Where <replaceable>VOLUME</replaceable> is the name or ID of the volume."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_volume-backups.xml17(para)
-msgid ""
-"The previous command will also return a backup ID. Use this backup ID when "
-"restoring the volume, as in:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_volume-backups.xml19(replaceable)
-#: ./doc/admin-guide-cloud/section_volume-backups-export-import.xml17(replaceable)
-msgid "backup_ID"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_volume-backups.xml20(para)
-msgid ""
-"As mentioned earlier, volume backups are dependent on the Block Storage "
-"database. Because of this, we recommend that you also back up your Block "
-"Storage database regularly in order to ensure data recovery."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_volume-backups.xml24(para)
-msgid ""
-"Alternatively, you can export and save the metadata of selected volume "
-"backups. Doing so will preclude the need to back up the entire Block Storage"
-" database. This is particularly useful if you only need a small subset of "
-"volumes to survive a catastrophic database failure."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_volume-backups.xml29(para)
-msgid ""
-"For more information on how to export and import volume backup metadata, see"
-" <xref linkend=\"volume-backup-restore-export-import\"/>."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_ts_cinder_config.xml11(title)
-msgid "Troubleshoot the Block Storage configuration"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_ts_cinder_config.xml13(para)
-msgid ""
-"Most Block Storage errors are caused by incorrect volume configurations that"
-" result in volume creation failues. To resolve these failures, review these "
-"logs:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_ts_cinder_config.xml17(para)
-msgid ""
-"<systemitem class=\"service\">cinder-api</systemitem> log "
-"(<filename>/var/log/cinder/api.log</filename>)"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_ts_cinder_config.xml19(para)
-msgid ""
-"<systemitem class=\"service\">cinder-volume</systemitem> log "
-"(<filename>/var/log/cinder/volume.log</filename>)"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_ts_cinder_config.xml22(para)
-msgid ""
-"The <systemitem class=\"service\">cinder-api</systemitem> log is useful for "
-"determining if you have endpoint or connectivity issues. If you send a "
-"request to create a volume and it fails, review the <systemitem "
-"class=\"service\">cinder-api</systemitem> log to determine whether the "
-"request made it to the Block Storage service. If the request is logged and "
-"you see no errors or trace-backs, check the <systemitem class=\"service"
-"\">cinder-volume</systemitem> log for errors or trace-backs."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_ts_cinder_config.xml32(para)
-msgid ""
-"Create commands are listed in the <systemitem class=\"service\">cinder-"
-"api</systemitem> log."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_ts_cinder_config.xml35(para)
-msgid ""
-"These entries in the <filename>cinder.openstack.common.log</filename> file "
-"can be used to assist in troubleshooting your block storage configuration."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_ts_cinder_config.xml107(para)
-msgid ""
-"These common issues might occur during configuration. To correct, use these "
-"suggested solutions."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_ts_cinder_config.xml111(para)
-msgid ""
-"Issues with <literal>state_path</literal> and <literal>volumes_dir</literal>"
-" settings."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_ts_cinder_config.xml113(para)
-msgid ""
-"The OpenStack Block Storage uses <placeholder-1/> as the default iscsi "
-"helper and implements persistent targets. This means that in the case of a "
-"tgt restart or even a node reboot your existing volumes on that node will be"
-" restored automatically with their original IQN."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_ts_cinder_config.xml118(para)
-msgid ""
-"In order to make this possible the iSCSI target information needs to be "
-"stored in a file on creation that can be queried in case of restart of the "
-"tgt daemon. By default, Block Storage uses a <literal>state_path</literal> "
-"variable, which if installing with Yum or APT should be set to "
-"<filename>/var/lib/cinder/</filename>. The next part is the "
-"<literal>volumes_dir</literal> variable, by default this just simply appends"
-" a \"<literal>volumes</literal>\" directory to the "
-"<literal>state_path</literal>. The result is a file-tree "
-"<filename>/var/lib/cinder/volumes/</filename>."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_ts_cinder_config.xml131(para)
-msgid ""
-"While this should all be handled by the installer, it can go wrong. If you "
-"have trouble creating volumes and this directory does not exist you should "
-"see an error message in the <systemitem class=\"service\">cinder-"
-"volume</systemitem> log indicating that the <literal>volumes_dir</literal> "
-"does not exist, and it should provide information about which path it was "
-"looking for."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_ts_cinder_config.xml141(para)
-msgid "The persistent tgt include file."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_ts_cinder_config.xml142(para)
-msgid ""
-"Along with the <option>volumes_dir</option> option, the iSCSI target driver "
-"also needs to be configured to look in the correct place for the persist "
-"files. This is a simple entry in the <filename>/etc/tgt/conf.d</filename> "
-"file that you should have set when you installed OpenStack. If issues occur,"
-" verify that you have a <filename>/etc/tgt/conf.d/cinder.conf</filename> "
-"file."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_ts_cinder_config.xml151(para)
-msgid "If the file is not present, create it with this command:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_ts_cinder_config.xml156(para)
-msgid ""
-"No sign of attach call in the <systemitem class=\"service\">cinder-"
-"api</systemitem> log."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_ts_cinder_config.xml159(para)
-msgid ""
-"This is most likely going to be a minor adjustment to your "
-"<filename>nova.conf</filename> file. Make sure that your "
-"<filename>nova.conf</filename> has this entry:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_ts_cinder_config.xml166(para)
-msgid ""
-"Failed to create iscsi target error in the <filename>cinder-"
-"volume.log</filename> file."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_ts_cinder_config.xml170(para)
-msgid ""
-"You might see this error in <filename>cinder-volume.log</filename> after "
-"trying to create a volume that is 1 GB. To fix this issue:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_ts_cinder_config.xml174(para)
-msgid ""
-"Change content of the <filename>/etc/tgt/targets.conf</filename> from "
-"<literal>include /etc/tgt/conf.d/*.conf</literal> to <literal>include "
-"/etc/tgt/conf.d/cinder_tgt.conf</literal>, as follows:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_ts_cinder_config.xml183(para)
-msgid ""
-"Restart <systemitem class=\"service\">tgt</systemitem> and <systemitem "
-"class=\"service\">cinder-*</systemitem> services so they pick up the new "
-"configuration."
-msgstr ""
-
 #: ./doc/admin-guide-cloud/ch_blockstorage.xml10(title)
 msgid "Block Storage"
 msgstr ""
@@ -677,7 +474,7 @@ msgid ""
 "<systemitem class=\"service\">nova-compute</systemitem>. The walk through "
 "uses a custom partitioning scheme that carves out 60 GB of space and labels "
 "it as LVM. The network uses the <literal>FlatManager</literal> and "
-"<literal>NetworkManager</literal> settings for OpenStack Compute (Nova)."
+"<literal>NetworkManager</literal> settings for OpenStack Compute."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/ch_blockstorage.xml103(para)
@@ -690,15 +487,15 @@ msgstr ""
 #: ./doc/admin-guide-cloud/ch_blockstorage.xml106(para)
 msgid ""
 "To set up Compute to use volumes, ensure that Block Storage is installed "
-"along with lvm2. This guide describes how to troubleshoot your installation "
-"and back up your Compute volumes."
+"along with <package>lvm2</package>. This guide describes how to troubleshoot"
+" your installation and back up your Compute volumes."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_blockstorage.xml111(title)
+#: ./doc/admin-guide-cloud/ch_blockstorage.xml112(title)
 msgid "Boot from volume"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_blockstorage.xml112(para)
+#: ./doc/admin-guide-cloud/ch_blockstorage.xml113(para)
 msgid ""
 "In some cases, instances can be stored and run from inside volumes. For "
 "information, see the <link href=\"http://docs.openstack.org/user-"
@@ -707,340 +504,14 @@ msgid ""
 "guide/content/\"><citetitle>OpenStack End User Guide</citetitle></link>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_blockstorage.xml132(title)
+#: ./doc/admin-guide-cloud/ch_blockstorage.xml133(title)
 msgid "Troubleshoot your installation"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_blockstorage.xml133(para)
+#: ./doc/admin-guide-cloud/ch_blockstorage.xml134(para)
 msgid ""
 "This section provides useful tips to help troubleshoot your Block Storage "
 "installation."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml10(title)
-msgid "Back up Block Storage service disks"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml11(para)
-msgid ""
-"While you can use the LVM snapshot to create snapshots, you can also use it "
-"to back up your volumes. By using LVM snapshot, you reduce the size of the "
-"backup; only existing data is backed up instead of the entire volume."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml15(para)
-msgid ""
-"To back up a volume, you must create a snapshot of it. An LVM snapshot is "
-"the exact copy of a logical volume, which contains data in a frozen state. "
-"This prevents data corruption, because data cannot be manipulated during the"
-" volume creation process. Remember that the volumes created through a "
-"<placeholder-1/> command exist in an LVM logical volume."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml22(para)
-msgid ""
-"You must also make sure that the operating system is not using the volume, "
-"and that all data has been flushed on the guest filesystems. This usually "
-"means that those filesystems have to be unmounted during the snapshot "
-"creation. They can be mounted again as soon as the logical volume snapshot "
-"has been created."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml27(para)
-msgid ""
-"Before you create the snapshot, you must have enough space to save it. As a "
-"precaution, you should have at least twice as much space as the potential "
-"snapshot size. If insufficient space is available, the snapshot might become"
-" corrupted."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml32(para)
-msgid ""
-"For this example, assume that a 100 GB volume named "
-"<literal>volume-00000001</literal> was created for an instance while only 4 "
-"GB are used. This example uses these commands to back up only those 4 GB:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml38(para)
-msgid "<placeholder-1/> command. Directly manipulates the volumes."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml42(para)
-msgid ""
-"<placeholder-1/> command. Discovers the partition table created inside the "
-"instance."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml46(para)
-msgid "<placeholder-1/> command. Creates a minimum-sized backup."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml50(para)
-msgid ""
-"<placeholder-1/> command. Calculates the backup checksum to check its "
-"consistency."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml54(para)
-msgid "You can apply this process to volumes of any size."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml56(title)
-msgid "To back up Block Storage service disks"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml58(title)
-msgid "Create a snapshot of a used volume"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml61(para)
-msgid "Use this command to list all volumes:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml65(para)
-msgid ""
-"Create the snapshot; you can do this while the volume is attached to an "
-"instance:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml68(para)
-msgid ""
-"Use the <option>--snapshot</option> configuration option to tell LVM that "
-"you want a snapshot of an already existing volume. The command includes the "
-"size of the space reserved for the snapshot volume, the name of the "
-"snapshot, and the path of an already existing volume. Generally, this path "
-"is <filename>/dev/cinder-"
-"volumes/<replaceable>$volume_name</replaceable></filename>."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml76(para)
-msgid ""
-"The size does not have to be the same as the volume of the snapshot. The "
-"<parameter>size</parameter> parameter defines the space that LVM reserves "
-"for the snapshot volume. As a precaution, the size should be the same as "
-"that of the original volume, even if the whole space is not currently used "
-"by the snapshot."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml87(para)
-msgid "Run the <placeholder-1/> command again to verify the snapshot:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml129(title)
-msgid "Partition table discovery"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml132(para)
-msgid ""
-"To exploit the snapshot with the <placeholder-1/> command, mount your "
-"partition on the Block Storage service server."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml136(para)
-msgid ""
-"The <placeholder-1/> utility discovers and maps table partitions. You can "
-"use it to view partitions that are created inside the instance. Without "
-"using the partitions created inside instances, you cannot see its content "
-"and create efficient backups."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml145(para)
-msgid ""
-"On a Debian-based distribution, you can use the <placeholder-1/> command to "
-"install <placeholder-2/>."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml150(para)
-msgid ""
-"If the tools successfully find and map the partition table, no errors are "
-"returned."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml155(para)
-msgid "To check the partition table map, run this command:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml158(para)
-msgid ""
-"You can see the <literal>cinder--volumes-volume--00000001--"
-"snapshot1</literal> partition."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml161(para)
-msgid ""
-"If you created more than one partition on that volume, you see several "
-"partitions; for example: <literal>cinder--volumes-volume--00000001--"
-"snapshot2</literal>, <literal>cinder--volumes-volume--00000001--"
-"snapshot3</literal>, and so on."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml169(para)
-msgid "Mount your partition:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml171(para)
-msgid "If the partition mounts successfully, no errors are returned."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml173(para)
-msgid ""
-"You can directly access the data inside the instance. If a message prompts "
-"you for a partition or you cannot mount it, determine whether enough space "
-"was allocated for the snapshot or the <placeholder-1/> command failed to "
-"discover the partition table."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml180(para)
-msgid "Allocate more space to the snapshot and try the process again."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml186(title)
-msgid "Use the <placeholder-1/> command to create archives"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml188(para)
-msgid "Create a backup of the volume:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml190(para)
-msgid ""
-"This command creates a <filename>tar.gz</filename> file that contains the "
-"data, <emphasis role=\"italic\">and data only</emphasis>. This ensures that "
-"you do not waste space by backing up empty sectors."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml196(title)
-msgid "Checksum calculation I"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml197(para)
-msgid ""
-"You should always have the checksum for your backup files. When you transfer"
-" the same file over the network, you can run a checksum calculation to "
-"ensure that your file was not corrupted during its transfer. The checksum is"
-" a unique ID for a file. If the checksums are different, the file is "
-"corrupted."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml203(para)
-msgid ""
-"Run this command to run a checksum for your file and save the result to a "
-"file:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml207(para)
-msgid ""
-"Use the <placeholder-1/> command carefully because the time it takes to "
-"complete the calculation is directly proportional to the size of the file."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml211(para)
-msgid ""
-"For files larger than around 4 to 6 GB, and depending on your CPU, the "
-"process might take a long time."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml217(title)
-msgid "After work cleaning"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml218(para)
-msgid ""
-"Now that you have an efficient and consistent backup, use this command to "
-"clean up the file system:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml223(para)
-msgid "Unmount the volume:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml227(para)
-msgid "Delete the partition table:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml231(para)
-msgid "Remove the snapshot:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml235(para)
-msgid "Repeat these steps for all your volumes."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml238(title)
-msgid "Automate your backups"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml239(para)
-msgid ""
-"Because more and more volumes might be allocated to your Block Storage "
-"service, you might want to automate your backups. The <link "
-"href=\"https://github.com/Razique/BashStuff/blob/master/SYSTEMS/OpenStack"
-"/SCR_5005_V01_NUAC-OPENSTACK-EBS-volumes-backup.sh\">SCR_5005_V01_NUAC-"
-"OPENSTACK-EBS-volumes-backup.sh</link> script assists you with this task. "
-"The script performs the operations from the previous example, but also "
-"provides a mail report and runs the backup based on the "
-"<option>backups_retention_days</option> setting."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml249(para)
-msgid ""
-"Launch this script from the server that runs the Block Storage service."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml251(para)
-msgid "This example shows a mail report:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_backup-block-storage-disks.xml265(para)
-msgid ""
-"The script also enables you to SSH to your instances and run a "
-"<placeholder-1/> command into them. To make this work, enable the connection"
-" to the Compute project keys. If you do not want to run the <placeholder-2/>"
-" command, you can add <literal>enable_mysql_dump=0</literal> to the script "
-"to turn off this functionality."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_ts_failed_connect_vol_FC_SAN.xml4(title)
-msgid "Failed to connect volume in FC SAN"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_ts_failed_connect_vol_FC_SAN.xml6(title)
-#: ./doc/admin-guide-cloud/section_ts_vol_attach_miss_sg_scan.xml10(title)
-#: ./doc/admin-guide-cloud/section_ts_failed_attach_vol_after_detach.xml8(title)
-#: ./doc/admin-guide-cloud/section_ts_non_existent_host.xml6(title)
-#: ./doc/admin-guide-cloud/section_ts_no_emulator_x86_64.xml6(title)
-#: ./doc/admin-guide-cloud/section_ts_HTTP_bad_req_in_cinder_vol_log.xml8(title)
-#: ./doc/admin-guide-cloud/section_ts_non_existent_vlun.xml6(title)
-#: ./doc/admin-guide-cloud/section_ts_failed_attach_vol_no_sysfsutils.xml6(title)
-#: ./doc/admin-guide-cloud/section_ts_multipath_warn.xml8(title)
-#: ./doc/admin-guide-cloud/section_ts_duplicate_3par_host.xml6(title)
-msgid "Problem"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_ts_failed_connect_vol_FC_SAN.xml7(para)
-msgid ""
-"Compute node failed to connect to a volume in a Fibre Channel (FC) SAN "
-"configuration. The WWN may not be zoned correctly in your FC SAN that links "
-"the compute host to the storage array."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_ts_failed_connect_vol_FC_SAN.xml15(title)
-#: ./doc/admin-guide-cloud/section_ts_vol_attach_miss_sg_scan.xml24(title)
-#: ./doc/admin-guide-cloud/section_ts_failed_attach_vol_after_detach.xml14(title)
-#: ./doc/admin-guide-cloud/section_ts_non_existent_host.xml14(title)
-#: ./doc/admin-guide-cloud/section_ts_no_emulator_x86_64.xml11(title)
-#: ./doc/admin-guide-cloud/section_ts_HTTP_bad_req_in_cinder_vol_log.xml43(title)
-#: ./doc/admin-guide-cloud/section_ts_non_existent_vlun.xml12(title)
-#: ./doc/admin-guide-cloud/section_ts_failed_attach_vol_no_sysfsutils.xml15(title)
-#: ./doc/admin-guide-cloud/section_ts_multipath_warn.xml20(title)
-#: ./doc/admin-guide-cloud/section_ts_duplicate_3par_host.xml12(title)
-msgid "Solution"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_ts_failed_connect_vol_FC_SAN.xml16(para)
-msgid ""
-"The network administrator must configure the FC SAN fabric by correctly "
-"zoning the WWN (port names) from your compute node HBAs."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/section_object-storage-admin.xml6(title)
@@ -1065,24 +536,6 @@ msgstr ""
 
 #: ./doc/admin-guide-cloud/ch_objectstorage.xml6(title)
 msgid "Object Storage"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_ts_vol_attach_miss_sg_scan.xml8(title)
-msgid "Failed to Attach Volume, Missing sg_scan"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_ts_vol_attach_miss_sg_scan.xml11(para)
-msgid ""
-"Failed to attach volume to an instance, <filename>sg_scan</filename> file "
-"not found. This warning and error occur when the "
-"<package>sg3-utils</package> package is not installed on the compute node. "
-"The IDs in your message are unique to your system:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_ts_vol_attach_miss_sg_scan.xml25(para)
-msgid ""
-"Run this command on the compute node to install the "
-"<package>sg3-utils</package> package:"
 msgstr ""
 
 #. ... Based on a blog, should be replaced with original material...
@@ -1378,51 +831,6 @@ msgid ""
 "Storage."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_ts_failed_attach_vol_after_detach.xml5(title)
-#: ./doc/admin-guide-cloud/section_ts_HTTP_bad_req_in_cinder_vol_log.xml5(title)
-msgid "Failed to attach volume after detaching"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_ts_failed_attach_vol_after_detach.xml9(para)
-msgid "Failed to attach a volume after detaching the same volume."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_ts_failed_attach_vol_after_detach.xml15(para)
-msgid ""
-"You must change the device name on the <placeholder-1/> command. The VM "
-"might not clean up after a <placeholder-2/> command runs. This example shows"
-" how the <placeholder-3/> command fails when you use the <code>vdb</code>, "
-"<code>vdc</code>, or <code>vdd</code> device names:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_ts_failed_attach_vol_after_detach.xml34(para)
-msgid ""
-"You might also have this problem after attaching and detaching the same "
-"volume from the same VM with the same mount point multiple times. In this "
-"case, restart the KVM host."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_ts_non_existent_host.xml4(title)
-msgid "Non-existent host"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_ts_non_existent_host.xml7(para)
-msgid ""
-"This error could be caused by a volume being exported outside of OpenStack "
-"using a host name different from the system name that OpenStack expects. "
-"This error could be displayed with the IQN if the host was exported using "
-"iSCSI."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_ts_non_existent_host.xml15(para)
-msgid ""
-"Host names constructed by the driver use just the local hostname, not the "
-"fully qualified domain name (FQDN) of the Compute host. For example, if the "
-"FQDN was <emphasis>myhost.example.com</emphasis>, just "
-"<emphasis>myhost</emphasis> would be used as the 3PAR hostname. IP addresses"
-" are not allowed as host names on the 3PAR storage server."
-msgstr ""
-
 #: ./doc/admin-guide-cloud/ch_networking.xml6(title)
 msgid "Networking"
 msgstr ""
@@ -1431,78 +839,6 @@ msgstr ""
 msgid ""
 "Learn OpenStack Networking concepts, architecture, and basic and advanced "
 "<placeholder-1/> and <placeholder-2/> command-line interface (CLI) commands."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_volume-backups-export-import.xml6(title)
-msgid "Export and import backup metadata"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_volume-backups-export-import.xml7(para)
-msgid ""
-"A volume backup can only be restored on the same Block Storage service. This"
-" is because restoring a volume from a backup requires metadata available on "
-"the database used by the Block Storage service."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_volume-backups-export-import.xml11(para)
-msgid ""
-"For information on how to back up and restore a volume, see <xref linkend"
-"=\"volume-backup-restore\"/>."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_volume-backups-export-import.xml13(para)
-msgid ""
-"You can, however, export the metadata of a volume backup. To do so, run this"
-" command as an OpenStack <literal>admin</literal> user (presumably, after "
-"creating a volume backup):"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_volume-backups-export-import.xml18(para)
-msgid ""
-"Where <replaceable>backup_ID</replaceable> is the volume backup's ID. This "
-"command should return the backup's corresponding database information as "
-"encoded string metadata."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_volume-backups-export-import.xml21(para)
-msgid ""
-"Exporting and storing this encoded string metadata allows you to completely "
-"restore the backup, even in the event of a catastrophic database failure. "
-"This will preclude the need to back up the entire Block Storage database, "
-"particularly if you only need to keep complete backups of a small subset of "
-"volumes."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_volume-backups-export-import.xml27(para)
-msgid ""
-"In addition, having a volume backup and its backup metadata also provides "
-"volume portability. Specifically, backing up a volume and exporting its "
-"metadata will allow you to restore the volume on a completely different "
-"Block Storage database, or even on a different cloud service. To do so, "
-"first import the backup metadata to the Block Storage database and then "
-"restore the backup."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_volume-backups-export-import.xml33(para)
-msgid ""
-"To import backup metadata, run the following command as an OpenStack "
-"<literal>admin</literal>:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_volume-backups-export-import.xml35(replaceable)
-msgid "metadata"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_volume-backups-export-import.xml36(para)
-msgid ""
-"Where <replaceable>metadata</replaceable> is the backup metadata exported "
-"earlier."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_volume-backups-export-import.xml38(para)
-msgid ""
-"Once you have imported the backup metadata into a Block Storage database, "
-"restore the volume (<xref linkend=\"volume-backup-restore\"/>)."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/bk-admin-guide-cloud.xml7(title)
@@ -1604,957 +940,6 @@ msgstr ""
 msgid "OpenStack Block Storage Service Administration Guide"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_ts_no_emulator_x86_64.xml4(title)
-msgid "Cannot find suitable emulator for x86_64"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_ts_no_emulator_x86_64.xml7(para)
-msgid ""
-"When you attempt to create a VM, the error shows the VM is in the "
-"<code>BUILD</code> then <code>ERROR</code> state."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_ts_no_emulator_x86_64.xml12(para)
-msgid ""
-"On the KVM host run, <code>cat /proc/cpuinfo</code>. Make sure the "
-"<code>vme</code> and <code>svm</code> flags are set."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_ts_no_emulator_x86_64.xml14(para)
-msgid ""
-"Follow the instructions in the <link "
-"href=\"http://docs.openstack.org/icehouse/config-"
-"reference/content/kvm.html#section_kvm_enable\"> enabling KVM section</link>"
-" of the <citetitle>Configuration Reference</citetitle> to enable hardware "
-"virtualization support in your BIOS."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml5(title)
-msgid "Configure a GlusterFS back end"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml6(para)
-msgid ""
-"This section explains how to configure OpenStack Block Storage to use "
-"GlusterFS as a back end. You must be able to access the GlusterFS shares "
-"from the server that hosts the <systemitem "
-"class=\"service\">cinder</systemitem> volume service."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml14(para)
-#: ./doc/admin-guide-cloud/section_nfs_backend.xml12(para)
-msgid ""
-"The <systemitem class=\"service\">cinder</systemitem> volume service is "
-"named <literal>openstack-cinder-volume</literal> on the following "
-"distributions:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml19(para)
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml194(para)
-#: ./doc/admin-guide-cloud/section_nfs_backend.xml17(para)
-#: ./doc/admin-guide-cloud/section_nfs_backend.xml100(para)
-msgid "CentOS"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml20(para)
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml197(para)
-#: ./doc/admin-guide-cloud/section_nfs_backend.xml18(para)
-#: ./doc/admin-guide-cloud/section_nfs_backend.xml103(para)
-msgid "Fedora"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml21(para)
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml200(para)
-#: ./doc/admin-guide-cloud/section_nfs_backend.xml19(para)
-#: ./doc/admin-guide-cloud/section_nfs_backend.xml106(para)
-msgid "openSUSE"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml22(para)
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml203(para)
-#: ./doc/admin-guide-cloud/section_nfs_backend.xml20(para)
-#: ./doc/admin-guide-cloud/section_nfs_backend.xml109(para)
-msgid "Red Hat Enterprise Linux"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml24(para)
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml206(para)
-#: ./doc/admin-guide-cloud/section_nfs_backend.xml22(para)
-#: ./doc/admin-guide-cloud/section_nfs_backend.xml112(para)
-msgid "SUSE Linux Enterprise"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml27(para)
-#: ./doc/admin-guide-cloud/section_nfs_backend.xml25(para)
-msgid ""
-"In Ubuntu and Debian distributions, the <systemitem "
-"class=\"service\">cinder</systemitem> volume service is named <literal"
-">cinder-volume</literal>."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml31(para)
-msgid ""
-"Mounting GlusterFS volumes requires utilities and libraries from the "
-"<package>glusterfs-fuse</package> package. This package must be installed on"
-" all systems that will access volumes backed by GlusterFS."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml38(para)
-msgid ""
-"The utilities and libraries required for mounting GlusterFS volumes on "
-"Ubuntu and Debian distributions are available from the <package>glusterfs-"
-"client</package> package instead."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml44(para)
-msgid ""
-"For information on how to install and configure GlusterFS, refer to the "
-"<link "
-"href=\"http://gluster.org/community/documentation/index.php/Main_Page\">GlusterDocumentation</link>"
-" page."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml49(title)
-msgid "Configure GlusterFS for OpenStack Block Storage"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml50(para)
-msgid ""
-"The GlusterFS server must also be configured accordingly in order to allow "
-"OpenStack Block Storage to use GlusterFS shares:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml55(para)
-msgid "Log in as <systemitem>root</systemitem> to the GlusterFS server."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml61(para)
-msgid ""
-"Set each Gluster volume to use the same UID and GID as the "
-"<systemitem>cinder</systemitem> user:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml65(replaceable)
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml66(replaceable)
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml88(replaceable)
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml129(replaceable)
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml153(replaceable)
-msgid "VOL_NAME"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml65(replaceable)
-msgid "cinder-uid"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml66(replaceable)
-msgid "cinder-gid"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml67(para)
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml130(para)
-#: ./doc/admin-guide-cloud/section_nfs_backend.xml52(para)
-msgid "Where:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml69(para)
-msgid "<replaceable>VOL_NAME</replaceable> is the Gluster volume name."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml71(para)
-msgid ""
-"<replaceable>cinder-uid</replaceable> is the UID of the "
-"<systemitem>cinder</systemitem> user."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml72(para)
-msgid ""
-"<replaceable>cinder-gid</replaceable> is the GID of the "
-"<systemitem>cinder</systemitem> user."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml75(para)
-msgid ""
-"The default UID and GID of the <systemitem>cinder</systemitem> user is "
-"<literal>165</literal> on most distributions."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml83(para)
-msgid ""
-"Configure each Gluster volume to accept <systemitem>libgfapi</systemitem> "
-"connections. To do this, set each Gluster volume to allow insecure ports:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml91(para)
-msgid ""
-"Enable client connections from unprivileged ports. To do this, add the "
-"following line to <filename>/etc/glusterfs/glusterd.vol</filename>:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml99(para)
-msgid "Restart the <systemitem>glusterd</systemitem> service:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml106(title)
-msgid "Configure Block Storage to use a GlusterFS back end"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml107(para)
-msgid "After you configure the GlusterFS service, complete these steps:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml112(para)
-msgid ""
-"Log in as <systemitem>root</systemitem> to the system hosting the cinder "
-"volume service."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml118(para)
-msgid ""
-"Create a text file named <filename>glusterfs</filename> in "
-"<filename>/etc/cinder/</filename>."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml124(para)
-msgid ""
-"Add an entry to <filename>/etc/cinder/glusterfs</filename> for each "
-"GlusterFS share that OpenStack Block Storage should use for back end "
-"storage. Each entry should be a separate line, and should use the following "
-"format:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml129(replaceable)
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml153(replaceable)
-#: ./doc/admin-guide-cloud/section_nfs_backend.xml51(replaceable)
-msgid "HOST"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml135(para)
-msgid ""
-"<replaceable>HOST</replaceable> is the IP address or host name of the Red "
-"Hat Storage server."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml141(para)
-msgid ""
-"<replaceable>VOL_NAME</replaceable> is the name an existing and accessible "
-"volume on the GlusterFS server."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml148(para)
-msgid ""
-"Optionally, if your environment requires additional mount options for a "
-"share, you can add them to the share's entry:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml153(replaceable)
-#: ./doc/admin-guide-cloud/section_nfs_backend.xml131(replaceable)
-msgid "OPTIONS"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml154(para)
-msgid ""
-"Replace <replaceable>OPTIONS</replaceable> with a comma-separated list of "
-"mount options."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml160(para)
-msgid ""
-"Set <filename>/etc/cinder/glusterfs</filename> to be owned by the "
-"<systemitem>root</systemitem> user and the <systemitem>cinder</systemitem> "
-"group."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml167(para)
-msgid ""
-"Set <filename>/etc/cinder/glusterfs</filename> to be readable by members of "
-"the <systemitem>cinder</systemitem> group:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml171(replaceable)
-msgid "FILE"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml174(para)
-msgid ""
-"Configure OpenStack Block Storage to use the "
-"<filename>/etc/cinder/glusterfs</filename> file created earlier. To do so, "
-"open the <filename>/etc/cinder/cinder.conf</filename> configuration file and"
-" set the <literal>glusterfs_shares_config</literal> configuration key to "
-"<filename>/etc/cinder/glusterfs</filename>."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml182(para)
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml219(para)
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml263(para)
-#: ./doc/admin-guide-cloud/section_nfs_backend.xml88(para)
-#: ./doc/admin-guide-cloud/section_nfs_backend.xml125(para)
-#: ./doc/admin-guide-cloud/section_nfs_backend.xml150(para)
-#: ./doc/admin-guide-cloud/section_nfs_backend.xml191(para)
-msgid ""
-"On distributions that include <application>openstack-config</application>, "
-"you can configure this by running the following command instead:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml189(para)
-#: ./doc/admin-guide-cloud/section_nfs_backend.xml95(para)
-msgid ""
-"The following distributions include <application>openstack-"
-"config</application>:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml211(para)
-msgid ""
-"Configure OpenStack Block Storage to use the correct volume driver, namely "
-"<literal>cinder.volume.drivers.glusterfs</literal>. To do so, open the "
-"<filename>/etc/cinder/cinder.conf</filename> configuration file and set the "
-"<literal>volume_driver</literal> configuration key to "
-"<literal>cinder.volume.drivers.glusterfs</literal>."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml227(para)
-#: ./doc/admin-guide-cloud/section_nfs_backend.xml158(para)
-msgid "You can now restart the service to apply the configuration."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml230(para)
-msgid ""
-"To restart the <systemitem class=\"service\">cinder</systemitem> volume "
-"service on CentOS, Fedora, openSUSE, RedHat Enterprise Linux, or SUSE Linux "
-"Enterprise, run:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml235(para)
-msgid ""
-"To restart the <systemitem class=\"service\">cinder</systemitem> volume "
-"service on Ubuntu or Debian, run:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml240(para)
-msgid "OpenStack Block Storage is now configured to use a GlusterFS back end."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml243(para)
-msgid ""
-"In <filename>/etc/cinder/cinder.conf</filename>, the "
-"<literal>glusterfs_sparsed_volumes</literal> configuration key determines "
-"whether volumes are created as sparse files and grown as needed or fully "
-"allocated up front. The default and recommended value of this key is "
-"<literal>true</literal>, which ensures volumes are initially created as "
-"sparse files."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml252(para)
-msgid ""
-"Setting <literal>glusterfs_sparsed_volumes</literal> to "
-"<literal>false</literal> will result in volumes being fully allocated at the"
-" time of creation. This leads to increased delays in volume creation."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml258(para)
-msgid ""
-"However, should you choose to set "
-"<literal>glusterfs_sparsed_volumes</literal> to <literal>false</literal>, "
-"you can do so directly in <filename>/etc/cinder/cinder.conf</filename>."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml272(para)
-msgid ""
-"If a client host has SELinux enabled, the "
-"<systemitem>virt_use_fusefs</systemitem> Boolean should also be enabled if "
-"the host requires access to GlusterFS volumes on an instance. To enable this"
-" Boolean, run the following command as the <systemitem>root</systemitem> "
-"user:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_backend.xml279(para)
-msgid ""
-"This command also makes the Boolean persistent across reboots. Run this "
-"command on all client hosts that require access to GlusterFS volumes on an "
-"instance. This includes all compute nodes."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_ts_HTTP_bad_req_in_cinder_vol_log.xml9(para)
-msgid ""
-"These errors appear in the <filename>cinder-volume.log</filename> file."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_ts_HTTP_bad_req_in_cinder_vol_log.xml44(para)
-msgid ""
-"You need to update your copy of the <filename>hp_3par_fc.py</filename> "
-"driver which contains the synchronization code."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_ts_non_existent_vlun.xml4(title)
-msgid "Non-existent VLUN"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_ts_non_existent_vlun.xml7(para)
-msgid ""
-"This error occurs if the 3PAR host exists with the correct host name that "
-"the OpenStack Block Storage drivers expect but the volume was created in a "
-"different Domain."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_ts_non_existent_vlun.xml13(para)
-msgid ""
-"The <code>hp3par_domain</code> configuration items either need to be updated"
-" to use the domain the 3PAR host currently resides in, or the 3PAR host "
-"needs to be moved to the domain that the volume was created in."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_removal.xml5(title)
-msgid "Gracefully remove a GlusterFS volume from usage"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_removal.xml6(para)
-msgid ""
-"Configuring the <systemitem>cinder</systemitem> volume service to use "
-"GlusterFS involves creating a shares file (for example, "
-"<filename>/etc/cinder/glusterfs</filename>). This shares file lists each "
-"GlusterFS volume (with its corresponding storage server) that the "
-"<systemitem>cinder</systemitem> volume service can use for back end storage."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_removal.xml13(para)
-msgid ""
-"To remove a GlusterFS volume from usage as a back end, delete the volume's "
-"corresponding entry from the shares file. After doing so, restart the Block "
-"Storage services."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_removal.xml16(para)
-msgid ""
-"To restart the Block Storage services on CentOS, Fedora, openSUSE, Red Hat "
-"Enterprise Linux, or SUSE Linux Enterprise, run:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_removal.xml20(para)
-msgid "To restart the Block Storage services on Ubuntu or Debian, run:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_removal.xml23(para)
-msgid ""
-"Restarting the Block Storage services will prevent the "
-"<systemitem>cinder</systemitem> volume service from exporting the deleted "
-"GlusterFS volume. This will prevent any instances from mounting the volume "
-"from that point onwards."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_glusterfs_removal.xml28(para)
-msgid ""
-"However, the removed GlusterFS volume might still be mounted on an instance "
-"at this point. Typically, this is the case when the volume was already "
-"mounted while its entry was deleted from the shares file. Whenever this "
-"occurs, you will have to unmount the volume as normal after the Block "
-"Storage services are restarted."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_ts_failed_attach_vol_no_sysfsutils.xml4(title)
-msgid "Failed to attach volume, systool is not installed"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_ts_failed_attach_vol_no_sysfsutils.xml7(para)
-msgid ""
-"This warning and error occurs if you do not have the required "
-"<filename>sysfsutils</filename> package installed on the compute node."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_ts_failed_attach_vol_no_sysfsutils.xml16(para)
-msgid ""
-"Run the following command on the compute node to install the "
-"<filename>sysfsutils</filename> packages."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_multi_backend.xml5(title)
-msgid "Configure a multiple-storage back-end"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_multi_backend.xml6(para)
-msgid ""
-"With multiple storage back-ends configured, you can create several back-end "
-"storage solutions serving the same OpenStack Compute configuration. "
-"Basically, multi back-end launches one <systemitem class=\"service\">cinder-"
-"volume</systemitem> for each back-end."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_multi_backend.xml11(para)
-msgid ""
-"In a multi back-end configuration, each back-end has a name "
-"(<literal>volume_backend_name</literal>). Several back-ends can have the "
-"same name. In that case, the scheduler properly decides which back-end the "
-"volume has to be created in."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_multi_backend.xml16(para)
-msgid ""
-"The name of the back-end is declared as an extra-specification of a volume "
-"type (such as, <literal>volume_backend_name=LVM_iSCSI</literal>). When a "
-"volume is created, the scheduler chooses an appropriate back-end to handle "
-"the request, according to the volume type specified by the user."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_multi_backend.xml23(title)
-msgid "Enable multi back-end"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_multi_backend.xml24(para)
-msgid ""
-"To enable a multi back-end configuration, you must set the "
-"<option>enabled_backends</option> flag in the "
-"<filename>cinder.conf</filename> file. This flag defines the names "
-"(separated by a comma) of the configuration groups for the different back-"
-"ends: one name is associated to one configuration group for a back-end (such"
-" as, <literal>[lvmdriver-1]</literal>)."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_multi_backend.xml32(para)
-msgid ""
-"The configuration group name is not related to the "
-"<literal>volume_backend_name</literal>."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_multi_backend.xml35(para)
-msgid ""
-"The options for a configuration group must be defined in the group (or "
-"default options are used). All the standard Block Storage configuration "
-"options (<literal>volume_group</literal>, <literal>volume_driver</literal>, "
-"and so on) might be used in a configuration group. Configuration values in "
-"the <literal>[DEFAULT]</literal> configuration group are not used."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_multi_backend.xml43(para)
-msgid "These examples show three back-ends:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_multi_backend.xml58(para)
-msgid ""
-"In this configuration, <literal>lvmdriver-1</literal> and "
-"<literal>lvmdriver-2</literal> have the same "
-"<literal>volume_backend_name</literal>. If a volume creation requests the "
-"<literal>LVM_iSCSI</literal> back-end name, the scheduler uses the capacity "
-"filter scheduler to choose the most suitable driver, which is either "
-"<literal>lvmdriver-1</literal> or <literal>lvmdriver-2</literal>. The "
-"capacity filter scheduler is enabled by default. The next section provides "
-"more information. In addition, this example presents a "
-"<literal>lvmdriver-3</literal> back-end."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_multi_backend.xml71(title)
-msgid "Configure Block Storage scheduler multi back-end"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_multi_backend.xml72(para)
-msgid ""
-"You must enable the <option>filter_scheduler</option> option to use multi "
-"back-end. Filter scheduler acts in two steps:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_multi_backend.xml77(para)
-msgid ""
-"The filter scheduler filters the available back-ends. By default, "
-"<literal>AvailabilityZoneFilter</literal>, <literal>CapacityFilter</literal>"
-" and <literal>CapabilitiesFilter</literal> are enabled."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_multi_backend.xml85(para)
-msgid ""
-"The filter scheduler weighs the previously filtered back-ends. By default, "
-"<literal>CapacityWeigher</literal> is enabled. The "
-"<literal>CapacityWeigher</literal> attributes higher scores to back-ends "
-"with the most available."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_multi_backend.xml93(para)
-msgid ""
-"The scheduler uses the filtering and weighing process to pick the best back-"
-"end to handle the request, and explicitly creates volumes on specific back-"
-"ends through the use of volume types."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_multi_backend.xml100(title)
-msgid "Volume type"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_multi_backend.xml101(para)
-msgid ""
-"Before using it, a volume type has to be declared to Block Storage. This can"
-" be done by the following command:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_multi_backend.xml104(para)
-msgid ""
-"Then, an extra-specification has to be created to link the volume type to a "
-"back-end name. Run this command:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_multi_backend.xml108(para)
-msgid ""
-"This example creates a <literal>lvm</literal> volume type with "
-"<literal>volume_backend_name=LVM_iSCSI</literal> as extra-specifications."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_multi_backend.xml111(para)
-msgid "Create another volume type:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_multi_backend.xml114(para)
-msgid ""
-"This second volume type is named <literal>lvm_gold</literal> and has "
-"<literal>LVM_iSCSI_b</literal> as back-end name."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_multi_backend.xml119(para)
-msgid "To list the extra-specifications, use this command:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_multi_backend.xml124(para)
-msgid ""
-"If a volume type points to a <literal>volume_backend_name</literal> that "
-"does not exist in the Block Storage configuration, the "
-"<literal>filter_scheduler</literal> returns an error that it cannot find a "
-"valid host with the suitable back-end."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_multi_backend.xml133(title)
-msgid "Usage"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_multi_backend.xml134(para)
-msgid ""
-"When you create a volume, you must specify the volume type. The extra-"
-"specifications of the volume type are used to determine which back-end has "
-"to be used. <placeholder-1/> Considering the <literal>cinder.conf</literal> "
-"described previously, the scheduler creates this volume on "
-"<literal>lvmdriver-1</literal> or <literal>lvmdriver-2</literal>."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_multi_backend.xml143(para)
-msgid "This second volume is created on <literal>lvmdriver-3</literal>."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_ts_multipath_warn.xml6(title)
-msgid "Multipath Call Failed Exit"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_ts_multipath_warn.xml9(para)
-msgid ""
-"Multipath call failed exit. This warning occurs in the Compute log if you do"
-" not have the optional <filename>multipath-tools</filename> package "
-"installed on the compute node. This is an optional package and the volume "
-"attachment does work without the multipath tools installed. If the <filename"
-">multipath-tools</filename> package is installed on the compute node, it is "
-"used to perform the volume attachment. The IDs in your message are unique to"
-" your system."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_ts_multipath_warn.xml21(para)
-msgid ""
-"Run the following command on the compute node to install the <filename"
-">multipath-tools</filename> packages."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_volume-migration.xml6(title)
-msgid "Migrate volumes"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_volume-migration.xml7(para)
-msgid ""
-"OpenStack has the ability to migrate volumes between back-ends. Migrating a "
-"volume transparently moves its data from the current back-end for the volume"
-" to a new one. This is an administrator function, and can be used for "
-"functions including storage evacuation (for maintenance or decommissioning),"
-" or manual optimizations (for example, performance, reliability, or cost)."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_volume-migration.xml14(para)
-msgid "These workflows are possible for a migration:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_volume-migration.xml17(para)
-msgid ""
-"If the storage can migrate the volume on its own, it is given the "
-"opportunity to do so. This allows the Block Storage driver to enable "
-"optimizations that the storage might be able to perform. If the back-end is "
-"not able to perform the migration, the Block Storage uses one of two generic"
-" flows, as follows."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_volume-migration.xml25(para)
-msgid ""
-"If the volume is not attached, the Block Storage service creates a volume "
-"and copies the data from the original to the new volume."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_volume-migration.xml29(para)
-msgid ""
-"While most back-ends support this function, not all do. See the driver "
-"documentation in the <link href=\"http://docs.openstack.org/icehouse/config-"
-"reference/content/\"><citetitle>OpenStack Configuration "
-"Reference</citetitle></link> for more details."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_volume-migration.xml38(para)
-msgid ""
-"If the volume is attached to a VM instance, the Block Storage creates a "
-"volume, and calls Compute to copy the data from the original to the new "
-"volume. Currently this is supported only by the Compute libvirt driver."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_volume-migration.xml45(para)
-msgid ""
-"As an example, this scenario shows two LVM back-ends and migrates an "
-"attached volume from one to the other. This scenario uses the third "
-"migration flow."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_volume-migration.xml48(para)
-msgid "First, list the available back-ends:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_volume-migration.xml52(para)
-msgid ""
-"Next, as the admin user, you can see the current status of the volume "
-"(replace the example ID with your own):"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_volume-migration.xml76(para)
-msgid "Note these attributes:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_volume-migration.xml79(para)
-msgid ""
-"<literal>os-vol-host-attr:host</literal> - the volume's current back-end."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_volume-migration.xml83(para)
-msgid ""
-"<literal>os-vol-mig-status-attr:migstat</literal> - the status of this "
-"volume's migration (<literal>None</literal> means that a migration is not "
-"currently in progress)."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_volume-migration.xml88(para)
-msgid ""
-"<literal>os-vol-mig-status-attr:name_id</literal> - the volume ID that this "
-"volume's name on the back-end is based on. Before a volume is ever migrated,"
-" its name on the back-end storage may be based on the volume's ID (see the "
-"<option>volume_name_template</option> configuration parameter). For example,"
-" if <option>volume_name_template</option> is kept as the default value "
-"(<literal>volume-%s</literal>), your first LVM back-end has a logical volume"
-" named <literal>volume-6088f80a-f116-4331-ad48-9afb0dfb196c</literal>. "
-"During the course of a migration, if you create a volume and copy over the "
-"data, the volume get the new name but keeps its original ID. This is exposed"
-" by the <literal>name_id</literal> attribute."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_volume-migration.xml106(para)
-msgid ""
-"If you plan to decommission a block storage node, you must stop the "
-"<systemitem class=\"service\">cinder</systemitem> volume service on the node"
-" after performing the migration."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_volume-migration.xml109(para)
-msgid ""
-"On nodes that run CentOS, Fedora, openSUSE, RedHat Enterprise Linux, or SUSE"
-" Linux Enterprise, run:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_volume-migration.xml114(para)
-msgid "On nodes that run Ubuntu or Debian, run:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_volume-migration.xml118(para)
-msgid ""
-"Stopping the <systemitem>cinder</systemitem> volume service will prevent "
-"volumes from being allocated to the node."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_volume-migration.xml121(para)
-msgid "Migrate this volume to the second LVM back-end:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_volume-migration.xml123(para)
-msgid ""
-"You can use the <placeholder-1/> command to see the status of the migration."
-" While migrating, the <literal>migstat</literal> attribute shows states such"
-" as <literal>migrating</literal> or <literal>completing</literal>. On error,"
-" <literal>migstat</literal> is set to <literal>None</literal> and the "
-"<literal>host</literal> attribute shows the original host. On success, in "
-"this example, the output looks like:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_volume-migration.xml153(para)
-msgid ""
-"Note that <literal>migstat</literal> is None, <literal>host</literal> is the"
-" new host, and <literal>name_id</literal> holds the ID of the volume created"
-" by the migration. If you look at the second LVM back end, you find the "
-"logical volume <literal>volume-133d1f56-9ffc-"
-"4f57-8798-d5217d851862</literal>."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_volume-migration.xml160(para)
-msgid ""
-"The migration is not visible to non-admin users (for example, through the "
-"volume <literal>status</literal>). However, some operations are not allowed "
-"while a migration is taking place, such as attaching/detaching a volume and "
-"deleting a volume. If a user performs such an action during a migration, an "
-"error is returned."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_volume-migration.xml168(para)
-msgid "Migrating volumes that have snapshots are currently not allowed."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_nfs_backend.xml5(title)
-msgid "Configure an NFS storage back end"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_nfs_backend.xml6(para)
-msgid ""
-"This section explains how to configure OpenStack Block Storage to use NFS "
-"storage. You must be able to access the NFS shares from the server that "
-"hosts the <systemitem class=\"service\">cinder</systemitem> volume service."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_nfs_backend.xml30(title)
-msgid "Configure Block Storage to use an NFS storage back end"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_nfs_backend.xml32(para)
-msgid ""
-"Log in as <systemitem>root</systemitem> to the system hosting the "
-"<systemitem>cinder</systemitem> volume service."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_nfs_backend.xml37(para)
-msgid ""
-"Create a text file named <filename>nfsshares</filename> in "
-"<filename>/etc/cinder/</filename>."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_nfs_backend.xml43(para)
-msgid ""
-"Add an entry to <filename>/etc/cinder/nfsshares</filename> for each NFS "
-"share that the <systemitem class=\"service\">cinder</systemitem> volume "
-"service should use for back end storage. Each entry should be a separate "
-"line, and should use the following format:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_nfs_backend.xml51(replaceable)
-msgid "SHARE"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_nfs_backend.xml54(para)
-msgid ""
-"<replaceable>HOST</replaceable> is the IP address or host name of the NFS "
-"server."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_nfs_backend.xml56(para)
-msgid ""
-"<replaceable>SHARE</replaceable> is the absolute path to an existing and "
-"accessible NFS share."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_nfs_backend.xml62(para)
-msgid ""
-"Set <filename>/etc/cinder/nfsshares</filename> to be owned by the "
-"<systemitem>root</systemitem> user and the <systemitem>cinder</systemitem> "
-"group:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_nfs_backend.xml70(para)
-msgid ""
-"Set <filename>/etc/cinder/nfsshares</filename> to be readable by members of "
-"the <systemitem>cinder</systemitem> group:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_nfs_backend.xml78(para)
-msgid ""
-"Configure the <systemitem class=\"service\">cinder</systemitem> volume "
-"service to use the <filename>/etc/cinder/nfsshares</filename> file created "
-"earlier. To do so, open the <filename>/etc/cinder/cinder.conf</filename> "
-"configuration file and set the <literal>nfs_shares_config</literal> "
-"configuration key to <filename>/etc/cinder/nfsshares</filename>."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_nfs_backend.xml117(para)
-msgid ""
-"Optionally, provide any additional NFS mount options required in your "
-"environment in the <literal>nfs_mount_options</literal> configuration key of"
-" <filename>/etc/cinder/cinder.conf</filename>. If your NFS shares do not "
-"require any additional mount options (or if you are unsure), skip this step."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_nfs_backend.xml132(para)
-msgid ""
-"Replace <replaceable>OPTIONS</replaceable> with the mount options to be used"
-" when accessing NFS shares. See the manual page for NFS for more information"
-" on available mount options (<placeholder-1/>)."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_nfs_backend.xml140(para)
-msgid ""
-"Configure the <systemitem class=\"service\">cinder</systemitem> volume "
-"service to use the correct volume driver, namely "
-"<literal>cinder.volume.drivers.nfs.NfsDriver</literal>. To do so, open the "
-"<filename>/etc/cinder/cinder.conf</filename> configuration file and set the "
-"<literal>volume_driver</literal> configuration key to "
-"<literal>cinder.volume.drivers.nfs.NfsDriver</literal>."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_nfs_backend.xml161(para)
-msgid ""
-"To restart the <systemitem class=\"service\">cinder</systemitem> volume "
-"service on CentOS, Fedora, openSUSE, Red Hat Enterprise Linux, or SUSE Linux"
-" Enterprise, run:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_nfs_backend.xml166(para)
-msgid ""
-"To restart the <systemitem>cinder</systemitem> volume service on Ubuntu or "
-"Debian, run:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_nfs_backend.xml172(para)
-msgid ""
-"The <literal>nfs_sparsed_volumes</literal> configuration key determines "
-"whether volumes are created as sparse files and grown as needed or fully "
-"allocated up front. The default and recommended value is "
-"<literal>true</literal>, which ensures volumes are initially created as "
-"sparse files."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_nfs_backend.xml180(para)
-msgid ""
-"Setting <literal>nfs_sparsed_volumes</literal> to <literal>false</literal> "
-"will result in volumes being fully allocated at the time of creation. This "
-"leads to increased delays in volume creation."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_nfs_backend.xml186(para)
-msgid ""
-"However, should you choose to set <literal>nfs_sparsed_volumes</literal> to "
-"<literal>false</literal>, you can do so directly in "
-"<filename>/etc/cinder/cinder.conf</filename>."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_nfs_backend.xml200(para)
-msgid ""
-"If a client host has SELinux enabled, the "
-"<systemitem>virt_use_nfs</systemitem> Boolean should also be enabled if the "
-"host requires access to NFS volumes on an instance. To enable this Boolean, "
-"run the following command as the <systemitem>root</systemitem> user:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_nfs_backend.xml207(para)
-msgid ""
-"This command also makes the Boolean persistent across reboots. Run this "
-"command on all client hosts that require access to NFS volumes on an "
-"instance. This includes all Compute nodes."
-msgstr ""
-
 #: ./doc/admin-guide-cloud/ch_dashboard.xml6(title)
 #: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml109(title)
 msgid "Dashboard"
@@ -2596,28 +981,6 @@ msgstr ""
 
 #: ./doc/admin-guide-cloud/ch_dashboard.xml15(para)
 msgid "For more information about using the dashboard, see: <placeholder-1/>"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_ts_duplicate_3par_host.xml4(title)
-msgid "Duplicate 3PAR host"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_ts_duplicate_3par_host.xml7(para)
-msgid ""
-"This error may be caused by a volume being exported outside of OpenStack "
-"using a host name different from the system name that OpenStack expects. "
-"This error could be displayed with the IQN if the host was exported using "
-"iSCSI."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_ts_duplicate_3par_host.xml13(para)
-msgid ""
-"Change the 3PAR host name to match the one that OpenStack expects. The 3PAR "
-"host constructed by the driver uses just the local hostname, not the fully "
-"qualified domain name (FQDN) of the compute host. For example, if the FQDN "
-"was <emphasis>myhost.example.com</emphasis>, just "
-"<emphasis>myhost</emphasis> would be used as the 3PAR hostname. IP addresses"
-" are not allowed as host names on the 3PAR storage server."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/ch_compute.xml11(title)
@@ -4704,11 +3067,11 @@ msgid ""
 "<placeholder-1/>"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-service-groups.xml11(title)
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-service-groups.xml9(title)
 msgid "Configure Compute service groups"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-service-groups.xml12(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-service-groups.xml10(para)
 msgid ""
 "To effectively manage and utilize compute nodes, the Compute service must "
 "know their statuses. For example, when a user launches a new VM, the Compute"
@@ -4716,7 +3079,7 @@ msgid ""
 " ServiceGroup API to get information about whether a node is alive."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-service-groups.xml16(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-service-groups.xml14(para)
 msgid ""
 "When a compute worker (running the <systemitem class=\"service\">nova-"
 "compute</systemitem> daemon) starts, it calls the "
@@ -4727,15 +3090,15 @@ msgid ""
 "the compute worker status."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-service-groups.xml21(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-service-groups.xml19(para)
 msgid "The database, ZooKeeper, and Memcache drivers are available."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-service-groups.xml23(title)
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-service-groups.xml21(title)
 msgid "Database ServiceGroup driver"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-service-groups.xml24(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-service-groups.xml22(para)
 msgid ""
 "By default, Compute uses the database driver to track node liveness. In a "
 "compute worker, this driver periodically sends a <placeholder-1/> command to"
@@ -4744,7 +3107,7 @@ msgid ""
 "whether a node is dead."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-service-groups.xml28(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-service-groups.xml26(para)
 msgid ""
 "The driver has limitations, which can be an issue depending on your setup. "
 "The more compute worker nodes that you have, the more pressure you put on "
@@ -4754,18 +3117,18 @@ msgid ""
 "the database workload."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-service-groups.xml33(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-service-groups.xml31(para)
 msgid ""
 "The database contains data that is both transient (whether the node is "
 "alive) and persistent (for example, entries for VM owners). With the "
 "ServiceGroup abstraction, Compute can treat each type separately."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-service-groups.xml38(title)
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-service-groups.xml36(title)
 msgid "ZooKeeper ServiceGroup driver"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-service-groups.xml39(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-service-groups.xml37(para)
 msgid ""
 "The ZooKeeper ServiceGroup driver works by using ZooKeeper ephemeral nodes. "
 "ZooKeeper, in contrast to databases, is a distributed system. Its load is "
@@ -4779,7 +3142,7 @@ msgid ""
 "<placeholder-1/> command in the group directory."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-service-groups.xml49(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-service-groups.xml47(para)
 msgid ""
 "To use the ZooKeeper driver, you must install ZooKeeper servers and client "
 "libraries. Setting up ZooKeeper servers is outside the scope of this guide "
@@ -4787,7 +3150,7 @@ msgid ""
 "href=\"http://zookeeper.apache.org/\">Apache Zookeeper</link>)."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-service-groups.xml53(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-service-groups.xml51(para)
 msgid ""
 "To use ZooKeeper, you must install client-side Python libraries on every "
 "nova node: <literal>python-zookeeper</literal> – the official Zookeeper "
@@ -4795,31 +3158,31 @@ msgid ""
 "binding work with the eventlet threading model."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-service-groups.xml57(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-service-groups.xml55(para)
 msgid ""
 "The following example assumes the ZooKeeper server addresses and ports are "
 "<literal>192.168.2.1:2181</literal>, <literal>192.168.2.2:2181</literal>, "
 "and <literal>192.168.2.3:2181</literal>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-service-groups.xml60(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-service-groups.xml58(para)
 msgid ""
 "The following values in the <filename>/etc/nova/nova.conf</filename> file "
 "(on every node) are required for the <systemitem>ZooKeeper</systemitem> "
 "driver:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-service-groups.xml67(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-service-groups.xml65(para)
 msgid ""
 "To customize the Compute Service groups, use the following configuration "
 "option settings:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-service-groups.xml72(title)
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-service-groups.xml70(title)
 msgid "Memcache ServiceGroup driver"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-service-groups.xml73(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-service-groups.xml71(para)
 msgid ""
 "The <systemitem>memcache</systemitem> ServiceGroup driver uses memcached, "
 "which is a distributed memory object caching system that is often used to "
@@ -4827,7 +3190,7 @@ msgid ""
 "href=\"http://memcached.org/\">memcached.org</link>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-service-groups.xml77(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-service-groups.xml75(para)
 msgid ""
 "To use the <systemitem>memcache</systemitem> driver, you must install "
 "<systemitem>memcached</systemitem>. However, because "
@@ -4838,7 +3201,7 @@ msgid ""
 "Installation Guide</citetitle></link> for more information."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-service-groups.xml85(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-service-groups.xml83(para)
 msgid ""
 "The following values in the <filename>/etc/nova/nova.conf</filename> file "
 "(on every node) are required for the <systemitem>memcache</systemitem> "
@@ -6503,7 +4866,7 @@ msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml7(para)
 msgid ""
-"The Networking service, code-named Neutron, provides an API that lets you "
+"The Networking service, code-named neutron, provides an API that lets you "
 "define network connectivity and addressing in the cloud. The Networking "
 "service enables operators to leverage different networking technologies to "
 "power their cloud networking. The Networking service also provides an API to"
@@ -8095,8 +6458,8 @@ msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml1482(para)
 msgid ""
-"In releases of Neutron prior to Icehouse, this package was named neutron-"
-"plugin-metering-agent."
+"In releases of neutron prior to Icehouse, this package was named <package"
+">neutron-plugin-metering-agent</package>."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml1487(para)
@@ -8237,9 +6600,9 @@ msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml46(para)
 msgid ""
-"Runs the Neutron, Keystone, and Nova services that are required to deploy "
-"VMs. The node must have at least one network interface that is connected to "
-"the Management Network."
+"Runs the Networking, Identity, and Compute services that are required to "
+"deploy VMs. The node must have at least one network interface that is "
+"connected to the Management Network."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml51(para)
@@ -8253,13 +6616,13 @@ msgid ""
 "There will be three hosts in the setup. <table rules=\"all\"><caption>Hosts "
 "for "
 "demo</caption><thead><tr><th>Host</th><th>Description</th></tr></thead><tbody><tr><td>OpenStack"
-" Controller host - "
-"controlnode</td><placeholder-1/></tr><tr><td>HostA</td><td>Runs Nova "
-"compute, the Neutron L2 agent and DHCP "
+" controller host - "
+"controlnode</td><placeholder-1/></tr><tr><td>HostA</td><td>Runs <systemitem "
+"class=\"service\">nova-compute</systemitem>, the Neutron L2 agent and DHCP "
 "agent</td></tr><tr><td>HostB</td><td>Same as HostA</td></tr></tbody></table>"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml70(title)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml71(title)
 #: ./doc/admin-guide-cloud/networking/section_networking-scenarios.xml16(title)
 #: ./doc/admin-guide-cloud/networking/section_networking-scenarios.xml458(title)
 #: ./doc/admin-guide-cloud/networking/section_networking-config-identity.xml146(th)
@@ -8268,82 +6631,82 @@ msgstr ""
 msgid "Configuration"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml72(title)
-msgid "controlnode: Neutron Server"
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml73(title)
+msgid "controlnode: neutron server"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml74(para)
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml99(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml75(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml100(para)
 msgid ""
 "Neutron configuration file <filename>/etc/neutron/neutron.conf</filename>:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml84(para)
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml108(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml85(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml109(para)
 msgid ""
 "Update the plug-in configuration file "
 "<filename>/etc/neutron/plugins/linuxbridge/linuxbridge_conf.ini</filename>:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml97(title)
-msgid "HostA and HostB: L2 Agent"
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml98(title)
+msgid "HostA and Hostb: L2 agent"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml120(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml121(para)
 msgid ""
 "Update the nova configuration file <filename>/etc/nova/nova.conf</filename>:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml135(title)
-msgid "HostA and HostB: DHCP Agent"
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml136(title)
+msgid "HostA and HostB: DHCP agent"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml137(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml138(para)
 msgid ""
 "Update the DHCP configuration file "
 "<filename>/etc/neutron/dhcp_agent.ini</filename>:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml145(title)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml146(title)
 msgid "Commands in agent management and scheduler extensions"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml147(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml148(para)
 msgid ""
 "The following commands require the tenant running the command to have an "
 "admin role."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml150(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml151(para)
 msgid ""
 "Ensure that the following environment variables are set. These are used by "
-"the various clients to access Keystone."
+"the various clients to access the Identity Service."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml159(title)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml160(title)
 #: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml68(caption)
 msgid "Settings"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml160(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml161(para)
 msgid "To experiment, you need VMs and a neutron network:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml180(title)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml181(title)
 msgid "Manage agents in neutron deployment"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml181(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml182(para)
 msgid ""
 "Every agent which supports these extensions will register itself with the "
 "neutron server when it starts up."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml185(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml186(para)
 msgid "List all agents:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml196(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml197(para)
 msgid ""
 "The output shows information for four agents. The <literal>alive</literal> "
 "field shows <literal>:-)</literal> if the agent reported its state within "
@@ -8352,11 +6715,11 @@ msgid ""
 " is <literal>xxx</literal>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml208(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml209(para)
 msgid "List the DHCP agents that host a specified network"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml210(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml211(para)
 msgid ""
 "In some deployments, one DHCP agent is not enough to hold all network data. "
 "In addition, you must have a backup for it even when the deployment is "
@@ -8364,27 +6727,27 @@ msgid ""
 "DHCP agent can host more than one network."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml217(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml218(para)
 msgid "List DHCP agents that host a specified network:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml227(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml228(para)
 msgid "List the networks hosted by a given DHCP agent."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml229(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml230(para)
 msgid "This command is to show which networks a given dhcp agent is managing."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml239(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml240(para)
 msgid "Show agent details."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml240(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml241(para)
 msgid "The <placeholder-1/> command shows details for a specified agent:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml267(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml268(para)
 msgid ""
 "In this output, <literal>heartbeat_timestamp</literal> is the time on the "
 "neutron server. You do not need to synchronize all agents to this time for "
@@ -8393,33 +6756,33 @@ msgid ""
 "DHCP agent and it hosts one network, one subnet, and three ports."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml277(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml278(para)
 msgid ""
 "Different types of agents show different details. The following output shows"
 " information for a Linux bridge agent:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml302(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml303(para)
 msgid ""
 "The output shows <literal>bridge-mapping</literal> and the number of virtual"
 " network devices on this L2 agent."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml309(title)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml310(title)
 msgid "Manage assignment of networks to DHCP agent"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml310(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml311(para)
 msgid ""
 "Now that you have run the <placeholder-1/> and <placeholder-2/> commands, "
 "you can add a network to a DHCP agent and remove one from it."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml316(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml317(para)
 msgid "Default scheduling."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml317(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml318(para)
 msgid ""
 "When you create a network with one port, you can schedule it to an active "
 "DHCP agent. If many active DHCP agents are running, select one randomly. You"
@@ -8427,7 +6790,7 @@ msgid ""
 "<systemitem class=\"service\">nova-schedule</systemitem> later on."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml335(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml336(para)
 msgid ""
 "It is allocated to DHCP agent on HostA. If you want to validate the behavior"
 " through the <placeholder-1/> command, you must create a subnet for the "
@@ -8435,93 +6798,93 @@ msgid ""
 "class=\"service\">dnsmasq</systemitem> service only if there is a DHCP."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml345(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml346(para)
 msgid "Assign a network to a given DHCP agent."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml347(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml348(para)
 msgid "To add another DHCP agent to host the network, run this command:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml358(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml359(para)
 msgid "Both DHCP agents host the <literal>net2</literal> network."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml363(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml364(para)
 msgid "Remove a network from a specified DHCP agent."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml365(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml366(para)
 msgid ""
 "This command is the sibling command for the previous one. Remove "
 "<literal>net2</literal> from the DHCP agent for HostA:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml377(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml378(para)
 msgid ""
 "You can see that only the DHCP agent for HostB is hosting the "
 "<literal>net2</literal> network."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml384(title)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml385(title)
 msgid "HA of DHCP agents"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml385(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml386(para)
 msgid ""
 "Boot a VM on net2. Let both DHCP agents host <literal>net2</literal>. Fail "
 "the agents in turn to see if the VM can still get the desired IP."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml390(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml391(para)
 msgid "Boot a VM on net2."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml411(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml412(para)
 msgid "Make sure both DHCP agents hosting 'net2'."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml413(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml414(para)
 msgid "Use the previous commands to assign the network to agents."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml425(title)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml426(title)
 msgid "Test the HA"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml427(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml428(para)
 msgid ""
 "Log in to the <literal>myserver4</literal> VM, and run "
 "<literal>udhcpc</literal>, <literal>dhclient</literal> or other DHCP client."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml434(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml435(para)
 msgid ""
 "Stop the DHCP agent on HostA. Besides stopping the <code>neutron-dhcp-"
 "agent</code> binary, you must stop the <placeholder-1/> processes."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml442(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml443(para)
 msgid "Run a DHCP client in VM to see if it can get the wanted IP."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml447(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml448(para)
 msgid "Stop the DHCP agent on HostB too."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml451(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml452(para)
 msgid "Run <placeholder-1/> in the VM; it cannot get the wanted IP."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml456(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml457(para)
 msgid "Start DHCP agent on HostB. The VM gets the wanted IP again."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml461(title)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml462(title)
 msgid "Disable and remove an agent"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml462(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml463(para)
 msgid ""
 "An administrator might want to disable an agent if a system hardware or "
 "software upgrade is planned. Some agents that support scheduling also "
@@ -8531,11 +6894,11 @@ msgid ""
 "the resources on the agent before you delete the agent."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml471(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml472(para)
 msgid "To run the following commands, you must stop the DHCP agent on HostA."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml493(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml494(para)
 msgid ""
 "After deletion, if you restart the DHCP agent, it appears on the agent list "
 "again."
@@ -10449,13 +8812,13 @@ msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking_arch.xml77(para)
 msgid ""
-"Networking relies on the Identity service (Keystone) for the authentication "
+"Networking relies on the Identity service (keystone) for the authentication "
 "and authorization of all API requests."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking_arch.xml82(para)
 msgid ""
-"Compute (Nova) interacts with Networking through calls to its standard API. "
+"Compute (nova) interacts with Networking through calls to its standard API. "
 "As part of creating a VM, the <systemitem class=\"service\">nova-"
 "compute</systemitem> service communicates with the Networking API to plug "
 "each virtual NIC on the VM into a particular network."
@@ -10463,7 +8826,7 @@ msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking_arch.xml91(para)
 msgid ""
-"The Dashboard (Horizon) integrates with the Networking API, enabling "
+"The dashboard (horizon) integrates with the Networking API, enabling "
 "administrators and tenant users to create and manage network services "
 "through a web-based GUI."
 msgstr ""
@@ -12139,7 +10502,7 @@ msgid ""
 "network. Then, when ports are created on that network they are automatically"
 " created and associated with the specific queue size that was associated "
 "with the network. Because one size queue for a every port on a network might"
-" not be optimal, a scaling factor from the Nova flavor 'rxtx_factor' is "
+" not be optimal, a scaling factor from the nova flavor 'rxtx_factor' is "
 "passed in from Compute when creating the port to scale the queue."
 msgstr ""
 
@@ -12559,7 +10922,7 @@ msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml1470(para)
 msgid ""
-"This section explains the Big Switch Neutron plug-in-specific extension."
+"This section explains the Big Switch neutron plug-in-specific extension."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml1472(title)
@@ -12583,8 +10946,8 @@ msgstr ""
 msgid ""
 "Each tenant router has a set of router rules associated with it. Each router"
 " rule has the attributes in this table. Router rules and their attributes "
-"can be set using the <placeholder-1/> command, through the Horizon interface"
-" or the Neutron API."
+"can be set using the <placeholder-1/> command, through the horizon interface"
+" or the Networking API."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml1485(caption)
@@ -13937,6 +12300,1643 @@ msgid ""
 " Compute security groups by setting <code>security_group_api = "
 "neutron</code> in the <filename>nova.conf</filename> file. After you set "
 "this option, all Compute security group commands are proxied to Networking."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml6(title)
+msgid "Back up and restore volumes"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml7(para)
+msgid ""
+"The <placeholder-1/> command-line interface provides the tools for creating "
+"a volume backup. You can restore a volume from a backup as long as the "
+"backup's associated database information (or backup metadata) is intact in "
+"the Block Storage database."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml13(para)
+msgid "Run this command to create a backup of a volume:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml14(replaceable)
+msgid "VOLUME"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml15(para)
+msgid ""
+"Where <replaceable>VOLUME</replaceable> is the name or ID of the volume."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml17(para)
+msgid ""
+"The previous command will also return a backup ID. Use this backup ID when "
+"restoring the volume, as in:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml19(replaceable)
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups-export-import.xml17(replaceable)
+msgid "backup_ID"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml20(para)
+msgid ""
+"As mentioned earlier, volume backups are dependent on the Block Storage "
+"database. Because of this, we recommend that you also back up your Block "
+"Storage database regularly in order to ensure data recovery."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml24(para)
+msgid ""
+"Alternatively, you can export and save the metadata of selected volume "
+"backups. Doing so will preclude the need to back up the entire Block Storage"
+" database. This is particularly useful if you only need a small subset of "
+"volumes to survive a catastrophic database failure."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml29(para)
+msgid ""
+"For more information on how to export and import volume backup metadata, see"
+" <xref linkend=\"volume-backup-restore-export-import\"/>."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_cinder_config.xml11(title)
+msgid "Troubleshoot the Block Storage configuration"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_cinder_config.xml13(para)
+msgid ""
+"Most Block Storage errors are caused by incorrect volume configurations that"
+" result in volume creation failues. To resolve these failures, review these "
+"logs:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_cinder_config.xml17(para)
+msgid ""
+"<systemitem class=\"service\">cinder-api</systemitem> log "
+"(<filename>/var/log/cinder/api.log</filename>)"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_cinder_config.xml19(para)
+msgid ""
+"<systemitem class=\"service\">cinder-volume</systemitem> log "
+"(<filename>/var/log/cinder/volume.log</filename>)"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_cinder_config.xml22(para)
+msgid ""
+"The <systemitem class=\"service\">cinder-api</systemitem> log is useful for "
+"determining if you have endpoint or connectivity issues. If you send a "
+"request to create a volume and it fails, review the <systemitem "
+"class=\"service\">cinder-api</systemitem> log to determine whether the "
+"request made it to the Block Storage service. If the request is logged and "
+"you see no errors or trace-backs, check the <systemitem class=\"service"
+"\">cinder-volume</systemitem> log for errors or trace-backs."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_cinder_config.xml32(para)
+msgid ""
+"Create commands are listed in the <systemitem class=\"service\">cinder-"
+"api</systemitem> log."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_cinder_config.xml35(para)
+msgid ""
+"These entries in the <filename>cinder.openstack.common.log</filename> file "
+"can be used to assist in troubleshooting your block storage configuration."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_cinder_config.xml107(para)
+msgid ""
+"These common issues might occur during configuration. To correct, use these "
+"suggested solutions."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_cinder_config.xml111(para)
+msgid ""
+"Issues with <literal>state_path</literal> and <literal>volumes_dir</literal>"
+" settings."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_cinder_config.xml113(para)
+msgid ""
+"The OpenStack Block Storage uses <placeholder-1/> as the default iscsi "
+"helper and implements persistent targets. This means that in the case of a "
+"tgt restart or even a node reboot your existing volumes on that node will be"
+" restored automatically with their original IQN."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_cinder_config.xml118(para)
+msgid ""
+"In order to make this possible the iSCSI target information needs to be "
+"stored in a file on creation that can be queried in case of restart of the "
+"tgt daemon. By default, Block Storage uses a <literal>state_path</literal> "
+"variable, which if installing with Yum or APT should be set to "
+"<filename>/var/lib/cinder/</filename>. The next part is the "
+"<literal>volumes_dir</literal> variable, by default this just simply appends"
+" a \"<literal>volumes</literal>\" directory to the "
+"<literal>state_path</literal>. The result is a file-tree "
+"<filename>/var/lib/cinder/volumes/</filename>."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_cinder_config.xml131(para)
+msgid ""
+"While this should all be handled by the installer, it can go wrong. If you "
+"have trouble creating volumes and this directory does not exist you should "
+"see an error message in the <systemitem class=\"service\">cinder-"
+"volume</systemitem> log indicating that the <literal>volumes_dir</literal> "
+"does not exist, and it should provide information about which path it was "
+"looking for."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_cinder_config.xml141(para)
+msgid "The persistent tgt include file."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_cinder_config.xml142(para)
+msgid ""
+"Along with the <option>volumes_dir</option> option, the iSCSI target driver "
+"also needs to be configured to look in the correct place for the persist "
+"files. This is a simple entry in the <filename>/etc/tgt/conf.d</filename> "
+"file that you should have set when you installed OpenStack. If issues occur,"
+" verify that you have a <filename>/etc/tgt/conf.d/cinder.conf</filename> "
+"file."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_cinder_config.xml151(para)
+msgid "If the file is not present, create it with this command:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_cinder_config.xml156(para)
+msgid ""
+"No sign of attach call in the <systemitem class=\"service\">cinder-"
+"api</systemitem> log."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_cinder_config.xml159(para)
+msgid ""
+"This is most likely going to be a minor adjustment to your "
+"<filename>nova.conf</filename> file. Make sure that your "
+"<filename>nova.conf</filename> has this entry:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_cinder_config.xml166(para)
+msgid ""
+"Failed to create iscsi target error in the <filename>cinder-"
+"volume.log</filename> file."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_cinder_config.xml170(para)
+msgid ""
+"You might see this error in <filename>cinder-volume.log</filename> after "
+"trying to create a volume that is 1 GB. To fix this issue:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_cinder_config.xml174(para)
+msgid ""
+"Change content of the <filename>/etc/tgt/targets.conf</filename> from "
+"<literal>include /etc/tgt/conf.d/*.conf</literal> to <literal>include "
+"/etc/tgt/conf.d/cinder_tgt.conf</literal>, as follows:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_cinder_config.xml183(para)
+msgid ""
+"Restart <systemitem class=\"service\">tgt</systemitem> and <systemitem "
+"class=\"service\">cinder-*</systemitem> services so they pick up the new "
+"configuration."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml10(title)
+msgid "Back up Block Storage service disks"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml11(para)
+msgid ""
+"While you can use the LVM snapshot to create snapshots, you can also use it "
+"to back up your volumes. By using LVM snapshot, you reduce the size of the "
+"backup; only existing data is backed up instead of the entire volume."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml15(para)
+msgid ""
+"To back up a volume, you must create a snapshot of it. An LVM snapshot is "
+"the exact copy of a logical volume, which contains data in a frozen state. "
+"This prevents data corruption, because data cannot be manipulated during the"
+" volume creation process. Remember that the volumes created through a "
+"<placeholder-1/> command exist in an LVM logical volume."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml22(para)
+msgid ""
+"You must also make sure that the operating system is not using the volume, "
+"and that all data has been flushed on the guest filesystems. This usually "
+"means that those filesystems have to be unmounted during the snapshot "
+"creation. They can be mounted again as soon as the logical volume snapshot "
+"has been created."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml27(para)
+msgid ""
+"Before you create the snapshot, you must have enough space to save it. As a "
+"precaution, you should have at least twice as much space as the potential "
+"snapshot size. If insufficient space is available, the snapshot might become"
+" corrupted."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml32(para)
+msgid ""
+"For this example, assume that a 100 GB volume named "
+"<literal>volume-00000001</literal> was created for an instance while only 4 "
+"GB are used. This example uses these commands to back up only those 4 GB:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml38(para)
+msgid "<placeholder-1/> command. Directly manipulates the volumes."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml42(para)
+msgid ""
+"<placeholder-1/> command. Discovers the partition table created inside the "
+"instance."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml46(para)
+msgid "<placeholder-1/> command. Creates a minimum-sized backup."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml50(para)
+msgid ""
+"<placeholder-1/> command. Calculates the backup checksum to check its "
+"consistency."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml54(para)
+msgid "You can apply this process to volumes of any size."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml56(title)
+msgid "To back up Block Storage service disks"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml58(title)
+msgid "Create a snapshot of a used volume"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml61(para)
+msgid "Use this command to list all volumes:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml65(para)
+msgid ""
+"Create the snapshot; you can do this while the volume is attached to an "
+"instance:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml68(para)
+msgid ""
+"Use the <option>--snapshot</option> configuration option to tell LVM that "
+"you want a snapshot of an already existing volume. The command includes the "
+"size of the space reserved for the snapshot volume, the name of the "
+"snapshot, and the path of an already existing volume. Generally, this path "
+"is <filename>/dev/cinder-"
+"volumes/<replaceable>$volume_name</replaceable></filename>."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml76(para)
+msgid ""
+"The size does not have to be the same as the volume of the snapshot. The "
+"<parameter>size</parameter> parameter defines the space that LVM reserves "
+"for the snapshot volume. As a precaution, the size should be the same as "
+"that of the original volume, even if the whole space is not currently used "
+"by the snapshot."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml87(para)
+msgid "Run the <placeholder-1/> command again to verify the snapshot:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml129(title)
+msgid "Partition table discovery"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml132(para)
+msgid ""
+"To exploit the snapshot with the <placeholder-1/> command, mount your "
+"partition on the Block Storage service server."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml136(para)
+msgid ""
+"The <placeholder-1/> utility discovers and maps table partitions. You can "
+"use it to view partitions that are created inside the instance. Without "
+"using the partitions created inside instances, you cannot see its content "
+"and create efficient backups."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml145(para)
+msgid ""
+"On a Debian-based distribution, you can use the <placeholder-1/> command to "
+"install <placeholder-2/>."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml150(para)
+msgid ""
+"If the tools successfully find and map the partition table, no errors are "
+"returned."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml155(para)
+msgid "To check the partition table map, run this command:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml158(para)
+msgid ""
+"You can see the <literal>cinder--volumes-volume--00000001--"
+"snapshot1</literal> partition."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml161(para)
+msgid ""
+"If you created more than one partition on that volume, you see several "
+"partitions; for example: <literal>cinder--volumes-volume--00000001--"
+"snapshot2</literal>, <literal>cinder--volumes-volume--00000001--"
+"snapshot3</literal>, and so on."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml169(para)
+msgid "Mount your partition:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml171(para)
+msgid "If the partition mounts successfully, no errors are returned."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml173(para)
+msgid ""
+"You can directly access the data inside the instance. If a message prompts "
+"you for a partition or you cannot mount it, determine whether enough space "
+"was allocated for the snapshot or the <placeholder-1/> command failed to "
+"discover the partition table."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml180(para)
+msgid "Allocate more space to the snapshot and try the process again."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml186(title)
+msgid "Use the <placeholder-1/> command to create archives"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml188(para)
+msgid "Create a backup of the volume:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml190(para)
+msgid ""
+"This command creates a <filename>tar.gz</filename> file that contains the "
+"data, <emphasis role=\"italic\">and data only</emphasis>. This ensures that "
+"you do not waste space by backing up empty sectors."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml196(title)
+msgid "Checksum calculation I"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml197(para)
+msgid ""
+"You should always have the checksum for your backup files. When you transfer"
+" the same file over the network, you can run a checksum calculation to "
+"ensure that your file was not corrupted during its transfer. The checksum is"
+" a unique ID for a file. If the checksums are different, the file is "
+"corrupted."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml203(para)
+msgid ""
+"Run this command to run a checksum for your file and save the result to a "
+"file:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml207(para)
+msgid ""
+"Use the <placeholder-1/> command carefully because the time it takes to "
+"complete the calculation is directly proportional to the size of the file."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml211(para)
+msgid ""
+"For files larger than around 4 to 6 GB, and depending on your CPU, the "
+"process might take a long time."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml217(title)
+msgid "After work cleaning"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml218(para)
+msgid ""
+"Now that you have an efficient and consistent backup, use this command to "
+"clean up the file system:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml223(para)
+msgid "Unmount the volume:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml227(para)
+msgid "Delete the partition table:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml231(para)
+msgid "Remove the snapshot:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml235(para)
+msgid "Repeat these steps for all your volumes."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml238(title)
+msgid "Automate your backups"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml239(para)
+msgid ""
+"Because more and more volumes might be allocated to your Block Storage "
+"service, you might want to automate your backups. The <link "
+"href=\"https://github.com/Razique/BashStuff/blob/master/SYSTEMS/OpenStack"
+"/SCR_5005_V01_NUAC-OPENSTACK-EBS-volumes-backup.sh\">SCR_5005_V01_NUAC-"
+"OPENSTACK-EBS-volumes-backup.sh</link> script assists you with this task. "
+"The script performs the operations from the previous example, but also "
+"provides a mail report and runs the backup based on the "
+"<option>backups_retention_days</option> setting."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml249(para)
+msgid ""
+"Launch this script from the server that runs the Block Storage service."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml251(para)
+msgid "This example shows a mail report:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml265(para)
+msgid ""
+"The script also enables you to SSH to your instances and run a "
+"<placeholder-1/> command into them. To make this work, enable the connection"
+" to the Compute project keys. If you do not want to run the <placeholder-2/>"
+" command, you can add <literal>enable_mysql_dump=0</literal> to the script "
+"to turn off this functionality."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_failed_connect_vol_FC_SAN.xml4(title)
+msgid "Failed to connect volume in FC SAN"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_failed_connect_vol_FC_SAN.xml6(title)
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_vol_attach_miss_sg_scan.xml10(title)
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_failed_attach_vol_after_detach.xml8(title)
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_non_existent_host.xml6(title)
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_no_emulator_x86_64.xml6(title)
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_HTTP_bad_req_in_cinder_vol_log.xml8(title)
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_non_existent_vlun.xml6(title)
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_failed_attach_vol_no_sysfsutils.xml6(title)
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_multipath_warn.xml8(title)
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_duplicate_3par_host.xml6(title)
+msgid "Problem"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_failed_connect_vol_FC_SAN.xml7(para)
+msgid ""
+"Compute node failed to connect to a volume in a Fibre Channel (FC) SAN "
+"configuration. The WWN may not be zoned correctly in your FC SAN that links "
+"the compute host to the storage array."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_failed_connect_vol_FC_SAN.xml15(title)
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_vol_attach_miss_sg_scan.xml24(title)
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_failed_attach_vol_after_detach.xml14(title)
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_non_existent_host.xml14(title)
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_no_emulator_x86_64.xml11(title)
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_HTTP_bad_req_in_cinder_vol_log.xml43(title)
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_non_existent_vlun.xml12(title)
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_failed_attach_vol_no_sysfsutils.xml15(title)
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_multipath_warn.xml20(title)
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_duplicate_3par_host.xml12(title)
+msgid "Solution"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_failed_connect_vol_FC_SAN.xml16(para)
+msgid ""
+"The network administrator must configure the FC SAN fabric by correctly "
+"zoning the WWN (port names) from your compute node HBAs."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_vol_attach_miss_sg_scan.xml8(title)
+msgid "Failed to Attach Volume, Missing sg_scan"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_vol_attach_miss_sg_scan.xml11(para)
+msgid ""
+"Failed to attach volume to an instance, <filename>sg_scan</filename> file "
+"not found. This warning and error occur when the "
+"<package>sg3-utils</package> package is not installed on the compute node. "
+"The IDs in your message are unique to your system:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_vol_attach_miss_sg_scan.xml25(para)
+msgid ""
+"Run this command on the compute node to install the "
+"<package>sg3-utils</package> package:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_failed_attach_vol_after_detach.xml5(title)
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_HTTP_bad_req_in_cinder_vol_log.xml5(title)
+msgid "Failed to attach volume after detaching"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_failed_attach_vol_after_detach.xml9(para)
+msgid "Failed to attach a volume after detaching the same volume."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_failed_attach_vol_after_detach.xml15(para)
+msgid ""
+"You must change the device name on the <placeholder-1/> command. The VM "
+"might not clean up after a <placeholder-2/> command runs. This example shows"
+" how the <placeholder-3/> command fails when you use the <code>vdb</code>, "
+"<code>vdc</code>, or <code>vdd</code> device names:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_failed_attach_vol_after_detach.xml34(para)
+msgid ""
+"You might also have this problem after attaching and detaching the same "
+"volume from the same VM with the same mount point multiple times. In this "
+"case, restart the KVM host."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_non_existent_host.xml4(title)
+msgid "Non-existent host"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_non_existent_host.xml7(para)
+msgid ""
+"This error could be caused by a volume being exported outside of OpenStack "
+"using a host name different from the system name that OpenStack expects. "
+"This error could be displayed with the IQN if the host was exported using "
+"iSCSI."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_non_existent_host.xml15(para)
+msgid ""
+"Host names constructed by the driver use just the local hostname, not the "
+"fully qualified domain name (FQDN) of the Compute host. For example, if the "
+"FQDN was <emphasis>myhost.example.com</emphasis>, just "
+"<emphasis>myhost</emphasis> would be used as the 3PAR hostname. IP addresses"
+" are not allowed as host names on the 3PAR storage server."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups-export-import.xml6(title)
+msgid "Export and import backup metadata"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups-export-import.xml7(para)
+msgid ""
+"A volume backup can only be restored on the same Block Storage service. This"
+" is because restoring a volume from a backup requires metadata available on "
+"the database used by the Block Storage service."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups-export-import.xml11(para)
+msgid ""
+"For information on how to back up and restore a volume, see <xref linkend"
+"=\"volume-backup-restore\"/>."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups-export-import.xml13(para)
+msgid ""
+"You can, however, export the metadata of a volume backup. To do so, run this"
+" command as an OpenStack <literal>admin</literal> user (presumably, after "
+"creating a volume backup):"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups-export-import.xml18(para)
+msgid ""
+"Where <replaceable>backup_ID</replaceable> is the volume backup's ID. This "
+"command should return the backup's corresponding database information as "
+"encoded string metadata."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups-export-import.xml21(para)
+msgid ""
+"Exporting and storing this encoded string metadata allows you to completely "
+"restore the backup, even in the event of a catastrophic database failure. "
+"This will preclude the need to back up the entire Block Storage database, "
+"particularly if you only need to keep complete backups of a small subset of "
+"volumes."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups-export-import.xml27(para)
+msgid ""
+"In addition, having a volume backup and its backup metadata also provides "
+"volume portability. Specifically, backing up a volume and exporting its "
+"metadata will allow you to restore the volume on a completely different "
+"Block Storage database, or even on a different cloud service. To do so, "
+"first import the backup metadata to the Block Storage database and then "
+"restore the backup."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups-export-import.xml33(para)
+msgid ""
+"To import backup metadata, run the following command as an OpenStack "
+"<literal>admin</literal>:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups-export-import.xml35(replaceable)
+msgid "metadata"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups-export-import.xml36(para)
+msgid ""
+"Where <replaceable>metadata</replaceable> is the backup metadata exported "
+"earlier."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups-export-import.xml38(para)
+msgid ""
+"Once you have imported the backup metadata into a Block Storage database, "
+"restore the volume (<xref linkend=\"volume-backup-restore\"/>)."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_no_emulator_x86_64.xml4(title)
+msgid "Cannot find suitable emulator for x86_64"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_no_emulator_x86_64.xml7(para)
+msgid ""
+"When you attempt to create a VM, the error shows the VM is in the "
+"<code>BUILD</code> then <code>ERROR</code> state."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_no_emulator_x86_64.xml12(para)
+msgid ""
+"On the KVM host run, <code>cat /proc/cpuinfo</code>. Make sure the "
+"<code>vme</code> and <code>svm</code> flags are set."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_no_emulator_x86_64.xml14(para)
+msgid ""
+"Follow the instructions in the <link "
+"href=\"http://docs.openstack.org/icehouse/config-"
+"reference/content/kvm.html#section_kvm_enable\"> enabling KVM section</link>"
+" of the <citetitle>Configuration Reference</citetitle> to enable hardware "
+"virtualization support in your BIOS."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml5(title)
+msgid "Configure a GlusterFS back end"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml6(para)
+msgid ""
+"This section explains how to configure OpenStack Block Storage to use "
+"GlusterFS as a back end. You must be able to access the GlusterFS shares "
+"from the server that hosts the <systemitem "
+"class=\"service\">cinder</systemitem> volume service."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml14(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml12(para)
+msgid ""
+"The <systemitem class=\"service\">cinder</systemitem> volume service is "
+"named <literal>openstack-cinder-volume</literal> on the following "
+"distributions:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml19(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml194(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml17(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml100(para)
+msgid "CentOS"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml20(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml197(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml18(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml103(para)
+msgid "Fedora"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml21(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml200(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml19(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml106(para)
+msgid "openSUSE"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml22(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml203(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml20(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml109(para)
+msgid "Red Hat Enterprise Linux"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml24(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml206(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml22(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml112(para)
+msgid "SUSE Linux Enterprise"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml27(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml25(para)
+msgid ""
+"In Ubuntu and Debian distributions, the <systemitem "
+"class=\"service\">cinder</systemitem> volume service is named <literal"
+">cinder-volume</literal>."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml31(para)
+msgid ""
+"Mounting GlusterFS volumes requires utilities and libraries from the "
+"<package>glusterfs-fuse</package> package. This package must be installed on"
+" all systems that will access volumes backed by GlusterFS."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml38(para)
+msgid ""
+"The utilities and libraries required for mounting GlusterFS volumes on "
+"Ubuntu and Debian distributions are available from the <package>glusterfs-"
+"client</package> package instead."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml44(para)
+msgid ""
+"For information on how to install and configure GlusterFS, refer to the "
+"<link "
+"href=\"http://gluster.org/community/documentation/index.php/Main_Page\">GlusterDocumentation</link>"
+" page."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml49(title)
+msgid "Configure GlusterFS for OpenStack Block Storage"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml50(para)
+msgid ""
+"The GlusterFS server must also be configured accordingly in order to allow "
+"OpenStack Block Storage to use GlusterFS shares:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml55(para)
+msgid "Log in as <systemitem>root</systemitem> to the GlusterFS server."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml61(para)
+msgid ""
+"Set each Gluster volume to use the same UID and GID as the "
+"<systemitem>cinder</systemitem> user:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml65(replaceable)
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml66(replaceable)
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml88(replaceable)
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml129(replaceable)
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml153(replaceable)
+msgid "VOL_NAME"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml65(replaceable)
+msgid "cinder-uid"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml66(replaceable)
+msgid "cinder-gid"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml67(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml130(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml52(para)
+msgid "Where:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml69(para)
+msgid "<replaceable>VOL_NAME</replaceable> is the Gluster volume name."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml71(para)
+msgid ""
+"<replaceable>cinder-uid</replaceable> is the UID of the "
+"<systemitem>cinder</systemitem> user."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml72(para)
+msgid ""
+"<replaceable>cinder-gid</replaceable> is the GID of the "
+"<systemitem>cinder</systemitem> user."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml75(para)
+msgid ""
+"The default UID and GID of the <systemitem>cinder</systemitem> user is "
+"<literal>165</literal> on most distributions."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml83(para)
+msgid ""
+"Configure each Gluster volume to accept <systemitem>libgfapi</systemitem> "
+"connections. To do this, set each Gluster volume to allow insecure ports:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml91(para)
+msgid ""
+"Enable client connections from unprivileged ports. To do this, add the "
+"following line to <filename>/etc/glusterfs/glusterd.vol</filename>:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml99(para)
+msgid "Restart the <systemitem>glusterd</systemitem> service:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml106(title)
+msgid "Configure Block Storage to use a GlusterFS back end"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml107(para)
+msgid "After you configure the GlusterFS service, complete these steps:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml112(para)
+msgid ""
+"Log in as <systemitem>root</systemitem> to the system hosting the cinder "
+"volume service."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml118(para)
+msgid ""
+"Create a text file named <filename>glusterfs</filename> in "
+"<filename>/etc/cinder/</filename>."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml124(para)
+msgid ""
+"Add an entry to <filename>/etc/cinder/glusterfs</filename> for each "
+"GlusterFS share that OpenStack Block Storage should use for back end "
+"storage. Each entry should be a separate line, and should use the following "
+"format:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml129(replaceable)
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml153(replaceable)
+#: ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml51(replaceable)
+msgid "HOST"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml135(para)
+msgid ""
+"<replaceable>HOST</replaceable> is the IP address or host name of the Red "
+"Hat Storage server."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml141(para)
+msgid ""
+"<replaceable>VOL_NAME</replaceable> is the name an existing and accessible "
+"volume on the GlusterFS server."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml148(para)
+msgid ""
+"Optionally, if your environment requires additional mount options for a "
+"share, you can add them to the share's entry:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml153(replaceable)
+#: ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml131(replaceable)
+msgid "OPTIONS"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml154(para)
+msgid ""
+"Replace <replaceable>OPTIONS</replaceable> with a comma-separated list of "
+"mount options."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml160(para)
+msgid ""
+"Set <filename>/etc/cinder/glusterfs</filename> to be owned by the "
+"<systemitem>root</systemitem> user and the <systemitem>cinder</systemitem> "
+"group."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml167(para)
+msgid ""
+"Set <filename>/etc/cinder/glusterfs</filename> to be readable by members of "
+"the <systemitem>cinder</systemitem> group:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml171(replaceable)
+msgid "FILE"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml174(para)
+msgid ""
+"Configure OpenStack Block Storage to use the "
+"<filename>/etc/cinder/glusterfs</filename> file created earlier. To do so, "
+"open the <filename>/etc/cinder/cinder.conf</filename> configuration file and"
+" set the <literal>glusterfs_shares_config</literal> configuration key to "
+"<filename>/etc/cinder/glusterfs</filename>."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml182(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml219(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml263(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml88(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml125(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml150(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml191(para)
+msgid ""
+"On distributions that include <application>openstack-config</application>, "
+"you can configure this by running the following command instead:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml189(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml95(para)
+msgid ""
+"The following distributions include <application>openstack-"
+"config</application>:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml211(para)
+msgid ""
+"Configure OpenStack Block Storage to use the correct volume driver, namely "
+"<literal>cinder.volume.drivers.glusterfs</literal>. To do so, open the "
+"<filename>/etc/cinder/cinder.conf</filename> configuration file and set the "
+"<literal>volume_driver</literal> configuration key to "
+"<literal>cinder.volume.drivers.glusterfs</literal>."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml227(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml158(para)
+msgid "You can now restart the service to apply the configuration."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml230(para)
+msgid ""
+"To restart the <systemitem class=\"service\">cinder</systemitem> volume "
+"service on CentOS, Fedora, openSUSE, RedHat Enterprise Linux, or SUSE Linux "
+"Enterprise, run:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml235(para)
+msgid ""
+"To restart the <systemitem class=\"service\">cinder</systemitem> volume "
+"service on Ubuntu or Debian, run:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml240(para)
+msgid "OpenStack Block Storage is now configured to use a GlusterFS back end."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml243(para)
+msgid ""
+"In <filename>/etc/cinder/cinder.conf</filename>, the "
+"<literal>glusterfs_sparsed_volumes</literal> configuration key determines "
+"whether volumes are created as sparse files and grown as needed or fully "
+"allocated up front. The default and recommended value of this key is "
+"<literal>true</literal>, which ensures volumes are initially created as "
+"sparse files."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml252(para)
+msgid ""
+"Setting <literal>glusterfs_sparsed_volumes</literal> to "
+"<literal>false</literal> will result in volumes being fully allocated at the"
+" time of creation. This leads to increased delays in volume creation."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml258(para)
+msgid ""
+"However, should you choose to set "
+"<literal>glusterfs_sparsed_volumes</literal> to <literal>false</literal>, "
+"you can do so directly in <filename>/etc/cinder/cinder.conf</filename>."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml272(para)
+msgid ""
+"If a client host has SELinux enabled, the "
+"<systemitem>virt_use_fusefs</systemitem> Boolean should also be enabled if "
+"the host requires access to GlusterFS volumes on an instance. To enable this"
+" Boolean, run the following command as the <systemitem>root</systemitem> "
+"user:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml279(para)
+msgid ""
+"This command also makes the Boolean persistent across reboots. Run this "
+"command on all client hosts that require access to GlusterFS volumes on an "
+"instance. This includes all compute nodes."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_HTTP_bad_req_in_cinder_vol_log.xml9(para)
+msgid ""
+"These errors appear in the <filename>cinder-volume.log</filename> file."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_HTTP_bad_req_in_cinder_vol_log.xml44(para)
+msgid ""
+"You need to update your copy of the <filename>hp_3par_fc.py</filename> "
+"driver which contains the synchronization code."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_non_existent_vlun.xml4(title)
+msgid "Non-existent VLUN"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_non_existent_vlun.xml7(para)
+msgid ""
+"This error occurs if the 3PAR host exists with the correct host name that "
+"the OpenStack Block Storage drivers expect but the volume was created in a "
+"different Domain."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_non_existent_vlun.xml13(para)
+msgid ""
+"The <code>hp3par_domain</code> configuration items either need to be updated"
+" to use the domain the 3PAR host currently resides in, or the 3PAR host "
+"needs to be moved to the domain that the volume was created in."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_removal.xml5(title)
+msgid "Gracefully remove a GlusterFS volume from usage"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_removal.xml6(para)
+msgid ""
+"Configuring the <systemitem>cinder</systemitem> volume service to use "
+"GlusterFS involves creating a shares file (for example, "
+"<filename>/etc/cinder/glusterfs</filename>). This shares file lists each "
+"GlusterFS volume (with its corresponding storage server) that the "
+"<systemitem>cinder</systemitem> volume service can use for back end storage."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_removal.xml13(para)
+msgid ""
+"To remove a GlusterFS volume from usage as a back end, delete the volume's "
+"corresponding entry from the shares file. After doing so, restart the Block "
+"Storage services."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_removal.xml16(para)
+msgid ""
+"To restart the Block Storage services on CentOS, Fedora, openSUSE, Red Hat "
+"Enterprise Linux, or SUSE Linux Enterprise, run:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_removal.xml20(para)
+msgid "To restart the Block Storage services on Ubuntu or Debian, run:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_removal.xml23(para)
+msgid ""
+"Restarting the Block Storage services will prevent the "
+"<systemitem>cinder</systemitem> volume service from exporting the deleted "
+"GlusterFS volume. This will prevent any instances from mounting the volume "
+"from that point onwards."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_removal.xml28(para)
+msgid ""
+"However, the removed GlusterFS volume might still be mounted on an instance "
+"at this point. Typically, this is the case when the volume was already "
+"mounted while its entry was deleted from the shares file. Whenever this "
+"occurs, you will have to unmount the volume as normal after the Block "
+"Storage services are restarted."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_failed_attach_vol_no_sysfsutils.xml4(title)
+msgid "Failed to attach volume, systool is not installed"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_failed_attach_vol_no_sysfsutils.xml7(para)
+msgid ""
+"This warning and error occurs if you do not have the required "
+"<filename>sysfsutils</filename> package installed on the compute node."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_failed_attach_vol_no_sysfsutils.xml16(para)
+msgid ""
+"Run the following command on the compute node to install the "
+"<filename>sysfsutils</filename> packages."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml5(title)
+msgid "Configure a multiple-storage back-end"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml6(para)
+msgid ""
+"With multiple storage back-ends configured, you can create several back-end "
+"storage solutions serving the same OpenStack Compute configuration. "
+"Basically, multi back-end launches one <systemitem class=\"service\">cinder-"
+"volume</systemitem> for each back-end."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml11(para)
+msgid ""
+"In a multi back-end configuration, each back-end has a name "
+"(<literal>volume_backend_name</literal>). Several back-ends can have the "
+"same name. In that case, the scheduler properly decides which back-end the "
+"volume has to be created in."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml16(para)
+msgid ""
+"The name of the back-end is declared as an extra-specification of a volume "
+"type (such as, <literal>volume_backend_name=LVM_iSCSI</literal>). When a "
+"volume is created, the scheduler chooses an appropriate back-end to handle "
+"the request, according to the volume type specified by the user."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml23(title)
+msgid "Enable multi back-end"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml24(para)
+msgid ""
+"To enable a multi back-end configuration, you must set the "
+"<option>enabled_backends</option> flag in the "
+"<filename>cinder.conf</filename> file. This flag defines the names "
+"(separated by a comma) of the configuration groups for the different back-"
+"ends: one name is associated to one configuration group for a back-end (such"
+" as, <literal>[lvmdriver-1]</literal>)."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml32(para)
+msgid ""
+"The configuration group name is not related to the "
+"<literal>volume_backend_name</literal>."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml35(para)
+msgid ""
+"The options for a configuration group must be defined in the group (or "
+"default options are used). All the standard Block Storage configuration "
+"options (<literal>volume_group</literal>, <literal>volume_driver</literal>, "
+"and so on) might be used in a configuration group. Configuration values in "
+"the <literal>[DEFAULT]</literal> configuration group are not used."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml43(para)
+msgid "These examples show three back-ends:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml57(para)
+msgid ""
+"In this configuration, <literal>lvmdriver-1</literal> and "
+"<literal>lvmdriver-2</literal> have the same "
+"<literal>volume_backend_name</literal>. If a volume creation requests the "
+"<literal>LVM_iSCSI</literal> back-end name, the scheduler uses the capacity "
+"filter scheduler to choose the most suitable driver, which is either "
+"<literal>lvmdriver-1</literal> or <literal>lvmdriver-2</literal>. The "
+"capacity filter scheduler is enabled by default. The next section provides "
+"more information. In addition, this example presents a "
+"<literal>lvmdriver-3</literal> back-end."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml70(title)
+msgid "Configure Block Storage scheduler multi back-end"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml71(para)
+msgid ""
+"You must enable the <option>filter_scheduler</option> option to use multi "
+"back-end. Filter scheduler acts in two steps:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml76(para)
+msgid ""
+"The filter scheduler filters the available back-ends. By default, "
+"<literal>AvailabilityZoneFilter</literal>, <literal>CapacityFilter</literal>"
+" and <literal>CapabilitiesFilter</literal> are enabled."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml84(para)
+msgid ""
+"The filter scheduler weighs the previously filtered back-ends. By default, "
+"<literal>CapacityWeigher</literal> is enabled. The "
+"<literal>CapacityWeigher</literal> attributes higher scores to back-ends "
+"with the most available."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml92(para)
+msgid ""
+"The scheduler uses the filtering and weighing process to pick the best back-"
+"end to handle the request, and explicitly creates volumes on specific back-"
+"ends through the use of volume types."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml99(title)
+msgid "Volume type"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml100(para)
+msgid ""
+"Before using it, a volume type has to be declared to Block Storage. This can"
+" be done by the following command:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml103(para)
+msgid ""
+"Then, an extra-specification has to be created to link the volume type to a "
+"back-end name. Run this command:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml107(para)
+msgid ""
+"This example creates a <literal>lvm</literal> volume type with "
+"<literal>volume_backend_name=LVM_iSCSI</literal> as extra-specifications."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml110(para)
+msgid "Create another volume type:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml113(para)
+msgid ""
+"This second volume type is named <literal>lvm_gold</literal> and has "
+"<literal>LVM_iSCSI_b</literal> as back-end name."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml118(para)
+msgid "To list the extra-specifications, use this command:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml123(para)
+msgid ""
+"If a volume type points to a <literal>volume_backend_name</literal> that "
+"does not exist in the Block Storage configuration, the "
+"<literal>filter_scheduler</literal> returns an error that it cannot find a "
+"valid host with the suitable back-end."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml132(title)
+msgid "Usage"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml133(para)
+msgid ""
+"When you create a volume, you must specify the volume type. The extra-"
+"specifications of the volume type are used to determine which back-end has "
+"to be used. <placeholder-1/> Considering the <literal>cinder.conf</literal> "
+"described previously, the scheduler creates this volume on "
+"<literal>lvmdriver-1</literal> or <literal>lvmdriver-2</literal>."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml142(para)
+msgid "This second volume is created on <literal>lvmdriver-3</literal>."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_multipath_warn.xml6(title)
+msgid "Multipath Call Failed Exit"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_multipath_warn.xml9(para)
+msgid ""
+"Multipath call failed exit. This warning occurs in the Compute log if you do"
+" not have the optional <filename>multipath-tools</filename> package "
+"installed on the compute node. This is an optional package and the volume "
+"attachment does work without the multipath tools installed. If the <filename"
+">multipath-tools</filename> package is installed on the compute node, it is "
+"used to perform the volume attachment. The IDs in your message are unique to"
+" your system."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_multipath_warn.xml21(para)
+msgid ""
+"Run the following command on the compute node to install the <filename"
+">multipath-tools</filename> packages."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-migration.xml6(title)
+msgid "Migrate volumes"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-migration.xml7(para)
+msgid ""
+"OpenStack has the ability to migrate volumes between back-ends. Migrating a "
+"volume transparently moves its data from the current back-end for the volume"
+" to a new one. This is an administrator function, and can be used for "
+"functions including storage evacuation (for maintenance or decommissioning),"
+" or manual optimizations (for example, performance, reliability, or cost)."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-migration.xml14(para)
+msgid "These workflows are possible for a migration:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-migration.xml17(para)
+msgid ""
+"If the storage can migrate the volume on its own, it is given the "
+"opportunity to do so. This allows the Block Storage driver to enable "
+"optimizations that the storage might be able to perform. If the back-end is "
+"not able to perform the migration, the Block Storage uses one of two generic"
+" flows, as follows."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-migration.xml25(para)
+msgid ""
+"If the volume is not attached, the Block Storage service creates a volume "
+"and copies the data from the original to the new volume."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-migration.xml29(para)
+msgid ""
+"While most back-ends support this function, not all do. See the driver "
+"documentation in the <link href=\"http://docs.openstack.org/icehouse/config-"
+"reference/content/\"><citetitle>OpenStack Configuration "
+"Reference</citetitle></link> for more details."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-migration.xml38(para)
+msgid ""
+"If the volume is attached to a VM instance, the Block Storage creates a "
+"volume, and calls Compute to copy the data from the original to the new "
+"volume. Currently this is supported only by the Compute libvirt driver."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-migration.xml45(para)
+msgid ""
+"As an example, this scenario shows two LVM back-ends and migrates an "
+"attached volume from one to the other. This scenario uses the third "
+"migration flow."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-migration.xml48(para)
+msgid "First, list the available back-ends:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-migration.xml52(para)
+msgid ""
+"Next, as the admin user, you can see the current status of the volume "
+"(replace the example ID with your own):"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-migration.xml76(para)
+msgid "Note these attributes:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-migration.xml79(para)
+msgid ""
+"<literal>os-vol-host-attr:host</literal> - the volume's current back-end."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-migration.xml83(para)
+msgid ""
+"<literal>os-vol-mig-status-attr:migstat</literal> - the status of this "
+"volume's migration (<literal>None</literal> means that a migration is not "
+"currently in progress)."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-migration.xml88(para)
+msgid ""
+"<literal>os-vol-mig-status-attr:name_id</literal> - the volume ID that this "
+"volume's name on the back-end is based on. Before a volume is ever migrated,"
+" its name on the back-end storage may be based on the volume's ID (see the "
+"<option>volume_name_template</option> configuration parameter). For example,"
+" if <option>volume_name_template</option> is kept as the default value "
+"(<literal>volume-%s</literal>), your first LVM back-end has a logical volume"
+" named <literal>volume-6088f80a-f116-4331-ad48-9afb0dfb196c</literal>. "
+"During the course of a migration, if you create a volume and copy over the "
+"data, the volume get the new name but keeps its original ID. This is exposed"
+" by the <literal>name_id</literal> attribute."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-migration.xml106(para)
+msgid ""
+"If you plan to decommission a block storage node, you must stop the "
+"<systemitem class=\"service\">cinder</systemitem> volume service on the node"
+" after performing the migration."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-migration.xml109(para)
+msgid ""
+"On nodes that run CentOS, Fedora, openSUSE, RedHat Enterprise Linux, or SUSE"
+" Linux Enterprise, run:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-migration.xml114(para)
+msgid "On nodes that run Ubuntu or Debian, run:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-migration.xml118(para)
+msgid ""
+"Stopping the <systemitem>cinder</systemitem> volume service will prevent "
+"volumes from being allocated to the node."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-migration.xml121(para)
+msgid "Migrate this volume to the second LVM back-end:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-migration.xml123(para)
+msgid ""
+"You can use the <placeholder-1/> command to see the status of the migration."
+" While migrating, the <literal>migstat</literal> attribute shows states such"
+" as <literal>migrating</literal> or <literal>completing</literal>. On error,"
+" <literal>migstat</literal> is set to <literal>None</literal> and the "
+"<literal>host</literal> attribute shows the original host. On success, in "
+"this example, the output looks like:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-migration.xml153(para)
+msgid ""
+"Note that <literal>migstat</literal> is None, <literal>host</literal> is the"
+" new host, and <literal>name_id</literal> holds the ID of the volume created"
+" by the migration. If you look at the second LVM back end, you find the "
+"logical volume <literal>volume-133d1f56-9ffc-"
+"4f57-8798-d5217d851862</literal>."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-migration.xml160(para)
+msgid ""
+"The migration is not visible to non-admin users (for example, through the "
+"volume <literal>status</literal>). However, some operations are not allowed "
+"while a migration is taking place, such as attaching/detaching a volume and "
+"deleting a volume. If a user performs such an action during a migration, an "
+"error is returned."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-migration.xml168(para)
+msgid "Migrating volumes that have snapshots are currently not allowed."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml5(title)
+msgid "Configure an NFS storage back end"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml6(para)
+msgid ""
+"This section explains how to configure OpenStack Block Storage to use NFS "
+"storage. You must be able to access the NFS shares from the server that "
+"hosts the <systemitem class=\"service\">cinder</systemitem> volume service."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml30(title)
+msgid "Configure Block Storage to use an NFS storage back end"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml32(para)
+msgid ""
+"Log in as <systemitem>root</systemitem> to the system hosting the "
+"<systemitem>cinder</systemitem> volume service."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml37(para)
+msgid ""
+"Create a text file named <filename>nfsshares</filename> in "
+"<filename>/etc/cinder/</filename>."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml43(para)
+msgid ""
+"Add an entry to <filename>/etc/cinder/nfsshares</filename> for each NFS "
+"share that the <systemitem class=\"service\">cinder</systemitem> volume "
+"service should use for back end storage. Each entry should be a separate "
+"line, and should use the following format:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml51(replaceable)
+msgid "SHARE"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml54(para)
+msgid ""
+"<replaceable>HOST</replaceable> is the IP address or host name of the NFS "
+"server."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml56(para)
+msgid ""
+"<replaceable>SHARE</replaceable> is the absolute path to an existing and "
+"accessible NFS share."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml62(para)
+msgid ""
+"Set <filename>/etc/cinder/nfsshares</filename> to be owned by the "
+"<systemitem>root</systemitem> user and the <systemitem>cinder</systemitem> "
+"group:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml70(para)
+msgid ""
+"Set <filename>/etc/cinder/nfsshares</filename> to be readable by members of "
+"the <systemitem>cinder</systemitem> group:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml78(para)
+msgid ""
+"Configure the <systemitem class=\"service\">cinder</systemitem> volume "
+"service to use the <filename>/etc/cinder/nfsshares</filename> file created "
+"earlier. To do so, open the <filename>/etc/cinder/cinder.conf</filename> "
+"configuration file and set the <literal>nfs_shares_config</literal> "
+"configuration key to <filename>/etc/cinder/nfsshares</filename>."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml117(para)
+msgid ""
+"Optionally, provide any additional NFS mount options required in your "
+"environment in the <literal>nfs_mount_options</literal> configuration key of"
+" <filename>/etc/cinder/cinder.conf</filename>. If your NFS shares do not "
+"require any additional mount options (or if you are unsure), skip this step."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml132(para)
+msgid ""
+"Replace <replaceable>OPTIONS</replaceable> with the mount options to be used"
+" when accessing NFS shares. See the manual page for NFS for more information"
+" on available mount options (<placeholder-1/>)."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml140(para)
+msgid ""
+"Configure the <systemitem class=\"service\">cinder</systemitem> volume "
+"service to use the correct volume driver, namely "
+"<literal>cinder.volume.drivers.nfs.NfsDriver</literal>. To do so, open the "
+"<filename>/etc/cinder/cinder.conf</filename> configuration file and set the "
+"<literal>volume_driver</literal> configuration key to "
+"<literal>cinder.volume.drivers.nfs.NfsDriver</literal>."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml161(para)
+msgid ""
+"To restart the <systemitem class=\"service\">cinder</systemitem> volume "
+"service on CentOS, Fedora, openSUSE, Red Hat Enterprise Linux, or SUSE Linux"
+" Enterprise, run:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml166(para)
+msgid ""
+"To restart the <systemitem>cinder</systemitem> volume service on Ubuntu or "
+"Debian, run:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml172(para)
+msgid ""
+"The <literal>nfs_sparsed_volumes</literal> configuration key determines "
+"whether volumes are created as sparse files and grown as needed or fully "
+"allocated up front. The default and recommended value is "
+"<literal>true</literal>, which ensures volumes are initially created as "
+"sparse files."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml180(para)
+msgid ""
+"Setting <literal>nfs_sparsed_volumes</literal> to <literal>false</literal> "
+"will result in volumes being fully allocated at the time of creation. This "
+"leads to increased delays in volume creation."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml186(para)
+msgid ""
+"However, should you choose to set <literal>nfs_sparsed_volumes</literal> to "
+"<literal>false</literal>, you can do so directly in "
+"<filename>/etc/cinder/cinder.conf</filename>."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml200(para)
+msgid ""
+"If a client host has SELinux enabled, the "
+"<systemitem>virt_use_nfs</systemitem> Boolean should also be enabled if the "
+"host requires access to NFS volumes on an instance. To enable this Boolean, "
+"run the following command as the <systemitem>root</systemitem> user:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml207(para)
+msgid ""
+"This command also makes the Boolean persistent across reboots. Run this "
+"command on all client hosts that require access to NFS volumes on an "
+"instance. This includes all Compute nodes."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_duplicate_3par_host.xml4(title)
+msgid "Duplicate 3PAR host"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_duplicate_3par_host.xml7(para)
+msgid ""
+"This error may be caused by a volume being exported outside of OpenStack "
+"using a host name different from the system name that OpenStack expects. "
+"This error could be displayed with the IQN if the host was exported using "
+"iSCSI."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_ts_duplicate_3par_host.xml13(para)
+msgid ""
+"Change the 3PAR host name to match the one that OpenStack expects. The 3PAR "
+"host constructed by the driver uses just the local hostname, not the fully "
+"qualified domain name (FQDN) of the compute host. For example, if the FQDN "
+"was <emphasis>myhost.example.com</emphasis>, just "
+"<emphasis>myhost</emphasis> would be used as the 3PAR hostname. IP addresses"
+" are not allowed as host names on the 3PAR storage server."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/image/section_glance-property-protection.xml6(title)
