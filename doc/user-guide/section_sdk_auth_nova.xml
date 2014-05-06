@@ -57,8 +57,8 @@ nova = nvclient.Client(auth_url=env['OS_AUTH_URL'],
   <programlisting language="python">import novaclient.auth_plugin
 import novaclient.v1_1.client as nvclient
 from os import environ as env
-auth_system = os.get('OS_AUTH_SYSTEM')
-if auth_system and auth_system != "keystone":
+auth_system = env.get('OS_AUTH_SYSTEM', 'keystone')
+if auth_system != "keystone":
   auth_plugin = novaclient.auth_plugin.load_plugin(auth_system)
 else:
   auth_plugin = None
