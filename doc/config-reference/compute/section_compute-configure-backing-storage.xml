@@ -4,27 +4,35 @@
          xmlns:xi="http://www.w3.org/2001/XInclude"
          version="5.0">
   <title>Configure Compute backing storage</title>
-  <para>Backing Storage is the storage used to provide
-  the expanded operating system image, and any ephemeral storage.
-  Inside the virtual machine, this is normally presented as two
-  virtual hard disks (for example, /dev/vda and /dev/vdb respectively).
-  However, inside OpenStack, this can be derived from one of three
-  methods: LVM, QCOW or RAW, chosen using the
-  <literal>libvirt_images_type</literal> option in <filename>nova.conf</filename>
-  on the compute node.</para>
-  <para>QCOW is the default backing store. It uses a copy-on-write philosophy to
-  delay allocation of storage until it is actually needed. This means that the
-  space required for the backing of an image can be significantly less on the real
-  disk than what seems available in the virtual machine operating system.
+  <para>
+    Backing Storage is the storage used to provide the expanded
+    operating system image, and any ephemeral storage. Inside the
+    virtual machine, this is normally presented as two virtual hard
+    disks (for example, <filename>/dev/vda</filename> and
+    <filename>/dev/vdb</filename> respectively). However, inside
+    OpenStack, this can be derived from one of three methods: LVM,
+    QCOW or RAW, chosen using the <literal>images_type</literal>
+    option in <filename>nova.conf</filename> on the compute node.
+  </para>
+  <para>
+    QCOW is the default backing store. It uses a copy-on-write
+    philosophy to delay allocation of storage until it is actually
+    needed. This means that the space required for the backing of an
+    image can be significantly less on the real disk than what seems
+    available in the virtual machine operating system.
  </para>
-  <para>RAW creates files without any sort of file formatting, effectively creating
-   files with the plain binary one would normally see on a real disk. This can
-   increase performance, but means that the entire size of the virtual disk is
-   reserved on the physical disk.
+  <para>
+    RAW creates files without any sort of file formatting, effectively
+    creating files with the plain binary one would normally see on a
+    real disk. This can increase performance, but means that the
+    entire size of the virtual disk is reserved on the physical disk.
  </para>
-  <para>Local <link xlink:href="http://http//en.wikipedia.org/wiki/Logical_Volume_Manager_(Linux)">LVM volumes</link>
-  can also be used.
-  Set <literal>libvirt_images_volume_group=nova_local</literal> where <literal>nova_local</literal> is the name
-  of the LVM group you have created.
- </para>
+  <para>
+    Local <link
+    xlink:href="http://http//en.wikipedia.org/wiki/Logical_Volume_Manager_(Linux)"
+    >LVM volumes</link> can also be used. Set
+    <literal>images_volume_group = nova_local</literal> where
+    <literal>nova_local</literal> is the name of the LVM group you
+    have created.
+  </para>
   </section>
