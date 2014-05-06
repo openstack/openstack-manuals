@@ -38,9 +38,9 @@
         <para>Network time services must be configured to ensure proper operation of the Hyper-V
             compute node. To set network time on your Hyper-V host you must run the
             following commands:</para>
-        <screen><prompt>C:\</prompt><userinput>net stop w32time</userinput>
-<prompt>C:\</prompt><userinput>w32tm /config /manualpeerlist:pool.ntp.org,0x8 /syncfromflags:MANUAL</userinput>
-<prompt>C:\</prompt><userinput>net start w32time</userinput></screen>
+        <screen><prompt>C:\></prompt><userinput>net stop w32time</userinput>
+<prompt>C:\></prompt><userinput>w32tm /config /manualpeerlist:pool.ntp.org,0x8 /syncfromflags:MANUAL</userinput>
+<prompt>C:\></prompt><userinput>net start w32time</userinput></screen>
     </section>
     <section xml:id="hyper-v-virtual-switch">
         <title>Configure Hyper-V virtual switching</title>
@@ -50,16 +50,16 @@
        </para>
         <para>To quickly enable an interface to be used as a Virtual Interface the following
             PowerShell may be used:</para>
-        <screen><prompt>PS C:\</prompt><userinput>$if = Get-NetIPAddress –IPAddress 192* | Get-NetIPInterface</userinput>
-<prompt>PS C:\</prompt><userinput>New-VMSwitch -NetAdapterName $if.ifAlias -Name yourbridgename –AllowManagementOS $false</userinput></screen>
+        <screen><prompt>PS C:\></prompt><userinput>$if = Get-NetIPAddress –IPAddress 192* | Get-NetIPInterface</userinput>
+<prompt>PS C:\></prompt><userinput>New-VMSwitch -NetAdapterName $if.ifAlias -Name yourbridgename –AllowManagementOS $false</userinput></screen>
     </section>
     <section xml:id="enable-iscsi-services-hyper-v">
         <title>Enable iSCSI initiator service</title>
         <para>To prepare the Hyper-V node to be able to attach to volumes provided by cinder
              you must first make sure the Windows iSCSI initiator service is running and
             started automatically.</para>
-        <screen><prompt>C:\</prompt><userinput>sc start MSiSCSI</userinput>
-<prompt>C:\</prompt><userinput>sc config MSiSCSI start="auto"</userinput></screen>
+        <screen><prompt>C:\></prompt><userinput>sc start MSiSCSI</userinput>
+<prompt>C:\></prompt><userinput>sc config MSiSCSI start="auto"</userinput></screen>
     </section>
     <section xml:id="live-migration-hyper-v">
         <title>Configure shared nothing live migration</title>
@@ -129,15 +129,15 @@
                 deployed with the setup must run with domain
                 credentials. You can set the service credentials
                 with:</para>
-                <screen><prompt>C:\</prompt><userinput>sc config openstack-compute obj="DOMAIN\username" password="password"</userinput></screen>
+                <screen><prompt>C:\></prompt><userinput>sc config openstack-compute obj="DOMAIN\username" password="password"</userinput></screen>
             </listitem>
         </itemizedlist>
         <para><emphasis role="bold">How to setup live migration on Hyper-V</emphasis></para>
         <para>To enable 'shared nothing live' migration, run the 3 PowerShell instructions below on
             each Hyper-V host:</para>
-        <screen><prompt>PS C:\</prompt><userinput>Enable-VMMigration</userinput>
-<prompt>PS C:\</prompt><userinput>Set-VMMigrationNetwork <replaceable>IP_ADDRESS</replaceable></userinput>
-<prompt>PS C:\</prompt><userinput>Set-VMHost –VirtualMachineMigrationAuthenticationTypeKerberos</userinput></screen>
+        <screen><prompt>PS C:\></prompt><userinput>Enable-VMMigration</userinput>
+<prompt>PS C:\></prompt><userinput>Set-VMMigrationNetwork <replaceable>IP_ADDRESS</replaceable></userinput>
+<prompt>PS C:\></prompt><userinput>Set-VMHost –VirtualMachineMigrationAuthenticationTypeKerberos</userinput></screen>
         <note>
             <para>Please replace the IP_ADDRESS with the address of the interface which will provide
                 the virtual switching for nova-network.</para>
@@ -211,7 +211,7 @@
         </itemizedlist>
         <para>You must install the following Python packages through <command>easy_install</command> or <command>pip</command>. Run the
             following replacing PACKAGENAME with the following packages:</para>
-        <screen><prompt>C:\</prompt><userinput>c:\Python27\Scripts\pip.exe install <replaceable>PACKAGE_NAME</replaceable></userinput></screen>
+        <screen><prompt>C:\></prompt><userinput>c:\Python27\Scripts\pip.exe install <replaceable>PACKAGE_NAME</replaceable></userinput></screen>
         <itemizedlist>
             <listitem>
                 <para>amqplib</para>
@@ -295,7 +295,7 @@
             installer and follow the prompts in the installation wizard. The default should be
             acceptable for the needs of the document.</para>
         <para>Once installed you may run the following to clone the Nova code.</para>
-        <screen><prompt>C:\</prompt><userinput>git.exe clone https://github.com/openstack/nova.git</userinput></screen>
+        <screen><prompt>C:\></prompt><userinput>git.exe clone https://github.com/openstack/nova.git</userinput></screen>
     </section>
     <section xml:id="sample_nova-conf-hyper-v">
         <title>Configure Nova.conf</title>
@@ -335,13 +335,13 @@ connection=mysql://nova:passwd@<replaceable>IP_ADDRESS</replaceable>/nova</progr
                 >http://technet.microsoft.com/en-us/library/cc772480.aspx</link></para>
         <para>Once you have successfully created a virtual machine, you can then upload the image to
             glance using the native glance-client:</para>
-        <screen><prompt>C:\</prompt><userinput>glance image-create --name="<replaceable>VM_IMAGE_NAME</replaceable>" --is-public=true --container-format=bare --disk-format=vhd</userinput></screen>
+        <screen><prompt>C:\></prompt><userinput>glance image-create --name="<replaceable>VM_IMAGE_NAME</replaceable>" --is-public=true --container-format=bare --disk-format=vhd</userinput></screen>
     </section>
     <section xml:id="running_compute-with-hyper-v">
         <title>Run Compute with Hyper-V</title>
         <para>To start the <systemitem class="service">nova-compute</systemitem> service, run this command from a console in the Windows
             server:</para>
-        <screen><prompt>C:\</prompt><userinput>C:\python27\python.exe c:\openstack\nova\bin\nova-compute.py</userinput></screen>
+        <screen><prompt>C:\></prompt><userinput>C:\python27\python.exe c:\openstack\nova\bin\nova-compute.py</userinput></screen>
     </section>
     <section xml:id="troubleshooting-hyper-v">
         <title>Troubleshoot Hyper-V configuration</title>
