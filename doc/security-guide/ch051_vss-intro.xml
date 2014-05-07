@@ -4,12 +4,7 @@
 %openstack;
 ]>
 
-<chapter xmlns:xi="http://www.w3.org/2001/XInclude"
-         xmlns:xlink="http://www.w3.org/1999/xlink"
-         xmlns="http://docbook.org/ns/docbook"
-         version="5.0"
-         xml:id="ch051_vss-intro">
-  <?dbhtml stop-chunking?>
+<chapter xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="ch051_vss-intro"><?dbhtml stop-chunking?>
     <title>Hypervisor selection</title>
     <para>Virtualization provides flexibility and other key benefits
     that enable cloud building. However, a virtualization stack also
@@ -99,7 +94,7 @@
         <para>One additional consideration when selecting a hypervisor is the availability of various formal certifications and attestations. While they may not be requirements for your specific organization, these certifications and attestations speak to the maturity, production readiness, and thoroughness of the testing a particular hypervisor platform has been subjected to.</para>
       </section>
       <section xml:id="ch051_vss-intro-idp262672">
-        <title>Common Criteria</title>
+        <title>Common criteria</title>
         <para>Common Criteria is an internationally standardized software evaluation process, used by governments and commercial companies to validate software technologies perform as advertised. In the government sector, NSTISSP No. 11 mandates that U.S. Government agencies only procure software which has been Common Criteria certified, a policy which has been in place since July 2002. It should be specifically noted that OpenStack has not undergone Common Criteria certification, however many of the available hypervisors have.</para>
         <para>In addition to validating a technologies capabilities, the Common Criteria process evaluates <emphasis>how</emphasis> technologies are developed.</para>
         <itemizedlist><listitem>
@@ -314,29 +309,57 @@
       </section>
       <section xml:id="ch051_vss-intro-idp396976">
         <title>Hypervisor vs. baremetal</title>
-        <para>To wrap up our discussion around hypervisor selection, it is important to call out the differences between using LXC (Linux Containers) or Baremetal systems vs using a hypervisor like KVM. Specifically, the focus of this security guide will be largely based on having a hypervisor and virtualization platform. However, should your implementation require the use of a baremetal or LXC environment, you will want to pay attention to the particular differences in regard to deployment of that environment. In particular, you will need to provide your end users with assurances that the node has been properly sanitized of their data prior to re-provisioning. Additionally, prior to reusing a node, you will need to provide assurances that the hardware has not been tampered or otherwise compromised.</para>
+        <para>It is important to recognise the difference between using LXC (Linux Containers) or Baremetal systems vs using a hypervisor like KVM. Specifically, the focus of this security guide will be largely based on having a hypervisor and virtualization platform. However, should your implementation require the use of a baremetal or LXC environment, you will want to pay attention to the particular differences in regard to deployment of that environment. In particular, you will need to provide your end users with assurances that the node has been properly sanitized of their data prior to re-provisioning. Additionally, prior to reusing a node, you will need to provide assurances that the hardware has not been tampered or otherwise compromised.</para>
         <para>It should be noted that while OpenStack has a baremetal project, a discussion of the particular security implications of running baremetal is beyond the scope of this book.</para>
         <para>Finally, due to the time constraints around a book sprint, the team chose to use KVM as the hypervisor in our example implementations and architectures.</para>
-        <note><para>There is an OpenStack Security Note pertaining to the <link xlink:href="https://bugs.launchpad.net/ossn/+bug/1098582">use of LXC in nova</link>.</para></note>
+        <note><para>There is an OpenStack Security Note pertaining to the <link xlink:href="https://bugs.launchpad.net/ossn/+bug/1098582">use of LXC in Compute</link>.</para></note>
+      </section>
+      <section xml:id='ch051_vss-intro-idpKMSTPS'>
+        <title>Hypervisor memory optimization</title>
+        <para>Many hypervisors use memory optimization techniques to overcommit memory to guest virtual machines. This is a useful feature that allows you to deploy very dense compute clusters. One way to achieve this is through de-duplication or “sharing” of memory pages. When two virtual machines have identical data in memory, there are advantages to having them reference the same memory. Typically this is achieved through Copy-On-Write (COW) mechanisms. These mechanisms have been shown to be vulnerable to side-channel attacks where one VM can infer something about the state of another and may not be appropriate for multi-tenant environments where not all tenants are trusted (or share the same levels of trust).</para>
+      </section>
+      <section xml:id='ch051_vss-intro-idpKMS'>
+      <title>KVM Kernel Samepage Merging</title>
+      <para>Introduced into the Linux kernel in version 2.6.32, Kernel
+Samepage Merging (KSM) consolidates identical memory pages between Linux
+processes. As each guest VM under the KVM hypervisor runs in its own process,
+KSM can be used to optimize memory use between VMs.</para>
+      </section>
+      <section xml:id='ch051_vss-intro-idpTPS'>
+            <title>XEN Transparent Page Sharing</title>
+            <para>XenServer 5.6 includes a memory overcommitment feature named
+Transparent Page Sharing (TPS). TPS scans memory in 4 KB chunks for any
+duplicates. When found, the Xen Virtual Machine Monitor (VMM) discards one of
+the duplicates and records the reference of the second one.</para>
+      </section>
+      <section xml:id="ch051_vss-intro-idpKMSTPSCons">
+            <title>Security considerations for memory optimization</title>
+            <para>Traditionally, memory de-duplication systems are vulnerable to
+side channel attacks. Both KSM and TPS have demonstrated to be vulnerable to
+some form of attack. In academic studies<footnote><para>Fine grain Cross-VM
+Attacks on Xen and VMware are possible - Apecechea, et al.  <link
+xlink:href="https://eprint.iacr.org/2014/248.pdf">https://eprint.iacr.org/2014/248.pdf</link></para></footnote><footnote><para>Memory
+Deduplication as a Threat to the Guest OS - Suzaki, et al. <link
+xlink:href="https://staff.aist.go.jp/c.artho/papers/EuroSec2011-suzaki.pdf">https://staff.aist.go.jp/c.artho/papers/EuroSec2011-suzaki.pdf</link></para></footnote>attackers
+were able to identify software packages and versions running on neighboring
+virtual machines as well as software downloads and other sensitive information
+through analyzing memory access times on the attacker VM.</para> <para>If a
+cloud deployment requires strong separation of tenants,
+as is the situation with public clouds and some private clouds, deployers
+should consider disabling TPS and KSM memory optimizations.</para>
       </section>
       <section xml:id="ch051_vss-intro-idp401408">
-        <title>Additional security features</title>
-        <para>Another thing to look into when selecting a hypervisor platform is the availability of specific security features. In particular, we are referring to features like Xen Server's XSM or Xen Security Modules, sVirt, Intel TXT, and AppArmor. The presence of these features will help increase your security profile as well as provide a good foundation.</para>
-        <para>The following table calls out these features by common hypervisor platforms.</para>
-
-          <informaltable rules="all" width="80%"><colgroup><col/><col/><col/><col/><col/><col/><col/><col/></colgroup>
-
-
-
-
-
-
-
-
-            <tbody>
+      <title>Additional security features</title>
+      <para>Another thing to look into when selecting a hypervisor platform
+is the availability of specific security features. In particular, we are
+referring to features like Xen Server's XSM or Xen Security Modules, sVirt,
+Intel TXT, and AppArmor. The presence of these features will help increase your
+security profile as well as provide a good foundation.</para> <para>The
+following table calls out these features by common hypervisor platforms.</para>
+          <informaltable rules="all" width="80%"><colgroup><col/><col/><col/><col/><col/><col/><col/></colgroup>
+      <tbody>
               <tr>
                 <td><para></para></td>
-                <td><para>KSM</para></td>
                 <td><para>XSM</para></td>
                 <td><para>sVirt</para></td>
                 <td><para>TXT</para></td>
@@ -346,7 +369,6 @@
               </tr>
               <tr>
                 <td><para>KVM</para></td>
-                <td><para>&CHECK;</para></td>
                 <td><para></para></td>
                 <td><para>&CHECK;</para></td>
                 <td><para>&CHECK;</para></td>
@@ -356,7 +378,6 @@
               </tr>
               <tr>
                 <td><para>Xen</para></td>
-                <td><para></para></td>
                 <td><para>&CHECK;</para></td>
                 <td><para></para></td>
                 <td><para>&CHECK;</para></td>
@@ -366,7 +387,6 @@
               </tr>
               <tr>
                 <td><para>ESXi</para></td>
-                <td><para></para></td>
                 <td><para></para></td>
                 <td><para></para></td>
                 <td><para>&CHECK;</para></td>
@@ -382,12 +402,9 @@
                 <td><para></para></td>
                 <td><para></para></td>
                 <td><para></para></td>
-                <td><para></para></td>
               </tr>
             </tbody>
           </informaltable>
-
-        <para><link xlink:href="http://www.linux-kvm.org/page/KSM">KSM: Kernel Samepage Merging</link></para>
         <para><link xlink:href="http://wiki.xen.org/wiki/Xen_Security_Modules_:_XSM-FLASK">XSM: Xen Security Modules</link></para>
         <para><link xlink:href="http://selinuxproject.org/page/SVirt">xVirt: Mandatory Access Control for Linux-based virtualization</link></para>
         <para><link xlink:href="http://www.intel.com/txt">TXT: Intel Trusted Execution Technology</link></para>
