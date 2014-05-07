@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://docbook.org/ns/docbook" xmlns:db="http://docbook.org/ns/docbook" version="5.0" xml:id="ch042_database-overview"><?dbhtml stop-chunking?>
-    <title>Database Access Control</title>
+<chapter xmlns:xi="http://www.w3.org/2001/XInclude"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns="http://docbook.org/ns/docbook"
+         version="5.0"
+         xml:id="ch042_database-overview">
+  <?dbhtml stop-chunking?>
+    <title>Database access control</title>
     <para>Each of the core OpenStack services (Compute, Identity, Networking, Block Storage) store state and configuration information in databases. In this chapter, we discuss how databases are used currently in OpenStack. We also explore security concerns, and the security ramifications of database backend choices.</para>
     <section xml:id="ch042_database-overview-idp44624">
-      <title>OpenStack Database Access Model</title>
+      <title>OpenStack database access model</title>
       <para>All of the services within an OpenStack project access a single database. There are presently no reference policies for creating table or row based access restrictions to the database.</para>
       <para>There are no general provisions for granular control of database operations in OpenStack. Access and privileges are granted simply based on whether a node has access to the database or not. In this scenario, nodes with access to the database may have full privileges to DROP, INSERT, or UPDATE functions.</para>
       <section xml:id="ch042_database-overview-idp46912">
-        <title>Granular Access Control</title>
+        <title>Granular access control</title>
         <para>By default, each of the OpenStack services and their processes access the database using a shared set of credentials. This makes auditing database operations and revoking access privileges from a service and its processes to the database particularly difficult.</para>
         <para><inlinemediaobject><imageobject role="html">
               <imagedata contentdepth="283" contentwidth="355" fileref="static/databaseusername.png" format="PNG" scalefit="1"/>
@@ -18,7 +23,7 @@
 </inlinemediaobject></para>
       </section>
       <section xml:id="ch042_database-overview-idp53264">
-        <title>Nova Conductor</title>
+        <title>Nova-conductor</title>
         <para>The compute nodes are the least trusted of the services in OpenStack because they host tenant instances. The <systemitem class="service">nova-conductor</systemitem> service has been introduced to serve as a database proxy, acting as an intermediary between the compute nodes and the database. We discuss its ramifications later in this chapter.</para>
         <para>We strongly recommend:</para>
         <itemizedlist><listitem>
@@ -44,7 +49,7 @@
       </section>
     </section>
     <section xml:id="ch042_database-overview-idp83456">
-      <title>Database Authentication and Access Control</title>
+      <title>Database authentication and access control</title>
       <para>Given the risks around access to the database, we strongly recommend that unique database user accounts be created per node needing access to the database. Doing this facilitates better analysis and auditing for ensuring compliance or in the event of a compromise of a node allows you to isolate the compromised host by removing access for that node to the database upon detection. When creating these per service endpoint database user accounts, care should be taken to ensure that they are configured to require SSL. Alternatively, for increased security it is recommended that the database accounts be configured using X.509 certificate authentication in addition to usernames and passwords.</para>
       <section xml:id="ch042_database-overview-idp85888">
         <title>Privileges</title>
@@ -53,13 +58,13 @@
       </section>
     </section>
     <section xml:id="ch042_database-overview-idp88080">
-      <title>Require User Accounts to Require SSL Transport</title>
+      <title>Require user accounts to require SSL transport</title>
       <section xml:id="ch042_database-overview-idp88784">
-        <title>Configuration Example #1: (MySQL)</title>
+        <title>Configuration example #1: (MySQL)</title>
         <programlisting>GRANT ALL ON dbname.* to 'compute01'@'hostname' IDENTIFIED BY 'password' REQUIRE SSL;</programlisting>
       </section>
       <section xml:id="ch042_database-overview-idp90096">
-        <title>Configuration Example #2: (PostgreSQL)</title>
+        <title>Configuration example #2: (PostgreSQL)</title>
         <para>In file pg_hba.conf:</para>
         <programlisting>hostssl dbname compute01 hostname md5</programlisting>
         <para>Note this command only adds the ability to communicate over SSL and is non-exclusive. Other access methods that may allow unencrypted transport should be disabled so that SSL is the sole access method.</para>
@@ -67,28 +72,28 @@
       </section>
     </section>
     <section xml:id="ch042_database-overview-idp93120">
-      <title>Authentication with X.509 Certificates</title>
+      <title>Authentication with X.509 certificates</title>
       <para>Security may be enhanced by requiring X.509 client certificates for authentication. Authenticating to the database in this manner provides greater identity assurance of the client making the connection to the database and ensures that the communications are encrypted.</para>
       <section xml:id="ch042_database-overview-idp94704">
-        <title>Configuration Example #1: (MySQL)</title>
+        <title>Configuration example #1: (MySQL)</title>
         <programlisting>GRANT ALL on dbname.* to 'compute01'@'hostname' IDENTIFIED BY 'password' REQUIRE SUBJECT
 '/C=XX/ST=YYY/L=ZZZZ/O=cloudycloud/CN=compute01' AND ISSUER
 '/C=XX/ST=YYY/L=ZZZZ/O=cloudycloud/CN=cloud-ca';</programlisting>
       </section>
       <section xml:id="ch042_database-overview-idp96192">
-        <title>Configuration Example #2: (PostgreSQL)</title>
+        <title>Configuration example #2: (PostgreSQL)</title>
         <programlisting>hostssl dbname compute01 hostname cert</programlisting>
       </section>
     </section>
     <section xml:id="ch042_database-overview-idp97536">
-      <title>OpenStack Service Database Configuration</title>
+      <title>OpenStack service database configuration</title>
       <para>If your database server is configured to require X.509 certificates for authentication you will need to specify the appropriate SQLAlchemy query parameters for the database backend. These parameters specify the certificate, private key, and certificate authority information for use with the initial connection string.</para>
       <para>Example of an <literal>:sql_connection</literal> string for X.509 certificate authentication to MySQL:</para>
       <programlisting language="ini">sql_connection = mysql://compute01:password@localhost/nova?
 charset=utf8&amp;ssl_ca=/etc/mysql/cacert.pem&amp;ssl_cert=/etc/mysql/server-cert.pem&amp;ssl_key=/etc/mysql/server-key.pem</programlisting>
     </section>
     <section xml:id="ch042_database-overview-idp100688">
-      <title>Nova Conductor</title>
+      <title>Nova-conductor</title>
       <para>OpenStack Compute offers a sub-service called <systemitem class="service">nova-conductor</systemitem> which proxies database connections, with the primary purpose of having the nova compute nodes interfacing with <systemitem class="service">nova-conductor</systemitem> to meet data persistence needs as opposed to directly communicating with the database.</para>
       <para>Nova-conductor receives requests over RPC and performs actions on behalf of the calling service without granting granular access to the database, its tables, or data within. Nova-conductor essentially abstracts direct database access away from compute nodes.</para>
       <para>This abstraction offers the advantage of restricting services to executing methods with parameters, similar to stored procedures, preventing a large number of systems from directly accessing or modifying database data. This is accomplished without having these procedures stored or executed within the context or scope of the database itself, a frequent criticism of typical stored procedures.</para>
@@ -101,7 +106,12 @@ charset=utf8&amp;ssl_ca=/etc/mysql/cacert.pem&amp;ssl_cert=/etc/mysql/server-cer
 </inlinemediaobject></para>
       <para>Unfortunately, this solution complicates the task of more fine-grained access control and the ability to audit data access. Because the <systemitem class="service">nova-conductor</systemitem> service receives requests over RPC, it highlights the importance of improving the security of messaging. Any node with access to the message queue may execute these methods provided by the <systemitem class="service">nova-conductor</systemitem> and effectively modifying the database.</para>
       <para>Finally, it should be noted that as of the Grizzly release, gaps exist where <systemitem class="service">nova-conductor</systemitem> is not used throughout OpenStack Compute. Depending on one's configuration, the use of <systemitem class="service">nova-conductor</systemitem> may not allow deployers to avoid the necessity of providing database GRANTs to individual compute host systems.</para>
-      <para>Note, as <systemitem class="service">nova-conductor</systemitem> only applies to OpenStack Compute, direct database access from compute hosts may still be necessary for the operation of other OpenStack components such as Telemetry (Ceilometer), Networking, and Block Storage.</para>
+      <para>Note, as <systemitem
+      class="service">nova-conductor</systemitem> only applies to
+      OpenStack Compute, direct database access from compute hosts may
+      still be necessary for the operation of other OpenStack
+      components such as Telemetry (ceilometer), Networking, and Block
+      Storage.</para>
       <para>Implementors should weigh the benefits and risks of both configurations before enabling or disabling the <systemitem class="service">nova-conductor</systemitem> service. We are not yet prepared to recommend the use of <systemitem class="service">nova-conductor</systemitem> in the Grizzly release. However, we do believe that this recommendation will change as additional features are added into OpenStack.</para>
       <para>To disable the <systemitem class="service">nova-conductor</systemitem>, place the following into your <filename>nova.conf</filename> file (on your compute hosts):</para>
       <programlisting language="ini">[conductor]

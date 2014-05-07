@@ -4,8 +4,13 @@
 %openstack;
 ]>
 
-<chapter xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://docbook.org/ns/docbook" xmlns:db="http://docbook.org/ns/docbook" version="5.0" xml:id="ch051_vss-intro"><?dbhtml stop-chunking?>
-    <title>Hypervisor Selection</title>
+<chapter xmlns:xi="http://www.w3.org/2001/XInclude"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns="http://docbook.org/ns/docbook"
+         version="5.0"
+         xml:id="ch051_vss-intro">
+  <?dbhtml stop-chunking?>
+    <title>Hypervisor selection</title>
     <para>Virtualization provides flexibility and other key benefits
     that enable cloud building. However, a virtualization stack also
     needs to be secured appropriately to reduce the risks associated
@@ -39,7 +44,7 @@
       <para>Within the framework of OpenStack you can choose from any number of hypervisor platforms and corresponding OpenStack plug-ins to optimize your cloud environment. In the context of the OpenStack Security guide, we will be highlighting hypervisor selection considerations as they pertain to feature sets that are critical to security. However, these considerations are not meant to be an exhaustive investigation into the pros and cons of particular hypervisors. NIST provides additional guidance in Special Publication 800-125, "<emphasis>Guide to Security for Full Virtualization Technologies</emphasis>".</para>
     </section>
     <section xml:id="ch051_vss-intro-idp242144">
-      <title>Selection Criteria</title>
+      <title>Selection criteria</title>
       <para>As part of your hypervisor selection process, you will need to consider a number of important factors to help increase your security posture. Specifically, we will be looking into the following areas:</para>
       <itemizedlist><listitem>
           <para>Team Expertise</para>
@@ -71,7 +76,7 @@
           </listitem>
 </itemizedlist><bridgehead>Team Expertise</bridgehead> Most likely, the most important aspect in hypervisor selection is the expertise of your staff in managing and maintaining a particular hypervisor platform. The more familiar your team is with a given product, its configuration, and its eccentricities, the less likely will there be configuration mistakes. Additionally, having staff expertise spread across an organization on a given hypervisor will increase availability of your systems, allow for developing a segregation of duties, and mitigate problems in the event that a team member is unavailable.</para>
       <section xml:id="ch051_vss-intro-idp252752">
-        <title>Product or Project Maturity</title>
+        <title>Product or project maturity</title>
         <para>The maturity of a given hypervisor product or project is critical to your security posture as well. Product maturity will have a number of effects once you have deployed your cloud, in the context of this security guide we are interested in the following:</para>
         <itemizedlist><listitem>
             <para>Availability of expertise</para>
@@ -90,7 +95,7 @@
         <para>Further, the quality of community, as it surrounds an open source hypervisor like KVM or Xen, will have a direct impact on the timeliness of bug fixes and security updates. When investigating both commercial and open source hypervisors, you will want to look into their release and support cycles as well as the time delta between the announcement of a bug or security issue and a patch or response. Lastly, the supported capabilities of OpenStack compute vary depending on the hypervisor chosen. Refer to the <link xlink:href="https://wiki.openstack.org/wiki/HypervisorSupportMatrix">OpenStack Hypervisor Support Matrix</link> for OpenStack compute feature support by hypervisor.</para>
       </section>
       <section xml:id="ch051_vss-intro-idp260720">
-        <title>Certifications and Attestations</title>
+        <title>Certifications and attestations</title>
         <para>One additional consideration when selecting a hypervisor is the availability of various formal certifications and attestations. While they may not be requirements for your specific organization, these certifications and attestations speak to the maturity, production readiness, and thoroughness of the testing a particular hypervisor platform has been subjected to.</para>
       </section>
       <section xml:id="ch051_vss-intro-idp262672">
@@ -184,7 +189,7 @@
 
       </section>
       <section xml:id="ch051_vss-intro-idp324896">
-        <title>Cryptography Standards</title>
+        <title>Cryptography standards</title>
         <para>Several cryptography algorithms are available within OpenStack for identification and authorization, data transfer and protection of data at rest. When selecting a hypervisor, the following are recommended algorithms and implementation standards to ensure the virtualization layer supports:</para>
 
           <informaltable rules="all" width="80%"><colgroup><col/><col/><col/><col/><col/></colgroup>
@@ -270,7 +275,7 @@
         </section>
       </section>
       <section xml:id="ch051_vss-intro-idp367552">
-        <title>Hardware Concerns</title>
+        <title>Hardware concerns</title>
         <para>Further, when evaluating a hypervisor platform the supportability of the hardware the hypervisor will run on should be considered. Additionally, consider the additional features available in the hardware and how those features are supported by the hypervisor you chose as part of the OpenStack deployment. To that end, hypervisors will each have their own hardware compatibility lists (HCLs). When selecting compatible hardware it is important to know in advance which hardware-based virtualization technologies are important from a security perspective.</para>
 
           <informaltable rules="all" width="80%"><colgroup><col/><col/><col/></colgroup>
@@ -308,14 +313,14 @@
 
       </section>
       <section xml:id="ch051_vss-intro-idp396976">
-        <title>Hypervisor vs. Baremetal</title>
+        <title>Hypervisor vs. baremetal</title>
         <para>To wrap up our discussion around hypervisor selection, it is important to call out the differences between using LXC (Linux Containers) or Baremetal systems vs using a hypervisor like KVM. Specifically, the focus of this security guide will be largely based on having a hypervisor and virtualization platform. However, should your implementation require the use of a baremetal or LXC environment, you will want to pay attention to the particular differences in regard to deployment of that environment. In particular, you will need to provide your end users with assurances that the node has been properly sanitized of their data prior to re-provisioning. Additionally, prior to reusing a node, you will need to provide assurances that the hardware has not been tampered or otherwise compromised.</para>
         <para>It should be noted that while OpenStack has a baremetal project, a discussion of the particular security implications of running baremetal is beyond the scope of this book.</para>
         <para>Finally, due to the time constraints around a book sprint, the team chose to use KVM as the hypervisor in our example implementations and architectures.</para>
-        <note><para>There is an OpenStack Security Note pertaining to the <link xlink:href="https://bugs.launchpad.net/ossn/+bug/1098582">use of LXC in Nova</link>.</para></note>
+        <note><para>There is an OpenStack Security Note pertaining to the <link xlink:href="https://bugs.launchpad.net/ossn/+bug/1098582">use of LXC in nova</link>.</para></note>
       </section>
       <section xml:id="ch051_vss-intro-idp401408">
-        <title>Additional Security Features</title>
+        <title>Additional security features</title>
         <para>Another thing to look into when selecting a hypervisor platform is the availability of specific security features. In particular, we are referring to features like Xen Server's XSM or Xen Security Modules, sVirt, Intel TXT, and AppArmor. The presence of these features will help increase your security profile as well as provide a good foundation.</para>
         <para>The following table calls out these features by common hypervisor platforms.</para>
 

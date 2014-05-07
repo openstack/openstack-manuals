@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://docbook.org/ns/docbook" xmlns:db="http://docbook.org/ns/docbook" version="5.0" xml:id="ch052_devices"><?dbhtml stop-chunking?>
-    <title>Hardening the Virtualization Layers</title>
+<chapter xmlns:xi="http://www.w3.org/2001/XInclude"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns="http://docbook.org/ns/docbook"
+         version="5.0"
+         xml:id="ch052_devices">
+  <?dbhtml stop-chunking?>
+    <title>Hardening the virtualization layers</title>
     <para>In the beginning of this chapter we discuss the use of both physical and virtual hardware by instances, the associated security risks, and some recommendations for mitigating those risks. We conclude the chapter with a discussion of sVirt, an open source project for integrating SELinux mandatory access controls with the virtualization components.</para>
     <section xml:id="ch052_devices-idp479920">
-      <title>Physical Hardware (PCI Passthrough)</title>
+      <title>Physical hardware (PCI passthrough)</title>
       <para>Many hypervisors offer a functionality known as PCI passthrough. This allows an instance to have direct access to a piece of hardware on the node. For example, this could be used to allow instances to access video cards offering the compute unified device architecture (CUDA) for high performance computation. This feature carries two types of security risks: direct memory access and hardware infection.</para>
       <para>Direct memory access (DMA) is a feature that permits certain hardware devices to access arbitrary physical memory addresses in the host computer. Often video cards have this capability. However, an instance should not be given arbitrary physical memory access because this would give it full view of both the host system and other instances running on the same node. Hardware vendors use an input/output memory management unit (IOMMU) to manage DMA access in these situations. Therefore, cloud architects should ensure that the hypervisor is configured to utilize this hardware feature.</para>
       <itemizedlist><listitem>
@@ -17,11 +22,25 @@
         <para>The IOMMU feature is marketed as VT-d by Intel and AMD-Vi by AMD.</para>
       </note>
       <para>A hardware infection occurs when an instance makes a malicious modification to the firmware or some other part of a device. As this device is used by other instances, or even the host OS, the malicious code can spread into these systems. The end result is that one instance can run code outside of its security domain. This is a potential problem in any hardware sharing scenario. The problem is specific to this scenario because it is harder to reset the state of physical hardware than virtual hardware.</para>
-      <para>Solutions to the hardware infection problem are domain specific. The strategy is to identify how an instance can modify hardware state then determine how to reset any modifications when the instance is done using the hardware. For example, one option could be to re-flash the firmware after use. Clearly there is a need to balance hardware longevity with security as some firmwares will fail after a large number of writes. TPM technology, described in <literal>link:Management/Node Bootstrapping</literal>, provides a solution for detecting unauthorized firmware changes. Regardless of the strategy selected, it is important to understand the risks associated with this kind of hardware sharing so that they can be properly mitigated for a given deployment scenario.</para>
+      <para>
+      Solutions to the hardware infection problem are domain
+      specific. The strategy is to identify how an instance can modify
+      hardware state then determine how to reset any modifications
+      when the instance is done using the hardware. For example, one
+      option could be to re-flash the firmware after use. Clearly
+      there is a need to balance hardware longevity with security as
+      some firmwares will fail after a large number of writes. TPM
+      technology, described in <xref
+      linkend="ch013_node-bootstrapping-idp44768"/>, provides a
+      solution for detecting unauthorized firmware changes. Regardless
+      of the strategy selected, it is important to understand the
+      risks associated with this kind of hardware sharing so that they
+      can be properly mitigated for a given deployment scenario.
+      </para>
       <para>Additionally, due to the risk and complexities associated with PCI passthrough, it should be disabled by default. If enabled for a specific need, you will need to have appropriate processes in place to ensure the hardware is clean before re-issue.</para>
     </section>
     <section xml:id="ch052_devices-idp488320">
-      <title>Virtual Hardware (QEMU)</title>
+      <title>Virtual hardware (QEMU)</title>
       <para>When running a virtual machine, virtual hardware is a
       software layer that provides the hardware interface for the
       virtual machine. Instances use this functionality to provide
@@ -44,7 +63,7 @@
       using mandatory access controls, such as sVirt, SELinux, or
       AppArmor.</para>
       <section xml:id="ch052_devices-idp490976">
-        <title>Minimizing the Qemu Code base</title>
+        <title>Minimizing the QEMU code base</title>
         <para>One classic security principle is to remove any unused components from your system. QEMU provides support for many different virtual hardware devices. However, only a small number of devices are needed for a given instance. Most instances will use the virtio devices. However, some legacy instances will need access to specific hardware, which can be specified using glance metadata:</para>
         <screen><prompt>$</prompt> <userinput>glance image-update \
     --property hw_disk_bus=ide \
@@ -54,7 +73,7 @@
         <para>A cloud architect should decide what devices to make available to cloud users. Anything that is not needed should be removed from QEMU. This step requires recompiling QEMU after modifying the options passed to the QEMU configure script. For a complete list of up-to-date options simply run <literal>./configure --help</literal> from within the QEMU source directory. Decide what is needed for your deployment, and disable the remaining options.</para>
       </section>
       <section xml:id="ch052_devices-idp494336">
-        <title>Compiler Hardening</title>
+        <title>Compiler hardening</title>
         <para>The next step is to harden QEMU using compiler hardening options. Modern compilers provide a variety of compile time options to improve the security of the resulting binaries. These features, which we will describe in more detail below, include relocation read-only (RELRO), stack canaries, never execute (NX), position independent executable (PIE), and address space layout randomization (ASLR).</para>
         <para>Many modern linux distributions already build QEMU with compiler hardening enabled, so you may want to verify your existing executable before proceeding with the information below. One tool that can assist you with this verification is called <link xlink:href="http://www.trapkit.de/tools/checksec.html"><literal>checksec.sh</literal></link>.</para>
         <itemizedlist><listitem>
@@ -86,12 +105,12 @@
 </itemizedlist>
       </section>
       <section xml:id="ch052_devices-idp508032">
-        <title>Mandatory Access Controls</title>
+        <title>Mandatory access controls</title>
         <para>Compiler hardening makes it more difficult to attack the QEMU process. However, if an attacker does succeed, we would like to limit the impact of the attack. Mandatory access controls accomplish this by restricting the privileges on QEMU process to only what is needed. This can be accomplished using sVirt / SELinux or AppArmor. When using sVirt, SELinux is configured to run every QEMU process under a different security context. AppArmor can be configured to provide similar functionality. We provide more details on sVirt in the instance isolation section below.</para>
       </section>
     </section>
     <section xml:id="ch052_devices-idp510512">
-      <title>sVirt: SELinux + Virtualization</title>
+      <title>sVirt: SELinux and virtualization</title>
       <para>With unique kernel-level architecture and National
       Security Agency (NSA) developed security mechanisms, KVM
       provides foundational isolation technologies for multi tenancy.
@@ -135,7 +154,7 @@
 </inlinemediaobject></para>
       <para>As shown above, sVirt isolation is provided regardless of the guest Operating System running inside the virtual machine -- Linux or Windows VMs can be used. Additionally, many Linux distributions provide SELinux within the operating system, allowing the virtual machine to protect internal virtual resources from threats.</para>
       <section xml:id="ch052_devices-idp523744">
-        <title>Labels and Categories</title>
+        <title>Labels and categories</title>
         <para>KVM-based virtual machine instances are labelled with their own SELinux data type, known as svirt_image_t. Kernel level protections prevent unauthorized system processes, such as malware, from manipulating the virtual machine image files on disk. When virtual machines are powered off, images are stored as svirt_image_t as shown below:</para>
         <programlisting>system_u:object_r:svirt_image_t:SystemLow image1
 system_u:object_r:svirt_image_t:SystemLow image2

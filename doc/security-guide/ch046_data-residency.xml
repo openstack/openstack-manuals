@@ -1,67 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://docbook.org/ns/docbook" xmlns:db="http://docbook.org/ns/docbook" version="5.0" xml:id="ch046_data-residency"><?dbhtml stop-chunking?>
-    <title>Data Privacy Concerns</title>
-    <para>OpenStack is designed to support multitenancy and those tenants will most probably have different data requirements. As a cloud builder and operator you need to ensure your OpenStack environment can address various data privacy concerns and regulations. In this chapter we will address the following topics around Data Privacy as it pertains to OpenStack implementations:</para>
+<chapter xmlns:xi="http://www.w3.org/2001/XInclude"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns="http://docbook.org/ns/docbook"
+         version="5.0"
+         xml:id="ch046_data-residency">
+  <?dbhtml stop-chunking?>
+    <title>Data privacy concerns</title>
+    <para>
+      OpenStack is designed to support multitenancy and those tenants
+      will most probably have different data requirements. As a cloud
+      builder and operator you need to ensure your OpenStack
+      environment can address various data privacy concerns and
+      regulations. In this chapter we will address the following
+      topics around Data Privacy as it pertains to OpenStack
+      implementations:
+    </para>
     <itemizedlist><listitem>
-        <para>Data Residency</para>
+        <para>Data residency</para>
       </listitem>
 <listitem>
-        <para>Data Disposal</para>
+        <para>Data disposal</para>
       </listitem>
 </itemizedlist>
     <section xml:id="ch046_data-residency-idp46544">
-      <title>Data Residency</title>
+      <title>Data residency</title>
       <para>The privacy and isolation of data has consistently been cited as the primary barrier to cloud adoption over the past few years. Concerns over who owns data in the cloud and whether the cloud operator can be ultimately trusted as a custodian of this data have been significant issues in the past.</para>
       <para>Numerous OpenStack services maintain data and metadata belonging to tenants or reference tenant information.</para>
       <para>Tenant data stored in an OpenStack cloud may include the following items:</para>
       <itemizedlist><listitem>
-          <para>Swift objects</para>
+          <para>Object Storage objects</para>
         </listitem>
-<listitem>
+        <listitem>
           <para>Compute instance ephemeral filesystem storage</para>
         </listitem>
-<listitem>
+        <listitem>
           <para>Compute instance memory</para>
         </listitem>
-<listitem>
-          <para>Cinder volume data</para>
+        <listitem>
+          <para>Block Storage volume data</para>
         </listitem>
-<listitem>
+        <listitem>
           <para>Public keys for Compute Access</para>
         </listitem>
-<listitem>
-          <para>Virtual Machine Images in Glance</para>
+        <listitem>
+          <para>Virtual Machine Images in the Image Service</para>
         </listitem>
-<listitem>
+        <listitem>
           <para>Machine snapshots</para>
         </listitem>
-<listitem>
+        <listitem>
           <para>Data passed to OpenStack Compute's configuration-drive extension</para>
         </listitem>
-</itemizedlist>
+      </itemizedlist>
       <para>Metadata stored by an OpenStack cloud includes the following non-exhaustive items:</para>
       <itemizedlist><listitem>
           <para>Organization name</para>
         </listitem>
-<listitem>
+        <listitem>
           <para>User's "Real Name"</para>
         </listitem>
-<listitem>
+        <listitem>
           <para>Number or size of running instances, buckets, objects, volumes, and other quota-related items</para>
         </listitem>
-<listitem>
+        <listitem>
           <para>Number of hours running instances or storing data</para>
         </listitem>
-<listitem>
+        <listitem>
           <para>IP addresses of users</para>
         </listitem>
-<listitem>
+        <listitem>
           <para>Internally generated private keys for compute image bundling</para>
         </listitem>
 </itemizedlist>
     </section>
     <section xml:id="ch046_data-residency-idp61296">
-      <title>Data Disposal</title>
+      <title>Data disposal</title>
       <para>OpenStack operators should strive to provide a certain level of tenant data disposal assurance. Best practices suggest that the operator sanitize cloud system media (digital and non-digital) prior to disposal, release out of organization control or release for reuse. Sanitization methods should implement an appropriate level of strength and integrity given the specific security domain and sensitivity of the information.</para>
       <blockquote>
         <para>"Sanitization is the process used to remove information from system media such that there is reasonable assurance that the information cannot be retrieved or reconstructed. Sanitization techniques, including clearing, purging, and destroying media information, prevent the disclosure of organizational information to unauthorized individuals when such media is reused or released for disposal." [NIST Special Publication 800-53 Revision 3]</para>
@@ -124,8 +137,20 @@
       </section>
       <section xml:id="ch046_data-residency-idp85040">
         <title>Bare metal server sanitization</title>
-        <para>A bare metal server driver for Nova was under development and has since moved into a separate project called <link xlink:href="https://wiki.openstack.org/wiki/Ironic">Ironic</link>. At the time of this writing, Ironic does not appear to address sanitization of tenant data resident the physical hardware.</para>
-        <para>Additionally, it is possible for tenants of a bare metal system to modify system firmware. TPM technology, described in ##link:Management/Node Bootstrapping##, provides a solution for detecting unauthorized firmware changes.</para>
+        <para>
+          A bare metal server driver for Compute was under development
+          and has since moved into a separate project called <link
+          xlink:href="https://wiki.openstack.org/wiki/Ironic">ironic</link>. At
+          the time of this writing, ironic does not appear to address
+          sanitization of tenant data resident the physical hardware.
+        </para>
+        <para>
+          Additionally, it is possible for tenants of a bare metal
+          system to modify system firmware. TPM technology, described
+          in <xref linkend="ch013_node-bootstrapping-idp44768"/>,
+          provides a solution for detecting unauthorized firmware
+          changes.
+        </para>
       </section>
     </section>
   </chapter>

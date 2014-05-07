@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://docbook.org/ns/docbook" xmlns:db="http://docbook.org/ns/docbook" version="5.0" xml:id="ch032_networking-best-practices"><?dbhtml stop-chunking?>
-    <title>Networking Services</title>
+<chapter xmlns:xi="http://www.w3.org/2001/XInclude"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns="http://docbook.org/ns/docbook"
+         version="5.0"
+         xml:id="ch032_networking-best-practices">
+  <?dbhtml stop-chunking?>
+    <title>Networking services</title>
     <para>In the initial architectural phases of designing your OpenStack Network infrastructure it is important to ensure appropriate expertise is available to assist with the design of the physical networking infrastructure, to identify proper security controls and auditing mechanisms.</para>
     <para>OpenStack Networking adds a layer of virtualized network services - giving tenants the capability to architect their own, virtual networks. These virtualized services are not as currently as mature as their traditional networking counterparts. It is important to be aware of the current state of these virtualized services and what controls may need to be implemented at the virtualized and traditional network boundary.</para>
     <section xml:id="ch032_networking-best-practices-idp45376">
-      <title>L2 Isolation using VLANs and Tunneling</title>
+      <title>L2 isolation using VLANs and tunneling</title>
       <para>OpenStack networking can employ two different mechanisms for traffic segregation on a per tenant/network combination: VLANs (IEEE 802.1Q tagging) or L2 tunnels using GRE encapsulation. Which method you choose for traffic segregation and isolation is determined by the scope and scale of your OpenStack deployment.</para>
       <section xml:id="ch032_networking-best-practices-idp46832">
         <title>VLANs</title>
@@ -15,24 +20,24 @@
         </note>
       </section>
       <section xml:id="ch032_networking-best-practices-idp50512">
-        <title>L2 Tunneling</title>
+        <title>L2 tunneling</title>
         <para>Network tunneling encapsulates each tenant/network combination with a unique "tunnel-id" that is used to identify the network traffic belonging to that combination. The tenant's L2 network connectivity is independent of physical locality or underlying network design. By encapsulating traffic inside IP packets, that traffic can cross Layer-3 boundaries, removing the need for preconfigured VLANs and VLAN trunking. Tunneling adds a layer of obfuscation to network data traffic, reducing the visibility of individual tenant traffic from a monitoring point of view.</para>
         <para>OpenStack Networking currently only supports GRE encapsulation with planned future support of VXLAN due in the Havana release.</para>
         <para>The choice of technology to provide L2 isolation is dependent upon the scope and size of tenant networks that will be created in your deployment. If your environment has limited VLAN ID availability or will have a large number of L2 networks, it is our recommendation that you utilize tunneling.</para>
       </section>
     </section>
     <section xml:id="ch032_networking-best-practices-idp54784">
-      <title>Network Services</title>
+      <title>Network services</title>
       <para>The choice of tenant network isolation affects how the network security and control boundary is implemented for tenant services. The following additional network services are either available or currently under development to enhance the security posture of the OpenStack network architecture.</para>
       <section xml:id="ch032_networking-best-practices-idp56112">
-        <title>Access Control Lists</title>
+        <title>Access control lists</title>
         <para>OpenStack Compute supports tenant network traffic access controls directly when deployed with the legacy nova-network service, or may defer access control to the OpenStack Networking service.</para>
         <para>Note, legacy nova-network security groups are applied to all virtual interface ports on an instance using IPTables.</para>
         <para>Security groups allow administrators and tenants the ability to specify the type of traffic, and direction (ingress/egress) that is allowed to pass through a virtual interface port. Security groups rules are stateful L2-L4 traffic filters.</para>
         <para>It is our recommendation that you enable security groups via OpenStack Networking.</para>
       </section>
       <section xml:id="ch032_networking-best-practices-idp59008">
-        <title>L3 Routing and NAT</title>
+        <title>L3 routing and NAT</title>
         <para>OpenStack Networking routers can connect multiple L2 networks, and can also provide a <emphasis>gateway</emphasis> that connects one or more private L2 networks to a shared <emphasis>external</emphasis> network, such as a public network for access to the Internet.</para>
         <para>The L3 router provides basic Network Address Translation (NAT) capabilities on <emphasis>gateway</emphasis> ports that uplink the router to external networks. This router SNATs (Static NAT) all traffic by default, and supports floating IPs, which creates a static one-to-one mapping from a public IP on the external network to a private IP on one of the other subnets attached to the router.</para>
         <para>It is our recommendation to leverage per tenant L3 routing and Floating IPs for more granular connectivity of tenant VMs.</para>
@@ -56,7 +61,7 @@
         <para>Tenant traffic port mirroring or Network Flow monitoring is currently not an exposed feature in OpenStack Networking. There are third-party plug-in extensions that do provide Port Mirroring on a per port/network/tenant basis. If Open vSwitch is used on the networking hypervisor, it is possible to enable sFlow and port mirroring, however it will require some operational effort to implement.</para>
       </section>
       <section xml:id="ch032_networking-best-practices-idp69408">
-        <title>Load Balancing</title>
+        <title>Load balancing</title>
         <para>An experimental feature in the Grizzly release of OpenStack Networking is Load-Balancer-as-a-service (LBaaS). The LBaaS API gives early adopters and vendors a chance to build implementations of the technology. The reference implementation however, is still experimental and should likely not be run in a production environment. The current reference implementation is based on HA-Proxy. There are third-party plug-ins in development for extensions in OpenStack Networking to provide extensive L4-L7 functionality for virtual interface ports.</para>
       </section>
       <section xml:id="ch032_networking-best-practices-idp71664">
@@ -66,18 +71,18 @@
       </section>
     </section>
     <section xml:id="ch032_networking-best-practices-idp74544">
-      <title>Network Services Extensions</title>
+      <title>Network services extensions</title>
       <para>Here is a list of known plug-ins provided by the open source community or by SDN companies that work with OpenStack Networking:</para>
-      <para>Big Switch Controller plug-in, Brocade Neutron plug-in
-      Brocade Neutron plug-in, Cisco UCS/Nexus plug-in, Cloudbase
+      <para>Big Switch Controller plug-in, Brocade neutron plug-in
+      Brocade neutron plug-in, Cisco UCS/Nexus plug-in, Cloudbase
       Hyper-V plug-in, Extreme Networks plug-in, Juniper Networks
-      Neutron plug-in, Linux Bridge plug-in, Mellanox Neutron plug-in,
+      neutron plug-in, Linux Bridge plug-in, Mellanox neutron plug-in,
       MidoNet plug-in, NEC OpenFlow plug-in, Open vSwitch plug-in,
       PLUMgrid plug-in, Ruijie Networks plug-in, Ryu OpenFlow
       Controller plug-in, VMware NSX plug-in.</para>
     </section>
     <section xml:id="ch032_networking-best-practices-idp78032">
-      <title>Networking Services Limitations</title>
+      <title>Networking services limitations</title>
       <para>OpenStack Networking has the following known limitations:</para>
       <itemizedlist><listitem>
           <para><emphasis role="bold">Overlapping IP addresses</emphasis> &#x2014; If nodes that run either <literal>neutron-l3-agent</literal> or <literal>neutron-dhcp-agent</literal> use overlapping IP addresses, those nodes must use Linux network namespaces. By default, the DHCP and L3 agents use Linux network namespaces. However, if the host does not support these namespaces, run the DHCP and L3 agents on different hosts.</para>

@@ -12,7 +12,7 @@
     uploading VM images, managing networks, setting up security groups, starting
     instances, and accessing the instances via a console.</para>
   <para>The dashboard is based on the Django web framework, therefore
-    secure deployment practices for Django apply directly to Horizon.
+    secure deployment practices for Django apply directly to horizon.
     This guide provides a popular set of Django security
     recommendations, further information can be found by reading the
       <link
@@ -23,7 +23,7 @@
       xlink:href="http://docs.openstack.org/developer/horizon/topics/deployment.html"
       >deployment and configuration documentation</link>.</para>
   <section xml:id="ch025_web-dashboard-idp237648">
-    <title>Basic Web Server Configuration</title>
+    <title>Basic web server configuration</title>
     <para>The dashboard should be deployed as a Web Services Gateway
       Interface (WSGI) application behind an HTTPS proxy such as
       Apache or nginx. If Apache is not already in use, we recommend
@@ -65,7 +65,7 @@
       configurations, including the configuration of HSTS.</para>
   </section>
   <section xml:id="ch025_web-dashboard-idp245456">
-    <title>Front end Caching</title>
+    <title>Front end caching</title>
     <para>Since dashboard is rendering dynamic content passed directly
       from OpenStack API requests, we do not recommend front end
       caching layers such as varnish. In Django, static media is
@@ -73,7 +73,7 @@
       web host caching.</para>
   </section>
   <section xml:id="ch025_web-dashboard-idp246880">
-    <title>Domain Names</title>
+    <title>Domain names</title>
     <para>Many organizations typically deploy web applications at
       subdomains of an overarching organization domain. It is natural
       for users to expect a domain of the form
@@ -108,7 +108,7 @@
       on the same second-level domain.</para>
   </section>
   <section xml:id="ch025_web-dashboard-idp251760">
-    <title>Static Media</title>
+    <title>Static media</title>
     <para>Dashboard's static media should be deployed to a subdomain
       of the dashboard domain and served by the web server. The use of
       an external content delivery network (CDN) is also acceptable.
@@ -131,23 +131,23 @@
       machines.</para>
   </section>
   <section xml:id="ch025_web-dashboard-idp255696">
-    <title>Secret Key</title>
+    <title>Secret key</title>
     <para>Dashboard depends on a shared SECRET_KEY setting for some
       security functions. It should be a randomly generated string at
       least 64 characters long. It must be shared across all active
-      Horizon instances. Compromise of this key may allow a remote
+      dashboard instances. Compromise of this key may allow a remote
       attacker to execute arbitrary code. Rotating this key
       invalidates existing user sessions and caching. Do not commit
       this key to public repositories.</para>
   </section>
   <section xml:id="ch025_web-dashboard-idp257248">
-    <title>Session Backend</title>
-    <para>Horizon's default session backend
+    <title>Session back-end</title>
+    <para>Horizon's default session back-end
         (<emphasis>django.contrib.sessions.backends.signed_cookies</emphasis>)
       stores user data in <emphasis>signed</emphasis> but
         <emphasis>unencrypted </emphasis>cookies stored in the
       browser. This approach allows the most simple session backend
-      scaling since each Horizon instance is stateless, but it comes
+      scaling since each dashboard instance is stateless, but it comes
       at the cost of <emphasis>storing sensitive access tokens in the
         client browser</emphasis> and transmitting them with every
       request. This backend ensures that session data has not been
@@ -165,11 +165,11 @@
         >Django session backend documentation</link>.</para>
   </section>
   <section xml:id="ch025_web-dashboard-idp262288">
-    <title>Allowed Hosts</title>
+    <title>Allowed hosts</title>
     <para>Configure the ALLOWED_HOSTS setting with the domain or
-      domains where Horizon is available. Failure to configure this
+      domains where the dashboard is available. Failure to configure this
       setting (especially if not following the recommendation above
-      regarding second level domains) opens Horizon to a number of
+      regarding second level domains) opens the dashboard to a number of
       serious attacks. Wild card domains should be avoided.</para>
     <para>For further details, see the <link
         xlink:href="https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts"
@@ -186,7 +186,7 @@
 SESSION_COOKIE_SECURE = True</programlisting>
   </section>
   <section xml:id="ch025_web-dashboard-idp266976">
-    <title>Password Auto Complete</title>
+    <title>Password auto complete</title>
     <para>We recommend that implementers do not change the default
       password auto complete behavior. Users choose stronger passwords
       in environments that allow them to use the secure browser
@@ -224,13 +224,13 @@ SESSION_COOKIE_SECURE = True</programlisting>
   <section xml:id="ch025_web-dashboard-idp272832">
     <title>Cross Origin Resource Sharing (CORS)</title>
     <para>Configure your web server to send a restrictive CORS header
-      with each response, allowing only the Horizon domain and
+      with each response, allowing only the dashboard domain and
       protocol:</para>
     <programlisting>Access-Control-Allow-Origin: https://example.com/</programlisting>
     <para>Never allow the wild card origin.</para>
   </section>
   <section xml:id="ch025_web-dashboard-idp275056">
-    <title>Horizon Image Upload</title>
+    <title>Horizon image upload</title>
     <para>We recommend that implementers <link
         xlink:href="http://docs.openstack.org/developer/horizon/topics/deployment.html#file-uploads"
         >disable HORIZON_IMAGES_ALLOW_UPLOAD</link> unless they have

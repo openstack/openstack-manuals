@@ -1,13 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://docbook.org/ns/docbook" xmlns:db="http://docbook.org/ns/docbook" version="5.0" xml:id="ch022_case-studies-api-endpoints"><?dbhtml stop-chunking?>
-    <title>Case Studies: API Endpoints</title>
+<chapter xmlns:xi="http://www.w3.org/2001/XInclude"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns="http://docbook.org/ns/docbook"
+         version="5.0"
+         xml:id="ch022_case-studies-api-endpoints">
+  <?dbhtml stop-chunking?>
+    <title>Case studies: API endpoints</title>
     <para>In this case study we discuss how Alice and Bob would address endpoint configuration to secure their private and public clouds. Alice's cloud is not publicly accessible, but she is still concerned about securing the endpoints against improper use. Bob's cloud, being public, must take measures to reduce the risk of attacks by external adversaries.</para>
     <section xml:id="ch022_case-studies-api-endpoints-idp3824">
-      <title>Alice's Private Cloud</title>
-      <para>Alice's organization requires that the security architecture protect the access to the public and private endpoints, so she elects to use the Apache SSL proxy on both public and internal services. Alice's organization has implemented its own certificate authority. Alice contacts the PKI office in her agency that manages her PKI and certificate issuance. Alice obtains certificates issued by this CA and configures the services within both the public and management security domains to use these certificates. Since Alice's OpenStack deployment exists entirely on a disconnected from the Internet network, she makes sure to remove all default CA bundles that contain external public CA providers to ensure the OpenStack services only accept client certificates issued by her agency's CA. Alice has registered all of the services in the Keystone Services Catalog, using the internal URLs for access by internal services. She has installed host-based intrusion detection on all of the API endpoints.</para>
+      <title>Alice's private cloud</title>
+      <para>
+        Alice's organization requires that the security architecture
+        protect the access to the public and private endpoints, so she
+        elects to use the Apache SSL proxy on both public and internal
+        services. Alice's organization has implemented its own
+        certificate authority. Alice contacts the PKI office in her
+        agency that manages her PKI and certificate issuance. Alice
+        obtains certificates issued by this CA and configures the
+        services within both the public and management security
+        domains to use these certificates. Since Alice's OpenStack
+        deployment exists entirely on a disconnected from the Internet
+        network, she makes sure to remove all default CA bundles that
+        contain external public CA providers to ensure the OpenStack
+        services only accept client certificates issued by her
+        agency's CA. Alice has registered all of the services in the
+        Identity service's catalog, using the internal URLs for access
+        by internal services. She has installed host-based intrusion
+        detection on all of the API endpoints.
+      </para>
     </section>
     <section xml:id="ch022_case-studies-api-endpoints-idp6592">
-      <title>Bob's Public Cloud</title>
-      <para>Bob must also protect the access to the public and private endpoints, so he elects to use the Apache SSL proxy on both public and internal services. On the public services, he has configured the certificate key files with certificates signed by a well-known Certificate Authority. He has used his organization's self-signed CA to sign certificates in the internal services on the Management network. Bob has registered his services in the Keystone Services Catalog, using the internal URLs for access by internal services. Bob's public cloud runs services on SELinux, which he has configured with a mandatory access control policy to reduce the impact of any publicly accessible services that may be compromised. He has also configured the endpoints with a host-based IDS.</para>
+      <title>Bob's public cloud</title>
+      <para>
+        Bob must also protect the access to the public and private
+        endpoints, so he elects to use the Apache SSL proxy on both
+        public and internal services. On the public services, he has
+        configured the certificate key files with certificates signed
+        by a well-known Certificate Authority. He has used his
+        organization's self-signed CA to sign certificates in the
+        internal services on the Management network. Bob has
+        registered his services in the Identity service's catalog,
+        using the internal URLs for access by internal services. Bob's
+        public cloud runs services on SELinux, which he has configured
+        with a mandatory access control policy to reduce the impact of
+        any publicly accessible services that may be compromised. He
+        has also configured the endpoints with a host-based IDS.
+      </para>
     </section>
   </chapter>

@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://docbook.org/ns/docbook" xmlns:db="http://docbook.org/ns/docbook" version="5.0" xml:id="ch034_tenant-secure-networking-best-practices"><?dbhtml stop-chunking?>
-    <title>Networking Services Security Best Practices</title>
+<chapter xmlns:xi="http://www.w3.org/2001/XInclude"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns="http://docbook.org/ns/docbook"
+         version="5.0"
+         xml:id="ch034_tenant-secure-networking-best-practices">
+  <?dbhtml stop-chunking?>
+    <title>Networking services security best practices</title>
     <para>This section discusses OpenStack Networking configuration best practices as they apply to tenant network security within your OpenStack deployment.</para>
     <section xml:id="ch034_tenant-secure-networking-best-practices-idp44592">
-      <title>Tenant Network Services Workflow</title>
+      <title>Tenant network services workflow</title>
       <para>OpenStack Networking provides users real self services of network resources and configurations. It is important that Cloud Architects and Operators evaluate their design use cases in providing users the ability to create, update, and destroy available network resources.</para>
     </section>
     <section xml:id="ch034_tenant-secure-networking-best-practices-idp46080">
-      <title>Networking Resource Policy Engine</title>
+      <title>Networking resource policy engine</title>
       <para>A policy engine and its configuration file,
       <filename>policy.json</filename>, within OpenStack Networking
       provides a method to provide finer grained authorization of
@@ -26,7 +31,7 @@
       <para>If your deployment of OpenStack provides multiple external access points into different security domains it is important that you limit the tenant's ability to attach multiple vNICs to multiple external access points -- this would bridge these security domains and could lead to unforeseen security compromise. It is possible mitigate this risk by utilizing the host aggregates functionality provided by OpenStack Compute or through splitting the tenant VMs into multiple tenant projects with different virtual network configurations.</para>
     </section>
     <section xml:id="ch034_tenant-secure-networking-best-practices-idp51440">
-      <title>Security Groups</title>
+      <title>Security groups</title>
       <para>The OpenStack Networking Service provides security group functionality using a mechanism that is more flexible and powerful than the security group capabilities built into OpenStack Compute. Thus, when using OpenStack Networking, <emphasis>nova.conf</emphasis> should always disable built-in security groups and proxy all security group calls to the OpenStack Networking API. Failure to do so will result in conflicting security policies being simultaneously applied by both services. To proxy security groups to OpenStack Networking, use the following configuration values:</para>
       <itemizedlist><listitem>
           <para>firewall_driver : must be set to 'nova.virt.firewall.NoopFirewallDriver' so that <systemitem class="service">nova-compute</systemitem> does not perform iptables-based filtering itself.</para>
