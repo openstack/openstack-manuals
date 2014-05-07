@@ -10,16 +10,16 @@
     <para>Deployers or users of OpenStack with strong security requirements may want to consider deploying these technologies. Not all are applicable in every situation, indeed in some cases technologies may be ruled out for use in a cloud because of prescriptive business requirements. Similarly some technologies inspect instance data such as run state which may be undesirable to the users of the system.</para>
     <para>In this chapter we explore these technologies and describe the situations where they can be used to enhance security for instances or underlying instances. We also seek to highlight where privacy concerns may exist. These include data pass through, introspection, or providing a source of entropy. In this section we highlight the following additional security services:</para>
     <itemizedlist><listitem>
-        <para>Entropy to Instances</para>
+        <para>Entropy to instances</para>
       </listitem>
-<listitem>
-        <para>Scheduling Instances to Nodes</para>
+      <listitem>
+        <para>Scheduling instances to nodes</para>
       </listitem>
-<listitem>
-        <para>Trusted Images</para>
+      <listitem>
+        <para>Trusted images</para>
       </listitem>
-<listitem>
-        <para>Instance Migrations</para>
+      <listitem>
+        <para>Instance migrations</para>
       </listitem>
 </itemizedlist>
     <section xml:id="ch055_security-services-for-instances-idp122544">
@@ -64,7 +64,7 @@
         partition up their compute host resources. Each node can have
         multiple aggregates (see the <link
         xlink:href="http://docs.openstack.org/trunk/config-reference/content/host-aggregates.html">Host
-        Aggregates</link> section of the <citetitle>OpenStack
+        aggregates</link> section of the <citetitle>OpenStack
         Configuration Reference</citetitle> for more information on
         creating and managing aggregates).</para>
       </section>
@@ -179,35 +179,38 @@
         <title>Live migration risks</title>
         <para>At various stages of the live migration process the contents of an instances run time memory and disk are transmitted over the network in plain text. Thus there are several risks that need to be addressed when using live migration. The following in-exhaustive list details some of these risks:</para>
         <itemizedlist><listitem>
-            <para><emphasis>Denial of Service (DoS)</emphasis> : If something fails during the migration process, the instance could be lost.</para>
+            <para><emphasis>Denial of Service (DoS)</emphasis>: If something fails during the migration process, the instance could be lost.</para>
           </listitem>
-<listitem>
-            <para><emphasis>Data Exposure</emphasis> : Memory or disk transfers must be handled securely.</para>
+          <listitem>
+            <para><emphasis>Data exposure</emphasis>: Memory or disk transfers must be handled securely.</para>
           </listitem>
-<listitem>
-            <para><emphasis>Data Manipulation</emphasis> : If memory or disk transfers are not handled securely, then an attacker could manipulate user data during the migration.</para>
+          <listitem>
+            <para><emphasis>Data manipulation</emphasis>: If memory or disk transfers are not handled securely, then an attacker could manipulate user data during the migration.</para>
           </listitem>
-<listitem>
-            <para><emphasis>Code Injection</emphasis> : If memory or disk transfers are not handled securely, then an attacker could manipulate executables, either on disk or in memory, during the migration.</para>
+          <listitem>
+            <para><emphasis>Code injection</emphasis>: If memory or disk transfers are not handled securely, then an attacker could manipulate executables, either on disk or in memory, during the migration.</para>
           </listitem>
-</itemizedlist>
+        </itemizedlist>
       </section>
       <section xml:id="ch055_security-services-for-instances-idp183744">
         <title>Live migration mitigations</title>
         <para>There are several methods to mitigate some of the risk associated with live migrations, the following list details some of these:</para>
         <itemizedlist><listitem>
-            <para>Disable Live Migration</para>
+            <para>Disable live migration</para>
           </listitem>
-<listitem>
-            <para>Isolated Migration Network</para>
+          <listitem>
+            <para>Isolated migration network</para>
           </listitem>
-<listitem>
-            <para>Encrypted Live Migration</para>
+          <listitem>
+            <para>Encrypted live migration</para>
           </listitem>
-</itemizedlist>
+        </itemizedlist>
         <section xml:id="ch055_security-services-for-instances-idp187568">
           <title>Disable live migration</title>
-          <para>At this time, live migration is enabled in OpenStack by default. Live migrations can be disabled by adding the following lines to the nova policy.json file:</para>
+          <para>At this time, live migration is enabled in OpenStack
+          by default. Live migrations can be disabled by adding the
+          following lines to the nova <filename>policy.json</filename>
+          file:</para>
           <programlisting>"compute_extension:admin_actions:migrate": "!",
 "compute_extension:admin_actions:migrateLive": "!",</programlisting>
         </section>

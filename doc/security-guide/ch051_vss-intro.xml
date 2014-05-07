@@ -47,27 +47,27 @@
       <title>Selection criteria</title>
       <para>As part of your hypervisor selection process, you will need to consider a number of important factors to help increase your security posture. Specifically, we will be looking into the following areas:</para>
       <itemizedlist><listitem>
-          <para>Team Expertise</para>
+          <para>Team expertise</para>
         </listitem>
-<listitem>
-          <para>Product or Project maturity</para>
+        <listitem>
+          <para>Product or project maturity</para>
         </listitem>
-<listitem>
-          <para>Certifications, Attestations</para>
+        <listitem>
+          <para>Certifications, attestations</para>
         </listitem>
-<listitem>
-          <para>Additional Security Features</para>
+        <listitem>
+          <para>Additional security features</para>
         </listitem>
-<listitem>
-          <para>Hypervisor vs. Baremetal</para>
+        <listitem>
+          <para>Hypervisor vs. baremetal</para>
         </listitem>
-<listitem>
-          <para>Hardware Concerns</para>
+        <listitem>
+          <para>Hardware concerns</para>
         </listitem>
-<listitem>
+        <listitem>
           <para>Common Criteria</para>
         </listitem>
-</itemizedlist>
+      </itemizedlist>
       <para>Additionally, the following security-related criteria are highly encouraged to be evaluated when selecting a hypervisor for OpenStack deployments:<itemizedlist><listitem>
             <para>Has the hypervisor undergone Common Criteria certification? If so, to what levels?</para>
           </listitem>
@@ -123,7 +123,7 @@
 
             <tbody>
               <tr>
-                <td><para>Identification and Authentication</para></td>
+                <td><para>Identification and authentication</para></td>
                 <td><para>Identification and authentication using pluggable authentication modules (PAM) based upon user passwords. The quality of the passwords used can be enforced through configuration options.</para></td>
               </tr>
               <tr>
@@ -158,23 +158,23 @@
                 <td><para>Role-based access control (RBAC) allows separation of roles to eliminate the need for an all-powerful system administrator.</para></td>
               </tr>
               <tr>
-                <td><para>Object Reuse</para></td>
+                <td><para>Object reuse</para></td>
                 <td><para>File system objects as well as memory and IPC objects will be cleared before they can be reused by a process belonging to a different user.</para></td>
               </tr>
               <tr>
-                <td><para>Security Management</para></td>
+                <td><para>Security management</para></td>
                 <td><para>The management of the security critical parameters of the system is performed by administrative users. A set of commands that require root privileges (or specific roles when RBAC is used) are used for system management. Security parameters are stored in specific files that are protected by the access control mechanisms of the system against unauthorized access by users that are not administrative users.</para></td>
               </tr>
               <tr>
-                <td><para>Secure Communication</para></td>
+                <td><para>Secure communication</para></td>
                 <td><para>The system supports the definition of trusted channels using SSH. Password based authentication is supported. Only a restricted number of cipher suites are supported for those protocols in the evaluated configuration.</para></td>
               </tr>
               <tr>
-                <td><para>Storage Encryption</para></td>
+                <td><para>Storage encryption</para></td>
                 <td><para>The system supports encrypted block devices to provide storage confidentiality via dm_crypt.</para></td>
               </tr>
               <tr>
-                <td><para>TSF Protection</para></td>
+                <td><para>TSF protection</para></td>
                 <td><para>While in operation, the kernel software and data are protected by the hardware memory protection mechanisms. The memory and process management components of the kernel ensure a user process cannot access kernel storage or storage belonging to other processes.</para><para>Non-kernel TSF software and data are protected by DAC and
                 process isolation mechanisms. In the evaluated
                 configuration, the reserved user ID root owns the
@@ -193,74 +193,71 @@
         <para>Several cryptography algorithms are available within OpenStack for identification and authorization, data transfer and protection of data at rest. When selecting a hypervisor, the following are recommended algorithms and implementation standards to ensure the virtualization layer supports:</para>
 
           <informaltable rules="all" width="80%"><colgroup><col/><col/><col/><col/><col/></colgroup>
-
-
-
-
-
+          <thead>
+              <tr>
+                <td>Algorithm</td>
+                <td>Key length</td>
+                <td>Intended purpose</td>
+                <td>Security function</td>
+                <td>Implementation standard</td>
+              </tr>
+          </thead>
             <tbody>
               <tr>
-                <td><para><emphasis role="bold">Algorithm</emphasis></para></td>
-                <td><para><emphasis role="bold">Key Length</emphasis></para></td>
-                <td><para><emphasis role="bold">Intended Purpose</emphasis></para></td>
-                <td><para><emphasis role="bold">Security Function</emphasis></para></td>
-                <td><para><emphasis role="bold">Implementation Standard</emphasis></para></td>
+                <td>AES</td>
+                <td>128, 192, or 256 bits</td>
+                <td>Encryption / decryption</td>
+                <td>Protected data transfer, protection for data at rest</td>
+                <td>RFC 4253</td>
               </tr>
               <tr>
-                <td><para>AES</para></td>
-                <td><para>128, 192, or 256 bits</para></td>
-                <td><para>Encryption / Decryption</para></td>
-                <td><para>Protected Data Transfer, Protection for Data at Rest</para></td>
-                <td><para>RFC 4253</para></td>
+                <td>TDES</td>
+                <td>168 bits</td>
+                <td>Encryption / decryption</td>
+                <td>Protected data transfer</td>
+                <td>RFC 4253</td>
               </tr>
               <tr>
-                <td><para>TDES</para></td>
-                <td><para>168 bits</para></td>
-                <td><para>Encryption / Decryption</para></td>
-                <td><para>Protected Data Transfer</para></td>
-                <td><para>RFC 4253</para></td>
+                <td>RSA</td>
+                <td>1024, 2048, or 3072 bits</td>
+                <td>Authentication, key exchange</td>
+                <td>Identification and authentication, protected data transfer</td>
+                <td>U.S. NIST FIPS PUB 186-3</td>
               </tr>
               <tr>
-                <td><para>RSA</para></td>
-                <td><para>1024, 2048, or 3072 bits</para></td>
-                <td><para>Authentication, Key Exchange</para></td>
-                <td><para>Identification and Authentication, Protected Data Transfer</para></td>
-                <td><para>U.S. NIST FIPS PUB 186-3</para></td>
+                <td>DSA</td>
+                <td>L=1024, N=160 bits</td>
+                <td>Authentication, key exchange</td>
+                <td>Identification and authentication, protected data transfer</td>
+                <td>U.S. NIST FIPS PUB 186-3</td>
               </tr>
               <tr>
-                <td><para>DSA</para></td>
-                <td><para>L=1024, N=160 bits</para></td>
-                <td><para>Authentication, Key Exchange</para></td>
-                <td><para>Identification and Authentication, Protected Data Transfer</para></td>
-                <td><para>U.S. NIST FIPS PUB 186-3</para></td>
+                <td>Serpent</td>
+                <td>128, 192, or 256 bits</td>
+                <td>Encryption / decryption</td>
+                <td>Protection of data at rest</td>
+                <td><link xlink:href="http://www.cl.cam.ac.uk/~rja14/Papers/serpent.pdf">http://www.cl.cam.ac.uk/~rja14/Papers/serpent.pdf</link></td>
               </tr>
               <tr>
-                <td><para>Serpent</para></td>
-                <td><para>128, 192, or 256 bits</para></td>
-                <td><para>Encryption / Decryption</para></td>
-                <td><para>Protection of Data at Rest</para></td>
-                <td><para><link xlink:href="http://www.cl.cam.ac.uk/~rja14/Papers/serpent.pdf">http://www.cl.cam.ac.uk/~rja14/Papers/serpent.pdf</link></para></td>
+                <td>Twofish</td>
+                <td>128, 192, or 256 bits</td>
+                <td>Encryption / decryption</td>
+                <td>Protection of data at rest</td>
+                <td><link xlink:href="http://www.schneier.com/paper-twofish-paper.html">http://www.schneier.com/paper-twofish-paper.html</link></td>
               </tr>
               <tr>
-                <td><para>Twofish</para></td>
-                <td><para>128, 192, or 256 bit</para></td>
-                <td><para>Encryption / Decryption</para></td>
-                <td><para>Protection of Data at Rest</para></td>
-                <td><para><link xlink:href="http://www.schneier.com/paper-twofish-paper.html">http://www.schneier.com/paper-twofish-paper.html</link></para></td>
+                <td>SHA-1</td>
+                <td>-</td>
+                <td>Message Digest</td>
+                <td>Protection of data at rest, protected data transfer</td>
+                <td>U.S. NIST FIPS 180-3</td>
               </tr>
               <tr>
-                <td><para>SHA-1</para></td>
-                <td><para>-</para></td>
-                <td><para>Message Digest</para></td>
-                <td><para>Protection of Data at Rest, Protected Data Transfer</para></td>
-                <td><para>U.S. NIST FIPS 180-3</para></td>
-              </tr>
-              <tr>
-                <td><para>SHA-2 (224, 256, 384, or 512 bits)</para></td>
-                <td><para>-</para></td>
-                <td><para>Message Digest</para></td>
-                <td><para>Protection for Data at Rest, Identification and Authentication</para></td>
-                <td><para>U.S. NIST FIPS 180-3</para></td>
+                <td>SHA-2 (224, 256, 384, or 512 bits)</td>
+                <td>-</td>
+                <td>Message digest</td>
+                <td>Protection for data at rest, identification and authentication</td>
+                <td>U.S. NIST FIPS 180-3</td>
               </tr>
             </tbody>
           </informaltable>
