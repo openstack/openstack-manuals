@@ -1,0 +1,513 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<appendix xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="app_cheat_sheet">
+    <?dbhtml stop-chunking?>
+    <title>OpenStack command-line interface cheat sheet</title>
+
+    <para>
+      The following tables give a quick reference of the most used
+      command-line commands.
+    </para>
+
+    <table rules="all" width="100%">
+      <caption>Identity (keystone)</caption>
+      <col width="30%"/>
+      <col width="70%"/>
+      <thead>
+        <tr>
+          <th>Description</th>
+          <th>Command</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>List all users</td>
+          <td>
+            <screen><prompt>$</prompt> <userinput>keystone user-list</userinput></screen>
+          </td>
+        </tr>
+        <tr>
+          <td>List Identity service catalog</td>
+          <td>
+            <screen><prompt>$</prompt> <userinput>keystone catalog</userinput></screen>
+          </td>
+        </tr>
+        <tr>
+          <td>List all services in service catalog</td>
+          <td>
+            <screen><prompt>$</prompt> <userinput>keystone service-list</userinput></screen>
+          </td>
+        </tr>
+        <tr>
+          <td>Create new user</td>
+          <td>
+            <screen><prompt>$</prompt> <userinput>keystone user-create --name <replaceable>NAME</replaceable> --tenant-id <replaceable>TENANT</replaceable> \
+  --pass <replaceable>PASSWORD</replaceable> --email <replaceable>EMAIL</replaceable> --enabled <replaceable>BOOL</replaceable></userinput></screen>
+          </td>
+        </tr>
+        <tr>
+          <td>Create new tenant</td>
+          <td>
+            <screen><prompt>$</prompt> <userinput>keystone tenant-create --name <replaceable>NAME</replaceable> --description "<replaceable>DESCRIPTION</replaceable>" \
+  --enabled BOOL</userinput></screen>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table rules="all" width="100%">
+      <caption>Image Service (glance)</caption>
+      <col width="30%"/>
+      <col width="70%"/>
+      <thead>
+        <tr>
+          <th>Description</th>
+          <th>Command</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>List images you can access</td>
+          <td>
+            <screen><prompt>$</prompt> <userinput>glance image-list</userinput></screen>
+          </td>
+        </tr>
+        <tr>
+          <td>Delete specified image</td>
+          <td>
+            <screen><prompt>$</prompt> <userinput>glance image-delete <replaceable>IMAGE</replaceable></userinput></screen>
+          </td>
+        </tr>
+        <tr>
+          <td>Describe a specific image</td>
+          <td>
+            <screen><prompt>$</prompt> <userinput>glance image-show <replaceable>IMAGE</replaceable></userinput></screen>
+          </td>
+        </tr>
+        <tr>
+          <td>Update image</td>
+          <td>
+            <screen><prompt>$</prompt> <userinput>glance image-update <replaceable>IMAGE</replaceable></userinput></screen>
+          </td>
+        </tr>
+        <tr>
+          <th colspan="2">Manage images</th>
+        </tr>
+        <tr>
+          <td>Kernel image</td>
+          <td>
+            <screen><prompt>$</prompt> <userinput>glance image-create --name "cirros-threepart-kernel" \
+  --disk-format aki --container-format aki --is-public True \
+  --file ~/images/cirros-0.3.1~pre4-x86_64-vmlinuz</userinput></screen>
+          </td>
+        </tr>
+        <tr>
+          <td>RAM image</td>
+          <td>
+            <screen><prompt>$</prompt> <userinput>glance image-create -—name "cirros-threepart-ramdisk" \
+  --disk-format ari --container-format ari --is-public True \
+  --file ~/images/cirros-0.3.1~pre4-x86_64-initrd</userinput></screen>
+          </td>
+        </tr>
+        <tr>
+          <td>Three-part image</td>
+          <td>
+            <screen><prompt>$</prompt> <userinput>glance image-create --name "cirros-threepart" --disk-format ami \
+  --container-format ami --is-public True \
+  --property kernel_id=$KID—property ramdisk_id=$RID \
+  --file ~/images/cirros-0.3.1~pre4-x86_64-blank.img</userinput></screen>
+          </td>
+        </tr>
+        <tr>
+          <td>Register raw image</td>
+          <td>
+            <screen><prompt>$</prompt> <userinput>glance image-create --name "cirros-qcow2" --disk-format qcow2 \
+  --container-format bare --is-public True \
+  --file ~/images/cirros-0.3.1~pre4-x86_64-disk.img</userinput></screen>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table rules="all" width="100%">
+      <caption>Compute (nova)</caption>
+      <col width="30%"/>
+      <col width="70%"/>
+      <thead>
+        <tr>
+          <th>Description</th>
+          <th>Command</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>List instances, notice status of instance</td>
+          <td>
+            <screen><prompt>$</prompt> <userinput>nova list</userinput></screen>
+          </td>
+        </tr>
+        <tr>
+          <td>List images</td>
+          <td>
+            <screen><prompt>$</prompt> <userinput>nova image-list</userinput></screen>
+          </td>
+        </tr>
+        <tr>
+          <td>List flavors</td>
+          <td>
+            <screen><prompt>$</prompt> <userinput>nova flavor-list</userinput></screen>
+          </td>
+        </tr>
+        <tr>
+          <td>Boot an instance using flavor and image names (if names are unique)</td>
+          <td>
+            <screen><prompt>$</prompt> <userinput>nova boot --image <replaceable>IMAGE</replaceable> --flavor <replaceable>FLAVOR</replaceable> <replaceable>INSTANCE_NAME</replaceable></userinput>
+<prompt>$</prompt> <userinput>nova boot --image cirros-0.3.1-x86_64-uec --flavor m1.tiny \
+  MyFirstInstance</userinput></screen>
+          </td>
+        </tr>
+        <tr>
+          <td>Login to instance</td>
+          <td>
+            <screen><prompt>#</prompt> <userinput>ip netns</userinput>
+<prompt>#</prompt> <userinput>ip netns exec <replaceable>NETNS_NAME</replaceable> ssh <replaceable>USER</replaceable>@<replaceable>SERVER</replaceable></userinput>
+<prompt>#</prompt> <userinput>ip netns exec qdhcp-6021a3b4-8587-4f9c-8064-0103885dfba2 \
+  ssh cirros@10.0.0.2</userinput></screen>
+          <para>Note, in CirrOS the password for user
+             <literal>cirros</literal> is "cubswin:)" without the
+             quotes.</para>
+          </td>
+        </tr>
+        <tr>
+          <td>Show details of instance</td>
+          <td>
+<screen><prompt>$</prompt> <userinput>nova show <replaceable>NAME</replaceable></userinput>
+<prompt>$</prompt> <userinput>nova show MyFirstInstance</userinput></screen>
+          </td>
+        </tr>
+        <tr>
+          <td>View console log of instance</td>
+          <td>
+              <screen><prompt>$</prompt> <userinput>nova console-log MyFirstInstance</userinput></screen>
+          </td>
+        </tr>
+        <tr>
+          <td>Set metadata on an instance</td>
+          <td>
+            <screen><prompt>$</prompt> <userinput>nova meta volumeTwoImage set newmeta='my meta data'</userinput></screen>
+          </td>
+        </tr>
+        <tr>
+          <td>Create an instance snapshot</td>
+          <td>
+<screen><prompt>$</prompt> <userinput>nova image-create volumeTwoImage snapshotOfVolumeImage</userinput>
+<prompt>$</prompt> <userinput>nova image-show snapshotOfVolumeImage</userinput></screen>
+          </td>
+        </tr>
+        <tr>
+          <th colspan="2">Pause, suspend, stop, rescue, resize, rebuild, reboot an instance</th>
+        </tr>
+        <tr>
+          <td>Pause</td>
+          <td>
+            <screen><prompt>$</prompt> <userinput>nova pause <replaceable>NAME</replaceable></userinput>
+<prompt>$</prompt> <userinput>nova pause volumeTwoImage</userinput></screen>
+          </td>
+        </tr>
+        <tr>
+          <td>Unpause</td>
+          <td>
+            <screen><prompt>$</prompt> <userinput>nova unpause <replaceable>NAME</replaceable></userinput></screen>
+          </td>
+        </tr>
+        <tr>
+          <td>Suspend</td>
+          <td>
+            <screen><prompt>$</prompt> <userinput>nova suspend <replaceable>NAME</replaceable></userinput></screen>
+          </td>
+        </tr>
+        <tr>
+          <td>Unsuspend</td>
+          <td>
+            <screen><prompt>$</prompt> <userinput>nova resume <replaceable>NAME</replaceable></userinput></screen>
+          </td>
+        </tr>
+        <tr>
+          <td>Stop</td>
+          <td>
+            <screen><prompt>$</prompt> <userinput>nova stop <replaceable>NAME</replaceable></userinput></screen>
+          </td>
+        </tr>
+        <tr>
+          <td>Start</td>
+          <td>
+            <screen><prompt>$</prompt> <userinput>nova start <replaceable>NAME</replaceable></userinput></screen>
+          </td>
+        </tr>
+        <tr>
+          <td>Rescue</td>
+          <td>
+            <screen><prompt>$</prompt> <userinput>nova rescue <replaceable>NAME</replaceable></userinput></screen>
+          </td>
+        </tr>
+        <tr>
+          <td>Resize</td>
+          <td>
+            <screen><prompt>$</prompt> <userinput>nova resize <replaceable>NAME</replaceable> <replaceable>FLAVOR</replaceable></userinput>
+<prompt>$</prompt> <userinput>nova resize my-pem-server m1.small</userinput>
+<prompt>$</prompt> <userinput>nova resize-confirm my-pem-server1</userinput></screen>
+          </td>
+        </tr>
+        <tr>
+          <td>Rebuild</td>
+          <td>
+<screen><prompt>$</prompt> <userinput>nova rebuild <replaceable>NAME</replaceable> <replaceable>IMAGE</replaceable></userinput>
+<prompt>$</prompt> <userinput>nova rebuild newtinny cirros-qcow2</userinput></screen>
+          </td>
+        </tr>
+        <tr>
+          <td>Reboot</td>
+          <td>
+<screen><prompt>$</prompt> <userinput>nova reboot <replaceable>NAME</replaceable></userinput>
+<prompt>$</prompt> <userinput>nova reboot newtinny</userinput></screen>
+          </td>
+        </tr>
+        <tr>
+          <td>Inject user data and files into an instance</td>
+          <td>
+<screen><prompt>$</prompt> <userinput>nova boot --user-data <replaceable>FILE</replaceable> <replaceable>INSTANCE</replaceable></userinput>
+<prompt>$</prompt> <userinput>nova boot --user-data userdata.txt --image cirros-qcow2 \
+  --flavor m1.tiny MyUserdataInstance2</userinput></screen>
+
+             <para>To validate that the file is there, ssh into the
+               instance, and look in <filename>/var/lib/cloud</filename>
+               for the file.</para>
+          </td>
+        </tr>
+        <tr>
+          <th colspan="2">Inject a keypair into an instance and access
+            the instance with that keypair</th>
+        </tr>
+        <tr>
+          <td>Create keypair</td>
+          <td>
+            <screen><prompt>$</prompt> <userinput>nova keypair-add test > test.pem</userinput>
+<prompt>$</prompt> <userinput>chmod 600 test.pem</userinput></screen>
+          </td>
+        </tr>
+        <tr>
+          <td>Boot</td>
+          <td>
+            <screen><prompt>$</prompt> <userinput>nova boot --image cirros-0.3.0-x86_64 --flavor m1.small \
+  --key_name test MyFirstServer</userinput></screen>
+          </td>
+        </tr>
+        <tr>
+          <td>Use ssh to connect to the instance</td>
+          <td>
+<screen><prompt>#</prompt> <userinput>ip netns exec qdhcp-98f09f1e-64c4-4301-a897-5067ee6d544f \
+  ssh -i test.pem cirros@10.0.0.4</userinput></screen>
+          </td>
+        </tr>
+        <tr>
+          <th colspan="2">Manage security groups</th>
+        </tr>
+        <tr>
+          <td>Add rules to default security group allowing ping and
+          SSH between instances in the default security group</td>
+          <td>
+<screen><prompt>$</prompt> <userinput>nova secgroup-add-group-rule default default icmp -1 -1</userinput>
+<prompt>$</prompt> <userinput>nova secgroup-add-group-rule default default tcp 22 22</userinput></screen></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table rules="all" width="100%">
+      <caption>Networking (neutron)</caption>
+      <col width="30%"/>
+      <col width="70%"/>
+      <thead>
+        <tr>
+          <th>Description</th>
+          <th>Command</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Create network</td>
+          <td>
+            <screen><prompt>$</prompt> <userinput>neutron net-create <replaceable>NAME</replaceable></userinput></screen>
+          </td>
+        </tr>
+        <tr>
+          <td>Create a subnet</td>
+          <td>
+            <screen><prompt>$</prompt> <userinput>neutron subnet-create <replaceable>NETWORK_NAME</replaceable> <replaceable>CIDR</replaceable></userinput>
+<prompt>$</prompt> <userinput>neutron subnet-create my-network 10.0.0.0/29</userinput></screen>
+          </td>
+        </tr>
+        <tr>
+          <td>List network and subnet</td>
+          <td>
+<screen><prompt>$</prompt> <userinput>neutron net-list</userinput>
+<prompt>$</prompt> <userinput>neutron subnet-list</userinput></screen>
+          </td>
+        </tr>
+        <tr>
+          <td>Examine details of network and subnet</td>
+          <td>
+<screen><prompt>$</prompt> <userinput>neutron net-show <replaceable>ID_OR_NAME_OF_NETWORK</replaceable></userinput>
+<prompt>$</prompt> <userinput>neutron subnet-show <replaceable>ID_OR_NAME_OF_NETWORK</replaceable></userinput></screen>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table rules="all" width="100%">
+      <caption>Block Storage (cinder)</caption>
+      <col width="30%"/>
+      <col width="70%"/>
+      <thead>
+        <tr>
+          <th>Description</th>
+          <th>Command</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th colspan="2">Manage volumes and volume snapshots</th>
+        </tr>
+        <tr>
+          <td>Create a new volume</td>
+          <td>
+<screen><prompt>$</prompt> <userinput>cinder create <replaceable>SIZE_IN_GB</replaceable> --display-name <replaceable>NAME</replaceable></userinput>
+<prompt>$</prompt> <userinput>cinder create 1 --display-name MyFirstVolume</userinput></screen>
+          </td>
+        </tr>
+        <tr>
+          <td>Boot an instance and attach to volume</td>
+          <td>
+<screen><prompt>$</prompt> <userinput>nova boot --image cirros-qcow2 --flavor m1.tiny MyVolumeInstance</userinput></screen>
+          </td>
+        </tr>
+        <tr>
+          <td>List volumes, notice status of volume</td>
+          <td>
+            <screen><prompt>$</prompt> <userinput>cinder list</userinput></screen>
+          </td>
+        </tr>
+        <tr>
+          <td>Attach volume to instance after instance is active, and
+            volume is available</td>
+          <td>
+<screen><prompt>$</prompt> <userinput>nova volume-attach <replaceable>INSTANCE_ID</replaceable> <replaceable>VOLUME_ID</replaceable> auto</userinput>
+<prompt>$</prompt> <userinput>nova volume-attach MyVolumeInstance /dev/vdb auto</userinput></screen>
+          </td>
+        </tr>
+        <tr>
+          <th colspan="2">Manage volumes after login into the instance</th>
+        </tr>
+        <tr>
+          <td>List storage devices</td>
+          <td>
+            <screen><prompt>#</prompt> <userinput>fdisk -l</userinput></screen>
+          </td>
+        </tr>
+        <tr>
+          <td>Make filesystem on volume</td>
+          <td>
+            <screen><prompt>#</prompt> <userinput>mkfs.ext3 /dev/vdb</userinput></screen>
+          </td>
+        </tr>
+        <tr>
+          <td>Create a mountpoint</td>
+          <td>
+            <screen><prompt>#</prompt> <userinput>mkdir /myspace</userinput></screen>
+          </td>
+        </tr>
+        <tr>
+          <td>Mount the volume at the mountpoint</td>
+          <td>
+            <screen><prompt>#</prompt> <userinput>mount /dev/vdb /myspace</userinput></screen>
+          </td>
+        </tr>
+        <tr>
+          <td>Create a file on the volume</td>
+          <td>
+            <screen><prompt>#</prompt> <userinput>touch /myspace/helloworld.txt</userinput>
+<prompt>#</prompt> <userinput>ls /myspace</userinput></screen>
+          </td>
+        </tr>
+        <tr>
+          <td>Unmount the volume</td>
+          <td>
+            <screen><prompt>#</prompt> <userinput>umount /myspace</userinput></screen>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table rules="all" width="100%">
+      <caption>Object Storage (swift)</caption>
+      <col width="30%"/>
+      <col width="70%"/>
+      <thead>
+        <tr>
+          <th>Description</th>
+          <th>Command</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Display information for the account, container, or object</td>
+          <td>
+<screen><prompt>$</prompt> <userinput>swift stat</userinput>
+<prompt>$</prompt> <userinput>swift stat <replaceable>ACCOUNT</replaceable></userinput>
+<prompt>$</prompt> <userinput>swift stat <replaceable>CONTAINER</replaceable></userinput>
+<prompt>$</prompt> <userinput>swift stat <replaceable>OBJECT</replaceable></userinput></screen>
+          </td>
+        </tr>
+        <tr>
+          <td>List containers</td>
+          <td>
+            <screen><prompt>$</prompt> <userinput>swift list</userinput></screen>
+          </td>
+        </tr>
+        <tr>
+          <td>Create a container</td>
+          <td>
+            <screen><prompt>$</prompt> <userinput>swift post <replaceable>CONTAINER_NAME</replaceable></userinput></screen>
+          </td>
+        </tr>
+        <tr>
+          <td>Upload file to a container</td>
+          <td>
+<screen><prompt>$</prompt> <userinput>swift upload <replaceable>CONTAINER_NAME</replaceable> <replaceable>FILE_NAME</replaceable></userinput>
+<prompt>$</prompt> <userinput>swift upload mycontainer myfile.txt</userinput></screen>
+          </td>
+        </tr>
+        <tr>
+          <td>List objects in container</td>
+          <td>
+            <screen><prompt>$</prompt> <userinput>swift list container</userinput></screen>
+          </td>
+        </tr>
+        <tr>
+          <td>Download object from container</td>
+          <td>
+            <screen><prompt>$</prompt> <userinput>swift download <replaceable>CONTAINER_NAME</replaceable> <replaceable>FILE_NAME</replaceable></userinput></screen>
+          </td>
+        </tr>
+        <tr>
+          <td>Upload with chunks, for large file</td>
+          <td>
+<screen><prompt>$</prompt> <userinput>swift upload -S <replaceable>SIZE</replaceable> <replaceable>CONTAINER_NAME</replaceable> <replaceable>FILE_NAME</replaceable></userinput>
+<prompt>$</prompt> <userinput>swift upload -S 64 container largeFile</userinput></screen>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+</appendix>
