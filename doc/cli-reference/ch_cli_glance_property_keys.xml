@@ -220,6 +220,18 @@
                 </td>
             </tr>
             <tr valign="top">
+                <td>libvirt API driver</td>
+                <td>hw_disk_bus</td>
+                <td>Specifies the type of disk controller to attach
+                  disk devices to.</td>
+                <td>
+                  One of <literal>scsi</literal>,
+                  <literal>virtio</literal>, <literal>uml</literal>,
+                  <literal>xen</literal>, <literal>ide</literal>, or
+                  <literal>usb</literal>.
+              </td>
+            </tr>
+            <tr valign="top">
                 <td><para>libvirt API driver</para></td>
                 <td><para>hw_rng_model</para></td>
                 <td><para>Adds a random-number generator device to the image's instances. The cloud
@@ -301,6 +313,45 @@
                     initialization. This key is valid only for Amazon kernel, ramdisk,
                     or machine images (aki, ari, or ami).</td>
                 <td/>
+            </tr>
+            <tr valign="top">
+                <td>libvirt API driver and VMware API driver</td>
+                <td>hw_vif_model</td>
+                <td>Specifies the model of virtual network interface device to use.</td>
+                <td>
+                  <para>
+                  The valid options depend on the configured
+                  hypervisor.
+                  </para>
+                  <itemizedlist>
+                    <listitem>
+                      <para>KVM and QEMU: <literal>e1000</literal>,
+                      <literal>ne2k_pci</literal>,
+                      <literal>pcnet</literal>,
+                      <literal>rtl8139</literal>, and
+                      <literal>virtio</literal>.
+                      </para>
+                    </listitem>
+                    <listitem>
+                      <para>VMware: <literal>e1000</literal>,
+                      <literal>e1000e</literal>,
+                      <literal>VirtualE1000</literal>,
+                      <literal>VirtualE1000e</literal>,
+                      <literal>VirtualPCNet32</literal>,
+                      <literal>VirtualSriovEthernetCard</literal>, and
+                      <literal>VirtualVmxnet</literal>.
+                      </para>
+                    </listitem>
+                    <listitem>
+                      <para>Xen: <literal>e1000</literal>,
+                      <literal>netfront</literal>,
+                      <literal>ne2k_pci</literal>,
+                      <literal>pcnet</literal>, and
+                      <literal>rtl8139</literal>.
+                      </para>
+                    </listitem>
+                  </itemizedlist>
+              </td>
             </tr>
             <tr valign="top">
                 <td>VMware API driver</td>
