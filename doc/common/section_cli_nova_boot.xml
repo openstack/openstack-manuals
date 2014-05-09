@@ -10,50 +10,55 @@
         parameters:</para>
     <itemizedlist xml:id="instance_parameters">
         <listitem>
-            <para>The <guilabel>instance source</guilabel>. This can be an
-                image, a snapshot, or a block storage volume that contains an
-                image or snapshot.</para>
+            <para>The <emphasis role="bold">instance source</emphasis>
+                can be an image, snapshot, or block storage volume
+                that contains an image or snapshot.</para>
         </listitem>
         <listitem>
-            <para>A <guilabel>name</guilabel> for your instance.
-           </para>
+            <para>A <emphasis role="bold">name</emphasis> for your instance.</para>
         </listitem>
         <listitem>
-            <para>The <emphasis role="bold">flavor</emphasis> for your instance,
-                which defines the compute, memory, and storage capacity of nova
-                computing instances. A flavor is an available hardware
-                configuration for a server. It defines the "size" of a virtual
-                server that can be launched.</para>
+            <para>The <emphasis role="bold">flavor</emphasis> for your
+                instance, which defines the compute, memory, and
+                storage capacity of nova computing instances. A flavor
+                is an available hardware configuration for a server.
+                It defines the size of a virtual server that can be
+                launched.</para>
         </listitem>
         <listitem>
-            <para>Any <emphasis role="bold">user data</emphasis> files: A user
-                data file is a special key in the metadata service that holds a
-                file that cloud-aware applications in the guest instance can
-                access. For example, one application that uses user data is the
+            <para>Any <emphasis role="bold">user data</emphasis>
+                files. A user data file is a special key in the
+                metadata service that holds a file that cloud-aware
+                applications in the guest instance can access. For
+                example, one application that uses user data is the
                     <link
                     xlink:href="https://help.ubuntu.com/community/CloudInit"
-                    >cloud-init</link> system, which is an open-source package
-                from Ubuntu that is available on various Linux distributions and
-                which handles early initialization of a cloud instance.</para>
+                    >cloud-init</link> system, which is an open-source
+                package from Ubuntu that is available on various Linux
+                distributions and that handles early initialization of
+                a cloud instance.</para>
         </listitem>
         <listitem>
             <para>Access and security credentials, which include one
                 or both of the following credentials:</para>
             <itemizedlist>
                 <listitem>
-                    <para>A <emphasis role="bold">key pair</emphasis> for your
-                        instance, which are SSH credentials that are injected
-                        into images when they are launched. For the key pair to
-                        be successfully injected, the image must contain the
-                            <literal>cloud-init</literal> package. Create at
-                        least one key pair for each project. If you already have
-                        generated a key pair with an external tool, you can
-                        import it into OpenStack. You can use the key pair for
-                        multiple instances that belong to that project.</para>
+                    <para>A <emphasis role="bold">key pair</emphasis>
+                        for your instance, which are SSH credentials
+                        that are injected into images when they are
+                        launched. For the key pair to be successfully
+                        injected, the image must contain the
+                            <literal>cloud-init</literal> package.
+                        Create at least one key pair for each project.
+                        If you already have generated a key pair with
+                        an external tool, you can import it into
+                        OpenStack. You can use the key pair for
+                        multiple instances that belong to that
+                        project.</para>
                 </listitem>
                 <listitem>
                     <para>A <emphasis role="bold">security
-                            group</emphasis>, which defines which
+                            group</emphasis> that defines which
                         incoming network traffic is forwarded to
                         instances. Security groups hold a set of
                         firewall policies, known as <emphasis
@@ -63,43 +68,45 @@
             </itemizedlist>
         </listitem>
         <listitem>
-            <para>If needed, you can assign a <emphasis role="bold">floating
-                    (public) IP address</emphasis> to a running instance.
-            </para>
+            <para>If needed, you can assign a <emphasis role="bold"
+                    >floating (public) IP address</emphasis> to a
+                running instance.</para>
         </listitem>
         <listitem>
-            <para>You can also attach a block storage device, or <emphasis
-                    role="bold">volume</emphasis>, for persistent
-                storage.</para>
+            <para>You can also attach a block storage device, or
+                    <emphasis role="bold">volume</emphasis>, for
+                persistent storage.</para>
         </listitem>
-    </itemizedlist><note>
-                    <para>Instances that use the default security group cannot,
-                        by default, be accessed from any IP address outside of
-                        the cloud. If you want those IP addresses to access the
-                        instances, you must modify the rules for the default
-                        security group.</para>
-                    <para>You can also assign a floating IP address to a running
-                        instance to make it accessible from outside the cloud.
-                        See <xref linkend="manage_ip_addresses"/>.</para>
-                </note>
-    <para>After you gather the parameters that you need to launch an instance,
-        you can launch it from an <link linkend="launch_from_image">image</link>
-        or a <link linkend="boot_from_volume">volume</link>. You can launch an
-        instance directly from one of the available OpenStack images or from an
-        image that you have copied to a persistent volume. The OpenStack Image
-        Service provides a pool of images that are accessible to members of
-        different projects.</para>
+    </itemizedlist>
+    <note>
+        <para>Instances that use the default security group cannot, by
+            default, be accessed from any IP address outside of the
+            cloud. If you want those IP addresses to access the
+            instances, you must modify the rules for the default
+            security group.</para>
+        <para>You can also assign a floating IP address to a running
+            instance to make it accessible from outside the cloud. See
+                <xref linkend="manage_ip_addresses"/>.</para>
+    </note>
+    <para>After you gather the parameters that you need to launch an
+        instance, you can launch it from an <link
+            linkend="launch_from_image">image</link> or a <link
+            linkend="boot_from_volume">volume</link>. You can launch
+        an instance directly from one of the available OpenStack
+        images or from an image that you have copied to a persistent
+        volume. The OpenStack Image Service provides a pool of images
+        that are accessible to members of different projects.</para>
     <?hard-pagebreak?>
     <section xml:id="gather_parms">
         <title wordsize="20">Gather parameters to launch an
             instance</title>
-        <para>
-            Before you begin, source the OpenStack RC file.</para>
+        <para>Before you begin, source the OpenStack RC file.</para>
         <procedure>
             <step>
-                <para>List the available flavors and note the ID of the flavor
-                    that you want to use for your instance.</para>
+                <para>List the available flavors:</para>
                 <screen><prompt>$</prompt> <userinput>nova flavor-list</userinput></screen>
+                <para>Note the ID of the flavor that you want to use
+                    for your instance:</para>
                 <screen><?db-font-size 55%?><computeroutput>+----+-----------+-----------+------+-----------+------+-------+-------------+-----------+
 | ID | Name      | Memory_MB | Disk | Ephemeral | Swap | VCPUs | RXTX_Factor | Is_Public |
 +----+-----------+-----------+------+-----------+------+-------+-------------+-----------+
@@ -111,10 +118,10 @@
 +----+-----------+-----------+------+-----------+------+-------+-------------+-----------+</computeroutput></screen>
             </step>
             <step>
-                <para>List the available images and note the ID of the image
-                    from which you want to boot your instance.</para>
+                <para>List the available images:</para>
                 <screen><prompt>$</prompt> <userinput>nova image-list</userinput></screen>
-                <screen><?db-font-size 55%?><computeroutput>+--------------------------------------+---------------------------------+--------+--------+
+               <para>Note the ID of the image from which you want to
+                    boot your instance:</para> <screen><?db-font-size 55%?><computeroutput>+--------------------------------------+---------------------------------+--------+--------+
 | ID                                   | Name                            | Status | Server |
 +--------------------------------------+---------------------------------+--------+--------+
 | 397e713c-b95b-4186-ad46-6126863ea0a9 | cirros-0.3.2-x86_64-uec         | ACTIVE |        |
@@ -122,22 +129,20 @@
 | 3cf852bd-2332-48f4-9ae4-7d926d50945e | cirros-0.3.2-x86_64-uec-ramdisk | ACTIVE |        |
 +--------------------------------------+---------------------------------+--------+--------+</computeroutput></screen>
                 <para>You can also filter the image list by using
-                        <command>grep</command> to find a specific image, as
-                    follows:</para>
+                        <command>grep</command> to find a specific
+                    image, as follows:</para>
                 <screen><prompt>$</prompt> <userinput>nova image-list | grep 'kernel'</userinput></screen>
                 <screen><?db-font-size 55%?><computeroutput>| df430cc2-3406-4061-b635-a51c16e488ac | cirros-0.3.2-x86_64-uec-kernel  | ACTIVE |        |</computeroutput></screen>
             </step>
             <step>
-                <para>List the available security groups and note the ID of the
-                    security group that you want to use for your
-                    instance.</para>
+                <para>List the available security groups:</para>
                 <note>
                     <para>If you are an admin user, specify the
                             <option>--all-tenants</option> parameter
                         to list groups for all tenants.</para>
                 </note>
                 <screen><prompt>$</prompt> <userinput>nova secgroup-list --all-tenants</userinput></screen>
-                <screen><?db-font-size 65%?><computeroutput>+----+---------+-------------+----------------------------------+
+                <para>Note the ID of the security group that you want to use for your instance:</para><screen><?db-font-size 65%?><computeroutput>+----+---------+-------------+----------------------------------+
 | Id | Name    | Description | Tenant_ID                        |
 +----+---------+-------------+----------------------------------+
 | 2  | default | default     | 66265572db174a7aa66eba661f58eb9e |
@@ -146,12 +151,14 @@
                 <para>If you have not created any security groups, you
                     can assign the instance to only the default
                     security group.</para>
-                <para>You can view rules for a specified security group:</para>
+                <para>You can view rules for a specified security
+                    group:</para>
                 <screen><prompt>$</prompt> <userinput>nova secgroup-list-rules default</userinput>           </screen>
             </step>
             <step>
-                <para>List the available key pairs and note the name of the key
-                    pair that you use for SSH access.</para>
+                <para>List the available key pairs and note the name
+                    of the key pair that you use for SSH
+                    access.</para>
                 <screen><prompt>$</prompt> <userinput>nova keypair-list</userinput></screen>
             </step>
         </procedure>
@@ -161,33 +168,37 @@
         <title wordsize="20">Launch an instance from an image</title>
         <procedure>
             <step>
-                <para>After you have all the parameters required to launch an
-                    instance, run the following command and specify the server
-                    name, flavor ID, and image ID. Optionally, you can provide a
-                    key name for access control and a security group for
-                    security. You can also include metadata key and value pairs.
-                    For example, you can add a description for your server by
-                    providing the <parameter>--meta description="My
-                        Server"</parameter> parameter.</para>
-                <para>You can pass user data in a local file at instance launch
-                    by using the <parameter>--user-data
+                <para>After you gather required parameters, run the
+                    following command to launch an instance. Specify
+                    the server name, flavor ID, and image ID.</para>
+                <para>Optionally, you can provide a key name for
+                    access control and a security group for security.
+                    You can also include metadata key and value pairs.
+                    For example, you can add a description for your
+                    server by providing the <parameter>--meta
+                        description="My Server"</parameter>
+                    parameter.</para>
+                <para>You can pass user data in a local file at
+                    instance launch by using the
+                        <parameter>--user-data
                             <replaceable>USER-DATA-FILE</replaceable></parameter>
                     parameter.</para>
                 <screen><prompt>$</prompt> <userinput>nova boot --flavor <replaceable>FLAVOR_ID</replaceable> --image <replaceable>IMAGE_ID</replaceable> --key-name <replaceable>KEY_NAME</replaceable> \
   --user-data <replaceable>USER_DATA_FILE</replaceable> --security-groups <replaceable>SEC_GROUP</replaceable> --meta <replaceable>KEY=VALUE</replaceable> \
   <replaceable>INSTANCE_NAME</replaceable></userinput></screen>
-                <para>The following example shows a the command for launching an
-                    instance called <literal>MyCirrosServer</literal> with the
-                        <literal>m1.small</literal> flavor (ID of
+                <para>The following command launches the
+                        <literal>MyCirrosServer</literal> instance
+                    with the <literal>m1.small</literal> flavor (ID of
                         <literal>1</literal>),
-                        <literal>cirros-0.3.2-x86_64-uec</literal> image (ID
-                    of
-                    <literal>397e713c-b95b-4186-ad46-6126863ea0a9</literal>),
-                    the <literal>default</literal> security group, the
-                        <literal>KeyPair01</literal> key, and a user data file
-                    called <filename>cloudinit.file</filename>.</para>
+                        <literal>cirros-0.3.2-x86_64-uec</literal>
+                    image (ID of
+                        <literal>397e713c-b95b-4186-ad46-6126863ea0a9</literal>),
+                        <literal>default</literal> security group,
+                        <literal>KeyPair01</literal> key, and a user
+                    data file called
+                        <filename>cloudinit.file</filename>:</para>
                 <screen><prompt>$</prompt> <userinput>nova boot --flavor 1 --image 397e713c-b95b-4186-ad46-6126863ea0a9 \
-  --security-groups default --key-name KeyPair01 --user-data cloudinit.file  \
+  --security-groups default --key-name KeyPair01 --user-data cloudinit.file \
   <replaceable>myCirrosServer</replaceable></userinput></screen>
                 <para>Depending on the parameters that you provide,
                     the command returns a list of server
@@ -232,29 +243,32 @@
                     use this ID to get details for or delete your
                     server.</para>
                 <para>Copy the administrative password value from the
-                        <literal>adminPass</literal> field. You use this value
-                    to log in to your server.</para>
+                        <literal>adminPass</literal> field. You use
+                    this value to log in to your server.</para>
                 <note>
-                    <para>You can also place arbitrary local files into the
-                        instance file system at creation time by using the
-                            <option>--file &lt;dst-path=src-path&gt;</option>
-                        option. You can store up to five files. For example, if
-                        you have a special authorized keys file named
+                    <para>You can also place arbitrary local files
+                        into the instance file system at creation time
+                        by using the <option>--file
+                            &lt;dst-path=src-path&gt;</option> option.
+                        You can store up to five files. For example,
+                        if you have a special authorized keys file
+                        named
                             <filename>special_authorized_keysfile</filename>
-                        that you want to put on the instance rather than using
-                        the regular SSH key injection, you can use the
-                            <option>--file</option> option as shown in the
-                        following
-                        example:<screen><prompt>$</prompt> <userinput><?db-font-size 75%?>nova boot --image ubuntu-cloudimage --flavor 1 vm-name \
-  --file /root/.ssh/authorized_keys=special_authorized_keysfile</userinput></screen></para>
+                        that you want to put on the instance rather
+                        than using the regular SSH key injection, you
+                        can use the <option>--file</option> option as
+                        shown in the following example:</para>
+                    <screen><prompt>$</prompt> <userinput><?db-font-size 75%?>nova boot --image ubuntu-cloudimage --flavor 1 vm-name \
+  --file /root/.ssh/authorized_keys=special_authorized_keysfile</userinput></screen>
                 </note>
             </step>
             <step>
                 <para>Check if the instance is online:</para>
                 <screen><prompt>$</prompt> <userinput><?db-font-size 75%?>nova list</userinput></screen>
-                <para>The list shows the ID, name, status, and private (and if
-                    assigned, public) IP addresses for all instances in the
-                    project to which you belong:</para>
+                <para>The list shows the ID, name, status, and private
+                    (and if assigned, public) IP addresses for all
+                    instances in the project to which you
+                    belong:</para>
                 <screen><?db-font-size 50%?><computeroutput>+--------------------------------------+----------------------+--------+------------+-------------+------------------+
 | ID                                   | Name                 | Status | Task State | Power State | Networks         |
 +--------------------------------------+----------------------+--------+------------+-------------+------------------+
@@ -269,9 +283,13 @@
                 <screen><prompt>$</prompt> <userinput><?db-font-size 75%?>nova help list</userinput></screen>
             </step>
         </procedure>
-                <note><para>If you did not provide a key pair, security groups, or rules, you can
-                access the instance only from inside the cloud through VNC. Even
-                pinging the instance is not possible.</para></note>
-      </section><?hard-pagebreak?>
+        <note>
+            <para>If you did not provide a key pair, security groups,
+                or rules, you can access the instance only from inside
+                the cloud through VNC. Even pinging the instance is
+                not possible.</para>
+        </note>
+    </section>
+    <?hard-pagebreak?>
     <xi:include href="section_cli_nova_boot_from_volume.xml"/>
 </section>
