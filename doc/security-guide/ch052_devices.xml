@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter [
+<!ENTITY % openstack SYSTEM "../common/entities/openstack.ent">
+%openstack;
+]>
 <chapter xmlns:xi="http://www.w3.org/2001/XInclude"
          xmlns:xlink="http://www.w3.org/1999/xlink"
          xmlns="http://docbook.org/ns/docbook"
@@ -89,7 +93,11 @@
             <para><emphasis>Position Independent Executable (PIE)</emphasis>: Produces a position independent executable, which is necessary for ASLR.</para>
           </listitem>
 <listitem>
-            <para><emphasis>Address Space Layout Randomization (ASLR)</emphasis> : This ensures that both code and data regions will be randomized. Enabled by the kernel (all modern linux kernels support ASLR), when the executable is built with PIE.</para>
+            <para><emphasis>Address Space Layout Randomization
+            (ASLR)</emphasis>: This ensures that both code and data
+            regions will be randomized. Enabled by the kernel (all
+            modern linux kernels support ASLR), when the executable is
+            built with PIE.</para>
           </listitem>
 </itemizedlist>
         <para>Putting this all together, and adding in some additional useful protections, we recommend the following compiler options for gcc when compiling QEMU:</para>
@@ -151,8 +159,16 @@
 <imageobject role="fo">
             <imagedata contentdepth="100%" fileref="static/sVirt Diagram 1.png" format="PNG" scalefit="1" width="100%"/>
           </imageobject>
-</inlinemediaobject></para>
-      <para>As shown above, sVirt isolation is provided regardless of the guest Operating System running inside the virtual machine -- Linux or Windows VMs can be used. Additionally, many Linux distributions provide SELinux within the operating system, allowing the virtual machine to protect internal virtual resources from threats.</para>
+      </inlinemediaobject>
+      </para>
+      <para>
+        As shown above, sVirt isolation is provided regardless of the
+        guest Operating System running inside the virtual
+        machine&mdash;Linux or Windows VMs can be used. Additionally,
+        many Linux distributions provide SELinux within the operating
+        system, allowing the virtual machine to protect internal
+        virtual resources from threats.
+      </para>
       <section xml:id="ch052_devices-idp523744">
         <title>Labels and categories</title>
         <para>KVM-based virtual machine instances are labelled with their own SELinux data type, known as svirt_image_t. Kernel level protections prevent unauthorized system processes, such as malware, from manipulating the virtual machine image files on disk. When virtual machines are powered off, images are stored as svirt_image_t as shown below:</para>

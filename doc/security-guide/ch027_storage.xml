@@ -127,9 +127,10 @@
         </section>
         <section xml:id="ch027_storage-idpC123">
             <title>File permissions</title>
-            <para>/etc/swift contains information about the ring
-                topology and environment configuration. The following
-                permissions are recommended:</para>
+            <para>The <filename>/etc/swift</filename> directory
+               contains information about the ring topology and
+               environment configuration. The following permissions are
+               recommended:</para>
             <screen><prompt>#</prompt> <userinput>chown -R root:swift /etc/swift/*</userinput>
 <prompt>#</prompt> <userinput>find /etc/swift/ -type f -exec chmod 640 {} \;</userinput>
 <prompt>#</prompt> <userinput>find /etc/swift/ -type d -exec chmod 750 {} \;</userinput></screen>
@@ -147,7 +148,7 @@
         <informaltable>
             <thead>
                 <tr>
-                    <td>Service Name</td>
+                    <td>Service name</td>
                     <td>Port</td>
                     <td>Type</td>
                 </tr>
@@ -282,7 +283,7 @@ Group swift</programlisting>
             <para>Create the file
                     <filename>$YOUR_APACHE_DOC_ROOT/swift/proxy-server.wsgi</filename>:</para>
             <programlisting>from swift.common.wsgi import init_request_processor application, conf, logger, log_name = \
-            init_request_processor('/etc/swift/proxy-server.conf','proxy-server')</programlisting>
+  init_request_processor('/etc/swift/proxy-server.conf','proxy-server')</programlisting>
         </section>
         <section xml:id="ch027_storage-idpF1">
             <title>HTTP listening port</title>
@@ -363,11 +364,12 @@ Group swift</programlisting>
     <!-- Object Storage Authentication -->
     <section xml:id="ch027_storage-idpI1">
         <title>Other notable items</title>
-        <para>In /etc/swift/swift.conf on every service node there is
-            a "swift_hash_path_suffix" setting. This is provided to
-            reduce the chance of hash collisions for objects being
-            stored and avert one user overwriting the data of another
-            user.</para>
+        <para>In <filename>/etc/swift/swift.conf</filename> on every
+        service node there is a
+        <option>swift_hash_path_suffix</option> setting. This is
+        provided to reduce the chance of hash collisions for objects
+        being stored and avert one user overwriting the data of
+        another user.</para>
         <para>This value should be initially set with a
             cryptographically secure random number generator and
             consistent across all service nodes. Ensure that it is

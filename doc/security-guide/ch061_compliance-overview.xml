@@ -22,25 +22,81 @@
 </itemizedlist>
     <section xml:id="ch061_compliance-overview-idp48672">
       <title>Security principles</title>
-      <para>Industry standard security principles provide a baseline for compliance certifications and attestations. If these principles are considered and referenced throughout an OpenStack deployment, certification activities may be simplified.</para>
-      <orderedlist><listitem>
-          <para><emphasis>Layered Defenses</emphasis>: Identify where risks exist in a cloud architecture and apply controls to mitigate the risks. In areas of significant concern, layered defences provide multiple complementary controls to further mitigate risk. For example, to ensure adequate isolation between cloud tenants, we recommend hardening QEMU, using a hypervisor with SELinux support, enforcing mandatory access control policies, and reducing the overall attack surface. The foundational principle is to harden an area of concern with multiple layers of defense such that if any one layer is compromised, other layers will exist to offer protection and minimize exposure.</para>
+      <para>Industry standard security principles provide a baseline
+      for compliance certifications and attestations. If these
+      principles are considered and referenced throughout an OpenStack
+      deployment, certification activities may be simplified.</para>
+      <variablelist>
+        <varlistentry><term>Layered defenses</term>
+          <listitem>
+            <para>
+              Identify where risks exist in a cloud architecture and
+              apply controls to mitigate the risks. In areas of
+              significant concern, layered defences provide multiple
+              complementary controls to further mitigate risk. For
+              example, to ensure adequate isolation between cloud
+              tenants, we recommend hardening QEMU, using a hypervisor
+              with SELinux support, enforcing mandatory access control
+              policies, and reducing the overall attack surface. The
+              foundational principle is to harden an area of concern
+              with multiple layers of defense such that if any one
+              layer is compromised, other layers will exist to offer
+              protection and minimize exposure.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry><term>Fail securely</term>
+          <listitem>
+            <para>
+              In the case of failure, systems should be configured to
+              fail into a closed secure state. For example, SSL
+              certificate verification should fail closed by severing
+              the network connection if the CNAME doesn't match the
+              server's DNS name. Software often fails open in this
+              situation, allowing the connection to proceed without a
+              CNAME match, which is less secure and not
+              recommended.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry><term>Least privilege</term>
+          <listitem>
+            <para>
+              Only the minimum level of access for users and system
+              services is granted. This access is based upon role,
+              responsibility and job function. This security principal
+              of least privilege is written into several international
+              government security policies, such as NIST 800-53
+              Section AC-6 within the United States.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry><term>Compartmentalize</term>
+          <listitem>
+            <para>
+              Systems should be segregated in a such way that if one
+              machine, or system-level service, is compromised the
+              security of the other systems will remain
+              intact. Practically, the enablement and proper usage of
+              SELinux helps accomplish this goal.</para>
         </listitem>
-<listitem>
-          <para><emphasis>Fail Securely</emphasis>: In the case of failure, systems should be configured to fail into a closed secure state. For example, SSL certificate verification should fail closed by severing the network connection if the CNAME doesn't match the server's DNS name. Software often fails open in this situation, allowing the connection to proceed without a CNAME match, which is less secure and not recommended.</para>
+        </varlistentry>
+        <varlistentry>
+          <term>Promote privacy</term>
+          <listitem>
+            <para>
+              The amount of information that can be gathered about a
+              system and its users should be minimized.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Logging capability</term>
+          <listitem>
+            <para>
+              Appropriate logging is implemented to monitor for
+              unauthorized use, incident response and forensics. It is
+              highly recommended that selected audit subsystems be
+              Common Criteria certified, which provides non-attestable
+              event records in most countries.</para>
         </listitem>
-<listitem>
-          <para><emphasis>Least Privilege</emphasis>: Only the minimum level of access for users and system services is granted. This access is based upon role, responsibility and job function. This security principal of least privilege is written into several international government security policies, such as NIST 800-53 Section AC-6 within the United States.</para>
-        </listitem>
-<listitem>
-          <para><emphasis>Compartmentalize</emphasis>: Systems should be segregated in a such way that if one machine, or system-level service, is compromised the security of the other systems will remain intact. Practically, the enablement and proper usage of SELinux helps accomplish this goal.</para>
-        </listitem>
-<listitem>
-          <para><emphasis>Promote Privacy</emphasis>: The amount of information that can be gathered about a system and its users should be minimized.</para>
-        </listitem>
-<listitem>
-          <para><emphasis>Logging Capability</emphasis>: Appropriate logging is implemented to monitor for unauthorized use, incident response and forensics. It is highly recommended that selected audit subsystems be Common Criteria certified, which provides non-attestable event records in most countries.</para>
-        </listitem>
-</orderedlist>
+        </varlistentry>
+      </variablelist>
     </section>
   </chapter>
