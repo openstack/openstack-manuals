@@ -8,46 +8,43 @@
   xmlns:xlink="http://www.w3.org/1999/xlink"
  version="5.0"
   xml:id="lab000-virtualbox-basics">
-  <title>VirtualBox Basics</title>
+  <title>VirtualBox basics</title>
   <para><guilabel>Getting Started</guilabel></para>
-  <para>The following are the conventional methods of deploying
+  <para>The following methods are conventional for deploying
     OpenStack on Virtual Box for the sake of a test/sandbox or just to
     try out OpenStack on commodity hardware.</para>
     <para>1. DevStack</para>
     <para>2. Vagrant</para>
-    <para>But DevStack and Vagrant bring in some level of automated
+    <para>DevStack and Vagrant bring in some level of automated
       deployment as running the scripts will get your VirtualBox
-      Instance configured as the required OpenStack deployment. We
-      will be manually deploying OpenStack on VirtualBox Instance to
-      get better view of how OpenStack works.</para>
+      instance configured as the required OpenStack deployment. We
+      will be manually deploying OpenStack on VirtualBox to
+      get a better view of how OpenStack works.</para>
     <para><guilabel>Prerequisite:</guilabel></para>
-    <para>Well, its a daunting task to just cover all of OpenStack’s
-      concepts let alone Virtualization and Networking. So some basic
-      idea/knowledge on Virtualization, Networking and Linux is
-      required. Even though I will try to keep the level as low as
-      possible for making it easy for Linux Newbies as well as
-      experts.</para>
-    <para>These Virtual Machines and Virtual Networks will be given
-      equal privilege as a physical machine on a physical
+    <para>Networking and Linux are required to get setup.</para>
+    <para>The Virtual Machines and Virtual Networks will be given
+      equal privileges as a physical machine on a physical
       network.</para>
-    <para>Just for those who would want to do a deeper research or
-      study, for more information you may refer the following
-      links</para>
-    <para><emphasis role="bold">OpenStack:</emphasis>OpenStack
-    Official Documentation (docs.openstack.org)</para>
-    <para><emphasis role="bold">Networking:</emphasis>Computer
+    <para>For more information, refer to the following
+        links:</para>
+    <para>
+      <emphasis role="bold">OpenStack:</emphasis> <link
+      xlink:href="http://docs.openstack.org">OpenStack Official
+      Documentation</link></para>
+    <para><emphasis role="bold">Networking:</emphasis> Computer
     Networks (5th Edition) by Andrew S. Tanenbaum</para>
-    <para><emphasis role="bold">VirtualBox:</emphasis>Virtual Box
-    Manual (http://www.virtualbox.org/manual/UserManual.html)</para>
-    <para><emphasis role="bold">Requirements :</emphasis></para>
+    <para><emphasis role="bold">VirtualBox:</emphasis> <link
+    xlink:href="http://www.virtualbox.org/manual/UserManual.html">Virtual
+    Box Manual</link></para>
+    <para><emphasis role="bold">Requirements:</emphasis></para>
     <para>Operating Systems - I recommend Ubuntu Server 12.04 LTS,
-    Ubuntu Server 13.10 or Debian Wheezy</para>
-    <para><emphasis role="bold">Note :</emphasis>Ubuntu 12.10 is not
-    supporting OpenStack Grizzly Packages. Ubuntu team has decided not
-    to package Grizzly Packages for Ubuntu 12.10.</para>
+    Ubuntu Server 13.10 or Debian Wheezy.</para>
+    <note><para>Ubuntu 12.10 is not
+       supporting OpenStack Grizzly Packages. Ubuntu team has decided not
+       to package Grizzly Packages for Ubuntu 12.10.</para></note>
     <itemizedlist>
       <listitem>
-        <para>Recommended Requirements.</para>
+          <para>Recommended Requirements:</para>
       </listitem>
     </itemizedlist>
     <informaltable class="c25">
@@ -64,14 +61,14 @@
     </informaltable>
     <itemizedlist>
       <listitem>
-        <para>Minimum Requirements.</para>
+          <para>Minimum Requirements:</para>
       </listitem>
     </itemizedlist>
     <informaltable class="c25">
       <tbody>
         <tr>
           <td rowspan="1" colspan="1">Non-VT PC's:</td>
-          <td rowspan="1" colspan="1">Intel Core 2 Duo or Amd Dual
+          <td rowspan="1" colspan="1">Intel Core 2 Duo or AMD Dual
             Core</td>
         </tr>
         <tr>
@@ -81,7 +78,7 @@
       </tbody>
     </informaltable>
     <para>If you don't know whether your processor is VT enabled, you
-      could check it by installing cpu checker:</para>
+      could check it by installing cpu-checker:</para>
       <screen><prompt>#</prompt> <userinput>apt-get install cpu-checker</userinput>
 <prompt>#</prompt> <userinput>kvm-ok</userinput></screen>
     <para>If your device does not support VT it will show:</para>
@@ -89,91 +86,94 @@
 KVM acceleration can NOT be used</computeroutput></screen>
     <para>You will still be able to use Virtual Box but the instances
       will be very slow.</para>
-    <para>There are many ways to configure your OpenStack Setup, we
-    will be deploying OpenStack Multi Node using OVS as the Network
-    Plugin and QEMU/ KVM as the hypervisor.</para>
-  <para><emphasis role="bold">Host Only Connections:</emphasis></para>
+    <para>There are many ways to configure your OpenStack Setup. In this example, we
+    will deploy OpenStack multi node using OVS as the network
+    plug-in and QEMU/KVM as the hypervisor.</para>
+  <para><emphasis role="bold">Host only connections:</emphasis></para>
     <itemizedlist>
       <listitem>
-        <para>Host only connections provide an Internal network
-          between your host and the Virtual Machine instances up and
-          running on your host machine.This network is not traceable
+        <para>Host only connections provide an internal network
+          between your host and the Virtual Machine instances on your host machine. This network is not traceable
           by other networks.</para>
       </listitem>
       <listitem>
-        <para>You may even use Bridged connection if you have a
-          router/switch. I am assuming the worst case (one IP without
-          any router), so that it is simple to get the required
-          networks running without the hassle of IP tables.</para>
+        <para>You may even use bridged connections if you have a
+          router/switch.</para>
       </listitem>
       <listitem>
         <para>The following are the host only connections that you
-          will be setting up later on :</para>
+          will be setting up later on:</para>
+          <orderedlist>
+            <listitem>
+              <para>vboxnet0 - OpenStack management network - host static IP
+                10.10.10.1</para>
+            </listitem>
+            <listitem>
+              <para>vboxnet1 - VM conf.network - host static IP
+                10.20.20.1</para>
+            </listitem>
+            <listitem>
+              <para>vboxnet2 - VM external network access (host
+                machine) 192.168.100.1</para>
+            </listitem>
+          </orderedlist>
       </listitem>
     </itemizedlist>
-    <orderedlist>
-      <listitem>
-        <para>vboxnet0 - OpenStack Management Network - Host static IP
-          10.10.10.1</para>
-      </listitem>
-      <listitem>
-        <para>vboxnet1 - VM Conf.Network - Host Static IP
-          10.20.20.1</para>
-      </listitem>
-      <listitem>
-        <para>vboxnet2 - VM External Network Access (Host
-        Machine) 192.168.100.1</para>
-      <para><emphasis role="bold">Network Diagram :</emphasis></para>
-      </listitem>
-    </orderedlist>
   <figure>
-    <title>Network Diagram</title>
+    <title>Network diagram</title>
     <mediaobject>
       <imageobject>
-        <imagedata  contentwidth="4in" fileref="figures/lab000-virtual-box/image03.png"/>
+        <imagedata  contentwidth="5in" fileref="figures/lab000-virtual-box/image03.png"/>
       </imageobject>
     </mediaobject>
   </figure>
+  <!--
   <para>Publicly editable image source at <link
     xlink:href="https://docs.google.com/drawings/d/1GX3FXmkz3c_tUDpZXUVMpyIxicWuHs5fNsHvYNjwNNk/edit?usp=sharing"
     >https://docs.google.com/drawings/d/1GX3FXmkz3c_tUDpZXUVMpyIxicWuHs5fNsHvYNjwNNk/edit?usp=sharing</link></para>
-  <para>Vboxnet0, Vboxnet1, Vboxnet2 - are virtual networks setup up
+  -->
+  <para>Vboxnet0, Vboxnet1, Vboxnet2 - are virtual networks setup
       by virtual box with your host machine. This is the way your host
       can communicate with the virtual machines. These networks are in
       turn used by virtual box VM’s for OpenStack networks, so that
-      OpenStack’s services can communicate with each other.</para>
-  <para><guilabel>Setup Your VM Environment</guilabel></para>
-  <para>Before you can start configuring your Environment you need to
+      OpenStack’s services can communicate with each other.
+      For details, see the <link
+      xlink:href="http://www.virtualbox.org/manual/ch06.html#network_hostonly">VirtualBox
+      documentation</link>
+  </para>
+  <section xml:id="lab000-virtualbox-basics_setup_virtualbox">
+  <title>Setup your VM environment</title>
+  <para>Before you can start configuring your environment you need to
     download some of the following stuff:</para>
-
   <orderedlist>
     <listitem>
       <para><link xlink:href="https://www.virtualbox.org/wiki/Downloads">
         Oracle Virtual Box</link></para>
+   <note><para>You cannot set up an AMD64 VM on a x86 machine.</para></note>
     </listitem>
-   </orderedlist>
-   <para>Note:You cannot set up a amd64 VM on a x86 machine.</para>
-   <orderedlist>
     <listitem>
       <para><link xlink:href="http://www.ubuntu.com/download/server">
         Ubuntu 12.04 Server or Ubuntu 13.04 Server</link></para>
      </listitem>
    </orderedlist>
-   <para>Note:You need a x86 image for VM's if kvm-ok fails, even
-      though you are on amd64 machine.</para>
-   <para>Note: Even Though I'm using Ubuntu as Host, the same is
-      applicable to Windows, Mac and other Linux Hosts.</para>
+   <note><para>You need a x86 image for VM's if kvm-ok fails, even
+      though you are on an AMD64 machine.</para></note>
+   <note><para>Even though I'm using Ubuntu as host, the same is
+      applicable to Windows, Mac and other Linux hosts.</para></note>
    <itemizedlist>
       <listitem>
         <para>If you have i5 or i7 2nd gen processor you can have VT
-        technology inside VM's provided by VmWare. This means that
-        your OpenStack nodes(Which are in turn VM's) will give
-        positive result on KVM-OK. (I call it - Nesting of type-2
-        Hypervisors). Rest of the configurations remain same except
-        for the UI and few other trivial differences.</para>
+        technology inside VM's provided by VMware. This means that
+        your OpenStack nodes (which are in turn VM's) will give
+        positive result on KVM-OK. (I call it - nesting of type-2
+        hypervisors). The rest of the configurations remain same except
+        for the UI and a few other trivial differences.</para>
       </listitem>
     </itemizedlist>
-  <para><guilabel>Configure Virtual Networks</guilabel></para>
+  </section>
+  <section xml:id="lab000-virtualbox-basics_setup_virtual_networks">
+    <title>Configure virtual networks</title>
+
     <itemizedlist>
       <listitem>
         <para>This section of the guide will help you setup your
@@ -199,7 +199,7 @@ KVM acceleration can NOT be used</computeroutput></screen>
       </listitem>
     </itemizedlist>
   <figure>
-    <title>Create Host Only Networks</title>
+    <title>Create host only networks</title>
     <mediaobject>
       <imageobject>
         <imagedata fileref="figures/lab000-virtual-box/image13.png"
@@ -209,11 +209,11 @@ KVM acceleration can NOT be used</computeroutput></screen>
   </figure>
     <itemizedlist>
       <listitem>
-        <para>Create three Host-Only Network Connections. As shown
+        <para>Create three host-only network connections. As shown
           above.</para>
       </listitem>
       <listitem>
-        <para>Edit the Host-Only Connections to have the following
+        <para>Edit the host-only connections to have the following
           settings.</para>
       </listitem>
     </itemizedlist>
@@ -222,24 +222,24 @@ KVM acceleration can NOT be used</computeroutput></screen>
     <informaltable class="c25">
       <tbody>
         <tr>
-          <th rowspan="1" colspan="1">Option</th>
-          <th rowspan="1" colspan="1">Value</th>
+          <th>Option</th>
+          <th>Value</th>
         </tr>
         <tr>
-          <td rowspan="1" colspan="1">IPv4 Address:</td>
-          <td rowspan="1" colspan="1">10.10.10.1</td>
+          <td>IPv4 Address:</td>
+          <td>10.10.10.1</td>
         </tr>
         <tr>
-          <td rowspan="1" colspan="1">IPv4 Network Mask:</td>
-          <td rowspan="1" colspan="1">255.255.255.0</td>
+          <td>IPv4 Network Mask:</td>
+          <td>255.255.255.0</td>
         </tr>
         <tr>
-          <td rowspan="1" colspan="1">IPv6 Address:</td>
-          <td rowspan="1" colspan="1">Can be Left Blank</td>
+          <td>IPv6 Address:</td>
+          <td>Can be left blank</td>
         </tr>
         <tr>
-          <td rowspan="1" colspan="1">IPv6 Network Mask Length :</td>
-          <td rowspan="1" colspan="1">Can be Left Blank</td>
+          <td>IPv6 Network Mask Length:</td>
+          <td>Can be left blank</td>
         </tr>
       </tbody>
     </informaltable>
@@ -323,49 +323,55 @@ KVM acceleration can NOT be used</computeroutput></screen>
       </imageobject>
     </mediaobject>
   </figure>
-  <para><guilabel>Install SSH and FTP</guilabel></para>
+  </section>
+  <section xml:id="lab000-virtualbox-basics_setup_install_ssh_ftp">
+    <title>Install SSH and FTP</title>
     <itemizedlist>
       <listitem>
         <para>You may benefit by installing SSH and FTP so that you
-          could use your remote shell to login into the machine and
-          use your terminal which is more convenient that using the
+          can use your remote shell to login into the machine and
+          use your terminal which is more convenient than using the
           Virtual Machines tty through the Virtual Box's UI. You get a
-          few added comforts like copy - paste commands into the
-          remote terminal which is not possible directly on VM.</para>
+          few added features such as copy - paste commands into the
+          remote terminal, which is not possible directly on VM.</para>
       </listitem>
       <listitem>
-        <para>FTP is for transferring files to and fro ... you can
+        <para>FTP is for transferring files to and from your local machine
+          and the virtual machine. You can
           also use SFTP or install FTPD on both HOST and VM's.</para>
       </listitem>
       <listitem>
-        <para>Installation of SSH and FTP with its configuration is
-          out of scope of this GUIDE and I may put it up but it
-          depends upon my free time. If someone wants to contribute to
-          this - please do so.</para>
+        <para>Installation of SSH and FTP with the configuration steps are
+          out of the scope of this guide.</para>
       </listitem>
     </itemizedlist>
-    <para><emphasis role="bold">Note:</emphasis>Please set up the
-    Networks from inside the VM before trying to SSH and FTP into the
-    machines. I would suggest setting it up at once just after the
-    installation of the Server on VM's is over.</para>
-    <para><guilabel>Install Your VM's Instances</guilabel></para>
+    <note><para>Set up the
+      networks from inside the VM before trying to SSH and FTP into the
+      machines.</para>
+    </note>
+  </section>
+  <section xml:id="lab000-virtualbox-basics_setup_install_vm_instances">
+    <title>Install your VM instances</title>
+
     <itemizedlist>
       <listitem>
-        <para>During Installation of The Operating Systems you will be
-          asked for Custom Software to Install , if you are confused
-          or not sure about this, just skip this step by pressing
-          Enter Key without selecting any of the given Options.</para>
+        <para>During installation of the operating systems you will be
+          asked for custom software to install. You may skip this step
+          by pressing the <keycap>Enter</keycap> key without selecting
+          any of the given options.</para>
       </listitem>
     </itemizedlist>
-    <para><emphasis role="bold">Warning</emphasis> - Please do not
-    install any of the other packages except for which are mentioned
-    below unless you know what you are doing. There is a good chance
-    that you may end up getting unwanted errors, package conflicts ...
-    due to the same.</para>
-    <para><guilabel>Control Node:</guilabel></para>
-    <para>Create a new virtual machine. Select Ubuntu Server</para>
+    <warning><para>Please do not install any of the other packages
+      except for the packages that are mentioned below unless you are
+      familiar with the process.</para>
+    </warning>
+  </section>
+  <section xml:id="lab000-virtualbox-basics_setup_control_node">
+    <title>Control node</title>
+
+    <para>Create a new virtual machine and select Ubuntu Server.</para>
   <figure>
-    <title>Create New Virtual Machine</title>
+    <title>Create new virtual machine</title>
     <mediaobject>
       <imageobject>
         <imagedata fileref="figures/lab000-virtual-box/image11.png"
@@ -375,7 +381,7 @@ KVM acceleration can NOT be used</computeroutput></screen>
   </figure>
     <para>Select the appropriate amount of RAM. For the control node,
     the minimum is 512&nbsp;MB of RAM. For other settings, use the
-    defaults. The hard disk size can be 8&nbsp;GB as default.</para>
+    defaults. The hard disk size can be 8&nbsp;GB.</para>
     <para>Configure the networks</para>
     <para>(Ignore the IP Address for now, you will set it up from
       inside the VM)</para>
@@ -383,24 +389,24 @@ KVM acceleration can NOT be used</computeroutput></screen>
     <informaltable class="c25">
       <tbody>
         <tr>
-          <th rowspan="1" colspan="1">Network Adapter</th>
-          <th rowspan="1" colspan="1">Host-Only Adapter Name</th>
-          <th rowspan="1" colspan="1">IP Address</th>
+          <th>Network Adapter</th>
+          <th>Host-Only Adapter Name</th>
+          <th>IP Address</th>
         </tr>
         <tr>
-          <td rowspan="1" colspan="1">eth0</td>
-          <td rowspan="1" colspan="1">Vboxnet0</td>
-          <td rowspan="1" colspan="1">10.10.10.51</td>
+          <td>eth0</td>
+          <td>Vboxnet0</td>
+          <td>10.10.10.51</td>
         </tr>
         <tr>
-          <td rowspan="1" colspan="1">eth1</td>
-          <td rowspan="1" colspan="1">Vboxnet2</td>
-          <td rowspan="1" colspan="1">192.168.100.51</td>
+          <td>eth1</td>
+          <td>Vboxnet2</td>
+          <td>192.168.100.51</td>
         </tr>
         <tr>
-          <td rowspan="1" colspan="1">eth2</td>
-          <td rowspan="1" colspan="1">NAT</td>
-          <td rowspan="1" colspan="1">DHCP</td>
+          <td>eth2</td>
+          <td>NAT</td>
+          <td>DHCP</td>
         </tr>
       </tbody>
     </informaltable>
@@ -434,17 +440,22 @@ KVM acceleration can NOT be used</computeroutput></screen>
       </imageobject>
     </mediaobject>
   </figure>
-    <para>Now Install Ubuntu Server 12.04 or 13.04 on this
+    <para>Now install Ubuntu Server 12.04 or 13.04 on this
       machine.</para>
-    <para><emphasis role="bold">Note :</emphasis>Install SSH server
-    when asked for Custom Software to Install. Rest of the packages
-    are not required and may come in the way of OpenStack packages -
-    like DNS servers etc. (not necessary). Unless you know what you
-    are doing.</para>
-    <para><guilabel>Network Node:</guilabel></para>
-    <para>Create a new Virtual Machine,</para>
-    <para>Minimum RAM is 512&nbsp;MB. Rest all can be left default. Minimum
-    HDD space 8&nbsp;GB.</para>
+    <note><para>Install SSH server
+      when asked for custom software to install. The rest of the packages
+      are not required and may come in the way of OpenStack packages -
+      like DNS servers etc. (not necessary). Unless you know what you
+      are doing.</para>
+    </note>
+  </section>
+  <section xml:id="lab000-virtualbox-basics_setup_network_node">
+    <title>Network node</title>
+
+    <para>Create a new virtual machine, minimum RAM is
+      512&nbsp;MB. The remainder can be left as default. The minimum HDD
+      space is 8&nbsp;GB.</para>
+
   <figure>
     <title>Create New Virtual Machine</title>
     <mediaobject>
@@ -461,29 +472,29 @@ KVM acceleration can NOT be used</computeroutput></screen>
     <informaltable class="c25">
       <tbody>
         <tr>
-          <th rowspan="1" colspan="1">Network Adapter</th>
-          <th rowspan="1" colspan="1">Host-Only Adapter Name</th>
-          <th rowspan="1" colspan="1">IP Address</th>
+          <th>Network Adapter</th>
+          <th>Host-Only Adapter Name</th>
+          <th>IP Address</th>
         </tr>
         <tr>
-          <td rowspan="1" colspan="1">eth0</td>
-          <td rowspan="1" colspan="1">Vboxnet0</td>
-          <td rowspan="1" colspan="1">10.10.10.52</td>
+          <td>eth0</td>
+          <td>Vboxnet0</td>
+          <td>10.10.10.52</td>
         </tr>
         <tr>
-          <td rowspan="1" colspan="1">eth1</td>
-          <td rowspan="1" colspan="1">Vboxnet1</td>
-          <td rowspan="1" colspan="1">10.20.20.52</td>
+          <td>eth1</td>
+          <td>Vboxnet1</td>
+          <td>10.20.20.52</td>
         </tr>
         <tr>
-          <td rowspan="1" colspan="1">eth2</td>
-          <td rowspan="1" colspan="1">Vboxnet2</td>
-          <td rowspan="1" colspan="1">192.168.100.52</td>
+          <td>eth2</td>
+          <td>Vboxnet2</td>
+          <td>192.168.100.52</td>
         </tr>
         <tr>
-          <td rowspan="1" colspan="1">eth3</td>
-          <td rowspan="1" colspan="1">NAT</td>
-          <td rowspan="1" colspan="1">DHCP</td>
+          <td>eth3</td>
+          <td>NAT</td>
+          <td>DHCP</td>
         </tr>
       </tbody>
     </informaltable>
@@ -527,18 +538,21 @@ KVM acceleration can NOT be used</computeroutput></screen>
       </imageobject>
     </mediaobject>
   </figure>
-    <para>Now Install Ubuntu Server 12.04 or 13.04 on this
+    <para>Now install Ubuntu Server 12.04 or 13.04 on this
       machine.</para>
-    <para><emphasis role="bold">Note :</emphasis>Install SSH server
-    when asked for Custom Software to Install. Rest of the packages
-    are not required and may come in the way of OpenStack packages -
-    like DNS servers etc. (not necessary). Unless you know what you
-    are doing.</para>
-    <para><guilabel>Compute Node:</guilabel></para>
+    <note><para>Install the SSH server when you are prompted for the
+      custom software to install. The rest of the packages are not
+      required and may come in the way of OpenStack packages - like DNS
+      servers.</para>
+    </note>
+  </section>
+  <section xml:id="lab000-virtualbox-basics_setup_compute_node">
+    <title>Compute node</title>
+
     <para>Create a virtual machine with at least 1,000&nbsp;MB RAM and
     8&nbsp;GB HDD. For other settings, use the defaults.</para>
   <figure>
-    <title>Create New Virtual Machine</title>
+    <title>Create new virtual machine</title>
     <mediaobject>
       <imageobject>
         <imagedata fileref="figures/lab000-virtual-box/image04.png"
@@ -553,24 +567,24 @@ KVM acceleration can NOT be used</computeroutput></screen>
     <informaltable class="c25">
       <tbody>
         <tr>
-          <th rowspan="1" colspan="1">Network Adapter</th>
-          <th rowspan="1" colspan="1">Host-Only Adapter Name</th>
-          <th rowspan="1" colspan="1">IP Address</th>
+          <th>Network Adapter</th>
+          <th>Host-Only Adapter Name</th>
+          <th>IP Address</th>
         </tr>
         <tr>
-          <td rowspan="1" colspan="1">eth0</td>
-          <td rowspan="1" colspan="1">Vboxnet0</td>
-          <td rowspan="1" colspan="1">10.10.10.53</td>
+          <td>eth0</td>
+          <td>Vboxnet0</td>
+          <td>10.10.10.53</td>
         </tr>
         <tr>
-          <td rowspan="1" colspan="1">eth1</td>
-          <td rowspan="1" colspan="1">Vboxnet1</td>
-          <td rowspan="1" colspan="1">10.20.20.53</td>
+          <td>eth1</td>
+          <td>Vboxnet1</td>
+          <td>10.20.20.53</td>
         </tr>
         <tr>
-          <td rowspan="1" colspan="1">eth2</td>
-          <td rowspan="1" colspan="1">NAT</td>
-          <td rowspan="1" colspan="1">DHCP</td>
+          <td>eth2</td>
+          <td>NAT</td>
+          <td>DHCP</td>
         </tr>
       </tbody>
     </informaltable>
@@ -604,27 +618,26 @@ KVM acceleration can NOT be used</computeroutput></screen>
       </imageobject>
     </mediaobject>
   </figure>
-    <para>Now Install Ubuntu Server 12.04 or 13.04 on this
+    <para>Now install Ubuntu Server 12.04 or 13.04 on this
       machine.</para>
-    <para><emphasis role="bold">Note :</emphasis>Install SSH server
-    when asked for Custom Software to Install. Rest of the packages
-    are not required and may come in the way of OpenStack packages -
-    like DNS servers etc. (not necessary). Unless you know what you
-    are doing.</para>
-  <para><guilabel>Warnings/Advice :</guilabel></para>
+    <note><para>Install the SSH server
+      when asked for custom software to install. The rest of the packages
+      are not required and may come in the way of OpenStack packages -
+      like DNS servers etc.</para>
+    </note>
+  </section>
+  <section xml:id="lab000-virtualbox-basics_setup_warnings">
+    <title>Warnings and advice</title>
+
+    <para>Well there are a few warnings that I must give you out
+       of experience due to common habits that most people may
+       have.</para>
+    <para>Sometimes shutting down your Virtual Machine may lead to
+        the malfunctioning of OpenStack Services. Try not to directly
+        shutdown your VM, in case your VM's don't get Internet.</para>
       <itemizedlist>
         <listitem>
-          <para>Well there are a few warnings that I must give you out
-            of experience due to common habits that most people may
-            have :</para>
-        </listitem>
-      </itemizedlist>
-      <para>Sometimes shutting down your Virtual Machine may lead to
-        malfunctioning of OpenStack Services. Try not to direct
-        shutdown your 3. In case your VM's don't get internet.</para>
-      <itemizedlist>
-        <listitem>
-          <para>From your VM Instance, use <command>ping</command>
+          <para>From your VM instance, use the <command>ping</command>
           command to see whether Internet is on.</para>
           <screen><prompt>$</prompt> <userinput>ping www.google.com</userinput></screen>
         </listitem>
@@ -635,27 +648,27 @@ KVM acceleration can NOT be used</computeroutput></screen>
 <prompt>#</prompt> <userinput>ping www.google.com</userinput></screen>
         </listitem>
         <listitem>
-          <para>If this doesn't work, you need to check your network
-            settings from Virtual Box, you may have left something or
-            misconfigured it.</para>
+          <para>If this doesn't work, check your network
+            settings from Virtual Box. Something may be missing or it may be
+            misconfigured.</para>
         </listitem>
         <listitem>
           <para>This should reconnect your network about 99% of the
-            times. If you are really unlucky you must be having some
+            time. If you are really unlucky you must be having some
             other problems or your Internet connection itself is not
             functioning.</para>
         </listitem>
         <listitem>
-          <para>Note :There are known bugs with the ping under NAT.
+          <para>Note: There are known bugs with the ping under NAT.
             Although the latest versions of Virtual Box have better
-            performance, sometimes ping may not work even if your
-            Network is connected to internet.</para>
+            performance, sometimes ping may not work even if the
+            Network is connected to the Internet.</para>
         </listitem>
       </itemizedlist>
       <para>Congrats, you are ready with the infrastructure for
         deploying OpenStack. Just make sure that you have installed
-        Ubuntu Server on the above setup Virtual Box Instances. In the
+        Ubuntu Server on the above setup Virtual Box instances. In the
         next section we will go through deploying OpenStack using the
         above created Virtual Box instances.</para>
-
+  </section>
 </chapter>
