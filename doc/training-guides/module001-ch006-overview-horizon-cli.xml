@@ -65,23 +65,21 @@
         <listitem>
           <para>Ask your cloud operator for the following
             information:</para>
+            <itemizedlist>
+              <listitem>
+                <para>The hostname or public IP address from which you can
+                  access the dashboard.</para>
+              </listitem>
+              <listitem>
+                <para>The dashboard is available on the node that has the
+                  nova-dashboard server role.</para>
+              </listitem>
+              <listitem>
+                <para>The username and password with which you can log in to
+                  the dashboard.</para>
+              </listitem>
+            </itemizedlist>
         </listitem>
-      </orderedlist>
-      <itemizedlist>
-        <listitem>
-          <para>The hostname or public IP address from which you can
-            access the dashboard.</para>
-        </listitem>
-        <listitem>
-          <para>The dashboard is available on the node that has the
-            nova-dashboard server role.</para>
-        </listitem>
-        <listitem>
-          <para>The username and password with which you can log in to
-            the dashboard.</para>
-        </listitem>
-      </itemizedlist>
-      <orderedlist>
         <listitem>
           <para>Open a Web browser that supports HTML5. Make sure that
             JavaScript and cookies are enabled.</para>
@@ -181,28 +179,26 @@
             Projecttab.</para>
         </listitem>
         <listitem>
-          <para>Click the Access &amp; Securitycategory.</para>
+          <para>Click the Access &amp; Security category.</para>
         </listitem>
         <listitem>
           <para>The dashboard shows the security groups that are
             available for this project.</para>
+            <figure>
+              <title>OpenStack dashboard - security groups</title>
+              <mediaobject>
+                <imageobject>
+                  <imagedata fileref="figures/image25.png"/>
+                </imageobject>
+              </mediaobject>
+            </figure>
         </listitem>
-      </orderedlist>
-  <figure>
-    <title>OpenStack Dashboard - Security Groups</title>
-    <mediaobject>
-      <imageobject>
-        <imagedata fileref="figures/image25.png"/>
-      </imageobject>
-    </mediaobject>
-  </figure>
-      <orderedlist>
         <listitem>
           <para>Select the default security group and click Edit
             Rules.</para>
         </listitem>
         <listitem>
-          <para>The Security Group Rulespage appears:</para>
+          <para>The Security Group Rules page appears:</para>
         </listitem>
       </orderedlist>
   <figure>
@@ -213,18 +209,14 @@
       </imageobject>
     </mediaobject>
   </figure>
-      <orderedlist>
-        <listitem>
-          <para>Add a TCP rule</para>
-        </listitem>
-        <listitem>
+      <para>Add a TCP rule</para>
+   <orderedlist>
+     <listitem>
           <para>Click Add Rule.</para>
         </listitem>
         <listitem>
           <para>The Add Rulewindow appears.</para>
         </listitem>
-      </orderedlist>
-      <orderedlist>
         <listitem>
           <para>In the IP Protocollist, select TCP.</para>
         </listitem>
@@ -253,18 +245,14 @@
             CIDRbox.</para>
         </listitem>
       </orderedlist>
+      <para>Add an ICMP rule</para>
       <orderedlist>
-        <listitem>
-          <para>Add an ICMP rule</para>
-        </listitem>
         <listitem>
           <para>Click Add Rule.</para>
         </listitem>
         <listitem>
           <para>The Add Rulewindow appears.</para>
         </listitem>
-      </orderedlist>
-      <orderedlist>
         <listitem>
           <para>In the IP Protocollist, select ICMP.</para>
         </listitem>
@@ -307,7 +295,7 @@
             keypairs that are available for this project.</para>
         </listitem>
         <listitem>
-          <para>To add a keypair</para>
+          <para>To add a keypair.</para>
         </listitem>
         <listitem>
           <para>Click Create Keypair.</para>
@@ -315,8 +303,6 @@
         <listitem>
           <para>The Create Keypairwindow appears.</para>
         </listitem>
-      </orderedlist>
-      <orderedlist>
         <listitem>
           <para>In the Keypair Namebox, enter a name for your
             keypair.</para>
@@ -327,19 +313,15 @@
         <listitem>
           <para>Respond to the prompt to download the keypair.</para>
         </listitem>
-      </orderedlist>
-      <orderedlist>
-        <listitem>
+     </orderedlist>
           <para>To import a keypair</para>
-        </listitem>
+       <orderedlist>
         <listitem>
           <para>Click Import Keypair.</para>
         </listitem>
         <listitem>
           <para>The Import Keypairwindow appears.</para>
         </listitem>
-      </orderedlist>
-      <orderedlist>
         <listitem>
           <para>In the Keypair Namebox, enter the name of your
             keypair.</para>
@@ -350,8 +332,6 @@
         <listitem>
           <para>Click Import Keypair.</para>
         </listitem>
-      </orderedlist>
-      <orderedlist>
         <listitem>
           <para>Save the *.pem file locally and change its permissions
             so that only you can read and write to the file:</para>
@@ -407,8 +387,6 @@
           <para>In the Launch Imagewindow, specify the
             following:</para>
         </listitem>
-      </orderedlist>
-      <orderedlist>
         <listitem>
           <para>Enter an instance name to assign to the virtual
             machine.</para>
@@ -456,9 +434,7 @@
               >the section called “Launch an instance from a
               volume”</link>.</para>
         </listitem>
-      </orderedlist>
-      <orderedlist>
-        <listitem>
+       <listitem>
           <para>Click Launch Instance. The instance is started on any
             of the compute nodes in the cloud.</para>
         </listitem>
@@ -559,32 +535,23 @@
           <para>Assuming that the attached volume is mounted as
             /dev/vdb, use one of the following commands to copy the
             image to the attached volume:</para>
+
+            <itemizedlist>
+              <listitem>
+                <para>For a raw image:</para>
+                <screen><prompt>$</prompt> <userinput>cat IMAGE &gt;/dev/null</userinput></screen>
+                <para>Alternatively, use <command>dd</command>.</para>
+              </listitem>
+              <listitem>
+                <para>For a non-raw image:</para>
+                <screen><prompt>$</prompt> <userinput>qemu-img convert -O raw IMAGE /dev/vdb</userinput></screen>
+              </listitem>
+              <listitem>
+                <para>For a *.tar.bz2 image:</para>
+                <screen><prompt>$</prompt> <userinput>tar xfjO IMAGE &gt;/dev/null</userinput></screen>
+              </listitem>
+            </itemizedlist>
         </listitem>
-      </orderedlist>
-      <itemizedlist>
-        <listitem>
-          <para>For a raw image:</para>
-        </listitem>
-        <listitem>
-          <para>$ cat IMAGE &gt;/dev/null</para>
-        </listitem>
-        <listitem>
-          <para>Alternatively, use dd.</para>
-        </listitem>
-        <listitem>
-          <para>For a non-raw image:</para>
-        </listitem>
-        <listitem>
-          <para>$ qemu-img convert -O raw IMAGE /dev/vdb</para>
-        </listitem>
-        <listitem>
-          <para>For a *.tar.bz2 image:</para>
-        </listitem>
-        <listitem>
-          <para>$ tar xfjO IMAGE &gt;/dev/null</para>
-        </listitem>
-      </itemizedlist>
-      <orderedlist>
         <listitem>
           <para>Only detached volumes are available for booting.
             Detach the volume.</para>
@@ -766,14 +733,12 @@
             tab.</para>
         </listitem>
         <listitem>
-          <para>Click the Volumescategory.</para>
-        </listitem>
-        <listitem>
-          <para>To create a volume</para>
+          <para>Click the Volumes category.</para>
         </listitem>
       </orderedlist>
+        <para>To create a volume</para>
       <orderedlist>
-        <listitem>
+      <listitem>
           <para>Click Create Volume.</para>
         </listitem>
         <listitem>
@@ -788,15 +753,11 @@
           <para>The dashboard shows the volume in the
             Volumescategory.</para>
         </listitem>
-      </orderedlist>
-      <orderedlist>
+     </orderedlist>
+        <para>To delete one or multiple volumes</para>
+       <orderedlist>
         <listitem>
-          <para>To delete one or multiple volumes</para>
-        </listitem>
-      </orderedlist>
-      <orderedlist>
-        <listitem>
-          <para>Activate the checkboxes in front of the volumes that
+         <para>Activate the checkboxes in front of the volumes that
             you want to delete.</para>
         </listitem>
         <listitem>
@@ -826,7 +787,7 @@
             tab.</para>
         </listitem>
         <listitem>
-          <para>Click the Volumescategory.</para>
+          <para>Click the Volumes category.</para>
         </listitem>
         <listitem>
           <para>Select the volume to add to an instance and click Edit
@@ -849,10 +810,8 @@
           <para>Now you can log in to the instance, mount the disk,
             format it, and use it.</para>
         </listitem>
-        <listitem>
-          <para>To detach a volume from an instance</para>
-        </listitem>
       </orderedlist>
+      <para>To detach a volume from an instance</para>
       <orderedlist>
         <listitem>
           <para>Select the volume and click Edit Attachments.</para>
