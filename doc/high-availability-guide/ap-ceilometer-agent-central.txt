@@ -1,23 +1,23 @@
 [[s-ceilometer-agent-central]]
-==== Highly available Ceilometer Central Agent
+==== Highly available Telemetry central agent
 
-Ceilometer is the metering service in OpenStack.
-Central Agent polls for resource utilization statistics for resources not tied
-to instances or compute nodes.
+Telemetry (ceilometer) is the metering and monitoring service in
+OpenStack.  The Central agent polls for resource utilization
+statistics for resources not tied to instances or compute nodes.
 
 NOTE: Due to limitations of a polling model, a single instance of this agent
 can be polling a given list of meters. In this setup, we install this service
 on the API nodes also in the active / passive mode.
 
 
-Making the Ceilometer Central Agent service highly available in active / passive mode involves
+Making the Telemetry central agent service highly available in active / passive mode involves
 managing its daemon with the Pacemaker cluster manager.
 
 NOTE: You will find at http://docs.openstack.org/developer/ceilometer/install/manual.html#installing-the-central-agent[this page]
-the process to install the Ceilometer Central Agent.
+the process to install the Telemetry central agent.
 
 
-===== Adding the Ceilometer Central Agent resource to Pacemaker
+===== Add the Telemetry central agent resource to Pacemaker
 
 First of all, you need to download the resource agent to your system:
 
@@ -28,7 +28,7 @@ chmod a+rx *
 ----
 
 You may then proceed with adding the Pacemaker configuration for
-the Ceilometer Central Agent resource. Connect to the Pacemaker cluster with +crm
+the Telemetry central agent resource. Connect to the Pacemaker cluster with +crm
 configure+, and add the following cluster resources:
 
 ----
@@ -47,7 +47,7 @@ Once completed, commit your configuration changes by entering +commit+
 from the +crm configure+ menu. Pacemaker will then start the Ceilometer Central Agent
 service, and its dependent resources, on one of your nodes.
 
-===== Configuring Ceilometer Central Agent service
+===== Configure Telemetry central agent service
 
 Edit +/etc/ceilometer/ceilometer.conf+ :
 ----
@@ -59,6 +59,6 @@ notifier_strategy = rabbit
 rabbit_host = 192.168.42.102
 
 [database]
-# We have to use MySQL connection to store datas :
+# We have to use MySQL connection to store data :
 sql_connection=mysql://ceilometer:password@192.168.42.101/ceilometer
 ----

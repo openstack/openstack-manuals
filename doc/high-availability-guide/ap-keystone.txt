@@ -4,14 +4,14 @@
 OpenStack Identity is the Identity Service in OpenStack and used by many services.
 Making the OpenStack Identity service highly available in active / passive mode involves
 
-* configuring OpenStack Identity to listen on the VIP address,
+* Configure OpenStack Identity to listen on the VIP address,
 * managing OpenStack Identity daemon with the Pacemaker cluster manager,
-* configuring OpenStack services to use this IP address.
+* Configure OpenStack services to use this IP address.
 
 NOTE: Here is the http://docs.openstack.org/trunk/install-guide/install/apt/content/ch_installing-openstack-identity-service.html[documentation] for installing OpenStack Identity service.
 
 
-===== Adding OpenStack Identity resource to Pacemaker
+===== Add OpenStack Identity resource to Pacemaker
 
 First of all, you need to download the resource agent to your system:
 
@@ -23,7 +23,7 @@ wget https://raw.github.com/madkiss/openstack-resource-agents/master/ocf/keyston
 chmod a+rx *
 ----
 
-You may now proceed with adding the Pacemaker configuration for
+You can now add the Pacemaker configuration for
 OpenStack Identity resource. Connect to the Pacemaker cluster with +crm
 configure+, and add the following cluster resources:
 
@@ -43,7 +43,7 @@ Once completed, commit your configuration changes by entering +commit+
 from the +crm configure+ menu. Pacemaker will then start the OpenStack Identity 
 service, and its dependent resources, on one of your nodes.
 
-===== Configuring OpenStack Identity service
+===== Configure OpenStack Identity service
 
 You need to edit your OpenStack Identity configuration file (+keystone.conf+) and change the bind parameters:
 
@@ -69,7 +69,7 @@ driver = keystone.identity.backends.sql.Identity
 ----
 
 
-===== Configuring OpenStack Services to use the Highly Available OpenStack Identity
+===== Configure OpenStack services to use the highly available OpenStack Identity
 
 Your OpenStack services must now point their OpenStack Identity configuration to
 the highly available, virtual cluster IP address -- rather than a
@@ -91,7 +91,7 @@ NOTE : If you are using both private and public IP addresses, you should create 
 keystone endpoint-create --region $KEYSTONE_REGION --service-id $service-id --publicurl 'http://PUBLIC_VIP:5000/v2.0' --adminurl 'http://192.168.42.103:35357/v2.0' --internalurl 'http://192.168.42.103:5000/v2.0'
 ----
 
-If you are using the Horizon Dashboard, you should edit the +local_settings.py+ file:
+If you are using the horizon dashboard, you should edit the +local_settings.py+ file:
 ----
 OPENSTACK_HOST = 192.168.42.103
 ----

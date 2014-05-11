@@ -1,17 +1,18 @@
 [[s-cinder-api]]
-==== Highly available Cinder API
+==== Highly available Block Storage API
 
-Cinder is the block storage service in OpenStack.
-Making the Cinder API service highly available in active / passive mode involves
+Making the Block Storage (cinder) API service highly available in active / passive mode involves
 
-* configuring Cinder to listen on the VIP address,
-* managing Cinder API daemon with the Pacemaker cluster manager,
-* configuring OpenStack services to use this IP address.
+* Configure Block Storage to listen on the VIP address,
+* managing Block Storage API daemon with the Pacemaker cluster manager,
+* Configure OpenStack services to use this IP address.
 
-NOTE: Here is the http://docs.openstack.org/trunk/install-guide/install/apt/content/cinder-install.html[documentation] for installing Cinder service.
+NOTE: Here is the
+http://docs.openstack.org/trunk/install-guide/install/apt/content/ch_cinder.html[documentation]
+for installing Block Storage service.
 
 
-===== Adding Cinder API resource to Pacemaker
+===== Add Block Storage API resource to Pacemaker
 
 First of all, you need to download the resource agent to your system:
   
@@ -21,8 +22,8 @@ wget https://raw.github.com/madkiss/openstack-resource-agents/master/ocf/cinder-
 chmod a+rx *
 ----
 
-You may now proceed with adding the Pacemaker configuration for
-Cinder API resource. Connect to the Pacemaker cluster with +crm
+You can now add the Pacemaker configuration for
+Block Storage API resource. Connect to the Pacemaker cluster with +crm
 configure+, and add the following cluster resources:
 
 ----
@@ -31,7 +32,7 @@ include::includes/pacemaker-cinder_api.crm[]
 
 This configuration creates
 
-* +p_cinder-api+, a resource for manage Cinder API service
+* +p_cinder-api+, a resource for manage Block Storage API service
 
 +crm configure+ supports batch input, so you may copy and paste the
 above into your live pacemaker configuration, and then make changes as
@@ -40,17 +41,17 @@ required. For example, you may enter +edit p_ip_cinder-api+ from the
 virtual IP address.
 
 Once completed, commit your configuration changes by entering +commit+
-from the +crm configure+ menu. Pacemaker will then start the Cinder API
+from the +crm configure+ menu. Pacemaker will then start the Block Storage API
 service, and its dependent resources, on one of your nodes.
 
-===== Configuring Cinder API service
+===== Configure Block Storage API service
 
 Edit +/etc/cinder/cinder.conf+:
 ----
 # We have to use MySQL connection to store data:
 sql_connection=mysql://cinder:password@192.168.42.101/cinder
 
-# We bind Cinder API to the VIP :
+# We bind Block Storage API to the VIP:
 osapi_volume_listen = 192.168.42.103
 
 # We send notifications to High Available RabbitMQ:
@@ -59,13 +60,13 @@ rabbit_host = 192.168.42.102
 ----
 
 
-===== Configuring OpenStack Services to use High Available Cinder API
+===== Configure OpenStack services to use highly available Block Storage API
 
-Your OpenStack services must now point their Cinder API configuration to
+Your OpenStack services must now point their Block Storage API configuration to
 the highly available, virtual cluster IP address -- rather than a
-Cinder API server's physical IP address as you normally would.
+Block Storage API server's physical IP address as you normally would.
 
-You need to create the Cinder API Endpoint with this IP.
+You must create the Block Storage API endpoint with this IP.
 
 NOTE: If you are using both private and public IP, you should create two Virtual IPs and define your endpoint like this:
 ----

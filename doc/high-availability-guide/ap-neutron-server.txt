@@ -1,17 +1,17 @@
 [[s-neutron-server]]
-==== Highly available OpenStack Networking Server
+==== Highly available OpenStack Networking server
 
 OpenStack Networking is the network connectivity service in OpenStack.
 Making the OpenStack Networking Server service highly available in active / passive mode involves
 
-* configuring OpenStack Networking to listen on the VIP address,
+* Configure OpenStack Networking to listen on the VIP address,
 * managing OpenStack Networking API Server daemon with the Pacemaker cluster manager,
-* configuring OpenStack services to use this IP address.
+* Configure OpenStack services to use this IP address.
 
 NOTE: Here is the http://docs.openstack.org/trunk/install-guide/install/apt/content/ch_installing-openstack-networking.html[documentation] for installing OpenStack Networking service.
 
 
-===== Adding OpenStack Networking Server resource to Pacemaker
+===== Add OpenStack Networking Server resource to Pacemaker
 
 First of all, you need to download the resource agent to your system:
 ----
@@ -20,7 +20,7 @@ wget https://raw.github.com/madkiss/openstack-resource-agents/master/ocf/neutron
 chmod a+rx *
 ----
 
-You may now proceed with adding the Pacemaker configuration for
+You can now add the Pacemaker configuration for
 OpenStack Networking Server resource. Connect to the Pacemaker cluster with +crm
 configure+, and add the following cluster resources:
 ----
@@ -39,7 +39,7 @@ Once completed, commit your configuration changes by entering +commit+
 from the +crm configure+ menu. Pacemaker will then start the OpenStack Networking API
 service, and its dependent resources, on one of your nodes.
 
-===== Configuring OpenStack Networking Server
+===== Configure OpenStack Networking server
 
 Edit +/etc/neutron/neutron.conf+ :
 ----
@@ -59,20 +59,20 @@ connection = mysql://neutron:password@192.168.42.101/neutron
 ----
 
 
-===== Configuring OpenStack Services to use Highly available OpenStack Networking Server
+===== Configure OpenStack services to use highly available OpenStack Networking server
 
 Your OpenStack services must now point their OpenStack Networking Server configuration to
 the highly available, virtual cluster IP address -- rather than an
 OpenStack Networking server's physical IP address as you normally would.
 
-For example, you should configure OpenStack Compute for using Highly Available OpenStack Networking Server in editing +nova.conf+ file:
+For example, you should configure OpenStack Compute for using highly available OpenStack Networking server in editing +nova.conf+ file:
 ----
 neutron_url = http://192.168.42.103:9696
 ----
 
-You need to create the OpenStack Networking Server Endpoint with this IP.
+You need to create the OpenStack Networking server endpoint with this IP.
 
-NOTE : If you are using both private and public IP addresses, you should create two Virtual IP addresses and define your endpoint like this:
+NOTE: If you are using both private and public IP addresses, you should create two Virtual IP addresses and define your endpoint like this:
 ----
 keystone endpoint-create --region $KEYSTONE_REGION --service-id $service-id --publicurl 'http://PUBLIC_VIP:9696/' --adminurl 'http://192.168.42.103:9696/' --internalurl 'http://192.168.42.103:9696/'
 ----

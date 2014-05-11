@@ -1,21 +1,21 @@
 [[ch-network]]
-=== Network Controller Cluster Stack
+=== Network controller cluster stack
 
-The Network controller sits on the management and data network, and needs to be connected to the Internet if a VM needs access to it.
+The network controller sits on the management and data network, and needs to be connected to the Internet if a VM needs access to it.
 
-NOTE: Both nodes should have the same hostname since the Neutron scheduler will be
+NOTE: Both nodes should have the same hostname since the Networking scheduler will be
 aware of one node, for example a virtual router attached to a single L3 node.
 
-==== Highly available Neutron L3 Agent
+==== Highly available neutron L3 agent
 
-The Neutron L3 agent provides L3/NAT forwarding to ensure external network access
-for VMs on tenant networks. High Availability for the L3 agent is achieved by
+The neutron L3 agent provides L3/NAT forwarding to ensure external network access
+for VMs on tenant networks. High availability for the L3 agent is achieved by
 adopting Pacemaker.
 
-NOTE: Here is the http://docs.openstack.org/trunk/config-reference/content/section_adv_cfg_l3_agent.html[documentation] for installing Neutron L3 Agent.
+NOTE: Here is the http://docs.openstack.org/trunk/config-reference/content/section_adv_cfg_l3_agent.html[documentation] for installing neutron L3 agent.
 
 
-===== Adding Neutron L3 Agent resource to Pacemaker
+===== Add neutron L3 agent resource to Pacemaker
 First of all, you need to download the resource agent to your system:
 
 ----
@@ -25,7 +25,7 @@ chmod a+rx neutron-l3-agent
 ----
 
 You may now proceed with adding the Pacemaker configuration for
-Neutron L3 Agent resource. Connect to the Pacemaker cluster with +crm
+neutron L3 agent resource. Connect to the Pacemaker cluster with +crm
 configure+, and add the following cluster resources:
 
 ----
@@ -41,23 +41,23 @@ above into your live pacemaker configuration, and then make changes as
 required.
 
 Once completed, commit your configuration changes by entering +commit+
-from the +crm configure+ menu. Pacemaker will then start the Neutron L3 Agent
+from the +crm configure+ menu. Pacemaker will then start the neutron L3 agent
 service, and its dependent resources, on one of your nodes.
 
 NOTE: This method does not ensure a zero downtime since it has to recreate all
 the namespaces and virtual routers on the node.
 
 
-==== Highly available Neutron DHCP Agent
+==== Highly available neutron DHCP agent
 
 Neutron DHCP agent distributes IP addresses to the VMs with dnsmasq (by
-default). High Availability for the DHCP agent is achieved by adopting
+default). High availability for the DHCP agent is achieved by adopting
 Pacemaker.
 
-NOTE: Here is the http://docs.openstack.org/trunk/config-reference/content/section_adv_cfg_dhcp_agent.html[documentation] for installing Neutron DHCP Agent.
+NOTE: Here is the http://docs.openstack.org/trunk/config-reference/content/section_adv_cfg_dhcp_agent.html[documentation] for installing neutron DHCP agent.
 
 
-===== Adding Neutron DHCP Agent resource to Pacemaker
+===== Add neutron DHCP agent resource to Pacemaker
 First of all, you need to download the resource agent to your system:
 
 ----
@@ -67,7 +67,7 @@ chmod a+rx neutron-dhcp-agent
 ----
 
 You may now proceed with adding the Pacemaker configuration for
-Neutron DHCP Agent resource. Connect to the Pacemaker cluster with +crm
+neutron DHCP agent resource. Connect to the Pacemaker cluster with +crm
 configure+, and add the following cluster resources:
 
 ----
@@ -84,20 +84,20 @@ above into your live pacemaker configuration, and then make changes as
 required.
 
 Once completed, commit your configuration changes by entering +commit+
-from the +crm configure+ menu. Pacemaker will then start the Neutron DHCP
-Agent service, and its dependent resources, on one of your nodes.
+from the +crm configure+ menu. Pacemaker will then start the neutron DHCP
+agent service, and its dependent resources, on one of your nodes.
 
 
-==== Highly available Neutron Metadata Agent
+==== Highly available neutron metadata agent
 
-Neutron Metadata agent allows Nova API Metadata to be reachable by VMs on tenant
-networks. High Availability for the Metadata agent is achieved by adopting
+Neutron metadata agent allows Compute API metadata to be reachable by VMs on tenant
+networks. High availability for the metadata agent is achieved by adopting
 Pacemaker.
 
 NOTE: Here is the http://docs.openstack.org/trunk/config-reference/content/networking-options-metadata.html[documentation] for installing Neutron Metadata Agent.
 
 
-===== Adding Neutron Metadata Agent resource to Pacemaker
+===== Add neutron metadata agent resource to Pacemaker
 First of all, you need to download the resource agent to your system:
 
 ----
@@ -107,7 +107,7 @@ chmod a+rx neutron-metadata-agent
 ----
 
 You may now proceed with adding the Pacemaker configuration for
-Neutron Metadata Agent resource. Connect to the Pacemaker cluster with +crm
+neutron metadata agent resource. Connect to the Pacemaker cluster with +crm
 configure+, and add the following cluster resources:
 
 ----
@@ -124,12 +124,12 @@ above into your live pacemaker configuration, and then make changes as
 required.
 
 Once completed, commit your configuration changes by entering +commit+
-from the +crm configure+ menu. Pacemaker will then start the Neutron Metadata
-Agent service, and its dependent resources, on one of your nodes.
+from the +crm configure+ menu. Pacemaker will then start the neutron metadata
+agent service, and its dependent resources, on one of your nodes.
 
 
 ==== Manage network resources
-You may now proceed with adding the Pacemaker configuration for
+You can now add the Pacemaker configuration for
 managing all network resources together with a group.
 Connect to the Pacemaker cluster with +crm configure+, and add the following
 cluster resources:
