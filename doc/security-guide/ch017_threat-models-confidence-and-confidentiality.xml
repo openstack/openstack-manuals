@@ -8,23 +8,51 @@
     <title>Introduction to SSL/TLS</title>
     <para>OpenStack services receive requests on behalf of users on public networks as well as from other internal services over management networks. Inter-service communications can also occur over public networks depending on deployment and architecture choices.</para>
     <para>While it is commonly accepted that data over public networks should be secured using cryptographic measures, such as Secure Sockets Layer or Transport Layer Security (SSL/TLS) protocols, it is insufficient to rely on security domain separation to protect internal traffic. Using a security-in-depth approach, we recommend securing all domains with SSL/TLS, including the management domain services. It is important that should a tenant escape their VM isolation and gain access to the hypervisor or host resources, compromise an API endpoint, or any other service, they must not be able to easily inject or capture messages, commands, or otherwise affect or control management capabilities of the cloud. SSL/TLS provides the mechanisms to ensure authentication, non-repudiation, confidentiality, and integrity of user communications to the OpenStack services and between the OpenStack services themselves.</para>
-    <para>Public Key Infrastructure (PKI) is the set of hardware, software, and policies to operate a secure system which provides authentication, non-repudiation, confidentiality, and integrity. The core components of PKI are:</para>
-    <itemizedlist><listitem>
-        <para>End Entity - user, process, or system that is the subject of a certificate</para>
-      </listitem>
-<listitem>
-        <para>Certification Authority (<glossterm>CA</glossterm>) - defines certificate policies, management, and issuance of certificates</para>
-      </listitem>
-<listitem>
-        <para>Registration Authority (RA) - an optional system to which a CA delegates certain management functions</para>
-      </listitem>
-<listitem>
-        <para>Repository - Where the end entity certificates and certificate revocation lists are stored and looked up - sometimes referred to as the "certificate bundle"</para>
-      </listitem>
-<listitem>
-    <para>Relying Party - The end point that is trusting that the CA is valid.</para>
-</listitem>
-</itemizedlist>
+    <para>
+      Public Key Infrastructure (PKI) is a set of hardware, software,
+      policies, and procedures required to operate a secure system
+      that provides authentication, non-repudiation, confidentiality,
+      and integrity. The core components of PKI are:</para>
+    <variablelist>
+      <varlistentry>
+        <term>End entity</term>
+        <listitem>
+          <para>User, process, or system that is the subject of a
+            certificate.</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Certification Authority (<glossterm>CA</glossterm>)</term>
+        <listitem>
+          <para>Defines certificate policies, management, and issuance
+            of certificates.</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Registration Authority (RA)</term>
+        <listitem>
+          <para>An optional system to which a CA delegates certain
+            management functions.</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Repository</term>
+        <listitem>
+          <para>
+            Where the end entity certificates and certificate
+            revocation lists are stored and looked up - sometimes
+            referred to as the <emphasis role="italic">certificate
+            bundle</emphasis>.</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Relying party</term>
+        <listitem>
+          <para>The endpoint that is trusting that the CA is valid.</para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+
     <para>PKI builds the framework on which to provide encryption algorithms, cipher modes, and protocols for securing data and authentication. We strongly recommend securing all services with Public Key Infrastructure (PKI), including the use of SSL/TLS for API endpoints. It is impossible for the encryption or signing of transports or messages alone to solve all these problems. Hosts themselves must be secure and implement policy, namespaces, and other controls to protect their private credentials and keys. However, the challenges of key management and protection do not reduce the necessity of these controls, or lessen their importance.</para>
     <section xml:id="ch017_threat-models-confidence-and-confidentiality-idp51264">
       <title>Certification authorities</title>
@@ -62,29 +90,38 @@
     </section>
     <section xml:id="ch017_threat-models-confidence-and-confidentiality-idp64128">
       <title>Summary</title>
-      <para>Given the complexity of the OpenStack components and the number of deployment possibilities, you must take care to ensure that each component gets the appropriate configuration of SSL certificates, keys, and CAs. The following services will be discussed in later sections of this book where SSL and PKI is available (either natively or possible via SSL proxy):</para>
-      <itemizedlist><listitem>
+      <para>
+        Given the complexity of the OpenStack components and the
+        number of deployment possibilities, you must take care to
+        ensure that each component gets the appropriate configuration
+        of SSL certificates, keys, and CAs. Subsequent sections discuss
+        the following services:
+      </para>
+      <itemizedlist>
+        <listitem>
           <para>Compute API endpoints</para>
         </listitem>
-<listitem>
+        <listitem>
           <para>Identity API endpoints</para>
         </listitem>
-<listitem>
+        <listitem>
           <para>Networking API endpoints</para>
         </listitem>
-<listitem>
+        <listitem>
           <para>Storage API endpoints</para>
         </listitem>
-<listitem>
+        <listitem>
           <para>Messaging server</para>
         </listitem>
-<listitem>
+        <listitem>
           <para>Database server</para>
         </listitem>
-<listitem>
+        <listitem>
           <para>Dashboard</para>
         </listitem>
-</itemizedlist>
-      <para>Throughout this book we will use SSL as shorthand to refer to these recommendations for SSL/TLS protocols.</para>
+      </itemizedlist>
+      <para>
+        This guide uses the term SSL as a shorthand to refer to these
+        recommendations for SSL/TLS protocols.</para>
     </section>
   </chapter>
