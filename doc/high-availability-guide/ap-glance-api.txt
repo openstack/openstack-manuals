@@ -2,16 +2,16 @@
 ==== Highly available OpenStack Image API
 
 OpenStack Image Service offers a service for discovering, registering, and retrieving virtual machine images.
-Making the OpenStack Image API service highly available in active / passive mode involves
+To make the OpenStack Image API service highly available in active / passive mode, you must:
 
-* configuring OpenStack Image to listen on the VIP address,
-* managing OpenStack Image API daemon with the Pacemaker cluster manager,
-* configuring OpenStack services to use this IP address.
+* Configure OpenStack Image to listen on the VIP address.
+* Manage OpenStack Image API daemon with the Pacemaker cluster manager.
+* Configure OpenStack services to use this IP address.
 
 NOTE: Here is the http://docs.openstack.org/trunk/install-guide/install/apt/content/ch_installing-openstack-image.html[documentation] for installing OpenStack Image API service.
 
 
-===== Adding OpenStack Image API resource to Pacemaker
+===== Add OpenStack Image API resource to Pacemaker
 
 First of all, you need to download the resource agent to your system:
   
@@ -21,7 +21,7 @@ wget https://raw.github.com/madkiss/openstack-resource-agents/master/ocf/glance-
 chmod a+rx *
 ----
 
-You may now proceed with adding the Pacemaker configuration for
+You can now add the Pacemaker configuration for
 OpenStack Image API resource. Connect to the Pacemaker cluster with +crm
 configure+, and add the following cluster resources:
 
@@ -43,7 +43,7 @@ Once completed, commit your configuration changes by entering +commit+
 from the +crm configure+ menu. Pacemaker will then start the OpenStack Image API
 service, and its dependent resources, on one of your nodes.
 
-===== Configuring OpenStack Image API service
+===== Configure OpenStack Image Service API
 
 Edit +/etc/glance/glance-api.conf+:
 ----
@@ -62,7 +62,7 @@ rabbit_host = 192.168.42.102
 ----
 
 
-===== Configuring OpenStack Services to use High Available OpenStack Image API
+===== Configure OpenStack services to use high available OpenStack Image API
 
 Your OpenStack services must now point their OpenStack Image API configuration to
 the highly available, virtual cluster IP address -- rather than an
@@ -76,7 +76,7 @@ the following line in your +nova.conf+ file:
 glance_api_servers = 192.168.42.103
 ----
 
-You need also to create the OpenStack Image API Endpoint with this IP.
+You must also create the OpenStack Image API endpoint with this IP.
 
 NOTE: If you are using both private and public IP addresses, you should create two Virtual IP addresses and define your endpoint like this:
 ----

@@ -4,23 +4,23 @@
 MySQL is the default database server used by many OpenStack
 services. Making the MySQL service highly available involves
 
-* configuring a DRBD device for use by MySQL,
-* configuring MySQL to use a data directory residing on that DRBD
+* Configure a DRBD device for use by MySQL,
+* Configure MySQL to use a data directory residing on that DRBD
   device,
 * selecting and assigning a virtual IP address (VIP) that can freely
   float between cluster nodes,
-* configuring MySQL to listen on that IP address,
+* Configure MySQL to listen on that IP address,
 * managing all resources, including the MySQL daemon itself, with
   the Pacemaker cluster manager.
 
 NOTE: http://codership.com/products/mysql_galera[MySQL/Galera] is an
-alternative method of configuring MySQL for high availability. It is
+alternative method of Configure MySQL for high availability. It is
 likely to become the preferred method of achieving MySQL high
 availability once it has sufficiently matured. At the time of writing,
 however, the Pacemaker/DRBD based approach remains the recommended one
 for OpenStack environments.
 
-===== Configuring DRBD
+===== Configure DRBD
 
 The Pacemaker based MySQL server requires a DRBD resource from
 which it mounts the +/var/lib/mysql+ directory. In this example,
@@ -93,7 +93,7 @@ background:
 drbdadm secondary mysql
 ----
 
-===== Preparing MySQL for Pacemaker high availability
+===== Prepare MySQL for Pacemaker high availability
 
 In order for Pacemaker monitoring to function properly, you must
 ensure that MySQL's database files reside on the DRBD device. If you
@@ -122,9 +122,9 @@ node1:# umount /mnt
 Regardless of the approach, the steps outlined here must be completed
 on only one cluster node.
 
-===== Adding MySQL resources to Pacemaker
+===== Add MySQL resources to Pacemaker
 
-You may now proceed with adding the Pacemaker configuration for
+You can now add the Pacemaker configuration for
 MySQL resources. Connect to the Pacemaker cluster with +crm
 configure+, and add the following cluster resources:
 
@@ -154,7 +154,7 @@ Once completed, commit your configuration changes by entering +commit+
 from the +crm configure+ menu. Pacemaker will then start the MySQL
 service, and its dependent resources, on one of your nodes.
 
-===== Configuring OpenStack services for highly available MySQL
+===== Configure OpenStack services for highly available MySQL
 
 Your OpenStack services must now point their MySQL configuration to
 the highly available, virtual cluster IP address -- rather than a

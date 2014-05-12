@@ -23,7 +23,7 @@ approach remains the recommended one for OpenStack environments,
 although this may change in the near future as RabbitMQ active-active
 mirrored queues mature.
 
-===== Configuring DRBD
+===== Configure DRBD
 
 The Pacemaker based RabbitMQ server requires a DRBD resource from
 which it mounts the +/var/lib/rabbitmq+ directory. In this example,
@@ -69,7 +69,7 @@ the primary and secondary roles in DRBD. Must be completed _on one
 node only,_ namely the one where you are about to continue with
 creating your filesystem.
 
-===== Creating a file system
+===== Create a file system
 
 Once the DRBD resource is running and in the primary role (and
 potentially still in the process of running the initial device
@@ -96,7 +96,7 @@ background:
 drbdadm secondary rabbitmq
 ----
 
-===== Preparing RabbitMQ for Pacemaker high availability
+===== Prepare RabbitMQ for Pacemaker high availability
 
 In order for Pacemaker monitoring to function properly, you must
 ensure that RabbitMQ's +.erlang.cookie+ files are identical on all
@@ -112,7 +112,7 @@ node1:# cp -a /var/lib/rabbitmq/.erlang.cookie /mnt
 node1:# umount /mnt
 ----
 
-===== Adding RabbitMQ resources to Pacemaker
+===== Add RabbitMQ resources to Pacemaker
 
 You may now proceed with adding the Pacemaker configuration for
 RabbitMQ resources. Connect to the Pacemaker cluster with +crm
@@ -144,7 +144,7 @@ Once completed, commit your configuration changes by entering +commit+
 from the +crm configure+ menu. Pacemaker will then start the RabbitMQ
 service, and its dependent resources, on one of your nodes.
 
-===== Configuring OpenStack services for highly available RabbitMQ
+===== Configure OpenStack services for highly available RabbitMQ
 
 Your OpenStack services must now point their RabbitMQ configuration to
 the highly available, virtual cluster IP address -- rather than a
