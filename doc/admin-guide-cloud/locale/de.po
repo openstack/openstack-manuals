@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenStack Manuals\n"
-"POT-Creation-Date: 2014-05-09 17:36+0000\n"
-"PO-Revision-Date: 2014-05-09 17:37+0000\n"
+"POT-Creation-Date: 2014-05-13 00:12+0000\n"
+"PO-Revision-Date: 2014-05-13 00:13+0000\n"
 "Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
 "Language-Team: German (http://www.transifex.com/projects/p/openstack-manuals-i18n/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -19,16 +19,15 @@ msgstr ""
 
 #: ./doc/admin-guide-cloud/ch_identity_mgmt.xml7(para)
 msgid ""
-"The OpenStack Identity Service, code-named keystone, is the default identity"
-" management system for OpenStack. After you install the Identity Service, "
-"you configure it through the <filename>etc/keystone.conf</filename> "
-"configuration file and, possibly, a separate logging configuration file. You"
-" initialize data into the Identity Service by using the <placeholder-1/> "
-"command-line client."
+"OpenStack Identity, code-named keystone, is the default identity management "
+"system for OpenStack. After you install Identity, you configure it through "
+"the <filename>etc/keystone.conf</filename> configuration file and, possibly,"
+" a separate logging configuration file. You initialize data into Identity by"
+" using the <placeholder-1/> command-line client."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/ch_identity_mgmt.xml15(title)
-msgid "Identity Service concepts"
+msgid "Identity concepts"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/ch_identity_mgmt.xml31(title)
@@ -37,9 +36,9 @@ msgstr ""
 
 #: ./doc/admin-guide-cloud/ch_identity_mgmt.xml32(para)
 msgid ""
-"The Identity Service provides a user CRUD filter that can be added to the "
-"public_api pipeline. This user CRUD filter enables users to use a HTTP PATCH"
-" to change their own password. To enable this extension you should define a "
+"Identity provides a user CRUD filter that can be added to the public_api "
+"pipeline. This user CRUD filter enables users to use a HTTP PATCH to change "
+"their own password. To enable this extension you should define a "
 "<literal>user_crud_extension</literal> filter, insert it after the "
 "<literal>*_body</literal> middleware and before the "
 "<literal>public_service</literal> application in the public_api WSGI "
@@ -50,14 +49,22 @@ msgstr ""
 msgid "Each user can then change their own password with a HTTP PATCH:"
 msgstr ""
 
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml47(replaceable)
+msgid "USERID"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml48(replaceable)
+msgid "AUTHTOKENID"
+msgstr ""
+
 #: ./doc/admin-guide-cloud/ch_identity_mgmt.xml49(para)
 msgid ""
-"In addition to changing their password, all of the user's current tokens are"
-" deleted (if the back-end is KVS or sql)."
+"In addition to changing their password, all current tokens for the user are "
+"deleted (if the back end is KVS or sql)."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/ch_identity_mgmt.xml51(para)
-msgid "Only use a KVS backend for tokens when testing."
+msgid "Only use a KVS back end for tokens when testing."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/ch_identity_mgmt.xml54(title)
@@ -66,31 +73,30 @@ msgstr ""
 
 #: ./doc/admin-guide-cloud/ch_identity_mgmt.xml55(para)
 msgid ""
-"You configure logging externally to the rest of the Identity Service. The "
-"file specifying the logging configuration is in the "
-"<literal>[DEFAULT]</literal> section of the "
-"<filename>keystone.conf</filename> file under <literal>log_config</literal>."
-" To route logging through syslog, set <literal>use_syslog=true</literal> "
-"option in the <literal>[DEFAULT]</literal> section."
+"You configure logging externally to the rest of Identity. The file "
+"specifying the logging configuration is in the <literal>[DEFAULT]</literal> "
+"section of the <filename>keystone.conf</filename> file under "
+"<literal>log_config</literal>. To route logging through syslog, set "
+"<literal>use_syslog=true</literal> option in the "
+"<literal>[DEFAULT]</literal> section."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml62(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml61(para)
 msgid ""
 "A sample logging file is available with the project in the "
 "<filename>etc/logging.conf.sample</filename> directory. Like other OpenStack"
-" projects, the Identity Service uses the Python logging module, which "
-"includes extensive configuration options that let you define the output "
-"levels and formats."
+" projects, Identity uses the Python logging module, which includes extensive"
+" configuration options that let you define the output levels and formats."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml67(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml66(para)
 msgid ""
 "Review the <filename>etc/keystone.conf</filename> sample configuration files"
 " that are distributed with the Identity Service. For example, each server "
 "application has its own configuration file."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml71(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml70(para)
 msgid ""
 "For services that have separate paste-deploy <filename>.ini</filename> "
 "files, you can configure <literal>auth_token</literal> middleware in the "
@@ -100,33 +106,33 @@ msgid ""
 "paste.ini</filename>, as follows:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml81(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml80(para)
 msgid "Set these values in the <filename>nova.conf</filename> file:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml96(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml95(para)
 msgid ""
 "Middleware parameters in paste config take priority. You must remove them to"
 " use values in the <literal>[keystone_authtoken]</literal> section."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml102(title)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml101(title)
 msgid "Monitoring"
 msgstr "Überwachung"
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml103(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml102(para)
 msgid ""
-"The Identity Service provides some basic request/response monitoring "
-"statistics out of the box."
+"Identity provides some basic request and response monitoring statistics out "
+"of the box."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml105(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml104(para)
 msgid ""
 "Enable data collection by defining a <literal>stats_monitoring</literal> "
 "filter and including it at the beginning of any desired WSGI pipelines:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml113(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml112(para)
 msgid ""
 "Enable the reporting of collected data by defining a "
 "<literal>stats_reporting</literal> filter and including it near the end of "
@@ -135,24 +141,23 @@ msgid ""
 "<literal>*_extension</literal> filters is recommended):"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml123(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml122(para)
 msgid "Query the admin API for statistics using:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml125(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml124(para)
 msgid "Reset collected data using:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml130(title)
-msgid "Start the Identity Service"
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml129(title)
+msgid "Start the Identity services"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml131(para)
-msgid ""
-"To start the services for the Identity Service, run the following command:"
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml130(para)
+msgid "To start the services for Identity, run the following command:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml134(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml133(para)
 msgid ""
 "This command starts two wsgi.Server instances configured by the "
 "<filename>keystone.conf</filename> file as described previously. One of "
@@ -161,11 +166,11 @@ msgid ""
 "Both run in a single process."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml142(title)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml141(title)
 msgid "Example usage"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml143(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml142(para)
 msgid ""
 "The <literal>keystone</literal> client is set up to expect commands in the "
 "general form of "
@@ -175,21 +180,21 @@ msgid ""
 " and <literal>tenant-create</literal> can be invoked as follows:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml173(title)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml172(title)
 msgid "Authentication middleware with user name and password"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml175(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml174(para)
 msgid ""
-"You can also configure the Identity Service authentication middleware using "
-"the <option>admin_user</option> and <option>admin_password</option> options."
-" When using the <option>admin_user</option> and "
+"You can also configure Identity authentication middleware using the "
+"<option>admin_user</option> and <option>admin_password</option> options. "
+"When using the <option>admin_user</option> and "
 "<option>admin_password</option> options the <option>admin_token</option> "
 "parameter is optional. If <option>admin_token</option> is specified, it is "
 "used only if the specified token is still valid."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml183(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml182(para)
 msgid ""
 "For services that have a separate paste-deploy .ini file, you can configure "
 "the authentication middleware in the <literal>[keystone_authtoken]</literal>"
@@ -198,172 +203,168 @@ msgid ""
 "middleware parameters from <filename>api-paste.ini</filename>, as follows:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml192(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml191(para)
 msgid ""
 "And set the following values in <filename>nova.conf</filename> as follows:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml207(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml206(para)
 msgid ""
 "The middleware parameters in the paste config take priority. You must remove"
 " them to use the values in the [keystone_authtoken] section."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml211(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml210(para)
 msgid ""
 "This sample paste config filter makes use of the <option>admin_user</option>"
 " and <option>admin_password</option> options:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml224(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml223(para)
 msgid ""
 "Using this option requires an admin tenant/role relationship. The admin user"
 " is granted access to the admin role on the admin tenant."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_rootwrap.xml6(title)
-#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml6(title)
-msgid "Secure with root wrappers"
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml229(title)
+msgid "Identity API protection with role-based access control (RBAC)"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_rootwrap.xml7(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml231(para)
 msgid ""
-"The root wrapper enables the Compute unprivileged user to run a number of "
-"actions as the root user in the safest manner possible. Historically, "
-"Compute used a specific <filename>sudoers</filename> file that listed every "
-"command that the Compute user was allowed to run, and used <placeholder-1/> "
-"to run that command as <literal>root</literal>. However this was difficult "
-"to maintain (the <filename>sudoers</filename> file was in packaging), and "
-"did not enable complex filtering of parameters (advanced filters). The "
-"rootwrap was designed to solve those issues."
+"Like most OpenStack projects, Identity supports the protection of its APIs "
+"by defining policy rules based on an RBAC approach. Identity stores a "
+"reference to a policy JSON file in the main Identity configuration file, "
+"<filename>keystone.conf</filename>. Typically this file is named "
+"<filename>policy.json</filename>, and it contains the rules for which roles "
+"have access to certain actions in defined services."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_rootwrap.xml19(title)
-#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml16(title)
-msgid "How rootwrap works"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_rootwrap.xml20(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml237(para)
 msgid ""
-"Instead of calling <placeholder-1/>, Compute services start with nova- call "
-"<placeholder-2/>. A generic sudoers entry lets the Compute user run nova-"
-"rootwrap as root. The nova-rootwrap code looks for filter definition "
-"directories in its configuration file, and loads command filters from them. "
-"Then it checks if the command requested by Compute matches one of those "
-"filters, in which case it executes the command (as root). If no filter "
-"matches, it denies the request."
+"Each Identity API v3 call has a line in the policy file that dictates which "
+"level of governance of access applies."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_rootwrap.xml33(title)
-#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml31(title)
-msgid "Security model"
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml239(replaceable)
+msgid "API_NAME"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_rootwrap.xml34(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml239(replaceable)
+msgid "RULE_STATEMENT"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml239(replaceable)
+msgid "MATCH_STATEMENT"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml240(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml67(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml130(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml52(para)
+msgid "Where:"
+msgstr "Wo:"
+
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml241(para)
 msgid ""
-"The escalation path is fully controlled by the root user. A sudoers entry "
-"(owned by root) allows Compute to run (as root) a specific rootwrap "
-"executable, and only with a specific configuration file (which should be "
-"owned by root). nova-rootwrap imports the Python modules it needs from a "
-"cleaned (and system-default) PYTHONPATH. The configuration file (also root-"
-"owned) points to root-owned filter definition directories, which contain "
-"root-owned filters definition files. This chain ensures that the Compute "
-"user itself is not in control of the configuration or modules used by the "
-"nova-rootwrap executable."
+"<code><replaceable>RULE_STATEMENT</replaceable></code> can contain "
+"<code><replaceable>RULE_STATEMENT</replaceable></code> or "
+"<code><replaceable>MATCH_STATEMENT</replaceable></code>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_rootwrap.xml47(title)
-#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml43(title)
-msgid "Details of rootwrap.conf"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_rootwrap.xml48(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml242(para)
 msgid ""
-"You configure nova-rootwrap in the <filename>rootwrap.conf</filename> file. "
-"Because it's in the trusted security path, it must be owned and writable by "
-"only the root user. Its location is specified both in the sudoers entry and "
-"in the <filename>nova.conf</filename> configuration file with the "
-"<code>rootwrap_config=entry</code>."
+"<code><replaceable>MATCH_STATEMENT</replaceable></code> is a set of "
+"identifiers that must match between the token provided by the caller of the "
+"API and the parameters or target entities of the API call in question. For "
+"example:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_rootwrap.xml55(para)
-msgid "It uses an INI file format with these sections and parameters:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_rootwrap.xml59(caption)
-#: ./doc/admin-guide-cloud/section_rootwrap.xml98(caption)
-#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml53(caption)
-msgid "rootwrap.conf configuration options"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_rootwrap.xml64(para)
-#: ./doc/admin-guide-cloud/section_rootwrap.xml103(para)
-#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml58(para)
-#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml96(para)
-msgid "Configuration option=Default value"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_rootwrap.xml66(para)
-#: ./doc/admin-guide-cloud/section_rootwrap.xml105(para)
-#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml60(para)
-#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml98(para)
-msgid "(Type) Description"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_rootwrap.xml71(para)
-#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml65(para)
-msgid "[DEFAULT]"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_rootwrap.xml72(para)
-#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml66(para)
-msgid "filters_path=/etc/nova/rootwrap.d,/usr/share/nova/rootwrap"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_rootwrap.xml74(para)
-#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml68(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml246(para)
 msgid ""
-"(ListOpt) Comma-separated list of directories containing filter definition "
-"files. Defines where filters for root wrap are stored. Directories defined "
-"on this line should all exist, be owned and writable only by the root user."
+"Indicates that to create a user, you must have the admin role in your token "
+"and the <literal>domain_id</literal> in your token (which implies this must "
+"be a domain-scoped token) must match the <literal>domain_id</literal> in the"
+" user object that you are trying to create. In other words, you must have "
+"the admin role on the domain in which you are creating the user, and the "
+"token that you use must be scoped to that domain."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_rootwrap.xml86(title)
-#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml80(title)
-msgid "Details of .filters files"
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml252(para)
+msgid "Each component of a match statement uses this format:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_rootwrap.xml87(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml253(replaceable)
+msgid "ATTRIB_FROM_TOKEN"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml253(replaceable)
+msgid "CONSTANT"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml253(replaceable)
+msgid "ATTRIB_RELATED_TO_API_CALL"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml254(para)
+msgid "The Identity service expects these attributes:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml255(para)
 msgid ""
-"Filters definition files contain lists of filters that nova-rootwrap will "
-"use to allow or deny a specific command. They are generally suffixed by "
-".filters. Since they are in the trusted security path, they need to be owned"
-" and writable only by the root user. Their location is specified in the "
-"rootwrap.conf file."
+"Attributes from token: <literal>user_id</literal>, the "
+"<literal>domain_id</literal> or <literal>project_id</literal> depending on "
+"the scope, and the list of roles you have within that scope."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_rootwrap.xml93(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml257(para)
 msgid ""
-"It uses an INI file format with a [Filters] section and several lines, each "
-"with a unique parameter name (different for each filter that you define):"
+"Attributes related to API call: Any parameters passed into the API call are "
+"available, along with any filters specified in the query string. You "
+"reference attributes of objects passed with an object.attribute syntax (such"
+" as, <literal>user.domain_id</literal>). The target objects of an API are "
+"also available using a target.object.attribute syntax. For instance:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/section_rootwrap.xml110(para)
-#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml103(para)
-msgid "[Filters]"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_rootwrap.xml111(para)
-#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml104(para)
-msgid "filter_name=kpartx: CommandFilter, /sbin/kpartx, root"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/section_rootwrap.xml113(para)
-#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml106(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml264(para)
 msgid ""
-"(ListOpt) Comma-separated list containing first the Filter class to use, "
-"followed by that Filter arguments (which vary depending on the Filter class "
-"selected)."
+"would ensure that Identity only deletes the user object in the same domain "
+"as the provided token."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml266(para)
+msgid ""
+"Every target object has an `id` and a `name` available as "
+"`target.<replaceable>OBJECT</replaceable>.id` and "
+"`target.<replaceable>OBJECT</replaceable>.name`. Identity retrieves other "
+"attributes from the database, and the attributes vary between object types. "
+"The Identity service filters out some database fields, such as user "
+"passwords."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml271(para)
+msgid "List of object attributes:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml301(para)
+msgid ""
+"The default <filename>policy.json</filename> file supplied provides a "
+"somewhat basic example of API protection, and does not assume any particular"
+" use of domains. Refer to <filename>policy.v3cloudsample.json</filename> as "
+"an example of multi-domain configuration installations where a cloud "
+"provider wants to delegate administration of the contents of a domain to a "
+"particular admin domain. This example policy file also shows the use of an "
+"admin_domain to allow a cloud provider to enable cloud administrators to "
+"have wider access across the APIs."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml310(para)
+msgid ""
+"A clean installation could start with the standard policy file, to allow "
+"creation of the admin_domain with the first users within it. You could then "
+"obtain the domain_id of the admin domain, paste the ID into a modified "
+"version of <filename>policy.v3cloudsample.json</filename>, and then enable "
+"it as the main policy file."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/ch_blockstorage.xml10(title)
@@ -1617,7 +1618,7 @@ msgid ""
 "machine images. The service also includes a RESTful API that allows you to "
 "query VM image metadata and retrieve the actual image with HTTP requests. "
 "For more information about the API, see the <link "
-"href=\"http://api.openstack.org/api-ref.html\">OpenStack API Complete "
+"href=\"http://developer.openstack.org/api-ref.html\">OpenStack API Complete "
 "Reference</link> and the <link href=\"http://docs.openstack.org/developer"
 "/python-glanceclient/\">Python API</link>."
 msgstr ""
@@ -1699,6 +1700,10 @@ msgstr ""
 msgid "Stores images using MongoDB."
 msgstr ""
 
+#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml6(title)
+msgid "Secure with root wrappers"
+msgstr ""
+
 #: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml7(para)
 msgid ""
 "The root wrapper enables an unprivileged user to run a number of Compute "
@@ -1709,6 +1714,10 @@ msgid ""
 "to maintain (the <filename>sudoers</filename> file was in packaging), and "
 "did not enable complex filtering of parameters (advanced filters). The "
 "rootwrap was designed to solve those issues."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml16(title)
+msgid "How rootwrap works"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml17(para)
@@ -1730,6 +1739,10 @@ msgid ""
 "<option>no_root_squash</option> option enabled."
 msgstr ""
 
+#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml31(title)
+msgid "Security model"
+msgstr ""
+
 #: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml32(para)
 msgid ""
 "The escalation path is fully controlled by the root user. A sudoers entry "
@@ -1741,6 +1754,10 @@ msgid ""
 "directories, which contain root-owned filters definition files. This chain "
 "ensures that the Compute user itself is not in control of the configuration "
 "or modules used by the <placeholder-2/> executable."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml43(title)
+msgid "Details of rootwrap.conf"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml44(para)
@@ -1756,6 +1773,39 @@ msgstr ""
 msgid ""
 "The <filename>rootwrap.conf</filename> file uses an INI file format with "
 "these sections and parameters:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml53(caption)
+msgid "rootwrap.conf configuration options"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml58(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml96(para)
+msgid "Configuration option=Default value"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml60(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml98(para)
+msgid "(Type) Description"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml65(para)
+msgid "[DEFAULT]"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml66(para)
+msgid "filters_path=/etc/nova/rootwrap.d,/usr/share/nova/rootwrap"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml68(para)
+msgid ""
+"(ListOpt) Comma-separated list of directories containing filter definition "
+"files. Defines where filters for root wrap are stored. Directories defined "
+"on this line should all exist, be owned and writable only by the root user."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml80(title)
+msgid "Details of .filters files"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml81(para)
@@ -1776,6 +1826,21 @@ msgstr ""
 
 #: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml91(caption)
 msgid ".filters configuration options"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml103(para)
+msgid "[Filters]"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml104(para)
+msgid "filter_name=kpartx: CommandFilter, /sbin/kpartx, root"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml106(para)
+msgid ""
+"(ListOpt) Comma-separated list containing first the Filter class to use, "
+"followed by that Filter arguments (which vary depending on the Filter class "
+"selected)."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/compute/section_compute-configure-ipv6.xml6(title)
@@ -13220,12 +13285,6 @@ msgstr ""
 #: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml66(replaceable)
 msgid "cinder-gid"
 msgstr ""
-
-#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml67(para)
-#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml130(para)
-#: ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml52(para)
-msgid "Where:"
-msgstr "Wo:"
 
 #: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml69(para)
 msgid "<replaceable>VOL_NAME</replaceable> is the Gluster volume name."

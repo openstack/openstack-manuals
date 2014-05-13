@@ -13,9 +13,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenStack Manuals\n"
-"POT-Creation-Date: 2014-05-12 02:56+0000\n"
-"PO-Revision-Date: 2014-05-11 17:20+0000\n"
-"Last-Translator: Heyzhu <ding-haiyang@hotmail.com>\n"
+"POT-Creation-Date: 2014-05-13 00:13+0000\n"
+"PO-Revision-Date: 2014-05-12 15:43+0000\n"
+"Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/projects/p/openstack-manuals-i18n/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1384,9 +1384,9 @@ msgstr ""
 #: ./doc/install-guide/section_keystone-install.xml30(replaceable)
 #: ./doc/install-guide/section_keystone-install.xml38(replaceable)
 #: ./doc/install-guide/object-storage/section_object-storage-install-config-proxy-node.xml82(replaceable)
-#: ./doc/install-guide/object-storage/section_object-storage-install.xml95(replaceable)
-#: ./doc/install-guide/object-storage/section_object-storage-install.xml96(replaceable)
-#: ./doc/install-guide/object-storage/section_object-storage-install.xml97(replaceable)
+#: ./doc/install-guide/object-storage/section_object-storage-install.xml101(replaceable)
+#: ./doc/install-guide/object-storage/section_object-storage-install.xml102(replaceable)
+#: ./doc/install-guide/object-storage/section_object-storage-install.xml103(replaceable)
 msgid "controller"
 msgstr "控制器"
 
@@ -3507,7 +3507,7 @@ msgid "Create a service entry for the Identity Service:"
 msgstr ""
 
 #: ./doc/install-guide/section_keystone-services.xml36(para)
-#: ./doc/install-guide/object-storage/section_object-storage-install.xml83(para)
+#: ./doc/install-guide/object-storage/section_object-storage-install.xml89(para)
 msgid ""
 "The service ID is randomly generated and is different from the one shown "
 "here."
@@ -4427,7 +4427,7 @@ msgstr ""
 #: ./doc/install-guide/ch_ceilometer.xml7(para)
 msgid ""
 "Telemetry provides a framework for monitoring and metering the OpenStack "
-"cloud. It is also known as the Ceilometer project."
+"cloud. It is also known as the ceilometer project."
 msgstr ""
 
 #: ./doc/install-guide/ch_ceilometer.xml19(para)
@@ -8620,7 +8620,7 @@ msgstr "当提示创建<literal>supermin</literal>装置时，回复<placeholder
 #: ./doc/install-guide/section_nova-compute.xml25(para)
 msgid ""
 "To use the meta-packages and install other components on your compute node, "
-"such as OpenStack Networking and Ceilometer agents, run this command:"
+"such as OpenStack Networking and Telemetry agents, run this command:"
 msgstr ""
 
 #: ./doc/install-guide/section_nova-compute.xml29(para)
@@ -9386,7 +9386,7 @@ msgid ""
 msgstr ""
 
 #: ./doc/install-guide/object-storage/section_object-storage-install-config-proxy-node.xml88(replaceable)
-#: ./doc/install-guide/object-storage/section_object-storage-install.xml65(replaceable)
+#: ./doc/install-guide/object-storage/section_object-storage-install.xml71(replaceable)
 msgid "SWIFT_PASS"
 msgstr "SWIFT_PASS"
 
@@ -9779,29 +9779,31 @@ msgstr ""
 
 #: ./doc/install-guide/object-storage/section_object-storage-install.xml38(para)
 msgid ""
-"One proxy node which runs the swift-proxy-server processes. The proxy server"
-" proxies requests to the appropriate storage nodes."
-msgstr "一个运行swift-proxy-server进程的代理节点。这个代理服务器把请求转发到相应的存储节点上。"
+"One proxy node which runs the <systemitem class=\"service\">swift-proxy-"
+"server</systemitem> processes. The proxy server proxies requests to the "
+"appropriate storage nodes."
+msgstr ""
 
-#: ./doc/install-guide/object-storage/section_object-storage-install.xml43(para)
+#: ./doc/install-guide/object-storage/section_object-storage-install.xml44(para)
 msgid ""
-"Five storage nodes that run the swift-account-server, swift-container-"
-"server, and swift-object-server processes which control storage of the "
-"account databases, the container databases, as well as the actual stored "
-"objects."
-msgstr "五个存储节点，运行了swift-account-server，swift-container-server，和swift-object-server进程，用于控制账户数据库的存储，容器数据库和实际储存的对象。"
+"Five storage nodes that run the <systemitem class=\"service\">swift-account-"
+"server</systemitem>, <systemitem class=\"service\">swift-container-"
+"server</systemitem>, and <systemitem class=\"service\">swift-object-"
+"server</systemitem> processes which control storage of the account "
+"databases, the container databases, as well as the actual stored objects."
+msgstr ""
 
-#: ./doc/install-guide/object-storage/section_object-storage-install.xml51(para)
+#: ./doc/install-guide/object-storage/section_object-storage-install.xml57(para)
 msgid ""
 "Fewer storage nodes can be used initially, but a minimum of five is "
 "recommended for a production cluster."
 msgstr ""
 
-#: ./doc/install-guide/object-storage/section_object-storage-install.xml56(title)
+#: ./doc/install-guide/object-storage/section_object-storage-install.xml62(title)
 msgid "General installation steps"
 msgstr "安装步骤概要"
 
-#: ./doc/install-guide/object-storage/section_object-storage-install.xml59(para)
+#: ./doc/install-guide/object-storage/section_object-storage-install.xml65(para)
 msgid ""
 "Create a <literal>swift</literal> user that the Object Storage Service can "
 "use to authenticate with the Identity Service. Choose a password and specify"
@@ -9810,15 +9812,15 @@ msgid ""
 "<literal>admin</literal> role:"
 msgstr "创建一个名为 <literal>swift</literal>的用户，被镜像服务用于到对象存储服务上做认证。为该用户创建密码并指定邮件地址。该用户属于<literal>service</literal>租户，赋予该用户<literal>admin</literal>角色。"
 
-#: ./doc/install-guide/object-storage/section_object-storage-install.xml66(replaceable)
+#: ./doc/install-guide/object-storage/section_object-storage-install.xml72(replaceable)
 msgid "swift@example.com"
 msgstr ""
 
-#: ./doc/install-guide/object-storage/section_object-storage-install.xml70(para)
+#: ./doc/install-guide/object-storage/section_object-storage-install.xml76(para)
 msgid "Create a service entry for the Object Storage Service:"
 msgstr ""
 
-#: ./doc/install-guide/object-storage/section_object-storage-install.xml88(para)
+#: ./doc/install-guide/object-storage/section_object-storage-install.xml94(para)
 msgid ""
 "Specify an API endpoint for the Object Storage Service by using the returned"
 " service ID. When you specify an endpoint, you provide URLs for the public "
@@ -9826,15 +9828,15 @@ msgid ""
 "<literal>controller</literal> host name is used:"
 msgstr ""
 
-#: ./doc/install-guide/object-storage/section_object-storage-install.xml110(para)
+#: ./doc/install-guide/object-storage/section_object-storage-install.xml116(para)
 msgid "Create the configuration directory on all nodes:"
 msgstr ""
 
-#: ./doc/install-guide/object-storage/section_object-storage-install.xml114(para)
+#: ./doc/install-guide/object-storage/section_object-storage-install.xml120(para)
 msgid "Create <filename>/etc/swift/swift.conf</filename> on all nodes:"
 msgstr "在所有节点上配置 <filename>/etc/swift/swift.conf</filename>："
 
-#: ./doc/install-guide/object-storage/section_object-storage-install.xml120(para)
+#: ./doc/install-guide/object-storage/section_object-storage-install.xml126(para)
 msgid ""
 "The suffix value in <filename>/etc/swift/swift.conf</filename> should be set"
 " to some random string of text to be used as a salt when hashing to "
@@ -9842,7 +9844,7 @@ msgid ""
 "the cluster!"
 msgstr ""
 
-#: ./doc/install-guide/object-storage/section_object-storage-install.xml125(para)
+#: ./doc/install-guide/object-storage/section_object-storage-install.xml131(para)
 msgid ""
 "Next, set up your storage nodes and proxy node. This example uses the "
 "Identity Service for the common authentication piece."
