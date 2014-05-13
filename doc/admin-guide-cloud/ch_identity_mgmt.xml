@@ -4,15 +4,15 @@
   xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
   xml:id="ch-identity-mgmt-config">
   <title>Identity management</title>
-  <para>The OpenStack Identity Service, code-named keystone, is the
+  <para>OpenStack Identity, code-named keystone, is the
     default identity management system for OpenStack. After you
-    install the Identity Service, you configure it through the
+    install Identity, you configure it through the
       <filename>etc/keystone.conf</filename> configuration file and,
     possibly, a separate logging configuration file. You initialize
-    data into the Identity Service by using the
+    data into Identity by using the
       <command>keystone</command> command-line client.</para>
   <section xml:id="keystone-admin-concepts">
-    <title>Identity Service concepts</title>
+    <title>Identity concepts</title>
     <xi:include
       href="../common/section_keystone-concepts-user-management.xml"/>
     <xi:include
@@ -29,7 +29,7 @@
   <xi:include href="identity/section_keystone-token-binding.xml"/>
   <section xml:id="user-crud">
     <title>User CRUD</title>
-    <para>The Identity Service provides a user CRUD filter that can
+    <para>Identity provides a user CRUD filter that can
       be added to the public_api pipeline. This user CRUD filter
       enables users to use a HTTP PATCH to change their own password.
       To enable this extension you should define a
@@ -44,16 +44,15 @@ paste.filter_factory = keystone.contrib.user_crud:CrudExtension.factory
 [pipeline:public_api]
 pipeline = stats_monitoring url_normalize token_auth admin_token_auth xml_body json_body debug ec2_extension user_crud_extension public_service</programlisting>
     <para>Each user can then change their own password with a HTTP PATCH:</para>
-    <screen><prompt>$</prompt> <userinput>curl -X PATCH http://localhost:5000/v2.0/OS-KSCRUD/users/&lt;userid&gt; -H &quot;Content-type: application/json&quot;  \
-  -H &quot;X_Auth_Token: &lt;authtokenid&gt;&quot; -d '{&quot;user&quot;: {&quot;password&quot;: &quot;ABCD&quot;, &quot;original_password&quot;: &quot;DCBA&quot;}}'</userinput></screen>
-    <para>In addition to changing their password, all of the user's current
-      tokens are deleted (if the back-end is KVS or sql).</para>
-    <note><para>Only use a KVS backend for tokens when testing.</para></note>
+    <screen><prompt>$</prompt> <userinput>curl -X PATCH http://localhost:5000/v2.0/OS-KSCRUD/users/<replaceable>USERID</replaceable> -H &quot;Content-type: application/json&quot;  \
+  -H &quot;X_Auth_Token: <replaceable>AUTHTOKENID</replaceable>&quot; -d '{&quot;user&quot;: {&quot;password&quot;: &quot;ABCD&quot;, &quot;original_password&quot;: &quot;DCBA&quot;}}'</userinput></screen>
+    <para>In addition to changing their password, all current
+      tokens for the user are deleted (if the back end is KVS or sql).</para>
+    <note><para>Only use a KVS back end for tokens when testing.</para></note>
   </section>
   <section xml:id="keystone-logging">
     <title>Logging</title>
-    <para>You configure logging externally to the rest of the Identity
-      Service. The file specifying the logging configuration is in the
+    <para>You configure logging externally to the rest of Identity. The file specifying the logging configuration is in the
         <literal>[DEFAULT]</literal> section of the
         <filename>keystone.conf</filename> file under
         <literal>log_config</literal>. To route logging through
@@ -61,7 +60,7 @@ pipeline = stats_monitoring url_normalize token_auth admin_token_auth xml_body j
         <literal>[DEFAULT]</literal> section.</para>
     <para>A sample logging file is available with the project in the
         <filename>etc/logging.conf.sample</filename> directory. Like
-      other OpenStack projects, the Identity Service uses the Python
+      other OpenStack projects, Identity uses the Python
       logging module, which includes extensive configuration options
       that let you define the output levels and formats.</para>
     <para>Review the <filename>etc/keystone.conf</filename> sample
@@ -100,7 +99,7 @@ admin_tenant_name = service</programlisting>
   </section>
   <section xml:id="monitoring">
     <title>Monitoring</title>
-    <para>The Identity Service provides some basic request/response
+    <para>Identity provides some basic request and response
       monitoring statistics out of the box.</para>
     <para>Enable data collection by defining a
         <literal>stats_monitoring</literal> filter and including it at
@@ -127,8 +126,8 @@ pipeline = [...] json_body stats_reporting ec2_extension [...] admin_service</pr
            http://localhost:35357/v2.0/OS-STATS/stats</userinput></screen>
   </section>
   <section xml:id="running-keystone">
-    <title>Start the Identity Service</title>
-    <para>To start the services for the Identity Service, run the
+    <title>Start the Identity services</title>
+    <para>To start the services for Identity, run the
       following command:</para>
     <screen><prompt>$</prompt> <userinput>keystone-all</userinput></screen>
     <para>This command starts two wsgi.Server instances configured by
@@ -172,7 +171,7 @@ keystone --username=admin --password=secrete --tenant_name=admin tenant-create -
   <section xml:id="auth-token-middleware-with-username-and-password">
     <title>Authentication middleware with user name and
       password</title>
-    <para>You can also configure the Identity Service authentication
+    <para>You can also configure Identity authentication
       middleware using the <option>admin_user</option> and
         <option>admin_password</option> options. When using the
         <option>admin_user</option> and
@@ -226,6 +225,94 @@ admin_password = keystone123</programlisting>
         role on the admin tenant.</para>
     </note>
   </section>
+   <section xml:id="identity-service-api-protection-with-role-based-access-control">
+      <title>Identity API protection with role-based access control (RBAC)
+      </title>
+      <para>Like most OpenStack projects, Identity supports the protection of
+      its APIs by defining policy rules based on an RBAC approach. Identity
+      stores a reference to a policy JSON file in the main Identity
+      configuration file, <filename>keystone.conf</filename>. Typically this
+      file is named <filename>policy.json</filename>, and it contains the rules
+      for which roles have access to certain actions in defined services.</para>
+    <para>Each Identity API v3 call has a line in the policy file that dictates which
+      level of governance of access applies.</para>
+    <programlisting language="ini"><replaceable>API_NAME</replaceable>: <replaceable>RULE_STATEMENT</replaceable> or <replaceable>MATCH_STATEMENT</replaceable></programlisting>
+    <para>Where:</para>
+    <para><code><replaceable>RULE_STATEMENT</replaceable></code> can contain <code><replaceable>RULE_STATEMENT</replaceable></code> or <code><replaceable>MATCH_STATEMENT</replaceable></code>.</para>
+    <para><code><replaceable>MATCH_STATEMENT</replaceable></code> is a set of identifiers that must match between the token
+    provided by the caller of the API and the parameters or target entities of
+    the API call in question. For example:</para>
+    <programlisting language="ini">"identity:create_user": [["role:admin", "domain_id:%(user.domain_id)s"]]</programlisting>
+    <para>Indicates that to create a user, you must have the admin role in your token and
+        the <literal>domain_id</literal> in your token (which implies this must be a domain-scoped token)
+        must match the <literal>domain_id</literal> in the user object that you are trying to
+        create. In other words, you must have the admin role on the domain in which
+        you are creating the user, and the token that you use must be scoped to that
+        domain.</para>
+  <para>Each component of a match statement uses this format:</para>
+  <programlisting language="ini"><replaceable>ATTRIB_FROM_TOKEN</replaceable>:<replaceable>CONSTANT</replaceable> or <replaceable>ATTRIB_RELATED_TO_API_CALL</replaceable></programlisting>
+  <para>The Identity service expects these attributes:</para>
+ <para>Attributes from token: <literal>user_id</literal>, the <literal>domain_id</literal> or <literal>project_id</literal> depending on
+     the scope, and the list of roles you have within that scope.</para>
+ <para>Attributes related to API call: Any parameters passed into the API call
+      are available, along with any filters specified in the query string. You
+      reference attributes of objects passed with an object.attribute syntax
+      (such as, <literal>user.domain_id</literal>). The target objects of an API are
+      also available using a target.object.attribute syntax. For
+      instance:</para>
+  <programlisting language="ini">"identity:delete_user": [["role:admin", "domain_id:%(target.user.domain_id)s"]]</programlisting>
+  <para>would ensure that Identity only deletes the user object in the same
+      domain as the provided token.</para>
+<para>Every target object has an `id` and a `name` available as
+      `target.<replaceable>OBJECT</replaceable>.id` and `target.<replaceable>OBJECT</replaceable>.name`. Identity
+      retrieves other attributes from the database, and the attributes vary
+      between object types. The Identity service filters out some database
+      fields, such as user passwords.</para>
+<para>List of object attributes:</para>
+<programlisting language="ini">role:
+     target.role.id
+     target.role.name
+
+ user:
+     target.user.default_project_id
+     target.user.description
+     target.user.domain_id
+     target.user.enabled
+     target.user.id
+     target.user.name
+
+ group:
+     target.group.description
+     target.group.domain_id
+     target.group.id
+     target.group.name
+
+ domain:
+     target.domain.enabled
+     target.domain.id
+     target.domain.name
+
+ project:
+     target.project.description
+     target.project.domain_id
+     target.project.enabled
+     target.project.id
+     target.project.name</programlisting>
+<para>The default <filename>policy.json</filename> file supplied provides a
+      somewhat basic example of API protection, and does not assume any
+      particular use of domains. Refer to
+        <filename>policy.v3cloudsample.json</filename> as an example of
+      multi-domain configuration installations where a cloud provider wants to
+      delegate administration of the contents of a domain to a particular admin
+      domain. This example policy file also shows the use of an admin_domain to
+      allow a cloud provider to enable cloud administrators to have wider access
+      across the APIs.</para>
+<para>A clean installation could start with the standard policy file, to allow
+      creation of the admin_domain with the first users within it. You could
+      then obtain the domain_id of the admin domain, paste the ID into a
+      modified version of <filename>policy.v3cloudsample.json</filename>, and
+      then enable it as the main policy file.</para>
+</section>
   <?hard-pagebreak?>
   <xi:include href="../common/section_identity-troubleshooting.xml"/>
 </chapter>
