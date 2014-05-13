@@ -5,8 +5,8 @@
   xml:id="keystone-token-binding">
   <title>Configure Identity service for token binding</title>
   <para>Token binding embeds information from an external
-    authentication mechanism, such as a Kerberos server, inside a
-    token. By using token binding, a client can enforce the use of a
+    authentication mechanism, such as a Kerberos server or X.509 certificate,
+    inside a token. By using token binding, a client can enforce the use of a
     specified external authentication mechanism with the token. This
     additional security mechanism ensures that if a token is stolen,
     for example, it is not usable without external
@@ -15,8 +15,11 @@
     the <filename>keystone.conf</filename> file:</para>
   <programlisting language="ini">[token]
 bind = kerberos</programlisting>
-  <para>Currently only <literal>kerberos</literal> is
-    supported.</para>
+  <para>or</para>
+  <programlisting language="ini">[token]
+bind = x509</programlisting>
+  <para>Currently <literal>kerberos</literal> and <literal>x509</literal>
+    are supported.</para>
   <para>To enforce checking of token binding, set the
       <option>enforce_token_bind</option> option to one of these
     modes:</para>
@@ -42,16 +45,18 @@ bind = kerberos</programlisting>
         authentication mechanism for tokens.</para>
     </listitem>
     <listitem>
-      <para><literal>named</literal></para>
-      <para>Enables bind checking. Requires use of the specified
+      <para><literal>kerberos</literal></para>
+      <para>Enables bind checking. Requires use of kerberos as the
         authentication mechanism for tokens:</para>
       <programlisting language="ini">[token]
 enforce_token_bind = kerberos</programlisting>
     </listitem>
+    <listitem>
+      <para><literal>x509</literal></para>
+      <para>Enables bind checking. Requires use of X.509 as the
+        authentication mechanism for tokens:</para>
+      <programlisting language="ini">[token]
+enforce_token_bind = x509</programlisting>
+    </listitem>
   </itemizedlist>
-  <note>
-    <para>Do not set <literal>enforce_token_bind = named</literal>.
-      The <literal>named</literal> authentication mechanism does not
-      exist.</para>
-  </note>
 </section>
