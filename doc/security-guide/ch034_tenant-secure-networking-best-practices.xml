@@ -46,7 +46,17 @@
     </section>
     <section xml:id="ch034_tenant-secure-networking-best-practices-idp51440">
       <title>Security groups</title>
-      <para>The OpenStack Networking Service provides security group functionality using a mechanism that is more flexible and powerful than the security group capabilities built into OpenStack Compute. Thus, when using OpenStack Networking, <emphasis>nova.conf</emphasis> should always disable built-in security groups and proxy all security group calls to the OpenStack Networking API. Failure to do so will result in conflicting security policies being simultaneously applied by both services. To proxy security groups to OpenStack Networking, use the following configuration values:</para>
+      <para>
+        The OpenStack Networking Service provides security group
+        functionality using a mechanism that is more flexible and
+        powerful than the security group capabilities built into
+        OpenStack Compute. Thus, when using OpenStack Networking,
+        <filename>nova.conf</filename> should always disable built-in
+        security groups and proxy all security group calls to the
+        OpenStack Networking API. Failure to do so will result in
+        conflicting security policies being simultaneously applied by
+        both services. To proxy security groups to OpenStack
+        Networking, use the following configuration values:</para>
       <itemizedlist><listitem>
           <para><option>firewall_driver</option> must be set to
           <literal>nova.virt.firewall.NoopFirewallDriver</literal> so
@@ -95,10 +105,11 @@ quota_security_group_rule = 100
 
 # default driver to use for quota checks
 quota_driver = neutron.quota.ConfDriver</programlisting>
-      <para>OpenStack Networking also supports per-tenant quotas limit
-      via a quota extension API. To enable per-tenant quotas, you must
-      set the <literal>quota_driver</literal> option in
-      <filename>neutron.conf</filename>.</para>
+      <para>
+        OpenStack Networking also supports per-tenant quotas limit
+        through a quota extension API. To enable per-tenant quotas,
+        you must set the <literal>quota_driver</literal> option in
+        <filename>neutron.conf</filename>.</para>
       <programlisting language="ini">quota_driver = neutron.db.quota_db.DbQuotaDriver</programlisting>
     </section>
   </chapter>

@@ -33,7 +33,7 @@
         control logs to identify unauthorized attempts to access
         accounts. Possible remediation would include reviewing the
         strength of the user password, or blocking the network source
-        of the attack via firewall rules. Firewall rules on the
+        of the attack through firewall rules. Firewall rules on the
         keystone server that restrict the number of connections could
         be used to reduce the attack effectiveness, and thus dissuade
         the attacker.</para>
@@ -63,13 +63,14 @@
         Identity database may be separate from databases used by other
         OpenStack services to reduce the risk of a compromise of the
         stored credentials.</para>
-      <para>When authentication is provided via username and password,
-        the Identity Service does not enforce policies on password
-        strength, expiration, or failed authentication attempts as
-        recommended by NIST Special Publication 800-118 (draft).
-        Organizations that desire to enforce stronger password
-        policies should consider using Identity
-        extensions or external authentication services.</para>
+      <para>
+        When you use a user name and password to authenticate,
+        Identity does not enforce policies on password strength,
+        expiration, or failed authentication attempts as recommended
+        by NIST Special Publication 800-118 (draft).  Organizations
+        that desire to enforce stronger password policies should
+        consider using Identity extensions or external authentication
+        services.</para>
       <para>LDAP simplifies integration of Identity authentication
         into an organization's existing directory service and user
         account management processes.</para>
@@ -85,9 +86,8 @@
       <para>Note that if the LDAP system has attributes defined for
         the user such as admin, finance, HR etc, these must be mapped
         into roles and groups within Identity for use by the various
-        OpenStack services. The <emphasis>etc/keystone.conf</emphasis>
-        file provides the mapping from the LDAP attributes to Identity
-        attributes.</para>
+        OpenStack services. The <filename>/etc/keystone.conf</filename>
+        file maps LDAP attributes to Identity attributes.</para>
       <para>The Identity Service <emphasis role="bold">MUST
           NOT</emphasis> be allowed to write to LDAP services used for
         authentication outside of the OpenStack deployment as this
@@ -198,7 +198,7 @@
       <para>The cloud administrator should protect sensitive
         configuration files for unauthorized modification. This can be
         achieved with mandatory access control frameworks such as
-        SELinux, including <literal>/etc/keystone.conf</literal> and
+        SELinux, including <filename>/etc/keystone.conf</filename> and
         X.509 certificates.</para>
 
       <para>For client authentication with SSL, you need to issue

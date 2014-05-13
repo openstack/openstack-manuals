@@ -136,8 +136,8 @@
 <prompt>#</prompt> <userinput>find /etc/swift/ -type d -exec chmod 750 {} \;</userinput></screen>
             <para>This restricts only root to be able to modify
                 configuration files while allowing the services to
-                read them via their group membership in
-                "swift."</para>
+                read them through their group membership in
+                the swift group.</para>
         </section>
     </section>
     <!-- Securing Services – General -->
@@ -240,14 +240,15 @@
     <section xml:id="ch027_storage-idpE1">
         <title>Securing proxy services</title>
         <para>A Proxy service node should have at least two interfaces
-            (physical or virtual): one public and one private. The
-            public interface may be protected via firewalls or service
-            binding. The public facing service is an HTTP web server
-            that processes end-point client requests, authenticates
-            them, and performs the appropriate action. The private
-            interface does not require any listening services but is
-            instead used to establish outgoing connections to storage
-            service nodes on the private storage network.</para>
+            (physical or virtual): one public and one
+            private. Firewalls or service binding might protect the
+            public interface. The public facing service is an HTTP web
+            server that processes end-point client requests,
+            authenticates them, and performs the appropriate
+            action. The private interface does not require any
+            listening services but is instead used to establish
+            outgoing connections to storage service nodes on the
+            private storage network.</para>
         <section xml:id="ch027_storage-idpE12">
             <title>Use SSL/TLS</title>
             <para>The built-in or included web server that comes with

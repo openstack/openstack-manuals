@@ -5,61 +5,172 @@
          version="5.0"
          xml:id="ch031_neutron-architecture">
   <?dbhtml stop-chunking?>
-    <title>Networking architecture</title>
-    <para>OpenStack Networking is a standalone service that often involves deploying several processes across a number of nodes. These processes interact with each other and with other OpenStack services. The main process of the OpenStack Networking service is neutron-server, a Python daemon that exposes the OpenStack Networking API and passes tenant requests to a suite of plug-ins for additional processing.</para>
-    <para>OpenStack Networking components encompasses the following elements:</para>
-    <itemizedlist><listitem>
-        <para><emphasis role="bold">neutron server</emphasis>  (<literal>neutron-server</literal> and <literal>neutron-*-plugin</literal>): This service runs on the network node to service the Networking API and its extensions. It also enforces the network model and IP addressing of each port. The neutron-server and plugin agents require access to a database for persistent storage and access to a message queue for inter-communication.</para>
-      </listitem>
-<listitem>
-        <para><emphasis role="bold">plugin agent</emphasis>  (<literal>neutron-*-agent</literal>): Runs on each compute node to manage local virtual switch (vswitch) configuration. The agents to be run will depend on which plugin you are using. This service requires message queue access. <emphasis>Optional depending on plugin.</emphasis></para>
-      </listitem>
-<listitem>
-        <para><emphasis role="bold">DHCP agent</emphasis>  (<literal>neutron-dhcp-agent</literal>): Provides DHCP services to tenant networks. This agent is the same across all plug-ins and is responsible for maintaining DHCP configuration. The neutron-dhcp-agent requires message queue access.</para>
-      </listitem>
-<listitem>
-        <para><emphasis role="bold">l3 agent</emphasis>  (<literal>neutron-l3-agent</literal>): Provides L3/NAT forwarding for external network access of VMs on tenant networks. Requires message queue access. <emphasis>Optional depending on plug-in.</emphasis></para>
-      </listitem>
-<listitem>
-        <para><emphasis role="bold">network provider services</emphasis>  (SDN server/services). Provide additional networking services that are provided to tenant networks. These SDN services may interact with the neutron-server, neutron-plugin, and/or plugin-agents via REST APIs or other communication channels.</para>
-      </listitem>
-</itemizedlist>
-    <para>The figure that follows provides an architectural and networking flow diagram of the OpenStack Networking components:</para>
+  <title>Networking architecture</title>
+  <para>
+    OpenStack Networking is a standalone service that often deploys
+    several processes across a number of nodes. These processes
+    interact with each other and other OpenStack services. The main
+    process of the OpenStack Networking service is <systemitem
+    class="service">neutron-server</systemitem>, a Python daemon that
+    exposes the OpenStack Networking API and passes tenant requests to
+    a suite of plug-ins for additional processing.</para>
+  <para>
+    The OpenStack Networking components are:</para>
+    <variablelist>
+      <varlistentry>
+        <term>neutron server (<systemitem
+          class="service">neutron-server</systemitem> and <systemitem
+          class="service">neutron-*-plugin</systemitem>)</term>
+        <listitem>
+          <para>
+            This service runs on the network node to service the
+            Networking API and its extensions. It also enforces the
+            network model and IP addressing of each port. The
+            neutron-server and plugin agents require access to a
+            database for persistent storage and access to a message
+            queue for inter-communication.</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>plugin agent (<systemitem class="service">neutron-*-agent</systemitem>)
+        </term>
+        <listitem>
+          <para>Runs on each compute node to manage local virtual
+          switch (vswitch) configuration. The plug-in that you use
+          determine which agents run. This service requires message
+          queue access. <emphasis>Optional depending on
+          plugin.</emphasis></para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>DHCP agent (<systemitem class="service">neutron-dhcp-agent</systemitem>)
+        </term>
+        <listitem>
+          <para>
+            Provides DHCP services to tenant networks. This agent is
+            the same across all plug-ins and is responsible for
+            maintaining DHCP configuration. The <systemitem
+            class="service">neutron-dhcp-agent</systemitem> requires
+            message queue access.</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>L3 agent (<systemitem class="service">neutron-l3-agent</systemitem>)
+        </term>
+        <listitem>
+          <para>
+            Provides L3/NAT forwarding for external network access of
+            VMs on tenant networks. Requires message queue
+            access. <emphasis>Optional depending on
+            plug-in.</emphasis></para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>network provider services (SDN server/services)</term>
+        <listitem>
+          <para>
+            Provide additional networking services to tenant
+            networks. These SDN services might interact with the
+            <systemitem class="service">neutron-server</systemitem>,
+            <systemitem class="service">neutron-plugin</systemitem>,
+            and/or plugin-agents through REST APIs or other
+            communication channels.</para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+    <para>
+      The following figure shows an architectural and networking
+      flow diagram of the OpenStack Networking components:</para>
     <para><inlinemediaobject><imageobject role="html">
-          <imagedata contentdepth="319" contentwidth="536" fileref="static/sdn-connections.png" format="PNG" scalefit="1"/>
+          <imagedata contentdepth="319" contentwidth="536"
+                     fileref="static/sdn-connections.png"
+                     format="PNG" scalefit="1"/>
         </imageobject>
-<imageobject role="fo">
-          <imagedata contentdepth="100%" fileref="static/sdn-connections.png" format="PNG" scalefit="1" width="100%"/>
+        <imageobject role="fo">
+          <imagedata contentdepth="100%"
+                     fileref="static/sdn-connections.png" format="PNG"
+                     scalefit="1" width="100%"/>
         </imageobject>
-</inlinemediaobject></para>
+      </inlinemediaobject>
+    </para>
     <section xml:id="ch031_neutron-architecture-idp61360">
       <title>OpenStack Networking service placement on physical servers</title>
-      <para>In this guide, we focus primarily on a standard architecture that includes a <emphasis>cloud controller</emphasis> host, a <emphasis>network</emphasis> host, and a set of <emphasis>compute</emphasis> hypervisors for running VMs.</para>
+      <para>
+        This guide focuses on a standard architecture
+        that includes a <emphasis>cloud controller</emphasis> host, a
+        <emphasis>network</emphasis> host, and a set of
+        <emphasis>compute</emphasis> hypervisors for running
+        VMs.</para>
       <section xml:id="ch031_neutron-architecture-idp63888">
         <title>Network connectivity of physical servers</title>
         <para><inlinemediaobject><imageobject role="html">
-              <imagedata contentdepth="364" contentwidth="536" fileref="static/1aa-network-domains-diagram.png" format="PNG" scalefit="1"/>
+              <imagedata contentdepth="364" contentwidth="536"
+                         fileref="static/1aa-network-domains-diagram.png"
+                         format="PNG" scalefit="1"/>
             </imageobject>
-<imageobject role="fo">
-              <imagedata contentdepth="100%" fileref="static/1aa-network-domains-diagram.png" format="PNG" scalefit="1" width="100%"/>
+            <imageobject role="fo">
+              <imagedata contentdepth="100%"
+                         fileref="static/1aa-network-domains-diagram.png"
+                         format="PNG" scalefit="1" width="100%"/>
             </imageobject>
-</inlinemediaobject></para>
-        <para>A standard OpenStack Networking setup has up to four distinct physical data center networks:</para>
-        <itemizedlist><listitem>
-            <para><emphasis role="bold">Management network</emphasis> Used for internal communication between OpenStack Components. The IP addresses on this network should be reachable only within the data center and is considered the Management Security Domain.</para>
-          </listitem>
-<listitem>
-            <para><emphasis role="bold">Guest network</emphasis> Used for VM data communication within the cloud deployment. The IP addressing requirements of this network depend on the OpenStack Networking plug-in in use and the network configuration choices of the virtual networks made by the tenant. This network is considered the Guest Security Domain.</para>
-          </listitem>
-<listitem>
-            <para><emphasis role="bold">External network</emphasis> Used to provide VMs with Internet access in some deployment scenarios. The IP addresses on this network should be reachable by anyone on the Internet and is considered to be in the Public Security Domain.</para>
-          </listitem>
-<listitem>
-            <para><emphasis role="bold">API network</emphasis> Exposes all OpenStack APIs, including the OpenStack Networking API, to tenants. The IP addresses on this network should be reachable by anyone on the Internet. This may be the same network as the external network, as it is possible to create a subnet for the external network that uses IP allocation ranges to use only less than the full range of IP addresses in an IP block. This network is considered the Public Security Domain.</para>
-          </listitem>
-</itemizedlist>
-        <para>For additional information see the <link xlink:href="http://docs.openstack.org/admin-guide-cloud/content/ch_networking.html">Networking chapter</link> in the
-        <citetitle>OpenStack Cloud Administrator Guide</citetitle>.</para>
+        </inlinemediaobject>
+        </para>
+        <para>A standard OpenStack Networking setup has up to four
+          distinct physical data center networks:</para>
+        <variablelist>
+          <varlistentry>
+            <term>Management network</term>
+            <listitem>
+              <para>
+                Used for internal communication between OpenStack
+                Components. The IP addresses on this network should be
+                reachable only within the data center and is
+                considered the Management Security Domain.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>Guest network</term>
+            <listitem>
+              <para>
+                Used for VM data communication within the cloud
+                deployment. The IP addressing requirements of this
+                network depend on the OpenStack Networking plug-in in
+                use and the network configuration choices of the
+                virtual networks made by the tenant. This network is
+                considered the Guest Security Domain.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>External network</term>
+            <listitem>
+              <para>
+                Used to provide VMs with Internet access in some
+                deployment scenarios. The IP addresses on this network
+                should be reachable by anyone on the Internet and is
+                considered to be in the Public Security Domain.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>API network</term>
+            <listitem>
+              <para>
+                Exposes all OpenStack APIs, including the OpenStack
+                Networking API, to tenants. The IP addresses on this
+                network should be reachable by anyone on the
+                Internet. This may be the same network as the external
+                network, as it is possible to create a subnet for the
+                external network that uses IP allocation ranges to use
+                only less than the full range of IP addresses in an IP
+                block. This network is considered the Public Security
+                Domain.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+        <para>
+          For additional information see the <link
+          xlink:href="http://docs.openstack.org/admin-guide-cloud/content/ch_networking.html">Networking
+          chapter</link> in the <citetitle>OpenStack Cloud
+          Administrator Guide</citetitle>.</para>
       </section>
     </section>
   </chapter>
