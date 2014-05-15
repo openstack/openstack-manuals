@@ -37,7 +37,7 @@ function test_manuals {
 
 function test_ja {
     setup_lang 'ja' 'user-guide'
-    test_manuals 'ja' 'security-guide' 'high-availability-guide'
+    test_manuals 'ja' 'security-guide' 'high-availability-guide' 'install-guide'
 }
 
 
