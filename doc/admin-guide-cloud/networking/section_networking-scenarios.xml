@@ -23,7 +23,7 @@
             configuration options in <filename>ovs_neutron_plugin.ini</filename>:
             <programlisting language="ini">[ovs]
 tenant_network_type = vlan
-network_vlan_ranges = physnet2:100:110
+network_vlan_ranges = physnet1,physnet2:100:110
 integration_bridge = br-int
 bridge_mappings = physnet2:br-eth1</programlisting></para>
 
@@ -164,7 +164,7 @@ bridge_mappings = physnet2:br-eth1</programlisting></para>
                 <filename>ovs_neutron_plugin.ini</filename> file:
 <programlisting language="bash">[ovs]
 tenant_network_type = vlan
-network_vlan_ranges = physnet2:101:110
+network_vlan_ranges = physnet1,physnet2:101:110
 integration_bridge = br-int
 bridge_mappings = physnet1:br-ex,physnet2:br-eth1</programlisting>
                 The following figure shows the network devices on the network host:</para>
@@ -465,7 +465,7 @@ ovs-vsctl add-port OVS-BR0 vxlan1 -- set Interface vxlan1 type=vxlan options:rem
             <filename>linuxbridge_conf.ini</filename>:
             <programlisting language="ini">[vlans]
 tenant_network_type = vlan
-network_vlan_ranges = physnet2:100:110
+network_vlan_ranges = physnet1,physnet2:100:110
 
 [linux_bridge]
 physical_interface_mappings = physnet2:eth1</programlisting></para>
