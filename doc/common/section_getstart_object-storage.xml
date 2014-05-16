@@ -2,47 +2,49 @@
   xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
   xml:id="object-storage-service">
-  <title>Object Storage service</title>
-  <para>The Object Storage service is a highly scalable and durable
-    multi-tenant object storage system for large amounts of
-    unstructured data at low cost through a RESTful HTTP API.</para>
+  <title>OpenStack Object Storage</title>
+  <para>The OpenStack Object Storage is a multi-tenant object storage system.
+        It is highly scalable and can manage large amounts of unstructured data
+        at low cost through a RESTful HTTP API.</para>
   <para>It includes the following components:</para>
-  <itemizedlist>
-    <listitem>
-      <para>Proxy servers (<systemitem class="service"
-          >swift-proxy-server</systemitem>). Accepts Object Storage
-        API and raw HTTP requests to upload files, modify metadata,
-        and create containers. It also serves file or container
-        listings to web browsers. To improve performance, the proxy
-        server can use an optional cache usually deployed with
-        memcache.</para>
-    </listitem>
-    <listitem>
-      <para>Account servers (<systemitem class="service"
-          >swift-account-server</systemitem>). Manage accounts defined
-        with the Object Storage service.</para>
-    </listitem>
-    <listitem>
-      <para>Container servers (<systemitem class="service"
-          >swift-container-server</systemitem>). Manage a mapping of
-        containers, or folders, within the Object Storage
-        service.</para>
-    </listitem>
-    <listitem>
-      <para>Object servers (<systemitem class="service"
-          >swift-object-server</systemitem>). Manage actual objects,
-        such as files, on the storage nodes.</para>
-    </listitem>
-    <listitem>
-      <para>A number of periodic processes. Performs housekeeping
-        tasks on the large data store. The replication services ensure
-        consistency and availability through the cluster. Other
-        periodic processes include auditors, updaters, and
-        reapers.</para>
-    </listitem>
-    <listitem>
-      <para>Configurable WSGI middleware that handles authentication.
-        Usually the Identity Service.</para>
-    </listitem>
-  </itemizedlist>
+  <variablelist>
+    <varlistentry><term>Proxy servers (<systemitem
+        class="service">swift-proxy-server</systemitem>)</term>
+      <listitem><para>Accepts OpenStack Object Storage API and raw HTTP
+         requests to upload files, modify metadata, and create containers. It
+         also serves file or container listings to web browsers. To improve
+         performance, the proxy server can use an optional cache usually
+         deployed with memcache.</para></listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>Account servers (<systemitem class="service"
+            >swift-account-server</systemitem>)</term>
+          <listitem><para>Manages accounts defined  with Object
+            Storage.</para></listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>Container servers (<systemitem class="service"
+        >swift-container-server</systemitem>)</term>
+      <listitem><para>Manages the mapping of containers or folders, within
+        Object Storage.</para></listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>Object servers (<systemitem class="service"
+        >swift-object-server</systemitem>)</term>
+      <listitem><para>Manages actual objects,such as files, on the
+       storage nodes.</para></listitem>
+  </varlistentry>
+    <varlistentry>
+     <term>Various periodic processes</term>
+     <listitem><para>Performs housekeeping tasks on the large data store.
+        The replication services ensure consistency and availability through
+        the cluster. Other periodic processes include auditors, updaters, and
+        reapers.</para></listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>WSGI middleware</term>
+          <listitem><para>Handles authentication and is usually OpenStack
+            Identity.</para></listitem>
+  </varlistentry>
+</variablelist>
 </section>
