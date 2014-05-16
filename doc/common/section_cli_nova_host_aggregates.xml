@@ -201,11 +201,10 @@
 +----+---------+-------------------+----------------------+-------------------+
 | 1  | fast-io | nova              | [u'node1', u'node2'] | {u'ssd': u'true'} |
 +----+---------+-------------------+----------------------+-------------------+</computeroutput></screen>
-        <para>Use the <command>nova flavor-create</command> command to
-            create the <literal>ssd.large</literal> flavor called with
-            an ID of 6, 8&nbsp;GB of RAM, 80&nbsp;GB root disk, and 4
-            vCPUs.</para>
-        <screen><prompt>$</prompt> <userinput>nova flavor-create ssd.large 6 8192 80 4</userinput>
+        <para>Use the <command>nova flavor-create</command> command to create
+            the <replaceable>ssd.large</replaceable> flavor called with an ID of
+            6, 8&nbsp;GB of RAM, 80&nbsp;GB root disk, and four vCPUs.</para>
+        <screen><prompt>$</prompt> <userinput>nova flavor-create <replaceable>ssd.large</replaceable> <replaceable>6</replaceable> <replaceable>8192</replaceable> <replaceable>80</replaceable> <replaceable>4</replaceable></userinput>
 <computeroutput>+----+-----------+-----------+------+-----------+------+-------+-------------+-----------+-------------+
 | ID | Name      | Memory_MB | Disk | Ephemeral | Swap | VCPUs | RXTX_Factor | Is_Public | extra_specs |
 +----+-----------+-----------+------+-----------+------+-------+-------------+-----------+-------------+
@@ -214,10 +213,10 @@
         <para>Once the flavor is created, specify one or more
             key-value pairs that match the key-value pairs on the host
             aggregates. In this case, that is the
-                <literal>ssd=true</literal> key-value pair. Setting a
+            <replaceable>ssd=true</replaceable> key-value pair. Setting a
             key-value pair on a flavor is done using the <command>nova
-                flavor-key set_key</command> command.</para>
-        <screen><prompt>$</prompt> <userinput>nova flavor-key set_key --name=ssd.large  --key=ssd --value=true</userinput></screen>
+                flavor-key</command> command.</para>
+        <screen><prompt>$</prompt> <userinput>nova flavor-key <replaceable>ssd.large</replaceable> set  <replaceable>ssd=true</replaceable></userinput></screen>
         <para>Once it is set, you should see the
                 <literal>extra_specs</literal> property of the
                 <literal>ssd.large</literal> flavor populated with a
