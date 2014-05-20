@@ -11,11 +11,11 @@
       functions:</para>
     <itemizedlist>
       <listitem>
-        <para>User management. Tracks users and their
+          <para>User management: Tracks users and their
           permissions.</para>
       </listitem>
       <listitem>
-        <para>Service catalog. Provides a catalog of available
+          <para>Service catalog: Provides a catalog of available
           services with their API endpoints.</para>
       </listitem>
     </itemizedlist>
@@ -26,7 +26,7 @@
         <listitem>
           <para>Digital representation of a person, system, or service
             who uses OpenStack cloud services. Identity authentication
-            services will validate that incoming request are being
+            services will validate that incoming requests are being
             made by the user who claims to be making the call. Users
             have a login and may be assigned tokens to access
             resources. Users may be directly assigned to a particular
@@ -115,12 +115,12 @@
       <varlistentry>
         <term><emphasis role="bold">Role</emphasis></term>
         <listitem>
-          <para>A personality that a user assumes that enables them to
+          <para>A personality that a user assumes which enables them to
             perform a specific set of operations. A role includes a
             set of rights and privileges. A user assuming that role
             inherits those rights and privileges.</para>
           <para>In the Identity Service, a token that is issued to a
-            user includes the list of roles that user can assume.
+            user includes the list of roles that a user can assume.
             Services that are being called by that user determine how
             they interpret the set of roles a user has and which
             operations or resources each role grants access to.</para>
@@ -168,7 +168,7 @@
           <screen><prompt>$</prompt> <userinput>keystone role-create --name=compute-user</userinput></screen>
           <para>The Identity service associates a user with a tenant
             and a role. To continue with our previous examples, we may
-            wish to assign the "alice" user the "compute-user" role in
+            assign the "alice" user the "compute-user" role in
             the "acme" tenant:</para>
           <screen><prompt>$</prompt> <userinput>keystone user-list</userinput></screen>
           <screen><prompt>$</prompt> <userinput>keystone user-role-add --user=892585 --role=9a764e --tenant-id=6b8fd2</userinput></screen>
@@ -192,7 +192,7 @@
             accessible by any user that has any role in a
             tenant.</para>
           <para>If you wish to restrict users from performing
-            operations in, say, the Compute service, you need to
+            operations in the Compute service, you need to
             create a role in the Identity service and then modify
               <filename>/etc/nova/policy.json</filename> so that this
             role is required for Compute operations.</para>
@@ -219,7 +219,7 @@
           </itemizedlist>
           <para>The Identity Service also maintains a user that
             corresponds to each service, such as a user named nova,
-            for the Compute service) and a special service tenant,
+            (for the Compute service) and a special service tenant,
             which is called service.</para>
           <para>The commands for creating services and endpoints are
             described in a later section.</para>
