@@ -117,6 +117,22 @@
                         cannot contain special characters or
                         spaces.</para>
                 </note>
+                <para>Here is an example with additional optional
+                    parameters filled in that creates a public "extra
+                    tiny" flavor that automatically gets an ID
+                    assigned, with 256 MB memory, no disk space, and
+                    one VCPU. The rxtx-factor indicates the slice of
+                    bandwidth that the instances with this flavor can
+                    use (through the Virtual Interface (vif) creation
+                    in the hypervisor).</para>
+                <screen><prompt>$</prompt> <userinput>nova flavor-create --is-public true m1.extra_tiny auto 256 0 1 --rxtx-factor .1</userinput></screen>
+                <para>If an individual user or group of users needs a custom
+                    flavor that you do not want other tenants to have access to,
+                you can change the flavor's access to make it a private flavor.
+                See <link
+                    xlink:href="http://docs.openstack.org/trunk/openstack-ops/content/private-flavors.html">
+                    Private Flavors in the OpenStack Operations Guide
+                </link>.</para>
                 <para>For a list of optional parameters, run this
                     command:</para>
                 <screen><prompt>$</prompt> <userinput>nova help flavor-create</userinput></screen>
