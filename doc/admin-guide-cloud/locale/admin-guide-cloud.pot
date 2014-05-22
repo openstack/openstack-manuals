@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-05-16 06:33+0000\n"
+"POT-Creation-Date: 2014-05-22 06:13+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -667,7 +667,7 @@ msgid "The <literal>scheduler</literal> is used to select the most suitable comp
 msgstr ""
 
 #: ./doc/admin-guide-cloud/ch_compute.xml:60(para)
-msgid "Compute uses a messaging-based, <literal>shared nothing</literal> architecture. All major components exist on multiple servers, including the compute,volume, and network controllers, and the object store or image service. The state of the entire system is stored in a database. The cloud controller communicates with the internal object store using HTTP, but it communicates with the scheduler, network controller, and volume controller using AMQP (advanced message queueing protocol). To avoid blocking a component while waiting for a response, Compute uses asynchronous calls, with a callback that is triggered when a response is received."
+msgid "Compute uses a messaging-based, <literal>shared nothing</literal> architecture. All major components exist on multiple servers, including the compute, volume, and network controllers, and the object store or image service. The state of the entire system is stored in a database. The cloud controller communicates with the internal object store using HTTP, but it communicates with the scheduler, network controller, and volume controller using AMQP (advanced message queueing protocol). To avoid blocking a component while waiting for a response, Compute uses asynchronous calls, with a callback that is triggered when a response is received."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/ch_compute.xml:69(title)
@@ -1469,7 +1469,7 @@ msgid "The metadata service is implemented by either the <systemitem class=\"ser
 msgstr ""
 
 #: ./doc/admin-guide-cloud/compute/section_compute-networking-nova.xml:349(para)
-msgid "Hosts access the service at <literal>169.254.169.254:80</literal>, and this is translated to <literal>metadata_host:metadata_port</literal> by an iptables rule established by the <systemitem class=\"service\">nova-network</systemitem> servce. In multi-host mode, you can set <option>metadata_host</option> to <literal>127.0.0.1</literal>."
+msgid "Hosts access the service at <literal>169.254.169.254:80</literal>, and this is translated to <literal>metadata_host:metadata_port</literal> by an iptables rule established by the <systemitem class=\"service\">nova-network</systemitem> service. In multi-host mode, you can set <option>metadata_host</option> to <literal>127.0.0.1</literal>."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/compute/section_compute-networking-nova.xml:354(para)
@@ -2171,7 +2171,7 @@ msgid "For every volume, an iSCSI session is made (so 14 ebs volumes equals 14 s
 msgstr ""
 
 #: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:201(para)
-msgid "From the cloud controller to the compute node, we also have iptables/ ebtables rules which allow access from the cloud controller to the running instance."
+msgid "From the cloud controller to the compute node, we also have iptables/ ebtables rules, which allow access from the cloud controller to the running instance."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:206(para)
@@ -2427,7 +2427,7 @@ msgid "<systemitem>nova-cert</systemitem>. Provides the certificate manager."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:36(para)
-msgid "<systemitem class=\"service\">nova-compute</systemitem>. Responsible for managing virtual machines. It loads a Service object which exposes the public methods on ComputeManager through Remote Procedure Call (RPC)."
+msgid "<systemitem class=\"service\">nova-compute</systemitem>. Responsible for managing virtual machines. It loads a Service object, which exposes the public methods on ComputeManager through Remote Procedure Call (RPC)."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:42(para)
@@ -2907,7 +2907,7 @@ msgid "Ensure that <literal><replaceable>NOVA-INST-DIR</replaceable></literal> (
 msgstr ""
 
 #: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:128(para)
-msgid "In this example, <literal>HostA</literal> is the NFSv4 server that exports <filename><replaceable>NOVA-INST-DIR</replaceable>/instances</filename>, and <literal>HostB</literal> and <literal>HostC</literal> mount it."
+msgid "In this example, <literal>HostA</literal> is the NFSv4 server that exports <filename><replaceable>NOVA-INST-DIR</replaceable>/instances</filename> directory. <literal>HostB</literal> and <literal>HostC</literal> are NFSv4 clients that mount it."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:136(title)
@@ -2971,7 +2971,7 @@ msgid "Perform the same check at HostB and HostC, paying special attention to th
 msgstr ""
 
 #: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:208(para)
-msgid "Update the libvirt configurations so that the calls can be made securely. These methods enable remote access over TCP and are not documented here, please consult your network administrator for assistance in deciding how to configure access."
+msgid "Update the libvirt configurations so that the calls can be made securely. These methods enable remote access over TCP and are not documented here. Please consult your network administrator for assistance in deciding how to configure access."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:212(para)
@@ -3015,7 +3015,7 @@ msgid "By default, the Compute service does not use the libvirt live migration f
 msgstr ""
 
 #: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:251(para)
-msgid "The Compute service does not use libvirt's live migration by default because there is a risk that the migration process never ends. This can happen if the guest operating system dirties blocks on the disk faster than they can migrated."
+msgid "The Compute service does not use libvirt's live migration by default because there is a risk that the migration process never ends. This can happen if the guest operating system dirties blocks on the disk faster than they can be migrated."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:260(title) ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:493(th)
@@ -3401,7 +3401,7 @@ msgid "Create a firewall policy:"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:287(para)
-msgid "The order of the rules specified above is important.You can create a firewall policy without and rules and add rules later either with the update operation (when adding multiple rules) or with the insert-rule operations (when adding a single rule). Please <link href=\"http://docs.openstack.org/cli-reference/content/neutronclient_commands.html#neutronclient_subcommand_firewall-policy-create\">check the CLI Reference</link> for more details on these operations."
+msgid "The order of the rules specified above is important. You can create a firewall policy without and rules and add rules later either with the update operation (when adding multiple rules) or with the insert-rule operations (when adding a single rule). Please <link href=\"http://docs.openstack.org/cli-reference/content/neutronclient_commands.html#neutronclient_subcommand_firewall-policy-create\">check the CLI Reference</link> for more details on these operations."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:295(para)
@@ -4395,7 +4395,7 @@ msgid "Manage agents in neutron deployment"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:182(para)
-msgid "Every agent which supports these extensions will register itself with the neutron server when it starts up."
+msgid "Every agent that supports these extensions will register itself with the neutron server when it starts up."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:186(para)
@@ -4579,11 +4579,11 @@ msgid "The policy engine reads entries from the <filename>policy.json</filename>
 msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking_auth.xml:64(para)
-msgid "Policies are triggered by the Networking policy engine whenever one of them matches an Networking API operation or a specific attribute being used in a given operation. For instance the <code>create_subnet</code> policy is triggered every time a <code>POST /v2.0/subnets</code> request is sent to the Networking server; on the other hand <code>create_network:shared</code> is triggered every time the <emphasis role=\"italic\">shared</emphasis> attribute is explicitly specified (and set to a value different from its default) in a <code>POST /v2.0/networks</code> request. It is also worth mentioning that policies can be also related to specific API extensions; for instance <code>extension:provider_network:set</code> is be triggered if the attributes defined by the Provider Network extensions are specified in an API request."
+msgid "Policies are triggered by the Networking policy engine whenever one of them matches a Networking API operation or a specific attribute being used in a given operation. For instance the <code>create_subnet</code> policy is triggered every time a <code>POST /v2.0/subnets</code> request is sent to the Networking server; on the other hand <code>create_network:shared</code> is triggered every time the <emphasis role=\"italic\">shared</emphasis> attribute is explicitly specified (and set to a value different from its default) in a <code>POST /v2.0/networks</code> request. It is also worth mentioning that policies can also be related to specific API extensions; for instance <code>extension:provider_network:set</code> is triggered if the attributes defined by the Provider Network extensions are specified in an API request."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking_auth.xml:79(para)
-msgid "An authorization policy can be composed by one or more rules. If more rules are specified, evaluation policy succeeds if any of the rules evaluates successfully; if an API operation matches multiple policies, then all the policies must evaluate successfully. Also, authorization rules are recursive. Once a rule is matched, the rule(s) can be resolved to another rule, until a terminal rule is reached."
+msgid "An authorization policy can be composed by one or more rules. If more rules are specified then the evaluation policy succeeds if any of the rules evaluates successfully; if an API operation matches multiple policies, then all the policies must evaluate successfully. Also, authorization rules are recursive. Once a rule is matched, the rule(s) can be resolved to another rule, until a terminal rule is reached."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking_auth.xml:86(para)
@@ -4627,7 +4627,7 @@ msgid "This policy restricts the ability to manipulate the <emphasis role=\"ital
 msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking_auth.xml:168(para)
-msgid "In some cases, some operations are restricted to administrators only. This example shows you how to modify a policy file to permit tenants to define networks and see their resources and permit administrative users to perform all other operations:"
+msgid "In some cases, some operations are restricted to administrators only. This example shows you how to modify a policy file to permit tenants to define networks, see their resources, and permit administrative users to perform all other operations:"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:6(title)
@@ -4878,7 +4878,7 @@ msgid "L3 metering driver"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:396(para)
-msgid "A driver which implements the metering abstraction needs to be configured. Currently there is only one implementation which is based on iptables."
+msgid "You must configure any driver that implements the metering abstraction. Currently the only available implementation uses iptables for metering."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:401(title)
@@ -5580,7 +5580,7 @@ msgstr ""
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
 #: ./doc/admin-guide-cloud/networking/section_networking_arch.xml:199(None)
-msgid "@@image: '../../common/figures/NetworkTypes.png'; md5=32a77fe63881b8bd9871c0a086dfaf59"
+msgid "@@image: '../../common/figures/NetworkTypes.png'; md5=c424894383b701a38a6dc3ccf2e916f3"
 msgstr ""
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
@@ -5754,7 +5754,7 @@ msgid "Tenant networks"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking_arch.xml:206(para)
-msgid "Tenant networks are created by users for connectivity within projects; they are fully isolated by default and are not shared with other projects. Networking supports a range of tenant network types:"
+msgid "Users create tenant networks for connectivity within projects; they are fully isolated by default and are not shared with other projects. Networking supports a range of tenant network types:"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking_arch.xml:214(term)
@@ -5822,7 +5822,7 @@ msgid "Several plug-ins implement API extensions that provide capabilities simil
 msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:12(para)
-msgid "Networks can be categorized as either \"tenant networks\" or \"provider networks\". Tenant networks are created by normal users, and details about how they are physically realized are hidden from those users. Provider networks are created with administrative credentials, specifying the details of how the network is physically realized, usually to match some existing network in the data center."
+msgid "Networks can be categorized as either \"tenant networks\" or \"provider networks\". Tenant networks are created by normal users and details about how they are physically realized are hidden from those users. Provider networks are created with administrative credentials, specifying the details of how the network is physically realized, usually to match some existing network in the data center."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:17(para)
@@ -5830,7 +5830,7 @@ msgid "Provider networks enable cloud administrators to create Networking networ
 msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:23(para)
-msgid "The provider extension allows administrators to explicitly manage the relationship between Networking virtual networks and underlying physical mechanisms such as VLANs and tunnels. When this extension is supported, Networking client users with administrative privileges see additional provider attributes on all virtual networks, and are able to specify these attributes in order to create provider networks."
+msgid "The provider extension allows administrators to explicitly manage the relationship between Networking virtual networks and underlying physical mechanisms such as VLANs and tunnels. When this extension is supported, Networking client users with administrative privileges see additional provider attributes on all virtual networks and are able to specify these attributes in order to create provider networks."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:28(para)
@@ -5890,7 +5890,7 @@ msgid "VLAN network"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:74(td)
-msgid "A virtual network implemented as packets on a specific physical network containing IEEE 802.1Q headers with a specific VID field value. VLAN networks sharing the same physical network are isolated from each other at L2, and can even have overlapping IP address spaces. Each distinct physical network supporting VLAN networks is treated as a separate VLAN trunk, with a distinct space of VID values. Valid VID values are 1 through 4094."
+msgid "A virtual network implemented as packets on a specific physical network containing IEEE 802.1Q headers with a specific VID field value. VLAN networks sharing the same physical network are isolated from each other at L2 and can even have overlapping IP address spaces. Each distinct physical network supporting VLAN networks is treated as a separate VLAN trunk, with a distinct space of VID values. Valid VID values are 1 through 4094."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:83(emphasis)
@@ -5990,7 +5990,7 @@ msgid "provider:physical_network"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:153(td)
-msgid "If a physical network named \"default\" has been configured, and if provider:network_type is <placeholder-1/> or <placeholder-2/>, then \"default\" is used."
+msgid "If a physical network named \"default\" has been configured and if provider:network_type is <placeholder-1/> or <placeholder-2/>, then \"default\" is used."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:156(td)
@@ -6054,11 +6054,11 @@ msgid "L3 routing and NAT"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:230(para)
-msgid "The Networking API provides abstract L2 network segments that are decoupled from the technology used to implement the L2 network. Networking includes an API extension that provides abstract L3 routers that API users can dynamically provision and configure. These Networking routers can connect multiple L2 Networking networks, and can also provide a gateway that connects one or more private L2 networks to a shared external network. For example, a public network for access to the Internet. See the <citetitle>OpenStack Configuration Reference</citetitle> for details on common models of deploying Networking L3 routers."
+msgid "The Networking API provides abstract L2 network segments that are decoupled from the technology used to implement the L2 network. Networking includes an API extension that provides abstract L3 routers that API users can dynamically provision and configure. These Networking routers can connect multiple L2 Networking networks and can also provide a gateway that connects one or more private L2 networks to a shared external network. For example, a public network for access to the Internet. See the <citetitle>OpenStack Configuration Reference</citetitle> for details on common models of deploying Networking L3 routers."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:239(para)
-msgid "The L3 router provides basic NAT capabilities on gateway ports that uplink the router to external networks. This router SNATs all traffic by default, and supports floating IPs, which creates a static one-to-one mapping from a public IP on the external network to a private IP on one of the other subnets attached to the router. This allows a tenant to selectively expose VMs on private networks to other hosts on the external network (and often to all hosts on the Internet). You can allocate and map floating IPs from one port to another, as needed."
+msgid "The L3 router provides basic NAT capabilities on gateway ports that uplink the router to external networks. This router SNATs all traffic by default and supports floating IPs, which creates a static one-to-one mapping from a public IP on the external network to a private IP on one of the other subnets attached to the router. This allows a tenant to selectively expose VMs on private networks to other hosts on the external network (and often to all hosts on the Internet). You can allocate and map floating IPs from one port to another, as needed."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:248(title)
@@ -6238,7 +6238,7 @@ msgid "Connects a router to an external network, which enables that router to ac
 msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:434(para)
-msgid "The router obtains an interface with the gateway_ip address of the subnet, and this interface is attached to a port on the L2 Networking network associated with the subnet. The router also gets a gateway interface to the specified external network. This provides SNAT connectivity to the external network as well as support for floating IPs allocated on that external networks. Commonly an external network maps to a network in the provider"
+msgid "The router obtains an interface with the gateway_ip address of the subnet and this interface is attached to a port on the L2 Networking network associated with the subnet. The router also gets a gateway interface to the specified external network. This provides SNAT connectivity to the external network as well as support for floating IPs allocated on that external networks. Commonly an external network maps to a network in the provider"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:445(para)
@@ -6578,7 +6578,7 @@ msgid "False"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:913(td)
-msgid "When set to True makes this firewall rule visible to tenants other than its owner, and it can be used in firewall policies not owned by its tenant."
+msgid "When set to True makes this firewall rule visible to tenants other than its owner and it can be used in firewall policies not owned by its tenant."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:921(td)
@@ -6690,7 +6690,7 @@ msgid "Human readable description for the firewall policy (1024 characters limit
 msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:1025(td)
-msgid "When set to True makes this firewall policy visible to tenants other than its owner, and can be used to associate with firewalls not owned by its tenant."
+msgid "When set to True makes this firewall policy visible to tenants other than its owner and can be used to associate with firewalls not owned by its tenant."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:1030(td)
@@ -6978,11 +6978,11 @@ msgid "Operational status synchronization in the VMware NSX plug-in"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:1363(para)
-msgid "Starting with the Havana release, the VMware NSX plug-in provides an asynchronous mechanism for retrieving the operational status for neutron resources from the NSX back-end; this applies to <emphasis>network</emphasis>, <emphasis>port</emphasis>, and <emphasis>router</emphasis> resources."
+msgid "Starting with the Havana release, the VMware NSX plug-in provides an asynchronous mechanism for retrieving the operational status for neutron resources from the NSX back-end; this applies to <emphasis>network</emphasis>, <emphasis>port</emphasis> and <emphasis>router</emphasis> resources."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:1367(para)
-msgid "The back-end is polled periodically, and the status for every resource is retrieved; then the status in the Networking database is updated only for the resources for which a status change occurred. As operational status is now retrieved asynchronously, performance for <literal>GET</literal> operations is consistently improved."
+msgid "The back-end is polled periodically and the status for every resource is retrieved; then the status in the Networking database is updated only for the resources for which a status change occurred. As operational status is now retrieved asynchronously, performance for <literal>GET</literal> operations is consistently improved."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:1372(para)
@@ -8198,7 +8198,7 @@ msgid "Troubleshoot the Block Storage configuration"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/blockstorage/section_ts_cinder_config.xml:13(para)
-msgid "Most Block Storage errors are caused by incorrect volume configurations that result in volume creation failues. To resolve these failures, review these logs:"
+msgid "Most Block Storage errors are caused by incorrect volume configurations that result in volume creation failures. To resolve these failures, review these logs:"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/blockstorage/section_ts_cinder_config.xml:17(para)
@@ -8238,7 +8238,7 @@ msgid "In order to make this possible the iSCSI target information needs to be s
 msgstr ""
 
 #: ./doc/admin-guide-cloud/blockstorage/section_ts_cinder_config.xml:131(para)
-msgid "While this should all be handled by the installer, it can go wrong. If you have trouble creating volumes and this directory does not exist you should see an error message in the <systemitem class=\"service\">cinder-volume</systemitem> log indicating that the <literal>volumes_dir</literal> does not exist, and it should provide information about which path it was looking for."
+msgid "While the installer should handle all this, it can go wrong. If you have trouble creating volumes and this directory does not exist you should see an error message in the <systemitem class=\"service\">cinder-volume</systemitem> log indicating that the <literal>volumes_dir</literal> does not exist, and it should provide information about which path it was looking for."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/blockstorage/section_ts_cinder_config.xml:141(para)
