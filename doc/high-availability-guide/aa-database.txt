@@ -13,20 +13,28 @@ installations, so we’ll cover it here.
 [[ha-aa-db-mysql-galera]]
 ==== MySQL with Galera
 
-Rather than starting with a vanilla version of MySQL and then adding Galera
-to it, you will want to install a version of MySQL patched for wsrep
-(Write Set REPlication) from https://launchpad.net/codership-mysql/0.7.  
-Note that the installation requirements are a bit touchy; you will want 
-to make sure to read the README file so you don’t miss any steps.
 
-Next, download Galera itself from https://launchpad.net/galera/+download.
-Go ahead and install the *.rpms or *.debs, taking care of any dependencies
-that your system doesn’t already have installed.
+Rather than starting with a vanilla version of MySQL, and then adding
+Galera, you will want to install a version of MySQL patched for wsrep
+(Write Set REPlication) from https://launchpad.net/codership-mysql/0.7.
+The wsrep API is suitable for configuring MySQL High Availability in
+OpenStack because it supports synchronous replication.
 
-Once you’ve completed the installation, you’ll need to make a few configuration changes:
+Note that the installation requirements call for careful attention. Read
+the guide https://launchpadlibrarian.net/66669857/README-wsrep
+to ensure you follow all the required steps.
 
-In the system-wide +my.conf+ file, make sure mysqld isn’t bound to 127.0.0.1,
-and that +/etc/mysql/conf.d/+ is included. Typically you can find this file at +/etc/my.cnf+:
+Installing Galera through a MySQL version patched for wsrep:
+
+1. Download Galera from https://launchpad.net/galera/+download, and
+  install the *.rpms or *.debs, which takes care of any dependencies
+  that your system doesn’t already have installed.
+
+2. Adjust the configuration:
+
+In the system-wide +my.conf+ file, make sure mysqld isn’t bound to
+127.0.0.1, and that +/etc/mysql/conf.d/+ is included.
+Typically you can find this file at +/etc/my.cnf+:
 
 ----
 [mysqld]
@@ -36,27 +44,30 @@ and that +/etc/mysql/conf.d/+ is included. Typically you can find this file at +
 #bind-address = 127.0.0.1
 ----
 
-When adding a new node, you must configure it with a MySQL account that can access the 
-other nodes so that it can request a state snapshot from one of those existing nodes. First specify
-that account information in +/etc/mysql/conf.d/wsrep.cnf+:
+When adding a new node, you must configure it with a MySQL account that
+can access the other nodes. The new node must be able to request a state
+snapshot from one of the existing nodes:
+
+3. Specify your MySQL account information in +/etc/mysql/conf.d/wsrep.cnf+:
 
 ----
 wsrep_sst_auth=wsrep_sst:wspass
 ----
 
-Next connect as root and grant privileges to that user:
+4. Connect as root and grant privileges to that user:
 
 ----
 $ mysql -e "SET wsrep_on=OFF; GRANT ALL ON *.* TO wsrep_sst@'%' IDENTIFIED BY 'wspass'";
 ----
 
-You’ll also need to remove user accounts with empty usernames, as they cause problems:
+5. Remove user accounts with empty usernames because they cause problems:
 
 ----
 $ mysql -e "SET wsrep_on=OFF; DELETE FROM mysql.user WHERE user='';"
 ----
 
-You'll also need to set certain mandatory configuration options within MySQL itself.  These include:
+6. Set up certain mandatory configuration options within MySQL itself.
+These include:
 
 ----
 query_cache_size=0
@@ -66,29 +77,36 @@ innodb_autoinc_lock_mode=2
 innodb_doublewrite=1
 ----
 
-Finally, make sure that the nodes can access each other through the firewall.  This might
-mean adjusting iptables, as in:
+7. Check that the nodes can access each other through the firewall.
+Depending on your environment, this might mean adjusting iptables, as in:
 
 ----
 # iptables --insert RH-Firewall-1-INPUT 1 --proto tcp --source <my IP>/24 --destination <my IP>/32 --dport 3306 -j ACCEPT
 # iptables --insert RH-Firewall-1-INPUT 1 --proto tcp --source <my IP>/24 --destination <my IP>/32 --dport 4567 -j ACCEPT
 ----
 
-It might also mean configuring any NAT firewall between nodes to allow direct connections,
-or disabling SELinux or configuring it to allow mysqld to listen to sockets at unprivileged
-ports.
+This might also mean configuring any NAT firewall between nodes to allow
+direct connections. You might need to disable SELinux, or configure it to
+allow mysqld to listen to sockets at unprivileged ports.
 
-Now you’re ready to actually create the cluster.
+Now you’re ready to create the cluster.
 
 ===== Create the cluster
 
-In creating a cluster, you first start a single instance, which creates the cluster.  The rest of the MySQL instances then connect to that cluster.  For example, if you started on +10.0.0.10+ by executing the command:
+In creating a cluster, you first start a single instance, which creates
+the cluster. The rest of the MySQL instances then connect to
+that cluster:
+
+An example of creating the cluster:
+
+1. Start on +10.0.0.10+ by executing the command:
 
 ----
 # service mysql start wsrep_cluster_address=gcomm://
 ----
 
-you could then connect to that cluster on the rest of the nodes by referencing the address of that node, as in:
+2. Connect to that cluster on the rest of the nodes by referencing the
+address of that node, as in:
 
 ----
 # service mysql start wsrep_cluster_address=gcomm://10.0.0.10
@@ -97,8 +115,11 @@ you could then connect to that cluster on the rest of the nodes by referencing t
 You also have the option to set the +wsrep_cluster_address+ in the
 +/etc/mysql/conf.d/wsrep.cnf+ file, or within the client itself.  (In
 fact, for some systems, such as MariaDB or Percona, this may be your
-only option.)  For example, to check the status of the cluster, open
-the MySQL client and check the status of the various parameters:
+only option.)
+
+An example of checking the status of the cluster.
+
+1. Open the MySQL client and check the status of the various parameters:
 
 ----
 mysql> SET GLOBAL wsrep_cluster_address='<cluster address string>';
@@ -162,7 +183,7 @@ mysql> show status like 'wsrep%';
 
 ==== Other ways to provide a highly available database
 
-MySQL with Galera is by no means the only way to achieve database HA.  MariaDB
-(https://mariadb.org/) and Percona (http://www.percona.com/) also work with Galera.
-You also have the option to use Postgres, which has its own replication, or some
-other database HA option.
+MySQL with Galera is by no means the only way to achieve database HA.
+MariaDB (https://mariadb.org/) and Percona (http://www.percona.com/)
+also work with Galera. You also have the option to use Postgres, which
+has its own replication, or another database HA option.
