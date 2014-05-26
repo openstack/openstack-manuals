@@ -56,11 +56,15 @@ IDENTIFIED BY '<replaceable>NEUTRON_DBPASS</replaceable>';</userinput></screen>
   <procedure>
     <title>To install the Networking components</title>
     <step>
-      <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install neutron-server neutron-plugin-ml2</userinput></screen>
+      <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install neutron-server neutron-plugin-ml2</userinput></screen>
+      <screen os="debian"><prompt>#</prompt> <userinput>apt-get install neutron-server</userinput></screen>
       <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-neutron openstack-neutron-ml2 python-neutronclient</userinput></screen>
       <screen os="sles;opensuse"><prompt>#</prompt> <userinput>zypper install openstack-neutron openstack-neutron-server</userinput></screen>
       <note os="sles;opensuse">
         <para>SUSE does not use a separate ML2 plug-in package.</para>
+      </note>
+      <note os="debian">
+        <para>Debian does not use a separate ML2 plug-in package.</para>
       </note>
     </step>
   </procedure>
@@ -78,6 +82,28 @@ IDENTIFIED BY '<replaceable>NEUTRON_DBPASS</replaceable>';</userinput></screen>
         registration</link>, and
         <link linkend="debconf-rabbitqm">message broker
         credentials</link>.</para>
+    </step>
+    <step os="debian">
+       <para>During the installation, you will also be prompted for which
+       Networking plug-in to use. This will automatically fill the
+       <option>core_plugin</option> directive in the
+       <filename>/etc/neutron/neutron.conf</filename> file.</para>
+       <informalfigure>
+        <mediaobject>
+          <imageobject>
+            <imagedata scale="50"
+              fileref="figures/debconf-screenshots/neutron_1_plugin_selection.png"
+            />
+          </imageobject>
+        </mediaobject>
+      </informalfigure>
+      <para>If the ML2 plug-in is selected, then the
+      <option>core_plugin</option> option will be filled with
+      <literal>neutron.plugins.ml2.plugin.Ml2Plugin</literal>, which is the
+      full class name for the ML2 plug-in. In Debian, you cannot (yet) use
+      the short names for the plug-ins. The <option>service_plugins</option>
+      and <option>allow_overlapping_ips</option> options are filled with the
+      appropriate values by default, so it is fine to not touch them.</para>
     </step>
     <step os="rhel;centos;fedora;sles;opensuse">
       <para>Configure Networking to use the database:</para>
@@ -262,7 +288,7 @@ nova_admin_auth_url = http://<replaceable>controller</replaceable>:35357/v2.0</p
           troubleshooting.</para>
       </note>
     </step>
-    <step os="ubuntu;debian">
+    <step os="ubuntu">
       <para>Configure Networking to use the Modular Layer 2 (ML2) plug-in
         and associated services:</para>
       <substeps>
