@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-05-13 06:25+0000\n"
+"POT-Creation-Date: 2014-05-27 06:11+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1146,402 +1146,430 @@ msgid "MySQL with Galera"
 msgstr ""
 
 #: ./doc/high-availability-guide/bk-ha-guide.xml:1599(simpara)
-msgid "Rather than starting with a vanilla version of MySQL and then adding Galera to it, you will want to install a version of MySQL patched for wsrep (Write Set REPlication) from <link href=\"https://launchpad.net/codership-mysql/0.7\">https://launchpad.net/codership-mysql/0.7</link>. Note that the installation requirements are a bit touchy; you will want to make sure to read the README file so you don’t miss any steps."
+msgid "Rather than starting with a vanilla version of MySQL, and then adding Galera, you will want to install a version of MySQL patched for wsrep (Write Set REPlication) from <link href=\"https://launchpad.net/codership-mysql/0.7\">https://launchpad.net/codership-mysql/0.7</link>. The wsrep API is suitable for configuring MySQL High Availability in OpenStack because it supports synchronous replication."
 msgstr ""
 
 #: ./doc/high-availability-guide/bk-ha-guide.xml:1604(simpara)
-msgid "Next, download Galera itself from <link href=\"https://launchpad.net/galera/+download\">https://launchpad.net/galera/+download</link>. Go ahead and install the *.rpms or *.debs, taking care of any dependencies that your system doesn’t already have installed."
+msgid "Note that the installation requirements call for careful attention. Read the guide <link href=\"https://launchpadlibrarian.net/66669857/README-wsrep\">https://launchpadlibrarian.net/66669857/README-wsrep</link> to ensure you follow all the required steps."
 msgstr ""
 
 #: ./doc/high-availability-guide/bk-ha-guide.xml:1607(simpara)
-msgid "Once you’ve completed the installation, you’ll need to make a few configuration changes:"
+msgid "Installing Galera through a MySQL version patched for wsrep:"
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:1608(simpara)
+#: ./doc/high-availability-guide/bk-ha-guide.xml:1610(simpara)
+msgid "Download Galera from <link href=\"https://launchpad.net/galera/+download\">https://launchpad.net/galera/+download</link>, and install the *.rpms or *.debs, which takes care of any dependencies that your system doesn’t already have installed."
+msgstr ""
+
+#: ./doc/high-availability-guide/bk-ha-guide.xml:1617(simpara)
+msgid "Adjust the configuration:"
+msgstr ""
+
+#: ./doc/high-availability-guide/bk-ha-guide.xml:1622(simpara)
 msgid "In the system-wide <literal>my.conf</literal> file, make sure mysqld isn’t bound to 127.0.0.1, and that <literal>/etc/mysql/conf.d/</literal> is included. Typically you can find this file at <literal>/etc/my.cnf</literal>:"
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:1615(simpara)
-msgid "When adding a new node, you must configure it with a MySQL account that can access the other nodes so that it can request a state snapshot from one of those existing nodes. First specify that account information in <literal>/etc/mysql/conf.d/wsrep.cnf</literal>:"
+#: ./doc/high-availability-guide/bk-ha-guide.xml:1630(simpara)
+msgid "When adding a new node, you must configure it with a MySQL account that can access the other nodes. The new node must be able to request a state snapshot from one of the existing nodes:"
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:1619(simpara)
-msgid "Next connect as root and grant privileges to that user:"
-msgstr ""
-
-#: ./doc/high-availability-guide/bk-ha-guide.xml:1621(simpara)
-msgid "You’ll also need to remove user accounts with empty usernames, as they cause problems:"
-msgstr ""
-
-#: ./doc/high-availability-guide/bk-ha-guide.xml:1623(simpara)
-msgid "You’ll also need to set certain mandatory configuration options within MySQL itself. These include:"
-msgstr ""
-
-#: ./doc/high-availability-guide/bk-ha-guide.xml:1629(simpara)
-msgid "Finally, make sure that the nodes can access each other through the firewall. This might mean adjusting iptables, as in:"
-msgstr ""
-
-#: ./doc/high-availability-guide/bk-ha-guide.xml:1633(simpara)
-msgid "It might also mean configuring any NAT firewall between nodes to allow direct connections, or disabling SELinux or configuring it to allow mysqld to listen to sockets at unprivileged ports."
-msgstr ""
-
-#: ./doc/high-availability-guide/bk-ha-guide.xml:1636(simpara)
-msgid "Now you’re ready to actually create the cluster."
-msgstr ""
-
-#: ./doc/high-availability-guide/bk-ha-guide.xml:1639(title)
-msgid "Create the cluster"
-msgstr ""
-
-#: ./doc/high-availability-guide/bk-ha-guide.xml:1641(simpara)
-msgid "In creating a cluster, you first start a single instance, which creates the cluster. The rest of the MySQL instances then connect to that cluster. For example, if you started on <literal>10.0.0.10</literal> by executing the command:"
+#: ./doc/high-availability-guide/bk-ha-guide.xml:1635(simpara)
+msgid "Specify your MySQL account information in <literal>/etc/mysql/conf.d/wsrep.cnf</literal>:"
 msgstr ""
 
 #: ./doc/high-availability-guide/bk-ha-guide.xml:1643(simpara)
-msgid "you could then connect to that cluster on the rest of the nodes by referencing the address of that node, as in:"
+msgid "Connect as root and grant privileges to that user:"
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:1645(simpara)
-msgid "You also have the option to set the <literal>wsrep_cluster_address</literal> in the <literal>/etc/mysql/conf.d/wsrep.cnf</literal> file, or within the client itself. (In fact, for some systems, such as MariaDB or Percona, this may be your only option.) For example, to check the status of the cluster, open the MySQL client and check the status of the various parameters:"
+#: ./doc/high-availability-guide/bk-ha-guide.xml:1651(simpara)
+msgid "Remove user accounts with empty usernames because they cause problems:"
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:1652(simpara)
-msgid "You should see a status that looks something like this:"
+#: ./doc/high-availability-guide/bk-ha-guide.xml:1659(simpara)
+msgid "Set up certain mandatory configuration options within MySQL itself. These include:"
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:1701(title)
-msgid "Galera monitoring scripts"
+#: ./doc/high-availability-guide/bk-ha-guide.xml:1672(simpara)
+msgid "Check that the nodes can access each other through the firewall. Depending on your environment, this might mean adjusting iptables, as in:"
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:1703(simpara)
-msgid "(Coming soon)"
+#: ./doc/high-availability-guide/bk-ha-guide.xml:1680(simpara)
+msgid "This might also mean configuring any NAT firewall between nodes to allow direct connections. You might need to disable SELinux, or configure it to allow mysqld to listen to sockets at unprivileged ports."
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:1707(title)
-msgid "Other ways to provide a highly available database"
+#: ./doc/high-availability-guide/bk-ha-guide.xml:1683(simpara)
+msgid "Now you’re ready to create the cluster."
+msgstr ""
+
+#: ./doc/high-availability-guide/bk-ha-guide.xml:1686(title)
+msgid "Create the cluster"
+msgstr ""
+
+#: ./doc/high-availability-guide/bk-ha-guide.xml:1688(simpara)
+msgid "In creating a cluster, you first start a single instance, which creates the cluster. The rest of the MySQL instances then connect to that cluster:"
+msgstr ""
+
+#: ./doc/high-availability-guide/bk-ha-guide.xml:1691(simpara)
+msgid "An example of creating the cluster:"
+msgstr ""
+
+#: ./doc/high-availability-guide/bk-ha-guide.xml:1694(simpara)
+msgid "Start on <literal>10.0.0.10</literal> by executing the command:"
+msgstr ""
+
+#: ./doc/high-availability-guide/bk-ha-guide.xml:1702(simpara)
+msgid "Connect to that cluster on the rest of the nodes by referencing the address of that node, as in:"
 msgstr ""
 
 #: ./doc/high-availability-guide/bk-ha-guide.xml:1709(simpara)
-msgid "MySQL with Galera is by no means the only way to achieve database HA. MariaDB (<link href=\"https://mariadb.org/\">https://mariadb.org/</link>) and Percona (<link href=\"http://www.percona.com/\">http://www.percona.com/</link>) also work with Galera. You also have the option to use Postgres, which has its own replication, or some other database HA option."
+msgid "You also have the option to set the <literal>wsrep_cluster_address</literal> in the <literal>/etc/mysql/conf.d/wsrep.cnf</literal> file, or within the client itself. (In fact, for some systems, such as MariaDB or Percona, this may be your only option.)"
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:1717(title)
-msgid "RabbitMQ"
+#: ./doc/high-availability-guide/bk-ha-guide.xml:1713(simpara)
+msgid "An example of checking the status of the cluster."
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:1719(simpara)
-msgid "RabbitMQ is the default AMQP server used by many OpenStack services. Making the RabbitMQ service highly available involves the following steps:"
+#: ./doc/high-availability-guide/bk-ha-guide.xml:1716(simpara)
+msgid "Open the MySQL client and check the status of the various parameters:"
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:1723(simpara) ./doc/high-availability-guide/bk-ha-guide.xml:1740(title)
-msgid "Install RabbitMQ"
+#: ./doc/high-availability-guide/bk-ha-guide.xml:1723(simpara)
+msgid "You should see a status that looks something like this:"
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:1728(simpara)
-msgid "Configure RabbitMQ for HA queues"
+#: ./doc/high-availability-guide/bk-ha-guide.xml:1772(title)
+msgid "Galera monitoring scripts"
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:1733(simpara)
-msgid "Configure OpenStack services to use Rabbit HA queues"
+#: ./doc/high-availability-guide/bk-ha-guide.xml:1774(simpara)
+msgid "(Coming soon)"
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:1742(simpara)
-msgid "This setup has been tested with RabbitMQ 2.7.1."
-msgstr ""
-
-#: ./doc/high-availability-guide/bk-ha-guide.xml:1745(title)
-msgid "On Ubuntu / Debian"
-msgstr ""
-
-#: ./doc/high-availability-guide/bk-ha-guide.xml:1747(simpara) ./doc/high-availability-guide/bk-ha-guide.xml:1757(simpara)
-msgid "RabbitMQ is packaged on both distros:"
-msgstr ""
-
-#: ./doc/high-availability-guide/bk-ha-guide.xml:1750(link)
-msgid "Official manual for installing RabbitMQ on Ubuntu / Debian"
-msgstr ""
-
-#: ./doc/high-availability-guide/bk-ha-guide.xml:1755(title)
-msgid "On Fedora / RHEL"
-msgstr ""
-
-#: ./doc/high-availability-guide/bk-ha-guide.xml:1760(link)
-msgid "Official manual for installing RabbitMQ on Fedora / RHEL"
-msgstr ""
-
-#: ./doc/high-availability-guide/bk-ha-guide.xml:1766(title)
-msgid "Configure RabbitMQ"
-msgstr ""
-
-#: ./doc/high-availability-guide/bk-ha-guide.xml:1768(simpara)
-msgid "Here we are building a cluster of RabbitMQ nodes to construct a RabbitMQ broker. Mirrored queues in RabbitMQ improve the availability of service since it will be resilient to failures. We have to consider that while exchanges and bindings will survive the loss of individual nodes, queues and their messages will not because a queue and its contents is located on one node. If we lose this node, we also lose the queue."
-msgstr ""
-
-#: ./doc/high-availability-guide/bk-ha-guide.xml:1773(simpara)
-msgid "We consider that we run (at least) two RabbitMQ servers. To build a broker, we need to ensure that all nodes have the same erlang cookie file. To do so, stop RabbitMQ everywhere and copy the cookie from rabbit1 server to other server(s):"
-msgstr ""
-
-#: ./doc/high-availability-guide/bk-ha-guide.xml:1778(simpara)
-msgid "Then, start RabbitMQ on nodes. If RabbitMQ fails to start, you can’t continue to the next step."
+#: ./doc/high-availability-guide/bk-ha-guide.xml:1778(title)
+msgid "Other ways to provide a highly available database"
 msgstr ""
 
 #: ./doc/high-availability-guide/bk-ha-guide.xml:1780(simpara)
-msgid "Now, we are building the HA cluster. From rabbit2, run these commands:"
+msgid "MySQL with Galera is by no means the only way to achieve database HA. MariaDB (<link href=\"https://mariadb.org/\">https://mariadb.org/</link>) and Percona (<link href=\"http://www.percona.com/\">http://www.percona.com/</link>) also work with Galera. You also have the option to use Postgres, which has its own replication, or another database HA option."
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:1784(simpara)
-msgid "To verify the cluster status :"
+#: ./doc/high-availability-guide/bk-ha-guide.xml:1788(title)
+msgid "RabbitMQ"
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:1789(simpara)
-msgid "If the cluster is working, you can now proceed to creating users and passwords for queues."
+#: ./doc/high-availability-guide/bk-ha-guide.xml:1790(simpara)
+msgid "RabbitMQ is the default AMQP server used by many OpenStack services. Making the RabbitMQ service highly available involves the following steps:"
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:1791(emphasis)
-msgid "Note for RabbitMQ version 3"
+#: ./doc/high-availability-guide/bk-ha-guide.xml:1794(simpara) ./doc/high-availability-guide/bk-ha-guide.xml:1811(title)
+msgid "Install RabbitMQ"
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:1793(simpara)
-msgid "Queue mirroring is no longer controlled by the <emphasis>x-ha-policy</emphasis> argument when declaring a queue. OpenStack can continue to declare this argument, but it won’t cause queues to be mirrored. We need to make sure that all queues (except those with auto-generated names) are mirrored across all running nodes:"
+#: ./doc/high-availability-guide/bk-ha-guide.xml:1799(simpara)
+msgid "Configure RabbitMQ for HA queues"
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:1798(link)
-msgid "More information about High availability in RabbitMQ"
-msgstr ""
-
-#: ./doc/high-availability-guide/bk-ha-guide.xml:1803(title)
-msgid "Configure OpenStack services to use RabbitMQ"
-msgstr ""
-
-#: ./doc/high-availability-guide/bk-ha-guide.xml:1805(simpara)
-msgid "We have to configure the OpenStack components to use at least two RabbitMQ nodes."
-msgstr ""
-
-#: ./doc/high-availability-guide/bk-ha-guide.xml:1806(simpara)
-msgid "Do this configuration on all services using RabbitMQ:"
-msgstr ""
-
-#: ./doc/high-availability-guide/bk-ha-guide.xml:1807(simpara)
-msgid "RabbitMQ HA cluster host:port pairs:"
-msgstr ""
-
-#: ./doc/high-availability-guide/bk-ha-guide.xml:1809(simpara)
-msgid "How frequently to retry connecting with RabbitMQ:"
-msgstr ""
-
-#: ./doc/high-availability-guide/bk-ha-guide.xml:1811(simpara)
-msgid "How long to back-off for between retries when connecting to RabbitMQ:"
+#: ./doc/high-availability-guide/bk-ha-guide.xml:1804(simpara)
+msgid "Configure OpenStack services to use Rabbit HA queues"
 msgstr ""
 
 #: ./doc/high-availability-guide/bk-ha-guide.xml:1813(simpara)
+msgid "This setup has been tested with RabbitMQ 2.7.1."
+msgstr ""
+
+#: ./doc/high-availability-guide/bk-ha-guide.xml:1816(title)
+msgid "On Ubuntu / Debian"
+msgstr ""
+
+#: ./doc/high-availability-guide/bk-ha-guide.xml:1818(simpara) ./doc/high-availability-guide/bk-ha-guide.xml:1828(simpara)
+msgid "RabbitMQ is packaged on both distros:"
+msgstr ""
+
+#: ./doc/high-availability-guide/bk-ha-guide.xml:1821(link)
+msgid "Official manual for installing RabbitMQ on Ubuntu / Debian"
+msgstr ""
+
+#: ./doc/high-availability-guide/bk-ha-guide.xml:1826(title)
+msgid "On Fedora / RHEL"
+msgstr ""
+
+#: ./doc/high-availability-guide/bk-ha-guide.xml:1831(link)
+msgid "Official manual for installing RabbitMQ on Fedora / RHEL"
+msgstr ""
+
+#: ./doc/high-availability-guide/bk-ha-guide.xml:1837(title)
+msgid "Configure RabbitMQ"
+msgstr ""
+
+#: ./doc/high-availability-guide/bk-ha-guide.xml:1839(simpara)
+msgid "Here we are building a cluster of RabbitMQ nodes to construct a RabbitMQ broker. Mirrored queues in RabbitMQ improve the availability of service since it will be resilient to failures. We have to consider that while exchanges and bindings will survive the loss of individual nodes, queues and their messages will not because a queue and its contents is located on one node. If we lose this node, we also lose the queue."
+msgstr ""
+
+#: ./doc/high-availability-guide/bk-ha-guide.xml:1844(simpara)
+msgid "We consider that we run (at least) two RabbitMQ servers. To build a broker, we need to ensure that all nodes have the same erlang cookie file. To do so, stop RabbitMQ everywhere and copy the cookie from rabbit1 server to other server(s):"
+msgstr ""
+
+#: ./doc/high-availability-guide/bk-ha-guide.xml:1849(simpara)
+msgid "Then, start RabbitMQ on nodes. If RabbitMQ fails to start, you can’t continue to the next step."
+msgstr ""
+
+#: ./doc/high-availability-guide/bk-ha-guide.xml:1851(simpara)
+msgid "Now, we are building the HA cluster. From rabbit2, run these commands:"
+msgstr ""
+
+#: ./doc/high-availability-guide/bk-ha-guide.xml:1855(simpara)
+msgid "To verify the cluster status :"
+msgstr ""
+
+#: ./doc/high-availability-guide/bk-ha-guide.xml:1860(simpara)
+msgid "If the cluster is working, you can now proceed to creating users and passwords for queues."
+msgstr ""
+
+#: ./doc/high-availability-guide/bk-ha-guide.xml:1862(emphasis)
+msgid "Note for RabbitMQ version 3"
+msgstr ""
+
+#: ./doc/high-availability-guide/bk-ha-guide.xml:1864(simpara)
+msgid "Queue mirroring is no longer controlled by the <emphasis>x-ha-policy</emphasis> argument when declaring a queue. OpenStack can continue to declare this argument, but it won’t cause queues to be mirrored. We need to make sure that all queues (except those with auto-generated names) are mirrored across all running nodes:"
+msgstr ""
+
+#: ./doc/high-availability-guide/bk-ha-guide.xml:1869(link)
+msgid "More information about High availability in RabbitMQ"
+msgstr ""
+
+#: ./doc/high-availability-guide/bk-ha-guide.xml:1874(title)
+msgid "Configure OpenStack services to use RabbitMQ"
+msgstr ""
+
+#: ./doc/high-availability-guide/bk-ha-guide.xml:1876(simpara)
+msgid "We have to configure the OpenStack components to use at least two RabbitMQ nodes."
+msgstr ""
+
+#: ./doc/high-availability-guide/bk-ha-guide.xml:1877(simpara)
+msgid "Do this configuration on all services using RabbitMQ:"
+msgstr ""
+
+#: ./doc/high-availability-guide/bk-ha-guide.xml:1878(simpara)
+msgid "RabbitMQ HA cluster host:port pairs:"
+msgstr ""
+
+#: ./doc/high-availability-guide/bk-ha-guide.xml:1880(simpara)
+msgid "How frequently to retry connecting with RabbitMQ:"
+msgstr ""
+
+#: ./doc/high-availability-guide/bk-ha-guide.xml:1882(simpara)
+msgid "How long to back-off for between retries when connecting to RabbitMQ:"
+msgstr ""
+
+#: ./doc/high-availability-guide/bk-ha-guide.xml:1884(simpara)
 msgid "Maximum retries with trying to connect to RabbitMQ (infinite by default):"
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:1815(simpara)
+#: ./doc/high-availability-guide/bk-ha-guide.xml:1886(simpara)
 msgid "Use durable queues in RabbitMQ:"
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:1817(simpara)
+#: ./doc/high-availability-guide/bk-ha-guide.xml:1888(simpara)
 msgid "Use H/A queues in RabbitMQ (x-ha-policy: all):"
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:1819(simpara)
+#: ./doc/high-availability-guide/bk-ha-guide.xml:1890(simpara)
 msgid "If you change the configuration from an old setup which did not use HA queues, you should interrupt the service:"
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:1823(simpara)
+#: ./doc/high-availability-guide/bk-ha-guide.xml:1894(simpara)
 msgid "Services currently working with HA queues: OpenStack Compute, OpenStack Block Storage, OpenStack Networking, Telemetry."
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:1828(title)
+#: ./doc/high-availability-guide/bk-ha-guide.xml:1899(title)
 msgid "HAproxy nodes"
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:1830(simpara)
+#: ./doc/high-availability-guide/bk-ha-guide.xml:1901(simpara)
 msgid "HAProxy is a very fast and reliable solution offering high availability, load balancing, and proxying for TCP and HTTP-based applications. It is particularly suited for web sites crawling under very high loads while needing persistence or Layer 7 processing. Supporting tens of thousands of connections is clearly realistic with today’s hardware."
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:1834(simpara)
+#: ./doc/high-availability-guide/bk-ha-guide.xml:1905(simpara)
 msgid "For installing HAproxy on your nodes, you should consider its <link href=\"http://haproxy.1wt.eu/#docs\">official documentation</link>. Also, you have to consider that this service should not be a single point of failure, so you need at least two nodes running HAproxy."
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:1837(simpara)
+#: ./doc/high-availability-guide/bk-ha-guide.xml:1908(simpara)
 msgid "Here is an example for HAproxy configuration file:"
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:1977(simpara)
+#: ./doc/high-availability-guide/bk-ha-guide.xml:2048(simpara)
 msgid "After each change of this file, you should restart HAproxy."
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:1981(title)
+#: ./doc/high-availability-guide/bk-ha-guide.xml:2052(title)
 msgid "OpenStack controller nodes"
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:1983(simpara)
+#: ./doc/high-availability-guide/bk-ha-guide.xml:2054(simpara)
 msgid "OpenStack controller nodes contain:"
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:1986(simpara)
+#: ./doc/high-availability-guide/bk-ha-guide.xml:2057(simpara)
 msgid "All OpenStack API services"
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:1991(simpara)
+#: ./doc/high-availability-guide/bk-ha-guide.xml:2062(simpara)
 msgid "All OpenStack schedulers"
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:1996(simpara)
+#: ./doc/high-availability-guide/bk-ha-guide.xml:2067(simpara)
 msgid "Memcached service"
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:2003(title)
+#: ./doc/high-availability-guide/bk-ha-guide.xml:2074(title)
 msgid "Run OpenStack API and schedulers"
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:2007(title)
+#: ./doc/high-availability-guide/bk-ha-guide.xml:2078(title)
 msgid "API services"
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:2009(simpara)
+#: ./doc/high-availability-guide/bk-ha-guide.xml:2080(simpara)
 msgid "All OpenStack projects have an API service for controlling all the resources in the Cloud. In Active / Active mode, the most common setup is to scale-out these services on at least two nodes and use load-balancing and virtual IP (with HAproxy &amp; Keepalived in this setup)."
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:2013(emphasis)
+#: ./doc/high-availability-guide/bk-ha-guide.xml:2084(emphasis)
 msgid "Configure API OpenStack services"
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:2015(simpara)
+#: ./doc/high-availability-guide/bk-ha-guide.xml:2086(simpara)
 msgid "To configure our Cloud using Highly available and scalable API services, we need to ensure that:"
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:2018(simpara)
+#: ./doc/high-availability-guide/bk-ha-guide.xml:2089(simpara)
 msgid "You use Virtual IP when configuring OpenStack Identity endpoints."
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:2023(simpara)
+#: ./doc/high-availability-guide/bk-ha-guide.xml:2094(simpara)
 msgid "All OpenStack configuration files should refer to Virtual IP."
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:2029(emphasis)
+#: ./doc/high-availability-guide/bk-ha-guide.xml:2100(emphasis)
 msgid "In case of failure"
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:2031(simpara)
+#: ./doc/high-availability-guide/bk-ha-guide.xml:2102(simpara)
 msgid "The monitor check is quite simple since it just establishes a TCP connection to the API port. Comparing to the Active / Passive mode using Corosync &amp; Resources Agents, we don’t check if the service is actually running). That’s why all OpenStack API should be monitored by another tool (i.e. Nagios) with the goal to detect failures in the Cloud Framework infrastructure."
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:2038(title)
+#: ./doc/high-availability-guide/bk-ha-guide.xml:2109(title)
 msgid "Schedulers"
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:2040(simpara)
+#: ./doc/high-availability-guide/bk-ha-guide.xml:2111(simpara)
 msgid "OpenStack schedulers are used to determine how to dispatch compute, network and volume requests. The most common setup is to use RabbitMQ as messaging system already documented in this guide. Those services are connected to the messaging backend and can scale-out :"
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:2045(simpara)
+#: ./doc/high-availability-guide/bk-ha-guide.xml:2116(simpara)
 msgid "nova-scheduler"
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:2050(simpara)
+#: ./doc/high-availability-guide/bk-ha-guide.xml:2121(simpara)
 msgid "nova-conductor"
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:2055(simpara)
+#: ./doc/high-availability-guide/bk-ha-guide.xml:2126(simpara)
 msgid "cinder-scheduler"
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:2060(simpara)
+#: ./doc/high-availability-guide/bk-ha-guide.xml:2131(simpara)
 msgid "neutron-server"
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:2065(simpara)
+#: ./doc/high-availability-guide/bk-ha-guide.xml:2136(simpara)
 msgid "ceilometer-collector"
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:2070(simpara)
+#: ./doc/high-availability-guide/bk-ha-guide.xml:2141(simpara)
 msgid "heat-engine"
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:2075(simpara)
+#: ./doc/high-availability-guide/bk-ha-guide.xml:2146(simpara)
 msgid "Please refer to the RabbitMQ section for configure these services with multiple messaging servers."
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:2080(title)
+#: ./doc/high-availability-guide/bk-ha-guide.xml:2151(title)
 msgid "Memcached"
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:2082(simpara)
+#: ./doc/high-availability-guide/bk-ha-guide.xml:2153(simpara)
 msgid "Most of OpenStack services use an application to offer persistence and store ephemeral data (like tokens). Memcached is one of them and can scale-out easily without specific trick."
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:2084(simpara)
+#: ./doc/high-availability-guide/bk-ha-guide.xml:2155(simpara)
 msgid "To install and configure it, read the <link href=\"http://code.google.com/p/memcached/wiki/NewStart\">official documentation</link>."
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:2085(simpara)
+#: ./doc/high-availability-guide/bk-ha-guide.xml:2156(simpara)
 msgid "Memory caching is managed by oslo-incubator so the way to use multiple memcached servers is the same for all projects."
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:2086(simpara)
+#: ./doc/high-availability-guide/bk-ha-guide.xml:2157(simpara)
 msgid "Example with two hosts:"
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:2088(simpara)
+#: ./doc/high-availability-guide/bk-ha-guide.xml:2159(simpara)
 msgid "By default, controller1 handles the caching service but if the host goes down, controller2 does the job. For more information about memcached installation, see the OpenStack Cloud Administrator Guide."
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:2095(title)
+#: ./doc/high-availability-guide/bk-ha-guide.xml:2166(title)
 msgid "OpenStack network nodes"
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:2097(simpara)
+#: ./doc/high-availability-guide/bk-ha-guide.xml:2168(simpara)
 msgid "OpenStack network nodes contain:"
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:2100(simpara)
+#: ./doc/high-availability-guide/bk-ha-guide.xml:2171(simpara)
 msgid "neutron DHCP agent"
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:2105(simpara)
+#: ./doc/high-availability-guide/bk-ha-guide.xml:2176(simpara)
 msgid "neutron L2 agent"
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:2110(simpara)
+#: ./doc/high-availability-guide/bk-ha-guide.xml:2181(simpara)
 msgid "Neutron L3 agent"
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:2115(simpara)
+#: ./doc/high-availability-guide/bk-ha-guide.xml:2186(simpara)
 msgid "neutron metadata agent"
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:2120(simpara)
+#: ./doc/high-availability-guide/bk-ha-guide.xml:2191(simpara)
 msgid "neutron lbaas agent"
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:2126(simpara)
+#: ./doc/high-availability-guide/bk-ha-guide.xml:2197(simpara)
 msgid "The neutron L2 agent does not need to be highly available. It has to be installed on each Data Forwarding Node and controls the virtual networking drivers as Open vSwitch or Linux Bridge. One L2 agent runs per node and controls its virtual interfaces. That’s why it cannot be distributed and highly available."
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:2134(title)
+#: ./doc/high-availability-guide/bk-ha-guide.xml:2205(title)
 msgid "Run neutron DHCP agent"
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:2136(simpara)
+#: ./doc/high-availability-guide/bk-ha-guide.xml:2207(simpara)
 msgid "OpenStack Networking service has a scheduler that lets you run multiple agents across nodes. Also, the DHCP agent can be natively highly available. For details, see <link href=\"http://docs.openstack.org/trunk/config-reference/content/app_demo_multi_dhcp_agents.html\">OpenStack Configuration Reference</link>."
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:2142(title)
+#: ./doc/high-availability-guide/bk-ha-guide.xml:2213(title)
 msgid "Run neutron L3 agent"
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:2144(simpara)
+#: ./doc/high-availability-guide/bk-ha-guide.xml:2215(simpara)
 msgid "The neutron L3 agent is scalable thanks to the scheduler that allows distribution of virtual routers across multiple nodes. But there is no native feature to make these routers highly available. At this time, the Active / Passive solution exists to run the Neutron L3 agent in failover mode with Pacemaker. See the Active / Passive section of this guide."
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:2153(title)
+#: ./doc/high-availability-guide/bk-ha-guide.xml:2224(title)
 msgid "Run neutron metadata agent"
 msgstr ""
 
-#: ./doc/high-availability-guide/bk-ha-guide.xml:2155(simpara)
+#: ./doc/high-availability-guide/bk-ha-guide.xml:2226(simpara)
 msgid "There is no native feature to make this service highly available. At this time, the Active / Passive solution exists to run the neutron metadata agent in failover mode with Pacemaker. See the Active / Passive section of this guide."
 msgstr ""
 
