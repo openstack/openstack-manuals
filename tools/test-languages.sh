@@ -21,14 +21,17 @@ function setup_lang {
 function test_ja {
     setup_lang 'ja'
 
-    # Currently disabled since broken: 'user-guide' 'user-guide-admin'
     case "$PURPOSE" in
         test)
-            setup_directory 'ja' 'security-guide' 'high-availability-guide' 'install-guide'
+            setup_directory 'ja' 'high-availability-guide' \
+                'install-guide'  'security-guide' 'user-guide' \
+                'user-guide-admin'
             openstack-doc-test --check-build -l ja \
-                --only-book security-guide \
                 --only-book high-availability-guide \
-                --only-book install-guide
+                --only-book install-guide \
+                --only-book user-guide \
+                --only-book user-guide-admin \
+                --only-book security-guide
             RET=$?
             ;;
         publish-install)
@@ -40,8 +43,10 @@ function test_ja {
         publish)
             setup_directory 'ja' 'security-guide' 'high-availability-guide'
             openstack-doc-test --publish --check-build -l ja \
-                --only-book security-guide \
-                --only-book high-availability-guide
+                --only-book high-availability-guide \
+                --only-book user-guide \
+                --only-book user-guide-admin \
+                --only-book security-guide
             RET=$?
             ;;
     esac
@@ -60,7 +65,7 @@ function test_language () {
             test_ja
             ;;
         *)
-	    BUILD_FAIL=1
+            BUILD_FAIL=1
             echo "Language $language not handled"
             ;;
     esac
