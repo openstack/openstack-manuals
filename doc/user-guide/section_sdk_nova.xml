@@ -102,19 +102,19 @@ from novaclient.client import Client</programlisting>
             <step>
                 <para>Get the flavor and image to use to create a
                     server. This code uses the
-                        <literal>cirros</literal> image and
-                        <literal>m1.tiny</literal> flavor:</para>
+                        <literal>cirros</literal> image, the
+                        <literal>m1.tiny</literal> flavor, and the
+                        <literal>private</literal> network:</para>
                 <programlisting language="python">image = nova_client.images.find(name="cirros")
-flavor = nova_client.flavors.find(name="m1.tiny")</programlisting>
+flavor = nova_client.flavors.find(name="m1.tiny")
+net = nova_client.networks.find(label="private")</programlisting>
             </step>
             <step>
-                <para>Determine which network to attach the server. To
-                    create the server, use the network, image, and
+                <para>To create the server, use the network, image, and
                     flavor:</para>
-                <programlisting language="python">net_id = 'd05a7729-4bcf-4149-9d8f-6a4764520a04'
-nic_d = [{'net-id': net_id}]
+                <programlisting language="python">nics = [{'net-id': net_id}]
 instance = nova_client.servers.create(name="vm2", image=image,
-                                      flavor=flavor, key_name="keypair-1", nics=nic_d)</programlisting>
+                                      flavor=flavor, key_name="keypair-1", nics=nics)</programlisting>
             </step>
             <step>
                 <para>Sleep for five seconds and determine whether the
@@ -140,10 +140,10 @@ try:
 
     image = nova_client.images.find(name="cirros")
     flavor = nova_client.flavors.find(name="m1.tiny")
-    net_id = 'd05a7729-4bcf-4149-9d8f-6a4764520a04'
-    nic_d = [{'net-id': net_id}]
+    net = nova_client.networks.find(label="private")
+    nics = [{'net-id': net.id}]
     instance = nova_client.servers.create(name="vm2", image=image,
-                                      flavor=flavor, key_name="keypair-1", nics=nic_d)
+                                      flavor=flavor, key_name="keypair-1", nics=nics)
     print("Sleeping for 5s after create command")
     time.sleep(5)
     print("List of VMs")
