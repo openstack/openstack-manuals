@@ -2,28 +2,29 @@
 <section xml:id="heat-verify" xmlns="http://docbook.org/ns/docbook"
   xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
-
-  <title>Verify the Orchestration service installation</title>
-
-  <para>To verify that the Orchestration service is installed and configured
-    correctly, make sure that your credentials are set up correctly in the
-    <filename>demo-openrc.sh</filename> file. Source the file, as follows:</para>
-
-  <screen><prompt>$</prompt> <userinput>source demo-openrc.sh</userinput></screen>
-
-  <para>The Orchestration Module uses templates to describe stacks. To learn
-      about the template languages, see <link
+  <title>Verify operation</title>
+  <para>This section describes how to verify operation of the Orchestration
+    module (heat).</para>
+  <procedure>
+    <step>
+      <para>Source the <literal>demo</literal> tenant credentials:</para>
+      <screen><prompt>$</prompt> <userinput>source demo-openrc.sh</userinput></screen>
+    </step>
+    <step>
+      <para>The Orchestration module uses templates to describe stacks. To learn
+        about the template language, see <link
           xlink:href="http://docs.openstack.org/developer/heat/template_guide/index.html"
-          >the Template Guide</link> in the <link
+        >the Template Guide</link> in the <link
           xlink:href="http://docs.openstack.org/developer/heat/">Heat developer
-          documentation</link>.</para>
-  <para>Create a test template in the <filename>test-stack.yml</filename>
-      file with the following content:</para>
-  <programlisting language="yml"><xi:include parse="text" href="samples/test-stack.yml"/></programlisting>
-
-  <para>Use the <command>heat stack-create</command> command to create a stack
-      from this template:</para>
-  <screen><prompt>$</prompt> <userinput>NET_ID=$(nova net-list | awk '/ demo-net / { print $2 }')</userinput>
+        documentation</link>.</para>
+      <para>Create a test template in the <filename>test-stack.yml</filename>
+        file with the following content:</para>
+      <programlisting language="yml"><xi:include parse="text" href="samples/test-stack.yml"/></programlisting>
+    </step>
+    <step>
+      <para>Use the <command>heat stack-create</command> command to create a
+        stack from the template:</para>
+      <screen><prompt>$</prompt> <userinput>NET_ID=$(nova net-list | awk '/ demo-net / { print $2 }')</userinput>
 <prompt>$</prompt> <userinput>heat stack-create -f test-stack.yml \
   -P "ImageID=cirros-0.3.2-x86_64;NetID=$NET_ID" testStack</userinput>
 <computeroutput>+--------------------------------------+------------+--------------------+----------------------+
@@ -31,13 +32,16 @@
 +--------------------------------------+------------+--------------------+----------------------+
 | 477d96b4-d547-4069-938d-32ee990834af | testStack  | CREATE_IN_PROGRESS | 2014-04-06T15:11:01Z |
 +--------------------------------------+------------+--------------------+----------------------+</computeroutput></screen>
-
-  <para>Verify that the stack was created successfully with the <command>heat stack-list</command> command:</para>
-  <screen><prompt>$</prompt> <userinput>heat stack-list</userinput>
+    </step>
+    <step>
+      <para>Use the <command>heat stack-list</command> command to verify
+        successful creation of the stack:</para>
+      <screen><prompt>$</prompt> <userinput>heat stack-list</userinput>
 <computeroutput>+--------------------------------------+------------+-----------------+----------------------+
 | id                                   | stack_name | stack_status    | creation_time        |
 +--------------------------------------+------------+-----------------+----------------------+
 | 477d96b4-d547-4069-938d-32ee990834af | testStack  | CREATE_COMPLETE | 2014-04-06T15:11:01Z |
 +--------------------------------------+------------+-----------------+----------------------+</computeroutput></screen>
-
+    </step>
+  </procedure>
 </section>
