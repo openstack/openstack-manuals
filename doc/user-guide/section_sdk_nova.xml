@@ -5,16 +5,16 @@
     xml:id="sdk_compute_apis">
     <title>Compute</title>
     <?dbhtml stop-chunking?>
-    <para>To use the information in this section, you should have a
-        general understanding of OpenStack Compute.</para>
+    <para>To use the information in this section, you must be familiar with OpenStack Compute.</para>
     <section xml:id="sdk_compute_env">
         <title>Set environment variables</title>
-        <para>Please see <xref linkend="sdk_auth"/> on how to setup environmental variables
-and authenticate against Compute API endpoints.</para>
+        <para>To set up environmental variables and authenticate
+            against Compute API endpoints, see <xref
+                linkend="sdk_auth"/>.</para>
     </section>
-    <section xml:id="sdk_compute_get_nova_credentials_v2">
-        <title>Get nova credentials v2</title>
-        <para>The examples in this section use the
+    <section xml:id="sdk_compute_get_openstack_credentials_v2">
+        <title>Get OpenStack credentials (API v2)</title>
+        <para>These example use the
                 <code>get_nova_credentials_v2</code> method:</para>
         <programlisting language="python">def get_nova_credentials_v2():
     d = {}
@@ -33,18 +33,19 @@ and authenticate against Compute API endpoints.</para>
     </section>
 
     <section xml:id="sdk_compute_list_servers">
-        <title>List servers v2</title>
-        <para>The following program lists servers using the v2 APIs:</para>
+        <title>List servers (API v2)</title>
+        <para>The following program lists servers by using the Compute
+            API v2.</para>
         <procedure>
-            <title>To list the servers</title>
+            <title>To list servers</title>
             <step>
                 <para>Import the following modules:</para>
                 <programlisting language="python">from credentials import get_nova_credentials_v2
 from novaclient.client import Client</programlisting>
             </step>
             <step>
-                <para>Get Nova Credentials. See <xref
-                        linkend="sdk_compute_get_nova_credentials_v2"
+                <para>Get Nova credentials. See <xref
+                        linkend="sdk_compute_get_openstack_credentials_v2"
                     />.</para>
             </step>
             <step>
@@ -52,19 +53,19 @@ from novaclient.client import Client</programlisting>
                     client object by using the
                         <literal>credentials</literal> dictionary
                     object:</para>
-                <programlisting language="python">
-nova_client = Client(**credentials)</programlisting>
+                <programlisting language="python">nova_client = Client(**credentials)</programlisting>
             </step>
             <step>
-                <para>Get the list of servers by calling <literal>servers.list</literal> on
-                <literal>nova_client</literal> object:</para>
+                <para>List servers by calling
+                        <literal>servers.list</literal> on
+                        <literal>nova_client</literal> object:</para>
                 <programlisting language="python">print(nova_client.servers.list())</programlisting>
             </step>
         </procedure>
         <example>
-            <title>List servers: complete code listing</title>
+            <title>List servers code listing</title>
             <programlisting language="python">#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+
 from credentials import get_nova_credentials_v2
 from novaclient.client import Client
 
@@ -75,8 +76,9 @@ print(nova_client.servers.list())</programlisting>
         </example>
     </section>
     <section xml:id="sdk_compute_create_server_v2">
-        <title>Create a server v2</title>
-        <para>The following program creates a server (VM) using the v2 APIs:</para>
+        <title>Create server (API v2)</title>
+        <para>The following program creates a server (VM) by using the
+            Compute API v2.</para>
         <procedure>
             <title>To create a server</title>
             <step>
@@ -86,8 +88,8 @@ from credentials import get_nova_credentials_v2
 from novaclient.client import Client</programlisting>
             </step>
             <step>
-                <para>Get Nova Credentials. See <xref
-                        linkend="sdk_compute_get_nova_credentials_v2"
+                <para>Get OpenStack credentials. See <xref
+                        linkend="sdk_compute_get_openstack_credentials_v2"
                     />.</para>
             </step>
             <step>
@@ -95,34 +97,29 @@ from novaclient.client import Client</programlisting>
                     client object by using the
                         <literal>credentials</literal> dictionary
                     object:</para>
-                <programlisting language="python">
-nova_client = Client(**credentials)</programlisting>
+                <programlisting language="python">nova_client = Client(**credentials)</programlisting>
             </step>
             <step>
-                <para>In this step, search for the flavor and image to be used for creating a server.
-                The following code assumes <literal>
-                cirros</literal> image and <literal>m1.tiny</literal> are being used.</para>
+                <para>Get the flavor and image to use to create a
+                    server. This code uses the
+                        <literal>cirros</literal> image and
+                        <literal>m1.tiny</literal> flavor:</para>
                 <programlisting language="python">image = nova_client.images.find(name="cirros")
 flavor = nova_client.flavors.find(name="m1.tiny")</programlisting>
             </step>
             <step>
-                <para></para>
-                <programlisting language="python">image = nova_client.images.find(name="cirros")
-flavor = nova_client.flavors.find(name="m1.tiny")</programlisting>
-            </step>
-            <step>
-                <para>In this step determine the network with which the server is going to
-                be attached. Use this along with flavor and image to create the server.
-                </para>
+                <para>Determine which network to attach the server. To
+                    create the server, use the network, image, and
+                    flavor:</para>
                 <programlisting language="python">net_id = 'd05a7729-4bcf-4149-9d8f-6a4764520a04'
 nic_d = [{'net-id': net_id}]
 instance = nova_client.servers.create(name="vm2", image=image,
                                       flavor=flavor, key_name="keypair-1", nics=nic_d)</programlisting>
             </step>
             <step>
-                <para>Sleep for 5 secs and check if the server/vm got created by calling
-                <literal>nova_client.servers.list()</literal>
-                </para>
+                <para>Sleep for five seconds and determine whether the
+                    server/vm was created by calling
+                        <literal>nova_client.servers.list()</literal>:</para>
                 <programlisting language="python">print("Sleeping for 5s after create command")
 time.sleep(5)
 print("List of VMs")
@@ -130,9 +127,9 @@ print(nova_client.servers.list)</programlisting>
             </step>
         </procedure>
         <example>
-            <title>Create server: complete code listing</title>
+            <title>Create server code listing</title>
             <programlisting language="python">#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+
 import time
 from credentials import get_nova_credentials_v2
 from novaclient.client import Client
@@ -155,11 +152,12 @@ finally:
     print("Execution Completed")</programlisting>
         </example>
     </section>
-        <section xml:id="sdk_compute_delete_server_v2">
-        <title>Delete server v2</title>
-        <para>The following program deletes a Server (VM) using the v2 API:</para>
+    <section xml:id="sdk_compute_delete_server_v2">
+        <title>Delete server (API v2)</title>
+        <para>The following program deletes a server (VM) by using the
+            Compute API v2.</para>
         <procedure>
-            <title>To Delete a Server</title>
+            <title>To delete a server</title>
             <step>
                 <para>Import the following modules:</para>
                 <programlisting language="python">import time
@@ -167,8 +165,8 @@ from credentials import get_nova_credentials_v2
 from novaclient.client import Client</programlisting>
             </step>
             <step>
-                <para>Get Nova Credentials. See <xref
-                        linkend="sdk_compute_get_nova_credentials_v2"
+                <para>Get Nova credentials. See <xref
+                        linkend="sdk_compute_get_openstack_credentials_v2"
                     />.</para>
             </step>
             <step>
@@ -176,19 +174,29 @@ from novaclient.client import Client</programlisting>
                     client object by using the
                         <literal>credentials</literal> dictionary
                     object:</para>
-                <programlisting language="python">
-nova_client = Client(**credentials)</programlisting>
+                <programlisting language="python">nova_client = Client(**credentials)</programlisting>
             </step>
             <step>
-                <para>Check if the server <literal>"vm1"</literal> exists using the following steps</para>
-                <procedure>
-                    <step><para>Get the list of servers: <literal>servers_list</literal></para></step>
-                    <step><para>Iterate over the <literal>servers_list</literal> and compare name with <literal>"vm1"
-                    </literal></para></step>
-                    <step><para>If true set the variable name <literal>server_exists</literal> as
-                        <literal>True</literal> and break from the for loop</para>
+                <para>Determine whether the <literal>vm1</literal>
+                    server exists:</para>
+                <substeps>
+                    <step>
+                        <para>List servers:
+                                <literal>servers_list</literal>.</para>
                     </step>
-                </procedure>
+                    <step>
+                        <para>Iterate over
+                                <literal>servers_list</literal> and
+                            compare name with
+                            <literal>vm1</literal>.</para>
+                    </step>
+                    <step>
+                        <para>If true, set the variable name
+                                <literal>server_exists</literal> to
+                                <literal>True</literal> and break from
+                            the for loop:</para>
+                    </step>
+                </substeps>
                 <programlisting language="python">servers_list = nova_client.servers.list()
 server_del = "vm1"
 server_exists = False
@@ -200,16 +208,18 @@ for s in servers_list:
         break</programlisting>
             </step>
             <step>
-                <para>If the server exists execute <literal>delete</literal> method of
-                <literal>nova_client.servers</literal> object.</para>
+                <para>If the server exists, run the
+                        <literal>delete</literal> method of the
+                        <literal>nova_client.servers</literal>
+                    object:</para>
                 <programlisting language="python">nova_client.servers.delete(s)</programlisting>
             </step>
 
         </procedure>
         <example>
-            <title>Delete: complete code listing</title>
+            <title>Delete server code listing</title>
             <programlisting language="python">#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+
 from credentials import get_nova_credentials_v2
 from novaclient.client import Client
 
@@ -233,5 +243,276 @@ else:
     print("server %s deleted" % server_del)</programlisting>
         </example>
     </section>
+    <section xml:id="sdk_update_server_v2">
+        <title>Update server (API v2)</title>
+        <para>The following program updates the name of a server (VM)
+            by using the Compute API v2.</para>
+        <procedure>
+            <title>To update a server</title>
+            <step>
+                <para>Import the following modules:</para>
+                <programlisting language="python">from credentials import get_nova_credentials_v2
+from novaclient.client import Client
+from utils import print_server</programlisting>
+                <para><literal>print_server</literal> is a method
+                    defined in <filename>utils.py</filename> and
+                    prints the server details as shown in the code
+                    listing below:</para>
+                <programlisting language="python">def print_server(server):
+    print("-"*35)
+    print("server id: %s" % server.id)
+    print("server name: %s" % server.name)
+    print("server image: %s" % server.image)
+    print("server flavour: %s" % server.flavor)
+    print("server key name: %s" % server.key_name)
+    print("user_id: %s" % server.user_id)
+    print("-"*35)</programlisting>
+            </step>
+            <step>
+                <para>Get OpenStack Credentials. See <xref
+                        linkend="sdk_compute_get_openstack_credentials_v2"
+                    />.</para>
+            </step>
+            <step>
+                <para>Instantiate the <literal>nova_client</literal>
+                    client object by using the
+                        <literal>credentials</literal> dictionary
+                    object:</para>
+                <programlisting language="python">nova_client = Client(**credentials)</programlisting>
+            </step>
+            <step>
+                <para>Get the server instance using
+                        <literal>server_id</literal> and print the
+                    details by calling <literal>print_server</literal>
+                    method:</para>
+                <programlisting language="python">server_id = '99889c8d-113f-4a7e-970c-77f1916bfe14'
+server = nova_client.servers.get(server_id)
+n = server.name
+print_server(server)</programlisting>
+            </step>
+            <step>
+                <para>Call <code>server.update</code> on the server
+                    object with the new value for
+                        <literal>name</literal> variable:</para>
+                <programlisting language="python">server.update(name = n + '1')</programlisting>
+            </step>
+            <step>
+                <para>Get the updated instance of the server:</para>
+                <programlisting language="python">server_updated = nova_client.servers.get(server_id)</programlisting>
+            </step>
+            <step>
+                <para>Call <literal>print_server</literal> again to
+                    check the update server details:</para>
+                <programlisting language="python">print_server(server_updated)</programlisting>
+            </step>
 
+        </procedure>
+        <example>
+            <title>Update server code listing</title>
+            <programlisting language="python">#!/usr/bin/env python
+
+from credentials import get_nova_credentials_v2
+from novaclient.client import Client
+from utils import print_server
+
+credentials = get_nova_credentials_v2()
+nova_client = Client(**credentials)
+
+# Change the server_id specific to your environment
+
+server_id = '99889c8d-113f-4a7e-970c-77f1916bfe14'
+server = nova_client.servers.get(server_id)
+n = server.name
+print_server(server)
+
+server.update(name=n +'1')
+server_updated = nova_client.servers.get(server_id)
+print_server(server_updated)</programlisting>
+        </example>
+    </section>
+    <section xml:id="list_flavors_v2">
+        <title>List flavors (API v2)</title>
+        <para>The following program lists flavors and their details by
+            using the Compute API v2.</para>
+        <procedure>
+            <title>To list flavors</title>
+            <step>
+                <para>Import the following modules:</para>
+                <programlisting language="python">from credentials import get_nova_credentials_v2
+from novaclient.client import Client
+from utils import print_flavors</programlisting>
+                <para>The <literal>print_flavors</literal> method is
+                    defined in <filename>utils.py</filename> and
+                    prints the flavor details:</para>
+                <programlisting language="python">def print_flavors(flavor_list):
+    for flavor in flavor_list:
+       print("-"*35)
+       print("flavor id : %s" % flavor.id)
+       print("flavor name : %s" % flavor.name)
+    print("-"*35)</programlisting>
+            </step>
+            <step>
+                <para>Get openStack credentials. See <xref
+                        linkend="sdk_compute_get_openstack_credentials_v2"
+                    />.</para>
+            </step>
+            <step>
+                <para>Instantiate the <literal>nova_client</literal>
+                    client object by using the
+                        <literal>credentials</literal> dictionary
+                    object:</para>
+                <programlisting language="python">nova_client = Client(**credentials)</programlisting>
+            </step>
+            <step>
+                <para>List flavors by calling
+                        <literal>list()</literal> on
+                        <literal>nova_client.flavors</literal>
+                    object:</para>
+                <programlisting language="python">flavors_list =  nova_client.flavors.list()</programlisting>
+            </step>
+            <step>
+                <para>Print the flavor details, id and name by calling
+                        <literal>print_flavors</literal>:</para>
+                <programlisting language="python">print_flavors(flavors_list)</programlisting>
+            </step>
+        </procedure>
+        <example>
+            <title>List flavors code listing</title>
+            <programlisting language="python">#!/usr/bin/env python
+
+from credentials import get_nova_credentials_v2
+from novaclient.client import Client
+from utils import print_flavors
+
+credentials = get_nova_credentials_v2()
+nova_client = Client(**credentials)
+
+flavors_list = nova_client.flavors.list()
+print_flavors(flavors_list)</programlisting>
+        </example>
+    </section>
+    <section xml:id="list_floating_ips_python_client">
+        <title>List floating IPs (API v2)</title>
+        <para>The following program lists the floating IPs and their
+            details by using the Compute API v2.</para>
+        <procedure>
+            <title>To list floating IPs</title>
+            <step>
+                <para>Import the following modules:</para>
+                <programlisting language="python">from credentials import get_nova_credentials_v2
+from novaclient.client import Client
+from utils import print_values_ip</programlisting>
+                <para>The <literal>print_values_ip</literal> method is
+                    defined in <filename>utils.py</filename> and
+                    prints the floating_ip object details:</para>
+                <programlisting language="python">def print_values_ip(ip_list):
+    ip_dict_lisl = []
+    for ip in ip_list:
+        print("-"*35)
+        print("fixed_ip : %s" % ip.fixed_ip)
+        print("id : %s" % ip.id)
+        print("instance_id : %s" % ip.instance_id)
+        print("ip : %s" % ip.ip)
+        print("pool : %s" % ip.pool)</programlisting>
+            </step>
+            <step>
+                <para>Get OpenStack credentials. See <xref
+                        linkend="sdk_compute_get_openstack_credentials_v2"
+                    />.</para>
+            </step>
+            <step>
+                <para>Instantiate the <literal>nova_client</literal>
+                    client object by using the
+                        <literal>credentials</literal> dictionary
+                    object:</para>
+                <programlisting language="python">nova_client = Client(**credentials)</programlisting>
+            </step>
+            <step>
+                <para>List floating IPs by calling
+                        <literal>list()</literal> on
+                        <literal>nova_client.floating_ips</literal>
+                    object:</para>
+                <programlisting language="python">ip_list = nova_client.floating_ips.list()</programlisting>
+            </step>
+            <step>
+                <para>Print the floating IP object details by calling
+                        <literal>print_values_ip</literal>:</para>
+                <programlisting language="python">print_values_ip(ip_list)</programlisting>
+            </step>
+        </procedure>
+        <example>
+            <title>List floating IPs code listing</title>
+            <programlisting language="python">#!/usr/bin/env python
+
+from credentials import get_nova_credentials_v2
+from novaclient.client import Client
+from utils import print_values_ip
+
+credentials = get_nova_credentials_v2()
+nova_client = Client(**credentials)
+ip_list = nova_client.floating_ips.list()
+print_values_ip(ip_list)</programlisting>
+        </example>
+    </section>
+    <section xml:id="list_hosts_v2">
+        <title>List hosts (API v2)</title>
+        <para>The following program lists the hosts by
+            using the Compute API v2.</para>
+        <procedure>
+            <title>To list hosts</title>
+            <step>
+                <para>Import the following modules:</para>
+                <programlisting language="python">from credentials import get_nova_credentials_v2
+from novaclient.client import Client
+from utils import print_hosts</programlisting>
+                <para>The <literal>print_hosts</literal> method is
+                    defined in <filename>utils.py</filename> and
+                    prints the host object details:</para>
+                <programlisting language="python">def print_hosts(host_list):
+    for host in host_list:
+       print("-"*35)
+       print("host_name : %s" % host.host_name)
+       print("service : %s" % host.service)
+       print("zone : %s" % host.zone)
+    print("-"*35)</programlisting>
+            </step>
+            <step>
+                <para>Get OpenStack credentials. See <xref
+                        linkend="sdk_compute_get_openstack_credentials_v2"
+                    />.</para>
+            </step>
+            <step>
+                <para>Instantiate the <literal>nova_client</literal>
+                    client object by using the
+                        <literal>credentials</literal> dictionary
+                    object:</para>
+                <programlisting language="python">nova_client = Client(**credentials)</programlisting>
+            </step>
+            <step>
+                <para>List hosts by calling <literal>list()</literal>
+                    on <literal>nova_client.hosts</literal>
+                    object:</para>
+                <programlisting language="python">host_list = nova_client.hosts.list()</programlisting>
+            </step>
+            <step>
+                <para>Print the host object details by calling
+                        <literal>print_hosts(host_list)</literal>:</para>
+                <programlisting language="python">print_hosts(host_list)</programlisting>
+            </step>
+        </procedure>
+        <example>
+            <title>List hosts code listing</title>
+            <programlisting language="python">#!/usr/bin/env python
+
+from credentials import get_nova_credentials_v2
+from novaclient.client import Client
+from utils import print_hosts
+
+credentials = get_nova_credentials_v2()
+nova_client = Client(**credentials)
+host_list = nova_client.hosts.list()
+
+print_hosts(host_list)</programlisting>
+        </example>
+    </section>
 </section>
