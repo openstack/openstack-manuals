@@ -4,6 +4,7 @@ function setup_directory {
     SET_LANG=$1
     shift
     for BOOK_DIR in "$@" ; do
+        echo "   $BOOK_DIR"
         openstack-generate-docbook -l $SET_LANG -b $BOOK_DIR
     done
 }
@@ -14,6 +15,7 @@ function setup_lang {
     shift
     echo "Setting up files for $SET_LANG"
     echo "======================="
+    echo "  Directories:"
     setup_directory $SET_LANG 'common' 'glossary' "$@"
     cp doc/pom.xml generated/$SET_LANG/pom.xml
 }
@@ -26,7 +28,7 @@ function test_ja {
             setup_directory 'ja' 'high-availability-guide' \
                 'install-guide'  'security-guide' 'user-guide' \
                 'user-guide-admin'
-            openstack-doc-test --check-build -l ja \
+            openstack-doc-test -v --check-build -l ja \
                 --only-book high-availability-guide \
                 --only-book install-guide \
                 --only-book user-guide \
@@ -36,13 +38,14 @@ function test_ja {
             ;;
         publish-install)
             setup_directory 'ja' 'install-guide'
-            openstack-doc-test --publish --check-build -l ja \
+            openstack-doc-test -v --publish --check-build -l ja \
                 --only-book install-guide
             RET=$?
             ;;
         publish)
-            setup_directory 'ja' 'security-guide' 'high-availability-guide'
-            openstack-doc-test --publish --check-build -l ja \
+            setup_directory 'ja' 'high-availability-guide' \
+                'security-guide' 'user-guide' 'user-guide-admin'
+            openstack-doc-test -v --publish --check-build -l ja \
                 --only-book high-availability-guide \
                 --only-book user-guide \
                 --only-book user-guide-admin \
