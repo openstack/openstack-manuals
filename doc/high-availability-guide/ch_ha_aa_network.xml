@@ -1,0 +1,48 @@
+    <chapter xmlns="http://docbook.org/ns/docbook"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    version="5.0" xml:id="ha-aa-network">
+      <info>
+        <title>OpenStack network nodes</title>
+      </info>
+      <simpara>OpenStack network nodes contain:</simpara>
+      <itemizedlist>
+        <listitem>
+          <simpara>
+neutron DHCP agent
+</simpara>
+        </listitem>
+        <listitem>
+          <simpara>
+neutron L2 agent
+</simpara>
+        </listitem>
+        <listitem>
+          <simpara>
+Neutron L3 agent
+</simpara>
+        </listitem>
+        <listitem>
+          <simpara>
+neutron metadata agent
+</simpara>
+        </listitem>
+        <listitem>
+          <simpara>
+neutron lbaas agent
+</simpara>
+        </listitem>
+      </itemizedlist>
+      <note>
+        <simpara>The neutron L2 agent does not need to be highly available. It has to be
+installed on each Data Forwarding Node and controls the virtual networking
+drivers as Open vSwitch or Linux Bridge. One L2 agent runs per node
+and controls its virtual interfaces. That’s why it cannot be distributed and
+highly available.</simpara>
+      </note>
+
+      <xi:include href="./ha_aa_network/section_run_neutron_dhcp_agent.xml"/>
+      <xi:include href="./ha_aa_network/section_run_neutron_l3_agent.xml"/>
+      <xi:include href="./ha_aa_network/section_run_neutron_metadata_agent.xml"/>
+
+    </chapter>

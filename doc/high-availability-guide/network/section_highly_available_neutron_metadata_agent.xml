@@ -1,0 +1,44 @@
+      <section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    version="5.0" xml:id="_highly_available_neutron_metadata_agent">
+        <info>
+          <title>Highly available neutron metadata agent</title>
+        </info>
+        <simpara>Neutron metadata agent allows Compute API metadata to be reachable by VMs on tenant
+networks. High availability for the metadata agent is achieved by adopting
+Pacemaker.</simpara>
+        <note>
+          <simpara>Here is the <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://docs.openstack.org/trunk/config-reference/content/networking-options-metadata.html">documentation</link> for installing Neutron Metadata Agent.</simpara>
+        </note>
+        <section xml:id="_add_neutron_metadata_agent_resource_to_pacemaker">
+          <info>
+            <title>Add neutron metadata agent resource to Pacemaker</title>
+          </info>
+          <simpara>First of all, you need to download the resource agent to your system:</simpara>
+          <screen>cd /usr/lib/ocf/resource.d/openstack
+wget https://raw.github.com/madkiss/openstack-resource-agents/master/ocf/neutron-metadata-agent
+chmod a+rx neutron-metadata-agent</screen>
+          <simpara>You may now proceed with adding the Pacemaker configuration for
+neutron metadata agent resource. Connect to the Pacemaker cluster with <literal>crm
+configure</literal>, and add the following cluster resources:</simpara>
+          <screen>primitive p_neutron-metadata-agent ocf:openstack:neutron-metadata-agent \
+    params config="/etc/neutron/neutron.conf" \
+    plugin_config="/etc/neutron/metadata_agent.ini" \
+    op monitor interval="30s" timeout="30s"</screen>
+          <simpara>This configuration creates</simpara>
+          <itemizedlist>
+            <listitem>
+              <simpara><literal>p_neutron-metadata-agent</literal>, a resource for manage Neutron Metadata Agent
+service
+</simpara>
+            </listitem>
+          </itemizedlist>
+          <simpara><literal>crm configure</literal> supports batch input, so you may copy and paste the
+above into your live pacemaker configuration, and then make changes as
+required.</simpara>
+          <simpara>Once completed, commit your configuration changes by entering <literal>commit</literal>
+from the <literal>crm configure</literal> menu. Pacemaker will then start the neutron metadata
+agent service, and its dependent resources, on one of your nodes.</simpara>
+        </section>
+      </section>

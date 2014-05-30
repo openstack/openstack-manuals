@@ -1,0 +1,53 @@
+     <section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    version="5.0" xml:id="_starting_corosync">
+        <info>
+          <title>Starting Corosync</title>
+        </info>
+        <simpara>Corosync is started as a regular system service. Depending on your
+distribution, it may ship with a LSB (System V style) init script, an
+upstart job, or a systemd unit file. Either way, the service is
+usually named <literal>corosync</literal>:</simpara>
+        <itemizedlist>
+          <listitem>
+            <simpara><literal>/etc/init.d/corosync start</literal> (LSB)
+</simpara>
+          </listitem>
+          <listitem>
+            <simpara><literal>service corosync start</literal> (LSB, alternate)
+</simpara>
+          </listitem>
+          <listitem>
+            <simpara><literal>start corosync</literal> (upstart)
+</simpara>
+          </listitem>
+          <listitem>
+            <simpara><literal>systemctl start corosync</literal> (systemd)
+</simpara>
+          </listitem>
+        </itemizedlist>
+        <simpara>You can now check the Corosync connectivity with two tools.</simpara>
+        <simpara>The <literal>corosync-cfgtool</literal> utility, when invoked with the <literal>-s</literal> option,
+gives a summary of the health of the communication rings:</simpara>
+        <screen># corosync-cfgtool -s
+Printing ring status.
+Local node ID 435324542
+RING ID 0
+        id      = 192.168.42.82
+        status  = ring 0 active with no faults
+RING ID 1
+        id      = 10.0.42.100
+        status  = ring 1 active with no faults</screen>
+        <simpara>The <literal>corosync-objctl</literal> utility can be used to dump the Corosync cluster
+member list:</simpara>
+        <screen># corosync-objctl runtime.totem.pg.mrp.srp.members
+runtime.totem.pg.mrp.srp.435324542.ip=r(0) ip(192.168.42.82) r(1) ip(10.0.42.100)
+runtime.totem.pg.mrp.srp.435324542.join_count=1
+runtime.totem.pg.mrp.srp.435324542.status=joined
+runtime.totem.pg.mrp.srp.983895584.ip=r(0) ip(192.168.42.87) r(1) ip(10.0.42.254)
+runtime.totem.pg.mrp.srp.983895584.join_count=1
+runtime.totem.pg.mrp.srp.983895584.status=joined</screen>
+        <simpara>You should see a <literal>status=joined</literal> entry for each of your constituent
+cluster nodes.</simpara>
+      </section>
