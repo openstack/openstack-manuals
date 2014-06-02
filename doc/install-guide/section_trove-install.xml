@@ -24,7 +24,15 @@
       <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-trove FIXME</userinput></screen>
       <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-trove python-troveclient</userinput></screen>
     </step>
-
+    <step os="debian">
+      <para>Respond to the prompts for <link
+        linkend="debconf-dbconfig-common">database management</link> and
+        <link linkend="debconf-keystone_authtoken"
+        ><literal>[keystone_authtoken]</literal> settings</link>,
+        and <link linkend="debconf-api-endpoints">API endpoint</link>
+        registration. The <command>trove-manage db_sync</command>
+        command runs automatically.</para>
+    </step>
     <step>
       <para>Prepare OpenStack:</para>
       <substeps>
@@ -123,7 +131,7 @@ rabbit_password = <replaceable>RABBIT_PASS</replaceable>
       </substeps>
     </step>
 
-    <step>
+    <step os="opensuse;sles;fedora;rhel;centos;ubuntu">
       <para>Edit the <literal>[filter:authtoken]</literal> section
       of the <filename>api-paste.ini</filename> file so it matches the
       listing shown below:</para>
@@ -166,7 +174,7 @@ nova_proxy_admin_tenant_name = service
 ...</programlisting>
     </step>
 
-    <step>
+    <step os="opensuse;sles;fedora;rhel;centos;ubuntu">
       <para>Prepare the trove admin database:</para>
       <screen><prompt>$</prompt> <userinput>mysql -u root -p</userinput>
 <prompt>mysql&gt;</prompt> <userinput>CREATE DATABASE trove;</userinput>
@@ -174,7 +182,7 @@ nova_proxy_admin_tenant_name = service
 <prompt>mysql&gt;</prompt> <userinput>GRANT ALL PRIVILEGES ON trove.* TO trove@'%' IDENTIFIED BY 'TROVE_DBPASS';</userinput></screen>
     </step>
 
-    <step>
+    <step os="opensuse;sles;fedora;rhel;centos;ubuntu">
       <para>Prepare the Database service:</para>
       <substeps>
         <step>
@@ -188,6 +196,13 @@ nova_proxy_admin_tenant_name = service
           <screen><prompt>#</prompt> <userinput>su -s /bin/sh -c "trove-manage datastore_update mysql ''" trove</userinput></screen>
         </step>
       </substeps>
+    </step>
+
+    <step os="debian">
+      <para>Create a datastore. You need to create a separate datastore for
+          each type of database you want to use, for example, MySQL, MongoDB, Cassandra.
+          This example shows you how to create a datastore for a MySQL database:</para>
+          <screen><prompt>#</prompt> <userinput>su -s /bin/sh -c "trove-manage datastore_update mysql ''" trove</userinput></screen>
     </step>
 
     <step>
