@@ -9,9 +9,17 @@
         each OpenStack client.</para>
     <section xml:id="install_prereq_software">
         <title>Install the prerequisite software</title>
-        <para>The following table lists the software that you need to
-            have to run the command-line clients, and provides
-            installation instructions as needed.</para>
+
+        <para>Most Linux distributions include packaged versions of the
+           command-line clients that you can install directly, see <xref
+           linkend="cli_clients_install_packages"/>.
+        </para>
+        <para>
+           If you need to install the command-line packages source
+           packages, the following table lists the software that you
+           need to have to run the command-line clients, and provides
+           installation instructions as needed.
+        </para>
     <table rules="all" width="75%">
         <caption>Prerequisite software</caption>
         <col width="15%"/>
@@ -66,7 +74,7 @@
                                 <package>pip</package>. It is easy to
                             use, ensures that you get the latest
                             version of the clients from the <link
-                                xlink:href="http://pypi.python.org/pypi/python-novaclient/"
+                                xlink:href="http://pypi.python.org/"
                                 >Python Package Index</link>, and lets
                             you update or remove the packages later
                             on.</para>
@@ -102,31 +110,43 @@
                             </formalpara>
                     <formalpara>
                         <title>Red Hat Enterprise Linux, CentOS, or Fedora</title>
-                        <para>A packaged version available in <link
+                        <para>A packaged version enables you to use <package>yum</package>
+                            to install the package:
+                            <screen><prompt>#</prompt> <userinput>yum install python-pip</userinput></screen>
+                            There are also packaged versions of the
+                            clients available in <link
                             xlink:href="http://openstack.redhat.com/">RDO</link>
-                            enables you to use <package>yum</package>
-                            to install the clients, or you can install
-                            <package>pip</package> and use it to
-                            manage client installation: <screen><prompt>#</prompt> <userinput>yum install python-pip</userinput></screen></para>
+                            that enable <package>yum</package> to
+                            install the clients as described in <xref
+                            linkend="cli_clients_install_packages"/>.
+                        </para>
                     </formalpara>
                     <formalpara>
-                        <title>openSUSE 12.2 and earlier</title>
+                        <title>SUSE Linux Enterprise Linux 11</title>
                         <para>A <link
-                            xlink:href="https://build.opensuse.org/package/show?package=python-novaclient&amp;project=Cloud:OpenStack:Master">packaged
+                            xlink:href="https://build.opensuse.org/package/show?package=python-pip&amp;project=Cloud:OpenStack:Master">packaged
                             version available in the Open Build
                             Service</link> enables you to use
-                            <package>rpm</package> or
-                            <package>zypper</package> to install the
-                            clients, or you can install
-                            <package>pip</package> and use it to manage client installation:
-                            <screen><prompt>#</prompt> <userinput>zypper install python-pip</userinput></screen></para>
+                            or <package>zypper</package> to install the package.
+                            First, add the Open Build Service repository:
+                            <screen><prompt>#</prompt> <userinput>zypper addrepo -f obs://Cloud:OpenStack:Icehouse/SLE_11_SP3 Icehouse</userinput></screen>
+                            Then install <package>pip</package> and use it to manage client installation:
+                            <screen><prompt>#</prompt> <userinput>zypper install python-pip</userinput></screen>
+                            There are also packaged versions of the clients available
+                            that enable <package>zypper</package> to install the
+                            clients as described in <xref linkend="cli_clients_install_packages"/>.
+                        </para>
                     </formalpara>
                     <formalpara>
-                        <title>openSUSE 12.3 and later</title>
-                        <para>A packaged version enables you to use
-                            <package>rpm</package> or
-                            <package>zypper</package> to install the
-                            clients. See <xref linkend="cli_clients_install"/></para>
+                        <title>openSUSE</title>
+                        <para>You can install
+                            <package>pip</package> and use it to
+                            manage client installation:
+                            <screen><prompt>#</prompt> <userinput>zypper install python-pip</userinput></screen>
+                            There are also packaged versions of the clients available
+                            that enable <package>zypper</package> to install the
+                            clients as described in <xref linkend="cli_clients_install_packages"/>
+                        </para>
                     </formalpara>
                 </td>
             </tr>
@@ -202,7 +222,7 @@
         </section>
         <section xml:id="cli_clients_install_packages">
             <title>Installing from packages</title>
-            <para>RDO and openSUSE have client packages that can be
+            <para>RDO, openSUSE and SUSE Linux Enterprise have client packages that can be
                 installed without <filename>pip</filename>.</para>
             <para>On Red Hat Enterprise Linux, CentOS, or Fedora, use
                     <command>yum</command> to install the clients from
@@ -210,12 +230,18 @@
                     xlink:href="http://openstack.redhat.com/"
                     >RDO</link>:
                 <screen><prompt>#</prompt> <userinput>yum install python-<replaceable>PROJECT</replaceable>client</userinput></screen></para>
-            <para>For openSUSE, use <package>rpm</package> or
-                    <package>zypper</package> to install the clients
-                from the packaged versions available in <link
-                    xlink:href="https://build.opensuse.org/package/show?package=python-novaclient&amp;project=Cloud:OpenStack:Master"
-                    >the Open Build
-                Service</link>:<screen><prompt>#</prompt> <userinput>zypper install python-<replaceable>PROJECT</replaceable></userinput></screen></para>
+            <para>For openSUSE, use <package>zypper</package> to install the clients
+                from the distribution packages
+                Service:
+            <screen><prompt>#</prompt> <userinput>zypper install python-<replaceable>PROJECT</replaceable></userinput></screen></para>
+            <para>For SUSE Linux Enterprise Server, use
+                <package>zypper</package> to install the clients from
+                the distribution packages in the Open Build Service. First,
+                add the Open Build Service repository:
+                <screen><prompt>#</prompt> <userinput>zypper addrepo -f obs://Cloud:OpenStack:Icehouse/SLE_11_SP3 Icehouse</userinput></screen>
+                Then you can install the packages:
+                <screen><prompt>#</prompt> <userinput>zypper install python-<replaceable>PROJECT</replaceable></userinput></screen>
+            </para>
         </section>
     </section>
     <section xml:id="cli_clients_remove_upgrade">
