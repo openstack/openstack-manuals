@@ -3,130 +3,160 @@
   xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
   xml:id="compute-service">
   <title>OpenStack Compute</title>
-  <para>OpenStack Compute is used to host and manage cloud computing systems and
-    is a major part of an infrastructure-as-a-service (IaaS) system. The main
-    modules are implemented in Python.</para>
+  <para>Use OpenStack Compute to host and manage cloud computing
+    systems. OpenStack Compute is a major part of an
+    infrastructure-as-a-service (IaaS) system. The main modules are
+    implemented in Python.</para>
   <para>OpenStack Compute interacts with OpenStack Identity for
-    authentication, OpenStack Image Service for images, and OpenStack dashboard
-    for the user and administrative interface. Access to images is limited
-    by project and by user; quotas are limited per project (for example, the
-    number of instances). OpenStack Compute can scale horizontally on standard
+    authentication, OpenStack Image Service for disk and server
+    images, and OpenStack dashboard for the user and administrative
+    interface. Image access is limited by projects, and by users;
+    quotas are limited per project (the number of instances, for
+    example). OpenStack Compute can scale horizontally on standard
     hardware, and download images to launch instances.</para>
   <para>OpenStack Compute consists of the following areas and their
-       components:</para>
-  <variablelist><title>API</title>
+    components:</para>
+  <variablelist>
+    <title>API</title>
     <varlistentry>
-      <term><systemitem class="service">nova-api service</systemitem></term>
-        <listitem><para>Accepts and responds to end user compute API calls.
-        Supports the OpenStack Compute API, the Amazon EC2 API, and a special
-        Admin API for privileged users to perform administrative actions. It
-        enforces some policies and initiates most orchestration activities,
-        such as running an instance.</para>
-    </listitem>
-  </varlistentry>
+      <term><systemitem class="service">nova-api
+        service</systemitem></term>
+      <listitem>
+        <para>Accepts and responds to end user compute API calls. The
+          service supports the OpenStack Compute API, the Amazon EC2
+          API, and a special Admin API for privileged users to perform
+          administrative actions. It enforces some policies and
+          initiates most orchestration activities, such as running an
+          instance.</para>
+      </listitem>
+    </varlistentry>
     <varlistentry>
       <term><systemitem class="service">nova-api-metadata</systemitem>
         service</term>
-      <listitem><para>Accepts metadata requests from instances. The
-<systemitem class="service">nova-api-metadata</systemitem>
-        service is generally used when you run in multi-host mode
-        with <systemitem class="service">nova-network</systemitem>
-        installations. For details, see <link
-          xlink:href="http://docs.openstack.org/admin-guide-cloud/content/section_metadata-service.html"
-          >Metadata service</link> in the <citetitle>Cloud
-          Administrator Guide</citetitle>.</para>
-      <para>On Debian systems, it is included in the <systemitem
-          class="service">nova-api</systemitem> package, and can be
-        selected through <package>debconf</package>.</para></listitem>
+      <listitem>
+        <para>Accepts metadata requests from instances. The
+            <systemitem class="service">nova-api-metadata</systemitem>
+          service is generally used when you run in multi-host mode
+          with <systemitem class="service">nova-network</systemitem>
+          installations. For details, see <link
+            xlink:href="http://docs.openstack.org/admin-guide-cloud/content/section_metadata-service.html"
+            >Metadata service</link> in the <citetitle>OpenStack Cloud
+            Administrator Guide</citetitle>.</para>
+        <para>On Debian systems, it is included in the <systemitem
+            class="service">nova-api</systemitem> package, and can be
+          selected through <package>debconf</package>.</para>
+      </listitem>
     </varlistentry>
   </variablelist>
   <variablelist>
     <title>Compute core</title>
     <varlistentry>
       <term><systemitem class="service">nova-compute</systemitem>
-        process</term> <listitem><para>A worker daemon that creates and
-        terminates virtual machine instances through hypervisor APIs. For
-        example, XenAPI for XenServer/XCP, libvirt for KVM or QEMU and
-        VMwareAPI for VMware. Processing is fairly complex but fundamentally it
-        accepts actions from the queue and performs a series of system
-        commands, like launching a KVM instance, whilst updating its state in
-        the database.</para></listitem>
-  </varlistentry>
+        service</term>
+      <listitem>
+        <para>A worker daemon that creates and terminates virtual
+          machine instances through hypervisor APIs. For
+          example:</para>
+        <itemizedlist>
+          <listitem>
+            <para>XenAPI for XenServer/XCP</para>
+          </listitem>
+          <listitem>
+            <para>libvirt for KVM or QEMU</para>
+          </listitem>
+          <listitem>
+            <para>VMwareAPI for VMware</para>
+          </listitem>
+        </itemizedlist>
+        <para>Processing is fairly complex. Basically, the daemon
+          accepts actions from the queue and performs a series of
+          system commands such as launching a KVM instance and
+          updating its state in the database.</para>
+      </listitem>
+    </varlistentry>
     <varlistentry>
       <term><systemitem class="service">nova-scheduler</systemitem>
-        process</term>
-      <listitem><para>Conceptually the simplest piece of code in OpenStack
-        Compute. It takes a virtual machine instance request from the queue and
-        determines on which compute server host it will run.</para>
-    </listitem>
-  </varlistentry>
+        service</term>
+      <listitem>
+        <para>Takes a virtual machine instance request from the queue
+          and determines on which compute server host it runs.</para>
+      </listitem>
+    </varlistentry>
     <varlistentry>
       <term><systemitem class="service">nova-conductor</systemitem>
-        module</term><listitem><para>Mediates interactions between <systemitem
-          class="service">nova-compute</systemitem> and the database.
-        It eliminates direct accesses to the cloud database made
-        by <systemitem class="service">nova-compute</systemitem>. The
-          <systemitem class="service">nova-conductor</systemitem>
-        module scales horizontally. However, do not deploy it on any
-        nodes where <systemitem class="service"
-          >nova-compute</systemitem> runs. For more information, see
-          <link
-          xlink:href="http://russellbryantnet.wordpress.com/2012/11/19/a-new-nova-service-nova-conductor/"
-          >A new Nova service: nova-conductor</link>.</para>
-    </listitem>
-  </varlistentry>
-</variablelist>
-  <variablelist><title>Networking for VMs</title>
-    <varlistentry><term><systemitem class="service">nova-network</systemitem>
-worker daemon</term>
-    <listitem><para>Similar to <systemitem
-class="service">nova-compute</systemitem>, it accepts networking tasks from
-        the queue and performs tasks to manipulate the network, such
-        as setting up bridging interfaces or changing iptables rules.
-        This functionality is being migrated to OpenStack Networking.</para>
-    </listitem>
-  </varlistentry>
+        module</term>
+      <listitem>
+        <para>Mediates interactions between the <systemitem
+            class="service">nova-compute</systemitem> service and the
+          database. It eliminates direct accesses to the cloud
+          database made by the <systemitem class="service"
+            >nova-compute</systemitem> service. The <systemitem
+            class="service">nova-conductor</systemitem> module scales
+          horizontally. However, do not deploy it on nodes where the
+            <systemitem class="service">nova-compute</systemitem>
+          service runs. For more information, see <link
+            xlink:href="http://russellbryantnet.wordpress.com/2012/11/19/a-new-nova-service-nova-conductor/"
+            >A new Nova service: nova-conductor</link>.</para>
+      </listitem>
+    </varlistentry>
+  </variablelist>
+  <variablelist>
+    <title>Networking for VMs</title>
     <varlistentry>
-      <term><systemitem class="service">nova-dhcpbridge</systemitem>
-        script</term>
-        <listitem><para>The IP address leases and is recorded in the
-        database using the dnsmasq <literal>dhcp-script</literal>
-        facility. This functionality is being migrated to OpenStack
-        Networkin which provides a different script.</para></listitem>
-  </varlistentry>
+      <term><systemitem class="service">nova-network</systemitem>
+        worker daemon</term>
+      <listitem>
+        <para>Similar to the <systemitem class="service"
+            >nova-compute</systemitem> service, accepts networking
+          tasks from the queue and manipulates the network. Performs
+          tasks such as setting up bridging interfaces or changing
+          IPtables rules.</para>
+      </listitem>
+    </varlistentry>
   </variablelist>
   <?hard-pagebreak?>
-  <variablelist><title>Console interface</title>
+  <variablelist>
+    <title>Console interface</title>
     <varlistentry>
       <term><systemitem class="service">nova-consoleauth</systemitem>
-        daemon</term><listitem><para>Authorizes tokens for users that console
-         proxies provide. See <systemitem class="service"
-          >nova-novncproxy</systemitem> and <systemitem
-          class="service">nova-xvpnvncproxy</systemitem>. This service
-        must be running for console proxies to work. Many proxies of
-        either type can be run against a single <systemitem
-          class="service">nova-consoleauth</systemitem> service in a
-        cluster configuration. For information, see <link
-          xlink:href="http://docs.openstack.org/trunk/config-reference/content/about-nova-consoleauth.html"
-          >About nova-consoleauth</link>.</para></listitem>
-  </varlistentry>
+        daemon</term>
+      <listitem>
+        <para>Authorizes tokens for users that console proxies
+          provide. See <systemitem class="service"
+            >nova-novncproxy</systemitem> and <systemitem
+            class="service">nova-xvpnvcproxy</systemitem>. This
+          service must be running for console proxies to work. You can
+          run proxies of either type against a single <systemitem
+            class="service">nova-consoleauth</systemitem> service in a
+          cluster configuration. For information, see <link
+            xlink:href="http://docs.openstack.org/trunk/config-reference/content/about-nova-consoleauth.html"
+            >About nova-consoleauth</link>.</para>
+      </listitem>
+    </varlistentry>
     <varlistentry>
       <term><systemitem class="service">nova-novncproxy</systemitem>
         daemon</term>
-      <listitem><para>Provides a proxy for accessing running instances through
-        a VNC connection. Supports browser-based novnc
-        clients.</para></listitem>
-  </varlistentry>
+      <listitem>
+        <para>Provides a proxy for accessing running instances through
+          a VNC connection. Supports browser-based novnc
+          clients.</para>
+      </listitem>
+    </varlistentry>
     <varlistentry>
       <term><systemitem class="service">nova-xvpnvncproxy</systemitem>
         daemon</term>
-      <listitem><para>A proxy for accessing running instances
-        through a VNC connection. It supports a Java client specifically
-        designed for OpenStack.</para></listitem>
+      <listitem>
+        <para>Provides a proxy for accessing running instances through
+          a VNC connection. Supports an OpenStack-specific Java
+          client.</para>
+      </listitem>
     </varlistentry>
     <varlistentry>
-      <term><systemitem class="service">nova-cert</systemitem> daemon</term>
-      <listitem><para>x509 certificates.</para></listitem>
+      <term><systemitem class="service">nova-cert</systemitem>
+        daemon</term>
+      <listitem>
+        <para>x509 certificates.</para>
+      </listitem>
     </varlistentry>
   </variablelist>
   <para os="debian">In Debian, a unique
@@ -139,57 +169,82 @@ class="service">nova-compute</systemitem>, it accepts networking tasks from
     the <package>debconf</package> interface. You can also manually
     edit the <filename>/etc/default/nova-consoleproxy</filename> file,
     and stop and start the console daemons.</para>
-  <variablelist> <title>Image management (EC2 scenario)</title>
+  <variablelist>
+    <title>Image management (EC2 scenario)</title>
     <varlistentry>
       <term><systemitem class="service">nova-objectstore</systemitem>
-        daemon</term> <listitem><para>A S3 interface for registering images
-        with the OpenStack Image Service. It is mainly used for installations
-        that must support euca2ools. The euca2ools tools talk to <systemitem
-          class="service">nova-objectstore</systemitem> in <emphasis
-          role="italic">S3 language</emphasis>, and <systemitem
-          class="service">nova-objectstore</systemitem> translates S3
-        requests into Image service requests.</para></listitem>
-  </varlistentry>
+        daemon</term>
+      <listitem>
+        <para>An S3 interface for registering images with the
+          OpenStack Image Service. Used primarily for installations
+          that must support euca2ools. The euca2ools tools talk to
+            <systemitem class="service">nova-objectstore</systemitem>
+          in <emphasis role="italic">S3 language</emphasis>, and
+            <systemitem class="service">nova-objectstore</systemitem>
+          translates S3 requests into Image Service requests.</para>
+      </listitem>
+    </varlistentry>
     <varlistentry>
       <term>euca2ools client</term>
-      <listitem><para>A set of command-line interpreter commands for managing
-        cloud resources. Although it is not an OpenStack module, you can
-        configure <systemitem class="service">nova-api</systemitem> to support
-        this EC2 interface. For more information, see the <link
-xlink:href="https://www.eucalyptus.com/docs/eucalyptus/3.4/index.html"
-          >Eucalyptus 3.4 Documentation</link>.</para></listitem>
-  </varlistentry>
-</variablelist>
-  <variablelist><title>Command-line clients and other interfaces</title>
-    <varlistentry><term>nova client</term>
-      <listitem><para>Allows users to submit commands as a tenant administrator
-        or end user.</para></listitem>
-  </varlistentry>
-    <varlistentry>
-      <term>nova-manage client</term>
-      <listitem><para>Enables cloud administrators to submit
-        commands.</para></listitem>
-  </varlistentry>
-</variablelist>
-  <variablelist><title>Other components</title>
-    <varlistentry><term>The queue</term><listitem><para>A central hub for
-          passing messages between daemons. It is usually implemented with <link
-          xlink:href="http://www.rabbitmq.com/">RabbitMQ</link>, but
-          could be any AMQP message queue, such as <link
-          xlink:href="http://qpid.apache.org/">Apache Qpid</link> or
-          <link xlink:href="http://www.zeromq.org/">Zero
-        MQ</link>.</para></listitem>
-</varlistentry>
-<varlistentry><term>SQL database</term>
-  <listitem><para>Stores most build-time and runtime states for a cloud
-  infrastructure. It includes instance types that are available for use,
-  instances in use, available networks, and projects. Theoretically,
-  OpenStack Compute can support any database that is supported by SQL-Alchemy.
-  Note the databases which are widely used are SQLite3 databases (for test and
-  development work), MySQL, and PostgreSQL.</para></listitem>
-  </varlistentry>
+      <listitem>
+        <para>A set of command-line interpreter commands for managing
+          cloud resources. Although it is not an OpenStack module, you
+          can configure <systemitem class="service"
+            >nova-api</systemitem> to support this EC2 interface. For
+          more information, see the <link
+            xlink:href="https://www.eucalyptus.com/docs/eucalyptus/3.4/index.html"
+            >Eucalyptus 3.4 Documentation</link>.</para>
+      </listitem>
+    </varlistentry>
   </variablelist>
-  <para>OpenStack Compute interacts with OpenStack Identity for
-        authentication; OpenStack Image Service for images; and the OpenStack
-        dashboard for a web interface.</para>
+  <variablelist>
+    <title>Command-line clients and other interfaces</title>
+    <varlistentry>
+      <term>nova client</term>
+      <listitem>
+        <para>Enables users to submit commands as a tenant
+          administrator or end user.</para>
+      </listitem>
+    </varlistentry>
+  </variablelist>
+  <variablelist>
+    <title>Other components</title>
+    <varlistentry>
+      <term>The queue</term>
+      <listitem>
+        <para>A central hub for passing messages between daemons.
+          Usually implemented with <link
+            xlink:href="http://www.rabbitmq.com/">RabbitMQ</link>, but
+          can be implemented with an AMQP message queue, such as <link
+            xlink:href="http://qpid.apache.org/">Apache Qpid</link> or
+            <link xlink:href="http://www.zeromq.org/">Zero
+          MQ</link>.</para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>SQL database</term>
+      <listitem>
+        <para>Stores most build-time and run-time states for a cloud
+          infrastructure, including:</para>
+        <itemizedlist>
+          <listitem>
+            <para>Available instance types</para>
+          </listitem>
+          <listitem>
+            <para>Instances in use</para>
+          </listitem>
+          <listitem>
+            <para>Available networks</para>
+          </listitem>
+          <listitem>
+            <para>Projects</para>
+          </listitem>
+        </itemizedlist>
+        <para>Theoretically, OpenStack Compute can support any
+          database that SQL-Alchemy supports. Common databases are
+          SQLite3 for test and development work, MySQL, and
+          PostgreSQL.</para>
+      </listitem>
+    </varlistentry>
+  </variablelist>
 </section>
