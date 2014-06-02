@@ -124,10 +124,13 @@ dbc_authmethod_user=''</programlisting>
       </imageobject>
     </mediaobject>
   </informalfigure>
-  <para>To access a MySQL server remotely, you must make it accessible
-    as root from a remote server. To do so, run the
-      <package>openstack-proxy-node</package> package command:</para>
-  <screen><prompt>#</prompt> <userinput>/usr/share/openstack-proxy-node/mysql-remote-root</userinput></screen>
+  <para>By default in Debian, the MySQL server is only accessible from
+    localhost using the socket file, or 127.0.0.1. To access it over
+    network, users must edit <filename>/etc/mysql/my.cnf</filename> and
+    edit the <literal>mysql.user</literal> table. To do so, Debian provides
+    a helper script located in the <package>openstack-deploy</package>
+    package. To use it, install the package and run:</para>
+  <screen><prompt>#</prompt> <userinput>/usr/share/openstack-deploy/mysql-remote-root</userinput></screen>
   <para>Alternatively, if you do not want to install this package, run
     this script to enable remote root access:</para>
   <programlisting language="bash">#!/bin/sh
@@ -152,5 +155,5 @@ ${SQL} "FLUSH PRIVILEGES"
 sed -i 's|^bind-address[ \t]*=.*|bind-address = 0.0.0.0|' /etc/mysql/my.cnf
 /etc/init.d/mysql restart</programlisting>
   <para>You must enable remote access before you install OpenStack
-    services.</para>
+    services on multiple nodes.</para>
 </section>
