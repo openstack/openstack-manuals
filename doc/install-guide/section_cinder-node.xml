@@ -102,7 +102,7 @@ filter = [ "a/sda1/", "a/sdb/", "r/.*/"]
         configure or re-configure <systemitem class="service"
           >cinder-common</systemitem>.</para>
     </step>
-    <step>
+    <step os="fedora;rhel;centos;opensuse;sles;ubuntu">
       <para os="fedora;rhel;centos;opensuse;sles">Copy the
           <filename>/etc/cinder/cinder.conf</filename> configuration
         file from the controller, or perform the following steps to
@@ -123,10 +123,10 @@ filter = [ "a/sda1/", "a/sdb/", "r/.*/"]
   admin_tenant_name service</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/cinder/cinder.conf keystone_authtoken \
   admin_password <replaceable>CINDER_PASS</replaceable></userinput></screen>
-      <para os="ubuntu;debian">Edit the
+      <para os="ubuntu">Edit the
           <filename>/etc/cinder/cinder.conf</filename> configuration
         file and add this section for keystone credentials:</para>
-      <programlisting os="ubuntu;debian" language="ini">...
+      <programlisting os="ubuntu" language="ini">...
 [keystone_authtoken]
 auth_uri = http://<replaceable>controller</replaceable>:5000
 auth_host = <replaceable>controller</replaceable>
