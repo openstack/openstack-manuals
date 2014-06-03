@@ -4,54 +4,57 @@
   xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
   <title>Networking concepts</title>
-  <para>OpenStack Networking (neutron) manages all of the networking facets for
-    the Virtual Networking Infrastructure (VNI) and the access layer aspects
-    of the Physical Networking Infrastructure (PNI) in your OpenStack
-    environment. OpenStack Networking allows tenants to create advanced virtual
-    network topologies including services such as
+  <para>OpenStack Networking (neutron) manages all of the networking
+    facets for the Virtual Networking Infrastructure (VNI) in your
+    OpenStack environment. OpenStack Networking also manages the access
+    layer aspects of the Physical Networking Infrastructure (PNI).
+    Tenants can create advanced virtual network topologies using
+    OpenStack Networking. These topologies include services such as
     <glossterm baseform="firewall">firewalls</glossterm>,
     <glossterm baseform="load balancer">load balancers</glossterm>, and
     <glossterm baseform="virtual private network (VPN)">
       virtual private networks (VPNs)</glossterm>.</para>
   <para>Networking provides the following object abstractions: networks,
-    subnets, and routers. Each has functionality that mimics its
+    routers, and subnets. Each has a functionality that mimics its
     physical counterpart: networks contain subnets, and routers route
     traffic between different subnet and networks.</para>
+  <para>Each router has one gateway that connects to a network, and many
+    interfaces connected to subnets. Subnets can access machines on
+    other subnets connected to the same router.</para>
   <para>Any given Networking set up has at least one external network.
-    This network, unlike the other networks, is not merely a virtually
-    defined network. Instead, it represents the view into a slice of
-    the external network that is accessible outside the OpenStack
-    installation. IP addresses on the Networking external network are
-    accessible by anybody physically on the outside network. Because
-    this network merely represents a slice of the outside network,
-    DHCP is disabled on this network.</para>
+    This external network, unlike the other networks, is not solely a
+    virtually defined network. It instead provides a view into a slice
+    of the network accessible outside the OpenStack installation, which
+    is the outside network. IP addresses on the external network are
+    accessible by anybody physically on the outside network. DHCP is
+    disabled on this network.</para>
+  <para>Machines can access the outside network through the gateway
+    for the router. For the outside network to access VMs, and for VM's
+    to access the outside network, routers between the networks are
+    needed.</para>
   <para>In addition to external networks, any Networking set up has one
     or more internal networks. These software-defined networks connect
     directly to the VMs. Only the VMs on any given internal network,
     or those on subnets connected through interfaces to a similar
     router, can access VMs connected to that network directly.</para>
-  <para>For the outside network to access VMs, and vice versa, routers
-    between the networks are needed. Each router has one gateway that
-    is connected to a network and many interfaces that are connected
-    to subnets. Like a physical router, subnets can access machines on
-    other subnets that are connected to the same router, and machines
-    can access the outside network through the gateway for the
-    router.</para>
-  <para>Additionally, you can allocate IP addresses on external
+   <para>Additionally, you can allocate IP addresses on external
     networks to ports on the internal network. Whenever something is
-    connected to a subnet, that connection is called a port. You can
-    associate external network IP addresses with ports to VMs. This
-    way, entities on the outside network can access VMs.</para>
+    connected to a subnet, that connection is called a port.You can
+    associate external network IP addresses with ports to VMs.
+    This way, entities on the outside network can access VMs.</para>
   <para>Networking also supports <emphasis role="italic">security
-      groups</emphasis>. Security groups enable administrators to
-    define firewall rules in groups. A VM can belong to one or more
-    security groups, and Networking applies the rules in those security
+    groups</emphasis>, which enable administrators to define
+    firewall rules in groups. A VM can belong to one or more
+    security groups. Networking applies the rules in those security
     groups to block or unblock ports, port ranges, or traffic types
     for that VM.</para>
-  <para>Each plug-in that Networking uses has its own concepts. While not
-    vital to operating Networking, understanding these concepts can help
-    you set up Networking. All Networking installations use a core plug-in
-    and a security group plug-in (or just the No-Op security group
-    plug-in). Additionally, Firewall-as-a-service (FWaaS) and
+  <simplesect><title>Networking plug-ins</title>
+  <para>Each plug-in that Networking uses has its own concepts. These
+    plug-in concepts are not vital to operating Networking.
+    Understanding these concepts can help you set up the Openstack
+    Networking service, however. All Networking installations use a core
+    plug-in and a security group plug-in (or just the No-Op security
+    group plug-in). Additionally, Firewall-as-a-service (FWaaS) and
     Load-balancing-as-a-service (LBaaS) plug-ins are available.</para>
+  </simplesect>
 </section>
