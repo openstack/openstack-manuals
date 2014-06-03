@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="nova_cli_host_servers_migrate">
+    <title>Migrate all instances to another compute host</title>
+    <para>When you want to move all instances from one compute host to
+        another, you can use the <command>nova
+            host-servers-migrate</command> command. The difference
+        between this command and the <command>nova evacuate</command>
+        command is that you can specify the host when evacuating. Also
+        when evacuating, you must configure shared storage on the
+        target host so that user data is preserved on the server disk.
+        See <link xlink:href="http://docs.openstack.org/user-guide/content/nova_cli_evacuate.html">Evacuate instances</link>.</para>
+    <procedure xml:id="migrate_host">
+        <step>
+            <para>To list the host you want to migrate, run:</para>
+            <screen><prompt>$</prompt> <userinput>nova service-list</userinput></screen>
+        </step>
+        <step>
+            <para>After selecting a host from the list, run this
+                command:
+            <screen><prompt>$</prompt> <userinput>nova host-servers-migrate <replaceable>HOST_NAME</replaceable></userinput></screen></para>
+            <para>Where <replaceable>HOST_NAME</replaceable> is the
+                name of the host you want the servers to go to.</para>
+            <para>All instances are booted from a new host while preserving
+                their current configurations, including ID, name, UUID, IP
+                address, and so on.</para>
+        </step>
+    </procedure>
+</section>
