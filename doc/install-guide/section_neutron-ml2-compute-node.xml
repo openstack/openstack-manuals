@@ -4,13 +4,13 @@
   xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
   <title>Configure compute node</title>
+  <para>Before you install and configure OpenStack Networking, you
+    must enable certain kernel networking functions.</para>
   <procedure>
-    <title>Prerequisites</title>
-    <para>Before you configure OpenStack Networking, you must enable certain
-      kernel networking functions.</para>
+    <title>To enable kernel networking functions</title>
     <step>
-      <para>Edit <filename>/etc/sysctl.conf</filename> to contain the
-        following:</para>
+      <para>Edit the <filename>/etc/sysctl.conf</filename> file and
+        add the following lines:</para>
       <programlisting>net.ipv4.conf.all.rp_filter=0
 net.ipv4.conf.default.rp_filter=0</programlisting>
     </step>
@@ -27,8 +27,9 @@ net.ipv4.conf.default.rp_filter=0</programlisting>
       <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-neutron-ml2 openstack-neutron-openvswitch</userinput></screen>
       <screen os="sles;opensuse"><prompt>#</prompt> <userinput>zypper install openstack-neutron-openvswitch-agent</userinput></screen>
       <note os="ubuntu">
-        <para>Ubuntu installations using Linux kernel version 3.11 or newer
-          do not require the <emphasis>openvswitch-datapath-dkms</emphasis>
+        <para>Ubuntu installations that use Linux kernel version 3.11
+          or later do not require the
+            <emphasis>openvswitch-datapath-dkms</emphasis>
           package.</para>
       </note>
       <note os="sles;opensuse">
@@ -41,21 +42,17 @@ net.ipv4.conf.default.rp_filter=0</programlisting>
     <para>The Networking common component configuration includes the
       authentication mechanism, message broker, and plug-in.</para>
     <step os="debian">
-      <para>Respond to prompts for
-        <link linkend="debconf-dbconfig-common">database management</link>,
-        <link linkend="debconf-keystone_authtoken">Identity service
-        credentials</link>,
-        <link linkend="debconf-api-endpoints">service endpoint
-        registration</link>, and
-        <link linkend="debconf-rabbitmq">message broker
-        credentials</link>.</para>
+      <para>Respond to prompts for <link
+          linkend="debconf-dbconfig-common">database
+        management</link>, <link linkend="debconf-keystone_authtoken"
+          >Identity service credentials</link>, <link
+          linkend="debconf-api-endpoints">service endpoint
+          registration</link>, and <link linkend="debconf-rabbitmq"
+          >message broker credentials</link>.</para>
     </step>
     <step os="rhel;centos;fedora;sles;opensuse">
       <para>Configure Networking to use the Identity service for
         authentication:</para>
-      <para>Replace <replaceable>NEUTRON_PASS</replaceable> with the
-        password you chose for the <literal>neutron</literal> user
-        in the Identity service.</para>
       <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf DEFAULT \
   auth_strategy keystone</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf keystone_authtoken \
@@ -72,23 +69,24 @@ net.ipv4.conf.default.rp_filter=0</programlisting>
   admin_user neutron</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf keystone_authtoken \
   admin_password <replaceable>NEUTRON_PASS</replaceable></userinput></screen>
+      <para>Replace <replaceable>NEUTRON_PASS</replaceable> with the
+        password you chose for the <literal>neutron</literal> user in
+        the Identity service.</para>
     </step>
     <step os="ubuntu">
       <para>Configure Networking to use the Identity service for
         authentication:</para>
       <substeps>
         <step>
-          <para>Edit the <filename>/etc/neutron/neutron.conf</filename>
-            file and add the following key to the
-            <literal>[DEFAULT]</literal> section:</para>
-            <programlisting language="ini">[DEFAULT]
+          <para>Edit the
+              <filename>/etc/neutron/neutron.conf</filename> file and
+            add the following key to the <literal>[DEFAULT]</literal>
+            section:</para>
+          <programlisting language="ini">[DEFAULT]
 ...
 auth_strategy = keystone</programlisting>
           <para>Add the following keys to the
-            <literal>[keystone_authtoken]</literal> section:</para>
-          <para>Replace <replaceable>NEUTRON_PASS</replaceable> with the
-            password you chose for the <literal>neutron</literal> user
-            in the Identity service.</para>
+              <literal>[keystone_authtoken]</literal> section:</para>
           <programlisting language="ini">[keystone_authtoken]
 ...
 auth_uri = http://<replaceable>controller</replaceable>:5000
@@ -98,14 +96,14 @@ auth_port = 35357
 admin_tenant_name = service
 admin_user = neutron
 admin_password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
+          <para>Replace <replaceable>NEUTRON_PASS</replaceable> with
+            the password you chose for the <literal>neutron</literal>
+            user in the Identity service.</para>
         </step>
       </substeps>
     </step>
     <step os="opensuse;sles;rhel;centos;fedora">
       <para>Configure Networking to use the message broker:</para>
-      <para>Replace <replaceable>RABBIT_PASS</replaceable> with the password
-        you chose for the <literal>guest</literal> account in
-        <application>RabbitMQ</application>.</para>
       <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf DEFAULT \
   rpc_backend neutron.openstack.common.rpc.impl_kombu</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf DEFAULT \
@@ -114,17 +112,21 @@ admin_password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
   rabbit_userid guest</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf DEFAULT \
   rabbit_password <replaceable>RABBIT_PASS</replaceable></userinput></screen>
+      <para>Replace <replaceable>RABBIT_PASS</replaceable> with the
+        password you chose for the <literal>guest</literal> account in
+          <application>RabbitMQ</application>.</para>
     </step>
     <step os="ubuntu">
       <para>Configure Networking to use the message broker:</para>
       <substeps>
         <step>
-          <para>Edit the <filename>/etc/neutron/neutron.conf</filename> file
-            and add the following keys to the <literal>[DEFAULT]</literal>
+          <para>Edit the
+              <filename>/etc/neutron/neutron.conf</filename> file and
+            add the following keys to the <literal>[DEFAULT]</literal>
             section:</para>
-          <para>Replace <replaceable>RABBIT_PASS</replaceable> with the
-            password you chose for the <literal>guest</literal> account in
-            <application>RabbitMQ</application>.</para>
+          <para>Replace <replaceable>RABBIT_PASS</replaceable> with
+            the password you chose for the <literal>guest</literal>
+            account in <application>RabbitMQ</application>.</para>
           <programlisting language="ini">[DEFAULT]
 ...
 rpc_backend = neutron.openstack.common.rpc.impl_kombu
@@ -134,26 +136,27 @@ rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
       </substeps>
     </step>
     <step os="rhel;centos;fedora;sles;opensuse">
-      <para>Configure Networking to use the Modular Layer 2 (ML2) plug-in
-        and associated services:</para>
-        <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf DEFAULT \
+      <para>Configure Networking to use the Modular Layer 2 (ML2)
+        plug-in and associated services:</para>
+      <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf DEFAULT \
   core_plugin ml2</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf DEFAULT \
   service_plugins router</userinput></screen>
       <note>
-        <para>We recommend adding <literal>verbose = True</literal> to
-          the <literal>[DEFAULT]</literal> section in
-          <filename>/etc/neutron/neutron.conf</filename> to assist with
-          troubleshooting.</para>
+        <para>To assist with troubleshooting, add <literal>verbose =
+            True</literal> to the <literal>[DEFAULT]</literal> section
+          in the <filename>/etc/neutron/neutron.conf</filename>
+          file.</para>
       </note>
     </step>
     <step os="ubuntu;debian">
-      <para>Configure Networking to use the Modular Layer 2 (ML2) plug-in
-        and associated services:</para>
+      <para>Configure Networking to use the Modular Layer 2 (ML2)
+        plug-in and associated services:</para>
       <substeps>
         <step>
-          <para>Edit the <filename>/etc/neutron/neutron.conf</filename> file
-            and add the following keys to the <literal>[DEFAULT]</literal>
+          <para>Edit the
+              <filename>/etc/neutron/neutron.conf</filename> file and
+            add the following keys to the <literal>[DEFAULT]</literal>
             section:</para>
           <programlisting os="ubuntu;debian" language="ini">[DEFAULT]
 ...
@@ -161,10 +164,11 @@ core_plugin = ml2
 service_plugins = router
 allow_overlapping_ips = True</programlisting>
           <note>
-            <para>We recommend adding <literal>verbose = True</literal> to
-              the <literal>[DEFAULT]</literal> section in
-              <filename>/etc/neutron/neutron.conf</filename> to assist with
-              troubleshooting.</para>
+            <para>To assist with troubleshooting, add <literal>verbose
+                = True</literal> to the <literal>[DEFAULT]</literal>
+              section in the
+                <filename>/etc/neutron/neutron.conf</filename>
+              file.</para>
           </note>
         </step>
       </substeps>
@@ -172,17 +176,11 @@ allow_overlapping_ips = True</programlisting>
   </procedure>
   <procedure>
     <title>To configure the Modular Layer 2 (ML2) plug-in</title>
-    <para>The ML2 plug-in uses the Open vSwitch (OVS) mechanism (agent) to
-      build the virtual networking framework for instances.</para>
+    <para>The ML2 plug-in uses the Open vSwitch (OVS) mechanism
+      (agent) to build the virtual networking framework for
+      instances.</para>
     <step os="rhel;centos;fedora;sles;opensuse">
       <para>Run the following commands:</para>
-      <para>Replace
-        <replaceable>INSTANCE_TUNNELS_INTERFACE_IP_ADDRESS</replaceable>
-        with the IP address of the instance tunnels network interface on
-        your compute node. This guide uses
-        <literal>10.0.1.31</literal> for the IP address of the
-        instance tunnels network interface on the first compute
-        node.</para>
       <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/plugins/ml2/ml2_conf.ini ml2 \
   type_drivers gre</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/plugins/ml2/ml2_conf.ini ml2 \
@@ -201,29 +199,35 @@ allow_overlapping_ips = True</programlisting>
   firewall_driver neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/plugins/ml2/ml2_conf.ini securitygroup \
   enable_security_group True</userinput></screen>
+      <para>Replace
+          <replaceable>INSTANCE_TUNNELS_INTERFACE_IP_ADDRESS</replaceable>
+        with the IP address of the instance tunnels network interface
+        on your compute node. This guide uses
+          <literal>10.0.1.31</literal> for the IP address of the
+        instance tunnels network interface on the first compute
+        node.</para>
     </step>
     <step os="ubuntu;debian">
       <para>Edit the
-        <filename>/etc/neutron/plugins/ml2/ml2_conf.ini</filename>
-        file:</para>
-      <para>Add the following keys to the <literal>[ml2]</literal>
-        section:</para>
+          <filename>/etc/neutron/plugins/ml2/ml2_conf.ini</filename>
+        file and add the following keys to the
+          <literal>[ml2]</literal> section:</para>
       <programlisting language="ini">[ml2]
 ...
 type_drivers = gre
 tenant_network_types = gre
 mechanism_drivers = openvswitch</programlisting>
       <para>Add the following keys to the
-        <literal>[ml2_type_gre]</literal> section:</para>
+          <literal>[ml2_type_gre]</literal> section:</para>
       <programlisting language="ini">[ml2_type_gre]
 ...
 tunnel_id_ranges = 1:1000</programlisting>
       <para>Add the <literal>[ovs]</literal> section and the following
         keys to it:</para>
       <para>Replace
-        <replaceable>INSTANCE_TUNNELS_INTERFACE_IP_ADDRESS</replaceable>
-        with the IP address of the instance tunnels network interface on
-        your compute node.</para>
+          <replaceable>INSTANCE_TUNNELS_INTERFACE_IP_ADDRESS</replaceable>
+        with the IP address of the instance tunnels network interface
+        on your compute node.</para>
       <programlisting language="ini">[ovs]
 ...
 local_ip = <replaceable>INSTANCE_TUNNELS_INTERFACE_IP_ADDRESS</replaceable>
@@ -239,28 +243,29 @@ enable_security_group = True</programlisting>
   </procedure>
   <procedure>
     <title>To configure the Open vSwitch (OVS) service</title>
-    <para>The OVS service provides the underlying virtual networking framework
-      for instances. The integration bridge <literal>br-int</literal> handles
-      internal instance network traffic within OVS.</para>
+    <para>The OVS service provides the underlying virtual networking
+      framework for instances. The integration bridge
+        <literal>br-int</literal> handles internal instance network
+      traffic within OVS.</para>
     <step os="rhel;centos;fedora">
-      <para>Start the OVS service and configure it to start when the system
-        boots:</para>
-        <screen><prompt>#</prompt> <userinput>service openvswitch start</userinput>
+      <para>Start the OVS service and configure it to start when the
+        system boots:</para>
+      <screen><prompt>#</prompt> <userinput>service openvswitch start</userinput>
 <prompt>#</prompt> <userinput>chkconfig openvswitch on</userinput></screen>
     </step>
     <step os="sles;opensuse">
-      <para>Start the OVS service and configure it to start when the system
-        boots:</para>
-        <screen><prompt>#</prompt> <userinput>service openvswitch-switch start</userinput>
+      <para>Start the OVS service and configure it to start when the
+        system boots:</para>
+      <screen><prompt>#</prompt> <userinput>service openvswitch-switch start</userinput>
 <prompt>#</prompt> <userinput>chkconfig openvswitch-switch on</userinput></screen>
     </step>
     <step os="ubuntu">
       <para>Restart the OVS service:</para>
-        <screen><prompt>#</prompt> <userinput>service openvswitch-switch restart</userinput></screen>
+      <screen><prompt>#</prompt> <userinput>service openvswitch-switch restart</userinput></screen>
     </step>
     <step os="debian">
       <para>Restart the OVS service:</para>
-        <screen><prompt>#</prompt> <userinput>service openvswitch restart</userinput></screen>
+      <screen><prompt>#</prompt> <userinput>service openvswitch restart</userinput></screen>
     </step>
     <step>
       <para>Add the integration bridge:</para>
@@ -269,14 +274,11 @@ enable_security_group = True</programlisting>
   </procedure>
   <procedure>
     <title>To configure Compute to use Networking</title>
-    <para>By default, most distributions configure Compute to use legacy
-      networking. You must reconfigure Compute to manage networks through
-      Networking.</para>
+    <para>By default, most distributions configure Compute to use
+      legacy networking. You must reconfigure Compute to manage
+      networks through Networking.</para>
     <step os="rhel;centos;fedora;sles;opensuse">
       <para>Run the following commands:</para>
-      <para>Replace <replaceable>NEUTRON_PASS</replaceable> with the
-        password you chose for the <literal>neutron</literal> user
-        in the Identity service.</para>
       <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT \
   network_api_class nova.network.neutronv2.api.API</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT \
@@ -297,20 +299,24 @@ enable_security_group = True</programlisting>
   firewall_driver nova.virt.firewall.NoopFirewallDriver</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT \
   security_group_api neutron</userinput></screen>
+      <para>Replace <replaceable>NEUTRON_PASS</replaceable> with the
+        password you chose for the <literal>neutron</literal> user in
+        the Identity service.</para>
       <note>
-        <para>By default, Compute uses an internal firewall service. Since
-          Networking includes a firewall service, you must disable the
-          Compute firewall service by using the
-          <literal>nova.virt.firewall.NoopFirewallDriver</literal> firewall
-          driver.</para>
+        <para>By default, Compute uses an internal firewall service.
+          Since Networking includes a firewall service, you must
+          disable the Compute firewall service by using the
+            <literal>nova.virt.firewall.NoopFirewallDriver</literal>
+          firewall driver.</para>
       </note>
     </step>
     <step os="ubuntu;debian">
-      <para>Edit the <filename>/etc/nova/nova.conf</filename> and add the
-        following keys to the <literal>[DEFAULT]</literal> section:</para>
+      <para>Edit the <filename>/etc/nova/nova.conf</filename> and add
+        the following keys to the <literal>[DEFAULT]</literal>
+        section:</para>
       <para>Replace <replaceable>NEUTRON_PASS</replaceable> with the
-        password you chose for the <literal>neutron</literal> user
-        in the Identity service.</para>
+        password you chose for the <literal>neutron</literal> user in
+        the Identity service.</para>
       <programlisting language="ini">[DEFAULT]
 ...
 network_api_class = nova.network.neutronv2.api.API
@@ -324,42 +330,43 @@ linuxnet_interface_driver = nova.network.linux_net.LinuxOVSInterfaceDriver
 firewall_driver = nova.virt.firewall.NoopFirewallDriver
 security_group_api = neutron</programlisting>
       <note>
-        <para>By default, Compute uses an internal firewall service. Since
-          Networking includes a firewall service, you must disable the
-          Compute firewall service by using the
-          <literal>nova.virt.firewall.NoopFirewallDriver</literal> firewall
-          driver.</para>
+        <para>By default, Compute uses an internal firewall service.
+          Since Networking includes a firewall service, you must
+          disable the Compute firewall service by using the
+            <literal>nova.virt.firewall.NoopFirewallDriver</literal>
+          firewall driver.</para>
       </note>
     </step>
   </procedure>
   <procedure>
     <title>To finalize the installation</title>
     <step os="rhel;centos;fedora">
-      <para>The Networking service initialization scripts expect a symbolic
-        link <filename>/etc/neutron/plugin.ini</filename> pointing to the
-        configuration file associated with your chosen plug-in. Using
-        the ML2 plug-in, for example, the symbolic link must point to
-        <filename>/etc/neutron/plugins/ml2/ml2_conf.ini</filename>.
+      <para>The Networking service initialization scripts expect a
+        symbolic link <filename>/etc/neutron/plugin.ini</filename>
+        pointing to the configuration file associated with your chosen
+        plug-in. Using the ML2 plug-in, for example, the symbolic link
+        must point to
+          <filename>/etc/neutron/plugins/ml2/ml2_conf.ini</filename>.
         If this symbolic link does not exist, create it using the
         following commands:</para>
       <screen><prompt>#</prompt> <userinput>ln -s plugins/ml2/ml2_conf.ini /etc/neutron/plugin.ini</userinput></screen>
-<!-- https://bugzilla.redhat.com/show_bug.cgi?id=1087647 -->
-      <para>Due to a packaging bug, the Open vSwitch agent initialization
-        script explicitly looks for the Open vSwitch plug-in configuration
-        file rather than a symbolic link
-        <filename>/etc/neutron/plugin.ini</filename> pointing to the ML2
-        plug-in configuration file. Run the following commands to resolve this
-        issue:</para>
+      <!-- https://bugzilla.redhat.com/show_bug.cgi?id=1087647 -->
+      <para>Due to a packaging bug, the Open vSwitch agent
+        initialization script explicitly looks for the Open vSwitch
+        plug-in configuration file rather than a symbolic link
+          <filename>/etc/neutron/plugin.ini</filename> pointing to the
+        ML2 plug-in configuration file. Run the following commands to
+        resolve this issue:</para>
       <screen><prompt>#</prompt> <userinput>cp /etc/init.d/neutron-openvswitch-agent /etc/init.d/neutron-openvswitch-agent.orig</userinput>
 <prompt>#</prompt> <userinput>sed -i 's,plugins/openvswitch/ovs_neutron_plugin.ini,plugin.ini,g' /etc/init.d/neutron-openvswitch-agent</userinput></screen>
     </step>
     <step os="sles;opensuse">
-      <para>The Networking service initialization scripts expect the variable
-        <literal>NEUTRON_PLUGIN_CONF</literal> in the
-        <filename>/etc/sysconfig/neutron</filename> file to reference the
-        configuration file associated with your chosen plug-in. Using
-        ML2, for example, edit the
-        <filename>/etc/sysconfig/neutron</filename> file and add the
+      <para>The Networking service initialization scripts expect the
+        variable <literal>NEUTRON_PLUGIN_CONF</literal> in the
+          <filename>/etc/sysconfig/neutron</filename> file to
+        reference the configuration file associated with your chosen
+        plug-in. Using ML2, for example, edit the
+          <filename>/etc/sysconfig/neutron</filename> file and add the
         following:</para>
       <programlisting>NEUTRON_PLUGIN_CONF="/etc/neutron/plugins/ml2/ml2_conf.ini"</programlisting>
     </step>
@@ -369,8 +376,8 @@ security_group_api = neutron</programlisting>
       <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service nova-compute restart</userinput></screen>
     </step>
     <step os="rhel;centos;fedora;sles;opensuse">
-      <para>Start the Open vSwitch (OVS) agent and configure it to start when
-        the system boots:</para>
+      <para>Start the Open vSwitch (OVS) agent and configure it to
+        start when the system boots:</para>
       <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>service neutron-openvswitch-agent start</userinput>
 <prompt>#</prompt> <userinput>chkconfig neutron-openvswitch-agent on</userinput></screen>
       <screen os="sles;opensuse"><prompt>#</prompt> <userinput>service openstack-neutron-openvswitch-agent start</userinput>

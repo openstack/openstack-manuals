@@ -4,10 +4,10 @@
   xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
   <title>Configure network node</title>
+  <para>Before you install and configure OpenStack Networking, you
+    must enable certain kernel networking functions.</para>
   <procedure>
-    <title>Prerequisites</title>
-    <para>Before you configure OpenStack Networking, you must enable certain
-      kernel networking functions.</para>
+    <title>To enable kernel networking functions</title>
     <step>
       <para>Edit <filename>/etc/sysctl.conf</filename> to contain the
         following:</para>
@@ -30,8 +30,9 @@ net.ipv4.conf.default.rp_filter=0</programlisting>
       <screen os="sles;opensuse"><prompt>#</prompt> <userinput>zypper install openstack-neutron-openvswitch-agent openstack-neutron-l3-agent \
   openstack-neutron-dhcp-agent openstack-neutron-metadata-agent</userinput></screen>
       <note os="ubuntu">
-        <para>Ubuntu installations using Linux kernel version 3.11 or newer
-          do not require the <emphasis>openvswitch-datapath-dkms</emphasis>
+        <para>Ubuntu installations using Linux kernel version 3.11 or
+          newer do not require the
+            <emphasis>openvswitch-datapath-dkms</emphasis>
           package.</para>
       </note>
       <note os="sles;opensuse">
@@ -44,21 +45,20 @@ net.ipv4.conf.default.rp_filter=0</programlisting>
     <para>The Networking common component configuration includes the
       authentication mechanism, message broker, and plug-in.</para>
     <step os="debian">
-      <para>Respond to prompts for
-        <link linkend="debconf-dbconfig-common">database management</link>,
-        <link linkend="debconf-keystone_authtoken">Identity service
-        credentials</link>,
-        <link linkend="debconf-api-endpoints">service endpoint
-        registration</link>, and
-        <link linkend="debconf-rabbitmq">message broker
-        credentials</link>.</para>
+      <para>Respond to prompts for <link
+          linkend="debconf-dbconfig-common">database
+        management</link>, <link linkend="debconf-keystone_authtoken"
+          >Identity service credentials</link>, <link
+          linkend="debconf-api-endpoints">service endpoint
+          registration</link>, and <link linkend="debconf-rabbitmq"
+          >message broker credentials</link>.</para>
     </step>
     <step os="rhel;centos;fedora;sles;opensuse">
       <para>Configure Networking to use the Identity service for
         authentication:</para>
       <para>Replace <replaceable>NEUTRON_PASS</replaceable> with the
-        password you chose for the <literal>neutron</literal> user
-        in the Identity service.</para>
+        password you chose for the <literal>neutron</literal> user in
+        the Identity service.</para>
       <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf DEFAULT \
   auth_strategy keystone</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf keystone_authtoken \
@@ -81,17 +81,18 @@ net.ipv4.conf.default.rp_filter=0</programlisting>
         authentication:</para>
       <substeps>
         <step>
-          <para>Edit the <filename>/etc/neutron/neutron.conf</filename>
-            file and add the following key to the
-            <literal>[DEFAULT]</literal> section:</para>
-            <programlisting language="ini">[DEFAULT]
+          <para>Edit the
+              <filename>/etc/neutron/neutron.conf</filename> file and
+            add the following key to the <literal>[DEFAULT]</literal>
+            section:</para>
+          <programlisting language="ini">[DEFAULT]
 ...
 auth_strategy = keystone</programlisting>
           <para>Add the following keys to the
-            <literal>[keystone_authtoken]</literal> section:</para>
-          <para>Replace <replaceable>NEUTRON_PASS</replaceable> with the
-            password you chose for the <literal>neutron</literal> user
-            in the Identity service.</para>
+              <literal>[keystone_authtoken]</literal> section:</para>
+          <para>Replace <replaceable>NEUTRON_PASS</replaceable> with
+            the password you chose for the <literal>neutron</literal>
+            user in the Identity service.</para>
           <programlisting language="ini">[keystone_authtoken]
 ...
 auth_uri = http://<replaceable>controller</replaceable>:5000
@@ -106,9 +107,9 @@ admin_password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
     </step>
     <step os="sles;opensuse;rhel;centos;fedora">
       <para>Configure Networking to use the message broker:</para>
-      <para>Replace <replaceable>RABBIT_PASS</replaceable> with the password
-        you chose for the <literal>guest</literal> account in
-        <application>RabbitMQ</application>.</para>
+      <para>Replace <replaceable>RABBIT_PASS</replaceable> with the
+        password you chose for the <literal>guest</literal> account in
+          <application>RabbitMQ</application>.</para>
       <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf DEFAULT \
   rpc_backend neutron.openstack.common.rpc.impl_kombu</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf DEFAULT \
@@ -122,12 +123,13 @@ admin_password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
       <para>Configure Networking to use the message broker:</para>
       <substeps>
         <step>
-          <para>Edit the <filename>/etc/neutron/neutron.conf</filename> file
-            and add the following keys to the <literal>[DEFAULT]</literal>
+          <para>Edit the
+              <filename>/etc/neutron/neutron.conf</filename> file and
+            add the following keys to the <literal>[DEFAULT]</literal>
             section:</para>
-          <para>Replace <replaceable>RABBIT_PASS</replaceable> with the
-            password you chose for the <literal>guest</literal> account in
-            <application>RabbitMQ</application>.</para>
+          <para>Replace <replaceable>RABBIT_PASS</replaceable> with
+            the password you chose for the <literal>guest</literal>
+            account in <application>RabbitMQ</application>.</para>
           <programlisting language="ini">[DEFAULT]
 ...
 rpc_backend = neutron.openstack.common.rpc.impl_kombu
@@ -137,26 +139,27 @@ rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
       </substeps>
     </step>
     <step os="rhel;centos;fedora;sles;opensuse">
-      <para>Configure Networking to use the Modular Layer 2 (ML2) plug-in
-        and associated services:</para>
-        <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf DEFAULT \
+      <para>Configure Networking to use the Modular Layer 2 (ML2)
+        plug-in and associated services:</para>
+      <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf DEFAULT \
   core_plugin ml2</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf DEFAULT \
   service_plugins router</userinput></screen>
       <note>
-        <para>We recommend adding <literal>verbose = True</literal> to
-          the <literal>[DEFAULT]</literal> section in
-          <filename>/etc/neutron/neutron.conf</filename> to assist with
-          troubleshooting.</para>
+        <para>To assist with troubleshooting, add <literal>verbose =
+            True</literal> to the <literal>[DEFAULT]</literal> section
+          in the <filename>/etc/neutron/neutron.conf</filename>
+          file.</para>
       </note>
     </step>
     <step os="ubuntu;debian">
-      <para>Configure Networking to use the Modular Layer 2 (ML2) plug-in
-        and associated services:</para>
+      <para>Configure Networking to use the Modular Layer 2 (ML2)
+        plug-in and associated services:</para>
       <substeps>
         <step>
-          <para>Edit the <filename>/etc/neutron/neutron.conf</filename> file
-            and add the following keys to the <literal>[DEFAULT]</literal>
+          <para>Edit the
+              <filename>/etc/neutron/neutron.conf</filename> file and
+            add the following keys to the <literal>[DEFAULT]</literal>
             section:</para>
           <programlisting language="ini">[DEFAULT]
 ...
@@ -164,10 +167,11 @@ core_plugin = ml2
 service_plugins = router
 allow_overlapping_ips = True</programlisting>
           <note>
-            <para>We recommend adding <literal>verbose = True</literal> to
-              the <literal>[DEFAULT]</literal> section in
-              <filename>/etc/neutron/neutron.conf</filename> to assist with
-              troubleshooting.</para>
+            <para>To assist with troubleshooting, add <literal>verbose
+                = True</literal> to the <literal>[DEFAULT]</literal>
+              section in the
+                <filename>/etc/neutron/neutron.conf</filename>
+              file.</para>
           </note>
         </step>
       </substeps>
@@ -175,8 +179,8 @@ allow_overlapping_ips = True</programlisting>
   </procedure>
   <procedure>
     <title>To configure the Layer-3 (L3) agent</title>
-    <para>The <glossterm>Layer-3 (L3) agent</glossterm> provides routing
-      services for instance virtual networks.</para>
+    <para>The <glossterm>Layer-3 (L3) agent</glossterm> provides
+      routing services for instance virtual networks.</para>
     <step os="rhel;centos;fedora;sles;opensuse">
       <para>Run the following commands:</para>
       <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/l3_agent.ini DEFAULT \
@@ -184,32 +188,32 @@ allow_overlapping_ips = True</programlisting>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/l3_agent.ini DEFAULT \
   use_namespaces True</userinput></screen>
       <note>
-        <para>We recommend adding <literal>verbose = True</literal> to
-          the <literal>[DEFAULT]</literal> section in
-          <filename>/etc/neutron/l3_agent.ini</filename> to assist with
-          troubleshooting.</para>
+        <para>To assist with troubleshooting, add <literal>verbose =
+            True</literal> to the <literal>[DEFAULT]</literal> section
+          in the <filename>/etc/neutron/l3_agent.ini</filename>
+          file.</para>
       </note>
     </step>
     <step os="ubuntu;debian">
-      <para>Edit the <filename>/etc/neutron/l3_agent.ini</filename> file
-        and add the following keys to the <literal>[DEFAULT]</literal>
-        section:</para>
+      <para>Edit the <filename>/etc/neutron/l3_agent.ini</filename>
+        file and add the following keys to the
+          <literal>[DEFAULT]</literal> section:</para>
       <programlisting language="ini">[DEFAULT]
 ...
 interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
 use_namespaces = True</programlisting>
       <note>
-        <para>We recommend adding <literal>verbose = True</literal> to
-          the <literal>[DEFAULT]</literal> section in
-          <filename>/etc/neutron/l3_agent.ini</filename> to assist with
-          troubleshooting.</para>
+        <para>To assist with troubleshooting, add <literal>verbose =
+            True</literal> to the <literal>[DEFAULT]</literal> section
+          in the <filename>/etc/neutron/l3_agent.ini</filename>
+          file.</para>
       </note>
     </step>
   </procedure>
   <procedure>
     <title>To configure the DHCP agent</title>
     <para>The <glossterm>DHCP agent</glossterm> provides
-      <glossterm>DHCP</glossterm> services for instance virtual
+        <glossterm>DHCP</glossterm> services for instance virtual
       networks.</para>
     <step os="rhel;centos;fedora;sles;opensuse">
       <para>Run the following commands:</para>
@@ -220,39 +224,40 @@ use_namespaces = True</programlisting>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/dhcp_agent.ini DEFAULT \
   use_namespaces True</userinput></screen>
       <note>
-        <para>We recommend adding <literal>verbose = True</literal> to
-          the <literal>[DEFAULT]</literal> section in
-          <filename>/etc/neutron/dhcp_agent.ini</filename> to assist with
-          troubleshooting.</para>
+        <para>To assist with troubleshooting, add <literal>verbose =
+            True</literal> to the <literal>[DEFAULT]</literal> section
+          in the <filename>/etc/neutron/dhcp_agent.ini</filename>
+          file.</para>
       </note>
     </step>
     <step os="ubuntu;debian">
-      <para>Edit the <filename>/etc/neutron/dhcp_agent.ini</filename> file
-        and add the following keys to the <literal>[DEFAULT]</literal>
-        section:</para>
+      <para>Edit the <filename>/etc/neutron/dhcp_agent.ini</filename>
+        file and add the following keys to the
+          <literal>[DEFAULT]</literal> section:</para>
       <programlisting language="ini">[DEFAULT]
 ...
 interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
 dhcp_driver = neutron.agent.linux.dhcp.Dnsmasq
 use_namespaces = True</programlisting>
       <note>
-        <para>We recommend adding <literal>verbose = True</literal> to
-          the <literal>[DEFAULT]</literal> section in
-          <filename>/etc/neutron/dhcp_agent.ini</filename> to assist with
-          troubleshooting.</para>
+        <para>To assist with troubleshooting, add <literal>verbose =
+            True</literal> to the <literal>[DEFAULT]</literal> section
+          in the <filename>/etc/neutron/dhcp_agent.ini</filename>
+          file.</para>
       </note>
     </step>
   </procedure>
   <procedure>
     <title>To configure the metadata agent</title>
-    <para>The <glossterm>metadata agent</glossterm> provides configuration
-      information such as credentials for remote access to instances.</para>
+    <para>The <glossterm>metadata agent</glossterm> provides
+      configuration information such as credentials for remote access
+      to instances.</para>
     <step os="rhel;centos;fedora;sles;opensuse">
       <para>Run the following commands:</para>
       <para>Replace <replaceable>NEUTRON_PASS</replaceable> with the
-        password you chose for the <literal>neutron</literal> user
-        in the Identity service. Replace
-        <replaceable>METADATA_SECRET</replaceable> with a suitable
+        password you chose for the <literal>neutron</literal> user in
+        the Identity service. Replace
+          <replaceable>METADATA_SECRET</replaceable> with a suitable
         secret for the metadata proxy.</para>
       <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/metadata_agent.ini DEFAULT \
   auth_url http://<replaceable>controller</replaceable>:5000/v2.0</userinput>
@@ -269,20 +274,21 @@ use_namespaces = True</programlisting>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/metadata_agent.ini DEFAULT \
   metadata_proxy_shared_secret <replaceable>METADATA_SECRET</replaceable></userinput></screen>
       <note>
-        <para>We recommend adding <literal>verbose = True</literal> to
-          the <literal>[DEFAULT]</literal> section in
-          <filename>/etc/neutron/metadata_agent.ini</filename> to assist with
-          troubleshooting.</para>
+        <para>To assist with troubleshooting, add <literal>verbose =
+            True</literal> to the <literal>[DEFAULT]</literal> section
+          in the <filename>/etc/neutron/metadata_agent.ini</filename>
+          file.</para>
       </note>
     </step>
     <step os="ubuntu;debian">
-      <para>Edit the <filename>/etc/neutron/metadata_agent.ini</filename> file
+      <para>Edit the
+          <filename>/etc/neutron/metadata_agent.ini</filename> file
         and add the following keys to the <literal>[DEFAULT]</literal>
         section:</para>
       <para>Replace <replaceable>NEUTRON_PASS</replaceable> with the
-        password you chose for the <literal>neutron</literal> user
-        in the Identity service. Replace
-        <replaceable>METADATA_SECRET</replaceable> with a suitable
+        password you chose for the <literal>neutron</literal> user in
+        the Identity service. Replace
+          <replaceable>METADATA_SECRET</replaceable> with a suitable
         secret for the metadata proxy.</para>
       <programlisting language="ini">[DEFAULT]
 ...
@@ -294,24 +300,23 @@ admin_password = <replaceable>NEUTRON_PASS</replaceable>
 nova_metadata_ip = <replaceable>controller</replaceable>
 metadata_proxy_shared_secret = <replaceable>METADATA_SECRET</replaceable></programlisting>
       <note>
-        <para>We recommend adding <literal>verbose = True</literal> to
-          the <literal>[DEFAULT]</literal> section in
-          <filename>/etc/neutron/metadata_agent.ini</filename> to assist with
-          troubleshooting.</para>
+        <para>To assist with troubleshooting, add <literal>verbose =
+            True</literal> to the <literal>[DEFAULT]</literal> section
+          in the <filename>/etc/neutron/metadata_agent.ini</filename>
+          file.</para>
       </note>
     </step>
     <step>
       <note>
         <para>Perform the next two steps on the
-        <emphasis>controller</emphasis> node.</para>
+            <emphasis>controller</emphasis> node.</para>
       </note>
     </step>
     <step os="rhel;centos;fedora;sles;opensuse">
-      <para>On the <emphasis>controller</emphasis> node, configure Compute to
-        use the metadata service:</para>
-      <para>Replace
-        <replaceable>METADATA_SECRET</replaceable> with the secret you chose
-        for the metadata proxy.</para>
+      <para>On the <emphasis>controller</emphasis> node, configure
+        Compute to use the metadata service:</para>
+      <para>Replace <replaceable>METADATA_SECRET</replaceable> with
+        the secret you chose for the metadata proxy.</para>
       <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT \
   service_neutron_metadata_proxy true</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT \
@@ -319,36 +324,36 @@ metadata_proxy_shared_secret = <replaceable>METADATA_SECRET</replaceable></progr
     </step>
     <step os="ubuntu;debian">
       <para>On the <emphasis>controller</emphasis> node, edit the
-        <filename>/etc/nova/nova.conf</filename> file and add the following
-        keys to the <literal>[DEFAULT]</literal> section:</para>
-      <para>Replace
-        <replaceable>METADATA_SECRET</replaceable> with the secret you chose
-        for the metadata proxy.</para>
+          <filename>/etc/nova/nova.conf</filename> file and add the
+        following keys to the <literal>[DEFAULT]</literal>
+        section:</para>
+      <para>Replace <replaceable>METADATA_SECRET</replaceable> with
+        the secret you chose for the metadata proxy.</para>
       <programlisting language="ini">[DEFAULT]
 ...
 service_neutron_metadata_proxy = true
 neutron_metadata_proxy_shared_secret = <replaceable>METADATA_SECRET</replaceable></programlisting>
     </step>
     <step>
-      <para>On the <emphasis>controller</emphasis> node, restart the Compute
-        <glossterm>API</glossterm> service:</para>
+      <para>On the <emphasis>controller</emphasis> node, restart the
+        Compute <glossterm>API</glossterm> service:</para>
       <screen os="rhel;centos;fedora;sles;opensuse"><prompt>#</prompt> <userinput>service openstack-nova-api restart</userinput></screen>
       <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service nova-api restart</userinput></screen>
     </step>
   </procedure>
   <procedure>
     <title>To configure the Modular Layer 2 (ML2) plug-in</title>
-    <para>The ML2 plug-in uses the Open vSwitch (OVS) mechanism (agent) to
-      build virtual networking framework for instances.</para>
+    <para>The ML2 plug-in uses the Open vSwitch (OVS) mechanism
+      (agent) to build virtual networking framework for
+      instances.</para>
     <step os="rhel;centos;fedora;sles;opensuse">
       <para>Run the following commands:</para>
       <para>Replace
-        <replaceable>INSTANCE_TUNNELS_INTERFACE_IP_ADDRESS</replaceable>
+          <replaceable>INSTANCE_TUNNELS_INTERFACE_IP_ADDRESS</replaceable>
         with the IP address of the instance tunnels network interface
         on your network node. This guide uses
-        <literal>10.0.1.21</literal> for the IP address of the
-        instance tunnels network interface on the network
-        node.</para>
+          <literal>10.0.1.21</literal> for the IP address of the
+        instance tunnels network interface on the network node.</para>
       <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/plugins/ml2/ml2_conf.ini ml2 \
   type_drivers gre</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/plugins/ml2/ml2_conf.ini ml2 \
@@ -370,7 +375,7 @@ neutron_metadata_proxy_shared_secret = <replaceable>METADATA_SECRET</replaceable
     </step>
     <step os="ubuntu;debian">
       <para>Edit the
-        <filename>/etc/neutron/plugins/ml2/ml2_conf.ini</filename>
+          <filename>/etc/neutron/plugins/ml2/ml2_conf.ini</filename>
         file.</para>
       <para>Add the following keys to the <literal>[ml2]</literal>
         section:</para>
@@ -380,16 +385,16 @@ type_drivers = gre
 tenant_network_types = gre
 mechanism_drivers = openvswitch</programlisting>
       <para>Add the following keys to the
-        <literal>[ml2_type_gre]</literal> section:</para>
+          <literal>[ml2_type_gre]</literal> section:</para>
       <programlisting language="ini">[ml2_type_gre]
 ...
 tunnel_id_ranges = 1:1000</programlisting>
       <para>Add the <literal>[ovs]</literal> section and the following
         keys to it:</para>
       <para>Replace
-        <replaceable>INSTANCE_TUNNELS_INTERFACE_IP_ADDRESS</replaceable>
-        with the IP address of the instance tunnels network interface on
-        your network node.</para>
+          <replaceable>INSTANCE_TUNNELS_INTERFACE_IP_ADDRESS</replaceable>
+        with the IP address of the instance tunnels network interface
+        on your network node.</para>
       <programlisting language="ini">[ovs]
 ...
 local_ip = <replaceable>INSTANCE_TUNNELS_INTERFACE_IP_ADDRESS</replaceable>
@@ -405,33 +410,34 @@ enable_security_group = True</programlisting>
   </procedure>
   <procedure>
     <title>To configure the Open vSwitch (OVS) service</title>
-    <para>The OVS service provides the underlying virtual networking framework
-      for instances. The integration bridge <literal>br-int</literal> handles
-      internal instance network traffic within OVS. The external bridge
-      <literal>br-ex</literal> handles external instance network traffic
-      within OVS. The external bridge requires a port on the physical external
-      network interface to provide instances with external network access.
-      In essence, this port bridges the virtual and physical external
+    <para>The OVS service provides the underlying virtual networking
+      framework for instances. The integration bridge
+        <literal>br-int</literal> handles internal instance network
+      traffic within OVS. The external bridge <literal>br-ex</literal>
+      handles external instance network traffic within OVS. The
+      external bridge requires a port on the physical external network
+      interface to provide instances with external network access. In
+      essence, this port bridges the virtual and physical external
       networks in your environment.</para>
     <step os="rhel;centos;fedora">
-      <para>Start the OVS service and configure it to start when the system
-        boots:</para>
-        <screen><prompt>#</prompt> <userinput>service openvswitch start</userinput>
+      <para>Start the OVS service and configure it to start when the
+        system boots:</para>
+      <screen><prompt>#</prompt> <userinput>service openvswitch start</userinput>
 <prompt>#</prompt> <userinput>chkconfig openvswitch on</userinput></screen>
     </step>
     <step os="sles;opensuse">
-      <para>Start the OVS service and configure it to start when the system
-        boots:</para>
-        <screen><prompt>#</prompt> <userinput>service openvswitch-switch start</userinput>
+      <para>Start the OVS service and configure it to start when the
+        system boots:</para>
+      <screen><prompt>#</prompt> <userinput>service openvswitch-switch start</userinput>
 <prompt>#</prompt> <userinput>chkconfig openvswitch-switch on</userinput></screen>
     </step>
     <step os="ubuntu">
       <para>Restart the OVS service:</para>
-        <screen><prompt>#</prompt> <userinput>service openvswitch-switch restart</userinput></screen>
+      <screen><prompt>#</prompt> <userinput>service openvswitch-switch restart</userinput></screen>
     </step>
     <step os="debian">
       <para>Restart the OVS service:</para>
-        <screen><prompt>#</prompt> <userinput>service openvswitch restart</userinput></screen>
+      <screen><prompt>#</prompt> <userinput>service openvswitch restart</userinput></screen>
     </step>
     <step>
       <para>Add the integration bridge:</para>
@@ -442,19 +448,19 @@ enable_security_group = True</programlisting>
       <screen><prompt>#</prompt> <userinput>ovs-vsctl add-br br-ex</userinput></screen>
     </step>
     <step>
-      <para>Add a port to the external bridge that connects to the physical
-        external network interface:</para>
+      <para>Add a port to the external bridge that connects to the
+        physical external network interface:</para>
       <para>Replace <replaceable>INTERFACE_NAME</replaceable> with the
-        actual interface name. For example, <emphasis>eth2</emphasis> or
-        <emphasis>ens256</emphasis>.</para>
+        actual interface name. For example, <emphasis>eth2</emphasis>
+        or <emphasis>ens256</emphasis>.</para>
       <screen><prompt>#</prompt> <userinput>ovs-vsctl add-port br-ex <replaceable>INTERFACE_NAME</replaceable></userinput></screen>
       <note>
-        <para>Depending on your network interface driver, you may need to
-          disable <glossterm>Generic Receive Offload (GRO)</glossterm> to
-          achieve suitable throughput between your instances and the external
-          network.</para>
-        <para>To temporarily disable GRO on the external network interface
-          while testing your environment:</para>
+        <para>Depending on your network interface driver, you may need
+          to disable <glossterm>Generic Receive Offload
+            (GRO)</glossterm> to achieve suitable throughput between
+          your instances and the external network.</para>
+        <para>To temporarily disable GRO on the external network
+          interface while testing your environment:</para>
         <screen><prompt>#</prompt> <userinput>ethtool -K <replaceable>INTERFACE_NAME</replaceable> gro off</userinput></screen>
       </note>
     </step>
@@ -462,37 +468,38 @@ enable_security_group = True</programlisting>
   <procedure>
     <title>To finalize the installation</title>
     <step os="rhel;centos;fedora">
-      <para>The Networking service initialization scripts expect a symbolic
-        link <filename>/etc/neutron/plugin.ini</filename> pointing to the
-        configuration file associated with your chosen plug-in. Using
-        the ML2 plug-in, for example, the symbolic link must point to
-        <filename>/etc/neutron/plugins/ml2/ml2_conf.ini</filename>.
+      <para>The Networking service initialization scripts expect a
+        symbolic link <filename>/etc/neutron/plugin.ini</filename>
+        pointing to the configuration file associated with your chosen
+        plug-in. Using the ML2 plug-in, for example, the symbolic link
+        must point to
+          <filename>/etc/neutron/plugins/ml2/ml2_conf.ini</filename>.
         If this symbolic link does not exist, create it using the
         following commands:</para>
-    <screen><prompt>#</prompt> <userinput>ln -s plugins/ml2/ml2_conf.ini /etc/neutron/plugin.ini</userinput></screen>
-<!-- https://bugzilla.redhat.com/show_bug.cgi?id=1087647 -->
-      <para>Due to a packaging bug, the Open vSwitch agent initialization
-        script explicitly looks for the Open vSwitch plug-in configuration
-        file rather than a symbolic link
-        <filename>/etc/neutron/plugin.ini</filename> pointing to the ML2
-        plug-in configuration file. Run the following commands to resolve this
-        issue:</para>
+      <screen><prompt>#</prompt> <userinput>ln -s plugins/ml2/ml2_conf.ini /etc/neutron/plugin.ini</userinput></screen>
+      <!-- https://bugzilla.redhat.com/show_bug.cgi?id=1087647 -->
+      <para>Due to a packaging bug, the Open vSwitch agent
+        initialization script explicitly looks for the Open vSwitch
+        plug-in configuration file rather than a symbolic link
+          <filename>/etc/neutron/plugin.ini</filename> pointing to the
+        ML2 plug-in configuration file. Run the following commands to
+        resolve this issue:</para>
       <screen><prompt>#</prompt> <userinput>cp /etc/init.d/neutron-openvswitch-agent /etc/init.d/neutron-openvswitch-agent.orig</userinput>
 <prompt>#</prompt> <userinput>sed -i 's,plugins/openvswitch/ovs_neutron_plugin.ini,plugin.ini,g' /etc/init.d/neutron-openvswitch-agent</userinput></screen>
     </step>
     <step os="sles;opensuse">
-      <para>The Networking service initialization scripts expect the variable
-        <literal>NEUTRON_PLUGIN_CONF</literal> in the
-        <filename>/etc/sysconfig/neutron</filename> file to reference the
-        configuration file associated with your chosen plug-in. Using
-        ML2, for example, edit the
-        <filename>/etc/sysconfig/neutron</filename> file and add the
+      <para>The Networking service initialization scripts expect the
+        variable <literal>NEUTRON_PLUGIN_CONF</literal> in the
+          <filename>/etc/sysconfig/neutron</filename> file to
+        reference the configuration file associated with your chosen
+        plug-in. Using ML2, for example, edit the
+          <filename>/etc/sysconfig/neutron</filename> file and add the
         following:</para>
       <programlisting>NEUTRON_PLUGIN_CONF="/etc/neutron/plugins/ml2/ml2_conf.ini"</programlisting>
     </step>
     <step os="rhel;centos;fedora;sles;opensuse">
-      <para>Start the Networking services and configure them to start when
-        the system boots:</para>
+      <para>Start the Networking services and configure them to start
+        when the system boots:</para>
       <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>service neutron-openvswitch-agent start</userinput>
 <prompt>#</prompt> <userinput>service neutron-l3-agent start</userinput>
 <prompt>#</prompt> <userinput>service neutron-dhcp-agent start</userinput>
