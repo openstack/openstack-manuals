@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenStack Manuals\n"
-"POT-Creation-Date: 2014-06-02 05:42+0000\n"
+"POT-Creation-Date: 2014-06-03 02:30+0000\n"
 "PO-Revision-Date: 2014-06-02 00:30+0000\n"
 "Last-Translator: Tomoyuki KATO <tomo@dream.daynight.jp>\n"
 "Language-Team: Japanese (http://www.transifex.com/projects/p/openstack-manuals-i18n/language/ja/)\n"
@@ -14,25 +14,15 @@ msgstr ""
 "Language: ja\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ./doc/high-availability-guide/ch_ha_aa_controllers.xml6(title)
-msgid "OpenStack controller nodes"
-msgstr "OpenStack コントローラーノード"
+#: ./doc/high-availability-guide/ch_controller.xml6(title)
+msgid "Cloud controller cluster stack"
+msgstr "クラウドコントローラーのクラスタースタック"
 
-#: ./doc/high-availability-guide/ch_ha_aa_controllers.xml8(simpara)
-msgid "OpenStack controller nodes contain:"
-msgstr "OpenStack コントローラーノードは次のものを含みます。"
-
-#: ./doc/high-availability-guide/ch_ha_aa_controllers.xml11(simpara)
-msgid "All OpenStack API services"
-msgstr "すべての OpenStack API サービス"
-
-#: ./doc/high-availability-guide/ch_ha_aa_controllers.xml16(simpara)
-msgid "All OpenStack schedulers"
-msgstr "すべての OpenStack スケジューラー"
-
-#: ./doc/high-availability-guide/ch_ha_aa_controllers.xml21(simpara)
-msgid "Memcached service"
-msgstr "Memcached サービス"
+#: ./doc/high-availability-guide/ch_controller.xml8(simpara)
+msgid ""
+"The cloud controller runs on the management network and must talk to all "
+"other services."
+msgstr "クラウドコントローラーは、管理ネットワークで動作し、他のすべてのサービスと通信できる必要があります。"
 
 #: ./doc/high-availability-guide/ch_ha_aa_network.xml6(title)
 msgid "OpenStack network nodes"
@@ -71,35 +61,6 @@ msgid ""
 "highly available."
 msgstr "neutron L2 エージェントは高可用性にする必要がありません。各データ転送ノードにインストールされる必要があります。また、Open vSwitch または Linux Bridge として仮想ネットワークドライバーを制御します。1 つの L2 エージェントをノードごとに実行し、その仮想インターフェースを制御します。これが分散できず、高可用性にできない理由です。"
 
-#: ./doc/high-availability-guide/ch_ha_aa_haproxy.xml6(title)
-msgid "HAproxy nodes"
-msgstr "HAproxy ノード"
-
-#: ./doc/high-availability-guide/ch_ha_aa_haproxy.xml8(simpara)
-msgid ""
-"HAProxy is a very fast and reliable solution offering high availability, "
-"load balancing, and proxying for TCP and HTTP-based applications. It is "
-"particularly suited for web sites crawling under very high loads while "
-"needing persistence or Layer 7 processing. Supporting tens of thousands of "
-"connections is clearly realistic with today’s hardware."
-msgstr "HAProxy は高可用性、負荷分散、TCP と HTTP ベースのアプリケーションに対するプロキシを提供する非常に高速かつ信頼性のあるソリューションです。とくに永続性とレイヤー 7 処理を必要とする、非常に負荷の高いウェブサイトに適しています。数千の接続をサポートすることは、今日のハードウェアではかなり現実的です。"
-
-#: ./doc/high-availability-guide/ch_ha_aa_haproxy.xml12(simpara)
-msgid ""
-"For installing HAproxy on your nodes, you should consider its <link "
-"href=\"http://haproxy.1wt.eu/#docs\">official documentation</link>. Also, "
-"you have to consider that this service should not be a single point of "
-"failure, so you need at least two nodes running HAproxy."
-msgstr "ノードに HAproxy をインストールするために、<link href=\"http://haproxy.1wt.eu/#docs\">公式ドキュメント</link>を参照すべきです。また、このサービスが単一障害点にならないように、少なくとも 2 つのノードで HAproxy を実行すべきであることを考慮する必要があります。"
-
-#: ./doc/high-availability-guide/ch_ha_aa_haproxy.xml15(simpara)
-msgid "Here is an example for HAproxy configuration file:"
-msgstr "これは HAproxy 設定ファイルの例です。"
-
-#: ./doc/high-availability-guide/ch_ha_aa_haproxy.xml155(simpara)
-msgid "After each change of this file, you should restart HAproxy."
-msgstr "このファイルをそれぞれ変更した後、HAproxy を再起動しなければいけません。"
-
 #: ./doc/high-availability-guide/ch_pacemaker.xml6(title)
 msgid "The Pacemaker cluster stack"
 msgstr "Pacemaker クラスタースタック"
@@ -133,10 +94,6 @@ msgid ""
 "OpenStack Identity and Image Services)."
 msgstr "Pacemaker は <emphasis>リソースエージェント</emphasis> (RA) を経由してアプリケーションと通信します。これは標準で 70 近くのアプリケーションをサポートします。Pacemaker はサードパーティーの RA を簡単に使用することもできます。OpenStack の高可用性設定は、既存の標準の Pacemaker RA (MySQL データベースまたは仮想 IP アドレスの管理など)、既存のサードパーティー RA (RabbitMQ など)、および標準の OpenStack RA (OpenStack 認証サービスおよびイメージサービスなど) を使用します。"
 
-#: ./doc/high-availability-guide/part_active_passive.xml6(title)
-msgid "HA using active/passive"
-msgstr "アクティブ/パッシブを使用した HA"
-
 #: ./doc/high-availability-guide/ch_ha_aa_rabbitmq.xml6(title)
 msgid "RabbitMQ"
 msgstr "RabbitMQ"
@@ -159,103 +116,6 @@ msgstr "高可用性 キュー用の RabbitMQ の設定"
 #: ./doc/high-availability-guide/ch_ha_aa_rabbitmq.xml22(simpara)
 msgid "Configure OpenStack services to use Rabbit HA queues"
 msgstr "RabbitMQ HA キューを使用するための OpenStack サービスの設定"
-
-#: ./doc/high-availability-guide/bk-ha-guide.xml8(title)
-msgid "OpenStack High Availability Guide"
-msgstr "OpenStack 高可用性ガイド"
-
-#: ./doc/high-availability-guide/bk-ha-guide.xml11(firstname)
-msgid "Florian"
-msgstr "Florian"
-
-#: ./doc/high-availability-guide/bk-ha-guide.xml12(surname)
-msgid "Haas"
-msgstr "Haas"
-
-#: ./doc/high-availability-guide/bk-ha-guide.xml14(email)
-msgid "florian@hastexo.com"
-msgstr "florian@hastexo.com"
-
-#: ./doc/high-availability-guide/bk-ha-guide.xml16(orgname)
-msgid "hastexo"
-msgstr "hastexo"
-
-#: ./doc/high-availability-guide/bk-ha-guide.xml20(year)
-msgid "2012"
-msgstr "2012"
-
-#: ./doc/high-availability-guide/bk-ha-guide.xml21(year)
-msgid "2013"
-msgstr "2013"
-
-#: ./doc/high-availability-guide/bk-ha-guide.xml22(year)
-msgid "2014"
-msgstr "2014"
-
-#: ./doc/high-availability-guide/bk-ha-guide.xml23(holder)
-msgid "OpenStack Contributors"
-msgstr "OpenStack 貢献者"
-
-#: ./doc/high-availability-guide/bk-ha-guide.xml25(releaseinfo)
-msgid "current"
-msgstr "カレント"
-
-#: ./doc/high-availability-guide/bk-ha-guide.xml26(productname)
-msgid "OpenStack"
-msgstr "OpenStack"
-
-#: ./doc/high-availability-guide/bk-ha-guide.xml30(remark)
-msgid "Copyright details are filled in by the template."
-msgstr "Copyright details are filled in by the template."
-
-#: ./doc/high-availability-guide/bk-ha-guide.xml34(para)
-msgid ""
-"This guide describes how to install, configure, and manage OpenStack for "
-"high availability."
-msgstr "このガイドは、高可用性 OpenStack をインストール、設定、管理する方法について記載します。"
-
-#: ./doc/high-availability-guide/bk-ha-guide.xml39(date)
-msgid "2014-05-16"
-msgstr "2014-05-16"
-
-#: ./doc/high-availability-guide/bk-ha-guide.xml43(para)
-msgid "Conversion to Docbook."
-msgstr "Docbook 形式への変換。"
-
-#: ./doc/high-availability-guide/bk-ha-guide.xml49(date)
-msgid "2014-04-17"
-msgstr "2014-04-17"
-
-#: ./doc/high-availability-guide/bk-ha-guide.xml53(para)
-msgid ""
-"Minor cleanup of typos, otherwise no major revisions for Icehouse release."
-msgstr "誤字脱字の軽微な修正。Icehouse リリース向けの大きな改版はありません。"
-
-#: ./doc/high-availability-guide/bk-ha-guide.xml60(date)
-msgid "2012-01-16"
-msgstr "2012-01-16"
-
-#: ./doc/high-availability-guide/bk-ha-guide.xml64(para)
-msgid "Organizes guide based on cloud controller and compute nodes."
-msgstr "クラウドコントローラーとコンピュートノードに基づいてガイドを整理しました。"
-
-#: ./doc/high-availability-guide/bk-ha-guide.xml70(date)
-msgid "2012-05-24"
-msgstr "2012-05-24"
-
-#: ./doc/high-availability-guide/bk-ha-guide.xml74(para)
-msgid "Begin trunk designation."
-msgstr "trunk 指定を始めました。"
-
-#: ./doc/high-availability-guide/ch_controller.xml6(title)
-msgid "Cloud controller cluster stack"
-msgstr "クラウドコントローラーのクラスタースタック"
-
-#: ./doc/high-availability-guide/ch_controller.xml8(simpara)
-msgid ""
-"The cloud controller runs on the management network and must talk to all "
-"other services."
-msgstr "クラウドコントローラーは、管理ネットワークで動作し、他のすべてのサービスと通信できる必要があります。"
 
 #: ./doc/high-availability-guide/ch_intro.xml6(title)
 msgid "Introduction to OpenStack High Availability"
@@ -438,6 +298,93 @@ msgid ""
 "of the more common options for highly available systems."
 msgstr "これらの高可用性アーキテクチャーを実現する、より一般的な方法がいくつかありますが、それらは唯一の方法ではありません。重要なことは、サービスが冗長であり、利用可能であることを確実にすることです。あなたがしたいように達成します。このドキュメントは高可用性システムのより一般的なオプションをいくつか取り扱います。"
 
+#: ./doc/high-availability-guide/bk-ha-guide.xml8(title)
+msgid "OpenStack High Availability Guide"
+msgstr "OpenStack 高可用性ガイド"
+
+#: ./doc/high-availability-guide/bk-ha-guide.xml11(firstname)
+msgid "Florian"
+msgstr "Florian"
+
+#: ./doc/high-availability-guide/bk-ha-guide.xml12(surname)
+msgid "Haas"
+msgstr "Haas"
+
+#: ./doc/high-availability-guide/bk-ha-guide.xml14(email)
+msgid "florian@hastexo.com"
+msgstr "florian@hastexo.com"
+
+#: ./doc/high-availability-guide/bk-ha-guide.xml16(orgname)
+msgid "hastexo"
+msgstr "hastexo"
+
+#: ./doc/high-availability-guide/bk-ha-guide.xml20(year)
+msgid "2012"
+msgstr "2012"
+
+#: ./doc/high-availability-guide/bk-ha-guide.xml21(year)
+msgid "2013"
+msgstr "2013"
+
+#: ./doc/high-availability-guide/bk-ha-guide.xml22(year)
+msgid "2014"
+msgstr "2014"
+
+#: ./doc/high-availability-guide/bk-ha-guide.xml23(holder)
+msgid "OpenStack Contributors"
+msgstr "OpenStack 貢献者"
+
+#: ./doc/high-availability-guide/bk-ha-guide.xml25(releaseinfo)
+msgid "current"
+msgstr "カレント"
+
+#: ./doc/high-availability-guide/bk-ha-guide.xml26(productname)
+msgid "OpenStack"
+msgstr "OpenStack"
+
+#: ./doc/high-availability-guide/bk-ha-guide.xml30(remark)
+msgid "Copyright details are filled in by the template."
+msgstr "Copyright details are filled in by the template."
+
+#: ./doc/high-availability-guide/bk-ha-guide.xml34(para)
+msgid ""
+"This guide describes how to install, configure, and manage OpenStack for "
+"high availability."
+msgstr "このガイドは、高可用性 OpenStack をインストール、設定、管理する方法について記載します。"
+
+#: ./doc/high-availability-guide/bk-ha-guide.xml39(date)
+msgid "2014-05-16"
+msgstr "2014-05-16"
+
+#: ./doc/high-availability-guide/bk-ha-guide.xml43(para)
+msgid "Conversion to Docbook."
+msgstr "Docbook 形式への変換。"
+
+#: ./doc/high-availability-guide/bk-ha-guide.xml49(date)
+msgid "2014-04-17"
+msgstr "2014-04-17"
+
+#: ./doc/high-availability-guide/bk-ha-guide.xml53(para)
+msgid ""
+"Minor cleanup of typos, otherwise no major revisions for Icehouse release."
+msgstr "誤字脱字の軽微な修正。Icehouse リリース向けの大きな改版はありません。"
+
+#: ./doc/high-availability-guide/bk-ha-guide.xml60(date)
+msgid "2012-01-16"
+msgstr "2012-01-16"
+
+#: ./doc/high-availability-guide/bk-ha-guide.xml64(para)
+msgid "Organizes guide based on cloud controller and compute nodes."
+msgstr "クラウドコントローラーとコンピュートノードに基づいてガイドを整理しました。"
+
+#: ./doc/high-availability-guide/bk-ha-guide.xml70(date)
+msgid "2012-05-24"
+msgstr "2012-05-24"
+
+#: ./doc/high-availability-guide/bk-ha-guide.xml74(para)
+msgid "Begin trunk designation."
+msgstr "trunk 指定を始めました。"
+
 #: ./doc/high-availability-guide/ch_network.xml6(title)
 msgid "Network controller cluster stack"
 msgstr "ネットワークコントローラーのクラスタースタック"
@@ -455,9 +402,58 @@ msgid ""
 "node."
 msgstr "Networking スケジューラーが 1 つのノードに認識するよう、両方のノードが同じホスト名を持つべきです。たとえば、単一の L3 ノードに接続された仮想ルーターです。"
 
-#: ./doc/high-availability-guide/part_active_active.xml6(title)
-msgid "HA using active/active"
-msgstr "アクティブ/アクティブを使用した HA"
+#: ./doc/high-availability-guide/ch_ha_aa_haproxy.xml6(title)
+msgid "HAproxy nodes"
+msgstr "HAproxy ノード"
+
+#: ./doc/high-availability-guide/ch_ha_aa_haproxy.xml8(simpara)
+msgid ""
+"HAProxy is a very fast and reliable solution offering high availability, "
+"load balancing, and proxying for TCP and HTTP-based applications. It is "
+"particularly suited for web sites crawling under very high loads while "
+"needing persistence or Layer 7 processing. Supporting tens of thousands of "
+"connections is clearly realistic with today’s hardware."
+msgstr "HAProxy は高可用性、負荷分散、TCP と HTTP ベースのアプリケーションに対するプロキシを提供する非常に高速かつ信頼性のあるソリューションです。とくに永続性とレイヤー 7 処理を必要とする、非常に負荷の高いウェブサイトに適しています。数千の接続をサポートすることは、今日のハードウェアではかなり現実的です。"
+
+#: ./doc/high-availability-guide/ch_ha_aa_haproxy.xml12(simpara)
+msgid ""
+"For installing HAproxy on your nodes, you should consider its <link "
+"href=\"http://haproxy.1wt.eu/#docs\">official documentation</link>. Also, "
+"you have to consider that this service should not be a single point of "
+"failure, so you need at least two nodes running HAproxy."
+msgstr "ノードに HAproxy をインストールするために、<link href=\"http://haproxy.1wt.eu/#docs\">公式ドキュメント</link>を参照すべきです。また、このサービスが単一障害点にならないように、少なくとも 2 つのノードで HAproxy を実行すべきであることを考慮する必要があります。"
+
+#: ./doc/high-availability-guide/ch_ha_aa_haproxy.xml15(simpara)
+msgid "Here is an example for HAproxy configuration file:"
+msgstr "これは HAproxy 設定ファイルの例です。"
+
+#: ./doc/high-availability-guide/ch_ha_aa_haproxy.xml155(simpara)
+msgid "After each change of this file, you should restart HAproxy."
+msgstr "このファイルをそれぞれ変更した後、HAproxy を再起動しなければいけません。"
+
+#: ./doc/high-availability-guide/ch_ha_aa_controllers.xml6(title)
+msgid "OpenStack controller nodes"
+msgstr "OpenStack コントローラーノード"
+
+#: ./doc/high-availability-guide/ch_ha_aa_controllers.xml8(simpara)
+msgid "OpenStack controller nodes contain:"
+msgstr "OpenStack コントローラーノードは次のものを含みます。"
+
+#: ./doc/high-availability-guide/ch_ha_aa_controllers.xml11(simpara)
+msgid "All OpenStack API services"
+msgstr "すべての OpenStack API サービス"
+
+#: ./doc/high-availability-guide/ch_ha_aa_controllers.xml16(simpara)
+msgid "All OpenStack schedulers"
+msgstr "すべての OpenStack スケジューラー"
+
+#: ./doc/high-availability-guide/ch_ha_aa_controllers.xml21(simpara)
+msgid "Memcached service"
+msgstr "Memcached サービス"
+
+#: ./doc/high-availability-guide/part_active_passive.xml6(title)
+msgid "HA using active/passive"
+msgstr "アクティブ/パッシブを使用した HA"
 
 #: ./doc/high-availability-guide/ch_api.xml6(title)
 msgid "API node cluster stack"
@@ -489,1269 +485,9 @@ msgid ""
 "installations, so we’ll cover it here."
 msgstr "データベースの選択は決められたものではありません。必ずしも MySQL を使用する必要がありません。しかしながら、OpenStack のインストール環境ではかなり一般的な選択肢であるため、ここでは MySQL を取り扱います。"
 
-#: ./doc/high-availability-guide/pacemaker/section_starting_corosync.xml6(title)
-msgid "Starting Corosync"
-msgstr "Corosync の開始"
-
-#: ./doc/high-availability-guide/pacemaker/section_starting_corosync.xml8(simpara)
-msgid ""
-"Corosync is started as a regular system service. Depending on your "
-"distribution, it may ship with a LSB (System V style) init script, an "
-"upstart job, or a systemd unit file. Either way, the service is usually "
-"named <literal>corosync</literal>:"
-msgstr "Corosync は通常のシステムサービスとして開始されます。お使いのディストリビューションにより、LSB (System V 形式) init スクリプト、upstart ジョブ、または systemd ユニットファイルが同梱されています。どの方法においても、サービスは通常 <literal>corosync</literal> という名前です:"
-
-#: ./doc/high-availability-guide/pacemaker/section_starting_corosync.xml14(simpara)
-msgid "<literal>/etc/init.d/corosync start</literal> (LSB)"
-msgstr "<literal>/etc/init.d/corosync start</literal> (LSB)"
-
-#: ./doc/high-availability-guide/pacemaker/section_starting_corosync.xml18(simpara)
-msgid "<literal>service corosync start</literal> (LSB, alternate)"
-msgstr "<literal>service corosync start</literal> (LSB, 代替)"
-
-#: ./doc/high-availability-guide/pacemaker/section_starting_corosync.xml22(simpara)
-msgid "<literal>start corosync</literal> (upstart)"
-msgstr "<literal>start corosync</literal> (upstart)"
-
-#: ./doc/high-availability-guide/pacemaker/section_starting_corosync.xml26(simpara)
-msgid "<literal>systemctl start corosync</literal> (systemd)"
-msgstr "<literal>systemctl start corosync</literal> (systemd)"
-
-#: ./doc/high-availability-guide/pacemaker/section_starting_corosync.xml30(simpara)
-msgid "You can now check the Corosync connectivity with two tools."
-msgstr "2 つのツールを用いて Corosync 接続性を確認できます。"
-
-#: ./doc/high-availability-guide/pacemaker/section_starting_corosync.xml31(simpara)
-msgid ""
-"The <literal>corosync-cfgtool</literal> utility, when invoked with the "
-"<literal>-s</literal> option, gives a summary of the health of the "
-"communication rings:"
-msgstr "<literal>corosync-cfgtool</literal> ユーティリティは、<literal>-s</literal> オプションを用いるとき、通信リングの健全性の概要を表示します:"
-
-#: ./doc/high-availability-guide/pacemaker/section_starting_corosync.xml42(simpara)
-msgid ""
-"The <literal>corosync-objctl</literal> utility can be used to dump the "
-"Corosync cluster member list:"
-msgstr "<literal>corosync-objctl</literal> ユーティリティは Corosync クラスターのメンバー一覧をダンプするために使用できます:"
-
-#: ./doc/high-availability-guide/pacemaker/section_starting_corosync.xml51(simpara)
-msgid ""
-"You should see a <literal>status=joined</literal> entry for each of your "
-"constituent cluster nodes."
-msgstr "組み込まれているそれぞれのクラスターノードの項目が <literal>status=joined</literal> になっていることが確認できるはずです。"
-
-#: ./doc/high-availability-guide/pacemaker/section_set_up_corosync.xml6(title)
-msgid "Set up Corosync"
-msgstr "Corosync のセットアップ"
-
-#: ./doc/high-availability-guide/pacemaker/section_set_up_corosync.xml8(simpara)
-msgid ""
-"Besides installing the <literal>corosync</literal> package, you must also "
-"create a configuration file, stored in "
-"<literal>/etc/corosync/corosync.conf</literal>. Most distributions ship an "
-"example configuration file (<literal>corosync.conf.example</literal>) as "
-"part of the documentation bundled with the <literal>corosync</literal> "
-"package. An example Corosync configuration file is shown below:"
-msgstr "<literal>corosync</literal> パッケージのインストールに関連して、<literal>/etc/corosync/corosync.conf</literal> に保存する、設定ファイルを作成する必要があります。多くのディストリビューションは、<literal>corosync</literal> パッケージに同梱されているドキュメントの一部として、サンプル設定ファイル (<literal>corosync.conf.example</literal>) が同梱されています。サンプルの Corosync 設定ファイルを以下に示します:"
-
-#: ./doc/high-availability-guide/pacemaker/section_set_up_corosync.xml16(title)
-msgid "Corosync configuration file (<literal>corosync.conf</literal>)"
-msgstr "Corosync 設定ファイル (<literal>corosync.conf</literal>)"
-
-#: ./doc/high-availability-guide/pacemaker/section_set_up_corosync.xml90(para)
-msgid ""
-"The <literal>token</literal> value specifies the time, in milliseconds, "
-"during which the Corosync token is expected to be transmitted around the "
-"ring. When this timeout expires, the token is declared lost, and after "
-"<literal>token_retransmits_before_loss_const</literal> lost tokens the non-"
-"responding <emphasis>processor</emphasis> (cluster node) is declared dead. "
-"In other words, <literal>token</literal> × "
-"<literal>token_retransmits_before_loss_const</literal> is the maximum time a"
-" node is allowed to not respond to cluster messages before being considered "
-"dead. The default for <literal>token</literal> is 1000 (1 second), with 4 "
-"allowed retransmits. These defaults are intended to minimize failover times,"
-" but can cause frequent \"false alarms\" and unintended failovers in case of"
-" short network interruptions. The values used here are safer, albeit with "
-"slightly extended failover times."
-msgstr "<literal>token</literal> の値は、Corosync トークンがリングを 1 周するまでの時間をミリ秒単位で指定します。このタイムアウトを経過した場合、トークンが消失したと判定します。<literal>token_retransmits_before_loss_const</literal> はトークンを失った後、応答のない <emphasis>processor</emphasis> (クラスターノード) が障害と判定されます。言い換えると、<literal>token</literal> × <literal>token_retransmits_before_loss_const</literal> が、ノードが障害と判定されるまでに、クラスターメッセージに応答しなくてもよい最大時間です。 <literal>token</literal> の規定値は 1000 (1 秒) で、再送 が 4 回まで許可されます。これらの規定値は、フェイルオーバー時間を最小化する狙いですが、頻繁に「誤報」を起こし、短時間のネットワーク障害により意図せずフェイルオーバーする可能性があります。ここで使用されている値は、フェイルオーバー時間をわずかに延ばしたとしても、より安全なものです。"
-
-#: ./doc/high-availability-guide/pacemaker/section_set_up_corosync.xml106(para)
-msgid ""
-"With <literal>secauth</literal> enabled, Corosync nodes mutually "
-"authenticate using a 128-byte shared secret stored in "
-"<literal>/etc/corosync/authkey</literal>, which may be generated with the "
-"<literal>corosync-keygen</literal> utility. When using "
-"<literal>secauth</literal>, cluster communications are also encrypted."
-msgstr "<literal>secauth</literal> を有効化している場合、Corosync ノードは <literal>/etc/corosync/authkey</literal> に保存されている 128 ビットの共有シークレットを使用して相互に認証します。このシークレットは <literal>corosync-keygen</literal> ユーティリティを用いて生成できます。<literal>secauth</literal> を使用するとき、クラスター通信も暗号化されます。"
-
-#: ./doc/high-availability-guide/pacemaker/section_set_up_corosync.xml114(para)
-msgid ""
-"In Corosync configurations using redundant networking (with more than one "
-"<literal>interface</literal>), you must select a Redundant Ring Protocol "
-"(RRP) mode other than <literal>none</literal>. <literal>active</literal> is "
-"the recommended RRP mode."
-msgstr "冗長ネットワーク (複数の <literal>interface</literal>) を使用した Corosync 設定の場合、Redundant Ring Protocol (RRP) モードを <literal>none</literal> 以外で選択する必要があります。<literal>active</literal> が推奨 RRP モードです。"
-
-#: ./doc/high-availability-guide/pacemaker/section_set_up_corosync.xml121(para)
-msgid ""
-"There are several things to note about the recommended interface "
-"configuration:"
-msgstr "インターフェースの推奨設定に関する注意事項がいくつかあります。"
-
-#: ./doc/high-availability-guide/pacemaker/section_set_up_corosync.xml127(simpara)
-msgid ""
-"The <literal>ringnumber</literal> must differ between all configured "
-"interfaces, starting with 0."
-msgstr "<literal>ringnumber</literal> はすべての設定済みインターフェースで異なる必要があります。0 から始まります。"
-
-#: ./doc/high-availability-guide/pacemaker/section_set_up_corosync.xml133(simpara)
-msgid ""
-"The <literal>bindnetaddr</literal> is the <emphasis>network</emphasis> "
-"address of the interfaces to bind to. The example uses two network addresses"
-" of <literal>/24</literal> IPv4 subnets."
-msgstr "<literal>bindnetaddr</literal> はバインドするインターフェースの<emphasis>ネットワーク</emphasis>アドレスです。この例は二つの <literal>/24</literal> IPv4 サブネットのネットワークアドレスを使用します。"
-
-#: ./doc/high-availability-guide/pacemaker/section_set_up_corosync.xml139(simpara)
-msgid ""
-"Multicast groups (<literal>mcastaddr</literal>) <emphasis>must "
-"not</emphasis> be reused across cluster boundaries. In other words, no two "
-"distinct clusters should ever use the same multicast group. Be sure to "
-"select multicast addresses compliant with <link "
-"href=\"http://www.ietf.org/rfc/rfc2365.txt\">RFC 2365, \"Administratively "
-"Scoped IP Multicast\"</link>."
-msgstr "マルチキャストグループ (<literal>mcastaddr</literal>) は、クラスターの境界をまたがって再利用できません。違い言い方をすると、2 つの別のクラスターは同じマルチキャストグループを使用できません。<link href=\"http://www.ietf.org/rfc/rfc2365.txt\">RFC 2365, \"Administratively Scoped IP Multicast\"</link> に適合しているマルチキャストアドレスを必ず選択してください。"
-
-#: ./doc/high-availability-guide/pacemaker/section_set_up_corosync.xml148(simpara)
-msgid ""
-"For firewall configurations, note that Corosync communicates over UDP only, "
-"and uses <literal>mcastport</literal> (for receives) and "
-"<literal>mcastport</literal>-1 (for sends)."
-msgstr "ファイアウォール設定に関して、Corosync は UDP のみを使用して通信し、<literal>mcastport</literal> (受信用) と <literal>mcastport</literal>-1 (送信用) を使用することに注意してください。"
-
-#: ./doc/high-availability-guide/pacemaker/section_set_up_corosync.xml157(para)
-msgid ""
-"The <literal>service</literal> declaration for the "
-"<literal>pacemaker</literal> service may be placed in the "
-"<literal>corosync.conf</literal> file directly, or in its own separate file,"
-" <literal>/etc/corosync/service.d/pacemaker</literal>."
-msgstr "<literal>pacemaker</literal> サービスに関する <literal>service</literal> 宣言は、<literal>corosync.conf</literal> ファイルに直接置かれるか、別のファイル <literal>/etc/corosync/service.d/pacemaker</literal> に置かれるかもしれません。"
-
-#: ./doc/high-availability-guide/pacemaker/section_set_up_corosync.xml164(simpara)
-msgid ""
-"Once created, the <literal>corosync.conf</literal> file (and the "
-"<literal>authkey</literal> file if the <literal>secauth</literal> option is "
-"enabled) must be synchronized across all cluster nodes."
-msgstr "一度作成すると、<literal>corosync.conf</literal> ファイル (および、<literal>secauth</literal> オプションが有効化されている場合は <literal>authkey</literal> ファイル) はすべてのクラスターノードで同期する必要があります。"
-
-#: ./doc/high-availability-guide/pacemaker/section_set_basic_cluster_properties.xml6(title)
-msgid "Set basic cluster properties"
-msgstr "基本的なクラスターのプロパティの設定"
-
-#: ./doc/high-availability-guide/pacemaker/section_set_basic_cluster_properties.xml8(simpara)
-msgid ""
-"Once your Pacemaker cluster is set up, it is recommended to set a few basic "
-"cluster properties. To do so, start the <literal>crm</literal> shell and "
-"change into the configuration menu by entering <literal>configure</literal>."
-" Alternatively. you may jump straight into the Pacemaker configuration menu "
-"by typing <literal>crm configure</literal> directly from a shell prompt."
-msgstr "Pacemaker クラスターを構築すると、いくつかの基本的なクラスタープロパティを設定することを推奨します。そうするために、<literal>crm</literal> シェルを開始し、<literal>configure</literal> と入力して設定メニューに変更します。代わりに、シェルプロンプトから直接 <literal>crm configure</literal> と入力して、Pacemaker 設定メニューに入ることもできます。"
-
-#: ./doc/high-availability-guide/pacemaker/section_set_basic_cluster_properties.xml14(simpara)
-msgid "Then, set the following properties:"
-msgstr "そして、以下のプロパティを設定します。"
-
-#: ./doc/high-availability-guide/pacemaker/section_set_basic_cluster_properties.xml22(para)
-msgid ""
-"Setting <literal>no-quorum-policy=\"ignore\"</literal> is required in 2-node"
-" Pacemaker clusters for the following reason: if quorum enforcement is "
-"enabled, and one of the two nodes fails, then the remaining node can not "
-"establish a <emphasis>majority</emphasis> of quorum votes necessary to run "
-"services, and thus it is unable to take over any resources. The appropriate "
-"workaround is to ignore loss of quorum in the cluster. This is safe and "
-"necessary <emphasis>only</emphasis> in 2-node clusters. Do not set this "
-"property in Pacemaker clusters with more than two nodes."
-msgstr "2 ノード Pacemaker クラスターの場合、以下の理由により <literal>no-quorum-policy=\"ignore\"</literal> の設定が必要になります。クォーラム強制が有効化されていると、2 ノードのどちらかに障害が発生した場合、残りのノードがサービスの実行に必要なクォーラムの<emphasis>過半数</emphasis>を獲得できなくなります。そのため、あらゆるリソースがテイクオーバーできません。適切な回避策は、クラスターでクォーラムの損失を無視することです。これは 2 ノードクラスター<emphasis>のみ</emphasis>で安全であり、必要になります。2 ノードより多い Pacemaker クラスターでは、このプロパティを設定してはいけません。"
-
-#: ./doc/high-availability-guide/pacemaker/section_set_basic_cluster_properties.xml34(para)
-msgid ""
-"Setting <literal>pe-warn-series-max</literal>, <literal>pe-input-series-"
-"max</literal> and <literal>pe-error-series-max</literal> to 1000 instructs "
-"Pacemaker to keep a longer history of the inputs processed, and errors and "
-"warnings generated, by its Policy Engine. This history is typically useful "
-"in case cluster troubleshooting becomes necessary."
-msgstr "<literal>pe-warn-series-max</literal>、<literal>pe-input-series-max</literal> および <literal>pe-error-series-max</literal> を 1000 に設定することにより、Pacemaker のポリシーエンジンにより、処理された入力、生成されたエラーと警告の履歴をより長く保持するよう Pacemaker に指示します。この履歴は一般的にクラスターのトラブルシューティングが必要となる場合に役に立ちます。"
-
-#: ./doc/high-availability-guide/pacemaker/section_set_basic_cluster_properties.xml43(para)
-msgid ""
-"Pacemaker uses an event-driven approach to cluster state processing. "
-"However, certain Pacemaker actions occur at a configurable interval, "
-"<literal>cluster-recheck-interval</literal>, which defaults to 15 minutes. "
-"It is usually prudent to reduce this to a shorter interval, such as 5 or 3 "
-"minutes."
-msgstr "Pacemaker はクラスター状態の処理にイベント駆動の方法を使用します。しかしながら、特定の Pacemaker アクションは、設定可能な間隔 <literal>cluster-recheck-interval</literal> で発生します。このデフォルトは 15 分です。一般的に 5 分や 3 分のようにより短い間隔にこれを慎重に減らします。"
-
-#: ./doc/high-availability-guide/pacemaker/section_set_basic_cluster_properties.xml52(simpara)
-msgid ""
-"Once you have made these changes, you may <literal>commit</literal> the "
-"updated configuration."
-msgstr "これらの変更を実行すると、更新した設定を <literal>commit</literal> できます。"
-
-#: ./doc/high-availability-guide/pacemaker/section_install_packages.xml6(title)
-msgid "Install packages"
-msgstr "パッケージのインストール"
-
-#: ./doc/high-availability-guide/pacemaker/section_install_packages.xml8(simpara)
-msgid ""
-"On any host that is meant to be part of a Pacemaker cluster, you must first "
-"establish cluster communications through the Corosync messaging layer. This "
-"involves Install the following packages (and their dependencies, which your "
-"package manager will normally install automatically):"
-msgstr "Pacemaker クラスターに参加させるすべてのホストにおいて、まず Corosync メッセージング層によるクラスター通信を確立する必要があります。これは、以下のパッケージをインストールする必要があります (また通常、パッケージ管理ソフトウェアが自動的にそれらに依存するものをインストールします)。"
-
-#: ./doc/high-availability-guide/pacemaker/section_install_packages.xml15(simpara)
-msgid ""
-"<literal>pacemaker</literal> Note that the crm shell should be downloaded "
-"separately."
-msgstr "<literal>pacemaker</literal> は crm シェルを別途ダウンロードする必要があることに注意してください。"
-
-#: ./doc/high-availability-guide/pacemaker/section_install_packages.xml20(literal)
-msgid "crmsh"
-msgstr "crmsh"
-
-#: ./doc/high-availability-guide/pacemaker/section_install_packages.xml25(literal)
-msgid "corosync"
-msgstr "corosync"
-
-#: ./doc/high-availability-guide/pacemaker/section_install_packages.xml30(literal)
-msgid "cluster-glue"
-msgstr "cluster-glue"
-
-#: ./doc/high-availability-guide/pacemaker/section_install_packages.xml34(simpara)
-msgid ""
-"<literal>fence-agents</literal> (Fedora only; all other distributions use "
-"fencing agents from <literal>cluster-glue</literal>)"
-msgstr "<literal>fence-agents</literal> (Fedora のみ、他のすべてのディストリビューションは <literal>cluster-glue</literal> からフェンシング・エージェントを使用します)"
-
-#: ./doc/high-availability-guide/pacemaker/section_install_packages.xml40(literal)
-msgid "resource-agents"
-msgstr "resource-agents"
-
-#: ./doc/high-availability-guide/pacemaker/section_start_pacemaker.xml6(title)
-msgid "Start Pacemaker"
-msgstr "Pacemaker の開始"
-
-#: ./doc/high-availability-guide/pacemaker/section_start_pacemaker.xml8(simpara)
-msgid ""
-"Once the Corosync services have been started, and you have established that "
-"the cluster is communicating properly, it is safe to start "
-"<literal>pacemakerd</literal>, the Pacemaker master control process:"
-msgstr "Corosync サービスが開始されると、クラスターが適切に通信するよう設定されます。<literal>pacemakerd</literal>, Pacemaker マスター制御プロセスを安全に開始されます:"
-
-#: ./doc/high-availability-guide/pacemaker/section_start_pacemaker.xml13(simpara)
-msgid "<literal>/etc/init.d/pacemaker start</literal> (LSB)"
-msgstr "<literal>/etc/init.d/pacemaker start</literal> (LSB)"
-
-#: ./doc/high-availability-guide/pacemaker/section_start_pacemaker.xml17(simpara)
-msgid "<literal>service pacemaker start</literal> (LSB, alternate)"
-msgstr "<literal>service pacemaker start</literal> (LSB, 代替)"
-
-#: ./doc/high-availability-guide/pacemaker/section_start_pacemaker.xml21(simpara)
-msgid "<literal>start pacemaker</literal> (upstart)"
-msgstr "<literal>start pacemaker</literal> (upstart)"
-
-#: ./doc/high-availability-guide/pacemaker/section_start_pacemaker.xml25(simpara)
-msgid "<literal>systemctl start pacemaker</literal> (systemd)"
-msgstr "<literal>systemctl start pacemaker</literal> (systemd)"
-
-#: ./doc/high-availability-guide/pacemaker/section_start_pacemaker.xml29(simpara)
-msgid ""
-"Once Pacemaker services have started, Pacemaker will create a default empty "
-"cluster configuration with no resources. You may observe Pacemaker’s status "
-"with the <literal>crm_mon</literal> utility:"
-msgstr "Pacemaker サービスが開始されると、Pacemaker はリソースを持たない空の標準クラスター設定を作成します。<literal>crm_mon</literal> ユーティリティを用いて Pacemaker の状態を確認できます。"
-
-#: ./doc/high-availability-guide/api/section_keystone.xml6(title)
-msgid "Highly available OpenStack Identity"
-msgstr "高可用性 OpenStack Identity"
-
-#: ./doc/high-availability-guide/api/section_keystone.xml8(simpara)
-msgid ""
-"OpenStack Identity is the Identity Service in OpenStack and used by many "
-"services. Making the OpenStack Identity service highly available in active /"
-" passive mode involves"
-msgstr "OpenStack Identity は OpenStack における認証サービスです。OpenStack Identity Service をアクティブ / パッシブモードで高可用性にすることは、次のことが関連します。"
-
-#: ./doc/high-availability-guide/api/section_keystone.xml12(simpara)
-msgid "Configure OpenStack Identity to listen on the VIP address,"
-msgstr "OpenStack Identity がその仮想 IP アドレスでリッスンするよう設定します。"
-
-#: ./doc/high-availability-guide/api/section_keystone.xml17(simpara)
-msgid "managing OpenStack Identity daemon with the Pacemaker cluster manager,"
-msgstr "Pacemaker クラスターマネージャーを用いた OpenStack Identity デーモンの管理"
-
-#: ./doc/high-availability-guide/api/section_keystone.xml22(simpara)
-#: ./doc/high-availability-guide/api/section_cinder_api.xml21(simpara)
-#: ./doc/high-availability-guide/api/section_neutron_server.xml22(simpara)
-#: ./doc/high-availability-guide/api/section_glance_api.xml22(simpara)
-msgid "Configure OpenStack services to use this IP address."
-msgstr "OpenStack のサービスがこの IP アドレスを使用するよう設定します。"
-
-#: ./doc/high-availability-guide/api/section_keystone.xml28(simpara)
-msgid ""
-"Here is the <link href=\"http://docs.openstack.org/trunk/install-"
-"guide/install/apt/content/ch_installing-openstack-identity-"
-"service.html\">documentation</link> for installing OpenStack Identity "
-"service."
-msgstr "ここに OpenStack Identity Service をインストールするための<link href=\"http://docs.openstack.org/trunk/install-guide/install/apt/content/ch_installing-openstack-identity-service.html\">ドキュメント</link>があります。"
-
-#: ./doc/high-availability-guide/api/section_keystone.xml32(title)
-msgid "Add OpenStack Identity resource to Pacemaker"
-msgstr "OpenStack Identity リソースの Pacemaker への追加"
-
-#: ./doc/high-availability-guide/api/section_keystone.xml34(simpara)
-#: ./doc/high-availability-guide/api/section_cinder_api.xml35(simpara)
-#: ./doc/high-availability-guide/api/section_ceilometer_agent_central.xml26(simpara)
-#: ./doc/high-availability-guide/api/section_neutron_server.xml34(simpara)
-#: ./doc/high-availability-guide/api/section_glance_api.xml34(simpara)
-#: ./doc/high-availability-guide/network/section_highly_available_neutron_l3_agent.xml18(simpara)
-#: ./doc/high-availability-guide/network/section_highly_available_neutron_metadata_agent.xml18(simpara)
-#: ./doc/high-availability-guide/network/section_highly_available_neutron_dhcp_agent.xml18(simpara)
-msgid "First of all, you need to download the resource agent to your system:"
-msgstr "まず初めに、リソースエージェントをシステムにダウンロードする必要があります。"
-
-#: ./doc/high-availability-guide/api/section_keystone.xml40(simpara)
-msgid ""
-"You can now add the Pacemaker configuration for OpenStack Identity resource."
-" Connect to the Pacemaker cluster with <literal>crm configure</literal>, and"
-" add the following cluster resources:"
-msgstr "OpenStack Identity リソース用の Pacemaker 設定を追加できます。<literal>crm configure</literal> を用いて Pacemaker クラスターに接続し、以下のクラスターリソースを追加します。"
-
-#: ./doc/high-availability-guide/api/section_keystone.xml46(simpara)
-msgid ""
-"This configuration creates <literal>p_keystone</literal>, a resource for "
-"managing the OpenStack Identity service."
-msgstr "この設定は OpenStack Identity サービスを管理するためのリソース <literal>p_keystone</literal> を作成します。"
-
-#: ./doc/high-availability-guide/api/section_keystone.xml47(simpara)
-msgid ""
-"<literal>crm configure</literal> supports batch input, so you may copy and "
-"paste the above into your live pacemaker configuration, and then make "
-"changes as required. For example, you may enter <literal>edit "
-"p_ip_keystone</literal> from the <literal>crm configure</literal> menu and "
-"edit the resource to match your preferred virtual IP address."
-msgstr "<literal>crm configure</literal> はバッチ入力をサポートします。そのため、現在の pacemaker 設定の中に上をコピー・ペーストし、適宜変更を反映できます。たとえば、お好みの仮想 IP アドレスに一致させるために、<literal>crm configure</literal> メニューから <literal>edit p_ip_keystone</literal> と入力し、リソースを編集できます。"
-
-#: ./doc/high-availability-guide/api/section_keystone.xml52(simpara)
-msgid ""
-"Once completed, commit your configuration changes by entering "
-"<literal>commit</literal> from the <literal>crm configure</literal> menu. "
-"Pacemaker will then start the OpenStack Identity service, and its dependent "
-"resources, on one of your nodes."
-msgstr "完了すると、<literal>crm configure</literal> メニューから <literal>commit</literal> と入力し、設定の変更をコミットします。Pacemaker は OpenStack Identity サービスおよび依存するリソースを同じノードに起動します。"
-
-#: ./doc/high-availability-guide/api/section_keystone.xml58(title)
-msgid "Configure OpenStack Identity service"
-msgstr "OpenStack Identity Service の設定"
-
-#: ./doc/high-availability-guide/api/section_keystone.xml60(simpara)
-msgid ""
-"You need to edit your OpenStack Identity configuration file "
-"(<literal>keystone.conf</literal>) and change the bind parameters:"
-msgstr "OpenStack Identity の設定ファイル (<literal>keystone.conf</literal>) を編集し、バインドのパラメーターを変更する必要があります。"
-
-#: ./doc/high-availability-guide/api/section_keystone.xml61(simpara)
-msgid "On Havana:"
-msgstr "Havana の場合:"
-
-#: ./doc/high-availability-guide/api/section_keystone.xml63(simpara)
-msgid ""
-"On Icehouse, the <literal>admin_bind_host</literal> option lets you use a "
-"private network for the admin access."
-msgstr "Icehouse の場合、<literal>admin_bind_host</literal> オプションにより管理アクセス用のプライベートネットワークを使用できます。"
-
-#: ./doc/high-availability-guide/api/section_keystone.xml66(simpara)
-msgid ""
-"To be sure all data will be highly available, you should be sure that you "
-"store everything in the MySQL database (which is also highly available):"
-msgstr "確実にすべてのデータが高可用性にするために、確実にすべてのものを (高可用性な) MySQL データベースに保存すべきです。"
-
-#: ./doc/high-availability-guide/api/section_keystone.xml76(title)
-msgid ""
-"Configure OpenStack services to use the highly available OpenStack Identity"
-msgstr "高可用性 OpenStack Identity を使用するための OpenStack サービスの設定"
-
-#: ./doc/high-availability-guide/api/section_keystone.xml78(simpara)
-msgid ""
-"Your OpenStack services must now point their OpenStack Identity "
-"configuration to the highly available, virtual cluster IP address — rather "
-"than a OpenStack Identity server’s physical IP address as you normally "
-"would."
-msgstr "OpenStack サービスは、通常どおり OpenStack Identity サーバーの物理 IP アドレスを指定する代わりに、OpenStack Identity サーバーの設定が高可用性と仮想クラスター IP アドレスを指し示す必要があります。"
-
-#: ./doc/high-availability-guide/api/section_keystone.xml81(simpara)
-msgid ""
-"For example with OpenStack Compute, if your OpenStack Identity service IP "
-"address is 192.168.42.103 as in the configuration explained here, you would "
-"use the following line in your API configuration file (<literal>api-"
-"paste.ini</literal>):"
-msgstr "OpenStack Compute を用いた例として、OpenStack Identity Service の IP アドレスがここで説明された設定にあるように 192.168.42.103 ならば、API 設定ファイル (<literal>api-paste.ini</literal>) で以下の行を使用する必要があります。"
-
-#: ./doc/high-availability-guide/api/section_keystone.xml86(simpara)
-msgid "You also need to create the OpenStack Identity Endpoint with this IP."
-msgstr "この IP を用いて OpenStack Identity エンドポイントを作成する必要があります。"
-
-#: ./doc/high-availability-guide/api/section_keystone.xml87(simpara)
-msgid ""
-"NOTE : If you are using both private and public IP addresses, you should "
-"create two Virtual IP addresses and define your endpoint like this:"
-msgstr "注: プライベート IP とパブリック IP の両方を使用する場合、2 つの仮想 IP アドレスを作成し、次のようにエンドポイントを定義すべきです。"
-
-#: ./doc/high-availability-guide/api/section_keystone.xml89(simpara)
-msgid ""
-"If you are using the horizon dashboard, you should edit the "
-"<literal>local_settings.py</literal> file:"
-msgstr "Dashboard を使用している場合、<literal>local_settings.py</literal> ファイルを編集する必要があります。"
-
-#: ./doc/high-availability-guide/api/section_api_vip.xml6(title)
-msgid "Configure the VIP"
-msgstr "仮想 IP の設定"
-
-#: ./doc/high-availability-guide/api/section_api_vip.xml8(simpara)
-msgid ""
-"First, you must select and assign a virtual IP address (VIP) that can freely"
-" float between cluster nodes."
-msgstr "まず初めに、クラスターノード間で自由に移動できる仮想 IP アドレス (VIP) を選択して割り当てる必要があります。"
-
-#: ./doc/high-availability-guide/api/section_api_vip.xml9(simpara)
-msgid ""
-"This configuration creates <literal>p_ip_api</literal>, a virtual IP address"
-" for use by the API node (192.168.42.103) :"
-msgstr "この設定は API ノードにより使用される仮想 IP アドレス (192.168.42.103) <literal>p_ip_api</literal> を作成します。"
-
-#: ./doc/high-availability-guide/api/section_cinder_api.xml6(title)
-msgid "Highly available Block Storage API"
-msgstr "高可用性 Block Storage API"
-
-#: ./doc/high-availability-guide/api/section_cinder_api.xml8(simpara)
-msgid ""
-"Making the Block Storage (cinder) API service highly available in active / "
-"passive mode involves"
-msgstr "Block Storage (cinder) API サービスのアクティブ / パッシブモードでの高可用化"
-
-#: ./doc/high-availability-guide/api/section_cinder_api.xml11(simpara)
-msgid "Configure Block Storage to listen on the VIP address,"
-msgstr "Block Storage がその仮想 IP アドレスをリッスンする設定"
-
-#: ./doc/high-availability-guide/api/section_cinder_api.xml16(simpara)
-msgid "managing Block Storage API daemon with the Pacemaker cluster manager,"
-msgstr "Pacemaker クラスターマネージャーを用いた Block Storage API デーモンの管理"
-
-#: ./doc/high-availability-guide/api/section_cinder_api.xml27(simpara)
-msgid ""
-"Here is the <link href=\"http://docs.openstack.org/trunk/install-"
-"guide/install/apt/content/ch_cinder.html\">documentation</link> for "
-"installing Block Storage service."
-msgstr "ここに Block Storage のインストールに関する<link href=\"http://docs.openstack.org/trunk/install-guide/install/apt/content/ch_cinder.html\">ドキュメント</link>があります。"
-
-#: ./doc/high-availability-guide/api/section_cinder_api.xml33(title)
-msgid "Add Block Storage API resource to Pacemaker"
-msgstr "Block Storage API リソースの Pacemaker への追加"
-
-#: ./doc/high-availability-guide/api/section_cinder_api.xml39(simpara)
-msgid ""
-"You can now add the Pacemaker configuration for Block Storage API resource. "
-"Connect to the Pacemaker cluster with <literal>crm configure</literal>, and "
-"add the following cluster resources:"
-msgstr "Block Storage API リソース用の Pacemaker 設定を追加できます。<literal>crm configure</literal> を用いて Pacemaker クラスターに接続し、以下のクラスターリソースを追加します。"
-
-#: ./doc/high-availability-guide/api/section_cinder_api.xml46(simpara)
-#: ./doc/high-availability-guide/api/section_ceilometer_agent_central.xml36(simpara)
-#: ./doc/high-availability-guide/api/section_glance_api.xml44(simpara)
-#: ./doc/high-availability-guide/network/section_highly_available_neutron_l3_agent.xml29(simpara)
-#: ./doc/high-availability-guide/network/section_highly_available_neutron_metadata_agent.xml29(simpara)
-#: ./doc/high-availability-guide/network/section_highly_available_neutron_dhcp_agent.xml29(simpara)
-#: ./doc/high-availability-guide/controller/section_mysql.xml197(simpara)
-#: ./doc/high-availability-guide/controller/section_rabbitmq.xml185(simpara)
-msgid "This configuration creates"
-msgstr "この設定により、次のものが作成されます。"
-
-#: ./doc/high-availability-guide/api/section_cinder_api.xml49(simpara)
-msgid ""
-"<literal>p_cinder-api</literal>, a resource for manage Block Storage API "
-"service"
-msgstr "<literal>p_cinder-api</literal>, Block Storage API サービスを管理するためのリソース"
-
-#: ./doc/high-availability-guide/api/section_cinder_api.xml53(simpara)
-msgid ""
-"<literal>crm configure</literal> supports batch input, so you may copy and "
-"paste the above into your live pacemaker configuration, and then make "
-"changes as required. For example, you may enter <literal>edit p_ip_cinder-"
-"api</literal> from the <literal>crm configure</literal> menu and edit the "
-"resource to match your preferred virtual IP address."
-msgstr "<literal>crm configure</literal> はバッチ入力をサポートします。そのため、現在の pacemaker 設定の中に上をコピー・ペーストし、適宜変更を反映できます。たとえば、お好みの仮想 IP アドレスに一致させるために、<literal>crm configure</literal> メニューから <literal>edit p_ip_cinder-api</literal> と入力し、リソースを編集できます。"
-
-#: ./doc/high-availability-guide/api/section_cinder_api.xml58(simpara)
-msgid ""
-"Once completed, commit your configuration changes by entering "
-"<literal>commit</literal> from the <literal>crm configure</literal> menu. "
-"Pacemaker will then start the Block Storage API service, and its dependent "
-"resources, on one of your nodes."
-msgstr "完了すると、<literal>crm configure</literal> メニューから <literal>commit</literal> と入力し、設定の変更をコミットします。Pacemaker は Block Storage API サービスおよび依存するリソースを同じノードに起動します。"
-
-#: ./doc/high-availability-guide/api/section_cinder_api.xml64(title)
-msgid "Configure Block Storage API service"
-msgstr "Block Storage API サービスの設定"
-
-#: ./doc/high-availability-guide/api/section_cinder_api.xml66(simpara)
-msgid "Edit <literal>/etc/cinder/cinder.conf</literal>:"
-msgstr "<literal>/etc/cinder/cinder.conf</literal> を編集します。"
-
-#: ./doc/high-availability-guide/api/section_cinder_api.xml79(title)
-msgid "Configure OpenStack services to use highly available Block Storage API"
-msgstr "高可用性 Block Storage API を使用するための OpenStack サービスの設定"
-
-#: ./doc/high-availability-guide/api/section_cinder_api.xml81(simpara)
-msgid ""
-"Your OpenStack services must now point their Block Storage API configuration"
-" to the highly available, virtual cluster IP address — rather than a Block "
-"Storage API server’s physical IP address as you normally would."
-msgstr "OpenStack サービスは、通常どおり Block Storage API サーバーの物理 IP アドレスを指定する代わりに、Block Storage API の設定が高可用性と仮想クラスター IP アドレスを指し示す必要があります。"
-
-#: ./doc/high-availability-guide/api/section_cinder_api.xml84(simpara)
-msgid "You must create the Block Storage API endpoint with this IP."
-msgstr "この IP を用いて Block Storage API エンドポイントを作成する必要があります。"
-
-#: ./doc/high-availability-guide/api/section_cinder_api.xml86(simpara)
-msgid ""
-"If you are using both private and public IP, you should create two Virtual "
-"IPs and define your endpoint like this:"
-msgstr "プライベート IP とパブリック IP の両方を使用する場合、2 つの仮想 IP アドレスを作成し、次のようにエンドポイントを定義すべきです。"
-
-#: ./doc/high-availability-guide/api/section_ceilometer_agent_central.xml6(title)
-msgid "Highly available Telemetry central agent"
-msgstr "高可用性 Telemetry 中央エージェント"
-
-#: ./doc/high-availability-guide/api/section_ceilometer_agent_central.xml8(simpara)
-msgid ""
-"Telemetry (ceilometer) is the metering and monitoring service in OpenStack. "
-"The Central agent polls for resource utilization statistics for resources "
-"not tied to instances or compute nodes."
-msgstr "Telemetry (ceilometer) は OpenStack のメータリングとモニタリングのサービスです。中央エージェントは、インスタンスやコンピュートノードに結びつけられていないリソースに対して、リソースの利用状況の統計情報を収集します。"
-
-#: ./doc/high-availability-guide/api/section_ceilometer_agent_central.xml12(simpara)
-msgid ""
-"Due to limitations of a polling model, a single instance of this agent can "
-"be polling a given list of meters. In this setup, we install this service on"
-" the API nodes also in the active / passive mode."
-msgstr "収集モデルの制限により、このエージェントの単一のインスタンスが指定された一覧の利用状況を収集できます。このセットアップの場合、このサービスもアクティブ / パッシブモードで API ノードにインストールします。"
-
-#: ./doc/high-availability-guide/api/section_ceilometer_agent_central.xml16(simpara)
-msgid ""
-"Making the Telemetry central agent service highly available in active / "
-"passive mode involves managing its daemon with the Pacemaker cluster "
-"manager."
-msgstr "Telemetry 中央エージェントサービスをアクティブ / パッシブモードで高可用性にすることは、Pacemaker クラスターマネージャーでそのデーモンを管理することが関連します。"
-
-#: ./doc/high-availability-guide/api/section_ceilometer_agent_central.xml19(simpara)
-msgid ""
-"You will find at <link "
-"href=\"http://docs.openstack.org/developer/ceilometer/install/manual.html"
-"#installing-the-central-agent\">this page</link> the process to install the "
-"Telemetry central agent."
-msgstr "Telemetry 中央エージェントをインストールする手順が<link href=\"http://docs.openstack.org/developer/ceilometer/install/manual.html#installing-the-central-agent\">このページ</link>にあります。"
-
-#: ./doc/high-availability-guide/api/section_ceilometer_agent_central.xml24(title)
-msgid "Add the Telemetry central agent resource to Pacemaker"
-msgstr "Telemetry 中央エージェントリソースの Pacemaker への追加"
-
-#: ./doc/high-availability-guide/api/section_ceilometer_agent_central.xml30(simpara)
-msgid ""
-"You may then proceed with adding the Pacemaker configuration for the "
-"Telemetry central agent resource. Connect to the Pacemaker cluster with "
-"<literal>crm configure</literal>, and add the following cluster resources:"
-msgstr "Telemetry 中央エージェントリソース用の Pacemaker 設定を追加して、次に進むことができます。<literal>crm configure</literal> を用いて Pacemaker クラスターに接続し、以下のクラスターリソースを追加します。"
-
-#: ./doc/high-availability-guide/api/section_ceilometer_agent_central.xml39(simpara)
-msgid ""
-"<literal>p_ceilometer-agent-central</literal>, a resource for manage "
-"Ceilometer Central Agent service"
-msgstr "<literal>p_ceilometer-agent-central</literal>, Ceilometer 中央エージェントサービスを管理するためのリソース。"
-
-#: ./doc/high-availability-guide/api/section_ceilometer_agent_central.xml43(simpara)
-#: ./doc/high-availability-guide/network/section_highly_available_neutron_l3_agent.xml36(simpara)
-#: ./doc/high-availability-guide/network/section_highly_available_neutron_metadata_agent.xml37(simpara)
-#: ./doc/high-availability-guide/network/section_highly_available_neutron_dhcp_agent.xml37(simpara)
-msgid ""
-"<literal>crm configure</literal> supports batch input, so you may copy and "
-"paste the above into your live pacemaker configuration, and then make "
-"changes as required."
-msgstr "<literal>crm configure</literal> はバッチ入力をサポートします。そのため、現在の pacemaker 設定の中に上をコピー・ペーストし、適宜変更を反映できます。"
-
-#: ./doc/high-availability-guide/api/section_ceilometer_agent_central.xml46(simpara)
-msgid ""
-"Once completed, commit your configuration changes by entering "
-"<literal>commit</literal> from the <literal>crm configure</literal> menu. "
-"Pacemaker will then start the Ceilometer Central Agent service, and its "
-"dependent resources, on one of your nodes."
-msgstr "完了すると、<literal>crm configure</literal> メニューから <literal>commit</literal> と入力し、設定の変更をコミットします。Pacemaker は Ceilometer 中央エージェント サービスおよび依存するリソースを同じノードに起動します。"
-
-#: ./doc/high-availability-guide/api/section_ceilometer_agent_central.xml52(title)
-msgid "Configure Telemetry central agent service"
-msgstr "Telemetry 中央エージェントサービスの設定"
-
-#: ./doc/high-availability-guide/api/section_ceilometer_agent_central.xml54(simpara)
-msgid "Edit <literal>/etc/ceilometer/ceilometer.conf</literal> :"
-msgstr "<literal>/etc/ceilometer/ceilometer.conf</literal> を編集します。"
-
-#: ./doc/high-availability-guide/api/section_neutron_server.xml6(title)
-msgid "Highly available OpenStack Networking server"
-msgstr "高可用性 OpenStack Networking サーバー"
-
-#: ./doc/high-availability-guide/api/section_neutron_server.xml8(simpara)
-msgid ""
-"OpenStack Networking is the network connectivity service in OpenStack. "
-"Making the OpenStack Networking Server service highly available in active / "
-"passive mode involves"
-msgstr "OpenStack Networking は OpenStack におけるネットワーク接続性のサービスです。OpenStack Networking サーバーをアクティブ / パッシブモードで高可用性にすることは、次のことが関連します。"
-
-#: ./doc/high-availability-guide/api/section_neutron_server.xml12(simpara)
-msgid "Configure OpenStack Networking to listen on the VIP address,"
-msgstr "OpenStack Networking がその仮想 IP アドレスをリッスンする設定"
-
-#: ./doc/high-availability-guide/api/section_neutron_server.xml17(simpara)
-msgid ""
-"managing OpenStack Networking API Server daemon with the Pacemaker cluster "
-"manager,"
-msgstr "Pacemaker クラスターマネージャーを用いた OpenStack Networking API サーバーデーモンの管理"
-
-#: ./doc/high-availability-guide/api/section_neutron_server.xml28(simpara)
-msgid ""
-"Here is the <link href=\"http://docs.openstack.org/trunk/install-"
-"guide/install/apt/content/ch_installing-openstack-"
-"networking.html\">documentation</link> for installing OpenStack Networking "
-"service."
-msgstr "ここに OpenStack Networking Service をインストールするための<link href=\"http://docs.openstack.org/trunk/install-guide/install/apt/content/ch_installing-openstack-networking.html\">ドキュメント</link>があります。"
-
-#: ./doc/high-availability-guide/api/section_neutron_server.xml32(title)
-msgid "Add OpenStack Networking Server resource to Pacemaker"
-msgstr "OpenStack Networking Server リソースの Pacemaker への追加"
-
-#: ./doc/high-availability-guide/api/section_neutron_server.xml38(simpara)
-msgid ""
-"You can now add the Pacemaker configuration for OpenStack Networking Server "
-"resource. Connect to the Pacemaker cluster with <literal>crm "
-"configure</literal>, and add the following cluster resources:"
-msgstr "OpenStack Networking Server リソース用の Pacemaker 設定を追加できます。<literal>crm configure</literal> を用いて Pacemaker クラスターに接続し、以下のクラスターリソースを追加します。"
-
-#: ./doc/high-availability-guide/api/section_neutron_server.xml45(simpara)
-msgid ""
-"This configuration creates <literal>p_neutron-server</literal>, a resource "
-"for manage OpenStack Networking Server service"
-msgstr "この設定は OpenStack Networking サーバーサービスを管理するためのリソース <literal>p_neutron-server</literal> を作成します。"
-
-#: ./doc/high-availability-guide/api/section_neutron_server.xml46(simpara)
-msgid ""
-"<literal>crm configure</literal> supports batch input, so you may copy and "
-"paste the above into your live pacemaker configuration, and then make "
-"changes as required. For example, you may enter <literal>edit p_neutron-"
-"server</literal> from the <literal>crm configure</literal> menu and edit the"
-" resource to match your preferred virtual IP address."
-msgstr "<literal>crm configure</literal> はバッチ入力をサポートします。そのため、現在の pacemaker 設定の中に上をコピー・ペーストし、適宜変更を反映できます。たとえば、お好みの仮想 IP アドレスに一致させるために、<literal>crm configure</literal> メニューから <literal>edit p_neutron-server</literal> と入力し、リソースを編集できます。"
-
-#: ./doc/high-availability-guide/api/section_neutron_server.xml51(simpara)
-msgid ""
-"Once completed, commit your configuration changes by entering "
-"<literal>commit</literal> from the <literal>crm configure</literal> menu. "
-"Pacemaker will then start the OpenStack Networking API service, and its "
-"dependent resources, on one of your nodes."
-msgstr "完了すると、<literal>crm configure</literal> メニューから <literal>commit</literal> と入力し、設定の変更をコミットします。Pacemaker は OpenStack Networking API サービスおよび依存するリソースを同じノードに起動します。"
-
-#: ./doc/high-availability-guide/api/section_neutron_server.xml57(title)
-msgid "Configure OpenStack Networking server"
-msgstr "OpenStack Networking Server の設定"
-
-#: ./doc/high-availability-guide/api/section_neutron_server.xml59(simpara)
-msgid "Edit <literal>/etc/neutron/neutron.conf</literal> :"
-msgstr "<literal>/etc/neutron/neutron.conf</literal> を編集します。"
-
-#: ./doc/high-availability-guide/api/section_neutron_server.xml76(title)
-msgid ""
-"Configure OpenStack services to use highly available OpenStack Networking "
-"server"
-msgstr "高可用性 OpenStack Networking を使用するための OpenStack サービスの設定"
-
-#: ./doc/high-availability-guide/api/section_neutron_server.xml78(simpara)
-msgid ""
-"Your OpenStack services must now point their OpenStack Networking Server "
-"configuration to the highly available, virtual cluster IP address — rather "
-"than an OpenStack Networking server’s physical IP address as you normally "
-"would."
-msgstr "OpenStack サービスは、通常どおり OpenStack Networking サーバーの物理 IP アドレスを指定する代わりに、OpenStack Networking サーバーの設定が高可用性と仮想クラスター IP アドレスを指し示す必要があります。"
-
-#: ./doc/high-availability-guide/api/section_neutron_server.xml81(simpara)
-msgid ""
-"For example, you should configure OpenStack Compute for using highly "
-"available OpenStack Networking server in editing "
-"<literal>nova.conf</literal> file:"
-msgstr "たとえば、高可用性 Networking サーバーを使用するために、<literal>nova.conf</literal> ファイルを編集して OpenStack Compute を設定する必要があります :"
-
-#: ./doc/high-availability-guide/api/section_neutron_server.xml83(simpara)
-msgid ""
-"You need to create the OpenStack Networking server endpoint with this IP."
-msgstr "この IP を用いて OpenStack Networking Server エンドポイントを作成する必要があります。"
-
-#: ./doc/high-availability-guide/api/section_neutron_server.xml85(simpara)
-#: ./doc/high-availability-guide/api/section_glance_api.xml91(simpara)
-msgid ""
-"If you are using both private and public IP addresses, you should create two"
-" Virtual IP addresses and define your endpoint like this:"
-msgstr "プライベート IP とパブリック IP の両方を使用する場合、2 つの仮想 IP アドレスを作成し、次のようにエンドポイントを定義すべきです。"
-
-#: ./doc/high-availability-guide/api/section_glance_api.xml6(title)
-msgid "Highly available OpenStack Image API"
-msgstr "高可用性 OpenStack Image API"
-
-#: ./doc/high-availability-guide/api/section_glance_api.xml8(simpara)
-msgid ""
-"OpenStack Image Service offers a service for discovering, registering, and "
-"retrieving virtual machine images. To make the OpenStack Image API service "
-"highly available in active / passive mode, you must:"
-msgstr "OpenStack Image Service は仮想マシンイメージの検索、登録、取得に関するサービスを提供します。OpenStack Image API サービスをアクティブ / パッシブモードで高可用性にするために、以下を実行する必要があります。"
-
-#: ./doc/high-availability-guide/api/section_glance_api.xml12(simpara)
-msgid "Configure OpenStack Image to listen on the VIP address."
-msgstr "OpenStack Image がその仮想 IP アドレスをリッスンするよう設定します。"
-
-#: ./doc/high-availability-guide/api/section_glance_api.xml17(simpara)
-msgid "Manage OpenStack Image API daemon with the Pacemaker cluster manager."
-msgstr "Pacemaker クラスターマネージャーを用いた OpenStack Image API デーモンを管理します。"
-
-#: ./doc/high-availability-guide/api/section_glance_api.xml28(simpara)
-msgid ""
-"Here is the <link href=\"http://docs.openstack.org/trunk/install-"
-"guide/install/apt/content/ch_installing-openstack-"
-"image.html\">documentation</link> for installing OpenStack Image API "
-"service."
-msgstr "ここに OpenStack Image API Service をインストールするための<link href=\"http://docs.openstack.org/trunk/install-guide/install/apt/content/ch_installing-openstack-image.html\">ドキュメント</link>があります。"
-
-#: ./doc/high-availability-guide/api/section_glance_api.xml32(title)
-msgid "Add OpenStack Image API resource to Pacemaker"
-msgstr "OpenStack Image API リソースの Pacemaker への追加"
-
-#: ./doc/high-availability-guide/api/section_glance_api.xml38(simpara)
-msgid ""
-"You can now add the Pacemaker configuration for OpenStack Image API "
-"resource. Connect to the Pacemaker cluster with <literal>crm "
-"configure</literal>, and add the following cluster resources:"
-msgstr "OpenStack Image API リソース用の Pacemaker 設定を追加できます。<literal>crm configure</literal> を用いて Pacemaker クラスターに接続し、以下のクラスターリソースを追加します。"
-
-#: ./doc/high-availability-guide/api/section_glance_api.xml47(simpara)
-msgid ""
-"<literal>p_glance-api</literal>, a resource for manage OpenStack Image API "
-"service"
-msgstr "<literal>p_glance-api</literal>, OpenStack Image API サービスを管理するためのリソース"
-
-#: ./doc/high-availability-guide/api/section_glance_api.xml51(simpara)
-msgid ""
-"<literal>crm configure</literal> supports batch input, so you may copy and "
-"paste the above into your live pacemaker configuration, and then make "
-"changes as required. For example, you may enter <literal>edit p_ip_glance-"
-"api</literal> from the <literal>crm configure</literal> menu and edit the "
-"resource to match your preferred virtual IP address."
-msgstr "<literal>crm configure</literal> はバッチ入力をサポートします。そのため、現在の pacemaker 設定の中に上をコピー・ペーストし、適宜変更を反映できます。たとえば、お好みの仮想 IP アドレスに一致させるために、<literal>crm configure</literal> メニューから <literal>edit p_ip_glance-api</literal> と入力し、リソースを編集できます。"
-
-#: ./doc/high-availability-guide/api/section_glance_api.xml56(simpara)
-msgid ""
-"Once completed, commit your configuration changes by entering "
-"<literal>commit</literal> from the <literal>crm configure</literal> menu. "
-"Pacemaker will then start the OpenStack Image API service, and its dependent"
-" resources, on one of your nodes."
-msgstr "完了すると、<literal>crm configure</literal> メニューから <literal>commit</literal> と入力し、設定の変更をコミットします。Pacemaker は OpenStack Image API サービスおよび依存するリソースを同じノードに起動します。"
-
-#: ./doc/high-availability-guide/api/section_glance_api.xml62(title)
-msgid "Configure OpenStack Image Service API"
-msgstr "OpenStack Image Service API の設定"
-
-#: ./doc/high-availability-guide/api/section_glance_api.xml64(simpara)
-msgid "Edit <literal>/etc/glance/glance-api.conf</literal>:"
-msgstr "<literal>/etc/glance/glance-api.conf</literal> を編集します。"
-
-#: ./doc/high-availability-guide/api/section_glance_api.xml80(title)
-msgid "Configure OpenStack services to use high available OpenStack Image API"
-msgstr "高可用性 OpenStack Image Service API を使用するための OpenStack サービスの設定"
-
-#: ./doc/high-availability-guide/api/section_glance_api.xml82(simpara)
-msgid ""
-"Your OpenStack services must now point their OpenStack Image API "
-"configuration to the highly available, virtual cluster IP address — rather "
-"than an OpenStack Image API server’s physical IP address as you normally "
-"would."
-msgstr "OpenStack サービスは、通常どおり OpenStack Image API サーバーの物理 IP アドレスを指定する代わりに、OpenStack Image API の設定が高可用性と仮想クラスター IP アドレスを指し示す必要があります。"
-
-#: ./doc/high-availability-guide/api/section_glance_api.xml85(simpara)
-msgid ""
-"For OpenStack Compute, for example, if your OpenStack Image API service IP "
-"address is 192.168.42.104 as in the configuration explained here, you would "
-"use the following line in your <literal>nova.conf</literal> file:"
-msgstr "OpenStack Compute の例として、OpenStack Image API の IP アドレスがここで説明された設定にあるように 192.168.42.104 ならば、<literal>nova.conf</literal> ファイルで以下の行を使用する必要があります。"
-
-#: ./doc/high-availability-guide/api/section_glance_api.xml89(simpara)
-msgid "You must also create the OpenStack Image API endpoint with this IP."
-msgstr "この IP を用いて OpenStack Image API エンドポイントを作成する必要があります。"
-
-#: ./doc/high-availability-guide/api/section_api_pacemaker.xml6(title)
-msgid "Configure Pacemaker group"
-msgstr "Pacemaker グループの設定"
-
-#: ./doc/high-availability-guide/api/section_api_pacemaker.xml8(simpara)
-msgid ""
-"Finally, we need to create a service <literal>group</literal> to ensure that"
-" virtual IP is linked to the API services resources:"
-msgstr "最終的に、仮想 IP が API サービスリソースとリンクされるよう、サービス <literal>グループ</literal> を作成する必要があります。"
-
-#: ./doc/high-availability-guide/ha_aa_rabbitmq/section_configure_rabbitmq.xml6(title)
-msgid "Configure RabbitMQ"
-msgstr "RabbitMQ の設定"
-
-#: ./doc/high-availability-guide/ha_aa_rabbitmq/section_configure_rabbitmq.xml8(simpara)
-msgid ""
-"Here we are building a cluster of RabbitMQ nodes to construct a RabbitMQ "
-"broker. Mirrored queues in RabbitMQ improve the availability of service "
-"since it will be resilient to failures. We have to consider that while "
-"exchanges and bindings will survive the loss of individual nodes, queues and"
-" their messages will not because a queue and its contents is located on one "
-"node. If we lose this node, we also lose the queue."
-msgstr "これから RabbitMQ ブローカーを構築するために RabbitMQ ノードのクラスターを構築します。障害の耐性ができるため、RabbitMQ のキューミラーによりサービスの可用性を高められます。メッセージ交換とバインドにより個々のノードの損失があると、キューとその内容が 1 つのノードに置かれているため、キューとそれらのメッセージが無くなることに注意してください。このノードが失われた場合、キューも失われます。"
-
-#: ./doc/high-availability-guide/ha_aa_rabbitmq/section_configure_rabbitmq.xml13(simpara)
-msgid ""
-"We consider that we run (at least) two RabbitMQ servers. To build a broker, "
-"we need to ensure that all nodes have the same erlang cookie file. To do so,"
-" stop RabbitMQ everywhere and copy the cookie from rabbit1 server to other "
-"server(s):"
-msgstr "(少なくとも) 2 つの RabbitMQ サーバーを実行することを考えます。ブローカーを構築するために、すべてのノードが必ず同じ erlang クッキーファイルを持つ必要があります。そうするために、すべての RabbitMQ を停止し、クッキーを rabbit1 サーバーから他のサーバーにコピーします。"
-
-#: ./doc/high-availability-guide/ha_aa_rabbitmq/section_configure_rabbitmq.xml18(simpara)
-msgid ""
-"Then, start RabbitMQ on nodes. If RabbitMQ fails to start, you can’t "
-"continue to the next step."
-msgstr "そして、ノードで RabbitMQ を起動します。RabbitMQ の起動に失敗した場合、次の手順に進めません。"
-
-#: ./doc/high-availability-guide/ha_aa_rabbitmq/section_configure_rabbitmq.xml20(simpara)
-msgid "Now, we are building the HA cluster. From rabbit2, run these commands:"
-msgstr "これで、HA クラスターの構築ができました。rabbit2 からこれらのコマンドを実行します。"
-
-#: ./doc/high-availability-guide/ha_aa_rabbitmq/section_configure_rabbitmq.xml24(simpara)
-msgid "To verify the cluster status :"
-msgstr "クラスターの状態を確認する方法:"
-
-#: ./doc/high-availability-guide/ha_aa_rabbitmq/section_configure_rabbitmq.xml29(simpara)
-msgid ""
-"If the cluster is working, you can now proceed to creating users and "
-"passwords for queues."
-msgstr "クラスターが動作していれば、キュー用のユーザーとパスワードを作成する手順に進めます。"
-
-#: ./doc/high-availability-guide/ha_aa_rabbitmq/section_configure_rabbitmq.xml31(emphasis)
-msgid "Note for RabbitMQ version 3"
-msgstr "RabbitMQ バージョン 3 の注意事項"
-
-#: ./doc/high-availability-guide/ha_aa_rabbitmq/section_configure_rabbitmq.xml33(simpara)
-msgid ""
-"Queue mirroring is no longer controlled by the <emphasis>x-ha-"
-"policy</emphasis> argument when declaring a queue. OpenStack can continue to"
-" declare this argument, but it won’t cause queues to be mirrored. We need to"
-" make sure that all queues (except those with auto-generated names) are "
-"mirrored across all running nodes:"
-msgstr "キューの宣言時、キューミラーが <emphasis>x-ha-policy</emphasis> 引数により制御されなくなりました。OpenStack がこの引数を宣言し続けますが、キューはミラーされません。すべてのキュー (自動生成された名前を除いて) が実行中の全ノードにわたり確実にミラーされる必要があります。"
-
-#: ./doc/high-availability-guide/ha_aa_rabbitmq/section_configure_rabbitmq.xml38(link)
-msgid "More information about High availability in RabbitMQ"
-msgstr "RabbitMQ の高可用性に関する詳細"
-
-#: ./doc/high-availability-guide/ha_aa_rabbitmq/section_configure_openstack_services_to_user_rabbitmq.xml6(title)
-msgid "Configure OpenStack services to use RabbitMQ"
-msgstr "RabbitMQ を使用するための OpenStack サービスの設定"
-
-#: ./doc/high-availability-guide/ha_aa_rabbitmq/section_configure_openstack_services_to_user_rabbitmq.xml8(simpara)
-msgid ""
-"We have to configure the OpenStack components to use at least two RabbitMQ "
-"nodes."
-msgstr "2 つ以上の RabbitMQ ノードを使用するよう、OpenStack のコンポーネントを設定する必要があります。"
-
-#: ./doc/high-availability-guide/ha_aa_rabbitmq/section_configure_openstack_services_to_user_rabbitmq.xml9(simpara)
-msgid "Do this configuration on all services using RabbitMQ:"
-msgstr "RabbitMQ を使用するすべてのサービスでこの設定を行います。"
-
-#: ./doc/high-availability-guide/ha_aa_rabbitmq/section_configure_openstack_services_to_user_rabbitmq.xml10(simpara)
-msgid "RabbitMQ HA cluster host:port pairs:"
-msgstr "RabbitMQ HA クラスターの host:port の組:"
-
-#: ./doc/high-availability-guide/ha_aa_rabbitmq/section_configure_openstack_services_to_user_rabbitmq.xml12(simpara)
-msgid "How frequently to retry connecting with RabbitMQ:"
-msgstr "RabbitMQ と再接続する頻度:"
-
-#: ./doc/high-availability-guide/ha_aa_rabbitmq/section_configure_openstack_services_to_user_rabbitmq.xml14(simpara)
-msgid "How long to back-off for between retries when connecting to RabbitMQ:"
-msgstr "RabbitMQ に接続するとき再試行するまでにバックオフする間隔:"
-
-#: ./doc/high-availability-guide/ha_aa_rabbitmq/section_configure_openstack_services_to_user_rabbitmq.xml16(simpara)
-msgid ""
-"Maximum retries with trying to connect to RabbitMQ (infinite by default):"
-msgstr "RabbitMQ に接続を試行する最大回数 (デフォルトで無制限):"
-
-#: ./doc/high-availability-guide/ha_aa_rabbitmq/section_configure_openstack_services_to_user_rabbitmq.xml18(simpara)
-msgid "Use durable queues in RabbitMQ:"
-msgstr "RabbitMQ での永続キューの使用:"
-
-#: ./doc/high-availability-guide/ha_aa_rabbitmq/section_configure_openstack_services_to_user_rabbitmq.xml20(simpara)
-msgid "Use H/A queues in RabbitMQ (x-ha-policy: all):"
-msgstr "RabbitMQ での H/A キューの使用 (x-ha-policy: all):"
-
-#: ./doc/high-availability-guide/ha_aa_rabbitmq/section_configure_openstack_services_to_user_rabbitmq.xml22(simpara)
-msgid ""
-"If you change the configuration from an old setup which did not use HA "
-"queues, you should interrupt the service:"
-msgstr "HA キューを使用していない古いセットアップから設定を変更した場合、サービスを中断しなければいけません。"
-
-#: ./doc/high-availability-guide/ha_aa_rabbitmq/section_configure_openstack_services_to_user_rabbitmq.xml26(simpara)
-msgid ""
-"Services currently working with HA queues: OpenStack Compute, OpenStack "
-"Block Storage, OpenStack Networking, Telemetry."
-msgstr "次のサービスはいま HA キューで動作しています。OpenStack Compute、OpenStack Cinder、OpenStack Networking、Telemetry。"
-
-#: ./doc/high-availability-guide/ha_aa_rabbitmq/section_install_rabbitmq.xml8(simpara)
-msgid "This setup has been tested with RabbitMQ 2.7.1."
-msgstr "このセットアップは RabbitMQ 2.7.1 を用いてテストしました。"
-
-#: ./doc/high-availability-guide/ha_aa_rabbitmq/section_install_rabbitmq.xml11(title)
-msgid "On Ubuntu / Debian"
-msgstr "Ubuntu / Debian の場合"
-
-#: ./doc/high-availability-guide/ha_aa_rabbitmq/section_install_rabbitmq.xml13(simpara)
-#: ./doc/high-availability-guide/ha_aa_rabbitmq/section_install_rabbitmq.xml23(simpara)
-msgid "RabbitMQ is packaged on both distros:"
-msgstr "RabbitMQ がどちらもパッケージ化されています。"
-
-#: ./doc/high-availability-guide/ha_aa_rabbitmq/section_install_rabbitmq.xml16(link)
-msgid "Official manual for installing RabbitMQ on Ubuntu / Debian"
-msgstr "Ubuntu / Debian に RabbitMQ をインストールする方法の公式マニュアル"
-
-#: ./doc/high-availability-guide/ha_aa_rabbitmq/section_install_rabbitmq.xml21(title)
-msgid "On Fedora / RHEL"
-msgstr "Fedora / RHEL の場合"
-
-#: ./doc/high-availability-guide/ha_aa_rabbitmq/section_install_rabbitmq.xml26(link)
-msgid "Official manual for installing RabbitMQ on Fedora / RHEL"
-msgstr "Fedora / RHEL に RabbitMQ をインストールする方法の公式マニュアル"
-
-#: ./doc/high-availability-guide/ha_aa_controllers/section_memcached.xml6(title)
-msgid "Memcached"
-msgstr "Memcached"
-
-#: ./doc/high-availability-guide/ha_aa_controllers/section_memcached.xml8(simpara)
-msgid ""
-"Most of OpenStack services use an application to offer persistence and store"
-" ephemeral data (like tokens). Memcached is one of them and can scale-out "
-"easily without specific trick."
-msgstr "ほとんどの OpenStack サービスは、永続性を提供し、(トークンのような) 一時的なデータを保存するために、アプリケーションを使用します。memcached は、それらの一つで、特別な工夫をすることなく簡単にスケールアウト可能にできます。"
-
-#: ./doc/high-availability-guide/ha_aa_controllers/section_memcached.xml10(simpara)
-msgid ""
-"To install and configure it, read the <link "
-"href=\"http://code.google.com/p/memcached/wiki/NewStart\">official "
-"documentation</link>."
-msgstr "インストールおよび設定するために、<link href=\"http://code.google.com/p/memcached/wiki/NewStart\">公式ドキュメント</link>を参照します。"
-
-#: ./doc/high-availability-guide/ha_aa_controllers/section_memcached.xml11(simpara)
-msgid ""
-"Memory caching is managed by oslo-incubator so the way to use multiple "
-"memcached servers is the same for all projects."
-msgstr "メモリキャッシュは、複数の memcached サーバーを使用する方法がすべてのプロジェクトで同じにするために、Oslo インキュベーターにより管理されています。"
-
-#: ./doc/high-availability-guide/ha_aa_controllers/section_memcached.xml12(simpara)
-msgid "Example with two hosts:"
-msgstr "2 つのホストを用いた例:"
-
-#: ./doc/high-availability-guide/ha_aa_controllers/section_memcached.xml14(simpara)
-msgid ""
-"By default, controller1 handles the caching service but if the host goes "
-"down, controller2 does the job. For more information about memcached "
-"installation, see the OpenStack Cloud Administrator Guide."
-msgstr "デフォルトで、controller1 がキャッシュサービスを処理します。しかし、このホストが停止すると、controller2 がこのジョブを実行します。memcached のインストールに関する詳細は OpenStack クラウド管理者ガイドを参照してください。"
-
-#: ./doc/high-availability-guide/ha_aa_controllers/section_run_openstack_api_and_schedulers.xml6(title)
-msgid "Run OpenStack API and schedulers"
-msgstr "OpenStack API &amp; スケジューラーの実行"
-
-#: ./doc/high-availability-guide/ha_aa_controllers/section_run_openstack_api_and_schedulers.xml10(title)
-msgid "API services"
-msgstr "API サービス"
-
-#: ./doc/high-availability-guide/ha_aa_controllers/section_run_openstack_api_and_schedulers.xml12(simpara)
-msgid ""
-"All OpenStack projects have an API service for controlling all the resources"
-" in the Cloud. In Active / Active mode, the most common setup is to scale-"
-"out these services on at least two nodes and use load-balancing and virtual "
-"IP (with HAproxy &amp; Keepalived in this setup)."
-msgstr "すべての OpenStack プロジェクトは、クラウドにあるすべてのリソースを制御するための API サービスを持ちます。アクティブ / アクティブモードの場合、最も一般的なセットアップ環境は、少なくとも 2 つのノードにこれらのサービスをスケールアウトし、(このセットアップで HAproxy と Keepalived を用いて) 負荷分散および仮想 IP を使用します。"
-
-#: ./doc/high-availability-guide/ha_aa_controllers/section_run_openstack_api_and_schedulers.xml16(emphasis)
-msgid "Configure API OpenStack services"
-msgstr "OpenStack サービスの API の設定"
-
-#: ./doc/high-availability-guide/ha_aa_controllers/section_run_openstack_api_and_schedulers.xml18(simpara)
-msgid ""
-"To configure our Cloud using Highly available and scalable API services, we "
-"need to ensure that:"
-msgstr "私たちのクラウド環境が高可用性かつスケーラブルな API サービスを使用するよう設定するために、以下の事項を確認する必要があります。"
-
-#: ./doc/high-availability-guide/ha_aa_controllers/section_run_openstack_api_and_schedulers.xml21(simpara)
-msgid "You use Virtual IP when configuring OpenStack Identity endpoints."
-msgstr "OpenStack Identity エンドポイントを設定するときに仮想 IP を使用します。"
-
-#: ./doc/high-availability-guide/ha_aa_controllers/section_run_openstack_api_and_schedulers.xml26(simpara)
-msgid "All OpenStack configuration files should refer to Virtual IP."
-msgstr "すべての OpenStack 設定ファイルは仮想 IP を参照すべきです。"
-
-#: ./doc/high-availability-guide/ha_aa_controllers/section_run_openstack_api_and_schedulers.xml32(emphasis)
-msgid "In case of failure"
-msgstr "失敗の場合"
-
-#: ./doc/high-availability-guide/ha_aa_controllers/section_run_openstack_api_and_schedulers.xml34(simpara)
-msgid ""
-"The monitor check is quite simple since it just establishes a TCP connection"
-" to the API port. Comparing to the Active / Passive mode using Corosync "
-"&amp; Resources Agents, we don’t check if the service is actually running). "
-"That’s why all OpenStack API should be monitored by another tool (i.e. "
-"Nagios) with the goal to detect failures in the Cloud Framework "
-"infrastructure."
-msgstr "API ポートへの TCP 接続を確立するだけのため、監視チェックは極めてシンプルです。Corosync とリソースエージェントを使用するアクティブ / パッシブモードと比べて、サービスが実際に動作しているかを確認しません。そのため、クラウドのフレームワーク環境における障害を検知するために、すべての OpenStack API は他のツール (例: Nagios) により監視すべきです。"
-
-#: ./doc/high-availability-guide/ha_aa_controllers/section_run_openstack_api_and_schedulers.xml41(title)
-msgid "Schedulers"
-msgstr "スケジューラー"
-
-#: ./doc/high-availability-guide/ha_aa_controllers/section_run_openstack_api_and_schedulers.xml43(simpara)
-msgid ""
-"OpenStack schedulers are used to determine how to dispatch compute, network "
-"and volume requests. The most common setup is to use RabbitMQ as messaging "
-"system already documented in this guide. Those services are connected to the"
-" messaging backend and can scale-out :"
-msgstr "OpenStack スケジューラーは、コンピュート、ネットワーク、ボリュームのリクエストをどのようにディスパッチするかを決めるために使用されます。最も一般的なセットアップ環境は、このガイドにドキュメント化されたメッセージングシステムとして RabbitMQ を使用することです。これらのサービスはメッセージングのバックエンドに接続され、スケールアウトできます。"
-
-#: ./doc/high-availability-guide/ha_aa_controllers/section_run_openstack_api_and_schedulers.xml48(simpara)
-msgid "nova-scheduler"
-msgstr "nova-scheduler"
-
-#: ./doc/high-availability-guide/ha_aa_controllers/section_run_openstack_api_and_schedulers.xml53(simpara)
-msgid "nova-conductor"
-msgstr "nova-conductor"
-
-#: ./doc/high-availability-guide/ha_aa_controllers/section_run_openstack_api_and_schedulers.xml58(simpara)
-msgid "cinder-scheduler"
-msgstr "cinder-scheduler"
-
-#: ./doc/high-availability-guide/ha_aa_controllers/section_run_openstack_api_and_schedulers.xml63(simpara)
-msgid "neutron-server"
-msgstr "neutron-server"
-
-#: ./doc/high-availability-guide/ha_aa_controllers/section_run_openstack_api_and_schedulers.xml68(simpara)
-msgid "ceilometer-collector"
-msgstr "ceilometer-collector"
-
-#: ./doc/high-availability-guide/ha_aa_controllers/section_run_openstack_api_and_schedulers.xml73(simpara)
-msgid "heat-engine"
-msgstr "heat-engine"
-
-#: ./doc/high-availability-guide/ha_aa_controllers/section_run_openstack_api_and_schedulers.xml78(simpara)
-msgid ""
-"Please refer to the RabbitMQ section for configure these services with "
-"multiple messaging servers."
-msgstr "これらのサービスを複数のメッセージングサービスを用いて設定する方法は、RabbitMQ のセクションを参照してください。"
-
-#: ./doc/high-availability-guide/network/section_highly_available_neutron_l3_agent.xml6(title)
-msgid "Highly available neutron L3 agent"
-msgstr "高可用性 Neutron L3 エージェント"
-
-#: ./doc/high-availability-guide/network/section_highly_available_neutron_l3_agent.xml8(simpara)
-msgid ""
-"The neutron L3 agent provides L3/NAT forwarding to ensure external network "
-"access for VMs on tenant networks. High availability for the L3 agent is "
-"achieved by adopting Pacemaker."
-msgstr "Neutron L3 エージェントは、プロジェクトのネットワークにある仮想マシンが確実に外部ネットワークにアクセスできるように、L3/NAT 転送機能を提供します。"
-
-#: ./doc/high-availability-guide/network/section_highly_available_neutron_l3_agent.xml12(simpara)
-msgid ""
-"Here is the <link href=\"http://docs.openstack.org/trunk/config-"
-"reference/content/section_adv_cfg_l3_agent.html\">documentation</link> for "
-"installing neutron L3 agent."
-msgstr "ここに Neutron L3 エージェントをインストールするための<link href=\"http://docs.openstack.org/trunk/config-reference/content/section_adv_cfg_l3_agent.html\">ドキュメント</link>があります。"
-
-#: ./doc/high-availability-guide/network/section_highly_available_neutron_l3_agent.xml16(title)
-msgid "Add neutron L3 agent resource to Pacemaker"
-msgstr "Neutron L3 Agent リソースの Pacemaker への追加"
-
-#: ./doc/high-availability-guide/network/section_highly_available_neutron_l3_agent.xml22(simpara)
-msgid ""
-"You may now proceed with adding the Pacemaker configuration for neutron L3 "
-"agent resource. Connect to the Pacemaker cluster with <literal>crm "
-"configure</literal>, and add the following cluster resources:"
-msgstr "Neutron L3 Agent リソース用の Pacemaker 設定を追加して、次に進むことができます。<literal>crm configure</literal> を用いて Pacemaker クラスターに接続し、以下のクラスターリソースを追加します。"
-
-#: ./doc/high-availability-guide/network/section_highly_available_neutron_l3_agent.xml32(simpara)
-msgid ""
-"<literal>p_neutron-l3-agent</literal>, a resource for manage Neutron L3 "
-"Agent service"
-msgstr "<literal>p_neutron-l3-agent</literal>, Neutron L3 Agent サービスを管理するためのリソース。"
-
-#: ./doc/high-availability-guide/network/section_highly_available_neutron_l3_agent.xml39(simpara)
-msgid ""
-"Once completed, commit your configuration changes by entering "
-"<literal>commit</literal> from the <literal>crm configure</literal> menu. "
-"Pacemaker will then start the neutron L3 agent service, and its dependent "
-"resources, on one of your nodes."
-msgstr "完了すると、<literal>crm configure</literal> メニューから <literal>commit</literal> と入力し、設定の変更をコミットします。Pacemaker は Neutron L3 Agent サービスおよび依存するリソースを同じノードに起動します。"
-
-#: ./doc/high-availability-guide/network/section_highly_available_neutron_l3_agent.xml43(simpara)
-msgid ""
-"This method does not ensure a zero downtime since it has to recreate all the"
-" namespaces and virtual routers on the node."
-msgstr "この方法は、ノードですべての名前空間と仮想ルーターを再作成する必要があるため、無停止を保証しません。"
-
-#: ./doc/high-availability-guide/network/section_highly_available_neutron_metadata_agent.xml6(title)
-msgid "Highly available neutron metadata agent"
-msgstr "高可用性 Neutron Metadata Agent"
-
-#: ./doc/high-availability-guide/network/section_highly_available_neutron_metadata_agent.xml8(simpara)
-msgid ""
-"Neutron metadata agent allows Compute API metadata to be reachable by VMs on"
-" tenant networks. High availability for the metadata agent is achieved by "
-"adopting Pacemaker."
-msgstr "Neutron Metadata エージェントにより Nova API Metadata がプロジェクトのネットワークにある仮想マシンによりアクセスできるようになります。Metadata エージェントの高可用性は Pacemaker の適用により実現されます。"
-
-#: ./doc/high-availability-guide/network/section_highly_available_neutron_metadata_agent.xml12(simpara)
-msgid ""
-"Here is the <link href=\"http://docs.openstack.org/trunk/config-"
-"reference/content/networking-options-metadata.html\">documentation</link> "
-"for installing Neutron Metadata Agent."
-msgstr "ここに Neutron Metadata エージェントをインストールするための<link href=\"http://docs.openstack.org/trunk/config-reference/content/networking-options-metadata.html\">ドキュメント</link>があります。"
-
-#: ./doc/high-availability-guide/network/section_highly_available_neutron_metadata_agent.xml16(title)
-msgid "Add neutron metadata agent resource to Pacemaker"
-msgstr "Neutron Metadata Agent リソースの Pacemaker への追加"
-
-#: ./doc/high-availability-guide/network/section_highly_available_neutron_metadata_agent.xml22(simpara)
-msgid ""
-"You may now proceed with adding the Pacemaker configuration for neutron "
-"metadata agent resource. Connect to the Pacemaker cluster with <literal>crm "
-"configure</literal>, and add the following cluster resources:"
-msgstr "OpenStack Metadata Agent リソース用の Pacemaker 設定を追加して、次に進むことができます。<literal>crm configure</literal> を用いて Pacemaker クラスターに接続し、以下のクラスターリソースを追加します。"
-
-#: ./doc/high-availability-guide/network/section_highly_available_neutron_metadata_agent.xml32(simpara)
-msgid ""
-"<literal>p_neutron-metadata-agent</literal>, a resource for manage Neutron "
-"Metadata Agent service"
-msgstr "<literal>p_neutron-metadata-agent</literal>, Neutron Metadata Agent サービスを管理するためのリソース。"
-
-#: ./doc/high-availability-guide/network/section_highly_available_neutron_metadata_agent.xml40(simpara)
-msgid ""
-"Once completed, commit your configuration changes by entering "
-"<literal>commit</literal> from the <literal>crm configure</literal> menu. "
-"Pacemaker will then start the neutron metadata agent service, and its "
-"dependent resources, on one of your nodes."
-msgstr "完了すると、<literal>crm configure</literal> メニューから <literal>commit</literal> と入力し、設定の変更をコミットします。Pacemaker は Neutron Metadata Agent サービスおよび依存するリソースを同じノードに起動します。"
-
-#: ./doc/high-availability-guide/network/section_manage_network_resources.xml6(title)
-msgid "Manage network resources"
-msgstr "ネットワークリソースの管理"
-
-#: ./doc/high-availability-guide/network/section_manage_network_resources.xml8(simpara)
-msgid ""
-"You can now add the Pacemaker configuration for managing all network "
-"resources together with a group. Connect to the Pacemaker cluster with "
-"<literal>crm configure</literal>, and add the following cluster resources:"
-msgstr "すべてのネットワークリソースをグループと一緒に管理するための Pacemaker 設定を追加できます。<literal>crm configure</literal> を用いて Pacemaker クラスターに接続し、以下のクラスターリソースを追加します。"
-
-#: ./doc/high-availability-guide/network/section_highly_available_neutron_dhcp_agent.xml6(title)
-msgid "Highly available neutron DHCP agent"
-msgstr "高可用性 Neutron DHCP Agent"
-
-#: ./doc/high-availability-guide/network/section_highly_available_neutron_dhcp_agent.xml8(simpara)
-msgid ""
-"Neutron DHCP agent distributes IP addresses to the VMs with dnsmasq (by "
-"default). High availability for the DHCP agent is achieved by adopting "
-"Pacemaker."
-msgstr "Neutron DHCP エージェントは (デフォルトで) dnsmasq を用いて仮想マシンに IP アドレスを配布します。DHCP エージェントの高可用性は Pacemaker の適用により実現されます。"
-
-#: ./doc/high-availability-guide/network/section_highly_available_neutron_dhcp_agent.xml12(simpara)
-msgid ""
-"Here is the <link href=\"http://docs.openstack.org/trunk/config-"
-"reference/content/section_adv_cfg_dhcp_agent.html\">documentation</link> for"
-" installing neutron DHCP agent."
-msgstr "ここに Neutron DHCP エージェントをインストールするための<link href=\"http://docs.openstack.org/trunk/config-reference/content/section_adv_cfg_dhcp_agent.html\">ドキュメント</link>があります。"
-
-#: ./doc/high-availability-guide/network/section_highly_available_neutron_dhcp_agent.xml16(title)
-msgid "Add neutron DHCP agent resource to Pacemaker"
-msgstr "Neutron DHCP Agent リソースの Pacemaker への追加"
-
-#: ./doc/high-availability-guide/network/section_highly_available_neutron_dhcp_agent.xml22(simpara)
-msgid ""
-"You may now proceed with adding the Pacemaker configuration for neutron DHCP"
-" agent resource. Connect to the Pacemaker cluster with <literal>crm "
-"configure</literal>, and add the following cluster resources:"
-msgstr "OpenStack DHCP Agent リソース用の Pacemaker 設定を追加して、次に進むことができます。<literal>crm configure</literal> を用いて Pacemaker クラスターに接続し、以下のクラスターリソースを追加します。"
-
-#: ./doc/high-availability-guide/network/section_highly_available_neutron_dhcp_agent.xml32(simpara)
-msgid ""
-"<literal>p_neutron-dhcp-agent</literal>, a resource for manage Neutron DHCP "
-"Agent service"
-msgstr "<literal>p_neutron-dhcp-agent</literal>, Neutron DHCP Agent サービスを管理するためのリソース。"
-
-#: ./doc/high-availability-guide/network/section_highly_available_neutron_dhcp_agent.xml40(simpara)
-msgid ""
-"Once completed, commit your configuration changes by entering "
-"<literal>commit</literal> from the <literal>crm configure</literal> menu. "
-"Pacemaker will then start the neutron DHCP agent service, and its dependent "
-"resources, on one of your nodes."
-msgstr "完了すると、<literal>crm configure</literal> メニューから <literal>commit</literal> と入力し、設定の変更をコミットします。Pacemaker は Neutron DHCP Agent サービスおよび依存するリソースを同じノードに起動します。"
-
-#: ./doc/high-availability-guide/ha_aa_network/section_run_neutron_l3_agent.xml6(title)
-msgid "Run neutron L3 agent"
-msgstr "Neutron L3 エージェントの実行"
-
-#: ./doc/high-availability-guide/ha_aa_network/section_run_neutron_l3_agent.xml8(simpara)
-msgid ""
-"The neutron L3 agent is scalable thanks to the scheduler that allows "
-"distribution of virtual routers across multiple nodes. But there is no "
-"native feature to make these routers highly available. At this time, the "
-"Active / Passive solution exists to run the Neutron L3 agent in failover "
-"mode with Pacemaker. See the Active / Passive section of this guide."
-msgstr "仮想ルーターを複数のノードに渡り配布できるスケジューラーのおかげで、Neutron L3 エージェントがスケール可能になりました。しかし、これらのルーターを高可用性にする独自の機能はありません。今のところ、Pacemaker のフェイルオーバーモードで Neutron L3 エージェントを実行させる、アクティブ / パッシブのソリューションがあります。このガイドのアクティブ / パッシブのセクションを参照ください。"
-
-#: ./doc/high-availability-guide/ha_aa_network/section_run_neutron_metadata_agent.xml6(title)
-msgid "Run neutron metadata agent"
-msgstr "Neutron メタデータエージェントの実行"
-
-#: ./doc/high-availability-guide/ha_aa_network/section_run_neutron_metadata_agent.xml8(simpara)
-msgid ""
-"There is no native feature to make this service highly available. At this "
-"time, the Active / Passive solution exists to run the neutron metadata agent"
-" in failover mode with Pacemaker. See the Active / Passive section of this "
-"guide."
-msgstr "このサービスを高可用性にする独自の機能はありません。今のところ、Pacemaker のフェイルオーバーモードで Neutron メタデータエージェントを実行させる、アクティブ / パッシブのソリューションがあります。このガイドのアクティブ / パッシブのセクションを参照ください。"
-
-#: ./doc/high-availability-guide/ha_aa_network/section_run_neutron_dhcp_agent.xml6(title)
-msgid "Run neutron DHCP agent"
-msgstr "Neutron DHCP エージェントの実行"
-
-#: ./doc/high-availability-guide/ha_aa_network/section_run_neutron_dhcp_agent.xml8(simpara)
-msgid ""
-"OpenStack Networking service has a scheduler that lets you run multiple "
-"agents across nodes. Also, the DHCP agent can be natively highly available. "
-"For details, see <link href=\"http://docs.openstack.org/trunk/config-"
-"reference/content/app_demo_multi_dhcp_agents.html\">OpenStack Configuration "
-"Reference</link>."
-msgstr "OpenStack Networking Service はノードをまたがり複数のエージェントを実行できるスケジューラーがあります。また、DHCP エージェントはネイティブで高可用性にできます。詳細は <link href=\"http://docs.openstack.org/trunk/config-reference/content/app_demo_multi_dhcp_agents.html\">OpenStack 設定リファレンス</link>を参照してください。"
+#: ./doc/high-availability-guide/part_active_active.xml6(title)
+msgid "HA using active/active"
+msgstr "アクティブ/アクティブを使用した HA"
 
 #: ./doc/high-availability-guide/ha_aa_db/section_ha_aa_db_galera_monitoring.xml6(title)
 msgid "Galera monitoring scripts"
@@ -1760,20 +496,6 @@ msgstr "Galera 監視スクリプト"
 #: ./doc/high-availability-guide/ha_aa_db/section_ha_aa_db_galera_monitoring.xml8(simpara)
 msgid "(Coming soon)"
 msgstr "(近日公開)"
-
-#: ./doc/high-availability-guide/ha_aa_db/section_other_ways_to_provide_a_highly_available_database.xml6(title)
-msgid "Other ways to provide a highly available database"
-msgstr "高可用性データベースを提供する別の方法"
-
-#: ./doc/high-availability-guide/ha_aa_db/section_other_ways_to_provide_a_highly_available_database.xml8(simpara)
-msgid ""
-"MySQL with Galera is by no means the only way to achieve database HA. "
-"MariaDB (<link href=\"https://mariadb.org/\">https://mariadb.org/</link>) "
-"and Percona (<link "
-"href=\"http://www.percona.com/\">http://www.percona.com/</link>) also work "
-"with Galera. You also have the option to use Postgres, which has its own "
-"replication, or another database HA option."
-msgstr "MySQL と Galera の併用がデータベースを HA 化する唯一の方法ではありません。MariaDB (<link href=\"https://mariadb.org/\">https://mariadb.org/</link>) や Percona (<link href=\"http://www.percona.com/\">http://www.percona.com/</link>) も Galera と併用できます。独自のレプリケーション機能を持つ Postgres や他のデータベースの HA オプションを使用するという選択肢もあります。"
 
 #: ./doc/high-availability-guide/ha_aa_db/section_ha_aa_db_mysql_galera.xml6(title)
 msgid "MySQL with Galera"
@@ -1909,6 +631,836 @@ msgstr "MySQL クライアントを開き、さまざまなパラメーターの
 msgid "You should see a status that looks something like this:"
 msgstr "このように見える状態を確認すべきです。"
 
+#: ./doc/high-availability-guide/ha_aa_db/section_other_ways_to_provide_a_highly_available_database.xml6(title)
+msgid "Other ways to provide a highly available database"
+msgstr "高可用性データベースを提供する別の方法"
+
+#: ./doc/high-availability-guide/ha_aa_db/section_other_ways_to_provide_a_highly_available_database.xml8(simpara)
+msgid ""
+"MySQL with Galera is by no means the only way to achieve database HA. "
+"MariaDB (<link href=\"https://mariadb.org/\">https://mariadb.org/</link>) "
+"and Percona (<link "
+"href=\"http://www.percona.com/\">http://www.percona.com/</link>) also work "
+"with Galera. You also have the option to use Postgres, which has its own "
+"replication, or another database HA option."
+msgstr "MySQL と Galera の併用がデータベースを HA 化する唯一の方法ではありません。MariaDB (<link href=\"https://mariadb.org/\">https://mariadb.org/</link>) や Percona (<link href=\"http://www.percona.com/\">http://www.percona.com/</link>) も Galera と併用できます。独自のレプリケーション機能を持つ Postgres や他のデータベースの HA オプションを使用するという選択肢もあります。"
+
+#: ./doc/high-availability-guide/ha_aa_network/section_run_neutron_l3_agent.xml6(title)
+msgid "Run neutron L3 agent"
+msgstr "Neutron L3 エージェントの実行"
+
+#: ./doc/high-availability-guide/ha_aa_network/section_run_neutron_l3_agent.xml8(simpara)
+msgid ""
+"The neutron L3 agent is scalable thanks to the scheduler that allows "
+"distribution of virtual routers across multiple nodes. But there is no "
+"native feature to make these routers highly available. At this time, the "
+"Active / Passive solution exists to run the Neutron L3 agent in failover "
+"mode with Pacemaker. See the Active / Passive section of this guide."
+msgstr "仮想ルーターを複数のノードに渡り配布できるスケジューラーのおかげで、Neutron L3 エージェントがスケール可能になりました。しかし、これらのルーターを高可用性にする独自の機能はありません。今のところ、Pacemaker のフェイルオーバーモードで Neutron L3 エージェントを実行させる、アクティブ / パッシブのソリューションがあります。このガイドのアクティブ / パッシブのセクションを参照ください。"
+
+#: ./doc/high-availability-guide/ha_aa_network/section_run_neutron_metadata_agent.xml6(title)
+msgid "Run neutron metadata agent"
+msgstr "Neutron メタデータエージェントの実行"
+
+#: ./doc/high-availability-guide/ha_aa_network/section_run_neutron_metadata_agent.xml8(simpara)
+msgid ""
+"There is no native feature to make this service highly available. At this "
+"time, the Active / Passive solution exists to run the neutron metadata agent"
+" in failover mode with Pacemaker. See the Active / Passive section of this "
+"guide."
+msgstr "このサービスを高可用性にする独自の機能はありません。今のところ、Pacemaker のフェイルオーバーモードで Neutron メタデータエージェントを実行させる、アクティブ / パッシブのソリューションがあります。このガイドのアクティブ / パッシブのセクションを参照ください。"
+
+#: ./doc/high-availability-guide/ha_aa_network/section_run_neutron_dhcp_agent.xml6(title)
+msgid "Run neutron DHCP agent"
+msgstr "Neutron DHCP エージェントの実行"
+
+#: ./doc/high-availability-guide/ha_aa_network/section_run_neutron_dhcp_agent.xml8(simpara)
+msgid ""
+"OpenStack Networking service has a scheduler that lets you run multiple "
+"agents across nodes. Also, the DHCP agent can be natively highly available. "
+"For details, see <link href=\"http://docs.openstack.org/trunk/config-"
+"reference/content/app_demo_multi_dhcp_agents.html\">OpenStack Configuration "
+"Reference</link>."
+msgstr "OpenStack Networking Service はノードをまたがり複数のエージェントを実行できるスケジューラーがあります。また、DHCP エージェントはネイティブで高可用性にできます。詳細は <link href=\"http://docs.openstack.org/trunk/config-reference/content/app_demo_multi_dhcp_agents.html\">OpenStack 設定リファレンス</link>を参照してください。"
+
+#: ./doc/high-availability-guide/api/section_cinder_api.xml6(title)
+msgid "Highly available Block Storage API"
+msgstr "高可用性 Block Storage API"
+
+#: ./doc/high-availability-guide/api/section_cinder_api.xml8(simpara)
+msgid ""
+"Making the Block Storage (cinder) API service highly available in active / "
+"passive mode involves"
+msgstr "Block Storage (cinder) API サービスのアクティブ / パッシブモードでの高可用化"
+
+#: ./doc/high-availability-guide/api/section_cinder_api.xml11(simpara)
+msgid "Configure Block Storage to listen on the VIP address,"
+msgstr "Block Storage がその仮想 IP アドレスをリッスンする設定"
+
+#: ./doc/high-availability-guide/api/section_cinder_api.xml16(simpara)
+msgid "managing Block Storage API daemon with the Pacemaker cluster manager,"
+msgstr "Pacemaker クラスターマネージャーを用いた Block Storage API デーモンの管理"
+
+#: ./doc/high-availability-guide/api/section_cinder_api.xml21(simpara)
+#: ./doc/high-availability-guide/api/section_glance_api.xml22(simpara)
+#: ./doc/high-availability-guide/api/section_neutron_server.xml22(simpara)
+#: ./doc/high-availability-guide/api/section_keystone.xml22(simpara)
+msgid "Configure OpenStack services to use this IP address."
+msgstr "OpenStack のサービスがこの IP アドレスを使用するよう設定します。"
+
+#: ./doc/high-availability-guide/api/section_cinder_api.xml27(simpara)
+msgid ""
+"Here is the <link href=\"http://docs.openstack.org/trunk/install-"
+"guide/install/apt/content/ch_cinder.html\">documentation</link> for "
+"installing Block Storage service."
+msgstr "ここに Block Storage のインストールに関する<link href=\"http://docs.openstack.org/trunk/install-guide/install/apt/content/ch_cinder.html\">ドキュメント</link>があります。"
+
+#: ./doc/high-availability-guide/api/section_cinder_api.xml33(title)
+msgid "Add Block Storage API resource to Pacemaker"
+msgstr "Block Storage API リソースの Pacemaker への追加"
+
+#: ./doc/high-availability-guide/api/section_cinder_api.xml35(simpara)
+#: ./doc/high-availability-guide/api/section_glance_api.xml34(simpara)
+#: ./doc/high-availability-guide/api/section_neutron_server.xml34(simpara)
+#: ./doc/high-availability-guide/api/section_ceilometer_agent_central.xml26(simpara)
+#: ./doc/high-availability-guide/api/section_keystone.xml34(simpara)
+#: ./doc/high-availability-guide/network/section_highly_available_neutron_metadata_agent.xml18(simpara)
+#: ./doc/high-availability-guide/network/section_highly_available_neutron_l3_agent.xml18(simpara)
+#: ./doc/high-availability-guide/network/section_highly_available_neutron_dhcp_agent.xml18(simpara)
+msgid "First of all, you need to download the resource agent to your system:"
+msgstr "まず初めに、リソースエージェントをシステムにダウンロードする必要があります。"
+
+#: ./doc/high-availability-guide/api/section_cinder_api.xml39(simpara)
+msgid ""
+"You can now add the Pacemaker configuration for Block Storage API resource. "
+"Connect to the Pacemaker cluster with <literal>crm configure</literal>, and "
+"add the following cluster resources:"
+msgstr "Block Storage API リソース用の Pacemaker 設定を追加できます。<literal>crm configure</literal> を用いて Pacemaker クラスターに接続し、以下のクラスターリソースを追加します。"
+
+#: ./doc/high-availability-guide/api/section_cinder_api.xml46(simpara)
+#: ./doc/high-availability-guide/api/section_glance_api.xml44(simpara)
+#: ./doc/high-availability-guide/api/section_ceilometer_agent_central.xml36(simpara)
+#: ./doc/high-availability-guide/controller/section_rabbitmq.xml185(simpara)
+#: ./doc/high-availability-guide/controller/section_mysql.xml197(simpara)
+#: ./doc/high-availability-guide/network/section_highly_available_neutron_metadata_agent.xml29(simpara)
+#: ./doc/high-availability-guide/network/section_highly_available_neutron_l3_agent.xml29(simpara)
+#: ./doc/high-availability-guide/network/section_highly_available_neutron_dhcp_agent.xml29(simpara)
+msgid "This configuration creates"
+msgstr "この設定により、次のものが作成されます。"
+
+#: ./doc/high-availability-guide/api/section_cinder_api.xml49(simpara)
+msgid ""
+"<literal>p_cinder-api</literal>, a resource for manage Block Storage API "
+"service"
+msgstr "<literal>p_cinder-api</literal>, Block Storage API サービスを管理するためのリソース"
+
+#: ./doc/high-availability-guide/api/section_cinder_api.xml53(simpara)
+msgid ""
+"<literal>crm configure</literal> supports batch input, so you may copy and "
+"paste the above into your live pacemaker configuration, and then make "
+"changes as required. For example, you may enter <literal>edit p_ip_cinder-"
+"api</literal> from the <literal>crm configure</literal> menu and edit the "
+"resource to match your preferred virtual IP address."
+msgstr "<literal>crm configure</literal> はバッチ入力をサポートします。そのため、現在の pacemaker 設定の中に上をコピー・ペーストし、適宜変更を反映できます。たとえば、お好みの仮想 IP アドレスに一致させるために、<literal>crm configure</literal> メニューから <literal>edit p_ip_cinder-api</literal> と入力し、リソースを編集できます。"
+
+#: ./doc/high-availability-guide/api/section_cinder_api.xml58(simpara)
+msgid ""
+"Once completed, commit your configuration changes by entering "
+"<literal>commit</literal> from the <literal>crm configure</literal> menu. "
+"Pacemaker will then start the Block Storage API service, and its dependent "
+"resources, on one of your nodes."
+msgstr "完了すると、<literal>crm configure</literal> メニューから <literal>commit</literal> と入力し、設定の変更をコミットします。Pacemaker は Block Storage API サービスおよび依存するリソースを同じノードに起動します。"
+
+#: ./doc/high-availability-guide/api/section_cinder_api.xml64(title)
+msgid "Configure Block Storage API service"
+msgstr "Block Storage API サービスの設定"
+
+#: ./doc/high-availability-guide/api/section_cinder_api.xml66(simpara)
+msgid "Edit <literal>/etc/cinder/cinder.conf</literal>:"
+msgstr "<literal>/etc/cinder/cinder.conf</literal> を編集します。"
+
+#: ./doc/high-availability-guide/api/section_cinder_api.xml79(title)
+msgid "Configure OpenStack services to use highly available Block Storage API"
+msgstr "高可用性 Block Storage API を使用するための OpenStack サービスの設定"
+
+#: ./doc/high-availability-guide/api/section_cinder_api.xml81(simpara)
+msgid ""
+"Your OpenStack services must now point their Block Storage API configuration"
+" to the highly available, virtual cluster IP address — rather than a Block "
+"Storage API server’s physical IP address as you normally would."
+msgstr "OpenStack サービスは、通常どおり Block Storage API サーバーの物理 IP アドレスを指定する代わりに、Block Storage API の設定が高可用性と仮想クラスター IP アドレスを指し示す必要があります。"
+
+#: ./doc/high-availability-guide/api/section_cinder_api.xml84(simpara)
+msgid "You must create the Block Storage API endpoint with this IP."
+msgstr "この IP を用いて Block Storage API エンドポイントを作成する必要があります。"
+
+#: ./doc/high-availability-guide/api/section_cinder_api.xml86(simpara)
+msgid ""
+"If you are using both private and public IP, you should create two Virtual "
+"IPs and define your endpoint like this:"
+msgstr "プライベート IP とパブリック IP の両方を使用する場合、2 つの仮想 IP アドレスを作成し、次のようにエンドポイントを定義すべきです。"
+
+#: ./doc/high-availability-guide/api/section_api_pacemaker.xml6(title)
+msgid "Configure Pacemaker group"
+msgstr "Pacemaker グループの設定"
+
+#: ./doc/high-availability-guide/api/section_api_pacemaker.xml8(simpara)
+msgid ""
+"Finally, we need to create a service <literal>group</literal> to ensure that"
+" virtual IP is linked to the API services resources:"
+msgstr "最終的に、仮想 IP が API サービスリソースとリンクされるよう、サービス <literal>グループ</literal> を作成する必要があります。"
+
+#: ./doc/high-availability-guide/api/section_glance_api.xml6(title)
+msgid "Highly available OpenStack Image API"
+msgstr "高可用性 OpenStack Image API"
+
+#: ./doc/high-availability-guide/api/section_glance_api.xml8(simpara)
+msgid ""
+"OpenStack Image Service offers a service for discovering, registering, and "
+"retrieving virtual machine images. To make the OpenStack Image API service "
+"highly available in active / passive mode, you must:"
+msgstr "OpenStack Image Service は仮想マシンイメージの検索、登録、取得に関するサービスを提供します。OpenStack Image API サービスをアクティブ / パッシブモードで高可用性にするために、以下を実行する必要があります。"
+
+#: ./doc/high-availability-guide/api/section_glance_api.xml12(simpara)
+msgid "Configure OpenStack Image to listen on the VIP address."
+msgstr "OpenStack Image がその仮想 IP アドレスをリッスンするよう設定します。"
+
+#: ./doc/high-availability-guide/api/section_glance_api.xml17(simpara)
+msgid "Manage OpenStack Image API daemon with the Pacemaker cluster manager."
+msgstr "Pacemaker クラスターマネージャーを用いた OpenStack Image API デーモンを管理します。"
+
+#: ./doc/high-availability-guide/api/section_glance_api.xml28(simpara)
+msgid ""
+"Here is the <link href=\"http://docs.openstack.org/trunk/install-"
+"guide/install/apt/content/ch_installing-openstack-"
+"image.html\">documentation</link> for installing OpenStack Image API "
+"service."
+msgstr "ここに OpenStack Image API Service をインストールするための<link href=\"http://docs.openstack.org/trunk/install-guide/install/apt/content/ch_installing-openstack-image.html\">ドキュメント</link>があります。"
+
+#: ./doc/high-availability-guide/api/section_glance_api.xml32(title)
+msgid "Add OpenStack Image API resource to Pacemaker"
+msgstr "OpenStack Image API リソースの Pacemaker への追加"
+
+#: ./doc/high-availability-guide/api/section_glance_api.xml38(simpara)
+msgid ""
+"You can now add the Pacemaker configuration for OpenStack Image API "
+"resource. Connect to the Pacemaker cluster with <literal>crm "
+"configure</literal>, and add the following cluster resources:"
+msgstr "OpenStack Image API リソース用の Pacemaker 設定を追加できます。<literal>crm configure</literal> を用いて Pacemaker クラスターに接続し、以下のクラスターリソースを追加します。"
+
+#: ./doc/high-availability-guide/api/section_glance_api.xml47(simpara)
+msgid ""
+"<literal>p_glance-api</literal>, a resource for manage OpenStack Image API "
+"service"
+msgstr "<literal>p_glance-api</literal>, OpenStack Image API サービスを管理するためのリソース"
+
+#: ./doc/high-availability-guide/api/section_glance_api.xml51(simpara)
+msgid ""
+"<literal>crm configure</literal> supports batch input, so you may copy and "
+"paste the above into your live pacemaker configuration, and then make "
+"changes as required. For example, you may enter <literal>edit p_ip_glance-"
+"api</literal> from the <literal>crm configure</literal> menu and edit the "
+"resource to match your preferred virtual IP address."
+msgstr "<literal>crm configure</literal> はバッチ入力をサポートします。そのため、現在の pacemaker 設定の中に上をコピー・ペーストし、適宜変更を反映できます。たとえば、お好みの仮想 IP アドレスに一致させるために、<literal>crm configure</literal> メニューから <literal>edit p_ip_glance-api</literal> と入力し、リソースを編集できます。"
+
+#: ./doc/high-availability-guide/api/section_glance_api.xml56(simpara)
+msgid ""
+"Once completed, commit your configuration changes by entering "
+"<literal>commit</literal> from the <literal>crm configure</literal> menu. "
+"Pacemaker will then start the OpenStack Image API service, and its dependent"
+" resources, on one of your nodes."
+msgstr "完了すると、<literal>crm configure</literal> メニューから <literal>commit</literal> と入力し、設定の変更をコミットします。Pacemaker は OpenStack Image API サービスおよび依存するリソースを同じノードに起動します。"
+
+#: ./doc/high-availability-guide/api/section_glance_api.xml62(title)
+msgid "Configure OpenStack Image Service API"
+msgstr "OpenStack Image Service API の設定"
+
+#: ./doc/high-availability-guide/api/section_glance_api.xml64(simpara)
+msgid "Edit <literal>/etc/glance/glance-api.conf</literal>:"
+msgstr "<literal>/etc/glance/glance-api.conf</literal> を編集します。"
+
+#: ./doc/high-availability-guide/api/section_glance_api.xml80(title)
+msgid "Configure OpenStack services to use high available OpenStack Image API"
+msgstr "高可用性 OpenStack Image Service API を使用するための OpenStack サービスの設定"
+
+#: ./doc/high-availability-guide/api/section_glance_api.xml82(simpara)
+msgid ""
+"Your OpenStack services must now point their OpenStack Image API "
+"configuration to the highly available, virtual cluster IP address — rather "
+"than an OpenStack Image API server’s physical IP address as you normally "
+"would."
+msgstr "OpenStack サービスは、通常どおり OpenStack Image API サーバーの物理 IP アドレスを指定する代わりに、OpenStack Image API の設定が高可用性と仮想クラスター IP アドレスを指し示す必要があります。"
+
+#: ./doc/high-availability-guide/api/section_glance_api.xml85(simpara)
+msgid ""
+"For OpenStack Compute, for example, if your OpenStack Image API service IP "
+"address is 192.168.42.104 as in the configuration explained here, you would "
+"use the following line in your <literal>nova.conf</literal> file:"
+msgstr "OpenStack Compute の例として、OpenStack Image API の IP アドレスがここで説明された設定にあるように 192.168.42.104 ならば、<literal>nova.conf</literal> ファイルで以下の行を使用する必要があります。"
+
+#: ./doc/high-availability-guide/api/section_glance_api.xml89(simpara)
+msgid "You must also create the OpenStack Image API endpoint with this IP."
+msgstr "この IP を用いて OpenStack Image API エンドポイントを作成する必要があります。"
+
+#: ./doc/high-availability-guide/api/section_glance_api.xml91(simpara)
+#: ./doc/high-availability-guide/api/section_neutron_server.xml85(simpara)
+msgid ""
+"If you are using both private and public IP addresses, you should create two"
+" Virtual IP addresses and define your endpoint like this:"
+msgstr "プライベート IP とパブリック IP の両方を使用する場合、2 つの仮想 IP アドレスを作成し、次のようにエンドポイントを定義すべきです。"
+
+#: ./doc/high-availability-guide/api/section_neutron_server.xml6(title)
+msgid "Highly available OpenStack Networking server"
+msgstr "高可用性 OpenStack Networking サーバー"
+
+#: ./doc/high-availability-guide/api/section_neutron_server.xml8(simpara)
+msgid ""
+"OpenStack Networking is the network connectivity service in OpenStack. "
+"Making the OpenStack Networking Server service highly available in active / "
+"passive mode involves"
+msgstr "OpenStack Networking は OpenStack におけるネットワーク接続性のサービスです。OpenStack Networking サーバーをアクティブ / パッシブモードで高可用性にすることは、次のことが関連します。"
+
+#: ./doc/high-availability-guide/api/section_neutron_server.xml12(simpara)
+msgid "Configure OpenStack Networking to listen on the VIP address,"
+msgstr "OpenStack Networking がその仮想 IP アドレスをリッスンする設定"
+
+#: ./doc/high-availability-guide/api/section_neutron_server.xml17(simpara)
+msgid ""
+"managing OpenStack Networking API Server daemon with the Pacemaker cluster "
+"manager,"
+msgstr "Pacemaker クラスターマネージャーを用いた OpenStack Networking API サーバーデーモンの管理"
+
+#: ./doc/high-availability-guide/api/section_neutron_server.xml28(simpara)
+msgid ""
+"Here is the <link href=\"http://docs.openstack.org/trunk/install-"
+"guide/install/apt/content/ch_installing-openstack-"
+"networking.html\">documentation</link> for installing OpenStack Networking "
+"service."
+msgstr "ここに OpenStack Networking Service をインストールするための<link href=\"http://docs.openstack.org/trunk/install-guide/install/apt/content/ch_installing-openstack-networking.html\">ドキュメント</link>があります。"
+
+#: ./doc/high-availability-guide/api/section_neutron_server.xml32(title)
+msgid "Add OpenStack Networking Server resource to Pacemaker"
+msgstr "OpenStack Networking Server リソースの Pacemaker への追加"
+
+#: ./doc/high-availability-guide/api/section_neutron_server.xml38(simpara)
+msgid ""
+"You can now add the Pacemaker configuration for OpenStack Networking Server "
+"resource. Connect to the Pacemaker cluster with <literal>crm "
+"configure</literal>, and add the following cluster resources:"
+msgstr "OpenStack Networking Server リソース用の Pacemaker 設定を追加できます。<literal>crm configure</literal> を用いて Pacemaker クラスターに接続し、以下のクラスターリソースを追加します。"
+
+#: ./doc/high-availability-guide/api/section_neutron_server.xml45(simpara)
+msgid ""
+"This configuration creates <literal>p_neutron-server</literal>, a resource "
+"for manage OpenStack Networking Server service"
+msgstr "この設定は OpenStack Networking サーバーサービスを管理するためのリソース <literal>p_neutron-server</literal> を作成します。"
+
+#: ./doc/high-availability-guide/api/section_neutron_server.xml46(simpara)
+msgid ""
+"<literal>crm configure</literal> supports batch input, so you may copy and "
+"paste the above into your live pacemaker configuration, and then make "
+"changes as required. For example, you may enter <literal>edit p_neutron-"
+"server</literal> from the <literal>crm configure</literal> menu and edit the"
+" resource to match your preferred virtual IP address."
+msgstr "<literal>crm configure</literal> はバッチ入力をサポートします。そのため、現在の pacemaker 設定の中に上をコピー・ペーストし、適宜変更を反映できます。たとえば、お好みの仮想 IP アドレスに一致させるために、<literal>crm configure</literal> メニューから <literal>edit p_neutron-server</literal> と入力し、リソースを編集できます。"
+
+#: ./doc/high-availability-guide/api/section_neutron_server.xml51(simpara)
+msgid ""
+"Once completed, commit your configuration changes by entering "
+"<literal>commit</literal> from the <literal>crm configure</literal> menu. "
+"Pacemaker will then start the OpenStack Networking API service, and its "
+"dependent resources, on one of your nodes."
+msgstr "完了すると、<literal>crm configure</literal> メニューから <literal>commit</literal> と入力し、設定の変更をコミットします。Pacemaker は OpenStack Networking API サービスおよび依存するリソースを同じノードに起動します。"
+
+#: ./doc/high-availability-guide/api/section_neutron_server.xml57(title)
+msgid "Configure OpenStack Networking server"
+msgstr "OpenStack Networking Server の設定"
+
+#: ./doc/high-availability-guide/api/section_neutron_server.xml59(simpara)
+msgid "Edit <literal>/etc/neutron/neutron.conf</literal> :"
+msgstr "<literal>/etc/neutron/neutron.conf</literal> を編集します。"
+
+#: ./doc/high-availability-guide/api/section_neutron_server.xml76(title)
+msgid ""
+"Configure OpenStack services to use highly available OpenStack Networking "
+"server"
+msgstr "高可用性 OpenStack Networking を使用するための OpenStack サービスの設定"
+
+#: ./doc/high-availability-guide/api/section_neutron_server.xml78(simpara)
+msgid ""
+"Your OpenStack services must now point their OpenStack Networking Server "
+"configuration to the highly available, virtual cluster IP address — rather "
+"than an OpenStack Networking server’s physical IP address as you normally "
+"would."
+msgstr "OpenStack サービスは、通常どおり OpenStack Networking サーバーの物理 IP アドレスを指定する代わりに、OpenStack Networking サーバーの設定が高可用性と仮想クラスター IP アドレスを指し示す必要があります。"
+
+#: ./doc/high-availability-guide/api/section_neutron_server.xml81(simpara)
+msgid ""
+"For example, you should configure OpenStack Compute for using highly "
+"available OpenStack Networking server in editing "
+"<literal>nova.conf</literal> file:"
+msgstr "たとえば、高可用性 Networking サーバーを使用するために、<literal>nova.conf</literal> ファイルを編集して OpenStack Compute を設定する必要があります :"
+
+#: ./doc/high-availability-guide/api/section_neutron_server.xml83(simpara)
+msgid ""
+"You need to create the OpenStack Networking server endpoint with this IP."
+msgstr "この IP を用いて OpenStack Networking Server エンドポイントを作成する必要があります。"
+
+#: ./doc/high-availability-guide/api/section_ceilometer_agent_central.xml6(title)
+msgid "Highly available Telemetry central agent"
+msgstr "高可用性 Telemetry 中央エージェント"
+
+#: ./doc/high-availability-guide/api/section_ceilometer_agent_central.xml8(simpara)
+msgid ""
+"Telemetry (ceilometer) is the metering and monitoring service in OpenStack. "
+"The Central agent polls for resource utilization statistics for resources "
+"not tied to instances or compute nodes."
+msgstr "Telemetry (ceilometer) は OpenStack のメータリングとモニタリングのサービスです。中央エージェントは、インスタンスやコンピュートノードに結びつけられていないリソースに対して、リソースの利用状況の統計情報を収集します。"
+
+#: ./doc/high-availability-guide/api/section_ceilometer_agent_central.xml12(simpara)
+msgid ""
+"Due to limitations of a polling model, a single instance of this agent can "
+"be polling a given list of meters. In this setup, we install this service on"
+" the API nodes also in the active / passive mode."
+msgstr "収集モデルの制限により、このエージェントの単一のインスタンスが指定された一覧の利用状況を収集できます。このセットアップの場合、このサービスもアクティブ / パッシブモードで API ノードにインストールします。"
+
+#: ./doc/high-availability-guide/api/section_ceilometer_agent_central.xml16(simpara)
+msgid ""
+"Making the Telemetry central agent service highly available in active / "
+"passive mode involves managing its daemon with the Pacemaker cluster "
+"manager."
+msgstr "Telemetry 中央エージェントサービスをアクティブ / パッシブモードで高可用性にすることは、Pacemaker クラスターマネージャーでそのデーモンを管理することが関連します。"
+
+#: ./doc/high-availability-guide/api/section_ceilometer_agent_central.xml19(simpara)
+msgid ""
+"You will find at <link "
+"href=\"http://docs.openstack.org/developer/ceilometer/install/manual.html"
+"#installing-the-central-agent\">this page</link> the process to install the "
+"Telemetry central agent."
+msgstr "Telemetry 中央エージェントをインストールする手順が<link href=\"http://docs.openstack.org/developer/ceilometer/install/manual.html#installing-the-central-agent\">このページ</link>にあります。"
+
+#: ./doc/high-availability-guide/api/section_ceilometer_agent_central.xml24(title)
+msgid "Add the Telemetry central agent resource to Pacemaker"
+msgstr "Telemetry 中央エージェントリソースの Pacemaker への追加"
+
+#: ./doc/high-availability-guide/api/section_ceilometer_agent_central.xml30(simpara)
+msgid ""
+"You may then proceed with adding the Pacemaker configuration for the "
+"Telemetry central agent resource. Connect to the Pacemaker cluster with "
+"<literal>crm configure</literal>, and add the following cluster resources:"
+msgstr "Telemetry 中央エージェントリソース用の Pacemaker 設定を追加して、次に進むことができます。<literal>crm configure</literal> を用いて Pacemaker クラスターに接続し、以下のクラスターリソースを追加します。"
+
+#: ./doc/high-availability-guide/api/section_ceilometer_agent_central.xml39(simpara)
+msgid ""
+"<literal>p_ceilometer-agent-central</literal>, a resource for manage "
+"Ceilometer Central Agent service"
+msgstr "<literal>p_ceilometer-agent-central</literal>, Ceilometer 中央エージェントサービスを管理するためのリソース。"
+
+#: ./doc/high-availability-guide/api/section_ceilometer_agent_central.xml43(simpara)
+#: ./doc/high-availability-guide/network/section_highly_available_neutron_metadata_agent.xml37(simpara)
+#: ./doc/high-availability-guide/network/section_highly_available_neutron_l3_agent.xml36(simpara)
+#: ./doc/high-availability-guide/network/section_highly_available_neutron_dhcp_agent.xml37(simpara)
+msgid ""
+"<literal>crm configure</literal> supports batch input, so you may copy and "
+"paste the above into your live pacemaker configuration, and then make "
+"changes as required."
+msgstr "<literal>crm configure</literal> はバッチ入力をサポートします。そのため、現在の pacemaker 設定の中に上をコピー・ペーストし、適宜変更を反映できます。"
+
+#: ./doc/high-availability-guide/api/section_ceilometer_agent_central.xml46(simpara)
+msgid ""
+"Once completed, commit your configuration changes by entering "
+"<literal>commit</literal> from the <literal>crm configure</literal> menu. "
+"Pacemaker will then start the Ceilometer Central Agent service, and its "
+"dependent resources, on one of your nodes."
+msgstr "完了すると、<literal>crm configure</literal> メニューから <literal>commit</literal> と入力し、設定の変更をコミットします。Pacemaker は Ceilometer 中央エージェント サービスおよび依存するリソースを同じノードに起動します。"
+
+#: ./doc/high-availability-guide/api/section_ceilometer_agent_central.xml52(title)
+msgid "Configure Telemetry central agent service"
+msgstr "Telemetry 中央エージェントサービスの設定"
+
+#: ./doc/high-availability-guide/api/section_ceilometer_agent_central.xml54(simpara)
+msgid "Edit <literal>/etc/ceilometer/ceilometer.conf</literal> :"
+msgstr "<literal>/etc/ceilometer/ceilometer.conf</literal> を編集します。"
+
+#: ./doc/high-availability-guide/api/section_keystone.xml6(title)
+msgid "Highly available OpenStack Identity"
+msgstr "高可用性 OpenStack Identity"
+
+#: ./doc/high-availability-guide/api/section_keystone.xml8(simpara)
+msgid ""
+"OpenStack Identity is the Identity Service in OpenStack and used by many "
+"services. Making the OpenStack Identity service highly available in active /"
+" passive mode involves"
+msgstr "OpenStack Identity は OpenStack における認証サービスです。OpenStack Identity Service をアクティブ / パッシブモードで高可用性にすることは、次のことが関連します。"
+
+#: ./doc/high-availability-guide/api/section_keystone.xml12(simpara)
+msgid "Configure OpenStack Identity to listen on the VIP address,"
+msgstr "OpenStack Identity がその仮想 IP アドレスでリッスンするよう設定します。"
+
+#: ./doc/high-availability-guide/api/section_keystone.xml17(simpara)
+msgid "managing OpenStack Identity daemon with the Pacemaker cluster manager,"
+msgstr "Pacemaker クラスターマネージャーを用いた OpenStack Identity デーモンの管理"
+
+#: ./doc/high-availability-guide/api/section_keystone.xml28(simpara)
+msgid ""
+"Here is the <link href=\"http://docs.openstack.org/trunk/install-"
+"guide/install/apt/content/ch_installing-openstack-identity-"
+"service.html\">documentation</link> for installing OpenStack Identity "
+"service."
+msgstr "ここに OpenStack Identity Service をインストールするための<link href=\"http://docs.openstack.org/trunk/install-guide/install/apt/content/ch_installing-openstack-identity-service.html\">ドキュメント</link>があります。"
+
+#: ./doc/high-availability-guide/api/section_keystone.xml32(title)
+msgid "Add OpenStack Identity resource to Pacemaker"
+msgstr "OpenStack Identity リソースの Pacemaker への追加"
+
+#: ./doc/high-availability-guide/api/section_keystone.xml40(simpara)
+msgid ""
+"You can now add the Pacemaker configuration for OpenStack Identity resource."
+" Connect to the Pacemaker cluster with <literal>crm configure</literal>, and"
+" add the following cluster resources:"
+msgstr "OpenStack Identity リソース用の Pacemaker 設定を追加できます。<literal>crm configure</literal> を用いて Pacemaker クラスターに接続し、以下のクラスターリソースを追加します。"
+
+#: ./doc/high-availability-guide/api/section_keystone.xml46(simpara)
+msgid ""
+"This configuration creates <literal>p_keystone</literal>, a resource for "
+"managing the OpenStack Identity service."
+msgstr "この設定は OpenStack Identity サービスを管理するためのリソース <literal>p_keystone</literal> を作成します。"
+
+#: ./doc/high-availability-guide/api/section_keystone.xml47(simpara)
+msgid ""
+"<literal>crm configure</literal> supports batch input, so you may copy and "
+"paste the above into your live pacemaker configuration, and then make "
+"changes as required. For example, you may enter <literal>edit "
+"p_ip_keystone</literal> from the <literal>crm configure</literal> menu and "
+"edit the resource to match your preferred virtual IP address."
+msgstr "<literal>crm configure</literal> はバッチ入力をサポートします。そのため、現在の pacemaker 設定の中に上をコピー・ペーストし、適宜変更を反映できます。たとえば、お好みの仮想 IP アドレスに一致させるために、<literal>crm configure</literal> メニューから <literal>edit p_ip_keystone</literal> と入力し、リソースを編集できます。"
+
+#: ./doc/high-availability-guide/api/section_keystone.xml52(simpara)
+msgid ""
+"Once completed, commit your configuration changes by entering "
+"<literal>commit</literal> from the <literal>crm configure</literal> menu. "
+"Pacemaker will then start the OpenStack Identity service, and its dependent "
+"resources, on one of your nodes."
+msgstr "完了すると、<literal>crm configure</literal> メニューから <literal>commit</literal> と入力し、設定の変更をコミットします。Pacemaker は OpenStack Identity サービスおよび依存するリソースを同じノードに起動します。"
+
+#: ./doc/high-availability-guide/api/section_keystone.xml58(title)
+msgid "Configure OpenStack Identity service"
+msgstr "OpenStack Identity Service の設定"
+
+#: ./doc/high-availability-guide/api/section_keystone.xml60(simpara)
+msgid ""
+"You need to edit your OpenStack Identity configuration file "
+"(<literal>keystone.conf</literal>) and change the bind parameters:"
+msgstr "OpenStack Identity の設定ファイル (<literal>keystone.conf</literal>) を編集し、バインドのパラメーターを変更する必要があります。"
+
+#: ./doc/high-availability-guide/api/section_keystone.xml61(simpara)
+msgid "On Havana:"
+msgstr "Havana の場合:"
+
+#: ./doc/high-availability-guide/api/section_keystone.xml63(simpara)
+msgid ""
+"On Icehouse, the <literal>admin_bind_host</literal> option lets you use a "
+"private network for the admin access."
+msgstr "Icehouse の場合、<literal>admin_bind_host</literal> オプションにより管理アクセス用のプライベートネットワークを使用できます。"
+
+#: ./doc/high-availability-guide/api/section_keystone.xml66(simpara)
+msgid ""
+"To be sure all data will be highly available, you should be sure that you "
+"store everything in the MySQL database (which is also highly available):"
+msgstr "確実にすべてのデータが高可用性にするために、確実にすべてのものを (高可用性な) MySQL データベースに保存すべきです。"
+
+#: ./doc/high-availability-guide/api/section_keystone.xml76(title)
+msgid ""
+"Configure OpenStack services to use the highly available OpenStack Identity"
+msgstr "高可用性 OpenStack Identity を使用するための OpenStack サービスの設定"
+
+#: ./doc/high-availability-guide/api/section_keystone.xml78(simpara)
+msgid ""
+"Your OpenStack services must now point their OpenStack Identity "
+"configuration to the highly available, virtual cluster IP address — rather "
+"than a OpenStack Identity server’s physical IP address as you normally "
+"would."
+msgstr "OpenStack サービスは、通常どおり OpenStack Identity サーバーの物理 IP アドレスを指定する代わりに、OpenStack Identity サーバーの設定が高可用性と仮想クラスター IP アドレスを指し示す必要があります。"
+
+#: ./doc/high-availability-guide/api/section_keystone.xml81(simpara)
+msgid ""
+"For example with OpenStack Compute, if your OpenStack Identity service IP "
+"address is 192.168.42.103 as in the configuration explained here, you would "
+"use the following line in your API configuration file (<literal>api-"
+"paste.ini</literal>):"
+msgstr "OpenStack Compute を用いた例として、OpenStack Identity Service の IP アドレスがここで説明された設定にあるように 192.168.42.103 ならば、API 設定ファイル (<literal>api-paste.ini</literal>) で以下の行を使用する必要があります。"
+
+#: ./doc/high-availability-guide/api/section_keystone.xml86(simpara)
+msgid "You also need to create the OpenStack Identity Endpoint with this IP."
+msgstr "この IP を用いて OpenStack Identity エンドポイントを作成する必要があります。"
+
+#: ./doc/high-availability-guide/api/section_keystone.xml87(simpara)
+msgid ""
+"NOTE : If you are using both private and public IP addresses, you should "
+"create two Virtual IP addresses and define your endpoint like this:"
+msgstr "注: プライベート IP とパブリック IP の両方を使用する場合、2 つの仮想 IP アドレスを作成し、次のようにエンドポイントを定義すべきです。"
+
+#: ./doc/high-availability-guide/api/section_keystone.xml89(simpara)
+msgid ""
+"If you are using the horizon dashboard, you should edit the "
+"<literal>local_settings.py</literal> file:"
+msgstr "Dashboard を使用している場合、<literal>local_settings.py</literal> ファイルを編集する必要があります。"
+
+#: ./doc/high-availability-guide/api/section_api_vip.xml6(title)
+msgid "Configure the VIP"
+msgstr "仮想 IP の設定"
+
+#: ./doc/high-availability-guide/api/section_api_vip.xml8(simpara)
+msgid ""
+"First, you must select and assign a virtual IP address (VIP) that can freely"
+" float between cluster nodes."
+msgstr "まず初めに、クラスターノード間で自由に移動できる仮想 IP アドレス (VIP) を選択して割り当てる必要があります。"
+
+#: ./doc/high-availability-guide/api/section_api_vip.xml9(simpara)
+msgid ""
+"This configuration creates <literal>p_ip_api</literal>, a virtual IP address"
+" for use by the API node (192.168.42.103) :"
+msgstr "この設定は API ノードにより使用される仮想 IP アドレス (192.168.42.103) <literal>p_ip_api</literal> を作成します。"
+
+#: ./doc/high-availability-guide/controller/section_rabbitmq.xml6(title)
+msgid "Highly available RabbitMQ"
+msgstr "高可用性 RabbitMQ"
+
+#: ./doc/high-availability-guide/controller/section_rabbitmq.xml8(simpara)
+msgid ""
+"RabbitMQ is the default AMQP server used by many OpenStack services. Making "
+"the RabbitMQ service highly available involves:"
+msgstr "RabbitMQ が多くの OpenStack サービスにより使用される標準の AMQP サーバーです。RabbitMQ サービスを高可用性にすることは、次のことが関連します。"
+
+#: ./doc/high-availability-guide/controller/section_rabbitmq.xml12(simpara)
+msgid "configuring a DRBD device for use by RabbitMQ,"
+msgstr "RabbitMQ により使用するための DRBD デバイスを設定します。"
+
+#: ./doc/high-availability-guide/controller/section_rabbitmq.xml17(simpara)
+msgid ""
+"configuring RabbitMQ to use a data directory residing on that DRBD device,"
+msgstr "RabbitMQ が DRBD デバイスにあるデータディレクトリを使用するよう設定します。"
+
+#: ./doc/high-availability-guide/controller/section_rabbitmq.xml23(simpara)
+#: ./doc/high-availability-guide/controller/section_mysql.xml23(simpara)
+msgid ""
+"selecting and assigning a virtual IP address (VIP) that can freely float "
+"between cluster nodes,"
+msgstr "クラスターノード間で自由に移動できる仮想 IP アドレス (VIP) を選択して割り当てます。"
+
+#: ./doc/high-availability-guide/controller/section_rabbitmq.xml29(simpara)
+msgid "configuring RabbitMQ to listen on that IP address,"
+msgstr "RabbitMQ がその IP アドレスでリッスンするよう設定します。"
+
+#: ./doc/high-availability-guide/controller/section_rabbitmq.xml34(simpara)
+msgid ""
+"managing all resources, including the RabbitMQ daemon itself, with the "
+"Pacemaker cluster manager."
+msgstr "RabbitMQ デーモン自身を含む、すべてのリソースを Pacemaker クラスターマネージャーで管理します。"
+
+#: ./doc/high-availability-guide/controller/section_rabbitmq.xml41(simpara)
+msgid ""
+"There is an alternative method of configuring RabbitMQ for high "
+"availability. That approach, known as <link "
+"href=\"http://www.rabbitmq.com/ha.html\">active-active mirrored "
+"queues</link>, happens to be the one preferred by the RabbitMQ developers — "
+"however it has shown less than ideal consistency and reliability in "
+"OpenStack clusters. Thus, at the time of writing, the Pacemaker/DRBD based "
+"approach remains the recommended one for OpenStack environments, although "
+"this may change in the near future as RabbitMQ active-active mirrored queues"
+" mature."
+msgstr "RabbitMQ を高可用性に設定する別の方法があります。この方法は、<link href=\"http://www.rabbitmq.com/ha.html\">アクティブ・アクティブのキューのミラー</link>として知られ、RabbitMQ 開発者に好まれているものです。しかしながら、OpenStack クラスターにおける理想的な一貫性と信頼性よりは劣るものです。そのため、執筆時点では、Pacemaker/DRBD による方法が OpenStack 環境に対する推奨事項として残されています。これは RabbitMQ のアクティブ・アクティブのキューのミラーが成熟すると、近い将来に変更される可能性もあります。"
+
+#: ./doc/high-availability-guide/controller/section_rabbitmq.xml53(title)
+#: ./doc/high-availability-guide/controller/section_mysql.xml50(title)
+msgid "Configure DRBD"
+msgstr "DRBD の設定"
+
+#: ./doc/high-availability-guide/controller/section_rabbitmq.xml55(simpara)
+msgid ""
+"The Pacemaker based RabbitMQ server requires a DRBD resource from which it "
+"mounts the <literal>/var/lib/rabbitmq</literal> directory. In this example, "
+"the DRBD resource is simply named <literal>rabbitmq</literal>:"
+msgstr "Pacemaker ベースの RabbitMQ サーバーは <literal>/var/lib/rabbitmq</literal> ディレクトリをマウントする DRBD リソースが必要です。この例では、DRBD リソースは単に <literal>rabbitmq</literal> という名前になっています。"
+
+#: ./doc/high-availability-guide/controller/section_rabbitmq.xml60(title)
+msgid ""
+"<literal>rabbitmq</literal> DRBD resource configuration "
+"(<literal>/etc/drbd.d/rabbitmq.res</literal>)"
+msgstr "<literal>rabbitmq</literal> DRBD リソース設定 (<literal>/etc/drbd.d/rabbitmq.res</literal>)"
+
+#: ./doc/high-availability-guide/controller/section_rabbitmq.xml76(simpara)
+msgid ""
+"This resource uses an underlying local disk (in DRBD terminology, a "
+"<emphasis>backing device</emphasis>) named "
+"<literal>/dev/data/rabbitmq</literal> on both cluster nodes, "
+"<literal>node1</literal> and <literal>node2</literal>. Normally, this would "
+"be an LVM Logical Volume specifically set aside for this purpose. The DRBD "
+"<literal>meta-disk</literal> is <literal>internal</literal>, meaning DRBD-"
+"specific metadata is being stored at the end of the <literal>disk</literal> "
+"device itself. The device is configured to communicate between IPv4 "
+"addresses 10.0.42.100 and 10.0.42.254, using TCP port 7701. Once enabled, it"
+" will map to a local DRBD block device with the device minor number 1, that "
+"is, <literal>/dev/drbd1</literal>."
+msgstr "このリソースは、両方のクラスターノード <literal>node1</literal> と <literal>node2</literal> において、<literal>/dev/data/rabbitmq</literal> という名前のバックエンドのローカルディスク (DRBD の用語で <emphasis>backing device</emphasis>) を使用します。通常、これはこの目的のために特別に設定された LVM 論理ボリュームでしょう。DRBD <literal>meta-disk</literal> は <literal>internal</literal> です。これは DRBD 固有のメタデータが <literal>disk</literal> デバイス自身の最後に保存されることを意味します。このデバイスは IPv4 アドレス 10.0.42.100 と 10.0.42.254 の間で TCP ポート 7701 を使用して通信するよう設定されます。一度有効化されると、デバイスマイナー番号 1 を持つローカル DRBD ブロックデバイス、つまり <literal>/dev/drbd1</literal> にマップされます。"
+
+#: ./doc/high-availability-guide/controller/section_rabbitmq.xml85(simpara)
+#: ./doc/high-availability-guide/controller/section_mysql.xml82(simpara)
+msgid ""
+"Enabling a DRBD resource is explained in detail in <link "
+"href=\"http://www.drbd.org/users-guide-8.3/s-first-time-up.html\">the DRBD "
+"User’s Guide</link>. In brief, the proper sequence of commands is this:"
+msgstr "DRBD リソースを有効化する方法は <link href=\"http://www.drbd.org/users-guide-8.3/s-first-time-up.html\">DRBD ユーザーガイド</link> に詳細に説明されています。要約すると、正しいコマンドの流れはこのとおりです。"
+
+#: ./doc/high-availability-guide/controller/section_rabbitmq.xml93(para)
+msgid ""
+"Initializes DRBD metadata and writes the initial set of metadata to "
+"<literal>/dev/data/rabbitmq</literal>. Must be completed on both nodes."
+msgstr "DRBD メタデータを初期化し、メタデータの初期セットを <literal>/dev/data/rabbitmq</literal> に書き込みます。両方のノードで完了する必要があります。"
+
+#: ./doc/high-availability-guide/controller/section_rabbitmq.xml99(para)
+msgid ""
+"Creates the <literal>/dev/drbd1</literal> device node, "
+"<emphasis>attaches</emphasis> the DRBD device to its backing store, and "
+"<emphasis>connects</emphasis> the DRBD node to its peer. Must be completed "
+"on both nodes."
+msgstr "<literal>/dev/drbd1</literal> デバイスノードを作成し、DRBD デバイスをそのバックエンドに<emphasis>接続</emphasis>し、DRBD ノードを同期先に<emphasis>接続</emphasis>します。両方のノードで完了する必要があります。"
+
+#: ./doc/high-availability-guide/controller/section_rabbitmq.xml106(para)
+#: ./doc/high-availability-guide/controller/section_mysql.xml103(para)
+msgid ""
+"Kicks off the initial device synchronization, and puts the device into the "
+"<literal>primary</literal> (readable and writable) role. See <link "
+"href=\"http://www.drbd.org/users-guide-8.3/ch-admin.html#s-roles\">Resource "
+"roles</link> (from the DRBD User’s Guide) for a more detailed description of"
+" the primary and secondary roles in DRBD. Must be completed <emphasis>on one"
+" node only,</emphasis> namely the one where you are about to continue with "
+"creating your filesystem."
+msgstr "初期デバイス同期を開始し、デバイスを <literal>プライマリ</literal> (読み書き可能) ロールにします。DRBD のプライマリロールとセカンダリロールの詳細は (DRBD User’s Guide の) <link href=\"http://www.drbd.org/users-guide-8.3/ch-admin.html#s-roles\">Resource roles</link> を参照してください。必ず<emphasis>一つのノードのみで</emphasis>実行する必要があります。つまり、ファイルシステムを作成しようとしているノードのみです。"
+
+#: ./doc/high-availability-guide/controller/section_rabbitmq.xml120(title)
+msgid "Create a file system"
+msgstr "ファイルシステムの作成"
+
+#: ./doc/high-availability-guide/controller/section_rabbitmq.xml122(simpara)
+msgid ""
+"Once the DRBD resource is running and in the primary role (and potentially "
+"still in the process of running the initial device synchronization), you may"
+" proceed with creating the filesystem for RabbitMQ data. XFS is generally "
+"the recommended filesystem:"
+msgstr "DRBD リソースが実行中になり、プライマリロールになると (まだ初期デバイス同期が実行中かもしれません)、RabbitMQ データのファイルシステムの作成を進められます。XFS が一般的に推奨されるファイルシステムです。"
+
+#: ./doc/high-availability-guide/controller/section_rabbitmq.xml127(simpara)
+#: ./doc/high-availability-guide/controller/section_mysql.xml124(simpara)
+msgid ""
+"You may also use the alternate device path for the DRBD device, which may be"
+" easier to remember as it includes the self-explanatory resource name:"
+msgstr "DRBD デバイスに対する代替デバイスパスを使用することもできます。これは自己説明的なリソース名を含むため、より覚えやすいでしょう。"
+
+#: ./doc/high-availability-guide/controller/section_rabbitmq.xml131(simpara)
+#: ./doc/high-availability-guide/controller/section_mysql.xml128(simpara)
+msgid ""
+"Once completed, you may safely return the device to the secondary role. Any "
+"ongoing device synchronization will continue in the background:"
+msgstr "一度完了すると、デバイスを安全にセカンダリロールに戻せます。すべての動作中のデバイス同期はバックエンドで継続されます。"
+
+#: ./doc/high-availability-guide/controller/section_rabbitmq.xml138(title)
+msgid "Prepare RabbitMQ for Pacemaker high availability"
+msgstr "Pacemaker 高可用性のための RabbitMQ の準備"
+
+#: ./doc/high-availability-guide/controller/section_rabbitmq.xml140(simpara)
+msgid ""
+"In order for Pacemaker monitoring to function properly, you must ensure that"
+" RabbitMQ’s <literal>.erlang.cookie</literal> files are identical on all "
+"nodes, regardless of whether DRBD is mounted there or not. The simplest way "
+"of doing so is to take an existing <literal>.erlang.cookie</literal> from "
+"one of your nodes, copying it to the RabbitMQ data directory on the other "
+"node, and also copying it to the DRBD-backed filesystem."
+msgstr "Pacemaker の監視を正しく機能させるために、DRBD がマウントされているかどうかに関わらず、RabbitMQ の <literal>.erlang.cookie</literal> ファイルをすべてのノードで必ず同じにする必要があります。そうする最も簡単な方法は、どこかのノードから既存の <literal>.erlang.cookie</literal> を取得し、他のノードの RabbitMQ データディレクトリおよび DRBD のバックエンドファイルシステムにコピーすることです。"
+
+#: ./doc/high-availability-guide/controller/section_rabbitmq.xml153(title)
+msgid "Add RabbitMQ resources to Pacemaker"
+msgstr "RabbitMQ リソースの Pacemaker への追加"
+
+#: ./doc/high-availability-guide/controller/section_rabbitmq.xml155(simpara)
+msgid ""
+"You may now proceed with adding the Pacemaker configuration for RabbitMQ "
+"resources. Connect to the Pacemaker cluster with <literal>crm "
+"configure</literal>, and add the following cluster resources:"
+msgstr "OpenStack RabbitMQ リソース用の Pacemaker 設定を追加して、次に進むことができます。<literal>crm configure</literal> を用いて Pacemaker クラスターに接続し、以下のクラスターリソースを追加します。"
+
+#: ./doc/high-availability-guide/controller/section_rabbitmq.xml188(simpara)
+msgid ""
+"<literal>p_ip_rabbitmp</literal>, a virtual IP address for use by RabbitMQ "
+"(192.168.42.100),"
+msgstr "<literal>p_ip_rabbitmp</literal>, RabbitMQ により使用される仮想 IP アドレス (192.168.42.100),"
+
+#: ./doc/high-availability-guide/controller/section_rabbitmq.xml193(simpara)
+msgid ""
+"<literal>p_fs_rabbitmq</literal>, a Pacemaker managed filesystem mounted to "
+"<literal>/var/lib/rabbitmq</literal> on whatever node currently runs the "
+"RabbitMQ service,"
+msgstr "<literal>p_fs_rabbitmq</literal>, 現在 RabbitMQ サービスを実行している、すべてのノードにおいて <literal>/var/lib/rabbitmq</literal> にマウントされている、Pacemaker が管理しているファイルシステム。"
+
+#: ./doc/high-availability-guide/controller/section_rabbitmq.xml199(simpara)
+msgid ""
+"<literal>ms_drbd_rabbitmq</literal>, the <emphasis>master/slave "
+"set</emphasis> managing the <literal>rabbitmq</literal> DRBD resource,"
+msgstr "<literal>ms_drbd_rabbitmq</literal>, <literal>rabbitmq</literal> DRBD リソースを管理している<emphasis>マスター/スレーブの組</emphasis>。"
+
+#: ./doc/high-availability-guide/controller/section_rabbitmq.xml204(simpara)
+#: ./doc/high-availability-guide/controller/section_mysql.xml216(simpara)
+msgid ""
+"a service <literal>group</literal> and <literal>order</literal> and "
+"<literal>colocation</literal> constraints to ensure resources are started on"
+" the correct nodes, and in the correct sequence."
+msgstr "リソースが適切なノードにおいて、適切な順序で起動されることを確実にする、サービスの <literal>group</literal>, <literal>order</literal> および <literal>colocation</literal> 制約。"
+
+#: ./doc/high-availability-guide/controller/section_rabbitmq.xml210(simpara)
+msgid ""
+"<literal>crm configure</literal> supports batch input, so you may copy and "
+"paste the above into your live pacemaker configuration, and then make "
+"changes as required. For example, you may enter <literal>edit "
+"p_ip_rabbitmq</literal> from the <literal>crm configure</literal> menu and "
+"edit the resource to match your preferred virtual IP address."
+msgstr "<literal>crm configure</literal> はバッチ入力をサポートします。そのため、現在の pacemaker 設定の中に上をコピー・ペーストし、適宜変更を反映できます。たとえば、お好みの仮想 IP アドレスに一致させるために、<literal>crm configure</literal> メニューから <literal>edit p_ip_rabbitmq</literal> と入力し、リソースを編集できます。"
+
+#: ./doc/high-availability-guide/controller/section_rabbitmq.xml215(simpara)
+msgid ""
+"Once completed, commit your configuration changes by entering "
+"<literal>commit</literal> from the <literal>crm configure</literal> menu. "
+"Pacemaker will then start the RabbitMQ service, and its dependent resources,"
+" on one of your nodes."
+msgstr "完了すると、<literal>crm configure</literal> メニューから <literal>commit</literal> と入力し、設定の変更をコミットします。Pacemaker は RabbitMQ サービスおよび依存するリソースを同じノードに起動します。"
+
+#: ./doc/high-availability-guide/controller/section_rabbitmq.xml221(title)
+msgid "Configure OpenStack services for highly available RabbitMQ"
+msgstr "高可用性 RabbitMQ のための OpenStack サービスの設定"
+
+#: ./doc/high-availability-guide/controller/section_rabbitmq.xml223(simpara)
+msgid ""
+"Your OpenStack services must now point their RabbitMQ configuration to the "
+"highly available, virtual cluster IP address — rather than a RabbitMQ "
+"server’s physical IP address as you normally would."
+msgstr "OpenStack サービスは、通常どおり RabbitMQ サーバーの物理 IP アドレスを指定する代わりに、RabbitMQ の設定が高可用性と仮想クラスター IP アドレスを指し示す必要があります。"
+
+#: ./doc/high-availability-guide/controller/section_rabbitmq.xml226(simpara)
+msgid ""
+"For OpenStack Image, for example, if your RabbitMQ service IP address is "
+"192.168.42.100 as in the configuration explained here, you would use the "
+"following line in your OpenStack Image API configuration file (<literal"
+">glance-api.conf</literal>):"
+msgstr "OpenStack Image の例として、RabbitMQ サーバーの IP アドレスがここで説明された設定にあるように 192.168.42.100 ならば、OpenStack Image API 定ファイル (<literal>glance-api.conf</literal>) で以下の行を使用する必要があります。"
+
+#: ./doc/high-availability-guide/controller/section_rabbitmq.xml231(simpara)
+msgid ""
+"No other changes are necessary to your OpenStack configuration. If the node "
+"currently hosting your RabbitMQ experiences a problem necessitating service "
+"failover, your OpenStack services may experience a brief RabbitMQ "
+"interruption, as they would in the event of a network hiccup, and then "
+"continue to run normally."
+msgstr "OpenStack の設定に他の変更は必要ありません。現在 RabbitMQ を稼働しているノードが、サービスのフェイルオーバーを必要とする問題に遭遇した場合、ネットワークの中断と通常どおりの動作継続により、OpenStack のサービスは MySQL の短時間の中断に遭遇するかもしれません。"
+
 #: ./doc/high-availability-guide/controller/section_mysql.xml6(title)
 msgid "Highly available MySQL"
 msgstr "高可用性 MySQL"
@@ -1926,13 +1478,6 @@ msgstr "MySQL により使用するための DRBD デバイスの設定,"
 #: ./doc/high-availability-guide/controller/section_mysql.xml17(simpara)
 msgid "Configure MySQL to use a data directory residing on that DRBD device,"
 msgstr "MySQL がこの DRBD デバイスにあるデータディレクトリを使用するよう設定します。"
-
-#: ./doc/high-availability-guide/controller/section_mysql.xml23(simpara)
-#: ./doc/high-availability-guide/controller/section_rabbitmq.xml23(simpara)
-msgid ""
-"selecting and assigning a virtual IP address (VIP) that can freely float "
-"between cluster nodes,"
-msgstr "クラスターノード間で自由に移動できる仮想 IP アドレス (VIP) を選択して割り当てます。"
 
 #: ./doc/high-availability-guide/controller/section_mysql.xml29(simpara)
 msgid "Configure MySQL to listen on that IP address,"
@@ -1954,11 +1499,6 @@ msgid ""
 "Pacemaker/DRBD based approach remains the recommended one for OpenStack "
 "environments."
 msgstr "<link href=\"http://codership.com/products/mysql_galera\">MySQL/Galera</link> は MySQL を高可用性に設定するもう一つの方法です。十分に成熟すれば、MySQL の高可用性を達成する好ましい方法になるでしょう。しかしながら、執筆時点では、Pacemaker/DRBD による方法が OpenStack 環境に対する推奨のものです。"
-
-#: ./doc/high-availability-guide/controller/section_mysql.xml50(title)
-#: ./doc/high-availability-guide/controller/section_rabbitmq.xml53(title)
-msgid "Configure DRBD"
-msgstr "DRBD の設定"
 
 #: ./doc/high-availability-guide/controller/section_mysql.xml52(simpara)
 msgid ""
@@ -1988,14 +1528,6 @@ msgid ""
 "is, <literal>/dev/drbd0</literal>."
 msgstr "このリソースは、両方のクラスターノード <literal>node1</literal> と <literal>node2</literal> において、<literal>/dev/data/mysql</literal> という名前のバックエンドのローカルディスク (DRBD の用語で <emphasis>backing device</emphasis>) を使用します。通常、これはこの目的のために特別に設定された LVM 論理ボリュームでしょう。DRBD <literal>meta-disk</literal> は <literal>internal</literal> です。これは DRBD 固有のメタデータが <literal>disk</literal> デバイス自身の最後に保存されることを意味します。このデバイスは IPv4 アドレス 10.0.42.100 と 10.0.42.254 の間で TCP ポート 7700 を使用して通信するよう設定されます。一度有効化されると、デバイスマイナー番号 0 を持つローカル DRBD ブロックデバイス、つまり <literal>/dev/drbd0</literal> にマップされます。"
 
-#: ./doc/high-availability-guide/controller/section_mysql.xml82(simpara)
-#: ./doc/high-availability-guide/controller/section_rabbitmq.xml85(simpara)
-msgid ""
-"Enabling a DRBD resource is explained in detail in <link "
-"href=\"http://www.drbd.org/users-guide-8.3/s-first-time-up.html\">the DRBD "
-"User’s Guide</link>. In brief, the proper sequence of commands is this:"
-msgstr "DRBD リソースを有効化する方法は <link href=\"http://www.drbd.org/users-guide-8.3/s-first-time-up.html\">DRBD ユーザーガイド</link> に詳細に説明されています。要約すると、正しいコマンドの流れはこのとおりです。"
-
 #: ./doc/high-availability-guide/controller/section_mysql.xml90(para)
 msgid ""
 "Initializes DRBD metadata and writes the initial set of metadata to "
@@ -2010,18 +1542,6 @@ msgid ""
 "on both nodes."
 msgstr "<literal>/dev/drbd0</literal> デバイスノードを作成し、DRBD デバイスをそのバックエンドに<emphasis>接続</emphasis>し、DRBD ノードを同期先に<emphasis>接続</emphasis>します。両方のノードで完了する必要があります。"
 
-#: ./doc/high-availability-guide/controller/section_mysql.xml103(para)
-#: ./doc/high-availability-guide/controller/section_rabbitmq.xml106(para)
-msgid ""
-"Kicks off the initial device synchronization, and puts the device into the "
-"<literal>primary</literal> (readable and writable) role. See <link "
-"href=\"http://www.drbd.org/users-guide-8.3/ch-admin.html#s-roles\">Resource "
-"roles</link> (from the DRBD User’s Guide) for a more detailed description of"
-" the primary and secondary roles in DRBD. Must be completed <emphasis>on one"
-" node only,</emphasis> namely the one where you are about to continue with "
-"creating your filesystem."
-msgstr "初期デバイス同期を開始し、デバイスを <literal>プライマリ</literal> (読み書き可能) ロールにします。DRBD のプライマリロールとセカンダリロールの詳細は (DRBD User’s Guide の) <link href=\"http://www.drbd.org/users-guide-8.3/ch-admin.html#s-roles\">Resource roles</link> を参照してください。必ず<emphasis>一つのノードのみで</emphasis>実行する必要があります。つまり、ファイルシステムを作成しようとしているノードのみです。"
-
 #: ./doc/high-availability-guide/controller/section_mysql.xml117(title)
 msgid "Creating a file system"
 msgstr "ファイルシステムの作成"
@@ -2033,20 +1553,6 @@ msgid ""
 " proceed with creating the filesystem for MySQL data. XFS is the generally "
 "recommended filesystem:"
 msgstr "DRBD リソースが実行中になり、プライマリロールになると (まだ初期デバイス同期が実行中かもしれません)、MySQL データのファイルシステムの作成を進められます。XFS が一般的に推奨されるファイルシステムです。"
-
-#: ./doc/high-availability-guide/controller/section_mysql.xml124(simpara)
-#: ./doc/high-availability-guide/controller/section_rabbitmq.xml127(simpara)
-msgid ""
-"You may also use the alternate device path for the DRBD device, which may be"
-" easier to remember as it includes the self-explanatory resource name:"
-msgstr "DRBD デバイスに対する代替デバイスパスを使用することもできます。これは自己説明的なリソース名を含むため、より覚えやすいでしょう。"
-
-#: ./doc/high-availability-guide/controller/section_mysql.xml128(simpara)
-#: ./doc/high-availability-guide/controller/section_rabbitmq.xml131(simpara)
-msgid ""
-"Once completed, you may safely return the device to the secondary role. Any "
-"ongoing device synchronization will continue in the background:"
-msgstr "一度完了すると、デバイスを安全にセカンダリロールに戻せます。すべての動作中のデバイス同期はバックエンドで継続されます。"
 
 #: ./doc/high-availability-guide/controller/section_mysql.xml135(title)
 msgid "Prepare MySQL for Pacemaker high availability"
@@ -2109,14 +1615,6 @@ msgid ""
 "managing the <literal>mysql</literal> DRBD resource,"
 msgstr "<literal>ms_drbd_mysql</literal>, <literal>mysql</literal> DRBD リソースを管理している<emphasis>マスター/スレーブの組</emphasis>。"
 
-#: ./doc/high-availability-guide/controller/section_mysql.xml216(simpara)
-#: ./doc/high-availability-guide/controller/section_rabbitmq.xml204(simpara)
-msgid ""
-"a service <literal>group</literal> and <literal>order</literal> and "
-"<literal>colocation</literal> constraints to ensure resources are started on"
-" the correct nodes, and in the correct sequence."
-msgstr "リソースが適切なノードにおいて、適切な順序で起動されることを確実にする、サービスの <literal>group</literal>, <literal>order</literal> および <literal>colocation</literal> 制約。"
-
 #: ./doc/high-availability-guide/controller/section_mysql.xml222(simpara)
 msgid ""
 "<literal>crm configure</literal> supports batch input, so you may copy and "
@@ -2162,192 +1660,694 @@ msgid ""
 "normally."
 msgstr "OpenStack の設定に他の変更は必要ありません。現在データベースを稼働しているノードが、サービスのフェイルオーバーを必要とする問題に遭遇した場合、ネットワークの中断と通常どおりの動作継続により、OpenStack のサービスは MySQL の短時間の中断に遭遇するかもしれません。"
 
-#: ./doc/high-availability-guide/controller/section_rabbitmq.xml6(title)
-msgid "Highly available RabbitMQ"
-msgstr "高可用性 RabbitMQ"
+#: ./doc/high-availability-guide/ha_aa_controllers/section_memcached.xml6(title)
+msgid "Memcached"
+msgstr "Memcached"
 
-#: ./doc/high-availability-guide/controller/section_rabbitmq.xml8(simpara)
+#: ./doc/high-availability-guide/ha_aa_controllers/section_memcached.xml8(simpara)
 msgid ""
-"RabbitMQ is the default AMQP server used by many OpenStack services. Making "
-"the RabbitMQ service highly available involves:"
-msgstr "RabbitMQ が多くの OpenStack サービスにより使用される標準の AMQP サーバーです。RabbitMQ サービスを高可用性にすることは、次のことが関連します。"
+"Most of OpenStack services use an application to offer persistence and store"
+" ephemeral data (like tokens). Memcached is one of them and can scale-out "
+"easily without specific trick."
+msgstr "ほとんどの OpenStack サービスは、永続性を提供し、(トークンのような) 一時的なデータを保存するために、アプリケーションを使用します。memcached は、それらの一つで、特別な工夫をすることなく簡単にスケールアウト可能にできます。"
 
-#: ./doc/high-availability-guide/controller/section_rabbitmq.xml12(simpara)
-msgid "configuring a DRBD device for use by RabbitMQ,"
-msgstr "RabbitMQ により使用するための DRBD デバイスを設定します。"
-
-#: ./doc/high-availability-guide/controller/section_rabbitmq.xml17(simpara)
+#: ./doc/high-availability-guide/ha_aa_controllers/section_memcached.xml10(simpara)
 msgid ""
-"configuring RabbitMQ to use a data directory residing on that DRBD device,"
-msgstr "RabbitMQ が DRBD デバイスにあるデータディレクトリを使用するよう設定します。"
+"To install and configure it, read the <link "
+"href=\"http://code.google.com/p/memcached/wiki/NewStart\">official "
+"documentation</link>."
+msgstr "インストールおよび設定するために、<link href=\"http://code.google.com/p/memcached/wiki/NewStart\">公式ドキュメント</link>を参照します。"
 
-#: ./doc/high-availability-guide/controller/section_rabbitmq.xml29(simpara)
-msgid "configuring RabbitMQ to listen on that IP address,"
-msgstr "RabbitMQ がその IP アドレスでリッスンするよう設定します。"
-
-#: ./doc/high-availability-guide/controller/section_rabbitmq.xml34(simpara)
+#: ./doc/high-availability-guide/ha_aa_controllers/section_memcached.xml11(simpara)
 msgid ""
-"managing all resources, including the RabbitMQ daemon itself, with the "
-"Pacemaker cluster manager."
-msgstr "RabbitMQ デーモン自身を含む、すべてのリソースを Pacemaker クラスターマネージャーで管理します。"
+"Memory caching is managed by oslo-incubator so the way to use multiple "
+"memcached servers is the same for all projects."
+msgstr "メモリキャッシュは、複数の memcached サーバーを使用する方法がすべてのプロジェクトで同じにするために、Oslo インキュベーターにより管理されています。"
 
-#: ./doc/high-availability-guide/controller/section_rabbitmq.xml41(simpara)
+#: ./doc/high-availability-guide/ha_aa_controllers/section_memcached.xml12(simpara)
+msgid "Example with two hosts:"
+msgstr "2 つのホストを用いた例:"
+
+#: ./doc/high-availability-guide/ha_aa_controllers/section_memcached.xml14(simpara)
 msgid ""
-"There is an alternative method of configuring RabbitMQ for high "
-"availability. That approach, known as <link "
-"href=\"http://www.rabbitmq.com/ha.html\">active-active mirrored "
-"queues</link>, happens to be the one preferred by the RabbitMQ developers — "
-"however it has shown less than ideal consistency and reliability in "
-"OpenStack clusters. Thus, at the time of writing, the Pacemaker/DRBD based "
-"approach remains the recommended one for OpenStack environments, although "
-"this may change in the near future as RabbitMQ active-active mirrored queues"
-" mature."
-msgstr "RabbitMQ を高可用性に設定する別の方法があります。この方法は、<link href=\"http://www.rabbitmq.com/ha.html\">アクティブ・アクティブのキューのミラー</link>として知られ、RabbitMQ 開発者に好まれているものです。しかしながら、OpenStack クラスターにおける理想的な一貫性と信頼性よりは劣るものです。そのため、執筆時点では、Pacemaker/DRBD による方法が OpenStack 環境に対する推奨事項として残されています。これは RabbitMQ のアクティブ・アクティブのキューのミラーが成熟すると、近い将来に変更される可能性もあります。"
+"By default, controller1 handles the caching service but if the host goes "
+"down, controller2 does the job. For more information about memcached "
+"installation, see the OpenStack Cloud Administrator Guide."
+msgstr "デフォルトで、controller1 がキャッシュサービスを処理します。しかし、このホストが停止すると、controller2 がこのジョブを実行します。memcached のインストールに関する詳細は OpenStack クラウド管理者ガイドを参照してください。"
 
-#: ./doc/high-availability-guide/controller/section_rabbitmq.xml55(simpara)
+#: ./doc/high-availability-guide/ha_aa_controllers/section_run_openstack_api_and_schedulers.xml6(title)
+msgid "Run OpenStack API and schedulers"
+msgstr "OpenStack API &amp; スケジューラーの実行"
+
+#: ./doc/high-availability-guide/ha_aa_controllers/section_run_openstack_api_and_schedulers.xml10(title)
+msgid "API services"
+msgstr "API サービス"
+
+#: ./doc/high-availability-guide/ha_aa_controllers/section_run_openstack_api_and_schedulers.xml12(simpara)
 msgid ""
-"The Pacemaker based RabbitMQ server requires a DRBD resource from which it "
-"mounts the <literal>/var/lib/rabbitmq</literal> directory. In this example, "
-"the DRBD resource is simply named <literal>rabbitmq</literal>:"
-msgstr "Pacemaker ベースの RabbitMQ サーバーは <literal>/var/lib/rabbitmq</literal> ディレクトリをマウントする DRBD リソースが必要です。この例では、DRBD リソースは単に <literal>rabbitmq</literal> という名前になっています。"
+"All OpenStack projects have an API service for controlling all the resources"
+" in the Cloud. In Active / Active mode, the most common setup is to scale-"
+"out these services on at least two nodes and use load-balancing and virtual "
+"IP (with HAproxy &amp; Keepalived in this setup)."
+msgstr "すべての OpenStack プロジェクトは、クラウドにあるすべてのリソースを制御するための API サービスを持ちます。アクティブ / アクティブモードの場合、最も一般的なセットアップ環境は、少なくとも 2 つのノードにこれらのサービスをスケールアウトし、(このセットアップで HAproxy と Keepalived を用いて) 負荷分散および仮想 IP を使用します。"
 
-#: ./doc/high-availability-guide/controller/section_rabbitmq.xml60(title)
+#: ./doc/high-availability-guide/ha_aa_controllers/section_run_openstack_api_and_schedulers.xml16(emphasis)
+msgid "Configure API OpenStack services"
+msgstr "OpenStack サービスの API の設定"
+
+#: ./doc/high-availability-guide/ha_aa_controllers/section_run_openstack_api_and_schedulers.xml18(simpara)
 msgid ""
-"<literal>rabbitmq</literal> DRBD resource configuration "
-"(<literal>/etc/drbd.d/rabbitmq.res</literal>)"
-msgstr "<literal>rabbitmq</literal> DRBD リソース設定 (<literal>/etc/drbd.d/rabbitmq.res</literal>)"
+"To configure our Cloud using Highly available and scalable API services, we "
+"need to ensure that:"
+msgstr "私たちのクラウド環境が高可用性かつスケーラブルな API サービスを使用するよう設定するために、以下の事項を確認する必要があります。"
 
-#: ./doc/high-availability-guide/controller/section_rabbitmq.xml76(simpara)
+#: ./doc/high-availability-guide/ha_aa_controllers/section_run_openstack_api_and_schedulers.xml21(simpara)
+msgid "You use Virtual IP when configuring OpenStack Identity endpoints."
+msgstr "OpenStack Identity エンドポイントを設定するときに仮想 IP を使用します。"
+
+#: ./doc/high-availability-guide/ha_aa_controllers/section_run_openstack_api_and_schedulers.xml26(simpara)
+msgid "All OpenStack configuration files should refer to Virtual IP."
+msgstr "すべての OpenStack 設定ファイルは仮想 IP を参照すべきです。"
+
+#: ./doc/high-availability-guide/ha_aa_controllers/section_run_openstack_api_and_schedulers.xml32(emphasis)
+msgid "In case of failure"
+msgstr "失敗の場合"
+
+#: ./doc/high-availability-guide/ha_aa_controllers/section_run_openstack_api_and_schedulers.xml34(simpara)
 msgid ""
-"This resource uses an underlying local disk (in DRBD terminology, a "
-"<emphasis>backing device</emphasis>) named "
-"<literal>/dev/data/rabbitmq</literal> on both cluster nodes, "
-"<literal>node1</literal> and <literal>node2</literal>. Normally, this would "
-"be an LVM Logical Volume specifically set aside for this purpose. The DRBD "
-"<literal>meta-disk</literal> is <literal>internal</literal>, meaning DRBD-"
-"specific metadata is being stored at the end of the <literal>disk</literal> "
-"device itself. The device is configured to communicate between IPv4 "
-"addresses 10.0.42.100 and 10.0.42.254, using TCP port 7701. Once enabled, it"
-" will map to a local DRBD block device with the device minor number 1, that "
-"is, <literal>/dev/drbd1</literal>."
-msgstr "このリソースは、両方のクラスターノード <literal>node1</literal> と <literal>node2</literal> において、<literal>/dev/data/rabbitmq</literal> という名前のバックエンドのローカルディスク (DRBD の用語で <emphasis>backing device</emphasis>) を使用します。通常、これはこの目的のために特別に設定された LVM 論理ボリュームでしょう。DRBD <literal>meta-disk</literal> は <literal>internal</literal> です。これは DRBD 固有のメタデータが <literal>disk</literal> デバイス自身の最後に保存されることを意味します。このデバイスは IPv4 アドレス 10.0.42.100 と 10.0.42.254 の間で TCP ポート 7701 を使用して通信するよう設定されます。一度有効化されると、デバイスマイナー番号 1 を持つローカル DRBD ブロックデバイス、つまり <literal>/dev/drbd1</literal> にマップされます。"
+"The monitor check is quite simple since it just establishes a TCP connection"
+" to the API port. Comparing to the Active / Passive mode using Corosync "
+"&amp; Resources Agents, we don’t check if the service is actually running). "
+"That’s why all OpenStack API should be monitored by another tool (i.e. "
+"Nagios) with the goal to detect failures in the Cloud Framework "
+"infrastructure."
+msgstr "API ポートへの TCP 接続を確立するだけのため、監視チェックは極めてシンプルです。Corosync とリソースエージェントを使用するアクティブ / パッシブモードと比べて、サービスが実際に動作しているかを確認しません。そのため、クラウドのフレームワーク環境における障害を検知するために、すべての OpenStack API は他のツール (例: Nagios) により監視すべきです。"
 
-#: ./doc/high-availability-guide/controller/section_rabbitmq.xml93(para)
+#: ./doc/high-availability-guide/ha_aa_controllers/section_run_openstack_api_and_schedulers.xml41(title)
+msgid "Schedulers"
+msgstr "スケジューラー"
+
+#: ./doc/high-availability-guide/ha_aa_controllers/section_run_openstack_api_and_schedulers.xml43(simpara)
 msgid ""
-"Initializes DRBD metadata and writes the initial set of metadata to "
-"<literal>/dev/data/rabbitmq</literal>. Must be completed on both nodes."
-msgstr "DRBD メタデータを初期化し、メタデータの初期セットを <literal>/dev/data/rabbitmq</literal> に書き込みます。両方のノードで完了する必要があります。"
+"OpenStack schedulers are used to determine how to dispatch compute, network "
+"and volume requests. The most common setup is to use RabbitMQ as messaging "
+"system already documented in this guide. Those services are connected to the"
+" messaging backend and can scale-out :"
+msgstr "OpenStack スケジューラーは、コンピュート、ネットワーク、ボリュームのリクエストをどのようにディスパッチするかを決めるために使用されます。最も一般的なセットアップ環境は、このガイドにドキュメント化されたメッセージングシステムとして RabbitMQ を使用することです。これらのサービスはメッセージングのバックエンドに接続され、スケールアウトできます。"
 
-#: ./doc/high-availability-guide/controller/section_rabbitmq.xml99(para)
+#: ./doc/high-availability-guide/ha_aa_controllers/section_run_openstack_api_and_schedulers.xml48(simpara)
+msgid "nova-scheduler"
+msgstr "nova-scheduler"
+
+#: ./doc/high-availability-guide/ha_aa_controllers/section_run_openstack_api_and_schedulers.xml53(simpara)
+msgid "nova-conductor"
+msgstr "nova-conductor"
+
+#: ./doc/high-availability-guide/ha_aa_controllers/section_run_openstack_api_and_schedulers.xml58(simpara)
+msgid "cinder-scheduler"
+msgstr "cinder-scheduler"
+
+#: ./doc/high-availability-guide/ha_aa_controllers/section_run_openstack_api_and_schedulers.xml63(simpara)
+msgid "neutron-server"
+msgstr "neutron-server"
+
+#: ./doc/high-availability-guide/ha_aa_controllers/section_run_openstack_api_and_schedulers.xml68(simpara)
+msgid "ceilometer-collector"
+msgstr "ceilometer-collector"
+
+#: ./doc/high-availability-guide/ha_aa_controllers/section_run_openstack_api_and_schedulers.xml73(simpara)
+msgid "heat-engine"
+msgstr "heat-engine"
+
+#: ./doc/high-availability-guide/ha_aa_controllers/section_run_openstack_api_and_schedulers.xml78(simpara)
 msgid ""
-"Creates the <literal>/dev/drbd1</literal> device node, "
-"<emphasis>attaches</emphasis> the DRBD device to its backing store, and "
-"<emphasis>connects</emphasis> the DRBD node to its peer. Must be completed "
-"on both nodes."
-msgstr "<literal>/dev/drbd1</literal> デバイスノードを作成し、DRBD デバイスをそのバックエンドに<emphasis>接続</emphasis>し、DRBD ノードを同期先に<emphasis>接続</emphasis>します。両方のノードで完了する必要があります。"
+"Please refer to the RabbitMQ section for configure these services with "
+"multiple messaging servers."
+msgstr "これらのサービスを複数のメッセージングサービスを用いて設定する方法は、RabbitMQ のセクションを参照してください。"
 
-#: ./doc/high-availability-guide/controller/section_rabbitmq.xml120(title)
-msgid "Create a file system"
-msgstr "ファイルシステムの作成"
+#: ./doc/high-availability-guide/pacemaker/section_start_pacemaker.xml6(title)
+msgid "Start Pacemaker"
+msgstr "Pacemaker の開始"
 
-#: ./doc/high-availability-guide/controller/section_rabbitmq.xml122(simpara)
+#: ./doc/high-availability-guide/pacemaker/section_start_pacemaker.xml8(simpara)
 msgid ""
-"Once the DRBD resource is running and in the primary role (and potentially "
-"still in the process of running the initial device synchronization), you may"
-" proceed with creating the filesystem for RabbitMQ data. XFS is generally "
-"the recommended filesystem:"
-msgstr "DRBD リソースが実行中になり、プライマリロールになると (まだ初期デバイス同期が実行中かもしれません)、RabbitMQ データのファイルシステムの作成を進められます。XFS が一般的に推奨されるファイルシステムです。"
+"Once the Corosync services have been started, and you have established that "
+"the cluster is communicating properly, it is safe to start "
+"<literal>pacemakerd</literal>, the Pacemaker master control process:"
+msgstr "Corosync サービスが開始されると、クラスターが適切に通信するよう設定されます。<literal>pacemakerd</literal>, Pacemaker マスター制御プロセスを安全に開始されます:"
 
-#: ./doc/high-availability-guide/controller/section_rabbitmq.xml138(title)
-msgid "Prepare RabbitMQ for Pacemaker high availability"
-msgstr "Pacemaker 高可用性のための RabbitMQ の準備"
+#: ./doc/high-availability-guide/pacemaker/section_start_pacemaker.xml13(simpara)
+msgid "<literal>/etc/init.d/pacemaker start</literal> (LSB)"
+msgstr "<literal>/etc/init.d/pacemaker start</literal> (LSB)"
 
-#: ./doc/high-availability-guide/controller/section_rabbitmq.xml140(simpara)
+#: ./doc/high-availability-guide/pacemaker/section_start_pacemaker.xml17(simpara)
+msgid "<literal>service pacemaker start</literal> (LSB, alternate)"
+msgstr "<literal>service pacemaker start</literal> (LSB, 代替)"
+
+#: ./doc/high-availability-guide/pacemaker/section_start_pacemaker.xml21(simpara)
+msgid "<literal>start pacemaker</literal> (upstart)"
+msgstr "<literal>start pacemaker</literal> (upstart)"
+
+#: ./doc/high-availability-guide/pacemaker/section_start_pacemaker.xml25(simpara)
+msgid "<literal>systemctl start pacemaker</literal> (systemd)"
+msgstr "<literal>systemctl start pacemaker</literal> (systemd)"
+
+#: ./doc/high-availability-guide/pacemaker/section_start_pacemaker.xml29(simpara)
 msgid ""
-"In order for Pacemaker monitoring to function properly, you must ensure that"
-" RabbitMQ’s <literal>.erlang.cookie</literal> files are identical on all "
-"nodes, regardless of whether DRBD is mounted there or not. The simplest way "
-"of doing so is to take an existing <literal>.erlang.cookie</literal> from "
-"one of your nodes, copying it to the RabbitMQ data directory on the other "
-"node, and also copying it to the DRBD-backed filesystem."
-msgstr "Pacemaker の監視を正しく機能させるために、DRBD がマウントされているかどうかに関わらず、RabbitMQ の <literal>.erlang.cookie</literal> ファイルをすべてのノードで必ず同じにする必要があります。そうする最も簡単な方法は、どこかのノードから既存の <literal>.erlang.cookie</literal> を取得し、他のノードの RabbitMQ データディレクトリおよび DRBD のバックエンドファイルシステムにコピーすることです。"
+"Once Pacemaker services have started, Pacemaker will create a default empty "
+"cluster configuration with no resources. You may observe Pacemaker’s status "
+"with the <literal>crm_mon</literal> utility:"
+msgstr "Pacemaker サービスが開始されると、Pacemaker はリソースを持たない空の標準クラスター設定を作成します。<literal>crm_mon</literal> ユーティリティを用いて Pacemaker の状態を確認できます。"
 
-#: ./doc/high-availability-guide/controller/section_rabbitmq.xml153(title)
-msgid "Add RabbitMQ resources to Pacemaker"
-msgstr "RabbitMQ リソースの Pacemaker への追加"
+#: ./doc/high-availability-guide/pacemaker/section_set_up_corosync.xml6(title)
+msgid "Set up Corosync"
+msgstr "Corosync のセットアップ"
 
-#: ./doc/high-availability-guide/controller/section_rabbitmq.xml155(simpara)
+#: ./doc/high-availability-guide/pacemaker/section_set_up_corosync.xml8(simpara)
 msgid ""
-"You may now proceed with adding the Pacemaker configuration for RabbitMQ "
-"resources. Connect to the Pacemaker cluster with <literal>crm "
+"Besides installing the <literal>corosync</literal> package, you must also "
+"create a configuration file, stored in "
+"<literal>/etc/corosync/corosync.conf</literal>. Most distributions ship an "
+"example configuration file (<literal>corosync.conf.example</literal>) as "
+"part of the documentation bundled with the <literal>corosync</literal> "
+"package. An example Corosync configuration file is shown below:"
+msgstr "<literal>corosync</literal> パッケージのインストールに関連して、<literal>/etc/corosync/corosync.conf</literal> に保存する、設定ファイルを作成する必要があります。多くのディストリビューションは、<literal>corosync</literal> パッケージに同梱されているドキュメントの一部として、サンプル設定ファイル (<literal>corosync.conf.example</literal>) が同梱されています。サンプルの Corosync 設定ファイルを以下に示します:"
+
+#: ./doc/high-availability-guide/pacemaker/section_set_up_corosync.xml16(title)
+msgid "Corosync configuration file (<literal>corosync.conf</literal>)"
+msgstr "Corosync 設定ファイル (<literal>corosync.conf</literal>)"
+
+#: ./doc/high-availability-guide/pacemaker/section_set_up_corosync.xml90(para)
+msgid ""
+"The <literal>token</literal> value specifies the time, in milliseconds, "
+"during which the Corosync token is expected to be transmitted around the "
+"ring. When this timeout expires, the token is declared lost, and after "
+"<literal>token_retransmits_before_loss_const</literal> lost tokens the non-"
+"responding <emphasis>processor</emphasis> (cluster node) is declared dead. "
+"In other words, <literal>token</literal> × "
+"<literal>token_retransmits_before_loss_const</literal> is the maximum time a"
+" node is allowed to not respond to cluster messages before being considered "
+"dead. The default for <literal>token</literal> is 1000 (1 second), with 4 "
+"allowed retransmits. These defaults are intended to minimize failover times,"
+" but can cause frequent \"false alarms\" and unintended failovers in case of"
+" short network interruptions. The values used here are safer, albeit with "
+"slightly extended failover times."
+msgstr "<literal>token</literal> の値は、Corosync トークンがリングを 1 周するまでの時間をミリ秒単位で指定します。このタイムアウトを経過した場合、トークンが消失したと判定します。<literal>token_retransmits_before_loss_const</literal> はトークンを失った後、応答のない <emphasis>processor</emphasis> (クラスターノード) が障害と判定されます。言い換えると、<literal>token</literal> × <literal>token_retransmits_before_loss_const</literal> が、ノードが障害と判定されるまでに、クラスターメッセージに応答しなくてもよい最大時間です。 <literal>token</literal> の規定値は 1000 (1 秒) で、再送 が 4 回まで許可されます。これらの規定値は、フェイルオーバー時間を最小化する狙いですが、頻繁に「誤報」を起こし、短時間のネットワーク障害により意図せずフェイルオーバーする可能性があります。ここで使用されている値は、フェイルオーバー時間をわずかに延ばしたとしても、より安全なものです。"
+
+#: ./doc/high-availability-guide/pacemaker/section_set_up_corosync.xml106(para)
+msgid ""
+"With <literal>secauth</literal> enabled, Corosync nodes mutually "
+"authenticate using a 128-byte shared secret stored in "
+"<literal>/etc/corosync/authkey</literal>, which may be generated with the "
+"<literal>corosync-keygen</literal> utility. When using "
+"<literal>secauth</literal>, cluster communications are also encrypted."
+msgstr "<literal>secauth</literal> を有効化している場合、Corosync ノードは <literal>/etc/corosync/authkey</literal> に保存されている 128 ビットの共有シークレットを使用して相互に認証します。このシークレットは <literal>corosync-keygen</literal> ユーティリティを用いて生成できます。<literal>secauth</literal> を使用するとき、クラスター通信も暗号化されます。"
+
+#: ./doc/high-availability-guide/pacemaker/section_set_up_corosync.xml114(para)
+msgid ""
+"In Corosync configurations using redundant networking (with more than one "
+"<literal>interface</literal>), you must select a Redundant Ring Protocol "
+"(RRP) mode other than <literal>none</literal>. <literal>active</literal> is "
+"the recommended RRP mode."
+msgstr "冗長ネットワーク (複数の <literal>interface</literal>) を使用した Corosync 設定の場合、Redundant Ring Protocol (RRP) モードを <literal>none</literal> 以外で選択する必要があります。<literal>active</literal> が推奨 RRP モードです。"
+
+#: ./doc/high-availability-guide/pacemaker/section_set_up_corosync.xml121(para)
+msgid ""
+"There are several things to note about the recommended interface "
+"configuration:"
+msgstr "インターフェースの推奨設定に関する注意事項がいくつかあります。"
+
+#: ./doc/high-availability-guide/pacemaker/section_set_up_corosync.xml127(simpara)
+msgid ""
+"The <literal>ringnumber</literal> must differ between all configured "
+"interfaces, starting with 0."
+msgstr "<literal>ringnumber</literal> はすべての設定済みインターフェースで異なる必要があります。0 から始まります。"
+
+#: ./doc/high-availability-guide/pacemaker/section_set_up_corosync.xml133(simpara)
+msgid ""
+"The <literal>bindnetaddr</literal> is the <emphasis>network</emphasis> "
+"address of the interfaces to bind to. The example uses two network addresses"
+" of <literal>/24</literal> IPv4 subnets."
+msgstr "<literal>bindnetaddr</literal> はバインドするインターフェースの<emphasis>ネットワーク</emphasis>アドレスです。この例は二つの <literal>/24</literal> IPv4 サブネットのネットワークアドレスを使用します。"
+
+#: ./doc/high-availability-guide/pacemaker/section_set_up_corosync.xml139(simpara)
+msgid ""
+"Multicast groups (<literal>mcastaddr</literal>) <emphasis>must "
+"not</emphasis> be reused across cluster boundaries. In other words, no two "
+"distinct clusters should ever use the same multicast group. Be sure to "
+"select multicast addresses compliant with <link "
+"href=\"http://www.ietf.org/rfc/rfc2365.txt\">RFC 2365, \"Administratively "
+"Scoped IP Multicast\"</link>."
+msgstr "マルチキャストグループ (<literal>mcastaddr</literal>) は、クラスターの境界をまたがって再利用できません。違い言い方をすると、2 つの別のクラスターは同じマルチキャストグループを使用できません。<link href=\"http://www.ietf.org/rfc/rfc2365.txt\">RFC 2365, \"Administratively Scoped IP Multicast\"</link> に適合しているマルチキャストアドレスを必ず選択してください。"
+
+#: ./doc/high-availability-guide/pacemaker/section_set_up_corosync.xml148(simpara)
+msgid ""
+"For firewall configurations, note that Corosync communicates over UDP only, "
+"and uses <literal>mcastport</literal> (for receives) and "
+"<literal>mcastport</literal>-1 (for sends)."
+msgstr "ファイアウォール設定に関して、Corosync は UDP のみを使用して通信し、<literal>mcastport</literal> (受信用) と <literal>mcastport</literal>-1 (送信用) を使用することに注意してください。"
+
+#: ./doc/high-availability-guide/pacemaker/section_set_up_corosync.xml157(para)
+msgid ""
+"The <literal>service</literal> declaration for the "
+"<literal>pacemaker</literal> service may be placed in the "
+"<literal>corosync.conf</literal> file directly, or in its own separate file,"
+" <literal>/etc/corosync/service.d/pacemaker</literal>."
+msgstr "<literal>pacemaker</literal> サービスに関する <literal>service</literal> 宣言は、<literal>corosync.conf</literal> ファイルに直接置かれるか、別のファイル <literal>/etc/corosync/service.d/pacemaker</literal> に置かれるかもしれません。"
+
+#: ./doc/high-availability-guide/pacemaker/section_set_up_corosync.xml164(simpara)
+msgid ""
+"Once created, the <literal>corosync.conf</literal> file (and the "
+"<literal>authkey</literal> file if the <literal>secauth</literal> option is "
+"enabled) must be synchronized across all cluster nodes."
+msgstr "一度作成すると、<literal>corosync.conf</literal> ファイル (および、<literal>secauth</literal> オプションが有効化されている場合は <literal>authkey</literal> ファイル) はすべてのクラスターノードで同期する必要があります。"
+
+#: ./doc/high-availability-guide/pacemaker/section_install_packages.xml6(title)
+msgid "Install packages"
+msgstr "パッケージのインストール"
+
+#: ./doc/high-availability-guide/pacemaker/section_install_packages.xml8(simpara)
+msgid ""
+"On any host that is meant to be part of a Pacemaker cluster, you must first "
+"establish cluster communications through the Corosync messaging layer. This "
+"involves Install the following packages (and their dependencies, which your "
+"package manager will normally install automatically):"
+msgstr "Pacemaker クラスターに参加させるすべてのホストにおいて、まず Corosync メッセージング層によるクラスター通信を確立する必要があります。これは、以下のパッケージをインストールする必要があります (また通常、パッケージ管理ソフトウェアが自動的にそれらに依存するものをインストールします)。"
+
+#: ./doc/high-availability-guide/pacemaker/section_install_packages.xml15(simpara)
+msgid ""
+"<literal>pacemaker</literal> Note that the crm shell should be downloaded "
+"separately."
+msgstr "<literal>pacemaker</literal> は crm シェルを別途ダウンロードする必要があることに注意してください。"
+
+#: ./doc/high-availability-guide/pacemaker/section_install_packages.xml20(literal)
+msgid "crmsh"
+msgstr "crmsh"
+
+#: ./doc/high-availability-guide/pacemaker/section_install_packages.xml25(literal)
+msgid "corosync"
+msgstr "corosync"
+
+#: ./doc/high-availability-guide/pacemaker/section_install_packages.xml30(literal)
+msgid "cluster-glue"
+msgstr "cluster-glue"
+
+#: ./doc/high-availability-guide/pacemaker/section_install_packages.xml34(simpara)
+msgid ""
+"<literal>fence-agents</literal> (Fedora only; all other distributions use "
+"fencing agents from <literal>cluster-glue</literal>)"
+msgstr "<literal>fence-agents</literal> (Fedora のみ、他のすべてのディストリビューションは <literal>cluster-glue</literal> からフェンシング・エージェントを使用します)"
+
+#: ./doc/high-availability-guide/pacemaker/section_install_packages.xml40(literal)
+msgid "resource-agents"
+msgstr "resource-agents"
+
+#: ./doc/high-availability-guide/pacemaker/section_set_basic_cluster_properties.xml6(title)
+msgid "Set basic cluster properties"
+msgstr "基本的なクラスターのプロパティの設定"
+
+#: ./doc/high-availability-guide/pacemaker/section_set_basic_cluster_properties.xml8(simpara)
+msgid ""
+"Once your Pacemaker cluster is set up, it is recommended to set a few basic "
+"cluster properties. To do so, start the <literal>crm</literal> shell and "
+"change into the configuration menu by entering <literal>configure</literal>."
+" Alternatively. you may jump straight into the Pacemaker configuration menu "
+"by typing <literal>crm configure</literal> directly from a shell prompt."
+msgstr "Pacemaker クラスターを構築すると、いくつかの基本的なクラスタープロパティを設定することを推奨します。そうするために、<literal>crm</literal> シェルを開始し、<literal>configure</literal> と入力して設定メニューに変更します。代わりに、シェルプロンプトから直接 <literal>crm configure</literal> と入力して、Pacemaker 設定メニューに入ることもできます。"
+
+#: ./doc/high-availability-guide/pacemaker/section_set_basic_cluster_properties.xml14(simpara)
+msgid "Then, set the following properties:"
+msgstr "そして、以下のプロパティを設定します。"
+
+#: ./doc/high-availability-guide/pacemaker/section_set_basic_cluster_properties.xml22(para)
+msgid ""
+"Setting <literal>no-quorum-policy=\"ignore\"</literal> is required in 2-node"
+" Pacemaker clusters for the following reason: if quorum enforcement is "
+"enabled, and one of the two nodes fails, then the remaining node can not "
+"establish a <emphasis>majority</emphasis> of quorum votes necessary to run "
+"services, and thus it is unable to take over any resources. The appropriate "
+"workaround is to ignore loss of quorum in the cluster. This is safe and "
+"necessary <emphasis>only</emphasis> in 2-node clusters. Do not set this "
+"property in Pacemaker clusters with more than two nodes."
+msgstr "2 ノード Pacemaker クラスターの場合、以下の理由により <literal>no-quorum-policy=\"ignore\"</literal> の設定が必要になります。クォーラム強制が有効化されていると、2 ノードのどちらかに障害が発生した場合、残りのノードがサービスの実行に必要なクォーラムの<emphasis>過半数</emphasis>を獲得できなくなります。そのため、あらゆるリソースがテイクオーバーできません。適切な回避策は、クラスターでクォーラムの損失を無視することです。これは 2 ノードクラスター<emphasis>のみ</emphasis>で安全であり、必要になります。2 ノードより多い Pacemaker クラスターでは、このプロパティを設定してはいけません。"
+
+#: ./doc/high-availability-guide/pacemaker/section_set_basic_cluster_properties.xml34(para)
+msgid ""
+"Setting <literal>pe-warn-series-max</literal>, <literal>pe-input-series-"
+"max</literal> and <literal>pe-error-series-max</literal> to 1000 instructs "
+"Pacemaker to keep a longer history of the inputs processed, and errors and "
+"warnings generated, by its Policy Engine. This history is typically useful "
+"in case cluster troubleshooting becomes necessary."
+msgstr "<literal>pe-warn-series-max</literal>、<literal>pe-input-series-max</literal> および <literal>pe-error-series-max</literal> を 1000 に設定することにより、Pacemaker のポリシーエンジンにより、処理された入力、生成されたエラーと警告の履歴をより長く保持するよう Pacemaker に指示します。この履歴は一般的にクラスターのトラブルシューティングが必要となる場合に役に立ちます。"
+
+#: ./doc/high-availability-guide/pacemaker/section_set_basic_cluster_properties.xml43(para)
+msgid ""
+"Pacemaker uses an event-driven approach to cluster state processing. "
+"However, certain Pacemaker actions occur at a configurable interval, "
+"<literal>cluster-recheck-interval</literal>, which defaults to 15 minutes. "
+"It is usually prudent to reduce this to a shorter interval, such as 5 or 3 "
+"minutes."
+msgstr "Pacemaker はクラスター状態の処理にイベント駆動の方法を使用します。しかしながら、特定の Pacemaker アクションは、設定可能な間隔 <literal>cluster-recheck-interval</literal> で発生します。このデフォルトは 15 分です。一般的に 5 分や 3 分のようにより短い間隔にこれを慎重に減らします。"
+
+#: ./doc/high-availability-guide/pacemaker/section_set_basic_cluster_properties.xml52(simpara)
+msgid ""
+"Once you have made these changes, you may <literal>commit</literal> the "
+"updated configuration."
+msgstr "これらの変更を実行すると、更新した設定を <literal>commit</literal> できます。"
+
+#: ./doc/high-availability-guide/pacemaker/section_starting_corosync.xml6(title)
+msgid "Starting Corosync"
+msgstr "Corosync の開始"
+
+#: ./doc/high-availability-guide/pacemaker/section_starting_corosync.xml8(simpara)
+msgid ""
+"Corosync is started as a regular system service. Depending on your "
+"distribution, it may ship with a LSB (System V style) init script, an "
+"upstart job, or a systemd unit file. Either way, the service is usually "
+"named <literal>corosync</literal>:"
+msgstr "Corosync は通常のシステムサービスとして開始されます。お使いのディストリビューションにより、LSB (System V 形式) init スクリプト、upstart ジョブ、または systemd ユニットファイルが同梱されています。どの方法においても、サービスは通常 <literal>corosync</literal> という名前です:"
+
+#: ./doc/high-availability-guide/pacemaker/section_starting_corosync.xml14(simpara)
+msgid "<literal>/etc/init.d/corosync start</literal> (LSB)"
+msgstr "<literal>/etc/init.d/corosync start</literal> (LSB)"
+
+#: ./doc/high-availability-guide/pacemaker/section_starting_corosync.xml18(simpara)
+msgid "<literal>service corosync start</literal> (LSB, alternate)"
+msgstr "<literal>service corosync start</literal> (LSB, 代替)"
+
+#: ./doc/high-availability-guide/pacemaker/section_starting_corosync.xml22(simpara)
+msgid "<literal>start corosync</literal> (upstart)"
+msgstr "<literal>start corosync</literal> (upstart)"
+
+#: ./doc/high-availability-guide/pacemaker/section_starting_corosync.xml26(simpara)
+msgid "<literal>systemctl start corosync</literal> (systemd)"
+msgstr "<literal>systemctl start corosync</literal> (systemd)"
+
+#: ./doc/high-availability-guide/pacemaker/section_starting_corosync.xml30(simpara)
+msgid "You can now check the Corosync connectivity with two tools."
+msgstr "2 つのツールを用いて Corosync 接続性を確認できます。"
+
+#: ./doc/high-availability-guide/pacemaker/section_starting_corosync.xml31(simpara)
+msgid ""
+"The <literal>corosync-cfgtool</literal> utility, when invoked with the "
+"<literal>-s</literal> option, gives a summary of the health of the "
+"communication rings:"
+msgstr "<literal>corosync-cfgtool</literal> ユーティリティは、<literal>-s</literal> オプションを用いるとき、通信リングの健全性の概要を表示します:"
+
+#: ./doc/high-availability-guide/pacemaker/section_starting_corosync.xml42(simpara)
+msgid ""
+"The <literal>corosync-objctl</literal> utility can be used to dump the "
+"Corosync cluster member list:"
+msgstr "<literal>corosync-objctl</literal> ユーティリティは Corosync クラスターのメンバー一覧をダンプするために使用できます:"
+
+#: ./doc/high-availability-guide/pacemaker/section_starting_corosync.xml51(simpara)
+msgid ""
+"You should see a <literal>status=joined</literal> entry for each of your "
+"constituent cluster nodes."
+msgstr "組み込まれているそれぞれのクラスターノードの項目が <literal>status=joined</literal> になっていることが確認できるはずです。"
+
+#: ./doc/high-availability-guide/ha_aa_rabbitmq/section_configure_openstack_services_to_user_rabbitmq.xml6(title)
+msgid "Configure OpenStack services to use RabbitMQ"
+msgstr "RabbitMQ を使用するための OpenStack サービスの設定"
+
+#: ./doc/high-availability-guide/ha_aa_rabbitmq/section_configure_openstack_services_to_user_rabbitmq.xml8(simpara)
+msgid ""
+"We have to configure the OpenStack components to use at least two RabbitMQ "
+"nodes."
+msgstr "2 つ以上の RabbitMQ ノードを使用するよう、OpenStack のコンポーネントを設定する必要があります。"
+
+#: ./doc/high-availability-guide/ha_aa_rabbitmq/section_configure_openstack_services_to_user_rabbitmq.xml9(simpara)
+msgid "Do this configuration on all services using RabbitMQ:"
+msgstr "RabbitMQ を使用するすべてのサービスでこの設定を行います。"
+
+#: ./doc/high-availability-guide/ha_aa_rabbitmq/section_configure_openstack_services_to_user_rabbitmq.xml10(simpara)
+msgid "RabbitMQ HA cluster host:port pairs:"
+msgstr "RabbitMQ HA クラスターの host:port の組:"
+
+#: ./doc/high-availability-guide/ha_aa_rabbitmq/section_configure_openstack_services_to_user_rabbitmq.xml12(simpara)
+msgid "How frequently to retry connecting with RabbitMQ:"
+msgstr "RabbitMQ と再接続する頻度:"
+
+#: ./doc/high-availability-guide/ha_aa_rabbitmq/section_configure_openstack_services_to_user_rabbitmq.xml14(simpara)
+msgid "How long to back-off for between retries when connecting to RabbitMQ:"
+msgstr "RabbitMQ に接続するとき再試行するまでにバックオフする間隔:"
+
+#: ./doc/high-availability-guide/ha_aa_rabbitmq/section_configure_openstack_services_to_user_rabbitmq.xml16(simpara)
+msgid ""
+"Maximum retries with trying to connect to RabbitMQ (infinite by default):"
+msgstr "RabbitMQ に接続を試行する最大回数 (デフォルトで無制限):"
+
+#: ./doc/high-availability-guide/ha_aa_rabbitmq/section_configure_openstack_services_to_user_rabbitmq.xml18(simpara)
+msgid "Use durable queues in RabbitMQ:"
+msgstr "RabbitMQ での永続キューの使用:"
+
+#: ./doc/high-availability-guide/ha_aa_rabbitmq/section_configure_openstack_services_to_user_rabbitmq.xml20(simpara)
+msgid "Use H/A queues in RabbitMQ (x-ha-policy: all):"
+msgstr "RabbitMQ での H/A キューの使用 (x-ha-policy: all):"
+
+#: ./doc/high-availability-guide/ha_aa_rabbitmq/section_configure_openstack_services_to_user_rabbitmq.xml22(simpara)
+msgid ""
+"If you change the configuration from an old setup which did not use HA "
+"queues, you should interrupt the service:"
+msgstr "HA キューを使用していない古いセットアップから設定を変更した場合、サービスを中断しなければいけません。"
+
+#: ./doc/high-availability-guide/ha_aa_rabbitmq/section_configure_openstack_services_to_user_rabbitmq.xml26(simpara)
+msgid ""
+"Services currently working with HA queues: OpenStack Compute, OpenStack "
+"Block Storage, OpenStack Networking, Telemetry."
+msgstr "次のサービスはいま HA キューで動作しています。OpenStack Compute、OpenStack Cinder、OpenStack Networking、Telemetry。"
+
+#: ./doc/high-availability-guide/ha_aa_rabbitmq/section_install_rabbitmq.xml8(simpara)
+msgid "This setup has been tested with RabbitMQ 2.7.1."
+msgstr "このセットアップは RabbitMQ 2.7.1 を用いてテストしました。"
+
+#: ./doc/high-availability-guide/ha_aa_rabbitmq/section_install_rabbitmq.xml11(title)
+msgid "On Ubuntu / Debian"
+msgstr "Ubuntu / Debian の場合"
+
+#: ./doc/high-availability-guide/ha_aa_rabbitmq/section_install_rabbitmq.xml13(simpara)
+#: ./doc/high-availability-guide/ha_aa_rabbitmq/section_install_rabbitmq.xml23(simpara)
+msgid "RabbitMQ is packaged on both distros:"
+msgstr "RabbitMQ がどちらもパッケージ化されています。"
+
+#: ./doc/high-availability-guide/ha_aa_rabbitmq/section_install_rabbitmq.xml16(link)
+msgid "Official manual for installing RabbitMQ on Ubuntu / Debian"
+msgstr "Ubuntu / Debian に RabbitMQ をインストールする方法の公式マニュアル"
+
+#: ./doc/high-availability-guide/ha_aa_rabbitmq/section_install_rabbitmq.xml21(title)
+msgid "On Fedora / RHEL"
+msgstr "Fedora / RHEL の場合"
+
+#: ./doc/high-availability-guide/ha_aa_rabbitmq/section_install_rabbitmq.xml26(link)
+msgid "Official manual for installing RabbitMQ on Fedora / RHEL"
+msgstr "Fedora / RHEL に RabbitMQ をインストールする方法の公式マニュアル"
+
+#: ./doc/high-availability-guide/ha_aa_rabbitmq/section_configure_rabbitmq.xml6(title)
+msgid "Configure RabbitMQ"
+msgstr "RabbitMQ の設定"
+
+#: ./doc/high-availability-guide/ha_aa_rabbitmq/section_configure_rabbitmq.xml8(simpara)
+msgid ""
+"Here we are building a cluster of RabbitMQ nodes to construct a RabbitMQ "
+"broker. Mirrored queues in RabbitMQ improve the availability of service "
+"since it will be resilient to failures. We have to consider that while "
+"exchanges and bindings will survive the loss of individual nodes, queues and"
+" their messages will not because a queue and its contents is located on one "
+"node. If we lose this node, we also lose the queue."
+msgstr "これから RabbitMQ ブローカーを構築するために RabbitMQ ノードのクラスターを構築します。障害の耐性ができるため、RabbitMQ のキューミラーによりサービスの可用性を高められます。メッセージ交換とバインドにより個々のノードの損失があると、キューとその内容が 1 つのノードに置かれているため、キューとそれらのメッセージが無くなることに注意してください。このノードが失われた場合、キューも失われます。"
+
+#: ./doc/high-availability-guide/ha_aa_rabbitmq/section_configure_rabbitmq.xml13(simpara)
+msgid ""
+"We consider that we run (at least) two RabbitMQ servers. To build a broker, "
+"we need to ensure that all nodes have the same erlang cookie file. To do so,"
+" stop RabbitMQ everywhere and copy the cookie from rabbit1 server to other "
+"server(s):"
+msgstr "(少なくとも) 2 つの RabbitMQ サーバーを実行することを考えます。ブローカーを構築するために、すべてのノードが必ず同じ erlang クッキーファイルを持つ必要があります。そうするために、すべての RabbitMQ を停止し、クッキーを rabbit1 サーバーから他のサーバーにコピーします。"
+
+#: ./doc/high-availability-guide/ha_aa_rabbitmq/section_configure_rabbitmq.xml18(simpara)
+msgid ""
+"Then, start RabbitMQ on nodes. If RabbitMQ fails to start, you can’t "
+"continue to the next step."
+msgstr "そして、ノードで RabbitMQ を起動します。RabbitMQ の起動に失敗した場合、次の手順に進めません。"
+
+#: ./doc/high-availability-guide/ha_aa_rabbitmq/section_configure_rabbitmq.xml20(simpara)
+msgid "Now, we are building the HA cluster. From rabbit2, run these commands:"
+msgstr "これで、HA クラスターの構築ができました。rabbit2 からこれらのコマンドを実行します。"
+
+#: ./doc/high-availability-guide/ha_aa_rabbitmq/section_configure_rabbitmq.xml24(simpara)
+msgid "To verify the cluster status :"
+msgstr "クラスターの状態を確認する方法:"
+
+#: ./doc/high-availability-guide/ha_aa_rabbitmq/section_configure_rabbitmq.xml29(simpara)
+msgid ""
+"If the cluster is working, you can now proceed to creating users and "
+"passwords for queues."
+msgstr "クラスターが動作していれば、キュー用のユーザーとパスワードを作成する手順に進めます。"
+
+#: ./doc/high-availability-guide/ha_aa_rabbitmq/section_configure_rabbitmq.xml31(emphasis)
+msgid "Note for RabbitMQ version 3"
+msgstr "RabbitMQ バージョン 3 の注意事項"
+
+#: ./doc/high-availability-guide/ha_aa_rabbitmq/section_configure_rabbitmq.xml33(simpara)
+msgid ""
+"Queue mirroring is no longer controlled by the <emphasis>x-ha-"
+"policy</emphasis> argument when declaring a queue. OpenStack can continue to"
+" declare this argument, but it won’t cause queues to be mirrored. We need to"
+" make sure that all queues (except those with auto-generated names) are "
+"mirrored across all running nodes:"
+msgstr "キューの宣言時、キューミラーが <emphasis>x-ha-policy</emphasis> 引数により制御されなくなりました。OpenStack がこの引数を宣言し続けますが、キューはミラーされません。すべてのキュー (自動生成された名前を除いて) が実行中の全ノードにわたり確実にミラーされる必要があります。"
+
+#: ./doc/high-availability-guide/ha_aa_rabbitmq/section_configure_rabbitmq.xml38(link)
+msgid "More information about High availability in RabbitMQ"
+msgstr "RabbitMQ の高可用性に関する詳細"
+
+#: ./doc/high-availability-guide/network/section_highly_available_neutron_metadata_agent.xml6(title)
+msgid "Highly available neutron metadata agent"
+msgstr "高可用性 Neutron Metadata Agent"
+
+#: ./doc/high-availability-guide/network/section_highly_available_neutron_metadata_agent.xml8(simpara)
+msgid ""
+"Neutron metadata agent allows Compute API metadata to be reachable by VMs on"
+" tenant networks. High availability for the metadata agent is achieved by "
+"adopting Pacemaker."
+msgstr "Neutron Metadata エージェントにより Nova API Metadata がプロジェクトのネットワークにある仮想マシンによりアクセスできるようになります。Metadata エージェントの高可用性は Pacemaker の適用により実現されます。"
+
+#: ./doc/high-availability-guide/network/section_highly_available_neutron_metadata_agent.xml12(simpara)
+msgid ""
+"Here is the <link href=\"http://docs.openstack.org/trunk/config-"
+"reference/content/networking-options-metadata.html\">documentation</link> "
+"for installing Neutron Metadata Agent."
+msgstr "ここに Neutron Metadata エージェントをインストールするための<link href=\"http://docs.openstack.org/trunk/config-reference/content/networking-options-metadata.html\">ドキュメント</link>があります。"
+
+#: ./doc/high-availability-guide/network/section_highly_available_neutron_metadata_agent.xml16(title)
+msgid "Add neutron metadata agent resource to Pacemaker"
+msgstr "Neutron Metadata Agent リソースの Pacemaker への追加"
+
+#: ./doc/high-availability-guide/network/section_highly_available_neutron_metadata_agent.xml22(simpara)
+msgid ""
+"You may now proceed with adding the Pacemaker configuration for neutron "
+"metadata agent resource. Connect to the Pacemaker cluster with <literal>crm "
 "configure</literal>, and add the following cluster resources:"
-msgstr "OpenStack RabbitMQ リソース用の Pacemaker 設定を追加して、次に進むことができます。<literal>crm configure</literal> を用いて Pacemaker クラスターに接続し、以下のクラスターリソースを追加します。"
+msgstr "OpenStack Metadata Agent リソース用の Pacemaker 設定を追加して、次に進むことができます。<literal>crm configure</literal> を用いて Pacemaker クラスターに接続し、以下のクラスターリソースを追加します。"
 
-#: ./doc/high-availability-guide/controller/section_rabbitmq.xml188(simpara)
+#: ./doc/high-availability-guide/network/section_highly_available_neutron_metadata_agent.xml32(simpara)
 msgid ""
-"<literal>p_ip_rabbitmp</literal>, a virtual IP address for use by RabbitMQ "
-"(192.168.42.100),"
-msgstr "<literal>p_ip_rabbitmp</literal>, RabbitMQ により使用される仮想 IP アドレス (192.168.42.100),"
+"<literal>p_neutron-metadata-agent</literal>, a resource for manage Neutron "
+"Metadata Agent service"
+msgstr "<literal>p_neutron-metadata-agent</literal>, Neutron Metadata Agent サービスを管理するためのリソース。"
 
-#: ./doc/high-availability-guide/controller/section_rabbitmq.xml193(simpara)
-msgid ""
-"<literal>p_fs_rabbitmq</literal>, a Pacemaker managed filesystem mounted to "
-"<literal>/var/lib/rabbitmq</literal> on whatever node currently runs the "
-"RabbitMQ service,"
-msgstr "<literal>p_fs_rabbitmq</literal>, 現在 RabbitMQ サービスを実行している、すべてのノードにおいて <literal>/var/lib/rabbitmq</literal> にマウントされている、Pacemaker が管理しているファイルシステム。"
-
-#: ./doc/high-availability-guide/controller/section_rabbitmq.xml199(simpara)
-msgid ""
-"<literal>ms_drbd_rabbitmq</literal>, the <emphasis>master/slave "
-"set</emphasis> managing the <literal>rabbitmq</literal> DRBD resource,"
-msgstr "<literal>ms_drbd_rabbitmq</literal>, <literal>rabbitmq</literal> DRBD リソースを管理している<emphasis>マスター/スレーブの組</emphasis>。"
-
-#: ./doc/high-availability-guide/controller/section_rabbitmq.xml210(simpara)
-msgid ""
-"<literal>crm configure</literal> supports batch input, so you may copy and "
-"paste the above into your live pacemaker configuration, and then make "
-"changes as required. For example, you may enter <literal>edit "
-"p_ip_rabbitmq</literal> from the <literal>crm configure</literal> menu and "
-"edit the resource to match your preferred virtual IP address."
-msgstr "<literal>crm configure</literal> はバッチ入力をサポートします。そのため、現在の pacemaker 設定の中に上をコピー・ペーストし、適宜変更を反映できます。たとえば、お好みの仮想 IP アドレスに一致させるために、<literal>crm configure</literal> メニューから <literal>edit p_ip_rabbitmq</literal> と入力し、リソースを編集できます。"
-
-#: ./doc/high-availability-guide/controller/section_rabbitmq.xml215(simpara)
+#: ./doc/high-availability-guide/network/section_highly_available_neutron_metadata_agent.xml40(simpara)
 msgid ""
 "Once completed, commit your configuration changes by entering "
 "<literal>commit</literal> from the <literal>crm configure</literal> menu. "
-"Pacemaker will then start the RabbitMQ service, and its dependent resources,"
-" on one of your nodes."
-msgstr "完了すると、<literal>crm configure</literal> メニューから <literal>commit</literal> と入力し、設定の変更をコミットします。Pacemaker は RabbitMQ サービスおよび依存するリソースを同じノードに起動します。"
+"Pacemaker will then start the neutron metadata agent service, and its "
+"dependent resources, on one of your nodes."
+msgstr "完了すると、<literal>crm configure</literal> メニューから <literal>commit</literal> と入力し、設定の変更をコミットします。Pacemaker は Neutron Metadata Agent サービスおよび依存するリソースを同じノードに起動します。"
 
-#: ./doc/high-availability-guide/controller/section_rabbitmq.xml221(title)
-msgid "Configure OpenStack services for highly available RabbitMQ"
-msgstr "高可用性 RabbitMQ のための OpenStack サービスの設定"
+#: ./doc/high-availability-guide/network/section_highly_available_neutron_l3_agent.xml6(title)
+msgid "Highly available neutron L3 agent"
+msgstr "高可用性 Neutron L3 エージェント"
 
-#: ./doc/high-availability-guide/controller/section_rabbitmq.xml223(simpara)
+#: ./doc/high-availability-guide/network/section_highly_available_neutron_l3_agent.xml8(simpara)
 msgid ""
-"Your OpenStack services must now point their RabbitMQ configuration to the "
-"highly available, virtual cluster IP address — rather than a RabbitMQ "
-"server’s physical IP address as you normally would."
-msgstr "OpenStack サービスは、通常どおり RabbitMQ サーバーの物理 IP アドレスを指定する代わりに、RabbitMQ の設定が高可用性と仮想クラスター IP アドレスを指し示す必要があります。"
+"The neutron L3 agent provides L3/NAT forwarding to ensure external network "
+"access for VMs on tenant networks. High availability for the L3 agent is "
+"achieved by adopting Pacemaker."
+msgstr "Neutron L3 エージェントは、プロジェクトのネットワークにある仮想マシンが確実に外部ネットワークにアクセスできるように、L3/NAT 転送機能を提供します。"
 
-#: ./doc/high-availability-guide/controller/section_rabbitmq.xml226(simpara)
+#: ./doc/high-availability-guide/network/section_highly_available_neutron_l3_agent.xml12(simpara)
 msgid ""
-"For OpenStack Image, for example, if your RabbitMQ service IP address is "
-"192.168.42.100 as in the configuration explained here, you would use the "
-"following line in your OpenStack Image API configuration file (<literal"
-">glance-api.conf</literal>):"
-msgstr "OpenStack Image の例として、RabbitMQ サーバーの IP アドレスがここで説明された設定にあるように 192.168.42.100 ならば、OpenStack Image API 定ファイル (<literal>glance-api.conf</literal>) で以下の行を使用する必要があります。"
+"Here is the <link href=\"http://docs.openstack.org/trunk/config-"
+"reference/content/section_adv_cfg_l3_agent.html\">documentation</link> for "
+"installing neutron L3 agent."
+msgstr "ここに Neutron L3 エージェントをインストールするための<link href=\"http://docs.openstack.org/trunk/config-reference/content/section_adv_cfg_l3_agent.html\">ドキュメント</link>があります。"
 
-#: ./doc/high-availability-guide/controller/section_rabbitmq.xml231(simpara)
+#: ./doc/high-availability-guide/network/section_highly_available_neutron_l3_agent.xml16(title)
+msgid "Add neutron L3 agent resource to Pacemaker"
+msgstr "Neutron L3 Agent リソースの Pacemaker への追加"
+
+#: ./doc/high-availability-guide/network/section_highly_available_neutron_l3_agent.xml22(simpara)
 msgid ""
-"No other changes are necessary to your OpenStack configuration. If the node "
-"currently hosting your RabbitMQ experiences a problem necessitating service "
-"failover, your OpenStack services may experience a brief RabbitMQ "
-"interruption, as they would in the event of a network hiccup, and then "
-"continue to run normally."
-msgstr "OpenStack の設定に他の変更は必要ありません。現在 RabbitMQ を稼働しているノードが、サービスのフェイルオーバーを必要とする問題に遭遇した場合、ネットワークの中断と通常どおりの動作継続により、OpenStack のサービスは MySQL の短時間の中断に遭遇するかもしれません。"
+"You may now proceed with adding the Pacemaker configuration for neutron L3 "
+"agent resource. Connect to the Pacemaker cluster with <literal>crm "
+"configure</literal>, and add the following cluster resources:"
+msgstr "Neutron L3 Agent リソース用の Pacemaker 設定を追加して、次に進むことができます。<literal>crm configure</literal> を用いて Pacemaker クラスターに接続し、以下のクラスターリソースを追加します。"
+
+#: ./doc/high-availability-guide/network/section_highly_available_neutron_l3_agent.xml32(simpara)
+msgid ""
+"<literal>p_neutron-l3-agent</literal>, a resource for manage Neutron L3 "
+"Agent service"
+msgstr "<literal>p_neutron-l3-agent</literal>, Neutron L3 Agent サービスを管理するためのリソース。"
+
+#: ./doc/high-availability-guide/network/section_highly_available_neutron_l3_agent.xml39(simpara)
+msgid ""
+"Once completed, commit your configuration changes by entering "
+"<literal>commit</literal> from the <literal>crm configure</literal> menu. "
+"Pacemaker will then start the neutron L3 agent service, and its dependent "
+"resources, on one of your nodes."
+msgstr "完了すると、<literal>crm configure</literal> メニューから <literal>commit</literal> と入力し、設定の変更をコミットします。Pacemaker は Neutron L3 Agent サービスおよび依存するリソースを同じノードに起動します。"
+
+#: ./doc/high-availability-guide/network/section_highly_available_neutron_l3_agent.xml43(simpara)
+msgid ""
+"This method does not ensure a zero downtime since it has to recreate all the"
+" namespaces and virtual routers on the node."
+msgstr "この方法は、ノードですべての名前空間と仮想ルーターを再作成する必要があるため、無停止を保証しません。"
+
+#: ./doc/high-availability-guide/network/section_manage_network_resources.xml6(title)
+msgid "Manage network resources"
+msgstr "ネットワークリソースの管理"
+
+#: ./doc/high-availability-guide/network/section_manage_network_resources.xml8(simpara)
+msgid ""
+"You can now add the Pacemaker configuration for managing all network "
+"resources together with a group. Connect to the Pacemaker cluster with "
+"<literal>crm configure</literal>, and add the following cluster resources:"
+msgstr "すべてのネットワークリソースをグループと一緒に管理するための Pacemaker 設定を追加できます。<literal>crm configure</literal> を用いて Pacemaker クラスターに接続し、以下のクラスターリソースを追加します。"
+
+#: ./doc/high-availability-guide/network/section_highly_available_neutron_dhcp_agent.xml6(title)
+msgid "Highly available neutron DHCP agent"
+msgstr "高可用性 Neutron DHCP Agent"
+
+#: ./doc/high-availability-guide/network/section_highly_available_neutron_dhcp_agent.xml8(simpara)
+msgid ""
+"Neutron DHCP agent distributes IP addresses to the VMs with dnsmasq (by "
+"default). High availability for the DHCP agent is achieved by adopting "
+"Pacemaker."
+msgstr "Neutron DHCP エージェントは (デフォルトで) dnsmasq を用いて仮想マシンに IP アドレスを配布します。DHCP エージェントの高可用性は Pacemaker の適用により実現されます。"
+
+#: ./doc/high-availability-guide/network/section_highly_available_neutron_dhcp_agent.xml12(simpara)
+msgid ""
+"Here is the <link href=\"http://docs.openstack.org/trunk/config-"
+"reference/content/section_adv_cfg_dhcp_agent.html\">documentation</link> for"
+" installing neutron DHCP agent."
+msgstr "ここに Neutron DHCP エージェントをインストールするための<link href=\"http://docs.openstack.org/trunk/config-reference/content/section_adv_cfg_dhcp_agent.html\">ドキュメント</link>があります。"
+
+#: ./doc/high-availability-guide/network/section_highly_available_neutron_dhcp_agent.xml16(title)
+msgid "Add neutron DHCP agent resource to Pacemaker"
+msgstr "Neutron DHCP Agent リソースの Pacemaker への追加"
+
+#: ./doc/high-availability-guide/network/section_highly_available_neutron_dhcp_agent.xml22(simpara)
+msgid ""
+"You may now proceed with adding the Pacemaker configuration for neutron DHCP"
+" agent resource. Connect to the Pacemaker cluster with <literal>crm "
+"configure</literal>, and add the following cluster resources:"
+msgstr "OpenStack DHCP Agent リソース用の Pacemaker 設定を追加して、次に進むことができます。<literal>crm configure</literal> を用いて Pacemaker クラスターに接続し、以下のクラスターリソースを追加します。"
+
+#: ./doc/high-availability-guide/network/section_highly_available_neutron_dhcp_agent.xml32(simpara)
+msgid ""
+"<literal>p_neutron-dhcp-agent</literal>, a resource for manage Neutron DHCP "
+"Agent service"
+msgstr "<literal>p_neutron-dhcp-agent</literal>, Neutron DHCP Agent サービスを管理するためのリソース。"
+
+#: ./doc/high-availability-guide/network/section_highly_available_neutron_dhcp_agent.xml40(simpara)
+msgid ""
+"Once completed, commit your configuration changes by entering "
+"<literal>commit</literal> from the <literal>crm configure</literal> menu. "
+"Pacemaker will then start the neutron DHCP agent service, and its dependent "
+"resources, on one of your nodes."
+msgstr "完了すると、<literal>crm configure</literal> メニューから <literal>commit</literal> と入力し、設定の変更をコミットします。Pacemaker は Neutron DHCP Agent サービスおよび依存するリソースを同じノードに起動します。"
 
 #. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
-#: ./doc/high-availability-guide/controller/section_rabbitmq.xml0(None)
+#: ./doc/high-availability-guide/network/section_highly_available_neutron_dhcp_agent.xml0(None)
 msgid "translator-credits"
 msgstr "Tomoyuki KATO <tomo@dream.daynight.jp>, 2012-2014"

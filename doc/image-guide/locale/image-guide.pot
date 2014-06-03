@@ -1,13 +1,141 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-05-16 06:34+0000\n"
+"POT-Creation-Date: 2014-06-03 06:11+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: ./doc/image-guide/section_windows-example.xml:8(title)
+msgid "Example: Microsoft Windows image"
+msgstr ""
+
+#: ./doc/image-guide/section_windows-example.xml:9(para)
+msgid "We do not yet have a fully documented example of how to create a Microsoft Windows image. You can use libvirt to install Windows from an installation DVD using the same approach as with the CentOS and Ubuntu examples. Once the initial install is done, you will need to perform some Windows-specific customizations."
+msgstr ""
+
+#: ./doc/image-guide/section_windows-example.xml:14(title)
+msgid "Install VirtIO drivers"
+msgstr ""
+
+#: ./doc/image-guide/section_windows-example.xml:15(para)
+msgid "Installing the <link href=\"http://www.linux-kvm.org/page/WindowsGuestDrivers/Download_Drivers\">VirtIO paravirtualizaion drivers for Windows</link> will improve virtual machine performance when using KVM as the hypervisor to run Windows."
+msgstr ""
+
+#: ./doc/image-guide/section_windows-example.xml:20(title)
+msgid "Sysprep"
+msgstr ""
+
+#: ./doc/image-guide/section_windows-example.xml:21(para)
+msgid "Microsoft has a special tool called <link href=\"http://technet.microsoft.com/en-us/library/cc766049(v=ws.10).aspx\">Sysprep</link> that must be run inside of a Windows guest to prepare it for use as a virtual machine image. On Windows 2012 server, invoke sysprep, as follows: <placeholder-1/>"
+msgstr ""
+
+#: ./doc/image-guide/section_windows-example.xml:28(title)
+msgid "cloudbase-init"
+msgstr ""
+
+#: ./doc/image-guide/section_windows-example.xml:29(para)
+msgid "<link href=\"http://www.cloudbase.it/cloud-init-for-windows-instances/\">cloudbase-init</link> is a Windows port of cloud-init that should be installed inside of the guest. The <link href=\"https://github.com/cloudbase/cloudbase-init\">source code</link> is available on github."
+msgstr ""
+
+#: ./doc/image-guide/section_windows-example.xml:35(title)
+msgid "Jordan Rinke's OpenStack Windows resources"
+msgstr ""
+
+#: ./doc/image-guide/section_windows-example.xml:36(para)
+msgid "Jordan Rinke maintains <link href=\"https://github.com/jordanrinke/openstack\">a collection of resources</link> for managing OpenStack Windows virtual machine guests."
+msgstr ""
+
+#: ./doc/image-guide/section_windows-example.xml:41(title)
+msgid "Windows instances require the timezone to be \"localtime\""
+msgstr ""
+
+#: ./doc/image-guide/section_windows-example.xml:42(para)
+msgid "When uploading Windows images, you must set the <literal>os_type</literal> parameter to <literal>windows</literal>, which causes instances to use the local time zone. Failing to set this will cause the clock timezone to be UTC, which has unexpected side effects in Windows."
+msgstr ""
+
+#: ./doc/image-guide/section_glance_image-formats.xml:6(title)
+msgid "Disk and container formats for images"
+msgstr ""
+
+#: ./doc/image-guide/section_glance_image-formats.xml:8(para)
+msgid "When you add an image to the Image Service, you can specify its disk and container formats."
+msgstr ""
+
+#: ./doc/image-guide/section_glance_image-formats.xml:11(title)
+msgid "Disk formats"
+msgstr ""
+
+#: ./doc/image-guide/section_glance_image-formats.xml:12(para)
+msgid "The disk format of a virtual machine image is the format of the underlying disk image. Virtual appliance vendors have different formats for laying out the information contained in a virtual machine disk image."
+msgstr ""
+
+#: ./doc/image-guide/section_glance_image-formats.xml:16(para)
+msgid "Set the disk format for your image to one of the following values:"
+msgstr ""
+
+#: ./doc/image-guide/section_glance_image-formats.xml:20(para)
+msgid "<literal>raw</literal>. An unstructured disk image format; if you have a file without an extension it is possibly a raw format"
+msgstr ""
+
+#: ./doc/image-guide/section_glance_image-formats.xml:25(para)
+msgid "<literal>vhd</literal>. The VHD disk format, a common disk format used by virtual machine monitors from VMWare, Xen, Microsoft, VirtualBox, and others"
+msgstr ""
+
+#: ./doc/image-guide/section_glance_image-formats.xml:31(para)
+msgid "<literal>vmdk</literal>. Common disk format supported by many common virtual machine monitors"
+msgstr ""
+
+#: ./doc/image-guide/section_glance_image-formats.xml:36(para)
+msgid "<literal>vdi</literal>. Supported by VirtualBox virtual machine monitor and the QEMU emulator"
+msgstr ""
+
+#: ./doc/image-guide/section_glance_image-formats.xml:41(para)
+msgid "<literal>iso</literal>. An archive format for the data contents of an optical disc, such as CD-ROM."
+msgstr ""
+
+#: ./doc/image-guide/section_glance_image-formats.xml:46(para)
+msgid "<literal>qcow2</literal>. Supported by the QEMU emulator that can expand dynamically and supports Copy on Write"
+msgstr ""
+
+#: ./doc/image-guide/section_glance_image-formats.xml:51(para) ./doc/image-guide/section_glance_image-formats.xml:87(para)
+msgid "<literal>aki</literal>. An Amazon kernel image."
+msgstr ""
+
+#: ./doc/image-guide/section_glance_image-formats.xml:55(para) ./doc/image-guide/section_glance_image-formats.xml:91(para)
+msgid "<literal>ari</literal>. An Amazon ramdisk image."
+msgstr ""
+
+#: ./doc/image-guide/section_glance_image-formats.xml:59(para) ./doc/image-guide/section_glance_image-formats.xml:95(para)
+msgid "<literal>ami</literal>. An Amazon machine image."
+msgstr ""
+
+#: ./doc/image-guide/section_glance_image-formats.xml:65(title)
+msgid "Container formats"
+msgstr ""
+
+#: ./doc/image-guide/section_glance_image-formats.xml:66(para)
+msgid "The container format indicates whether the virtual machine image is in a file format that also contains metadata about the actual virtual machine."
+msgstr ""
+
+#: ./doc/image-guide/section_glance_image-formats.xml:70(para)
+msgid "The Image Service and other OpenStack projects do not currently support the container format. It is safe to specify <literal>bare</literal> as the container format if you are unsure."
+msgstr ""
+
+#: ./doc/image-guide/section_glance_image-formats.xml:75(para)
+msgid "You can set the container format for your image to one of the following values:"
+msgstr ""
+
+#: ./doc/image-guide/section_glance_image-formats.xml:79(para)
+msgid "<literal>bare</literal>. The image does not have a container or metadata envelope."
+msgstr ""
+
+#: ./doc/image-guide/section_glance_image-formats.xml:83(para)
+msgid "<literal>ovf</literal>. The OVF container format."
+msgstr ""
 
 #: ./doc/image-guide/ch_modifying_images.xml:10(title)
 msgid "Modify images"
@@ -239,6 +367,254 @@ msgstr ""
 
 #: ./doc/image-guide/ch_modifying_images.xml:387(para)
 msgid "When you're done, clean up:<placeholder-1/>"
+msgstr ""
+
+#: ./doc/image-guide/section_freebsd-example.xml:8(title)
+msgid "Example: FreeBSD image"
+msgstr ""
+
+#: ./doc/image-guide/section_freebsd-example.xml:9(para)
+msgid "We do not yet have a fully documented example of how to create a FreeBSD image."
+msgstr ""
+
+#: ./doc/image-guide/section_freebsd-example.xml:11(para)
+msgid "See the <link href=\"http://pellaeon.github.io/bsd-cloudinit/\">bsd-cloudinit</link> project for information on how to build a FreeBSD VM image that works with OpenStack."
+msgstr ""
+
+#: ./doc/image-guide/ch_converting.xml:4(title)
+msgid "Converting between image formats"
+msgstr ""
+
+#: ./doc/image-guide/ch_converting.xml:5(para)
+msgid "Converting images from one format to another is generally straightforward."
+msgstr ""
+
+#: ./doc/image-guide/ch_converting.xml:7(title)
+msgid "qemu-img convert: raw, qcow2, VDI, VMDK"
+msgstr ""
+
+#: ./doc/image-guide/ch_converting.xml:8(para)
+msgid "The <placeholder-1/> command can do conversion between multiple formats, including raw, qcow2, VDI (VirtualBox), VMDK (VMWare) and VHD (Hyper-V)."
+msgstr ""
+
+#: ./doc/image-guide/ch_converting.xml:12(caption)
+msgid "qemu-img format strings"
+msgstr ""
+
+#: ./doc/image-guide/ch_converting.xml:16(th)
+msgid "Image format"
+msgstr ""
+
+#: ./doc/image-guide/ch_converting.xml:17(th)
+msgid "Argument to qemu-img"
+msgstr ""
+
+#: ./doc/image-guide/ch_converting.xml:22(td) ./doc/image-guide/ch_converting.xml:23(literal)
+msgid "raw"
+msgstr ""
+
+#: ./doc/image-guide/ch_converting.xml:26(td) ./doc/image-guide/ch_converting.xml:27(literal) ./doc/image-guide/ch_introduction.xml:32(term)
+msgid "qcow2"
+msgstr ""
+
+#: ./doc/image-guide/ch_converting.xml:30(td)
+msgid "VDI (VirtualBox)"
+msgstr ""
+
+#: ./doc/image-guide/ch_converting.xml:31(literal)
+msgid "vdi"
+msgstr ""
+
+#: ./doc/image-guide/ch_converting.xml:34(td)
+msgid "VMDK (VMWare)"
+msgstr ""
+
+#: ./doc/image-guide/ch_converting.xml:35(literal)
+msgid "vmdk"
+msgstr ""
+
+#: ./doc/image-guide/ch_converting.xml:38(td)
+msgid "VHD (Hyper-V)"
+msgstr ""
+
+#: ./doc/image-guide/ch_converting.xml:39(literal)
+msgid "vpc"
+msgstr ""
+
+#: ./doc/image-guide/ch_converting.xml:43(para)
+msgid "This example will convert a raw image file named centos63.dsk to a qcow2 image file."
+msgstr ""
+
+#: ./doc/image-guide/ch_converting.xml:47(para)
+msgid "To convert from vmdk to raw, you would do: <placeholder-1/>"
+msgstr ""
+
+#: ./doc/image-guide/ch_converting.xml:51(para)
+msgid "The <literal>-f <replaceable>format</replaceable></literal> flag is optional. If omitted, qemu-img will try to infer the image format."
+msgstr ""
+
+#: ./doc/image-guide/ch_converting.xml:57(title)
+msgid "VBoxManage: VDI (VirtualBox) to raw"
+msgstr ""
+
+#: ./doc/image-guide/ch_converting.xml:58(para)
+msgid "If you've created a VDI image using VirtualBox, you can convert it to raw format using the <placeholder-1/> command-line tool that ships with VirtualBox. On Mac OS X, VirtualBox stores images by default in the <filename>~/VirtualBox VMs/</filename> directory. The following example creates a raw image in the current directory from a VirtualBox VDI image.<placeholder-2/>"
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml:6(title)
+msgid "Introduction"
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml:7(para)
+msgid "An OpenStack Compute cloud is not very useful unless you have virtual machine images (which some people call \"virtual appliances\"). This guide describes how to obtain, create, and modify virtual machine images that are compatible with OpenStack."
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml:10(para)
+msgid "To keep things brief, we'll sometimes use the term \"image\" instead of \"virtual machine image\"."
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml:12(para)
+msgid "What is a virtual machine image?"
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml:13(para)
+msgid "A virtual machine image is a single file which contains a virtual disk that has a bootable operating system installed on it."
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml:15(para)
+msgid "Virtual machine images come in different formats, some of which are described below. In a later chapter, we'll describe how to convert between formats."
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml:19(term)
+msgid "Raw"
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml:26(para)
+msgid "We don't recommend creating raw images by dd'ing block device files, we discuss how to create raw images later."
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml:20(para)
+msgid "The \"raw\" image format is the simplest one, and is natively supported by both KVM and Xen hypervisors. You can think of a raw image as being the bit-equivalent of a block device file, created as if somebody had copied, say, <filename>/dev/sda</filename> to a file using the <placeholder-1/> command. <placeholder-2/>"
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml:37(para)
+msgid "Using sparse representation, so the image size is smaller"
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml:40(para)
+msgid "Support for snapshots"
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml:33(para)
+msgid "The <link href=\"http://en.wikibooks.org/wiki/QEMU/Images\">qcow2</link> (QEMU copy-on-write version 2) format is commonly used with the KVM hypervisor. It has some additional features over the raw format, such as:<placeholder-1/>"
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml:43(para)
+msgid "Because qcow2 is sparse, it's often faster to convert a raw image to qcow2 and upload it then to upload the raw file."
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml:47(para)
+msgid "Because raw images don't support snapshots, OpenStack Compute will automatically convert raw image files to qcow2 as needed."
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml:53(term)
+msgid "AMI/AKI/ARI"
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml:59(para)
+msgid "AMI (Amazon Machine Image):"
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml:60(para)
+msgid "This is a virtual machine image in raw format, as described above."
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml:64(para)
+msgid "AKI (Amazon Kernel Image)"
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml:65(para)
+msgid "A kernel file that the hypervisor will load initially to boot the image. For a Linux machine, this would be a <emphasis>vmlinuz</emphasis> file."
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml:72(para)
+msgid "ARI (Amazon Ramdisk Image)"
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml:73(para)
+msgid "An optional ramdisk file mounted at boot time. For a Linux machine, this would be an <emphasis>initrd</emphasis> file."
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml:54(para)
+msgid "The <link href=\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html\">AMI/AKI/ARI </link>format was the initial image format supported by Amazon EC2. The image consists of three files:<placeholder-1/>"
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml:81(term)
+msgid "UEC tarball"
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml:84(para)
+msgid "Ubuntu Enterprise Cloud refers to a discontinued Eucalyptus-based Ubuntu cloud solution that has been replaced by the OpenStack-based Ubuntu Cloud Infrastructure."
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml:82(para)
+msgid "A UEC (Ubuntu Enterprise Cloud) tarball is a gzipped tarfile that contains an AMI file, AKI file, and ARI file.<placeholder-1/>"
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml:90(term)
+msgid "VMDK"
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml:91(para)
+msgid "VMWare's ESXi hypervisor uses the <link href=\"http://www.vmware.com/technical-resources/interfaces/vmdk.html\">VMDK</link> (Virtual Machine Disk) format for images."
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml:96(term)
+msgid "VDI"
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml:97(para)
+msgid "VirtualBox uses the <link href=\"https://forums.virtualbox.org/viewtopic.php?t=8046\">VDI</link> (Virtual Disk Image) format for image files. None of the OpenStack Compute hypervisors support VDI directly, so you will need to convert these files to a different format to use them with OpenStack."
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml:104(term)
+msgid "VHD"
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml:105(para)
+msgid "Microsoft Hyper-V uses the VHD (Virtual Hard Disk) format for images."
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml:108(term)
+msgid "VHDX"
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml:109(para)
+msgid "The version of Hyper-V that ships with Microsoft Server 2012 uses the newer <link href=\"http://technet.microsoft.com/en-us/library/hh831446.aspx\">VHDX</link> format, which has some additional features over VHD such as support for larger disk sizes and protection against data corruption during power failures."
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml:115(term)
+msgid "OVF"
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml:116(para)
+msgid "<link href=\"http://www.dmtf.org/standards/ovf\">OVF</link> (Open Virtualization Format) is a packaging format for virtual machines, defined by the Distributed Management Task Force (DMTF) standards group. An OVF package contains one or more image files, a .ovf XML metadata file that contains information about the virtual machine, and possibly other files as well."
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml:121(para)
+msgid "An OVF package can be distributed in different ways. For example, it could be distributed as a set of discrete files, or as a tar archive file with an .ova (open virtual appliance/application) extension."
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml:124(para)
+msgid "OpenStack Compute does not currently have support for OVF packages, so you will need to extract the image file(s) from an OVF package if you wish to use it with OpenStack."
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml:129(term)
+msgid "ISO"
+msgstr ""
+
+#: ./doc/image-guide/ch_introduction.xml:130(para)
+msgid "The <link href=\"http://www.ecma-international.org/publications/standards/Ecma-119.htm\">ISO</link> format is a disk image formatted with the read-only ISO 9660 (also known as ECMA-119) filesystem commonly used for CDs and DVDs. While we don't normally think of ISO as a virtual machine image format, since ISOs contain bootable filesystems with an installed operating system, you can treat them the same as you treat other virtual machine image files."
 msgstr ""
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
@@ -615,6 +991,214 @@ msgstr ""
 msgid "Initial release of this guide."
 msgstr ""
 
+#: ./doc/image-guide/ch_creating_images_automatically.xml:6(title)
+msgid "Tool support for image creation"
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_automatically.xml:8(para)
+msgid "There are several tools that are designed to automate image creation."
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_automatically.xml:11(title)
+msgid "Oz"
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_automatically.xml:22(para)
+msgid "As of this writing, there are no Oz packages for Ubuntu, so you will need to either install from source or build your own .deb file."
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_automatically.xml:12(para)
+msgid "<link href=\"https://github.com/clalancette/oz/wiki\">Oz</link> is a command-line tool that automates the process of creating a virtual machine image file. Oz is a Python app that interacts with KVM to step through the process of installing a virtual machine. It uses a predefined set of kickstart (Red Hat-based systems) and preseed files (Debian-based systems) for operating systems that it supports, and it can also be used to create Microsoft Windows images. On Fedora, install Oz with yum:<placeholder-1/><placeholder-2/>"
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_automatically.xml:26(para)
+msgid "A full treatment of Oz is beyond the scope of this document, but we will provide an example. You can find additional examples of Oz template files on github at <link href=\"https://github.com/rackerjoe/oz-image-build/tree/master/templates\">rackerjoe/oz-image-build/templates</link>. Here's how you would create a CentOS 6.4 image with Oz."
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_automatically.xml:33(para)
+msgid "Create a template file (we'll call it <filename>centos64.tdl</filename>) with the following contents. The only entry you will need to change is the <literal>&lt;rootpw&gt;</literal> contents.<placeholder-1/>"
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_automatically.xml:71(para)
+msgid "This Oz template specifies where to download the Centos 6.4 install ISO. Oz will use the version information to identify which kickstart file to use. In this case, it will be <link href=\"https://github.com/clalancette/oz/blob/master/oz/auto/RHEL6.auto\">RHEL6.auto</link>. It adds EPEL as a repository and install the <literal>epel-release</literal>, <literal>cloud-utils</literal>, and <literal>cloud-init</literal> packages, as specified in the <literal>packages</literal> section of the file."
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_automatically.xml:82(para)
+msgid "After Oz does the initial OS install using the kickstart file, it customizes the image by doing an update. It also removes any reference to the eth0 device that libvirt creates while Oz does the customizing, as specified in the <literal>command</literal> section of the XML file."
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_automatically.xml:88(para)
+msgid "To run this, do, as root:"
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_automatically.xml:91(para)
+msgid "The <literal>-d3</literal> flag tells Oz to show status information as it runs."
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_automatically.xml:95(para)
+msgid "The <literal>-u</literal> tells Oz to do the customization (install extra packages, run the commands) once it does the initial install."
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_automatically.xml:101(para)
+msgid "The <literal>-x &lt;filename&gt;</literal> flag tells Oz what filename to use to write out a libvirt XML file (otherwise it will default to something like <filename>centos64Apr_03_2013-12:39:42</filename>."
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_automatically.xml:89(para)
+msgid "<placeholder-1/><placeholder-2/>If you leave out the <literal>-u</literal> flag, or you want to edit the file to do additional customizations, you can use the <placeholder-3/> command, using the libvirt XML file that <placeholder-4/> creates. For example: <placeholder-5/> Oz will invoke libvirt to boot the image inside of KVM, then Oz will ssh into the instance and perform the customizations."
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_automatically.xml:119(title)
+msgid "VMBuilder"
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_automatically.xml:120(para)
+msgid "<link href=\"https://launchpad.net/vmbuilder\">VMBuilder</link> (Virtual Machine Builder) is a command-line tool that creates virtual machine images for different hypervisors. The version of VMBuilder that ships with Ubuntu can only create Ubuntu virtual machine guests. The version of VMBuilder that ships with Debian can create Ubuntu and Debian virtual machine guests."
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_automatically.xml:127(para)
+msgid "The <link href=\"https://help.ubuntu.com/12.04/serverguide/jeos-and-vmbuilder.html\"><citetitle>Ubuntu Server Guide</citetitle></link> has documentation on how to use VMBuilder to create an Ubuntu image."
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_automatically.xml:134(title)
+msgid "BoxGrinder"
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_automatically.xml:135(para)
+msgid "<link href=\"http://boxgrinder.org/\">BoxGrinder</link> is another tool for creating virtual machine images, which it calls appliances. BoxGrinder can create Fedora, Red Hat Enterprise Linux, or CentOS images. BoxGrinder is currently only supported on Fedora."
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_automatically.xml:144(title)
+msgid "VeeWee"
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_automatically.xml:145(para)
+msgid "<link href=\"https://github.com/jedi4ever/veewee\"> VeeWee</link> is often used to build <link href=\"http://vagrantup.com\">Vagrant</link> boxes, but it can also be used to build KVM images."
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_automatically.xml:151(title)
+msgid "Packer"
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_automatically.xml:152(para)
+msgid "<link href=\"http://www.packer.io/\"> Packer</link> is a tool for creating machine images for multiple platforms from a single source configuration."
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_automatically.xml:158(title)
+msgid "imagefactory"
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_automatically.xml:159(para)
+msgid "<link href=\"http://imgfac.org/\">imagefactory</link> is a newer tool designed to automate the building, converting, and uploading images to different cloud providers. It uses Oz as its back-end and includes support for OpenStack-based clouds."
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_automatically.xml:166(title)
+msgid "SUSE Studio"
+msgstr ""
+
+#: ./doc/image-guide/ch_creating_images_automatically.xml:167(para)
+msgid "<link href=\"http://susestudio.com\">SUSE Studio</link> is a web application for building and testing software applications in a web browser. It supports the creation of physical, virtual or cloud-based applications and includes support for building images for OpenStack based clouds using SUSE Linux Enterprise and openSUSE as distributions."
+msgstr ""
+
+#: ./doc/image-guide/ch_obtaining_images.xml:6(title)
+msgid "Get images"
+msgstr ""
+
+#: ./doc/image-guide/ch_obtaining_images.xml:8(para)
+msgid "The simplest way to obtain a virtual machine image that works with OpenStack is to download one that someone else has already created."
+msgstr ""
+
+#: ./doc/image-guide/ch_obtaining_images.xml:11(title)
+msgid "CirrOS (test) images"
+msgstr ""
+
+#: ./doc/image-guide/ch_obtaining_images.xml:12(para)
+msgid "CirrOS is a minimal Linux distribution that was designed for use as a test image on clouds such as OpenStack Compute. You can download a CirrOS image in various formats from the <link href=\"https://launchpad.net/cirros/+download\">CirrOS Launchpad download page</link>."
+msgstr ""
+
+#: ./doc/image-guide/ch_obtaining_images.xml:21(para)
+msgid "In a CirrOS image, the login account is <literal>cirros</literal>. The password is <literal>cubswin:)</literal>"
+msgstr ""
+
+#: ./doc/image-guide/ch_obtaining_images.xml:16(para)
+msgid "If your deployment uses QEMU or KVM, we recommend using the images in qcow2 format. The most recent 64-bit qcow2 image as of this writing is <link href=\"http://download.cirros-cloud.net/0.3.2/cirros-0.3.2-x86_64-disk.img\">cirros-0.3.2-x86_64-disk.img</link><placeholder-1/>"
+msgstr ""
+
+#: ./doc/image-guide/ch_obtaining_images.xml:27(title)
+msgid "Official Ubuntu images"
+msgstr ""
+
+#: ./doc/image-guide/ch_obtaining_images.xml:28(para)
+msgid "Canonical maintains an <link href=\"http://cloud-images.ubuntu.com/\">official set of Ubuntu-based images</link>."
+msgstr ""
+
+#: ./doc/image-guide/ch_obtaining_images.xml:30(para)
+msgid "Images are arranged by Ubuntu release, and by image release date, with \"current\" being the most recent. For example, the page that contains the most recently built image for Ubuntu 12.04 \"Precise Pangolin\" is <link href=\"http://cloud-images.ubuntu.com/precise/current/\">http://cloud-images.ubuntu.com/precise/current/</link>. Scroll to the bottom of the page for links to images that can be downloaded directly."
+msgstr ""
+
+#: ./doc/image-guide/ch_obtaining_images.xml:40(para)
+msgid "In an Ubuntu cloud image, the login account is <literal>ubuntu</literal>."
+msgstr ""
+
+#: ./doc/image-guide/ch_obtaining_images.xml:36(para)
+msgid "If your deployment uses QEMU or KVM, we recommend using the images in qcow2 format. The most recent version of the 64-bit QCOW2 image for Ubuntu 12.04 is <link href=\"http://uec-images.ubuntu.com/precise/current/precise-server-cloudimg-amd64-disk1.img\">precise-server-cloudimg-amd64-disk1.img</link>.<placeholder-1/>"
+msgstr ""
+
+#: ./doc/image-guide/ch_obtaining_images.xml:45(title)
+msgid "Official Red Hat Enterprise Linux images"
+msgstr ""
+
+#: ./doc/image-guide/ch_obtaining_images.xml:46(para)
+msgid "Red Hat maintains an official Red Hat Enterprise Linux 6 cloud image. A valid Red Hat Enterprise Linux 6 subscription is required to download the <link href=\"https://rhn.redhat.com/rhn/software/channel/downloads/Download.do?cid=16952\">KVM Guest Image</link>."
+msgstr ""
+
+#: ./doc/image-guide/ch_obtaining_images.xml:53(para)
+msgid "A <link href=\"https://rhn.redhat.com/rhn/software/channel/downloads/Download.do?cid=10486\">boot.iso</link> image is also available. This is the same as the <literal>boot.iso</literal> file provided on the Red Hat Enterprise Linux installation DVD. It is a minimal image suitable for kickstarting operating system installation over a network."
+msgstr ""
+
+#: ./doc/image-guide/ch_obtaining_images.xml:63(title)
+msgid "Official Fedora images"
+msgstr ""
+
+#: ./doc/image-guide/ch_obtaining_images.xml:64(para)
+msgid "The Fedora project maintains a list of official cloud images at <link href=\"http://cloud.fedoraproject.org/\"/>. The images include the <systemitem class=\"process\">cloud-init</systemitem> utility to support key and user data injection. The default user name is <systemitem class=\"username\">fedora</systemitem>."
+msgstr ""
+
+#: ./doc/image-guide/ch_obtaining_images.xml:72(title)
+msgid "Official openSUSE and SLES images"
+msgstr ""
+
+#: ./doc/image-guide/ch_obtaining_images.xml:73(para)
+msgid "SUSE does not provide openSUSE or SUSE Linux Enterprise Server (SLES) images for direct download. Instead, they provide a web-based tool called <link href=\"http://susestudio.com\">SUSE Studio</link> that you can use to build openSUSE and SLES images."
+msgstr ""
+
+#: ./doc/image-guide/ch_obtaining_images.xml:79(para)
+msgid "For example, Christian Berendt used <link href=\"http://www.opensuse.org\">openSUSE</link> to create <link href=\"http://susestudio.com/a/YRUrwO/testing-instance-for-openstack-opensuse-12-3\"> a test openSUSE 12.3 image</link>."
+msgstr ""
+
+#: ./doc/image-guide/ch_obtaining_images.xml:84(title)
+msgid "Official images from other Linux distributions"
+msgstr ""
+
+#: ./doc/image-guide/ch_obtaining_images.xml:85(para)
+msgid "As of this writing, we are not aware of other distributions that provide images for download."
+msgstr ""
+
+#: ./doc/image-guide/ch_obtaining_images.xml:88(title)
+msgid "Rackspace Cloud Builders (multiple distros) images"
+msgstr ""
+
+#: ./doc/image-guide/ch_obtaining_images.xml:90(para)
+msgid "Rackspace Cloud Builders maintains a list of pre-built images from various distributions (Red Hat, CentOS, Fedora, Ubuntu). Links to these images can be found at <link href=\"https://github.com/rackerjoe/oz-image-build\">rackerjoe/oz-image-build on Github</link>."
+msgstr ""
+
+#: ./doc/image-guide/ch_obtaining_images.xml:96(title)
+msgid "Microsoft Windows images"
+msgstr ""
+
+#: ./doc/image-guide/ch_obtaining_images.xml:97(para)
+msgid "Cloudbase Solutions hosts an <link href=\"http://www.cloudbase.it/ws2012/\">OpenStack Windows Server 2012 Standard Evaluation image</link> that runs on Hyper-V, KVM, and XenServer/XCP."
+msgstr ""
+
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
 #: ./doc/image-guide/section_ubuntu-example.xml:50(None)
@@ -759,272 +1343,36 @@ msgstr ""
 msgid "The underlying image file that you created with <placeholder-1/>, such as <filename>/tmp/precise.qcow2</filename>, is now ready for uploading to the OpenStack Image Service."
 msgstr ""
 
-#: ./doc/image-guide/ch_introduction.xml:6(title)
-msgid "Introduction"
+#: ./doc/image-guide/section_glance-image-metadata.xml:7(title)
+msgid "Image metadata"
 msgstr ""
 
-#: ./doc/image-guide/ch_introduction.xml:7(para)
-msgid "An OpenStack Compute cloud is not very useful unless you have virtual machine images (which some people call \"virtual appliances\"). This guide describes how to obtain, create, and modify virtual machine images that are compatible with OpenStack."
+#: ./doc/image-guide/section_glance-image-metadata.xml:9(para)
+msgid "Image metadata can help end users determine the nature of an image, and is used by associated OpenStack components and drivers which interface with the Image Service."
 msgstr ""
 
-#: ./doc/image-guide/ch_introduction.xml:10(para)
-msgid "To keep things brief, we'll sometimes use the term \"image\" instead of \"virtual machine image\"."
+#: ./doc/image-guide/section_glance-image-metadata.xml:11(para)
+msgid "Metadata can also determine the scheduling of hosts. If the <option>property</option> option is set on an image, and Compute is configured so that the <systemitem>ImagePropertiesFilter</systemitem> scheduler filter is enabled (default), then the scheduler only considers compute hosts that satisfy that property."
 msgstr ""
 
-#: ./doc/image-guide/ch_introduction.xml:12(para)
-msgid "What is a virtual machine image?"
+#: ./doc/image-guide/section_glance-image-metadata.xml:15(para)
+msgid "Compute's <systemitem>ImagePropertiesFilter</systemitem> value is specified in the <option>scheduler_default_filter</option> value in the <filename>/etc/nova/nova.conf</filename> file."
 msgstr ""
 
-#: ./doc/image-guide/ch_introduction.xml:13(para)
-msgid "A virtual machine image is a single file which contains a virtual disk that has a bootable operating system installed on it."
+#: ./doc/image-guide/section_glance-image-metadata.xml:18(para)
+msgid "You can add metadata to Image Service images by using the <option>--property <replaceable>key</replaceable>=<replaceable>value</replaceable></option> option with the <placeholder-1/> or <placeholder-2/> command. More than one property can be specified. For example:"
 msgstr ""
 
-#: ./doc/image-guide/ch_introduction.xml:15(para)
-msgid "Virtual machine images come in different formats, some of which are described below. In a later chapter, we'll describe how to convert between formats."
+#: ./doc/image-guide/section_glance-image-metadata.xml:22(replaceable)
+msgid "img-uuid"
 msgstr ""
 
-#: ./doc/image-guide/ch_introduction.xml:19(term)
-msgid "Raw"
+#: ./doc/image-guide/section_glance-image-metadata.xml:23(para)
+msgid "Common image properties are also specified in the <filename>/etc/glance/schema-image.json</filename> file. For a complete list of valid property keys and values, refer to the <link href=\"http://docs.openstack.org/cli-reference/content/\"><citetitle>OpenStack Command-Line Reference</citetitle></link>."
 msgstr ""
 
-#: ./doc/image-guide/ch_introduction.xml:26(para)
-msgid "We don't recommend creating raw images by dd'ing block device files, we discuss how to create raw images later."
-msgstr ""
-
-#: ./doc/image-guide/ch_introduction.xml:20(para)
-msgid "The \"raw\" image format is the simplest one, and is natively supported by both KVM and Xen hypervisors. You can think of a raw image as being the bit-equivalent of a block device file, created as if somebody had copied, say, <filename>/dev/sda</filename> to a file using the <placeholder-1/> command. <placeholder-2/>"
-msgstr ""
-
-#: ./doc/image-guide/ch_introduction.xml:32(term) ./doc/image-guide/ch_converting.xml:26(td) ./doc/image-guide/ch_converting.xml:27(literal)
-msgid "qcow2"
-msgstr ""
-
-#: ./doc/image-guide/ch_introduction.xml:37(para)
-msgid "Using sparse representation, so the image size is smaller"
-msgstr ""
-
-#: ./doc/image-guide/ch_introduction.xml:40(para)
-msgid "Support for snapshots"
-msgstr ""
-
-#: ./doc/image-guide/ch_introduction.xml:33(para)
-msgid "The <link href=\"http://en.wikibooks.org/wiki/QEMU/Images\">qcow2</link> (QEMU copy-on-write version 2) format is commonly used with the KVM hypervisor. It has some additional features over the raw format, such as:<placeholder-1/>"
-msgstr ""
-
-#: ./doc/image-guide/ch_introduction.xml:43(para)
-msgid "Because qcow2 is sparse, it's often faster to convert a raw image to qcow2 and upload it then to upload the raw file."
-msgstr ""
-
-#: ./doc/image-guide/ch_introduction.xml:47(para)
-msgid "Because raw images don't support snapshots, OpenStack Compute will automatically convert raw image files to qcow2 as needed."
-msgstr ""
-
-#: ./doc/image-guide/ch_introduction.xml:53(term)
-msgid "AMI/AKI/ARI"
-msgstr ""
-
-#: ./doc/image-guide/ch_introduction.xml:59(para)
-msgid "AMI (Amazon Machine Image):"
-msgstr ""
-
-#: ./doc/image-guide/ch_introduction.xml:60(para)
-msgid "This is a virtual machine image in raw format, as described above."
-msgstr ""
-
-#: ./doc/image-guide/ch_introduction.xml:64(para)
-msgid "AKI (Amazon Kernel Image)"
-msgstr ""
-
-#: ./doc/image-guide/ch_introduction.xml:65(para)
-msgid "A kernel file that the hypervisor will load initially to boot the image. For a Linux machine, this would be a <emphasis>vmlinuz</emphasis> file."
-msgstr ""
-
-#: ./doc/image-guide/ch_introduction.xml:72(para)
-msgid "ARI (Amazon Ramdisk Image)"
-msgstr ""
-
-#: ./doc/image-guide/ch_introduction.xml:73(para)
-msgid "An optional ramdisk file mounted at boot time. For a Linux machine, this would be an <emphasis>initrd</emphasis> file."
-msgstr ""
-
-#: ./doc/image-guide/ch_introduction.xml:54(para)
-msgid "The <link href=\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html\">AMI/AKI/ARI </link>format was the initial image format supported by Amazon EC2. The image consists of three files:<placeholder-1/>"
-msgstr ""
-
-#: ./doc/image-guide/ch_introduction.xml:81(term)
-msgid "UEC tarball"
-msgstr ""
-
-#: ./doc/image-guide/ch_introduction.xml:84(para)
-msgid "Ubuntu Enterprise Cloud refers to a discontinued Eucalyptus-based Ubuntu cloud solution that has been replaced by the OpenStack-based Ubuntu Cloud Infrastructure."
-msgstr ""
-
-#: ./doc/image-guide/ch_introduction.xml:82(para)
-msgid "A UEC (Ubuntu Enterprise Cloud) tarball is a gzipped tarfile that contains an AMI file, AKI file, and ARI file.<placeholder-1/>"
-msgstr ""
-
-#: ./doc/image-guide/ch_introduction.xml:90(term)
-msgid "VMDK"
-msgstr ""
-
-#: ./doc/image-guide/ch_introduction.xml:91(para)
-msgid "VMWare's ESXi hypervisor uses the <link href=\"http://www.vmware.com/technical-resources/interfaces/vmdk.html\">VMDK</link> (Virtual Machine Disk) format for images."
-msgstr ""
-
-#: ./doc/image-guide/ch_introduction.xml:96(term)
-msgid "VDI"
-msgstr ""
-
-#: ./doc/image-guide/ch_introduction.xml:97(para)
-msgid "VirtualBox uses the <link href=\"https://forums.virtualbox.org/viewtopic.php?t=8046\">VDI</link> (Virtual Disk Image) format for image files. None of the OpenStack Compute hypervisors support VDI directly, so you will need to convert these files to a different format to use them with OpenStack."
-msgstr ""
-
-#: ./doc/image-guide/ch_introduction.xml:104(term)
-msgid "VHD"
-msgstr ""
-
-#: ./doc/image-guide/ch_introduction.xml:105(para)
-msgid "Microsoft Hyper-V uses the VHD (Virtual Hard Disk) format for images."
-msgstr ""
-
-#: ./doc/image-guide/ch_introduction.xml:108(term)
-msgid "VHDX"
-msgstr ""
-
-#: ./doc/image-guide/ch_introduction.xml:109(para)
-msgid "The version of Hyper-V that ships with Microsoft Server 2012 uses the newer <link href=\"http://technet.microsoft.com/en-us/library/hh831446.aspx\">VHDX</link> format, which has some additional features over VHD such as support for larger disk sizes and protection against data corruption during power failures."
-msgstr ""
-
-#: ./doc/image-guide/ch_introduction.xml:115(term)
-msgid "OVF"
-msgstr ""
-
-#: ./doc/image-guide/ch_introduction.xml:116(para)
-msgid "<link href=\"http://www.dmtf.org/standards/ovf\">OVF</link> (Open Virtualization Format) is a packaging format for virtual machines, defined by the Distributed Management Task Force (DMTF) standards group. An OVF package contains one or more image files, a .ovf XML metadata file that contains information about the virtual machine, and possibly other files as well."
-msgstr ""
-
-#: ./doc/image-guide/ch_introduction.xml:121(para)
-msgid "An OVF package can be distributed in different ways. For example, it could be distributed as a set of discrete files, or as a tar archive file with an .ova (open virtual appliance/application) extension."
-msgstr ""
-
-#: ./doc/image-guide/ch_introduction.xml:124(para)
-msgid "OpenStack Compute does not currently have support for OVF packages, so you will need to extract the image file(s) from an OVF package if you wish to use it with OpenStack."
-msgstr ""
-
-#: ./doc/image-guide/ch_introduction.xml:129(term)
-msgid "ISO"
-msgstr ""
-
-#: ./doc/image-guide/ch_introduction.xml:130(para)
-msgid "The <link href=\"http://www.ecma-international.org/publications/standards/Ecma-119.htm\">ISO</link> format is a disk image formatted with the read-only ISO 9660 (also known as ECMA-119) filesystem commonly used for CDs and DVDs. While we don't normally think of ISO as a virtual machine image format, since ISOs contain bootable filesystems with an installed operating system, you can treat them the same as you treat other virtual machine image files."
-msgstr ""
-
-#: ./doc/image-guide/ch_creating_images_automatically.xml:6(title)
-msgid "Tool support for image creation"
-msgstr ""
-
-#: ./doc/image-guide/ch_creating_images_automatically.xml:8(para)
-msgid "There are several tools that are designed to automate image creation."
-msgstr ""
-
-#: ./doc/image-guide/ch_creating_images_automatically.xml:11(title)
-msgid "Oz"
-msgstr ""
-
-#: ./doc/image-guide/ch_creating_images_automatically.xml:22(para)
-msgid "As of this writing, there are no Oz packages for Ubuntu, so you will need to either install from source or build your own .deb file."
-msgstr ""
-
-#: ./doc/image-guide/ch_creating_images_automatically.xml:12(para)
-msgid "<link href=\"https://github.com/clalancette/oz/wiki\">Oz</link> is a command-line tool that automates the process of creating a virtual machine image file. Oz is a Python app that interacts with KVM to step through the process of installing a virtual machine. It uses a predefined set of kickstart (Red Hat-based systems) and preseed files (Debian-based systems) for operating systems that it supports, and it can also be used to create Microsoft Windows images. On Fedora, install Oz with yum:<placeholder-1/><placeholder-2/>"
-msgstr ""
-
-#: ./doc/image-guide/ch_creating_images_automatically.xml:26(para)
-msgid "A full treatment of Oz is beyond the scope of this document, but we will provide an example. You can find additional examples of Oz template files on github at <link href=\"https://github.com/rackerjoe/oz-image-build/tree/master/templates\">rackerjoe/oz-image-build/templates</link>. Here's how you would create a CentOS 6.4 image with Oz."
-msgstr ""
-
-#: ./doc/image-guide/ch_creating_images_automatically.xml:33(para)
-msgid "Create a template file (we'll call it <filename>centos64.tdl</filename>) with the following contents. The only entry you will need to change is the <literal>&lt;rootpw&gt;</literal> contents.<placeholder-1/>"
-msgstr ""
-
-#: ./doc/image-guide/ch_creating_images_automatically.xml:71(para)
-msgid "This Oz template specifies where to download the Centos 6.4 install ISO. Oz will use the version information to identify which kickstart file to use. In this case, it will be <link href=\"https://github.com/clalancette/oz/blob/master/oz/auto/RHEL6.auto\">RHEL6.auto</link>. It adds EPEL as a repository and install the <literal>epel-release</literal>, <literal>cloud-utils</literal>, and <literal>cloud-init</literal> packages, as specified in the <literal>packages</literal> section of the file."
-msgstr ""
-
-#: ./doc/image-guide/ch_creating_images_automatically.xml:82(para)
-msgid "After Oz does the initial OS install using the kickstart file, it customizes the image by doing an update. It also removes any reference to the eth0 device that libvirt creates while Oz does the customizing, as specified in the <literal>command</literal> section of the XML file."
-msgstr ""
-
-#: ./doc/image-guide/ch_creating_images_automatically.xml:88(para)
-msgid "To run this, do, as root:"
-msgstr ""
-
-#: ./doc/image-guide/ch_creating_images_automatically.xml:91(para)
-msgid "The <literal>-d3</literal> flag tells Oz to show status information as it runs."
-msgstr ""
-
-#: ./doc/image-guide/ch_creating_images_automatically.xml:95(para)
-msgid "The <literal>-u</literal> tells Oz to do the customization (install extra packages, run the commands) once it does the initial install."
-msgstr ""
-
-#: ./doc/image-guide/ch_creating_images_automatically.xml:101(para)
-msgid "The <literal>-x &lt;filename&gt;</literal> flag tells Oz what filename to use to write out a libvirt XML file (otherwise it will default to something like <filename>centos64Apr_03_2013-12:39:42</filename>."
-msgstr ""
-
-#: ./doc/image-guide/ch_creating_images_automatically.xml:89(para)
-msgid "<placeholder-1/><placeholder-2/>If you leave out the <literal>-u</literal> flag, or you want to edit the file to do additional customizations, you can use the <placeholder-3/> command, using the libvirt XML file that <placeholder-4/> creates. For example: <placeholder-5/> Oz will invoke libvirt to boot the image inside of KVM, then Oz will ssh into the instance and perform the customizations."
-msgstr ""
-
-#: ./doc/image-guide/ch_creating_images_automatically.xml:119(title)
-msgid "VMBuilder"
-msgstr ""
-
-#: ./doc/image-guide/ch_creating_images_automatically.xml:120(para)
-msgid "<link href=\"https://launchpad.net/vmbuilder\">VMBuilder</link> (Virtual Machine Builder) is a command-line tool that creates virtual machine images for different hypervisors. The version of VMBuilder that ships with Ubuntu can only create Ubuntu virtual machine guests. The version of VMBuilder that ships with Debian can create Ubuntu and Debian virtual machine guests."
-msgstr ""
-
-#: ./doc/image-guide/ch_creating_images_automatically.xml:127(para)
-msgid "The <link href=\"https://help.ubuntu.com/12.04/serverguide/jeos-and-vmbuilder.html\"><citetitle>Ubuntu Server Guide</citetitle></link> has documentation on how to use VMBuilder to create an Ubuntu image."
-msgstr ""
-
-#: ./doc/image-guide/ch_creating_images_automatically.xml:134(title)
-msgid "BoxGrinder"
-msgstr ""
-
-#: ./doc/image-guide/ch_creating_images_automatically.xml:135(para)
-msgid "<link href=\"http://boxgrinder.org/\">BoxGrinder</link> is another tool for creating virtual machine images, which it calls appliances. BoxGrinder can create Fedora, Red Hat Enterprise Linux, or CentOS images. BoxGrinder is currently only supported on Fedora."
-msgstr ""
-
-#: ./doc/image-guide/ch_creating_images_automatically.xml:144(title)
-msgid "VeeWee"
-msgstr ""
-
-#: ./doc/image-guide/ch_creating_images_automatically.xml:145(para)
-msgid "<link href=\"https://github.com/jedi4ever/veewee\"> VeeWee</link> is often used to build <link href=\"http://vagrantup.com\">Vagrant</link> boxes, but it can also be used to build KVM images."
-msgstr ""
-
-#: ./doc/image-guide/ch_creating_images_automatically.xml:151(title)
-msgid "Packer"
-msgstr ""
-
-#: ./doc/image-guide/ch_creating_images_automatically.xml:152(para)
-msgid "<link href=\"http://www.packer.io/\"> Packer</link> is a tool for creating machine images for multiple platforms from a single source configuration."
-msgstr ""
-
-#: ./doc/image-guide/ch_creating_images_automatically.xml:158(title)
-msgid "imagefactory"
-msgstr ""
-
-#: ./doc/image-guide/ch_creating_images_automatically.xml:159(para)
-msgid "<link href=\"http://imgfac.org/\">imagefactory</link> is a newer tool designed to automate the building, converting, and uploading images to different cloud providers. It uses Oz as its back-end and includes support for OpenStack-based clouds."
-msgstr ""
-
-#: ./doc/image-guide/ch_creating_images_automatically.xml:166(title)
-msgid "SUSE Studio"
-msgstr ""
-
-#: ./doc/image-guide/ch_creating_images_automatically.xml:167(para)
-msgid "<link href=\"http://susestudio.com\">SUSE Studio</link> is a web application for building and testing software applications in a web browser. It supports the creation of physical, virtual or cloud-based applications and includes support for building images for OpenStack based clouds using SUSE Linux Enterprise and openSUSE as distributions."
+#: ./doc/image-guide/section_glance-image-metadata.xml:28(para)
+msgid "All associated properties for an image can be displayed using the <placeholder-1/> command. For example:"
 msgstr ""
 
 #: ./doc/image-guide/ch_openstack_images.xml:10(title)
@@ -1395,66 +1743,6 @@ msgstr ""
 msgid "Because 86400 seconds (24 hours) is the default time for <literal>remove_unused_original_minimum_age_seconds</literal>, you can either wait for that time interval to see the base image removed, or set the value to a shorter time period in <filename>nova.conf</filename>. Restart all nova services after changing a setting in <filename>nova.conf</filename>."
 msgstr ""
 
-#: ./doc/image-guide/section_windows-example.xml:8(title)
-msgid "Example: Microsoft Windows image"
-msgstr ""
-
-#: ./doc/image-guide/section_windows-example.xml:9(para)
-msgid "We do not yet have a fully documented example of how to create a Microsoft Windows image. You can use libvirt to install Windows from an installation DVD using the same approach as with the CentOS and Ubuntu examples. Once the initial install is done, you will need to perform some Windows-specific customizations."
-msgstr ""
-
-#: ./doc/image-guide/section_windows-example.xml:14(title)
-msgid "Install VirtIO drivers"
-msgstr ""
-
-#: ./doc/image-guide/section_windows-example.xml:15(para)
-msgid "Installing the <link href=\"http://www.linux-kvm.org/page/WindowsGuestDrivers/Download_Drivers\">VirtIO paravirtualizaion drivers for Windows</link> will improve virtual machine performance when using KVM as the hypervisor to run Windows."
-msgstr ""
-
-#: ./doc/image-guide/section_windows-example.xml:20(title)
-msgid "Sysprep"
-msgstr ""
-
-#: ./doc/image-guide/section_windows-example.xml:21(para)
-msgid "Microsoft has a special tool called <link href=\"http://technet.microsoft.com/en-us/library/cc766049(v=ws.10).aspx\">Sysprep</link> that must be run inside of a Windows guest to prepare it for use as a virtual machine image. On Windows 2012 server, invoke sysprep, as follows: <placeholder-1/>"
-msgstr ""
-
-#: ./doc/image-guide/section_windows-example.xml:28(title)
-msgid "cloudbase-init"
-msgstr ""
-
-#: ./doc/image-guide/section_windows-example.xml:29(para)
-msgid "<link href=\"http://www.cloudbase.it/cloud-init-for-windows-instances/\">cloudbase-init</link> is a Windows port of cloud-init that should be installed inside of the guest. The <link href=\"https://github.com/cloudbase/cloudbase-init\">source code</link> is available on github."
-msgstr ""
-
-#: ./doc/image-guide/section_windows-example.xml:35(title)
-msgid "Jordan Rinke's OpenStack Windows resources"
-msgstr ""
-
-#: ./doc/image-guide/section_windows-example.xml:36(para)
-msgid "Jordan Rinke maintains <link href=\"https://github.com/jordanrinke/openstack\">a collection of resources</link> for managing OpenStack Windows virtual machine guests."
-msgstr ""
-
-#: ./doc/image-guide/section_windows-example.xml:41(title)
-msgid "Windows instances require the timezone to be \"localtime\""
-msgstr ""
-
-#: ./doc/image-guide/section_windows-example.xml:42(para)
-msgid "When uploading Windows images, you must set the <literal>os_type</literal> parameter to <literal>windows</literal>, which causes instances to use the local time zone. Failing to set this will cause the clock timezone to be UTC, which has unexpected side effects in Windows."
-msgstr ""
-
-#: ./doc/image-guide/section_freebsd-example.xml:8(title)
-msgid "Example: FreeBSD image"
-msgstr ""
-
-#: ./doc/image-guide/section_freebsd-example.xml:9(para)
-msgid "We do not yet have a fully documented example of how to create a FreeBSD image."
-msgstr ""
-
-#: ./doc/image-guide/section_freebsd-example.xml:11(para)
-msgid "See the <link href=\"http://pellaeon.github.io/bsd-cloudinit/\">bsd-cloudinit</link> project for information on how to build a FreeBSD VM image that works with OpenStack."
-msgstr ""
-
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
 #: ./doc/image-guide/ch_creating_images_manually.xml:82(None)
@@ -1561,296 +1849,8 @@ msgstr ""
 msgid "In the example above, the guest <literal>centos-6.4</literal> uses VNC display <literal>:1</literal>, which corresponds to tcp port <literal>5901</literal>. You should be able to connect to a VNC client running on your local machine to display :1 on the remote machine and step through the installation process."
 msgstr ""
 
-#: ./doc/image-guide/section_glance_image-formats.xml:6(title)
-msgid "Disk and container formats for images"
-msgstr ""
-
-#: ./doc/image-guide/section_glance_image-formats.xml:8(para)
-msgid "When you add an image to the Image Service, you can specify its disk and container formats."
-msgstr ""
-
-#: ./doc/image-guide/section_glance_image-formats.xml:11(title)
-msgid "Disk formats"
-msgstr ""
-
-#: ./doc/image-guide/section_glance_image-formats.xml:12(para)
-msgid "The disk format of a virtual machine image is the format of the underlying disk image. Virtual appliance vendors have different formats for laying out the information contained in a virtual machine disk image."
-msgstr ""
-
-#: ./doc/image-guide/section_glance_image-formats.xml:16(para)
-msgid "Set the disk format for your image to one of the following values:"
-msgstr ""
-
-#: ./doc/image-guide/section_glance_image-formats.xml:20(para)
-msgid "<literal>raw</literal>. An unstructured disk image format; if you have a file without an extension it is possibly a raw format"
-msgstr ""
-
-#: ./doc/image-guide/section_glance_image-formats.xml:25(para)
-msgid "<literal>vhd</literal>. The VHD disk format, a common disk format used by virtual machine monitors from VMWare, Xen, Microsoft, VirtualBox, and others"
-msgstr ""
-
-#: ./doc/image-guide/section_glance_image-formats.xml:31(para)
-msgid "<literal>vmdk</literal>. Common disk format supported by many common virtual machine monitors"
-msgstr ""
-
-#: ./doc/image-guide/section_glance_image-formats.xml:36(para)
-msgid "<literal>vdi</literal>. Supported by VirtualBox virtual machine monitor and the QEMU emulator"
-msgstr ""
-
-#: ./doc/image-guide/section_glance_image-formats.xml:41(para)
-msgid "<literal>iso</literal>. An archive format for the data contents of an optical disc, such as CD-ROM."
-msgstr ""
-
-#: ./doc/image-guide/section_glance_image-formats.xml:46(para)
-msgid "<literal>qcow2</literal>. Supported by the QEMU emulator that can expand dynamically and supports Copy on Write"
-msgstr ""
-
-#: ./doc/image-guide/section_glance_image-formats.xml:51(para) ./doc/image-guide/section_glance_image-formats.xml:87(para)
-msgid "<literal>aki</literal>. An Amazon kernel image."
-msgstr ""
-
-#: ./doc/image-guide/section_glance_image-formats.xml:55(para) ./doc/image-guide/section_glance_image-formats.xml:91(para)
-msgid "<literal>ari</literal>. An Amazon ramdisk image."
-msgstr ""
-
-#: ./doc/image-guide/section_glance_image-formats.xml:59(para) ./doc/image-guide/section_glance_image-formats.xml:95(para)
-msgid "<literal>ami</literal>. An Amazon machine image."
-msgstr ""
-
-#: ./doc/image-guide/section_glance_image-formats.xml:65(title)
-msgid "Container formats"
-msgstr ""
-
-#: ./doc/image-guide/section_glance_image-formats.xml:66(para)
-msgid "The container format indicates whether the virtual machine image is in a file format that also contains metadata about the actual virtual machine."
-msgstr ""
-
-#: ./doc/image-guide/section_glance_image-formats.xml:70(para)
-msgid "The Image Service and other OpenStack projects do not currently support the container format. It is safe to specify <literal>bare</literal> as the container format if you are unsure."
-msgstr ""
-
-#: ./doc/image-guide/section_glance_image-formats.xml:75(para)
-msgid "You can set the container format for your image to one of the following values:"
-msgstr ""
-
-#: ./doc/image-guide/section_glance_image-formats.xml:79(para)
-msgid "<literal>bare</literal>. The image does not have a container or metadata envelope."
-msgstr ""
-
-#: ./doc/image-guide/section_glance_image-formats.xml:83(para)
-msgid "<literal>ovf</literal>. The OVF container format."
-msgstr ""
-
-#: ./doc/image-guide/section_glance-image-metadata.xml:7(title)
-msgid "Image metadata"
-msgstr ""
-
-#: ./doc/image-guide/section_glance-image-metadata.xml:9(para)
-msgid "Image metadata can help end users determine the nature of an image, and is used by associated OpenStack components and drivers which interface with the Image Service."
-msgstr ""
-
-#: ./doc/image-guide/section_glance-image-metadata.xml:11(para)
-msgid "Metadata can also determine the scheduling of hosts. If the <option>property</option> option is set on an image, and Compute is configured so that the <systemitem>ImagePropertiesFilter</systemitem> scheduler filter is enabled (default), then the scheduler only considers compute hosts that satisfy that property."
-msgstr ""
-
-#: ./doc/image-guide/section_glance-image-metadata.xml:15(para)
-msgid "Compute's <systemitem>ImagePropertiesFilter</systemitem> value is specified in the <option>scheduler_default_filter</option> value in the <filename>/etc/nova/nova.conf</filename> file."
-msgstr ""
-
-#: ./doc/image-guide/section_glance-image-metadata.xml:18(para)
-msgid "You can add metadata to Image Service images by using the <option>--property <replaceable>key</replaceable>=<replaceable>value</replaceable></option> option with the <placeholder-1/> or <placeholder-2/> command. More than one property can be specified. For example:"
-msgstr ""
-
-#: ./doc/image-guide/section_glance-image-metadata.xml:22(replaceable)
-msgid "img-uuid"
-msgstr ""
-
-#: ./doc/image-guide/section_glance-image-metadata.xml:23(para)
-msgid "Common image properties are also specified in the <filename>/etc/glance/schema-image.json</filename> file. For a complete list of valid property keys and values, refer to the <link href=\"http://docs.openstack.org/cli-reference/content/\"><citetitle>OpenStack Command-Line Reference</citetitle></link>."
-msgstr ""
-
-#: ./doc/image-guide/section_glance-image-metadata.xml:28(para)
-msgid "All associated properties for an image can be displayed using the <placeholder-1/> command. For example:"
-msgstr ""
-
-#: ./doc/image-guide/ch_converting.xml:4(title)
-msgid "Converting between image formats"
-msgstr ""
-
-#: ./doc/image-guide/ch_converting.xml:5(para)
-msgid "Converting images from one format to another is generally straightforward."
-msgstr ""
-
-#: ./doc/image-guide/ch_converting.xml:7(title)
-msgid "qemu-img convert: raw, qcow2, VDI, VMDK"
-msgstr ""
-
-#: ./doc/image-guide/ch_converting.xml:8(para)
-msgid "The <placeholder-1/> command can do conversion between multiple formats, including raw, qcow2, VDI (VirtualBox), VMDK (VMWare) and VHD (Hyper-V)."
-msgstr ""
-
-#: ./doc/image-guide/ch_converting.xml:12(caption)
-msgid "qemu-img format strings"
-msgstr ""
-
-#: ./doc/image-guide/ch_converting.xml:16(th)
-msgid "Image format"
-msgstr ""
-
-#: ./doc/image-guide/ch_converting.xml:17(th)
-msgid "Argument to qemu-img"
-msgstr ""
-
-#: ./doc/image-guide/ch_converting.xml:22(td) ./doc/image-guide/ch_converting.xml:23(literal)
-msgid "raw"
-msgstr ""
-
-#: ./doc/image-guide/ch_converting.xml:30(td)
-msgid "VDI (VirtualBox)"
-msgstr ""
-
-#: ./doc/image-guide/ch_converting.xml:31(literal)
-msgid "vdi"
-msgstr ""
-
-#: ./doc/image-guide/ch_converting.xml:34(td)
-msgid "VMDK (VMWare)"
-msgstr ""
-
-#: ./doc/image-guide/ch_converting.xml:35(literal)
-msgid "vmdk"
-msgstr ""
-
-#: ./doc/image-guide/ch_converting.xml:38(td)
-msgid "VHD (Hyper-V)"
-msgstr ""
-
-#: ./doc/image-guide/ch_converting.xml:39(literal)
-msgid "vpc"
-msgstr ""
-
-#: ./doc/image-guide/ch_converting.xml:43(para)
-msgid "This example will convert a raw image file named centos63.dsk to a qcow2 image file."
-msgstr ""
-
-#: ./doc/image-guide/ch_converting.xml:47(para)
-msgid "To convert from vmdk to raw, you would do: <placeholder-1/>"
-msgstr ""
-
-#: ./doc/image-guide/ch_converting.xml:51(para)
-msgid "The <literal>-f <replaceable>format</replaceable></literal> flag is optional. If omitted, qemu-img will try to infer the image format."
-msgstr ""
-
-#: ./doc/image-guide/ch_converting.xml:57(title)
-msgid "VBoxManage: VDI (VirtualBox) to raw"
-msgstr ""
-
-#: ./doc/image-guide/ch_converting.xml:58(para)
-msgid "If you've created a VDI image using VirtualBox, you can convert it to raw format using the <placeholder-1/> command-line tool that ships with VirtualBox. On Mac OS X, VirtualBox stores images by default in the <filename>~/VirtualBox VMs/</filename> directory. The following example creates a raw image in the current directory from a VirtualBox VDI image.<placeholder-2/>"
-msgstr ""
-
-#: ./doc/image-guide/ch_obtaining_images.xml:6(title)
-msgid "Get images"
-msgstr ""
-
-#: ./doc/image-guide/ch_obtaining_images.xml:8(para)
-msgid "The simplest way to obtain a virtual machine image that works with OpenStack is to download one that someone else has already created."
-msgstr ""
-
-#: ./doc/image-guide/ch_obtaining_images.xml:11(title)
-msgid "CirrOS (test) images"
-msgstr ""
-
-#: ./doc/image-guide/ch_obtaining_images.xml:12(para)
-msgid "CirrOS is a minimal Linux distribution that was designed for use as a test image on clouds such as OpenStack Compute. You can download a CirrOS image in various formats from the <link href=\"https://launchpad.net/cirros/+download\">CirrOS Launchpad download page</link>."
-msgstr ""
-
-#: ./doc/image-guide/ch_obtaining_images.xml:21(para)
-msgid "In a CirrOS image, the login account is <literal>cirros</literal>. The password is <literal>cubswin:)</literal>"
-msgstr ""
-
-#: ./doc/image-guide/ch_obtaining_images.xml:16(para)
-msgid "If your deployment uses QEMU or KVM, we recommend using the images in qcow2 format. The most recent 64-bit qcow2 image as of this writing is <link href=\"http://download.cirros-cloud.net/0.3.2/cirros-0.3.2-x86_64-disk.img\">cirros-0.3.2-x86_64-disk.img</link><placeholder-1/>"
-msgstr ""
-
-#: ./doc/image-guide/ch_obtaining_images.xml:27(title)
-msgid "Official Ubuntu images"
-msgstr ""
-
-#: ./doc/image-guide/ch_obtaining_images.xml:28(para)
-msgid "Canonical maintains an <link href=\"http://cloud-images.ubuntu.com/\">official set of Ubuntu-based images</link>."
-msgstr ""
-
-#: ./doc/image-guide/ch_obtaining_images.xml:30(para)
-msgid "Images are arranged by Ubuntu release, and by image release date, with \"current\" being the most recent. For example, the page that contains the most recently built image for Ubuntu 12.04 \"Precise Pangolin\" is <link href=\"http://cloud-images.ubuntu.com/precise/current/\">http://cloud-images.ubuntu.com/precise/current/</link>. Scroll to the bottom of the page for links to images that can be downloaded directly."
-msgstr ""
-
-#: ./doc/image-guide/ch_obtaining_images.xml:40(para)
-msgid "In an Ubuntu cloud image, the login account is <literal>ubuntu</literal>."
-msgstr ""
-
-#: ./doc/image-guide/ch_obtaining_images.xml:36(para)
-msgid "If your deployment uses QEMU or KVM, we recommend using the images in qcow2 format. The most recent version of the 64-bit QCOW2 image for Ubuntu 12.04 is <link href=\"http://uec-images.ubuntu.com/precise/current/precise-server-cloudimg-amd64-disk1.img\">precise-server-cloudimg-amd64-disk1.img</link>.<placeholder-1/>"
-msgstr ""
-
-#: ./doc/image-guide/ch_obtaining_images.xml:45(title)
-msgid "Official Red Hat Enterprise Linux images"
-msgstr ""
-
-#: ./doc/image-guide/ch_obtaining_images.xml:46(para)
-msgid "Red Hat maintains an official Red Hat Enterprise Linux 6 cloud image. A valid Red Hat Enterprise Linux 6 subscription is required to download the <link href=\"https://rhn.redhat.com/rhn/software/channel/downloads/Download.do?cid=16952\">KVM Guest Image</link>."
-msgstr ""
-
-#: ./doc/image-guide/ch_obtaining_images.xml:53(para)
-msgid "A <link href=\"https://rhn.redhat.com/rhn/software/channel/downloads/Download.do?cid=10486\">boot.iso</link> image is also available. This is the same as the <literal>boot.iso</literal> file provided on the Red Hat Enterprise Linux installation DVD. It is a minimal image suitable for kickstarting operating system installation over a network."
-msgstr ""
-
-#: ./doc/image-guide/ch_obtaining_images.xml:63(title)
-msgid "Official Fedora images"
-msgstr ""
-
-#: ./doc/image-guide/ch_obtaining_images.xml:64(para)
-msgid "The Fedora project maintains a list of official cloud images at <link href=\"http://cloud.fedoraproject.org/\"/>. The images include the <systemitem class=\"process\">cloud-init</systemitem> utility to support key and user data injection. The default user name is <systemitem class=\"username\">fedora</systemitem>."
-msgstr ""
-
-#: ./doc/image-guide/ch_obtaining_images.xml:72(title)
-msgid "Official openSUSE and SLES images"
-msgstr ""
-
-#: ./doc/image-guide/ch_obtaining_images.xml:73(para)
-msgid "SUSE does not provide openSUSE or SUSE Linux Enterprise Server (SLES) images for direct download. Instead, they provide a web-based tool called <link href=\"http://susestudio.com\">SUSE Studio</link> that you can use to build openSUSE and SLES images."
-msgstr ""
-
-#: ./doc/image-guide/ch_obtaining_images.xml:79(para)
-msgid "For example, Christian Berendt used <link href=\"http://www.opensuse.org\">openSUSE</link> to create <link href=\"http://susestudio.com/a/YRUrwO/testing-instance-for-openstack-opensuse-12-3\"> a test openSUSE 12.3 image</link>."
-msgstr ""
-
-#: ./doc/image-guide/ch_obtaining_images.xml:84(title)
-msgid "Official images from other Linux distributions"
-msgstr ""
-
-#: ./doc/image-guide/ch_obtaining_images.xml:85(para)
-msgid "As of this writing, we are not aware of other distributions that provide images for download."
-msgstr ""
-
-#: ./doc/image-guide/ch_obtaining_images.xml:88(title)
-msgid "Rackspace Cloud Builders (multiple distros) images"
-msgstr ""
-
-#: ./doc/image-guide/ch_obtaining_images.xml:90(para)
-msgid "Rackspace Cloud Builders maintains a list of pre-built images from various distributions (Red Hat, CentOS, Fedora, Ubuntu). Links to these images can be found at <link href=\"https://github.com/rackerjoe/oz-image-build\">rackerjoe/oz-image-build on Github</link>."
-msgstr ""
-
-#: ./doc/image-guide/ch_obtaining_images.xml:96(title)
-msgid "Microsoft Windows images"
-msgstr ""
-
-#: ./doc/image-guide/ch_obtaining_images.xml:97(para)
-msgid "Cloudbase Solutions hosts an <link href=\"http://www.cloudbase.it/ws2012/\">OpenStack Windows Server 2012 Standard Evaluation image</link> that runs on Hyper-V, KVM, and XenServer/XCP."
-msgstr ""
-
 #. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
-#: ./doc/image-guide/ch_obtaining_images.xml:0(None)
+#: ./doc/image-guide/ch_creating_images_manually.xml:0(None)
 msgid "translator-credits"
 msgstr ""
 
