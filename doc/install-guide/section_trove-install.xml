@@ -79,23 +79,6 @@ sql_connection = mysql://trove:<literal>TROVE_DBPASS</literal>@<replaceable>cont
 notifier_queue_hostname = <replaceable>controller</replaceable></programlisting>
         </step>
 
-        <step os="fedora;rhel;centos">
-          <para>Set these configuration keys to configure the Database
-          module to use the Qpid message broker:</para>
-          <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/trove/trove-api.conf \
-  DEFAULT rpc_backend qpid</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/trove/trove-taskmaster.conf \
-  DEFAULT rpc_backend qpid</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/trove/trove-conductor.conf \
-  DEFAULT rpc_backend qpid</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/trove/trove-api.conf DEFAULT \
-  qpid_hostname <replaceable>controller</replaceable></userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/trove/trove-taskmaster.conf DEFAULT \
-  qpid_hostname <replaceable>controller</replaceable></userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/trove/trove-conductor.conf DEFAULT \
-  qpid_hostname <replaceable>controller</replaceable></userinput></screen>
-        </step>
-
         <step os="ubuntu">
           <para>Configure the Database module to use the RabbitMQ message broker by
           setting the rabbit_password in the <literal>[DEFAULT]</literal>
@@ -106,7 +89,7 @@ rabbit_password = <replaceable>RABBIT_PASS</replaceable>
 ...</programlisting>
         </step>
 
-        <step os="opensuse;sles">
+        <step os="opensuse;sles;rhel;centos;fedora">
           <para>Set these configuration keys to configure the Database module to use
           the RabbitMQ message broker:</para>
           <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/trove/trove-api.conf \
@@ -217,14 +200,8 @@ nova_proxy_admin_tenant_name = service
       <substeps>
         <step>
           <para>Add the following lines to <filename>trove-guestagent.conf</filename>:</para>
-          <programlisting language="ini" os="ubuntu;debian;sles;opensuse">rabbit_host = <replaceable>controller</replaceable>
+          <programlisting language="ini">rabbit_host = <replaceable>controller</replaceable>
 rabbit_password = <replaceable>RABBIT_PASS</replaceable>
-nova_proxy_admin_user = admin
-nova_proxy_admin_pass = <replaceable>ADMIN_PASS</replaceable>
-nova_proxy_admin_tenant_name = service
-trove_auth_url = http://<replaceable>controller</replaceable>:35357/v2.0</programlisting>
-          <programlisting language="ini" os="centos;rhel;fedora">rpc_backend = qpid
-qpid_host = <replaceable>controller</replaceable>
 nova_proxy_admin_user = admin
 nova_proxy_admin_pass = <replaceable>ADMIN_PASS</replaceable>
 nova_proxy_admin_tenant_name = service

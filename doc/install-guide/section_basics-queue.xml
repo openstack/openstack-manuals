@@ -10,9 +10,10 @@
     message brokers including <application>RabbitMQ</application>,
     <application>Qpid</application>, and <application>ZeroMQ</application>.
     However, most distributions that package OpenStack support a particular
-    message broker. This guide covers the message broker supported by each
-    distribution. If you prefer to implement a different message broker,
-    consult the documentation associated with it.</para>
+    message broker. This guide covers the RabbitMQ message broker which is
+    supported by each distribution. If you prefer to implement a
+    different message broker, consult the documentation associated
+    with it.</para>
   <itemizedlist>
     <listitem>
       <para><link xlink:href="http://www.rabbitmq.com">RabbitMQ</link></para>
@@ -25,48 +26,24 @@
     </listitem>
   </itemizedlist>
   <procedure>
-    <title>To install the message broker service</title>
+    <title>To install the <application>RabbitMQ</application> message broker service</title>
     <step os="ubuntu;debian">
-      <para>Ubuntu and Debian use <application>RabbitMQ</application>.</para>
       <screen><prompt>#</prompt> <userinput>apt-get install rabbitmq-server</userinput></screen>
     </step>
     <step os="rhel;centos;fedora">
-      <para>Red Hat Enterprise Linux (RHEL), CentOS, Scientific Linux, and
-        Fedora use <application>Qpid</application>.
-      </para>
-      <screen><prompt>#</prompt> <userinput>yum install qpid-cpp-server</userinput></screen>
+      <screen><prompt>#</prompt> <userinput>yum install rabbitmq-server</userinput></screen>
     </step>
     <step os="sles;opensuse">
-      <para>SUSE Linux Enterprise Server (SLES) and openSUSE use
-        <application>RabbitMQ</application>.</para>
       <screen><prompt>#</prompt> <userinput>zypper install rabbitmq-server</userinput></screen>
     </step>
   </procedure>
   <procedure>
     <title>To configure the message broker service</title>
-    <step os="rhel;centos;fedora">
-      <para>To simplify installation of your test environment, we recommend
-        that you disable authentication.</para>
-      <para>Edit the <filename>/etc/qpidd.conf</filename> file and change
-        the following key:</para>
-      <programlisting>auth=no</programlisting>
-      <note>
-        <para>For production environments, you should enable authentication.
-          For more information on securing the message broker, see the
-        <link xlink:href=
-          "http://qpid.apache.org/books/trunk/AMQP-Messaging-Broker-CPP-Book/html/chap-Messaging_User_Guide-Security.html"
-          >documentation</link>.</para>
-        <para>If you decide to enable authentication for your test
-          environment, you must configure the <literal>qpid_username</literal>
-          and <literal>qpid_password</literal> keys in the configuration file
-          of each OpenStack service that uses the message broker.</para>
-      </note>
-    </step>
-    <step os="sles;opensuse">
+    <step os="sles;opensuse;rhel;centos;fedora">
       <para>Start the message broker service:</para>
       <screen><prompt>#</prompt> <userinput>service rabbitmq-server start</userinput></screen>
     </step>
-    <step os="ubuntu;debian;sles;opensuse">
+    <step>
       <para>The message broker creates a default account that uses
         <literal>guest</literal> for the username and password. To simplify
         installation of your test environment, we recommend that you use this
@@ -94,13 +71,7 @@
   </procedure>
   <procedure os="rhel;centos;fedora;sles;opensuse">
     <title>To finalize installation</title>
-    <step os="rhel;centos;fedora">
-      <para>Start the message broker service and configure it to start when
-        the system boots:</para>
-      <screen><prompt>#</prompt> <userinput>service qpidd start</userinput>
-<prompt>#</prompt> <userinput>chkconfig qpidd on</userinput></screen>
-    </step>
-    <step os="sles;opensuse">
+    <step>
       <para>Configure the message broker service to start when the system
         boots:</para>
       <screen><prompt>#</prompt> <userinput>chkconfig rabbitmq-server on</userinput></screen>
