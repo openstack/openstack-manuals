@@ -3,31 +3,99 @@
   xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
   xml:id="glance-property-protection">
-  <title>Image property protection</title>
-  <para>An image property is a key and value pair that is attached to
-    OpenStack Image Service image.</para>
-  <para>Core properties, such as the image name, are defined and set
-    by the cloud administrator. Additional properties, such as
-    licensing and billing information, are defined and set by the
-    cloud administrator and the image owner.</para>
+  <title>Image properties and property protection</title>
+  <para>An image property is a key and value pair that the cloud
+    administrator or the image owner attaches to an OpenStack Image
+    Service image, as follows:</para>
+  <para>
+    <itemizedlist>
+      <listitem>
+        <para>The cloud administrator defines <emphasis role="italic"
+            >core</emphasis> properties, such as the image
+          name.</para>
+      </listitem>
+      <listitem>
+        <para>The cloud administrator and the image owner can define
+            <emphasis role="italic">additional</emphasis> properties,
+          such as licensing and billing information.</para>
+      </listitem>
+    </itemizedlist>
+  </para>
   <para>The cloud administrator can configure any property as
-      <glossterm baseform="protected property">protected</glossterm>,
-    which limits which user roles can perform CRUD operations on that
-    property. Protected properties are generally extra properties to
-    which only cloud administrators have access.</para>
+      <firstterm>protected</firstterm>, which limits which policies or
+    user roles can perform CRUD operations on that property. Protected
+    properties are generally additional properties to which only cloud
+    administrators have access.</para>
   <para>For unprotected image properties, the cloud administrator can
     manage core properties and the image owner can manage additional
     properties.</para>
   <procedure>
     <title>To configure property protection</title>
+    <para>To configure property protection, the cloud administrator
+      completes these steps:</para>
     <step>
-      <para>Define roles in the <filename>policy.json</filename>
-        file.</para>
+      <para>Define roles or policies in the
+          <filename>policy.json</filename> file. To view a sample
+        configuration file, see <link
+          xlink:href="http://docs.openstack.org/trunk/config-reference/content/section_glance-policy.json.html"
+          >policy.json</link>.</para>
     </step>
     <step>
-      <para>Define which roles can manage which properties in the
-          <filename>/etc/glance/property-protections.conf</filename>
-        file.</para>
+      <para>Define which roles or policies can manage which properties
+        in a property protections configuration file. For
+        example:</para>
+      <programlisting language="ini">[x_none_read]
+create = context_is_admin
+read = !
+update = !
+delete = !
+
+[x_none_update]
+create = context_is_admin
+read = context_is_admin
+update = !
+delete = context_is_admin
+
+[x_none_delete]
+create = context_is_admin
+read = context_is_admin
+update = context_is_admin
+delete = !</programlisting>
+      <itemizedlist>
+        <listitem>
+          <para>A value of <literal>@</literal> allows the
+            corresponding operation for a property.</para>
+        </listitem>
+        <listitem>
+          <para>A value of <literal>!</literal> disallows the
+            corresponding operation for a property.</para>
+        </listitem>
+      </itemizedlist>
+    </step>
+    <step>
+      <para>In the <filename>glance-api.conf</filename> file, define
+        the location of a property protections configuration
+        file:</para>
+      <programlisting language="ini">property_protection_file = {file_name}</programlisting>
+      <para>This file contains the rules for property protections and
+        the roles and policies associated with it.</para>
+      <para>By default, property protections are not enforced.</para>
+      <para>If you specify a file name value and the file is not
+        found, the <systemitem role="service">glance-api</systemitem>
+        service does not start.</para>
+      <para>To view a sample configuration file, see <link
+          xlink:href="http://docs.openstack.org/trunk/config-reference/content/section_glance-api.conf.html"
+          >glance-api.conf</link>.</para>
+    </step>
+    <step>
+      <para>Optionally, in the <filename>glance-api.conf</filename>
+        file, specify whether roles or policies are used in the
+        property protections configuration file:</para>
+      <programlisting language="ini">property_protection_rule_format = roles</programlisting>
+      <para>The default is <literal>roles</literal>.</para>
+      <para>To view a sample configuration file, see <link
+          xlink:href="http://docs.openstack.org/trunk/config-reference/content/section_glance-api.conf.html"
+          >glance-api.conf</link>.</para>
     </step>
   </procedure>
 </section>
