@@ -1,101 +1,118 @@
 <section xml:id="section_compute-cells"
     xmlns="http://docbook.org/ns/docbook"
     xmlns:xlink="http://www.w3.org/1999/xlink"
-    xmlns:xi="http://www.w3.org/2001/XInclude"
-    version="5.0">
+    xmlns:xi="http://www.w3.org/2001/XInclude" version="5.0">
     <title>Cells</title>
     <?dbhtml stop-chunking?>
-    <para><emphasis role="italic">Cells</emphasis> functionality allows you to scale an OpenStack
-        Compute cloud in a more distributed fashion without having to use complicated technologies
-        like database and message queue clustering. It is intended to support very large
-        deployments.</para>
-    <para>When this functionality is enabled, the hosts in an OpenStack Compute cloud are
-        partitioned into groups called cells. Cells are configured as a tree. The top-level cell
-        should have a host that runs a <systemitem class="service">nova-api</systemitem> service,
-        but no <systemitem class="service">nova-compute</systemitem> services. Each child cell
-        should run all of the typical <systemitem class="service">nova-*</systemitem> services in a
-        regular Compute cloud except for <systemitem class="service">nova-api</systemitem>. You can
-        think of cells as a normal Compute deployment in that each cell has its own database server
-        and message queue broker.</para>
-    <para>The <systemitem class="service">nova-cells</systemitem> service handles communication
-        between cells and selects cells for new instances. This service is required for every cell.
-        Communication between cells is pluggable, and currently the only option is communication through
-        RPC.</para>
-    <para>Cells scheduling is separate from host scheduling. <systemitem
-        class="service">nova-cells</systemitem>
-        first picks a cell. Once a cell is selected and the new build
-        request reaches its <systemitem
-        class="service">nova-cells</systemitem> service, it is sent
-        over to the host scheduler in that cell and the build proceeds
-        as it would have without cells.</para>
-        <warning>
-            <para>Cell functionality is currently considered experimental.</para>
-        </warning>
+    <para><emphasis role="italic">Cells</emphasis> functionality
+        enables you to scale an OpenStack Compute cloud in a more
+        distributed fashion without having to use complicated
+        technologies like database and message queue clustering. It
+        supports very large deployments.</para>
+    <para>When this functionality is enabled, the hosts in an
+        OpenStack Compute cloud are partitioned into groups called
+        cells. Cells are configured as a tree. The top-level cell
+        should have a host that runs a <systemitem class="service"
+            >nova-api</systemitem> service, but no <systemitem
+            class="service">nova-compute</systemitem> services. Each
+        child cell should run all of the typical <systemitem
+            class="service">nova-*</systemitem> services in a regular
+        Compute cloud except for <systemitem class="service"
+            >nova-api</systemitem>. You can think of cells as a normal
+        Compute deployment in that each cell has its own database
+        server and message queue broker.</para>
+    <para>The <systemitem class="service">nova-cells</systemitem>
+        service handles communication between cells and selects cells
+        for new instances. This service is required for every cell.
+        Communication between cells is pluggable, and currently the
+        only option is communication through RPC.</para>
+    <para>Cells scheduling is separate from host scheduling.
+            <systemitem class="service">nova-cells</systemitem> first
+        picks a cell. Once a cell is selected and the new build
+        request reaches its <systemitem class="service"
+            >nova-cells</systemitem> service, it is sent over to the
+        host scheduler in that cell and the build proceeds as it would
+        have without cells.</para>
+    <warning>
+        <para>Cell functionality is currently considered
+            experimental.</para>
+    </warning>
     <section xml:id="cell-config-options">
         <title>Cell configuration options</title>
-        <para>Cells are disabled by default. All cell-related configuration options go under a
-                <literal>[cells]</literal> section in <filename>nova.conf</filename>. The following
+        <para>Cells are disabled by default. All cell-related
+            configuration options appear in the
+                <literal>[cells]</literal> section in
+                <filename>nova.conf</filename>. The following
             cell-related options are currently supported:<variablelist>
                 <varlistentry>
-                    <term><literal>enable</literal></term>
+                    <term><option>enable</option></term>
                     <listitem>
-                        <para>Set this is <literal>True</literal> to turn on cell functionality,
-                            which is off by default.</para>
+                        <para>Set to <literal>True</literal> to turn
+                            on cell functionality. Default is
+                                <literal>false</literal>.</para>
                     </listitem>
                 </varlistentry>
                 <varlistentry>
-                    <term><literal>name</literal></term>
+                    <term><option>name</option></term>
                     <listitem>
-                        <para>Name of the current cell. This must be unique for each cell.</para>
+                        <para>Name of the current cell. Must be unique
+                            for each cell.</para>
                     </listitem>
                 </varlistentry>
                 <varlistentry>
-                    <term><literal>capabilities</literal></term>
+                    <term><option>capabilities</option></term>
                     <listitem>
                         <para>List of arbitrary
-                                    <literal><replaceable>key</replaceable>=<replaceable>value</replaceable></literal>
-                            pairs defining capabilities of the current cell.
-                            Values include
+                                   <literal><replaceable>key</replaceable>=<replaceable>value</replaceable></literal>
+                            pairs defining capabilities of the current
+                            cell. Values include
                                 <literal>hypervisor=xenserver;kvm,os=linux;windows</literal>.</para>
                     </listitem>
                 </varlistentry>
                 <varlistentry>
-                    <term><literal>call_timeout</literal></term>
+                    <term><option>call_timeout</option></term>
                     <listitem>
-                        <para>How long in seconds to wait for replies from calls
-                            between cells.</para>
+                        <para>How long in seconds to wait for replies
+                            from calls between cells.</para>
                     </listitem>
                 </varlistentry>
                 <varlistentry>
                     <term>scheduler_filter_classes</term>
                     <listitem>
-                        <para>Filter classes that the cells scheduler should use. By default, uses
-                                "<literal>nova.cells.filters.all_filters</literal>" to map to all
-                            cells filters included with Compute.</para>
+                        <para>Filter classes that the cells scheduler
+                            should use. By default, uses
+                                "<literal>nova.cells.filters.all_filters</literal>"
+                            to map to all cells filters included with
+                            Compute.</para>
                     </listitem>
                 </varlistentry>
                 <varlistentry>
                     <term>scheduler_weight_classes</term>
-                    <listitem><para>Weight classes the cells scheduler should use. By default, uses
+                    <listitem>
+                        <para>Weight classes the cells scheduler
+                            should use. By default, uses
                                 "<literal>nova.cells.weights.all_weighers</literal>"
-                            to map to all cells weight algorithms (weighers)
-                            included with Compute.</para></listitem>
+                            to map to all cells weight algorithms
+                            (weighers) included with Compute.</para>
+                    </listitem>
                 </varlistentry>
                 <varlistentry>
                     <term>ram_weight_multiplier</term>
                     <listitem>
-                        <para>Multiplier used for weighing ram. Negative numbers
-                            mean you want Compute to stack VMs on one host
-                            instead of spreading out new VMs to more hosts in
-                            the cell. Default value is 10.0.</para>
+                        <para>Multiplier used for weighing ram.
+                            Negative numbers mean you want Compute to
+                            stack VMs on one host instead of spreading
+                            out new VMs to more hosts in the cell. The
+                            default value is 10.0.</para>
                     </listitem>
                 </varlistentry>
             </variablelist></para>
     </section>
     <section xml:id="config-API-cell">
         <title>Configure the API (top-level) cell</title>
-        <para>The compute API class must be changed in the API cell so that requests can be proxied
-            through nova-cells down to the correct cell properly. Add the following to
+        <para>The compute API class must be changed in the API cell so
+            that requests can be proxied through nova-cells down to
+            the correct cell properly. Add the following line to
                 <filename>nova.conf</filename> in the API
             cell:<programlisting language="ini">[DEFAULT]
 compute_api_class=nova.compute.cells_api.ComputeCellsAPI
@@ -107,8 +124,10 @@ name=api</programlisting></para>
     </section>
     <section xml:id="config-child-cell">
         <title>Configure the child cells</title>
-        <para>Add the following to <filename>nova.conf</filename> in the child cells, replacing
-                <replaceable>cell1</replaceable> with the name of each
+        <para>Add the following lines to
+                <filename>nova.conf</filename> in the child cells,
+            replacing <replaceable>cell1</replaceable> with the name
+            of each
             cell:<programlisting language="ini">[DEFAULT]
 # Disable quota checking in child cells.  Let API cell do it exclusively.
 quota_driver=nova.quota.NoopQuotaDriver
@@ -119,13 +138,15 @@ name=<replaceable>cell1</replaceable></programlisting></para>
     </section>
     <section xml:id="config-cell-db">
         <title>Configure the database in each cell</title>
-        <para>Before bringing the services online, the database in each cell needs to be configured
-            with information about related cells. In particular, the API cell needs to know about
-            its immediate children, and the child cells must know about their immediate agents.
-            The information needed is the <application>RabbitMQ</application> server credentials
-            for the particular cell.</para>
-        <para>Use the <command>nova-manage cell create</command> command to add this information to
-            the database in each
+        <para>Before bringing the services online, the database in
+            each cell needs to be configured with information about
+            related cells. In particular, the API cell needs to know
+            about its immediate children, and the child cells must
+            know about their immediate agents. The information needed
+            is the <application>RabbitMQ</application> server
+            credentials for the particular cell.</para>
+        <para>Use the <command>nova-manage cell create</command>
+            command to add this information to the database in each
             cell:<screen><prompt>#</prompt> <userinput>nova-manage cell create -h</userinput>
 <computeroutput>Options:
   -h, --help            show this help message and exit
@@ -144,117 +165,158 @@ name=<replaceable>cell1</replaceable></programlisting></para>
   --woffset=&lt;float>
                         (weight offset) It might be used by some cell scheduling code in the future
   --wscale=&lt;float>
-                        (weight scale) It might be used by some cell scheduling code in the future
-</computeroutput></screen></para>
-        <para>As an example, assume we have an API cell named <literal>api</literal> and a child
-            cell named <literal>cell1</literal>. Within the api cell, we have the following RabbitMQ
-            server
-            info:<programlisting language="ini">rabbit_host=10.0.0.10
+                        (weight scale) It might be used by some cell scheduling code in the future</computeroutput></screen></para>
+        <para>As an example, assume an API cell named
+                <literal>api</literal> and a child cell named
+                <literal>cell1</literal>.</para>
+        <para>Within the <literal>api</literal> cell, specify the
+            following RabbitMQ server
+            information:<programlisting language="ini">rabbit_host=10.0.0.10
 rabbit_port=5672
 rabbit_username=api_user
 rabbit_password=api_passwd
 rabbit_virtual_host=api_vhost</programlisting></para>
-        <para>And in the child cell named <literal>cell1</literal> we have the following RabbitMQ
-            server
-            info:<programlisting language="ini">rabbit_host=10.0.1.10
+        <para>Within the <literal>cell1</literal> child cell, specify
+            the following RabbitMQ server
+            information:<programlisting language="ini">rabbit_host=10.0.1.10
 rabbit_port=5673
 rabbit_username=cell1_user
 rabbit_password=cell1_passwd
 rabbit_virtual_host=cell1_vhost</programlisting></para>
-        <para>We would run this in the API cell, as
-            root.<screen><prompt>#</prompt> <userinput>nova-manage cell create --name=cell1 --cell_type=child \
+        <para>You can run this in the API cell as
+            root:<screen><prompt>#</prompt> <userinput>nova-manage cell create --name=cell1 --cell_type=child \
   --username=cell1_user --password=cell1_passwd --hostname=10.0.1.10 \
-  --port=5673 --virtual_host=cell1_vhost --woffset=1.0 --wscale=1.0</userinput></screen>
-        </para>
-        <para>Repeat the above for all child cells.</para>
-        <para>In the child cell, we would run the following, as
+  --port=5673 --virtual_host=cell1_vhost --woffset=1.0 --wscale=1.0</userinput></screen></para>
+        <para>Repeat the previous steps for all child cells.</para>
+        <para>In the child cell, run the following, as
             root:<screen><prompt>#</prompt> <userinput>nova-manage cell create --name=api --cell_type=parent \
   --username=api_user --password=api_passwd --hostname=10.0.0.10 \
-  --port=5672 --virtual_host=api_vhost --woffset=1.0 --wscale=1.0</userinput></screen>
-        </para>
-        <para>To customize the Compute cells, use the configuration option
-            settings documented in <xref
+  --port=5672 --virtual_host=api_vhost --woffset=1.0 --wscale=1.0</userinput></screen></para>
+        <para>To customize the Compute cells, use the configuration
+            option settings documented in <xref
                 linkend="config_table_nova_cells"/>.</para>
     </section>
     <section xml:id="cell-weights-filters">
         <title>Cell scheduling configuration</title>
-        <para>To determine the best cell for launching a new instance, Compute  uses a set of
-            filters and weights configured in <filename>/etc/nova/nova.conf</filename>. The
-            following options are available to prioritize cells for scheduling:</para>
-        <para>
-            <itemizedlist>
+        <para>To determine the best cell to use to launch a new
+            instance, Compute uses a set of filters and weights
+            defined in the <filename>/etc/nova/nova.conf</filename>
+            file. The following options are available to prioritize
+            cells for scheduling:</para>
+        <variablelist>
+            <varlistentry>
+                <term><option>scheduler_filter_classes</option></term>
                 <listitem>
-                    <para><code>scheduler_filter_classes</code> - Specifies the list of filter
-                        classes. By default <code>nova.cells.weights.all_filters</code> is
-                        specified, which maps to all cells filters included with Compute (see
-                        <xref linkend="scheduler-filters"/>).</para>
+                    <para>. Specifies the list of filter classes. By
+                        default
+                            <option>nova.cells.weights.all_filters</option>
+                        is specified, which maps to all cells filters
+                        included with Compute (see <xref
+                            linkend="scheduler-filters"/>).</para>
                 </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><option>scheduler_weight_classes</option></term>
                 <listitem>
-                    <para><code>scheduler_weight_classes</code> - Specifies the list of weight
-                        classes. By default <code>nova.cells.weights.all_weighers</code> is
-                        specified, which maps to all cell weight algorithms (weighers) included with
-                        Compute. The following modules are available:</para>
-                    <itemizedlist><listitem>
-                            <para><code>mute_child</code>: Downgrades the likelihood of child cells
-                                being chosen for scheduling requests, which haven't sent capacity or
-                                capability updates in a while. Options include
-                                    <code>mute_weight_multiplier</code> (multiplier for mute
-                                children; value should be negative) and
-                                    <code>mute_weight_value</code> (assigned to mute children;
-                                should be a positive value).</para>
+                    <para>Specifies the list of weight classes. By
+                        default
+                            <option>nova.cells.weights.all_weighers</option>
+                        is specified, which maps to all cell weight
+                        algorithms (weighers) included with Compute.
+                        The following modules are available:</para>
+                    <itemizedlist>
+                        <listitem>
+                            <para><literal>mute_child</literal>.
+                                Downgrades the likelihood of child
+                                cells being chosen for scheduling
+                                requests, which haven't sent capacity
+                                or capability updates in a while.
+                                Options include
+                                   <option>mute_weight_multiplier</option>
+                                (multiplier for mute children; value
+                                should be negative) and
+                                   <option>mute_weight_value</option>
+                                (assigned to mute children; should be
+                                a positive value).</para>
                         </listitem>
                         <listitem>
-                            <para><code>ram_by_instance_type</code>: Select cells with the most RAM
-                                capacity for the instance type being requested. Because higher
-                                weights win, Compute returns the number of available units for the
-                                instance type requested. The <code>ram_weight_multiplier</code>
-                                option defaults to 10.0 that adds to the weight by a factor of 10.
-                                Use a negative number to stack VMs on one host instead of spreading
-                                out new VMs to more hosts in the cell.</para>
+                            <para><literal>ram_by_instance_type</literal>.
+                                Select cells with the most RAM
+                                capacity for the instance type being
+                                requested. Because higher weights win,
+                                Compute returns the number of
+                                available units for the instance type
+                                requested. The
+                                   <option>ram_weight_multiplier</option>
+                                option defaults to 10.0 that adds to
+                                the weight by a factor of 10. Use a
+                                negative number to stack VMs on one
+                                host instead of spreading out new VMs
+                                to more hosts in the cell.</para>
                         </listitem>
-                        <listitem><para><code>weight_offset</code>: Allows modifying the database to weight a particular cell. You can
-                                use this when you want to disable a cell (for example, '0'), or to
-                                set a default cell by making its weight_offset very high (for
-                                example, '999999999999999'). The highest weight will be the first
-                                cell to be scheduled for launching an instance.</para></listitem></itemizedlist>
+                        <listitem>
+                            <para><literal>weight_offset</literal>.
+                                Allows modifying the database to
+                                weight a particular cell. You can use
+                                this when you want to disable a cell
+                                (for example, '0'), or to set a
+                                default cell by making its
+                                weight_offset very high (for example,
+                                '999999999999999'). The highest weight
+                                will be the first cell to be scheduled
+                                for launching an instance.</para>
+                        </listitem>
+                    </itemizedlist>
                 </listitem>
-            </itemizedlist>
-       </para>
-        <para>Additionally, the following options are available for the cell scheduler:</para>
-        <para>
-            <itemizedlist>
+            </varlistentry>
+        </variablelist>
+        <para>Additionally, the following options are available for
+            the cell scheduler:</para>
+        <variablelist>
+            <varlistentry>
+                <term><option>scheduler_retries</option></term>
                 <listitem>
-                    <para><code>scheduler_retries</code> - Specifies how many times the scheduler
-                        tries to launch a new instance when no cells are available (default=10).</para>
+                    <para>Specifies how many times the scheduler tries
+                        to launch a new instance when no cells are
+                        available (default=10).</para>
                 </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><option>scheduler_retry_delay</option></term>
                 <listitem>
-                    <para><code>scheduler_retry_delay</code> - Specifies the delay (in seconds)
-                        between retries (default=2).</para>
+                    <para>Specifies the delay (in seconds) between
+                        retries (default=2).</para>
                 </listitem>
-            </itemizedlist>
-       </para>
-        <para>As an admin user, you can also add a filter that directs builds to
-            a particular cell. The <filename>policy.json</filename> file must
-            have a line with <literal>"cells_scheduler_filter:TargetCellFilter"
-                : "is_admin:True"</literal> to let an admin user specify a
-            scheduler hint to direct a build to a particular cell.</para>
+            </varlistentry>
+        </variablelist>
+        <para>As an admin user, you can also add a filter that directs
+            builds to a particular cell. The
+                <filename>policy.json</filename> file must have a line
+            with <literal>"cells_scheduler_filter:TargetCellFilter" :
+                "is_admin:True"</literal> to let an admin user specify
+            a scheduler hint to direct a build to a particular
+            cell.</para>
     </section>
     <section xml:id="cell-config-optional-json">
         <title>Optional cell configuration</title>
-        <para>Cells currently keeps all inter-cell communication data, including
-            user names and passwords, in the database. This is undesirable and
-            unnecessary since cells data isn't updated very frequently. Instead,
-            create a JSON file to input cells data specified via a
-                <code>[cells]cells_config</code> option. When specified, the
-            database is no longer consulted when reloading cells data. The file
-            will need the columns present in the Cell model (excluding common
-            database fields and the <code>id</code> column). The queue
-            connection information must be specified through a
-                <code>transport_url</code> field, instead of
-                <code>username</code>, <code>password</code>, and so on. The
-                <code>transport_url</code> has the following form:</para>
-            <programlisting>rabbit://<replaceable>USERNAME</replaceable>:<replaceable>PASSWORD</replaceable>@<replaceable>HOSTNAME</replaceable>:<replaceable>PORT</replaceable>/<replaceable>VIRTUAL_HOST</replaceable></programlisting>
-        <para>The scheme can be either <literal>qpid</literal> or <literal>rabbit</literal>, as shown previously. The following sample shows this optional configuration:</para>
+        <para>Cells store all inter-cell communication data, including
+            user names and passwords, in the database. Because the
+            cells data is not updated very frequently, use the
+                <option>[cells]cells_config</option> option to specify
+            a JSON file to store cells data. With this configuration,
+            the database is no longer consulted when reloading the
+            cells data. The file must have columns present in the Cell
+            model (excluding common database fields and the
+                <option>id</option> column). You must specify the
+            queue connection information through a
+                <option>transport_url</option> field, instead of
+                <option>username</option>, <option>password</option>,
+            and so on. The <option>transport_url</option> has the
+            following form:</para>
+        <programlisting>rabbit://<replaceable>USERNAME</replaceable>:<replaceable>PASSWORD</replaceable>@<replaceable>HOSTNAME</replaceable>:<replaceable>PORT</replaceable>/<replaceable>VIRTUAL_HOST</replaceable></programlisting>
+        <para>The scheme can be either <literal>qpid</literal> or
+                <literal>rabbit</literal>, as shown previously. The
+            following sample shows this optional configuration:</para>
         <programlisting language="json"><xi:include href="samples/cells-resp.json" parse="text"/></programlisting>
     </section>
 </section>
