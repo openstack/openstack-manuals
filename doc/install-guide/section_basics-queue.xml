@@ -40,8 +40,10 @@
   <procedure>
     <title>To configure the message broker service</title>
     <step os="sles;opensuse;rhel;centos;fedora">
-      <para>Start the message broker service:</para>
-      <screen><prompt>#</prompt> <userinput>service rabbitmq-server start</userinput></screen>
+      <para>Start the message broker service and enable it to start when the
+          system boots:</para>
+      <screen><prompt>#</prompt> <userinput>service rabbitmq-server start</userinput>
+<prompt>#</prompt> <userinput>chkconfig rabbitmq-server on</userinput></screen>
     </step>
     <step>
       <para>The message broker creates a default account that uses
@@ -67,14 +69,6 @@
           <literal>rabbit_password</literal> keys in the configuration file
           of each OpenStack service that uses the message broker.</para>
       </note>
-    </step>
-  </procedure>
-  <procedure os="rhel;centos;fedora;sles;opensuse">
-    <title>To finalize installation</title>
-    <step>
-      <para>Configure the message broker service to start when the system
-        boots:</para>
-      <screen><prompt>#</prompt> <userinput>chkconfig rabbitmq-server on</userinput></screen>
     </step>
   </procedure>
   <para>Congratulations, now you are ready to install OpenStack
