@@ -5,60 +5,35 @@
     xml:id="dashboard_manage_projects_users">
     <?dbhtml stop-chunking?>
     <title>Manage projects and users</title>
-    <para>As a cloud administrator, you manage both projects and
-        users. Projects are organizational units in the cloud to which
-        you can assign users. Projects are also known as <emphasis
-            role="italic">tenants</emphasis> or <emphasis
-            role="italic">accounts</emphasis>.You can manage projects
-        and users independently from each other.</para>
-    <para>Users are members of one or more projects.</para>
-    <para>During cloud set up, the operator defines at least one
-        project, user, and role. The operator links the role to the
-        user and the user to the project. Roles define the actions
-        that users can perform. As an administrator, you can create
-        additional projects and users as needed.</para>
-    <para>Learn how to add, update, and delete projects and users,
-        assign users to one or more projects, and change or remove the
-        assignment. To enable or temporarily disable a project or
-        user, update that project or user. You can also change quotas
-        at the project level. For information, see <xref
-            linkend="dashboard_set_quotas"/>.</para>
-    <para>When you create a user account, you must assign the account
-        to a primary project. Optionally, you can assign the account
-        to additional projects. Before you can delete a user account,
-        you must remove the user account from its primary
-        project.</para>
-    <section xml:id="disable_project">
-        <title>Consequences of disabling projects and users</title>
-        <para>When you disable a project, it has the following
-            consequences:</para>
-        <itemizedlist>
-            <listitem>
-                <para>In the dashboard, users can no longer access the
-                    project from the <guilabel>CURRENT
-                        PROJECT</guilabel> drop-down list on the
-                        <guilabel>Project</guilabel> tab.</para>
-            </listitem>
-            <listitem>
-                <para>Users who are members of only the disabled
-                    project can no longer log in.</para>
-            </listitem>
-            <listitem>
-                <para>You cannot launch instances for a disabled
-                    project. Instances that are already running are
-                    not automatically terminated though—you must stop
-                    them manually.</para>
-            </listitem>
-            <listitem>
-                <para>The data for a disabled project is maintained so
-                    that you can enable the project again at any
-                    time.</para>
-            </listitem>
-        </itemizedlist>
-        <para>When you disable a user account, the user can no longer
-            log in, but the data for the user is maintained so that
-            you can enable the user again at any time.</para>
-    </section>
+    <para>As an OpenStack cloud administrator, you manage both
+        projects and users, which can be managed independently from
+        each other. Projects, also known as <emphasis role="italic"
+            >tenants</emphasis> or <emphasis role="italic"
+            >accounts</emphasis>, are organizational units in the
+        cloud to which you can assign users. Users also have roles
+        that determine their level of access to the project, and may
+        have different roles in different projects.</para>
+    <para>When the cloud is initially created, the operator defines at
+        least one project, user, and role.</para>
+    <para>As an administrator, you can create additional projects and users as
+        needed. This section documents the following project and user
+        administration tasks:</para>
+    <itemizedlist>
+        <listitem>
+            <para>Adding, updating, and deleting projects and
+                users.</para>
+        </listitem>
+    <listitem>
+        <para>Assigning users to one or more projects, and changing or
+                removing the assignment.</para>
+    </listitem>
+    <listitem>
+        <para>Enabling or temporarily disabling a project or
+                user.</para>
+    </listitem>
+    </itemizedlist>
+    <para>You can also change quotas at the project level. For information, see
+            <xref linkend="dashboard_set_quotas"/>.</para>
     <section xml:id="dashboard_create_project">
         <title>Create a project</title>
         <procedure>
@@ -66,11 +41,12 @@
                 <para>Log in to the dashboard and choose the
                         <guilabel>admin</guilabel> project from the
                         <guilabel>CURRENT PROJECT</guilabel> drop-down
-                    list.</para>
+                    list at the top of the screen.</para>
             </step>
             <step>
-                <para>On the <guilabel>Admin</guilabel> tab, click the
-                        <guilabel>Projects</guilabel> category.</para>
+                <para>In the <guilabel>Admin</guilabel> tab, open the
+                        <guilabel>Identity Panel</guilabel> and click
+                    on <guilabel>Projects</guilabel>.</para>
             </step>
             <step>
                 <para>Click <guibutton>Create
@@ -95,8 +71,8 @@
             <step>
                 <para>Click <guibutton>Create
                     Project</guibutton>.</para>
-                <para>The <guilabel>Projects</guilabel> category shows
-                    the project, including its assigned ID.</para>
+                <para>The <guilabel>Projects</guilabel> list shows the
+                    project, including its assigned ID.</para>
             </step>
         </procedure>
     </section>
@@ -106,12 +82,12 @@
             description, and enable or temporarily disable it.</para>
         <procedure>
             <step>
-                <para>On the <guilabel>Admin</guilabel> tab, click the
-                        <guilabel>Projects</guilabel> category.</para>
+                <para>In the <guilabel>Admin</guilabel> tab, open the
+                        <guilabel>Identity Panel</guilabel> and click
+                    on <guilabel>Projects</guilabel>.</para>
             </step>
             <step>
-                <para>Select the project that you want to update.
-                </para>
+                <para>Select the project that you want to update.</para>
             </step>
             <step>
                 <para>In the <guilabel>More</guilabel> drop-down list,
@@ -132,6 +108,34 @@
                 <para>Click <guibutton>Save</guibutton>.</para>
             </step>
         </procedure>
+        <section xml:id="disable_project">
+            <title>Consequences of disabling projects</title>
+            <para>When you disable a project, it has the following
+            consequences:</para>
+            <itemizedlist>
+                <listitem>
+                    <para>In the dashboard, users can no longer access the
+                    project from the <guilabel>CURRENT
+                        PROJECT</guilabel> drop-down list on the
+                        <guilabel>Project</guilabel> tab.</para>
+                </listitem>
+                <listitem>
+                    <para>Users who are members of only the disabled
+                    project can no longer log in.</para>
+                </listitem>
+                <listitem>
+                    <para>You cannot launch instances for a disabled
+                    project. Instances that are already running are
+                    not automatically terminated though—you must stop
+                    them manually.</para>
+                </listitem>
+                <listitem>
+                    <para>The data for a disabled project is maintained so
+                    that you can enable the project again at any
+                    time.</para>
+                </listitem>
+            </itemizedlist>
+        </section>
     </section>
     <section xml:id="dashboard_user_assignments">
         <title>Modify user assignments for a project</title>
@@ -142,16 +146,14 @@
             assignments.</para>
         <procedure>
             <step>
-                <para>On the <guilabel>Admin</guilabel> tab, select
-                    the <guilabel>Projects</guilabel> category.</para>
+                <para>In the <guilabel>Admin</guilabel> tab, open the
+                        <guilabel>Identity Panel</guilabel> and click
+                    on <guilabel>Projects</guilabel>.</para>
             </step>
             <step>
-                <para>Select a project to modify its user
-                    assignments.</para>
-            </step>
-            <step>
-                <para>Select <guibutton>Modify
-                    Users</guibutton>.</para>
+                <para>Click the <guilabel>Modify Users</guilabel>
+                    button for the project that you want to
+                    modify.</para>
                 <para>The <guilabel>Edit Project</guilabel> window
                     shows the following lists of users:</para>
                 <itemizedlist>
@@ -163,7 +165,7 @@
                     <listitem>
                         <para><guilabel>Project Members</guilabel>.
                             Users that are assigned to the current
-                            project, </para>
+                            project.</para>
                     </listitem>
                 </itemizedlist>
                 <figure xml:id="cloud_dash_users_list">
@@ -206,30 +208,34 @@
                         <guilabel>Projects</guilabel> category.</para>
             </step>
             <step>
-                <para>Select the projects that you want to delete.
-                </para>
+                <para>Select the projects that you want to delete.</para>
             </step>
             <step>
                 <para>Click <guibutton>Delete Projects</guibutton> to
                     confirm the deletion.</para>
-                <note>
+                <warning>
                     <para>You cannot undo the delete action.</para>
-                </note>
+                </warning>
             </step>
         </procedure>
     </section>
     <section xml:id="dashboard_create_user">
         <title>Create a user account</title>
+        <para>When you create a user account, you must assign the account to a
+            primary project. You also have the option of assigning the account
+            to additional projects. Before you can delete a user account, you
+            must remove the user account from its primary project.</para>
         <procedure>
             <step>
                 <para>Log in to the dashboard and choose the
                         <guilabel>admin</guilabel> project from the
                         <guilabel>CURRENT PROJECT</guilabel> drop-down
-                    list.</para>
+                    list at the top of the screen.</para>
             </step>
             <step>
-                <para>On the <guilabel>Admin</guilabel> tab, select
-                    the <guilabel>Users</guilabel> category.</para>
+                <para>In the <guilabel>Admin</guilabel> tab, open the
+                        <guilabel>Identity Panel</guilabel> and click
+                    on <guilabel>Users</guilabel>.</para>
             </step>
             <step>
                 <para>Click <guibutton>Create User</guibutton>.</para>
@@ -257,19 +263,22 @@
     </section>
     <section xml:id="dashboard_disable_user">
         <title>Disable or enable a user</title>
+        <para>When you disable a user account, the user can no longer log in.
+            However, the data for the user is maintained so that you can enable
+            the user again at any time.</para>
         <procedure>
             <step>
-                <para>On the <guilabel>Admin</guilabel> tab, select
-                    the <guilabel>Users</guilabel> category.</para>
+                <para>In the <guilabel>Admin</guilabel> tab, open the
+                        <guilabel>Identity Panel</guilabel> and click
+                    on <guilabel>Users</guilabel>.</para>
             </step>
             <step>
-                <para>Select the user that you want to disable or
-                    enable. You can disable or enable only one user at
-                    a time.</para>
+                <para>Locate the user that you want to disable or
+                    enable in the Users list.</para>
             </step>
             <step>
-                <para>In the <guilabel>Actions</guilabel> drop-down
-                    list, select <guilabel>Disable User</guilabel> or
+                <para>In the <guilabel>More</guilabel> drop-down list,
+                    select <guilabel>Disable User</guilabel> or
                         <guilabel>Enable User</guilabel>.</para>
                 <para>In the <guilabel>Enabled</guilabel> column, the
                     enabled value updates to either
