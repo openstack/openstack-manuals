@@ -51,13 +51,6 @@
 connection = mysql://nova:<replaceable>NOVA_DBPASS</replaceable>@controller/nova</programlisting>
     </step>
 
-    <step os="fedora;rhel;centos">
-      <para>Set these configuration keys to configure Compute to use
-        the Qpid message broker:</para>
-      <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf \
-  DEFAULT rpc_backend qpid</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT qpid_hostname <replaceable>controller</replaceable></userinput></screen>
-    </step>
     <step os="ubuntu">
       <para>Configure the Compute service to use the RabbitMQ message broker by
         setting these configuration keys in the <literal>[DEFAULT]</literal>
@@ -69,7 +62,7 @@ rpc_backend = rabbit
 rabbit_host = controller
 rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
     </step>
-    <step os="opensuse;sles">
+    <step os="opensuse;sles;rhel;centos;fedora">
       <para>Set these configuration keys to configure Compute to use
         the RabbitMQ message broker:</para>
       <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf \
