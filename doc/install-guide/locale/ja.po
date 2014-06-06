@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenStack Manuals\n"
-"POT-Creation-Date: 2014-06-04 20:34+0000\n"
-"PO-Revision-Date: 2014-06-04 22:11+0000\n"
+"POT-Creation-Date: 2014-06-05 21:55+0000\n"
+"PO-Revision-Date: 2014-06-05 22:30+0000\n"
 "Last-Translator: Tomoyuki KATO <tomo@dream.daynight.jp>\n"
 "Language-Team: Japanese (http://www.transifex.com/projects/p/openstack-manuals-i18n/language/ja/)\n"
 "MIME-Version: 1.0\n"
@@ -2059,35 +2059,49 @@ msgstr "Networking の概念"
 #: ./doc/install-guide/section_neutron-concepts.xml7(para)
 msgid ""
 "OpenStack Networking (neutron) manages all of the networking facets for the "
-"Virtual Networking Infrastructure (VNI) and the access layer aspects of the "
-"Physical Networking Infrastructure (PNI) in your OpenStack environment. "
-"OpenStack Networking allows tenants to create advanced virtual network "
-"topologies including services such as <glossterm "
-"baseform=\"firewall\">firewalls</glossterm>, <glossterm baseform=\"load "
-"balancer\">load balancers</glossterm>, and <glossterm baseform=\"virtual "
-"private network (VPN)\"> virtual private networks (VPNs)</glossterm>."
-msgstr "OpenStack Networking (neutron) は OpenStack 環境で、仮想ネットワークインフラストラクチャ (VNI) のすべてのネットワークファセット、物理ネットワークインフラストラクチャ (PNI) のアクセス層の側面を管理します。OpenStack Networking により、プロジェクトが<glossterm baseform=\"firewall\">ファイアウォール</glossterm>、<glossterm baseform=\"load balancer\">負荷分散装置</glossterm>、<glossterm baseform=\"virtual private network (VPN)\">VPN</glossterm> などの高度な仮想ネットワークトポロジーを作成できるようになります。"
+"Virtual Networking Infrastructure (VNI) in your OpenStack environment. "
+"OpenStack Networking also manages the access layer aspects of the Physical "
+"Networking Infrastructure (PNI). Tenants can create advanced virtual network"
+" topologies using OpenStack Networking. These topologies include services "
+"such as <glossterm baseform=\"firewall\">firewalls</glossterm>, <glossterm "
+"baseform=\"load balancer\">load balancers</glossterm>, and <glossterm "
+"baseform=\"virtual private network (VPN)\"> virtual private networks "
+"(VPNs)</glossterm>."
+msgstr "OpenStack Networking (neutron) は、OpenStack 環境で仮想ネットワークインフラストラクチャ (VNI) のすべてのネットワークファセットを管理します。また、OpenStack Networking は物理ネットワークインフラストラクチャ (PNI) のアクセス層の側面も管理します。プロジェクトが<glossterm baseform=\"firewall\">ファイアウォール</glossterm>、<glossterm baseform=\"load balancer\">負荷分散装置</glossterm>、<glossterm baseform=\"virtual private network (VPN)\">VPN</glossterm> などの高度な仮想ネットワークトポロジーを作成できます。"
 
-#: ./doc/install-guide/section_neutron-concepts.xml16(para)
+#: ./doc/install-guide/section_neutron-concepts.xml17(para)
 msgid ""
-"Networking provides the following object abstractions: networks, subnets, "
-"and routers. Each has functionality that mimics its physical counterpart: "
+"Networking provides the following object abstractions: networks, routers, "
+"and subnets. Each has a functionality that mimics its physical counterpart: "
 "networks contain subnets, and routers route traffic between different subnet"
 " and networks."
-msgstr "Networking はネットワーク、サブネット、ルーターのオブジェクトの抽象化を提供します。それぞれ、対応する物理的なものの機能を模倣します。ネットワークがサブネットを含みます。ルーターがサブネットやネットワーク間の通信を中継します。"
+msgstr "Networking はネットワーク、ルーター、サブネットのオブジェクトの抽象化を提供します。それぞれ、対応する物理的なものの機能を模倣します。ネットワークがサブネットを含みます。ルーターがサブネットやネットワーク間の通信を中継します。"
 
-#: ./doc/install-guide/section_neutron-concepts.xml20(para)
+#: ./doc/install-guide/section_neutron-concepts.xml21(para)
 msgid ""
-"Any given Networking set up has at least one external network. This network,"
-" unlike the other networks, is not merely a virtually defined network. "
-"Instead, it represents the view into a slice of the external network that is"
-" accessible outside the OpenStack installation. IP addresses on the "
-"Networking external network are accessible by anybody physically on the "
-"outside network. Because this network merely represents a slice of the "
-"outside network, DHCP is disabled on this network."
-msgstr "すべての Networking 環境は少なくとも 1 つの外部ネットワークを持ちます。このネットワークは、他のネットワークと異なり、ほとんど仮想的に定義されたネットワークではありません。これは OpenStack インストール環境の外部からアクセス可能な外部ネットワークの一部のビューであることを意味します。Networking 外部ネットワークの IP アドレスは外部ネットワークにある何らかの物理的なものによりアクセスできます。このネットワークがほとんど外部ネットワークの一部を表すため、DHCP はこのネットワークで無効化されます。"
+"Each router has one gateway that connects to a network, and many interfaces "
+"connected to subnets. Subnets can access machines on other subnets connected"
+" to the same router."
+msgstr "各ルーターは、ネットワークに接続する 1 つのゲートウェイ、サブネットに接続する複数のインターフェースを持ちます。サブネットは、同じルーターに接続された他のサブネットにあるマシンにアクセスできます。"
 
-#: ./doc/install-guide/section_neutron-concepts.xml28(para)
+#: ./doc/install-guide/section_neutron-concepts.xml24(para)
+msgid ""
+"Any given Networking set up has at least one external network. This external"
+" network, unlike the other networks, is not solely a virtually defined "
+"network. It instead provides a view into a slice of the network accessible "
+"outside the OpenStack installation, which is the outside network. IP "
+"addresses on the external network are accessible by anybody physically on "
+"the outside network. DHCP is disabled on this network."
+msgstr "すべての Networking 環境は少なくとも 1 つの外部ネットワークを持ちます。この外部ネットワークは、他のネットワークと異なり、ほとんど仮想的に定義されたネットワークではありません。これは OpenStack インストール環境の外部からアクセス可能なネットワークの一部のビューであることを意味します。これは外部ネットワークです。外部ネットワークの IP アドレスは外部ネットワークにある何らかの物理的なものによりアクセスできます。DHCP はこのネットワークで無効化されます。"
+
+#: ./doc/install-guide/section_neutron-concepts.xml31(para)
+msgid ""
+"Machines can access the outside network through the gateway for the router. "
+"For the outside network to access VMs, and for VM's to access the outside "
+"network, routers between the networks are needed."
+msgstr "マシンが、ルーターのゲートウェイ経由で外部ネットワークにアクセスできます。外部ネットワークが仮想マシンにアクセスするため、仮想マシンが外部ネットワークにアクセスするために、ネットワーク間のルーターが必要です。"
+
+#: ./doc/install-guide/section_neutron-concepts.xml35(para)
 msgid ""
 "In addition to external networks, any Networking set up has one or more "
 "internal networks. These software-defined networks connect directly to the "
@@ -2096,43 +2110,36 @@ msgid ""
 "to that network directly."
 msgstr "外部ネットワークに加えて、あらゆる Networking のセットアップ環境は 1 つ以上の内部ネットワークを持ちます。これらの SDN は仮想マシンに直接接続します。あらゆる指定された内部ネットワークにある仮想マシン、またはインターフェース経由で同様のルーターに接続されたサブネットにある仮想マシンのみが、そのネットワークに接続された仮想マシンに直接アクセスできます。"
 
-#: ./doc/install-guide/section_neutron-concepts.xml33(para)
-msgid ""
-"For the outside network to access VMs, and vice versa, routers between the "
-"networks are needed. Each router has one gateway that is connected to a "
-"network and many interfaces that are connected to subnets. Like a physical "
-"router, subnets can access machines on other subnets that are connected to "
-"the same router, and machines can access the outside network through the "
-"gateway for the router."
-msgstr "外部ネットワークが仮想マシンにアクセスするため、またその逆のため、ネットワーク間のルーターが必要になります。各ルーターはネットワークに接続された 1 つのゲートウェイとサブネットに接続された多くのインターフェースを持ちます。物理ルーターのように、同じルーターに接続された他のサブネットにあるマシンにサブネットがアクセスできます。また、マシンはルーターに対するゲートウェイ経由で外部ネットワークにアクセスできます。"
-
 #: ./doc/install-guide/section_neutron-concepts.xml40(para)
 msgid ""
 "Additionally, you can allocate IP addresses on external networks to ports on"
 " the internal network. Whenever something is connected to a subnet, that "
-"connection is called a port. You can associate external network IP addresses"
-" with ports to VMs. This way, entities on the outside network can access "
-"VMs."
+"connection is called a port.You can associate external network IP addresses "
+"with ports to VMs. This way, entities on the outside network can access VMs."
 msgstr "さらに、内部ネットワークにたどり着くために外部ネットワークに IP アドレスを割り当てることができます。何かがサブネットに接続されたとき必ず、その接続がポートと呼ばれます。外部ネットワークの IP アドレスを仮想マシンのポートに関連づけられます。このように、外部ネットワークのものが仮想マシンにアクセスできます。"
 
 #: ./doc/install-guide/section_neutron-concepts.xml45(para)
 msgid ""
 "Networking also supports <emphasis role=\"italic\">security "
-"groups</emphasis>. Security groups enable administrators to define firewall "
-"rules in groups. A VM can belong to one or more security groups, and "
-"Networking applies the rules in those security groups to block or unblock "
-"ports, port ranges, or traffic types for that VM."
-msgstr "Networking は <emphasis role=\"italic\">セキュリティグループ</emphasis> もサポートします。セキュリティグループにより、管理者がグループでファイアウォールルールを定義できます。仮想マシンは 1 つ以上のセキュリティグループに属します。Networking が、ポート、ポート範囲、または通信種別をブロックするかブロックしないかのために、これらのセキュリティグループにあるルールを仮想マシンに対して適用します。"
+"groups</emphasis>, which enable administrators to define firewall rules in "
+"groups. A VM can belong to one or more security groups. Networking applies "
+"the rules in those security groups to block or unblock ports, port ranges, "
+"or traffic types for that VM."
+msgstr "Networking は <emphasis role=\"italic\">セキュリティグループ</emphasis> もサポートします。これにより、管理者がグループでファイアウォールルールを定義できます。仮想マシンは 1 つ以上のセキュリティグループに属します。Networking が、ポート、ポート範囲、または通信種別をブロックするかブロックしないかのために、これらのセキュリティグループにあるルールを仮想マシンに対して適用します。"
 
-#: ./doc/install-guide/section_neutron-concepts.xml51(para)
+#: ./doc/install-guide/section_neutron-concepts.xml51(title)
+msgid "Networking plug-ins"
+msgstr "Networking プラグイン"
+
+#: ./doc/install-guide/section_neutron-concepts.xml52(para)
 msgid ""
-"Each plug-in that Networking uses has its own concepts. While not vital to "
-"operating Networking, understanding these concepts can help you set up "
-"Networking. All Networking installations use a core plug-in and a security "
-"group plug-in (or just the No-Op security group plug-in). Additionally, "
-"Firewall-as-a-service (FWaaS) and Load-balancing-as-a-service (LBaaS) plug-"
-"ins are available."
-msgstr "Networking が使用する各プラグインはそれぞれ独自の概念を持ちます。Networking を稼働されるために必須ではありませんが、これらの概念を理解することにより、Networking をセットアップする役に立つでしょう。すべての Networking インストール環境は、コアプラグインとセキュリティグループプラグイン (またはただの No-Op セキュリティグループプラグイン) を使用します。さらに、Firewall-as-a-service (FWaaS) と Load-balancing-as-a-service (LBaaS) プラグインが利用可能です。"
+"Each plug-in that Networking uses has its own concepts. These plug-in "
+"concepts are not vital to operating Networking. Understanding these concepts"
+" can help you set up the Openstack Networking service, however. All "
+"Networking installations use a core plug-in and a security group plug-in (or"
+" just the No-Op security group plug-in). Additionally, Firewall-as-a-service"
+" (FWaaS) and Load-balancing-as-a-service (LBaaS) plug-ins are available."
+msgstr "Networking が使用する各プラグインはそれぞれ独自の概念を持ちます。これらのプラグインの概念は、Networking を稼働されるために必須ではありません。しかしながら、これらの概念を理解することにより、Openstack Networking をセットアップする役に立つでしょう。すべての Networking インストール環境は、コアプラグインとセキュリティグループプラグイン (またはただの No-Op セキュリティグループプラグイン) を使用します。さらに、Firewall-as-a-service (FWaaS) と Load-balancing-as-a-service (LBaaS) プラグインが利用可能です。"
 
 #: ./doc/install-guide/section_nova-networking-initial-network.xml5(title)
 msgid "Create initial network"
@@ -5651,8 +5658,8 @@ msgid "Restart the Compute services:"
 msgstr "Compute のサービスを再起動します。"
 
 #: ./doc/install-guide/ch_nova.xml7(title)
-msgid "Configure Compute services"
-msgstr "Compute Service の設定"
+msgid "Add the Compute services"
+msgstr "Compute の追加"
 
 #: ./doc/install-guide/ch_networking.xml6(title)
 msgid "Add a networking service"
