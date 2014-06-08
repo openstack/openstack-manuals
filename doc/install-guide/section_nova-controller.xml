@@ -34,7 +34,7 @@
           db sync</command> command runs automatically.</para>
     </step>
 
-    <step>
+    <step os="opensuse;sles;fedora;rhel;centos;ubuntu">
       <para>Compute stores information in a database. In this guide, we
         use a MySQL database on the controller node. Configure Compute
         with the database location and credentials. Replace
@@ -42,11 +42,11 @@
         database that you will create in a later step.</para>
       <screen os="fedora;rhel;centos;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf \
   database connection mysql://nova:<replaceable>NOVA_DBPASS</replaceable>@<replaceable>controller</replaceable>/nova</userinput></screen>
-      <para os="ubuntu;debian">Edit the <literal>[database]</literal> section
+      <para os="ubuntu">Edit the <literal>[database]</literal> section
         in the <filename>/etc/nova/nova.conf</filename> file, adding it if
        necessary, to modify this
         key:</para>
-      <programlisting os="ubuntu;debian" language="ini">
+      <programlisting os="ubuntu" language="ini">
 [database]
 connection = mysql://nova:<replaceable>NOVA_DBPASS</replaceable>@controller/nova</programlisting>
     </step>
@@ -132,7 +132,7 @@ IDENTIFIED BY '<replaceable>NOVA_DBPASS</replaceable>';</userinput></screen>
       <screen><prompt>$</prompt> <userinput>keystone user-create --name=nova --pass=<replaceable>NOVA_PASS</replaceable> --email=<replaceable>nova@example.com</replaceable></userinput>
 <prompt>$</prompt> <userinput>keystone user-role-add --user=nova --tenant=service --role=admin</userinput></screen>
     </step>
-    <step>
+    <step os="opensuse;sles;fedora;rhel;centos;ubuntu">
       <para>Configure Compute to use these credentials with the Identity
         Service running on the controller. Replace
         <replaceable>NOVA_PASS</replaceable> with your Compute password.</para>
@@ -144,17 +144,17 @@ IDENTIFIED BY '<replaceable>NOVA_DBPASS</replaceable>';</userinput></screen>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf keystone_authtoken admin_user nova</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf keystone_authtoken admin_tenant_name service</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf keystone_authtoken admin_password <replaceable>NOVA_PASS</replaceable></userinput></screen>
-      <para os="ubuntu;debian">Edit the <literal>[DEFAULT]</literal> section
+      <para os="ubuntu">Edit the <literal>[DEFAULT]</literal> section
         in the <filename>/etc/nova/nova.conf</filename> file to add this
         key:
       </para>
-      <programlisting os="ubuntu;debian" language="ini">
+      <programlisting os="ubuntu" language="ini">
 [DEFAULT]
 ...
 auth_strategy = keystone</programlisting>
-      <para os="ubuntu;debian">Add these keys to the
+      <para os="ubuntu">Add these keys to the
         <literal>[keystone_authtoken]</literal> section:</para>
-      <programlisting os="ubuntu;debian" language="ini">
+      <programlisting os="ubuntu" language="ini">
 [keystone_authtoken]
 ...
 auth_uri = http://<replaceable>controller</replaceable>:5000

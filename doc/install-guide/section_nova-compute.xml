@@ -65,7 +65,7 @@ dpkg-statoverride --update --add root root 0644 /boot/vmlinuz-${version}</progra
 <screen><prompt>#</prompt> <userinput>chmod +x /etc/kernel/postinst.d/statoverride</userinput></screen>
       </para>
     </step>
-    <step>
+    <step os="fedora;rhel;centos;opensuse;sles;ubuntu">
       <para os="fedora;rhel;centos;opensuse;sles">Edit the
         <filename>/etc/nova/nova.conf</filename> configuration file:
       </para>
@@ -78,10 +78,10 @@ dpkg-statoverride --update --add root root 0644 /boot/vmlinuz-${version}</progra
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf keystone_authtoken admin_user nova</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf keystone_authtoken admin_tenant_name service</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf keystone_authtoken admin_password <replaceable>NOVA_PASS</replaceable></userinput></screen>
-    <para os="ubuntu;debian">Edit the
+    <para os="ubuntu">Edit the
           <filename>/etc/nova/nova.conf</filename> configuration file and add these
         lines to the appropriate sections:</para>
-      <programlisting os="ubuntu;debian" language="ini">[DEFAULT]
+      <programlisting os="ubuntu" language="ini">[DEFAULT]
 ...
 auth_strategy = keystone
 ...
