@@ -20,4 +20,14 @@
     <para>This table lists the ports that other OpenStack components
         use:</para>
     <xi:include href="table_default-ports-peripheral-services.xml"/>
+    <para>On some deployments, the default port used by a service
+        may fall within the defined local port range of a host. To
+        check a host's local port range:</para>
+        <screen><prompt>$</prompt> <userinput>sysctl -a | grep ip_local_port_range</userinput></screen>
+        <para>If a service's default port falls within this range, run
+        the following program to check if the port has already been
+        assigned to another application:</para>
+        <screen><prompt>$</prompt> <userinput>lsof -i :<replaceable>PORT</replaceable></userinput></screen>
+        <para>Configure the service to use a different port if the
+        default port is already being used by another application.</para>
 </appendix>
