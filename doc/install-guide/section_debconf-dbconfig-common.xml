@@ -4,16 +4,22 @@
   xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
   <title>Configure the database with dbconfig-common</title>
-  <para>The <package>dbconfig-common</package> package provides a
-    standard Debian interface that enables you to configure Debian
+  <para>Many of the OpenStack services need to be configured
+    to access a database. These are configured through a DSN (Database
+    Source Name) directive as follows:</para>
+  <programlisting language="ini">[database]
+connection = mysql://keystone:0dec658e3f14a7d@localhost/keystonedb</programlisting>
+  <para>This <literal>connection</literal> directive will be handled by
+    the <package>dbconfig-common</package> package, which provides a
+    standard Debian interface. It enables you to configure Debian
     database parameters. It includes localized prompts for many
-    languages and it supports the OpenStack database back ends:
+    languages and it supports the following database backends:
     SQLite, MySQL, and PostgreSQL.</para>
   <para>By default, the <package>dbconfig-common</package> package
-    configures the OpenStack services to use SQLite3. So if you use
-      <package>debconf</package> in non-interactive mode and without
-    pre-seeding, the OpenStack services that you install use
-    SQLite3.</para>
+    configures the OpenStack services to use SQLite. So if you use
+    <package>debconf</package> in non-interactive mode and without
+    pre-seeding, the OpenStack services that you install will use
+    SQLite.</para>
   <para>By default, <package>dbconfig-common</package> does not
     provide access to database servers over a network. If you want the
       <package>dbconfig-common</package> package to prompt for remote
@@ -54,7 +60,7 @@ dbc_upgrade='true'
 dbc_remove=''
 dbc_dbtype='mysql'
 dbc_dbuser='keystone'
-dbc_dbpass='MyKeyStoneDbPassWord'
+dbc_dbpass='PASSWORD'
 dbc_dbserver=''
 dbc_dbport=''
 dbc_dbname='keystonedb'
@@ -67,9 +73,20 @@ dbc_authmethod_user=''</programlisting>
   <screen><prompt>#</prompt> <userinput>apt-get install keystone</userinput></screen>
   <para>The Identity Service is installed with MySQL as the database
     back end, <literal>keystonedb</literal> as database name, and the
-    localhost socket file.</para>
-  <para>The <package>cinder-common</package> package displays these
-    screens:</para>
+    localhost socket file. The corresponding DNS will then be:</para>
+  <programlisting language="ini">[database]
+connection = mysql://keystone:PASSWORD@localhost/keystonedb</programlisting>
+  <para>The <package>dbconfig-common</package> package will configure
+    MySQL for these access rights, and create the database for you.
+    Since OpenStack 2014.1.1, all OpenStack packages in Debian are performing
+    the following MySQL query after database creation (if you decide
+    to use MySQL as a back-end):</para>
+    <programlisting language="ini">ALTER DATABASE keystone CHARACTER SET utf8 COLLATE utf8_unicode_ci</programlisting>
+    <para>So, if using Debian, you wont need to care about database
+      creation, access rights and character sets. All that is handled
+      for you by the packages.</para>
+  <para>As an example, here are screenshots from the
+    <package>cinder-common</package> package:</para>
   <informalfigure>
     <mediaobject>
       <imageobject>
