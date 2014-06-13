@@ -1,25 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE chapter [
+<!DOCTYPE chapter[
 <!ENTITY % openstack SYSTEM "../../common/entities/openstack.ent">
 %openstack;
 ]>
-<section xmlns="http://docbook.org/ns/docbook"
-  xmlns:xi="http://www.w3.org/2001/XInclude"
-  xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
-  xml:id="vmware">
+<section xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0" xml:id="vmware">
   <title>VMware vSphere</title>
   <?dbhtml stop-chunking?>
   <section xml:id="vmware-intro">
     <title>Introduction</title>
     <para>OpenStack Compute supports the VMware vSphere product family
       and enables access to advanced features such as vMotion, High
-      Availability, and Dynamic Resource Scheduling (DRS). This
-      section describes how to configure VMware-based virtual machine
-      images for launch. vSphere versions 4.1 and newer are
+      Availability, and Dynamic Resource Scheduling (DRS).</para>
+    <para>This section describes how to configure VMware-based virtual
+      machine images for launch. vSphere versions 4.1 and later are
       supported.</para>
-    <para>The VMware vCenter driver enables the <systemitem
-      class="service">nova-compute</systemitem> service to communicate with
-      a VMware vCenter server that manages one or more ESX host
+    <para>The VMware vCenter driver enables the
+    <systemitem class="service">nova-compute</systemitem> service to communicate
+      with a VMware vCenter server that manages one or more ESX host
       clusters. The driver aggregates the ESX hosts in each cluster to
       present one large hypervisor entity for each cluster to the
       Compute scheduler. Because individual ESX hosts are not exposed
@@ -38,22 +35,18 @@
       <title>VMware driver architecture</title>
       <mediaobject>
         <imageobject>
-          <imagedata
-            fileref="../../common/figures/vmware-nova-driver-architecture.jpg"
-            format="JPG" contentwidth="6in"/>
+          <imagedata fileref="../../common/figures/vmware-nova-driver-architecture.jpg" format="JPG" contentwidth="6in"/>
         </imageobject>
       </mediaobject>
     </figure>
     <para>As the figure shows, the OpenStack Compute Scheduler sees
       three hypervisors that each correspond to a cluster in vCenter.
         <systemitem class="service">Nova-compute</systemitem> contains
-      the VMware driver. You can run with multiple <systemitem
-        class="service">nova-compute</systemitem> services. While
+      the VMware driver. You can run with multiple <systemitem class="service">nova-compute</systemitem> services. While
       Compute schedules at the granularity of a cluster, the VMware
-      driver inside <systemitem class="service"
-        >nova-compute</systemitem> interacts with the vCenter APIs to
-      select an appropriate ESX host within the cluster. Internally,
-      vCenter uses DRS for placement.</para>
+      driver inside <systemitem class="service">nova-compute</systemitem>
+      interacts with the vCenter APIs to select an appropriate ESX host within
+      the cluster. Internally, vCenter uses DRS for placement.</para>
     <para>The VMware vCenter driver also interacts with the OpenStack
       Image Service to copy VMDK images from the Image Service back
       end store. The dotted line in the figure represents VMDK images
@@ -69,10 +62,9 @@
       you configure OpenStack resources such as VMs through the
       OpenStack dashboard.</para>
     <para>The figure does not show how networking fits into the
-      architecture. Both <systemitem class="service"
-        >nova-network</systemitem> and the OpenStack Networking
-      Service are supported. For details, see <xref
-        linkend="VMWare_networking"/>.</para>
+      architecture. Both <systemitem class="service">nova-network</systemitem>
+      and the OpenStack Networking Service are supported. For details, see
+      <xref linkend="VMWare_networking"/>.</para>
   </section>
   <section xml:id="vmware_configuration_overview">
     <title>Configuration overview</title>
@@ -80,23 +72,19 @@
       following high-level steps:</para>
     <orderedlist>
       <listitem>
-        <para>Configure vCenter correctly. See <xref
-            linkend="vmware-prereqs"/>.</para>
+        <para>Configure vCenter. See <xref linkend="vmware-prereqs"/>.</para>
       </listitem>
       <listitem>
-        <para>Configure <filename>nova.conf</filename> for the VMware
-          vCenter driver. See <xref linkend="VMWareVCDriver_details"
-          />.</para>
+        <para>Configure the VMware
+          vCenter driver in the <filename>nova.conf</filename> file. See <xref linkend="VMWareVCDriver_details"/>.</para>
       </listitem>
       <listitem>
         <para>Load desired VMDK images into the OpenStack Image
           Service. See <xref linkend="VMWare_images"/>.</para>
       </listitem>
       <listitem>
-        <para>Configure networking with either <systemitem
-            class="service">nova-network</systemitem> or the OpenStack
-          Networking Service. See <xref linkend="VMWare_networking"
-          />.</para>
+        <para>Configure networking with either <systemitem class="service">nova-network</systemitem>
+        or the OpenStack Networking Service. See <xref linkend="VMWare_networking"/>.</para>
       </listitem>
     </orderedlist>
   </section>
@@ -150,10 +138,7 @@
           5900 - 6105 (inclusive) is automatically enabled for VNC
           connections on every ESX host in all clusters under
           OpenStack control. For more information about using a VNC
-          client to connect to virtual machine, see <link
-            xlink:href="http://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;cmd=displayKC&amp;externalId=1246"
-            >http://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;cmd=displayKC&amp;externalId=1246</link>.
-        </para>
+          client to connect to virtual machine, see <link xlink:href="http://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;cmd=displayKC&amp;externalId=1246">http://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;cmd=displayKC&amp;externalId=1246</link>.</para>
         <note><para>In addition to the default VNC port
           numbers (5900 to 6000) specified in the above document, the
           following ports are also used: 6101, 6102, and 6105.</para></note>
@@ -164,9 +149,7 @@
           running ESXi host or added to a custom image profile used to
           install ESXi hosts. For details about how to create a VIB
           for persisting the firewall configuration modifications, see
-            <link
-            xlink:href="http://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;cmd=displayKC&amp;externalId=2007381"
-            >
+            <link xlink:href="http://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;cmd=displayKC&amp;externalId=2007381">
             http://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;cmd=displayKC&amp;externalId=2007381</link>.</para>
       </listitem>
       <listitem>
@@ -177,20 +160,369 @@
       <listitem>
         <para>
           Injection of SSH keys into compute instances hosted by vCenter is
-          not currently supported.
-        </para>
+          not currently supported.</para>
       </listitem>
       <listitem>
         <para>
           To use multiple vCenter installations with OpenStack, each vCenter
           must be assigned to a separate availability zone. This is required
           as the OpenStack Block Storage VMDK driver does not currently work
-          across multiple vCenter installations.
-        </para>
+          across multiple vCenter installations.</para>
       </listitem>
     </orderedlist>
   </section>
-  <section xml:id="VMWareVCDriver_details">
+<section xml:id="vCenter_service_perms">
+    <title>VMware vCenter service account</title>
+    <para>OpenStack integration requires a vCenter service account with the following
+    minimum permissions. Apply the permissions to the
+    <systemitem>Datacenter</systemitem> root object, and select the <guibutton>Propagate to Child Objects</guibutton> option.</para>
+        <table rules="all" width="1047">
+        <caption>vCenter permissions tree</caption>
+        <col width="108pt" align="left"/>
+        <col width="120pt" align="left"/>
+        <col width="260pt" align="left"/>
+        <col width="210pt" align="left"/>
+        <tbody>
+          <tr>
+            <td>All Privileges</td>
+            <td/>
+            <td/>
+            <td/>
+          </tr>
+          <tr>
+            <td/>
+            <td>Datastore</td>
+            <td/>
+            <td/>
+          </tr>
+          <tr>
+            <td/>
+            <td/>
+            <td>Allocate space</td>
+            <td/>
+          </tr>
+          <tr>
+            <td/>
+            <td/>
+            <td>Browse datastore</td>
+            <td/>
+          </tr>
+          <tr>
+            <td/>
+            <td/>
+            <td>Low level file operation</td>
+            <td/>
+          </tr>
+          <tr>
+            <td/>
+            <td/>
+            <td>Remove file</td>
+            <td/>
+          </tr>
+          <tr>
+            <td/>
+            <td>Folder</td>
+            <td/>
+            <td/>
+          </tr>
+          <tr>
+            <td/>
+            <td/>
+            <td>Create folder</td>
+            <td/>
+          </tr>
+          <tr>
+            <td/>
+            <td>Host</td>
+            <td/>
+            <td/>
+          </tr>
+          <tr>
+            <td/>
+            <td/>
+            <td>Configuration</td>
+            <td/>
+          </tr>
+          <tr>
+            <td/>
+            <td/>
+            <td/>
+            <td>Maintenance</td>
+          </tr>
+          <tr>
+            <td/>
+            <td/>
+            <td/>
+            <td>Network configuration</td>
+          </tr>
+          <tr>
+            <td/>
+            <td/>
+            <td/>
+            <td>Storage partition configuration</td>
+          </tr>
+          <tr>
+            <td/>
+            <td>Network</td>
+            <td/>
+            <td/>
+          </tr>
+          <tr>
+            <td/>
+            <td/>
+            <td>Assign network</td>
+            <td/>
+          </tr>
+          <tr>
+            <td/>
+            <td>Resource</td>
+            <td/>
+            <td/>
+          </tr>
+          <tr>
+            <td/>
+            <td/>
+            <td>Assign virtual machine to resource pool</td>
+            <td/>
+          </tr>
+          <tr>
+            <td/>
+            <td/>
+            <td>Migrate powered off virtual machine</td>
+            <td/>
+          </tr>
+          <tr>
+            <td/>
+            <td/>
+            <td>Migrate powered on virtual machine</td>
+            <td/>
+          </tr>
+          <tr>
+            <td/>
+            <td>Virtual Machine</td>
+            <td/>
+            <td/>
+          </tr>
+          <tr>
+            <td/>
+            <td/>
+            <td>Configuration</td>
+            <td/>
+          </tr>
+          <tr>
+            <td/>
+            <td/>
+            <td/>
+            <td>Add existing disk</td>
+          </tr>
+          <tr>
+            <td/>
+            <td/>
+            <td/>
+            <td>Add new disk</td>
+          </tr>
+          <tr>
+            <td/>
+            <td/>
+            <td/>
+            <td>Add or remove device</td>
+          </tr>
+          <tr>
+            <td/>
+            <td/>
+            <td/>
+            <td>Advanced</td>
+          </tr>
+          <tr>
+            <td/>
+            <td/>
+            <td/>
+            <td>CPU count</td>
+          </tr>
+          <tr>
+            <td/>
+            <td/>
+            <td/>
+            <td>Disk change tracking</td>
+          </tr>
+          <tr>
+            <td/>
+            <td/>
+            <td/>
+            <td>Host USB device</td>
+          </tr>
+          <tr>
+            <td/>
+            <td/>
+            <td/>
+            <td>Memory</td>
+          </tr>
+          <tr>
+            <td/>
+            <td/>
+            <td/>
+            <td>Raw device</td>
+          </tr>
+          <tr>
+            <td/>
+            <td/>
+            <td/>
+            <td>Remove disk</td>
+          </tr>
+          <tr>
+            <td/>
+            <td/>
+            <td/>
+            <td>Rename</td>
+          </tr>
+          <tr>
+            <td/>
+            <td/>
+            <td/>
+            <td>Swapfile placement</td>
+          </tr>
+          <tr>
+            <td/>
+            <td/>
+            <td>Interaction</td>
+            <td/>
+          </tr>
+          <tr>
+            <td/>
+            <td/>
+            <td/>
+            <td>Configure CD media</td>
+          </tr>
+          <tr>
+            <td/>
+            <td/>
+            <td/>
+            <td>Power Off</td>
+          </tr>
+          <tr>
+            <td/>
+            <td/>
+            <td/>
+            <td>Power On</td>
+          </tr>
+          <tr>
+            <td/>
+            <td/>
+            <td/>
+            <td>Reset</td>
+          </tr>
+          <tr>
+            <td/>
+            <td/>
+            <td/>
+            <td>Suspend</td>
+          </tr>
+          <tr>
+            <td/>
+            <td/>
+            <td>Inventory</td>
+            <td/>
+          </tr>
+          <tr>
+            <td/>
+            <td/>
+            <td/>
+            <td>Create from existing</td>
+          </tr>
+          <tr>
+            <td/>
+            <td/>
+            <td/>
+            <td>Create new</td>
+          </tr>
+          <tr>
+            <td/>
+            <td/>
+            <td/>
+            <td>Move</td>
+          </tr>
+          <tr>
+            <td/>
+            <td/>
+            <td/>
+            <td>Remove</td>
+          </tr>
+          <tr>
+            <td/>
+            <td/>
+            <td/>
+            <td>Unregister</td>
+          </tr>
+          <tr>
+            <td/>
+            <td/>
+            <td>Provisioning</td>
+            <td/>
+          </tr>
+          <tr>
+            <td/>
+            <td/>
+            <td/>
+            <td>Clone virtual machine</td>
+          </tr>
+          <tr>
+            <td/>
+            <td/>
+            <td/>
+            <td>Customize</td>
+          </tr>
+          <tr>
+            <td/>
+            <td/>
+            <td>Sessions</td>
+            <td/>
+          </tr>
+          <tr>
+            <td/>
+            <td/>
+            <td/>
+            <td>View and stop sessions</td>
+          </tr>
+          <tr>
+            <td/>
+            <td/>
+            <td>Snapshot management</td>
+            <td/>
+          </tr>
+          <tr>
+            <td/>
+            <td/>
+            <td/>
+            <td>Create snapshot</td>
+          </tr>
+          <tr>
+            <td/>
+            <td/>
+            <td/>
+            <td>Remove snapshot</td>
+          </tr>
+          <tr>
+            <td/>
+            <td>vApp</td>
+            <td/>
+            <td/>
+          </tr>
+          <tr>
+            <td/>
+            <td/>
+            <td>Export</td>
+            <td/>
+          </tr>
+          <tr>
+            <td/>
+            <td/>
+            <td>Import</td>
+            <td/>
+          </tr>
+        </tbody>
+      </table>
+</section>
+<section xml:id="VMWareVCDriver_details">
     <title>VMware vCenter driver</title>
     <para>Use the VMware vCenter driver (VMwareVCDriver) to connect
       OpenStack Compute with vCenter. This recommended configuration
@@ -254,10 +586,9 @@ datastore_regex=&lt;optional datastore regex&gt;</programlisting>
       </note>
       <para>A <systemitem class="service">nova-compute</systemitem>
         service can control one or more clusters containing multiple
-        ESX hosts, making <systemitem class="service"
-          >nova-compute</systemitem> a critical service from a high
-        availability perspective. Because the host that runs
-          <systemitem class="service">nova-compute</systemitem> can
+        ESX hosts, making <systemitem class="service">nova-compute</systemitem>
+        a critical service from a high availability perspective. Because the
+        host that runs <systemitem class="service">nova-compute</systemitem> can
         fail while the vCenter and ESX still run, you must protect the
           <systemitem class="service">nova-compute</systemitem>
         service against host failures.</para>
@@ -266,8 +597,7 @@ datastore_regex=&lt;optional datastore regex&gt;</programlisting>
           to libvirt but do not apply to this driver.</para>
       </note>
       <para>You must complete additional configuration for
-        environments that use vSphere 5.0 and earlier. See <xref
-          linkend="VMWare_additional_config"/>.</para>
+        environments that use vSphere 5.0 and earlier. See <xref linkend="VMWare_additional_config"/>.</para>
     </section>
   </section>
   <section xml:id="VMWare_images">
@@ -339,7 +669,6 @@ datastore_regex=&lt;optional datastore regex&gt;</programlisting>
           </tr>
         </tbody>
       </table>
-
       <para>The <option>vmware_disktype</option> property is set when an
         image is loaded into the OpenStack Image Service. For example,
         the following command creates a Monolithic Sparse image by
@@ -349,11 +678,11 @@ datastore_regex=&lt;optional datastore regex&gt;</programlisting>
 --container_format=bare --is_public=true \
 --property vmware_disktype="sparse" \
 --property vmware_ostype="ubuntu64Guest" &lt; ubuntuLTS-sparse.vmdk</userinput></screen>
-      <para>Note that specifying <literal>thin</literal> does not
+      <note><para>Specifying <literal>thin</literal> does not
         provide any advantage over <literal>preallocated</literal>
         with the current version of the driver. Future versions might
         restore the thin properties of the disk after it is downloaded
-        to a vSphere data store.</para>
+        to a vSphere data store.</para></note>
     </section>
     <section xml:id="VMware_converting_images">
       <title>Convert and load images</title>
@@ -361,9 +690,7 @@ datastore_regex=&lt;optional datastore regex&gt;</programlisting>
         several formats (such as, qcow2) can be converted to the VMDK
         format.</para>
       <para>For example, the following command can be used to convert
-        a <link
-          xlink:href="http://cloud-images.ubuntu.com/precise/current/precise-server-cloudimg-amd64-disk1.img"
-          >qcow2 Ubuntu Precise cloud image</link>:</para>
+        a <link xlink:href="http://cloud-images.ubuntu.com/precise/current/precise-server-cloudimg-amd64-disk1.img">qcow2 Ubuntu Precise cloud image</link>:</para>
       <screen><prompt>$</prompt> <userinput>qemu-img convert -f qcow2 ~/Downloads/precise-server-cloudimg-amd64-disk1.img \
 -O vmdk precise-server-cloudimg-amd64-disk1.vmdk</userinput></screen>
       <para>VMDK disks converted through <code>qemu-img</code> are
@@ -379,8 +706,7 @@ datastore_regex=&lt;optional datastore regex&gt;</programlisting>
 precise-server-cloudimg-amd64-disk1.vmdk</userinput></screen>
       <para>Note that the <option>vmware_disktype</option> is set to
           <emphasis role="italic">sparse</emphasis> and the
-          <code>vmware_adaptertype</code> is set to <emphasis
-          role="italic">ide</emphasis> in the previous command.</para>
+          <code>vmware_adaptertype</code> is set to <emphasis role="italic">ide</emphasis> in the previous command.</para>
       <para>If the image did not come from the <code>qemu-img</code>
         utility, the <code>vmware_disktype</code> and
           <code>vmware_adaptertype</code> might be different. To
@@ -434,48 +760,54 @@ precise-server-cloudimg-amd64-disk1.vmdk</userinput></screen>
       <para>To avoid the conversion step (at the cost of longer
         download times) consider converting sparse disks to thin
         provisioned or preallocated disks before loading them into the
-        OpenStack Image Service. Below are some tools that can be used
-        to pre-convert sparse disks.</para>
-      <orderedlist>
-        <listitem>
-          <para><emphasis role="bold">Using vSphere CLI (or sometimes
-              called the remote CLI or rCLI) tools</emphasis></para>
-          <para>Assuming that the sparse disk is made available on a
-            data store accessible by an ESX host, the following
-            command converts it to preallocated format:</para>
+        OpenStack Image Service.</para>
+      <para>Use one of the following tools to pre-convert sparse
+        disks.</para>
+      <variablelist>
+        <varlistentry>
+          <term><emphasis role="bold">vSphere CLI
+            tools</emphasis></term>
+          <listitem>
+          <para>Sometimes called the remote CLI or rCLI.</para>
+            <para>Assuming that the sparse disk is made available on a
+              data store accessible by an ESX host, the following
+              command converts it to preallocated format:</para>
           <programlisting>vmkfstools --server=ip_of_some_ESX_host -i /vmfs/volumes/datastore1/sparse.vmdk /vmfs/volumes/datastore1/converted.vmdk</programlisting>
-          <para>(Note that the vifs tool from the same CLI package can
-            be used to upload the disk to be converted. The vifs tool
-            can also be used to download the converted disk if
-            necessary.)</para>
+          <para>Note that the vifs tool from the same CLI package can
+              be used to upload the disk to be converted. The vifs
+              tool can also be used to download the converted disk if
+              necessary.</para>
         </listitem>
-        <listitem>
-          <para><emphasis role="bold">Using vmkfstools directly on the
-              ESX host</emphasis></para>
+        </varlistentry>
+        <varlistentry><term><emphasis role="bold">vmkfstools directly on the ESX
+              host</emphasis></term> <listitem>
           <para>If the SSH service is enabled on an ESX host, the
-            sparse disk can be uploaded to the ESX data store via scp
-            and the vmkfstools local to the ESX host can use used to
-            perform the conversion: (After logging in to the host via
-            ssh)</para>
+              sparse disk can be uploaded to the ESX data store
+              through scp and the vmkfstools local to the ESX host can
+              use used to perform the conversion. After you log in to
+              the host through ssh, run this command:</para>
           <programlisting>vmkfstools -i /vmfs/volumes/datastore1/sparse.vmdk /vmfs/volumes/datastore1/converted.vmdk</programlisting>
-        </listitem>
-        <listitem>
-          <para><emphasis role="bold"
-            >vmware-vdiskmanager</emphasis></para>
+        </listitem></varlistentry>
+        <varlistentry><term><emphasis role="bold">vmware-vdiskmanager</emphasis></term><listitem>
           <para><code>vmware-vdiskmanager</code> is a utility that
-            comes bundled with VMware Fusion and VMware Workstation.
-            Below is an example of converting a sparse disk to
-            preallocated format:</para>
+              comes bundled with VMware Fusion and VMware Workstation.
+              The following example converts a sparse disk to
+              preallocated format:</para>
           <programlisting>'/Applications/VMware Fusion.app/Contents/Library/vmware-vdiskmanager' -r sparse.vmdk -t 4 converted.vmdk</programlisting>
-          <para>In all of the above cases, the converted vmdk is
-            actually a pair of files: the descriptor file <emphasis
-              role="italic">converted.vmdk</emphasis> and the actual
-            virtual disk data file <emphasis role="italic"
-              >converted-flat.vmdk</emphasis>. The file to be uploaded
-            to the OpenStack Image Service is <emphasis role="italic"
-              >converted-flat.vmdk</emphasis>.</para>
+        </listitem></varlistentry>
+      </variablelist>
+      <para>In the previous cases, the converted vmdk is
+        actually a pair of files:</para> <itemizedlist><listitem>
+          <para>The descriptor file <emphasis role="italic"
+            >converted.vmdk</emphasis>.</para>
         </listitem>
-      </orderedlist>
+          <listitem>
+            <para>The actual virtual disk data file <emphasis
+              role="italic">converted-flat.vmdk</emphasis>.</para>
+          </listitem></itemizedlist>
+      <para>The file to be uploaded to the OpenStack Image
+        Service is <emphasis role="italic"
+          >converted-flat.vmdk</emphasis>.</para>
     </section>
     <section xml:id="VMware_copying_images">
       <title>Image handling</title>
@@ -491,32 +823,35 @@ precise-server-cloudimg-amd64-disk1.vmdk</userinput></screen>
       <para>Even with a cached VMDK, there is still a copy operation
         from the cache location to the hypervisor file directory in
         the shared data store. To avoid this copy, boot the image in
-        linked_clone mode. To learn how to enable this mode, see <xref
-          linkend="VMWare_config"/>. Note also that it is possible to
-        override the linked_clone mode on a per-image basis by using
+        linked_clone mode. To learn how to enable this mode, see <xref linkend="VMWare_config"/>.</para>
+      <note><para>You can also use
         the <code>vmware_linked_clone</code> property in the OpenStack
-        Image Service.</para>
-      <para>You can configure the <filename>nova.conf</filename> file
-        to automatically purge unused images after a specified period
-        of time. The relevant settings in the <literal>DEFAULT</literal>
-        section are:</para>
-      <itemizedlist>
-        <listitem><para><parameter>remove_unused_base_images</parameter>
-          - Set this parameter to <userinput>True</userinput> to
+        Image Service to
+        override the linked_clone mode on a per-image basis.</para></note>
+      <para>You can automatically purge unused images after a
+        specified period of time. To configure this action, set these
+        options in the <literal>DEFAULT</literal> section in the
+          <filename>nova.conf</filename> file:</para>
+      <variablelist><varlistentry>
+        <term><parameter>remove_unused_base_images</parameter></term>
+        <listitem>
+<para>Set this parameter to <userinput>True</userinput> to
           specify that unused images should be removed after the
           duration specified in the <parameter>remove_unused_original_minimum_age_seconds</parameter> parameter.
           The default is <userinput>True</userinput>.</para></listitem>
-        <listitem><para><parameter>remove_unused_original_minimum_age_seconds</parameter>
-          - Specifies the duration in seconds after which an unused
-          image is purged from the cache. The default is
-          <userinput>86400</userinput> (24 hours).</para></listitem>
-      </itemizedlist>
+      </varlistentry>
+        <varlistentry>
+          <term><parameter>remove_unused_original_minimum_age_seconds</parameter></term>
+          <listitem><para>Specifies the duration in seconds after which an unused
+            image is purged from the cache. The default is
+            <userinput>86400</userinput> (24 hours).</para></listitem>
+        </varlistentry>
+      </variablelist>
     </section>
   </section>
   <section xml:id="VMWare_networking">
     <title>Networking with VMware vSphere</title>
-    <para>The VMware driver supports networking with the <systemitem
-        class="service">nova-network</systemitem> service or the
+    <para>The VMware driver supports networking with the <systemitem class="service">nova-network</systemitem> service or the
       OpenStack Networking Service. Depending on your installation,
       complete these configuration steps before you provision
       VMs:</para>
@@ -544,8 +879,7 @@ precise-server-cloudimg-amd64-disk1.vmdk</userinput></screen>
         </note>
       </listitem>
       <listitem>
-        <para><emphasis role="bold">The <systemitem class="service"
-              >nova-network</systemitem> service with the
+        <para><emphasis role="bold">The <systemitem class="service">nova-network</systemitem> service with the
             VlanManager</emphasis>. Set the
             <literal>vlan_interface</literal> configuration option to
           match the ESX host interface that handles VLAN-tagged VM
@@ -569,10 +903,8 @@ precise-server-cloudimg-amd64-disk1.vmdk</userinput></screen>
     <para>The VMware driver supports attaching volumes from the
       OpenStack Block Storage service. The VMware VMDK driver for
       OpenStack Block Storage is recommended and should be used for
-      managing volumes based on vSphere data stores. More information
-      about the VMware VMDK driver can be found at: <link
-        xlink:href="http://docs.openstack.org/trunk/config-reference/content/vmware-vmdk-driver.html"
-        >VMware VMDK Driver</link>. Also an iscsi volume driver
+      managing volumes based on vSphere data stores. For more information
+      about the VMware VMDK driver, see <link xlink:href="http://docs.openstack.org/trunk/config-reference/content/vmware-vmdk-driver.html">VMware VMDK Driver</link>. Also an iscsi volume driver
       provides limited support and can be used only for
       attachments.</para>
   </section>
@@ -582,9 +914,7 @@ precise-server-cloudimg-amd64-disk1.vmdk</userinput></screen>
       locally. These steps are applicable for vCenter 5.0 or ESXi 5.0
       and you can either mirror the WSDL from the vCenter or ESXi
       server that you intend to use or you can download the SDK
-      directly from VMware. These workaround steps fix a <link
-        xlink:href="http://kb.vmware.com/selfservice/microsites/search.do?cmd=displayKC&amp;externalId=2010507"
-        >known issue</link> with the WSDL that was resolved in later
+      directly from VMware. These workaround steps fix a <link xlink:href="http://kb.vmware.com/selfservice/microsites/search.do?cmd=displayKC&amp;externalId=2010507">known issue</link> with the WSDL that was resolved in later
       versions.</para>
     <para>When setting the VMwareVCDriver configuration options, you
       must include the <code>wsdl_location</code> option. For more
@@ -592,7 +922,7 @@ precise-server-cloudimg-amd64-disk1.vmdk</userinput></screen>
       <link linkend="VMWareVCDriver_configuration_options">VMwareVCDriver
       configuration options</link> above.</para>
     <procedure>
-      <title>Mirror WSDL from vCenter (or ESXi)</title>
+      <title>To mirror WSDL from vCenter (or ESXi)</title>
       <step>
         <para>Set the <code>VMWAREAPI_IP</code> shell variable to the
           IP address for your vCenter or ESXi host from where you plan
@@ -652,9 +982,7 @@ wsdl_location=file:///opt/stack/vmware/wsdl/5.0/vimService.wsdl</programlisting>
       </step>
     </procedure>
     <para>Alternatively, download the version appropriate SDK from
-        <link
-        xlink:href="http://www.vmware.com/support/developer/vc-sdk/"
-        >http://www.vmware.com/support/developer/vc-sdk/</link> and
+        <link xlink:href="http://www.vmware.com/support/developer/vc-sdk/">http://www.vmware.com/support/developer/vc-sdk/</link> and
       copy it to the <filename>/opt/stack/vmware</filename> file. Make
       sure that the WSDL is available, in for example
         <filename>/opt/stack/vmware/SDK/wsdl/vim25/vimService.wsdl</filename>.
@@ -676,8 +1004,7 @@ wsdl_location=file:///opt/stack/vmware/SDK/wsdl/vim25/vimService.wsdl</programli
         <warning>
           <para>
             The VMWare ESX driver has been deprecated in the Icehouse
-            release and will be removed with the Juno release.
-          </para>
+            release and will be removed with the Juno release.</para>
         </warning>
     <section xml:id="VMWareESXDriver_configuration_options">
       <title>VMwareESXDriver configuration options</title>
@@ -693,8 +1020,7 @@ host_ip=&lt;ESXi host IP&gt;
 host_username=&lt;ESXi host username&gt;
 host_password=&lt;ESXi host password&gt;
 wsdl_location=http://127.0.0.1:8080/vmware/SDK/wsdl/vim25/vimService.wsdl</programlisting>
-      <para>Remember that you will have one <systemitem
-          class="service">nova-compute</systemitem> service for each
+      <para>Remember that you must have one <systemitem class="service">nova-compute</systemitem> service for each
         ESXi host. It is recommended that this host run as a VM on the
         same ESXi host that it manages.</para>
       <note>
