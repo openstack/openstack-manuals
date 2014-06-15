@@ -65,7 +65,7 @@ admin_token = <replaceable>ADMIN_TOKEN</replaceable></programlisting>
             database access:</para>
           <programlisting language="ini">[database]
 ...
-connection mysql://keystone:<replaceable>KEYSTONE_DBPASS</replaceable>@<replaceable>controller</replaceable>/keystone</programlisting>
+connection = mysql://keystone:<replaceable>KEYSTONE_DBPASS</replaceable>@<replaceable>controller</replaceable>/keystone</programlisting>
           <para>Replace <replaceable>KEYSTONE_DBPASS</replaceable> with
             the password you chose for the database.</para>
         </step>
@@ -215,7 +215,7 @@ log_dir = /var/log/keystone</programlisting>
         file:</para>
       <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>(crontab -l -u keystone 2>&amp;1 | grep -q token_flush) || \
 echo '@hourly /usr/bin/keystone-manage token_flush >/var/log/keystone/keystone-tokenflush.log 2>&amp;1' \
->> var/spool/cron/crontabs/keystone</userinput></screen>
+>> /var/spool/cron/crontabs/keystone</userinput></screen>
       <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>(crontab -l -u keystone 2>&amp;1 | grep -q token_flush) || \
 echo '@hourly /usr/bin/keystone-manage token_flush >/var/log/keystone/keystone-tokenflush.log 2>&amp;1' \
 >> /var/spool/cron/keystone</userinput></screen>
