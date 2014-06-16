@@ -24,8 +24,13 @@
       <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install  openstack-cinder-api openstack-cinder-scheduler</userinput></screen>
     </step>
     <step os="debian">
-      <para>Respond to the prompts for database
-        management, <literal>[keystone_authtoken]</literal> settings, RabbitMQ credentials and API endpoint registration.</para>
+      <para>Respond to the prompts for <link
+          linkend="debconf-dbconfig-common">database
+        management</link>, <link linkend="debconf-keystone_authtoken"
+            ><literal>[keystone_authtoken]</literal> settings</link>,
+          <link linkend="debconf-rabbitmq">RabbitMQ
+        credentials</link>, and <link linkend="debconf-api-endpoints"
+          >API endpoint</link> registration.</para>
     </step>
     <step os="ubuntu;rhel;centos;fedora;opensuse;sles">
       <para>Configure Block Storage to use your database.</para>
@@ -93,7 +98,7 @@ connection = mysql://cinder:<replaceable>CINDER_DBPASS</replaceable>@<replaceabl
   admin_tenant_name service</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/cinder/cinder.conf keystone_authtoken \
   admin_password <replaceable>CINDER_PASS</replaceable></userinput></screen>
-    <para os="ubuntu;debian">Edit the
+    <para os="ubuntu">Edit the
           <filename>/etc/cinder/cinder.conf</filename> configuration
         file and add this section for keystone credentials:</para>
       <programlisting os="ubuntu;debian" language="ini">...
