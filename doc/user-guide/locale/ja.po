@@ -7,9 +7,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenStack Manuals\n"
-"POT-Creation-Date: 2014-06-14 07:29+0000\n"
-"PO-Revision-Date: 2014-06-16 03:20+0000\n"
-"Last-Translator: Tomoyuki KATO <tomo@dream.daynight.jp>\n"
+"POT-Creation-Date: 2014-06-18 18:46+0000\n"
+"PO-Revision-Date: 2014-06-18 18:51+0000\n"
+"Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
 "Language-Team: Japanese (http://www.transifex.com/projects/p/openstack-manuals-i18n/language/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1846,6 +1846,7 @@ msgid ""
 msgstr "インスタンス起動後、ボリューム作成後のインスタンスへのボリュームの接続"
 
 #: ./doc/user-guide/app_cheat_sheet.xml405(replaceable)
+#: ./doc/user-guide/section_cli_trove.xml180(replaceable)
 msgid "INSTANCE_ID"
 msgstr "INSTANCE_ID"
 
@@ -3213,6 +3214,243 @@ msgid ""
 "drive."
 msgstr "以下の表はコンフィグドライブの全オプションを示します。"
 
+#: ./doc/user-guide/section_cli_trove.xml8(title)
+msgid "Create and manage databases"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml9(para)
+msgid ""
+"The Database service provides scalable and reliable cloud provisioning "
+"functionality for both relational and non-relational database engines. Users"
+" can quickly and easily use database features without the burden of handling"
+" complex administrative tasks."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml11(title)
+msgid "Create and access a database"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml12(para)
+msgid ""
+"Assuming you have already installed the Database service and stocked your "
+"datastore with images for the type and versions of databases you want, you "
+"can create and access a database. This example shows you how to create and "
+"access a MySQL 5.5 database."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml14(title)
+msgid "To create and access a database"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml17(title)
+msgid "Determine the flavor to use for your database."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml18(para)
+msgid ""
+"When you create a database instance, you must specify a nova flavor. The "
+"flavor indicates various characteristics of the instance, such as RAM, root "
+"volume size, and so on. The default nova flavors do not cover what you need "
+"for database instances. Therefore, you may need to create (or obtain) some "
+"new nova flavors that will work for databases."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml20(para)
+msgid ""
+"The first step is to list the existing flavors, using the nova "
+"<placeholder-1/> command. Here are the default flavors, although you may "
+"have additional custom flavors in your environment:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml32(para)
+msgid ""
+"Now take a look at the minimum requirements for various database instances:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml41(th)
+msgid "Database"
+msgstr "データベース"
+
+#: ./doc/user-guide/section_cli_trove.xml42(th)
+msgid "RAM (in MB)"
+msgstr "メモリー (MB 単位)"
+
+#: ./doc/user-guide/section_cli_trove.xml43(th)
+msgid "Disk (in GB)"
+msgstr "ディスク (GB 単位)"
+
+#: ./doc/user-guide/section_cli_trove.xml44(th)
+msgid "VCPUs"
+msgstr "仮想 CPU"
+
+#: ./doc/user-guide/section_cli_trove.xml50(para)
+msgid "MySQL"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml53(para)
+#: ./doc/user-guide/section_cli_trove.xml95(para)
+msgid "512"
+msgstr "512"
+
+#: ./doc/user-guide/section_cli_trove.xml56(para)
+#: ./doc/user-guide/section_cli_trove.xml70(para)
+#: ./doc/user-guide/section_cli_trove.xml84(para)
+#: ./doc/user-guide/section_cli_trove.xml98(para)
+msgid "5"
+msgstr "5"
+
+#: ./doc/user-guide/section_cli_trove.xml59(para)
+#: ./doc/user-guide/section_cli_trove.xml73(para)
+#: ./doc/user-guide/section_cli_trove.xml87(para)
+#: ./doc/user-guide/section_cli_trove.xml101(para)
+msgid "1"
+msgstr "1"
+
+#: ./doc/user-guide/section_cli_trove.xml64(para)
+msgid "Cassandra"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml67(para)
+msgid "2048"
+msgstr "2048"
+
+#: ./doc/user-guide/section_cli_trove.xml78(para)
+msgid "MongoDB"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml81(para)
+msgid "1024"
+msgstr "1024"
+
+#: ./doc/user-guide/section_cli_trove.xml92(para)
+msgid "Redis"
+msgstr "Redis"
+
+#: ./doc/user-guide/section_cli_trove.xml108(para)
+msgid ""
+"If you have a custom flavor that meets the needs of the database you want to"
+" create, you can simply use that flavor. In this case, skip the rest of this"
+" step and move on to the next step in this procedure."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml111(para)
+msgid ""
+"If your environment does not have a suitable flavor, an admin user needs to "
+"create a custom flavor, using the nova <placeholder-1/> command."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml114(title)
+msgid "MySQL example."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml114(para)
+msgid ""
+"This example creates a flavor that you can use with a MySQL database. This "
+"example has the following attributes:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml116(para)
+msgid "Flavor name: <literal>mysql_minimum</literal>"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml117(para)
+msgid ""
+"Flavor ID: You need to use an ID that is not already in use. In this "
+"example, IDs 1 through 5 are already in use, so the ID can be "
+"<literal>6</literal>."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml118(para)
+msgid "RAM: <literal>512</literal>"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml119(para)
+msgid "Root volume size in GB: <literal>5</literal>"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml120(para)
+msgid "Virtual CPUs: <literal>1</literal>"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml133(title)
+msgid "Create a database instance."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml134(para)
+msgid ""
+"This example creates a database instance with the following characteristics:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml137(para)
+msgid "Name of the instance: <literal>mysql_instance_1</literal>"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml138(para)
+msgid "Database flavor: <literal>6</literal>"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml140(para)
+msgid "In addition, this command uses various options to specify that:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml142(para)
+msgid "The instance has a volume size of <literal>5</literal> (meaning 5 GB)."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml143(para)
+msgid "It has a database called <literal>myDB</literal>."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml144(para)
+msgid ""
+"It has a user called <literal>userA</literal> with a password of "
+"<literal>password</literal>."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml145(para)
+msgid ""
+"The database is based on a datastore called <literal>mysql</literal> and a "
+"datastore_version called <literal>mysql-5.5</literal>."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml168(title)
+msgid "Get the IP address of the database instance."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml169(para)
+msgid ""
+"First, use the trove <placeholder-1/> command to list all instances and "
+"their IDs:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml179(para)
+msgid ""
+"This command returns the instance ID of your new instance. You can now pass "
+"in the instance ID with the trove <placeholder-1/> command to get the IP "
+"address of the instance. In this example, you would replace "
+"<replaceable>INSTANCE_ID</replaceable> with 5599dad6-731e-44df-"
+"bb60-488da3da9cfe."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml197(para)
+msgid "This command returns the IP address of the database instance."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml202(title)
+msgid "Access the new database."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml203(para)
+msgid ""
+"You can now access the new database you just created (myDB) using typical "
+"database access commands. In this MySQL example, you would replace "
+"<replaceable>IP_ADDRESS</replaceable> with 172.16.200.2."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml205(replaceable)
+msgid "IP_ADDRESS"
+msgstr ""
+
 #: ./doc/user-guide/section_dashboard_launch_instances.xml6(title)
 msgid "Launch and manage instances"
 msgstr "インスタンスの起動と管理"
@@ -4466,7 +4704,6 @@ msgstr "コンテナーにオブジェクトをアップロードするために
 #: ./doc/user-guide/section_cli_swift_howto.xml94(replaceable)
 #: ./doc/user-guide/section_cli_swift_howto.xml96(replaceable)
 #: ./doc/user-guide/section_cli_swift_howto.xml101(replaceable)
-#: ./doc/user-guide/section_cli_swift_howto.xml115(replaceable)
 #: ./doc/user-guide/section_cli_swift_howto.xml120(replaceable)
 msgid "OBJECT_FILENAME"
 msgstr "OBJECT_FILENAME"
