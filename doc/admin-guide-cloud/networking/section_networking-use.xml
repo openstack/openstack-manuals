@@ -1,699 +1,695 @@
 <?xml version="1.0" encoding="UTF-8"?>
-    <section xml:id="section_networking-use" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="section_networking-use"
+    xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
-        <title>Use Networking</title>
-        <para>You can manage OpenStack Networking services using
-            the <systemitem>service</systemitem> command. For
-            example:</para>
-        <screen><prompt>#</prompt> <userinput>service neutron-server stop</userinput>
+    <title>Use Networking</title>
+    <para>You can manage OpenStack Networking services by using the
+            <systemitem>service</systemitem> command. For
+        example:</para>
+    <screen><prompt>#</prompt> <userinput>service neutron-server stop</userinput>
 <prompt>#</prompt> <userinput>service neutron-server status</userinput>
 <prompt>#</prompt> <userinput>service neutron-server start</userinput>
 <prompt>#</prompt> <userinput>service neutron-server restart</userinput></screen>
-        <para>Log files are in the
-                <systemitem>/var/log/neutron</systemitem>
-            directory.</para>
-        <para>Configuration files are in the
-                <systemitem>/etc/neutron</systemitem>
-            directory.</para>
-        <para>You can use Networking in the following ways:</para>
-        <itemizedlist>
-            <listitem>
-                <para>Expose the Networking API to cloud tenants,
-                    enabling them to build rich network topologies.</para>
-            </listitem>
-            <listitem>
-                <para>Have the cloud administrator, or an automated
-                    administrative tool, create network connectivity
-                    on behalf of tenants.</para>
-            </listitem>
-        </itemizedlist>
-        <para>A tenant or cloud administrator can both perform the
-            following procedures.</para>
-        <section xml:id="api_features">
-            <title>Core Networking API features</title>
-            <para>After you install and run Networking, tenants and
-                administrators can perform create-read-update-delete
-                (CRUD) API networking operations by using the
-                Networking API directly or the neutron command-line
-                interface (CLI). The neutron CLI is a wrapper around
-                the Networking API. Every Networking API call has a
-                corresponding neutron command.</para>
-            <para>The CLI includes a number of options. For details,
-                refer to the <link
-                    xlink:href="http://docs.openstack.org/user-guide/content/"
-                        ><citetitle>OpenStack End User
-                        Guide</citetitle></link>.</para>
-            <section xml:id="api_abstractions">
-                <title>API abstractions</title>
-                <para>The Networking v2.0 API provides control over
-                    both L2 network topologies and their allocated
-                    IP addresses (IP Address Management or IPAM).
-                    There is also an extension to cover basic L3
-                    forwarding and NAT, which provides capabilities
-                    similar to <command>nova-network</command>.</para>
-                <para><table rules="all">
-                        <caption>API abstractions</caption>
-                        <col width="10%"/>
-                        <col width="90%"/>
-                        <thead>
-                            <tr>
-                                <th>Abstraction</th>
-                                <th>Description</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><emphasis role="bold"
+    <para>Log files are in the
+            <systemitem>/var/log/neutron</systemitem>
+        directory.</para>
+    <para>Configuration files are in the
+            <systemitem>/etc/neutron</systemitem> directory.</para>
+    <para>Cloud administrators and tenants can use OpenStack
+        Networking to build rich network topologies. Cloud
+        administrators can create network connectivity on behalf of
+        tenants.</para>
+    <!-- removed this line because there are no 'following procedures' -->
+    <!--<para>A tenant or cloud administrator can both perform the
+            following procedures.</para>-->
+    <section xml:id="api_features">
+        <title>Core Networking API features</title>
+        <para>After you install and configure Networking, tenants and
+            administrators can perform create-read-update-delete
+            (CRUD) API networking operations by using the Networking
+            API directly or neutron command-line interface (CLI). The
+            neutron CLI is a wrapper around the Networking API. Every
+            Networking API call has a corresponding neutron
+            command.</para>
+        <para>The CLI includes a number of options. For details, see
+            the <link
+                xlink:href="http://docs.openstack.org/user-guide/content/"
+                    ><citetitle>OpenStack End User
+                Guide</citetitle></link>.</para>
+        <section xml:id="api_abstractions">
+            <title>API abstractions</title>
+            <para>The Networking v2.0 API provides control over both
+                L2 network topologies and their allocated IP addresses
+                (IP Address Management or IPAM). There is also an
+                extension to cover basic L3 forwarding and NAT, which
+                provides capabilities similar to
+                    <command>nova-network</command>.</para>
+            <para><table rules="all">
+                    <caption>API abstractions</caption>
+                    <col width="10%"/>
+                    <col width="90%"/>
+                    <thead>
+                        <tr>
+                            <th>Abstraction</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><emphasis role="bold"
                                    >Network</emphasis></td>
-                                <td>An isolated L2 network segment
-                                   (similar to a VLAN) that forms the
-                                   basis for describing the L2 network
-                                   topology available in an Networking
-                                   deployment.</td>
-                            </tr>
-                            <tr>
-                                <td><emphasis role="bold"
+                            <td>An isolated L2 network segment
+                                (similar to a VLAN) that forms the
+                                basis for describing the L2 network
+                                topology available in an Networking
+                                deployment.</td>
+                        </tr>
+                        <tr>
+                            <td><emphasis role="bold"
                                    >Subnet</emphasis></td>
-                                <td>Associates a block of IP addresses
-                                    and other network configuration,
-                                    such as default gateways or
-                                    dns-servers, with an Networking
-                                    network. Each subnet represents
-                                    an IPv4 or IPv6 address block,
-                                    and each Networking network can
-                                    have multiple subnets.</td>
-                            </tr>
-                            <tr>
-                                <td><emphasis role="bold"
-                                   >Port</emphasis></td>
-                                <td>Represents an attachment port to a
-                                   L2 Networking network. When a port
-                                   is created on the network, by
-                                   default it is allocated an
-                                   available fixed IP address out of
-                                   one of the designated subnets for
-                                   each IP version (if one exists).
-                                   When the port is destroyed, its
-                                   allocated addresses return to the
-                                   pool of available IPs on the
-                                   subnet. Users of the Networking API
-                                   can either choose a specific IP
-                                   address from the block, or let
-                                   Networking choose the first
-                                   available IP address.</td>
-                            </tr>
-                        </tbody>
-                    </table></para>
-                <?hard-pagebreak?>
-                <para>This table summarizes the attributes available
-                    for each networking abstraction. For information
-                    about API abstraction and operations, see the
-                        <link
-                        xlink:href="http://docs.openstack.org/api/openstack-network/2.0/content/"
-                        >Networking API v2.0 Reference</link>.</para>
-                <table rules="all">
-                    <caption>Network attributes</caption>
-                    <col width="20%"/>
-                    <col width="15%"/>
-                    <col width="17%"/>
-                    <col width="47%"/>
-                    <thead>
-                        <tr>
-                            <th>Attribute</th>
-                            <th>Type</th>
-                            <th>Default value</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><option>admin_state_up</option></td>
-                            <td>bool</td>
-                            <td>True</td>
-                            <td>Administrative state of the network.
-                                If specified as False (down), this
-                                network does not forward packets.
-                            </td>
+                            <td>Associates a block of IP addresses and
+                                other network configuration, such as
+                                default gateways or dns-servers, with
+                                an Networking network. Each subnet
+                                represents an IPv4 or IPv6 address
+                                block, and each Networking network can
+                                have multiple subnets.</td>
                         </tr>
                         <tr>
-                            <td><option>id</option></td>
-                            <td>uuid-str</td>
-                            <td>Generated</td>
-                            <td>UUID for this network.</td>
-                        </tr>
-                        <tr>
-                            <td><option>name</option></td>
-                            <td>string</td>
-                            <td>None</td>
-                            <td>Human-readable name for this network;
-                                is not required to be unique.</td>
-                        </tr>
-                        <tr>
-                            <td><option>shared</option></td>
-                            <td>bool</td>
-                            <td>False</td>
-                            <td>Specifies whether this network
-                                resource can be accessed by any
-                                tenant. The default policy setting
-                                restricts usage of this attribute to
-                                administrative users only.</td>
-                        </tr>
-                        <tr>
-                            <td><option>status</option></td>
-                            <td>string</td>
-                            <td>N/A</td>
-                            <td>Indicates whether this network is
-                                currently operational.</td>
-                        </tr>
-                        <tr>
-                            <td><option>subnets</option></td>
-                            <td>list(uuid-str)</td>
-                            <td>Empty list</td>
-                            <td>List of subnets associated with this
-                                network.</td>
-                        </tr>
-                        <tr>
-                            <td><option>tenant_id</option></td>
-                            <td>uuid-str</td>
-                            <td>N/A</td>
-                            <td>Tenant owner of the network. Only
-                                administrative users can set the
-                                tenant identifier; this cannot be
-                                changed using authorization policies.
-                            </td>
+                            <td><emphasis role="bold"
+                                >Port</emphasis></td>
+                            <td>Represents an attachment port to a L2
+                                Networking network. When a port is
+                                created on the network, by default it
+                                is allocated an available fixed IP
+                                address out of one of the designated
+                                subnets for each IP version (if one
+                                exists). When the port is destroyed,
+                                its allocated addresses return to the
+                                pool of available IPs on the subnet.
+                                Users of the Networking API can either
+                                choose a specific IP address from the
+                                block, or let Networking choose the
+                                first available IP address.</td>
                         </tr>
                     </tbody>
-                </table>
-                <table rules="all">
-                    <caption>Subnet attributes</caption>
-                    <col width="20%"/>
-                    <col width="15%"/>
-                    <col width="17%"/>
-                    <col width="47%"/>
-                    <thead>
-                        <tr>
-                            <th>Attribute</th>
-                            <th>Type</th>
-                            <th>Default Value</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><option>allocation_pools</option></td>
-                            <td>list(dict)</td>
-                            <td>Every address in
-                                <option>cidr</option>, excluding
-                                   <option>gateway_ip</option> (if
-                                configured).</td>
-                            <td><para>List of cidr sub-ranges that are
-                                   available for dynamic allocation to
-                                   ports. Syntax:</para>
-                                <programlisting language="json">[ { "start":"10.0.0.2",
-    "end": "10.0.0.254"} ]</programlisting>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><option>cidr</option></td>
-                            <td>string</td>
-                            <td>N/A</td>
-                            <td>IP range for this subnet, based on the
-                                IP version.</td>
-                        </tr>
-                        <tr>
-                            <td><option>dns_nameservers</option></td>
-                            <td>list(string)</td>
-                            <td>Empty list</td>
-                            <td>List of DNS name servers used by hosts
-                                in this subnet.</td>
-                        </tr>
-                        <tr>
-                            <td><option>enable_dhcp</option></td>
-                            <td>bool</td>
-                            <td>True</td>
-                            <td>Specifies whether DHCP is enabled for
-                                this subnet.</td>
-                        </tr>
-                        <tr>
-                            <td><option>gateway_ip</option></td>
-                            <td>string</td>
-                            <td>First address in <option>cidr</option>
-                            </td>
-                            <td>Default gateway used by devices in
-                                this subnet.</td>
-                        </tr>
-                        <tr>
-                            <td><option>host_routes</option></td>
-                            <td>list(dict)</td>
-                            <td>Empty list</td>
-                            <td>Routes that should be used by devices
-                                with IPs from this subnet (not
-                                including local subnet route).</td>
-                        </tr>
-                        <tr>
-                            <td><option>id</option></td>
-                            <td>uuid-string</td>
-                            <td>Generated</td>
-                            <td>UUID representing this subnet.</td>
-                        </tr>
-                        <tr>
-                            <td><option>ip_version</option></td>
-                            <td>int</td>
-                            <td>4</td>
-                            <td>IP version.</td>
-                        </tr>
-                        <tr>
-                            <td><option>name</option></td>
-                            <td>string</td>
-                            <td>None</td>
-                            <td>Human-readable name for this subnet
-                                (might not be unique).</td>
-                        </tr>
-                        <tr>
-                            <td><option>network_id</option></td>
-                            <td>uuid-string</td>
-                            <td>N/A</td>
-                            <td>Network with which this subnet is
-                                associated.</td>
-                        </tr>
-                        <tr>
-                            <td><option>tenant_id</option></td>
-                            <td>uuid-string</td>
-                            <td>N/A</td>
-                            <td>Owner of network. Only administrative
-                                users can set the tenant identifier;
-                                this cannot be changed using
-                                authorization policies.</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <?hard-pagebreak?>
-                <table rules="all">
-                    <caption>Port attributes</caption>
-                    <col width="20%"/>
-                    <col width="15%"/>
-                    <col width="17%"/>
-                    <col width="47%"/>
-                    <thead>
-                        <tr>
-                            <th>Attribute</th>
-                            <th>Type</th>
-                            <th>Default Value</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><option>admin_state_up</option></td>
-                            <td>bool</td>
-                            <td>true</td>
-                            <td>Administrative state of this port. If
-                                specified as False (down), this port
-                                does not forward packets.</td>
-                        </tr>
-                        <tr>
-                            <td><option>device_id</option></td>
-                            <td>string</td>
-                            <td>None</td>
-                            <td>Identifies the device using this port
-                                (for example, a virtual server's ID).
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><option>device_owner</option></td>
-                            <td>string</td>
-                            <td>None</td>
-                            <td>Identifies the entity using this port
-                                (for example, a dhcp agent).</td>
-                        </tr>
-                        <tr>
-                            <td><option>fixed_ips</option></td>
-                            <td>list(dict)</td>
-                            <td>Automatically allocated from pool</td>
-                            <td>Specifies IP addresses for this port;
-                                associates the port with the subnets
-                                containing the listed IP addresses.
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><option>id</option></td>
-                            <td>uuid-string</td>
-                            <td>Generated</td>
-                            <td>UUID for this port.</td>
-                        </tr>
-                        <tr>
-                            <td><option>mac_address</option></td>
-                            <td>string</td>
-                            <td>Generated</td>
-                            <td>Mac address to use on this port.</td>
-                        </tr>
-                        <tr>
-                            <td><option>name</option></td>
-                            <td>string</td>
-                            <td>None</td>
-                            <td>Human-readable name for this port
-                                (might not be unique).</td>
-                        </tr>
-                        <tr>
-                            <td><option>network_id</option></td>
-                            <td>uuid-string</td>
-                            <td>N/A</td>
-                            <td>Network with which this port is
-                                associated.</td>
-                        </tr>
-                        <tr>
-                            <td><option>status</option></td>
-                            <td>string</td>
-                            <td>N/A</td>
-                            <td>Indicates whether the network is
-                                currently operational.</td>
-                        </tr>
-                        <tr>
-                            <td><option>tenant_id</option></td>
-                            <td>uuid-string</td>
-                            <td>N/A</td>
-                            <td>Owner of the network. Only
-                                administrative users can set the
-                                tenant identifier; this cannot be
-                                changed using authorization policies.
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
-            <section xml:id="basic_operations">
-                <title>Basic Networking operations</title>
-                <para>To learn about advanced capabilities available
-                    through the neutron command-line interface
-                    (CLI), read the networking section in the <link
+                </table></para>
+            <?hard-pagebreak?>
+            <para>This table summarizes the attributes available for
+                each networking abstraction. For information about API
+                abstraction and operations, see the <link
+                    xlink:href="http://docs.openstack.org/api/openstack-network/2.0/content/"
+                    >Networking API v2.0 Reference</link>.</para>
+            <table rules="all">
+                <caption>Network attributes</caption>
+                <col width="20%"/>
+                <col width="15%"/>
+                <col width="17%"/>
+                <col width="47%"/>
+                <thead>
+                    <tr>
+                        <th>Attribute</th>
+                        <th>Type</th>
+                        <th>Default value</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><option>admin_state_up</option></td>
+                        <td>bool</td>
+                        <td>True</td>
+                        <td>Administrative state of the network. If
+                            specified as False (down), this network
+                            does not forward packets.</td>
+                    </tr>
+                    <tr>
+                        <td><option>id</option></td>
+                        <td>uuid-str</td>
+                        <td>Generated</td>
+                        <td>UUID for this network.</td>
+                    </tr>
+                    <tr>
+                        <td><option>name</option></td>
+                        <td>string</td>
+                        <td>None</td>
+                        <td>Human-readable name for this network; is
+                            not required to be unique.</td>
+                    </tr>
+                    <tr>
+                        <td><option>shared</option></td>
+                        <td>bool</td>
+                        <td>False</td>
+                        <td>Specifies whether this network resource
+                            can be accessed by any tenant. The default
+                            policy setting restricts usage of this
+                            attribute to administrative users
+                            only.</td>
+                    </tr>
+                    <tr>
+                        <td><option>status</option></td>
+                        <td>string</td>
+                        <td>N/A</td>
+                        <td>Indicates whether this network is
+                            currently operational.</td>
+                    </tr>
+                    <tr>
+                        <td><option>subnets</option></td>
+                        <td>list(uuid-str)</td>
+                        <td>Empty list</td>
+                        <td>List of subnets associated with this
+                            network.</td>
+                    </tr>
+                    <tr>
+                        <td><option>tenant_id</option></td>
+                        <td>uuid-str</td>
+                        <td>N/A</td>
+                        <td>Tenant owner of the network. Only
+                            administrative users can set the tenant
+                            identifier; this cannot be changed using
+                            authorization policies.</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table rules="all">
+                <caption>Subnet attributes</caption>
+                <col width="20%"/>
+                <col width="15%"/>
+                <col width="17%"/>
+                <col width="47%"/>
+                <thead>
+                    <tr>
+                        <th>Attribute</th>
+                        <th>Type</th>
+                        <th>Default value</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><option>allocation_pools</option></td>
+                        <td>list(dict)</td>
+                        <td>Every address in <option>cidr</option>,
+                            excluding <option>gateway_ip</option> (if
+                            configured).</td>
+                        <td><para>List of cidr sub-ranges that are
+                                available for dynamic allocation to
+                                ports. Syntax:</para>
+                            <programlisting language="json">[ { "start":"10.0.0.2",
+    "end": "10.0.0.254"} ]</programlisting></td>
+                    </tr>
+                    <tr>
+                        <td><option>cidr</option></td>
+                        <td>string</td>
+                        <td>N/A</td>
+                        <td>IP range for this subnet, based on the IP
+                            version.</td>
+                    </tr>
+                    <tr>
+                        <td><option>dns_nameservers</option></td>
+                        <td>list(string)</td>
+                        <td>Empty list</td>
+                        <td>List of DNS name servers used by hosts in
+                            this subnet.</td>
+                    </tr>
+                    <tr>
+                        <td><option>enable_dhcp</option></td>
+                        <td>bool</td>
+                        <td>True</td>
+                        <td>Specifies whether DHCP is enabled for this
+                            subnet.</td>
+                    </tr>
+                    <tr>
+                        <td><option>gateway_ip</option></td>
+                        <td>string</td>
+                        <td>First address in <option>cidr</option></td>
+                        <td>Default gateway used by devices in this
+                            subnet.</td>
+                    </tr>
+                    <tr>
+                        <td><option>host_routes</option></td>
+                        <td>list(dict)</td>
+                        <td>Empty list</td>
+                        <td>Routes that should be used by devices with
+                            IPs from this subnet (not including local
+                            subnet route).</td>
+                    </tr>
+                    <tr>
+                        <td><option>id</option></td>
+                        <td>uuid-string</td>
+                        <td>Generated</td>
+                        <td>UUID representing this subnet.</td>
+                    </tr>
+                    <tr>
+                        <td><option>ip_version</option></td>
+                        <td>int</td>
+                        <td>4</td>
+                        <td>IP version.</td>
+                    </tr>
+                    <tr>
+                        <td><option>name</option></td>
+                        <td>string</td>
+                        <td>None</td>
+                        <td>Human-readable name for this subnet (might
+                            not be unique).</td>
+                    </tr>
+                    <tr>
+                        <td><option>network_id</option></td>
+                        <td>uuid-string</td>
+                        <td>N/A</td>
+                        <td>Network with which this subnet is
+                            associated.</td>
+                    </tr>
+                    <tr>
+                        <td><option>tenant_id</option></td>
+                        <td>uuid-string</td>
+                        <td>N/A</td>
+                        <td>Owner of network. Only administrative
+                            users can set the tenant identifier; this
+                            cannot be changed using authorization
+                            policies.</td>
+                    </tr>
+                </tbody>
+            </table>
+            <?hard-pagebreak?>
+            <table rules="all">
+                <caption>Port attributes</caption>
+                <col width="20%"/>
+                <col width="15%"/>
+                <col width="17%"/>
+                <col width="47%"/>
+                <thead>
+                    <tr>
+                        <th>Attribute</th>
+                        <th>Type</th>
+                        <th>Default value</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><option>admin_state_up</option></td>
+                        <td>bool</td>
+                        <td>true</td>
+                        <td>Administrative state of this port. If
+                            specified as False (down), this port does
+                            not forward packets.</td>
+                    </tr>
+                    <tr>
+                        <td><option>device_id</option></td>
+                        <td>string</td>
+                        <td>None</td>
+                        <td>Identifies the device using this port (for
+                            example, a virtual server's ID).</td>
+                    </tr>
+                    <tr>
+                        <td><option>device_owner</option></td>
+                        <td>string</td>
+                        <td>None</td>
+                        <td>Identifies the entity using this port (for
+                            example, a dhcp agent).</td>
+                    </tr>
+                    <tr>
+                        <td><option>fixed_ips</option></td>
+                        <td>list(dict)</td>
+                        <td>Automatically allocated from pool</td>
+                        <td>Specifies IP addresses for this port;
+                            associates the port with the subnets
+                            containing the listed IP addresses.</td>
+                    </tr>
+                    <tr>
+                        <td><option>id</option></td>
+                        <td>uuid-string</td>
+                        <td>Generated</td>
+                        <td>UUID for this port.</td>
+                    </tr>
+                    <tr>
+                        <td><option>mac_address</option></td>
+                        <td>string</td>
+                        <td>Generated</td>
+                        <td>Mac address to use on this port.</td>
+                    </tr>
+                    <tr>
+                        <td><option>name</option></td>
+                        <td>string</td>
+                        <td>None</td>
+                        <td>Human-readable name for this port (might
+                            not be unique).</td>
+                    </tr>
+                    <tr>
+                        <td><option>network_id</option></td>
+                        <td>uuid-string</td>
+                        <td>N/A</td>
+                        <td>Network with which this port is
+                            associated.</td>
+                    </tr>
+                    <tr>
+                        <td><option>status</option></td>
+                        <td>string</td>
+                        <td>N/A</td>
+                        <td>Indicates whether the network is currently
+                            operational.</td>
+                    </tr>
+                    <tr>
+                        <td><option>tenant_id</option></td>
+                        <td>uuid-string</td>
+                        <td>N/A</td>
+                        <td>Owner of the network. Only administrative
+                            users can set the tenant identifier; this
+                            cannot be changed using authorization
+                            policies.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        <section xml:id="basic_operations">
+            <title>Basic Networking operations</title>
+            <para>To learn about advanced capabilities available
+                through the neutron command-line interface (CLI), read
+                the networking section in the <link
                     xlink:href="http://docs.openstack.org/user-guide/content/index.html"
                     > OpenStack End User Guide</link>.</para>
-                <para>This table shows example neutron commands
-                    that enable you to complete basic network
-                    operations:</para>
-                <table rules="all">
-                    <caption>Basic Networking operations</caption>
-                    <col width="40%"/>
-                    <col width="60%"/>
-                    <thead>
-                        <tr>
-                            <th>Operation</th>
-                            <th>Command</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Creates a network.</td>
-                            <td><screen><prompt>$</prompt> <userinput>neutron net-create net1</userinput></screen></td>
-                        </tr>
-                        <tr>
-                            <td>Creates a subnet that is associated
-                                with net1.</td>
-                            <td><screen><prompt>$</prompt> <userinput>neutron subnet-create net1 10.0.0.0/24</userinput></screen></td>
-                        </tr>
-                        <tr>
-                            <td>Lists ports for a specified
-                                tenant.</td>
-                            <td><screen><prompt>$</prompt> <userinput>neutron port-list</userinput></screen></td>
-                        </tr>
-                        <tr>
-                            <td>Lists ports for a specified tenant and
-                                displays the <option>id</option>,
-                                   <option>fixed_ips</option>, and
-                                   <option>device_owner</option>
-                                columns.</td>
-                            <td><screen><prompt>$</prompt> <userinput>neutron port-list -c id -c fixed_ips -c device_owner</userinput></screen>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Shows information for a specified
-                                port.</td>
-                            <td><screen><prompt>$</prompt> <userinput>neutron port-show <replaceable>port-id</replaceable></userinput></screen></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <note>
-                    <para>The <option>device_owner</option> field
-                        describes who owns the port. A port whose
-                            <option>device_owner</option> begins
-                        with:</para>
-                    <itemizedlist>
-                        <listitem>
-                            <para><literal>network</literal> is
-                                created by Networking.</para>
-                        </listitem>
-                        <listitem>
-                            <para><literal>compute</literal> is
-                                created by Compute.</para>
-                        </listitem>
-                    </itemizedlist>
-                </note>
-            </section>
-            <section xml:id="admin_api_config">
-                <title>Administrative operations</title>
-                <para>The cloud administrator can run any
-                        <command>neutron</command> command on behalf
-                    of tenants by specifying an Identity
-                        <option>tenant_id</option> in the command, as
-                    follows:</para>
-                <screen><prompt>$</prompt> <userinput>neutron net-create --tenant-id=<replaceable>tenant-id</replaceable> <replaceable>network-name</replaceable></userinput></screen>
-                <para>For example:</para>
-                <screen><prompt>$</prompt> <userinput>neutron net-create --tenant-id=5e4bbe24b67a4410bc4d9fae29ec394e net1</userinput></screen>
-                <note>
-                    <para>To view all tenant IDs in Identity, run the
-                        following command as an Identity Service admin
-                        user:</para>
-                    <screen><prompt>$</prompt> <userinput>keystone tenant-list</userinput></screen>
-                </note>
-            </section>
-            <?hard-pagebreak?>
-            <section xml:id="advanced_networking">
-                <title>Advanced Networking operations</title>
-                <para>This table shows example Networking commands
-                    that enable you to complete advanced network
-                    operations:</para>
-                <table rules="all">
-                    <caption>Advanced Networking operations</caption>
-                    <col width="40%"/>
-                    <col width="60%"/>
-                    <thead>
-                        <tr>
-                            <th>Operation</th>
-                            <th>Command</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Creates a network that all tenants can
-                                use.</td>
-                            <td><screen><prompt>$</prompt> <userinput>neutron net-create --shared public-net</userinput></screen></td>
-                        </tr>
-                        <tr>
-                            <td>Creates a subnet with a specified
-                                gateway IP address.</td>
-                            <td><screen><prompt>$</prompt> <userinput>neutron subnet-create --gateway 10.0.0.254 net1 10.0.0.0/24</userinput></screen></td>
-                        </tr>
-                        <tr>
-                            <td>Creates a subnet that has no gateway
-                                IP address.</td>
-                            <td><screen><prompt>$</prompt> <userinput>neutron subnet-create --no-gateway net1 10.0.0.0/24</userinput></screen></td>
-                        </tr>
-                        <tr>
-                            <td>Creates a subnet with DHCP
-                                disabled.</td>
-                            <td><screen><prompt>$</prompt> <userinput>neutron subnet-create net1 10.0.0.0/24 --enable_dhcp False</userinput></screen></td>
-                        </tr>
-                        <tr>
-                            <td>Creates a subnet with a specified set
-                                of host routes.</td>
-                            <td><screen><prompt>$</prompt> <userinput>neutron subnet-create test-net1 40.0.0.0/24 --host_routes type=dict list=true destination=40.0.1.0/24,nexthop=40.0.0.2</userinput></screen></td>
-                        </tr>
-                        <tr>
-                            <td>Creates a subnet with a specified set
-                                of dns name servers.</td>
-                            <td><screen><prompt>$</prompt> <userinput>neutron subnet-create test-net1 40.0.0.0/24 --dns_nameservers list=true 8.8.8.7 8.8.8.8</userinput></screen></td>
-                        </tr>
-                        <tr>
-                            <td>Displays all ports and IPs allocated
-                                on a network.</td>
-                            <td><screen><prompt>$</prompt> <userinput>neutron port-list --network_id <replaceable>net-id</replaceable></userinput></screen></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
-        </section>
-        <?hard-pagebreak?>
-        <section xml:id="using_nova_with_neutron">
-            <title>Use Compute with Networking</title>
-            <section xml:id="basic_workflow_with_nova">
-                <title>Basic Compute and Networking operations</title>
-                <para>This table shows example neutron and
-                    nova commands that enable you to complete
-                    basic VM networking operations:</para>
-                <table rules="all">
-                    <caption>Basic Compute and Networking
-                        operations</caption>
-                    <col width="40%"/>
-                    <col width="60%"/>
-                    <thead>
-                        <tr>
-                            <th>Action</th>
-                            <th>Command</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Checks available networks.</td>
-                            <td><screen><prompt>$</prompt> <userinput>neutron net-list</userinput></screen></td>
-                        </tr>
-                        <tr>
-                            <td>Boots a VM with a single NIC on a
-                                selected Networking network.</td>
-                            <td><screen><prompt>$</prompt> <userinput>nova boot --image <replaceable>img</replaceable> --flavor <replaceable>flavor</replaceable> --nic net-id=<replaceable>net-id</replaceable> <replaceable>vm-name</replaceable></userinput></screen>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><para>Searches for ports with a
-                                   <option>device_id</option> that
-                                   matches the Compute instance UUID.
-                                   See <xref
-                                   linkend="network_compute_note"
-                                   />.</para>
-                            </td>
-                            <td><screen><prompt>$</prompt> <userinput>neutron port-list --device_id=<replaceable>vm-id</replaceable></userinput></screen></td>
-                        </tr>
-                        <tr>
-                            <td>Searches for ports, but shows only the
-                                <option>mac_address</option> of the port.</td>
-                            <td><screen><prompt>$</prompt> <userinput>neutron port-list --field mac_address --device_id=<replaceable>vm-id</replaceable></userinput></screen></td>
-                        </tr>
-                        <tr>
-                            <td>Temporarily disables a port from
-                                sending traffic.</td>
-                            <td><screen><prompt>$</prompt> <userinput>neutron port-update <replaceable>port-id</replaceable> --admin_state_up=False</userinput></screen></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <note>
-                    <para>The <option>device_id</option> can also be a
-                        logical router ID.</para>
-                </note>
-                <note xml:id="network_compute_note">
-                    <title>Create and delete VMs</title>
-                    <itemizedlist>
-                        <listitem>
-                            <para>When you boot a Compute VM, a port
-                                on the network that corresponds to the
-                                VM NIC is automatically created and
-                                associated with the default security
-                                group. You can configure <link
-                                   linkend="enabling_ping_and_ssh"
-                                   >security group rules</link> to
-                                enable users to access the VM.</para>
-                        </listitem>
-                        <listitem>
-                            <para>When you delete a Compute VM, the
-                                underlying Networking port is
-                                automatically deleted.</para>
-                        </listitem>
-                    </itemizedlist>
-                </note>
-            </section>
-            <section xml:id="advanced_vm_creation">
-                <title>Advanced VM creation operations</title>
-                <para>This table shows example nova and
-                    neutron commands that enable you to
-                    complete advanced VM creation operations:</para>
-                <table rules="all">
-                    <caption>Advanced VM creation operations</caption>
-                    <col width="40%"/>
-                    <col width="60%"/>
-                    <thead>
-                        <tr>
-                            <th>Operation</th>
-                            <th>Command</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Boots a VM with multiple NICs.</td>
-                            <td><screen><prompt>$</prompt> <userinput>nova boot --image <replaceable>img</replaceable> --flavor <replaceable>flavor</replaceable> --nic net-id=<replaceable>net1-id</replaceable> --nic net-id=<replaceable>net2-id</replaceable> <replaceable>vm-name</replaceable></userinput></screen></td>
-                        </tr>
-                        <tr>
-                            <td>Boots a VM with a specific IP address.
-                                First, create an Networking port with
-                                a specific IP address. Then, boot a VM
-                                specifying a <option>port-id</option>
-                                rather than a
-                                <option>net-id</option>.</td>
-                            <td><screen><prompt>$</prompt> <userinput>neutron port-create --fixed-ip subnet_id=<replaceable>subnet-id</replaceable>,ip_address=<replaceable>IP</replaceable> <replaceable>net-id</replaceable></userinput>
-<prompt>$</prompt> <userinput>nova boot --image <replaceable>img</replaceable> --flavor <replaceable>flavor</replaceable> --nic port-id=<replaceable>port-id</replaceable> <replaceable>vm-name</replaceable></userinput></screen>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Boots a VM that connects to all
-                                networks that are accessible to the
-                                tenant who submits the request
-                                (without the <parameter>--nic</parameter>
-                                option).</td>
-                            <td><screen><prompt>$</prompt> <userinput>nova boot --image <replaceable>img</replaceable> --flavor <replaceable>flavor</replaceable> <replaceable>vm-name</replaceable></userinput></screen>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <note>
-                    <para>Networking does not currently support the
-                            <parameter>v4-fixed-ip</parameter> parameter
-                        of the <parameter>--nic</parameter> option for the
-                            <command>nova</command> command.</para>
-                </note>
-            </section>
-            <section xml:id="enabling_ping_and_ssh">
-                <title>Enable ping and SSH on VMs (security
-                    groups)</title>
-                <para>You must configure security group rules
-                    depending on the type of plug-in you are using. If
-                    you are using a plug-in that:</para>
+            <para>This table shows example neutron commands that
+                enable you to complete basic network
+                operations:</para>
+            <table rules="all">
+                <caption>Basic Networking operations</caption>
+                <col width="40%"/>
+                <col width="60%"/>
+                <thead>
+                    <tr>
+                        <th>Operation</th>
+                        <th>Command</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Creates a network.</td>
+                        <td><screen><prompt>$</prompt> <userinput>neutron net-create net1</userinput></screen></td>
+                    </tr>
+                    <tr>
+                        <td>Creates a subnet that is associated with
+                            net1.</td>
+                        <td><screen><prompt>$</prompt> <userinput>neutron subnet-create net1 10.0.0.0/24</userinput></screen></td>
+                    </tr>
+                    <tr>
+                        <td>Lists ports for a specified tenant.</td>
+                        <td><screen><prompt>$</prompt> <userinput>neutron port-list</userinput></screen></td>
+                    </tr>
+                    <tr>
+                        <td>Lists ports for a specified tenant and
+                            displays the <option>id</option>,
+                                <option>fixed_ips</option>, and
+                                <option>device_owner</option>
+                            columns.</td>
+                        <td><screen><prompt>$</prompt> <userinput>neutron port-list -c id -c fixed_ips -c device_owner</userinput></screen></td>
+                    </tr>
+                    <tr>
+                        <td>Shows information for a specified
+                            port.</td>
+                        <td><screen><prompt>$</prompt> <userinput>neutron port-show <replaceable>port-id</replaceable></userinput></screen></td>
+                    </tr>
+                </tbody>
+            </table>
+            <note>
+                <para>The <option>device_owner</option> field
+                    describes who owns the port. A port whose
+                        <option>device_owner</option> begins
+                    with:</para>
                 <itemizedlist>
                     <listitem>
-                        <para>Implements Networking security groups,
-                            you can configure security group rules
-                            directly by using <command>neutron
-                                security-group-rule-create</command>.
-                            This example enables
-                                <command>ping</command> and
-                                <command>ssh</command> access to your
-                            VMs.</para>
-                        <screen><prompt>$</prompt> <userinput>neutron security-group-rule-create --protocol icmp \
-    --direction ingress default</userinput></screen>
-                        <screen><prompt>$</prompt> <userinput>neutron security-group-rule-create --protocol tcp --port-range-min 22 \
-    --port-range-max 22 --direction ingress default</userinput></screen>
+                        <para><literal>network</literal> is created by
+                            Networking.</para>
                     </listitem>
                     <listitem>
-                        <para>Does not implement Networking security
-                            groups, you can configure security group
-                            rules by using the <command>nova
-                                secgroup-add-rule</command> or
-                                <command>euca-authorize</command>
-                            command. These <command>nova</command>
-                            commands enable <command>ping</command>
-                            and <command>ssh</command> access to your
-                            VMs.</para>
-                        <screen><prompt>$</prompt> <userinput>nova secgroup-add-rule default icmp -1 -1 0.0.0.0/0</userinput>
-<prompt>$</prompt> <userinput>nova secgroup-add-rule default tcp 22 22 0.0.0.0/0</userinput></screen>
+                        <para><literal>compute</literal> is created by
+                            Compute.</para>
                     </listitem>
                 </itemizedlist>
-                <note>
-                    <para>If your plug-in implements Networking
-                        security groups, you can also leverage Compute
-                        security groups by setting
-                            <code>security_group_api = neutron</code>
-                        in the <filename>nova.conf</filename> file.
-                        After you set this option, all Compute
-                        security group commands are proxied to
-                        Networking.</para>
-                </note>
-            </section>
+            </note>
+        </section>
+        <section xml:id="admin_api_config">
+            <title>Administrative operations</title>
+            <para>The cloud administrator can run any
+                    <command>neutron</command> command on behalf of
+                tenants by specifying an Identity
+                    <option>tenant_id</option> in the command, as
+                follows:</para>
+            <screen><prompt>$</prompt> <userinput>neutron net-create --tenant-id=<replaceable>tenant-id</replaceable> <replaceable>network-name</replaceable></userinput></screen>
+            <para>For example:</para>
+            <screen><prompt>$</prompt> <userinput>neutron net-create --tenant-id=5e4bbe24b67a4410bc4d9fae29ec394e net1</userinput></screen>
+            <note>
+                <para>To view all tenant IDs in Identity, run the
+                    following command as an Identity Service admin
+                    user:</para>
+                <screen><prompt>$</prompt> <userinput>keystone tenant-list</userinput></screen>
+            </note>
+        </section>
+        <?hard-pagebreak?>
+        <section xml:id="advanced_networking">
+            <title>Advanced Networking operations</title>
+            <para>This table shows example Networking commands that
+                enable you to complete advanced network
+                operations:</para>
+            <table rules="all">
+                <caption>Advanced Networking operations</caption>
+                <col width="40%"/>
+                <col width="60%"/>
+                <thead>
+                    <tr>
+                        <th>Operation</th>
+                        <th>Command</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Creates a network that all tenants can
+                            use.</td>
+                        <td><screen><prompt>$</prompt> <userinput>neutron net-create --shared public-net</userinput></screen></td>
+                    </tr>
+                    <tr>
+                        <td>Creates a subnet with a specified gateway
+                            IP address.</td>
+                        <td><screen><prompt>$</prompt> <userinput>neutron subnet-create --gateway 10.0.0.254 net1 10.0.0.0/24</userinput></screen></td>
+                    </tr>
+                    <tr>
+                        <td>Creates a subnet that has no gateway IP
+                            address.</td>
+                        <td><screen><prompt>$</prompt> <userinput>neutron subnet-create --no-gateway net1 10.0.0.0/24</userinput></screen></td>
+                    </tr>
+                    <tr>
+                        <td>Creates a subnet with DHCP disabled.</td>
+                        <td><screen><prompt>$</prompt> <userinput>neutron subnet-create net1 10.0.0.0/24 --enable_dhcp False</userinput></screen></td>
+                    </tr>
+                    <tr>
+                        <td>Creates a subnet with a specified set of
+                            host routes.</td>
+                        <td><screen><prompt>$</prompt> <userinput>neutron subnet-create test-net1 40.0.0.0/24 --host_routes type=dict list=true destination=40.0.1.0/24,nexthop=40.0.0.2</userinput></screen></td>
+                    </tr>
+                    <tr>
+                        <td>Creates a subnet with a specified set of
+                            dns name servers.</td>
+                        <td><screen><prompt>$</prompt> <userinput>neutron subnet-create test-net1 40.0.0.0/24 --dns_nameservers list=true 8.8.8.7 8.8.8.8</userinput></screen></td>
+                    </tr>
+                    <tr>
+                        <td>Displays all ports and IPs allocated on a
+                            network.</td>
+                        <td><screen><prompt>$</prompt> <userinput>neutron port-list --network_id <replaceable>net-id</replaceable></userinput></screen></td>
+                    </tr>
+                </tbody>
+            </table>
         </section>
     </section>
+    <?hard-pagebreak?>
+    <section xml:id="using_nova_with_neutron">
+        <title>Use Compute with Networking</title>
+        <section xml:id="basic_workflow_with_nova">
+            <title>Basic Compute and Networking operations</title>
+            <para>This table shows example neutron and nova commands
+                that enable you to complete basic VM networking
+                operations:</para>
+            <table rules="all">
+                <caption>Basic Compute and Networking
+                    operations</caption>
+                <col width="40%"/>
+                <col width="60%"/>
+                <thead>
+                    <tr>
+                        <th>Action</th>
+                        <th>Command</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Checks available networks.</td>
+                        <td><screen><prompt>$</prompt> <userinput>neutron net-list</userinput></screen></td>
+                    </tr>
+                    <tr>
+                        <td>Boots a VM with a single NIC on a selected
+                            Networking network.</td>
+                        <td><screen><prompt>$</prompt> <userinput>nova boot --image <replaceable>img</replaceable> --flavor <replaceable>flavor</replaceable> --nic net-id=<replaceable>net-id</replaceable> <replaceable>vm-name</replaceable></userinput></screen></td>
+                    </tr>
+                    <tr>
+                        <td><para>Searches for ports with a
+                                   <option>device_id</option> that
+                                matches the Compute instance UUID. See
+                                   <xref
+                                   linkend="network_compute_note"
+                                />.</para></td>
+                        <td><screen><prompt>$</prompt> <userinput>neutron port-list --device_id=<replaceable>vm-id</replaceable></userinput></screen></td>
+                    </tr>
+                    <tr>
+                        <td>Searches for ports, but shows only the
+                                <option>mac_address</option> of the
+                            port.</td>
+                        <td><screen><prompt>$</prompt> <userinput>neutron port-list --field mac_address --device_id=<replaceable>vm-id</replaceable></userinput></screen></td>
+                    </tr>
+                    <tr>
+                        <td>Temporarily disables a port from sending
+                            traffic.</td>
+                        <td><screen><prompt>$</prompt> <userinput>neutron port-update <replaceable>port-id</replaceable> --admin_state_up=False</userinput></screen></td>
+                    </tr>
+                </tbody>
+            </table>
+            <note>
+                <para>The <option>device_id</option> can also be a
+                    logical router ID.</para>
+            </note>
+            <note xml:id="network_compute_note">
+                <title>Create and delete VMs</title>
+                <itemizedlist>
+                    <listitem>
+                        <para>When you boot a Compute VM, a port on
+                            the network that corresponds to the VM NIC
+                            is automatically created and associated
+                            with the default security group. You can
+                            configure <link
+                                linkend="enabling_ping_and_ssh"
+                                >security group rules</link> to enable
+                            users to access the VM.</para>
+                    </listitem>
+                    <listitem>
+                        <para>When you delete a Compute VM, the
+                            underlying Networking port is
+                            automatically deleted.</para>
+                    </listitem>
+                </itemizedlist>
+            </note>
+        </section>
+        <section xml:id="advanced_vm_creation">
+            <title>Advanced VM creation operations</title>
+            <para>This table shows example nova and neutron commands
+                that enable you to complete advanced VM creation
+                operations:</para>
+            <table rules="all">
+                <caption>Advanced VM creation operations</caption>
+                <col width="40%"/>
+                <col width="60%"/>
+                <thead>
+                    <tr>
+                        <th>Operation</th>
+                        <th>Command</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Boots a VM with multiple NICs.</td>
+                        <td><screen><prompt>$</prompt> <userinput>nova boot --image <replaceable>img</replaceable> --flavor <replaceable>flavor</replaceable> --nic net-id=<replaceable>net1-id</replaceable> --nic net-id=<replaceable>net2-id</replaceable> <replaceable>vm-name</replaceable></userinput></screen></td>
+                    </tr>
+                    <tr>
+                        <td>Boots a VM with a specific IP address.
+                            First, create an Networking port with a
+                            specific IP address. Then, boot a VM
+                            specifying a <option>port-id</option>
+                            rather than a
+                            <option>net-id</option>.</td>
+                        <td><screen><prompt>$</prompt> <userinput>neutron port-create --fixed-ip subnet_id=<replaceable>subnet-id</replaceable>,ip_address=<replaceable>IP</replaceable> <replaceable>net-id</replaceable></userinput>
+<prompt>$</prompt> <userinput>nova boot --image <replaceable>img</replaceable> --flavor <replaceable>flavor</replaceable> --nic port-id=<replaceable>port-id</replaceable> <replaceable>vm-name</replaceable></userinput></screen></td>
+                    </tr>
+                    <tr>
+                        <td>Boots a VM that connects to all networks
+                            that are accessible to the tenant who
+                            submits the request (without the
+                                <parameter>--nic</parameter>
+                            option).</td>
+                        <td><screen><prompt>$</prompt> <userinput>nova boot --image <replaceable>img</replaceable> --flavor <replaceable>flavor</replaceable> <replaceable>vm-name</replaceable></userinput></screen></td>
+                    </tr>
+                </tbody>
+            </table>
+            <note>
+                <para>Networking does not currently support the
+                        <parameter>v4-fixed-ip</parameter> parameter
+                    of the <parameter>--nic</parameter> option for the
+                        <command>nova</command> command.</para>
+            </note>
+            <note>
+                <para>Cloud images that distribution vendors offer
+                    usually have only one active NIC configured. When
+                    you boot with multiple NICs, you must configure
+                    additional interfaces on the image or the NICS are
+                    not reachable.</para>
+                <para>The following Debian/Ubuntu-based example shows
+                    how to set up the interfaces within the instance
+                    in the
+                        <filename>/etc/network/interfaces</filename>
+                    file. You must apply this configuration to the
+                    image.</para>
+                <programlisting language="bash"># The loopback network interface
+auto lo
+iface lo inet loopback
+
+auto eth0
+iface eth0 inet dhcp
+
+auto eth1
+iface eth1 inet dhcp</programlisting>
+            </note>
+        </section>
+        <section xml:id="enabling_ping_and_ssh">
+            <title>Enable ping and SSH on VMs (security
+                groups)</title>
+            <para>You must configure security group rules depending on
+                the type of plug-in you are using. If you are using a
+                plug-in that:</para>
+            <itemizedlist>
+                <listitem>
+                    <para>Implements Networking security groups, you
+                        can configure security group rules directly by
+                        using the <command>neutron
+                            security-group-rule-create</command>
+                        command. This example enables
+                            <command>ping</command> and
+                            <command>ssh</command> access to your
+                        VMs.</para>
+                    <screen><prompt>$</prompt> <userinput>neutron security-group-rule-create --protocol icmp \
+    --direction ingress default</userinput></screen>
+                    <screen><prompt>$</prompt> <userinput>neutron security-group-rule-create --protocol tcp --port-range-min 22 \
+    --port-range-max 22 --direction ingress default</userinput></screen>
+                </listitem>
+                <listitem>
+                    <para>Does not implement Networking security
+                        groups, you can configure security group rules
+                        by using the <command>nova
+                            secgroup-add-rule</command> or
+                            <command>euca-authorize</command> command.
+                        These <command>nova</command> commands enable
+                            <command>ping</command> and
+                            <command>ssh</command> access to your
+                        VMs.</para>
+                    <screen><prompt>$</prompt> <userinput>nova secgroup-add-rule default icmp -1 -1 0.0.0.0/0</userinput>
+<prompt>$</prompt> <userinput>nova secgroup-add-rule default tcp 22 22 0.0.0.0/0</userinput></screen>
+                </listitem>
+            </itemizedlist>
+            <note>
+                <para>If your plug-in implements Networking security
+                    groups, you can also leverage Compute security
+                    groups by setting <code>security_group_api =
+                        neutron</code> in the
+                        <filename>nova.conf</filename> file. After you
+                    set this option, all Compute security group
+                    commands are proxied to Networking.</para>
+            </note>
+        </section>
+    </section>
+</section>
