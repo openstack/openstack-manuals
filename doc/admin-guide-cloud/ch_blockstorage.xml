@@ -27,12 +27,13 @@
                 >Storage Decisions</link> in the <citetitle>OpenStack
                 Operations Guide</citetitle>.</para>
         <para>OpenStack Block Storage enables you to add extra
-        block-level storage to your OpenStack Compute instances.
-        This service is similar to the Amazon EC2 Elastic Block
-        Storage (EBS) offering.</para>
+            block-level storage to your OpenStack Compute instances.
+            This service is similar to the Amazon EC2 Elastic Block
+            Storage (EBS) offering.</para>
     </section>
     <?hard-pagebreak?>
-    <xi:include href="blockstorage/section_increase-api-throughput.xml"/>
+    <xi:include
+        href="blockstorage/section_increase-api-throughput.xml"/>
     <section xml:id="section_manage-volumes">
         <title>Manage volumes</title>
         <para>The default OpenStack Block Storage service
@@ -53,22 +54,24 @@
         <para>This high-level procedure shows you how to create and
             attach a volume to a server instance.</para>
         <procedure>
+            <title>To create and attach a volume to an
+                instance</title>
             <step>
-                <para>You must configure both OpenStack Compute and
-                    the OpenStack Block Storage service through the
+                <para>Configure the OpenStack Compute and the
+                    OpenStack Block Storage services through the
                         <filename>cinder.conf</filename> file.</para>
             </step>
             <step>
-                <para>Create a volume through the <command>cinder
-                        create</command> command. This command creates
-                    an LV into the volume group (VG)
-                    <literal>cinder-volumes</literal>.</para>
+                <para>Use the <command>cinder create</command> command
+                    to create a volume. This command creates an LV
+                    into the volume group (VG)
+                        <literal>cinder-volumes</literal>.</para>
             </step>
             <step>
-                <para>Attach the volume to an instance through the
-                        <command>nova volume-attach</command> command.
-                    This command creates a unique iSCSI IQN that is
-                    exposed to the compute node.</para>
+                <para>Use the <command>nova volume-attach</command>
+                    command to attach the volume to an instance. This
+                    command creates a unique iSCSI IQN that is exposed
+                    to the compute node.</para>
                 <substeps>
                     <step>
                         <para>The compute node, which runs the
@@ -79,8 +82,8 @@
                     </step>
                     <step>
                         <para>libvirt uses that local storage as
-                            storage for the instance. The instance gets
-                            a new disk (usually a
+                            storage for the instance. The instance
+                            gets a new disk (usually a
                                 <filename>/dev/vdX</filename>
                             disk).</para>
                     </step>
@@ -96,22 +99,22 @@
                 <literal>cinder-*</literal> services. Two additional
             compute nodes run <systemitem class="service"
                 >nova-compute</systemitem>. The walk through uses a
-            custom partitioning scheme that carves out 60&nbsp;GB of space
-            and labels it as LVM. The network uses the
+            custom partitioning scheme that carves out 60&nbsp;GB of
+            space and labels it as LVM. The network uses the
                 <literal>FlatManager</literal> and
                 <literal>NetworkManager</literal> settings for
             OpenStack Compute.</para>
-        <para>The network mode does not interfere with the way cinder
-            works, but you must set up networking for cinder to work.
-            For details, see <xref linkend="ch_networking"/>.</para>
+        <para>The network mode does not interfere with OpenStack Block
+            Storage operations, but you must set up networking for
+            Block Storage to work. For details, see <xref
+                linkend="ch_networking"/>.</para>
         <para>To set up Compute to use volumes, ensure that Block
-            Storage is installed along with <package>lvm2</package>. This guide
-            describes
-            how to troubleshoot your installation and back up your
-            Compute volumes.</para>
+            Storage is installed along with <package>lvm2</package>.
+            This guide describes how to troubleshoot your installation
+            and back up your Compute volumes.</para>
         <section xml:id="boot-from-volume">
             <title>Boot from volume</title>
-            <para>In some cases, instances can be stored and run from
+            <para>In some cases, you can store and run instances from
                 inside volumes. For information, see the <link
                     xlink:href="http://docs.openstack.org/user-guide/content/boot_from_volume.html"
                     >Launch an instance from a volume</link> section
@@ -124,29 +127,50 @@
         <xi:include href="blockstorage/section_nfs_backend.xml"/>
         <xi:include href="blockstorage/section_glusterfs_backend.xml"/>
         <xi:include href="blockstorage/section_multi_backend.xml"/>
-        <xi:include href="blockstorage/section_backup-block-storage-disks.xml"/>
+        <xi:include
+            href="blockstorage/section_backup-block-storage-disks.xml"/>
         <xi:include href="blockstorage/section_volume-migration.xml"/>
         <xi:include href="blockstorage/section_glusterfs_removal.xml"/>
         <xi:include href="blockstorage/section_volume-backups.xml"/>
-        <xi:include href="blockstorage/section_volume-backups-export-import.xml"/>
+        <xi:include
+            href="blockstorage/section_volume-backups-export-import.xml"/>
+        <section xml:id="using-lio-iscsi">
+            <title>Use LIO iSCSI support</title>
+            <para>The default <option>iscsi_helper</option> tool is
+                    <literal>tgtadm</literal>. To use LIO iSCSI,
+                install the <literal>python-rtslib</literal> package,
+                and set <literal>iscsi_helper=lioadm</literal> in the
+                    <filename>cinder.conf</filename> file.</para>
+            <para>Once configured, you can use the
+                    <command>cinder-rtstool</command> command to
+                manage the volumes. This command enables you to
+                create, delete, and verify volumes and determine
+                targets and add iSCSI initiators to the system.</para>
+        </section>
     </section>
     <section xml:id="troubleshooting-cinder-install">
         <title>Troubleshoot your installation</title>
-        <para>This section provides useful tips to help troubleshoot
-            your Block Storage installation.</para>
+        <para>This section provides useful tips to help you
+            troubleshoot your Block Storage installation.</para>
         <xi:include href="blockstorage/section_ts_cinder_config.xml"/>
         <xi:include href="blockstorage/section_ts_multipath_warn.xml"/>
-        <xi:include href="blockstorage/section_ts_vol_attach_miss_sg_scan.xml"/>
+        <xi:include
+            href="blockstorage/section_ts_vol_attach_miss_sg_scan.xml"/>
         <xi:include
             href="blockstorage/section_ts_HTTP_bad_req_in_cinder_vol_log.xml"/>
-        <xi:include href="blockstorage/section_ts_duplicate_3par_host.xml"/>
+        <xi:include
+            href="blockstorage/section_ts_duplicate_3par_host.xml"/>
         <xi:include
             href="blockstorage/section_ts_failed_attach_vol_after_detach.xml"/>
         <xi:include
             href="blockstorage/section_ts_failed_attach_vol_no_sysfsutils.xml"/>
-        <xi:include href="blockstorage/section_ts_failed_connect_vol_FC_SAN.xml"/>
-        <xi:include href="blockstorage/section_ts_no_emulator_x86_64.xml"/>
-        <xi:include href="blockstorage/section_ts_non_existent_host.xml"/>
-        <xi:include href="blockstorage/section_ts_non_existent_vlun.xml"/>
+        <xi:include
+            href="blockstorage/section_ts_failed_connect_vol_FC_SAN.xml"/>
+        <xi:include
+            href="blockstorage/section_ts_no_emulator_x86_64.xml"/>
+        <xi:include
+            href="blockstorage/section_ts_non_existent_host.xml"/>
+        <xi:include
+            href="blockstorage/section_ts_non_existent_vlun.xml"/>
     </section>
 </chapter>
