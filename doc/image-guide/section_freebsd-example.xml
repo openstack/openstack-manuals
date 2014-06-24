@@ -1,15 +1,267 @@
 <?xml version="1.0" encoding="UTF-8"?>
-    <section
-        xmlns="http://docbook.org/ns/docbook"
-        xmlns:xi="http://www.w3.org/2001/XInclude"
-        xmlns:xlink="http://www.w3.org/1999/xlink"
-        version="5.0"
-        xml:id="example-freebsd-image">
-    <title>Example: FreeBSD image</title>
-    <para>We do not yet have a fully documented example of how to create a
-        FreeBSD image.</para>
-    <para>See the <link xlink:href="http://pellaeon.github.io/bsd-cloudinit/">bsd-cloudinit</link>
-        project for information on how to build a FreeBSD VM image that
-        works with OpenStack.
-    </para>
+<!DOCTYPE section [
+<!ENTITY % openstack SYSTEM "../common/entities/openstack.ent">
+%openstack;
+]>
+<section xmlns="http://docbook.org/ns/docbook"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+  xml:id="example-freebsd-image">
+  <title>Example: FreeBSD image</title>
+  <para>This example creates a minimal FreeBSD image that is
+    compatible with OpenStack and
+      <application>bsd-cloudinit</application>. The
+      <application>bsd-cloudinit</application> program is
+    independently maintained and in active development. The best
+    source of information on the current state of the project is at
+      <link xlink:href="http://pellaeon.github.io/bsd-cloudinit/"
+      >http://pellaeon.github.io/bsd-cloudinit</link>.</para>
+  <para>KVM with virtio drivers is used as the virtualization platform
+    because that is the most widely used among OpenStack operators. If
+    you use a different platform for your cloud virtualization, use
+    that same platform in the image creation step.</para>
+  <para>This example shows how to create a FreeBSD 10 image. To create
+    a FreeBSD 9.2 image, follow these steps with the noted
+    differences.</para>
+  <procedure>
+    <title>To create a FreeBSD image</title>
+    <step>
+      <para>Make a virtual drive:</para>
+      <screen><prompt>$</prompt> <userinput>qemu-img create -f qcow2 freebsd.qcow2 1G</userinput></screen>
+      <para>The minimum supported disk size for FreeBSD is 1&nbsp;GB.
+        Because the goal is to make the smallest possible base image,
+        the example uses that minimum size. This size is sufficient to
+        include the optional <literal>doc</literal>,
+          <literal>games</literal>, and <literal>lib32</literal>
+        collections. To include the <literal>ports</literal>
+        collection, add another 1&nbsp;GB. To include
+          <literal>src</literal>, add 512&nbsp;MB.</para>
+    </step>
+    <step>
+      <para>Get the installer ISO:</para>
+      <screen><prompt>$</prompt> <userinput>curl ftp://ftp.freebsd.org/pub/FreeBSD/releases\
+/amd64/amd64/ISO-IMAGES/10.0/FreeBSD-10.0-RELEASE-amd64-bootonly.iso &gt;\
+FreeBSD-10.0-RELEASE-amd64-bootonly.iso</userinput></screen>
+    </step>
+    <step>
+      <para>Launch a VM on your local workstation. Use the same
+        hypervisor, virtual disk, and virtual network drivers as you
+        use in your production environment.</para>
+      <para>The following command uses the minimum amount of RAM,
+        which is 128&nbsp;MB:</para>
+      <screen><prompt>$</prompt> <userinput>kvm -smp 1 -m 128 -cdrom FreeBSD-10.0-RELEASE-amd64-bootonly.iso \
+-drive if=virtio,file=freebsd.qcow2 \
+-net nic,model=virtio -net user</userinput></screen>
+      <para>You can specify up to 1&nbsp;GB additional RAM to make the
+        installation process run faster.</para>
+      <para>This VM must also have Internet access to download
+        packages.</para>
+      <note>
+        <para>By using the same hypervisor, you can ensure that you
+          emulate the same devices that exist in production. However,
+          if you use full hardware virtualization instead of
+          paravirtualization, you do not need to use the same
+          hypervisor; you must use the same type of virtualized
+          hardware because FreeBSD device names are related to their
+          drivers. If the name of your root block device or primary
+          network interface in production differs than the names used
+          during image creation, errors can occur.</para>
+      </note>
+      <para>You now have a VM that boots from the downloaded install
+        ISO and is connected to the blank virtual disk that you
+        created previously.</para>
+    </step>
+    <step>
+      <para>To install the operating system, complete the following
+        steps inside the VM:</para>
+      <substeps>
+        <step>
+          <para>When prompted, choose to run the ISO in
+              <guibutton>Install</guibutton> mode.</para>
+        </step>
+        <step>
+          <para>Accept the default keymap or select an appropriate
+            mapping for your needs.</para>
+        </step>
+        <step>
+          <para>Provide a host name for your image. If you use
+              <application>bsd-cloudinit</application>, it overrides
+            this value with the name provided by OpenStack when an
+            instance boots from this image.</para>
+        </step>
+        <step>
+          <para>When prompted about the optional
+              <literal>doc</literal>, <literal>games</literal>,
+              <literal>lib32</literal>, <literal>ports</literal>, and
+              <literal>src</literal> system components, select only
+            those that you need. It is possible to have a fully
+            functional installation without selecting additional
+            components selected. As noted previously, a minimal system
+            with a 1&nbsp;GB virtual disk supports
+              <literal>doc</literal>, <literal>games</literal>, and
+              <literal>lib32</literal> inclusive. The
+              <literal>ports</literal> collection requires at least
+            1&nbsp;GB additional space and possibly more if you plan
+            to install many ports. The <literal>src</literal>
+            collection requires an additional 512&nbsp;MB.</para>
+        </step>
+        <step>
+          <para>Configure the primary network interface to use DHCP.
+            In this example, which uses a virtio network device, this
+            interface is named <literal>vtnet0</literal>.</para>
+        </step>
+        <step>
+          <para>Accept the default network mirror.</para>
+        </step>
+        <step>
+          <para>Set up disk partitioning.</para>
+          <para>Disk partitioning is a critical element of the image
+            creation process and the auto-generated default
+            partitioning scheme does not work with
+              <application>bsd-cloudinit</application> at this
+            time.</para>
+          <para>Because the default does not work, you must select
+            manual partitioning. The partition editor should list only
+            one block device. If you use virtio for the disk device
+            driver, it is named <literal>vtbd0</literal>. Select this
+            device and run the <command>create</command> command three
+            times:</para>
+          <orderedlist>
+            <listitem>
+              <para>Select <guibutton>Create</guibutton> to create a
+                partition table. This action is the default when no
+                partition table exists. Then, select <guilabel>GPT
+                  GUID Partition Table</guilabel> from the list. This
+                choice is the default.</para>
+            </listitem>
+            <listitem>
+              <para>Create two partitions:<itemizedlist>
+                  <listitem>
+                    <para>First partition: A 64&nbsp;kB
+                        <literal>freebsd-boot</literal> partition with
+                      no mount point.</para>
+                  </listitem>
+                  <listitem>
+                    <para>Second partition: A
+                        <literal>freebsd-ufs</literal> partition with
+                      a mount point of <filename>/</filename> with all
+                      remaining free space.</para>
+                  </listitem>
+                </itemizedlist></para>
+            </listitem>
+          </orderedlist>
+          <para>The following figure shows a completed partition table
+            with a 1&nbsp;GB virtual disk:</para>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="figures/freebsd-partitions.png"
+                format="PNG" contentwidth="6in"/>
+            </imageobject>
+          </mediaobject>
+          <para>Select <guibutton>Finish</guibutton> and then
+              <guibutton>Commit</guibutton> to commit your
+            changes.</para>
+          <note>
+            <para>If you modify this example, the root partition,
+              which is mounted on <filename>/</filename>, must be the
+              last partition on the drive so that it can expand at run
+              time to the disk size that your instance type provides.
+              Also note that <application>bsd-cloudinit</application>
+              currently has a hard-coded assumption that this is the
+              second partition.</para>
+          </note>
+        </step>
+      </substeps>
+    </step>
+    <step>
+      <para>Select a root password.</para>
+    </step>
+    <step>
+      <para>Select the CMOS time zone.</para>
+      <para>The virtualized CMOS almost always stores its time in UTC,
+        so unless you know otherwise, select UTC.</para>
+    </step>
+    <step>
+      <para>Select the time zone appropriate to your
+        environment.</para>
+    </step>
+    <step>
+      <para>From the list of services to start on boot, you must
+        select <systemitem class="service">ssh</systemitem>.
+        Optionally, select other services.</para>
+    </step>
+    <step>
+      <para>Optionally, add users.</para>
+      <para>You do not need to add users at this time. The
+          <application>bsd-cloudinit</application> program adds a
+          <literal>freebsd</literal> user account if one does not
+        exist. The <systemitem class="service">ssh</systemitem> keys
+        for this user are associated with OpenStack. To customize this
+        user account, you can create it now. For example, you might
+        want to customize the shell for the user.</para>
+    </step>
+    <step>
+      <title>Final config</title>
+      <para>This menu enables you to update previous settings. Check
+        that the settings are correct, and click
+          <guibutton>exit</guibutton>.</para>
+    </step>
+    <step>
+      <para>After you exit, you can open a shell to complete manual
+        configuration steps. Select <guibutton>Yes</guibutton> to make
+        a few OpenStack-specific changes:</para>
+      <substeps>
+        <step>
+          <para>Set up the console:</para>
+          <screen><prompt>#</prompt> <userinput>echo 'console="comconsole,vidconsole"' >> /boot/loader.conf</userinput></screen>
+          <para>This sets console output to go to the serial console,
+            which is displayed by <command>nova consolelog</command>,
+            and the video console for sites with VNC or Spice
+            configured.</para>
+        </step>
+        <step>
+          <para>Minimize boot delay:</para>
+          <screen><prompt>#</prompt> <userinput>echo 'autoboot_delay="1"' >> /boot/loader.conf</userinput></screen>
+        </step>
+        <step>
+          <para>Download the latest
+              <application>bsd-cloudinit-installer</application>. The
+            download commands differ between FreeBSD 10.0 and 9.2
+            because of differences in how the <command>fetch</command>
+            command handles HTTPS URLs.</para>
+          <para>In FreeBSD 10.0 the <command>fetch</command> command
+            verifies SSL peers by default, so you need to install the
+              <package>ca_root_nss</package> package that contains
+            certificate authority root certificates and tell
+              <command>fetch</command> where to find them. For FreeBSD
+            10.0 run these commands:</para>
+          <screen><prompt>#</prompt> <userinput>pkg install ca_root_nss</userinput>
+<prompt>#</prompt> <userinput>fetch --ca-cert=/usr/local/share/certs/ca-root-nss.crt \
+https://raw.github.com/pellaeon/bsd-cloudinit-installer/master/installer.sh</userinput></screen>
+          <para>FreeBSD 9.2 <command>fetch</command> does not support
+            peer-verification for https. For FreeBSD 9.2, run this
+            command:</para>
+          <screen><prompt>#</prompt> <userinput>fetch https://raw.github.com/pellaeon/bsd-cloudinit-installer/master/installer.sh</userinput></screen>
+        </step>
+        <step>
+          <para>Run the installer:</para>
+          <screen><prompt>#</prompt> <userinput>sh ./installer.sh</userinput></screen>
+          <para>The installer installs necessary prerequisites and
+            downloads and installs the latest
+              <package>bsd-cloudinit</package>.</para>
+        </step>
+        <step>
+          <para>Install <package>sudo</package> and configure the
+              <literal>freebsd</literal> user to have passwordless
+            access:</para>
+          <screen><prompt>#</prompt> <userinput>pkg install sudo</userinput>
+<prompt>#</prompt> <userinput>echo 'freebsd ALL=(ALL) NOPASSWD: ALL' > /usr/local/etc/sudoers.d/10-cloudinit</userinput></screen>
+        </step>
+      </substeps>
+    </step>
+    <step>
+      <para>Power off the system:</para>
+      <screen><prompt>#</prompt> <userinput>shutdown -s now</userinput></screen>
+    </step>
+  </procedure>
 </section>
