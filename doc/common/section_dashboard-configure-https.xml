@@ -1,37 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<section xml:id="dashboard-config-https" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="dashboard-config-https"
+    xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"><title>Configure the dashboard for HTTPS</title>
-    <para>You can configure the dashboard for a secured HTTPS deployment. While the standard installation
-        uses a non-encrypted HTTP channel, you can enable SSL support
-        for the dashboard.</para>
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+    <title>Configure the dashboard for HTTPS</title>
+    <para>You can configure the dashboard for a secured HTTPS
+        deployment. While the standard installation uses a
+        non-encrypted HTTP channel, you can enable SSL support for the
+        dashboard.</para>
     <procedure>
-        <para>The following example uses the domain,
-            "http://openstack.example.com." Use a domain that fits
-            your current setup.</para>
+        <para>This example uses the
+                <literal>http://openstack.example.com</literal>
+            domain. Use a domain that fits your current setup.</para>
         <step>
-            <para>In<filename>/etc/openstack-dashboard/local_settings.py</filename>
-                update the following
-                directives:</para><programlisting language="python">USE_SSL = True
+            <para>In the
+                    <filename>/etc/openstack-dashboard/local_settings.py</filename>
+                file, update the following options:</para>
+            <programlisting language="python">USE_SSL = True
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
 SESSION_COOKIE_HTTPONLY = True</programlisting>
-            <para>The first option is required to enable HTTPS.
-                The other recommended settings defend against
-                cross-site scripting and require HTTPS.</para>
+            <para>To enable HTTPS, the <code>USE_SSL = True</code>
+                option is required.</para>
+            <para>The other options require that HTTPS is enabled;
+                these options defend against cross-site
+                scripting.</para>
         </step>
         <step>
-            <para>Edit
-                <filename>/etc/apache2/ports.conf</filename>
+            <para>Edit the
+                    <filename>/etc/apache2/ports.conf</filename> file
                 and add the following line:</para>
             <programlisting>NameVirtualHost *:443</programlisting>
         </step>
         <step>
-            <para>Edit
-                <filename>/etc/apache2/conf.d/openstack-dashboard.conf:</filename></para>
-
-            <para>Before:</para>
-            <programlisting><?db-font-size 65%?>WSGIScriptAlias / /usr/share/openstack-dashboard/openstack_dashboard/wsgi/django.wsgi
+            <para>Edit the
+                    <filename>/etc/apache2/conf.d/openstack-dashboard.conf</filename>
+                file as shown in <xref linkend="after-example"
+                />:</para>
+            <example>
+                <title>Before</title>
+                <programlisting><?db-font-size 65%?>WSGIScriptAlias / /usr/share/openstack-dashboard/openstack_dashboard/wsgi/django.wsgi
 WSGIDaemonProcess horizon user=www-data group=www-data processes=3 threads=10
 Alias /static /usr/share/openstack-dashboard/openstack_dashboard/static/
 &lt;Directory /usr/share/openstack-dashboard/openstack_dashboard/wsgi&gt;
@@ -42,9 +50,10 @@ Allow from all
 # For Apache http server 2.4 and later:
 # Require all granted
 &lt;/Directory&gt;</programlisting>
-
-            <para>After:</para>
-            <programlisting><?db-font-size 65%?>&lt;VirtualHost *:80&gt;
+            </example>
+            <example xml:id="after-example">
+                <title>After</title>
+                <programlisting><?db-font-size 65%?>&lt;VirtualHost *:80&gt;
 ServerName openstack.example.com
 &lt;IfModule mod_rewrite.c&gt;
 RewriteEngine On
@@ -84,22 +93,26 @@ Allow from all
 # Require all granted
 &lt;/Directory&gt;
 &lt;/VirtualHost&gt;</programlisting>
-            <para>In this configuration, Apache http server listens on the
-                port 443 and redirects all the hits to the HTTPS
-                protocol for all the non-secured requests. The secured
-                section defines the private key, public key, and
-                certificate to use.</para>
+            </example>
+            <para>In this configuration, the Apache HTTP server
+                listens on port 443 and redirects all non-secure
+                requests to the HTTPS protocol. The secured section
+                defines the private key, public key, and certificate
+                to use.</para>
         </step>
         <step>
-            <para>Restart Apache http server. For Debian/Ubuntu/SUSE:</para>
+            <para>Restart the Apache HTTP server.</para>
+            <para>For Debian, Ubuntu, or SUSE distributions:</para>
             <screen><prompt>#</prompt> <userinput>service apache2 restart</userinput></screen>
-            <para>Or for Fedora/RHEL/CentOS:</para>
+            <para>For Fedora, RHEL, or CentOS distributions:</para>
             <screen><prompt>#</prompt> <userinput>service httpd restart</userinput></screen>
-            <para>Next, restart memcached:</para>
-            <screen><prompt>#</prompt> <userinput>service memcached restart</userinput></screen>
-            <para>If you try to access the dashboard through HTTP,
-                the browser redirects you to the HTTPS page.</para>
         </step>
-    </procedure></section>
-
-
+        <step>
+            <para>Restart <systemitem class="service"
+                    >memcached</systemitem>:</para>
+            <screen><prompt>#</prompt> <userinput>service memcached restart</userinput></screen>
+            <para>If you try to access the dashboard through HTTP, the
+                browser redirects you to the HTTPS page.</para>
+        </step>
+    </procedure>
+</section>
