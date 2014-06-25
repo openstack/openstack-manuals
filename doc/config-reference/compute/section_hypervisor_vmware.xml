@@ -675,7 +675,7 @@ datastore_regex=&lt;optional datastore regex&gt;</programlisting>
         setting <option>vmware_disktype</option> to
           <literal>sparse</literal>:</para>
       <screen><prompt>$</prompt> <userinput>glance image-create --name="ubuntu-sparse" --disk_format=vmdk \
---container_format=bare --is_public=true \
+--container_format=bare \
 --property vmware_disktype="sparse" \
 --property vmware_ostype="ubuntu64Guest" &lt; ubuntuLTS-sparse.vmdk</userinput></screen>
       <note><para>Specifying <literal>thin</literal> does not
@@ -699,7 +699,7 @@ datastore_regex=&lt;optional datastore regex&gt;</programlisting>
         example of the Precise Ubuntu image after the
           <code>qemu-img</code> conversion, the command to upload the
         VMDK disk should be something like:</para>
-      <screen><prompt>$</prompt> <userinput>glance image-create --name precise-cloud --is-public=True \
+      <screen><prompt>$</prompt> <userinput>glance image-create --name precise-cloud --is-public=False \
 --container-format=bare --disk-format=vmdk \
 --property vmware_disktype="sparse" \
 --property vmware_adaptertype="ide" &lt; \
@@ -718,7 +718,7 @@ precise-server-cloudimg-amd64-disk1.vmdk</userinput></screen>
         adapter type, the following command uploads the VMDK
         disk:</para>
       <screen><prompt>$</prompt> <userinput>glance image-create --name="ubuntu-thick-scsi" --disk_format=vmdk \
---container_format=bare --is_public=true \
+--container_format=bare \
 --property vmware_adaptertype="lsiLogic" \
 --property vmware_disktype="preallocated" \
 --property vmware_ostype="ubuntu64Guest" &lt; ubuntuLTS-flat.vmdk</userinput></screen>
@@ -741,7 +741,7 @@ precise-server-cloudimg-amd64-disk1.vmdk</userinput></screen>
         type to <literal>vmware</literal>. Other valid hypervisor
         types include: xen, qemu, kvm, lxc, uml, and hyperv.</para>
       <screen><prompt>$</prompt> <userinput>glance image-create --name="ubuntu-thick-scsi" --disk_format=vmdk \
---container_format=bare --is_public=true \
+--container_format=bare \
 --property vmware_adaptertype="lsiLogic" \
 --property vmware_disktype="preallocated" \
 --property hypervisor_type="vmware" \
