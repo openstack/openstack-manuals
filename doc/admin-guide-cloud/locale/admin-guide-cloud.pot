@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-06-24 06:07+0000\n"
+"POT-Creation-Date: 2014-06-25 06:07+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -211,79 +211,95 @@ msgid "Introduction to Block Storage"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/ch_blockstorage.xml:20(para)
-msgid "To administer the OpenStack Block Storage service, it is helpful to understand a number of concepts. You must make certain choices when you configure the Block Storage service in OpenStack. The bulk of the options come down to two choices, single node or multi-node install. You can read a longer discussion about storage decisions in <link href=\"http://docs.openstack.org/trunk/openstack-ops/content/storage_decision.html\">Storage Decisions</link> in the <citetitle>OpenStack Operations Guide</citetitle>."
+msgid "To administer the OpenStack Block Storage service, it is helpful to understand a number of concepts. You must make certain choices when you configure the Block Storage service in OpenStack. The bulk of the options come down to two choices, single node or multi-node install. You can read a longer discussion about storage decisions in <link href=\"http://docs.openstack.org/openstack-ops/content/storage_decision.html\">Storage Decisions</link> in the <citetitle>OpenStack Operations Guide</citetitle>."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/ch_blockstorage.xml:29(para)
 msgid "OpenStack Block Storage enables you to add extra block-level storage to your OpenStack Compute instances. This service is similar to the Amazon EC2 Elastic Block Storage (EBS) offering."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_blockstorage.xml:37(title)
+#: ./doc/admin-guide-cloud/ch_blockstorage.xml:38(title)
 msgid "Manage volumes"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_blockstorage.xml:38(para)
+#: ./doc/admin-guide-cloud/ch_blockstorage.xml:39(para)
 msgid "The default OpenStack Block Storage service implementation is an iSCSI solution that uses Logical Volume Manager (LVM) for Linux."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_blockstorage.xml:42(para)
+#: ./doc/admin-guide-cloud/ch_blockstorage.xml:43(para)
 msgid "The OpenStack Block Storage service is not a shared storage solution like a Storage Area Network (SAN) of NFS volumes, where you can attach a volume to multiple servers. With the OpenStack Block Storage service, you can attach a volume to only one instance at a time."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_blockstorage.xml:48(para)
+#: ./doc/admin-guide-cloud/ch_blockstorage.xml:49(para)
 msgid "The OpenStack Block Storage service also provides drivers that enable you to use several vendors' back-end storage devices, in addition to or instead of the base LVM implementation."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_blockstorage.xml:53(para)
+#: ./doc/admin-guide-cloud/ch_blockstorage.xml:54(para)
 msgid "This high-level procedure shows you how to create and attach a volume to a server instance."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_blockstorage.xml:57(para)
-msgid "You must configure both OpenStack Compute and the OpenStack Block Storage service through the <filename>cinder.conf</filename> file."
+#: ./doc/admin-guide-cloud/ch_blockstorage.xml:57(title)
+msgid "To create and attach a volume to an instance"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_blockstorage.xml:62(para)
-msgid "Create a volume through the <placeholder-1/> command. This command creates an LV into the volume group (VG) <literal>cinder-volumes</literal>."
+#: ./doc/admin-guide-cloud/ch_blockstorage.xml:60(para)
+msgid "Configure the OpenStack Compute and the OpenStack Block Storage services through the <filename>cinder.conf</filename> file."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_blockstorage.xml:68(para)
-msgid "Attach the volume to an instance through the <placeholder-1/> command. This command creates a unique iSCSI IQN that is exposed to the compute node."
+#: ./doc/admin-guide-cloud/ch_blockstorage.xml:65(para)
+msgid "Use the <placeholder-1/> command to create a volume. This command creates an LV into the volume group (VG) <literal>cinder-volumes</literal>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_blockstorage.xml:74(para)
+#: ./doc/admin-guide-cloud/ch_blockstorage.xml:71(para)
+msgid "Use the <placeholder-1/> command to attach the volume to an instance. This command creates a unique iSCSI IQN that is exposed to the compute node."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/ch_blockstorage.xml:77(para)
 msgid "The compute node, which runs the instance, now has an active ISCSI session and new local storage (usually a <filename>/dev/sdX</filename> disk)."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_blockstorage.xml:81(para)
+#: ./doc/admin-guide-cloud/ch_blockstorage.xml:84(para)
 msgid "libvirt uses that local storage as storage for the instance. The instance gets a new disk (usually a <filename>/dev/vdX</filename> disk)."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_blockstorage.xml:90(para)
+#: ./doc/admin-guide-cloud/ch_blockstorage.xml:93(para)
 msgid "For this particular walk through, one cloud controller runs <systemitem class=\"service\">nova-api</systemitem>, <systemitem class=\"service\">nova-scheduler</systemitem>, <systemitem class=\"service\">nova-objectstore</systemitem>, <literal>nova-network</literal> and <literal>cinder-*</literal> services. Two additional compute nodes run <systemitem class=\"service\">nova-compute</systemitem>. The walk through uses a custom partitioning scheme that carves out 60GB of space and labels it as LVM. The network uses the FlatManager and NetworkManager settings for OpenStack Compute."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_blockstorage.xml:104(para)
-msgid "The network mode does not interfere with the way cinder works, but you must set up networking for cinder to work. For details, see <xref linkend=\"ch_networking\"/>."
+#: ./doc/admin-guide-cloud/ch_blockstorage.xml:107(para)
+msgid "The network mode does not interfere with OpenStack Block Storage operations, but you must set up networking for Block Storage to work. For details, see <xref linkend=\"ch_networking\"/>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_blockstorage.xml:107(para)
+#: ./doc/admin-guide-cloud/ch_blockstorage.xml:111(para)
 msgid "To set up Compute to use volumes, ensure that Block Storage is installed along with <package>lvm2</package>. This guide describes how to troubleshoot your installation and back up your Compute volumes."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_blockstorage.xml:113(title)
+#: ./doc/admin-guide-cloud/ch_blockstorage.xml:116(title)
 msgid "Boot from volume"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_blockstorage.xml:114(para)
-msgid "In some cases, instances can be stored and run from inside volumes. For information, see the <link href=\"http://docs.openstack.org/user-guide/content/boot_from_volume.html\">Launch an instance from a volume</link> section in the <link href=\"http://docs.openstack.org/user-guide/content/\"><citetitle>OpenStack End User Guide</citetitle></link>."
+#: ./doc/admin-guide-cloud/ch_blockstorage.xml:117(para)
+msgid "In some cases, you can store and run instances from inside volumes. For information, see the <link href=\"http://docs.openstack.org/user-guide/content/boot_from_volume.html\">Launch an instance from a volume</link> section in the <link href=\"http://docs.openstack.org/user-guide/content/\"><citetitle>OpenStack End User Guide</citetitle></link>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_blockstorage.xml:134(title)
+#: ./doc/admin-guide-cloud/ch_blockstorage.xml:138(title)
+msgid "Use LIO iSCSI support"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/ch_blockstorage.xml:139(para)
+msgid "The default <option>iscsi_helper</option> tool is <literal>tgtadm</literal>. To use LIO iSCSI, install the <literal>python-rtslib</literal> package, and set <literal>iscsi_helper=lioadm</literal> in the <filename>cinder.conf</filename> file."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/ch_blockstorage.xml:144(para)
+msgid "Once configured, you can use the <placeholder-1/> command to manage the volumes. This command enables you to create, delete, and verify volumes and determine targets and add iSCSI initiators to the system."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/ch_blockstorage.xml:152(title)
 msgid "Troubleshoot your installation"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_blockstorage.xml:135(para)
-msgid "This section provides useful tips to help troubleshoot your Block Storage installation."
+#: ./doc/admin-guide-cloud/ch_blockstorage.xml:153(para)
+msgid "This section provides useful tips to help you troubleshoot your Block Storage installation."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/ch_networking.xml:6(title)
@@ -6633,7 +6649,7 @@ msgstr ""
 msgid "Configure OpenStack Block Storage to use the <filename>/etc/cinder/glusterfs</filename> file created earlier. To do so, open the <filename>/etc/cinder/cinder.conf</filename> configuration file and set the <literal>glusterfs_shares_config</literal> configuration key to <filename>/etc/cinder/glusterfs</filename>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml:182(para) ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml:219(para) ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml:263(para) ./doc/admin-guide-cloud/blockstorage/section_increase-api-throughput.xml:37(para) ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml:88(para) ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml:125(para) ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml:150(para) ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml:191(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml:182(para) ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml:219(para) ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml:263(para) ./doc/admin-guide-cloud/blockstorage/section_increase-api-throughput.xml:29(para) ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml:88(para) ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml:125(para) ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml:150(para) ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml:191(para)
 msgid "On distributions that include <application>openstack-config</application>, you can configure this by running the following command instead:"
 msgstr ""
 
@@ -6681,31 +6697,31 @@ msgstr ""
 msgid "This command also makes the Boolean persistent across reboots. Run this command on all client hosts that require access to GlusterFS volumes on an instance. This includes all compute nodes."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_increase-api-throughput.xml:7(title)
+#: ./doc/admin-guide-cloud/blockstorage/section_increase-api-throughput.xml:6(title)
 msgid "Increase Block Storage API service throughput"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_increase-api-throughput.xml:8(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_increase-api-throughput.xml:7(para)
 msgid "By default, the Block Storage API service runs in one process. This limits the number of API requests that the Block Storage service can process at any given time. In a production environment, you should increase the Block Storage API throughput by allowing the Block Storage API service to run in as many processes as the machine capacity allows."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_increase-api-throughput.xml:17(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_increase-api-throughput.xml:14(para)
 msgid "The Block Storage API service is named <literal>openstack-cinder-api</literal> on the following distributions: CentOS, Fedora, openSUSE, Red Hat Enterprise Linux, and SUSE Linux Enterprise. In Ubuntu and Debian distributions, the Block Storage API service is named <literal>cinder-api</literal>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_increase-api-throughput.xml:25(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_increase-api-throughput.xml:21(para)
 msgid "To do so, use the Block Storage API service option <parameter>osapi_volume_workers</parameter>. This option allows you to specify the number of API service workers (or OS processes) to launch for the Block Storage API service."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_increase-api-throughput.xml:31(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_increase-api-throughput.xml:25(para)
 msgid "To configure this option, open the <filename>/etc/cinder/cinder.conf</filename> configuration file and set the <literal>osapi_volume_workers</literal> configuration key to the number of CPU cores/threads on a machine."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_increase-api-throughput.xml:43(replaceable)
+#: ./doc/admin-guide-cloud/blockstorage/section_increase-api-throughput.xml:33(replaceable)
 msgid "CORES"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_increase-api-throughput.xml:44(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_increase-api-throughput.xml:34(para)
 msgid "Replace <replaceable>CORES</replaceable> with the number of CPU cores/threads on a machine."
 msgstr ""
 
@@ -6786,186 +6802,186 @@ msgid "To back up a volume, you must create a snapshot of it. An LVM snapshot is
 msgstr ""
 
 #: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:22(para)
-msgid "You must also make sure that the operating system is not using the volume, and that all data has been flushed on the guest filesystems. This usually means that those filesystems have to be unmounted during the snapshot creation. They can be mounted again as soon as the logical volume snapshot has been created."
+msgid "You must also make sure that the operating system is not using the volume, and that all data has been flushed on the guest file systems. This usually means that those file systems have to be unmounted during the snapshot creation. They can be mounted again as soon as the logical volume snapshot has been created."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:27(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:28(para)
 msgid "Before you create the snapshot, you must have enough space to save it. As a precaution, you should have at least twice as much space as the potential snapshot size. If insufficient space is available, the snapshot might become corrupted."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:32(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:33(para)
 msgid "For this example, assume that a 100GB volume named volume-00000001 was created for an instance while only 4GB are used. This example uses these commands to back up only those 4GB:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:38(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:39(para)
 msgid "<placeholder-1/> command. Directly manipulates the volumes."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:42(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:43(para)
 msgid "<placeholder-1/> command. Discovers the partition table created inside the instance."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:46(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:47(para)
 msgid "<placeholder-1/> command. Creates a minimum-sized backup."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:50(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:51(para)
 msgid "<placeholder-1/> command. Calculates the backup checksum to check its consistency."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:54(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:55(para)
 msgid "You can apply this process to volumes of any size."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:56(title)
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:57(title)
 msgid "To back up Block Storage service disks"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:58(title)
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:59(title)
 msgid "Create a snapshot of a used volume"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:61(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:62(para)
 msgid "Use this command to list all volumes:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:65(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:66(para)
 msgid "Create the snapshot; you can do this while the volume is attached to an instance:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:68(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:69(para)
 msgid "Use the <option>--snapshot</option> configuration option to tell LVM that you want a snapshot of an already existing volume. The command includes the size of the space reserved for the snapshot volume, the name of the snapshot, and the path of an already existing volume. Generally, this path is <filename>/dev/cinder-volumes/<replaceable>$volume_name</replaceable></filename>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:76(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:77(para)
 msgid "The size does not have to be the same as the volume of the snapshot. The <parameter>size</parameter> parameter defines the space that LVM reserves for the snapshot volume. As a precaution, the size should be the same as that of the original volume, even if the whole space is not currently used by the snapshot."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:87(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:88(para)
 msgid "Run the <placeholder-1/> command again to verify the snapshot:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:129(title)
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:130(title)
 msgid "Partition table discovery"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:132(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:133(para)
 msgid "To exploit the snapshot with the <placeholder-1/> command, mount your partition on the Block Storage service server."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:136(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:137(para)
 msgid "The <placeholder-1/> utility discovers and maps table partitions. You can use it to view partitions that are created inside the instance. Without using the partitions created inside instances, you cannot see its content and create efficient backups."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:145(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:146(para)
 msgid "On a Debian-based distribution, you can use the <placeholder-1/> command to install <placeholder-2/>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:150(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:151(para)
 msgid "If the tools successfully find and map the partition table, no errors are returned."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:155(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:156(para)
 msgid "To check the partition table map, run this command:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:158(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:159(para)
 msgid "You can see the <literal>cinder--volumes-volume--00000001--snapshot1</literal> partition."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:161(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:162(para)
 msgid "If you created more than one partition on that volume, you see several partitions; for example: <literal>cinder--volumes-volume--00000001--snapshot2</literal>, <literal>cinder--volumes-volume--00000001--snapshot3</literal>, and so on."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:169(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:170(para)
 msgid "Mount your partition:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:171(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:172(para)
 msgid "If the partition mounts successfully, no errors are returned."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:173(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:174(para)
 msgid "You can directly access the data inside the instance. If a message prompts you for a partition or you cannot mount it, determine whether enough space was allocated for the snapshot or the <placeholder-1/> command failed to discover the partition table."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:180(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:181(para)
 msgid "Allocate more space to the snapshot and try the process again."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:186(title)
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:187(title)
 msgid "Use the <placeholder-1/> command to create archives"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:188(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:189(para)
 msgid "Create a backup of the volume:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:190(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:191(para)
 msgid "This command creates a <filename>tar.gz</filename> file that contains the data, <emphasis role=\"italic\">and data only</emphasis>. This ensures that you do not waste space by backing up empty sectors."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:196(title)
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:197(title)
 msgid "Checksum calculation I"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:197(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:198(para)
 msgid "You should always have the checksum for your backup files. When you transfer the same file over the network, you can run a checksum calculation to ensure that your file was not corrupted during its transfer. The checksum is a unique ID for a file. If the checksums are different, the file is corrupted."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:203(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:204(para)
 msgid "Run this command to run a checksum for your file and save the result to a file:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:207(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:208(para)
 msgid "Use the <placeholder-1/> command carefully because the time it takes to complete the calculation is directly proportional to the size of the file."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:211(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:212(para)
 msgid "For files larger than around 4 to 6GB, and depending on your CPU, the process might take a long time."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:217(title)
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:218(title)
 msgid "After work cleaning"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:218(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:219(para)
 msgid "Now that you have an efficient and consistent backup, use this command to clean up the file system:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:223(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:224(para)
 msgid "Unmount the volume:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:227(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:228(para)
 msgid "Delete the partition table:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:231(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:232(para)
 msgid "Remove the snapshot:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:235(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:236(para)
 msgid "Repeat these steps for all your volumes."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:238(title)
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:239(title)
 msgid "Automate your backups"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:239(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:240(para)
 msgid "Because more and more volumes might be allocated to your Block Storage service, you might want to automate your backups. The <link href=\"https://github.com/Razique/BashStuff/blob/master/SYSTEMS/OpenStack/SCR_5005_V01_NUAC-OPENSTACK-EBS-volumes-backup.sh\">SCR_5005_V01_NUAC-OPENSTACK-EBS-volumes-backup.sh</link> script assists you with this task. The script performs the operations from the previous example, but also provides a mail report and runs the backup based on the <option>backups_retention_days</option> setting."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:249(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:250(para)
 msgid "Launch this script from the server that runs the Block Storage service."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:251(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:252(para)
 msgid "This example shows a mail report:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:265(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_backup-block-storage-disks.xml:266(para)
 msgid "The script also enables you to SSH to your instances and run a <placeholder-1/> command into them. To make this work, enable the connection to the Compute project keys. If you do not want to run the <placeholder-2/> command, you can add <literal>enable_mysql_dump=0</literal> to the script to turn off this functionality."
 msgstr ""
 
@@ -7512,7 +7528,7 @@ msgid "All network managers configure the network using <emphasis role=\"italic\
 msgstr ""
 
 #: ./doc/admin-guide-cloud/compute/section_compute-networking-nova.xml:122(para)
-msgid "All network managers operate in either <emphasis role=\"italic\">single-host</emphasis> or <emphasis role=\"italic\">multi-host</emphasis> mode. This choice greatly influences the network configuration. In single-host mode, a single <systemitem class=\"service\">nova-network</systemitem> service provides a default gateway for VMs and hosts a single DHCP server (<systemitem>dnsmasq</systemitem>). In multi-host mode, each compute node runs its own <systemitem class=\"service\">nova-network</systemitem> service. In both cases, all traffic between VMs and the outer world flows through <systemitem class=\"service\">nova-network</systemitem>. Each mode has its pros and cons (see the <citetitle>Network Topology</citetitle> section in the <link href=\"http://docs.openstack.org/trunk/openstack-ops/content/\"><citetitle>OpenStack Operations Guide</citetitle></link>."
+msgid "All network managers operate in either <emphasis role=\"italic\">single-host</emphasis> or <emphasis role=\"italic\">multi-host</emphasis> mode. This choice greatly influences the network configuration. In single-host mode, a single <systemitem class=\"service\">nova-network</systemitem> service provides a default gateway for VMs and hosts a single DHCP server (<systemitem>dnsmasq</systemitem>). In multi-host mode, each compute node runs its own <systemitem class=\"service\">nova-network</systemitem> service. In both cases, all traffic between VMs and the outer world flows through <systemitem class=\"service\">nova-network</systemitem>. Each mode has its pros and cons (see the <citetitle>Network Topology</citetitle> section in the <link href=\"http://docs.openstack.org/openstack-ops/content/\"><citetitle>OpenStack Operations Guide</citetitle></link>."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/compute/section_compute-networking-nova.xml:134(para)
@@ -8430,7 +8446,7 @@ msgid "For more information about image configuration options, see the <link hre
 msgstr ""
 
 #: ./doc/admin-guide-cloud/compute/section_compute-images-instances.xml:39(para)
-msgid "For more information about flavors, see <xref linkend=\"customize-flavors\"/> or the <link href=\"http://docs.openstack.org/trunk/openstack-ops/content/flavors.html\">Flavors</link> section in the <citetitle>OpenStack Operations Guide</citetitle>."
+msgid "For more information about flavors, see <xref linkend=\"customize-flavors\"/> or the <link href=\"http://docs.openstack.org/openstack-ops/content/flavors.html\">Flavors</link> section in the <citetitle>OpenStack Operations Guide</citetitle>."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/compute/section_compute-images-instances.xml:45(para)
