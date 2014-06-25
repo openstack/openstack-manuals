@@ -42,7 +42,7 @@
           linkend="debconf-dbconfig-common">database
         management</link>, <link linkend="debconf-keystone_authtoken"
             ><literal>[keystone_authtoken]</literal> settings</link>,
-          <link linkend="debconf-rabbitqm">RabbitMQ
+          <link linkend="debconf-rabbitmq">RabbitMQ
         credentials</link>, and <link linkend="debconf-api-endpoints"
           >API endpoint</link> registration.</para>
     </step>
@@ -65,12 +65,11 @@ dpkg-statoverride --update --add root root 0644 /boot/vmlinuz-${version}</progra
 <screen><prompt>#</prompt> <userinput>chmod +x /etc/kernel/postinst.d/statoverride</userinput></screen>
       </para>
     </step>
-    <step>
+    <step os="fedora;rhel;centos;opensuse;sles;ubuntu">
       <para os="fedora;rhel;centos;opensuse;sles">Edit the
         <filename>/etc/nova/nova.conf</filename> configuration file:
       </para>
       <screen os="fedora;rhel;centos;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf database connection mysql://nova:<replaceable>NOVA_DBPASS</replaceable>@controller/nova</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT auth_strategy keystone</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf keystone_authtoken auth_uri http://<replaceable>controller</replaceable>:5000</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf keystone_authtoken auth_host <replaceable>controller</replaceable></userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf keystone_authtoken auth_protocol http</userinput>
@@ -78,10 +77,10 @@ dpkg-statoverride --update --add root root 0644 /boot/vmlinuz-${version}</progra
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf keystone_authtoken admin_user nova</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf keystone_authtoken admin_tenant_name service</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf keystone_authtoken admin_password <replaceable>NOVA_PASS</replaceable></userinput></screen>
-    <para os="ubuntu;debian">Edit the
+    <para os="ubuntu">Edit the
           <filename>/etc/nova/nova.conf</filename> configuration file and add these
         lines to the appropriate sections:</para>
-      <programlisting os="ubuntu;debian" language="ini">[DEFAULT]
+      <programlisting os="ubuntu" language="ini">[DEFAULT]
 ...
 auth_strategy = keystone
 ...
@@ -99,11 +98,6 @@ admin_user = nova
 admin_password = <replaceable>NOVA_PASS</replaceable></programlisting>
     </step>
     <step os="fedora;rhel;centos;ubuntu;opensuse;sles">
-      <para os="fedora;rhel;centos">Configure the Compute service to use the
-        Qpid message broker by setting these configuration keys:</para>
-      <screen os="fedora;rhel;centos"><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf \
-  DEFAULT rpc_backend qpid</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT qpid_hostname <replaceable>controller</replaceable></userinput></screen>
       <para os="ubuntu">Configure the Compute service to use
         the RabbitMQ message broker by setting these configuration
         keys in the <literal>[DEFAULT]</literal> configuration group of
@@ -113,9 +107,9 @@ admin_password = <replaceable>NOVA_PASS</replaceable></programlisting>
 rpc_backend = rabbit
 rabbit_host = controller
 rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
-      <para os="opensuse;sles">Configure the Compute service to use the RabbitMQ message broker
+      <para os="opensuse;sles;rhel;centos;fedora">Configure the Compute service to use the RabbitMQ message broker
         by setting these configuration keys:</para>
-      <screen os="opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf \
+      <screen os="opensuse;sles;fedora;rhel;centos"><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf \
   DEFAULT rpc_backend nova.rpc.impl_kombu</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT rabbit_host controller</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT rabbit_password <replaceable>RABBIT_PASS</replaceable></userinput></screen>

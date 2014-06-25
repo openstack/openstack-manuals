@@ -47,7 +47,7 @@ net.ipv4.conf.default.rp_filter=0</programlisting>
         credentials</link>,
         <link linkend="debconf-api-endpoints">service endpoint
         registration</link>, and
-        <link linkend="debconf-rabbitqm">message broker
+        <link linkend="debconf-rabbitmq">message broker
         credentials</link>.</para>
     </step>
     <step os="rhel;centos;fedora;sles;opensuse">
@@ -101,7 +101,7 @@ admin_password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
         </step>
       </substeps>
     </step>
-    <step os="opensuse;sles">
+    <step os="opensuse;sles;rhel;centos;fedora">
       <para>Configure Networking to use the message broker:</para>
       <para>Replace <replaceable>RABBIT_PASS</replaceable> with the password
         you chose for the <literal>guest</literal> account in
@@ -114,13 +114,6 @@ admin_password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
   rabbit_userid guest</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf DEFAULT \
   rabbit_password <replaceable>RABBIT_PASS</replaceable></userinput></screen>
-    </step>
-    <step os="rhel;centos;fedora">
-      <para>Configure Networking to use the message broker:</para>
-      <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf DEFAULT \
-  rpc_backend neutron.openstack.common.rpc.impl_qpid</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf DEFAULT \
-  qpid_hostname <replaceable>controller</replaceable></userinput></screen>
     </step>
     <step os="ubuntu">
       <para>Configure Networking to use the message broker:</para>
@@ -175,10 +168,6 @@ allow_overlapping_ips = True</programlisting>
           </note>
         </step>
       </substeps>
-    </step>
-    <step>
-      <para>Comment out any lines in the
-          <literal>[service_providers]</literal> section.</para>
     </step>
   </procedure>
   <procedure>

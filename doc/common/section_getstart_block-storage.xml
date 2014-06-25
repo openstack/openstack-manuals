@@ -2,39 +2,47 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="block-storage-service">
-      <title>Block Storage</title>
-      <para>The Block Storage service enables management of volumes,
-        volume snapshots, and volume types. It includes the following
+      <title>OpenStack Block Storage</title>
+      <para>The Openstack Block Storage service (cinder) adds
+        persistent storage to a virtual machine. Block
+        Storage provides an infrastructure for managing volumes, and
+        interacts with OpenStack Compute to provide
+        volumes for instances. The service also enables management of
+        volume snapshots, and volume types.</para>
+      <para>The Block Storage service consists of the following
         components:</para>
-      <itemizedlist>
-        <listitem>
-          <para><systemitem class="service">cinder-api</systemitem>:
-            Accepts API requests and routes them to <systemitem
-              class="service">cinder-volume</systemitem> for
-            action.</para>
-        </listitem>
-        <listitem>
-          <para><systemitem class="service"
-            >cinder-volume</systemitem>: Responds to requests to read
-            from and write to the Block Storage database to maintain
-            state, interacting with other processes (like <systemitem
-              class="service">cinder-scheduler</systemitem>) through a
-            message queue and directly upon block storage providing
-            hardware or software. It can interact with a variety of
-            storage providers through a driver architecture.</para>
-        </listitem>
-        <listitem>
-          <para><systemitem class="service"
-              >cinder-scheduler</systemitem> daemon: Like the
-              <systemitem class="service">nova-scheduler</systemitem>,
-            picks the optimal block storage provider node on which to
-            create the volume.</para>
-        </listitem>
-        <listitem>
-          <para>Messaging queue: Routes information between the Block
-            Storage service processes.</para>
-        </listitem>
-      </itemizedlist>
-      <para>The Block Storage service interacts with Compute to
-        provide volumes for instances.</para>
+      <variablelist>
+        <varlistentry>
+          <term><systemitem class="service">cinder-api</systemitem></term>
+          <listitem><para>Accepts API requests, and
+            routes them to the <systemitem class="service">cinder-volume</systemitem>
+            for action.</para></listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><systemitem class="service">cinder-volume</systemitem></term>
+          <listitem><para>Interacts directly with the Block Storage
+            service, and processes such as the
+            <systemitem class="service">cinder-scheduler</systemitem>.
+            It also interacts with these processes through a message
+            queue. The <systemitem>cinder-volume service</systemitem>
+            responds to read and write requests sent to the Block
+            Storage service to maintain state. It can interact with a
+            variety of storage providers through a driver architecture.
+          </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><systemitem class="service">cinder-scheduler</systemitem>
+          daemon</term>
+        <listitem> <para>Selects the optimal storage provider node on
+          which to create the volume. A similar component to
+          the <systemitem class="service">nova-scheduler</systemitem>.
+        </para></listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Messaging queue</term>
+          <listitem><para>Routes information between the Block Storage
+            processes.</para></listitem>
+        </varlistentry>
+    </variablelist>
     </section>

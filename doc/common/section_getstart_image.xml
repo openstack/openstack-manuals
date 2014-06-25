@@ -2,43 +2,47 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="image-service-overview">
-      <title>Image Service overview</title>
-      <para>The Image Service includes the following
-        components:</para>
-      <itemizedlist>
-        <listitem>
-          <para><systemitem class="service">glance-api</systemitem>.
-            Accepts Image API calls for image discovery, retrieval,
-            and storage.</para>
-        </listitem>
-        <listitem>
-          <para><systemitem class="service"
-          >glance-registry</systemitem>. Stores, processes, and
-        retrieves metadata about images. Metadata includes items such
-        as size and type.</para>
-          <note><title>Security note</title>
-          <para>The registry is a private internal service meant only for use
-          by the Image Service itself. Do not expose it to users.</para></note>
-        </listitem>
-        <listitem>
-          <para>Database. Stores image metadata. You can choose your
-            database depending on your preference. Most deployments
-            use MySQL or SQlite.</para>
-        </listitem>
-        <listitem>
-          <para>Storage repository for image files. The Image Service
-          supports a variety of repositories including normal file systems,
-          Object Storage, RADOS block devices, HTTP, and Amazon S3. Some
-          types of repositories support only read-only usage.</para>
-        </listitem>
-      </itemizedlist>
-      <para>A number of periodic processes run on the Image Service to
+      <title>OpenStack Image Service</title>
+      <para>The OpenStack Image Service is central to infrastructure-as-a-service (IaaS)
+        as shown in <xref linkend="conceptual-architecture"/>. It accepts API requests
+        for disk or server images, and image metadata from end users or OpenStack Compute
+        components. It also supports the storage of disk or server images on various
+        repository types, including OpenStack Object Storage.
+        </para>
+      <para>A number of periodic processes run on the OpenStack Image Service to
         support caching. Replication services ensures consistency and
         availability through the cluster. Other periodic processes
         include auditors, updaters, and reapers.</para>
-      <para>As shown in <xref linkend="conceptual-architecture"/>, the Image
-        Service is central to the overall IaaS picture. It accepts API
-        requests for images or image metadata from end users or
-        Compute components and can store its disk files in the Object
-        Storage Service.</para>
+      <para>The OpenStack Image Service includes the following
+        components:</para>
+      <variablelist>
+        <varlistentry>
+          <term><systemitem class="service">glance-api</systemitem></term>
+          <listitem><para>Accepts Image API calls for image discovery,
+           retrieval, and storage.</para></listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><systemitem class="service">glance-registry</systemitem></term>
+          <listitem><para>Stores, processes, and retrieves metadata about
+           images. Metadata includes items such as size and type.</para>
+          <note><title>Security note</title>
+          <para>The registry is a private internal service meant for use
+           by OpenStack Image Service. Do not disclose it to
+           users.</para></note>
+        </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Database</term>
+          <listitem><para>Stores image metadata and you can choose your database
+           depending on your preference. Most deployments use MySQL or
+           SQlite.</para></listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Storage repository for image files</term>
+          <listitem><para>Various repository types are supported including
+           normal file systems, Object Storage, RADOS block devices, HTTP, and
+           Amazon S3. Note that some repositories will only support
+           read-only usage.</para></listitem>
+       </varlistentry>
+      </variablelist>
     </section>

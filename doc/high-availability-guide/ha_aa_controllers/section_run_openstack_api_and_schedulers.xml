@@ -1,0 +1,80 @@
+      <section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    version="5.0" xml:id="_run_openstack_api_and_schedulers">
+        <info>
+          <title>Run OpenStack API and schedulers</title>
+        </info>
+        <section xml:id="_api_services">
+          <info>
+            <title>API services</title>
+          </info>
+          <simpara>All OpenStack projects have an API service for controlling all the resources in the Cloud.
+In Active / Active mode, the most common setup is to scale-out these services on at least two nodes
+and use load-balancing and virtual IP (with HAproxy &amp; Keepalived in this setup).</simpara>
+          <simpara>
+            <emphasis role="strong">Configure API OpenStack services</emphasis>
+          </simpara>
+          <simpara>To configure our Cloud using Highly available and scalable API services, we need to ensure that:</simpara>
+          <itemizedlist>
+            <listitem>
+              <simpara>
+You use Virtual IP when configuring OpenStack Identity endpoints.
+</simpara>
+            </listitem>
+            <listitem>
+              <simpara>
+All OpenStack configuration files should refer to Virtual IP.
+</simpara>
+            </listitem>
+          </itemizedlist>
+          <simpara>
+            <emphasis role="strong">In case of failure</emphasis>
+          </simpara>
+          <simpara>The monitor check is quite simple since it just establishes a TCP connection to the API port. Comparing to the
+Active / Passive mode using Corosync &amp; Resources Agents, we don’t check if the service is actually running).
+That’s why all OpenStack API should be monitored by another tool (i.e. Nagios) with the goal to detect
+failures in the Cloud Framework infrastructure.</simpara>
+        </section>
+        <section xml:id="_schedulers">
+          <info>
+            <title>Schedulers</title>
+          </info>
+          <simpara>OpenStack schedulers are used to determine how to dispatch compute, network and volume requests. The most
+common setup is to use RabbitMQ as messaging system already documented in this guide.
+Those services are connected to the messaging backend and can scale-out :</simpara>
+          <itemizedlist>
+            <listitem>
+              <simpara>
+nova-scheduler
+</simpara>
+            </listitem>
+            <listitem>
+              <simpara>
+nova-conductor
+</simpara>
+            </listitem>
+            <listitem>
+              <simpara>
+cinder-scheduler
+</simpara>
+            </listitem>
+            <listitem>
+              <simpara>
+neutron-server
+</simpara>
+            </listitem>
+            <listitem>
+              <simpara>
+ceilometer-collector
+</simpara>
+            </listitem>
+            <listitem>
+              <simpara>
+heat-engine
+</simpara>
+            </listitem>
+          </itemizedlist>
+          <simpara>Please refer to the RabbitMQ section for configure these services with multiple messaging servers.</simpara>
+        </section>
+      </section>

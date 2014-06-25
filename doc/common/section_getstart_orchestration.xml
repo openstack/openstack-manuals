@@ -2,42 +2,45 @@
   xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
   xml:id="orchestration-service">
-  <title>Orchestration service overview</title>
-  <para>The Orchestration service provides a template-based
-    orchestration for describing a cloud application by running
+  <title>Orchestration module concepts</title>
+  <para>The Orchestration module provides a template-based
+    orchestration for describing a cloud application, by running
     OpenStack API calls to generate running cloud applications. The
     software integrates other core components of OpenStack into a
-    one-file template system. The templates enable you to create most
+    one-file template system. The templates allow you to create most
     OpenStack resource types, such as instances, floating IPs,
-    volumes, security groups, users, and so on. Also, provides some
-    more advanced functionality, such as instance high availability,
-    instance auto-scaling, and nested stacks. By providing very tight
-    integration with other OpenStack core projects, all OpenStack core
-    projects could receive a larger user base.</para>
+    volumes, security groups and users. It also provides advanced
+    functionality, such as instance high availability, instance auto-scaling,
+    and nested stacks. This enables OpenStack core projects to receive a larger
+    user base.</para>
   <para>The service enables deployers to integrate with the
-    Orchestration service directly or through custom plug-ins.</para>
-  <para>The Orchestration service consists of the following
+    Orchestration module directly or through custom plug-ins.</para>
+  <para>The Orchestration module consists of the following
     components:</para>
-  <itemizedlist>
-    <listitem>
-      <para><code>heat</code> command-line client. A CLI that communicates with the
-        heat-api to run AWS CloudFormation APIs. End developers could
-        also use the Orchestration REST API directly.</para>
+  <variablelist>
+    <varlistentry>
+      <term><code>heat</code> command-line client</term>
+      <listitem><para>A CLI that communicates with the heat-api to run AWS
+      CloudFormation APIs. End developers can directly use the Orchestration
+      REST API.</para></listitem>
+    </varlistentry>
+    <varlistentry>
+      <term><code>heat-api</code> component</term><listitem><para>An
+        OpenStack-native REST API that processes API requests by sending them to
+        the heat-engine over Remote Procedure Call (RPC).</para>
     </listitem>
-    <listitem>
-      <para><code>heat-api</code> component. Provides an
-        OpenStack-native REST API that processes API requests by
-        sending them to the heat-engine over RPC.</para>
-    </listitem>
-    <listitem>
-      <para><code>heat-api-cfn</code> component. Provides an AWS Query
-        API that is compatible with AWS CloudFormation and processes
+    </varlistentry>
+    <varlistentry>
+      <term><code>heat-api-cfn</code> component</term> <listitem><para>An AWS
+        Query API that is compatible with AWS CloudFormation. It processes
         API requests by sending them to the heat-engine over
-        RPC.</para>
+        RPC.</para></listitem>
+    </varlistentry>
+    <varlistentry>
+      <term><code>heat-engine</code></term>
+      <listitem><para>Orchestrates the launching of templates and provides
+        events back to the API consumer.</para>
     </listitem>
-    <listitem>
-      <para><code>heat-engine</code>. Orchestrates the launching of
-        templates and provides events back to the API consumer.</para>
-    </listitem>
-  </itemizedlist>
+  </varlistentry>
+</variablelist>
 </section>

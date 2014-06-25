@@ -5,16 +5,16 @@
     xml:id="dashboard_manage_projects_security">
     <?dbhtml stop-chunking?>
     <title>Manage project security</title>
-    <para>Security groups are sets of IP filter rules that are applied
-        to all project instances, and which define networking access
-        to the instance. Group rules are project specific; project
-        members can edit the default rules for their group and add new
-        rule sets.</para>
-    <para>All projects have a default security
-        group that is applied to any instance that has no other
-        defined security group. Unless you change the default, this
-        security group denies all incoming traffic and allows only
-        outgoing traffic to your instance.</para>
+    <para>Security groups are sets of IP filter rules that define networking
+        access and are applied to all instances within a project. Group rules
+        are project-specific; project members can edit the default rules for
+        their group and add new rule sets.</para>
+    <para>All projects have a default security group that is applied to any
+        instance that has no other defined security group. When unmodified, the
+        default security group denies all incoming traffic and allows only
+        outgoing traffic to your instance. A common use case is to edit the
+        default security group to permit SSH access and ICMP access, so that
+        users can log into and ping instances.</para>
     <note>
         <para>For information about updating global controls on the
             command line, see <xref
@@ -24,15 +24,15 @@
         <title>Create a security group</title>
         <procedure>
             <step>
-                <para>Log in to the dashboard as a project
-                    member.</para>
+                <para>Log in to the dashboard as a project member.</para>
             </step>
             <step>
-                <para>On the <guilabel>Project</guilabel> tab, select
-                    the appropriate project from the <guimenu>CURRENT
-                        PROJECT</guimenu> drop-down list, and click
-                    the <guimenuitem>Access &amp;
-                        Security</guimenuitem> category.</para>
+                <para>Select a project from the drop-down menu at the top of the screen.</para>
+            </step>
+            <step>
+                <para>On the <guilabel>Project</guilabel> tab, click the
+                        <guimenuitem>Access &amp; Security</guimenuitem>
+                    category.</para>
             </step>
             <step>
                 <para>On the <guilabel>Security Groups</guilabel> tab,
@@ -52,187 +52,170 @@
         <title>Add a security group rule</title>
         <procedure>
             <step>
-                <para>Log in to the dashboard as a project
-                    member.</para>
+                <para>Log in to the dashboard as a project member.</para>
             </step>
             <step>
-                <para>On the <guilabel>Project</guilabel> tab, select
-                    the appropriate project from the <guimenu>CURRENT
-                        PROJECT</guimenu> drop-down list, and click
-                    the <guimenuitem>Access &amp;
-                        Security</guimenuitem> category.</para>
+                <para>Select a project from the drop-down menu at the top of the
+                    screen.</para>
             </step>
             <step>
-                <para>On the <guilabel>Security Groups</guilabel> tab,
-                    click <guibutton>Edit rules</guibutton> for the
-                    appropriate security group.</para>
+                <para>On the <guilabel>Project</guilabel> tab, click the
+                        <guimenuitem>Access &amp; Security</guimenuitem>
+                    category.</para>
             </step>
             <step>
-                <para>To add a rule, click <guibutton>Add
-                        Rule</guibutton>. Set the attributes for the rule,
-                    and click <guibutton>Add</guibutton>:</para>
+                <para>On the <guilabel>Security Groups</guilabel> tab, click
+                        <guibutton>Manage rules</guibutton> for the appropriate
+                    security group.</para>
+            </step>
+            <step>
+                <para>To add a rule, click <guibutton>Add Rule</guibutton>. Set
+                    the attributes for the rule, and click
+                        <guibutton>Add</guibutton>.</para>
+                <para>The following attributes can be configured:</para>
                 <variablelist wordsize="10">
-                    <!-- this doesn't match the UI -->
-                    <!-- <varlistentry>
+                    <varlistentry>
                         <term>Rule</term>
                         <listitem>
-                            <para>The rule protocol type .
-                                Valid types are:<itemizedlist>
-                                   <listitem>
-                                   <para><guilabel>Custom TCP
-                                   Rule</guilabel>.Typically used to
-                                   exchange data between systems, and
-                                   for end-user communication.</para>
-                                   </listitem>
-                                   <listitem>
-                                   <para><guilabel>Custom UDP
-                                   Rule</guilabel>. Typically used to
-                                   exchange data between systems,
-                                   particularly at the application
-                                   level.</para>
-                                   </listitem>
-                                   <listitem>
-                                   <para><guilabel>Custom ICMP
-                                   Rule</guilabel>. Typically used by
-                                   network devices (for example,
-                                   routers) to send error or
-                                   monitoring messages.</para>
-                                   </listitem>
-                                   <listitem>
-                                   <para><guilabel>Other
-                                   Protocol</guilabel>. Other protocol
-                                   type (for example, SCTP, which can
-                                   be used to handle application data
-                                   at the SCTP level). Only available
-                                   for OpenStack Networking security
-                                   groups.</para>
-                                   </listitem>
+                            <para>The rule protocol type. Valid types are:<itemizedlist>
+                                    <listitem>
+                                        <para><guilabel>Custom TCP
+                                        Rule</guilabel>.Typically used to
+                                        exchange data between systems, and for
+                                        end-user communication.</para>
+                                    </listitem>
+                                    <listitem>
+                                        <para><guilabel>Custom UDP
+                                        Rule</guilabel>. Typically used to
+                                        exchange data between systems,
+                                        particularly at the application
+                                        level.</para>
+                                    </listitem>
+                                    <listitem>
+                                        <para><guilabel>Custom ICMP
+                                        Rule</guilabel>. Typically used by
+                                        network devices (for example, routers)
+                                        to send error or monitoring
+                                        messages.</para>
+                                    </listitem>
+                                    <listitem>
+                                        <para><guilabel>Other
+                                        Protocol</guilabel>: Enables you to
+                                        manually specify another rule protocol,
+                                        if it is not included in the
+                                        list.</para>
+                                    </listitem>
+                                    <listitem>
+                                        <para>Other standard IP protocols,
+                                        including: All ICMP, All TCP, All UDP,
+                                        DNS, HTTP, HTTPS, IMAP, IMAPS, LDAP, MS
+                                        SQL, MYSQL, POP3, POP3S, RDP, SMTP,
+                                        SMTPS, and SSH.</para>
+                                    </listitem>
                                 </itemizedlist></para>
                         </listitem>
-                    </varlistentry> -->
-                    <varlistentry>
-                        <term><guilabel>IP Protocol</guilabel></term>
-                        <listitem>
-                            <para>The IP protocol to which
-                                the rule applies:</para>
-                            <itemizedlist>
-                                <listitem>
-                                   <para><guilabel>TCP</guilabel>.Typically
-                                   used to exchange data between
-                                   systems, and for end-user
-                                   communication.</para>
-                                </listitem>
-                                <listitem>
-                                   <para><guilabel>UDP</guilabel>.
-                                   Typically used to exchange data
-                                   between systems, particularly at
-                                   the application level.</para>
-                                </listitem>
-                                <listitem>
-                                   <para><guilabel>ICMP</guilabel>.
-                                   Typically used by network devices,
-                                   such as routers, to send error or
-                                   monitoring messages.</para>
-                                </listitem>
-                            </itemizedlist>
-                        </listitem>
                     </varlistentry>
-                    <!-- not in the GUI -->
-                    <!--<varlistentry>
+                    <varlistentry>
                         <term>Direction</term>
                         <listitem>
-                            <para>For OpenStack Networking. The
-                                direction of network traffic to which
-                                the rule applies:
-                                   <guilabel>Ingress</guilabel>
-                                (inbound) or
-                                   <guilabel>Egress</guilabel>
-                                (outbound).</para>
+                            <para>The direction of network traffic to which the
+                                rule applies: <guilabel>Ingress</guilabel>
+                                (inbound) or <guilabel>Egress</guilabel>
+                                (outbound). This option is available only when
+                                    <guilabel>Custom TCP Rule</guilabel>,
+                                    <guilabel>Custom UDP Rule</guilabel>,
+                                    <guilabel>Custom ICMP Rule</guilabel>,
+                                    <guilabel>All ICMP</guilabel>, <guilabel>All
+                                    TCP</guilabel>, <guilabel>All
+                                UDP</guilabel>, or <guilabel>Other
+                                    Protocol</guilabel> is selected.</para>
                         </listitem>
-                    </varlistentry> -->
+                    </varlistentry>
                     <varlistentry>
-                        <term><guilabel>Open</guilabel></term>
+                        <term>Open Port</term>
                         <listitem>
-                            <para>For TCP or UDP rules, the
-                                   <guilabel>Port</guilabel> or
-                                   <guilabel>Port Range</guilabel> to
-                                open for the rule. Choose to open a
-                                single port or range of ports.</para>
-                            <para>For a range of ports, enter port
+                            <para>The <guilabel>Port</guilabel> or
+                                    <guilabel>Port Range</guilabel> to open for
+                                the rule. This option is available only when
+                                    <guilabel>Custom TCP Rule</guilabel> or
+                                    <guilabel>Custom UDP Rule</guilabel> is
+                                selected.</para>
+                            <itemizedlist>
+                                <listitem>
+                                    <para>For a range of ports, enter port
                                 values in the <guilabel>From
                                    Port</guilabel> and <guilabel>To
                                    Port</guilabel> fields.</para>
-                            <para>For a single port, enter the port
+                                </listitem>
+                            <listitem>
+                                <para>For a single port, enter the port
                                 value in the <guilabel>Port</guilabel>
                                 field.</para>
+                            </listitem>
+                            </itemizedlist>
                         </listitem>
                     </varlistentry>
-                    <!-- not in the GUI -->
-                    <!--<varlistentry>
+                    <varlistentry>
                         <term>Type</term>
                         <listitem>
-                            <para>For ICMP rules, specifies
-                                the ICMP message that is being
-                                passed.</para>
+                            <para>Specifies the ICMP message that is being
+                                passed. This option is available only when
+                                    <guilabel>Custom ICMP Rule</guilabel> is
+                                selected.</para>
                         </listitem>
                     </varlistentry>
                     <varlistentry>
                         <term>Code</term>
                         <listitem>
-                            <para>For ICMP rules, specifies
-                                the ICMP subtype code, which provides
-                                further information about the
-                                   <guilabel>Type</guilabel>
-                                message.</para>
+                            <para>For ICMP rules, specifies the ICMP subtype
+                                code, which provides further information about
+                                the <guilabel>Type</guilabel> message. This
+                                option is available only when <guilabel>Custom
+                                    ICMP Rule</guilabel> is selected.</para>
                         </listitem>
                     </varlistentry>
                     <varlistentry>
                         <term>IP Protocol</term>
                         <listitem>
-                            <para>For OpenStack Networking. For
-                                   <guilabel>Other Protocol</guilabel>
-                                rules, specifies the IP protocol to be
-                                used for the rule. Specify the
-                                protocol as an integer. See <link
-                                   xlink:href="http://www.iana.org/assignments/protocol-numbers/protocol-numbers.xhtml"
-                                   >http://www.iana.org/assignments/protocol-numbers/protocol-numbers.xhtml</link>.</para>
+                            <para>For <guilabel>Other Protocol</guilabel> rules,
+                                specifies the IP protocol to be used for the
+                                rule. Specify the protocol as an integer. See
+                                    <link
+                                    xlink:href="http://www.iana.org/assignments/protocol-numbers/protocol-numbers.xhtml"
+                                    >http://www.iana.org/assignments/protocol-numbers/protocol-numbers.xhtml</link>.
+                                This option is available only when
+                                    <guilabel>Other Protocol</guilabel> is
+                                selected.</para>
                         </listitem>
-                    </varlistentry> -->
+                    </varlistentry>
                     <varlistentry>
-                        <term><guilabel>Source</guilabel></term>
+                        <term>Remote</term>
                         <listitem>
                             <para>The source of the traffic
                                 for this rule:</para>
                             <itemizedlist>
                                 <listitem>
-                                   <para><guilabel>CIDR</guilabel>
-                                   (Classless Inter-Domain Routing).
-                                   IP address block, which limits
-                                   access to IPs within the block.
-                                   Enter the CIDR in the
-                                   <guilabel>Source</guilabel>
-                                   field.</para>
+                                   <para><guilabel>CIDR</guilabel> (Classless
+                                        Inter-Domain Routing). When selected,
+                                        access is limited only to IP addresses
+                                        within the specified block. When
+                                        selected, enter the CIDR in the
+                                        <guilabel>CIDR</guilabel> field.</para>
                                 </listitem>
                                 <listitem>
-                                   <para><guilabel>Security
-                                   Group</guilabel>. Source group that
-                                   enables any instance in the group
-                                   to access any other group
-                                   instance.</para>
+                                   <para><guilabel>Security Group</guilabel>.
+                                        When selected, any instance in the
+                                        selected security group can access any
+                                        other group instance. When selected,
+                                        choose the <guilabel>Security
+                                        Group</guilabel> and the <guilabel>Ether
+                                        Type</guilabel>, which can be either
+                                        <guilabel>IPv4</guilabel> or
+                                        <guilabel>IPv6</guilabel>.</para>
                                 </listitem>
                             </itemizedlist>
                         </listitem>
                     </varlistentry>
-                    <!-- not in gui -->
-                    <!--<varlistentry>
-                        <term>Ether Type</term>
-                        <listitem>
-                            <para>For OpenStack Networking. The
-                                traffic protocol for the rule. Either
-                                   <guilabel>IPv4</guilabel> or
-                                   <guilabel>IPv6</guilabel>.</para>
-                        </listitem>
-                    </varlistentry> -->
                 </variablelist>
             </step>
         </procedure>
@@ -241,24 +224,26 @@
         <title>Delete a security group rule</title>
         <procedure>
             <step>
-                <para>Log in to the dashboard as a project
-                    member.</para>
+                <para>Log in to the dashboard as a project member.</para>
             </step>
             <step>
-                <para>On the <guilabel>Project</guilabel> tab, select
-                    the appropriate project from the <guimenu>CURRENT
-                        PROJECT</guimenu> drop-down list, and click
-                    the <guimenuitem>Access &amp;
-                        Security</guimenuitem> category.</para>
+                <para>Select a project from the drop-down menu at the top of the
+                    screen.</para>
             </step>
             <step>
-                <para>On the <guilabel>Security Groups</guilabel> tab,
-                    click <guibutton>Edit rules</guibutton> for the
-                    appropriate security group.</para>
+                <para>On the <guilabel>Project</guilabel> tab, click the
+                        <guimenuitem>Access &amp; Security</guimenuitem>
+                    category.</para>
+            </step>
+            <step>
+                <para>On the <guilabel>Security Groups</guilabel> tab, click
+                        <guibutton>Manage rules</guibutton> for the appropriate
+                    security group.</para>
             </step>
             <step>
                 <para>To delete a rule, select the rule and click
-                        <guibutton>Delete Rule</guibutton>.</para>
+                        <guibutton>Delete Rule</guibutton> and confirm that you
+                    want to delete the rule.</para>
             </step>
         </procedure>
     </section>
@@ -266,21 +251,22 @@
         <title>Delete a security group</title>
         <procedure>
             <step>
-                <para>Log in to the dashboard as a project
-                    member.</para>
+                <para>Log in to the dashboard as a project member.</para>
             </step>
             <step>
-                <para>On the <guilabel>Project</guilabel> tab, select
-                    the appropriate project from the <guilabel>CURRENT
-                        PROJECT</guilabel> drop-down list, and click
-                    the <guilabel>Access &amp; Security</guilabel>
+                <para>Select a project from the drop-down menu at the top of the
+                    screen.</para>
+            </step>
+            <step>
+                <para>On the <guilabel>Project</guilabel> tab, click the
+                        <guimenuitem>Access &amp; Security</guimenuitem>
                     category.</para>
             </step>
             <step>
-                <para>On the <guilabel>Security Groups</guilabel> tab,
-                    select the appropriate group, and click
-                        <guibutton>Delete Security
-                    Group</guibutton>.</para>
+                <para>On the <guilabel>Security Groups</guilabel> tab, select
+                    the appropriate group, and click <guibutton>Delete Security
+                        Group</guibutton> and confirm that you want to delete
+                    the group.</para>
             </step>
         </procedure>
     </section>

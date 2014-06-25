@@ -28,7 +28,7 @@
           linkend="debconf-dbconfig-common">database
         management</link>, <link linkend="debconf-keystone_authtoken"
             ><literal>[keystone_authtoken]</literal> settings</link>,
-          <link linkend="debconf-rabbitqm">RabbitMQ credentials</link>
+          <link linkend="debconf-rabbitmq">RabbitMQ credentials</link>
         and <link linkend="debconf-api-endpoints">API endpoint</link>
         registration. You must also select the caching type:</para>
       <mediaobject>
@@ -65,14 +65,6 @@
 connection = mysql://glance:GLANCE_DBPASS@<replaceable>controller</replaceable>/glance</programlisting>
     </step>
 
-
-    <step os="fedora;rhel;centos">
-      <para>Configure the Image Service to use the message broker:</para>
-      <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf DEFAULT \
-  rpc_backend qpid</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf DEFAULT \
-  qpid_hostname <replaceable>controller</replaceable></userinput></screen>
-    </step>
     <step os="ubuntu">
       <para>Configure the Image Service to use the message broker:</para>
       <substeps>
@@ -91,7 +83,7 @@ rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
         </step>
       </substeps>
     </step>
-    <step os="opensuse;sles">
+    <step os="opensuse;sles;rhel;centos;fedora">
       <para>Configure the Image Service to use the message broker:</para>
       <para>Replace <replaceable>RABBIT_PASS</replaceable> with the password
         you chose for the <literal>guest</literal> account in

@@ -81,7 +81,7 @@ filter = [ "a/sda1/", "a/sdb/", "r/.*/"]
           linkend="debconf-dbconfig-common">database
         management</link>, <link linkend="debconf-keystone_authtoken"
             ><literal>[keystone_authtoken]</literal> settings</link>,
-        and <link linkend="debconf-rabbitqm">RabbitMQ
+        and <link linkend="debconf-rabbitmq">RabbitMQ
           credentials</link>. Make sure to enter the same details as
         you did for your Block Storage service controller node.</para>
       <para>Another screen prompts you for the <systemitem
@@ -102,7 +102,7 @@ filter = [ "a/sda1/", "a/sdb/", "r/.*/"]
         configure or re-configure <systemitem class="service"
           >cinder-common</systemitem>.</para>
     </step>
-    <step>
+    <step os="fedora;rhel;centos;opensuse;sles;ubuntu">
       <para os="fedora;rhel;centos;opensuse;sles">Copy the
           <filename>/etc/cinder/cinder.conf</filename> configuration
         file from the controller, or perform the following steps to
@@ -123,10 +123,10 @@ filter = [ "a/sda1/", "a/sdb/", "r/.*/"]
   admin_tenant_name service</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/cinder/cinder.conf keystone_authtoken \
   admin_password <replaceable>CINDER_PASS</replaceable></userinput></screen>
-      <para os="ubuntu;debian">Edit the
+      <para os="ubuntu">Edit the
           <filename>/etc/cinder/cinder.conf</filename> configuration
         file and add this section for keystone credentials:</para>
-      <programlisting os="ubuntu;debian" language="ini">...
+      <programlisting os="ubuntu" language="ini">...
 [keystone_authtoken]
 auth_uri = http://<replaceable>controller</replaceable>:5000
 auth_host = <replaceable>controller</replaceable>
@@ -152,15 +152,7 @@ rabbit_port = 5672
 rabbit_userid = guest
 rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
     </step>
-    <step os="rhel;centos;fedora">
-      <para>Configure Block Storage to use the Qpid message
-        broker:</para>
-      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>openstack-config --set /etc/cinder/cinder.conf \
-  DEFAULT rpc_backend cinder.openstack.common.rpc.impl_qpid</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/cinder/cinder.conf \
-    DEFAULT qpid_hostname <replaceable>controller</replaceable></userinput></screen>
-    </step>
-    <step os="sles;opensuse">
+    <step os="sles;opensuse;rhel;centos;fedora">
       <para>Configure Block Storage to use the RabbitMQ message
         broker. Replace <replaceable>RABBIT_PASS</replaceable> with
         the password you chose for RabbitMQ:</para>

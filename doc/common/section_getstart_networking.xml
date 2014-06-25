@@ -2,42 +2,39 @@
   xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
   xml:id="networking-service-overview">
-  <title>Networking service overview</title>
-  <para>Provides network-connectivity-as-a-service between interface
-    devices that are managed by other OpenStack services, usually
-    Compute. Enables users to create and attach interfaces to
-    networks. Like many OpenStack services, OpenStack Networking is
-    highly configurable due to its plug-in architecture. These
-    plug-ins accommodate different networking equipment and software.
-    Consequently, the architecture and deployment vary
-    dramatically.</para>
-  <para>Includes the following components:</para>
-  <itemizedlist>
-    <listitem>
-      <para><systemitem class="service">neutron-server</systemitem>.
-        Accepts and routes API requests to the appropriate OpenStack
-        Networking plug-in for action.</para>
-    </listitem>
-    <listitem>
-      <para>OpenStack Networking plug-ins and agents. Plugs and
-        unplugs ports, creates networks or subnets, and provides IP
-        addressing. These plug-ins and agents differ depending on the
-        vendor and technologies used in the particular cloud.
+  <title>OpenStack Networking</title>
+  <para>OpenStack Networking allows you to create and
+    attach interface devices managed by other OpenStack services to
+    networks. Plug-ins can be implemented to accomodate different
+    networking equipment and software, providing flexibility to OpenStack
+    architecture and deployment.</para>
+  <para>It includes the following components:</para>
+  <variablelist>
+    <varlistentry><term><systemitem
+          class="service">neutron-server</systemitem></term>
+        <listitem><para>Accepts and routes API requests to the appropriate
+         OpenStack Networking plug-in for action.</para></listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>OpenStack Networking plug-ins and agents</term>
+        <listitem><para>Plugs and unplugs ports, creates networks or subnets,
+        and provides IP  addressing. These plug-ins and agents differ
+        depending on the vendor and technologies used in the particular cloud.
         OpenStack Networking ships with plug-ins and agents for Cisco
         virtual and physical switches, NEC OpenFlow products, Open
         vSwitch, Linux bridging, Ryu Network Operating System, and
         the VMware NSX product.</para>
       <para>The common agents are L3 (layer 3), DHCP (dynamic host IP
-        addressing), and a plug-in agent.</para>
-    </listitem>
-    <listitem>
-      <para>Messaging queue. Most OpenStack Networking installations
-        make use of a messaging queue to route information between the
-        neutron-server and various agents as well as a database to
-        store networking state for particular plug-ins.</para>
-    </listitem>
-  </itemizedlist>
-  <para>OpenStack Networking interacts mainly with OpenStack Compute,
-    where it provides networks and connectivity for its
-    instances.</para>
+        addressing), and a plug-in agent.</para></listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>Messaging queue</term>
+      <listitem><para>Used by most OpenStack Networking installations to route
+        information between the neutron-server and various agents, as well as a
+        database to store networking state for particular
+        plug-ins.</para></listitem>
+    </varlistentry>
+  </variablelist>
+  <para>OpenStack Networking mainly interacts with OpenStack Compute to
+       provide networks and connectivity for its instances.</para>
 </section>

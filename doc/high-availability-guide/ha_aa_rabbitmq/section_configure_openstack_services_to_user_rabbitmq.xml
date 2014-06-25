@@ -1,0 +1,28 @@
+     <section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    version="5.0" xml:id="_configure_openstack_services_to_use_rabbitmq">
+        <info>
+          <title>Configure OpenStack services to use RabbitMQ</title>
+        </info>
+        <simpara>We have to configure the OpenStack components to use at least two RabbitMQ nodes.</simpara>
+        <simpara>Do this configuration on all services using RabbitMQ:</simpara>
+        <simpara>RabbitMQ HA cluster host:port pairs:</simpara>
+        <screen>rabbit_hosts=rabbit1:5672,rabbit2:5672</screen>
+        <simpara>How frequently to retry connecting with RabbitMQ:</simpara>
+        <screen>rabbit_retry_interval=1</screen>
+        <simpara>How long to back-off for between retries when connecting to RabbitMQ:</simpara>
+        <screen>rabbit_retry_backoff=2</screen>
+        <simpara>Maximum retries with trying to connect to RabbitMQ (infinite by default):</simpara>
+        <screen>rabbit_max_retries=0</screen>
+        <simpara>Use durable queues in RabbitMQ:</simpara>
+        <screen>rabbit_durable_queues=false</screen>
+        <simpara>Use H/A queues in RabbitMQ (x-ha-policy: all):</simpara>
+        <screen>rabbit_ha_queues=true</screen>
+        <simpara>If you change the configuration from an old setup which did not use HA queues, you should interrupt the service:</simpara>
+        <screen>rabbitmqctl stop_app
+rabbitmqctl reset
+rabbitmqctl start_app</screen>
+        <simpara>Services currently working with HA queues: OpenStack Compute, OpenStack Block Storage, OpenStack Networking, Telemetry.</simpara>
+      </section>
+ 

@@ -72,26 +72,93 @@
         </varlistentry>
     </variablelist>
     <para>The default flavors are:</para>
-    <itemizedlist>
-        <listitem>
-            <para>m1.tiny (1 VCPU/0 GB Disk/512 MB RAM)</para>
-        </listitem>
-        <listitem>
-            <para>m1.smaller (1 VCPU/0 GB Disk/1024 MB RAM)</para>
-        </listitem>
-        <listitem>
-            <para>m1.small (1 VCPU/10 GB Disk/2048 MB RAM)</para>
-        </listitem>
-        <listitem>
-            <para>m1.medium (2 VCPU/10 GB Disk/3072 MB RAM)</para>
-        </listitem>
-        <listitem>
-            <para>m1.large (4 VCPU/10 GB Disk/8192 MB RAM)</para>
-        </listitem>
-        <listitem>
-            <para>m1.xlarge (8 VCPU/10 GB Disk/8192 MB RAM)</para>
-        </listitem>
-    </itemizedlist>
+<informaltable rules="all" width="50%">
+    <col width="30%"/>
+    <col width="20%"/>
+    <col width="25%"/>
+    <col width="25%"/>
+
+<thead>
+      <tr>
+        <th>Flavor</th>
+        <th>VCPUs</th>
+        <th>Disk (in GB)</th>
+        <th>RAM (in MB)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <para>m1.tiny</para>
+        </td>
+        <td>
+          <para>1</para>
+        </td>
+        <td>
+          <para>1</para>
+        </td>
+        <td>
+          <para>512</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para>m1.small</para>
+        </td>
+        <td>
+          <para>1</para>
+        </td>
+        <td>
+          <para>20</para>
+        </td>
+        <td>
+          <para>2048</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para>m1.medium</para>
+        </td>
+        <td>
+          <para>2</para>
+        </td>
+        <td>
+          <para>40</para>
+        </td>
+        <td>
+          <para>4096</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para>m1.large</para>
+        </td>
+        <td>
+          <para>4</para>
+        </td>
+        <td>
+          <para>80</para>
+        </td>
+        <td>
+          <para>8192</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para>m1.xlarge</para>
+        </td>
+        <td>
+          <para>8</para>
+        </td>
+        <td>
+          <para>160</para>
+        </td>
+        <td>
+          <para>16384</para>
+        </td>
+      </tr>
+    </tbody>
+    </informaltable>
     <para>You can create and manage flavors with the nova
             <command>flavor-*</command> commands provided by the
             <filename>python-novaclient</filename> package.</para>
@@ -117,6 +184,22 @@
                         cannot contain special characters or
                         spaces.</para>
                 </note>
+                <para>Here is an example with additional optional
+                    parameters filled in that creates a public "extra
+                    tiny" flavor that automatically gets an ID
+                    assigned, with 256 MB memory, no disk space, and
+                    one VCPU. The rxtx-factor indicates the slice of
+                    bandwidth that the instances with this flavor can
+                    use (through the Virtual Interface (vif) creation
+                    in the hypervisor).</para>
+                <screen><prompt>$</prompt> <userinput>nova flavor-create --is-public true m1.extra_tiny auto 256 0 1 --rxtx-factor .1</userinput></screen>
+                <para>If an individual user or group of users needs a custom
+                    flavor that you do not want other tenants to have access to,
+                you can change the flavor's access to make it a private flavor.
+                See <link
+                    xlink:href="http://docs.openstack.org/openstack-ops/content/private-flavors.html">
+                    Private Flavors in the OpenStack Operations Guide
+                </link>.</para>
                 <para>For a list of optional parameters, run this
                     command:</para>
                 <screen><prompt>$</prompt> <userinput>nova help flavor-create</userinput></screen>

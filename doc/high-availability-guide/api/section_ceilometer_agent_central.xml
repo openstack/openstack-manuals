@@ -1,0 +1,66 @@
+     <section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    version="5.0" xml:id="s-ceilometer-agent-central">
+        <info>
+          <title>Highly available Telemetry central agent</title>
+        </info>
+        <simpara>Telemetry (ceilometer) is the metering and monitoring service in
+OpenStack.  The Central agent polls for resource utilization
+statistics for resources not tied to instances or compute nodes.</simpara>
+        <note>
+          <simpara>Due to limitations of a polling model, a single instance of this agent
+can be polling a given list of meters. In this setup, we install this service
+on the API nodes also in the active / passive mode.</simpara>
+        </note>
+        <simpara>Making the Telemetry central agent service highly available in active / passive mode involves
+managing its daemon with the Pacemaker cluster manager.</simpara>
+        <note>
+          <simpara>You will find at <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://docs.openstack.org/developer/ceilometer/install/manual.html#installing-the-central-agent">this page</link>
+the process to install the Telemetry central agent.</simpara>
+        </note>
+        <section xml:id="_add_the_telemetry_central_agent_resource_to_pacemaker">
+          <info>
+            <title>Add the Telemetry central agent resource to Pacemaker</title>
+          </info>
+          <simpara>First of all, you need to download the resource agent to your system:</simpara>
+          <screen>cd /usr/lib/ocf/resource.d/openstack
+wget https://raw.github.com/madkiss/openstack-resource-agents/master/ocf/ceilometer-agent-central
+chmod a+rx *</screen>
+          <simpara>You may then proceed with adding the Pacemaker configuration for
+the Telemetry central agent resource. Connect to the Pacemaker cluster with <literal>crm
+configure</literal>, and add the following cluster resources:</simpara>
+          <screen>primitive p_ceilometer-agent-central ocf:openstack:ceilometer-agent-central \
+    params config="/etc/ceilometer/ceilometer.conf" \
+    op monitor interval="30s" timeout="30s"</screen>
+          <simpara>This configuration creates</simpara>
+          <itemizedlist>
+            <listitem>
+              <simpara><literal>p_ceilometer-agent-central</literal>, a resource for manage Ceilometer Central Agent service
+</simpara>
+            </listitem>
+          </itemizedlist>
+          <simpara><literal>crm configure</literal> supports batch input, so you may copy and paste the
+above into your live pacemaker configuration, and then make changes as
+required.</simpara>
+          <simpara>Once completed, commit your configuration changes by entering <literal>commit</literal>
+from the <literal>crm configure</literal> menu. Pacemaker will then start the Ceilometer Central Agent
+service, and its dependent resources, on one of your nodes.</simpara>
+        </section>
+        <section xml:id="_configure_telemetry_central_agent_service">
+          <info>
+            <title>Configure Telemetry central agent service</title>
+          </info>
+          <simpara>Edit <literal>/etc/ceilometer/ceilometer.conf</literal> :</simpara>
+          <screen># We use API VIP for Identity Service connection :
+os_auth_url=http://192.168.42.103:5000/v2.0
+
+# We send notifications to High Available RabbitMQ :
+notifier_strategy = rabbit
+rabbit_host = 192.168.42.102
+
+[database]
+# We have to use MySQL connection to store data :
+sql_connection=mysql://ceilometer:password@192.168.42.101/ceilometer</screen>
+        </section>
+      </section>

@@ -3,69 +3,87 @@
   xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
   xml:id="trove-service">
   <title>Database service overview</title>
-  <para>The Database service provides scalable and reliable cloud provisioning functionality for both relational and non-relational database engines. Users can quickly and easily utilize database features without the burden of handling complex administrative tasks. Cloud users and database administrators can provision and manage multiple database instances as needed.</para>
-<para>The Database service provides resource isolation at high performance levels, and automates complex administrative tasks such as deployment, configuration, patching, backups, restores, and monitoring.</para>
+  <para>The Database service provides scalable and reliable cloud provisioning
+    functionality for both relational and non-relational database engines. Users
+    can quickly and easily use database features without the burden of
+    handling complex administrative tasks. Cloud users and database
+    administrators can provision and manage multiple database instances as
+    needed.</para>
+  <para>The Database service provides resource isolation at high performance
+    levels, and automates complex administrative tasks such as deployment,
+    configuration, patching, backups, restores, and monitoring.</para>
   <formalpara>
-    <title>Process flow example.</title><para>Here is a high-level process flow example for using Database services:</para>
-</formalpara>
+    <title>Process flow example</title>
+    <para>This example is a high-level process flow for using Database
+      services:</para>
+  </formalpara>
   <procedure>
-    <step><para>Administrator sets up infrastructure:</para>
+    <step><para>The OpenStack Administrator configures the basic infrastructure
+        using the following steps:</para>
     <substeps>
       <step>
-        <para>OpenStack administrator installs the Database service.</para>
+        <para>Install the Database service.</para>
       </step>
       <step>
-        <para>She creates one image for each type of database the
-          administrator wants to have (one for MySQL, one for MongoDB,
-          and so on).</para>
+        <para>Create an image for each type of database. For example, one for
+          MySQL and one for MongoDB.</para>
         </step>
       <step>
-        <para>OpenStack administrator updates the datastore to use the
-        new images, using the <command>trove-manage</command>
-        command.</para>
+        <para>Use the <command>trove-manage</command> command to import images
+          and offer them to tenants.</para>
         </step>
         </substeps>
     </step>
     <step>
-      <para>End user uses database service:</para>
+      <para>The OpenStack end user deploys the Database service using the following
+        steps:</para>
     <substeps>
       <step>
-        <para>Now that the basic infrastructure is set up, an end user
-        can create a Trove instance (database) whenever the user
-        wants, using the <command>trove create</command>
+        <para>Create a Database service instance using the
+         <command>trove create</command>
         command.</para>
       </step>
       <step>
-        <para>The end user gets the IP address of the Trove instance by using
-the <command>trove list</command> command to get the ID of the instance, and
-then using the <command>trove show <replaceable>instanceID</replaceable></command> command to get the IP address.</para>
+        <para>Use the <command>trove list</command> command to get the ID of
+         the instance, followed by the <command>trove show</command> command to get the IP
+         address of it.</para>
         </step>
       <step>
-        <para>The end user can now access the Trove instance using typical database access commands. MySQL example:</para>
-        <screen><prompt>$</prompt> mysql -u myuser -pmypass -h <replaceable>trove_ip_address</replaceable> mydb</screen>
+        <para>Access the Database service instance using typical database access
+         commands. For example, with MySQL:</para>
+        <screen><prompt>$</prompt> mysql -u myuser -p -h <replaceable>TROVE_IP_ADDRESS</replaceable> mydb</screen>
         </step>
         </substeps>
     </step>
   </procedure>
- <formalpara>
-<title>Components:</title><para>The Database service includes the following components:</para>
-  </formalpara>
-  <itemizedlist>
-    <listitem>
-      <para><code>python-troveclient</code> command-line client. A CLI that communicates with the <code>trove-api</code> component.</para>
-    </listitem>
-    <listitem>
-      <para><code>trove-api</code> component. Provides an
-        OpenStack-native RESTful API that supports JSON to provision and manage Trove instances.</para>
-    </listitem>
-    <listitem>
-      <para><code>trove-conductor</code> service. Runs on the host, and receives messages from guest instances that want to update information on the host.</para>
-    </listitem>
-    <listitem>
-      <para><code>trove-taskmanager</code> service. Instruments the complex system flows that support provisioning instances, managing the lifecycle of instances, and performing operations on instances.</para>
-    </listitem>
-    <listitem>
-      <para><code>trove-guestagent</code> service. Runs within the guest instance. Manages and performs operations on the database itself.</para>
-    </listitem>
-  </itemizedlist>
+  <para>The Database service includes the following components:</para>
+  <variablelist>
+    <varlistentry>
+      <term><code>python-troveclient</code> command-line client</term>
+      <listitem><para>A CLI that communicates with the <code>trove-api</code>
+          component.</para></listitem>
+    </varlistentry>
+    <varlistentry>
+      <term><code>trove-api</code> component</term>
+      <listitem><para>Provides an OpenStack-native RESTful API that supports
+      JSON to provision and manage Trove instances.</para></listitem>
+    </varlistentry>
+    <varlistentry>
+      <term><code>trove-conductor</code> service</term>
+      <listitem><para>Runs on the host, and receives messages from guest
+       instances that want to update information on the host.</para></listitem>
+    </varlistentry>
+    <varlistentry>
+      <term><code>trove-taskmanager</code> service</term>
+      <listitem><para>Instruments the complex system flows that support
+       provisioning instances, managing the lifecycle of instances, and
+       performing operations on instances.</para></listitem>
+    </varlistentry>
+    <varlistentry>
+      <term><code>trove-guestagent</code> service</term>
+      <listitem><para>Runs within the guest instance. Manages and performs
+      operations on the database itself.</para></listitem>
+    </varlistentry>
+    </variablelist>
+
 </section>

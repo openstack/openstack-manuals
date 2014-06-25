@@ -10,7 +10,7 @@
     <section xml:id="section_provider_networks">
         <title>Provider networks</title>
         <para>Networks can be categorized as either "tenant networks" or "provider networks". Tenant
-            networks are created by normal users, and details about how they are physically realized
+            networks are created by normal users and details about how they are physically realized
             are hidden from those users. Provider networks are created with administrative
             credentials, specifying the details of how the network is physically realized, usually
             to match some existing network in the data center.</para>
@@ -23,7 +23,7 @@
         <para>The provider extension allows administrators to explicitly manage the relationship
             between Networking virtual networks and underlying physical mechanisms such as VLANs and
             tunnels. When this extension is supported, Networking client users with administrative
-            privileges see additional provider attributes on all virtual networks, and are able to
+            privileges see additional provider attributes on all virtual networks and are able to
             specify these attributes in order to create provider networks.</para>
         <para>The provider extension is supported by the Open vSwitch and Linux Bridge plug-ins.
             Configuration of these plug-ins requires familiarity with this extension.</para>
@@ -74,7 +74,7 @@
                         <td>A virtual network implemented as packets on a specific physical network
                             containing IEEE 802.1Q headers with a specific VID field value. VLAN
                             networks sharing the same physical network are isolated from each other
-                            at L2, and can even have overlapping IP address spaces. Each distinct
+                            at L2 and can even have overlapping IP address spaces. Each distinct
                             physical network supporting VLAN networks is treated as a separate VLAN
                             trunk, with a distinct space of VID values. Valid VID values are 1
                             through 4094.</td>
@@ -150,7 +150,7 @@
                     <tr>
                         <td>provider:physical_network</td>
                         <td>String</td>
-                        <td>If a physical network named "default" has been configured, and if
+                        <td>If a physical network named "default" has been configured and if
                             provider:network_type is <literal>flat</literal> or
                                 <literal>vlan</literal>, then "default" is used.</td>
                         <td>The name of the physical network over which the virtual network is
@@ -230,14 +230,14 @@
         <para>The Networking API provides abstract L2 network segments that are decoupled from the
             technology used to implement the L2 network. Networking includes an API extension that
             provides abstract L3 routers that API users can dynamically provision and configure.
-            These Networking routers can connect multiple L2 Networking networks, and can also
+            These Networking routers can connect multiple L2 Networking networks and can also
             provide a gateway that connects one or more private L2 networks to a shared external
             network. For example, a public network for access to the
             Internet. See the <citetitle>OpenStack Configuration
             Reference</citetitle> for details on common models of
             deploying Networking L3 routers.</para>
         <para>The L3 router provides basic NAT capabilities on gateway ports that uplink the router
-            to external networks. This router SNATs all traffic by default, and supports floating
+            to external networks. This router SNATs all traffic by default and supports floating
             IPs, which creates a static one-to-one mapping from a public IP on the external network
             to a private IP on one of the other subnets attached to the router. This allows a tenant
             to selectively expose VMs on private networks to other hosts on the external network
@@ -432,7 +432,7 @@
                         <td>
                             <screen><prompt>$</prompt> <userinput>neutron router-gateway-set router1 &lt;ext-net-id&gt;</userinput></screen>
                             <para>The router obtains an interface with the gateway_ip address of the
-                                subnet, and this interface is attached to a port on the L2
+                                subnet and this interface is attached to a port on the L2
                                 Networking network associated with the subnet. The router also gets
                                 a gateway interface to the specified external network. This provides
                                 SNAT connectivity to the external network as well as support for
@@ -911,7 +911,7 @@
                         <td>Boolean</td>
                         <td>False</td>
                         <td>When set to True makes this firewall rule visible to tenants other than
-                            its owner, and it can be used in firewall policies not owned by its
+                            its owner and it can be used in firewall policies not owned by its
                             tenant.</td>
                     </tr>
                     <tr>
@@ -1023,7 +1023,7 @@
                         <td>Boolean</td>
                         <td>False</td>
                         <td>When set to True makes this firewall policy visible to tenants other
-                            than its owner, and can be used to associate with firewalls not owned by
+                            than its owner and can be used to associate with firewalls not owned by
                             its tenant.</td>
                     </tr>
                     <tr>
@@ -1363,8 +1363,8 @@
                 <para>Starting with the Havana release, the VMware NSX plug-in provides an
                     asynchronous mechanism for retrieving the operational status for neutron
                     resources from the NSX back-end; this applies to <emphasis>network</emphasis>,
-                        <emphasis>port</emphasis>, and <emphasis>router</emphasis> resources.</para>
-                <para>The back-end is polled periodically, and the status for every resource is
+                        <emphasis>port</emphasis> and <emphasis>router</emphasis> resources.</para>
+                <para>The back-end is polled periodically and the status for every resource is
                     retrieved; then the status in the Networking database is updated only for the
                     resources for which a status change occurred. As operational status is now
                     retrieved asynchronously, performance for <literal>GET</literal> operations is

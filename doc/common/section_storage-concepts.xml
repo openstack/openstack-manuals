@@ -41,7 +41,7 @@
       <tr>
         <td>Implemented as a filesystem underlying OpenStack
           Compute</td>
-        <td>Mounted via OpenStack Block-Storage controlled protocol
+        <td>Mounted via OpenStack Block Storage controlled protocol
           (for example, iSCSI)</td>
         <td>REST API</td>
       </tr>
@@ -58,27 +58,26 @@
       </tr>
     </tbody>
   </table>
-  <?hard-pagebreak?>
-  <para>Other points of note include: <itemizedlist>
+
+  <para>You should note that:<itemizedlist>
       <listitem>
-        <para><emphasis>OpenStack Object Storage is not used like a
-            traditional hard drive.</emphasis> Object storage is all
-          about relaxing some of the constraints of a POSIX-style file
-          system. The access to it is API-based (and the API uses
-          http). This is a good idea as if you don't have to provide
-          atomic operations (that is, you can rely on eventual
-          consistency), you can much more easily scale a storage
-          system and avoid a central point of failure.</para>
+        <para><emphasis>You cannot use OpenStack Object Storage like a
+            traditional hard drive.</emphasis> The Object Storage relaxes some
+            of the constraints of a POSIX-style file system to get other gains.
+            You can access the objects through an API which uses HTTP.
+            Subsequently you don't have to provide atomic operations (that is,
+            relying on eventual consistency), you can scale a storage system
+            easily and avoid a central point of failure.</para>
       </listitem>
       <listitem>
         <para><emphasis>The OpenStack Image Service is used to manage
             the virtual machine images in an OpenStack cluster, not
-            store them.</emphasis> Instead, it provides an
-          abstraction to different methods for storage - a bridge to
-          the storage, not the storage itself.</para>
+            store them.</emphasis> It provides an abstraction to different
+            methods for storage - a bridge to the storage, not the storage
+            itself.</para>
       </listitem>
       <listitem>
-        <para><emphasis>OpenStack Object Storage can function on its
+        <para><emphasis>The OpenStack Object Storage can function on its
             own.</emphasis> The Object Storage (swift) product can be
           used independently of the Compute (nova) product.</para>
       </listitem>

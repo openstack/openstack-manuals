@@ -47,7 +47,7 @@
           management</link>, <link
           linkend="debconf-keystone_authtoken"
           ><literal>[keystone_authtoken]</literal>
-          settings</link>, <link linkend="debconf-rabbitqm">RabbitMQ
+          settings</link>, <link linkend="debconf-rabbitmq">RabbitMQ
           credentials</link> and <link
           linkend="debconf-api-endpoints">API endpoint</link>
           registration.</para>
@@ -137,7 +137,7 @@ admin_password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
           </step>
         </substeps>
       </step>
-      <step os="opensuse;sles">
+      <step os="opensuse;sles;rhel;centos;fedora">
         <para>Configure access to the <application>RabbitMQ</application> service:</para>
         <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf DEFAULT \
   rpc_backend neutron.openstack.common.rpc.impl_kombu</userinput>
@@ -156,19 +156,6 @@ admin_password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
         <programlisting language="ini">rabbit_host = <replaceable>controller</replaceable>
 rabbit_userid = guest
 rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
-      </step>
-      <step os="rhel;centos;fedora">
-        <para>Configure access to the <application>Qpid</application> message queue:</para>
-        <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf DEFAULT \
-  rpc_backend neutron.openstack.common.rpc.impl_qpid</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf DEFAULT \
-  qpid_hostname <replaceable>controller</replaceable></userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf DEFAULT \
-  qpid_port 5672</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf DEFAULT \
-  qpid_username <replaceable>guest</replaceable></userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf DEFAULT \
-  qpid_password <replaceable>guest</replaceable></userinput></screen>
       </step>
     </procedure>
     <procedure>

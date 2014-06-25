@@ -2,8 +2,8 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="metering-service">
-      <title>Telemetry</title>
-      <para>The Telemetry module:</para>
+      <title>Telemetry module</title>
+      <para>The Telemetry module performs the following functions:</para>
       <para>
         <itemizedlist>
           <listitem>
@@ -16,7 +16,7 @@
           </listitem>
           <listitem>
             <para>Configures the type of collected data to meet
-          various operating requirements. Accessing and inserting the
+          various operating requirements. It accesses and inserts the
           metering data through the REST API.</para>
           </listitem>
           <listitem>
@@ -29,55 +29,52 @@
           </listitem>
         </itemizedlist>
      </para>
-      <para>The system consists of the following basic
+      <para>The Telemetry module consists of the following
         components:</para>
-      <itemizedlist>
-        <listitem>
-          <para>A compute agent (<systemitem class="service"
-            >ceilometer-agent-compute</systemitem>). Runs on each
-            compute node and polls
-            for resource utilization statistics. There may be other
-            types of agents in the future, but for now we will focus
-            on creating the compute agent.</para>
+      <variablelist>
+        <varlistentry><term>A compute agent (<systemitem class="service"
+          >ceilometer-agent-compute</systemitem>)</term>
+          <listitem><para>Runs on each compute node and polls for resource
+          utilization statistics. There may be other types of agents in the
+          future, but for now our focus is creating the compute agent.</para>
         </listitem>
-        <listitem>
-          <para>A central agent (<systemitem class="service"
-            >ceilometer-agent-central</systemitem>). Runs on a central
-            management server
-            to poll for resource utilization statistics for resources
-            not tied to instances or compute nodes.</para>
+        </varlistentry>
+        <varlistentry><term>A central agent (<systemitem class="service"
+           >ceilometer-agent-central</systemitem>)</term>
+          <listitem><para>Runs on a central management server to poll for
+           resource utilization statistics for resources not tied to instances
+           or compute nodes.</para></listitem>
+        </varlistentry>
+        <varlistentry><term>A collector (<systemitem class="service"
+           >ceilometer-collector</systemitem></term>
+          <listitem><para>Runs on central management server(s) to monitor the
+           message queues (for notifications and for metering data coming from
+           the agent). Notification messages are processed and turned into
+           metering messages, which are sent to the message bus using the
+           appropriate topic. Telemetry messages are written to the data store
+           without modification.</para>
         </listitem>
-        <listitem>
-          <para>A collector (<systemitem class="service"
-            >ceilometer-collector</systemitem>). Runs on one or more
-            central management
-            servers to monitor the message queues (for notifications
-            and for metering data coming from the agent). Notification
-            messages are processed and turned into metering messages
-            and sent back out onto the message bus using the
-            appropriate topic. Telemetry messages are written to the
-            data store without modification.</para>
-        </listitem>
-        <listitem>
-          <para>An alarm notifier (<systemitem class="service"
-          >ceilometer-alarm-notifier</systemitem>). Runs on one or more
-          central management servers to allow setting alarms based on
-          threshold evaluation for a collection of samples.
-         </para>
-        </listitem>
-        <listitem>
-          <para>A data store. A database capable of handling
+        </varlistentry>
+        <varlistentry><term>An alarm notifier (<systemitem class="service"
+            >ceilometer-alarm-notifier</systemitem>)</term>
+          <listitem><para>Runs on one or more central management servers to
+            allow alarms to be set based on the threshold evaluation for a
+            collection of samples.</para></listitem>
+     </varlistentry>
+        <varlistentry>
+          <term>A data store</term>
+          <listitem><para>A database capable of handling
             concurrent writes (from one or more collector instances)
-            and reads (from the API server).</para>
-        </listitem>
-        <listitem>
-          <para>An API server (<systemitem class="service"
-            >ceilometer-api</systemitem>). Runs on one or more central
-            management
-            servers to provide access to the data from the data store.</para>
-        </listitem>
-      </itemizedlist>
-      <para>These services communicate by using the standard OpenStack
-        messaging bus. Only the collector and API server have access
+            and reads (from the API server).</para></listitem>
+        </varlistentry>
+          <varlistentry>
+          <term>An API server (<systemitem
+           class="service">ceilometer-api</systemitem>)</term>
+          <listitem><para>Runs on one or more central management servers to
+           provide data access from the data store.</para></listitem>
+      </varlistentry>
+      </variablelist>
+      <para>These services communicate by using the OpenStack messaging bus.
+        Only the collector and API server have access
         to the data store.</para>
     </section>

@@ -70,19 +70,14 @@ notification_driver = ceilometer.compute.nova_notifier</programlisting>
 metering_secret = <replaceable>CEILOMETER_TOKEN</replaceable></programlisting>
     </step>
 
-    <step os="opensuse;sles;ubuntu">
+    <step os="opensuse;sles;ubuntu;rhel;centos;fedora">
       <para>Configure the RabbitMQ access:</para>
-      <screen os="opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf DEFAULT rabbit_host controller</userinput>
+      <screen os="opensuse;sles;rhel;centos;fedora"><prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf DEFAULT rabbit_host controller</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf DEFAULT rabbit_password <replaceable>RABBIT_PASS</replaceable></userinput></screen>
       <para os="ubuntu">Edit the <filename>/etc/ceilometer/ceilometer.conf</filename> file and update the <literal>[DEFAULT]</literal> section:</para>
       <programlisting os="ubuntu" language="ini">[DEFAULT]
 rabbit_host = <replaceable>controller</replaceable>
 rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
-    </step>
-
-    <step os="rhel;centos;fedora">
-      <para>Configure the QPid access:</para>
-      <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/ceilometer/ceilometer.conf DEFAULT qpid_hostname <replaceable>controller</replaceable></userinput></screen>
     </step>
 
     <step>

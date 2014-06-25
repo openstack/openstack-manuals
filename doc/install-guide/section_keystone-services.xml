@@ -2,25 +2,12 @@
   xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="keystone-services"
   version="5.0" os="rhel;centos;fedora;opensuse;sles;ubuntu">
   <title>Define services and API endpoints</title>
-  <para>So that the Identity Service can track which OpenStack services are
-    installed and where they are located on the network, you must register each
-    service in your OpenStack installation. To register a service, run these
-    commands:</para>
-  <itemizedlist>
-    <listitem>
-      <para><command>keystone service-create</command>. Describes the
-        service.</para>
-    </listitem>
-    <listitem>
-      <para><command>keystone endpoint-create</command>. Associates
-        <glossterm baseform="API endpoint">API endpoints</glossterm>
-        with the service.</para>
-    </listitem>
-  </itemizedlist>
-  <para>You must also register the Identity Service itself. Use the
-      <code>OS_SERVICE_TOKEN</code> environment variable, as set previously, for
-    authentication.</para>
   <procedure>
+    <step>
+      <para>Register the identity service itself using the
+      <code>OS_SERVICE_TOKEN</code> environment variable, as set
+      previously, for authentication.</para>
+    </step>
     <step>
       <para>Create a service entry for the Identity Service:</para>
       <screen><prompt>$</prompt> <userinput>keystone service-create --name=keystone --type=identity \
@@ -33,15 +20,16 @@
 | name        | keystone                         |
 | type        | identity                         |
 +-------------+----------------------------------+</computeroutput></screen>
-      <para>The service ID is randomly generated and is different from the one
-        shown here.</para>
+      <para>The service ID is randomly generated and is different from
+        the one shown here.</para>
     </step>
     <step>
-      <para>Specify an API endpoint for the Identity Service by using the
-        returned service ID. When you specify an endpoint, you provide URLs for
-        the public API, internal API, and admin API. In this guide, the
-          <literal>controller</literal> host name is used. Note that the
-        Identity Service uses a different port for the admin API.</para>
+      <para>Specify an API endpoint for the Identity Service by using
+        the returned service ID. When you specify an endpoint, you
+        provide URLs for the public API, internal API, and admin API.
+        In this guide, the <literal>controller</literal> host name is
+        used. Note that the Identity Service uses a different port for
+        the admin API.</para>
       <screen><prompt>$</prompt> <userinput>keystone endpoint-create \
   --service-id=$(keystone service-list | awk '/ identity / {print $2}') \
   --publicurl=http://<replaceable>controller</replaceable>:5000/v2.0 \
@@ -61,10 +49,10 @@
   </procedure>
   <note>
     <para>
-      You will need to create an additional endpoint for each service added to
-      your OpenStack environment. The sections of this guide associated with
-      the installation of each service include the endpoint creation step
-      specific to the service.
+      You will need to create an additional endpoint for each service
+      added to your OpenStack environment. The sections of this guide
+      associated with the installation of each service include the
+      endpoint creation step specific to the service.
     </para>
   </note>
 </section>
