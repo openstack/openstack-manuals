@@ -11,7 +11,7 @@
     <title>Orchestration command-line client</title>
     <para>The <command>heat</command> client is the command-line interface
          (CLI) for the Orchestration API and its extensions. This chapter documents
-         <command>heat</command> version 0.2.9.
+         <command>heat</command> version 0.2.10.
     </para>
     <para>For help on a specific <command>heat</command>
        command, enter:
@@ -20,8 +20,8 @@
 
     <section xml:id="heatclient_command_usage">
        <title>heat usage</title>
-        <screen><computeroutput>usage: heat [--version] [-d] [-v] [-k] [--cert-file CERT_FILE]
-            [--key-file KEY_FILE] [--ca-file CA_FILE]
+        <screen><computeroutput>usage: heat [--version] [-d] [-v] [-k] [--os-cacert &lt;ca-certificate&gt;]
+            [--cert-file CERT_FILE] [--key-file KEY_FILE] [--ca-file CA_FILE]
             [--api-timeout API_TIMEOUT] [--os-username OS_USERNAME]
             [--os-password OS_PASSWORD] [--os-tenant-id OS_TENANT_ID]
             [--os-tenant-name OS_TENANT_NAME] [--os-auth-url OS_AUTH_URL]
@@ -351,6 +351,15 @@
       (https) requests. The server's certificate will not be
       verified against any certificate authorities. This
       option should be used with caution.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-cacert &lt;ca-certificate&gt;</command></term>
+    <listitem>
+      <para>
+      Specify a CA bundle file to use in verifying a TLS
+      (https) server certificate. Defaults to <code>env[OS_CACERT]</code>
       </para>
     </listitem>
   </varlistentry>
@@ -812,7 +821,9 @@ Show the resource type.
         <title>heat stack-abandon command</title>
         <screen><computeroutput>usage: heat stack-abandon &lt;NAME or ID&gt;</computeroutput></screen>
         <para>
-Abandon the stack.
+Abandon the stack. This will delete the record of the stack from Heat, but
+will not delete any of the underlying resources. Prints an adoptable JSON
+representation of the stack to stdout on success.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
@@ -874,7 +885,7 @@ Adopt a stack.
     <term><command>-o &lt;URL&gt;, --template-object &lt;URL&gt;</command></term>
     <listitem>
       <para>
-      URL to retrieve template object (e.g from swift).
+      URL to retrieve template object (e.g. from swift).
       </para>
     </listitem>
   </varlistentry>
@@ -1032,12 +1043,20 @@ Delete the stack(s).
     </section>
     <section xml:id="heatclient_subcommand_stack-list">
         <title>heat stack-list command</title>
-        <screen><computeroutput>usage: heat stack-list [-f &lt;KEY1=VALUE1;KEY2=VALUE2...&gt;] [-l &lt;LIMIT&gt;]
-                       [-m &lt;ID&gt;]</computeroutput></screen>
+        <screen><computeroutput>usage: heat stack-list [-s] [-f &lt;KEY1=VALUE1;KEY2=VALUE2...&gt;] [-l &lt;LIMIT&gt;]
+                       [-m &lt;ID&gt;] [-g]</computeroutput></screen>
         <para>
 List the user's stacks.
         </para>  <variablelist wordsize="10">
     <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-s, --show-deleted</command></term>
+    <listitem>
+      <para>
+        Include soft-deleted stacks in the stack listing.
+      </para>
+    </listitem>
+  </varlistentry>
   <varlistentry>
     <term><command>-f &lt;KEY1=VALUE1;KEY2=VALUE2...&gt;, --filters &lt;KEY1=VALUE1;KEY2=VALUE2...&gt;</command></term>
     <listitem>
@@ -1065,12 +1084,21 @@ List the user's stacks.
       </para>
     </listitem>
   </varlistentry>
+  <varlistentry>
+    <term><command>-g, --global-tenant</command></term>
+    <listitem>
+      <para>
+        Display stacks from all tenants. Operation only
+      authorized for users who match the policy in heat's
+      policy.json.
+      </para>
+    </listitem>
+  </varlistentry>
  </variablelist>
     </section>
     <section xml:id="heatclient_subcommand_stack-preview">
         <title>heat stack-preview command</title>
         <screen><computeroutput>usage: heat stack-preview [-f &lt;FILE&gt;] [-e &lt;FILE or URL&gt;] [-u &lt;URL&gt;] [-o &lt;URL&gt;]
-                          [-c &lt;TIMEOUT&gt;] [-r]
                           [-P &lt;KEY1=VALUE1;KEY2=VALUE2...&gt;]
                           &lt;STACK_NAME&gt;</computeroutput></screen>
         <para>
@@ -1116,23 +1144,7 @@ Preview the stack.
     <term><command>-o &lt;URL&gt;, --template-object &lt;URL&gt;</command></term>
     <listitem>
       <para>
-      URL to retrieve template object (e.g from swift)
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>-c &lt;TIMEOUT&gt;, --create-timeout &lt;TIMEOUT&gt;</command></term>
-    <listitem>
-      <para>
-      Stack timeout in minutes. Default: 60
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>-r, --enable-rollback</command></term>
-    <listitem>
-      <para>
-      Enable rollback on failure
+      URL to retrieve template object (e.g. from swift)
       </para>
     </listitem>
   </varlistentry>
@@ -1168,7 +1180,7 @@ Describe the stack.
     <section xml:id="heatclient_subcommand_stack-update">
         <title>heat stack-update command</title>
         <screen><computeroutput>usage: heat stack-update [-f &lt;FILE&gt;] [-e &lt;FILE or URL&gt;] [-u &lt;URL&gt;] [-o &lt;URL&gt;]
-                         [-t &lt;TIMEOUT&gt;] [-P &lt;KEY1=VALUE1;KEY2=VALUE2...&gt;]
+                         [-t &lt;TIMEOUT&gt;] [-r] [-P &lt;KEY1=VALUE1;KEY2=VALUE2...&gt;]
                          &lt;NAME or ID&gt;</computeroutput></screen>
         <para>
 Update the stack.
@@ -1226,6 +1238,14 @@ Update the stack.
     </listitem>
   </varlistentry>
   <varlistentry>
+    <term><command>-r, --enable-rollback</command></term>
+    <listitem>
+      <para>
+      Enable rollback on create/update failure.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
     <term><command>-P &lt;KEY1=VALUE1;KEY2=VALUE2...&gt;, --parameters &lt;KEY1=VALUE1;KEY2=VALUE2...&gt;</command></term>
     <listitem>
       <para>
@@ -1257,7 +1277,7 @@ Get the template for the specified stack.
     <section xml:id="heatclient_subcommand_template-validate">
         <title>heat template-validate command</title>
         <screen><computeroutput>usage: heat template-validate [-u &lt;URL&gt;] [-f &lt;FILE&gt;] [-e &lt;FILE or URL&gt;]
-                              [-o &lt;URL&gt;] [-P &lt;KEY1=VALUE1;KEY2=VALUE2...&gt;]</computeroutput></screen>
+                              [-o &lt;URL&gt;]</computeroutput></screen>
         <para>
 Validate a template with parameters.
         </para>  <variablelist wordsize="10">
@@ -1291,16 +1311,6 @@ Validate a template with parameters.
     <listitem>
       <para>
       URL to retrieve template object (e.g. from swift).
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>-P &lt;KEY1=VALUE1;KEY2=VALUE2...&gt;, --parameters &lt;KEY1=VALUE1;KEY2=VALUE2...&gt;</command></term>
-    <listitem>
-      <para>
-      Parameter values to validate. This can be specified
-      multiple times, or once with parameters separated by a
-      semicolon.
       </para>
     </listitem>
   </varlistentry>
