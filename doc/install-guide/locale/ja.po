@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenStack Manuals\n"
-"POT-Creation-Date: 2014-06-25 14:33+0000\n"
-"PO-Revision-Date: 2014-06-25 09:40+0000\n"
+"POT-Creation-Date: 2014-06-27 05:07+0000\n"
+"PO-Revision-Date: 2014-06-27 06:01+0000\n"
 "Last-Translator: Tomoyuki KATO <tomo@dream.daynight.jp>\n"
 "Language-Team: Japanese (http://www.transifex.com/projects/p/openstack-manuals-i18n/language/ja/)\n"
 "MIME-Version: 1.0\n"
@@ -1497,19 +1497,20 @@ msgid "On the volume node:"
 msgstr "ボリュームノードで:"
 
 #: ./doc/install-guide/section_glance-verify.xml5(title)
-msgid "Verify the Image Service installation"
-msgstr "Image Service のインストールの検証"
+#: ./doc/install-guide/section_heat-verify.xml5(title)
+#: ./doc/install-guide/section_basics-ntp.xml93(title)
+msgid "Verify operation"
+msgstr "運用の検証"
 
 #: ./doc/install-guide/section_glance-verify.xml6(para)
 msgid ""
-"To test the Image Service installation, download at least one virtual "
-"machine image that is known to work with OpenStack. For example, CirrOS is a"
-" small test image that is often used for testing OpenStack deployments "
-"(<link href=\"http://download.cirros-cloud.net/\">CirrOS downloads</link>). "
-"This walk through uses the 64-bit CirrOS QCOW2 image."
-msgstr "Image Service のインストールをテストするために、OpenStack で動作することが知られている仮想マシンイメージを何かしらダウンロードします。例えば、CirrOS  (<link href=\"http://download.cirros-cloud.net/\">CirrOS ダウンロード</link>) は OpenStack 環境をテストするためによく使用される小さなテストイメージです。ここでは  64 ビット CirrOS QCOW2 イメージを使用します。"
+"This section describes how to verify operation of the Image Service, code-"
+"named glance, by using <link "
+"href=\"http://launchpad.net/cirros\">CirrOS</link>. CirrOS is a small Linux "
+"image that helps you test OpenStack deployments."
+msgstr "このセクションは、<link href=\"http://launchpad.net/cirros\">CirrOS</link> を使用して、コード名 glance という Image Service の動作を検証する方法について記載します。CirrOS は、OpenStack 環境のテストを支援する、軽量の Linux イメージです。"
 
-#: ./doc/install-guide/section_glance-verify.xml13(para)
+#: ./doc/install-guide/section_glance-verify.xml11(para)
 msgid ""
 "For more information about how to download and build images, see <link "
 "href=\"http://docs.openstack.org/image-"
@@ -1520,123 +1521,58 @@ msgid ""
 "Guide</citetitle></link>."
 msgstr "ダウンロード方法とイメージ構築の詳細は<link href=\"http://docs.openstack.org/image-guide/content/index.html\"><citetitle>OpenStack 仮想マシンイメージガイド</citetitle></link>を参照してください。イメージの管理方法の詳細は<link href=\"http://docs.openstack.org/user-guide/content/index.html\"><citetitle>OpenStack ユーザーガイド</citetitle></link>を参照してください。"
 
-#: ./doc/install-guide/section_glance-verify.xml24(para)
-msgid ""
-"Download the image into a dedicated directory using <placeholder-1/> or "
-"<placeholder-2/>:"
-msgstr "<placeholder-1/> や <placeholder-2/> を使用して、イメージを専用のディレクトリにダウンロードします。"
+#: ./doc/install-guide/section_glance-verify.xml21(para)
+msgid "Create and change into a temporary local directory:"
+msgstr "ローカル一時ディレクトリを作成し、移動します。"
 
-#: ./doc/install-guide/section_glance-verify.xml32(para)
+#: ./doc/install-guide/section_glance-verify.xml26(para)
+msgid "Download the image to the local directory:"
+msgstr "イメージをローカルディレクトリにダウンロードします。"
+
+#: ./doc/install-guide/section_glance-verify.xml30(para)
+#: ./doc/install-guide/section_nova-networking-initial-network.xml26(para)
+#: ./doc/install-guide/section_neutron-initial-networks.xml45(para)
+msgid "Source the <literal>admin</literal> tenant credentials:"
+msgstr "<literal>admin</literal> プロジェクトのクレデンシャルを読み込みます。"
+
+#: ./doc/install-guide/section_glance-verify.xml35(para)
 msgid "Upload the image to the Image Service:"
 msgstr "イメージを Image Service にアップロードします。"
 
-#: ./doc/install-guide/section_glance-verify.xml33(replaceable)
-#: ./doc/install-guide/section_glance-verify.xml38(replaceable)
-msgid "IMAGELABEL"
-msgstr "IMAGELABEL"
-
-#: ./doc/install-guide/section_glance-verify.xml33(replaceable)
-#: ./doc/install-guide/section_glance-verify.xml45(replaceable)
-msgid "FILEFORMAT"
-msgstr "FILEFORMAT"
-
-#: ./doc/install-guide/section_glance-verify.xml34(replaceable)
-#: ./doc/install-guide/section_glance-verify.xml65(replaceable)
-msgid "CONTAINERFORMAT"
-msgstr "CONTAINERFORMAT"
-
-#: ./doc/install-guide/section_glance-verify.xml34(replaceable)
-#: ./doc/install-guide/section_glance-verify.xml86(replaceable)
-msgid "ACCESSVALUE"
-msgstr "ACCESSVALUE"
-
-#: ./doc/install-guide/section_glance-verify.xml34(replaceable)
-#: ./doc/install-guide/section_glance-verify.xml101(replaceable)
-msgid "IMAGEFILE"
-msgstr "IMAGEFILE"
-
-#: ./doc/install-guide/section_glance-verify.xml35(para)
-msgid "Where:"
-msgstr "各項目:"
-
-#: ./doc/install-guide/section_glance-verify.xml40(para)
-msgid "Arbitrary label. The name by which users refer to the image."
-msgstr "任意のラベル。ユーザーがイメージを参照する名前。"
-
-#: ./doc/install-guide/section_glance-verify.xml47(para)
-msgid ""
-"Specifies the format of the image file. Valid formats include "
-"<literal>qcow2</literal>, <literal>raw</literal>, <literal>vhd</literal>, "
-"<literal>vmdk</literal>, <literal>vdi</literal>, <literal>iso</literal>, "
-"<literal>aki</literal>, <literal>ari</literal>, and <literal>ami</literal>."
-msgstr "イメージファイルの形式を指定します。有効な形式は <literal>qcow2</literal>, <literal>raw</literal>, <literal>vhd</literal>, <literal>vmdk</literal>, <literal>vdi</literal>, <literal>iso</literal>, <literal>aki</literal>, <literal>ari</literal>, <literal>ami</literal> です。"
-
-#: ./doc/install-guide/section_glance-verify.xml58(para)
-msgid ""
-"You can verify the format using the <placeholder-1/> command: "
-"<placeholder-2/>"
-msgstr "<placeholder-1/> コマンドを使用して形式を確認できます。 <placeholder-2/>"
-
-#: ./doc/install-guide/section_glance-verify.xml67(para)
-msgid ""
-"Specifies the container format. Valid formats include: "
-"<literal>bare</literal>, <literal>ovf</literal>, <literal>aki</literal>, "
-"<literal>ari</literal> and <literal>ami</literal>."
-msgstr "コンテナーの形式を指定します。有効な形式は <literal>bare</literal>, <literal>ovf</literal>, <literal>aki</literal>, <literal>ari</literal>, <literal>ami</literal> です。"
-
-#: ./doc/install-guide/section_glance-verify.xml73(para)
-msgid ""
-"Specify <literal>bare</literal> to indicate that the image file is not in a "
-"file format that contains metadata about the virtual machine. Although this "
-"field is currently required, it is not actually used by any of the OpenStack"
-" services and has no effect on system behavior. Because the value is not "
-"used anywhere, it is safe to always specify <literal>bare</literal> as the "
-"container format."
-msgstr "仮想マシンに関するメタデータを含むイメージファイルがファイル形式ではないことを示すために <literal>bare</literal> を指定します。この項目が現在必須となっていますが、実際はすべての OpenStack により使用されるわけではなく、システム動作に影響を与えません。この値がどこでも使用されないため、常に <literal>bare</literal> をコンテナー形式として指定すると安全です。"
-
-#: ./doc/install-guide/section_glance-verify.xml90(para)
-msgid "true - All users can view and use the image."
-msgstr "true - すべてのユーザーがイメージを表示および使用できます。"
-
-#: ./doc/install-guide/section_glance-verify.xml94(para)
-msgid "false - Only administrators can view and use the image."
-msgstr "false - 管理者のみがイメージを表示および使用できます。"
-
-#: ./doc/install-guide/section_glance-verify.xml88(para)
-msgid "Specifies image access: <placeholder-1/>"
-msgstr "イメージのアクセス権を指定します。 <placeholder-1/>"
-
-#: ./doc/install-guide/section_glance-verify.xml103(para)
-msgid "Specifies the name of your downloaded image file."
-msgstr "ダウンロードしたイメージファイルの名前を指定します。"
-
-#: ./doc/install-guide/section_glance-verify.xml108(para)
-#: ./doc/install-guide/section_glance-verify.xml157(para)
+#: ./doc/install-guide/section_glance-verify.xml36(para)
 msgid "For example:"
 msgstr "例:"
 
-#: ./doc/install-guide/section_glance-verify.xml133(para)
+#: ./doc/install-guide/section_glance-verify.xml60(para)
+msgid ""
+"For information about the parameters for the <placeholder-1/> command, see "
+"<link href=\"http://docs.openstack.org/cli-"
+"reference/content/glanceclient_commands.html#glanceclient_subcommand_image-"
+"create\">Image Service command-line client</link> in the "
+"<citetitle>OpenStack Command-Line Interface Reference</citetitle>."
+msgstr "<placeholder-1/> コマンドのパラメーターの詳細は、<citetitle>OpenStack Command-Line Interface Reference</citetitle> の <link href=\"http://docs.openstack.org/cli-reference/content/glanceclient_commands.html#glanceclient_subcommand_image-create\">Image Service command-line client</link> を参照してください。"
+
+#: ./doc/install-guide/section_glance-verify.xml66(para)
+msgid ""
+"For information about disk and container formats for images, see <link "
+"href=\"http://docs.openstack.org/image-guide/content/image-"
+"formats.html\">Disk and container formats for images</link> in the "
+"<citetitle>OpenStack Virtual Machine Image Guide</citetitle>."
+msgstr "イメージのディスクとコンテナー形式に関する詳細は、<citetitle>OpenStack Virtual Machine Image Guide</citetitle> の <link href=\"http://docs.openstack.org/image-guide/content/image-formats.html\">Disk and container formats for images</link> を参照してください。"
+
+#: ./doc/install-guide/section_glance-verify.xml72(para)
 msgid ""
 "Because the returned image ID is generated dynamically, your deployment "
 "generates a different ID than the one shown in this example."
 msgstr "返されたイメージ ID は動的に変更されるため、導入環境によりこの例で示されているものと異なる ID が生成されます。"
 
-#: ./doc/install-guide/section_glance-verify.xml139(para)
-msgid "Confirm that the image was uploaded and display its attributes:"
-msgstr "イメージがアップロードされたことを確認し、その属性を表示します。"
+#: ./doc/install-guide/section_glance-verify.xml78(para)
+msgid "Confirm upload of the image and validate attributes:"
+msgstr "イメージがアップロードされたことを確認し、属性を検証します。"
 
-#: ./doc/install-guide/section_glance-verify.xml149(para)
-msgid ""
-"You can now remove the locally downloaded image, since it is stored and "
-"available through the Image Service."
-msgstr "これで Image Service に保存され、そこから利用できるため、ローカルにダウンロードしたイメージを削除できます。"
-
-#: ./doc/install-guide/section_glance-verify.xml156(para)
-msgid ""
-"Alternatively, the upload to the Image Service can be done without having to"
-" use local disk space to store the file, by use of the <parameter>--copy-"
-"from</parameter> parameter."
-msgstr "代わりに、Image Service にアップロードしたものは、<parameter>--copy-from</parameter> パラメーターを使用することにより、ファイルを保存するためのローカルディスク領域を使用する必要なく実行できます。"
+#: ./doc/install-guide/section_glance-verify.xml88(para)
+msgid "Remove the temporary local directory:"
+msgstr "ローカル一時ディレクトリを削除します。"
 
 #: ./doc/install-guide/ch_debconf.xml6(title)
 msgid "Configure OpenStack with debconf"
@@ -2198,11 +2134,6 @@ msgstr "これらのコマンドをコントローラーノードで実行しま
 msgid "To create the network"
 msgstr "ネットワークの作成方法"
 
-#: ./doc/install-guide/section_nova-networking-initial-network.xml26(para)
-#: ./doc/install-guide/section_neutron-initial-networks.xml45(para)
-msgid "Source the <literal>admin</literal> tenant credentials:"
-msgstr "<literal>admin</literal> プロジェクトのクレデンシャルを読み込みます。"
-
 #: ./doc/install-guide/section_nova-networking-initial-network.xml30(para)
 #: ./doc/install-guide/section_neutron-initial-networks.xml49(para)
 #: ./doc/install-guide/section_neutron-initial-networks.xml136(para)
@@ -2419,8 +2350,8 @@ msgstr "<package>yum-plugin-priorities</package> プラグインをインスト�
 #: ./doc/install-guide/section_basics-packages.xml24(para)
 msgid ""
 "To enable the RDO repository, download and install the <package>rdo-release-"
-"icehouse</package> package:"
-msgstr "RDO リポジトリを有効にするために、<package>rdo-release-icehouse</package> パッケージをダウンロードしてインストールします。"
+"juno</package> package:"
+msgstr "RDO リポジトリを有効にするために、<package>rdo-release-juno</package> パッケージをダウンロードしてインストールします。"
 
 #: ./doc/install-guide/section_basics-packages.xml29(para)
 msgid ""
@@ -2443,9 +2374,9 @@ msgstr "<package>openstack-utils</package> パッケージはインストール�
 
 #: ./doc/install-guide/section_basics-packages.xml45(para)
 msgid ""
-"Use the Open Build Service repositories for <glossterm>Icehouse</glossterm> "
+"Use the Open Build Service repositories for <glossterm>Juno</glossterm> "
 "based on your openSUSE or SUSE Linux Enterprise Server version."
-msgstr "openSUSE または SUSE Linux Enterprise Server のバージョンに基づいた <glossterm>Icehouse</glossterm> 用 Open Build Service リポジトリを使用します。"
+msgstr "openSUSE または SUSE Linux Enterprise Server のバージョンに基づいた <glossterm>Juno</glossterm> 用 Open Build Service リポジトリを使用します。"
 
 #: ./doc/install-guide/section_basics-packages.xml48(para)
 msgid "For openSUSE 13.1 use:"
@@ -2501,8 +2432,8 @@ msgid ""
 msgstr "アップグレードが新しいカーネルパッケージを含む場合、確実に新しいカーネルを実行するために、システムを再起動します。"
 
 #: ./doc/install-guide/section_basics-packages.xml94(title)
-msgid "To use the Ubuntu Cloud Archive for Icehouse"
-msgstr "Icehouse 用 Ubuntu Cloud Archive の使用法"
+msgid "To use the Ubuntu Cloud Archive for Juno"
+msgstr "Juno 用 Ubuntu Cloud Archive の使用法"
 
 #: ./doc/install-guide/section_basics-packages.xml95(para)
 msgid ""
@@ -2511,22 +2442,17 @@ msgid ""
 "newer releases of OpenStack on the stable supported version of Ubuntu."
 msgstr "<link href=\"https://wiki.ubuntu.com/ServerTeam/CloudArchive\">Ubuntu Cloud Archive</link> は、Ubuntu の安定サポートバージョンで OpenStack の最新版をインストールできるようにするための特別なリポジトリです。"
 
-#: ./doc/install-guide/section_basics-packages.xml100(para)
+#: ./doc/install-guide/section_basics-packages.xml101(para)
 msgid ""
-"Icehouse is in the main repository for 14.04 - this step is not required."
-msgstr "Icehouse は 14.04 のメインリポジトリにあります。この手順は不要です。"
-
-#: ./doc/install-guide/section_basics-packages.xml103(para)
-msgid ""
-"Install the Ubuntu Cloud Archive for <glossterm>Icehouse</glossterm>: "
+"Install the Ubuntu Cloud Archive for <glossterm>Juno</glossterm>: "
 "<placeholder-1/>"
-msgstr "<glossterm>Icehouse</glossterm> 向け Ubuntu Cloud Archive をインストールします。 <placeholder-1/>"
+msgstr "<glossterm>Juno</glossterm> 向け Ubuntu Cloud Archive をインストールします。 <placeholder-1/>"
 
-#: ./doc/install-guide/section_basics-packages.xml109(para)
+#: ./doc/install-guide/section_basics-packages.xml107(para)
 msgid "Update the package database and upgrade your system:"
 msgstr "パッケージデータベースを更新し、システムをアップグレードします。"
 
-#: ./doc/install-guide/section_basics-packages.xml114(para)
+#: ./doc/install-guide/section_basics-packages.xml112(para)
 msgid ""
 "If you intend to use OpenStack Networking with Ubuntu 12.04, you should "
 "install a backported Linux kernel to improve the stability of your system. "
@@ -2534,45 +2460,45 @@ msgid ""
 "service."
 msgstr "Ubuntu 12.04 で OpenStack Networking を使用したい場合、システムの安定性改善のため、バックポートした Linux カーネルをインストールすべきです。レガシーネットワークサービスを使用したい場合、このインストールは必要ありません。"
 
-#: ./doc/install-guide/section_basics-packages.xml118(para)
+#: ./doc/install-guide/section_basics-packages.xml116(para)
 msgid "Install the Ubuntu 13.10 backported kernel:"
 msgstr "Ubuntu 13.10 バックポートカーネルをインストールします。"
 
-#: ./doc/install-guide/section_basics-packages.xml122(para)
+#: ./doc/install-guide/section_basics-packages.xml120(para)
 msgid "Reboot the system for all changes to take effect:"
 msgstr "すべての変更を反映するために、システムを再起動します。"
 
-#: ./doc/install-guide/section_basics-packages.xml127(title)
-msgid "To use the Debian Wheezy backports archive for Icehouse"
-msgstr "Debian Wheezy を使用する場合、Icehouse 向けアーカイブをバックポートします"
+#: ./doc/install-guide/section_basics-packages.xml125(title)
+msgid "To use the Debian Wheezy backports archive for Juno"
+msgstr "Debian Wheezy を使用するためには、Juno 向けアーカイブをバックポートします"
 
-#: ./doc/install-guide/section_basics-packages.xml129(para)
+#: ./doc/install-guide/section_basics-packages.xml127(para)
 msgid ""
-"The <glossterm>Icehouse</glossterm> release is available only in Debian Sid "
+"The <glossterm>Juno</glossterm> release is available only in Debian Sid "
 "(otherwise called Unstable). However, the Debian maintainers of OpenStack "
 "also maintain a non-official Debian repository for OpenStack containing "
 "Wheezy backports."
-msgstr "<glossterm>Icehouse</glossterm> リリースは Debian Sid (開発版とも言います) のみで利用できます。しかしながら、OpenStack の Debian メンテナーは、Wheezy バックポートを含む OpenStack の非公式 Debian リポジトリをメンテナンスしています。"
+msgstr "<glossterm>Juno</glossterm> リリースは Debian Sid (開発版とも言います) のみで利用できます。しかしながら、OpenStack の Debian メンテナーは、Wheezy バックポートを含む OpenStack の非公式 Debian リポジトリをメンテナンスしています。"
 
-#: ./doc/install-guide/section_basics-packages.xml135(para)
-msgid "Install the Debian Wheezy backport repository Icehouse:"
-msgstr "Debian Wheezy バックポート Icehouse リポジトリをインストールします。"
+#: ./doc/install-guide/section_basics-packages.xml133(para)
+msgid "Install the Debian Wheezy backport repository Juno:"
+msgstr "Debian Wheezy バックポート Juno リポジトリをインストールします。"
 
-#: ./doc/install-guide/section_basics-packages.xml140(para)
-msgid "Install the Debian Wheezy OpenStack repository for Icehouse:"
-msgstr "Debian Wheezy OpenStack Icehouse リポジトリをインストールします。"
+#: ./doc/install-guide/section_basics-packages.xml138(para)
+msgid "Install the Debian Wheezy OpenStack repository for Juno:"
+msgstr "Debian Wheezy OpenStack Juno リポジトリをインストールします。"
 
-#: ./doc/install-guide/section_basics-packages.xml145(para)
+#: ./doc/install-guide/section_basics-packages.xml143(para)
 msgid "Update the repository database and install the key:"
 msgstr "リポジトリデータベースを更新し、キーをインストールします。"
 
-#: ./doc/install-guide/section_basics-packages.xml149(para)
+#: ./doc/install-guide/section_basics-packages.xml147(para)
 msgid ""
 "Update the package database, upgrade your system, and reboot for all changes"
 " to take effect:"
 msgstr "パッケージデータベースを更新し、システムをアップグレードします。すべての変更を反映するために再起動します。"
 
-#: ./doc/install-guide/section_basics-packages.xml155(para)
+#: ./doc/install-guide/section_basics-packages.xml153(para)
 msgid ""
 "Numerous archive.gplhost.com mirrors are available around the world. All are"
 " available with both FTP and HTTP protocols (you should use the closest "
@@ -2580,18 +2506,18 @@ msgid ""
 "href=\"http://archive.gplhost.com/readme.mirrors\">http://archive.gplhost.com/readme.mirrors</link>."
 msgstr "数多くの archive.gplhost.com ミラーが世界中で利用可能です。すべて FTP と HTTP のプロトコルで利用可能です (最寄りのミラーを使用すべきです)。ミラーの一覧は <link href=\"http://archive.gplhost.com/readme.mirrors\">http://archive.gplhost.com/readme.mirrors</link> にあります。"
 
-#: ./doc/install-guide/section_basics-packages.xml162(title)
+#: ./doc/install-guide/section_basics-packages.xml160(title)
 msgid "Manually install python-argparse"
 msgstr "python-argparse の手動インストール"
 
-#: ./doc/install-guide/section_basics-packages.xml163(para)
+#: ./doc/install-guide/section_basics-packages.xml161(para)
 msgid ""
 "The Debian OpenStack packages are maintained on Debian Sid (also known as "
 "Debian Unstable) - the current development version. Backported packages run "
 "correctly on Debian Wheezy with one caveat:"
 msgstr "Debian OpenStack パッケージは Debian Sid (Debian 不安定版としても知られ、現在の開発バージョン) でメンテナンスされています。バックポートされたパッケージは一つ注意して Debian Wheezy で正しく動作します。"
 
-#: ./doc/install-guide/section_basics-packages.xml167(para)
+#: ./doc/install-guide/section_basics-packages.xml165(para)
 msgid ""
 "All OpenStack packages are written in Python. Wheezy uses Python 2.6 and "
 "2.7, with Python 2.6 as the default interpreter; Sid has only Python 2.7. "
@@ -2602,7 +2528,7 @@ msgid ""
 "directive."
 msgstr "すべての OpenStack パッケージは Python で書かれています。Wheezy は Python 2.6 と 2.7 を使用します。Python 2.6 がデフォルトのインタプリターです。Sid は Python 2.7 のみあります。この二つの間で一つのパッケージの違いがあります。Python 2.6 では <package>python-argparse</package> パッケージをそれぞれインストールします。Python 2.7 では、このパッケージがデフォルトでインストールされません。残念ながら Python 2.7 では、このパッケージは <code>Provides: python-argparse</code> ディレクティブを含みません。"
 
-#: ./doc/install-guide/section_basics-packages.xml175(para)
+#: ./doc/install-guide/section_basics-packages.xml173(para)
 msgid ""
 "Because the packages are maintained in Sid where the <code>Provides: python-"
 "argparse</code> directive causes an error, and the Debian OpenStack "
@@ -2612,7 +2538,7 @@ msgid ""
 "packages. Use the following command to install the package:"
 msgstr "パッケージは <code>Provides: python-argparse</code> ディレクティブがエラーとなる Sid でメンテナンスされていて、Debian OpenStack メンテナーは一つのバージョンの OpenStack パッケージをメンテナンスしたいので、Debian Wheezy を実行している OpenStack システムに他の OpenStack パッケージをインストールする前に、各システムに <package>python-argparse</package> を手動でインストールする必要があります。パッケージをインストールするために以下のコマンドを使用します。"
 
-#: ./doc/install-guide/section_basics-packages.xml184(para)
+#: ./doc/install-guide/section_basics-packages.xml182(para)
 msgid "This caveat applies to most OpenStack packages in Wheezy."
 msgstr "この注意事項は Wheezy 上の多くの OpenStack パッケージに適用されます。"
 
@@ -3132,11 +3058,6 @@ msgid ""
 "boots:"
 msgstr " <systemitem class=\"service\">openstack-ceilometer-api</systemitem>、<systemitem class=\"service\" os=\"opensuse;sles\">openstack-ceilometer-agent-central</systemitem><systemitem class=\"service\" os=\"rhel;fedora;centos\">openstack-ceilometer-central</systemitem>、<systemitem class=\"service\">openstack-ceilometer-collector</systemitem>、<systemitem class=\"service\" os=\"opensuse;sles\">openstack-ceilometer-alarm-evaluator</systemitem>、<systemitem class=\"service\" os=\"opensuse;sles\">openstack-ceilometer-alarm-notifier</systemitem> サービスを起動し、システムの起動時にそれらが起動するよう設定します。"
 
-#: ./doc/install-guide/section_heat-verify.xml5(title)
-#: ./doc/install-guide/section_basics-ntp.xml93(title)
-msgid "Verify operation"
-msgstr "運用の検証"
-
 #: ./doc/install-guide/section_heat-verify.xml6(para)
 msgid ""
 "This section describes how to verify operation of the Orchestration module "
@@ -3583,11 +3504,11 @@ msgstr "環境の基本設定"
 
 #: ./doc/install-guide/ch_basics.xml8(para)
 msgid ""
-"The trunk version of this guide focuses on the future Juno release and may "
+"The trunk version of this guide focuses on the future Juno release and will "
 "not work for the current Icehouse release. If you want to install Icehouse, "
-"please use the <link href=\"http://docs.openstack.org\">Icehouse "
+"you must use the <link href=\"http://docs.openstack.org\">Icehouse "
 "version</link> of this guide instead."
-msgstr "このガイドの trunk バージョンは、将来の Juno リリースに注力し、現行の Icehouse リリースに対応していないかもしれません。Icehouse をインストールしたい場合、このガイドの <link href=\"http://docs.openstack.org\">Icehouse バージョン</link>を使用してください。"
+msgstr "このガイドの trunk バージョンは、将来の Juno リリースに注力し、現行の Icehouse リリースに対応していないかもしれません。Icehouse をインストールしたい場合、このガイドの <link href=\"http://docs.openstack.org\">Icehouse バージョン</link>を使用する必要があります。"
 
 #: ./doc/install-guide/ch_basics.xml17(para)
 msgid ""
