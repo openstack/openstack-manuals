@@ -4,47 +4,65 @@
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="sample-configuration-files">
     <title>Identity service sample configuration files</title>
-    <para>All the files in this section can be found in the <systemitem>/etc/keystone</systemitem>
-        directory.</para>
+    <para>You can find the files described in this section in the
+            <systemitem>/etc/keystone</systemitem> directory.</para>
     <section xml:id="section_keystone.conf">
         <title>keystone.conf</title>
-        <para>The majority of the Identity service configuration is performed from the
-            <filename>keystone.conf</filename> file.</para>
-          <para>
-                <programlisting language="ini"><xi:include parse="text" href="http://git.openstack.org/cgit/openstack/keystone/plain/etc/keystone.conf.sample?h=stable/icehouse"/>
+        <para>Use the <filename>keystone.conf</filename> file to
+            configure most Identity service options:</para>
+        <programlisting language="ini"><xi:include parse="text" href="http://git.openstack.org/cgit/openstack/keystone/plain/etc/keystone.conf.sample?h=stable/icehouse"/>
                 </programlisting>
-          </para>
     </section>
     <section xml:id="section_keystone-paste.ini">
-         <title>keystone-paste.ini</title>
-         <para>The <filename>keystone-paste.ini</filename> file configures the
-             Web Service Gateway Interface (WSGI) middleware pipeline for
-             the Identity service.
-         </para>
-         <para>
-             <programlisting language="ini"><xi:include parse="text" href="http://git.openstack.org/cgit/openstack/keystone/plain/etc/keystone-paste.ini?h=stable/icehouse"/>
+        <title>keystone-paste.ini</title>
+        <para>Use the <filename>keystone-paste.ini</filename> file to
+            configure the Web Service Gateway Interface (WSGI)
+            middleware pipeline for the Identity service.</para>
+        <programlisting language="ini"><xi:include parse="text" href="http://git.openstack.org/cgit/openstack/keystone/plain/etc/keystone-paste.ini?h=stable/icehouse"/>
              </programlisting>
-         </para>
     </section>
     <section xml:id="section_keystone-logging.conf">
-         <title>logging.conf</title>
-         <para>A special logging configuration file can be specified in the
-             <filename>keystone.conf</filename> configuration file (for example,
-             <filename>/etc/keystone/logging.conf</filename>). For details, see the Python
-             logging module documentation (
-             <link xlink:href="http://docs.python.org/2/howto/logging.html#configuring-logging">Python Logging</link>).</para>
-         <para>
-             <programlisting language="ini"><xi:include parse="text" href="http://git.openstack.org/cgit/openstack/keystone/plain/etc/logging.conf.sample?h=stable/icehouse"/>
+        <title>logging.conf</title>
+        <para>You can specify a special logging configuration file in
+            the <filename>keystone.conf</filename> configuration file.
+            For example,
+                <filename>/etc/keystone/logging.conf</filename>.</para>
+        <para>For details, see the (<link
+                xlink:href="http://docs.python.org/2/howto/logging.html#configuring-logging"
+                >Python logging module documentation</link>).</para>
+        <programlisting language="ini"><xi:include parse="text" href="http://git.openstack.org/cgit/openstack/keystone/plain/etc/logging.conf.sample?h=stable/icehouse"/>
              </programlisting>
-         </para>
     </section>
     <section xml:id="section_keystone-policy.json">
-         <title>policy.json</title>
-         <para>The <filename>policy.json</filename> file defines additional access controls that
-             apply to the Identity service.</para>
-         <para>
-            <programlisting language="json"><xi:include parse="text" href="http://git.openstack.org/cgit/openstack/keystone/plain/etc/policy.json?h=stable/icehouse"/>
-            </programlisting>
-         </para>
+        <title>policy.json</title>
+        <para>Use the <filename>policy.json</filename> file to define
+            additional access controls that apply to the Identity
+            service.</para>
+        <programlisting language="json"><xi:include parse="text" href="http://git.openstack.org/cgit/openstack/keystone/plain/etc/policy.json?h=stable/icehouse"/></programlisting>
+    </section>
+    <section xml:id="section_keystone-domain-configs">
+        <title>Domain-specific configuration</title>
+        <para>Identity enables you to configure domain-specific
+            authentication drivers. For example, you can configure a
+            domain to have its own LDAP or SQL server.</para>
+        <para>By default, the option to configure domain-specific
+            drivers is disabled.</para>
+        <para>To enable domain-specific drivers, set these options in
+                <literal>[identity]</literal> section in the
+                <filename>keystone.conf</filename> file:</para>
+        <programlisting language="ini">[identity]
+domain_specific_drivers_enabled = True
+domain_config_dir = /etc/keystone/domains</programlisting>
+        <para>When you enable domain-specific drivers, Identity looks
+            in the <option>domain_config_dir</option> directory for
+            configuration files that are named as follows:
+                    <filename>keystone.<replaceable>DOMAIN_NAME</replaceable>.conf</filename>,
+            where <replaceable>DOMAIN_NAME</replaceable> is the domain
+            name.</para>
+        <para>Any options that you define in the domain-specific
+            configuration file override options in the primary
+            configuration file for the specified domain. Any domain
+            without a domain-specific configuration file uses only the
+            options in the primary configuration file.</para>
     </section>
 </section>
