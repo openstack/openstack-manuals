@@ -86,7 +86,7 @@ scheduler_default_filters=RetryFilter,AvailabilityZoneFilter,RamFilter,ComputeFi
         Guide</citetitle>.</para>
     <section xml:id="filter-scheduler">
         <title>Filter scheduler</title>
-        <para>The Filter Scheduler
+        <para>The filter scheduler
                 (<literal>nova.scheduler.filter_scheduler.FilterScheduler</literal>)
             is the default scheduler for scheduling virtual machine
             instances. It supports filtering and weighting to make
@@ -96,7 +96,7 @@ scheduler_default_filters=RetryFilter,AvailabilityZoneFilter,RamFilter,ComputeFi
     <section xml:id="scheduler-filters">
         <?dbhtml stop-chunking?>
         <title>Filters</title>
-        <para>When the Filter Scheduler receives a request for a
+        <para>When the filter scheduler receives a request for a
             resource, it first applies filters to determine which
             hosts are eligible for consideration when dispatching a
             resource. Filters are binary: either a host is accepted by
@@ -607,8 +607,8 @@ isolated_images=342b492c-128f-4a42-8d3a-c5088cf27d13,ebd267a6-ca86-4d6c-9a0e-bd1
     <section xml:id="weights">
         <title>Weights</title>
         <?dbhtml stop-chunking?>
-        <para>When resourcing instances, the Filter Scheduler filters
-            and weighs each host in the list of acceptable hosts. Each
+        <para>When resourcing instances, the filter scheduler filters
+            and weights each host in the list of acceptable hosts. Each
             time the scheduler selects a host, it virtually consumes
             resources on it, and subsequent selections are adjusted
             accordingly. This process is useful when the customer asks
@@ -617,8 +617,8 @@ isolated_images=342b492c-128f-4a42-8d3a-c5088cf27d13,ebd267a6-ca86-4d6c-9a0e-bd1
         <para>All weights are normalized before being summed up; the
             host with the largest weight is given the highest
             priority.</para>
-        <figure xml:id="figure_weighing-hosts">
-            <title>Weighing hosts</title>
+        <figure xml:id="figure_weighting-hosts">
+            <title>Weighting hosts</title>
             <mediaobject>
                 <imageobject>
                     <imagedata
@@ -629,7 +629,7 @@ isolated_images=342b492c-128f-4a42-8d3a-c5088cf27d13,ebd267a6-ca86-4d6c-9a0e-bd1
         </figure>
         <para>If cells are used, cells are weighted by the scheduler
             in the same manner as hosts.</para>
-        <para>Hosts and cells are weighed based on the following
+        <para>Hosts and cells are weighted based on the following
             options in the <filename>/etc/nova/nova.conf</filename>
             file:</para>
         <table rules="all" xml:id="table_host-weighting-options">
@@ -663,7 +663,7 @@ isolated_images=342b492c-128f-4a42-8d3a-c5088cf27d13,ebd267a6-ca86-4d6c-9a0e-bd1
                         hosts. This property defines the subset size
                         from which a host is chosen. A value of 1
                         chooses the first host returned by the
-                        weighing functions. This value must be at
+                        weighting functions. This value must be at
                         least 1. A value less than 1 is ignored, and 1
                         is used instead. Use an integer value.</td>
                 </tr>
@@ -672,20 +672,20 @@ isolated_images=342b492c-128f-4a42-8d3a-c5088cf27d13,ebd267a6-ca86-4d6c-9a0e-bd1
                     <td><literal>scheduler_weight_classes</literal></td>
                     <td>Defaults to
                             <literal>nova.scheduler.weights.all_weighers</literal>,
-                        which selects the only available weigher, the
-                        RamWeigher. Hosts are then weighed and sorted
+                        which selects the
+                        RamWeigher. Hosts are then weighted and sorted
                         with the largest weight winning.</td>
                 </tr>
                 <tr valign="top">
                     <td>[metrics]</td>
                     <td><literal>weight_multiplier</literal></td>
-                    <td>Multiplier for weighing metrics. Use a
+                    <td>Multiplier for weighting metrics. Use a
                         floating-point value.</td>
                 </tr>
                 <tr valign="top">
                     <td>[metrics]</td>
                     <td><literal>weight_setting</literal></td>
-                    <td>Determines how metrics are weighed. Use a
+                    <td>Determines how metrics are weighted. Use a
                         comma-separated list of metricName=ratio. For
                         example: "name1=1.0, name2=-1.0" results in:
                             <literal>name1.value * 1.0 + name2.value *
@@ -707,7 +707,7 @@ isolated_images=342b492c-128f-4a42-8d3a-c5088cf27d13,ebd267a6-ca86-4d6c-9a0e-bd1
                                 </listitem>
                                 <listitem>
                                    <para>False&mdash;Treated as a
-                                   negative factor in the weighing
+                                   negative factor in the weighting
                                    process (uses the
                                    <option>weight_of_unavailable</option>
                                    option).</para>
@@ -752,7 +752,7 @@ weight_of_unavailable=-10000.0</programlisting>
                 <tr valign="top">
                     <td>[cells]</td>
                     <td><literal>mute_weight_multiplier</literal></td>
-                    <td>Multiplier to weigh mute children (hosts which
+                    <td>Multiplier to weight mute children (hosts which
                         have not sent capacity or capacity updates for
                         some time). Use a negative, floating-point
                         value.</td>
@@ -767,7 +767,7 @@ weight_of_unavailable=-10000.0</programlisting>
                 <tr valign="top">
                     <td>[cells]</td>
                     <td><literal>offset_weight_multiplier</literal></td>
-                    <td>Multiplier to weigh cells, so you can specify
+                    <td>Multiplier to weight cells, so you can specify
                         a preferred cell. Use a floating point
                         value.</td>
                 </tr>
@@ -786,8 +786,8 @@ weight_of_unavailable=-10000.0</programlisting>
                     <td><literal>scheduler_weight_classes</literal></td>
                     <td>Defaults to
                             <literal>nova.cells.weights.all_weighers</literal>,
-                        which maps to all cell weighers included with
-                        Compute. Cells are then weighed and sorted
+                        which maps to all cell weighters included with
+                        Compute. Cells are then weighted and sorted
                         with the largest weight winning.</td>
                 </tr>
             </tbody>
@@ -803,7 +803,7 @@ offset_weight_multiplier=1.0</programlisting>
     <section xml:id="chance-scheduler">
         <title>Chance scheduler</title>
         <?dbhtml stop-chunking?>
-        <para>As an administrator, you work with the Filter Scheduler.
+        <para>As an administrator, you work with the filter scheduler.
             However, the Compute service also uses the Chance
             Scheduler,
                 <literal>nova.scheduler.chance.ChanceScheduler</literal>,
