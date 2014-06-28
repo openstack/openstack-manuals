@@ -5,7 +5,7 @@
   <title>Install and configure</title>
   <para>This section describes how to install and configure the Image Service
     (glance) on the controller node. For simplicity, this configuration stores
-    images on the local filesystem.</para>
+    images on the local file system.</para>
   <note>
     <para>This section assumes proper installation, configuration, and
       operation of the Identity service as described in
@@ -17,7 +17,7 @@
     <para>Before you install and configure the Image Service, you must create
       a database and Identity service credentials including endpoints.</para>
     <step>
-      <para>Create the database.</para>
+      <para>To create the database, complete these steps:</para>
       <substeps>
         <step>
           <para>Use the database access client to connect to the database
@@ -43,13 +43,12 @@
       </substeps>
     </step>
     <step>
-      <para>Source the <literal>admin</literal> tenant credentials so that
-        OpenStack client commands use the administrative access level
-        capable of performing global configuration:</para>
+      <para>Source the <literal>admin</literal> credentials to gain access to
+        admin-only CLI commands:</para>
       <screen><prompt>$</prompt> <userinput>source admin-openrc.sh</userinput></screen>
     </step>
     <step>
-      <para>Create the Identity service credentials.</para>
+      <para>To create the Identity service credentials, complete these steps:</para>
       <substeps>
         <step>
           <para>Create the <literal>glance</literal> user:</para>
@@ -83,14 +82,14 @@
   <procedure os="ubuntu;rhel;centos;fedora;sles;opensuse">
     <title>To install and configure the Image Service components</title>
     <step>
-      <para>Run the following commands to install the packages:</para>
+      <para>Install the packages:</para>
       <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install glance python-glanceclient</userinput></screen>
       <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-glance python-glanceclient</userinput></screen>
       <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-glance python-glanceclient</userinput></screen>
     </step>
     <step>
       <para>Edit the <filename>/etc/glance/glance-api.conf</filename>
-        file and perform the following operations:</para>
+        file and complete the following actions:</para>
       <substeps>
         <step>
           <para>In the <literal>[database]</literal> section, configure
@@ -138,7 +137,7 @@ flavor = keystone</programlisting>
     </step>
     <step>
       <para>Edit the <filename>/etc/glance/glance-registry.conf</filename>
-        file.</para>
+        file and complete the following actions:</para>
       <substeps>
         <step>
           <para>In the <literal>[database]</literal> section, configure
@@ -173,7 +172,7 @@ flavor = keystone</programlisting>
       </substeps>
     </step>
     <step>
-      <para>Run the following command to populate the Image Service
+      <para>Populate the Image Service
         database:</para>
       <screen><prompt>#</prompt> <userinput>su -s /bin/sh -c "glance-manage db_sync" glance</userinput></screen>
     </step>
@@ -181,7 +180,7 @@ flavor = keystone</programlisting>
   <procedure os="debian">
     <title>To install and configure the Image Service components</title>
     <step>
-      <para>Run the following commands to install the packages:</para>
+      <para>Install the packages:</para>
       <screen><prompt>#</prompt> <userinput>apt-get install glance python-glanceclient</userinput></screen>
     </step>
     <step>
