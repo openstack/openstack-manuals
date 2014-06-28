@@ -7,6 +7,7 @@ api_paste_config api
 api_rate_limit api
 auth_strategy auth
 available_devices block-device
+az_cache_duration api
 backdoor_port api
 backup_api_class backups
 backup_ceph_chunk_size backups_ceph
@@ -71,6 +72,7 @@ glance_api_insecure images
 glance_api_servers images
 glance_api_ssl_compression images
 glance_api_version images
+glance_core_properties images
 glance_host images
 glance_num_retries images
 glance_port images
@@ -86,6 +88,8 @@ gpfs_mount_point_base storage_gpfs
 gpfs_sparse_volumes storage_gpfs
 gpfs_storage_pool storage_gpfs
 hds_cinder_config_file hds-hus
+hds_hnas_iscsi_config_file hds-hus
+hds_hnas_nfs_config_file hds-hus
 host common
 hp3par_api_url hp3par
 hp3par_cpg hp3par
@@ -214,7 +218,6 @@ osapi_volume_ext_list api
 osapi_volume_extension api
 osapi_volume_listen api
 osapi_volume_listen_port api
-osapi_volume_workers api
 password rpc
 periodic_fuzzy_delay common
 periodic_interval common
@@ -253,6 +256,7 @@ rbd_flatten_volume_from_snapshot storage_ceph
 rbd_max_clone_depth storage_ceph
 rbd_pool storage_ceph
 rbd_secret_uuid storage_ceph
+rbd_store_chunk_size storage_ceph
 rbd_user storage_ceph
 report_interval common
 reservation_expire quota
@@ -299,8 +303,7 @@ sf_api_port solidfire
 sf_emulate_512 solidfire
 snapshot_name_template backups
 snapshot_same_host backups
-sqlite_db common
-sqlite_synchronous common
+sqlite_clean_db database
 ssh_conn_timeout san
 ssh_max_pool_conn san
 ssh_min_pool_conn san
@@ -324,6 +327,9 @@ storwize_svc_vol_rsize storwize
 storwize_svc_vol_warning storwize
 storwize_svc_volpool_name storwize
 syslog_log_facility common
+tcp_keepalive common
+tcp_keepalive_count common
+tcp_keepalive_interval common
 tcp_keepidle common
 thres_avl_size_perc_start netapp_7mode_nfs netapp_cdot_nfs
 thres_avl_size_perc_stop netapp_7mode_nfs netapp_cdot_nfs
@@ -352,6 +358,8 @@ volume_backend_name storage
 volume_clear storage
 volume_clear_ionice storage
 volume_clear_size storage
+volume_copy_blkio_cgroup_name storage
+volume_copy_bps_limit storage
 volume_dd_blocksize storage
 volume_driver storage
 volume_group lvm
@@ -394,17 +402,26 @@ BRCD_FABRIC_EXAMPLE/principal_switch_wwn zoning_fabric
 BRCD_FABRIC_EXAMPLE/zone_activate zoning_fabric
 BRCD_FABRIC_EXAMPLE/zone_name_prefix zoning_fabric
 BRCD_FABRIC_EXAMPLE/zoning_policy zoning_fabric
-database/backend storage
-database/connection connection
-database/connection_debug connection
-database/connection_trace connection
-database/idle_timeout common
-database/max_overflow storage
-database/max_pool_size storage
-database/max_retries storage
-database/min_pool_size storage
-database/retry_interval common
-database/use_tpool common
+database/backend database
+database/connection database
+database/connection_debug database
+database/connection_trace database
+database/db_inc_retry_interval database
+database/db_max_retries database
+database/db_max_retry_interval database
+database/db_retry_interval database
+database/idle_timeout database
+database/max_overflow database
+database/max_pool_size database
+database/max_retries database
+database/min_pool_size database
+database/mysql_sql_mode database
+database/pool_timeout database
+database/retry_interval database
+database/sqlite_db database
+database/sqlite_synchronous database
+database/use_db_reconnect database
+database/use_tpool database
 fc-zone-manager/brcd_sb_connector zoning_manager
 fc-zone-manager/fc_fabric_names zoning
 fc-zone-manager/fc_san_lookup_service zoning_manager
@@ -425,10 +442,13 @@ keystone_authtoken/auth_version auth_token
 keystone_authtoken/cache auth_token
 keystone_authtoken/cafile auth_token
 keystone_authtoken/certfile auth_token
+keystone_authtoken/check_revocations_for_cached auth_token
 keystone_authtoken/delay_auth_decision auth_token
 keystone_authtoken/enforce_token_bind auth_token
+keystone_authtoken/hash_algorithms auth_token
 keystone_authtoken/http_connect_timeout auth_token
 keystone_authtoken/http_request_max_retries auth_token
+keystone_authtoken/identity_uri auth_token
 keystone_authtoken/include_service_catalog auth_token
 keystone_authtoken/insecure auth_token
 keystone_authtoken/keyfile auth_token

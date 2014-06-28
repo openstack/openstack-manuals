@@ -1,51 +1,139 @@
-<?xml version="1.0" encoding="UTF-8"?>
-    <!-- The tool that generated this table lives in the
-         openstack-doc-tools repository. The editions made in
-         this file will *not* be lost if you run the script again. -->
-    <para xmlns="http://docbook.org/ns/docbook" version="5.0">
-    <table rules="all">
-    <caption>Description of configuration options for <literal>[DEFAULT]</literal> in <literal>proxy-server.conf-sample</literal></caption>
+<?xml version='1.0' encoding='UTF-8'?>
+<para xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <!-- The tool that generated this table lives in the
+     openstack-doc-tools repository. The editions made in
+     this file will *not* be lost if you run the script again. -->
+  <table rules="all">
+    <caption>Description of configuration options for
+        <literal>[DEFAULT]</literal> in <literal>proxy-server.conf</literal>
+    </caption>
     <col width="50%"/>
     <col width="50%"/>
     <thead>
-        <tr>
-            <th>Configuration option = Default value</th>
-            <th>Description</th>
-        </tr>
+      <tr>
+        <th>Configuration option = Default value</th>
+        <th>Description</th>
+      </tr>
     </thead>
     <tbody>
-        <tr>
-            <td>bind_ip = 0.0.0.0</td><td>IP Address for server to bind to</td>
-        </tr>
-        <tr>
-            <td>bind_port = 80</td><td>Port for server to bind to</td>
-        </tr>
-        <tr>
-            <td>bind_timeout = 30</td><td>Seconds to attempt bind before giving up</td>
-        </tr>
-        <tr>
-            <td>backlog = 4096</td><td>Maximum number of allowed pending TCP connections</td>
-        </tr>
-        <tr>
-            <td>swift_dir = /etc/swift</td><td>Swift configuration directory</td>
-        </tr>
-        <tr>
-            <td>user = swift</td><td>User to run as</td>
-        </tr>
-        <tr>
-            <td>expose_info = true</td><td>Enables exposing configuration settings via HTTP GET /info.</td>
-        </tr>
-        <tr>
-            <td>admin_key = secret_admin_key</td><td>to use for admin calls that are HMAC signed.  Default is empty, which will disable admin calls to /info. the proxy server.  For most cases, this should be `egg:swift#proxy`. request whenever it has to failover to a handoff node</td>
-        </tr>
-        <tr>
-            <td>disallowed_sections = container_quotas, tempurl</td><td>No help text available for this option.</td>
-        </tr>
-        <tr>
-            <td>workers = auto</td><td>a much higher value, one can reduce the impact of slow file system operations in one request from negatively impacting other requests.</td>
-        </tr>
-        <tr>
-            <td>max_clients = 1024</td><td>Maximum number of clients one worker can process simultaneously
+      <tr>
+        <td>admin_key = secret_admin_key</td>
+        <td>to use for admin calls that are HMAC signed.  Default is empty, which will disable admin calls to /info. the proxy server.  For most cases, this should be `egg:swift#proxy`. request whenever it has to failover to a handoff node</td>
+      </tr>
+      <tr>
+        <td>backlog = 4096</td>
+        <td>Maximum number of allowed pending TCP connections</td>
+      </tr>
+      <tr>
+        <td>bind_ip = 0.0.0.0</td>
+        <td>IP Address for server to bind to</td>
+      </tr>
+      <tr>
+        <td>bind_port = 80</td>
+        <td>Port for server to bind to</td>
+      </tr>
+      <tr>
+        <td>bind_timeout = 30</td>
+        <td>Seconds to attempt bind before giving up</td>
+      </tr>
+      <tr>
+        <td>cert_file = /etc/swift/proxy.crt</td>
+        <td>to the ssl .crt. This should be enabled for testing purposes only.</td>
+      </tr>
+      <tr>
+        <td>client_timeout = 60</td>
+        <td>Timeout to read one chunk from a client external services</td>
+      </tr>
+      <tr>
+        <td>cors_allow_origin = </td>
+        <td>is a list of hosts that are included with any CORS request by default and returned with the Access-Control-Allow-Origin header in addition to what the container has set. to call to setup custom log handlers. for eventlet the proxy server.  For most cases, this should be `egg:swift#proxy`. request whenever it has to failover to a handoff node</td>
+      </tr>
+      <tr>
+        <td>disallowed_sections = container_quotas, tempurl, bulk_delete.max_failed_deletes</td>
+        <td>No help text available for this option.</td>
+      </tr>
+      <tr>
+        <td>eventlet_debug = false</td>
+        <td>If true, turn on debug logging for eventlet</td>
+      </tr>
+      <tr>
+        <td>expiring_objects_account_name = expiring_objects</td>
+        <td>No help text available for this option.</td>
+      </tr>
+      <tr>
+        <td>expiring_objects_container_divisor = 86400</td>
+        <td>No help text available for this option.</td>
+      </tr>
+      <tr>
+        <td>expose_info = true</td>
+        <td>Enables exposing configuration settings via HTTP GET /info.</td>
+      </tr>
+      <tr>
+        <td>key_file = /etc/swift/proxy.key</td>
+        <td>to the ssl .key. This should be enabled for testing purposes only.</td>
+      </tr>
+      <tr>
+        <td>log_address = /dev/log</td>
+        <td>Location where syslog sends the logs to</td>
+      </tr>
+      <tr>
+        <td>log_custom_handlers = </td>
+        <td>Comma-separated list of functions to call to setup custom log handlers.</td>
+      </tr>
+      <tr>
+        <td>log_facility = LOG_LOCAL0</td>
+        <td>Syslog log facility</td>
+      </tr>
+      <tr>
+        <td>log_headers = false</td>
+        <td>No help text available for this option.</td>
+      </tr>
+      <tr>
+        <td>log_level = INFO</td>
+        <td>Logging level</td>
+      </tr>
+      <tr>
+        <td>log_max_line_length = 0</td>
+        <td>Caps the length of log lines to the value given; no limit if set to 0, the default.</td>
+      </tr>
+      <tr>
+        <td>log_name = swift</td>
+        <td>Label used when logging</td>
+      </tr>
+      <tr>
+        <td>log_statsd_default_sample_rate = 1.0</td>
+        <td>Defines the probability of sending a sample for any given event or
+                    timing measurement.</td>
+      </tr>
+      <tr>
+        <td>log_statsd_host = localhost</td>
+        <td>If not set, the StatsD feature is disabled.</td>
+      </tr>
+      <tr>
+        <td>log_statsd_metric_prefix = </td>
+        <td>Value will be prepended to every metric sent to the StatsD server.</td>
+      </tr>
+      <tr>
+        <td>log_statsd_port = 8125</td>
+        <td>Port value for the StatsD server.</td>
+      </tr>
+      <tr>
+        <td>log_statsd_sample_rate_factor = 1.0</td>
+        <td>Not recommended to set this to a value less than 1.0, if frequency
+                    of logging is too high, tune the
+                    log_statsd_default_sample_rate instead.</td>
+      </tr>
+      <tr>
+        <td>log_udp_host = </td>
+        <td>If not set, the UDB receiver for syslog is disabled.</td>
+      </tr>
+      <tr>
+        <td>log_udp_port = 514</td>
+        <td>Port value for UDB receiver, if enabled.</td>
+      </tr>
+      <tr>
+        <td>max_clients = 1024</td>
+        <td>Maximum number of clients one worker can process simultaneously
 Lowering the number of clients handled per worker, and raising the
 number of workers can lessen the impact that a CPU intensive, or
 blocking, request can have on other requests served by the same
@@ -53,73 +141,23 @@ worker. If the maximum number of clients is set to one, then a given worker
 will not perform another call while processing, allowing
 other workers a chance to process it.
 </td>
-        </tr>
-        <tr>
-            <td>cert_file = /etc/swift/proxy.crt</td><td>to the ssl .crt. This should be enabled for testing purposes only.</td>
-        </tr>
-        <tr>
-            <td>key_file = /etc/swift/proxy.key</td><td>to the ssl .key. This should be enabled for testing purposes only.</td>
-        </tr>
-        <tr>
-            <td>expiring_objects_container_divisor = 86400</td><td>No help text available for this option.</td>
-        </tr>
-        <tr>
-            <td>expiring_objects_account_name = expiring_objects</td><td>No help text available for this option.</td>
-        </tr>
-        <tr>
-            <td>log_name = swift</td><td>Label used when logging</td>
-        </tr>
-        <tr>
-            <td>log_facility = LOG_LOCAL0</td><td>Syslog log facility</td>
-        </tr>
-        <tr>
-            <td>log_level = INFO</td><td>Logging level</td>
-        </tr>
-        <tr>
-            <td>log_headers = false</td><td>No help text available for this option.</td>
-        </tr>
-        <tr>
-            <td>log_address = /dev/log</td><td>Location where syslog sends the logs to</td>
-        </tr>
-        <tr>
-            <td>trans_id_suffix = </td><td>No help text available for this option.</td>
-        </tr>
-        <tr>
-            <td>log_custom_handlers = </td><td>Comma-separated list of functions to call to setup custom log handlers.</td>
-        </tr>
-        <tr>
-            <td>log_udp_host = </td><td>If not set, the UDB receiver for syslog is disabled.</td>
-        </tr>
-        <tr>
-            <td>log_udp_port = 514</td><td>Port value for UDB receiver, if enabled.</td>
-        </tr>
-        <tr>
-            <td>log_statsd_host = localhost</td><td>If not set, the StatsD feature is disabled.</td>
-        </tr>
-        <tr>
-            <td>log_statsd_port = 8125</td><td>Port value for the StatsD server.</td>
-        </tr>
-        <tr>
-            <td>log_statsd_default_sample_rate = 1.0</td><td>Defines the probability of sending a sample for any given event or
-                    timing measurement.</td>
-        </tr>
-        <tr>
-            <td>log_statsd_sample_rate_factor = 1.0</td><td>Not recommended to set this to a value less than 1.0, if frequency
-                    of logging is too high, tune the
-                    log_statsd_default_sample_rate instead.</td>
-        </tr>
-        <tr>
-            <td>log_statsd_metric_prefix = </td><td>Value will be prepended to every metric sent to the StatsD server.</td>
-        </tr>
-        <tr>
-            <td>cors_allow_origin = </td><td>is a list of hosts that are included with any CORS request by default and returned with the Access-Control-Allow-Origin header in addition to what the container has set. to call to setup custom log handlers. for eventlet the proxy server.  For most cases, this should be `egg:swift#proxy`. request whenever it has to failover to a handoff node</td>
-        </tr>
-        <tr>
-            <td>client_timeout = 60</td><td>Timeout to read one chunk from a client external services</td>
-        </tr>
-        <tr>
-            <td>eventlet_debug = false</td><td>If true, turn on debug logging for eventlet</td>
-        </tr>
+      </tr>
+      <tr>
+        <td>swift_dir = /etc/swift</td>
+        <td>Swift configuration directory</td>
+      </tr>
+      <tr>
+        <td>trans_id_suffix = </td>
+        <td>No help text available for this option.</td>
+      </tr>
+      <tr>
+        <td>user = swift</td>
+        <td>User to run as</td>
+      </tr>
+      <tr>
+        <td>workers = auto</td>
+        <td>a much higher value, one can reduce the impact of slow file system operations in one request from negatively impacting other requests.</td>
+      </tr>
     </tbody>
-    </table>
-    </para>
+  </table>
+</para>
