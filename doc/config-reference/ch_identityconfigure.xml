@@ -12,18 +12,51 @@ options. For installation prerequisites and step-by-step walkthroughs, see the
                 xlink:href="http://docs.openstack.org/admin-guide-cloud/content/">Cloud
                 Administrator Guide</link></citetitle>.</para>
 
+   <section xml:id="section_keystone-cache">
+    <title>Caching layer</title>
+    <para>Identity supports a caching layer that is above the
+    configurable subsystems, such as token or assignment.  The
+    majority of the caching configuration options are set in the
+    <literal>[cache]</literal> section. However, each section that
+    has the capability to be cached usually has a
+    <option>caching</option> option that will toggle caching for that
+    specific section. By default, caching is globally disabled.
+    Options are as follows:</para>
+
+ <xi:include href="../common/tables/keystone-cache.xml"/>
+
+ <para>Current functional backends are:</para>
+    <itemizedlist>
+    <listitem><para><literal>dogpile.cache.memcached</literal> - Memcached backend using
+    the standard python-memcached library</para></listitem>
+    <listitem><para><literal>dogpile.cache.pylibmc</literal> - Memcached backend using
+    the pylibmc library</para></listitem>
+    <listitem><para><literal>dogpile.cache.bmemcached</literal> - Memcached using
+    python-binary-memcached library.</para></listitem>
+    <listitem><para><literal>dogpile.cache.redis</literal> - Redis backend</para></listitem>
+    <listitem><para><literal>dogpile.cache.dbm</literal> - Local DBM file backend</para></listitem>
+    <listitem><para><literal>dogpile.cache.memory</literal> - In-memory cache, not
+    suitable for use outside of testing as it does not cleanup it's
+    internal cache on cache expiration and does not share cache
+    between processes. This means that caching and cache invalidation
+    will not be consistent or reliable.</para>
+    </listitem>
+    <listitem><para><literal>dogpile.cache.mongo</literal> - MongoDB as caching
+    backend.</para></listitem>
+    </itemizedlist>
+
+   </section>
+
     <section xml:id="keystone-configuration-file">
     <title>Identity service configuration file</title>
     <para>The Identity service is configured in the
       <filename>/etc/keystone/keystone.conf</filename> file.</para>
     <para>The following tables provide a comprehensive list of the Identity
         service options.</para>
-
     <xi:include href="../common/tables/keystone-api.xml"/>
     <xi:include href="../common/tables/keystone-assignment.xml"/>
     <xi:include href="../common/tables/keystone-auth.xml"/>
     <xi:include href="../common/tables/keystone-auth_token.xml"/>
-    <xi:include href="../common/tables/keystone-cache.xml"/>
     <xi:include href="../common/tables/keystone-catalog.xml"/>
     <xi:include href="../common/tables/keystone-credential.xml"/>
     <xi:include href="../common/tables/keystone-database.xml"/>
