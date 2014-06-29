@@ -1,0 +1,46 @@
+<section xmlns="http://docbook.org/ns/docbook"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+  xml:id="nova-verify">
+  <title>Verify operation</title>
+  <para>This section describes how to verify operation of the Compute
+    service.</para>
+  <procedure>
+    <note>
+      <para>Perform these commands on the controller node.</para>
+    </note>
+    <step>
+      <para>Source the <literal>admin</literal> credentials to gain access to
+        admin-only CLI commands:</para>
+      <screen><prompt>$</prompt> <userinput>source admin-openrc.sh</userinput></screen>
+    </step>
+    <step>
+      <para>List service components to verify successful launch of each
+        process:</para>
+      <screen><prompt>$</prompt> <userinput>nova service-list</userinput>
+<computeroutput>+------------------+-------------+----------+---------+-------+----------------------------+-----------------+
+| Binary           | Host        | Zone     | Status  | State | Updated_at                 | Disabled Reason |
++------------------+-------------+----------+---------+-------+----------------------------+-----------------+
+| nova-cert        | controller  | internal | enabled | up    | 2014-06-29T22:23:16.000000 | -               |
+| nova-consoleauth | controller  | internal | enabled | up    | 2014-06-29T22:23:10.000000 | -               |
+| nova-scheduler   | controller  | internal | enabled | up    | 2014-06-29T22:23:14.000000 | -               |
+| nova-conductor   | controller  | internal | enabled | up    | 2014-06-29T22:23:11.000000 | -               |
+| nova-compute     | compute1    | nova     | enabled | up    | 2014-06-29T22:23:11.000000 | -               |
++------------------+-------------+----------+---------+-------+----------------------------+-----------------+</computeroutput></screen>
+      <note>
+        <para>This output should indicate four components enabled on the
+        controller node one component enabled on the compute node.</para>
+      </note>
+    </step>
+    <step>
+      <para>List images in the Image Service catalog to verify connectivity
+        with the Identity service and Image Service:</para>
+      <screen><prompt>$</prompt> <userinput>nova image-list</userinput>
+<computeroutput>+--------------------------------------+---------------------+--------+--------+
+| ID                                   | Name                | Status | Server |
++--------------------------------------+---------------------+--------+--------+
+| acafc7c0-40aa-4026-9673-b879898e1fc2 | cirros-0.3.2-x86_64 | ACTIVE |        |
++--------------------------------------+---------------------+--------+--------+</computeroutput></screen>
+    </step>
+  </procedure>
+</section>
