@@ -26,14 +26,13 @@ function test_ja {
     case "$PURPOSE" in
         test)
             setup_directory 'ja' 'high-availability-guide' \
-                'install-guide'  'security-guide' 'user-guide' \
+                'install-guide'  'user-guide' \
                 'user-guide-admin'
             openstack-doc-test -v --check-build -l ja \
                 --only-book high-availability-guide \
                 --only-book install-guide \
                 --only-book user-guide \
-                --only-book user-guide-admin \
-                --only-book security-guide
+                --only-book user-guide-admin
             RET=$?
             ;;
         publish-install)
@@ -44,12 +43,11 @@ function test_ja {
             ;;
         publish)
             setup_directory 'ja' 'high-availability-guide' \
-                'security-guide' 'user-guide' 'user-guide-admin'
+                'user-guide' 'user-guide-admin'
             openstack-doc-test -v --publish --check-build -l ja \
                 --only-book high-availability-guide \
                 --only-book user-guide \
-                --only-book user-guide-admin \
-                --only-book security-guide
+                --only-book user-guide-admin
             RET=$?
             ;;
     esac
