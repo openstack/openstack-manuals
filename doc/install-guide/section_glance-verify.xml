@@ -4,10 +4,9 @@
   xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
   <title>Verify operation</title>
   <para>This section describes how to verify operation of the Image
-    Service, code-named glance, by using <link
-      xlink:href="http://launchpad.net/cirros">CirrOS</link>. CirrOS
-    is a small Linux image that helps you test OpenStack
-    deployments.</para>
+    Service using
+    <link xlink:href="http://launchpad.net/cirros">CirrOS</link>, a small
+    Linux image that helps you test your OpenStack deployment.</para>
   <para>For more information about how to download and build images,
     see <link
       xlink:href="http://docs.openstack.org/image-guide/content/index.html"
@@ -27,16 +26,14 @@
       <screen><prompt>$</prompt> <userinput>wget http://cdn.download.cirros-cloud.net/0.3.2/cirros-0.3.2-x86_64-disk.img</userinput></screen>
     </step>
     <step>
-      <para>Source the <literal>admin</literal> tenant
-        credentials:</para>
+      <para>Source the <literal>admin</literal> credentials to gain access to
+        admin-only CLI commands:</para>
       <screen><prompt>$</prompt> <userinput>source admin-openrc.sh</userinput></screen>
     </step>
     <step>
       <para>Upload the image to the Image Service:</para>
-      <para>For example:</para>
-      <screen><prompt>$</prompt> <userinput>source admin-openrc.sh</userinput>
-<prompt>$</prompt> <userinput>glance image-create --name "cirros-0.3.2-x86_64" --disk-format qcow2 \
-    --container-format bare --is-public True --progress &lt; cirros-0.3.2-x86_64-disk.img</userinput>
+      <screen><prompt>$</prompt> <userinput>glance image-create --name "cirros-0.3.2-x86_64" --file cirros-0.3.2-x86_64-disk.img \
+  --disk-format qcow2 --container-format bare --is-public True --progress</userinput>
 <computeroutput>+------------------+--------------------------------------+
 | Property         | Value                                |
 +------------------+--------------------------------------+
