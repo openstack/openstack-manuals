@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenStack Manuals\n"
-"POT-Creation-Date: 2014-06-28 04:55+0000\n"
-"PO-Revision-Date: 2014-06-28 01:59+0000\n"
+"POT-Creation-Date: 2014-06-29 04:08+0000\n"
+"PO-Revision-Date: 2014-06-29 01:40+0000\n"
 "Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
 "Language-Team: Japanese (http://www.transifex.com/projects/p/openstack-manuals-i18n/language/ja/)\n"
 "MIME-Version: 1.0\n"
@@ -20485,6 +20485,7 @@ msgid "Identity Panel"
 msgstr "認証パネル"
 
 #: ./doc/common/section_dashboard_access.xml358(guilabel)
+#: ./doc/common/section_getstart_compute.xml240(para)
 msgid "Projects"
 msgstr "プロジェクト"
 
@@ -21556,185 +21557,190 @@ msgstr "OpenStack Compute"
 
 #: ./doc/common/section_getstart_compute.xml6(para)
 msgid ""
-"OpenStack Compute is used to host and manage cloud computing systems and is "
-"a major part of an infrastructure-as-a-service (IaaS) system. The main "
-"modules are implemented in Python."
+"Use OpenStack Compute to host and manage cloud computing systems. OpenStack "
+"Compute is a major part of an infrastructure-as-a-service (IaaS) system. The"
+" main modules are implemented in Python."
 msgstr ""
 
-#: ./doc/common/section_getstart_compute.xml9(para)
+#: ./doc/common/section_getstart_compute.xml10(para)
 msgid ""
 "OpenStack Compute interacts with OpenStack Identity for authentication, "
-"OpenStack Image Service for images, and OpenStack dashboard for the user and"
-" administrative interface. Access to images is limited by project and by "
-"user; quotas are limited per project (for example, the number of instances)."
-" OpenStack Compute can scale horizontally on standard hardware, and download"
-" images to launch instances."
+"OpenStack Image Service for disk and server images, and OpenStack dashboard "
+"for the user and administrative interface. Image access is limited by "
+"projects, and by users; quotas are limited per project (the number of "
+"instances, for example). OpenStack Compute can scale horizontally on "
+"standard hardware, and download images to launch instances."
 msgstr ""
 
-#: ./doc/common/section_getstart_compute.xml15(para)
+#: ./doc/common/section_getstart_compute.xml17(para)
 msgid ""
 "OpenStack Compute consists of the following areas and their components:"
 msgstr ""
 
-#: ./doc/common/section_getstart_compute.xml17(title)
+#: ./doc/common/section_getstart_compute.xml20(title)
 msgid "API"
 msgstr "API"
 
-#: ./doc/common/section_getstart_compute.xml19(systemitem)
+#: ./doc/common/section_getstart_compute.xml22(systemitem)
 msgid "nova-api service"
 msgstr ""
 
-#: ./doc/common/section_getstart_compute.xml20(para)
+#: ./doc/common/section_getstart_compute.xml25(para)
 msgid ""
-"Accepts and responds to end user compute API calls. Supports the OpenStack "
-"Compute API, the Amazon EC2 API, and a special Admin API for privileged "
-"users to perform administrative actions. It enforces some policies and "
-"initiates most orchestration activities, such as running an instance."
+"Accepts and responds to end user compute API calls. The service supports the"
+" OpenStack Compute API, the Amazon EC2 API, and a special Admin API for "
+"privileged users to perform administrative actions. It enforces some "
+"policies and initiates most orchestration activities, such as running an "
+"instance."
 msgstr ""
 
-#: ./doc/common/section_getstart_compute.xml28(term)
+#: ./doc/common/section_getstart_compute.xml34(term)
 msgid "<systemitem class=\"service\">nova-api-metadata</systemitem> service"
 msgstr ""
 
-#: ./doc/common/section_getstart_compute.xml30(para)
+#: ./doc/common/section_getstart_compute.xml37(para)
 msgid ""
 "Accepts metadata requests from instances. The <systemitem class=\"service"
 "\">nova-api-metadata</systemitem> service is generally used when you run in "
 "multi-host mode with <systemitem class=\"service\">nova-network</systemitem>"
 " installations. For details, see <link href=\"http://docs.openstack.org"
 "/admin-guide-cloud/content/section_metadata-service.html\">Metadata "
-"service</link> in the <citetitle>Cloud Administrator Guide</citetitle>."
+"service</link> in the <citetitle>OpenStack Cloud Administrator "
+"Guide</citetitle>."
 msgstr ""
 
-#: ./doc/common/section_getstart_compute.xml38(para)
+#: ./doc/common/section_getstart_compute.xml45(para)
 msgid ""
 "On Debian systems, it is included in the <systemitem class=\"service\">nova-"
 "api</systemitem> package, and can be selected through "
 "<package>debconf</package>."
 msgstr "Debian システムの場合、<systemitem class=\"service\">nova-api</systemitem> パッケージに含まれます。<package>debconf</package> 経由で選択できます。"
 
-#: ./doc/common/section_getstart_compute.xml44(title)
+#: ./doc/common/section_getstart_compute.xml52(title)
 msgid "Compute core"
 msgstr "Compute コア"
 
-#: ./doc/common/section_getstart_compute.xml46(term)
-msgid "<systemitem class=\"service\">nova-compute</systemitem> process"
+#: ./doc/common/section_getstart_compute.xml54(term)
+msgid "<systemitem class=\"service\">nova-compute</systemitem> service"
 msgstr ""
 
-#: ./doc/common/section_getstart_compute.xml47(para)
+#: ./doc/common/section_getstart_compute.xml57(para)
 msgid ""
 "A worker daemon that creates and terminates virtual machine instances "
-"through hypervisor APIs. For example, XenAPI for XenServer/XCP, libvirt for "
-"KVM or QEMU and VMwareAPI for VMware. Processing is fairly complex but "
-"fundamentally it accepts actions from the queue and performs a series of "
-"system commands, like launching a KVM instance, whilst updating its state in"
-" the database."
+"through hypervisor APIs. For example:"
 msgstr ""
 
-#: ./doc/common/section_getstart_compute.xml56(term)
-msgid "<systemitem class=\"service\">nova-scheduler</systemitem> process"
-msgstr ""
-
-#: ./doc/common/section_getstart_compute.xml58(para)
-msgid ""
-"Conceptually the simplest piece of code in OpenStack Compute. It takes a "
-"virtual machine instance request from the queue and determines on which "
-"compute server host it will run."
-msgstr ""
-
-#: ./doc/common/section_getstart_compute.xml64(term)
-msgid "<systemitem class=\"service\">nova-conductor</systemitem> module"
+#: ./doc/common/section_getstart_compute.xml62(para)
+msgid "XenAPI for XenServer/XCP"
 msgstr ""
 
 #: ./doc/common/section_getstart_compute.xml65(para)
+msgid "libvirt for KVM or QEMU"
+msgstr ""
+
+#: ./doc/common/section_getstart_compute.xml68(para)
+msgid "VMwareAPI for VMware"
+msgstr ""
+
+#: ./doc/common/section_getstart_compute.xml71(para)
 msgid ""
-"Mediates interactions between <systemitem class=\"service\">nova-"
-"compute</systemitem> and the database. It eliminates direct accesses to the "
-"cloud database made by <systemitem class=\"service\">nova-"
-"compute</systemitem>. The <systemitem class=\"service\">nova-"
+"Processing is fairly complex. Basically, the daemon accepts actions from the"
+" queue and performs a series of system commands such as launching a KVM "
+"instance and updating its state in the database."
+msgstr ""
+
+#: ./doc/common/section_getstart_compute.xml78(term)
+msgid "<systemitem class=\"service\">nova-scheduler</systemitem> service"
+msgstr ""
+
+#: ./doc/common/section_getstart_compute.xml81(para)
+msgid ""
+"Takes a virtual machine instance request from the queue and determines on "
+"which compute server host it runs."
+msgstr ""
+
+#: ./doc/common/section_getstart_compute.xml86(term)
+msgid "<systemitem class=\"service\">nova-conductor</systemitem> module"
+msgstr ""
+
+#: ./doc/common/section_getstart_compute.xml89(para)
+msgid ""
+"Mediates interactions between the <systemitem class=\"service\">nova-"
+"compute</systemitem> service and the database. It eliminates direct accesses"
+" to the cloud database made by the <systemitem class=\"service\">nova-"
+"compute</systemitem> service. The <systemitem class=\"service\">nova-"
 "conductor</systemitem> module scales horizontally. However, do not deploy it"
-" on any nodes where <systemitem class=\"service\">nova-compute</systemitem> "
-"runs. For more information, see <link "
+" on nodes where the <systemitem class=\"service\">nova-compute</systemitem> "
+"service runs. For more information, see <link "
 "href=\"http://russellbryantnet.wordpress.com/2012/11/19/a-new-nova-service-"
 "nova-conductor/\">A new Nova service: nova-conductor</link>."
 msgstr ""
 
-#: ./doc/common/section_getstart_compute.xml79(title)
+#: ./doc/common/section_getstart_compute.xml104(title)
 msgid "Networking for VMs"
 msgstr "仮想マシン用ネットワーク"
 
-#: ./doc/common/section_getstart_compute.xml80(term)
+#: ./doc/common/section_getstart_compute.xml106(term)
 msgid "<systemitem class=\"service\">nova-network</systemitem> worker daemon"
 msgstr ""
 
-#: ./doc/common/section_getstart_compute.xml82(para)
+#: ./doc/common/section_getstart_compute.xml109(para)
 msgid ""
-"Similar to <systemitem class=\"service\">nova-compute</systemitem>, it "
-"accepts networking tasks from the queue and performs tasks to manipulate the"
-" network, such as setting up bridging interfaces or changing iptables rules."
-" This functionality is being migrated to OpenStack Networking."
+"Similar to the <systemitem class=\"service\">nova-compute</systemitem> "
+"service, accepts networking tasks from the queue and manipulates the "
+"network. Performs tasks such as setting up bridging interfaces or changing "
+"IPtables rules."
 msgstr ""
 
-#: ./doc/common/section_getstart_compute.xml90(term)
-msgid "<systemitem class=\"service\">nova-dhcpbridge</systemitem> script"
-msgstr ""
-
-#: ./doc/common/section_getstart_compute.xml92(para)
-msgid ""
-"The IP address leases and is recorded in the database using the dnsmasq "
-"<literal>dhcp-script</literal> facility. This functionality is being "
-"migrated to OpenStack Networkin which provides a different script."
-msgstr ""
-
-#: ./doc/common/section_getstart_compute.xml99(title)
+#: ./doc/common/section_getstart_compute.xml119(title)
 msgid "Console interface"
 msgstr "コンソールインターフェース"
 
-#: ./doc/common/section_getstart_compute.xml101(term)
+#: ./doc/common/section_getstart_compute.xml121(term)
 msgid "<systemitem class=\"service\">nova-consoleauth</systemitem> daemon"
 msgstr ""
 
-#: ./doc/common/section_getstart_compute.xml102(para)
+#: ./doc/common/section_getstart_compute.xml124(para)
 msgid ""
 "Authorizes tokens for users that console proxies provide. See <systemitem "
 "class=\"service\">nova-novncproxy</systemitem> and <systemitem "
 "class=\"service\">nova-xvpnvcproxy</systemitem>. This service must be "
-"running for console proxies to work. Many proxies of either type can be run "
+"running for console proxies to work. You can run proxies of either type "
 "against a single <systemitem class=\"service\">nova-consoleauth</systemitem>"
 " service in a cluster configuration. For information, see <link "
 "href=\"http://docs.openstack.org/trunk/config-reference/content/about-nova-"
 "consoleauth.html\">About nova-consoleauth</link>."
 msgstr ""
 
-#: ./doc/common/section_getstart_compute.xml114(term)
+#: ./doc/common/section_getstart_compute.xml137(term)
 msgid "<systemitem class=\"service\">nova-novncproxy</systemitem> daemon"
 msgstr ""
 
-#: ./doc/common/section_getstart_compute.xml116(para)
+#: ./doc/common/section_getstart_compute.xml140(para)
 msgid ""
 "Provides a proxy for accessing running instances through a VNC connection. "
 "Supports browser-based novnc clients."
 msgstr ""
 
-#: ./doc/common/section_getstart_compute.xml121(term)
+#: ./doc/common/section_getstart_compute.xml146(term)
 msgid "<systemitem class=\"service\">nova-xvpnvncproxy</systemitem> daemon"
 msgstr ""
 
-#: ./doc/common/section_getstart_compute.xml123(para)
+#: ./doc/common/section_getstart_compute.xml149(para)
 msgid ""
-"A proxy for accessing running instances through a VNC connection. It "
-"supports a Java client specifically designed for OpenStack."
+"Provides a proxy for accessing running instances through a VNC connection. "
+"Supports an OpenStack-specific Java client."
 msgstr ""
 
-#: ./doc/common/section_getstart_compute.xml128(term)
+#: ./doc/common/section_getstart_compute.xml155(term)
 msgid "<systemitem class=\"service\">nova-cert</systemitem> daemon"
 msgstr ""
 
-#: ./doc/common/section_getstart_compute.xml129(para)
+#: ./doc/common/section_getstart_compute.xml158(para)
 msgid "x509 certificates."
 msgstr ""
 
-#: ./doc/common/section_getstart_compute.xml132(para)
+#: ./doc/common/section_getstart_compute.xml162(para)
 msgid ""
 "In Debian, a unique <package>nova-consoleproxy</package> package provides "
 "the <package>nova-novncproxy</package>, <package>nova-"
@@ -21745,29 +21751,29 @@ msgid ""
 "consoleproxy</filename> file, and stop and start the console daemons."
 msgstr ""
 
-#: ./doc/common/section_getstart_compute.xml142(title)
+#: ./doc/common/section_getstart_compute.xml173(title)
 msgid "Image management (EC2 scenario)"
 msgstr "イメージ管理 (EC2 シナリオ)"
 
-#: ./doc/common/section_getstart_compute.xml144(term)
+#: ./doc/common/section_getstart_compute.xml175(term)
 msgid "<systemitem class=\"service\">nova-objectstore</systemitem> daemon"
 msgstr ""
 
-#: ./doc/common/section_getstart_compute.xml145(para)
+#: ./doc/common/section_getstart_compute.xml178(para)
 msgid ""
-"A S3 interface for registering images with the OpenStack Image Service. It "
-"is mainly used for installations that must support euca2ools. The euca2ools "
+"An S3 interface for registering images with the OpenStack Image Service. "
+"Used primarily for installations that must support euca2ools. The euca2ools "
 "tools talk to <systemitem class=\"service\">nova-objectstore</systemitem> in"
 " <emphasis role=\"italic\">S3 language</emphasis>, and <systemitem "
 "class=\"service\">nova-objectstore</systemitem> translates S3 requests into "
-"Image service requests."
+"Image Service requests."
 msgstr ""
 
-#: ./doc/common/section_getstart_compute.xml154(term)
+#: ./doc/common/section_getstart_compute.xml188(term)
 msgid "euca2ools client"
 msgstr ""
 
-#: ./doc/common/section_getstart_compute.xml155(para)
+#: ./doc/common/section_getstart_compute.xml190(para)
 msgid ""
 "A set of command-line interpreter commands for managing cloud resources. "
 "Although it is not an OpenStack module, you can configure <systemitem "
@@ -21777,62 +21783,63 @@ msgid ""
 " 3.4 Documentation</link>."
 msgstr ""
 
-#: ./doc/common/section_getstart_compute.xml163(title)
+#: ./doc/common/section_getstart_compute.xml201(title)
 msgid "Command-line clients and other interfaces"
 msgstr "コマンドラインクライアントと他のインターフェース"
 
-#: ./doc/common/section_getstart_compute.xml164(term)
+#: ./doc/common/section_getstart_compute.xml203(term)
 msgid "nova client"
 msgstr ""
 
-#: ./doc/common/section_getstart_compute.xml165(para)
-msgid "Allows users to submit commands as a tenant administrator or end user."
+#: ./doc/common/section_getstart_compute.xml205(para)
+msgid ""
+"Enables users to submit commands as a tenant administrator or end user."
 msgstr ""
 
-#: ./doc/common/section_getstart_compute.xml169(term)
-msgid "nova-manage client"
-msgstr ""
-
-#: ./doc/common/section_getstart_compute.xml170(para)
-msgid "Enables cloud administrators to submit commands."
-msgstr ""
-
-#: ./doc/common/section_getstart_compute.xml174(title)
+#: ./doc/common/section_getstart_compute.xml211(title)
 msgid "Other components"
 msgstr "他のコンポーネント"
 
-#: ./doc/common/section_getstart_compute.xml175(term)
+#: ./doc/common/section_getstart_compute.xml213(term)
 msgid "The queue"
 msgstr ""
 
-#: ./doc/common/section_getstart_compute.xml175(para)
+#: ./doc/common/section_getstart_compute.xml215(para)
 msgid ""
-"A central hub for passing messages between daemons. It is usually "
-"implemented with <link href=\"http://www.rabbitmq.com/\">RabbitMQ</link>, "
-"but could be any AMQP message queue, such as <link "
+"A central hub for passing messages between daemons. Usually implemented with"
+" <link href=\"http://www.rabbitmq.com/\">RabbitMQ</link>, but can be "
+"implemented with an AMQP message queue, such as <link "
 "href=\"http://qpid.apache.org/\">Apache Qpid</link> or <link "
 "href=\"http://www.zeromq.org/\">Zero MQ</link>."
 msgstr ""
 
-#: ./doc/common/section_getstart_compute.xml183(term)
+#: ./doc/common/section_getstart_compute.xml225(term)
 msgid "SQL database"
 msgstr "SQL データベース"
 
-#: ./doc/common/section_getstart_compute.xml184(para)
+#: ./doc/common/section_getstart_compute.xml227(para)
 msgid ""
-"Stores most build-time and runtime states for a cloud infrastructure. It "
-"includes instance types that are available for use, instances in use, "
-"available networks, and projects. Theoretically, OpenStack Compute can "
-"support any database that is supported by SQL-Alchemy. Note the databases "
-"which are widely used are SQLite3 databases (for test and development work),"
-" MySQL, and PostgreSQL."
+"Stores most build-time and run-time states for a cloud infrastructure, "
+"including:"
 msgstr ""
 
-#: ./doc/common/section_getstart_compute.xml192(para)
+#: ./doc/common/section_getstart_compute.xml231(para)
+msgid "Available instance types"
+msgstr ""
+
+#: ./doc/common/section_getstart_compute.xml234(para)
+msgid "Instances in use"
+msgstr ""
+
+#: ./doc/common/section_getstart_compute.xml237(para)
+msgid "Available networks"
+msgstr "利用可能なネットワーク"
+
+#: ./doc/common/section_getstart_compute.xml243(para)
 msgid ""
-"OpenStack Compute interacts with OpenStack Identity for authentication; "
-"OpenStack Image Service for images; and the OpenStack dashboard for a web "
-"interface."
+"Theoretically, OpenStack Compute can support any database that SQL-Alchemy "
+"supports. Common databases are SQLite3 for test and development work, MySQL,"
+" and PostgreSQL."
 msgstr ""
 
 #: ./doc/common/section_cli_nova_manage_images.xml6(title)

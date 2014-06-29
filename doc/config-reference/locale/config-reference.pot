@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-06-28 06:07+0000\n"
+"POT-Creation-Date: 2014-06-29 06:06+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1045,7 +1045,7 @@ msgstr ""
 msgid "Use the <filename>api-paste.ini</filename> to configure the OpenStack Networking API."
 msgstr ""
 
-#: ./doc/config-reference/networking/section_networking-sample-configuration-files.xml:22(title) ./doc/config-reference/telemetry/section_telemetry-sample-configuration-files.xml:35(title) ./doc/config-reference/identity/section_keystone-sample-conf-files.xml:42(title) ./doc/config-reference/block-storage/section_block-storage-sample-configuration-files.xml:22(title) ./doc/config-reference/image-service/section_image-service-sample-configuration-files.xml:51(title) ./doc/config-reference/compute/section_compute-sample-configuration-files.xml:15(title)
+#: ./doc/config-reference/networking/section_networking-sample-configuration-files.xml:22(title) ./doc/config-reference/telemetry/section_telemetry-sample-configuration-files.xml:35(title) ./doc/config-reference/identity/section_keystone-sample-conf-files.xml:37(title) ./doc/config-reference/block-storage/section_block-storage-sample-configuration-files.xml:22(title) ./doc/config-reference/image-service/section_image-service-sample-configuration-files.xml:51(title) ./doc/config-reference/compute/section_compute-sample-configuration-files.xml:15(title)
 msgid "policy.json"
 msgstr ""
 
@@ -1378,7 +1378,7 @@ msgid "Identity service sample configuration files"
 msgstr ""
 
 #: ./doc/config-reference/identity/section_keystone-sample-conf-files.xml:7(para)
-msgid "All the files in this section can be found in the <systemitem>/etc/keystone</systemitem> directory."
+msgid "You can find the files described in this section in the <systemitem>/etc/keystone</systemitem> directory."
 msgstr ""
 
 #: ./doc/config-reference/identity/section_keystone-sample-conf-files.xml:10(title)
@@ -1386,27 +1386,55 @@ msgid "keystone.conf"
 msgstr ""
 
 #: ./doc/config-reference/identity/section_keystone-sample-conf-files.xml:11(para)
-msgid "The majority of the Identity service configuration is performed from the <filename>keystone.conf</filename> file."
+msgid "Use the <filename>keystone.conf</filename> file to configure most Identity service options:"
 msgstr ""
 
-#: ./doc/config-reference/identity/section_keystone-sample-conf-files.xml:19(title)
+#: ./doc/config-reference/identity/section_keystone-sample-conf-files.xml:17(title)
 msgid "keystone-paste.ini"
 msgstr ""
 
-#: ./doc/config-reference/identity/section_keystone-sample-conf-files.xml:20(para)
-msgid "The <filename>keystone-paste.ini</filename> file configures the Web Service Gateway Interface (WSGI) middleware pipeline for the Identity service."
+#: ./doc/config-reference/identity/section_keystone-sample-conf-files.xml:18(para)
+msgid "Use the <filename>keystone-paste.ini</filename> file to configure the Web Service Gateway Interface (WSGI) middleware pipeline for the Identity service."
 msgstr ""
 
-#: ./doc/config-reference/identity/section_keystone-sample-conf-files.xml:30(title)
+#: ./doc/config-reference/identity/section_keystone-sample-conf-files.xml:25(title)
 msgid "logging.conf"
 msgstr ""
 
-#: ./doc/config-reference/identity/section_keystone-sample-conf-files.xml:31(para)
-msgid "A special logging configuration file can be specified in the <filename>keystone.conf</filename> configuration file (for example, <filename>/etc/keystone/logging.conf</filename>). For details, see the Python logging module documentation ( <link href=\"http://docs.python.org/2/howto/logging.html#configuring-logging\">Python Logging</link>)."
+#: ./doc/config-reference/identity/section_keystone-sample-conf-files.xml:26(para)
+msgid "You can specify a special logging configuration file in the <filename>keystone.conf</filename> configuration file. For example, <filename>/etc/keystone/logging.conf</filename>."
 msgstr ""
 
-#: ./doc/config-reference/identity/section_keystone-sample-conf-files.xml:43(para)
-msgid "The <filename>policy.json</filename> file defines additional access controls that apply to the Identity service."
+#: ./doc/config-reference/identity/section_keystone-sample-conf-files.xml:30(para)
+msgid "For details, see the (<link href=\"http://docs.python.org/2/howto/logging.html#configuring-logging\">Python logging module documentation</link>)."
+msgstr ""
+
+#: ./doc/config-reference/identity/section_keystone-sample-conf-files.xml:38(para)
+msgid "Use the <filename>policy.json</filename> file to define additional access controls that apply to the Identity service."
+msgstr ""
+
+#: ./doc/config-reference/identity/section_keystone-sample-conf-files.xml:44(title)
+msgid "Domain-specific configuration"
+msgstr ""
+
+#: ./doc/config-reference/identity/section_keystone-sample-conf-files.xml:45(para)
+msgid "Identity enables you to configure domain-specific authentication drivers. For example, you can configure a domain to have its own LDAP or SQL server."
+msgstr ""
+
+#: ./doc/config-reference/identity/section_keystone-sample-conf-files.xml:48(para)
+msgid "By default, the option to configure domain-specific drivers is disabled."
+msgstr ""
+
+#: ./doc/config-reference/identity/section_keystone-sample-conf-files.xml:50(para)
+msgid "To enable domain-specific drivers, set these options in <literal>[identity]</literal> section in the <filename>keystone.conf</filename> file:"
+msgstr ""
+
+#: ./doc/config-reference/identity/section_keystone-sample-conf-files.xml:56(para)
+msgid "When you enable domain-specific drivers, Identity looks in the <option>domain_config_dir</option> directory for configuration files that are named as follows: <filename>keystone.<replaceable>DOMAIN_NAME</replaceable>.conf</filename>, where <replaceable>DOMAIN_NAME</replaceable> is the domain name."
+msgstr ""
+
+#: ./doc/config-reference/identity/section_keystone-sample-conf-files.xml:62(para)
+msgid "Any options that you define in the domain-specific configuration file override options in the primary configuration file for the specified domain. Any domain without a domain-specific configuration file uses only the options in the primary configuration file."
 msgstr ""
 
 #: ./doc/config-reference/object-storage/section_object-storage-cors.xml:6(title)
@@ -7418,12 +7446,8 @@ msgstr ""
 msgid "I ran the <literal>nova-manage service list</literal> command from my controller; however, I'm not seeing smiley faces for Hyper-V compute nodes, what do I do?"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_hyper-v.xml:355(link)
-msgid "here"
-msgstr ""
-
 #: ./doc/config-reference/compute/section_hypervisor_hyper-v.xml:353(emphasis)
-msgid "Verify that you are synchronized with a network time source. Instructions for configuring NTP on your Hyper-V compute node are located <placeholder-1/>"
+msgid "Verify that you are synchronized with a network time source. For instructions about how to configure NTP on your Hyper-V compute node, see <xref linkend=\"configure-ntp-hyper-v\"/>."
 msgstr ""
 
 #: ./doc/config-reference/compute/section_hypervisor_baremetal.xml:6(title)
