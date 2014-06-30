@@ -2,31 +2,30 @@
 <section xml:id="multi_backend" xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="1.0">
-    <title>Configure a multiple-storage back-end</title>
-    <para>With multiple storage back-ends configured, you can create
-        several back-end storage solutions serving the
-        same OpenStack Compute configuration. Basically, multi
-        back-end launches one <systemitem class="service"
-            >cinder-volume</systemitem> for each back-end.</para>
-    <para>In a multi back-end configuration, each back-end has a name
-            (<literal>volume_backend_name</literal>). Several
-        back-ends can have the same name. In that case, the scheduler
-        properly decides which back-end the volume has to be
-        created in.</para>
-    <para>The name of the back-end is declared as an
+    <title>Configure multiple-storage back ends</title>
+    <para>When you configure multiple-storage back ends, you can
+        create several back-end storage solutions that serve the same
+        OpenStack Compute configuration and one <systemitem class="service">cinder-volume</systemitem>
+        is launched for each back end.</para>
+    <para>In a multiple-storage back end configuration, each back end has a name
+            (<literal>volume_backend_name</literal>). Several back
+        ends can have the same name. In that case, the scheduler
+        properly decides which back end the volume has to be created
+        in.</para>
+    <para>The name of the back end is declared as an
         extra-specification of a volume type (such as,
             <literal>volume_backend_name=LVM_iSCSI</literal>). When a
-        volume is created, the scheduler chooses an appropriate
-        back-end to handle the request, according to the volume type
+        volume is created, the scheduler chooses an appropriate back
+        end to handle the request, according to the volume type
         specified by the user.</para>
     <simplesect>
-        <title>Enable multi back-end</title>
-        <para>To enable a multi back-end configuration, you must set
+        <title>Enable multiple-storage back ends</title>
+        <para>To enable a multiple-storage back ends, you must set
             the <option>enabled_backends</option> flag in the
                 <filename>cinder.conf</filename> file. This flag
             defines the names (separated by a comma) of the
-            configuration groups for the different back-ends: one name
-            is associated to one configuration group for a back-end
+            configuration groups for the different back ends: one name
+            is associated to one configuration group for a back end
             (such as, <literal>[lvmdriver-1]</literal>).</para>
         <note>
             <para>The configuration group name is not related to the
@@ -40,7 +39,7 @@
             used in a configuration group. Configuration values in the
                 <literal>[DEFAULT]</literal> configuration group are
             not used.</para>
-        <para>These examples show three back-ends:</para>
+        <para>These examples show three back ends:</para>
         <programlisting language="ini">enabled_backends=lvmdriver-1,lvmdriver-2,lvmdriver-3
 [lvmdriver-1]
 volume_group=cinder-volumes-1
@@ -57,51 +56,52 @@ volume_backend_name=LVM_iSCSI_b</programlisting>
         <para>In this configuration, <literal>lvmdriver-1</literal>
             and <literal>lvmdriver-2</literal> have the same
                 <literal>volume_backend_name</literal>. If a volume
-            creation requests the <literal>LVM_iSCSI</literal>
-            back-end name, the scheduler uses the capacity filter
-            scheduler to choose the most suitable driver, which is
-            either <literal>lvmdriver-1</literal> or
+            creation requests the <literal>LVM_iSCSI</literal> back
+            end name, the scheduler uses the capacity filter scheduler
+            to choose the most suitable driver, which is either
+                <literal>lvmdriver-1</literal> or
                 <literal>lvmdriver-2</literal>. The capacity filter
             scheduler is enabled by default. The next section provides
             more information. In addition, this example presents a
-                <literal>lvmdriver-3</literal> back-end.</para>
+                <literal>lvmdriver-3</literal> back end.</para>
     </simplesect>
     <simplesect>
-        <title>Configure Block Storage scheduler multi back-end</title>
+        <title>Configure Block Storage scheduler multi back
+            end</title>
         <para>You must enable the <option>filter_scheduler</option>
-            option to use multi back-end. Filter scheduler acts in two
-            steps:</para>
+            option to use multiple-storage back ends. The filter scheduler:</para>
         <orderedlist>
             <listitem>
-                <para>The filter scheduler filters the available
-                    back-ends. By default,
+                <para>Filters the available back
+                    ends. By default,
                         <literal>AvailabilityZoneFilter</literal>,
                         <literal>CapacityFilter</literal> and
                         <literal>CapabilitiesFilter</literal> are
                     enabled.</para>
             </listitem>
             <listitem>
-                <para>The filter scheduler weighs the previously
-                    filtered back-ends. By default,
-                        <literal>CapacityWeigher</literal> is enabled.
-                    The <literal>CapacityWeigher</literal> attributes
-                    higher scores to back-ends with the most
-                    available.</para>
+                <para>Weights the previously
+                    filtered back ends. By default, the
+                        <option>CapacityWeigher</option> option is
+                    enabled. When this option is enabled, the filter
+                    scheduler assigns the highest weight to back ends
+                    with the most available capacity.</para>
             </listitem>
         </orderedlist>
-        <para>The scheduler uses the filtering and weighing process to
-            pick the best back-end to handle the request, and
-            explicitly creates volumes on specific back-ends through
-            the use of volume types.</para>
+        <para>The scheduler uses filters and weights to pick the best
+            back end to handle the request. The scheduler uses volume
+            types to explicitly create volumes on specific back
+            ends.</para>
         <!-- TODO: when filter/weighing scheduler documentation will be up, a ref should be added here -->
     </simplesect>
     <simplesect>
         <title>Volume type</title>
         <para>Before using it, a volume type has to be declared to
-            Block Storage. This can be done by the following command:</para>
+            Block Storage. This can be done by the following
+            command:</para>
         <screen><prompt>$</prompt> <userinput>cinder --os-username admin --os-tenant-name admin type-create lvm</userinput></screen>
         <para>Then, an extra-specification has to be created to link
-            the volume type to a back-end name. Run this
+            the volume type to a back end name. Run this
             command:</para>
         <screen><prompt>$</prompt> <userinput>cinder --os-username admin --os-tenant-name admin type-key lvm set volume_backend_name=LVM_iSCSI</userinput></screen>
         <para>This example creates a <literal>lvm</literal> volume
@@ -112,7 +112,7 @@ volume_backend_name=LVM_iSCSI_b</programlisting>
         <screen><prompt>$</prompt> <userinput>cinder --os-username admin --os-tenant-name admin type-key lvm_gold set volume_backend_name=LVM_iSCSI_b</userinput></screen>
         <para>This second volume type is named
                 <literal>lvm_gold</literal> and has
-                <literal>LVM_iSCSI_b</literal> as back-end
+                <literal>LVM_iSCSI_b</literal> as back end
             name.</para>
         <note>
             <para>To list the extra-specifications, use this
@@ -125,14 +125,14 @@ volume_backend_name=LVM_iSCSI_b</programlisting>
                 not exist in the Block Storage configuration, the
                     <literal>filter_scheduler</literal> returns an
                 error that it cannot find a valid host with the
-                suitable back-end.</para>
+                suitable back end.</para>
         </note>
     </simplesect>
     <simplesect>
         <title>Usage</title>
         <para>When you create a volume, you must specify the volume
             type. The extra-specifications of the volume type are used
-            to determine which back-end has to be used.
+            to determine which back end has to be used.
             <screen><prompt>$</prompt> <userinput>cinder create --volume_type lvm --display_name test_multi_backend 1</userinput></screen>
             Considering the <literal>cinder.conf</literal> described
             previously, the scheduler creates this volume on
