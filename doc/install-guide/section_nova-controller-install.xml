@@ -1,0 +1,228 @@
+<section xmlns="http://docbook.org/ns/docbook"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+  xml:id="nova-controller-install">
+  <title>Install and configure controller node</title>
+  <para>This section describes how to install and configure the Compute
+    service, code-named nova, on the controller node.</para>
+  <procedure os="ubuntu;rhel;centos;fedora;sles;opensuse">
+    <title>To configure prerequisites</title>
+    <para>Before you install and configure Compute, you must create a database
+      and Identity service credentials including endpoints.</para>
+    <step>
+      <para>To create the database, complete these steps:</para>
+      <substeps>
+        <step>
+          <para>Use the database access client to connect to the database
+            server as the <literal>root</literal> user:</para>
+          <screen><prompt>$</prompt> <userinput>mysql -u root -p</userinput></screen>
+        </step>
+        <step>
+          <para>Create the <literal>nova</literal> database:</para>
+          <screen><prompt>mysql></prompt> <userinput>CREATE DATABASE nova;</userinput></screen>
+        </step>
+        <step>
+          <para>Grant proper access to the <literal>nova</literal>
+            database:</para>
+          <screen><prompt>mysql></prompt> <userinput>GRANT ALL PRIVILEGES ON nova.* TO 'nova'@'localhost' IDENTIFIED BY '<replaceable>NOVA_DBPASS</replaceable>';</userinput>
+<prompt>mysql></prompt> <userinput>GRANT ALL PRIVILEGES ON nova.* TO 'nova'@'%' IDENTIFIED BY '<replaceable>NOVA_DBPASS</replaceable>';</userinput></screen>
+          <para>Replace <replaceable>NOVA_DBPASS</replaceable> with a suitable
+        password.</para>
+        </step>
+        <step>
+          <para>Exit the database access client:</para>
+          <screen><prompt>mysql></prompt> <userinput>exit</userinput></screen>
+        </step>
+      </substeps>
+    </step>
+    <step>
+      <para>Source the <literal>admin</literal> credentials to gain access to
+        admin-only CLI commands:</para>
+      <screen><prompt>$</prompt> <userinput>source admin-openrc.sh</userinput></screen>
+    </step>
+    <step>
+      <para>To create the Identity service credentials, complete these
+        steps:</para>
+      <substeps>
+        <step>
+          <para>Create the <literal>nova</literal> user:</para>
+          <screen><prompt>$</prompt> <userinput>keystone user-create --name=nova --pass=<replaceable>NOVA_PASS</replaceable> --email=<replaceable>EMAIL_ADDRESS</replaceable></userinput></screen>
+          <para>Replace <replaceable>NOVA_PASS</replaceable> with a suitable
+            password and <replaceable>EMAIL_ADDRESS</replaceable> with
+            a suitable e-mail address.</para>
+        </step>
+        <step>
+          <para>Link the <literal>nova</literal> user to the
+            <literal>service</literal> tenant and <literal>admin</literal>
+            role:</para>
+          <screen><prompt>$</prompt> <userinput>keystone user-role-add --user=nova --tenant=service --role=admin</userinput></screen>
+        </step>
+        <step>
+          <para>Create the <literal>nova</literal> service:</para>
+          <screen><prompt>$</prompt> <userinput>keystone service-create --name=nova --type=compute --description="OpenStack Compute"</userinput></screen>
+        </step>
+      </substeps>
+    </step>
+    <step>
+      <para>Create the Compute service endpoints:</para>
+      <screen><prompt>$</prompt> <userinput>keystone endpoint-create \
+  --service-id=$(keystone service-list | awk '/ compute / {print $2}') \
+  --publicurl=http://<replaceable>controller</replaceable>:8774/v2/%\(tenant_id\)s \
+  --internalurl=http://<replaceable>controller</replaceable>:8774/v2/%\(tenant_id\)s \
+  --adminurl=http://<replaceable>controller</replaceable>:8774/v2/%\(tenant_id\)s</userinput></screen>
+    </step>
+  </procedure>
+  <procedure os="ubuntu;rhel;centos;fedora;sles;opensuse">
+    <title>To install and configure Compute controller components</title>
+    <step>
+      <para>Install the packages:</para>
+      <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install nova-api nova-cert nova-conductor nova-consoleauth \
+  nova-novncproxy nova-scheduler python-novaclient</userinput></screen>
+      <screen os="fedora;rhel;centos"><prompt>#</prompt> <userinput>yum install openstack-nova-api openstack-nova-cert openstack-nova-conductor \
+  openstack-nova-console openstack-nova-novncproxy openstack-nova-scheduler \
+  python-novaclient</userinput></screen>
+      <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-nova-api openstack-nova-scheduler \
+  openstack-nova-cert openstack-nova-conductor openstack-nova-console \
+  openstack-nova-consoleauth openstack-nova-novncproxy python-novaclient</userinput></screen>
+    </step>
+    <step>
+      <para>Edit the <filename>/etc/nova/nova.conf</filename> file and
+        complete the following actions:</para>
+      <substeps>
+        <step>
+          <para>In the <literal>[database]</literal> section, configure
+            database access:</para>
+          <programlisting language="ini">[database]
+...
+connection = mysql://nova:<replaceable>NOVA_DBPASS</replaceable>@controller/nova</programlisting>
+          <para>Replace <replaceable>NOVA_DBPASS</replaceable> with the
+            password you chose for the Compute database.</para>
+        </step>
+        <step>
+          <para>In the <literal>[DEFAULT]</literal> section, configure
+            <application>RabbitMQ</application> message broker access:</para>
+          <programlisting language="ini">[DEFAULT]
+...
+rpc_backend = rabbit
+rabbit_host = <replaceable>controller</replaceable>
+rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
+          <para>Replace <replaceable>RABBIT_PASS</replaceable> with the
+            password you chose for the <literal>guest</literal> account in
+            <application>RabbitMQ</application>.</para>
+        </step>
+        <step>
+          <para>In the <literal>[keystone_authtoken]</literal> section,
+            configure Identity service access:</para>
+          <programlisting language="ini">
+[keystone_authtoken]
+...
+auth_uri = http://<replaceable>controller</replaceable>:5000/v2.0
+auth_host = <replaceable>controller</replaceable>
+auth_port = 35357
+auth_protocol = http
+admin_tenant_name = service
+admin_user = nova
+admin_password = <replaceable>NOVA_PASS</replaceable></programlisting>
+          <para>Replace <replaceable>NOVA_PASS</replaceable> with the password
+            you chose for the <literal>nova</literal> user in the Identity
+            service.</para>
+        </step>
+        <step>
+          <para>In the <literal>[DEFAULT]</literal> section, configure the
+            <literal>my_ip</literal> key to use the management interface IP
+            address of the controller node:</para>
+          <programlisting language="ini">[DEFAULT]
+...
+my_ip = 10.0.0.11</programlisting>
+        </step>
+        <step>
+          <para>In the <literal>[DEFAULT]</literal> section, configure the
+            VNC proxy to use the management interface IP address of the
+            controller node:</para>
+          <programlisting language="ini">[DEFAULT]
+...
+vncserver_listen = 10.0.0.11
+vncserver_proxyclient_address = 10.0.0.11</programlisting>
+        </step>
+        <step>
+          <para>In the <literal>[DEFAULT]</literal> section, configure the
+            location of the Image Service:</para>
+          <programlisting language="ini">[DEFAULT]
+...
+glance_host = <replaceable>controller</replaceable></programlisting>
+        </step>
+      </substeps>
+    </step>
+    <step>
+      <para>Populate the Compute database:</para>
+      <screen><prompt>#</prompt> <userinput>su -s /bin/sh -c "nova-manage db sync" nova</userinput></screen>
+    </step>
+  </procedure>
+  <procedure os="debian">
+    <title>To install and configure the Compute controller components</title>
+    <step>
+      <para>Install the packages:</para>
+      <screen><prompt>#</prompt> <userinput>apt-get install nova-api nova-cert nova-conductor nova-consoleauth \
+  nova-novncproxy nova-scheduler python-novaclient</userinput></screen>
+    </step>
+    <step>
+      <para>Respond to prompts for
+        <link linkend="debconf-dbconfig-common">database management</link>,
+        <link linkend="debconf-keystone_authtoken">Identity service
+        credentials</link>,
+        <link linkend="debconf-api-endpoints">service endpoint
+        registration</link>, and
+        <link linkend="debconf-rabbitmq">message broker
+        credentials</link>.</para>
+    </step>
+    <step>
+      <para>Edit the <filename>/etc/nova/nova.conf</filename> file and
+        complete the following actions:</para>
+      <substeps>
+        <step>
+          <para>In the <literal>[DEFAULT]</literal> section, configure the VNC
+            proxy to use the management interface IP address of the controller
+            node:</para>
+          <programlisting language="ini">[DEFAULT]
+...
+vncserver_listen = 10.0.0.11
+vncserver_proxyclient_address = 10.0.0.11</programlisting>
+        </step>
+      </substeps>
+    </step>
+  </procedure>
+  <procedure>
+    <title>To finalize installation</title>
+    <step os="ubuntu;debian">
+      <para>Restart the Compute services:</para>
+      <screen><prompt>#</prompt> <userinput>service nova-api restart</userinput>
+<prompt>#</prompt> <userinput>service nova-cert restart</userinput>
+<prompt>#</prompt> <userinput>service nova-consoleauth restart</userinput>
+<prompt>#</prompt> <userinput>service nova-scheduler restart</userinput>
+<prompt>#</prompt> <userinput>service nova-conductor restart</userinput>
+<prompt>#</prompt> <userinput>service nova-novncproxy restart</userinput></screen>
+    </step>
+    <step os="rhel;centos;fedora;sles;opensuse">
+      <para>Start the Compute services and configure them to start when the
+        system boots:</para>
+      <screen><prompt>#</prompt> <userinput>service openstack-nova-api start</userinput>
+<prompt>#</prompt> <userinput>service openstack-nova-cert start</userinput>
+<prompt>#</prompt> <userinput>service openstack-nova-consoleauth start</userinput>
+<prompt>#</prompt> <userinput>service openstack-nova-scheduler start</userinput>
+<prompt>#</prompt> <userinput>service openstack-nova-conductor start</userinput>
+<prompt>#</prompt> <userinput>service openstack-nova-novncproxy start</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-nova-api on</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-nova-cert on</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-nova-consoleauth on</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-nova-scheduler on</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-nova-conductor on</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-nova-novncproxy on</userinput></screen>
+    </step>
+    <step os="ubuntu">
+      <para>By default, the Ubuntu packages create an SQLite database.</para>
+      <para>Because this configuration uses a SQL database server, you can
+        remove the SQLite database file:</para>
+      <screen><prompt>#</prompt> <userinput>rm /var/lib/nova/nova.sqlite</userinput></screen>
+    </step>
+  </procedure>
+</section>
