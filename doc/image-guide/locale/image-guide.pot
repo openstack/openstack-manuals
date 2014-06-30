@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-06-27 06:07+0000\n"
+"POT-Creation-Date: 2014-06-30 06:06+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -369,16 +369,214 @@ msgstr ""
 msgid "When you're done, clean up:<placeholder-1/>"
 msgstr ""
 
-#: ./doc/image-guide/section_freebsd-example.xml:8(title)
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: ./doc/image-guide/section_freebsd-example.xml:158(None)
+msgid "@@image: 'figures/freebsd-partitions.png'; md5=47dbba18dda83b095f370a71e1dc3413"
+msgstr ""
+
+#: ./doc/image-guide/section_freebsd-example.xml:10(title)
 msgid "Example: FreeBSD image"
 msgstr ""
 
-#: ./doc/image-guide/section_freebsd-example.xml:9(para)
-msgid "We do not yet have a fully documented example of how to create a FreeBSD image."
+#: ./doc/image-guide/section_freebsd-example.xml:11(para)
+msgid "This example creates a minimal FreeBSD image that is compatible with OpenStack and <application>bsd-cloudinit</application>. The <application>bsd-cloudinit</application> program is independently maintained and in active development. The best source of information on the current state of the project is at <link href=\"http://pellaeon.github.io/bsd-cloudinit/\">http://pellaeon.github.io/bsd-cloudinit</link>."
 msgstr ""
 
-#: ./doc/image-guide/section_freebsd-example.xml:11(para)
-msgid "See the <link href=\"http://pellaeon.github.io/bsd-cloudinit/\">bsd-cloudinit</link> project for information on how to build a FreeBSD VM image that works with OpenStack."
+#: ./doc/image-guide/section_freebsd-example.xml:19(para)
+msgid "KVM with virtio drivers is used as the virtualization platform because that is the most widely used among OpenStack operators. If you use a different platform for your cloud virtualization, use that same platform in the image creation step."
+msgstr ""
+
+#: ./doc/image-guide/section_freebsd-example.xml:23(para)
+msgid "This example shows how to create a FreeBSD 10 image. To create a FreeBSD 9.2 image, follow these steps with the noted differences."
+msgstr ""
+
+#: ./doc/image-guide/section_freebsd-example.xml:27(title)
+msgid "To create a FreeBSD image"
+msgstr ""
+
+#: ./doc/image-guide/section_freebsd-example.xml:29(para)
+msgid "Make a virtual drive:"
+msgstr ""
+
+#: ./doc/image-guide/section_freebsd-example.xml:31(para)
+msgid "The minimum supported disk size for FreeBSD is 1GB. Because the goal is to make the smallest possible base image, the example uses that minimum size. This size is sufficient to include the optional doc, games, and lib32 collections. To include the ports collection, add another 1GB. To include src, add 512MB."
+msgstr ""
+
+#: ./doc/image-guide/section_freebsd-example.xml:41(para)
+msgid "Get the installer ISO:"
+msgstr ""
+
+#: ./doc/image-guide/section_freebsd-example.xml:47(para)
+msgid "Launch a VM on your local workstation. Use the same hypervisor, virtual disk, and virtual network drivers as you use in your production environment."
+msgstr ""
+
+#: ./doc/image-guide/section_freebsd-example.xml:50(para)
+msgid "The following command uses the minimum amount of RAM, which is 128MB:"
+msgstr ""
+
+#: ./doc/image-guide/section_freebsd-example.xml:55(para)
+msgid "You can specify up to 1GB additional RAM to make the installation process run faster."
+msgstr ""
+
+#: ./doc/image-guide/section_freebsd-example.xml:57(para)
+msgid "This VM must also have Internet access to download packages."
+msgstr ""
+
+#: ./doc/image-guide/section_freebsd-example.xml:60(para)
+msgid "By using the same hypervisor, you can ensure that you emulate the same devices that exist in production. However, if you use full hardware virtualization instead of paravirtualization, you do not need to use the same hypervisor; you must use the same type of virtualized hardware because FreeBSD device names are related to their drivers. If the name of your root block device or primary network interface in production differs than the names used during image creation, errors can occur."
+msgstr ""
+
+#: ./doc/image-guide/section_freebsd-example.xml:70(para)
+msgid "You now have a VM that boots from the downloaded install ISO and is connected to the blank virtual disk that you created previously."
+msgstr ""
+
+#: ./doc/image-guide/section_freebsd-example.xml:75(para)
+msgid "To install the operating system, complete the following steps inside the VM:"
+msgstr ""
+
+#: ./doc/image-guide/section_freebsd-example.xml:79(para)
+msgid "When prompted, choose to run the ISO in <guibutton>Install</guibutton> mode."
+msgstr ""
+
+#: ./doc/image-guide/section_freebsd-example.xml:83(para)
+msgid "Accept the default keymap or select an appropriate mapping for your needs."
+msgstr ""
+
+#: ./doc/image-guide/section_freebsd-example.xml:87(para)
+msgid "Provide a host name for your image. If you use <application>bsd-cloudinit</application>, it overrides this value with the name provided by OpenStack when an instance boots from this image."
+msgstr ""
+
+#: ./doc/image-guide/section_freebsd-example.xml:93(para)
+msgid "When prompted about the optional <literal>doc</literal>, <literal>games</literal>, <literal>lib32</literal>, <literal>ports</literal>, and <literal>src</literal> system components, select only those that you need. It is possible to have a fully functional installation without selecting additional components selected. As noted previously, a minimal system with a 1GB virtual disk supports doc, games, and lib32 inclusive. The ports collection requires at least 1GB additional space and possibly more if you plan to install many ports. The src collection requires an additional 512MB."
+msgstr ""
+
+#: ./doc/image-guide/section_freebsd-example.xml:109(para)
+msgid "Configure the primary network interface to use DHCP. In this example, which uses a virtio network device, this interface is named <literal>vtnet0</literal>."
+msgstr ""
+
+#: ./doc/image-guide/section_freebsd-example.xml:114(para)
+msgid "Accept the default network mirror."
+msgstr ""
+
+#: ./doc/image-guide/section_freebsd-example.xml:117(para)
+msgid "Set up disk partitioning."
+msgstr ""
+
+#: ./doc/image-guide/section_freebsd-example.xml:118(para)
+msgid "Disk partitioning is a critical element of the image creation process and the auto-generated default partitioning scheme does not work with <application>bsd-cloudinit</application> at this time."
+msgstr ""
+
+#: ./doc/image-guide/section_freebsd-example.xml:123(para)
+msgid "Because the default does not work, you must select manual partitioning. The partition editor should list only one block device. If you use virtio for the disk device driver, it is named <literal>vtbd0</literal>. Select this device and run the <placeholder-1/> command three times:"
+msgstr ""
+
+#: ./doc/image-guide/section_freebsd-example.xml:131(para)
+msgid "Select <guibutton>Create</guibutton> to create a partition table. This action is the default when no partition table exists. Then, select <guilabel>GPT GUID Partition Table</guilabel> from the list. This choice is the default."
+msgstr ""
+
+#: ./doc/image-guide/section_freebsd-example.xml:140(para)
+msgid "First partition: A 64kB freebsd-boot partition with no mount point."
+msgstr ""
+
+#: ./doc/image-guide/section_freebsd-example.xml:145(para)
+msgid "Second partition: A <literal>freebsd-ufs</literal> partition with a mount point of <filename>/</filename> with all remaining free space."
+msgstr ""
+
+#: ./doc/image-guide/section_freebsd-example.xml:138(para)
+msgid "Create two partitions:<placeholder-1/>"
+msgstr ""
+
+#: ./doc/image-guide/section_freebsd-example.xml:153(para)
+msgid "The following figure shows a completed partition table with a 1GB virtual disk:"
+msgstr ""
+
+#: ./doc/image-guide/section_freebsd-example.xml:161(para)
+msgid "Select <guibutton>Finish</guibutton> and then <guibutton>Commit</guibutton> to commit your changes."
+msgstr ""
+
+#: ./doc/image-guide/section_freebsd-example.xml:165(para)
+msgid "If you modify this example, the root partition, which is mounted on <filename>/</filename>, must be the last partition on the drive so that it can expand at run time to the disk size that your instance type provides. Also note that <application>bsd-cloudinit</application> currently has a hard-coded assumption that this is the second partition."
+msgstr ""
+
+#: ./doc/image-guide/section_freebsd-example.xml:177(para)
+msgid "Select a root password."
+msgstr ""
+
+#: ./doc/image-guide/section_freebsd-example.xml:180(para)
+msgid "Select the CMOS time zone."
+msgstr ""
+
+#: ./doc/image-guide/section_freebsd-example.xml:181(para)
+msgid "The virtualized CMOS almost always stores its time in UTC, so unless you know otherwise, select UTC."
+msgstr ""
+
+#: ./doc/image-guide/section_freebsd-example.xml:185(para)
+msgid "Select the time zone appropriate to your environment."
+msgstr ""
+
+#: ./doc/image-guide/section_freebsd-example.xml:189(para)
+msgid "From the list of services to start on boot, you must select <systemitem class=\"service\">ssh</systemitem>. Optionally, select other services."
+msgstr ""
+
+#: ./doc/image-guide/section_freebsd-example.xml:194(para)
+msgid "Optionally, add users."
+msgstr ""
+
+#: ./doc/image-guide/section_freebsd-example.xml:195(para)
+msgid "You do not need to add users at this time. The <application>bsd-cloudinit</application> program adds a <literal>freebsd</literal> user account if one does not exist. The <systemitem class=\"service\">ssh</systemitem> keys for this user are associated with OpenStack. To customize this user account, you can create it now. For example, you might want to customize the shell for the user."
+msgstr ""
+
+#: ./doc/image-guide/section_freebsd-example.xml:204(title)
+msgid "Final config"
+msgstr ""
+
+#: ./doc/image-guide/section_freebsd-example.xml:205(para)
+msgid "This menu enables you to update previous settings. Check that the settings are correct, and click <guibutton>exit</guibutton>."
+msgstr ""
+
+#: ./doc/image-guide/section_freebsd-example.xml:210(para)
+msgid "After you exit, you can open a shell to complete manual configuration steps. Select <guibutton>Yes</guibutton> to make a few OpenStack-specific changes:"
+msgstr ""
+
+#: ./doc/image-guide/section_freebsd-example.xml:215(para)
+msgid "Set up the console:"
+msgstr ""
+
+#: ./doc/image-guide/section_freebsd-example.xml:217(para)
+msgid "This sets console output to go to the serial console, which is displayed by <placeholder-1/>, and the video console for sites with VNC or Spice configured."
+msgstr ""
+
+#: ./doc/image-guide/section_freebsd-example.xml:223(para)
+msgid "Minimize boot delay:"
+msgstr ""
+
+#: ./doc/image-guide/section_freebsd-example.xml:227(para)
+msgid "Download the latest <application>bsd-cloudinit-installer</application>. The download commands differ between FreeBSD 10.0 and 9.2 because of differences in how the <placeholder-1/> command handles HTTPS URLs."
+msgstr ""
+
+#: ./doc/image-guide/section_freebsd-example.xml:232(para)
+msgid "In FreeBSD 10.0 the <placeholder-1/> command verifies SSL peers by default, so you need to install the <package>ca_root_nss</package> package that contains certificate authority root certificates and tell <placeholder-2/> where to find them. For FreeBSD 10.0 run these commands:"
+msgstr ""
+
+#: ./doc/image-guide/section_freebsd-example.xml:241(para)
+msgid "FreeBSD 9.2 <placeholder-1/> does not support peer-verification for https. For FreeBSD 9.2, run this command:"
+msgstr ""
+
+#: ./doc/image-guide/section_freebsd-example.xml:247(para)
+msgid "Run the installer:"
+msgstr ""
+
+#: ./doc/image-guide/section_freebsd-example.xml:249(para)
+msgid "The installer installs necessary prerequisites and downloads and installs the latest <package>bsd-cloudinit</package>."
+msgstr ""
+
+#: ./doc/image-guide/section_freebsd-example.xml:254(para)
+msgid "Install <package>sudo</package> and configure the <literal>freebsd</literal> user to have passwordless access:"
+msgstr ""
+
+#: ./doc/image-guide/section_freebsd-example.xml:263(para)
+msgid "Power off the system:"
 msgstr ""
 
 #: ./doc/image-guide/ch_converting.xml:4(title)
