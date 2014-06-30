@@ -77,7 +77,7 @@ delay_auth_decision = true
 # auth_* settings refer to the Keystone server
 auth_protocol = http
 auth_host = <replaceable>controller</replaceable>
-auth_port = 35357
+auth_uri = http://controller:5000
 
 # the service tenant and swift username and password created in Keystone
 admin_tenant_name = service
@@ -101,6 +101,13 @@ use = egg:swift#healthcheck
                     <literallayout class="monospaced">10.1.2.3:11211,10.1.2.4:11211</literallayout>
                 <para>Only the proxy server uses memcache.</para>
             </note>
+            <warning>
+              <para><literal>keystoneclient.middleware.auth_token</literal>: You
+                must configure <literal>auth_uri</literal> to point to the public
+                identity endpoint. Otherwise, clients might not be able to
+                authenticate against an admin endpoint.
+              </para>
+              </warning>
         </step>
         <step>
             <para>Create the account, container, and object rings. The
