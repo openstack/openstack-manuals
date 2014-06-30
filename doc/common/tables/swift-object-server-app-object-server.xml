@@ -1,79 +1,101 @@
-<?xml version="1.0" encoding="UTF-8"?>
-    <!-- The tool that generated this table lives in the
-         openstack-doc-tools repository. The editions made in
-         this file will *not* be lost if you run the script again. -->
-    <para xmlns="http://docbook.org/ns/docbook" version="5.0">
-    <table rules="all">
-    <caption>Description of configuration options for <literal>[app:object-server]</literal> in <literal>object-server.conf-sample</literal></caption>
+<?xml version='1.0' encoding='UTF-8'?>
+<para xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <!-- The tool that generated this table lives in the
+     openstack-doc-tools repository. The editions made in
+     this file will *not* be lost if you run the script again. -->
+  <table rules="all">
+    <caption>Description of configuration options for
+        <literal>[app-object-server]</literal> in <literal>object-server.conf</literal>
+    </caption>
     <col width="50%"/>
     <col width="50%"/>
     <thead>
-        <tr>
-            <th>Configuration option = Default value</th>
-            <th>Description</th>
-        </tr>
+      <tr>
+        <th>Configuration option = Default value</th>
+        <th>Description</th>
+      </tr>
     </thead>
     <tbody>
-        <tr>
-            <td>use = egg:swift#object</td><td>Entry point of paste.deploy in the server</td>
-        </tr>
-        <tr>
-            <td>set log_name = object-server</td><td>Label to use when logging</td>
-        </tr>
-        <tr>
-            <td>set log_facility = LOG_LOCAL0</td><td>Syslog log facility</td>
-        </tr>
-        <tr>
-            <td>set log_level = INFO</td><td>Log level</td>
-        </tr>
-        <tr>
-            <td>set log_requests = true</td><td>Whether or not to log requests</td>
-        </tr>
-        <tr>
-            <td>set log_address = /dev/log</td><td>Location where syslog sends the logs to</td>
-        </tr>
-        <tr>
-            <td>max_upload_time = 86400</td><td>Maximum time allowed to upload an object</td>
-        </tr>
-        <tr>
-            <td>slow = 0</td><td>If > 0, Minimum time in seconds for a PUT or DELETE request to complete</td>
-        </tr>
-        <tr>
-            <td>keep_cache_size = 5424880</td><td>Largest object size to keep in buffer cache</td>
-        </tr>
-        <tr>
-            <td>keep_cache_private = false</td><td>Allow non-public objects to stay in kernel's buffer cache</td>
-        </tr>
-        <tr>
-            <td>mb_per_sync = 512</td><td>On PUT requests, sync file every n MB</td>
-        </tr>
-        <tr>
-            <td>allowed_headers = Content-Disposition, Content-Encoding, X-Delete-At, X-Object-Manifest, X-Static-Large-Object</td><td>Comma-separated list of headers that can be set in metadata of an object</td>
-        </tr>
-        <tr>
-            <td>auto_create_account_prefix = .</td><td>Prefix to use when automatically creating accounts</td>
-        </tr>
-        <tr>
-            <td>threads_per_disk = 0</td><td>Size of the per-disk thread pool used for performing disk I/O. The default of 0 means to not use a per-disk thread pool. It is recommended to keep this value small, as large values can result in high read latencies due to large queue depths. A good starting point is 4 threads per disk.</td>
-        </tr>
-        <tr>
-            <td>replication_server = false</td><td>If defined, tells server how to handle replication verbs in requests. When set to True (or 1), only replication verbs will be accepted. When set to False, replication verbs will be rejected. When undefined, server will accept any verb in the request.</td>
-        </tr>
-        <tr>
-            <td>replication_concurrency = 4</td><td>Set to restrict the number of concurrent incoming REPLICATION requests; set to 0 for unlimited</td>
-        </tr>
-        <tr>
-            <td>replication_one_per_device = True</td><td>Restricts incoming REPLICATION requests to one per device, replication_currency above allowing. This can help control I/O to each device, but you may wish to set this to False to allow multiple REPLICATION requests (up to the above replication_concurrency setting) per device.</td>
-        </tr>
-        <tr>
-            <td>replication_lock_timeout = 15</td><td>Number of seconds to wait for an existing replication device lock before giving up.</td>
-        </tr>
-        <tr>
-            <td>replication_failure_threshold = 100</td><td>The number of subrequest failures before the replication_failure_ratio is checked</td>
-        </tr>
-        <tr>
-            <td>replication_failure_ratio = 1.0</td><td>If the value of failures / successes of REPLICATION subrequests exceeds this ratio, the overall REPLICATION request will be aborted</td>
-        </tr>
+      <tr>
+        <td>allowed_headers = Content-Disposition, Content-Encoding, X-Delete-At, X-Object-Manifest, X-Static-Large-Object</td>
+        <td>Comma-separated list of headers that can be set in metadata of an object</td>
+      </tr>
+      <tr>
+        <td>auto_create_account_prefix = .</td>
+        <td>Prefix to use when automatically creating accounts</td>
+      </tr>
+      <tr>
+        <td>keep_cache_private = false</td>
+        <td>Allow non-public objects to stay in kernel's buffer cache</td>
+      </tr>
+      <tr>
+        <td>keep_cache_size = 5424880</td>
+        <td>Largest object size to keep in buffer cache</td>
+      </tr>
+      <tr>
+        <td>max_upload_time = 86400</td>
+        <td>Maximum time allowed to upload an object</td>
+      </tr>
+      <tr>
+        <td>mb_per_sync = 512</td>
+        <td>On PUT requests, sync file every n MB</td>
+      </tr>
+      <tr>
+        <td>replication_concurrency = 4</td>
+        <td>Set to restrict the number of concurrent incoming REPLICATION requests; set to 0 for unlimited</td>
+      </tr>
+      <tr>
+        <td>replication_failure_ratio = 1.0</td>
+        <td>If the value of failures / successes of REPLICATION subrequests exceeds this ratio, the overall REPLICATION request will be aborted</td>
+      </tr>
+      <tr>
+        <td>replication_failure_threshold = 100</td>
+        <td>The number of subrequest failures before the replication_failure_ratio is checked</td>
+      </tr>
+      <tr>
+        <td>replication_lock_timeout = 15</td>
+        <td>Number of seconds to wait for an existing replication device lock before giving up.</td>
+      </tr>
+      <tr>
+        <td>replication_one_per_device = True</td>
+        <td>Restricts incoming REPLICATION requests to one per device, replication_currency above allowing. This can help control I/O to each device, but you may wish to set this to False to allow multiple REPLICATION requests (up to the above replication_concurrency setting) per device.</td>
+      </tr>
+      <tr>
+        <td>replication_server = false</td>
+        <td>If defined, tells server how to handle replication verbs in requests. When set to True (or 1), only replication verbs will be accepted. When set to False, replication verbs will be rejected. When undefined, server will accept any verb in the request.</td>
+      </tr>
+      <tr>
+        <td>set log_address = /dev/log</td>
+        <td>Location where syslog sends the logs to</td>
+      </tr>
+      <tr>
+        <td>set log_facility = LOG_LOCAL0</td>
+        <td>Syslog log facility</td>
+      </tr>
+      <tr>
+        <td>set log_level = INFO</td>
+        <td>Log level</td>
+      </tr>
+      <tr>
+        <td>set log_name = object-server</td>
+        <td>Label to use when logging</td>
+      </tr>
+      <tr>
+        <td>set log_requests = true</td>
+        <td>Whether or not to log requests</td>
+      </tr>
+      <tr>
+        <td>slow = 0</td>
+        <td>If &gt; 0, Minimum time in seconds for a PUT or DELETE request to complete</td>
+      </tr>
+      <tr>
+        <td>threads_per_disk = 0</td>
+        <td>Size of the per-disk thread pool used for performing disk I/O. The default of 0 means to not use a per-disk thread pool. It is recommended to keep this value small, as large values can result in high read latencies due to large queue depths. A good starting point is 4 threads per disk.</td>
+      </tr>
+      <tr>
+        <td>use = egg:swift#object</td>
+        <td>Entry point of paste.deploy in the server</td>
+      </tr>
     </tbody>
-    </table>
-    </para>
+  </table>
+</para>

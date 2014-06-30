@@ -5,7 +5,6 @@ auth_encryption_key crypt
 backdoor_port debug
 cloud_backend clients_backends
 control_exchange amqp
-db_backend database
 debug debug
 default_log_levels logging
 default_notification_level amqp
@@ -29,6 +28,7 @@ instance_format logging
 instance_user common
 instance_uuid_format logging
 keystone_backend common
+kombu_reconnect_delay rabbitmq
 kombu_ssl_ca_certs rabbitmq
 kombu_ssl_certfile rabbitmq
 kombu_ssl_keyfile rabbitmq
@@ -56,11 +56,14 @@ max_template_size quota
 memcached_servers auth_token
 notification_driver amqp
 notification_topics amqp
+num_engine_workers api
 onready notification
+password rpc
 periodic_interval common
 plugin_dirs common
 policy_default_rule api
 policy_file api
+port rpc
 publish_errors notification
 qpid_heartbeat qpid
 qpid_hostname qpid
@@ -75,6 +78,7 @@ qpid_username qpid
 rabbit_ha_queues rabbitmq
 rabbit_host rabbitmq
 rabbit_hosts rabbitmq
+rabbit_login_method rabbitmq
 rabbit_max_retries rabbitmq
 rabbit_password rabbitmq
 rabbit_port rabbitmq
@@ -97,16 +101,16 @@ rpc_zmq_matchmaker zeromq
 rpc_zmq_port zeromq
 rpc_zmq_topic_backlog zeromq
 secure_proxy_ssl_header api
-sqlite_db database
-sqlite_synchronous database
 stack_action_timeout api
 stack_domain_admin api
 stack_domain_admin_password api
 stack_user_domain api
 syslog_log_facility logging
+transport_url rpc
 trusts_delegated_roles api
 use_stderr logging
 use_syslog logging
+use_syslog_rfc_format logging
 verbose logging
 auth_password/allowed_auth_uris api
 auth_password/multi_cloud api
@@ -125,6 +129,11 @@ clients_cinder/cert_file clients_cinder
 clients_cinder/endpoint_type clients_cinder
 clients_cinder/insecure clients_cinder
 clients_cinder/key_file clients_cinder
+clients_glance/ca_file clients_glance
+clients_glance/cert_file clients_glance
+clients_glance/endpoint_type clients_glance
+clients_glance/insecure clients_glance
+clients_glance/key_file clients_glance
 clients_heat/ca_file clients_heat
 clients_heat/cert_file clients_heat
 clients_heat/endpoint_type clients_heat
@@ -144,6 +153,7 @@ clients_neutron/key_file clients_neutron
 clients_nova/ca_file clients_nova
 clients_nova/cert_file clients_nova
 clients_nova/endpoint_type clients_nova
+clients_nova/http_log_debug clients_nova
 clients_nova/insecure clients_nova
 clients_nova/key_file clients_nova
 clients_swift/ca_file clients_swift
@@ -160,14 +170,21 @@ database/backend database
 database/connection database
 database/connection_debug database
 database/connection_trace database
+database/db_inc_retry_interval database
+database/db_max_retries database
+database/db_max_retry_interval database
+database/db_retry_interval database
 database/idle_timeout database
 database/max_overflow database
 database/max_pool_size database
 database/max_retries database
 database/min_pool_size database
+database/mysql_sql_mode database
 database/pool_timeout database
 database/retry_interval database
-database/slave_connection database
+database/sqlite_db database
+database/sqlite_synchronous database
+database/use_db_reconnect database
 ec2authtoken/allowed_auth_uris api
 ec2authtoken/auth_uri api
 ec2authtoken/multi_cloud api
@@ -205,10 +222,13 @@ keystone_authtoken/auth_version auth_token
 keystone_authtoken/cache auth_token
 keystone_authtoken/cafile auth_token
 keystone_authtoken/certfile auth_token
+keystone_authtoken/check_revocations_for_cached auth_token
 keystone_authtoken/delay_auth_decision auth_token
 keystone_authtoken/enforce_token_bind auth_token
+keystone_authtoken/hash_algorithms auth_token
 keystone_authtoken/http_connect_timeout auth_token
 keystone_authtoken/http_request_max_retries auth_token
+keystone_authtoken/identity_uri auth_token
 keystone_authtoken/include_service_catalog auth_token
 keystone_authtoken/insecure auth_token
 keystone_authtoken/keyfile auth_token
@@ -218,14 +238,10 @@ keystone_authtoken/memcached_servers auth_token
 keystone_authtoken/revocation_cache_time auth_token
 keystone_authtoken/signing_dir auth_token
 keystone_authtoken/token_cache_time auth_token
-matchmaker_redis/host redis
-matchmaker_redis/password redis
-matchmaker_redis/port redis
 matchmaker_ring/ringfile rpc
 paste_deploy/api_paste_config api
 paste_deploy/flavor api
 revision/heat_revision common
-rpc_notifier2/topics rpc
 ssl/ca_file api cfn_api cloudwatch_api
 ssl/cert_file api cfn_api cloudwatch_api
 ssl/key_file api cfn_api cloudwatch_api
