@@ -206,4 +206,172 @@
           </step>
       </procedure>
   </section>
+  <section xml:id="backup_db">
+    <title>Backup and restore a database</title>
+    <para>You can use Database services to backup a database and store the backup artifact in the Object Storage module. Later on, if the original database is damaged, you can use the backup artifact to restore the database. The restore process creates a new database instance.</para>
+    <para>This example shows you how to backup and restore a MySQL database.</para>
+    <procedure>
+      <title>To backup and restore a database</title>
+      <step>
+        <formalpara>
+          <title>Backup the database instance.</title>
+          <para>As background, assume that you have <link linkend="create_db">created a database instance</link> with the following characteristics:</para>
+        </formalpara>
+        <itemizedlist>
+          <listitem>
+            <para>Name of the database instance: <literal>guest1</literal></para>
+        </listitem>
+          <listitem>
+            <para>Flavor ID: <literal>10</literal></para>
+        </listitem>
+          <listitem>
+            <para>Root volume size: <literal>2</literal></para>
+        </listitem>
+          <listitem>
+            <para>Databases: <literal>db1</literal> and <literal>db2</literal></para>
+        </listitem>
+          <listitem>
+            <para>Users: One user named <literal>user1</literal> with a password of <literal>password</literal></para>
+        </listitem>
+      </itemizedlist>
+      <para>First, get the ID of the <literal>guest1</literal> database instance by using the trove <command>list</command> command:</para>
+<screen><prompt>$</prompt> <userinput>trove list</userinput>
+<computeroutput>+--------------------------------------+--------+-----------+-------------------+--------+-----------+------+
+|                  id                  |  name  | datastore | datastore_version | status | flavor_id | size |
++--------------------------------------+--------+-----------+-------------------+--------+-----------+------+
+| 97b4b853-80f6-414f-ba6f-c6f455a79ae6 | guest1 |   mysql   |     mysql-5.5     | ACTIVE |     10    |  2   |
++--------------------------------------+--------+-----------+-------------------+--------+-----------+------+</computeroutput></screen>
+      <para>Backup the database instance by using the trove <command>backup-create</command> command. In this example, the backup is called <literal>backup1</literal>. In this example, you would replace <replaceable>INSTANCE_ID</replaceable> with 97b4b853-80f6-414f-ba6f-c6f455a79ae6:</para>
+<screen><prompt>$</prompt> <userinput>trove backup-create backup1 <replaceable>INSTANCE_ID</replaceable></userinput>
+<computeroutput>+-------------+--------------------------------------+
+|   Property  |                Value                 |
++-------------+--------------------------------------+
+|   created   |         2014-03-18T17:09:07          |
+| description |                 None                 |
+|      id     | 8af30763-61fd-4aab-8fe8-57d528911138 |
+| instance_id | 97b4b853-80f6-414f-ba6f-c6f455a79ae6 |
+| locationRef |                 None                 |
+|     name    |               backup1                |
+|  parent_id  |                 None                 |
+|     size    |                 None                 |
+|    status   |                 NEW                  |
+|   updated   |         2014-03-18T17:09:07          |
++-------------+--------------------------------------+</computeroutput></screen>
+      <para>Note that the command returns both the ID of the original instance (<literal>instance_id</literal>) and the ID of the backup artifact (<literal>id</literal>).</para>
+      <para>Later on, you can obtain this same information by using the trove <command>backup-list</command> command:</para>
+<screen><prompt>$</prompt> <userinput>trove backup-list</userinput>
+<computeroutput>+--------------------------------------+--------------------------------------+---------+-----------+-----------+---------------------+
+|                  id                  |             instance_id              |   name  |   status  | parent_id |       updated       |
++--------------------------------------+--------------------------------------+---------+-----------+-----------+---------------------+
+| 8af30763-61fd-4aab-8fe8-57d528911138 | 97b4b853-80f6-414f-ba6f-c6f455a79ae6 | backup1 | COMPLETED |    None   | 2014-03-18T17:09:11 |
++--------------------------------------+--------------------------------------+---------+-----------+-----------+---------------------+</computeroutput></screen>
+      <para>You can get additional information about the backup by using the trove <command>backup-show</command> command and passing in the <replaceable>BACKUP_ID</replaceable>, which in this case is 8af30763-61fd-4aab-8fe8-57d528911138.</para>
+<screen><prompt>$</prompt> <userinput>trove backup-show <replaceable>BACKUP_ID</replaceable></userinput>
+<computeroutput>+-------------+-------------------------------------------------------------------------------------------------------------------------------------+
+|   Property  |                                                                Value                                                                |
++-------------+-------------------------------------------------------------------------------------------------------------------------------------+
+|   created   |                                                         2014-03-18T17:09:07                                                         |
+| description |                                                                 None                                                                |
+|      id     |                                                 8af30763-61fd-4aab-8fe8-57d528911138                                                |
+| instance_id |                                                 97b4b853-80f6-414f-ba6f-c6f455a79ae6                                                |
+| locationRef | http://10.0.0.1:8080/v1/AUTH_626734041baa4254ae316de52a20b390/database_backups/8af30763-61fd-4aab-8fe8-57d528911138.xbstream.gz.enc |
+|     name    |                                                               backup1                                                               |
+|  parent_id  |                                                                 None                                                                |
+|     size    |                                                                 0.17                                                                |
+|    status   |                                                              COMPLETED                                                              |
+|   updated   |                                                         2014-03-18T17:09:11                                                         |
++-------------+-------------------------------------------------------------------------------------------------------------------------------------+</computeroutput></screen>
+    </step>
+    <step>
+      <formalpara>
+        <title>Restore a database instance.</title>
+        <para>Now assume that your <literal>guest1</literal> database instance is damaged and you need to restore it. In this example, you use the trove <command>create</command> command to create a new database instance called <literal>guest2</literal>.</para>
+      </formalpara>
+      <itemizedlist>
+        <listitem>
+          <para>You specify that the new <literal>guest2</literal> instance has the same flavor (<literal>10</literal>) and the same root volume size (<literal>2</literal>) as the original <literal>guest1</literal> instance.</para>
+        </listitem>
+        <listitem>
+          <para>You use the <code>--backup</code> argument to indicate that this new instance is based on the backup artifact identified by <replaceable>BACKUP_ID</replaceable>. In this example, you would replace <replaceable>BACKUP_ID</replaceable> with 8af30763-61fd-4aab-8fe8-57d528911138.</para>
+        </listitem>
+      </itemizedlist>
+<screen><prompt>$</prompt> <userinput>trove create guest2 10 --size 2 --backup <replaceable>BACKUP_ID</replaceable></userinput>
+<computeroutput>+-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|      Property     |                                                                                                     Value                                                                                                      |
++-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|      created      |                                                                                              2014-03-18T17:12:03                                                                                               |
+|     datastore     |                                                                                 {u'version': u'mysql-5.5', u'type': u'mysql'}                                                                                  |
+| datastore_version |                                                                                                   mysql-5.5                                                                                                    |
+|       flavor      | {u'id': u'10', u'links': [{u'href': u'https://10.125.1.135:8779/v1.0/626734041baa4254ae316de52a20b390/flavors/10', u'rel': u'self'}, {u'href': u'https://10.125.1.135:8779/flavors/10', u'rel': u'bookmark'}]} |
+|         id        |                                                                                      ac7a2b35-a9b4-4ff6-beac-a1bcee86d04b                                                                                      |
+|        name       |                                                                                                     guest2                                                                                                     |
+|       status      |                                                                                                     BUILD                                                                                                      |
+|      updated      |                                                                                              2014-03-18T17:12:03                                                                                               |
+|       volume      |                                                                                                  {u'size': 2}                                                                                                  |
++-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+</computeroutput></screen>
+    </step>
+    <step>
+      <formalpara>
+        <title>Verify backup.</title>
+        <para>Now check that the new <literal>guest2</literal> instance has the same characteristics as the original <literal>guest1</literal> instance.</para>
+      </formalpara>
+      <para>Start by getting the ID of the new <literal>guest2</literal> instance.</para>
+<screen><prompt>$</prompt> <userinput>trove list</userinput>
+<computeroutput>+--------------------------------------+--------+-----------+-------------------+--------+-----------+------+
+|                  id                  |  name  | datastore | datastore_version | status | flavor_id | size |
++--------------------------------------+--------+-----------+-------------------+--------+-----------+------+
+| 97b4b853-80f6-414f-ba6f-c6f455a79ae6 | guest1 |   mysql   |     mysql-5.5     | ACTIVE |     10    |  2   |
+| ac7a2b35-a9b4-4ff6-beac-a1bcee86d04b | guest2 |   mysql   |     mysql-5.5     | ACTIVE |     10    |  2   |
++--------------------------------------+--------+-----------+-------------------+--------+-----------+------+</computeroutput></screen>
+      <para>Use the trove <command>show</command> command to display information about the new guest2 instance. Pass in guest2's <replaceable>INSTANCE_ID</replaceable>, which in this case is ac7a2b35-a9b4-4ff6-beac-a1bcee86d04b.</para>
+<screen><prompt>$</prompt> <userinput>trove show <replaceable>INSTANCE_ID</replaceable></userinput>
+<computeroutput>+-------------------+--------------------------------------+
+|      Property     |                Value                 |
++-------------------+--------------------------------------+
+|      created      |         2014-03-18T17:12:03          |
+|     datastore     |                mysql                 |
+| datastore_version |              mysql-5.5               |
+|       flavor      |                  10                  |
+|         id        | ac7a2b35-a9b4-4ff6-beac-a1bcee86d04b |
+|         ip        |               10.0.0.3               |
+|        name       |                guest2                |
+|       status      |                ACTIVE                |
+|      updated      |         2014-03-18T17:12:06          |
+|       volume      |                  2                   |
+|    volume_used    |                 0.18                 |
++-------------------+--------------------------------------+</computeroutput></screen>
+      <para>Note that the datastore, flavor ID and volume size are the same as the original <literal>guest1</literal> instance.</para>
+      <para>Use the trove <command>database-list</command> command to check that the original databases (<literal>db1</literal> and <literal>db2</literal>) are present on the restored instance.</para>
+<screen><prompt>$</prompt> <userinput>trove database-list <replaceable>INSTANCE_ID</replaceable></userinput>
+<computeroutput>+--------------------+
+|        name        |
++--------------------+
+|        db1         |
+|        db2         |
+| performance_schema |
+|        test        |
++--------------------+</computeroutput></screen>
+      <para>Use the trove <command>user-list</command> command to check that the original user (<literal>user1</literal>) is present on the restored instance.</para>
+<screen><prompt>$</prompt> <userinput>trove user-list <replaceable>INSTANCE_ID</replaceable></userinput>
+<computeroutput>+--------+------+-----------+
+|  name  | host | databases |
++--------+------+-----------+
+| user1  |  %   |  db1, db2 |
++--------+------+-----------+</computeroutput></screen>
+    </step>
+    <step>
+      <formalpara>
+        <title>Notify users.</title>
+        <para>Tell the users who were accessing the now-disabled <literal>guest1</literal> database instance that they can now access <literal>guest2</literal>. Provide them with <literal>guest2</literal>'s name, IP address, and any other information they might need. (You can get this information by using the trove <command>show</command> command as listed above.)</para>
+      </formalpara>
+    </step>
+    <step>
+      <formalpara>
+        <title>Clean up.</title>
+        <para>At this point, you may also want to delete the disabled <literal>guest1</literal> instance, by using the trove <command>delete</command> command.</para>
+      </formalpara>
+<screen><prompt>$</prompt> <userinput>trove delete <replaceable>INSTANCE_ID</replaceable></userinput></screen>
+    </step>
+    </procedure>
+  </section>
 </section>
