@@ -56,7 +56,7 @@ bind_port = 8080
 user = swift
 
 [pipeline:main]
-pipeline = healthcheck cache authtoken keystoneauth proxy-server
+pipeline = catch_errors gatekeeper healthcheck proxy-logging cache authtoken keystoneauth proxy-logging proxy-server
 
 [app:proxy-server]
 use = egg:swift#proxy
@@ -84,14 +84,22 @@ admin_tenant_name = service
 admin_user = swift
 admin_password = <replaceable>SWIFT_PASS</replaceable>
 
+[filter:healthcheck]
+use = egg:swift#healthcheck
+
 [filter:cache]
 use = egg:swift#memcache
+set log_name = cache
 
 [filter:catch_errors]
 use = egg:swift#catch_errors
 
-[filter:healthcheck]
-use = egg:swift#healthcheck
+[filter:gatekeeper]
+use = egg:swift#gatekeeper
+
+[filter:proxy-logging]
+use = egg:swift#proxy_logging
+
 </programlisting>
             <note>
                 <para>If you run multiple memcache servers, put the
