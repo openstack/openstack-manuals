@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenStack Manuals\n"
-"POT-Creation-Date: 2014-06-30 04:51+0000\n"
-"PO-Revision-Date: 2014-06-30 04:52+0000\n"
+"POT-Creation-Date: 2014-06-30 19:20+0000\n"
+"PO-Revision-Date: 2014-06-30 22:52+0000\n"
 "Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
 "Language-Team: Japanese (http://www.transifex.com/projects/p/openstack-manuals-i18n/language/ja/)\n"
 "MIME-Version: 1.0\n"
@@ -93,6 +93,7 @@ msgstr "このセクションは、コントローラーノードに OpenStack I
 
 #: ./doc/install-guide/section_keystone-install.xml10(title)
 #: ./doc/install-guide/section_keystone-install.xml35(title)
+#: ./doc/install-guide/section_nova-controller-install.xml9(title)
 #: ./doc/install-guide/section_glance-install.xml16(title)
 #: ./doc/install-guide/section_heat-install.xml9(title)
 msgid "To configure prerequisites"
@@ -162,6 +163,7 @@ msgid ""
 msgstr "<replaceable>ADMIN_TOKEN</replaceable> を前の手順で生成したランダム値で置き換えます。"
 
 #: ./doc/install-guide/section_keystone-install.xml64(para)
+#: ./doc/install-guide/section_nova-controller-install.xml93(para)
 #: ./doc/install-guide/section_glance-install.xml95(para)
 #: ./doc/install-guide/section_glance-install.xml143(para)
 #: ./doc/install-guide/section_heat-install.xml82(para)
@@ -187,13 +189,6 @@ msgstr "<literal>[database]</literal> セクションに、データベースの
 #: ./doc/install-guide/section_ceilometer-nova.xml86(replaceable)
 #: ./doc/install-guide/section_ceilometer-nova.xml102(replaceable)
 #: ./doc/install-guide/section_ceilometer-nova.xml117(replaceable)
-#: ./doc/install-guide/section_nova-controller.xml44(replaceable)
-#: ./doc/install-guide/section_nova-controller.xml132(replaceable)
-#: ./doc/install-guide/section_nova-controller.xml133(replaceable)
-#: ./doc/install-guide/section_nova-controller.xml144(replaceable)
-#: ./doc/install-guide/section_nova-controller.xml161(replaceable)
-#: ./doc/install-guide/section_nova-controller.xml162(replaceable)
-#: ./doc/install-guide/section_nova-controller.xml163(replaceable)
 #: ./doc/install-guide/section_basics-networking-neutron.xml277(replaceable)
 #: ./doc/install-guide/section_basics-networking-neutron.xml321(replaceable)
 #: ./doc/install-guide/section_neutron-ovs-compute-node.xml143(replaceable)
@@ -221,6 +216,13 @@ msgstr "<literal>[database]</literal> セクションに、データベースの
 #: ./doc/install-guide/section_ceilometer-install.xml240(replaceable)
 #: ./doc/install-guide/section_basics-ntp.xml72(replaceable)
 #: ./doc/install-guide/ch_clients.xml42(replaceable)
+#: ./doc/install-guide/section_nova-controller-install.xml70(replaceable)
+#: ./doc/install-guide/section_nova-controller-install.xml71(replaceable)
+#: ./doc/install-guide/section_nova-controller-install.xml72(replaceable)
+#: ./doc/install-guide/section_nova-controller-install.xml107(replaceable)
+#: ./doc/install-guide/section_nova-controller-install.xml119(replaceable)
+#: ./doc/install-guide/section_nova-controller-install.xml120(replaceable)
+#: ./doc/install-guide/section_nova-controller-install.xml152(replaceable)
 #: ./doc/install-guide/section_glance-install.xml77(replaceable)
 #: ./doc/install-guide/section_glance-install.xml78(replaceable)
 #: ./doc/install-guide/section_glance-install.xml79(replaceable)
@@ -403,6 +405,7 @@ msgid "Register the Identity service in the catalog:"
 msgstr "Identity をカタログに登録します。"
 
 #: ./doc/install-guide/section_keystone-install.xml185(title)
+#: ./doc/install-guide/section_nova-controller-install.xml195(title)
 #: ./doc/install-guide/section_glance-install.xml209(title)
 #: ./doc/install-guide/section_neutron-ml2-controller-node.xml418(title)
 #: ./doc/install-guide/section_heat-install.xml180(title)
@@ -424,6 +427,7 @@ msgid "By default, the Ubuntu packages create a SQLite database."
 msgstr "Ubuntu パッケージは、デフォルトで SQLite データベースを作成します。"
 
 #: ./doc/install-guide/section_keystone-install.xml199(para)
+#: ./doc/install-guide/section_nova-controller-install.xml223(para)
 #: ./doc/install-guide/section_glance-install.xml225(para)
 #: ./doc/install-guide/section_heat-install.xml199(para)
 msgid ""
@@ -716,12 +720,11 @@ msgstr "<filename>/etc/cinder/cinder.conf</filename> ファイルの <literal>[D
 #: ./doc/install-guide/section_cinder-controller.xml142(replaceable)
 #: ./doc/install-guide/section_ceilometer-nova.xml76(replaceable)
 #: ./doc/install-guide/section_ceilometer-nova.xml80(replaceable)
-#: ./doc/install-guide/section_nova-controller.xml63(replaceable)
-#: ./doc/install-guide/section_nova-controller.xml71(replaceable)
 #: ./doc/install-guide/section_neutron-ovs-compute-node.xml198(replaceable)
 #: ./doc/install-guide/section_neutron-ovs-compute-node.xml207(replaceable)
 #: ./doc/install-guide/section_ceilometer-install.xml146(replaceable)
 #: ./doc/install-guide/section_ceilometer-install.xml149(replaceable)
+#: ./doc/install-guide/section_nova-controller-install.xml108(replaceable)
 #: ./doc/install-guide/section_glance-install.xml110(replaceable)
 #: ./doc/install-guide/section_cinder-node.xml153(replaceable)
 #: ./doc/install-guide/section_cinder-node.xml166(replaceable)
@@ -1307,164 +1310,6 @@ msgstr "ログディレクトリを設定します。"
 msgid "Start the service and configure it to start when the system boots:"
 msgstr "サービスを起動し、システム起動時に起動するよう設定します。"
 
-#: ./doc/install-guide/section_nova-controller.xml5(title)
-msgid "Install Compute controller services"
-msgstr "Compute コントローラーサービスのインストール"
-
-#: ./doc/install-guide/section_nova-controller.xml6(para)
-msgid ""
-"Compute is a collection of services that enable you to launch virtual "
-"machine instances. You can configure these services to run on separate nodes"
-" or the same node. In this guide, most services run on the controller node "
-"and the service that launches virtual machines runs on a dedicated compute "
-"node. This section shows you how to install and configure these services on "
-"the controller node."
-msgstr "Compute は仮想マシンインスタンスを起動できるようにするためのサービス群です。これらのサービスを別々のノードで実行することも同じノードで実行することも設定できます。このガイドでは、多くのサービスはコントローラーノードで実行し、仮想マシンを起動するサービスはコンピュート専用ノードで実行します。このセクションは、コントローラーノードにこれらのサービスをインストールし、設定する方法を示します。"
-
-#: ./doc/install-guide/section_nova-controller.xml15(para)
-msgid "Install the Compute packages necessary for the controller node."
-msgstr "コントローラーノードに必要な Compute のパッケージをインストールします。"
-
-#: ./doc/install-guide/section_nova-controller.xml27(para)
-msgid ""
-"Respond to the prompts for <link linkend=\"debconf-dbconfig-"
-"common\">database management</link>, <link linkend=\"debconf-"
-"keystone_authtoken\"><literal>[keystone_authtoken]</literal> "
-"settings</link>, <link linkend=\"debconf-rabbitmq\">RabbitMQ "
-"credentials</link>, and <link linkend=\"debconf-api-endpoints\">API "
-"endpoint</link> registration. The <placeholder-1/> command runs "
-"automatically."
-msgstr "<link linkend=\"debconf-dbconfig-common\">データベース管理</link>、<link linkend=\"debconf-keystone_authtoken\"><literal>[keystone_authtoken]</literal> 設定</link>、<link linkend=\"debconf-rabbitmq\">RabbitMQ クレデンシャル</link>、<link linkend=\"debconf-api-endpoints\">API エンドポイント</link>登録に関するプロンプトに答えます。<placeholder-1/> コマンドが自動的に実行されます。"
-
-#: ./doc/install-guide/section_nova-controller.xml38(para)
-msgid ""
-"Compute stores information in a database. In this guide, we use a MySQL "
-"database on the controller node. Configure Compute with the database "
-"location and credentials. Replace <replaceable>NOVA_DBPASS</replaceable> "
-"with the password for the database that you will create in a later step."
-msgstr "Compute は情報を保存するためにデータベースを使用します。このガイドでは、コントローラーノードで MySQL データベースを使用します。Compute をデータベースの位置とクレデンシャルで設定します。<replaceable>NOVA_DBPASS</replaceable> を後のステップで作成するデータベース用パスワードで置き換えます。"
-
-#: ./doc/install-guide/section_nova-controller.xml44(replaceable)
-#: ./doc/install-guide/section_nova-controller.xml51(replaceable)
-#: ./doc/install-guide/section_nova-controller.xml112(replaceable)
-#: ./doc/install-guide/section_nova-controller.xml114(replaceable)
-#: ./doc/install-guide/section_nova-compute.xml72(replaceable)
-msgid "NOVA_DBPASS"
-msgstr "NOVA_DBPASS"
-
-#: ./doc/install-guide/section_nova-controller.xml45(para)
-msgid ""
-"Edit the <literal>[database]</literal> section in the "
-"<filename>/etc/nova/nova.conf</filename> file, adding it if necessary, to "
-"modify this key:"
-msgstr "<filename>/etc/nova/nova.conf</filename> ファイルの <literal>[database]</literal> セクションを編集し、このキーを変更します。必要に応じてセクションを追加します。"
-
-#: ./doc/install-guide/section_nova-controller.xml55(para)
-#: ./doc/install-guide/section_nova-compute.xml101(para)
-msgid ""
-"Configure the Compute service to use the RabbitMQ message broker by setting "
-"these configuration keys in the <literal>[DEFAULT]</literal> configuration "
-"group of the <filename>/etc/nova/nova.conf</filename> file:"
-msgstr "<filename>/etc/nova/nova.conf</filename> ファイルの <literal>[DEFAULT]</literal> 設定グループにこれらの設定キーを設定することにより、Compute サービスが RabbitMQ メッセージブローカーを使用するよう設定します。"
-
-#: ./doc/install-guide/section_nova-controller.xml66(para)
-msgid ""
-"Set these configuration keys to configure Compute to use the RabbitMQ "
-"message broker:"
-msgstr "Compute が RabbitMQ メッセージブローカーを使用するよう設定するために、これらの設定キーを設定します。"
-
-#: ./doc/install-guide/section_nova-controller.xml74(para)
-msgid ""
-"Set the <option>my_ip</option>, <option>vncserver_listen</option>, and "
-"<option>vncserver_proxyclient_address</option> configuration options to the "
-"management interface IP address of the controller node:"
-msgstr "<option>my_ip</option>、<option>vncserver_listen</option>、<option>vncserver_proxyclient_address</option> 設定オプションをコントローラーノードの管理インターフェース IP アドレスに設定します。"
-
-#: ./doc/install-guide/section_nova-controller.xml82(para)
-msgid ""
-"Edit the <filename>/etc/nova/nova.conf</filename> file and add these lines "
-"to the <literal>[DEFAULT]</literal> section:"
-msgstr "<filename>/etc/nova/nova.conf</filename> ファイルを編集し、<literal>[DEFAULT]</literal> セクションにこれらの行を追加します。"
-
-#: ./doc/install-guide/section_nova-controller.xml85(para)
-msgid ""
-"In Debian, the <package>debconf</package> package automatically sets up "
-"<literal>my_ip</literal> parameter but you must edit the "
-"<filename>/etc/nova/nova.conf</filename> file to configure the "
-"<option>vncserver_listen</option> and "
-"<option>vncserver_proxyclient_address</option> options, which appear at the "
-"end of the file:"
-msgstr "Debian では、<package>debconf</package> パッケージが自動的に <literal>my_ip</literal> パラメーターをセットアップしますが、<filename>/etc/nova/nova.conf</filename> ファイルの最後にある <option>vncserver_listen</option> オプションと <option>vncserver_proxyclient_address</option> オプションを設定するために、このファイルを編集する必要があります。"
-
-#: ./doc/install-guide/section_nova-controller.xml100(para)
-msgid ""
-"By default, the Ubuntu packages create an SQLite database. Delete the "
-"<filename>nova.sqlite</filename> file created in the "
-"<filename>/var/lib/nova/</filename> directory so that it does not get used "
-"by mistake:"
-msgstr "Ubuntu パッケージはデフォルトで SQLite データベースを作成します。誤って使用されないように、<filename>/var/lib/nova/</filename> に作成された <filename>nova.sqlite</filename> ファイルを削除します。"
-
-#: ./doc/install-guide/section_nova-controller.xml107(para)
-msgid ""
-"Use the password you created previously to log in as root. Create a "
-"<literal>nova</literal> database user:"
-msgstr "root としてログインするために、前に作成したパスワードを使用します。<literal>nova</literal> データベースユーザーを作成します。"
-
-#: ./doc/install-guide/section_nova-controller.xml117(para)
-msgid "Create the Compute service tables:"
-msgstr "Compute サービスのテーブルを作成します。"
-
-#: ./doc/install-guide/section_nova-controller.xml121(para)
-msgid ""
-"Create a <literal>nova</literal> user that Compute uses to authenticate with"
-" the Identity Service. Use the <literal>service</literal> tenant and give "
-"the user the <literal>admin</literal> role:"
-msgstr "Compute が Identity Service で認証するために使用する <literal>nova</literal> ユーザーを作成します。<literal>service</literal> プロジェクトを使用し、ユーザーに <literal>admin</literal> ロールを与えます。"
-
-#: ./doc/install-guide/section_nova-controller.xml125(replaceable)
-#: ./doc/install-guide/section_nova-controller.xml138(replaceable)
-#: ./doc/install-guide/section_nova-controller.xml150(replaceable)
-#: ./doc/install-guide/section_nova-compute.xml79(replaceable)
-#: ./doc/install-guide/section_nova-compute.xml98(replaceable)
-#: ./doc/install-guide/section_neutron-ml2-controller-node.xml227(replaceable)
-#: ./doc/install-guide/section_neutron-ml2-controller-node.xml251(replaceable)
-msgid "NOVA_PASS"
-msgstr "NOVA_PASS"
-
-#: ./doc/install-guide/section_nova-controller.xml125(replaceable)
-msgid "nova@example.com"
-msgstr "nova@example.com"
-
-#: ./doc/install-guide/section_nova-controller.xml129(para)
-msgid ""
-"Configure Compute to use these credentials with the Identity Service running"
-" on the controller. Replace <replaceable>NOVA_PASS</replaceable> with your "
-"Compute password."
-msgstr "コントローラーで実行している Identity Service でこれらのクレデンシャルを使用するよう Compute を設定します。<replaceable>NOVA_PASS</replaceable> をお使いの Compute パスワードで置き換えます。"
-
-#: ./doc/install-guide/section_nova-controller.xml139(para)
-msgid "Add these keys to the <literal>[keystone_authtoken]</literal> section:"
-msgstr "これらのキーを <literal>[keystone_authtoken]</literal> セクションに追加します。"
-
-#: ./doc/install-guide/section_nova-controller.xml153(para)
-msgid ""
-"You must register Compute with the Identity Service so that other OpenStack "
-"services can locate it. Register the service and specify the endpoint:"
-msgstr "他の OpenStack サービスから使用できるように、Compute を Identity Service に登録します。サービスを登録し、エンドポイントを指定します。"
-
-#: ./doc/install-guide/section_nova-controller.xml166(para)
-msgid ""
-"Start Compute services and configure them to start when the system boots:"
-msgstr "Compute サービスを起動し、システム起動時に起動するよう設定します。"
-
-#: ./doc/install-guide/section_nova-controller.xml169(para)
-msgid "Restart Compute services:"
-msgstr "Compute サービスを再起動します。"
-
-#: ./doc/install-guide/section_nova-controller.xml190(para)
-msgid "To verify your configuration, list available images:"
-msgstr "設定を検証するために、使用可能なイメージを一覧表示します。"
-
 #: ./doc/install-guide/section_ceilometer-cinder.xml7(title)
 msgid "Add the Block Storage service agent for Telemetry"
 msgstr "Telemetry 用 Block Storage Service エージェントの追加"
@@ -1500,6 +1345,7 @@ msgstr "ボリュームノードで:"
 #: ./doc/install-guide/section_glance-verify.xml5(title)
 #: ./doc/install-guide/section_heat-verify.xml5(title)
 #: ./doc/install-guide/section_basics-ntp.xml93(title)
+#: ./doc/install-guide/section_nova-verify.xml5(title)
 msgid "Verify operation"
 msgstr "運用の検証"
 
@@ -1530,6 +1376,8 @@ msgid "Download the image to the local directory:"
 msgstr "イメージをローカルディレクトリにダウンロードします。"
 
 #: ./doc/install-guide/section_glance-verify.xml29(para)
+#: ./doc/install-guide/section_nova-controller-install.xml39(para)
+#: ./doc/install-guide/section_nova-verify.xml13(para)
 #: ./doc/install-guide/section_glance-install.xml46(para)
 msgid ""
 "Source the <literal>admin</literal> credentials to gain access to admin-only"
@@ -2091,7 +1939,7 @@ msgid ""
 "operating Networking, understanding these concepts can help you set up "
 "Networking. All Networking installations use a core plug-in and a security "
 "group plug-in (or just the No-Op security group plug-in). Additionally, "
-"Firewall as a Service (FWaaS) and Load Balancer as a Service (LBaaS) plug-"
+"Firewall-as-a-Service (FWaaS) and Load-Balancer-as-a-Service (LBaaS) plug-"
 "ins are available."
 msgstr ""
 
@@ -2123,6 +1971,7 @@ msgstr "このネットワークは、コンピュートノードの外部<gloss
 #: ./doc/install-guide/section_nova-networking-initial-network.xml21(para)
 #: ./doc/install-guide/section_neutron-initial-networks.xml40(para)
 #: ./doc/install-guide/section_neutron-initial-networks.xml127(para)
+#: ./doc/install-guide/section_nova-verify.xml10(para)
 msgid "Perform these commands on the controller node."
 msgstr "これらのコマンドをコントローラーノードで実行します。"
 
@@ -3536,6 +3385,222 @@ msgid ""
 "configure the <literal>sudo</literal> utility."
 msgstr "各ノードを設定するために、管理権限を持つアカウントを使用する必要があります。<literal>root</literal> ユーザーとしてコマンドを実行するか、<literal>sudo</literal> ユーティリティを設定します。"
 
+#: ./doc/install-guide/section_nova-controller-install.xml5(title)
+msgid "Install and configure controller node"
+msgstr ""
+
+#: ./doc/install-guide/section_nova-controller-install.xml6(para)
+msgid ""
+"This section describes how to install and configure the Compute service, "
+"code-named nova, on the controller node."
+msgstr ""
+
+#: ./doc/install-guide/section_nova-controller-install.xml10(para)
+msgid ""
+"Before you install and configure Compute, you must create a database and "
+"Identity service credentials including endpoints."
+msgstr ""
+
+#: ./doc/install-guide/section_nova-controller-install.xml13(para)
+#: ./doc/install-guide/section_glance-install.xml20(para)
+msgid "To create the database, complete these steps:"
+msgstr ""
+
+#: ./doc/install-guide/section_nova-controller-install.xml16(para)
+#: ./doc/install-guide/section_glance-install.xml23(para)
+msgid ""
+"Use the database access client to connect to the database server as the "
+"<literal>root</literal> user:"
+msgstr ""
+
+#: ./doc/install-guide/section_nova-controller-install.xml21(para)
+msgid "Create the <literal>nova</literal> database:"
+msgstr ""
+
+#: ./doc/install-guide/section_nova-controller-install.xml25(para)
+msgid "Grant proper access to the <literal>nova</literal> database:"
+msgstr ""
+
+#: ./doc/install-guide/section_nova-controller-install.xml27(replaceable)
+#: ./doc/install-guide/section_nova-controller-install.xml28(replaceable)
+#: ./doc/install-guide/section_nova-controller-install.xml97(replaceable)
+#: ./doc/install-guide/section_nova-compute.xml72(replaceable)
+msgid "NOVA_DBPASS"
+msgstr "NOVA_DBPASS"
+
+#: ./doc/install-guide/section_nova-controller-install.xml29(para)
+msgid ""
+"Replace <replaceable>NOVA_DBPASS</replaceable> with a suitable password."
+msgstr ""
+
+#: ./doc/install-guide/section_nova-controller-install.xml33(para)
+#: ./doc/install-guide/section_glance-install.xml40(para)
+msgid "Exit the database access client:"
+msgstr ""
+
+#: ./doc/install-guide/section_nova-controller-install.xml44(para)
+#: ./doc/install-guide/section_glance-install.xml51(para)
+msgid "To create the Identity service credentials, complete these steps:"
+msgstr ""
+
+#: ./doc/install-guide/section_nova-controller-install.xml48(para)
+msgid "Create the <literal>nova</literal> user:"
+msgstr ""
+
+#: ./doc/install-guide/section_nova-controller-install.xml49(replaceable)
+#: ./doc/install-guide/section_nova-controller-install.xml125(replaceable)
+#: ./doc/install-guide/section_nova-compute.xml79(replaceable)
+#: ./doc/install-guide/section_nova-compute.xml98(replaceable)
+#: ./doc/install-guide/section_neutron-ml2-controller-node.xml227(replaceable)
+#: ./doc/install-guide/section_neutron-ml2-controller-node.xml251(replaceable)
+msgid "NOVA_PASS"
+msgstr "NOVA_PASS"
+
+#: ./doc/install-guide/section_nova-controller-install.xml49(replaceable)
+#: ./doc/install-guide/section_glance-install.xml55(replaceable)
+#: ./doc/install-guide/section_heat-install.xml30(replaceable)
+msgid "EMAIL_ADDRESS"
+msgstr "EMAIL_ADDRESS"
+
+#: ./doc/install-guide/section_nova-controller-install.xml50(para)
+msgid ""
+"Replace <replaceable>NOVA_PASS</replaceable> with a suitable password and "
+"<replaceable>EMAIL_ADDRESS</replaceable> with a suitable e-mail address."
+msgstr ""
+
+#: ./doc/install-guide/section_nova-controller-install.xml55(para)
+msgid ""
+"Link the <literal>nova</literal> user to the <literal>service</literal> "
+"tenant and <literal>admin</literal> role:"
+msgstr ""
+
+#: ./doc/install-guide/section_nova-controller-install.xml61(para)
+msgid "Create the <literal>nova</literal> service:"
+msgstr ""
+
+#: ./doc/install-guide/section_nova-controller-install.xml67(para)
+msgid "Create the Compute service endpoints:"
+msgstr ""
+
+#: ./doc/install-guide/section_nova-controller-install.xml76(title)
+msgid "To install and configure Compute controller components"
+msgstr ""
+
+#: ./doc/install-guide/section_nova-controller-install.xml78(para)
+#: ./doc/install-guide/section_nova-controller-install.xml164(para)
+#: ./doc/install-guide/section_glance-install.xml85(para)
+#: ./doc/install-guide/section_glance-install.xml183(para)
+msgid "Install the packages:"
+msgstr "パッケージをインストールします。"
+
+#: ./doc/install-guide/section_nova-controller-install.xml89(para)
+#: ./doc/install-guide/section_nova-controller-install.xml179(para)
+msgid ""
+"Edit the <filename>/etc/nova/nova.conf</filename> file and complete the "
+"following actions:"
+msgstr ""
+
+#: ./doc/install-guide/section_nova-controller-install.xml98(para)
+msgid ""
+"Replace <replaceable>NOVA_DBPASS</replaceable> with the password you chose "
+"for the Compute database."
+msgstr ""
+
+#: ./doc/install-guide/section_nova-controller-install.xml102(para)
+#: ./doc/install-guide/section_glance-install.xml104(para)
+#: ./doc/install-guide/section_heat-install.xml91(para)
+msgid ""
+"In the <literal>[DEFAULT]</literal> section, configure "
+"<application>RabbitMQ</application> message broker access:"
+msgstr "<literal>[DEFAULT]</literal> セクションで、<application>RabbitMQ</application> メッセージブローカーのアクセス権を設定します。"
+
+#: ./doc/install-guide/section_nova-controller-install.xml109(para)
+#: ./doc/install-guide/section_glance-install.xml111(para)
+#: ./doc/install-guide/section_neutron-ml2-compute-node.xml115(para)
+#: ./doc/install-guide/section_neutron-ml2-compute-node.xml127(para)
+#: ./doc/install-guide/section_neutron-ml2-controller-node.xml183(para)
+#: ./doc/install-guide/section_neutron-ml2-controller-node.xml202(para)
+#: ./doc/install-guide/section_heat-install.xml98(para)
+#: ./doc/install-guide/section_neutron-ml2-network-node.xml110(para)
+#: ./doc/install-guide/section_neutron-ml2-network-node.xml130(para)
+msgid ""
+"Replace <replaceable>RABBIT_PASS</replaceable> with the password you chose "
+"for the <literal>guest</literal> account in "
+"<application>RabbitMQ</application>."
+msgstr "<replaceable>RABBIT_PASS</replaceable> を <application>RabbitMQ</application> の <literal>guest</literal> アカウント用に選んだパスワードで置き換えます。"
+
+#: ./doc/install-guide/section_nova-controller-install.xml114(para)
+msgid ""
+"In the <literal>[keystone_authtoken]</literal> section, configure Identity "
+"service access:"
+msgstr ""
+
+#: ./doc/install-guide/section_nova-controller-install.xml126(para)
+msgid ""
+"Replace <replaceable>NOVA_PASS</replaceable> with the password you chose for"
+" the <literal>nova</literal> user in the Identity service."
+msgstr ""
+
+#: ./doc/install-guide/section_nova-controller-install.xml131(para)
+msgid ""
+"In the <literal>[DEFAULT]</literal> section, configure the "
+"<literal>my_ip</literal> key to use the management interface IP address of "
+"the controller node:"
+msgstr ""
+
+#: ./doc/install-guide/section_nova-controller-install.xml139(para)
+#: ./doc/install-guide/section_nova-controller-install.xml183(para)
+msgid ""
+"In the <literal>[DEFAULT]</literal> section, configure the VNC proxy to use "
+"the management interface IP address of the controller node:"
+msgstr ""
+
+#: ./doc/install-guide/section_nova-controller-install.xml148(para)
+msgid ""
+"In the <literal>[DEFAULT]</literal> section, configure the location of the "
+"Image Service:"
+msgstr ""
+
+#: ./doc/install-guide/section_nova-controller-install.xml157(para)
+msgid "Populate the Compute database:"
+msgstr ""
+
+#: ./doc/install-guide/section_nova-controller-install.xml162(title)
+msgid "To install and configure the Compute controller components"
+msgstr ""
+
+#: ./doc/install-guide/section_nova-controller-install.xml169(para)
+#: ./doc/install-guide/section_glance-install.xml187(para)
+#: ./doc/install-guide/section_neutron-ml2-compute-node.xml45(para)
+#: ./doc/install-guide/section_neutron-ml2-controller-node.xml77(para)
+#: ./doc/install-guide/section_heat-install.xml153(para)
+#: ./doc/install-guide/section_neutron-ml2-network-node.xml48(para)
+msgid ""
+"Respond to prompts for <link linkend=\"debconf-dbconfig-common\">database "
+"management</link>, <link linkend=\"debconf-keystone_authtoken\">Identity "
+"service credentials</link>, <link linkend=\"debconf-api-endpoints\">service "
+"endpoint registration</link>, and <link linkend=\"debconf-rabbitmq\">message"
+" broker credentials</link>."
+msgstr "<link linkend=\"debconf-dbconfig-common\">データベース管理</link>、<link linkend=\"debconf-keystone_authtoken\">Identity のクレデンシャル</link>、<link linkend=\"debconf-api-endpoints\">サービスエンドポイント登録</link>、<link linkend=\"debconf-rabbitmq\">メッセージブローカーのクレデンシャル</link>に関するプロンプトに答えます。"
+
+#: ./doc/install-guide/section_nova-controller-install.xml197(para)
+#: ./doc/install-guide/section_nova-networking-controller-node.xml26(para)
+#: ./doc/install-guide/section_neutron-ml2-controller-node.xml440(para)
+#: ./doc/install-guide/section_neutron-ovs-controller-node.xml317(para)
+msgid "Restart the Compute services:"
+msgstr "Compute のサービスを再起動します。"
+
+#: ./doc/install-guide/section_nova-controller-install.xml206(para)
+msgid ""
+"Start the Compute services and configure them to start when the system "
+"boots:"
+msgstr ""
+
+#: ./doc/install-guide/section_nova-controller-install.xml222(para)
+#: ./doc/install-guide/section_glance-install.xml224(para)
+msgid "By default, the Ubuntu packages create an SQLite database."
+msgstr ""
+
 #: ./doc/install-guide/section_dashboard-system-reqs.xml6(title)
 msgid "System requirements"
 msgstr "システム要件"
@@ -3915,6 +3980,26 @@ msgstr "サービスを再起動します。"
 msgid "Start the services and configure them to start when the system boots:"
 msgstr "サービスを起動し、システム起動時に起動するよう設定します。"
 
+#: ./doc/install-guide/section_nova-verify.xml6(para)
+msgid "This section describes how to verify operation of the Compute service."
+msgstr ""
+
+#: ./doc/install-guide/section_nova-verify.xml18(para)
+msgid "List service components to verify successful launch of each process:"
+msgstr ""
+
+#: ./doc/install-guide/section_nova-verify.xml31(para)
+msgid ""
+"This output should indicate four components enabled on the controller node "
+"one component enabled on the compute node."
+msgstr ""
+
+#: ./doc/install-guide/section_nova-verify.xml36(para)
+msgid ""
+"List images in the Image Service catalog to verify connectivity with the "
+"Identity service and Image Service:"
+msgstr ""
+
 #. When image changes, this message will be marked fuzzy or untranslated for
 #. you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -3944,16 +4029,6 @@ msgid ""
 "database and Identity service credentials including endpoints."
 msgstr ""
 
-#: ./doc/install-guide/section_glance-install.xml20(para)
-msgid "To create the database, complete these steps:"
-msgstr ""
-
-#: ./doc/install-guide/section_glance-install.xml23(para)
-msgid ""
-"Use the database access client to connect to the database server as the "
-"<literal>root</literal> user:"
-msgstr ""
-
 #: ./doc/install-guide/section_glance-install.xml28(para)
 msgid "Create the <literal>glance</literal> database:"
 msgstr ""
@@ -3974,14 +4049,6 @@ msgid ""
 "Replace <replaceable>GLANCE_DBPASS</replaceable> with a suitable password."
 msgstr ""
 
-#: ./doc/install-guide/section_glance-install.xml40(para)
-msgid "Exit the database access client:"
-msgstr ""
-
-#: ./doc/install-guide/section_glance-install.xml51(para)
-msgid "To create the Identity service credentials, complete these steps:"
-msgstr ""
-
 #: ./doc/install-guide/section_glance-install.xml54(para)
 msgid "Create the <literal>glance</literal> user:"
 msgstr ""
@@ -3991,11 +4058,6 @@ msgstr ""
 #: ./doc/install-guide/section_glance-install.xml163(replaceable)
 msgid "GLANCE_PASS"
 msgstr "GLANCE_PASS"
-
-#: ./doc/install-guide/section_glance-install.xml55(replaceable)
-#: ./doc/install-guide/section_heat-install.xml30(replaceable)
-msgid "EMAIL_ADDRESS"
-msgstr "EMAIL_ADDRESS"
 
 #: ./doc/install-guide/section_glance-install.xml56(para)
 msgid ""
@@ -4023,11 +4085,6 @@ msgstr "Identity のエンドポイントを作成します。"
 msgid "To install and configure the Image Service components"
 msgstr ""
 
-#: ./doc/install-guide/section_glance-install.xml85(para)
-#: ./doc/install-guide/section_glance-install.xml183(para)
-msgid "Install the packages:"
-msgstr "パッケージをインストールします。"
-
 #: ./doc/install-guide/section_glance-install.xml91(para)
 msgid ""
 "Edit the <filename>/etc/glance/glance-api.conf</filename> file and complete "
@@ -4040,27 +4097,6 @@ msgid ""
 "Replace <replaceable>GLANCE_DBPASS</replaceable> with the password you chose"
 " for the Image Service database."
 msgstr ""
-
-#: ./doc/install-guide/section_glance-install.xml104(para)
-#: ./doc/install-guide/section_heat-install.xml91(para)
-msgid ""
-"In the <literal>[DEFAULT]</literal> section, configure "
-"<application>RabbitMQ</application> message broker access:"
-msgstr "<literal>[DEFAULT]</literal> セクションで、<application>RabbitMQ</application> メッセージブローカーのアクセス権を設定します。"
-
-#: ./doc/install-guide/section_glance-install.xml111(para)
-#: ./doc/install-guide/section_neutron-ml2-compute-node.xml115(para)
-#: ./doc/install-guide/section_neutron-ml2-compute-node.xml127(para)
-#: ./doc/install-guide/section_neutron-ml2-controller-node.xml183(para)
-#: ./doc/install-guide/section_neutron-ml2-controller-node.xml202(para)
-#: ./doc/install-guide/section_heat-install.xml98(para)
-#: ./doc/install-guide/section_neutron-ml2-network-node.xml110(para)
-#: ./doc/install-guide/section_neutron-ml2-network-node.xml130(para)
-msgid ""
-"Replace <replaceable>RABBIT_PASS</replaceable> with the password you chose "
-"for the <literal>guest</literal> account in "
-"<application>RabbitMQ</application>."
-msgstr "<replaceable>RABBIT_PASS</replaceable> を <application>RabbitMQ</application> の <literal>guest</literal> アカウント用に選んだパスワードで置き換えます。"
 
 #: ./doc/install-guide/section_glance-install.xml116(para)
 #: ./doc/install-guide/section_glance-install.xml152(para)
@@ -4087,19 +4123,6 @@ msgstr ""
 msgid "Populate the Image Service database:"
 msgstr ""
 
-#: ./doc/install-guide/section_glance-install.xml187(para)
-#: ./doc/install-guide/section_neutron-ml2-compute-node.xml45(para)
-#: ./doc/install-guide/section_neutron-ml2-controller-node.xml77(para)
-#: ./doc/install-guide/section_heat-install.xml153(para)
-#: ./doc/install-guide/section_neutron-ml2-network-node.xml48(para)
-msgid ""
-"Respond to prompts for <link linkend=\"debconf-dbconfig-common\">database "
-"management</link>, <link linkend=\"debconf-keystone_authtoken\">Identity "
-"service credentials</link>, <link linkend=\"debconf-api-endpoints\">service "
-"endpoint registration</link>, and <link linkend=\"debconf-rabbitmq\">message"
-" broker credentials</link>."
-msgstr "<link linkend=\"debconf-dbconfig-common\">データベース管理</link>、<link linkend=\"debconf-keystone_authtoken\">Identity のクレデンシャル</link>、<link linkend=\"debconf-api-endpoints\">サービスエンドポイント登録</link>、<link linkend=\"debconf-rabbitmq\">メッセージブローカーのクレデンシャル</link>に関するプロンプトに答えます。"
-
 #: ./doc/install-guide/section_glance-install.xml197(para)
 msgid ""
 "Select the <literal>keystone</literal> pipeline to configure the Image "
@@ -4114,10 +4137,6 @@ msgstr ""
 msgid ""
 "Start the Image Service services and configure them to start when the system"
 " boots:"
-msgstr ""
-
-#: ./doc/install-guide/section_glance-install.xml224(para)
-msgid "By default, the Ubuntu packages create an SQLite database."
 msgstr ""
 
 #: ./doc/install-guide/section_dashboard-install.xml7(title)
@@ -5051,6 +5070,13 @@ msgid ""
 " these lines to the appropriate sections:"
 msgstr "<filename>/etc/nova/nova.conf</filename> 設定ファイルを編集し、これらの行を適切なセクションに追加します。"
 
+#: ./doc/install-guide/section_nova-compute.xml101(para)
+msgid ""
+"Configure the Compute service to use the RabbitMQ message broker by setting "
+"these configuration keys in the <literal>[DEFAULT]</literal> configuration "
+"group of the <filename>/etc/nova/nova.conf</filename> file:"
+msgstr "<filename>/etc/nova/nova.conf</filename> ファイルの <literal>[DEFAULT]</literal> 設定グループにこれらの設定キーを設定することにより、Compute サービスが RabbitMQ メッセージブローカーを使用するよう設定します。"
+
 #: ./doc/install-guide/section_nova-compute.xml110(para)
 msgid ""
 "Configure the Compute service to use the RabbitMQ message broker by setting "
@@ -5548,15 +5574,9 @@ msgid ""
 "configure the controller node to use it."
 msgstr "レガシーネットワークは、主にコンピュートノードを関係します。しかしながら、それを使用するために、コントローラーノードを設定する必要があります。"
 
-#: ./doc/install-guide/section_nova-networking-controller-node.xml26(para)
-#: ./doc/install-guide/section_neutron-ml2-controller-node.xml440(para)
-#: ./doc/install-guide/section_neutron-ovs-controller-node.xml317(para)
-msgid "Restart the Compute services:"
-msgstr "Compute のサービスを再起動します。"
-
 #: ./doc/install-guide/ch_nova.xml7(title)
-msgid "Add the Compute services"
-msgstr "Compute の追加"
+msgid "Add the Compute service"
+msgstr ""
 
 #: ./doc/install-guide/ch_networking.xml6(title)
 msgid "Add a networking component"
@@ -7823,7 +7843,15 @@ msgstr "複数の memcache サーバーを実行している場合、<filename>/
 msgid "Only the proxy server uses memcache."
 msgstr "プロキシサーバーのみが memcache を使用します。"
 
-#: ./doc/install-guide/object-storage/section_object-storage-install-config-proxy-node.xml106(para)
+#: ./doc/install-guide/object-storage/section_object-storage-install-config-proxy-node.xml105(para)
+msgid ""
+"<literal>keystoneclient.middleware.auth_token</literal>: You must configure "
+"<literal>auth_uri</literal> to point to the public identity endpoint. "
+"Otherwise, clients might not be able to authenticate against an admin "
+"endpoint."
+msgstr "<literal>keystoneclient.middleware.auth_token</literal>: パブリック Identity エンドポイントを指し示すよう <literal>auth_uri</literal> を設定する必要があります。そうしなければ、クライアントは管理エンドポイントに認証できないでしょう。"
+
+#: ./doc/install-guide/object-storage/section_object-storage-install-config-proxy-node.xml113(para)
 msgid ""
 "Create the account, container, and object rings. The builder command creates"
 " a builder file with a few parameters. The parameter with the value of 18 "
@@ -7834,46 +7862,46 @@ msgid ""
 "partition more than once."
 msgstr "アカウント、コンテナー、オブジェクトリングを作成します。builder コマンドがいくつかのパラメーターを用いてビルダーファイルを作成します。18 という値を持つパラメーターは、パーティションの大きさが 2 の 18 乗となるを意味します。この “partition power” (パーティションのべき乗) の値は、リング全体が使用したいストレージの合計量に依存します。3 という値は各オブジェクトの複製数を表します。最後の値は一度ならずパーティションが移動することを制限する時間数です。"
 
-#: ./doc/install-guide/object-storage/section_object-storage-install-config-proxy-node.xml122(para)
+#: ./doc/install-guide/object-storage/section_object-storage-install-config-proxy-node.xml129(para)
 msgid "For every storage device on each node add entries to each ring:"
 msgstr "各ノードですべてのストレージデバイスに対して、各リングに項目を追加します。"
 
-#: ./doc/install-guide/object-storage/section_object-storage-install-config-proxy-node.xml124(replaceable)
-#: ./doc/install-guide/object-storage/section_object-storage-install-config-proxy-node.xml125(replaceable)
-#: ./doc/install-guide/object-storage/section_object-storage-install-config-proxy-node.xml126(replaceable)
+#: ./doc/install-guide/object-storage/section_object-storage-install-config-proxy-node.xml131(replaceable)
+#: ./doc/install-guide/object-storage/section_object-storage-install-config-proxy-node.xml132(replaceable)
+#: ./doc/install-guide/object-storage/section_object-storage-install-config-proxy-node.xml133(replaceable)
 msgid "ZONE"
 msgstr "ZONE"
 
-#: ./doc/install-guide/object-storage/section_object-storage-install-config-proxy-node.xml124(replaceable)
+#: ./doc/install-guide/object-storage/section_object-storage-install-config-proxy-node.xml131(replaceable)
 #: ./doc/install-guide/object-storage/section_object-storage-install-config-storage-nodes.xml54(replaceable)
 msgid "STORAGE_LOCAL_NET_IP"
 msgstr "STORAGE_LOCAL_NET_IP"
 
-#: ./doc/install-guide/object-storage/section_object-storage-install-config-proxy-node.xml124(replaceable)
-#: ./doc/install-guide/object-storage/section_object-storage-install-config-proxy-node.xml125(replaceable)
-#: ./doc/install-guide/object-storage/section_object-storage-install-config-proxy-node.xml126(replaceable)
+#: ./doc/install-guide/object-storage/section_object-storage-install-config-proxy-node.xml131(replaceable)
+#: ./doc/install-guide/object-storage/section_object-storage-install-config-proxy-node.xml132(replaceable)
+#: ./doc/install-guide/object-storage/section_object-storage-install-config-proxy-node.xml133(replaceable)
 #: ./doc/install-guide/object-storage/section_object-storage-install-config-storage-nodes.xml80(replaceable)
 msgid "STORAGE_REPLICATION_NET_IP"
 msgstr "STORAGE_REPLICATION_NET_IP"
 
-#: ./doc/install-guide/object-storage/section_object-storage-install-config-proxy-node.xml124(replaceable)
-#: ./doc/install-guide/object-storage/section_object-storage-install-config-proxy-node.xml125(replaceable)
-#: ./doc/install-guide/object-storage/section_object-storage-install-config-proxy-node.xml126(replaceable)
+#: ./doc/install-guide/object-storage/section_object-storage-install-config-proxy-node.xml131(replaceable)
+#: ./doc/install-guide/object-storage/section_object-storage-install-config-proxy-node.xml132(replaceable)
+#: ./doc/install-guide/object-storage/section_object-storage-install-config-proxy-node.xml133(replaceable)
 msgid "DEVICE"
 msgstr "DEVICE"
 
-#: ./doc/install-guide/object-storage/section_object-storage-install-config-proxy-node.xml125(replaceable)
-#: ./doc/install-guide/object-storage/section_object-storage-install-config-proxy-node.xml126(replaceable)
+#: ./doc/install-guide/object-storage/section_object-storage-install-config-proxy-node.xml132(replaceable)
+#: ./doc/install-guide/object-storage/section_object-storage-install-config-proxy-node.xml133(replaceable)
 msgid "STORAGE_LOCAL_NET_IP_1"
 msgstr "STORAGE_LOCAL_NET_IP_1"
 
-#: ./doc/install-guide/object-storage/section_object-storage-install-config-proxy-node.xml128(para)
+#: ./doc/install-guide/object-storage/section_object-storage-install-config-proxy-node.xml135(para)
 msgid ""
 "You must omit the optional <parameter>STORAGE_REPLICATION_NET_IP</parameter>"
 " parameter if you do not want to use dedicated network for replication."
 msgstr "複製のために専用のネットワークを使用したくなれば、オプションの <parameter>STORAGE_REPLICATION_NET_IP</parameter> パラメーターを省略する必要があります。"
 
-#: ./doc/install-guide/object-storage/section_object-storage-install-config-proxy-node.xml132(para)
+#: ./doc/install-guide/object-storage/section_object-storage-install-config-proxy-node.xml139(para)
 msgid ""
 "For example, if a storage node has a partition in Zone 1 on IP 10.0.0.1, the"
 " storage node has address 10.0.1.1 from replication network. The mount point"
@@ -7882,25 +7910,25 @@ msgid ""
 "the DEVICE would be sdb1 and the commands are:"
 msgstr "例えば、ストレージノードが IP 10.0.0.1 でゾーン 1 にパーティションを持つならば、ストレージノードは複製ネットワークのアドレス 10.0.1.1 を持ちます。このパーティションのマウントポイントは <filename>/srv/node/sdb1</filename> です。<filename>/etc/rsyncd.conf</filename> のパスは <filename>/srv/node/</filename> です。DEVICE が sdb1 になり、コマンドは次のとおりです。"
 
-#: ./doc/install-guide/object-storage/section_object-storage-install-config-proxy-node.xml143(para)
+#: ./doc/install-guide/object-storage/section_object-storage-install-config-proxy-node.xml150(para)
 msgid ""
 "If you assume five zones with one node for each zone, start ZONE at 1. For "
 "each additional node, increment ZONE by 1."
 msgstr "各ゾーンに対して 1 つのノードを持つ 5 つのゾーンを仮定する場合、ZONE を 1 から始めます。それぞれの追加ノードに対して、ZONE を 1 増やします。"
 
-#: ./doc/install-guide/object-storage/section_object-storage-install-config-proxy-node.xml149(para)
+#: ./doc/install-guide/object-storage/section_object-storage-install-config-proxy-node.xml156(para)
 msgid "Verify the ring contents for each ring:"
 msgstr "各リングのリングコンテンツを検証します。"
 
-#: ./doc/install-guide/object-storage/section_object-storage-install-config-proxy-node.xml155(para)
+#: ./doc/install-guide/object-storage/section_object-storage-install-config-proxy-node.xml162(para)
 msgid "Rebalance the rings:"
 msgstr "リングを再バランスします。"
 
-#: ./doc/install-guide/object-storage/section_object-storage-install-config-proxy-node.xml160(para)
+#: ./doc/install-guide/object-storage/section_object-storage-install-config-proxy-node.xml167(para)
 msgid "Rebalancing rings can take some time."
 msgstr "リングの再バランスには少し時間がかかります。"
 
-#: ./doc/install-guide/object-storage/section_object-storage-install-config-proxy-node.xml164(para)
+#: ./doc/install-guide/object-storage/section_object-storage-install-config-proxy-node.xml171(para)
 msgid ""
 "Copy the <filename>account.ring.gz</filename>, "
 "<filename>container.ring.gz</filename>, and "
@@ -7908,15 +7936,15 @@ msgid ""
 "nodes in <filename>/etc/swift</filename>."
 msgstr "<filename>account.ring.gz</filename>、<filename>container.ring.gz</filename>、<filename>object.ring.gz</filename> ファイルをそれぞれのプロキシノードとストレージノードの <filename>/etc/swift</filename> にコピーします。"
 
-#: ./doc/install-guide/object-storage/section_object-storage-install-config-proxy-node.xml170(para)
+#: ./doc/install-guide/object-storage/section_object-storage-install-config-proxy-node.xml177(para)
 msgid "Make sure the swift user owns all configuration files:"
 msgstr "swift ユーザーがすべての設定ファイルを所有していることを確認します。"
 
-#: ./doc/install-guide/object-storage/section_object-storage-install-config-proxy-node.xml174(para)
+#: ./doc/install-guide/object-storage/section_object-storage-install-config-proxy-node.xml181(para)
 msgid "Restart the Proxy service:"
 msgstr "プロキシサービスを再起動します。"
 
-#: ./doc/install-guide/object-storage/section_object-storage-install-config-proxy-node.xml178(para)
+#: ./doc/install-guide/object-storage/section_object-storage-install-config-proxy-node.xml185(para)
 msgid ""
 "Start the Proxy service and configure it to start when the system boots:"
 msgstr "プロキシサービスを起動し、システム起動時に起動するよう設定します。"
