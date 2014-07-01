@@ -62,6 +62,9 @@ function test_ja {
 function test_language () {
 
     case "$language" in
+	all)
+	    test_ja
+	    ;;
         ja)
             test_ja
             ;;
@@ -76,6 +79,7 @@ function usage () {
     echo "Call the script as: "
     echo "$0 PURPOSE LANGUAGE1 LANGUAGE2..."
     echo "PURPOSE is either 'test', 'publish' or 'publish-install'"
+    echo "LANGUAGE can also be 'all'."
 }
 
 if [ "$#" -lt 2 ] ; then
