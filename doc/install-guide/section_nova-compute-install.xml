@@ -1,0 +1,217 @@
+<section xmlns="http://docbook.org/ns/docbook"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+  xml:id="nova-compute-install">
+  <title>Install and configure a compute node</title>
+  <para>This section describes how to install and configure the Compute
+    service on a compute node. The service supports several
+    <glossterm baseform="hypervisor">hypervisors</glossterm> to
+    deploy <glossterm baseform="instance">instances</glossterm> or
+    <glossterm baseform="virtual machine (VM)">VMs</glossterm>. For simplicity,
+    this configuration uses the
+    <glossterm baseform="Quick EMUlator (QEMU)">QEMU</glossterm> hypervisor
+    with the
+    <glossterm baseform="kernel-based VM (KVM)">KVM</glossterm> extension
+    on compute nodes that support hardware acceleration for virtual machines.
+    On legacy hardware, this configuration uses the generic QEMU hypervisor.
+    You can follow these instructions with minor modifications to horizontally
+    scale your environment with additional compute nodes.</para>
+  <procedure os="ubuntu;rhel;centos;fedora;sles;opensuse">
+    <title>To install and configure the Compute hypervisor components</title>
+    <step>
+      <para>Install the packages:</para>
+      <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install nova-compute</userinput></screen>
+      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-nova-compute</userinput></screen>
+      <screen os="sles;opensuse"><prompt>#</prompt> <userinput>zypper install openstack-nova-compute</userinput></screen>
+    </step>
+    <step>
+      <para>Edit the <filename>/etc/nova/nova.conf</filename> file and
+        complete the following actions:</para>
+      <substeps>
+        <step>
+          <para>In the <literal>[database]</literal> section, configure
+            database access:</para>
+          <programlisting language="ini">[database]
+...
+connection = mysql://nova:<replaceable>NOVA_DBPASS</replaceable>@<replaceable>controller</replaceable>/nova</programlisting>
+          <para>Replace <replaceable>NOVA_DBPASS</replaceable> with the password
+            you chose for the Compute database.</para>
+        </step>
+        <step>
+          <para>In the <literal>[DEFAULT]</literal> section, configure
+            <application>RabbitMQ</application> message broker access:</para>
+          <programlisting language="ini">[DEFAULT]
+...
+rpc_backend = rabbit
+rabbit_host = <replaceable>controller</replaceable>
+rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
+          <para>Replace <replaceable>RABBIT_PASS</replaceable> with the password
+            you chose for the <literal>guest</literal> account in
+            <application>RabbitMQ</application>.</para>
+        </step>
+        <step>
+          <para>In the <literal>[keystone_authtoken</literal>] section,
+            configure Identity service access:</para>
+         <programlisting language="ini">
+[keystone_authtoken]
+...
+auth_uri = http://<replaceable>controller</replaceable>:5000/v2.0
+auth_host = <replaceable>controller</replaceable>
+auth_port = 35357
+auth_protocol = http
+admin_tenant_name = service
+admin_user = nova
+admin_password = <replaceable>NOVA_PASS</replaceable></programlisting>
+          <para>Replace <replaceable>NOVA_PASS</replaceable> with the password
+            you chose for the <literal>nova</literal> user in the Identity
+            service.</para>
+        </step>
+        <step>
+          <para>In the <literal>[DEFAULT]</literal> section, configure the
+            <literal>my_ip</literal> key:</para>
+          <programlisting language="ini">[DEFAULT]
+...
+my_ip = <replaceable>MANAGEMENT_INTERFACE_IP_ADDRESS</replaceable></programlisting>
+          <para>Replace
+            <replaceable>MANAGEMENT_INTERFACE_IP_ADDRESS</replaceable> with
+            the IP address of the management network interface on your
+            first compute node, typically 10.0.0.31 in the
+            <link linkend="architecture_example-architectures">example
+            architecture</link>.</para>
+        </step>
+        <step>
+          <para>In the <literal>[DEFAULT]</literal> section, enable and
+            configure remote console access:</para>
+          <programlisting language="ini">[DEFAULT]
+...
+vnc_enabled = True
+vncserver_listen = 0.0.0.0
+vncserver_proxyclient_address = <replaceable>MANAGEMENT_INTERFACE_IP_ADDRESS</replaceable>
+novncproxy_base_url = http://<replaceable>controller</replaceable>:6080/vnc_auto.html</programlisting>
+          <para>The server component listens on all IP addresses and the proxy
+            component only listens on the management interface IP address of
+            the compute node. The base URL indicates the location where you
+            can use a web browser to access remote consoles of instances
+            on this compute node.</para>
+          <para>Replace
+            <replaceable>MANAGEMENT_INTERFACE_IP_ADDRESS</replaceable> with
+            the IP address of the management network interface on your
+            first compute node, typically 10.0.0.31 in the
+            <link linkend="architecture_example-architectures">example
+            architecture</link>.</para>
+          <note>
+            <para>If the web browser to access remote consoles resides on a
+              host that cannot resolve the
+              <replaceable>controller</replaceable> hostname, you must replace
+              <replaceable>controller</replaceable> with the management
+              interface IP address of the controller node.</para>
+          </note>
+        </step>
+        <step>
+          <para>In the <literal>[DEFAULT]</literal> section, configure the
+            location of the Image Service:</para>
+          <programlisting language="ini">[DEFAULT]
+...
+glance_host = <replaceable>controller</replaceable></programlisting>
+        </step>
+      </substeps>
+    </step>
+  </procedure>
+  <procedure os="debian">
+    <title>To install and configure the Compute hypervisor components</title>
+    <step>
+      <para>Install the packages:</para>
+      <screen><prompt>#</prompt> <userinput>apt-get install nova-compute</userinput></screen>
+    </step>
+    <step>
+      <para>Respond to the prompts for
+        <link linkend="debconf-dbconfig-common">database management</link>,
+        <link linkend="debconf-keystone_authtoken">Identity service
+        credentials</link>,
+        <link linkend="debconf-api-endpoints">service endpoint
+        registration</link>, and
+        <link linkend="debconf-rabbitmq">message broker
+        credentials.</link>.</para>
+    </step>
+  </procedure>
+  <procedure>
+    <title>To finalize installation</title>
+    <step>
+      <para>Determine whether your compute node supports hardware acceleration
+        for virtual machines:</para>
+      <screen><prompt>$</prompt> <userinput>egrep -c '(vmx|svm)' /proc/cpuinfo</userinput></screen>
+      <para>If this command returns a value of
+        <emphasis>one or greater</emphasis>, your compute node supports
+        hardware acceleration which typically requires no additional
+        configuration.</para>
+      <para>If this command returns a value of <emphasis>zero</emphasis>,
+        your compute node does not support hardware acceleration and you must
+        configure <literal>libvirt</literal> to use QEMU instead of KVM.</para>
+      <substeps>
+        <step>
+          <para>Edit the <literal>[libvirt]</literal>
+            section in the
+            <filename os="ubuntu;debian">/etc/nova/nova-compute.conf</filename>
+            <filename os="rhel;centos;fedora;sles;opensuse"
+              >/etc/nova/nova.conf</filename> file as follows:</para>
+          <programlisting language="ini">[libvirt]
+...
+virt_type = qemu</programlisting>
+          <warning os="ubuntu">
+            <para>On Ubuntu 12.04, kernels backported from newer releases may
+              not automatically load the KVM modules for hardware acceleration
+              when the compute node boots. In this case, launching an instance
+              will fail with the following message in the
+              <filename>/var/log/nova/nova-compute.log</filename> file:</para>
+            <screen><computeroutput>libvirtError: internal error: no supported architecture for os type 'hvm'</computeroutput></screen>
+            <para>As a workaround for this issue, you must add the appropriate
+              module for your compute node to the
+              <filename>/etc/modules</filename> file.</para>
+            <para>For systems with Intel processors:</para>
+            <screen><prompt>#</prompt> <userinput>echo 'kvm_intel' >> /etc/modules</userinput></screen>
+            <para>For systems with AMD processors:</para>
+            <screen><prompt>#</prompt> <userinput>echo 'kvm_amd' >> /etc/modules</userinput></screen>
+          </warning>
+        </step>
+      </substeps>
+    </step>
+    <step os="ubuntu;debian">
+      <para>Restart the Compute service:</para>
+      <screen><prompt>#</prompt> <userinput>service nova-compute restart</userinput></screen>
+    </step>
+    <step os="rhel;centos;fedora;sles;opensuse">
+      <para>Start the Compute service including its dependencies and configure
+        them to start automatically when the system boots:</para>
+      <stepalternatives os="rhel;centos;fedora">
+        <step>
+          <para>For RHEL, CentOS, and compatible derivatives:</para>
+          <screen><prompt>#</prompt> <userinput>service libvirtd start</userinput>
+<prompt>#</prompt> <userinput>service messagebus start</userinput>
+<prompt>#</prompt> <userinput>service openstack-nova-compute start</userinput>
+<prompt>#</prompt> <userinput>chkconfig libvirtd on</userinput>
+<prompt>#</prompt> <userinput>chkconfig messagebus on</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-nova-compute on</userinput></screen>
+        </step>
+        <step>
+          <para>For Fedora:</para>
+          <screen><prompt>#</prompt> <userinput>service libvirtd start</userinput>
+<prompt>#</prompt> <userinput>service dbus start</userinput>
+<prompt>#</prompt> <userinput>service openstack-nova-compute start</userinput>
+<prompt>#</prompt> <userinput>chkconfig libvirtd on</userinput>
+<prompt>#</prompt> <userinput>chkconfig dbus on</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-nova-compute on</userinput></screen>
+        </step>
+      </stepalternatives>
+      <screen os="opensuse;sles"><prompt>#</prompt> <userinput>service libvirtd start</userinput>
+<prompt>#</prompt> <userinput>chkconfig libvirtd on</userinput>
+<prompt>#</prompt> <userinput>service openstack-nova-compute start</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-nova-compute on</userinput></screen>
+    </step>
+    <step os="ubuntu">
+      <para>By default, the Ubuntu packages create an SQLite database.</para>
+      <para>Because this configuration uses a SQL database server, you can
+        remove the SQLite database file:</para>
+      <screen><prompt>#</prompt> <userinput>rm /var/lib/nova/nova.sqlite</userinput></screen>
+    </step>
+  </procedure>
+</section>
