@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenStack Manuals\n"
-"POT-Creation-Date: 2014-06-27 05:07+0000\n"
-"PO-Revision-Date: 2014-06-27 06:02+0000\n"
+"POT-Creation-Date: 2014-07-01 20:21+0000\n"
+"PO-Revision-Date: 2014-07-02 04:10+0000\n"
 "Last-Translator: Tomoyuki KATO <tomo@dream.daynight.jp>\n"
 "Language-Team: Japanese (http://www.transifex.com/projects/p/openstack-manuals-i18n/language/ja/)\n"
 "MIME-Version: 1.0\n"
@@ -1847,6 +1847,11 @@ msgstr "インスタンス起動後、ボリューム作成後のインスタン
 
 #: ./doc/user-guide/app_cheat_sheet.xml405(replaceable)
 #: ./doc/user-guide/section_cli_trove.xml180(replaceable)
+#: ./doc/user-guide/section_cli_trove.xml245(replaceable)
+#: ./doc/user-guide/section_cli_trove.xml327(replaceable)
+#: ./doc/user-guide/section_cli_trove.xml345(replaceable)
+#: ./doc/user-guide/section_cli_trove.xml355(replaceable)
+#: ./doc/user-guide/section_cli_trove.xml373(replaceable)
 msgid "INSTANCE_ID"
 msgstr "INSTANCE_ID"
 
@@ -3450,6 +3455,190 @@ msgstr "これで、一般的なデータベースアクセスコマンドを使
 #: ./doc/user-guide/section_cli_trove.xml205(replaceable)
 msgid "IP_ADDRESS"
 msgstr "IP_ADDRESS"
+
+#: ./doc/user-guide/section_cli_trove.xml210(title)
+msgid "Backup and restore a database"
+msgstr "データベースのバックアップとリストア"
+
+#: ./doc/user-guide/section_cli_trove.xml211(para)
+msgid ""
+"You can use Database services to backup a database and store the backup "
+"artifact in the Object Storage module. Later on, if the original database is"
+" damaged, you can use the backup artifact to restore the database. The "
+"restore process creates a new database instance."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml212(para)
+msgid "This example shows you how to backup and restore a MySQL database."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml214(title)
+msgid "To backup and restore a database"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml217(title)
+msgid "Backup the database instance."
+msgstr "データベースインスタンスをバックアップします。"
+
+#: ./doc/user-guide/section_cli_trove.xml218(para)
+msgid ""
+"As background, assume that you have <link linkend=\"create_db\">created a "
+"database instance</link> with the following characteristics:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml222(para)
+msgid "Name of the database instance: <literal>guest1</literal>"
+msgstr "データベースインスタンス名: <literal>guest1</literal>"
+
+#: ./doc/user-guide/section_cli_trove.xml225(para)
+msgid "Flavor ID: <literal>10</literal>"
+msgstr "フレーバー ID: <literal>10</literal>"
+
+#: ./doc/user-guide/section_cli_trove.xml228(para)
+msgid "Root volume size: <literal>2</literal>"
+msgstr "ルートボリューム容量: <literal>2</literal>"
+
+#: ./doc/user-guide/section_cli_trove.xml231(para)
+msgid "Databases: <literal>db1</literal> and <literal>db2</literal>"
+msgstr "データベース: <literal>db1</literal>、<literal>db2</literal>"
+
+#: ./doc/user-guide/section_cli_trove.xml234(para)
+msgid ""
+"Users: One user named <literal>user1</literal> with a password of "
+"<literal>password</literal>"
+msgstr "ユーザー: ユーザー名が <literal>user1</literal>、パスワードが <literal>password</literal>"
+
+#: ./doc/user-guide/section_cli_trove.xml237(para)
+msgid ""
+"First, get the ID of the <literal>guest1</literal> database instance by "
+"using the trove <placeholder-1/> command:"
+msgstr "まず、trove <placeholder-1/> コマンドを使用して、<literal>guest1</literal> データベースインスタンスの ID を取得します。"
+
+#: ./doc/user-guide/section_cli_trove.xml244(para)
+msgid ""
+"Backup the database instance by using the trove <placeholder-1/> command. In"
+" this example, the backup is called <literal>backup1</literal>. In this "
+"example, you would replace <replaceable>INSTANCE_ID</replaceable> with "
+"97b4b853-80f6-414f-ba6f-c6f455a79ae6:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml260(para)
+msgid ""
+"Note that the command returns both the ID of the original instance "
+"(<literal>instance_id</literal>) and the ID of the backup artifact "
+"(<literal>id</literal>)."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml261(para)
+msgid ""
+"Later on, you can obtain this same information by using the trove "
+"<placeholder-1/> command:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml268(para)
+msgid ""
+"You can get additional information about the backup by using the trove "
+"<placeholder-1/> command and passing in the "
+"<replaceable>BACKUP_ID</replaceable>, which in this case is 8af30763-61fd-"
+"4aab-8fe8-57d528911138."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml269(replaceable)
+#: ./doc/user-guide/section_cli_trove.xml298(replaceable)
+msgid "BACKUP_ID"
+msgstr "BACKUP_ID"
+
+#: ./doc/user-guide/section_cli_trove.xml287(title)
+msgid "Restore a database instance."
+msgstr "データベースインスタンスをリストアします。"
+
+#: ./doc/user-guide/section_cli_trove.xml288(para)
+msgid ""
+"Now assume that your <literal>guest1</literal> database instance is damaged "
+"and you need to restore it. In this example, you use the trove "
+"<placeholder-1/> command to create a new database instance called "
+"<literal>guest2</literal>."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml292(para)
+msgid ""
+"You specify that the new <literal>guest2</literal> instance has the same "
+"flavor (<literal>10</literal>) and the same root volume size "
+"(<literal>2</literal>) as the original <literal>guest1</literal> instance."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml295(para)
+msgid ""
+"You use the <code>--backup</code> argument to indicate that this new "
+"instance is based on the backup artifact identified by "
+"<replaceable>BACKUP_ID</replaceable>. In this example, you would replace "
+"<replaceable>BACKUP_ID</replaceable> with 8af30763-61fd-4aab-"
+"8fe8-57d528911138."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml315(title)
+msgid "Verify backup."
+msgstr "バックアップを検証します。"
+
+#: ./doc/user-guide/section_cli_trove.xml316(para)
+msgid ""
+"Now check that the new <literal>guest2</literal> instance has the same "
+"characteristics as the original <literal>guest1</literal> instance."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml318(para)
+msgid "Start by getting the ID of the new <literal>guest2</literal> instance."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml326(para)
+msgid ""
+"Use the trove <placeholder-1/> command to display information about the new "
+"guest2 instance. Pass in guest2's <replaceable>INSTANCE_ID</replaceable>, "
+"which in this case is ac7a2b35-a9b4-4ff6-beac-a1bcee86d04b."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml343(para)
+msgid ""
+"Note that the datastore, flavor ID and volume size are the same as the "
+"original <literal>guest1</literal> instance."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml344(para)
+msgid ""
+"Use the trove <placeholder-1/> command to check that the original databases "
+"(<literal>db1</literal> and <literal>db2</literal>) are present on the "
+"restored instance."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml354(para)
+msgid ""
+"Use the trove <placeholder-1/> command to check that the original user "
+"(<literal>user1</literal>) is present on the restored instance."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml364(title)
+msgid "Notify users."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml365(para)
+msgid ""
+"Tell the users who were accessing the now-disabled <literal>guest1</literal>"
+" database instance that they can now access <literal>guest2</literal>. "
+"Provide them with <literal>guest2</literal>'s name, IP address, and any "
+"other information they might need. (You can get this information by using "
+"the trove <placeholder-1/> command as listed above.)"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml370(title)
+msgid "Clean up."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml371(para)
+msgid ""
+"At this point, you may also want to delete the disabled "
+"<literal>guest1</literal> instance, by using the trove <placeholder-1/> "
+"command."
+msgstr ""
 
 #: ./doc/user-guide/section_dashboard_launch_instances.xml6(title)
 msgid "Launch and manage instances"
