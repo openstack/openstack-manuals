@@ -202,20 +202,33 @@ virt_type = qemu</programlisting>
       <screen><prompt>#</prompt> <userinput>rm /var/lib/nova/nova.sqlite</userinput></screen>
     </step>
     <step>
-      <para os="fedora;rhel;centos;opensuse;sles">Start the Compute
-        service and configure it to start when the system
-        boots:</para>
+      <para os="fedora;rhel;centos;opensuse;sles">Start the Compute service and
+        its dependencies. Configure them to start automatically when the system
+        boots.</para>
       <para os="ubuntu;debian">Restart the Compute service:</para>
       <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service nova-compute restart</userinput></screen>
-      <screen os="fedora;rhel;centos"><prompt>#</prompt> <userinput>service libvirtd start</userinput>
+      <stepalternatives os="fedora;rhel;centos">
+        <step>
+          <para>For RHEL or CentOS:</para>
+          <screen><prompt>#</prompt> <userinput>service libvirtd start</userinput>
 <prompt>#</prompt> <userinput>service messagebus start</userinput>
+<prompt>#</prompt> <userinput>service openstack-nova-compute start</userinput>
 <prompt>#</prompt> <userinput>chkconfig libvirtd on</userinput>
 <prompt>#</prompt> <userinput>chkconfig messagebus on</userinput>
-<prompt>#</prompt> <userinput>service openstack-nova-compute start</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-nova-compute on</userinput></screen>
-      <screen os="opensuse;sles"><prompt>#</prompt> <userinput>service libvirtd start</userinput>
-<prompt>#</prompt> <userinput>chkconfig libvirtd on</userinput>
+        </step>
+        <step><para>For Fedora:</para>
+          <screen><prompt>#</prompt> <userinput>service libvirtd start</userinput>
+<prompt>#</prompt> <userinput>service dbus start</userinput>
 <prompt>#</prompt> <userinput>service openstack-nova-compute start</userinput>
+<prompt>#</prompt> <userinput>chkconfig libvirtd on</userinput>
+<prompt>#</prompt> <userinput>chkconfig dbus on</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-nova-compute on</userinput></screen>
+        </step>
+      </stepalternatives>
+      <screen os="opensuse;sles"><prompt>#</prompt> <userinput>service libvirtd start</userinput>
+<prompt>#</prompt> <userinput>service openstack-nova-compute start</userinput>
+<prompt>#</prompt> <userinput>chkconfig libvirtd on</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-nova-compute on</userinput></screen>
     </step>
   </procedure>
