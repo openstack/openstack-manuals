@@ -35,17 +35,13 @@ function test_ja {
                 --only-book user-guide-admin
             RET=$?
             ;;
-        publish-install)
-            setup_directory 'ja' 'install-guide'
-            openstack-doc-test -v --publish --check-build -l ja \
-                --only-book install-guide
-            RET=$?
-            ;;
         publish)
             setup_directory 'ja' 'high-availability-guide' \
-                'user-guide' 'user-guide-admin'
+                'install-guide' 'user-guide' \
+                'user-guide-admin'
             openstack-doc-test -v --publish --check-build -l ja \
                 --only-book high-availability-guide \
+                --only-book install-guide \
                 --only-book user-guide \
                 --only-book user-guide-admin
             RET=$?
@@ -62,9 +58,9 @@ function test_ja {
 function test_language () {
 
     case "$language" in
-	all)
-	    test_ja
-	    ;;
+        all)
+            test_ja
+            ;;
         ja)
             test_ja
             ;;
@@ -78,7 +74,7 @@ function test_language () {
 function usage () {
     echo "Call the script as: "
     echo "$0 PURPOSE LANGUAGE1 LANGUAGE2..."
-    echo "PURPOSE is either 'test', 'publish' or 'publish-install'"
+    echo "PURPOSE is either 'test' or 'publish'."
     echo "LANGUAGE can also be 'all'."
 }
 
@@ -90,8 +86,6 @@ if [ "$1" = "test" ] ; then
    PURPOSE="test"
 elif [ "$1" = "publish" ] ; then
    PURPOSE="publish"
-elif [ "$1" = "publish-install" ] ; then
-   PURPOSE="publish-install"
 else
     usage
     exit 1
