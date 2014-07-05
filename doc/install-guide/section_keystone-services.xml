@@ -1,58 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <section xmlns="http://docbook.org/ns/docbook"
-  xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="keystone-services"
-  version="5.0" os="rhel;centos;fedora;opensuse;sles;ubuntu">
-  <title>Define services and API endpoints</title>
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  version="5.0"
+  xml:id="keystone-services" os="ubuntu;rhel;centos;fedora;sles;opensuse">
+  <title>Create the service entity and API endpoint</title>
+  <para>After you create tenants, users, and roles, you must create the
+    <glossterm>service</glossterm> entity and
+    <glossterm>API endpoint</glossterm> for the Identity service.</para>
   <procedure>
+    <title>To configure prerequisites</title>
     <step>
-      <para>Register the identity service itself using the
-      <code>OS_SERVICE_TOKEN</code> environment variable, as set
-      previously, for authentication.</para>
+      <para>Set the <envar>OS_SERVICE_TOKEN</envar> and
+        <envar>OS_SERVICE_ENDPOINT</envar> environment variables, as described
+        in <xref linkend="keystone-users"/>.</para>
     </step>
+  </procedure>
+  <procedure>
+    <title>To create the service entity and API endpoint</title>
     <step>
-      <para>Create a service entry for the Identity Service:</para>
-      <screen><prompt>$</prompt> <userinput>keystone service-create --name=keystone --type=identity \
+      <para>The Identity service manages a catalog of services in your
+        OpenStack environment. Services use this catalog to locate other
+        services in your environment.</para>
+      <para>Create the service entity for the Identity service:</para>
+      <screen><prompt>$</prompt> <userinput>keystone service-create --name keystone --type identity \
   --description="OpenStack Identity"</userinput>
 <computeroutput>+-------------+----------------------------------+
 |   Property  |              Value               |
 +-------------+----------------------------------+
-| description | OpenStack Identity               |
+| description |        OpenStack Identity        |
 | id          | 15c11a23667e427e91bc31335b45f4bd |
-| name        | keystone                         |
-| type        | identity                         |
+| name        |             keystone             |
+| type        |             identity             |
 +-------------+----------------------------------+</computeroutput></screen>
-      <para>The service ID is randomly generated and is different from
-        the one shown here.</para>
+      <note>
+        <para>Because OpenStack generates IDs dynamically, you will see
+          different values from this example command output.</para>
+      </note>
     </step>
     <step>
-      <para>Specify an API endpoint for the Identity Service by using
-        the returned service ID. When you specify an endpoint, you
-        provide URLs for the public API, internal API, and admin API.
-        In this guide, the <literal>controller</literal> host name is
-        used. Note that the Identity Service uses a different port for
-        the admin API.</para>
+      <para>The Identity service manages a catalog of API endpoints associated
+        with the services in your OpenStack environment. Services use this
+        catalog to determine how to communicate with other services in your
+        environment.</para>
+      <para>OpenStack provides three API endpoint variations for each service:
+        admin, internal, and public. In a production environment, the variants
+        might reside on separate networks that service different types of users
+        for security reasons. For simplicity, this configuration uses the
+        management network for all variations.</para>
+      <para>Create the API endpoint for the Identity service:</para>
       <screen><prompt>$</prompt> <userinput>keystone endpoint-create \
   --service-id=$(keystone service-list | awk '/ identity / {print $2}') \
   --publicurl=http://<replaceable>controller</replaceable>:5000/v2.0 \
   --internalurl=http://<replaceable>controller</replaceable>:5000/v2.0 \
   --adminurl=http://<replaceable>controller</replaceable>:35357/v2.0</userinput>
-<computeroutput>+-------------+-----------------------------------+
-|   Property  |             Value                 |
-+-------------+-----------------------------------+
-| adminurl    | http://controller:35357/v2.0      |
-| id          | 11f9c625a3b94a3f8e66bf4e5de2679f  |
-| internalurl | http://controller:5000/v2.0       |
-| publicurl   | http://controller:5000/v2.0       |
-| region      | regionOne                         |
-| service_id  | 15c11a23667e427e91bc31335b45f4bd  |
-+-------------+-----------------------------------+</computeroutput></screen>
+<computeroutput>+-------------+----------------------------------+
+|   Property  |             Value                |
++-------------+----------------------------------+
+| adminurl    |   http://controller:35357/v2.0   |
+| id          | 11f9c625a3b94a3f8e66bf4e5de2679f |
+| internalurl |   http://controller:5000/v2.0    |
+| publicurl   |   http://controller:5000/v2.0    |
+| region      |           regionOne              |
+| service_id  | 15c11a23667e427e91bc31335b45f4bd |
++-------------+----------------------------------+</computeroutput></screen>
+      <note>
+        <para>This command references the ID of the service that you created
+          in the previous step.</para>
+      </note>
     </step>
   </procedure>
   <note>
-    <para>
-      You will need to create an additional endpoint for each service
-      added to your OpenStack environment. The sections of this guide
-      associated with the installation of each service include the
-      endpoint creation step specific to the service.
-    </para>
+    <para>Each service that you add to your OpenStack environment requires
+      adding information such as API endpoints to the Identity service. The
+      sections of this guide that cover service installation include steps
+      to add the appropriate information to the Identity service.</para>
   </note>
 </section>
