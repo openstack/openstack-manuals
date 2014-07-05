@@ -8,7 +8,6 @@ review up on review.openstack.org.
 May 20, 2014
 To do tasks:
 - Add a chapter describing Telemetry tasks (ceilometer); how to monitor usage
-- Add audience information; who is this book intended for
 
 Ongoing tasks:
 - Ensure it meets conventions and standards
