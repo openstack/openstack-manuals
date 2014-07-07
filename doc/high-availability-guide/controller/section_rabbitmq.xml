@@ -7,65 +7,65 @@
          xmlns:xlink="http://www.w3.org/1999/xlink"
          xmlns:xi="http://www.w3.org/2001/XInclude"
          version="5.0" xml:id="s-rabbitmq">
-        <info>
+
           <title>Highly available RabbitMQ</title>
-        </info>
-        <simpara>RabbitMQ is the default AMQP server used by many OpenStack
-services. Making the RabbitMQ service highly available involves:</simpara>
+
+        <para>RabbitMQ is the default AMQP server used by many OpenStack
+services. Making the RabbitMQ service highly available involves:</para>
         <itemizedlist>
           <listitem>
-            <simpara>
+            <para>
 configuring a DRBD device for use by RabbitMQ,
-</simpara>
+</para>
           </listitem>
           <listitem>
-            <simpara>
+            <para>
 configuring RabbitMQ to use a data directory residing on that DRBD
   device,
-</simpara>
+</para>
           </listitem>
           <listitem>
-            <simpara>
+            <para>
 selecting and assigning a virtual IP address (VIP) that can freely
   float between cluster nodes,
-</simpara>
+</para>
           </listitem>
           <listitem>
-            <simpara>
+            <para>
 configuring RabbitMQ to listen on that IP address,
-</simpara>
+</para>
           </listitem>
           <listitem>
-            <simpara>
+            <para>
 managing all resources, including the RabbitMQ daemon itself, with
   the Pacemaker cluster manager.
-</simpara>
+</para>
           </listitem>
         </itemizedlist>
         <note>
-          <simpara>There is an alternative method of configuring RabbitMQ for high
+          <para>There is an alternative method of configuring RabbitMQ for high
 availability. That approach, known as
-<link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.rabbitmq.com/ha.html">active-active mirrored queues</link>,
+<link xlink:href="http://www.rabbitmq.com/ha.html">active-active mirrored queues</link>,
 happens to be the one preferred by the RabbitMQ developers&mdash;however
 it has shown less than ideal consistency and reliability in OpenStack
 clusters. Thus, at the time of writing, the Pacemaker/DRBD based
 approach remains the recommended one for OpenStack environments,
 although this may change in the near future as RabbitMQ active-active
-mirrored queues mature.</simpara>
+mirrored queues mature.</para>
         </note>
         <section xml:id="_configure_drbd_2">
-          <info>
+
             <title>Configure DRBD</title>
-          </info>
-          <simpara>The Pacemaker based RabbitMQ server requires a DRBD resource from
+
+          <para>The Pacemaker based RabbitMQ server requires a DRBD resource from
 which it mounts the <literal>/var/lib/rabbitmq</literal> directory. In this example,
-the DRBD resource is simply named <literal>rabbitmq</literal>:</simpara>
+the DRBD resource is simply named <literal>rabbitmq</literal>:</para>
           <formalpara>
-            <info>
-              <title><literal>rabbitmq</literal> DRBD resource configuration (<literal>/etc/drbd.d/rabbitmq.res</literal>)</title>
-            </info>
+
+              <title><literal>rabbitmq</literal> DRBD resource configuration (<filename>/etc/drbd.d/rabbitmq.res</filename>)</title>
+
             <para>
-              <screen>resource rabbitmq {
+              <programlisting>resource rabbitmq {
   device    minor 1;
   disk      "/dev/data/rabbitmq";
   meta-disk internal;
@@ -75,10 +75,10 @@ the DRBD resource is simply named <literal>rabbitmq</literal>:</simpara>
   on node2 {
     address ipv4 10.0.42.254:7701;
   }
-}</screen>
+}</programlisting>
             </para>
           </formalpara>
-          <simpara>This resource uses an underlying local disk (in DRBD terminology, a
+          <para>This resource uses an underlying local disk (in DRBD terminology, a
 <emphasis>backing device</emphasis>) named <literal>/dev/data/rabbitmq</literal> on both cluster nodes,
 <literal>node1</literal> and <literal>node2</literal>. Normally, this would be an LVM Logical Volume
 specifically set aside for this purpose. The DRBD <literal>meta-disk</literal> is
@@ -86,13 +86,13 @@ specifically set aside for this purpose. The DRBD <literal>meta-disk</literal> i
 of the <literal>disk</literal> device itself. The device is configured to communicate
 between IPv4 addresses 10.0.42.100 and 10.0.42.254, using TCP port
 7701. Once enabled, it will map to a local DRBD block device with the
-device minor number 1, that is, <literal>/dev/drbd1</literal>.</simpara>
-          <simpara>Enabling a DRBD resource is explained in detail in
-<link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.drbd.org/users-guide-8.3/s-first-time-up.html">the DRBD
-User’s Guide</link>. In brief, the proper sequence of commands is this:</simpara>
-          <screen>drbdadm create-md rabbitmq <co xml:id="CO4-1"/>
-drbdadm up rabbitmq <co xml:id="CO4-2"/>
-drbdadm -- --force primary rabbitmq <co xml:id="CO4-3"/></screen>
+device minor number 1, that is, <literal>/dev/drbd1</literal>.</para>
+          <para>Enabling a DRBD resource is explained in detail in
+<link xlink:href="http://www.drbd.org/users-guide-8.3/s-first-time-up.html">the DRBD
+User’s Guide</link>. In brief, the proper sequence of commands is this:</para>
+          <screen><prompt>#</prompt> <userinput>drbdadm create-md rabbitmq</userinput><co xml:id="CO4-1"/>
+<prompt>#</prompt> <userinput>drbdadm up rabbitmq</userinput><co xml:id="CO4-2"/>
+<prompt>#</prompt> <userinput>drbdadm -- --force primary rabbitmq</userinput><co xml:id="CO4-3"/></screen>
           <calloutlist>
             <callout arearefs="CO4-1">
               <para>
@@ -111,7 +111,7 @@ be completed on both nodes.
               <para>
 Kicks off the initial device synchronization, and puts the device
 into the <literal>primary</literal> (readable and writable) role. See
-<link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.drbd.org/users-guide-8.3/ch-admin.html#s-roles">Resource
+<link xlink:href="http://www.drbd.org/users-guide-8.3/ch-admin.html#s-roles">Resource
 roles</link> (from the DRBD User’s Guide) for a more detailed description of
 the primary and secondary roles in DRBD. Must be completed <emphasis>on one
 node only,</emphasis> namely the one where you are about to continue with
@@ -121,46 +121,46 @@ creating your filesystem.
           </calloutlist>
         </section>
         <section xml:id="_create_a_file_system">
-          <info>
+
             <title>Create a file system</title>
-          </info>
-          <simpara>Once the DRBD resource is running and in the primary role (and
+
+          <para>Once the DRBD resource is running and in the primary role (and
 potentially still in the process of running the initial device
 synchronization), you may proceed with creating the filesystem for
-RabbitMQ data. XFS is generally the recommended filesystem:</simpara>
-          <screen>mkfs -t xfs /dev/drbd1</screen>
-          <simpara>You may also use the alternate device path for the DRBD device, which
+RabbitMQ data. XFS is generally the recommended filesystem:</para>
+          <screen><prompt>#</prompt> <userinput>mkfs -t xfs /dev/drbd1</userinput></screen>
+          <para>You may also use the alternate device path for the DRBD device, which
 may be easier to remember as it includes the self-explanatory resource
-name:</simpara>
-          <screen>mkfs -t xfs /dev/drbd/by-res/rabbitmq</screen>
-          <simpara>Once completed, you may safely return the device to the secondary
+name:</para>
+          <screen><prompt>#</prompt> <userinput>mkfs -t xfs /dev/drbd/by-res/rabbitmq</userinput></screen>
+          <para>Once completed, you may safely return the device to the secondary
 role. Any ongoing device synchronization will continue in the
-background:</simpara>
-          <screen>drbdadm secondary rabbitmq</screen>
+background:</para>
+          <screen><prompt>#</prompt> <userinput>drbdadm secondary rabbitmq</userinput></screen>
         </section>
         <section xml:id="_prepare_rabbitmq_for_pacemaker_high_availability">
-          <info>
+
             <title>Prepare RabbitMQ for Pacemaker high availability</title>
-          </info>
-          <simpara>In order for Pacemaker monitoring to function properly, you must
+
+          <para>In order for Pacemaker monitoring to function properly, you must
 ensure that RabbitMQ’s <literal>.erlang.cookie</literal> files are identical on all
 nodes, regardless of whether DRBD is mounted there or not. The
 simplest way of doing so is to take an existing <literal>.erlang.cookie</literal> from
 one of your nodes, copying it to the RabbitMQ data directory on the
-other node, and also copying it to the DRBD-backed filesystem.</simpara>
-          <screen>node1:# scp -a /var/lib/rabbitmq/.erlang.cookie node2:/var/lib/rabbitmq/
-node1:# mount /dev/drbd/by-res/rabbitmq /mnt
-node1:# cp -a /var/lib/rabbitmq/.erlang.cookie /mnt
-node1:# umount /mnt</screen>
+other node, and also copying it to the DRBD-backed filesystem.</para>
+          <screen><prompt>#</prompt> <userinput>scp -a /var/lib/rabbitmq/.erlang.cookie node2:/var/lib/rabbitmq/</userinput>
+<prompt>#</prompt> <userinput>mount /dev/drbd/by-res/rabbitmq /mnt</userinput>
+<prompt>#</prompt> <userinput>cp -a /var/lib/rabbitmq/.erlang.cookie /mnt</userinput>
+<prompt>#</prompt> <userinput>umount /mnt</userinput></screen>
         </section>
         <section xml:id="_add_rabbitmq_resources_to_pacemaker">
-          <info>
+
             <title>Add RabbitMQ resources to Pacemaker</title>
-          </info>
-          <simpara>You may now proceed with adding the Pacemaker configuration for
+
+          <para>You may now proceed with adding the Pacemaker configuration for
 RabbitMQ resources. Connect to the Pacemaker cluster with <literal>crm
-configure</literal>, and add the following cluster resources:</simpara>
-          <screen>primitive p_ip_rabbitmq ocf:heartbeat:IPaddr2 \
+configure</literal>, and add the following cluster resources:</para>
+          <programlisting>primitive p_ip_rabbitmq ocf:heartbeat:IPaddr2 \
   params ip="192.168.42.100" cidr_netmask="24" \
   op monitor interval="10s"
 primitive p_drbd_rabbitmq ocf:linbit:drbd \
@@ -186,57 +186,57 @@ group g_rabbitmq p_ip_rabbitmq p_fs_rabbitmq p_rabbitmq
 ms ms_drbd_rabbitmq p_drbd_rabbitmq \
   meta notify="true" master-max="1" clone-max="2"
 colocation c_rabbitmq_on_drbd inf: g_rabbitmq ms_drbd_rabbitmq:Master
-order o_drbd_before_rabbitmq inf: ms_drbd_rabbitmq:promote g_rabbitmq:start</screen>
-          <simpara>This configuration creates</simpara>
+order o_drbd_before_rabbitmq inf: ms_drbd_rabbitmq:promote g_rabbitmq:start</programlisting>
+          <para>This configuration creates</para>
           <itemizedlist>
             <listitem>
-              <simpara><literal>p_ip_rabbitmq</literal>, a virtual IP address for use by RabbitMQ
+              <para><literal>p_ip_rabbitmq</literal>, a virtual IP address for use by RabbitMQ
   (192.168.42.100),
-</simpara>
+</para>
             </listitem>
             <listitem>
-              <simpara><literal>p_fs_rabbitmq</literal>, a Pacemaker managed filesystem mounted to
+              <para><literal>p_fs_rabbitmq</literal>, a Pacemaker managed filesystem mounted to
   <literal>/var/lib/rabbitmq</literal> on whatever node currently runs the RabbitMQ
   service,
-</simpara>
+</para>
             </listitem>
             <listitem>
-              <simpara><literal>ms_drbd_rabbitmq</literal>, the <emphasis>master/slave set</emphasis> managing the <literal>rabbitmq</literal>
+              <para><literal>ms_drbd_rabbitmq</literal>, the <emphasis>master/slave set</emphasis> managing the <literal>rabbitmq</literal>
   DRBD resource,
-</simpara>
+</para>
             </listitem>
             <listitem>
-              <simpara>
+              <para>
 a service <literal>group</literal> and <literal>order</literal> and <literal>colocation</literal> constraints to ensure
   resources are started on the correct nodes, and in the correct sequence.
-</simpara>
+</para>
             </listitem>
           </itemizedlist>
-          <simpara><literal>crm configure</literal> supports batch input, so you may copy and paste the
+          <para><literal>crm configure</literal> supports batch input, so you may copy and paste the
 above into your live pacemaker configuration, and then make changes as
 required. For example, you may enter <literal>edit p_ip_rabbitmq</literal> from the
 <literal>crm configure</literal> menu and edit the resource to match your preferred
-virtual IP address.</simpara>
-          <simpara>Once completed, commit your configuration changes by entering <literal>commit</literal>
+virtual IP address.</para>
+          <para>Once completed, commit your configuration changes by entering <literal>commit</literal>
 from the <literal>crm configure</literal> menu. Pacemaker will then start the RabbitMQ
-service, and its dependent resources, on one of your nodes.</simpara>
+service, and its dependent resources, on one of your nodes.</para>
         </section>
         <section xml:id="_configure_openstack_services_for_highly_available_rabbitmq">
-          <info>
+
             <title>Configure OpenStack services for highly available RabbitMQ</title>
-          </info>
-          <simpara>Your OpenStack services must now point their RabbitMQ configuration to
+
+          <para>Your OpenStack services must now point their RabbitMQ configuration to
 the highly available, virtual cluster IP address&mdash;rather than a
-RabbitMQ server’s physical IP address as you normally would.</simpara>
-          <simpara>For OpenStack Image, for example, if your RabbitMQ service IP address is
+RabbitMQ server’s physical IP address as you normally would.</para>
+          <para>For OpenStack Image, for example, if your RabbitMQ service IP address is
 192.168.42.100 as in the configuration explained here, you would use
 the following line in your OpenStack Image API configuration file
-(<literal>glance-api.conf</literal>):</simpara>
-          <screen>rabbit_host = 192.168.42.100</screen>
-          <simpara>No other changes are necessary to your OpenStack configuration. If the
+(<filename>glance-api.conf</filename>):</para>
+          <programlisting language="ini">rabbit_host = 192.168.42.100</programlisting>
+          <para>No other changes are necessary to your OpenStack configuration. If the
 node currently hosting your RabbitMQ experiences a problem
 necessitating service failover, your OpenStack services may experience
 a brief RabbitMQ interruption, as they would in the event of a network
-hiccup, and then continue to run normally.</simpara>
+hiccup, and then continue to run normally.</para>
         </section>
       </section>

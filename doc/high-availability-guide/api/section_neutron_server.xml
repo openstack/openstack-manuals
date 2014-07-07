@@ -2,62 +2,62 @@
     xmlns:xlink="http://www.w3.org/1999/xlink"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     version="5.0" xml:id="s-neutron-server">
-        <info>
+
           <title>Highly available OpenStack Networking server</title>
-        </info>
-        <simpara>OpenStack Networking is the network connectivity service in OpenStack.
-Making the OpenStack Networking Server service highly available in active / passive mode involves</simpara>
+
+        <para>OpenStack Networking is the network connectivity service in OpenStack.
+Making the OpenStack Networking Server service highly available in active / passive mode involves</para>
         <itemizedlist>
           <listitem>
-            <simpara>
+            <para>
 Configure OpenStack Networking to listen on the VIP address,
-</simpara>
+</para>
           </listitem>
           <listitem>
-            <simpara>
+            <para>
 managing OpenStack Networking API Server daemon with the Pacemaker cluster manager,
-</simpara>
+</para>
           </listitem>
           <listitem>
-            <simpara>
+            <para>
 Configure OpenStack services to use this IP address.
-</simpara>
+</para>
           </listitem>
         </itemizedlist>
         <note>
-          <simpara>Here is the <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://docs.openstack.org/trunk/install-guide/install/apt/content/ch_installing-openstack-networking.html">documentation</link> for installing OpenStack Networking service.</simpara>
+          <para>Here is the <link xlink:href="http://docs.openstack.org/trunk/install-guide/install/apt/content/ch_installing-openstack-networking.html">documentation</link> for installing OpenStack Networking service.</para>
         </note>
         <section xml:id="_add_openstack_networking_server_resource_to_pacemaker">
-          <info>
+
             <title>Add OpenStack Networking Server resource to Pacemaker</title>
-          </info>
-          <simpara>First of all, you need to download the resource agent to your system:</simpara>
-          <screen>cd /usr/lib/ocf/resource.d/openstack
-wget https://raw.github.com/madkiss/openstack-resource-agents/master/ocf/neutron-server
-chmod a+rx *</screen>
-          <simpara>You can now add the Pacemaker configuration for
+
+          <para>First of all, you need to download the resource agent to your system:</para>
+          <screen><prompt>#</prompt> <userinput>cd /usr/lib/ocf/resource.d/openstack</userinput>
+<prompt>#</prompt> <userinput>wget https://raw.github.com/madkiss/openstack-resource-agents/master/ocf/neutron-server</userinput>
+<prompt>#</prompt> <userinput>chmod a+rx *</userinput></screen>
+          <para>You can now add the Pacemaker configuration for
 OpenStack Networking Server resource. Connect to the Pacemaker cluster with <literal>crm
-configure</literal>, and add the following cluster resources:</simpara>
-          <screen>primitive p_neutron-server ocf:openstack:neutron-server \
+configure</literal>, and add the following cluster resources:</para>
+          <programlisting>primitive p_neutron-server ocf:openstack:neutron-server \
     params os_password="secrete" os_username="admin" os_tenant_name="admin" \
     keystone_get_token_url="http://192.168.42.103:5000/v2.0/tokens" \
-    op monitor interval="30s" timeout="30s"</screen>
-          <simpara>This configuration creates <literal>p_neutron-server</literal>, a resource for manage OpenStack Networking Server service</simpara>
-          <simpara><literal>crm configure</literal> supports batch input, so you may copy and paste the
+    op monitor interval="30s" timeout="30s"</programlisting>
+          <para>This configuration creates <literal>p_neutron-server</literal>, a resource for manage OpenStack Networking Server service</para>
+          <para><literal>crm configure</literal> supports batch input, so you may copy and paste the
 above into your live pacemaker configuration, and then make changes as
 required. For example, you may enter <literal>edit p_neutron-server</literal> from the
 <literal>crm configure</literal> menu and edit the resource to match your preferred
-virtual IP address.</simpara>
-          <simpara>Once completed, commit your configuration changes by entering <literal>commit</literal>
+virtual IP address.</para>
+          <para>Once completed, commit your configuration changes by entering <literal>commit</literal>
 from the <literal>crm configure</literal> menu. Pacemaker will then start the OpenStack Networking API
-service, and its dependent resources, on one of your nodes.</simpara>
+service, and its dependent resources, on one of your nodes.</para>
         </section>
         <section xml:id="_configure_openstack_networking_server">
-          <info>
+
             <title>Configure OpenStack Networking server</title>
-          </info>
-          <simpara>Edit <literal>/etc/neutron/neutron.conf</literal> :</simpara>
-          <screen># We bind the service to the VIP:
+
+          <para>Edit <filename>/etc/neutron/neutron.conf</filename>:</para>
+          <programlisting language="ini"># We bind the service to the VIP:
 bind_host = 192.168.42.103
 
 # We bind OpenStack Networking Server to the VIP:
@@ -69,21 +69,24 @@ rabbit_host = 192.168.42.102
 
 [database]
 # We have to use MySQL connection to store data:
-connection = mysql://neutron:password@192.168.42.101/neutron</screen>
+connection = mysql://neutron:password@192.168.42.101/neutron</programlisting>
         </section>
         <section xml:id="_configure_openstack_services_to_use_highly_available_openstack_networking_server">
-          <info>
+
             <title>Configure OpenStack services to use highly available OpenStack Networking server</title>
-          </info>
-          <simpara>Your OpenStack services must now point their OpenStack Networking Server configuration to
+
+          <para>Your OpenStack services must now point their OpenStack Networking Server configuration to
 the highly available, virtual cluster IP address — rather than an
-OpenStack Networking server’s physical IP address as you normally would.</simpara>
-          <simpara>For example, you should configure OpenStack Compute for using highly available OpenStack Networking server in editing <literal>nova.conf</literal> file:</simpara>
-          <screen>neutron_url = http://192.168.42.103:9696</screen>
-          <simpara>You need to create the OpenStack Networking server endpoint with this IP.</simpara>
+OpenStack Networking server’s physical IP address as you normally would.</para>
+          <para>For example, you should configure OpenStack Compute for using highly available OpenStack Networking server in editing <literal>nova.conf</literal> file:</para>
+          <programlisting language="ini">neutron_url = http://192.168.42.103:9696</programlisting>
+          <para>You need to create the OpenStack Networking server endpoint with this IP.</para>
           <note>
-            <simpara>If you are using both private and public IP addresses, you should create two Virtual IP addresses and define your endpoint like this:</simpara>
+            <para>If you are using both private and public IP addresses, you should create two Virtual IP addresses and define your endpoint like this:</para>
           </note>
-          <screen>keystone endpoint-create --region $KEYSTONE_REGION --service-id $service-id --publicurl 'http://PUBLIC_VIP:9696/' --adminurl 'http://192.168.42.103:9696/' --internalurl 'http://192.168.42.103:9696/'</screen>
+          <screen><prompt>$</prompt> <userinput>keystone endpoint-create --region $KEYSTONE_REGION --service-id $service-id \
+  --publicurl 'http://PUBLIC_VIP:9696/' \
+  --adminurl 'http://192.168.42.103:9696/' \
+  --internalurl 'http://192.168.42.103:9696/'</userinput></screen>
         </section>
       </section>

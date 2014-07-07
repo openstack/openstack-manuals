@@ -2,69 +2,69 @@
     xmlns:xlink="http://www.w3.org/1999/xlink"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     version="5.0" xml:id="s-cinder-api">
-        <info>
+
           <title>Highly available Block Storage API</title>
-        </info>
-        <simpara>Making the Block Storage (cinder) API service highly available in active / passive mode involves</simpara>
+
+        <para>Making the Block Storage (cinder) API service highly available in active / passive mode involves</para>
         <itemizedlist>
           <listitem>
-            <simpara>
+            <para>
 Configure Block Storage to listen on the VIP address,
-</simpara>
+</para>
           </listitem>
           <listitem>
-            <simpara>
+            <para>
 managing Block Storage API daemon with the Pacemaker cluster manager,
-</simpara>
+</para>
           </listitem>
           <listitem>
-            <simpara>
+            <para>
 Configure OpenStack services to use this IP address.
-</simpara>
+</para>
           </listitem>
         </itemizedlist>
         <note>
-          <simpara>Here is the
-<link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://docs.openstack.org/trunk/install-guide/install/apt/content/ch_cinder.html">documentation</link>
-for installing Block Storage service.</simpara>
+          <para>Here is the
+<link xlink:href="http://docs.openstack.org/trunk/install-guide/install/apt/content/ch_cinder.html">documentation</link>
+for installing Block Storage service.</para>
         </note>
         <section xml:id="_add_block_storage_api_resource_to_pacemaker">
-          <info>
+
             <title>Add Block Storage API resource to Pacemaker</title>
-          </info>
-          <simpara>First of all, you need to download the resource agent to your system:</simpara>
-          <screen>cd /usr/lib/ocf/resource.d/openstack
-wget https://raw.github.com/madkiss/openstack-resource-agents/master/ocf/cinder-api
-chmod a+rx *</screen>
-          <simpara>You can now add the Pacemaker configuration for
+
+          <para>First of all, you need to download the resource agent to your system:</para>
+          <screen><prompt>#</prompt> <userinput>cd /usr/lib/ocf/resource.d/openstack</userinput>
+<prompt>#</prompt> <userinput>wget https://raw.github.com/madkiss/openstack-resource-agents/master/ocf/cinder-api</userinput>
+<prompt>#</prompt> <userinput>chmod a+rx *</userinput></screen>
+          <para>You can now add the Pacemaker configuration for
 Block Storage API resource. Connect to the Pacemaker cluster with <literal>crm
-configure</literal>, and add the following cluster resources:</simpara>
-          <screen>primitive p_cinder-api ocf:openstack:cinder-api \
+configure</literal>, and add the following cluster resources:</para>
+          <programlisting>primitive p_cinder-api ocf:openstack:cinder-api \
     params config="/etc/cinder/cinder.conf" os_password="secrete" os_username="admin" \
     os_tenant_name="admin" keystone_get_token_url="http://192.168.42.103:5000/v2.0/tokens" \
-    op monitor interval="30s" timeout="30s"</screen>
-          <simpara>This configuration creates</simpara>
+    op monitor interval="30s" timeout="30s"</programlisting>
+          <para>This configuration creates</para>
           <itemizedlist>
             <listitem>
-              <simpara><literal>p_cinder-api</literal>, a resource for manage Block Storage API service
-</simpara>
+              <para><literal>p_cinder-api</literal>, a resource for manage Block Storage API service
+</para>
             </listitem>
           </itemizedlist>
-          <simpara><literal>crm configure</literal> supports batch input, so you may copy and paste the
+          <para><literal>crm configure</literal> supports batch input, so you may copy and paste the
 above into your live pacemaker configuration, and then make changes as
 required. For example, you may enter <literal>edit p_ip_cinder-api</literal> from the
 <literal>crm configure</literal> menu and edit the resource to match your preferred
-virtual IP address.</simpara>
-          <simpara>Once completed, commit your configuration changes by entering <literal>commit</literal>
+virtual IP address.</para>
+          <para>Once completed, commit your configuration changes by entering <literal>commit</literal>
 from the <literal>crm configure</literal> menu. Pacemaker will then start the Block Storage API
-service, and its dependent resources, on one of your nodes.</simpara>
+service, and its dependent resources, on one of your nodes.</para>
         </section>
         <section xml:id="_configure_block_storage_api_service">
-          <info>
+
             <title>Configure Block Storage API service</title>
-          </info>
-          <simpara>Edit <literal>/etc/cinder/cinder.conf</literal>:</simpara>
-          <screen># We have to use MySQL connection to store data:
+
+          <para>Edit <filename>/etc/cinder/cinder.conf</filename>:</para>
+          <programlisting language="ini"># We have to use MySQL connection to store data:
 sql_connection=mysql://cinder:password@192.168.42.101/cinder
 
 # We bind Block Storage API to the VIP:
@@ -72,19 +72,22 @@ osapi_volume_listen = 192.168.42.103
 
 # We send notifications to High Available RabbitMQ:
 notifier_strategy = rabbit
-rabbit_host = 192.168.42.102</screen>
+rabbit_host = 192.168.42.102</programlisting>
         </section>
         <section xml:id="_configure_openstack_services_to_use_highly_available_block_storage_api">
-          <info>
+
             <title>Configure OpenStack services to use highly available Block Storage API</title>
-          </info>
-          <simpara>Your OpenStack services must now point their Block Storage API configuration to
+
+          <para>Your OpenStack services must now point their Block Storage API configuration to
 the highly available, virtual cluster IP address — rather than a
-Block Storage API server’s physical IP address as you normally would.</simpara>
-          <simpara>You must create the Block Storage API endpoint with this IP.</simpara>
+Block Storage API server’s physical IP address as you normally would.</para>
+          <para>You must create the Block Storage API endpoint with this IP.</para>
           <note>
-            <simpara>If you are using both private and public IP, you should create two Virtual IPs and define your endpoint like this:</simpara>
+            <para>If you are using both private and public IP, you should create two Virtual IPs and define your endpoint like this:</para>
           </note>
-          <screen>keystone endpoint-create --region $KEYSTONE_REGION --service-id $service-id --publicurl 'http://PUBLIC_VIP:8776/v1/%(tenant_id)s' --adminurl 'http://192.168.42.103:8776/v1/%(tenant_id)s' --internalurl 'http://192.168.42.103:8776/v1/%(tenant_id)s'</screen>
+          <screen><prompt>$</prompt> <userinput>keystone endpoint-create --region $KEYSTONE_REGION \
+  --service-id $service-id --publicurl 'http://PUBLIC_VIP:8776/v1/%(tenant_id)s' \
+  --adminurl 'http://192.168.42.103:8776/v1/%(tenant_id)s' \
+  --internalurl 'http://192.168.42.103:8776/v1/%(tenant_id)s'</userinput></screen>
         </section>
       </section>

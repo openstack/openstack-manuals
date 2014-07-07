@@ -7,62 +7,62 @@
          xmlns:xlink="http://www.w3.org/1999/xlink"
          xmlns:xi="http://www.w3.org/2001/XInclude"
          version="5.0" xml:id="s-mysql">
-        <info>
+
           <title>Highly available MySQL</title>
-        </info>
-        <simpara>MySQL is the default database server used by many OpenStack
-services. Making the MySQL service highly available involves</simpara>
+
+        <para>MySQL is the default database server used by many OpenStack
+services. Making the MySQL service highly available involves</para>
         <itemizedlist>
           <listitem>
-            <simpara>
+            <para>
 Configure a DRBD device for use by MySQL,
-</simpara>
+</para>
           </listitem>
           <listitem>
-            <simpara>
+            <para>
 Configure MySQL to use a data directory residing on that DRBD
   device,
-</simpara>
+</para>
           </listitem>
           <listitem>
-            <simpara>
+            <para>
 selecting and assigning a virtual IP address (VIP) that can freely
   float between cluster nodes,
-</simpara>
+</para>
           </listitem>
           <listitem>
-            <simpara>
+            <para>
 Configure MySQL to listen on that IP address,
-</simpara>
+</para>
           </listitem>
           <listitem>
-            <simpara>
+            <para>
 managing all resources, including the MySQL daemon itself, with
   the Pacemaker cluster manager.
-</simpara>
+</para>
           </listitem>
         </itemizedlist>
         <note>
-          <simpara><link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://codership.com/products/mysql_galera">MySQL/Galera</link> is an
+          <para><link xlink:href="http://codership.com/products/mysql_galera">MySQL/Galera</link> is an
 alternative method of Configure MySQL for high availability. It is
 likely to become the preferred method of achieving MySQL high
 availability once it has sufficiently matured. At the time of writing,
 however, the Pacemaker/DRBD based approach remains the recommended one
-for OpenStack environments.</simpara>
+for OpenStack environments.</para>
         </note>
         <section xml:id="_configure_drbd">
-          <info>
+
             <title>Configure DRBD</title>
-          </info>
-          <simpara>The Pacemaker based MySQL server requires a DRBD resource from
+
+          <para>The Pacemaker based MySQL server requires a DRBD resource from
 which it mounts the <literal>/var/lib/mysql</literal> directory. In this example,
-the DRBD resource is simply named <literal>mysql</literal>:</simpara>
+the DRBD resource is simply named <literal>mysql</literal>:</para>
           <formalpara>
-            <info>
-              <title><literal>mysql</literal> DRBD resource configuration (<literal>/etc/drbd.d/mysql.res</literal>)</title>
-            </info>
+
+              <title><literal>mysql</literal> DRBD resource configuration (<filename>/etc/drbd.d/mysql.res</filename>)</title>
+
             <para>
-              <screen>resource mysql {
+              <programlisting>resource mysql {
   device    minor 0;
   disk      "/dev/data/mysql";
   meta-disk internal;
@@ -72,10 +72,10 @@ the DRBD resource is simply named <literal>mysql</literal>:</simpara>
   on node2 {
     address ipv4 10.0.42.254:7700;
   }
-}</screen>
+}</programlisting>
             </para>
           </formalpara>
-          <simpara>This resource uses an underlying local disk (in DRBD terminology, a
+          <para>This resource uses an underlying local disk (in DRBD terminology, a
 <emphasis>backing device</emphasis>) named <literal>/dev/data/mysql</literal> on both cluster nodes,
 <literal>node1</literal> and <literal>node2</literal>. Normally, this would be an LVM Logical Volume
 specifically set aside for this purpose. The DRBD <literal>meta-disk</literal> is
@@ -83,13 +83,13 @@ specifically set aside for this purpose. The DRBD <literal>meta-disk</literal> i
 of the <literal>disk</literal> device itself. The device is configured to communicate
 between IPv4 addresses 10.0.42.100 and 10.0.42.254, using TCP port
 7700. Once enabled, it will map to a local DRBD block device with the
-device minor number 0, that is, <literal>/dev/drbd0</literal>.</simpara>
-          <simpara>Enabling a DRBD resource is explained in detail in
-<link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.drbd.org/users-guide-8.3/s-first-time-up.html">the DRBD
-User’s Guide</link>. In brief, the proper sequence of commands is this:</simpara>
-          <screen>drbdadm create-md mysql <co xml:id="CO3-1"/>
-drbdadm up mysql <co xml:id="CO3-2"/>
-drbdadm -- --force primary mysql <co xml:id="CO3-3"/></screen>
+device minor number 0, that is, <filename>/dev/drbd0</filename>.</para>
+          <para>Enabling a DRBD resource is explained in detail in
+<link xlink:href="http://www.drbd.org/users-guide-8.3/s-first-time-up.html">the DRBD
+User’s Guide</link>. In brief, the proper sequence of commands is this:</para>
+          <screen><prompt>#</prompt> <userinput>drbdadm create-md mysql</userinput><co xml:id="CO3-1"/>
+<prompt>#</prompt> <userinput>drbdadm up mysql</userinput><co xml:id="CO3-2"/>
+<prompt>#</prompt> <userinput>drbdadm -- --force primary mysql</userinput><co xml:id="CO3-3"/></screen>
           <calloutlist>
             <callout arearefs="CO3-1">
               <para>
@@ -108,7 +108,7 @@ be completed on both nodes.
               <para>
 Kicks off the initial device synchronization, and puts the device
 into the <literal>primary</literal> (readable and writable) role. See
-<link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.drbd.org/users-guide-8.3/ch-admin.html#s-roles">Resource
+<link xlink:href="http://www.drbd.org/users-guide-8.3/ch-admin.html#s-roles">Resource
 roles</link> (from the DRBD User’s Guide) for a more detailed description of
 the primary and secondary roles in DRBD. Must be completed <emphasis>on one
 node only,</emphasis> namely the one where you are about to continue with
@@ -118,55 +118,55 @@ creating your filesystem.
           </calloutlist>
         </section>
         <section xml:id="_creating_a_file_system">
-          <info>
+
             <title>Creating a file system</title>
-          </info>
-          <simpara>Once the DRBD resource is running and in the primary role (and
+
+          <para>Once the DRBD resource is running and in the primary role (and
 potentially still in the process of running the initial device
 synchronization), you may proceed with creating the filesystem for
-MySQL data. XFS is the generally recommended filesystem:</simpara>
-          <screen>mkfs -t xfs /dev/drbd0</screen>
-          <simpara>You may also use the alternate device path for the DRBD device, which
+MySQL data. XFS is the generally recommended filesystem:</para>
+          <screen><prompt>#</prompt> <userinput>mkfs -t xfs /dev/drbd0</userinput></screen>
+          <para>You may also use the alternate device path for the DRBD device, which
 may be easier to remember as it includes the self-explanatory resource
-name:</simpara>
-          <screen>mkfs -t xfs /dev/drbd/by-res/mysql</screen>
-          <simpara>Once completed, you may safely return the device to the secondary
+name:</para>
+          <screen><prompt>#</prompt> <userinput>mkfs -t xfs /dev/drbd/by-res/mysql</userinput></screen>
+          <para>Once completed, you may safely return the device to the secondary
 role. Any ongoing device synchronization will continue in the
-background:</simpara>
-          <screen>drbdadm secondary mysql</screen>
+background:</para>
+          <screen><prompt>#</prompt> <userinput>drbdadm secondary mysql</userinput></screen>
         </section>
         <section xml:id="_prepare_mysql_for_pacemaker_high_availability">
-          <info>
+
             <title>Prepare MySQL for Pacemaker high availability</title>
-          </info>
-          <simpara>In order for Pacemaker monitoring to function properly, you must
+
+          <para>In order for Pacemaker monitoring to function properly, you must
 ensure that MySQL’s database files reside on the DRBD device. If you
 already have an existing MySQL database, the simplest approach is to
 just move the contents of the existing <literal>/var/lib/mysql</literal> directory into
-the newly created filesystem on the DRBD device.</simpara>
+the newly created filesystem on the DRBD device.</para>
           <warning>
-            <simpara>You must complete the next step while the MySQL database
-server is shut down.</simpara>
+            <para>You must complete the next step while the MySQL database
+server is shut down.</para>
           </warning>
-          <screen>node1:# mount /dev/drbd/by-res/mysql /mnt
-node1:# mv /var/lib/mysql/* /mnt
-node1:# umount /mnt</screen>
-          <simpara>For a new MySQL installation with no existing data, you may also run
-the <literal>mysql_install_db</literal> command:</simpara>
-          <screen>node1:# mount /dev/drbd/by-res/mysql /mnt
-node1:# mysql_install_db --datadir=/mnt
-node1:# umount /mnt</screen>
-          <simpara>Regardless of the approach, the steps outlined here must be completed
-on only one cluster node.</simpara>
+          <screen><prompt>#</prompt> <userinput>mount /dev/drbd/by-res/mysql /mnt</userinput>
+<prompt>#</prompt> <userinput>mv /var/lib/mysql/* /mnt</userinput>
+<prompt>#</prompt> <userinput>umount /mnt</userinput></screen>
+          <para>For a new MySQL installation with no existing data, you may also run
+the <literal>mysql_install_db</literal> command:</para>
+          <screen><prompt>#</prompt> <userinput>mount /dev/drbd/by-res/mysql /mnt</userinput>
+<prompt>#</prompt> <userinput>mysql_install_db --datadir=/mnt</userinput>
+<prompt>#</prompt> <userinput>umount /mnt</userinput></screen>
+          <para>Regardless of the approach, the steps outlined here must be completed
+on only one cluster node.</para>
         </section>
         <section xml:id="_add_mysql_resources_to_pacemaker">
-          <info>
+
             <title>Add MySQL resources to Pacemaker</title>
-          </info>
-          <simpara>You can now add the Pacemaker configuration for
+
+          <para>You can now add the Pacemaker configuration for
 MySQL resources. Connect to the Pacemaker cluster with <literal>crm
-configure</literal>, and add the following cluster resources:</simpara>
-          <screen>primitive p_ip_mysql ocf:heartbeat:IPaddr2 \
+configure</literal>, and add the following cluster resources:</para>
+          <programlisting>primitive p_ip_mysql ocf:heartbeat:IPaddr2 \
   params ip="192.168.42.101" cidr_netmask="24" \
   op monitor interval="30s"
 primitive p_drbd_mysql ocf:linbit:drbd \
@@ -198,57 +198,57 @@ group g_mysql p_ip_mysql p_fs_mysql p_mysql
 ms ms_drbd_mysql p_drbd_mysql \
   meta notify="true" clone-max="2"
 colocation c_mysql_on_drbd inf: g_mysql ms_drbd_mysql:Master
-order o_drbd_before_mysql inf: ms_drbd_mysql:promote g_mysql:start</screen>
-          <simpara>This configuration creates</simpara>
+order o_drbd_before_mysql inf: ms_drbd_mysql:promote g_mysql:start</programlisting>
+          <para>This configuration creates</para>
           <itemizedlist>
             <listitem>
-              <simpara><literal>p_ip_mysql</literal>, a virtual IP address for use by MySQL
+              <para><literal>p_ip_mysql</literal>, a virtual IP address for use by MySQL
   (192.168.42.101),
-</simpara>
+</para>
             </listitem>
             <listitem>
-              <simpara><literal>p_fs_mysql</literal>, a Pacemaker managed filesystem mounted to
+              <para><literal>p_fs_mysql</literal>, a Pacemaker managed filesystem mounted to
   <literal>/var/lib/mysql</literal> on whatever node currently runs the MySQL
   service,
-</simpara>
+</para>
             </listitem>
             <listitem>
-              <simpara><literal>ms_drbd_mysql</literal>, the <emphasis>master/slave set</emphasis> managing the <literal>mysql</literal>
+              <para><literal>ms_drbd_mysql</literal>, the <emphasis>master/slave set</emphasis> managing the <literal>mysql</literal>
   DRBD resource,
-</simpara>
+</para>
             </listitem>
             <listitem>
-              <simpara>
+              <para>
 a service <literal>group</literal> and <literal>order</literal> and <literal>colocation</literal> constraints to ensure
   resources are started on the correct nodes, and in the correct sequence.
-</simpara>
+</para>
             </listitem>
           </itemizedlist>
-          <simpara><literal>crm configure</literal> supports batch input, so you may copy and paste the
+          <para><literal>crm configure</literal> supports batch input, so you may copy and paste the
 above into your live pacemaker configuration, and then make changes as
 required. For example, you may enter <literal>edit p_ip_mysql</literal> from the
 <literal>crm configure</literal> menu and edit the resource to match your preferred
-virtual IP address.</simpara>
-          <simpara>Once completed, commit your configuration changes by entering <literal>commit</literal>
+virtual IP address.</para>
+          <para>Once completed, commit your configuration changes by entering <literal>commit</literal>
 from the <literal>crm configure</literal> menu. Pacemaker will then start the MySQL
-service, and its dependent resources, on one of your nodes.</simpara>
+service, and its dependent resources, on one of your nodes.</para>
         </section>
         <section xml:id="_configure_openstack_services_for_highly_available_mysql">
-          <info>
+
             <title>Configure OpenStack services for highly available MySQL</title>
-          </info>
-          <simpara>Your OpenStack services must now point their MySQL configuration to
+
+          <para>Your OpenStack services must now point their MySQL configuration to
 the highly available, virtual cluster IP address&mdash;rather than a
-MySQL server’s physical IP address as you normally would.</simpara>
-          <simpara>For OpenStack Image, for example, if your MySQL service IP address is
+MySQL server’s physical IP address as you normally would.</para>
+          <para>For OpenStack Image, for example, if your MySQL service IP address is
 192.168.42.101 as in the configuration explained here, you would use
 the following line in your OpenStack Image registry configuration file
-(<literal>glance-registry.conf</literal>):</simpara>
-          <screen>sql_connection = mysql://glancedbadmin:&lt;password&gt;@192.168.42.101/glance</screen>
-          <simpara>No other changes are necessary to your OpenStack configuration. If the
+(<filename>glance-registry.conf</filename>):</para>
+          <programlisting language="ini">sql_connection = mysql://glancedbadmin:&lt;password&gt;@192.168.42.101/glance</programlisting>
+          <para>No other changes are necessary to your OpenStack configuration. If the
 node currently hosting your database experiences a problem
 necessitating service failover, your OpenStack services may experience
 a brief MySQL interruption, as they would in the event of a network
-hiccup, and then continue to run normally.</simpara>
+hiccup, and then continue to run normally.</para>
         </section>
       </section>

@@ -2,46 +2,46 @@
     xmlns:xlink="http://www.w3.org/1999/xlink"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     version="5.0" xml:id="_highly_available_neutron_l3_agent">
-        <info>
+
           <title>Highly available neutron L3 agent</title>
-        </info>
-        <simpara>The neutron L3 agent provides L3/NAT forwarding to ensure external network access
+
+        <para>The neutron L3 agent provides L3/NAT forwarding to ensure external network access
 for VMs on tenant networks. High availability for the L3 agent is achieved by
-adopting Pacemaker.</simpara>
+adopting Pacemaker.</para>
         <note>
-          <simpara>Here is the <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://docs.openstack.org/trunk/config-reference/content/section_adv_cfg_l3_agent.html">documentation</link> for installing neutron L3 agent.</simpara>
+          <para>Here is the <link xlink:href="http://docs.openstack.org/trunk/config-reference/content/section_adv_cfg_l3_agent.html">documentation</link> for installing neutron L3 agent.</para>
         </note>
         <section xml:id="_add_neutron_l3_agent_resource_to_pacemaker">
-          <info>
+
             <title>Add neutron L3 agent resource to Pacemaker</title>
-          </info>
-          <simpara>First of all, you need to download the resource agent to your system:</simpara>
-          <screen>cd /usr/lib/ocf/resource.d/openstack
-wget https://raw.github.com/madkiss/openstack-resource-agents/master/ocf/neutron-agent-l3
-chmod a+rx neutron-l3-agent</screen>
-          <simpara>You may now proceed with adding the Pacemaker configuration for
+
+          <para>First of all, you need to download the resource agent to your system:</para>
+          <screen><prompt>#</prompt> <userinput>cd /usr/lib/ocf/resource.d/openstack</userinput>
+<prompt>#</prompt> <userinput>wget https://raw.github.com/madkiss/openstack-resource-agents/master/ocf/neutron-agent-l3</userinput>
+<prompt>#</prompt> <userinput>chmod a+rx neutron-l3-agent</userinput></screen>
+          <para>You may now proceed with adding the Pacemaker configuration for
 neutron L3 agent resource. Connect to the Pacemaker cluster with <literal>crm
-configure</literal>, and add the following cluster resources:</simpara>
-          <screen>primitive p_neutron-l3-agent ocf:openstack:neutron-agent-l3 \
+configure</literal>, and add the following cluster resources:</para>
+          <programlisting>primitive p_neutron-l3-agent ocf:openstack:neutron-agent-l3 \
     params config="/etc/neutron/neutron.conf" \
     plugin_config="/etc/neutron/l3_agent.ini" \
-    op monitor interval="30s" timeout="30s"</screen>
-          <simpara>This configuration creates</simpara>
+    op monitor interval="30s" timeout="30s"</programlisting>
+          <para>This configuration creates</para>
           <itemizedlist>
             <listitem>
-              <simpara><literal>p_neutron-l3-agent</literal>, a resource for manage Neutron L3 Agent service
-</simpara>
+              <para><literal>p_neutron-l3-agent</literal>, a resource for manage Neutron L3 Agent service
+</para>
             </listitem>
           </itemizedlist>
-          <simpara><literal>crm configure</literal> supports batch input, so you may copy and paste the
+          <para><literal>crm configure</literal> supports batch input, so you may copy and paste the
 above into your live pacemaker configuration, and then make changes as
-required.</simpara>
-          <simpara>Once completed, commit your configuration changes by entering <literal>commit</literal>
+required.</para>
+          <para>Once completed, commit your configuration changes by entering <literal>commit</literal>
 from the <literal>crm configure</literal> menu. Pacemaker will then start the neutron L3 agent
-service, and its dependent resources, on one of your nodes.</simpara>
+service, and its dependent resources, on one of your nodes.</para>
           <note>
-            <simpara>This method does not ensure a zero downtime since it has to recreate all
-the namespaces and virtual routers on the node.</simpara>
+            <para>This method does not ensure a zero downtime since it has to recreate all
+the namespaces and virtual routers on the node.</para>
           </note>
         </section>
       </section>
