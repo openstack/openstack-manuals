@@ -5,9 +5,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenStack Manuals\n"
-"POT-Creation-Date: 2014-07-03 20:47+0000\n"
-"PO-Revision-Date: 2014-07-03 20:47+0000\n"
-"Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
+"POT-Creation-Date: 2014-07-07 05:43+0000\n"
+"PO-Revision-Date: 2014-07-07 02:00+0000\n"
+"Last-Translator: Tomoyuki KATO <tomo@dream.daynight.jp>\n"
 "Language-Team: Japanese (http://www.transifex.com/projects/p/openstack-manuals-i18n/language/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -96,6 +96,7 @@ msgstr "このセクションは、コントローラーノードに OpenStack I
 #: ./doc/install-guide/section_nova-controller-install.xml9(title)
 #: ./doc/install-guide/section_glance-install.xml16(title)
 #: ./doc/install-guide/section_heat-install.xml9(title)
+#: ./doc/install-guide/section_keystone-services.xml12(title)
 msgid "To configure prerequisites"
 msgstr "前提条件の設定方法"
 
@@ -166,6 +167,7 @@ msgstr "<replaceable>ADMIN_TOKEN</replaceable> を前の手順で生成したラ
 #: ./doc/install-guide/section_nova-controller-install.xml93(para)
 #: ./doc/install-guide/section_glance-install.xml95(para)
 #: ./doc/install-guide/section_glance-install.xml143(para)
+#: ./doc/install-guide/section_nova-compute-install.xml32(para)
 #: ./doc/install-guide/section_heat-install.xml82(para)
 msgid ""
 "In the <literal>[database]</literal> section, configure database access:"
@@ -254,14 +256,6 @@ msgstr "<literal>[database]</literal> セクションに、データベースの
 #: ./doc/install-guide/section_neutron-ml2-compute-node.xml317(replaceable)
 #: ./doc/install-guide/section_neutron-ml2-compute-node.xml322(replaceable)
 #: ./doc/install-guide/section_basics-networking-nova.xml202(replaceable)
-#: ./doc/install-guide/section_nova-compute.xml73(replaceable)
-#: ./doc/install-guide/section_nova-compute.xml74(replaceable)
-#: ./doc/install-guide/section_nova-compute.xml92(replaceable)
-#: ./doc/install-guide/section_nova-compute.xml93(replaceable)
-#: ./doc/install-guide/section_nova-compute.xml125(replaceable)
-#: ./doc/install-guide/section_nova-compute.xml137(replaceable)
-#: ./doc/install-guide/section_nova-compute.xml145(replaceable)
-#: ./doc/install-guide/section_nova-compute.xml148(replaceable)
 #: ./doc/install-guide/section_trove-install.xml74(replaceable)
 #: ./doc/install-guide/section_trove-install.xml75(replaceable)
 #: ./doc/install-guide/section_trove-install.xml76(replaceable)
@@ -295,6 +289,12 @@ msgstr "<literal>[database]</literal> セクションに、データベースの
 #: ./doc/install-guide/section_neutron-ml2-controller-node.xml375(replaceable)
 #: ./doc/install-guide/section_neutron-ml2-controller-node.xml399(replaceable)
 #: ./doc/install-guide/section_neutron-ml2-controller-node.xml404(replaceable)
+#: ./doc/install-guide/section_nova-compute-install.xml36(replaceable)
+#: ./doc/install-guide/section_nova-compute-install.xml46(replaceable)
+#: ./doc/install-guide/section_nova-compute-install.xml58(replaceable)
+#: ./doc/install-guide/section_nova-compute-install.xml59(replaceable)
+#: ./doc/install-guide/section_nova-compute-install.xml90(replaceable)
+#: ./doc/install-guide/section_nova-compute-install.xml115(replaceable)
 #: ./doc/install-guide/section_neutron-ovs-controller-node.xml55(replaceable)
 #: ./doc/install-guide/section_neutron-ovs-controller-node.xml56(replaceable)
 #: ./doc/install-guide/section_neutron-ovs-controller-node.xml57(replaceable)
@@ -334,9 +334,9 @@ msgstr "<literal>[database]</literal> セクションに、データベースの
 #: ./doc/install-guide/section_neutron-ml2-network-node.xml300(replaceable)
 #: ./doc/install-guide/section_ceilometer-glance.xml17(replaceable)
 #: ./doc/install-guide/section_ceilometer-glance.xml23(replaceable)
-#: ./doc/install-guide/section_keystone-services.xml35(replaceable)
-#: ./doc/install-guide/section_keystone-services.xml36(replaceable)
-#: ./doc/install-guide/section_keystone-services.xml37(replaceable)
+#: ./doc/install-guide/section_keystone-services.xml54(replaceable)
+#: ./doc/install-guide/section_keystone-services.xml55(replaceable)
+#: ./doc/install-guide/section_keystone-services.xml56(replaceable)
 #: ./doc/install-guide/section_neutron-ovs-network-node.xml97(replaceable)
 #: ./doc/install-guide/section_neutron-ovs-network-node.xml99(replaceable)
 #: ./doc/install-guide/section_neutron-ovs-network-node.xml130(replaceable)
@@ -408,6 +408,7 @@ msgstr "Identity をカタログに登録します。"
 #: ./doc/install-guide/section_nova-controller-install.xml195(title)
 #: ./doc/install-guide/section_glance-install.xml209(title)
 #: ./doc/install-guide/section_neutron-ml2-controller-node.xml418(title)
+#: ./doc/install-guide/section_nova-compute-install.xml138(title)
 #: ./doc/install-guide/section_heat-install.xml180(title)
 msgid "To finalize installation"
 msgstr "インストールの最終手順"
@@ -429,6 +430,7 @@ msgstr "Ubuntu パッケージは、デフォルトで SQLite データベース
 #: ./doc/install-guide/section_keystone-install.xml199(para)
 #: ./doc/install-guide/section_nova-controller-install.xml223(para)
 #: ./doc/install-guide/section_glance-install.xml225(para)
+#: ./doc/install-guide/section_nova-compute-install.xml212(para)
 #: ./doc/install-guide/section_heat-install.xml199(para)
 msgid ""
 "Because this configuration uses a SQL database server, you can remove the "
@@ -603,7 +605,6 @@ msgid "Install the appropriate packages for the Block Storage service:"
 msgstr "Block Storage Service のために適切なパッケージをインストールします。"
 
 #: ./doc/install-guide/section_cinder-controller.xml27(para)
-#: ./doc/install-guide/section_nova-compute.xml41(para)
 msgid ""
 "Respond to the prompts for <link linkend=\"debconf-dbconfig-"
 "common\">database management</link>, <link linkend=\"debconf-"
@@ -730,8 +731,6 @@ msgstr "<filename>/etc/cinder/cinder.conf</filename> ファイルの <literal>[D
 #: ./doc/install-guide/section_cinder-node.xml166(replaceable)
 #: ./doc/install-guide/section_neutron-ml2-compute-node.xml114(replaceable)
 #: ./doc/install-guide/section_neutron-ml2-compute-node.xml134(replaceable)
-#: ./doc/install-guide/section_nova-compute.xml109(replaceable)
-#: ./doc/install-guide/section_nova-compute.xml115(replaceable)
 #: ./doc/install-guide/section_trove-install.xml88(replaceable)
 #: ./doc/install-guide/section_trove-install.xml108(replaceable)
 #: ./doc/install-guide/section_trove-install.xml110(replaceable)
@@ -739,6 +738,7 @@ msgstr "<filename>/etc/cinder/cinder.conf</filename> ファイルの <literal>[D
 #: ./doc/install-guide/section_trove-install.xml204(replaceable)
 #: ./doc/install-guide/section_neutron-ml2-controller-node.xml193(replaceable)
 #: ./doc/install-guide/section_neutron-ml2-controller-node.xml209(replaceable)
+#: ./doc/install-guide/section_nova-compute-install.xml47(replaceable)
 #: ./doc/install-guide/section_neutron-ovs-controller-node.xml153(replaceable)
 #: ./doc/install-guide/section_neutron-ovs-controller-node.xml166(replaceable)
 #: ./doc/install-guide/section_heat-install.xml97(replaceable)
@@ -1235,7 +1235,7 @@ msgstr "<filename>/etc/nova/nova.conf</filename> ファイルを編集し、<lit
 
 #: ./doc/install-guide/section_ceilometer-nova.xml53(para)
 #: ./doc/install-guide/section_neutron-ml2-compute-node.xml368(para)
-#: ./doc/install-guide/section_nova-compute.xml202(para)
+#: ./doc/install-guide/section_nova-compute-install.xml179(para)
 msgid "Restart the Compute service:"
 msgstr "Compute Service を再起動します。"
 
@@ -1382,7 +1382,7 @@ msgstr "イメージをローカルディレクトリにダウンロードしま
 msgid ""
 "Source the <literal>admin</literal> credentials to gain access to admin-only"
 " CLI commands:"
-msgstr ""
+msgstr "<literal>admin</literal> クレデンシャルを読み込み、管理者専用 CLI コマンドへのアクセス権を取得します。"
 
 #: ./doc/install-guide/section_glance-verify.xml34(para)
 msgid "Upload the image to the Image Service:"
@@ -1869,7 +1869,7 @@ msgid ""
 "baseform=\"firewall\">firewalls</glossterm>, <glossterm baseform=\"load "
 "balancer\">load balancers</glossterm>, and <glossterm baseform=\"virtual "
 "private network (VPN)\">virtual private networks (VPNs)</glossterm>."
-msgstr ""
+msgstr "OpenStack Networking (neutron) は OpenStack 環境で、仮想ネットワークインフラストラクチャ (VNI) のすべてのネットワークファセット、物理ネットワークインフラストラクチャ (PNI) のアクセス層の側面を管理します。OpenStack Networking により、プロジェクトが<glossterm baseform=\"firewall\">ファイアウォール</glossterm>、<glossterm baseform=\"load balancer\">負荷分散装置</glossterm>、<glossterm baseform=\"virtual private network (VPN)\">VPN</glossterm> などの高度な仮想ネットワークトポロジーを作成できるようになります。"
 
 #: ./doc/install-guide/section_neutron-concepts.xml16(para)
 msgid ""
@@ -1877,7 +1877,7 @@ msgid ""
 "Each abstraction has functionality that mimics its physical counterpart: "
 "networks contain subnets, and routers route traffic between different subnet"
 " and networks."
-msgstr ""
+msgstr "Networking はネットワーク、サブネット、ルーターのオブジェクトの抽象化を提供します。それぞれの抽象化は、対応する物理的なものの機能を模倣します。ネットワークがサブネットを含みます。ルーターがサブネットやネットワーク間の通信を中継します。"
 
 #: ./doc/install-guide/section_neutron-concepts.xml20(para)
 msgid ""
@@ -3380,24 +3380,24 @@ msgstr "各ノードを設定するために、管理権限を持つアカウン
 
 #: ./doc/install-guide/section_nova-controller-install.xml5(title)
 msgid "Install and configure controller node"
-msgstr ""
+msgstr "コントローラーノードのインストールと設定"
 
 #: ./doc/install-guide/section_nova-controller-install.xml6(para)
 msgid ""
 "This section describes how to install and configure the Compute service, "
 "code-named nova, on the controller node."
-msgstr ""
+msgstr "このセクションは、nova というコード名の Compute をコントローラーノードにインストールし、設定する方法を説明します。"
 
 #: ./doc/install-guide/section_nova-controller-install.xml10(para)
 msgid ""
 "Before you install and configure Compute, you must create a database and "
 "Identity service credentials including endpoints."
-msgstr ""
+msgstr "Compute をインストールし、設定する前に、エンドポイントを含んでいる、データベースと Identity のクレデンシャルを作成する必要があります。"
 
 #: ./doc/install-guide/section_nova-controller-install.xml13(para)
 #: ./doc/install-guide/section_glance-install.xml20(para)
 msgid "To create the database, complete these steps:"
-msgstr ""
+msgstr "これらの手順を完了して、データベースを作成します。"
 
 #: ./doc/install-guide/section_nova-controller-install.xml16(para)
 #: ./doc/install-guide/section_glance-install.xml23(para)
@@ -3408,23 +3408,23 @@ msgstr "データベースクライアントを使用して、データベース
 
 #: ./doc/install-guide/section_nova-controller-install.xml21(para)
 msgid "Create the <literal>nova</literal> database:"
-msgstr ""
+msgstr "<literal>nova</literal> データベースを作成します。"
 
 #: ./doc/install-guide/section_nova-controller-install.xml25(para)
 msgid "Grant proper access to the <literal>nova</literal> database:"
-msgstr ""
+msgstr "<literal>nova</literal> データベースに適切なアクセス権を付与します。"
 
 #: ./doc/install-guide/section_nova-controller-install.xml27(replaceable)
 #: ./doc/install-guide/section_nova-controller-install.xml28(replaceable)
 #: ./doc/install-guide/section_nova-controller-install.xml97(replaceable)
-#: ./doc/install-guide/section_nova-compute.xml72(replaceable)
+#: ./doc/install-guide/section_nova-compute-install.xml36(replaceable)
 msgid "NOVA_DBPASS"
 msgstr "NOVA_DBPASS"
 
 #: ./doc/install-guide/section_nova-controller-install.xml29(para)
 msgid ""
 "Replace <replaceable>NOVA_DBPASS</replaceable> with a suitable password."
-msgstr ""
+msgstr "<replaceable>NOVA_DBPASS</replaceable> を適切なパスワードに置き換えます。"
 
 #: ./doc/install-guide/section_nova-controller-install.xml33(para)
 #: ./doc/install-guide/section_glance-install.xml40(para)
@@ -3434,18 +3434,17 @@ msgstr "データベースアクセスクライアントを終了します。"
 #: ./doc/install-guide/section_nova-controller-install.xml44(para)
 #: ./doc/install-guide/section_glance-install.xml51(para)
 msgid "To create the Identity service credentials, complete these steps:"
-msgstr ""
+msgstr "これらの手順を完了して、Identity のクレデンシャルを作成します。"
 
 #: ./doc/install-guide/section_nova-controller-install.xml48(para)
 msgid "Create the <literal>nova</literal> user:"
-msgstr ""
+msgstr "<literal>nova</literal> ユーザーを作成します。"
 
 #: ./doc/install-guide/section_nova-controller-install.xml49(replaceable)
 #: ./doc/install-guide/section_nova-controller-install.xml125(replaceable)
-#: ./doc/install-guide/section_nova-compute.xml79(replaceable)
-#: ./doc/install-guide/section_nova-compute.xml98(replaceable)
 #: ./doc/install-guide/section_neutron-ml2-controller-node.xml227(replaceable)
 #: ./doc/install-guide/section_neutron-ml2-controller-node.xml251(replaceable)
+#: ./doc/install-guide/section_nova-compute-install.xml64(replaceable)
 msgid "NOVA_PASS"
 msgstr "NOVA_PASS"
 
@@ -3459,13 +3458,13 @@ msgstr "EMAIL_ADDRESS"
 msgid ""
 "Replace <replaceable>NOVA_PASS</replaceable> with a suitable password and "
 "<replaceable>EMAIL_ADDRESS</replaceable> with a suitable e-mail address."
-msgstr ""
+msgstr "<replaceable>NOVA_PASS</replaceable> を適切なパスワードで置き換え、<replaceable>EMAIL_ADDRESS</replaceable> を適切な電子メールアドレスに置き換えます。"
 
 #: ./doc/install-guide/section_nova-controller-install.xml55(para)
 msgid ""
 "Link the <literal>nova</literal> user to the <literal>service</literal> "
 "tenant and <literal>admin</literal> role:"
-msgstr ""
+msgstr "<literal>nova</literal> ユーザーを <literal>service</literal> テナントおよび <literal>admin</literal> ロールにリンクします。"
 
 #: ./doc/install-guide/section_nova-controller-install.xml61(para)
 msgid "Create the <literal>nova</literal> service:"
@@ -3477,30 +3476,35 @@ msgstr "Compute サービスのエンドポイントを作成します。"
 
 #: ./doc/install-guide/section_nova-controller-install.xml76(title)
 msgid "To install and configure Compute controller components"
-msgstr ""
+msgstr "Compute のコントローラーのコンポーネントをインストールし、設定する方法"
 
 #: ./doc/install-guide/section_nova-controller-install.xml78(para)
 #: ./doc/install-guide/section_nova-controller-install.xml164(para)
 #: ./doc/install-guide/section_glance-install.xml85(para)
 #: ./doc/install-guide/section_glance-install.xml183(para)
+#: ./doc/install-guide/section_nova-compute-install.xml22(para)
+#: ./doc/install-guide/section_nova-compute-install.xml123(para)
 msgid "Install the packages:"
 msgstr "パッケージをインストールします。"
 
 #: ./doc/install-guide/section_nova-controller-install.xml89(para)
 #: ./doc/install-guide/section_nova-controller-install.xml179(para)
+#: ./doc/install-guide/section_nova-compute-install.xml28(para)
 msgid ""
 "Edit the <filename>/etc/nova/nova.conf</filename> file and complete the "
 "following actions:"
 msgstr "<filename>/etc/nova/nova.conf</filename> ファイルを編集し、以下の作業を完了します。"
 
 #: ./doc/install-guide/section_nova-controller-install.xml98(para)
+#: ./doc/install-guide/section_nova-compute-install.xml37(para)
 msgid ""
 "Replace <replaceable>NOVA_DBPASS</replaceable> with the password you chose "
 "for the Compute database."
-msgstr ""
+msgstr "<replaceable>NOVA_DBPASS</replaceable> を Compute データベース用に選んだパスワードで置き換えます。"
 
 #: ./doc/install-guide/section_nova-controller-install.xml102(para)
 #: ./doc/install-guide/section_glance-install.xml104(para)
+#: ./doc/install-guide/section_nova-compute-install.xml41(para)
 #: ./doc/install-guide/section_heat-install.xml91(para)
 msgid ""
 "In the <literal>[DEFAULT]</literal> section, configure "
@@ -3513,6 +3517,7 @@ msgstr "<literal>[DEFAULT]</literal> セクションで、<application>RabbitMQ<
 #: ./doc/install-guide/section_neutron-ml2-compute-node.xml127(para)
 #: ./doc/install-guide/section_neutron-ml2-controller-node.xml183(para)
 #: ./doc/install-guide/section_neutron-ml2-controller-node.xml202(para)
+#: ./doc/install-guide/section_nova-compute-install.xml48(para)
 #: ./doc/install-guide/section_heat-install.xml98(para)
 #: ./doc/install-guide/section_neutron-ml2-network-node.xml110(para)
 #: ./doc/install-guide/section_neutron-ml2-network-node.xml130(para)
@@ -3526,33 +3531,35 @@ msgstr "<replaceable>RABBIT_PASS</replaceable> を <application>RabbitMQ</applic
 msgid ""
 "In the <literal>[keystone_authtoken]</literal> section, configure Identity "
 "service access:"
-msgstr ""
+msgstr "<literal>[keystone_authtoken]</literal> セクションで、Identity のアクセス権を設定します。"
 
 #: ./doc/install-guide/section_nova-controller-install.xml126(para)
+#: ./doc/install-guide/section_nova-compute-install.xml65(para)
 msgid ""
 "Replace <replaceable>NOVA_PASS</replaceable> with the password you chose for"
 " the <literal>nova</literal> user in the Identity service."
-msgstr ""
+msgstr "Identity で <literal>nova</literal> ユーザー用に選択したパスワードで <replaceable>NOVA_PASS</replaceable> を置き換えます。"
 
 #: ./doc/install-guide/section_nova-controller-install.xml131(para)
 msgid ""
 "In the <literal>[DEFAULT]</literal> section, configure the "
 "<literal>my_ip</literal> key to use the management interface IP address of "
 "the controller node:"
-msgstr ""
+msgstr "<literal>[DEFAULT]</literal> セクションで、コントローラーノードの管理インターフェース IP アドレスを使用するために、<literal>my_ip</literal> キーを設定します。"
 
 #: ./doc/install-guide/section_nova-controller-install.xml139(para)
 #: ./doc/install-guide/section_nova-controller-install.xml183(para)
 msgid ""
 "In the <literal>[DEFAULT]</literal> section, configure the VNC proxy to use "
 "the management interface IP address of the controller node:"
-msgstr ""
+msgstr "<literal>[DEFAULT]</literal> セクションで、コントローラーノードの管理インターフェース IP アドレスを使用するために、VNC プロキシを設定します。"
 
 #: ./doc/install-guide/section_nova-controller-install.xml148(para)
+#: ./doc/install-guide/section_nova-compute-install.xml111(para)
 msgid ""
 "In the <literal>[DEFAULT]</literal> section, configure the location of the "
 "Image Service:"
-msgstr ""
+msgstr "<literal>[DEFAULT]</literal> セクションで、Image Service の位置を設定します。"
 
 #: ./doc/install-guide/section_nova-controller-install.xml157(para)
 msgid "Populate the Compute database:"
@@ -3560,7 +3567,7 @@ msgstr ""
 
 #: ./doc/install-guide/section_nova-controller-install.xml162(title)
 msgid "To install and configure the Compute controller components"
-msgstr ""
+msgstr "Compute のコントローラーのコンポーネントをインストールし、設定する方法"
 
 #: ./doc/install-guide/section_nova-controller-install.xml169(para)
 #: ./doc/install-guide/section_glance-install.xml187(para)
@@ -3587,12 +3594,13 @@ msgstr "Compute のサービスを再起動します。"
 msgid ""
 "Start the Compute services and configure them to start when the system "
 "boots:"
-msgstr ""
+msgstr "Compute サービスを起動し、システム起動時に起動するよう設定します。"
 
 #: ./doc/install-guide/section_nova-controller-install.xml222(para)
 #: ./doc/install-guide/section_glance-install.xml224(para)
+#: ./doc/install-guide/section_nova-compute-install.xml211(para)
 msgid "By default, the Ubuntu packages create an SQLite database."
-msgstr ""
+msgstr "Ubuntu パッケージは、デフォルトで SQLite データベースを作成します。"
 
 #: ./doc/install-guide/section_dashboard-system-reqs.xml6(title)
 msgid "System requirements"
@@ -3975,7 +3983,7 @@ msgstr "サービスを起動し、システム起動時に起動するよう設
 
 #: ./doc/install-guide/section_nova-verify.xml6(para)
 msgid "This section describes how to verify operation of the Compute service."
-msgstr ""
+msgstr "このセクションは、Compute の動作を検証する方法について説明します。"
 
 #: ./doc/install-guide/section_nova-verify.xml18(para)
 msgid "List service components to verify successful launch of each process:"
@@ -4082,7 +4090,7 @@ msgstr "Image Service のコンポーネントをインストールし、設定�
 msgid ""
 "Edit the <filename>/etc/glance/glance-api.conf</filename> file and complete "
 "the following actions:"
-msgstr ""
+msgstr "<filename>/etc/glance/glance-api.conf</filename> ファイルを編集し、以下の作業を完了します。"
 
 #: ./doc/install-guide/section_glance-install.xml100(para)
 #: ./doc/install-guide/section_glance-install.xml148(para)
@@ -4110,7 +4118,7 @@ msgstr "Identity で <literal>glance</literal> ユーザー用に選択したパ
 msgid ""
 "Edit the <filename>/etc/glance/glance-registry.conf</filename> file and "
 "complete the following actions:"
-msgstr ""
+msgstr "<filename>/etc/glance/glance-registry.conf</filename> ファイルを編集し、以下の作業を完了します。"
 
 #: ./doc/install-guide/section_glance-install.xml175(para)
 msgid "Populate the Image Service database:"
@@ -4130,7 +4138,7 @@ msgstr "Image Service のサービスを再起動します。"
 msgid ""
 "Start the Image Service services and configure them to start when the system"
 " boots:"
-msgstr ""
+msgstr "Image Service のサービスを起動し、システム起動時に起動するよう設定します。"
 
 #: ./doc/install-guide/section_dashboard-install.xml7(title)
 msgid "Install the dashboard"
@@ -4649,18 +4657,18 @@ msgstr "OpenStack 環境に Telemetryが追加されました。<link linkend=\"
 msgid ""
 "Before you install and configure OpenStack Networking, you must enable "
 "certain kernel networking functions."
-msgstr ""
+msgstr "OpenStack Networking をインストールし、設定する前に、特定のカーネルネットワーク機能を有効化する必要があります。"
 
 #: ./doc/install-guide/section_neutron-ml2-compute-node.xml10(title)
 #: ./doc/install-guide/section_neutron-ml2-network-node.xml10(title)
 msgid "To enable kernel networking functions"
-msgstr ""
+msgstr "カーネルのネットワーク機能の有効化方法"
 
 #: ./doc/install-guide/section_neutron-ml2-compute-node.xml12(para)
 msgid ""
 "Edit the <filename>/etc/sysctl.conf</filename> file and add the following "
 "lines:"
-msgstr ""
+msgstr "<filename>/etc/sysctl.conf</filename> ファイルを編集し、以下の行を追加します。"
 
 #: ./doc/install-guide/section_neutron-ml2-compute-node.xml18(para)
 #: ./doc/install-guide/section_neutron-ml2-network-node.xml19(para)
@@ -4677,7 +4685,7 @@ msgstr "Networking コンポーネントのインストール方法"
 msgid ""
 "Ubuntu installations that use Linux kernel version 3.11 or later do not "
 "require the <emphasis>openvswitch-datapath-dkms</emphasis> package."
-msgstr ""
+msgstr "Linux カーネル 3.11 以降を使用した Ubuntu インストール環境は、<emphasis>openvswitch-datapath-dkms</emphasis> パッケージを必要としません。"
 
 #: ./doc/install-guide/section_neutron-ml2-compute-node.xml36(para)
 #: ./doc/install-guide/section_neutron-ml2-controller-node.xml64(para)
@@ -4810,7 +4818,7 @@ msgstr "コンピュートノードのインスタンストンネルネットワ
 msgid ""
 "Edit the <filename>/etc/neutron/plugins/ml2/ml2_conf.ini</filename> file and"
 " add the following keys to the <literal>[ml2]</literal> section:"
-msgstr ""
+msgstr "<filename>/etc/neutron/plugins/ml2/ml2_conf.ini</filename> ファイルを編集し、以下のキーを <literal>[ml2]</literal> セクションに追加します。"
 
 #: ./doc/install-guide/section_neutron-ml2-compute-node.xml220(para)
 #: ./doc/install-guide/section_neutron-ml2-network-node.xml387(para)
@@ -4989,175 +4997,6 @@ msgid ""
 "Replace <replaceable>INTERFACE_NAME</replaceable> with the actual interface "
 "name. For example, <emphasis>eth1</emphasis> or <emphasis>ens224</emphasis>."
 msgstr "<replaceable>INTERFACE_NAME</replaceable> を実際のインターフェース名で置き換えます。例えば、<emphasis>eth1</emphasis> や <emphasis>ens224</emphasis> です。"
-
-#: ./doc/install-guide/section_nova-compute.xml5(title)
-msgid "Configure a compute node"
-msgstr "コンピュートノードの設定"
-
-#: ./doc/install-guide/section_nova-compute.xml6(para)
-msgid ""
-"After you configure the Compute service on the controller node, you must "
-"configure another system as a compute node. The compute node receives "
-"requests from the controller node and hosts virtual machine instances. You "
-"can run all services on a single node, but the examples in this guide use "
-"separate systems. This makes it easy to scale horizontally by adding "
-"additional Compute nodes following the instructions in this section."
-msgstr "コントローラーノードで Compute サービスを設定した後、他のシステムをコンピュートノードとして設定する必要があります。コンピュートノードはコントローラーノードからリクエストを受け取り、仮想マシンインスタンスをホストします。単一ノードですべてのサービスを実行することもできます。しかし、このガイドの例では分離したシステムを使用します。これにより、このセクションにある説明に従って、追加のコンピュートノードを追加して、水平的にスケールさせることが容易になります。"
-
-#: ./doc/install-guide/section_nova-compute.xml13(para)
-msgid ""
-"The Compute service relies on a hypervisor to run virtual machine instances."
-" OpenStack can use various hypervisors, but this guide uses KVM."
-msgstr "Compute サービスは仮想マシンインスタンスを実行するためにハイパーバイザーに依存します。OpenStack はさまざまなハイパーバイザーを使用できますが、このガイドは KVM を使用します。"
-
-#: ./doc/install-guide/section_nova-compute.xml18(para)
-msgid "Install the Compute packages:"
-msgstr "Compute のパッケージをインストールします。"
-
-#: ./doc/install-guide/section_nova-compute.xml20(para)
-msgid ""
-"When prompted to create a <literal>supermin</literal> appliance, respond "
-"<placeholder-1/>."
-msgstr "<literal>supermin</literal> アプライアンスを作成するためのプロンプトが表示されたとき、<placeholder-1/> を答えます。"
-
-#: ./doc/install-guide/section_nova-compute.xml25(para)
-msgid ""
-"To use the meta-packages and install other components on your compute node, "
-"such as OpenStack Networking and Telemetry agents, run this command:"
-msgstr "メタパッケージを使用して、OpenStack Networking や Ceilometer のエージェントのような他のコンポーネントをコンピュートノードにインストールするために、このコマンドを実行します。"
-
-#: ./doc/install-guide/section_nova-compute.xml29(para)
-msgid ""
-"The controller node has the <package>openstack-proxy-node</package> and "
-"<package>openstack-toaster</package> meta-packages that install <package"
-">openstack-proxy-node</package> and <package>openstack-toaster</package> at "
-"the same time."
-msgstr "コントローラーノードは同時に、<package>openstack-proxy-node</package> と <package>openstack-toaster</package> をインストールする、<package>openstack-proxy-node</package> メタパッケージと <package>openstack-toaster</package> メタパッケージを持ちます。"
-
-#: ./doc/install-guide/section_nova-compute.xml50(para)
-msgid ""
-"For security reasons, the Linux kernel is not readable by normal users which"
-" restricts hypervisor services such as qemu and libguestfs. For details, see"
-" <link "
-"href=\"https://bugs.launchpad.net/ubuntu/+source/linux/+bug/759725\">this "
-"bug</link>. To make the current kernel readable, run: <placeholder-1/> To "
-"also enable this override for all future kernel updates, create the file "
-"<filename>/etc/kernel/postinst.d/statoverride</filename> "
-"containing:<placeholder-2/> Remember to make the file executable: "
-"<placeholder-3/>"
-msgstr "セキュリティの理由から、Linux カーネルは通常のユーザーにより読み取りできません。これにより QEMU や libguestfs のようなハイパーバイザーサービスを制限します。詳細は<link href=\"https://bugs.launchpad.net/ubuntu/+source/linux/+bug/759725\">このバグ</link>を参照してください。現在のカーネルを読み取り可能にするために、<placeholder-1/> を実行します。今後のすべてのカーネル更新でこの上書きを有効にするために、以下を含めた <filename>/etc/kernel/postinst.d/statoverride</filename> ファイルを作成します。<placeholder-2/> 忘れずに、ファイルを実行可能にします。<placeholder-3/>"
-
-#: ./doc/install-guide/section_nova-compute.xml69(para)
-msgid "Edit the <filename>/etc/nova/nova.conf</filename> configuration file:"
-msgstr "<filename>/etc/nova/nova.conf</filename> 設定ファイルを編集します。"
-
-#: ./doc/install-guide/section_nova-compute.xml80(para)
-msgid ""
-"Edit the <filename>/etc/nova/nova.conf</filename> configuration file and add"
-" these lines to the appropriate sections:"
-msgstr "<filename>/etc/nova/nova.conf</filename> 設定ファイルを編集し、これらの行を適切なセクションに追加します。"
-
-#: ./doc/install-guide/section_nova-compute.xml101(para)
-msgid ""
-"Configure the Compute service to use the RabbitMQ message broker by setting "
-"these configuration keys in the <literal>[DEFAULT]</literal> configuration "
-"group of the <filename>/etc/nova/nova.conf</filename> file:"
-msgstr "<filename>/etc/nova/nova.conf</filename> ファイルの <literal>[DEFAULT]</literal> 設定グループにこれらの設定キーを設定することにより、Compute サービスが RabbitMQ メッセージブローカーを使用するよう設定します。"
-
-#: ./doc/install-guide/section_nova-compute.xml110(para)
-msgid ""
-"Configure the Compute service to use the RabbitMQ message broker by setting "
-"these configuration keys:"
-msgstr "これらの設定キーを設定することにより、Compute サービスが RabbitMQ メッセージブローカーを使用するよう設定します。"
-
-#: ./doc/install-guide/section_nova-compute.xml119(para)
-msgid "Configure Compute to provide remote console access to instances."
-msgstr "インスタンスへのリモートコンソールアクセスを提供するよう Compute を設定します。"
-
-#: ./doc/install-guide/section_nova-compute.xml126(para)
-msgid ""
-"Edit <filename>/etc/nova/nova.conf</filename> and add the following keys "
-"under the <literal>[DEFAULT]</literal> section:"
-msgstr "<filename>/etc/nova/nova.conf</filename> を編集し、以下のキーを <literal>[DEFAULT]</literal> セクションに追加します。"
-
-#: ./doc/install-guide/section_nova-compute.xml140(para)
-msgid ""
-"Specify the host that runs the Image Service.<phrase os=\"ubuntu;debian\"> "
-"Edit <filename>/etc/nova/nova.conf</filename> file and add these lines to "
-"the <literal>[DEFAULT]</literal> section:</phrase>"
-msgstr "Image Service を実行するホストを指定します。<phrase os=\"ubuntu;debian\"><filename>/etc/nova/nova.conf</filename> ファイルを編集し、これらの行を <literal>[DEFAULT]</literal> セクションに追加します。</phrase>"
-
-#: ./doc/install-guide/section_nova-compute.xml151(para)
-msgid ""
-"You must determine whether your system's processor and/or hypervisor support"
-" hardware acceleration for virtual machines."
-msgstr "お使いのシステムのプロセッサーとハイパーバイザーが仮想マシンのハードウェア支援機能をサポートするかどうか確認する必要があります。"
-
-#: ./doc/install-guide/section_nova-compute.xml153(para)
-#: ./doc/install-guide/section_nova-compute.xml172(para)
-#: ./doc/install-guide/section_basics-queue.xml53(para)
-msgid "Run the following command:"
-msgstr "以下のコマンドを実行します。"
-
-#: ./doc/install-guide/section_nova-compute.xml155(para)
-msgid ""
-"If this command returns a value of <emphasis>one or greater</emphasis>, your"
-" system supports hardware acceleration which typically requires no "
-"additional configuration."
-msgstr "このコマンドが <emphasis>1 以上</emphasis>の値を返したならば、お使いのシステムがハードウェア支援機能をサポートし、一般的に追加の設定は必要ありません。"
-
-#: ./doc/install-guide/section_nova-compute.xml159(para)
-msgid ""
-"If this command returns a value of <emphasis>zero</emphasis>, your system "
-"does not support hardware acceleration and you must configure "
-"<literal>libvirt</literal> to use QEMU instead of KVM."
-msgstr "このコマンドが <emphasis>0</emphasis> を返す場合、お使いのシステムはハードウェア支援機能をサポートしません。<literal>libvirt</literal> は KVM の代わりに QEMU を使用する必要があります。"
-
-#: ./doc/install-guide/section_nova-compute.xml164(para)
-msgid ""
-"Edit the <literal>[libvirt]</literal> section in the <filename>/etc/nova"
-"/nova-compute.conf</filename> file to modify this key:"
-msgstr "このキーを変更するために <filename>/etc/nova/nova-compute.conf</filename> ファイルの <literal>[libvirt]</literal> セクションを編集します。"
-
-#: ./doc/install-guide/section_nova-compute.xml177(para)
-msgid ""
-"On Ubuntu 12.04, kernels backported from newer releases may not "
-"automatically load the KVM modules for hardware acceleration when the system"
-" boots. In this case, launching an instance will fail with the following "
-"message in the <filename>/var/log/nova/nova-compute.log</filename> file:"
-msgstr "Ubuntu 12.04 の場合、新しいカーネルからバックポートされたカーネルは、システム起動時に KVM のハードウェア支援機能のモジュールを自動的に読み込まない可能性があります。この場合、インスタンスの起動に失敗し、以下のメッセージが <filename>/var/log/nova/nova-compute.log</filename> ファイルに記録されます。"
-
-#: ./doc/install-guide/section_nova-compute.xml183(para)
-msgid ""
-"As a workaround for this issue, you must add the appropriate module for your"
-" system to the <filename>/etc/modules</filename> file."
-msgstr "この問題の回避策として、お使いのシステム用の適切なモジュールを <filename>/etc/modules</filename> ファイルに追加する必要があります。"
-
-#: ./doc/install-guide/section_nova-compute.xml186(para)
-msgid "For systems with Intel processors, run the following command:"
-msgstr "Intel プロセッサーのシステムの場合、以下のコマンドを実行します。"
-
-#: ./doc/install-guide/section_nova-compute.xml189(para)
-msgid "For systems with AMD processors, run the following command:"
-msgstr "AMD プロセッサーのシステムの場合、以下のコマンドを実行します。"
-
-#: ./doc/install-guide/section_nova-compute.xml195(para)
-msgid "Remove the SQLite database created by the packages:"
-msgstr "パッケージにより作成された SQLite データベースを削除します。"
-
-#: ./doc/install-guide/section_nova-compute.xml199(para)
-msgid ""
-"Start the Compute service and its dependencies. Configure them to start "
-"automatically when the system boots."
-msgstr ""
-
-#: ./doc/install-guide/section_nova-compute.xml206(para)
-msgid "For RHEL or CentOS:"
-msgstr ""
-
-#: ./doc/install-guide/section_nova-compute.xml214(para)
-msgid "For Fedora:"
-msgstr ""
 
 #: ./doc/install-guide/section_trove-install.xml3(title)
 msgid "Install the Database service"
@@ -5576,7 +5415,7 @@ msgstr "Compute の追加"
 
 #: ./doc/install-guide/ch_networking.xml6(title)
 msgid "Add a networking component"
-msgstr ""
+msgstr "networking コンポーネントの追加"
 
 #: ./doc/install-guide/ch_networking.xml7(para)
 msgid ""
@@ -5595,7 +5434,7 @@ msgid ""
 "For more information, see the <link href=\"http://docs.openstack.org/admin-"
 "guide-cloud/content/ch_networking.html\">Networking</link> chapter of the "
 "<citetitle>OpenStack Cloud Administrator Guide</citetitle>."
-msgstr ""
+msgstr "詳細は、<citetitle>OpenStack Cloud Administrator Guide</citetitle> の <link href=\"http://docs.openstack.org/admin-guide-cloud/content/ch_networking.html\">Networking</link> の章を参照してください。"
 
 #: ./doc/install-guide/ch_networking.xml25(title)
 msgid "Modular Layer 2 (ML2) plug-in"
@@ -5606,7 +5445,7 @@ msgid ""
 "Your OpenStack environment now includes the core components necessary to "
 "launch a basic instance. You can <link linkend=\"launch-instance\">launch an"
 " instance</link> or add more OpenStack services to your environment."
-msgstr ""
+msgstr "基本的なインスタンスを起動するために必要なコンポーネントが OpenStack 環境に追加されました。<link linkend=\"launch-instance\">インスタンスの起動</link>、OpenStack サービスの環境への追加を実行できます。"
 
 #. When image changes, this message will be marked fuzzy or untranslated for
 #. you.
@@ -5848,6 +5687,152 @@ msgstr "Floating IP アドレスをインスタンスに割り当てます。"
 #: ./doc/install-guide/section_launch-instance-neutron.xml249(para)
 msgid "Check the status of your floating IP address:"
 msgstr "Floating IP アドレスの状態を確認します。"
+
+#: ./doc/install-guide/section_nova-compute-install.xml5(title)
+msgid "Install and configure a compute node"
+msgstr "コンピュートノードのインストールと設定"
+
+#: ./doc/install-guide/section_nova-compute-install.xml6(para)
+msgid ""
+"This section describes how to install and configure the Compute service on a"
+" compute node. The service supports several <glossterm "
+"baseform=\"hypervisor\">hypervisors</glossterm> to deploy <glossterm "
+"baseform=\"instance\">instances</glossterm> or <glossterm baseform=\"virtual"
+" machine (VM)\">VMs</glossterm>. For simplicity, this configuration uses the"
+" <glossterm baseform=\"Quick EMUlator (QEMU)\">QEMU</glossterm> hypervisor "
+"with the <glossterm baseform=\"kernel-based VM (KVM)\">KVM</glossterm> "
+"extension on compute nodes that support hardware acceleration for virtual "
+"machines. On legacy hardware, this configuration uses the generic QEMU "
+"hypervisor. You can follow these instructions with minor modifications to "
+"horizontally scale your environment with additional compute nodes."
+msgstr ""
+
+#: ./doc/install-guide/section_nova-compute-install.xml20(title)
+#: ./doc/install-guide/section_nova-compute-install.xml121(title)
+msgid "To install and configure the Compute hypervisor components"
+msgstr ""
+
+#: ./doc/install-guide/section_nova-compute-install.xml53(para)
+msgid ""
+"In the <literal>[keystone_authtoken</literal>] section, configure Identity "
+"service access:"
+msgstr "<literal>[keystone_authtoken</literal>] セクションに、Identity のアクセス権を設定します。"
+
+#: ./doc/install-guide/section_nova-compute-install.xml70(para)
+msgid ""
+"In the <literal>[DEFAULT]</literal> section, configure the "
+"<literal>my_ip</literal> key:"
+msgstr "<literal>[DEFAULT]</literal> セクションに、<literal>my_ip</literal> キーを設定します。"
+
+#: ./doc/install-guide/section_nova-compute-install.xml74(replaceable)
+#: ./doc/install-guide/section_nova-compute-install.xml89(replaceable)
+msgid "MANAGEMENT_INTERFACE_IP_ADDRESS"
+msgstr "MANAGEMENT_INTERFACE_IP_ADDRESS"
+
+#: ./doc/install-guide/section_nova-compute-install.xml75(para)
+#: ./doc/install-guide/section_nova-compute-install.xml96(para)
+msgid ""
+"Replace <replaceable>MANAGEMENT_INTERFACE_IP_ADDRESS</replaceable> with the "
+"IP address of the management network interface on your first compute node, "
+"typically 10.0.0.31 in the <link linkend=\"architecture_example-"
+"architectures\">example architecture</link>."
+msgstr ""
+
+#: ./doc/install-guide/section_nova-compute-install.xml83(para)
+msgid ""
+"In the <literal>[DEFAULT]</literal> section, enable and configure remote "
+"console access:"
+msgstr "<literal>[DEFAULT]</literal> セクションに、リモートコンソールアクセスを有効化し、設定します。"
+
+#: ./doc/install-guide/section_nova-compute-install.xml91(para)
+msgid ""
+"The server component listens on all IP addresses and the proxy component "
+"only listens on the management interface IP address of the compute node. The"
+" base URL indicates the location where you can use a web browser to access "
+"remote consoles of instances on this compute node."
+msgstr ""
+
+#: ./doc/install-guide/section_nova-compute-install.xml103(para)
+msgid ""
+"If the web browser to access remote consoles resides on a host that cannot "
+"resolve the <replaceable>controller</replaceable> hostname, you must replace"
+" <replaceable>controller</replaceable> with the management interface IP "
+"address of the controller node."
+msgstr ""
+
+#: ./doc/install-guide/section_nova-compute-install.xml127(para)
+msgid ""
+"Respond to the prompts for <link linkend=\"debconf-dbconfig-"
+"common\">database management</link>, <link linkend=\"debconf-"
+"keystone_authtoken\">Identity service credentials</link>, <link linkend"
+"=\"debconf-api-endpoints\">service endpoint registration</link>, and <link "
+"linkend=\"debconf-rabbitmq\">message broker credentials.</link>."
+msgstr "<link linkend=\"debconf-dbconfig-common\">データベース管理</link>、<link linkend=\"debconf-keystone_authtoken\">Identity のクレデンシャル</link>、<link linkend=\"debconf-api-endpoints\">サービスエンドポイント登録</link>、<link linkend=\"debconf-rabbitmq\">メッセージブローカーのクレデンシャル</link>に関するプロンプトに答えます。"
+
+#: ./doc/install-guide/section_nova-compute-install.xml140(para)
+msgid ""
+"Determine whether your compute node supports hardware acceleration for "
+"virtual machines:"
+msgstr ""
+
+#: ./doc/install-guide/section_nova-compute-install.xml143(para)
+msgid ""
+"If this command returns a value of <emphasis>one or greater</emphasis>, your"
+" compute node supports hardware acceleration which typically requires no "
+"additional configuration."
+msgstr "このコマンドが <emphasis>1 以上</emphasis>の値を返したならば、お使いのコンピュートノードがハードウェア支援機能をサポートし、一般的に追加の設定は必要ありません。"
+
+#: ./doc/install-guide/section_nova-compute-install.xml147(para)
+msgid ""
+"If this command returns a value of <emphasis>zero</emphasis>, your compute "
+"node does not support hardware acceleration and you must configure "
+"<literal>libvirt</literal> to use QEMU instead of KVM."
+msgstr "このコマンドが <emphasis>0</emphasis> を返す場合、お使いのコンピュートノードはハードウェア支援機能をサポートしません。<literal>libvirt</literal> は KVM の代わりに QEMU を使用する必要があります。"
+
+#: ./doc/install-guide/section_nova-compute-install.xml152(para)
+msgid ""
+"Edit the <literal>[libvirt]</literal> section in the <filename "
+"os=\"ubuntu;debian\">/etc/nova/nova-compute.conf</filename><filename "
+"os=\"rhel;centos;fedora;sles;opensuse\">/etc/nova/nova.conf</filename> file "
+"as follows:"
+msgstr ""
+
+#: ./doc/install-guide/section_nova-compute-install.xml161(para)
+msgid ""
+"On Ubuntu 12.04, kernels backported from newer releases may not "
+"automatically load the KVM modules for hardware acceleration when the "
+"compute node boots. In this case, launching an instance will fail with the "
+"following message in the <filename>/var/log/nova/nova-compute.log</filename>"
+" file:"
+msgstr "Ubuntu 12.04 の場合、新しいカーネルからバックポートされたカーネルは、コンピュートノードの起動時に KVM のハードウェア支援機能のモジュールを自動的に読み込まない可能性があります。この場合、インスタンスの起動に失敗し、以下のメッセージが <filename>/var/log/nova/nova-compute.log</filename> ファイルに記録されます。"
+
+#: ./doc/install-guide/section_nova-compute-install.xml167(para)
+msgid ""
+"As a workaround for this issue, you must add the appropriate module for your"
+" compute node to the <filename>/etc/modules</filename> file."
+msgstr "この問題の回避策として、お使いのコンピュートノード用の適切なモジュールを <filename>/etc/modules</filename> ファイルに追加する必要があります。"
+
+#: ./doc/install-guide/section_nova-compute-install.xml170(para)
+msgid "For systems with Intel processors:"
+msgstr "Intel プロセッサーのシステムの場合:"
+
+#: ./doc/install-guide/section_nova-compute-install.xml172(para)
+msgid "For systems with AMD processors:"
+msgstr "AMD プロセッサーのシステムの場合:"
+
+#: ./doc/install-guide/section_nova-compute-install.xml183(para)
+msgid ""
+"Start the Compute service including its dependencies and configure them to "
+"start automatically when the system boots:"
+msgstr ""
+
+#: ./doc/install-guide/section_nova-compute-install.xml187(para)
+msgid "For RHEL, CentOS, and compatible derivatives:"
+msgstr "RHEL、CentOS、その派生物の場合:"
+
+#: ./doc/install-guide/section_nova-compute-install.xml196(para)
+msgid "For Fedora:"
+msgstr "Fedora の場合:"
 
 #: ./doc/install-guide/ch_glance.xml6(title)
 msgid "Add the Image Service"
@@ -6776,7 +6761,7 @@ msgid ""
 "do not have to manually edit the configuration files."
 msgstr "Debian OpenStack パッケージがこれを自動化するため、OpenStack ユーザーは設定ファイルを手動で編集する必要がありません。"
 
-#: ./doc/install-guide/bk-openstack-install-guide.xml7(title)
+#: ./doc/install-guide/bk-openstack-install-guide.xml8(title)
 msgid ""
 "OpenStack Installation Guide for <phrase os=\"rhel;centos;fedora\">Red Hat "
 "Enterprise Linux, CentOS, and Fedora</phrase><phrase os=\"ubuntu\">Ubuntu "
@@ -6785,61 +6770,61 @@ msgid ""
 "Server</phrase>"
 msgstr "OpenStack インストールガイド <phrase os=\"rhel;centos;fedora\">Red Hat Enterprise Linux、CentOS、Fedora</phrase><phrase os=\"ubuntu\">Ubuntu 12.04/14.04 (LTS)</phrase><phrase os=\"debian\">Debian 7.0 (Wheezy)</phrase><phrase os=\"opensuse\">openSUSE、SUSE Linux Enterprise Server</phrase> 版"
 
-#: ./doc/install-guide/bk-openstack-install-guide.xml15(phrase)
+#: ./doc/install-guide/bk-openstack-install-guide.xml19(phrase)
 msgid "Red Hat Enterprise Linux, CentOS, and Fedora"
 msgstr "Red Hat Enterprise Linux、CentOS、Fedora"
 
-#: ./doc/install-guide/bk-openstack-install-guide.xml16(phrase)
+#: ./doc/install-guide/bk-openstack-install-guide.xml20(phrase)
 msgid "Ubuntu 12.04/14.04 (LTS)"
 msgstr "Ubuntu 12.04/14.04 (LTS)"
 
-#: ./doc/install-guide/bk-openstack-install-guide.xml17(phrase)
+#: ./doc/install-guide/bk-openstack-install-guide.xml21(phrase)
 msgid "openSUSE and SUSE Linux Enterprise Server"
 msgstr "openSUSE、SUSE Linux Enterprise Server"
 
-#: ./doc/install-guide/bk-openstack-install-guide.xml18(phrase)
+#: ./doc/install-guide/bk-openstack-install-guide.xml22(phrase)
 msgid "Debian 7.0 (Wheezy)"
 msgstr "Debian 7.0 (Wheezy)"
 
-#: ./doc/install-guide/bk-openstack-install-guide.xml14(titleabbrev)
+#: ./doc/install-guide/bk-openstack-install-guide.xml18(titleabbrev)
 msgid ""
 "OpenStack Installation Guide for "
 "<placeholder-1/><placeholder-2/><placeholder-3/><placeholder-4/>"
 msgstr "OpenStack インストールガイド <placeholder-1/><placeholder-2/><placeholder-3/><placeholder-4/> 版"
 
-#: ./doc/install-guide/bk-openstack-install-guide.xml27(orgname)
+#: ./doc/install-guide/bk-openstack-install-guide.xml31(orgname)
 msgid "OpenStack"
 msgstr "OpenStack"
 
-#: ./doc/install-guide/bk-openstack-install-guide.xml31(year)
+#: ./doc/install-guide/bk-openstack-install-guide.xml35(year)
 msgid "2012"
 msgstr "2012"
 
-#: ./doc/install-guide/bk-openstack-install-guide.xml32(year)
+#: ./doc/install-guide/bk-openstack-install-guide.xml36(year)
 msgid "2013"
 msgstr "2013"
 
-#: ./doc/install-guide/bk-openstack-install-guide.xml33(year)
+#: ./doc/install-guide/bk-openstack-install-guide.xml37(year)
 msgid "2014"
 msgstr "2014"
 
-#: ./doc/install-guide/bk-openstack-install-guide.xml34(holder)
+#: ./doc/install-guide/bk-openstack-install-guide.xml38(holder)
 msgid "OpenStack Foundation"
 msgstr "OpenStack Foundation"
 
-#: ./doc/install-guide/bk-openstack-install-guide.xml36(releaseinfo)
+#: ./doc/install-guide/bk-openstack-install-guide.xml40(releaseinfo)
 msgid "juno"
 msgstr "juno"
 
-#: ./doc/install-guide/bk-openstack-install-guide.xml37(productname)
+#: ./doc/install-guide/bk-openstack-install-guide.xml41(productname)
 msgid "OpenStack Installation Guide"
 msgstr "OpenStack インストールガイド"
 
-#: ./doc/install-guide/bk-openstack-install-guide.xml41(remark)
+#: ./doc/install-guide/bk-openstack-install-guide.xml45(remark)
 msgid "Copyright details are filled in by the template."
 msgstr "Copyright details are filled in by the template."
 
-#: ./doc/install-guide/bk-openstack-install-guide.xml46(para)
+#: ./doc/install-guide/bk-openstack-install-guide.xml50(para)
 msgid ""
 "The OpenStack® system consists of several key projects that you install "
 "separately but that work together depending on your cloud needs. These "
@@ -6859,99 +6844,99 @@ msgid ""
 " sample configuration files are included."
 msgstr "OpenStack® システムはいくつかの主要なプロジェクトから構成されます。これらは別々にインストールできますが、クラウドの要件に応じて一緒に使用できます。Compute、Identity Service、Networking、Image Service、Block Storage、Object Storage、Telemetry、Orchestration、Database があります。これらのプロジェクトを別々にインストールできます。スタンドアローンまたは全体を接続するよう設定できます。<phrase os=\"debian\">このガイドは Debian 7.0 (コード名: Wheezy) で利用可能なパッケージを使用してインストールしていきます。</phrase><phrase os=\"ubuntu\">このガイドは Ubuntu 12.04 (LTS)、14.04 (LTS) で利用可能なパッケージを使用してインストールしていきます。</phrase><phrase os=\"rhel;centos;fedora\">このガイドは EPEL リポジトリから Fedora 20、Red Hat Enterprise Linux、その派生物で利用可能なパッケージを使用して OpenStack をインストールする方法を説明します。</phrase><phrase os=\"opensuse\">Open Build Service Cloud リポジトリから openSUSE で利用可能なパッケージを使用して OpenStack をインストールする方法を説明します。</phrase>設定オプションの説明とサンプル設定ファイルが含まれます。"
 
-#: ./doc/install-guide/bk-openstack-install-guide.xml74(date)
+#: ./doc/install-guide/bk-openstack-install-guide.xml78(date)
 msgid "2014-06-03"
 msgstr "2014-06-03"
 
-#: ./doc/install-guide/bk-openstack-install-guide.xml78(para)
+#: ./doc/install-guide/bk-openstack-install-guide.xml82(para)
 msgid "Start documentation for Juno."
 msgstr "Juno 向けドキュメント化を開始しました。"
 
-#: ./doc/install-guide/bk-openstack-install-guide.xml85(date)
+#: ./doc/install-guide/bk-openstack-install-guide.xml89(date)
 msgid "2014-04-16"
 msgstr "2014-04-16"
 
-#: ./doc/install-guide/bk-openstack-install-guide.xml89(para)
+#: ./doc/install-guide/bk-openstack-install-guide.xml93(para)
 msgid ""
 "Update for Icehouse, rework Networking setup to use ML2 as plugin, add new "
 "chapter for Database Service setup, improved basic configuration."
 msgstr "Icehouse 向け更新。Networking のセットアップを ML2 プラグインを使用するよう再構成。Database Service のセットアップに関する章の追加。基本的な設定の改善。"
 
-#: ./doc/install-guide/bk-openstack-install-guide.xml98(date)
+#: ./doc/install-guide/bk-openstack-install-guide.xml102(date)
 msgid "2013-10-25"
 msgstr "2013-10-25"
 
-#: ./doc/install-guide/bk-openstack-install-guide.xml102(para)
+#: ./doc/install-guide/bk-openstack-install-guide.xml106(para)
 msgid "Added initial Debian support."
 msgstr "Debian の初期サポートの追加。"
 
-#: ./doc/install-guide/bk-openstack-install-guide.xml108(date)
+#: ./doc/install-guide/bk-openstack-install-guide.xml112(date)
 msgid "2013-10-17"
 msgstr "2013-10-17"
 
-#: ./doc/install-guide/bk-openstack-install-guide.xml112(para)
+#: ./doc/install-guide/bk-openstack-install-guide.xml116(para)
 msgid "Havana release."
 msgstr "Havana リリース。"
 
-#: ./doc/install-guide/bk-openstack-install-guide.xml118(date)
+#: ./doc/install-guide/bk-openstack-install-guide.xml122(date)
 msgid "2013-10-16"
 msgstr "2013-10-16"
 
-#: ./doc/install-guide/bk-openstack-install-guide.xml122(para)
+#: ./doc/install-guide/bk-openstack-install-guide.xml126(para)
 msgid "Add support for SUSE Linux Enterprise."
 msgstr "SUSE Linux Enterprise のサポートの追加。"
 
-#: ./doc/install-guide/bk-openstack-install-guide.xml129(date)
+#: ./doc/install-guide/bk-openstack-install-guide.xml133(date)
 msgid "2013-10-08"
 msgstr "2013-10-08"
 
-#: ./doc/install-guide/bk-openstack-install-guide.xml133(para)
+#: ./doc/install-guide/bk-openstack-install-guide.xml137(para)
 msgid "Complete reorganization for Havana."
 msgstr "Havana 向け再構成の完了。"
 
-#: ./doc/install-guide/bk-openstack-install-guide.xml140(date)
+#: ./doc/install-guide/bk-openstack-install-guide.xml144(date)
 msgid "2013-09-09"
 msgstr "2013-09-09"
 
-#: ./doc/install-guide/bk-openstack-install-guide.xml144(para)
+#: ./doc/install-guide/bk-openstack-install-guide.xml148(para)
 msgid "Build also for openSUSE."
 msgstr "openSUSE 版の作成。"
 
-#: ./doc/install-guide/bk-openstack-install-guide.xml150(date)
+#: ./doc/install-guide/bk-openstack-install-guide.xml154(date)
 msgid "2013-08-01"
 msgstr "2013-08-01"
 
-#: ./doc/install-guide/bk-openstack-install-guide.xml154(para)
+#: ./doc/install-guide/bk-openstack-install-guide.xml158(para)
 msgid ""
 "Fixes to Object Storage verification steps. Fix bug <link "
 "href=\"https://bugs.launchpad.net/openstack-"
 "manuals/+bug/1207347\">1207347</link>."
 msgstr "Object Storage 検証手順の修正。バグ <link href=\"https://bugs.launchpad.net/openstack-manuals/+bug/1207347\">1207347</link> の修正。"
 
-#: ./doc/install-guide/bk-openstack-install-guide.xml163(date)
+#: ./doc/install-guide/bk-openstack-install-guide.xml167(date)
 msgid "2013-07-25"
 msgstr "2013-07-25"
 
-#: ./doc/install-guide/bk-openstack-install-guide.xml167(para)
+#: ./doc/install-guide/bk-openstack-install-guide.xml171(para)
 msgid ""
 "Adds creation of cinder user and addition to the service tenant. Fix bug "
 "<link href=\"https://bugs.launchpad.net/openstack-"
 "manuals/+bug/1205057\">1205057</link>."
 msgstr "cinder ユーザーの作成と service プロジェクトへの追加。バグ <link href=\"https://bugs.launchpad.net/openstack-manuals/+bug/1205057\">1205057</link> の修正。"
 
-#: ./doc/install-guide/bk-openstack-install-guide.xml177(date)
+#: ./doc/install-guide/bk-openstack-install-guide.xml181(date)
 msgid "2013-05-08"
 msgstr "2013-05-08"
 
-#: ./doc/install-guide/bk-openstack-install-guide.xml181(para)
+#: ./doc/install-guide/bk-openstack-install-guide.xml185(para)
 msgid "Updated the book title for consistency."
 msgstr "一貫性のために文書名の更新。"
 
-#: ./doc/install-guide/bk-openstack-install-guide.xml188(date)
+#: ./doc/install-guide/bk-openstack-install-guide.xml192(date)
 msgid "2013-05-02"
 msgstr "2013-05-02"
 
-#: ./doc/install-guide/bk-openstack-install-guide.xml192(para)
+#: ./doc/install-guide/bk-openstack-install-guide.xml196(para)
 msgid "Updated cover and fixed small errors in appendix."
 msgstr "表紙の更新と付録の小さなミスの修正。"
 
@@ -7007,6 +6992,10 @@ msgid ""
 "account, but change the password for it."
 msgstr "メッセージブローカーは、ユーザー名とパスワードに <literal>guest</literal> を使用するデフォルトアカウントを作成します。テスト環境のインストールを簡単にするために、このアカウントを使用し、そのパスワードを変更しないことを推奨します。"
 
+#: ./doc/install-guide/section_basics-queue.xml53(para)
+msgid "Run the following command:"
+msgstr "以下のコマンドを実行します。"
+
 #: ./doc/install-guide/section_basics-queue.xml54(para)
 msgid ""
 "Replace <replaceable>RABBIT_PASS</replaceable> with a suitable password."
@@ -7038,43 +7027,78 @@ msgstr "テスト環境向けに適切なパスワードを持つ独自のアカ
 msgid "Congratulations, now you are ready to install OpenStack services!"
 msgstr "おめでとうございます。これで OpenStack サービスをインストールする準備ができました。"
 
-#: ./doc/install-guide/section_keystone-services.xml4(title)
-msgid "Define services and API endpoints"
-msgstr "サービスと API エンドポイントの定義"
+#: ./doc/install-guide/section_keystone-services.xml7(title)
+msgid "Create the service entity and API endpoint"
+msgstr ""
 
-#: ./doc/install-guide/section_keystone-services.xml7(para)
+#: ./doc/install-guide/section_keystone-services.xml8(para)
 msgid ""
-"Register the identity service itself using the <code>OS_SERVICE_TOKEN</code>"
-" environment variable, as set previously, for authentication."
-msgstr "前に設定したとおり、認証のために <code>OS_SERVICE_TOKEN</code> 環境変数を使用して、Identity 自身を登録します。"
+"After you create tenants, users, and roles, you must create the "
+"<glossterm>service</glossterm> entity and <glossterm>API "
+"endpoint</glossterm> for the Identity service."
+msgstr ""
 
-#: ./doc/install-guide/section_keystone-services.xml12(para)
-msgid "Create a service entry for the Identity Service:"
-msgstr "Identity Service のサービスエントリーを作成します。"
-
-#: ./doc/install-guide/section_keystone-services.xml23(para)
-#: ./doc/install-guide/object-storage/section_object-storage-install.xml89(para)
+#: ./doc/install-guide/section_keystone-services.xml14(para)
 msgid ""
-"The service ID is randomly generated and is different from the one shown "
-"here."
-msgstr "サービス ID はランダムに生成され、ここに表示されているものとは異なります。"
+"Set the <envar>OS_SERVICE_TOKEN</envar> and "
+"<envar>OS_SERVICE_ENDPOINT</envar> environment variables, as described in "
+"<xref linkend=\"keystone-users\"/>."
+msgstr "<xref linkend=\"keystone-users\"/>に記載されているとおり、<envar>OS_SERVICE_TOKEN</envar> と <envar>OS_SERVICE_ENDPOINT</envar> 環境変数を設定します。"
 
-#: ./doc/install-guide/section_keystone-services.xml27(para)
+#: ./doc/install-guide/section_keystone-services.xml20(title)
+msgid "To create the service entity and API endpoint"
+msgstr ""
+
+#: ./doc/install-guide/section_keystone-services.xml22(para)
 msgid ""
-"Specify an API endpoint for the Identity Service by using the returned "
-"service ID. When you specify an endpoint, you provide URLs for the public "
-"API, internal API, and admin API. In this guide, the "
-"<literal>controller</literal> host name is used. Note that the Identity "
-"Service uses a different port for the admin API."
-msgstr "返されたサービス ID を使用することにより、Identity Service の API エンドポイントを指定します。エンドポイントを指定するとき、パブリック API、内部 API、管理 API の URL を指定します。このガイドでは、<literal>controller</literal> というホスト名を使用します。Identity Service は管理 API 用に異なるポートを使用することに注意してください。"
+"The Identity service manages a catalog of services in your OpenStack "
+"environment. Services use this catalog to locate other services in your "
+"environment."
+msgstr ""
+
+#: ./doc/install-guide/section_keystone-services.xml25(para)
+msgid "Create the service entity for the Identity service:"
+msgstr ""
+
+#: ./doc/install-guide/section_keystone-services.xml37(para)
+msgid ""
+"Because OpenStack generates IDs dynamically, you will see different values "
+"from this example command output."
+msgstr ""
+
+#: ./doc/install-guide/section_keystone-services.xml42(para)
+msgid ""
+"The Identity service manages a catalog of API endpoints associated with the "
+"services in your OpenStack environment. Services use this catalog to "
+"determine how to communicate with other services in your environment."
+msgstr ""
+
+#: ./doc/install-guide/section_keystone-services.xml46(para)
+msgid ""
+"OpenStack provides three API endpoint variations for each service: admin, "
+"internal, and public. In a production environment, the variants might reside"
+" on separate networks that service different types of users for security "
+"reasons. For simplicity, this configuration uses the management network for "
+"all variations."
+msgstr ""
 
 #: ./doc/install-guide/section_keystone-services.xml51(para)
+msgid "Create the API endpoint for the Identity service:"
+msgstr "Identity の API エンドポイントを作成します。"
+
+#: ./doc/install-guide/section_keystone-services.xml68(para)
 msgid ""
-"You will need to create an additional endpoint for each service added to "
-"your OpenStack environment. The sections of this guide associated with the "
-"installation of each service include the endpoint creation step specific to "
-"the service."
-msgstr "お使いの OpenStack 環境に追加した各サービス用の追加のエンドポイントを作成することが必要になります。各サービスのインストールと関連したこのガイドのセクションに、サービスへのエンドポイントの具体的な作成手順があります。"
+"This command references the ID of the service that you created in the "
+"previous step."
+msgstr ""
+
+#: ./doc/install-guide/section_keystone-services.xml74(para)
+msgid ""
+"Each service that you add to your OpenStack environment requires adding "
+"information such as API endpoints to the Identity service. The sections of "
+"this guide that cover service installation include steps to add the "
+"appropriate information to the Identity service."
+msgstr ""
 
 #. When image changes, this message will be marked fuzzy or untranslated for
 #. you.
@@ -8036,6 +8060,12 @@ msgstr "swift@example.com"
 #: ./doc/install-guide/object-storage/section_object-storage-install.xml76(para)
 msgid "Create a service entry for the Object Storage Service:"
 msgstr "Object Storage Service のサービスエントリーを作成します。"
+
+#: ./doc/install-guide/object-storage/section_object-storage-install.xml89(para)
+msgid ""
+"The service ID is randomly generated and is different from the one shown "
+"here."
+msgstr "サービス ID はランダムに生成され、ここに表示されているものとは異なります。"
 
 #: ./doc/install-guide/object-storage/section_object-storage-install.xml94(para)
 msgid ""
