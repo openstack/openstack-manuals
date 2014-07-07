@@ -9,7 +9,7 @@
     <para>The swift client is simple to use, scalable, and flexible.</para><para>Use the swift client <option>-o</option> or
             <option>-output</option> option to get short answers to
         questions about logs,</para>
-    <para>You can use the <option>-o —output</option> option with a
+    <para>You can use the <option>-o</option> or <option>--output</option> option with a
         single object download to redirect the command output to a
         specific file or to STDOUT (<literal>-</literal>). The ability
         to redirect the output to STDOUT enables you to pipe
@@ -61,7 +61,7 @@ Write ACL:</computeroutput></screen></step>
 2010-11-16-22_access.log</computeroutput></screen></step></procedure></section>
      <section xml:id="swift_upload_files"><title>Download and analyze an object</title>
      <procedure>
-            <para>This example uses the <option>-o —output</option>
+            <para>This example uses the <option>-o</option>
                 option and a hyphen (<literal>-</literal>) to get
                 information about an object.</para>
             <para>Use the swift <command>download</command> command to
@@ -79,7 +79,7 @@ Write ACL:</computeroutput></screen></step>
            <step>
                <para>Download an object:</para>
                 <screen><prompt>$</prompt> <userinput>swift -A http://swift-auth.com:11000/v1.0 -U test:tester -K testing \
-     download -o - logtest 2010-11-16-22_access.log | awk ‘{ print $9”-“$12}’ | sort | uniq -c</userinput>           </screen>
+     download -o - logtest 2010-11-16-22_access.log | awk '{ print $9"-"$12}' | sort | uniq -c</userinput>           </screen>
             <screen><computeroutput>805 DELETE-204
 12 DELETE-404
 2 DELETE-409
@@ -112,7 +112,7 @@ Write ACL:</computeroutput></screen></step>
 8 PUT-499</computeroutput></screen></step>
       <step><para>Discover how many PUT requests are in each log file.</para>
                     <para>Use a bash for loop with awk and swift with
-                    the <option>-o —output</option> option and a
+                    the <option>-o</option> or <option>--output</option> option and a
                     hyphen (<literal>-</literal>) to discover how many
                     PUT requests are in each log file.</para>
 
@@ -124,7 +124,7 @@ Write ACL:</computeroutput></screen></step>
                     Finally, pipe into <command>wc -l</command> to
                     count the lines.</para>
                 <screen><prompt>$</prompt> <userinput>for f in `swift -A http://swift-auth.com:11000/v1.0 -U test:tester -K testing list logtest` ; \
-        do  echo -ne “PUTS - ” ; swift -A http://swift-auth.com:11000/v1.0 -U test:tester -K testing download -o -  logtest $f | grep PUT | wc -l ; \
+        do  echo -ne "PUTS - " ; swift -A http://swift-auth.com:11000/v1.0 -U test:tester -K testing download -o -  logtest $f | grep PUT | wc -l ; \
     done</userinput></screen>
             <screen><computeroutput>2010-11-15-21_access.log - PUTS - 402
 2010-11-15-22_access.log - PUTS - 1091
@@ -145,7 +145,7 @@ Write ACL:</computeroutput></screen></step>
                     object name.</para>
 
                 <screen><prompt>$</prompt> <userinput>for f in `swift -A http://swift-auth.com:11000/v1.0 -U test:tester -K testing list -p 2010-11-15 logtest` ; \
-        do  echo -ne “$f - PUTS - ” ; swift -A http://127.0.0.1:11000/v1.0 -U test:tester \
+        do  echo -ne "$f - PUTS - " ; swift -A http://127.0.0.1:11000/v1.0 -U test:tester \
         -K testing download -o - logtest $f | grep PUT | wc -l ; \
       done</userinput></screen>
             <screen><computeroutput>2010-11-15-21_access.log - PUTS - 402
