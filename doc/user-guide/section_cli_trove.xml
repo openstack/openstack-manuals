@@ -1,4 +1,8 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter [
+<!ENTITY % openstack SYSTEM "../common/entities/openstack.ent">
+%openstack;
+]>
 <section xmlns="http://docbook.org/ns/docbook"
     xmlns:xlink="http://www.w3.org/1999/xlink"
     xmlns:xi="http://www.w3.org/2001/XInclude"
@@ -372,6 +376,109 @@
       </formalpara>
 <screen><prompt>$</prompt> <userinput>trove delete <replaceable>INSTANCE_ID</replaceable></userinput></screen>
     </step>
+    </procedure>
+  </section>
+  <section xml:id="backup_db_incremental">
+    <title>Use incremental backups</title>
+    <para>Incremental backups let you chain together a series of backups. You start with a regular backup. Then, when you want to create a subsequent incremental backup, you specify the parent backup.</para>
+    <para>Restoring a database instance from an incremental backup is the same as creating a database instance from a regular backup&mdash;the Database service handles the complexities of applying the chain of incremental backups.</para>
+    <para>This example shows you how to use incremental backups with a MySQL database.</para>
+    <formalpara>
+      <title>Assumptions.</title>
+      <para>Assume that you have <link linkend="backup_db">created a regular backup</link> for the following database instance:</para>
+    </formalpara>
+    <itemizedlist>
+      <listitem>
+        <para>Instance name: <literal>guest1</literal></para>
+      </listitem>
+      <listitem>
+        <para>ID of the instance (<replaceable>INSTANCE_ID</replaceable>): <literal>792a6a56-278f-4a01-9997-d997fa126370</literal></para>
+      </listitem>
+      <listitem>
+        <para>ID of the regular backup artifact (<replaceable>BACKUP_ID</replaceable>): <literal>6dc3a9b7-1f3e-4954-8582-3f2e4942cddd</literal></para>
+      </listitem>
+    </itemizedlist>
+    <procedure>
+      <title>To create and use incremental backups</title>
+      <step>
+        <formalpara>
+          <title>Create your first incremental backup.</title>
+          <para>Use the trove <command>backup-create</command> command and specify:</para>
+        </formalpara>
+        <itemizedlist>
+          <listitem>
+            <para>The name of the incremental backup you are creating: <literal>backup1.1</literal></para>
+          </listitem>
+          <listitem>
+            <para>The <replaceable>INSTANCE_ID</replaceable> of the database instance you are doing the incremental backup for (in this example, <literal>792a6a56-278f-4a01-9997-d997fa126370</literal>)</para>
+          </listitem>
+          <listitem>
+            <para>The <replaceable>BACKUP_ID</replaceable> of the parent backup. In this case, the parent is the regular backup, with an ID of <literal>6dc3a9b7-1f3e-4954-8582-3f2e4942cddd</literal></para>
+          </listitem>
+        </itemizedlist>
+<screen><prompt>$</prompt> <userinput>trove backup-create backup1.1 <replaceable>INSTANCE_ID</replaceable> --parent <replaceable>BACKUP_ID</replaceable></userinput>
+<computeroutput>+-------------+--------------------------------------+
+|   Property  |                Value                 |
++-------------+--------------------------------------+
+|   created   |         2014-03-19T14:09:13          |
+| description |                 None                 |
+|      id     | 1d474981-a006-4f62-b25f-43d7b8a7097e |
+| instance_id | 792a6a56-278f-4a01-9997-d997fa126370 |
+| locationRef |                 None                 |
+|     name    |              backup1.1               |
+|  parent_id  | 6dc3a9b7-1f3e-4954-8582-3f2e4942cddd |
+|     size    |                 None                 |
+|    status   |                 NEW                  |
+|   updated   |         2014-03-19T14:09:13          |
++-------------+--------------------------------------+</computeroutput></screen>
+      <para>Note that this command returns both the ID of the database instance you are incrementally backing up (<literal>instance_id</literal>) and a new ID for the new incremental backup artifact you just created (<literal>id</literal>).</para>
+      </step>
+      <step>
+        <formalpara>
+          <title>Create your second incremental backup.</title>
+          <para>The name of your second incremental backup is <literal>backup1.2</literal>. This time, when you specify the parent, pass in the ID of the incremental backup you just created in the previous step (<literal>backup1.1</literal>). In this example, it would be <literal>1d474981-a006-4f62-b25f-43d7b8a7097e</literal>.</para>
+        </formalpara>
+<screen><prompt>$</prompt> <userinput>trove backup-create backup1.2 <replaceable>INSTANCE_ID</replaceable> --parent <replaceable>BACKUP_ID</replaceable></userinput>
+<computeroutput>+-------------+--------------------------------------+
+|   Property  |                Value                 |
++-------------+--------------------------------------+
+|   created   |         2014-03-19T14:09:13          |
+| description |                 None                 |
+|      id     | bb84a240-668e-49b5-861e-6a98b67e7a1f |
+| instance_id | 792a6a56-278f-4a01-9997-d997fa126370 |
+| locationRef |                 None                 |
+|     name    |              backup1.2               |
+|  parent_id  | 1d474981-a006-4f62-b25f-43d7b8a7097e |
+|     size    |                 None                 |
+|    status   |                 NEW                  |
+|   updated   |         2014-03-19T14:09:13          |
++-------------+--------------------------------------+</computeroutput></screen>
+      </step>
+      <step>
+        <formalpara>
+          <title>Restore using incremental backups.</title>
+          <para>Now assume that your <literal>guest1</literal> database instance is damaged and you need to restore it from your incremental backups.  In this example, you use the trove <command>create</command> command to create a new database instance called <literal>guest2</literal>.</para>
+        </formalpara>
+        <para>To incorporate your incremental backups, you simply use the <code>--backup</code> argument to pass in the <replaceable>BACKUP_ID</replaceable> of your most recent incremental backup. The Database service handles the complexities of applying the chain of all previous incremental backups.</para>
+<screen><prompt>$</prompt> <userinput>trove create guest2 10 --size 1 --backup <replaceable>BACKUP_ID</replaceable></userinput>
+<computeroutput>+-------------------+-----------------------------------------------------------+
+|      Property     |                       Value                               |
++-------------------+-----------------------------------------------------------+
+|      created      |                  2014-03-19T14:10:56                      |
+|     datastore     |         {u'version': u'mysql-5.5', u'type': u'mysql'}     |
+| datastore_version |                      mysql-5.5                            |
+|       flavor      | {u'id': u'10', u'links':                                  |
+|                   | [{u'href': u'https://10.125.1.135:8779/v1.0/              |
+|                   |  626734041baa4254ae316de52a20b390/flavors/10', u'rel':    |
+|                   |  u'self'}, {u'href': u'https://10.125.1.135:8779/         |
+|                   |  flavors/10', u'rel': u'bookmark'}]}                      |
+|         id        |         a3680953-eea9-4cf2-918b-5b8e49d7e1b3              |
+|        name       |                      guest2                               |
+|       status      |                      BUILD                                |
+|      updated      |                  2014-03-19T14:10:56                      |
+|       volume      |                   {u'size': 1}                            |
++-------------------+-----------------------------------------------------------+</computeroutput></screen>
+      </step>
     </procedure>
   </section>
 </section>
