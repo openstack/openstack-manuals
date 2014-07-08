@@ -20,6 +20,31 @@ function setup_lang {
     cp doc/pom.xml generated/$SET_LANG/pom.xml
 }
 
+function test_fr {
+    setup_lang 'fr'
+
+    setup_directory 'fr' 'common' 'glossary' 'user-guide'
+    case "$PURPOSE" in
+        test)
+            openstack-doc-test -v --check-build -l fr \
+                --only-book user-guide
+            RET=$?
+            ;;
+        publish)
+            openstack-doc-test -v --publish --check-build -l fr \
+                --only-book user-guide
+            RET=$?
+            ;;
+    esac
+    if [ "$RET" -eq "0" ] ; then
+        echo "... succeeded"
+    else
+        echo "... failed"
+        BUILD_FAIL=1
+    fi
+}
+
+
 function test_ja {
     setup_lang 'ja'
 
@@ -59,7 +84,11 @@ function test_language () {
 
     case "$language" in
         all)
+            test_fr
             test_ja
+            ;;
+        fr)
+            test_fr
             ;;
         ja)
             test_ja
