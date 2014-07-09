@@ -1,102 +1,112 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<section xml:id="keystone-verify"
-  xmlns="http://docbook.org/ns/docbook"
+<section xmlns="http://docbook.org/ns/docbook"
   xmlns:xi="http://www.w3.org/2001/XInclude"
-  xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
-  <title>Verify the Identity Service installation</title>
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  version="5.0"
+  xml:id="keystone-verify">
+  <title>Verify operation</title>
+  <para>This section describes how to verify operation of the Identity
+    service.</para>
   <procedure>
     <step>
-      <para>To verify that the Identity Service is installed and
-        configured correctly, clear the values in the
-          <envar>OS_SERVICE_TOKEN</envar> and
-          <envar>OS_SERVICE_ENDPOINT</envar> environment
-        variables:</para>
+      <para>Unset the temporary <envar>OS_SERVICE_TOKEN</envar> and
+      <envar>OS_SERVICE_ENDPOINT</envar> environment variables:</para>
       <screen><prompt>$</prompt> <userinput>unset OS_SERVICE_TOKEN OS_SERVICE_ENDPOINT</userinput></screen>
-      <para>These variables, which were used to bootstrap the
-        administrative user and register the Identity Service, are no
-        longer needed.</para>
     </step>
     <step>
-      <para>You can now use regular user name-based
-        authentication.</para>
-      <para>Request a authentication token by using the
-          <literal>admin</literal> user and the password you chose for
-        that user:</para>
-      <screen><prompt>$</prompt> <userinput>keystone --os-username=admin --os-password=<replaceable>ADMIN_PASS</replaceable> \
-  --os-auth-url=http://controller:35357/v2.0 token-get</userinput></screen>
-      <para>In response, you receive a token paired with your user ID.
-        This verifies that the Identity Service is running on the
-        expected endpoint and that your user account is established
-        with the expected credentials.</para>
+      <para>As the <literal>admin</literal> tenant and user, request an
+        authentication token:</para>
+      <screen><prompt>$</prompt> <userinput>keystone --os-tenant-name admin --os-username admin --os-password <replaceable>ADMIN_PASS</replaceable> \
+  --os-auth-url http://controller:35357/v2.0 token-get</userinput></screen>
+      <para>Replace <replaceable>ADMIN_PASS</replaceable> with the password
+        you chose for the <literal>admin</literal> user in the Identity
+        service. You might need to use single quotes (') around your password
+        if it includes special characters.</para>
+      <para>Lengthy output that includes a token value verifies operation
+        for the <literal>admin</literal> tenant and user.</para>
     </step>
     <step>
-      <para>Verify that authorization behaves as expected. To do so,
-        request authorization on a tenant:</para>
-      <screen><prompt>$</prompt> <userinput>keystone --os-username=admin --os-password=<replaceable>ADMIN_PASS</replaceable> \
-  --os-tenant-name=admin --os-auth-url=http://controller:35357/v2.0 \
-  token-get</userinput></screen>
-      <para>In response, you receive a token that includes the ID of
-        the tenant that you specified. This verifies that your user
-        account has an explicitly defined role on the specified tenant
-        and the tenant exists as expected.</para>
-    </step>
-    <step>
-      <para>You can also set your <literal>--os-*</literal> variables
-        in your environment to simplify command-line usage. Set up a
-          <filename>admin-openrc.sh</filename> file with the admin
-        credentials and admin endpoint:</para>
-      <programlisting language="bash">export OS_USERNAME=admin
-export OS_PASSWORD=<replaceable>ADMIN_PASS</replaceable>
-export OS_TENANT_NAME=admin
-export OS_AUTH_URL=http://controller:35357/v2.0</programlisting>
-    </step>
-    <step>
-      <para>Source this file to read in the environment
-        variables:</para>
-      <screen><prompt>$</prompt> <userinput>source admin-openrc.sh</userinput></screen>
-    </step>
-    <step>
-      <para>Verify that your <filename>admin-openrc.sh</filename> file is
-        configured correctly. Run the same command without the
-          <literal>--os-*</literal> arguments:</para>
-      <screen><prompt>$</prompt> <userinput>keystone token-get</userinput></screen>
-      <para>The command returns a token and the ID of the specified
-        tenant. This verifies that you have configured your
-        environment variables correctly.</para>
-    </step>
-    <step>
-      <para>Verify that your admin account has authorization to
-        perform administrative commands:</para>
-      <screen><prompt>$</prompt> <userinput>keystone user-list</userinput>
-<computeroutput>+----------------------------------+-------+---------+-------------------+
-|                id                |  name | enabled |    email          |
-+----------------------------------+-------+---------+-------------------+
-| afea5bde3be9413dbd60e479fddf9228 | admin |   True  | admin@example.com |
-| 32aca1f9a47540c29d6988091f76c934 |  demo |   True  | demo@example.com  |
-+----------------------------------+-------+---------+-------------------+
-</computeroutput></screen>
-      <screen><prompt>$</prompt> <userinput>keystone user-role-list --user admin --tenant admin</userinput>
-<computeroutput>+----------------------------------+----------+----------------------------------+----------------------------------+
-|                id                |   name   |             user_id              |            tenant_id             |
-+----------------------------------+----------+----------------------------------+----------------------------------+
-| 9fe2ff9ee4384b1894a90878d3e92bab | _member_ | afea5bde3be9413dbd60e479fddf9228 | e519b772cb43474582fa303da62559e5 |
-| 5d3b60b66f1f438b80eaae41a77b5951 |  admin   | afea5bde3be9413dbd60e479fddf9228 | e519b772cb43474582fa303da62559e5 |
-+----------------------------------+----------+----------------------------------+----------------------------------+</computeroutput></screen>
-      <para>Seeing that the <literal>id</literal> in the output
-        from the <command>keystone user-list</command>
-        command matches the <literal>user_id</literal> in the
-        <command>keystone user-role-list</command> command,
-        and that the admin role is listed for that user, for the
-        related tenant, this verifies that your user account has the
-        <literal>admin</literal> role, which matches the role
-        used in the Identity Service <filename>policy.json</filename>
-        file.</para>
+      <para os="ubuntu;rhel;centos;fedora;sles;opensuse">As the
+        <literal>admin</literal> tenant and user, list tenants to verify
+        that the <literal>admin</literal> tenant and user can execute
+        admin-only CLI commands and that the Identity service contains the
+        tenants that you created in <xref linkend="keystone-users"/>:</para>
+      <para os="debian">As the <literal>admin</literal> tenant and user, list
+        tenants to verify that the <literal>admin</literal> tenant and user
+        can execute admin-only CLI commands and that the Identity service
+        contains the tenants created by the configuration tool:</para>
+      <screen><prompt>$</prompt> <userinput>keystone --os-tenant-name admin --os-username admin --os-password <replaceable>ADMIN_PASS</replaceable> \
+  --os-auth-url http://controller:35357/v2.0 tenant-list</userinput>
+<computeroutput>+----------------------------------+----------+---------+
+|                id                |   name   | enabled |
++----------------------------------+----------+---------+
+| 6f4c1e4cbfef4d5a8a1345882fbca110 |  admin   |   True  |
+| 4aa51bb942be4dd0ac0555d7591f80a6 |   demo   |   True  |
+| 6b69202e1bf846a4ae50d65bc4789122 | service  |   True  |
++----------------------------------+----------+---------+</computeroutput></screen>
       <note>
-        <para>As long as you define your credentials and the Identity
-          Service endpoint through the command line or environment
-          variables, you can run all OpenStack client commands from
-          any machine. For details, see <xref linkend="ch_clients"
-          />.</para>
+        <para>Because OpenStack generates IDs dynamically, you will see
+          different values from this example command output.</para>
+      </note>
+    </step>
+    <step>
+      <para os="ubuntu;rhel;centos;fedora;sles;opensuse">As the
+        <literal>admin</literal> tenant and user, list users to verify
+        that the Identity service contains the users that you created
+        in <xref linkend="keystone-users"/>:</para>
+      <para os="debian">As the <literal>admin</literal> tenant and user, list
+        users to verify that the Identity service contains the users
+        created by the configuration tool:</para>
+      <screen><prompt>$</prompt> <userinput>keystone --os-tenant-name admin --os-username admin --os-password <replaceable>ADMIN_PASS</replaceable> \
+  --os-auth-url http://controller:35357/v2.0 user-list</userinput>
+<computeroutput>+----------------------------------+---------+---------+---------------------+
+|                id                |   name  | enabled |        email        |
++----------------------------------+---------+---------+---------------------+
+| ea8c352d253443118041c9c8b8416040 |  admin  |   True  |  admin@example.com  |
+| 7004dfa0dda84d63aef81cf7f100af01 |   demo  |   True  |  demo@example.com   |
++----------------------------------+---------+---------+---------------------+</computeroutput></screen>
+    </step>
+    <step>
+      <para os="ubuntu;rhel;centos;fedora;sles;opensuse">As the
+        <literal>admin</literal> tenant and user, list roles to verify
+        that the Identity service contains the role that you created
+        in <xref linkend="keystone-users"/>:</para>
+      <para os="debian">As the <literal>admin</literal> tenant and user, list
+        roles to verify that the Identity service contains the role
+        created by the configuration tool:</para>
+      <screen><prompt>$</prompt> <userinput>keystone --os-tenant-name admin --os-username admin --os-password <replaceable>ADMIN_PASS</replaceable> \
+  --os-auth-url http://controller:35357/v2.0 role-list</userinput>
+<computeroutput>+----------------------------------+----------+
+|                id                |   name   |
++----------------------------------+----------+
+| 9fe2ff9ee4384b1894a90878d3e92bab | _member_ |
+| bff3a6083b714fa29c9344bf8930d199 |  admin   |
++----------------------------------+----------+</computeroutput></screen>
+    </step>
+    <step>
+      <para>As the <literal>demo</literal> tenant and user, request an
+        authentication token:</para>
+      <screen><prompt>$</prompt> <userinput>keystone --os-tenant-name demo --os-username demo --os-password <replaceable>DEMO_PASS</replaceable> \
+  --os-auth-url http://controller:35357/v2.0 token-get</userinput></screen>
+      <para>Replace <replaceable>DEMO_PASS</replaceable> with the password
+        you chose for the <literal>demo</literal> user in the Identity
+        service.</para>
+      <para>Lengthy output that includes a token value verifies operation
+        for the <literal>demo</literal> tenant and user.</para>
+    </step>
+    <step>
+      <para>As the <literal>demo</literal> tenant and user, attempt to list
+        users to verify that you cannot execute admin-only CLI
+        commands:</para>
+      <screen><prompt>$</prompt> <userinput>keystone --os-tenant-name demo --os-username demo --os-password <replaceable>DEMO_PASS</replaceable> \
+  --os-auth-url http://controller:35357/v2.0 user-list</userinput>
+<computeroutput>You are not authorized to perform the requested action, admin_required. (HTTP 403)</computeroutput></screen>
+      <note>
+        <para>Each OpenStack service references a
+          <filename>policy.json</filename> file to determine the operations
+          available to a particular tenant, user, or role. For more
+          information, see the
+          <link xlink:href="http://docs.openstack.org/openstack-ops/content/projects_users.html">Operations Guide - Managing Projects and Users</link>.</para>
       </note>
     </step>
   </procedure>
