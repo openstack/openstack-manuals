@@ -2,91 +2,94 @@
     xmlns:xlink="http://www.w3.org/1999/xlink"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     version="5.0" xml:id="s-keystone">
-        <info>
+
           <title>Highly available OpenStack Identity</title>
-        </info>
-        <simpara>OpenStack Identity is the Identity Service in OpenStack and used by many services.
-Making the OpenStack Identity service highly available in active / passive mode involves</simpara>
+
+        <para>OpenStack Identity is the Identity Service in OpenStack and used by many services.
+Making the OpenStack Identity service highly available in active / passive mode involves</para>
         <itemizedlist>
           <listitem>
-            <simpara>
+            <para>
 Configure OpenStack Identity to listen on the VIP address,
-</simpara>
+</para>
           </listitem>
           <listitem>
-            <simpara>
+            <para>
 managing OpenStack Identity daemon with the Pacemaker cluster manager,
-</simpara>
+</para>
           </listitem>
           <listitem>
-            <simpara>
+            <para>
 Configure OpenStack services to use this IP address.
-</simpara>
+</para>
           </listitem>
         </itemizedlist>
         <note>
-          <simpara>Here is the <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://docs.openstack.org/trunk/install-guide/install/apt/content/ch_installing-openstack-identity-service.html">documentation</link> for installing OpenStack Identity service.</simpara>
+          <para>Here is the <link xlink:href="http://docs.openstack.org/trunk/install-guide/install/apt/content/ch_installing-openstack-identity-service.html">documentation</link> for installing OpenStack Identity service.</para>
         </note>
         <section xml:id="_add_openstack_identity_resource_to_pacemaker">
-          <info>
+
             <title>Add OpenStack Identity resource to Pacemaker</title>
-          </info>
-          <simpara>First of all, you need to download the resource agent to your system:</simpara>
-          <screen>cd /usr/lib/ocf/resource.d
-mkdir openstack
-cd openstack
-wget https://raw.github.com/madkiss/openstack-resource-agents/master/ocf/keystone
-chmod a+rx *</screen>
-          <simpara>You can now add the Pacemaker configuration for
+
+          <para>First of all, you need to download the resource agent to your system:</para>
+          <screen><prompt>#</prompt> <userinput>cd /usr/lib/ocf/resource.d</userinput>
+<prompt>#</prompt> <userinput>mkdir openstack</userinput>
+<prompt>#</prompt> <userinput>cd openstack</userinput>
+<prompt>#</prompt> <userinput>wget https://raw.github.com/madkiss/openstack-resource-agents/master/ocf/keystone</userinput>
+<prompt>#</prompt> <userinput>chmod a+rx *</userinput></screen>
+          <para>You can now add the Pacemaker configuration for
 OpenStack Identity resource. Connect to the Pacemaker cluster with <literal>crm
-configure</literal>, and add the following cluster resources:</simpara>
-          <screen>primitive p_keystone ocf:openstack:keystone \
+configure</literal>, and add the following cluster resources:</para>
+          <programlisting>primitive p_keystone ocf:openstack:keystone \
   params config="/etc/keystone/keystone.conf" os_password="secret" os_username="admin" os_tenant_name="admin" os_auth_url="http://192.168.42.103:5000/v2.0/" \
-  op monitor interval="30s" timeout="30s"</screen>
-          <simpara>This configuration creates <literal>p_keystone</literal>, a resource for managing the OpenStack Identity service.</simpara>
-          <simpara><literal>crm configure</literal> supports batch input, so you may copy and paste the
+  op monitor interval="30s" timeout="30s"</programlisting>
+          <para>This configuration creates <literal>p_keystone</literal>, a resource for managing the OpenStack Identity service.</para>
+          <para><literal>crm configure</literal> supports batch input, so you may copy and paste the
 above into your live pacemaker configuration, and then make changes as
 required. For example, you may enter <literal>edit p_ip_keystone</literal> from the
 <literal>crm configure</literal> menu and edit the resource to match your preferred
-virtual IP address.</simpara>
-          <simpara>Once completed, commit your configuration changes by entering <literal>commit</literal>
+virtual IP address.</para>
+          <para>Once completed, commit your configuration changes by entering <literal>commit</literal>
 from the <literal>crm configure</literal> menu. Pacemaker will then start the OpenStack Identity
-service, and its dependent resources, on one of your nodes.</simpara>
+service, and its dependent resources, on one of your nodes.</para>
         </section>
         <section xml:id="_configure_openstack_identity_service">
-          <info>
+
             <title>Configure OpenStack Identity service</title>
-          </info>
-          <simpara>You need to edit your OpenStack Identity configuration file (<literal>keystone.conf</literal>) and change the bind parameters:</simpara>
-          <simpara>On Havana:</simpara>
-          <screen>bind_host = 192.168.42.103</screen>
-          <simpara>On Icehouse, the <literal>admin_bind_host</literal> option lets you use a private network for the admin access.</simpara>
-          <screen>public_bind_host = 192.168.42.103
-admin_bind_host = 192.168.42.103</screen>
-          <simpara>To be sure all data will be highly available, you should be sure that you store everything in the MySQL database (which is also highly available):</simpara>
-          <screen>[catalog]
+
+          <para>You need to edit your OpenStack Identity configuration file (<filename>keystone.conf</filename>) and change the bind parameters:</para>
+          <para>On Havana:</para>
+          <programlisting language="ini">bind_host = 192.168.42.103</programlisting>
+          <para>On Icehouse, the <literal>admin_bind_host</literal> option lets you use a private network for the admin access.</para>
+          <programlisting language="ini">public_bind_host = 192.168.42.103
+admin_bind_host = 192.168.42.103</programlisting>
+          <para>To be sure all data will be highly available, you should be sure that you store everything in the MySQL database (which is also highly available):</para>
+          <programlisting language="ini">[catalog]
 driver = keystone.catalog.backends.sql.Catalog
 ...
 [identity]
 driver = keystone.identity.backends.sql.Identity
-...</screen>
+...</programlisting>
         </section>
         <section xml:id="_configure_openstack_services_to_use_the_highly_available_openstack_identity">
-          <info>
+
             <title>Configure OpenStack services to use the highly available OpenStack Identity</title>
-          </info>
-          <simpara>Your OpenStack services must now point their OpenStack Identity configuration to
+
+          <para>Your OpenStack services must now point their OpenStack Identity configuration to
 the highly available, virtual cluster IP address — rather than a
-OpenStack Identity server’s physical IP address as you normally would.</simpara>
-          <simpara>For example with OpenStack Compute, if your OpenStack Identity service IP address is
+OpenStack Identity server’s physical IP address as you normally would.</para>
+          <para>For example with OpenStack Compute, if your OpenStack Identity service IP address is
 192.168.42.103 as in the configuration explained here, you would use
 the following line in your API configuration file
-(<literal>api-paste.ini</literal>):</simpara>
-          <screen>auth_host = 192.168.42.103</screen>
-          <simpara>You also need to create the OpenStack Identity Endpoint with this IP.</simpara>
-          <simpara>NOTE : If you are using both private and public IP addresses, you should create two Virtual IP addresses and define your endpoint like this:</simpara>
-          <screen>keystone endpoint-create --region $KEYSTONE_REGION --service-id $service-id --publicurl 'http://PUBLIC_VIP:5000/v2.0' --adminurl 'http://192.168.42.103:35357/v2.0' --internalurl 'http://192.168.42.103:5000/v2.0'</screen>
-          <simpara>If you are using the horizon dashboard, you should edit the <literal>local_settings.py</literal> file:</simpara>
-          <screen>OPENSTACK_HOST = 192.168.42.103</screen>
+(<literal>api-paste.ini</literal>):</para>
+          <programlisting language="ini">auth_host = 192.168.42.103</programlisting>
+          <para>You also need to create the OpenStack Identity Endpoint with this IP.</para>
+          <para>NOTE: If you are using both private and public IP addresses, you should create two Virtual IP addresses and define your endpoint like this:</para>
+          <screen><prompt>$</prompt> <userinput>keystone endpoint-create --region $KEYSTONE_REGION \
+  --service-id $service-id --publicurl 'http://PUBLIC_VIP:5000/v2.0' \
+  --adminurl 'http://192.168.42.103:35357/v2.0' \
+  --internalurl 'http://192.168.42.103:5000/v2.0'</userinput></screen>
+          <para>If you are using the horizon dashboard, you should edit the <literal>local_settings.py</literal> file:</para>
+          <programlisting>OPENSTACK_HOST = 192.168.42.103</programlisting>
         </section>
       </section>

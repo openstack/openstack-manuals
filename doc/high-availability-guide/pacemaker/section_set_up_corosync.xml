@@ -2,21 +2,19 @@
     xmlns:xlink="http://www.w3.org/1999/xlink"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     version="5.0" xml:id="_set_up_corosync">
-        <info>
           <title>Set up Corosync</title>
-        </info>
-        <simpara>Besides installing the <literal>corosync</literal> package, you must also
+        <para>Besides installing the <literal>corosync</literal> package, you must also
 create a configuration file, stored in
-<literal>/etc/corosync/corosync.conf</literal>. Most distributions ship an example
-configuration file (<literal>corosync.conf.example</literal>) as part of the
+<filename>/etc/corosync/corosync.conf</filename>. Most distributions ship an example
+configuration file (<filename>corosync.conf.example</filename>) as part of the
 documentation bundled with the <literal>corosync</literal> package. An example Corosync
-configuration file is shown below:</simpara>
+configuration file is shown below:</para>
         <formalpara>
-          <info>
-            <title>Corosync configuration file (<literal>corosync.conf</literal>)</title>
-          </info>
+
+            <title>Corosync configuration file (<filename>corosync.conf</filename>)</title>
+
           <para>
-            <screen>totem {
+            <programlisting>totem {
         version: 2
 
         # Time (in ms) to wait for a token <co xml:id="CO1-1"/>
@@ -82,7 +80,7 @@ logging {
                 debug: off
                 tags: enter|leave|trace1|trace2|trace3|trace4|trace6
         }
-}</screen>
+}</programlisting>
           </para>
         </formalpara>
         <calloutlist>
@@ -124,44 +122,44 @@ configuration:
 </para>
             <itemizedlist>
               <listitem>
-                <simpara>
+                <para>
 The <literal>ringnumber</literal> must differ between all configured interfaces,
   starting with 0.
-</simpara>
+</para>
               </listitem>
               <listitem>
-                <simpara>
+                <para>
 The <literal>bindnetaddr</literal> is the <emphasis>network</emphasis> address of the interfaces to bind
   to. The example uses two network addresses of <literal>/24</literal> IPv4 subnets.
-</simpara>
+</para>
               </listitem>
               <listitem>
-                <simpara>
+                <para>
 Multicast groups (<literal>mcastaddr</literal>) <emphasis>must not</emphasis> be reused across cluster
   boundaries. In other words, no two distinct clusters should ever use
   the same multicast group. Be sure to select multicast addresses
-  compliant with <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.ietf.org/rfc/rfc2365.txt">RFC 2365,
+  compliant with <link xlink:href="http://www.ietf.org/rfc/rfc2365.txt">RFC 2365,
   "Administratively Scoped IP Multicast"</link>.
-</simpara>
+</para>
               </listitem>
               <listitem>
-                <simpara>
+                <para>
 For firewall configurations, note that Corosync communicates over
   UDP only, and uses <literal>mcastport</literal> (for receives) and <literal>mcastport</literal>-1 (for
   sends).
-</simpara>
+</para>
               </listitem>
             </itemizedlist>
           </callout>
           <callout arearefs="CO1-5">
             <para>
 The <literal>service</literal> declaration for the <literal>pacemaker</literal> service may be
-placed in the <literal>corosync.conf</literal> file directly, or in its own separate
-file, <literal>/etc/corosync/service.d/pacemaker</literal>.
+placed in the <filename>corosync.conf</filename> file directly, or in its own separate
+file, <filename>/etc/corosync/service.d/pacemaker</filename>.
 </para>
           </callout>
         </calloutlist>
-        <simpara>Once created, the <literal>corosync.conf</literal> file (and the <literal>authkey</literal> file if the
+        <para>Once created, the <filename>corosync.conf</filename> file (and the <filename>authkey</filename> file if the
 <literal>secauth</literal> option is enabled) must be synchronized across all cluster
-nodes.</simpara>
+nodes.</para>
       </section>
