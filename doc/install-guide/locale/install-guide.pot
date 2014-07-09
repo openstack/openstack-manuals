@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-07-08 06:08+0000\n"
+"POT-Creation-Date: 2014-07-09 06:06+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -563,7 +563,7 @@ msgstr ""
 msgid "Create the <literal>admin</literal> tenant:"
 msgstr ""
 
-#: ./doc/install-guide/section_keystone-users.xml:59(para) ./doc/install-guide/section_keystone-services.xml:37(para)
+#: ./doc/install-guide/section_keystone-users.xml:59(para) ./doc/install-guide/section_keystone-verify.xml:48(para) ./doc/install-guide/section_keystone-services.xml:37(para)
 msgid "Because OpenStack generates IDs dynamically, you will see different values from this example command output."
 msgstr ""
 
@@ -571,7 +571,7 @@ msgstr ""
 msgid "Create the <literal>admin</literal> user:"
 msgstr ""
 
-#: ./doc/install-guide/section_keystone-users.xml:65(replaceable) ./doc/install-guide/section_keystone-verify.xml:25(replaceable) ./doc/install-guide/section_keystone-verify.xml:35(replaceable) ./doc/install-guide/section_keystone-verify.xml:49(replaceable) ./doc/install-guide/section_trove-install.xml:126(replaceable) ./doc/install-guide/section_trove-install.xml:155(replaceable) ./doc/install-guide/section_trove-install.xml:206(replaceable)
+#: ./doc/install-guide/section_keystone-users.xml:65(replaceable) ./doc/install-guide/section_keystone-verify.xml:19(replaceable) ./doc/install-guide/section_keystone-verify.xml:38(replaceable) ./doc/install-guide/section_keystone-verify.xml:60(replaceable) ./doc/install-guide/section_keystone-verify.xml:77(replaceable) ./doc/install-guide/section_trove-install.xml:126(replaceable) ./doc/install-guide/section_trove-install.xml:155(replaceable) ./doc/install-guide/section_trove-install.xml:206(replaceable)
 msgid "ADMIN_PASS"
 msgstr ""
 
@@ -623,7 +623,7 @@ msgstr ""
 msgid "Create the <literal>demo</literal> user:"
 msgstr ""
 
-#: ./doc/install-guide/section_keystone-users.xml:143(replaceable) ./doc/install-guide/ch_clients.xml:40(replaceable)
+#: ./doc/install-guide/section_keystone-users.xml:143(replaceable) ./doc/install-guide/section_keystone-verify.xml:89(replaceable) ./doc/install-guide/section_keystone-verify.xml:101(replaceable) ./doc/install-guide/ch_clients.xml:40(replaceable)
 msgid "DEMO_PASS"
 msgstr ""
 
@@ -747,7 +747,7 @@ msgstr ""
 msgid "On the volume node:"
 msgstr ""
 
-#: ./doc/install-guide/section_glance-verify.xml:5(title) ./doc/install-guide/section_heat-verify.xml:5(title) ./doc/install-guide/section_basics-ntp.xml:94(title) ./doc/install-guide/section_nova-verify.xml:6(title)
+#: ./doc/install-guide/section_glance-verify.xml:5(title) ./doc/install-guide/section_keystone-verify.xml:7(title) ./doc/install-guide/section_heat-verify.xml:5(title) ./doc/install-guide/section_basics-ntp.xml:94(title) ./doc/install-guide/section_nova-verify.xml:6(title)
 msgid "Verify operation"
 msgstr ""
 
@@ -1149,64 +1149,68 @@ msgstr ""
 msgid "Your OpenStack environment now includes the dashboard. You can <link linkend=\"launch-instance\">launch an instance</link> or add more services to your environment in the following chapters."
 msgstr ""
 
-#: ./doc/install-guide/section_keystone-verify.xml:6(title)
-msgid "Verify the Identity Service installation"
+#: ./doc/install-guide/section_keystone-verify.xml:8(para)
+msgid "This section describes how to verify operation of the Identity service."
 msgstr ""
 
-#: ./doc/install-guide/section_keystone-verify.xml:9(para)
-msgid "To verify that the Identity Service is installed and configured correctly, clear the values in the <envar>OS_SERVICE_TOKEN</envar> and <envar>OS_SERVICE_ENDPOINT</envar> environment variables:"
+#: ./doc/install-guide/section_keystone-verify.xml:12(para)
+msgid "Unset the temporary <envar>OS_SERVICE_TOKEN</envar> and <envar>OS_SERVICE_ENDPOINT</envar> environment variables:"
 msgstr ""
 
-#: ./doc/install-guide/section_keystone-verify.xml:15(para)
-msgid "These variables, which were used to bootstrap the administrative user and register the Identity Service, are no longer needed."
+#: ./doc/install-guide/section_keystone-verify.xml:17(para)
+msgid "As the <literal>admin</literal> tenant and user, request an authentication token:"
 msgstr ""
 
-#: ./doc/install-guide/section_keystone-verify.xml:20(para)
-msgid "You can now use regular user name-based authentication."
+#: ./doc/install-guide/section_keystone-verify.xml:21(para)
+msgid "Replace <replaceable>ADMIN_PASS</replaceable> with the password you chose for the <literal>admin</literal> user in the Identity service. You might need to use single quotes (') around your password if it includes special characters."
 msgstr ""
 
-#: ./doc/install-guide/section_keystone-verify.xml:22(para)
-msgid "Request a authentication token by using the <literal>admin</literal> user and the password you chose for that user:"
+#: ./doc/install-guide/section_keystone-verify.xml:25(para)
+msgid "Lengthy output that includes a token value verifies operation for the <literal>admin</literal> tenant and user."
 msgstr ""
 
-#: ./doc/install-guide/section_keystone-verify.xml:27(para)
-msgid "In response, you receive a token paired with your user ID. This verifies that the Identity Service is running on the expected endpoint and that your user account is established with the expected credentials."
+#: ./doc/install-guide/section_keystone-verify.xml:29(para)
+msgid "As the <literal>admin</literal> tenant and user, list tenants to verify that the <literal>admin</literal> tenant and user can execute admin-only CLI commands and that the Identity service contains the tenants that you created in <xref linkend=\"keystone-users\"/>:"
 msgstr ""
 
-#: ./doc/install-guide/section_keystone-verify.xml:33(para)
-msgid "Verify that authorization behaves as expected. To do so, request authorization on a tenant:"
+#: ./doc/install-guide/section_keystone-verify.xml:34(para)
+msgid "As the <literal>admin</literal> tenant and user, list tenants to verify that the <literal>admin</literal> tenant and user can execute admin-only CLI commands and that the Identity service contains the tenants created by the configuration tool:"
 msgstr ""
 
-#: ./doc/install-guide/section_keystone-verify.xml:38(para)
-msgid "In response, you receive a token that includes the ID of the tenant that you specified. This verifies that your user account has an explicitly defined role on the specified tenant and the tenant exists as expected."
+#: ./doc/install-guide/section_keystone-verify.xml:53(para)
+msgid "As the <literal>admin</literal> tenant and user, list users to verify that the Identity service contains the users that you created in <xref linkend=\"keystone-users\"/>:"
 msgstr ""
 
-#: ./doc/install-guide/section_keystone-verify.xml:44(para)
-msgid "You can also set your <literal>--os-*</literal> variables in your environment to simplify command-line usage. Set up a <filename>admin-openrc.sh</filename> file with the admin credentials and admin endpoint:"
+#: ./doc/install-guide/section_keystone-verify.xml:57(para)
+msgid "As the <literal>admin</literal> tenant and user, list users to verify that the Identity service contains the users created by the configuration tool:"
 msgstr ""
 
-#: ./doc/install-guide/section_keystone-verify.xml:54(para)
-msgid "Source this file to read in the environment variables:"
+#: ./doc/install-guide/section_keystone-verify.xml:70(para)
+msgid "As the <literal>admin</literal> tenant and user, list roles to verify that the Identity service contains the role that you created in <xref linkend=\"keystone-users\"/>:"
 msgstr ""
 
-#: ./doc/install-guide/section_keystone-verify.xml:59(para)
-msgid "Verify that your <filename>admin-openrc.sh</filename> file is configured correctly. Run the same command without the <literal>--os-*</literal> arguments:"
+#: ./doc/install-guide/section_keystone-verify.xml:74(para)
+msgid "As the <literal>admin</literal> tenant and user, list roles to verify that the Identity service contains the role created by the configuration tool:"
 msgstr ""
 
-#: ./doc/install-guide/section_keystone-verify.xml:63(para)
-msgid "The command returns a token and the ID of the specified tenant. This verifies that you have configured your environment variables correctly."
+#: ./doc/install-guide/section_keystone-verify.xml:87(para)
+msgid "As the <literal>demo</literal> tenant and user, request an authentication token:"
 msgstr ""
 
-#: ./doc/install-guide/section_keystone-verify.xml:68(para)
-msgid "Verify that your admin account has authorization to perform administrative commands:"
+#: ./doc/install-guide/section_keystone-verify.xml:91(para)
+msgid "Replace <replaceable>DEMO_PASS</replaceable> with the password you chose for the <literal>demo</literal> user in the Identity service."
 msgstr ""
 
-#: ./doc/install-guide/section_keystone-verify.xml:85(para)
-msgid "Seeing that the <literal>id</literal> in the output from the <placeholder-1/> command matches the <literal>user_id</literal> in the <placeholder-2/> command, and that the admin role is listed for that user, for the related tenant, this verifies that your user account has the <literal>admin</literal> role, which matches the role used in the Identity Service <filename>policy.json</filename> file."
+#: ./doc/install-guide/section_keystone-verify.xml:94(para)
+msgid "Lengthy output that includes a token value verifies operation for the <literal>demo</literal> tenant and user."
 msgstr ""
 
-#: ./doc/install-guide/section_keystone-verify.xml:95(para)
-msgid "As long as you define your credentials and the Identity Service endpoint through the command line or environment variables, you can run all OpenStack client commands from any machine. For details, see <xref linkend=\"ch_clients\"/>."
+#: ./doc/install-guide/section_keystone-verify.xml:98(para)
+msgid "As the <literal>demo</literal> tenant and user, attempt to list users to verify that you cannot execute admin-only CLI commands:"
+msgstr ""
+
+#: ./doc/install-guide/section_keystone-verify.xml:105(para)
+msgid "Each OpenStack service references a <filename>policy.json</filename> file to determine the operations available to a particular tenant, user, or role. For more information, see the <link href=\"http://docs.openstack.org/openstack-ops/content/projects_users.html\">Operations Guide - Managing Projects and Users</link>."
 msgstr ""
 
 #: ./doc/install-guide/section_basics-packages.xml:7(title)

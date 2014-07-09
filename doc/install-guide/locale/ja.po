@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenStack Manuals\n"
-"POT-Creation-Date: 2014-07-08 03:10+0000\n"
-"PO-Revision-Date: 2014-07-07 20:32+0000\n"
+"POT-Creation-Date: 2014-07-09 04:52+0000\n"
+"PO-Revision-Date: 2014-07-09 03:30+0000\n"
 "Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
 "Language-Team: Japanese (http://www.transifex.com/projects/p/openstack-manuals-i18n/language/ja/)\n"
 "MIME-Version: 1.0\n"
@@ -1092,6 +1092,7 @@ msgid "Create the <literal>admin</literal> tenant:"
 msgstr "<literal>admin</literal> プロジェクトを作成します。"
 
 #: ./doc/install-guide/section_keystone-users.xml59(para)
+#: ./doc/install-guide/section_keystone-verify.xml48(para)
 #: ./doc/install-guide/section_keystone-services.xml37(para)
 msgid ""
 "Because OpenStack generates IDs dynamically, you will see different values "
@@ -1103,9 +1104,10 @@ msgid "Create the <literal>admin</literal> user:"
 msgstr "<literal>admin</literal> ユーザーを作成します。"
 
 #: ./doc/install-guide/section_keystone-users.xml65(replaceable)
-#: ./doc/install-guide/section_keystone-verify.xml25(replaceable)
-#: ./doc/install-guide/section_keystone-verify.xml35(replaceable)
-#: ./doc/install-guide/section_keystone-verify.xml49(replaceable)
+#: ./doc/install-guide/section_keystone-verify.xml19(replaceable)
+#: ./doc/install-guide/section_keystone-verify.xml38(replaceable)
+#: ./doc/install-guide/section_keystone-verify.xml60(replaceable)
+#: ./doc/install-guide/section_keystone-verify.xml77(replaceable)
 #: ./doc/install-guide/section_trove-install.xml126(replaceable)
 #: ./doc/install-guide/section_trove-install.xml155(replaceable)
 #: ./doc/install-guide/section_trove-install.xml206(replaceable)
@@ -1191,6 +1193,8 @@ msgid "Create the <literal>demo</literal> user:"
 msgstr "<literal>demo</literal> ユーザーを作成します。"
 
 #: ./doc/install-guide/section_keystone-users.xml143(replaceable)
+#: ./doc/install-guide/section_keystone-verify.xml89(replaceable)
+#: ./doc/install-guide/section_keystone-verify.xml101(replaceable)
 #: ./doc/install-guide/ch_clients.xml40(replaceable)
 msgid "DEMO_PASS"
 msgstr "DEMO_PASS"
@@ -1366,6 +1370,7 @@ msgid "On the volume node:"
 msgstr "ボリュームノードで:"
 
 #: ./doc/install-guide/section_glance-verify.xml5(title)
+#: ./doc/install-guide/section_keystone-verify.xml7(title)
 #: ./doc/install-guide/section_heat-verify.xml5(title)
 #: ./doc/install-guide/section_basics-ntp.xml94(title)
 #: ./doc/install-guide/section_nova-verify.xml6(title)
@@ -2087,100 +2092,111 @@ msgid ""
 "environment in the following chapters."
 msgstr "OpenStack 環境にダッシュボードが追加されました。<link linkend=\"launch-instance\">インスタンスの起動</link>、以降の章に記載されているサービスの環境への追加を実行できます。"
 
-#: ./doc/install-guide/section_keystone-verify.xml6(title)
-msgid "Verify the Identity Service installation"
-msgstr "Identity Service のインストールの検証"
-
-#: ./doc/install-guide/section_keystone-verify.xml9(para)
+#: ./doc/install-guide/section_keystone-verify.xml8(para)
 msgid ""
-"To verify that the Identity Service is installed and configured correctly, "
-"clear the values in the <envar>OS_SERVICE_TOKEN</envar> and "
+"This section describes how to verify operation of the Identity service."
+msgstr ""
+
+#: ./doc/install-guide/section_keystone-verify.xml12(para)
+msgid ""
+"Unset the temporary <envar>OS_SERVICE_TOKEN</envar> and "
 "<envar>OS_SERVICE_ENDPOINT</envar> environment variables:"
-msgstr "Identity Service が正しくインストールされ、設定されていることを確認するためには、<envar>OS_SERVICE_TOKEN</envar> 環境変数と <envar>OS_SERVICE_ENDPOINT</envar> 環境変数にある値を削除します。"
+msgstr ""
 
-#: ./doc/install-guide/section_keystone-verify.xml15(para)
+#: ./doc/install-guide/section_keystone-verify.xml17(para)
 msgid ""
-"These variables, which were used to bootstrap the administrative user and "
-"register the Identity Service, are no longer needed."
-msgstr "管理ユーザーをブートストラップし、Identity Service に登録するために使用された、これらの変数はもはや必要ありません。"
+"As the <literal>admin</literal> tenant and user, request an authentication "
+"token:"
+msgstr ""
 
-#: ./doc/install-guide/section_keystone-verify.xml20(para)
-msgid "You can now use regular user name-based authentication."
-msgstr "これで通常のユーザー名による認証を使用できます。"
-
-#: ./doc/install-guide/section_keystone-verify.xml22(para)
+#: ./doc/install-guide/section_keystone-verify.xml21(para)
 msgid ""
-"Request a authentication token by using the <literal>admin</literal> user "
-"and the password you chose for that user:"
-msgstr "<literal>admin</literal> ユーザーと、そのユーザー用に選択したパスワードを使用して認証トークンを要求します。"
+"Replace <replaceable>ADMIN_PASS</replaceable> with the password you chose "
+"for the <literal>admin</literal> user in the Identity service. You might "
+"need to use single quotes (') around your password if it includes special "
+"characters."
+msgstr ""
 
-#: ./doc/install-guide/section_keystone-verify.xml27(para)
+#: ./doc/install-guide/section_keystone-verify.xml25(para)
 msgid ""
-"In response, you receive a token paired with your user ID. This verifies "
-"that the Identity Service is running on the expected endpoint and that your "
-"user account is established with the expected credentials."
-msgstr "応答で、ユーザー ID とペアになったトークンを受け取ります。これにより、Identity Service が期待したエンドポイントで実行されていて、ユーザーアカウントが期待したクレデンシャルで確立されていることを検証できます。"
+"Lengthy output that includes a token value verifies operation for the "
+"<literal>admin</literal> tenant and user."
+msgstr ""
 
-#: ./doc/install-guide/section_keystone-verify.xml33(para)
+#: ./doc/install-guide/section_keystone-verify.xml29(para)
 msgid ""
-"Verify that authorization behaves as expected. To do so, request "
-"authorization on a tenant:"
-msgstr "認可が期待したとおり動作することを検証します。そうするために、プロジェクトで認可を要求します。"
+"As the <literal>admin</literal> tenant and user, list tenants to verify that"
+" the <literal>admin</literal> tenant and user can execute admin-only CLI "
+"commands and that the Identity service contains the tenants that you created"
+" in <xref linkend=\"keystone-users\"/>:"
+msgstr ""
 
-#: ./doc/install-guide/section_keystone-verify.xml38(para)
+#: ./doc/install-guide/section_keystone-verify.xml34(para)
 msgid ""
-"In response, you receive a token that includes the ID of the tenant that you"
-" specified. This verifies that your user account has an explicitly defined "
-"role on the specified tenant and the tenant exists as expected."
-msgstr "応答で、指定したプロジェクトの ID を含むトークンを受け取ります。これにより、ユーザーアカウントが指定したプロジェクトで明示的に定義したロールを持ち、プロジェクトが期待したとおりに存在することを検証します。"
+"As the <literal>admin</literal> tenant and user, list tenants to verify that"
+" the <literal>admin</literal> tenant and user can execute admin-only CLI "
+"commands and that the Identity service contains the tenants created by the "
+"configuration tool:"
+msgstr ""
 
-#: ./doc/install-guide/section_keystone-verify.xml44(para)
+#: ./doc/install-guide/section_keystone-verify.xml53(para)
 msgid ""
-"You can also set your <literal>--os-*</literal> variables in your "
-"environment to simplify command-line usage. Set up a <filename>admin-"
-"openrc.sh</filename> file with the admin credentials and admin endpoint:"
-msgstr "コマンドラインの使用を簡単にするために、お使いの環境で <literal>--os-*</literal> 変数を設定することもできます。admin クレデンシャルと admin エンドポイントを用いて <filename>admin-openrc.sh</filename> ファイルをセットアップします。"
+"As the <literal>admin</literal> tenant and user, list users to verify that "
+"the Identity service contains the users that you created in <xref linkend"
+"=\"keystone-users\"/>:"
+msgstr ""
 
-#: ./doc/install-guide/section_keystone-verify.xml54(para)
-msgid "Source this file to read in the environment variables:"
-msgstr "環境変数を読み込むために、このファイルを source します。"
-
-#: ./doc/install-guide/section_keystone-verify.xml59(para)
+#: ./doc/install-guide/section_keystone-verify.xml57(para)
 msgid ""
-"Verify that your <filename>admin-openrc.sh</filename> file is configured "
-"correctly. Run the same command without the <literal>--os-*</literal> "
-"arguments:"
-msgstr "<filename>admin-openrc.sh</filename> ファイルが正しく設定されていることを検証します。同じコマンドを <literal>--os-*</literal> 引数なしで実行します。"
+"As the <literal>admin</literal> tenant and user, list users to verify that "
+"the Identity service contains the users created by the configuration tool:"
+msgstr ""
 
-#: ./doc/install-guide/section_keystone-verify.xml63(para)
+#: ./doc/install-guide/section_keystone-verify.xml70(para)
 msgid ""
-"The command returns a token and the ID of the specified tenant. This "
-"verifies that you have configured your environment variables correctly."
-msgstr "コマンドはトークンと指定されたプロジェクトの ID を返します。これにより、環境変数が正しく設定されていることを確認します。"
+"As the <literal>admin</literal> tenant and user, list roles to verify that "
+"the Identity service contains the role that you created in <xref linkend"
+"=\"keystone-users\"/>:"
+msgstr ""
 
-#: ./doc/install-guide/section_keystone-verify.xml68(para)
+#: ./doc/install-guide/section_keystone-verify.xml74(para)
 msgid ""
-"Verify that your admin account has authorization to perform administrative "
-"commands:"
-msgstr "admin アカウントが管理コマンドを実行する権限があることを検証します。"
+"As the <literal>admin</literal> tenant and user, list roles to verify that "
+"the Identity service contains the role created by the configuration tool:"
+msgstr ""
 
-#: ./doc/install-guide/section_keystone-verify.xml85(para)
+#: ./doc/install-guide/section_keystone-verify.xml87(para)
 msgid ""
-"Seeing that the <literal>id</literal> in the output from the "
-"<placeholder-1/> command matches the <literal>user_id</literal> in the "
-"<placeholder-2/> command, and that the admin role is listed for that user, "
-"for the related tenant, this verifies that your user account has the "
-"<literal>admin</literal> role, which matches the role used in the Identity "
-"Service <filename>policy.json</filename> file."
-msgstr "<placeholder-1/> コマンドの出力の <literal>id</literal> が <placeholder-2/> コマンドの <literal>user_id</literal> と同じであること、admin ロールがそのユーザー、その関連プロジェクトに対して表示されることを確認します。これにより、お使いのユーザーアカウントが <literal>admin</literal> ロールを持つことを確認します。このロールは Identity Service の <filename>policy.json</filename> ファイルで使用されるロールと対応します。"
+"As the <literal>demo</literal> tenant and user, request an authentication "
+"token:"
+msgstr ""
 
-#: ./doc/install-guide/section_keystone-verify.xml95(para)
+#: ./doc/install-guide/section_keystone-verify.xml91(para)
 msgid ""
-"As long as you define your credentials and the Identity Service endpoint "
-"through the command line or environment variables, you can run all OpenStack"
-" client commands from any machine. For details, see <xref "
-"linkend=\"ch_clients\"/>."
-msgstr "コマンドラインや環境変数経由でクレデンシャルと Identity Service エンドポイントを定義する限り、すべてのマシンからすべての OpenStack クライアントコマンドを実行できます。詳細は <xref linkend=\"ch_clients\"/> を参照してください。"
+"Replace <replaceable>DEMO_PASS</replaceable> with the password you chose for"
+" the <literal>demo</literal> user in the Identity service."
+msgstr ""
+
+#: ./doc/install-guide/section_keystone-verify.xml94(para)
+msgid ""
+"Lengthy output that includes a token value verifies operation for the "
+"<literal>demo</literal> tenant and user."
+msgstr ""
+
+#: ./doc/install-guide/section_keystone-verify.xml98(para)
+msgid ""
+"As the <literal>demo</literal> tenant and user, attempt to list users to "
+"verify that you cannot execute admin-only CLI commands:"
+msgstr ""
+
+#: ./doc/install-guide/section_keystone-verify.xml105(para)
+msgid ""
+"Each OpenStack service references a <filename>policy.json</filename> file to"
+" determine the operations available to a particular tenant, user, or role. "
+"For more information, see the <link href=\"http://docs.openstack.org"
+"/openstack-ops/content/projects_users.html\">Operations Guide - Managing "
+"Projects and Users</link>."
+msgstr ""
 
 #: ./doc/install-guide/section_basics-packages.xml7(title)
 msgid "OpenStack packages"
