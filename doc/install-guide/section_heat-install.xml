@@ -95,6 +95,11 @@ rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
       <screen os="opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/heat/heat.conf DEFAULT rabbit_host <replaceable>controller</replaceable></userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/heat/heat.conf DEFAULT rabbit_password <replaceable>RABBIT_PASS</replaceable></userinput></screen>
     </step>
+    <step os="rhel;centos;fedora">
+      <para>Configure the Orchestration Service to use the Qpid
+        message broker:</para>
+      <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/heat/heat.conf DEFAULT qpid_hostname <replaceable>controller</replaceable></userinput></screen>
+    </step>
     <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
       <para>Create a <literal>heat</literal> user that the
         Orchestration service can use to authenticate with the
@@ -104,7 +109,7 @@ rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
   --email=<replaceable>heat@example.com</replaceable></userinput>
 <prompt>$</prompt> <userinput>keystone user-role-add --user=heat --tenant=service --role=admin</userinput></screen>
     </step>
-    <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
+    <step os="opensuse;sles;ubuntu">
       <para>Edit the <filename>/etc/heat/heat.conf</filename> file to
         change the <literal>[keystone_authtoken]</literal> and
           <literal>[ec2authtoken]</literal> sections to add
@@ -120,6 +125,24 @@ admin_password = <replaceable>HEAT_PASS</replaceable>
 
 [ec2authtoken]
 auth_uri = http://<replaceable>controller</replaceable>:5000/v2.0</programlisting>
+    </step>
+    <step os="rhel;centos;fedora">
+    <para>Run the following commands to configure the Orchestration service to authenticate with the Identity service:</para>
+<screen><prompt>#</prompt> <userinput>openstack-config --set /etc/heat/heat.conf keystone_authtoken \
+  auth_uri http://<replaceable>controller</replaceable>:5000</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/heat/heat.conf keystone_authtoken \
+  auth_port 35357</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/heat/heat.conf keystone_authtoken \
+  auth_protocol http</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/heat/heat.conf keystone_authtoken \
+  admin_tenant_name service</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/heat/heat.conf keystone_authtoken \
+  admin_user heat</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/heat/heat.conf keystone_authtoken \
+  admin_password<replaceable>HEAT_PASS</replaceable></userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/heat/heat.conf ec2authtoken \
+  auth_uri http://<replaceable>controller</replaceable>:5000</userinput>
+</screen>
     </step>
     <step os="debian">
       <para>Edit the <filename>/etc/heat/heat.conf</filename> file to
