@@ -8,19 +8,18 @@ For more details, see the `OpenStack Documentation wiki page
 
 It includes these manuals:
 
- * Installation Guides
- * Cloud Administrator Guide
- * High Availability Guide
- * Security Guide
- * Virtual Machine Image Guide
- * End User Guide
  * Admin User Guide
- * Training Guides
+ * Cloud Administrator Guide
+ * Command-Line Interface Reference
+ * Configuration Reference
+ * End User Guide
+ * High Availability Guide
+ * Installation Guides
+ * Virtual Machine Image Guide
 
 In addition to the guides, this repository contains:
 
  * docs.openstack.org: ``www``
- * tools for gating tests prior to merging documentation in this repo
 
 Prerequisites
 =============
