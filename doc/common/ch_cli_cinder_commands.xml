@@ -12,7 +12,7 @@
     <title>Block Storage command-line client</title>
     <para>The <command>cinder</command> client is the command-line interface
          (CLI) for the OpenStack Block Storage API and its extensions. This chapter documents
-         <command>cinder</command> version 1.0.8.
+         <command>cinder</command> version 1.0.9.
     </para>
     <para>For help on a specific <command>cinder</command>
        command, enter:
@@ -25,7 +25,8 @@
               [--os-password &lt;auth-password&gt;]
               [--os-tenant-name &lt;auth-tenant-name&gt;]
               [--os-tenant-id &lt;auth-tenant-id&gt;] [--os-auth-url &lt;auth-url&gt;]
-              [--os-region-name &lt;region-name&gt;] [--service-type &lt;service-type&gt;]
+              [--os-region-name &lt;region-name&gt;]
+              [--os-auth-system &lt;auth-system&gt;] [--service-type &lt;service-type&gt;]
               [--service-name &lt;service-name&gt;]
               [--volume-service-name &lt;volume-service-name&gt;]
               [--endpoint-type &lt;endpoint-type&gt;]
@@ -322,6 +323,14 @@
     </listitem>
   </varlistentry>
   <varlistentry>
+    <term><command>quota-delete</command></term>
+    <listitem>
+      <para>
+        Delete the quotas for a tenant.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
     <term><command>quota-show</command></term>
     <listitem>
       <para>
@@ -422,7 +431,7 @@
     <term><command>snapshot-delete</command></term>
     <listitem>
       <para>
-        Remove a snapshot.
+        Remove one or more snapshots.
       </para>
     </listitem>
   </varlistentry>
@@ -653,6 +662,14 @@
     <listitem>
       <para>
       Defaults to <code>env[OS_REGION_NAME]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-auth-system &lt;auth-system&gt;</command></term>
+    <listitem>
+      <para>
+      Defaults to <code>env[OS_AUTH_SYSTEM]</code>.
       </para>
     </listitem>
   </varlistentry>
@@ -1014,8 +1031,8 @@ Create a new encryption type for a volume type (Admin Only).
     <listitem>
       <para>
       Notional service where encryption is performed (e.g.,
-      front-end=Nova). Values: 'front-end', 'back-end'
-      (Optional, Default=None)
+      front-end=Nova) Values: 'front-end', 'back-end'
+      (Default='front-end')
       </para>
     </listitem>
   </varlistentry>
@@ -1566,6 +1583,23 @@ List the default quotas for a tenant.
   </varlistentry>
  </variablelist>
     </section>
+    <section xml:id="cinderclient_subcommand_quota-delete">
+        <title>cinder quota-delete command</title>
+        <screen><computeroutput>usage: cinder quota-delete &lt;tenant_id&gt;</computeroutput></screen>
+        <para>
+Delete the quotas for a tenant.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;tenant_id&gt;</command></term>
+    <listitem>
+      <para>
+        UUID of tenant to delete the quotas for.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
     <section xml:id="cinderclient_subcommand_quota-show">
         <title>cinder quota-show command</title>
         <screen><computeroutput>usage: cinder quota-show &lt;tenant_id&gt;</computeroutput></screen>
@@ -1757,7 +1791,7 @@ Explicitly update the state of a volume.
     </section>
     <section xml:id="cinderclient_subcommand_service-disable">
         <title>cinder service-disable command</title>
-        <screen><computeroutput>usage: cinder service-disable &lt;hostname&gt; &lt;binary&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: cinder service-disable [--reason &lt;reason&gt;] &lt;hostname&gt; &lt;binary&gt;</computeroutput></screen>
         <para>
 Disable the service.
         </para>  <variablelist wordsize="10">
@@ -1775,6 +1809,17 @@ Disable the service.
     <listitem>
       <para>
         Service binary.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--reason &lt;reason&gt;</command></term>
+    <listitem>
+      <para>
+        Reason for disabling service.
       </para>
     </listitem>
   </varlistentry>
@@ -1897,16 +1942,16 @@ Add a new snapshot.
     </section>
     <section xml:id="cinderclient_subcommand_snapshot-delete">
         <title>cinder snapshot-delete command</title>
-        <screen><computeroutput>usage: cinder snapshot-delete &lt;snapshot&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: cinder snapshot-delete &lt;snapshot&gt; [&lt;snapshot&gt; ...]</computeroutput></screen>
         <para>
-Remove a snapshot.
+Remove one or more snapshots.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;snapshot&gt;</command></term>
     <listitem>
       <para>
-        Name or ID of the snapshot to delete.
+        Name or ID of the snapshot(s) to delete.
       </para>
     </listitem>
   </varlistentry>
@@ -2240,7 +2285,7 @@ Delete a specific volume type.
     <term><command>&lt;id&gt;</command></term>
     <listitem>
       <para>
-        Unique ID of the volume type to delete
+        Name or ID of the volume type to delete
       </para>
     </listitem>
   </varlistentry>
