@@ -12,7 +12,7 @@
     <title>Image Service command-line client</title>
     <para>The <command>glance</command> client is the command-line interface
          (CLI) for the OpenStack Image Service API and its extensions. This chapter documents
-         <command>glance</command> version 0.12.0.
+         <command>glance</command> version 0.13.1.
     </para>
     <para>For help on a specific <command>glance</command>
        command, enter:
@@ -224,7 +224,7 @@
     <term><command>-d, --debug</command></term>
     <listitem>
       <para>
-        Defaults to <code>env[GLANCECLIENT_DEBUG]</code>
+        Defaults to <code>env[GLANCECLIENT_DEBUG]</code>.
       </para>
     </listitem>
   </varlistentry>
@@ -240,9 +240,9 @@
     <term><command>--get-schema</command></term>
     <listitem>
       <para>
-        Force retrieving the schema used to generate portions
-      of the help text rather than using a cached copy.
-      Ignored with api version 1
+        Ignores cached copy and forces retrieval of schema
+      that generates portions of the help text. Ignored with
+      API version 1.
       </para>
     </listitem>
   </varlistentry>
@@ -359,7 +359,7 @@
     <term><command>--os-username OS_USERNAME</command></term>
     <listitem>
       <para>
-      Defaults to <code>env[OS_USERNAME]</code>
+      Defaults to <code>env[OS_USERNAME]</code>.
       </para>
     </listitem>
   </varlistentry>
@@ -375,7 +375,7 @@
     <term><command>--os-password OS_PASSWORD</command></term>
     <listitem>
       <para>
-      Defaults to <code>env[OS_PASSWORD]</code>
+      Defaults to <code>env[OS_PASSWORD]</code>.
       </para>
     </listitem>
   </varlistentry>
@@ -391,7 +391,7 @@
     <term><command>--os-tenant-id OS_TENANT_ID</command></term>
     <listitem>
       <para>
-      Defaults to <code>env[OS_TENANT_ID]</code>
+      Defaults to <code>env[OS_TENANT_ID]</code>.
       </para>
     </listitem>
   </varlistentry>
@@ -399,7 +399,7 @@
     <term><command>--os-tenant-name OS_TENANT_NAME</command></term>
     <listitem>
       <para>
-      Defaults to <code>env[OS_TENANT_NAME]</code>
+      Defaults to <code>env[OS_TENANT_NAME]</code>.
       </para>
     </listitem>
   </varlistentry>
@@ -415,7 +415,7 @@
     <term><command>--os-auth-url OS_AUTH_URL</command></term>
     <listitem>
       <para>
-      Defaults to <code>env[OS_AUTH_URL]</code>
+      Defaults to <code>env[OS_AUTH_URL]</code>.
       </para>
     </listitem>
   </varlistentry>
@@ -431,7 +431,7 @@
     <term><command>--os-region-name OS_REGION_NAME</command></term>
     <listitem>
       <para>
-      Defaults to <code>env[OS_REGION_NAME]</code>
+      Defaults to <code>env[OS_REGION_NAME]</code>.
       </para>
     </listitem>
   </varlistentry>
@@ -447,7 +447,7 @@
     <term><command>--os-auth-token OS_AUTH_TOKEN</command></term>
     <listitem>
       <para>
-      Defaults to <code>env[OS_AUTH_TOKEN]</code>
+      Defaults to <code>env[OS_AUTH_TOKEN]</code>.
       </para>
     </listitem>
   </varlistentry>
@@ -463,7 +463,7 @@
     <term><command>--os-image-url OS_IMAGE_URL</command></term>
     <listitem>
       <para>
-      Defaults to <code>env[OS_IMAGE_URL]</code>
+      Defaults to <code>env[OS_IMAGE_URL]</code>.
       </para>
     </listitem>
   </varlistentry>
@@ -479,7 +479,7 @@
     <term><command>--os-image-api-version OS_IMAGE_API_VERSION</command></term>
     <listitem>
       <para>
-      Defaults to <code>env[OS_IMAGE_API_VERSION]</code> or 1
+      Defaults to <code>env[OS_IMAGE_API_VERSION]</code> or 1.
       </para>
     </listitem>
   </varlistentry>
@@ -487,7 +487,7 @@
     <term><command>--os-service-type OS_SERVICE_TYPE</command></term>
     <listitem>
       <para>
-      Defaults to <code>env[OS_SERVICE_TYPE]</code>
+      Defaults to <code>env[OS_SERVICE_TYPE]</code>.
       </para>
     </listitem>
   </varlistentry>
@@ -495,7 +495,7 @@
     <term><command>--os-endpoint-type OS_ENDPOINT_TYPE</command></term>
     <listitem>
       <para>
-      Defaults to <code>env[OS_ENDPOINT_TYPE]</code>
+      Defaults to <code>env[OS_ENDPOINT_TYPE]</code>.
       </para>
     </listitem>
   </varlistentry>
@@ -845,7 +845,8 @@ List images you can access.
     </section>
     <section xml:id="glanceclient_subcommand_image-show">
         <title>glance image-show command</title>
-        <screen><computeroutput>usage: glance image-show [--human-readable] &lt;IMAGE&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: glance image-show [--human-readable] [--max-column-width &lt;integer&gt;]
+                         &lt;IMAGE&gt;</computeroutput></screen>
         <para>
 Describe a specific image.
         </para>  <variablelist wordsize="10">
@@ -866,6 +867,14 @@ Describe a specific image.
     <listitem>
       <para>
         Print image size in a human-friendly format.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--max-column-width &lt;integer&gt;</command></term>
+    <listitem>
+      <para>
+      The max column width of the printed table.
       </para>
     </listitem>
   </varlistentry>
@@ -1099,7 +1108,7 @@ Remove a shared image from a tenant.
     <term><command>&lt;IMAGE&gt;</command></term>
     <listitem>
       <para>
-        Image from which to remove member
+        Image from which to remove member.
       </para>
     </listitem>
   </varlistentry>
@@ -1107,7 +1116,7 @@ Remove a shared image from a tenant.
     <term><command>&lt;TENANT_ID&gt;</command></term>
     <listitem>
       <para>
-        Tenant to remove as member
+        Tenant to remove as member.
       </para>
     </listitem>
   </varlistentry>
