@@ -171,16 +171,23 @@
         <screen><prompt>#</prompt> <userinput>virsh attach-disk --type cdrom --mode readonly centos-6.4 "" hdc</userinput>
 <prompt>#</prompt> <userinput>virsh destroy centos-6.4</userinput>
 <prompt>#</prompt> <userinput>virsh start centos-6.4</userinput></screen>
-        <note>
-            <para>In theory, you can use the <command>virsh reboot centos-6.4</command> command
-                instead of destroy and start commands. However, in our testing we were unable to
-                reboot successfully using the <command>virsh reboot</command> command.</para>
-        </note>
     </simplesect>
     <simplesect>
         <title>Log in to newly created image</title>
         <para>When you boot for the first time after installation, you might be prompted about
             authentication tools. Select <guilabel>Exit</guilabel>. Then, log in as root.</para>
+    </simplesect>
+    <simplesect>
+        <title>Install the ACPI service</title>
+        <para>To enable the hypervisor to reboot or shutdown an instance, you
+            must install and run the <systemitem
+                class="service">acpid</systemitem> service on the guest
+            system.</para>
+        <para>Run the following commands inside the CentOS guest to install the
+            ACPI service and configure it to start when the system
+            boots:</para>
+        <screen><prompt>#</prompt> <userinput>yum install acpid</userinput>
+<prompt>#</prompt> <userinput>chkconfig acpid on</userinput></screen>
     </simplesect>
     <simplesect>
         <title>Configure to fetch metadata</title>
