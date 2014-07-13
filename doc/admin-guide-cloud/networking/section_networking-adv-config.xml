@@ -9,33 +9,33 @@
             <filename>/etc/neutron</filename>.</para>
     <section xml:id="section_neutron_server">
         <title>OpenStack Networking server with plug-in</title>
-        <para>This web server runs the OpenStack Networking API Web Server. It is responsible for
-            loading a plug-in and passing the API calls to the plug-in for processing. The
-            neutron-server receives one or more configuration files as input. For example:</para>
-        <screen><userinput>neutron-server --config-file &lt;neutron config&gt; --config-file &lt;plugin config&gt;</userinput></screen>
-        <para>The neutron config contains the common neutron configuration parameters. The plug-in
-            configuration file contains the plug-in specific options. The plug-in that is run on the
-            service is loaded through the <parameter>core_plugin</parameter> configuration
-            parameter. In some cases a plug-in might have an agent that performs the actual
-            networking.</para>
-        <para>Most plug-ins require a SQL database. After you install and start the database server,
-            set a password for the root account and delete the anonymous accounts:</para>
+        <para>This web server runs the OpenStack Networking API Web Server. It laods
+            a plug-in and passes the API calls to the plug-in for processing. The
+                <systemitem class="service">neutron-server</systemitem> service receives one or more configuration files
+            as input. For example:</para>
+        <screen><userinput>neutron-server --config-file <replaceable>NEUTRON_CONFIG_FILE</replaceable> --config-file <replaceable>PLUGIN_CONFIG_FILE</replaceable></userinput></screen>
+        <para>The neutron configuration file contains the common neutron configuration options.</para>
+        <para>The plug-in configuration file contains the plug-in specific options.</para>
+        <para>The plug-in that runs on the service is loaded through the
+                <parameter>core_plugin</parameter> configuration option. In some cases, a plug-in
+            might have an agent that performs the actual networking.</para>
+        <para>Most plug-ins require an SQL database. After you install and start the database
+            server, set a password for the root account and delete the anonymous accounts:</para>
         <screen><prompt>$</prompt> <userinput>&gt; mysql -u root</userinput>
 <prompt>mysql&gt;</prompt> <userinput>update mysql.user set password = password('iamroot') where user = 'root';</userinput>
 <prompt>mysql&gt;</prompt> <userinput>delete from mysql.user where user = '';</userinput></screen>
         <para>Create a database and user account specifically for plug-in:</para>
-        <screen><prompt>mysql&gt;</prompt> <userinput>create database &lt;database-name&gt;;</userinput>
-<prompt>mysql&gt;</prompt> <userinput>create user '&lt;user-name&gt;'@'localhost' identified by '&lt;user-name&gt;';</userinput>
-<prompt>mysql&gt;</prompt> <userinput>create user '&lt;user-name&gt;'@'%' identified by '&lt;user-name&gt;';</userinput>
-<prompt>mysql&gt;</prompt> <userinput>grant all on &lt;database-name&gt;.* to '&lt;user-name&gt;'@'%';</userinput></screen>
+        <screen><prompt>mysql&gt;</prompt> <userinput>create database <replaceable>DATABASE_NAME</replaceable></userinput>
+<prompt>mysql&gt;</prompt> <userinput>create user '<replaceable>USER_NAME</replaceable>'@'localhost' identified by '<replaceable>USER_NAME</replaceable>';</userinput>
+<prompt>mysql&gt;</prompt> <userinput>create user '<replaceable>USER_NAME</replaceable>'@'%' identified by '<replaceable>USER_NAME</replaceable>';</userinput>
+<prompt>mysql&gt;</prompt> <userinput>grant all on <replaceable>DATABASE_NAME</replaceable>.* to '<replaceable>USER_NAME</replaceable>'@'%';</userinput></screen>
         <para>After this step completes, you can update the settings in the relevant plug-in
             configuration files. Find the plug-in specific configuration files at
                 <filename>$NEUTRON_CONF_DIR/plugins</filename>.</para>
-        <para>Some plug-ins have a L2 agent that performs the actual networking. That is, the agent
+        <para>Some plug-ins have an L2 agent that performs the actual networking. That is, the agent
             attaches the virtual machine NIC to the OpenStack Networking network. Each node should
-            have an L2 agent running on it. Note that the agent receives the following input
-            parameters:</para>
-        <screen><userinput>neutron-plugin-agent --config-file &lt;neutron config&gt; --config-file &lt;plugin config&gt;</userinput></screen>
+            run an L2 agent. Note that the agent receives the following input parameters:</para>
+        <screen><userinput>neutron-plugin-agent --config-file <replaceable>NEUTRON_CONFIG_FILE</replaceable> --config-file <replaceable>PLUGIN_CONFIG_FILE</replaceable></userinput></screen>
         <para>You must complete these tasks before you can work with the plug-in:</para>
         <orderedlist>
             <listitem>
@@ -45,13 +45,13 @@
                 <para>Ensure that the database connection is correctly set.</para>
             </listitem>
         </orderedlist>
-        <para>The following table contains examples for these settings. Some Linux packages might
-            provide installation utilities that configure these.</para>
+        <para>The following table shows sample values for the configuration options. Some Linux
+            packages might provide installation utilities that configure these values.</para>
         <table rules="all">
             <caption>Settings</caption>
             <thead>
                 <tr>
-                    <th>Parameter</th>
+                    <th>Option</th>
                     <th>Value</th>
                 </tr>
             </thead>
@@ -67,7 +67,7 @@
                 <tr>
                     <td>connection (in the plugin configuration file, section
                             <code>[database]</code>)</td>
-                    <td>mysql://&lt;username&gt;:&lt;password&gt;@localhost/ovs_neutron?charset=utf8</td>
+                    <td>mysql://<replaceable>USERNAME</replaceable>:<replaceable>PASSWORD</replaceable>@localhost/ovs_neutron?charset=utf8</td>
                 </tr>
                 <tr>
                     <td>Plug-in Configuration File</td>
@@ -88,7 +88,7 @@
                 <tr>
                     <td>connection (in the plug-in configuration file, section
                             <code>[database]</code>)</td>
-                    <td>mysql://&lt;username&gt;:&lt;password&gt;@localhost/neutron_linux_bridge?charset=utf8</td>
+                    <td>mysql://<replaceable>USERNAME</replaceable>:<replaceable>PASSWORD</replaceable>@localhost/neutron_linux_bridge?charset=utf8</td>
                 </tr>
                 <tr>
                     <td>Plug-in Configuration File</td>
@@ -103,18 +103,18 @@
     </section>
     <section xml:id="section_adv_cfg_dhcp_agent">
         <title>DHCP agent</title>
-        <para>You can run a DHCP server that allocates IP addresses to virtual machines running on
+        <para>You can run a DHCP server that allocates IP addresses to virtual machines that run on
             the network. When a subnet is created, by default, the subnet has DHCP enabled.</para>
         <para>The node that runs the DHCP agent should run:</para>
-        <screen><userinput>neutron-dhcp-agent --config-file &lt;neutron config&gt; --config-file &lt;dhcp config&gt;</userinput></screen>
-        <para>Currently the DHCP agent uses dnsmasq to perform that static address
-            assignment.</para>
-        <para>A driver must be configured that matches the plug-in running on the service.</para>
+        <screen><userinput>neutron-dhcp-agent --config-file <replaceable>NEUTRON_CONFIG_FILE</replaceable> --config-file <replaceable>DHCP_CONFIG_FILE</replaceable></userinput></screen>
+        <para>Currently the DHCP agent uses <systemitem class="service">dnsmasq</systemitem> to perform that static
+            address assignment.</para>
+        <para>You must configure a driver that matches the plug-in that runs on the service.</para>
         <table rules="all">
             <caption>Settings</caption>
             <thead>
                 <tr>
-                    <th>Parameter</th>
+                    <th>Option</th>
                     <th>Value</th>
                 </tr>
             </thead>
@@ -139,29 +139,27 @@
         </table>
         <section xml:id="adv_cfg_dhcp_agent_namespace">
             <title>Namespace</title>
-            <para>By default the DHCP agent makes use of Linux network namespaces in order to
-                support overlapping IP addresses. Requirements for network namespaces support are
-                described in the <link linkend="section_limitations">Limitations</link>
-                section.</para>
-            <para>If the Linux installation does not support network namespace, you must disable
-                using network namespace in the DHCP agent configuration file. The default value of
+            <para>By default, the DHCP agent uses Linux network namespaces to support overlapping IP
+                addresses. For information about network namespaces support, see the <link
+                    linkend="section_limitations">Limitations</link> section.</para>
+            <para>If the Linux installation does not support network namespaces, you must disable
+                network namespaces in the DHCP agent configuration file. The default value of
                     <option>use_namespaces</option> is <literal>True</literal>.</para>
             <programlisting language="ini">use_namespaces = False</programlisting>
         </section>
     </section>
     <section xml:id="section_adv_cfg_l3_agent">
         <title>L3 agent</title>
-        <para>You can run a L3 agent that enables layer 3 forwarding and floating IP support. The
-            node that runs the L3 agent should run:</para>
-        <screen><userinput>neutron-l3-agent --config-file &lt;neutron config&gt;
---config-file &lt;l3 config&gt;</userinput></screen>
-        <para>A driver must be configured that matches the plug-in running on the service. The
-            driver is used to create the routing interface.</para>
+        <para>You can run an L3 agent that enables layer 3 forwarding and floating IP support.</para>
+        <para>The node that runs the L3 agent should run:</para>
+        <screen><userinput>neutron-l3-agent --config-file <replaceable>NEUTRON_CONFIG_FILE</replaceable> --config-file <replaceable>L3_CONFIG_FILE</replaceable></userinput></screen>
+        <para>You must configure a driver that matches the plug-in that runs on the service. This
+            driver creates the routing interface.</para>
         <table rules="all">
             <caption>Settings</caption>
             <thead>
                 <tr>
-                    <th>Parameter</th>
+                    <th>Option</th>
                     <th>Value</th>
                 </tr>
             </thead>
@@ -202,7 +200,7 @@
                 <programlisting language="ini">http://10.56.51.210:5000/v2.0</programlisting>
             </listitem>
             <listitem>
-                <para>Admin user details:</para>
+                <para>Administrative user details:</para>
                 <programlisting language="ini">admin_tenant_name $SERVICE_TENANT_NAME
 admin_user $Q_ADMIN_USERNAME
 admin_password $SERVICE_PASSWORD</programlisting>
@@ -210,22 +208,24 @@ admin_password $SERVICE_PASSWORD</programlisting>
         </orderedlist>
         <section xml:id="adv_cfg_l3_agent_namespace">
             <title>Namespace</title>
-            <para>By default the L3 agent makes use of Linux network namespaces in order to support
-                overlapping IP addresses. Requirements for network namespaces support are described
-                in the <link linkend="section_limitations">Limitation</link> section.</para>
-            <para>If the Linux installation does not support network namespace, you must disable
-                using network namespace in the L3 agent config file. The default value of
+            <para>By default, the L3 agent uses Linux network namespaces to support overlapping IP
+                addresses.</para>
+            <para>For information about network namespaces support, see the <link
+                    linkend="section_limitations">Limitation</link> section.</para>
+            <para>If the Linux installation does not support network namespaces, you must disable
+                network namespaces in the L3 agent configuration file. The default value of
                     <option>use_namespaces</option> is <literal>True</literal>.</para>
             <programlisting language="ini">use_namespaces = False</programlisting>
-            <para>When <option>use_namespaces</option> is set to <literal>False</literal>, only one
-                router ID can be supported per node. This must be configured via the configuration
-                variable <emphasis>router_id</emphasis>.</para>
+            <para>When you set <option>use_namespaces</option> to <literal>False</literal>, only one
+                router ID is supported per node.</para>
+            <para>Use the <option>router_id</option> configuration option to configure the
+                router:</para>
             <programlisting language="ini"># If use_namespaces is set to False then the agent can only configure one router.
 # This is done by setting the specific router_id.
 router_id = 1064ad16-36b7-4c2f-86f0-daa2bcbd6b2a</programlisting>
-            <para>To configure it, you must run the OpenStack Networking service and create a
-                router, and then set an ID of the router created to <emphasis>router_id</emphasis>
-                in the L3 agent configuration file.</para>
+            <para>To configure it, you must run the OpenStack Networking service, create a router,
+                and set the router ID value to the <option>router_id</option> value in the L3 agent
+                configuration file.</para>
             <screen><prompt>$</prompt> <userinput>neutron router-create myrouter1</userinput>
 <computeroutput>Created a new router:
 +-----------------------+--------------------------------------+
@@ -254,13 +254,14 @@ router_id = 1064ad16-36b7-4c2f-86f0-daa2bcbd6b2a</programlisting>
             <section xml:id="adv_cfg_l3_agent_multi_subnet">
                 <title>Assign multiple subnets to an external network</title>
                 <para>This approach leverages the addition of on-link routes, which enables a router
-                    to host floating IPs from any of the subnets on an external network regardless
-                    of which subnet the primary router IP address comes from. This method does not
-                    require the creation of multiple external networks.</para>
+                    to host floating IPs from any subnet on an external network regardless of which
+                    subnet the primary router IP address comes from. This method does not require
+                    the creation of multiple external networks.</para>
                 <para>To add a subnet to the external network, use the following command
                     template:</para>
-                <screen><prompt>$</prompt> <userinput>neutron subnet-create <replaceable>EXT_NETWORK_NAME</replaceable> <replaceable>CIDR</replaceable></userinput>
-<prompt>$</prompt> <userinput>neutron subnet-create my-ext_network 10.0.0.0/29</userinput> </screen>
+                <screen><prompt>$</prompt> <userinput>neutron subnet-create <replaceable>EXT_NETWORK_NAME</replaceable> <replaceable>CIDR</replaceable></userinput></screen>
+                <para>For example:</para>
+                <screen><prompt>$</prompt> <userinput>neutron subnet-create my-ext_network 10.0.0.0/29</userinput> </screen>
             </section>
             <section xml:id="adv_cfg_l3_agent_multi_floatip">
                 <title>Multiple floating IP pools</title>
@@ -268,31 +269,33 @@ router_id = 1064ad16-36b7-4c2f-86f0-daa2bcbd6b2a</programlisting>
                     OpenStack Networking, a floating IP pool is represented as an external network
                     and a floating IP is allocated from a subnet associated with the external
                     network. Because you can associate each L3 agent with, at most, one external
-                    network, you must invoke multiple L3 agent to define multiple floating IP pools.
-                    The <option>gateway_external_network_id</option> option in the L3 agent
-                    configuration file defines the external network that the L3 agent handles. You
-                    can run multiple L3 agent instances on one host.</para>
-                <para>In addition, when you run multiple L3 agents, make sure that
-                        <option>handle_internal_only_routers</option> is set to
-                        <literal>True</literal> only for one L3 agent in an OpenStack Networking
-                    deployment and set to <literal>False</literal> for all other L3 agents. Because
-                    the default value of this parameter is <literal>True</literal>, you must
-                    configure it carefully.</para>
-                <para>Before starting L3 agents, you must create routers and external networks, then
-                    update the configuration files with UUID of external networks and start L3
+                    network, you must invoke multiple L3 agents to define multiple floating IP
+                    pools. Use the <option>gateway_external_network_id</option> option in the L3
+                    agent configuration file to define the external network that the L3 agent
+                    handles. You can run multiple L3 agent instances on one host.</para>
+                <para>In addition, when you run multiple L3 agents, set the
+                        <option>handle_internal_only_routers</option> option to
+                        <literal>True</literal> for only one L3 agent in an OpenStack Networking
+                    deployment and set this option to <literal>False</literal> for all other L3
+                    agents. Because the default value of this parameter is <literal>True</literal>,
+                    you must configure it carefully.</para>
+                <para>Before starting L3 agents, you must create routers and external networks,
+                    update the configuration files with UUID of external networks, and start L3
                     agents.</para>
                 <para>For the first agent, invoke it with the following
-                        <filename>l3_agent.ini</filename>, where handle_internal_only_routers is
+                        <filename>l3_agent.ini</filename>, where the
+                        <option>handle_internal_only_routers</option> option is set to
                         <literal>True</literal>.</para>
                 <programlisting language="ini">handle_internal_only_routers = True
 gateway_external_network_id = 2118b11c-011e-4fa5-a6f1-2ca34d372c35
 external_network_bridge = br-ex</programlisting>
-                <screen><userinput>python /opt/stack/neutron/bin/neutron-l3-agent
+                <screen><prompt>$</prompt> <userinput>python /opt/stack/neutron/bin/neutron-l3-agent
  --config-file /etc/neutron/neutron.conf
  --config-file=/etc/neutron/l3_agent.ini</userinput></screen>
                 <para>For the second (or later) agent, invoke it with the following
-                        <filename>l3_agent.ini</filename> where handle_internal_only_routers is
-                    False.</para>
+                        <filename>l3_agent.ini</filename> where the
+                        <option>handle_internal_only_routers</option> option is set to
+                        <literal>False</literal>.</para>
                 <programlisting language="ini">handle_internal_only_routers = False
 gateway_external_network_id = e828e54c-850a-4e74-80a8-8b79c6a285d8
 external_network_bridge = br-ex-2</programlisting>
@@ -301,17 +304,16 @@ external_network_bridge = br-ex-2</programlisting>
     </section>
     <section xml:id="section_adv_cfg_l3_metering_agent">
         <title>L3 metering agent</title>
-        <para>You can run a L3 metering agent that enables layer 3 traffic metering. In general, the
-            metering agent should be launched on all nodes that run the L3 agent:</para>
-        <screen><userinput>neutron-metering-agent --config-file &lt;neutron config&gt;
---config-file &lt;l3 metering config&gt;</userinput></screen>
-        <para>A driver must be configured that matches the plug-in running on the service. The
-            driver is used to add metering to the routing interface.</para>
+        <para>You can run an L3 metering agent that enables layer 3 traffic metering. In general,
+            you should launch the metering agent on all nodes that run the L3 agent:</para>
+        <screen><userinput>neutron-metering-agent --config-file <replaceable>NEUTRON_CONFIG_FILE</replaceable> --config-file <replaceable>L3_METERING_CONFIG_FILE</replaceable></userinput></screen>
+        <para>You must configure a driver that matches the plug-in that runs on the service. The
+            driver adds metering to the routing interface.</para>
         <table rules="all">
             <caption>Settings</caption>
             <thead>
                 <tr>
-                    <th>Parameter</th>
+                    <th>Option</th>
                     <th>Value</th>
                 </tr>
             </thead>
@@ -336,12 +338,12 @@ external_network_bridge = br-ex-2</programlisting>
         </table>
         <section xml:id="adv_cfg_l3_metering_agent_namespace">
             <title>Namespace</title>
-            <para>The metering agent and the L3 agent have to have the same configuration regarding
-                to the network namespaces setting.</para>
+            <para>The metering agent and the L3 agent must have the same network namespaces
+                configuration.</para>
             <note>
-                <para>If the Linux installation does not support network namespace, you must disable
-                    using network namespace in the L3 metering config file (The default value of
-                        <option>use_namespaces</option> is <code>True</code>).</para>
+                <para>If the Linux installation does not support network namespaces, you must
+                    disable network namespaces in the L3 metering configuration file.  The default
+                    value of the <option>use_namespaces</option> option is <code>True</code>.</para>
             </note>
             <para><programlisting language="ini">use_namespaces = False</programlisting></para>
         </section>
@@ -353,8 +355,8 @@ external_network_bridge = br-ex-2</programlisting>
         </section>
         <section xml:id="adv_cfg_l3_metering_service_driver">
             <title>L3 metering service driver</title>
-            <para>To enable L3 metering, you must set the following parameter in
-                    <filename>neutron.conf</filename> on the host that runs <systemitem
+            <para>To enable L3 metering, you must set the following option in the
+                    <filename>neutron.conf</filename> file on the host that runs <systemitem
                     class="service">neutron-server</systemitem>:</para>
             <programlisting language="ini">service_plugins = metering</programlisting>
         </section>
@@ -385,30 +387,30 @@ external_network_bridge = br-ex-2</programlisting>
                     namespaces, the following are required:</para>
                 <itemizedlist>
                     <listitem>
-                        <para>Linux kernel 2.6.24 or newer (with CONFIG_NET_NS=y in kernel
-                            configuration) and</para>
+                        <para>Linux kernel 2.6.24 or later (with <literal>CONFIG_NET_NS=y</literal>
+                            in kernel configuration)</para>
                     </listitem>
                     <listitem>
                         <para>iproute2 utilities ('ip' command) version 3.1.0 (aka 20111117) or
-                            newer</para>
+                            later</para>
                     </listitem>
                 </itemizedlist>
-                <para>To check whether your host supports namespaces try running the following as
+                <para>To check whether your host supports namespaces, run these commands as
                     root:</para>
                 <screen><prompt>#</prompt> <userinput>ip netns add test-ns</userinput>
 <prompt>#</prompt> <userinput>ip netns exec test-ns ifconfig</userinput></screen>
-                <para>If the preceding commands do not produce errors, your platform is likely
-                    sufficient to use the dhcp-agent or l3-agent with namespace. In our experience,
-                    Ubuntu 12.04 or later support namespaces as does Fedora 17 and new, but some
-                    older RHEL platforms do not by default. It may be possible to upgrade the
-                    iproute2 package on a platform that does not support namespaces by
-                    default.</para>
-                <para>If you must disable namespaces, make sure the
-                        <filename>neutron.conf</filename> used by neutron-server has the following
+                <para>If these commands succeed, your platform is likely sufficient to use the
+                    dhcp-agent or l3-agent with namespaces. In our experience, Ubuntu 12.04 or later
+                    support namespaces as does Fedora 17 and later, but some earlier RHEL platforms
+                    do not by default. It might be possible to upgrade the <systemitem
+                        class="service">iproute2</systemitem> package on a platform that does not
+                    support namespaces by default.</para>
+                <para>If you must disable namespaces, make sure that the
+                        <filename>neutron.conf</filename> file that is used by <systemitem class="service">neutron-server</systemitem> has the following
                     setting:</para>
                 <programlisting>allow_overlapping_ips=False</programlisting>
                 <para>Also, ensure that the <filename>dhcp_agent.ini</filename> and
-                        l<filename>3_agent.ini</filename> have the following setting:</para>
+                        <filename>l3_agent.ini</filename> files have the following setting:</para>
                 <programlisting>use_namespaces=False</programlisting>
                 <note>
                     <para>If the host does not support namespaces, the <systemitem class="service"
