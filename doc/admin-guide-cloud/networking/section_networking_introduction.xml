@@ -775,6 +775,9 @@ local_ip=&lt;data-net-IP-address-of-node&gt;</programlisting>
                                 <filename>/etc/neutron/dhcp_agent.ini</filename>
                             file:</para>
                         <programlisting language="ini">dnsmasq_config_file=/etc/neutron/dnsmasq/dnsmasq-neutron.conf</programlisting>
+                        <para>Restart the DHCP service to apply the
+                            settings:</para>
+                        <screen><prompt>#</prompt> <userinput>service neutron-dhcp-agent restart</userinput></screen>
                     </step>
                     <step>
                         <para>To lower the MTU size on instances and
@@ -785,8 +788,9 @@ local_ip=&lt;data-net-IP-address-of-node&gt;</programlisting>
                         <programlisting language="ini">dhcp-option-force=26,1400</programlisting>
                     </step>
                     <step>
-                        <para>Restart the Networking service to apply
-                            the settings:</para>
+                        <para>Restart the <systemitem
+                                class="service">neutron-server</systemitem>
+                            service to apply the settings:</para>
                         <screen><prompt>#</prompt> <userinput>service neutron-server restart</userinput></screen>
                     </step>
                 </procedure>
@@ -982,33 +986,36 @@ nsx_controllers=10.127.0.100,10.127.0.200:8888</programlisting>
                                 plug-in and you must add a
                                    <code>vcns</code> section:</para>
                             <programlisting language="ini">[DEFAULT]
-    nsx_password = <replaceable>admin</replaceable>
-    nsx_user = <replaceable>admin</replaceable>
-    nsx_controllers = <replaceable>10.37.1.137:443</replaceable>
-    default_l3_gw_service_uuid = <replaceable>aae63e9b-2e4e-4efe-81a1-92cf32e308bf</replaceable>
-    default_tz_uuid = <replaceable>2702f27a-869a-49d1-8781-09331a0f6b9e</replaceable>
+nsx_password = <replaceable>admin</replaceable>
+nsx_user = <replaceable>admin</replaceable>
+nsx_controllers = <replaceable>10.37.1.137:443</replaceable>
+default_l3_gw_service_uuid = <replaceable>aae63e9b-2e4e-4efe-81a1-92cf32e308bf</replaceable>
+default_tz_uuid = <replaceable>2702f27a-869a-49d1-8781-09331a0f6b9e</replaceable>
 
-    [vcns]
+[vcns]
+# VSM management URL
+manager_uri = <replaceable>https://10.24.106.219</replaceable>
 
-    # VSM management URL
-    manager_uri = <replaceable>https://10.24.106.219</replaceable>
+# VSM admin user name
+user = <replaceable>admin</replaceable>
 
-    # VSM admin user name
-    user = <replaceable>admin</replaceable>
+# VSM admin password
+password = <replaceable>default</replaceable>
 
-    # VSM admin password
-    password = <replaceable>default</replaceable>
+# UUID of a logical switch on NSX which has physical network connectivity (currently using bridge transport type)
+external_network = <replaceable>f2c023cf-76e2-4625-869b-d0dabcfcc638</replaceable>
 
-    # UUID of a logical switch on NSX which has physical network connectivity (currently using bridge transport type)
-    external_network = <replaceable>f2c023cf-76e2-4625-869b-d0dabcfcc638</replaceable>
+# ID of deployment_container on VSM. Optional, if not specified, a default global deployment container is used
+# deployment_container_id =
 
-    # ID of deployment_container on VSM. Optional, if not specified, a default global deployment container is used
-
-    # deployment_container_id =
-
-    # task_status_check_interval configures status check interval for vCNS asynchronous API. Default is 2000 msec.
-
-    # task_status_check_interval =</programlisting>
+# task_status_check_interval configures status check interval for vCNS asynchronous API. Default is 2000 msec.
+# task_status_check_interval =</programlisting>
+                        </step>
+                        <step>
+                            <para>Restart the <systemitem
+                                    class="service">neutron-server</systemitem>
+                                service to apply the settings:</para>
+                            <screen><prompt>#</prompt> <userinput>service neutron-server restart</userinput></screen>
                         </step>
                     </procedure>
                 </section>
@@ -1045,7 +1052,7 @@ password = "PLUMgrid-director-admin-password"</programlisting>
                     </step>
                     <step>
                         <para>Restart the <systemitem class="service"
-                                >neutron-server</systemitem> to apply
+                                >neutron-server</systemitem> service to apply
                             the settings:</para>
                         <screen><prompt>#</prompt> <userinput>service neutron-server restart</userinput></screen>
                     </step>
