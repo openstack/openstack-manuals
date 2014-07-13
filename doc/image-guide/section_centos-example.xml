@@ -1,202 +1,157 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<section xmlns="http://docbook.org/ns/docbook"
-  xmlns:xi="http://www.w3.org/2001/XInclude"
-  xmlns:xlink="http://www.w3.org/1999/xlink"
-  version="5.0"
-  xml:id="centos-image">
+<section xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0" xml:id="centos-image">
     <title>Example: CentOS image</title>
-    <para>We'll run through an example of installing a CentOS image.
-        This will focus mainly on CentOS 6.4. Because the CentOS
-        installation process may change across versions, if you are
-        using a different version of CentOS the installer steps may
-        differ.</para>
-    <simplesect>
+    <para>This example shows you how to install a CentOS image and focuses mainly on CentOS 6.4.
+        Because the CentOS installation process might differ across versions, the installation steps
+        might differ if you use a different version of CentOS.</para>
+    <procedure>
         <title>Download a CentOS install ISO</title>
-        <para>
-            <orderedlist>
-                <listitem>
-                    <para>Navigate to the <link
-                            xlink:href="http://www.centos.org/modules/tinycontent/index.php?id=30"
-                            >CentOS mirrors</link> page.</para>
-                </listitem>
-                <listitem>
-                    <para>Click one of the <literal>HTTP</literal>
-                        links in the right-hand column next to one of
-                        the mirrors.</para>
-                </listitem>
-                <listitem>
-                    <para>Click the folder link of the CentOS version
-                        you want to use. For example,
-                            <literal>6.4/</literal>.</para>
-                </listitem>
-                <listitem>
-                    <para>Click the <literal>isos/</literal> folder
-                        link.</para>
-                </listitem>
-                <listitem>
-                    <para>Click the <literal>x86_64/</literal> folder
-                        link for 64-bit images.</para>
-                </listitem>
-                <listitem>
-                    <para>Click the ISO image you want to download.
-                        The netinstall ISO. For example,
-                            <filename>CentOS-6.4-x86_64-netinstall.iso</filename>
-                        is a good choice since it's a smaller image
-                        that will download missing packages from the
-                        Internet during the install process.</para>
-                </listitem>
-            </orderedlist>
-        </para>
-    </simplesect>
+        <step>
+            <para>Navigate to the <link
+                    xlink:href="http://www.centos.org/modules/tinycontent/index.php?id=30">CentOS
+                    mirrors</link> page.</para>
+        </step>
+        <step>
+            <para>Click one of the <literal>HTTP</literal> links in the right-hand column next to
+                one of the mirrors.</para>
+        </step>
+        <step>
+            <para>Click the folder link of the CentOS version that you want to use. For example,
+                    <literal>6.4/</literal>.</para>
+        </step>
+        <step>
+            <para>Click the <literal>isos/</literal> folder link.</para>
+        </step>
+        <step>
+            <para>Click the <literal>x86_64/</literal> folder link for 64-bit images.</para>
+        </step>
+        <step>
+            <para>Click the netinstall ISO image that you want to download. For example,
+                    <filename>CentOS-6.4-x86_64-netinstall.iso</filename> is a good choice because
+                it is a smaller image that downloads missing packages from the Internet during
+                installation.</para>
+        </step>
+    </procedure>
     <simplesect>
-        <title>Start the install process</title>
-        <para>Start the installation process using either
-                <command>virt-manager</command> or
-                <command>virt-install</command> as described in the
-            previous section. If using
-            <command>virt-install</command>, don't forget to connect
-            your VNC client to the virtual machine.</para>
-        <para>We will assume the name of your virtual machine image is
-                <literal>centos-6.4</literal>, which we need to know
-            when using <command>virsh</command> commands to manipulate
-            the state of the image.</para>
-        <para>If you're using virt-manager, the commands should look
-            something like
-            this:<screen><prompt>#</prompt> <userinput>qemu-img create -f qcow2 /tmp/centos-6.4.qcow2 10G</userinput>
+        <title>Start the installation process</title>
+        <para>Start the installation process using either <command>virt-manager</command> or
+                <command>virt-install</command> as described in the previous section. If you use
+                <command>virt-install</command>, do not forget to connect your VNC client to the
+            virtual machine.</para>
+        <para>Assume that the name of your virtual machine image is <literal>centos-6.4</literal>;
+            you need this name when you use <command>virsh</command> commands to manipulate the
+            state of the image.</para>
+        <para>If you use <command>virt-manager</command>, the commands should look something like
+            this:</para>
+        <screen><prompt>#</prompt> <userinput>qemu-img create -f qcow2 /tmp/centos-6.4.qcow2 10G</userinput>
 <prompt>#</prompt> <userinput>virt-install --virt-type kvm --name centos-6.4 --ram 1024 \
 --cdrom=/data/isos/CentOS-6.4-x86_64-netinstall.iso \
 --disk /tmp/centos-6.4.qcow2,format=qcow2 \
 --network network=default \
 --graphics vnc,listen=0.0.0.0 --noautoconsole \
---os-type=linux --os-variant=rhel6</userinput></screen></para>
+--os-type=linux --os-variant=rhel6</userinput></screen>
     </simplesect>
     <simplesect>
-        <title>Step through the install</title>
-        <para>At the initial Installer boot menu, choose the "Install
-            or upgrade an existing system" option. Step through the
-            install prompts, the defaults should be fine.</para>
+        <title>Step through the installation</title>
+        <para>At the initial Installer boot menu, choose the <guilabel>Install or upgrade an
+                existing system</guilabel> option. Step through the installation prompts. Accept the
+            defaults.</para>
         <mediaobject>
             <imageobject role="fo">
-                <imagedata fileref="figures/centos-install.png"
-                    format="PNG" scale="60"/>
+                <imagedata fileref="figures/centos-install.png" format="PNG" scale="60"/>
             </imageobject>
             <imageobject role="html">
-                <imagedata fileref="figures/centos-install.png"
-                    format="PNG"/>
+                <imagedata fileref="figures/centos-install.png" format="PNG"/>
             </imageobject>
         </mediaobject>
     </simplesect>
     <simplesect>
         <title>Configure TCP/IP</title>
-        <para>The default TCP/IP settings are fine. In particular,
-            ensure that Enable IPv4 support is enabled with DHCP,
-            which is the default.</para>
+        <para>The default TCP/IP settings are fine. In particular, ensure that Enable IPv4 support
+            is enabled with DHCP, which is the default.</para>
         <mediaobject>
             <imageobject>
-                <imagedata fileref="figures/centos-tcpip.png"
-                    format="PNG" contentwidth="6in"/>
+                <imagedata fileref="figures/centos-tcpip.png" format="PNG" contentwidth="6in"/>
             </imageobject>
         </mediaobject>
-
     </simplesect>
     <simplesect>
         <title>Point the installer to a CentOS web server</title>
         <para>Choose URL as the installation method.</para>
         <mediaobject>
             <imageobject>
-                <imagedata fileref="figures/install-method.png"
-                    format="PNG" contentwidth="6in"/>
+                <imagedata fileref="figures/install-method.png" format="PNG" contentwidth="6in"/>
             </imageobject>
         </mediaobject>
-        <para>Depending on the version of CentOS, the net installer
-            requires that the user specify either a URL, or the web
-            site and a CentOS directory that corresponds to one of the
-            CentOS mirrors. If the installer asks for a single URL, an
-            example of a valid URL would be:
-                <literal>http://mirror.umd/centos/6/os/x86_64</literal>.<note>
-                <para>Consider using other mirrors as an alternative
-                    to mirror.umd.edu.</para>
-            </note></para>
+        <para>Depending on the version of CentOS, the net installer requires that the user specify
+            either a URL or the web site and a CentOS directory that corresponds to one of the
+            CentOS mirrors. If the installer asks for a single URL, a valid URL might be
+                <literal>http://mirror.umd/centos/6/os/x86_64</literal>.</para>
+        <note>
+            <para>Consider using other mirrors as an alternative to
+                    <literal>mirror.umd.edu</literal>.</para>
+        </note>
         <mediaobject>
             <imageobject>
-                <imagedata fileref="figures/url-setup.png"
-                    format="PNG" contentwidth="6in"/>
+                <imagedata fileref="figures/url-setup.png" format="PNG" contentwidth="6in"/>
             </imageobject>
         </mediaobject>
-
-        <para>If the installer asks for web site name and CentOS
-            directory separately, an example would be:</para>
-        <para>
-            <itemizedlist>
-                <listitem>
-                    <para>Web site name:
-                            <literal>mirror.umd.edu</literal>
-                    </para>
-                </listitem>
-                <listitem>
-                    <para>CentOS directory:
-                            <literal>centos/6/os/x86_64</literal></para>
-                </listitem>
-            </itemizedlist>
-        </para>
-        <para>See <link
-                xlink:href="http://www.centos.org/modules/tinycontent/index.php?id=30"
-                >CentOS mirror page</link> to get a full list of
-            mirrors, click on the "HTTP" link of a mirror to retrieve
-            the web site name of a mirror.</para>
+        <para>If the installer asks for web site name and CentOS directory separately, you might
+            enter:</para>
+        <itemizedlist>
+            <listitem>
+                <para>Web site name: <literal>mirror.umd.edu</literal></para>
+            </listitem>
+            <listitem>
+                <para>CentOS directory: <literal>centos/6/os/x86_64</literal></para>
+            </listitem>
+        </itemizedlist>
+        <para>See <link xlink:href="http://www.centos.org/modules/tinycontent/index.php?id=30"
+                >CentOS mirror page</link> to get a full list of mirrors, click on the "HTTP" link
+            of a mirror to retrieve the web site name of a mirror.</para>
     </simplesect>
     <simplesect>
         <title>Storage devices</title>
-        <para>If asked about what type of devices your installation
-            involves, choose "Basic Storage Devices".</para>
+        <para>If prompted about which type of devices your installation uses, choose <guilabel>Basic
+                Storage Devices</guilabel>.</para>
     </simplesect>
     <simplesect>
         <title>Hostname</title>
-        <para>The installer may ask you to choose a hostname. The
-            default (<literal>localhost.localdomain</literal>) is
-            fine. We will install the cloud-init package later, which
-            will set the hostname on boot when a new instance is
-            provisioned using this image.</para>
+        <para>The installer may ask you to choose a host name. The default
+                (<literal>localhost.localdomain</literal>) is fine. You install the <systemitem
+                class="service">cloud-init</systemitem> package later, which sets the host name on
+            boot when a new instance is provisioned using this image.</para>
     </simplesect>
     <simplesect>
         <title>Partition the disks</title>
-        <para>There are different options for partitioning the disks.
-            The default installation will use LVM partitions, and will
-            create three partitions (<filename>/boot</filename>,
-                <filename>/</filename>, swap), and this will work
-            fine. Alternatively, you may wish to create a single ext4
-            partition, mounted to "<literal>/</literal>", should also
-            work fine.</para>
-        <para>If unsure, we recommend you use the installer's default
-            partition scheme, since there is no clear advantage to one
-            scheme or another.</para>
+        <para>There are different options for partitioning the disks. The default installation uses
+            LVM partitions, and creates three partitions (<filename>/boot</filename>,
+                <filename>/</filename>, swap), which works fine. Alternatively, you might want to
+            create a single ext4 partition that is mounted to "<literal>/</literal>", which also
+            works fine.</para>
+        <para>If unsure, use the default partition scheme for the installer because no scheme is
+            better than another.</para>
     </simplesect>
     <simplesect>
-        <title>Step through the install</title>
-        <para>Step through the install, using the default options. The
-            simplest thing to do is to choose the "Basic Server"
-            install (may be called "Server" install on older versions
-            of CentOS), which will install an SSH server.</para>
+        <title>Step through the installation</title>
+        <para>Step through the installation, using the default options. The simplest thing to do is
+            to choose the "Basic Server" install (may be called "Server" install on older versions
+            of CentOS), which installs an SSH server.</para>
     </simplesect>
     <simplesect>
         <title>Detach the CD-ROM and reboot</title>
-        <para>Once the install completes, you will see the screen
-            "Congratulations, your CentOS installation is
-            complete".</para>
+        <para>After the install completes, the <guilabel>Congratulations, your CentOS installation
+                is complete</guilabel> screen appears.</para>
         <mediaobject>
             <imageobject>
-                <imagedata fileref="figures/centos-complete.png"
-                    format="PNG" contentwidth="6in"/>
+                <imagedata fileref="figures/centos-complete.png" format="PNG" contentwidth="6in"/>
             </imageobject>
         </mediaobject>
-
-        <para>To eject a disk using <command>virsh</command>, libvirt
-            requires that you attach an empty disk at the same target
-            that the CDROM was previously attached, which should be
-                <literal>hdc</literal>. You can confirm the
-            appropriate target using the <command>dom dumpxml
-                    <replaceable>vm-image</replaceable></command>
-            command.</para>
+        <para>To eject a disk by using the <command>virsh</command> command, libvirt requires that
+            you attach an empty disk at the same target that the CDROM was previously attached,
+            which should be <literal>hdc</literal>. You can confirm the appropriate target using the
+                <command>dom dumpxml <replaceable>vm-image</replaceable></command> command.</para>
         <screen><prompt>#</prompt> <userinput>virsh dumpxml centos-6.4</userinput>
 <computeroutput>&lt;domain type='kvm'>
   &lt;name>centos-6.4&lt;/name>
@@ -210,80 +165,64 @@
 ...
 &lt;/domain>
 </computeroutput></screen>
-        <para>Run the following commands from the host to eject the
-            disk and reboot using virsh, as root. If you are using
-            virt-manager, the commands below will work, but you can
-            also use the GUI to detach and reboot it by manually
-            stopping and
-            starting.<screen><prompt>#</prompt> <userinput>virsh attach-disk --type cdrom --mode readonly centos-6.4 "" hdc</userinput>
+        <para>Run the following commands from the host to eject the disk and reboot using virsh, as
+            root. If you are using virt-manager, the commands below will work, but you can also use
+            the GUI to detach and reboot it by manually stopping and starting.</para>
+        <screen><prompt>#</prompt> <userinput>virsh attach-disk --type cdrom --mode readonly centos-6.4 "" hdc</userinput>
 <prompt>#</prompt> <userinput>virsh destroy centos-6.4</userinput>
-<prompt>#</prompt> <userinput>virsh start centos-6.4</userinput></screen></para>
+<prompt>#</prompt> <userinput>virsh start centos-6.4</userinput></screen>
         <note>
-            <para>In theory, the <command>virsh reboot
-                    centos-6.4</command> command can be used instead
-                of using destroy and start commands. However, in our
-                testing we were unable to reboot successfully using
-                the <command>virsh reboot</command> command.</para>
+            <para>In theory, you can use the <command>virsh reboot centos-6.4</command> command
+                instead of destroy and start commands. However, in our testing we were unable to
+                reboot successfully using the <command>virsh reboot</command> command.</para>
         </note>
-
     </simplesect>
     <simplesect>
         <title>Log in to newly created image</title>
-        <para>When you boot for the first time after install, it may ask
-            you about authentication tools, you can just choose
-            "Exit". Then, log in as root using the root password you
-            specified.</para>
+        <para>When you boot for the first time after installation, you might be prompted about
+            authentication tools. Select <guilabel>Exit</guilabel>. Then, log in as root.</para>
     </simplesect>
     <simplesect>
         <title>Configure to fetch metadata</title>
-        <para>An instance must perform several steps on start up by
-            interacting with the metadata service. For example,
-            retrieve ssh public key and execute user data script.
-            There are several ways to implement this functionality, including:<itemizedlist>
-                <listitem>
-                    <para>Install a cloud-init RPM, which is a port of
-                        the Ubuntu <link
-                            xlink:href="https://launchpad.net/cloud-init"
-                            >cloud-init</link> package. This is the
-                        recommended approach.</para>
-                </listitem>
-                <listitem>
-                    <para>Modify <filename>/etc/rc.local</filename> to
-                        fetch desired information from the metadata
-                        service, as described below.</para>
-                </listitem>
-            </itemizedlist></para>
+        <para>An instance must interact with the metadata service to perform several tasks on start
+            up. For example, the instance must get the ssh public key and run the user data script.
+            To ensure that the instance performs these tasks, use one of these methods:</para>
+        <itemizedlist>
+            <listitem>
+                <para>Install a <systemitem class="service">cloud-init</systemitem> RPM, which is a
+                    port of the Ubuntu <link xlink:href="https://launchpad.net/cloud-init"
+                        >cloud-init</link> package. This is the recommended approach.</para>
+            </listitem>
+            <listitem>
+                <para>Modify <filename>/etc/rc.local</filename> to fetch desired information from
+                    the metadata service, as described in the next section.</para>
+            </listitem>
+        </itemizedlist>
     </simplesect>
     <simplesect>
         <title>Use cloud-init to fetch the public key</title>
-        <para>The cloud-init package will automatically fetch the
-            public key from the metadata server and place the key in
-            an account. You can install cloud-init inside the CentOS
-            guest by adding the EPEL
-            repo:<screen><prompt>#</prompt> <userinput>rpm -Uvh http://download.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm</userinput>
-<prompt>#</prompt> <userinput>yum install cloud-init</userinput></screen></para>
-        <para>The account varies by distribution. On Ubuntu-based
-            virtual machines, the account is called "ubuntu". On
-            Fedora-based virtual machines, the account is called
-            "ec2-user".</para>
-        <para>You can change the name of the account used by
-            cloud-init by editing the
-                <filename>/etc/cloud/cloud.cfg</filename> file and
-            adding a line with a different user. For example, to
-            configure cloud-init to put the key in an account named
-                <literal>admin</literal>, edit the configuration file
-            so it has the line:</para>
+        <para>The <systemitem class="service">cloud-init</systemitem> package automatically fetches
+            the public key from the metadata server and places the key in an account. You can
+            install <systemitem class="service">cloud-init</systemitem> inside the CentOS guest by
+            adding the EPEL repo:</para>
+        <screen><prompt>#</prompt> <userinput>rpm -Uvh http://download.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm</userinput>
+<prompt>#</prompt> <userinput>yum install cloud-init</userinput></screen>
+        <para>The account varies by distribution. On Ubuntu-based virtual machines, the account is
+            called <literal>ubuntu</literal>. On Fedora-based virtual machines, the account is
+            called <literal>ec2-user</literal>.</para>
+        <para>You can change the name of the account used by <systemitem class="service"
+                >cloud-init</systemitem> by editing the <filename>/etc/cloud/cloud.cfg</filename>
+            file and adding a line with a different user. For example, to configure <systemitem
+                class="service">cloud-init</systemitem> to put the key in an account named
+                <literal>admin</literal>, add this line to the configuration file:</para>
         <programlisting>user: admin</programlisting>
     </simplesect>
     <simplesect>
-        <title>Write a script to fetch the public key (if no
-            cloud-init)</title>
-        <para>If you are not able to install the cloud-init package in
-            your image, to fetch the ssh public key and add it to the
-            root account, edit the <filename>/etc/rc.local</filename>
-            file and add the following lines before the line
-                “<literal>touch
-            /var/lock/subsys/local</literal>”</para>
+        <title>Write a script to fetch the public key (if no cloud-init)</title>
+        <para>If you are not able to install the <systemitem class="service">cloud-init</systemitem>
+            package in your image, to fetch the ssh public key and add it to the root account, edit
+            the <filename>/etc/rc.local</filename> file and add the following lines before the line
+                <literal>touch /var/lock/subsys/local</literal>:</para>
         <programlisting language="bash">if [ ! -d /root/.ssh ]; then
   mkdir -p /root/.ssh
   chmod 700 /root/.ssh
@@ -308,79 +247,69 @@ while [ ! -f /root/.ssh/authorized_keys ]; do
     echo "*****************"
 done</programlisting>
         <note>
-            <para>Some VNC clients replace : (colon) with ;
-                (semicolon) and _ (underscore) with - (hyphen). Make
-                sure it's http: not http; and authorized_keys not
-                authorized-keys.</para>
+            <para>Some VNC clients replace the colon (<literal>:</literal>) with a semicolon
+                    (<literal>;</literal>) and the underscore (<literal>_</literal>) with a hyphen
+                    (<literal>-</literal>). Make sure to specify <literal>http:</literal> and not
+                    <literal>http;</literal>. Make sure to specify
+                    <literal>authorized_keys</literal> and not
+                <literal>authorized-keys</literal>.</para>
         </note>
         <note>
-            <para>The above script only retrieves the ssh public key
-                from the metadata server. It does not retrieve
-                    <emphasis role="italic">user data</emphasis>,
-                which is optional data that can be passed by the user
-                when requesting a new instance. User data is often
-                used for running a custom script when an instance
-                comes up.</para>
-            <para>As the OpenStack metadata service is compatible with
-                version 2009-04-04 of the Amazon EC2 metadata service,
-                consult the Amazon EC2 documentation on <link
+            <para>The previous script only gets the ssh public key from the metadata server. It does
+                not get user data, which is optional data that can be passed by the user when
+                requesting a new instance. User data is often used to run a custom script when an
+                instance boots.</para>
+            <para>As the OpenStack metadata service is compatible with version 2009-04-04 of the
+                Amazon EC2 metadata service, consult the Amazon EC2 documentation on <link
                     xlink:href="http://docs.amazonwebservices.com/AWSEC2/2009-04-04/UserGuide/AESDG-chapter-instancedata.html"
-                    >Using Instance Metadata</link> for details on how
-                to retrieve user data.</para>
+                    >Using Instance Metadata</link> for details on how to get user data.</para>
         </note>
     </simplesect>
     <simplesect>
         <title>Disable the zeroconf route</title>
-        <para>In order for the instance to access the metadata service, disable
-            the default zeroconf route:</para>
+        <para>For the instance to access the metadata service, you must disable the default zeroconf
+            route:</para>
         <screen><prompt>#</prompt> <userinput>echo "NOZEROCONF=yes" &gt;&gt; /etc/sysconfig/network</userinput></screen>
     </simplesect>
     <simplesect>
         <title>Configure console</title>
-        <para>In order for <command>nova console-log</command> to work
-            properly on CentOS 6.x, guests you may need to add the
-            following lines to
-                <filename>/boot/grub/menu.lst</filename><programlisting>serial --unit=0 --speed=115200
+        <para>For the <command>nova console-log</command> command to work properly on CentOS
+                6.<replaceable>x</replaceable>, you might need to add the following lines to the
+                <filename>/boot/grub/menu.lst</filename> file:</para>
+        <programlisting>serial --unit=0 --speed=115200
 terminal --timeout=10 console serial
 # Edit the kernel line to add the console entries
-kernel <replaceable>...</replaceable> console=tty0 console=ttyS0,115200n8</programlisting></para>
+kernel <replaceable>...</replaceable> console=tty0 console=ttyS0,115200n8</programlisting>
     </simplesect>
     <simplesect>
         <title>Shut down the instance</title>
-        <para>From inside the instance, as
-            root:<screen><prompt>#</prompt> <userinput>/sbin/shutdown -h now</userinput></screen></para>
+        <para>From inside the instance, as root:</para>
+        <screen><prompt>#</prompt> <userinput>/sbin/shutdown -h now</userinput></screen>
     </simplesect>
     <simplesect>
         <title>Clean up (remove MAC address details)</title>
-        <para>The operating system records the MAC address of the
-            virtual ethernet card in locations such as
-                <filename>/etc/sysconfig/network-scripts/ifcfg-eth0</filename>
-            and
-                <filename>/etc/udev/rules.d/70-persistent-net.rules</filename>
-            during the instance process. However, each time the image
-            boots up, the virtual ethernet card will have a different
-            MAC address, so this information must be deleted from the
-            configuration file.</para>
-        <para>There is a utility called
-                <command>virt-sysprep</command>, that performs various
-            cleanup tasks such as removing the MAC address references.
-            It will clean up a virtual machine image in
-            place:<screen><prompt>#</prompt> <userinput>virt-sysprep -d centos-6.4</userinput></screen></para>
+        <para>The operating system records the MAC address of the virtual ethernet card in locations
+            such as <filename>/etc/sysconfig/network-scripts/ifcfg-eth0</filename> and
+                <filename>/etc/udev/rules.d/70-persistent-net.rules</filename> during the instance
+            process. However, each time the image boots up, the virtual ethernet card will have a
+            different MAC address, so this information must be deleted from the configuration
+            file.</para>
+        <para>There is a utility called <command>virt-sysprep</command>, that performs various
+            cleanup tasks such as removing the MAC address references. It will clean up a virtual
+            machine image in place:</para>
+        <screen><prompt>#</prompt> <userinput>virt-sysprep -d centos-6.4</userinput></screen>
     </simplesect>
     <simplesect>
         <title>Undefine the libvirt domain</title>
-        <para>Now that the image is ready to be uploaded to the Image
-            Service, you no longer need to have this virtual machine
-            image managed by libvirt. Use the <command>virsh undefine
-                    <replaceable>vm-image</replaceable></command>
-            command to inform
-            libvirt.<screen><prompt>#</prompt> <userinput>virsh undefine centos-6.4</userinput></screen></para>
+        <para>Now that you can upload the image to the Image Service, you no longer need to have
+            this virtual machine image managed by libvirt. Use the <command>virsh undefine
+                    <replaceable>vm-image</replaceable></command> command to inform libvirt:</para>
+        <screen><prompt>#</prompt> <userinput>virsh undefine centos-6.4</userinput></screen>
     </simplesect>
     <simplesect>
         <title>Image is complete</title>
-        <para>The underlying image file you created with
-                <command>qemu-img create</command>. For example,
-                <filename>/tmp/centos-6.4.qcow2</filename> is now
-            ready for uploading to the OpenStack Image Service.</para>
+        <para>The underlying image file that you created with <command>qemu-img create</command> is
+            ready to be uploaded. For example, you can upload the
+                <filename>/tmp/centos-6.4.qcow2</filename> image to the Image Service.</para>
     </simplesect>
 </section>
