@@ -1079,21 +1079,21 @@ password = "PLUMgrid-director-admin-password"</programlisting>
                         <para>Edit the
                                 <filename>/etc/neutron/plugins/ryu/ryu.ini</filename>
                             file and update these options in the
-                                <systemitem>[ovs]</systemitem> section
+                                <literal>[ovs]</literal> section
                             for the
-                                <systemitem>ryu-neutron-agent</systemitem>:</para>
+                                <systemitem class="service">ryu-neutron-agent</systemitem>:</para>
                         <itemizedlist>
                             <listitem>
-                                <para><systemitem>openflow_rest_api</systemitem>.
+                                <para><option>openflow_rest_api</option>.
                                    Defines where Ryu is listening for
                                    REST API. Substitute
-                                   <systemitem>ip-address</systemitem>
+                                   <option>ip-address</option>
                                    and
-                                   <systemitem>port-no</systemitem>
+                                   <option>port-no</option>
                                    based on your Ryu setup.</para>
                             </listitem>
                             <listitem>
-                                <para><literal>ovsdb_interface</literal>.
+                                <para><option>ovsdb_interface</option>.
                                    Enables Ryu to access the
                                    <systemitem>ovsdb-server</systemitem>.
                                    Substitute <literal>eth0</literal>
@@ -1102,14 +1102,14 @@ password = "PLUMgrid-director-admin-password"</programlisting>
                                    If you want to change this value
                                    irrespective of the interface name,
                                    you can specify
-                                   <systemitem>ovsdb_ip</systemitem>.
+                                   <option>ovsdb_ip</option>.
                                    If you use a non-default port for
                                    <systemitem>ovsdb-server</systemitem>,
                                    you can specify
-                                   <systemitem>ovsdb_port</systemitem>.</para>
+                                   <option>ovsdb_port</option>.</para>
                             </listitem>
                             <listitem>
-                                <para><systemitem>tunnel_interface</systemitem>.
+                                <para><option>tunnel_interface</option>.
                                    Defines which IP address is used
                                    for tunneling. If you do not use
                                    tunneling, this value is ignored.
@@ -1145,10 +1145,10 @@ password = "PLUMgrid-director-admin-password"</programlisting>
             packets. This includes any node that runs <systemitem
                 class="service">nova-compute</systemitem> and nodes
             that run dedicated OpenStack Networking service agents
-            such as <systemitem>neutron-dhcp-agent</systemitem>,
-                <systemitem class="service">neutron-l3-agent</systemitem>,
-                <systemitem>neutron-metering-agent</systemitem> or
-                <systemitem>neutron-lbaas-agent</systemitem>.</para>
+            such as <systemitem class="service">neutron-dhcp-agent</systemitem>,
+            <systemitem class="service">neutron-l3-agent</systemitem>,
+            <systemitem class="service">neutron-metering-agent</systemitem> or
+            <systemitem class="service">neutron-lbaas-agent</systemitem>.</para>
         <para>A data-forwarding node typically has a network interface
             with an IP address on the management network and another
             interface on the data network.</para>
@@ -1170,7 +1170,7 @@ password = "PLUMgrid-director-admin-password"</programlisting>
                             mechanism driver.</para>
                     </note>If you use the Open vSwitch plug-in, you
                     must install Open vSwitch and the
-                        <systemitem>neutron-plugin-openvswitch-agent</systemitem>
+                    <systemitem class="service">neutron-plugin-openvswitch-agent</systemitem>
                     agent on each data-forwarding node:</para>
                 <warning>
                     <para>Do not install the
@@ -1189,7 +1189,7 @@ password = "PLUMgrid-director-admin-password"</programlisting>
                     </step>
                     <step>
                         <para>On each node that runs the
-                                <systemitem>neutron-plugin-openvswitch-agent</systemitem>,
+                            <systemitem class="service">neutron-plugin-openvswitch-agent</systemitem>,
                             complete these steps:</para>
                         <itemizedlist>
                             <listitem>
@@ -1205,7 +1205,7 @@ password = "PLUMgrid-director-admin-password"</programlisting>
                                    address that is configured on the
                                    data network for the node by using
                                    the
-                                   <systemitem>local_ip</systemitem>
+                                   <option>local_ip</option>
                                    value.</para>
                             </listitem>
                         </itemizedlist>
@@ -1222,7 +1222,7 @@ password = "PLUMgrid-director-admin-password"</programlisting>
                     <step>
                         <note><para>The next step only applies to releases prior to Juno.</para></note>
                         <para>All nodes that run
-                                <systemitem>neutron-plugin-openvswitch-agent</systemitem>
+                            <systemitem class="service">neutron-plugin-openvswitch-agent</systemitem>
                             must have an OVS <literal>br-int</literal>
                             bridge.</para>
                         <para>To create the bridge, run this
@@ -1266,15 +1266,15 @@ password = "PLUMgrid-director-admin-password"</programlisting>
                             Hypervisor by using the NSX Manager GUI.
                             Even if your forwarding node has no VMs
                             and is only used for services agents like
-                                <systemitem>neutron-dhcp-agent</systemitem>
+                            <systemitem class="service">neutron-dhcp-agent</systemitem>
                             or
-                                <systemitem>neutron-lbaas-agent</systemitem>,
+                            <systemitem class="service">neutron-lbaas-agent</systemitem>,
                             it should still be added to NSX as a
                             Hypervisor.</para>
                     </step>
                     <step>
                         <para>After following the <citetitle>NSX
-                                Administrator Guide</citetitle>, use
+                            Administrator Guide</citetitle>, use
                             the page for this Hypervisor in the NSX
                             Manager GUI to confirm that the node is
                             properly connected to the NSX Controller
@@ -1310,7 +1310,7 @@ password = "PLUMgrid-director-admin-password"</programlisting>
                             and <filename>neutron.conf</filename>
                             files created in the above step on all
                             nodes running
-                                <systemitem>neutron-plugin-ryu-agent</systemitem>.</para>
+                            <systemitem class="service">neutron-plugin-ryu-agent</systemitem>.</para>
                     </step>
                     <step>
                         <para>Restart Open vSwitch to properly load
@@ -1323,7 +1323,7 @@ password = "PLUMgrid-director-admin-password"</programlisting>
                     </step>
                     <step>
                         <para>All nodes that run
-                                <systemitem>neutron-plugin-ryu-agent</systemitem>
+                            <systemitem class="service">neutron-plugin-ryu-agent</systemitem>
                             must also have an OVS bridge named
                                 <literal>br-int</literal> on each
                             node.</para>
@@ -1344,7 +1344,7 @@ password = "PLUMgrid-director-admin-password"</programlisting>
                 <title>To install and configure the DHCP agent</title>
                 <step>
                     <para>You must configure the host running the
-                            <systemitem>neutron-dhcp-agent</systemitem>
+                        <systemitem class="service">neutron-dhcp-agent</systemitem>
                         as a data forwarding node according to the
                         requirements for your plug-in. See <xref
                             linkend="install_neutron_agent"/>.</para>
@@ -1626,9 +1626,9 @@ interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver</programlist
                         driver:</para>
                     <programlisting language="ini">interface_driver = neutron.agent.linux.interface.BridgeInterfaceDriver</programlisting>
                     <para>Apply the settings by restarting the
-                            <systemitem>neutron-server</systemitem>
+                        <systemitem class="service">neutron-server</systemitem>
                         and
-                            <systemitem>neutron-lbaas-agent</systemitem>
+                        <systemitem class="service">neutron-lbaas-agent</systemitem>
                         services.</para>
                     <note>
                         <title>Upgrade from Havana to Icehouse</title>
