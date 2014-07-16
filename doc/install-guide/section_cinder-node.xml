@@ -74,8 +74,13 @@ filter = [ "a/sda1/", "a/sdb/", "r/.*/"]
       <para>After you configure the operating system, install the
         appropriate packages for the Block Storage service:</para>
       <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install cinder-volume</userinput></screen>
-      <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>yum install openstack-cinder scsi-target-utils</userinput></screen>
+      <screen os="centos;rhel;fedora"><prompt>#</prompt> <userinput>yum install openstack-cinder-volume targetcli</userinput></screen>
       <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-cinder-volume tgt</userinput></screen>
+    </step>
+    <step os="fedora;rhel;centos">
+        <para>Start and enable the target service.</para>
+        <screen><prompt>#</prompt><userinput> service target start</userinput>
+<prompt>#</prompt><userinput> chkconfig target on</userinput></screen>
     </step>
     <step os="debian">
       <para>Respond to the <systemitem class="library"
@@ -137,6 +142,12 @@ auth_protocol = http
 admin_tenant_name = service
 admin_user = cinder
 admin_password = <replaceable>CINDER_PASS</replaceable></programlisting>
+    </step>
+    <step os="fedora;rhel;centos">
+        <para>Configure Block Storage to use the lioadm iscsi_helper:</para>
+        <screen os="fedora;rhel;centos">
+<prompt>#</prompt> <userinput>openstack-config --set /etc/cinder/cinder.conf \
+  DEFAULT iscsi_helper lioadm</userinput></screen>
     </step>
     <step os="ubuntu">
       <para>Configure Block Storage to use the RabbitMQ message
@@ -204,20 +215,17 @@ glance_host = <replaceable>controller</replaceable></programlisting>
       <screen><prompt>#</prompt> <userinput>service cinder-volume restart</userinput>
 <prompt>#</prompt> <userinput>service tgt restart</userinput></screen>
     </step>
-    <step os="rhel;fedora;centos">
-      <para>Configure the iSCSI target service to discover Block
-        Storage volumes. Add the following line to the beginning of
-        the <filename>/etc/tgt/targets.conf</filename> file, if it is
-        not already present:</para>
-      <programlisting>include /etc/cinder/volumes/*</programlisting>
-    </step>
-    <step os="rhel;fedora;centos;opensuse;sles">
+    <step os="opensuse;sles">
       <para>Start and configure the Block Storage services to start
         when the system boots:</para>
-      <screen><prompt>#</prompt> <userinput>service openstack-cinder-volume start</userinput>
-<prompt>#</prompt> <userinput>service tgtd start</userinput>
-<prompt>#</prompt> <userinput>chkconfig openstack-cinder-volume on</userinput>
+<screen><prompt>#</prompt> <userinput>service tgtd start</userinput>
 <prompt>#</prompt> <userinput>chkconfig tgtd on</userinput></screen>
+    </step>
+    <step os="rhel;centos;fedora;opensuse;sles">
+        <para>Start and configure the cinder volume service to start
+         when the system boots:</para>
+<screen><prompt>#</prompt> <userinput>chkconfig openstack-cinder-volume on</userinput>
+<prompt>#</prompt> <userinput>service openstack-cinder-volume start</userinput></screen>
     </step>
   </procedure>
 </section>
