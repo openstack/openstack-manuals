@@ -12,7 +12,7 @@
     <title>Compute command-line client</title>
     <para>The <command>nova</command> client is the command-line interface
          (CLI) for the OpenStack Compute API and its extensions. This chapter documents
-         <command>nova</command> version 2.18.0.
+         <command>nova</command> version 2.18.1.
     </para>
     <para>For help on a specific <command>nova</command>
        command, enter:
@@ -1391,6 +1391,14 @@
     </listitem>
   </varlistentry>
   <varlistentry>
+    <term><command>migration-list</command></term>
+    <listitem>
+      <para>
+        Print a list of migrations.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
     <term><command>force-delete</command></term>
     <listitem>
       <para>
@@ -1435,6 +1443,31 @@
     <listitem>
       <para>
         List networks
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>host-evacuate</command></term>
+    <listitem>
+      <para>
+        Evacuate all instances from failed host to
+      specified one.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>instance-action</command></term>
+    <listitem>
+      <para>
+        Show an action.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>instance-action-list</command></term>
+    <listitem>
+      <para>
+        List actions on a server.
       </para>
     </listitem>
   </varlistentry>
@@ -1498,35 +1531,11 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>host-evacuate</command></term>
+    <term><command>list-extensions</command></term>
     <listitem>
       <para>
-        Evacuate all instances from failed host to
-      specified one.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>instance-action</command></term>
-    <listitem>
-      <para>
-        Show an action.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>instance-action-list</command></term>
-    <listitem>
-      <para>
-        List actions on a server.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>migration-list</command></term>
-    <listitem>
-      <para>
-        Print a list of migrations.
+        List all the os-api extensions that are
+      available.
       </para>
     </listitem>
   </varlistentry>
@@ -1536,6 +1545,15 @@
       <para>
         Migrate all instances of the specified host to
       other available hosts.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>host-meta</command></term>
+    <listitem>
+      <para>
+        Set or Delete metadata on all instances of a
+      host.
       </para>
     </listitem>
   </varlistentry>
@@ -1553,24 +1571,6 @@
     <listitem>
       <para>
         Show details of a given cell.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>host-meta</command></term>
-    <listitem>
-      <para>
-        Set or Delete metadata on all instances of a
-      host.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>list-extensions</command></term>
-    <listitem>
-      <para>
-        List all the os-api extensions that are
-      available.
       </para>
     </listitem>
   </varlistentry>
@@ -4729,8 +4729,9 @@ Associate project with network.
         <title>nova network-create command</title>
         <screen><computeroutput>usage: nova network-create [--fixed-range-v4 &lt;x.x.x.x/yy&gt;]
                            [--fixed-range-v6 CIDR_V6] [--vlan &lt;vlan id&gt;]
-                           [--vpn &lt;vpn start&gt;] [--gateway GATEWAY]
-                           [--gateway-v6 GATEWAY_V6] [--bridge &lt;bridge&gt;]
+                           [--vlan-start &lt;vlan start&gt;] [--vpn &lt;vpn start&gt;]
+                           [--gateway GATEWAY] [--gateway-v6 GATEWAY_V6]
+                           [--bridge &lt;bridge&gt;]
                            [--bridge-interface &lt;bridge interface&gt;]
                            [--multi-host &lt;'T'|'F'&gt;] [--dns1 &lt;DNS Address&gt;]
                            [--dns2 &lt;DNS Address&gt;] [--uuid &lt;network uuid&gt;]
@@ -4772,7 +4773,17 @@ Create a network.
     <term><command>--vlan &lt;vlan id&gt;</command></term>
     <listitem>
       <para>
-        vlan id
+        vlan id to be assigned to project
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--vlan-start &lt;vlan start&gt;</command></term>
+    <listitem>
+      <para>
+        First vlan ID to be assigned to project.
+      Subsequent vlan IDs will be assigned
+      incrementally
       </para>
     </listitem>
   </varlistentry>
