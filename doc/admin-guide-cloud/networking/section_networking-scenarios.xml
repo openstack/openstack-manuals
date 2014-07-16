@@ -103,10 +103,17 @@ bridge_mappings = physnet2:br-eth1</programlisting></para>
                         virtual network interfaces. An ethernet frame sent to one end of a veth pair
                         is received by the other end of a veth pair. Networking uses veth pairs as
                         virtual patch cables to make connections between virtual bridges.</para>
-            <para>A <emphasis role="italic">Linux bridge</emphasis> behaves like a hub: you can
-                connect multiple (physical or virtual) network interfaces devices to a Linux bridge.
-                Any ethernet frames that come in from one interface attached to the bridge is
-                transmitted to all of the other devices.</para>
+            <para>A <emphasis role="italic">Linux bridge</emphasis> behaves like a simple MAC
+                learning switch: you can connect multiple (physical or virtual) network
+                interfaces devices to a Linux bridge. The Linux bridge uses a MAC caching table to record
+                which interface on the bridge is used to communicate with a host on the link.
+                For any ethernet frames that come in from one interface attached to the bridge, the
+                host MAC address and port on which the frame was received is recorded in the MAC caching
+                table for a limited time. When the bridge needs to forward a frame, it will check
+                to see if the frame's destination MAC address is recorded in the table. If so,
+                the Linux bridge forwards the frame through only that port. If not, the frame
+                is flooded to all network ports in the bridge, with the exception of the port
+                where the frame was received.</para>
             <para>An <emphasis role="italic">Open vSwitch bridge</emphasis> behaves like a virtual
                 switch: network interface devices connect to Open vSwitch bridge's ports, and the
                 ports can be configured much like a physical switch's ports, including VLAN
