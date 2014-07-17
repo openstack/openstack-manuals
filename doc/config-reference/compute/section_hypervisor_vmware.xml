@@ -700,20 +700,21 @@ datastore_regex=&lt;optional datastore regex&gt;</programlisting>
         several formats (such as, qcow2) can be converted to the VMDK
         format.</para>
       <para>For example, the following command can be used to convert
-        a <link xlink:href="http://cloud-images.ubuntu.com/precise/current/precise-server-cloudimg-amd64-disk1.img">qcow2 Ubuntu Precise cloud image</link>:</para>
-      <screen><prompt>$</prompt> <userinput>qemu-img convert -f qcow2 ~/Downloads/precise-server-cloudimg-amd64-disk1.img \
--O vmdk precise-server-cloudimg-amd64-disk1.vmdk</userinput></screen>
+        a <link
+xlink:href="http://cloud-images.ubuntu.com/trusty/current/trusty-server-cloudimg-amd64-disk1.img">qcow2 Ubuntu Trusty cloud image</link>:</para>
+      <screen><prompt>$</prompt> <userinput>qemu-img convert -f qcow2 ~/Downloads/trusty-server-cloudimg-amd64-disk1.img \
+-O vmdk trusty-server-cloudimg-amd64-disk1.vmdk</userinput></screen>
       <para>VMDK disks converted through <code>qemu-img</code> are
           <emphasis role="italic">always</emphasis> monolithic sparse
         VMDK disks with an IDE adapter type. Using the previous
-        example of the Precise Ubuntu image after the
+        example of the Ubuntu Trusty image after the
           <code>qemu-img</code> conversion, the command to upload the
         VMDK disk should be something like:</para>
-      <screen><prompt>$</prompt> <userinput>glance image-create --name precise-cloud --is-public=False \
+      <screen><prompt>$</prompt> <userinput>glance image-create --name trusty-cloud --is-public=False \
 --container-format=bare --disk-format=vmdk \
 --property vmware_disktype="sparse" \
 --property vmware_adaptertype="ide" &lt; \
-precise-server-cloudimg-amd64-disk1.vmdk</userinput></screen>
+trusty-server-cloudimg-amd64-disk1.vmdk</userinput></screen>
       <para>Note that the <option>vmware_disktype</option> is set to
           <emphasis role="italic">sparse</emphasis> and the
           <code>vmware_adaptertype</code> is set to <emphasis role="italic">ide</emphasis> in the previous command.</para>
