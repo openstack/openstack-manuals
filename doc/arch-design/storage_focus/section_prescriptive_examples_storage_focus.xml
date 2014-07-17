@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="5.0"
+    xml:id="prescriptive-example-storage-focus">
+    <?dbhtml stop-chunking?>
+    <title>Prescriptive Examples</title>
+    <para>Storage-focused architectures are highly dependant on the
+        specific use case. Three specific example use cases are
+        discussed in this section: an object store with a RESTful
+        interface, compute analytics with parallel file systems, and a
+        high performance database.</para>
+    <para>This example describes a REST interface without a high
+        performance requirement, so the presented REST interface does
+        not require a high performance caching tier, and is presented
+        as a traditional Object store running on traditional
+        spindles.</para>
+    <para>Swift is a highly scalable object store that is part of the
+        OpenStack project. This is a diagram to explain the example
+        architecture:</para>
+    <mediaobject>
+        <imageobject>
+            <imagedata
+                fileref="../images/Storage_Object.png"
+            />
+        </imageobject>
+    </mediaobject>
+    <para>This example uses the following components:</para>
+    <para>Network:</para>
+    <itemizedlist>
+        <listitem>
+            <para>10 GbE horizontally scalable spine leaf back end
+                storage and front end network.</para>
+        </listitem>
+    </itemizedlist>
+    <para>Storage hardware:</para>
+    <itemizedlist>
+        <listitem>
+            <para>10 storage servers each with 12x4 TB disks which
+                equals 480 TB total space with approximately 160 Tb of
+                usable space after replicas.</para>
+        </listitem>
+    </itemizedlist>
+    <para>Proxy:</para>
+    <itemizedlist>
+        <listitem>
+            <para>3x proxies</para>
+        </listitem>
+        <listitem>
+            <para>2x10 GbE bonded front end</para>
+        </listitem>
+        <listitem>
+            <para>2x10 GbE back end bonds</para>
+        </listitem>
+        <listitem>
+            <para>Approximately 60 Gb of total bandwidth to the
+                back end storage cluster</para>
+        </listitem>
+    </itemizedlist>
+    <note><para>For some applications, it may be necessary to
+        implement a 3rd-party caching layer to achieve suitable
+        performance.</para></note>
+    <section xml:id="compute-analytics-with-sahara"><title>Compute Analytics with Sahara</title>
+    <para>Analytics of large data sets can be highly dependant on the
+        performance of the storage system. Some clouds using storage
+        systems such as HDFS have inefficiencies which can cause
+        performance issues. A potential solution to this is to
+        implement a storage system designed with performance in mind.
+        Traditionally, parallel file systems have filled this need in
+        the HPC space and could be a consideration, when applicable,
+        for large scale performance-oriented systems.</para>
+    <para>This example discusses an OpenStack Object Store with a high
+        performance requirement. OpenStack has integration with Hadoop
+        through the Sahara project, which is leveraged to manage the
+        Hadoop cluster within the cloud.</para>
+    <mediaobject>
+        <imageobject>
+            <imagedata
+                fileref="../images/Storage_Hadoop3.png"
+            />
+        </imageobject>
+    </mediaobject>
+    <para>The actual hardware requirements and configuration are
+        similar to those of the High Performance Database example
+        below. In this case, the architecture uses Ceph's
+        Swift-compatible REST interface, features that allow for
+        connecting a caching pool to allow for acceleration of the
+        presented pool.</para></section>
+    <section xml:id="high-performance-database-with-trove">
+        <title>High Performance Database with Trove</title>
+    <para>Databases are a common workload that can greatly benefit
+        from a high performance storage back end. Although enterprise
+        storage is not a requirement, many environments have existing
+        storage that can be used as back ends for an OpenStack cloud.
+        As shown in the following diagram, a storage pool can be
+        carved up to provide block devices with OpenStack Block
+        Storage to instances as well as an object interface. In this
+        example the database I-O requirements were high and demanded
+        storage presented from a fast SSD pool.</para>
+    <para>A storage system is used to present a LUN that is backed by
+        a set of SSDs using a traditional storage array with OpenStack
+        Block Storage integration or a storage platform such as Ceph
+        or Gluster.</para>
+    <para>This kind of system can also provide additional performance
+        in other situations. For example, in the database example
+        below, a portion of the SSD pool can act as a block device to
+        the Database server. In the high performance analytics
+        example, the REST interface would be accelerated by the inline
+        SSD cache layer.</para>
+    <mediaobject>
+        <imageobject>
+            <imagedata
+                fileref="../images/Storage_Database_+_Object5.png"
+            />
+        </imageobject>
+    </mediaobject>
+    <para>Ceph was selected to present a Swift-compatible REST
+        interface, as well as a block level storage from a distributed
+        storage cluster. It is highly flexible and has features that
+        allow to reduce cost of operations such as self healing and
+        auto balancing. Erasure coded pools are used to maximize the
+        amount of usable space. Note that there are special
+        considerations around erasure coded pools, for example, higher
+        computational requirements and limitations on the operations
+        allowed on a object. For example, partial writes are not
+        supported in an erasure coded pool.</para>
+    <para>A potential architecture for Ceph, as it relates to the
+        examples above, would entail the following:</para>
+    <para>Network:</para>
+    <itemizedlist>
+        <listitem>
+            <para>10 GbE horizontally scalable spine leaf back end
+                storage and front end network</para>
+        </listitem>
+    </itemizedlist>
+    <para>Storage hardware:</para>
+    <itemizedlist>
+        <listitem>
+            <para>5 storage servers for caching layer 24x1 TB SSD
+          </para>
+        </listitem>
+        <listitem>
+            <para>10 storage servers each with 12x4 TB disks which
+                equals 480 TB total space with about approximately 160
+                Tb of usable space after 3 replicas</para>
+        </listitem>
+    </itemizedlist>
+    <para>REST proxy:</para>
+    <itemizedlist>
+        <listitem>
+            <para>3x proxies</para>
+        </listitem>
+        <listitem>
+            <para>2x10 GbE bonded front end</para>
+        </listitem>
+        <listitem>
+            <para>2x10 GbE back end bonds</para>
+        </listitem>
+        <listitem>
+            <para>Approximately 60 Gb of total bandwidth to the
+                back end storage cluster</para>
+        </listitem>
+    </itemizedlist>
+    <para>The SSD cache layer is used to present block devices
+        directly to Hypervisors or instances. The SSD cache systems
+        can also be used as an inline cache for the REST interface.
+  </para></section>
+</section>

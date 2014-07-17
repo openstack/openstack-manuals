@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="5.0"
+    xml:id="arch-guide-hybrid-operational-considerations">
+    <?dbhtml stop-chunking?>
+    <title>Operational Considerations</title>
+    <para>Hybrid cloud deployments present complex operational
+        challenges. There are several factors to consider that affect
+        the way each cloud is deployed and how users and operators
+        will interact with each cloud. Not every cloud provider
+        implements infrastructure components the same way which may
+        lead to incompatible interactions with workloads or a specific
+        Cloud Management Platform (CMP). Different cloud providers may
+        also offer different levels of integration with competing
+        cloud offerings.</para>
+    <para>When selecting a CMP, one of the most important aspects to
+        consider is monitoring. Gaining valuable insight into each
+        cloud is critical to gaining a holistic view of all involved
+        clouds. In choosing an existing CMP, determining whether it
+        supports monitoring of all the clouds involved or if
+        compatible APIs are available which can be queried for the
+        necessary information, is vital. Once all the information
+        about each cloud can be gathered and stored in a searchable
+        database, proper actions can be taken on that data offline so
+        workloads will not be impacted.</para>
+    <section xml:id="agility"><title>Agility</title>
+    <para>Implementing a hybrid cloud solution can provide application
+        availability across disparate cloud environments and
+        technologies. This availability enables the deployment to
+        survive a complete disaster in any single cloud environment.
+        Each cloud should provide the means to quickly spin up new
+        instances in the case of capacity issues or complete
+        unavailability of a single cloud installation.</para></section>
+    <section xml:id="application-readiness-hybrid"><title>Application Readiness</title>
+    <para>It is important to understand the type of application
+        workloads that will be deployed across the hybrid cloud
+        environment. Enterprise workloads that depend on the
+        underlying infrastructure for availability are not designed to
+        run on OpenStack. Although these types of applications can run
+        on an OpenStack cloud, if the application is not able to
+        tolerate infrastructure failures, it is likely to require
+        significant operator intervention to recover. Cloud workloads,
+        however, are designed with fault tolerance in mind and the SLA
+        of the application is not tied to the underlying
+        infrastructure. Ideally, cloud applications will be designed
+        to recover when entire racks and even data centers full of
+        infrastructure experience an outage.</para></section>
+    <section xml:id="upgrades"><title>Upgrades</title>
+    <para>OpenStack is a complex and constantly evolving collection of
+        software. Upgrades may be performed to one or more of the
+        cloud environments involved. If a public cloud is involved in
+        the deployment, predicting upgrades may not be possible. Be
+        sure to examine the advertised SLA for any public cloud
+        provider being used. Note that at massive scale, even when
+        dealing with a cloud that offers an SLA with a high percentage
+        of uptime, workloads must be able to recover at short
+        notice.</para>
+    <para>Similarly, when upgrading private cloud deployments, care
+        must be taken to minimize disruption by making incremental
+        changes and providing a facility to either rollback or
+        continue to roll forward when using a continuous delivery
+        model.</para>
+    <para>Another consideration is upgrades to the CMP which may need
+        to be completed in coordination with any of the hybrid cloud
+        upgrades. This may be necessary whenever API changes are made
+        in one of the cloud solutions in use to support the new
+        functionality.</para></section>
+    <section xml:id="network-operation-center-noc"><title>Network Operation Center (NOC)</title>
+    <para>When planning the Network Operation Center for a hybrid
+        cloud environment, it is important to recognize where control
+        over each piece of infrastructure resides. If a significant
+        portion of the cloud is on externally managed systems, be
+        prepared for situations in which it may not be possible to
+        make changes at all or at the most convenient time.
+        Additionally, situations of conflict may arise in which
+        multiple providers have differing points of view on the way
+        infrastructure must be managed and exposed. This can lead to
+        delays in root cause and analysis where each insists the blame
+        lies with the other provider.</para>
+    <para>It is important to ensure that the structure put in place
+        enables connection of the networking of both clouds to form an
+        integrated system, keeping in mind the state of handoffs.
+        These handoffs must both be as reliable as possible and
+        include as little latency as possible to ensure the best
+        performance of the overall system.</para></section>
+    <section xml:id="maintainability"><title>Maintainability</title>
+    <para>Operating hybrid clouds is a situation in which there is a
+        greater reliance on third party systems and processes. As a
+        result of a lack of control of various pieces of a hybrid
+        cloud environment, it is not necessarily possible to guarantee
+        proper maintenance of the overall system. Instead, the user
+        must be prepared to abandon workloads and spin them up again
+        in an improved state. Having a hybrid cloud deployment does,
+        however, provide agility for these situations by allowing the
+        migration of workloads to alternative clouds in response to
+        cloud-specific issues.</para></section>
+</section>

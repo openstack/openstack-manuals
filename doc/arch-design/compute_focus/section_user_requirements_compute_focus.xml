@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="5.0"
+    xml:id="user-requirements-compute-focus">
+    <?dbhtml stop-chunking?>
+    <title>User Requirements</title>
+    <para>Compute intensive workloads are defined by their high
+        utilization of CPU, RAM, or both. User requirements will
+        determine if a cloud must be built to accommodate anticipated
+        performance demands.</para>
+    <itemizedlist>
+        <listitem>
+            <para>Cost: Cost is not generally a primary concern for a
+                compute-focused cloud, however some organizations
+                might be concerned with cost avoidance. Repurposing
+                existing resources to tackle compute-intensive tasks
+                instead of needing to acquire additional resources may
+                offer cost reduction opportunities.</para>
+        </listitem>
+        <listitem>
+            <para>Time to Market: Compute-focused clouds can be used
+                to deliver products more quickly, for example,
+                speeding up a company's software development life cycle
+                (SDLC) for building products and applications.</para>
+        </listitem>
+        <listitem>
+            <para>Revenue Opportunity: Companies that are interested
+                in building services or products that rely on the
+                power of the compute resources will benefit from a
+                compute-focused cloud. Examples include the analysis
+                of large data sets (via Hadoop or Cassandra) or
+                completing computational intensive tasks such as
+                rendering, scientific computation, or
+                simulations.</para>
+        </listitem>
+    </itemizedlist>
+    <section xml:id="legal-requirements-compute-focus"><title>Legal Requirements</title>
+    <para>Many jurisdictions have legislative and regulatory
+        requirements governing the storage and management of data in
+        cloud environments. Common areas of regulation include:</para>
+    <itemizedlist>
+        <listitem>
+            <para>Data retention policies ensuring storage of
+                persistent data and records management to meet data
+                archival requirements.</para>
+        </listitem>
+        <listitem>
+            <para>Data ownership policies governing the possession and
+                responsibility for data.</para>
+        </listitem>
+        <listitem>
+            <para>Data sovereignty policies governing the storage of
+                data in foreign countries or otherwise separate
+                jurisdictions.</para>
+        </listitem>
+        <listitem>
+            <para>Data compliance - certain types of information needs
+                to reside in certain locations due to regular issues -
+                and more important cannot reside in other locations
+                for the same reason.</para>
+        </listitem>
+    </itemizedlist>
+    <para>Examples of such legal frameworks include the data
+        protection framework of the European Union
+        (http://ec.europa.eu/justice/data-protection/ ) and the
+        requirements of the Financial Industry Regulatory Authority
+        (http://www.finra.org/Industry/Regulation/FINRARules/ ) in the
+        United States. Consult a local regulatory body for more
+        information.</para></section>
+    <section xml:id="technical-considerations-compute-focus-user"><title>Technical Considerations</title>
+    <para>The following are some technical requirements that need to
+        be incorporated into the architecture design.</para>
+    <itemizedlist>
+        <listitem>
+            <para>Performance: If a primary technical concern is for
+                the environment to deliver high performance
+                capability, then a compute-focused design is an
+                obvious choice because it is specifically designed to
+                host compute-intensive workloads.</para>
+        </listitem>
+        <listitem>
+            <para>Workload persistence: Workloads can be either
+                short-lived or long running. Short-lived workloads
+                might include continuous integration and continuous
+                deployment (CI-CD) jobs, where large numbers of
+                compute instances are created simultaneously to
+                perform a set of compute-intensive tasks. The results
+                or artifacts are then copied from the instance into
+                long-term storage before the instance is destroyed.
+                Long-running workloads, like a Hadoop or
+                high-performance computing (HPC) cluster, typically
+                ingest large data sets, perform the computational work
+                on those data sets, then push the results into long
+                term storage. Unlike short-lived workloads, when the
+                computational work is completed, they will remain idle
+                until the next job is pushed to them. Long-running
+                workloads are often larger and more complex, so the
+                effort of building them is mitigated by keeping them
+                active between jobs. Another example of long running
+                workloads is legacy applications that typically are
+                persistent over time.</para>
+        </listitem>
+        <listitem>
+            <para>Storage: Workloads targeted for a compute-focused
+                OpenStack cloud generally do not require any
+                persistent block storage (although some usages of
+                Hadoop with HDFS may dictate the use of persistent
+                block storage). A shared filesystem or object store
+                will maintain the initial data set(s) and serve as the
+                destination for saving the computational results. By
+                avoiding the input-output (IO) overhead, workload
+                performance is significantly enhanced. Depending on
+                the size of the data set(s), it might be necessary to
+                scale the object store or shared file system to match
+                the storage demand.</para>
+        </listitem>
+        <listitem>
+            <para>User Interface: Like any other cloud architecture, a
+                compute-focused OpenStack cloud requires an on-demand
+                and self-service user interface. End users must be
+                able to provision computing power, storage, networks
+                and software simply and flexibly. This includes
+                scaling the infrastructure up to a substantial level
+                without disrupting host operations.</para>
+        </listitem>
+        <listitem>
+            <para>Security: Security is going to be highly dependent
+                on the business requirements. For example, a
+                computationally intense drug discovery application
+                will obviously have much higher security requirements
+                than a cloud that is designed for processing market
+                data for a retailer. As a general start, the security
+                recommendations and guidelines provided in the
+                OpenStack Security Guide are applicable.</para>
+        </listitem>
+    </itemizedlist></section>
+    <section xml:id="operational-considerations-compute-focus-user"><title>Operational Considerations</title>
+    <para>The compute intensive cloud from the operational perspective
+        is similar to the requirements for the general-purpose cloud.
+        More details on operational requirements can be found in the
+        general-purpose design section.</para></section>
+</section>

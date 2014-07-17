@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="5.0"
+    xml:id="multi-hypervisor-example">
+    <?dbhtml stop-chunking?>
+    <title>Multi-Hypervisor Example</title>
+    <para>A financial company requires a migration of its applications
+        from a traditional virtualized environment to an API driven,
+        orchestrated environment. A number of their applications have
+        strict support requirements which limit what hypervisors they
+        are supported on, however the rest do not have such
+        restrictions and do not need the same features. Because of
+        these requirements, the overall target environment needs
+        multiple hypervisors.</para>
+    <para>The current environment consists of a vSphere environment
+        with 20 VMware ESXi hypervisors supporting 300 instances of
+        various sizes. Approximately 50 of the instances must be run
+        on ESXi but the rest have more flexible requirements.</para>
+    <para>The company has decided to bring the management of the
+        overall system into a common platform provided by
+        OpenStack.</para>
+    <mediaobject>
+        <imageobject>
+            <imagedata
+                fileref="../images/Compute_NSX.png"
+            />
+        </imageobject>
+    </mediaobject>
+    <para>The approach is to run a host aggregate consisting of KVM
+        hypervisors for the general purpose instances and a separate
+        host aggregate for instances requiring ESXi. This way,
+        workloads that must be run on ESXi can be targeted at those
+        hypervisors, but the rest can be targeted at the KVM
+        hypervisors.</para>
+    <para>Images in the OpenStack Image Service have particular
+        hypervisor metadata attached so that when a user requests a
+        certain image, the instance will spawn on the relevant
+        aggregate. Images for ESXi are stored in VMDK format. QEMU
+        disk images can be converted to VMDK, VMFS Flat Disks, which
+        includes thin, thick, zeroed-thick, and eager-zeroed-thick.
+        Note that once a VMFS thin disk is exported from VMFS to a
+        non-VMFS location, like the OpenStack Image Service, it
+        becomes a preallocated flat disk. This impacts the transfer
+        time from the OpenStack Image Service to the data store when
+        the full preallocated flat disk, rather than the thin disk,
+        must be transferred.</para>
+    <para>This example has the additional complication that, rather
+        than being spawned directly on a hypervisor simply by calling
+        a specific host aggregate using the metadata of the image, the
+        VMware host aggregate compute nodes communicate with vCenter
+        which then requests that the instance be scheduled to run on
+        an ESXi hypervisor. As of the Icehouse release,this
+        functionality requires that VMware Distributed Resource
+        Scheduler (DRS) be enabled on a cluster and set to "Fully
+        Automated".</para>
+    <para>Due to the DRS requirement, note that vSphere requires
+        shared storage (DRS uses vMotion, which requires shared
+        storage). The solution uses shared storage to provide Block
+        Storage capabilities to the KVM instances while also providing
+        the storage for vSphere. The environment uses a dedicated data
+        network to provide this functionality, therefore the compute
+        hosts should have dedicated NICs to support this dedicated
+        traffic. vSphere supports the use of OpenStack Block Storage
+        to present storage from a VMFS datastore to an instance, so
+        the use of Block Storage in this architecture supports both
+        hypervisors.</para>
+    <para>In this case, network connectivity is provided by OpenStack
+        Networking with the VMware NSX plug-in driver configured.
+        Alternatively, the system could use nova-network, which is
+        supported by both hypervisors used in this design, but has
+        limitations. Specifically, security groups are not supported
+        on vSphere with nova-network. With VMware NSX as part of the
+        design, however, when a user launches an instance within
+        either of the host aggregates, the instances are attached to
+        appropriate network overlay-based logical networks as defined
+        by the user.</para>
+    <para>Note that care must be taken with this approach, as there
+        are design considerations around the OpenStack Compute
+        integration. When using vSphere with OpenStack, the
+        nova-compute service that is configured to communicate with
+        vCenter shows up as a single large hypervisor representing the
+        entire ESXi cluster (multiple instances of nova-compute can be
+        run to represent multiple ESXi clusters or to connect to
+        multiple vCenter servers). If the process running the
+        nova-compute service crashes, the connection to that
+        particular vCenter Server-and any ESXi clusters behind it-are
+        severed and it will not be possible to provision more
+        instances on that vCenter, despite the fact that vSphere
+        itself could be configured for high availability. Therefore,
+        it is important to monitor the nova-compute service that
+        connects to vSphere for any disruptions.</para>
+</section>

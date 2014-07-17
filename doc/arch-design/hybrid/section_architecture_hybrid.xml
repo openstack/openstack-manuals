@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="5.0"
+    xml:id="arch-guide-architecture-hybrid">
+    <?dbhtml stop-chunking?>
+    <title>Architecture</title>
+    <para>Once business and application requirements have been
+        defined, the first step for designing a hybrid cloud solution
+        is to map out the dependencies between the expected workloads
+        and the diverse cloud infrastructures that need to support
+        them. By mapping the applications and the targeted cloud
+        environments, you can architect a solution that enables the
+        broadest compatibility between cloud platforms and minimizes
+        the need to create workarounds and processes to fill
+        identified gaps. Note the evaluation of the monitoring and
+        orchestration APIs available on each cloud platform and the
+        relative levels of support for them in the chosen Cloud
+        Management Platform.</para>
+    <mediaobject>
+        <imageobject>
+            <imagedata
+                fileref="../images/Multi-Cloud_Priv-AWS4.png"
+            />
+        </imageobject>
+    </mediaobject>
+    <section xml:id="image-portability"><title>Image portability</title>
+    <para>The majority of cloud workloads currently run on instances
+        using hypervisor technologies such as KVM, Xen, or ESXi. The
+        challenge is that each of these hypervisors use an image
+        format that is mostly, or not at all, compatible with one
+        another. In a private or hybrid cloud solution, this can be
+        mitigated by standardizing on the same hypervisor and instance
+        image format but this is not always feasible. This is
+        particularly evident if one of the clouds in the architecture
+        is a public cloud that is outside of the control of the
+        designers.</para>
+    <para>There are conversion tools such as virt-v2v
+        (http://libguestfs.org/virt-v2v/) and virt-edit
+        (http://libguestfs.org/virt-edit.1.html) that can be used in
+        those scenarios but they are often not suitable beyond very
+        basic cloud instance specifications. An alternative is to
+        build a thin operating system image as the base for new
+        instances. This facilitates rapid creation of cloud instances
+        using cloud orchestration or configuration management tools,
+        driven by the CMP, for more specific templating. Another more
+        expensive option is to use a commercial image migration tool.
+        The issue of image portability is not just for a one time
+        migration. If the intention is to use the multiple cloud for
+        disaster recovery, application diversity or high availability,
+        the images and instances are likely to be moved between the
+        different cloud platforms regularly.</para></section>
+    <section xml:id="upper-layer-services"><title>Upper-Layer Services</title>
+    <para>Many clouds offer complementary services over and above the
+        basic compute, network, and storage components. These
+        additional services are often used to simplify the deployment
+        and management of applications on a cloud platform.</para>
+    <para>Consideration is required to be given to moving workloads
+        that may have upper-layer service dependencies on the source
+        cloud platform to a destination cloud platform that may not
+        have a comparable service. Conversely, the user can implement
+        it in a different way or by using a different technology. For
+        example, moving an application that uses a NoSQL database
+        service such as MongoDB that is delivered as a service on the
+        source cloud, to a destination cloud that does not offer that
+        service or may only use a relational database such as MySQL,
+        could cause difficulties in maintaining the application
+        between the platforms.</para>
+    <para>There are a number of options that might be appropriate for
+        the hybrid cloud use case:</para>
+    <itemizedlist>
+        <listitem>
+            <para>Create a baseline of upper-layer services that are
+                implemented across all of the cloud platforms. For
+                platforms that do not support a given service, create
+                a service on top of that platform and apply it to the
+                workloads as they are launched on that cloud. For
+                example, OpenStack, via Trove, supports MySQL as a
+                service but not NoSQL databases in production. To move
+                from or to run alongside on AWS a NoSQL workload would
+                require recreating the NoSQL database on top of
+                OpenStack and automate the process of implementing it
+                using a tool such as OpenStack Orchestration
+                (Heat).</para>
+        </listitem>
+        <listitem>
+            <para>Deploy a Platform as a Service (PaaS) technology
+                such as Cloud Foundry or OpenShift that abstracts the
+                upper-layer services from the underlying cloud
+                platform. The unit of application deployment and
+                migration is the PaaS and leverages the services of
+                the PaaS and only consumes the base infrastructure
+                services of the cloud platform. The downside to this
+                approach is that the PaaS itself then potentially
+                becomes a source of lock-in.</para>
+        </listitem>
+        <listitem>
+            <para>Use only the base infrastructure services that are
+                common across all cloud platforms. Use automation
+                tools to create the required upper-layer services
+                which are portable across all cloud platforms. For
+                example, instead of using any database services that
+                are inherent in the cloud platforms, launch cloud
+                instances and deploy the databases on to those
+                instances using scripts or various configuration and
+                application deployment tools.</para>
+        </listitem>
+    </itemizedlist></section>
+    <section xml:id="network-services"><title>Network Services</title>
+    <para>Network services functionality is a significant barrier for
+        multiple cloud architectures. It could be an important factor
+        to assess when choosing a CMP and cloud provider.
+        Considerations are: functionality, security, scalability and
+        High availability (HA). Verification and ongoing testing of
+        the critical features of the cloud endpoint used by the
+        architecture are important tasks.</para>
+    <itemizedlist>
+        <listitem>
+            <para>Once the network functionality framework has been
+                decided, a minimum functionality test should be
+                designed to confirm that the functionality is in fact
+                compatible. This will ensure testing and functionality
+                persists during and after upgrades. Note that over
+                time, the diverse cloud platforms are likely to
+                de-synchronize if care is not taken to maintain
+                compatibility. This is a particular issue with
+                APIs.</para>
+        </listitem>
+        <listitem>
+            <para>Scalability across multiple cloud providers may
+                dictate which underlying network framework is chosen
+                for the different cloud providers. It is important to
+                have the network API functions presented and to verify
+                that the desired functionality persists across all
+                chosen cloud endpoint.</para>
+        </listitem>
+        <listitem>
+            <para>High availability (HA) implementations vary in
+                functionality and design. Examples of some common
+                methods are Active-Hot-Standby, Active-Passive and
+                Active-Active. High availability and a test framework
+                need to be developed to insure that the functionality
+                and limitations are well understood.</para>
+        </listitem>
+        <listitem>
+            <para>Security considerations, such as how data is secured
+                between client and endpoint and any traffic that
+                traverses the multiple clouds, from eavesdropping to
+                DoS activities must be addressed. Business and
+                regulatory requirements dictate the security approach
+                that needs to be taken.</para>
+        </listitem>
+    </itemizedlist></section>
+    <section xml:id="data"><title>Data</title>
+    <para>Replication has been the traditional method for protecting
+        object store implementations. A variety of different
+        implementations have existed in storage architectures.
+        Examples of this are both synchronous and asynchronous
+        mirroring. Most object stores and back-end storage systems have
+        a method for replication that can be implemented at the
+        storage subsystem layer. Object stores also have implemented
+        replication techniques that can be tailored to fit a clouds
+        needs. An organization must find the right balance between
+        data integrity and data availability. Replication strategy may
+        also influence the disaster recovery methods
+        implemented.</para>
+    <para>Replication across different racks, data centers and
+        geographical regions has led to the increased focus of
+        determining and ensuring data locality. The ability to
+        guarantee data is accessed from the nearest or fastest storage
+        can be necessary for applications to perform well. Examples of
+        this are Hadoop running in a cloud. The user either runs with
+        a native HDFS, when applicable, or on a separate parallel file
+        system such as those provided by Hitachi and IBM. Special
+        consideration should be taken when running embedded object
+        store methods to not cause extra data replication, which can
+        create unnecessary performance issues. Another example of
+        ensuring data locality is by using Ceph. Ceph has a data
+        container abstraction called a pool. Pools can be created with
+        replicas or erasure code. Replica based pools can also have a
+        rule set defined to have data written to a “local” set of
+        hardware which would be the primary access and modification
+        point.</para>
+    </section>
+</section>

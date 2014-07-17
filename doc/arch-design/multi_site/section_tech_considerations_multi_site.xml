@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="5.0"
+    xml:id="technical-considerations-multi-site">
+    <?dbhtml stop-chunking?>
+    <title>Technical Considerations</title>
+    <para>There are many technical considerations to take into account
+        with regard to designing a multi-site OpenStack
+        implementation. An OpenStack cloud can be designed in a
+        variety of ways to handle individual application needs. A
+        multi-site deployment will have additional challenges compared
+        to single site installations and will therefore be a more
+        complex solution.</para>
+    <para>When determining capacity options be sure to take into
+        account not just the technical issues, but also the economic
+        or operational issues that might arise from specific
+        decisions.</para>
+    <para>Inter-site link capacity describes the capabilities of the
+        connectivity between the different OpenStack sites. This
+        includes parameters such as bandwidth, latency, whether or not
+        a link is dedicated, and any business policies applied to the
+        connection. The capability and number of the links between
+        sites will determine what kind of options may be available for
+        deployment. For example, if two sites have a pair of
+        high-bandwidth links available between them, it may be wise to
+        configure a separate storage replication network between the
+        two sites to support a single Swift endpoint and a shared
+        object storage capability between them. (An example of this
+        technique, as well as a configuration walk-through, is
+        available at
+        http://docs.openstack.org/developer/swift/replication_network.html#dedicated-replication-network).
+        Another option in this scenario is to build a dedicated set of
+        tenant private networks across the secondary link using
+        overlay networks with a third party mapping the site overlays
+        to each other.</para>
+    <para>The capacity requirements of the links between sites will be
+        driven by application behavior. If the latency of the links is
+        too high, certain applications that use a large number of
+        small packets, for example RPC calls, may encounter issues
+        communicating with each other or operating properly.
+        Additionally, OpenStack may encounter similar types of issues.
+        To mitigate this, tuning of the Keystone call timeouts may be
+        necessary to prevent issues authenticating against a central
+        Identity Service.</para>
+    <para>Another capacity consideration when it comes to networking
+        for a multi-site deployment is the available amount and
+        performance of overlay networks for tenant networks. If using
+        shared tenant networks across zones, it is imperative that an
+        external overlay manager or controller be used to map these
+        overlays together. It is necessary to ensure the amount of
+        possible IDs between the zones are identical. Note that, as of
+        the Icehouse release, Neutron was not capable of managing
+        tunnel IDs across installations. This means that if one site
+        runs out of IDs, but other does not, that tenant's network
+        will be unable to reach the other site.</para>
+    <para>Capacity can take other forms as well. The ability for a
+        region to grow depends on scaling out the number of available
+        compute nodes. This topic is covered in greater detail in the
+        section for compute-focused deployments. However, it should be
+        noted that cells may be necessary to grow an individual region
+        beyond a certain point. This point depends on the size of your
+        cluster and the ratio of virtual machines per
+        hypervisor.</para>
+    <para>A third form of capacity comes in the multi-region-capable
+        components of OpenStack. Centralized Object Storage is capable
+        of serving objects through a single namespace across multiple
+        regions. Since this works by accessing the object store via
+        swift proxy, it is possible to overload the proxies. There are
+        two options available to mitigate this issue. The first is to
+        deploy a large number of swift proxies. The drawback to this
+        is that the proxies are not load-balanced and a large file
+        request could continually hit the same proxy. The other way to
+        mitigate this is to front-end the proxies with a caching HTTP
+        proxy and load balancer. Since swift objects are returned to
+        the requester via HTTP, this load balancer would alleviate the
+        load required on the swift proxies.</para>
+    <section xml:id="utilization-multi-site"><title>Utilization</title>
+    <para>While constructing a multi-site OpenStack environment is the
+        goal of this guide, the real test is whether an application
+        can utilize it.</para>
+    <para>Identity is normally the first interface for the majority of
+        OpenStack users. Interacting with Keystone is required for
+        almost all major operations within OpenStack. Therefore, it is
+        important to ensure that you provide users with a single URL
+        for Keystone authentication. Equally important is proper
+        documentation and configuration of regions within Keystone.
+        Each of the sites defined in your installation is considered
+        to be a region in Keystone nomenclature. This is important for
+        the users of the system, when reading Keystone documentation,
+        as it is required to define the Region name when providing
+        actions to an API endpoint or in Horizon.</para>
+    <para>Load balancing is another common issue with multi-site
+        installations. While it is still possible to run HAproxy
+        instances with load balancer as a service, these will be local
+        to a specific region. Some applications may be able to cope
+        with this via internal mechanisms. Others, however, may
+        require the implementation of an external system including
+        global services load balancers or anycast-advertised
+        DNS.</para>
+    <para>Depending on the storage model chosen during site design,
+        storage replication and availability will also be a concern
+        for end-users. If an application is capable of understanding
+        regions, then it is possible to keep the object storage system
+        separated by region. In this case, users who want to have an
+        object available to more than one region will need to do the
+        cross-site replication themselves. With a centralized swift
+        proxy, however, the user may need to benchmark the replication
+        timing of the Swift back end. Benchmarking allows the
+        operational staff to provide users with an understanding of
+        the amount of time required for a stored or modified object to
+        become available to the entire environment.</para></section>
+    <section xml:id="performance"><title>Performance</title>
+    <para>Determining the performance of a multi-site installation
+        involves considerations that do not come into play in a
+        single-site deployment. Being a distributed deployment,
+        multi-site deployments incur a few extra penalties to
+        performance in certain situations.</para>
+    <para>Since multi-site systems can be geographically separated,
+        they may have worse than normal latency or jitter when
+        communicating across regions. This can especially impact
+        systems like the OpenStack Identity service when making
+        authentication attempts from regions that do not contain the
+        centralized Keystone implementation. It can also affect
+        certain applications which rely on remote procedure call (RPC)
+        for normal operation. An example of this can be seen in High
+        Performance Computing workloads.</para>
+    <para>Storage availability can also be impacted by the
+        architecture of a multi-site deployment. A centralized Object
+        Storage Service requires more time for an object to be
+        available to instances locally in regions where the object was
+        not created. Some applications may need to be tuned to account
+        for this effect. Block storage does not currently have a
+        method for replicating data across multiple regions, so
+        applications that depend on available block storage will need
+        to manually cope with this limitation by creating duplicate
+        block storage entries in each region.</para></section>
+    <section xml:id="security-multi-site"><title>Security</title>
+    <para>Securing a multi-site OpenStack installation also brings
+        extra challenges. Tenants may expect a tenant-created network
+        to be secure. In a multi-site installation the use of a
+        non-private connection between sites may be required. This may
+        mean that traffic would be visible to third parties and, in
+        cases where an application requires security, this issue will
+        require mitigation. Installing a VPN or encrypted connection
+        between sites is recommended in such instances.</para>
+    <para>Another security consideration with regard to multi-site
+        deployments is Identity. Authentication in a multi-site
+        deployment should be centralized. Centralization provides a
+        single authentication point for users across the deployment,
+        as well as a single point of administration for traditional
+        create, read, update and delete operations. Centralized
+        authentication is also useful for auditing purposes because
+        all authentication tokens originate from the same
+        source.</para>
+    <para>Just as tenants in a single-site deployment need isolation
+        from each other, so do tenants in multi-site installations.
+        The extra challenges in multi-site designs revolve around
+        ensuring that tenant networks function across regions.
+        Unfortunately, OpenStack Networking does not presently support
+        a mechanism to provide this functionality, therefore an
+        external system may be necessary to manage these mappings.
+        Tenant networks may contain sensitive information requiring
+        that this mapping be accurate and consistent to ensure that a
+        tenant in one site does not connect to a different tenant in
+        another site.</para></section>
+    <section xml:id="openstack-components-multi-site"><title>OpenStack Components</title>
+    <para>Most OpenStack installations require a bare minimum set of
+        pieces to function. These include Keystone for authentication,
+        Nova for compute, Glance for image storage, Neutron for
+        networking, and potentially an object store in the form of
+        Swift. Bringing multi-site into play also demands extra
+        components in order to coordinate between regions. Centralized
+        Keystone is necessary to provide the single authentication
+        point. Centralized Horizon is also recommended to provide a
+        single login point and a mapped experience to the API and CLI
+        options available. If necessary, a centralized Swift may be
+        used and will require the installation of the Swift proxy
+        service.</para>
+    <para>It may also be helpful to install a few extra options in
+        order to facilitate certain use cases. For instance,
+        installing Designate may assist in automatically generating
+        DNS domains for each region with an automatically-populated
+        zone full of resource records for each instance. This
+        facilitates using DNS as a mechanism for determining which
+        region would be selected for certain applications.</para>
+    <para>Another useful tool for managing a multi-site installation
+        is Heat. Heat allows the use of templates to define a set of
+        instances to be launched together or for scaling existing
+        sets. It can also be used to setup matching or differentiated
+        groupings based on regions. For instance, if an application
+        requires an equally balanced number of nodes across sites, the
+        same heat template can be used to cover each site with small
+        alterations to only the region name.</para></section>
+</section>

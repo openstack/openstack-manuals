@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="5.0"
+    xml:id="operational-considerations-networking-focus">
+    <?dbhtml stop-chunking?>
+    <title>Operational Considerations</title>
+    <para>Network focused OpenStack clouds have a number of
+        operational considerations that will influence the selected
+        design. Topics including, but not limited to, dynamic routing
+        of static routes, service level agreements, and ownership of
+        user management all need to be considered.</para>
+    <para>One of the first required decisions is the selection of a
+        telecom company or transit provider. This is especially true
+        if the network requirements include external or site-to-site
+        network connectivity.</para>
+    <para>Additional design decisions need to be made about monitoring
+        and alarming. These can be an internal responsibility or the
+        responsibility of the external provider. In the case of using
+        an external provider, SLAs will likely apply. In addition,
+        other operational considerations such as bandwidth, latency,
+        and jitter can be part of a service level agreement.</para>
+    <para>The ability to upgrade the infrastructure is another subject
+        for consideration. As demand for network resources increase,
+        operators will be required to add additional IP address blocks
+        and add additional bandwidth capacity. Managing hardware and
+        software life cycle events, for example upgrades,
+        decommissioning, and outages while avoiding service
+        interruptions for tenants, will also need to be
+        considered.</para>
+    <para>Maintainability will also need to be factored into the
+        overall network design. This includes the ability to manage
+        and maintain IP addresses as well as the use of overlay
+        identifiers including VLAN tag IDs, GRE tunnel IDs, and MPLS
+        tags. As an example, if all of the IP addresses have to be
+        changed on a network, a process known as renumbering, then the
+        design needs to support the ability to do so.</para>
+    <para>Network focused applications themselves need to be addressed
+        when concerning certain operational realities. For example,
+        the impending exhaustion of IPv4 addresses, the migration to
+        IPv6 and the utilization of private networks to segregate
+        different types of traffic that an application receives or
+        generates. In the case of IPv4 to IPv6 migrations,
+        applications should follow best practices for storing IP
+        addresses. It is further recommended to avoid relying on IPv4
+        features that were not carried over to the IPv6 protocol or
+        have differences in implementation.</para>
+    <para>When using private networks to segregate traffic,
+        applications should create private tenant networks for
+        database and data storage network traffic, and utilize public
+        networks for client-facing traffic. By segregating this
+        traffic, quality of service and security decisions can be made
+        to ensure that each network has the correct level of service
+        that it requires.</para>
+    <para>Finally, decisions must be made about the routing of network
+        traffic. For some applications, a more complex policy
+        framework for routing must be developed. The economic cost of
+        transmitting traffic over expensive links versus cheaper
+        links, in addition to bandwidth, latency, and jitter
+        requirements, can be used to create a routing policy that will
+        satisfy business requirements.</para>
+    <para>How to respond to network events must also be taken into
+        consideration. As an example, how load is transferred from one
+        link to another during a failure scenario could be a factor in
+        the design. If network capacity is not planned correctly,
+        failover traffic could overwhelm other ports or network links
+        and create a cascading failure scenario. In this case, traffic
+        that fails over to one link overwhelms that link and then
+        moves to the subsequent links until the all network traffic
+        stops.</para>
+</section>

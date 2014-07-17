@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="5.0"
+    xml:id="operational-considerations-multi-site">
+    <?dbhtml stop-chunking?>
+    <title>Operational Considerations</title>
+    <para>Deployment of a multi-site OpenStack cloud using regions
+        requires that the service catalog contains per-region entries
+        for each service deployed other than the Identity service
+        itself. There is limited support amongst currently available
+        off-the-shelf OpenStack deployment tools for defining multiple
+        regions in this fashion.</para>
+    <para>Deployers must be aware of this and provide the appropriate
+        customization of the service catalog for their site either
+        manually or via customization of the deployment tools in
+        use.</para>
+    <para>Note that, as of the Icehouse release, documentation for
+        implementing this feature is in progress. See this bug for
+        more information:
+        https://bugs.launchpad.net/openstack-manuals/+bug/1340509</para>
+    <section xml:id="licensing"><title>Licensing</title>
+    <para>Multi-site OpenStack deployments present additional
+        licensing considerations over and above regular OpenStack
+        clouds, particularly where site licenses are in use to provide
+        cost efficient access to software licenses. The licensing for
+        host operating systems, guest operating systems, OpenStack
+        distributions (if applicable), software-defined infrastructure
+        including network controllers and storage systems, and even
+        individual applications need to be evaluated in light of the
+        multi-site nature of the cloud.</para>
+    <para>Topics to consider include:</para>
+    <itemizedlist>
+        <listitem>
+            <para>The specific definition of what constitutes a site
+                in the relevant licenses, as the term does not
+                necessarily denote a geographic or otherwise
+                physically isolated location in the traditional
+                sense.</para>
+        </listitem>
+        <listitem>
+            <para>Differentiations between "hot" (active) and "cold"
+                (inactive) sites where significant savings may be made
+                in situations where one site is a cold standby for
+                disaster recovery purposes only.</para>
+        </listitem>
+        <listitem>
+            <para>Certain locations might require local vendors to
+                provide support and services for each site provides
+                challenges, but will vary on the licensing agreement
+                in place.</para>
+        </listitem>
+    </itemizedlist></section>
+    <section xml:id="logging-and-monitoring-multi-site"><title>Logging and Monitoring</title>
+    <para>Logging and monitoring does not significantly differ for a
+        multi-site OpenStack cloud. The same well known tools
+        described in the Operations Guide
+        (http://docs.openstack.org/openstack-ops/content/logging_monitoring.html)
+        remain applicable. Logging and monitoring can be provided both
+        on a per-site basis and in a common centralized
+        location.</para>
+    <para>When attempting to deploy logging and monitoring facilities
+        to a centralized location, care must be taken with regards to
+        the load placed on the inter-site networking links.</para></section>
+    <section xml:id="upgrades-multi-site"><title>Upgrades</title>
+    <para>In multi-site OpenStack clouds deployed using regions each
+        site is, effectively, an independent OpenStack installation
+        which is linked to the others by using centralized services
+        such as Identity which are shared between sites. At a high
+        level the recommended order of operations to upgrade an
+        individual OpenStack environment is
+        (http://docs.openstack.org/openstack-ops/content/ops_upgrades-general-steps.html):</para>
+    <orderedlist>
+        <listitem>
+            <para>Upgrade the OpenStack Identity Service
+                (Keystone).</para>
+        </listitem>
+        <listitem>
+            <para>Upgrade the OpenStack Image Service (Glance).</para>
+        </listitem>
+        <listitem>
+            <para>Upgrade OpenStack Compute (Nova), including
+                networking components.</para>
+        </listitem>
+        <listitem>
+            <para>Upgrade OpenStack Block Storage (Cinder).</para>
+        </listitem>
+        <listitem>
+            <para>Upgrade the OpenStack dashboard.(Horizon)</para>
+        </listitem>
+    </orderedlist>
+    <para>The process for upgrading a multi-site environment is not
+        significantly different:</para>
+    <orderedlist>
+        <listitem>
+            <para>Upgrade the shared OpenStack Identity Service
+                (Keystone) deployment.</para>
+        </listitem>
+        <listitem>
+            <para>Upgrade the OpenStack Image Service (glance) at each
+                site.</para>
+        </listitem>
+        <listitem>
+            <para>Upgrade OpenStack Compute (Nova), including
+                networking components, at each site.</para>
+        </listitem>
+        <listitem>
+            <para>Upgrade OpenStack Block Storage (Cinder) at each
+                site.</para>
+        </listitem>
+        <listitem>
+            <para>Upgrade the OpenStack dashboard (Horizon), at each
+                site - or in the single central location if it is
+                shared.</para>
+        </listitem>
+    </orderedlist>
+    <para>Note that, as of the OpenStack Icehouse release, compute
+        upgrades within each site can also be performed in a rolling
+        fashion. Compute controller services (API, Scheduler, and
+        Conductor) can be upgraded prior to upgrading of individual
+        compute nodes. This maximizes the ability of operations staff
+        to keep a site operational for users of compute services while
+        performing an upgrade.</para></section>
+    <section xml:id="quota-management-multi-site"><title>Quota Management</title>
+    <para>To prevent system capacities from being exhausted without
+        notification, OpenStack provides operators with the ability to
+        define quotas. Quotas are used to set operational limits and
+        are currently enforced at the tenant (or project) level rather
+        than at the user level.</para>
+    <para>Quotas are defined on a per-region basis. Operators may wish
+        to define identical quotas for tenants in each region of the
+        cloud to provide a consistent experience, or even create a
+        process for synchronizing allocated quotas across regions. It
+        is important to note that only the operational limits imposed
+        by the quotas will be aligned consumption of quotas by users
+        will not be reflected between regions.</para>
+    <para>For example, given a cloud with two regions, if the operator
+        grants a user a quota of 25 instances in each region then that
+        user may launch a total of 50 instances spread across both
+        regions. They may not, however, launch more than 25 instances
+        in any single region.</para>
+    <para>For more information on managing quotas refer to Chapter 9.
+        Managing Projects and Users
+        (http://docs.openstack.org/openstack-ops/content/projects_users.html)
+        of the OpenStack Operators Guide.</para></section>
+    <section xml:id="policy-management-multi-site"><title>Policy Management</title>
+    <para>OpenStack provides a default set of Role Based Access
+        Control (RBAC) policies, defined in a <filename>policy.json</filename> file, for
+        each service. Operators edit these files to customize the
+        policies for their OpenStack installation. If the application
+        of consistent RBAC policies across sites is considered a
+        requirement, then it is necessary to ensure proper
+        synchronization of the <filename>policy.json</filename> files to all
+        installations.</para>
+    <para>This must be done using normal system administration tools
+        such as rsync as no functionality for synchronizing policies
+        across regions is currently provided within OpenStack.</para></section>
+    <section xml:id="documentation-multi-site"><title>Documentation</title>
+    <para>Users must be able to leverage cloud infrastructure and
+        provision new resources in the environment. It is important
+        that user documentation is accessible by users of the cloud
+        infrastructure to ensure they are given sufficient information
+        to help them leverage the cloud. As an example, by default
+        OpenStack will schedule instances on a compute node
+        automatically. However, when multiple regions are available,
+        it is left to the end user to decide in which region to
+        schedule the new instance. Horizon will present the user with
+        the first region in your configuration. The API and CLI tools
+        will not execute commands unless a valid region is specified.
+        It is therefore important to provide documentation to your
+        users describing the region layout as well as calling out that
+        quotas are region-specific. If a user reaches his or her quota
+        in one region, OpenStack will not automatically build new
+        instances in another. Documenting specific examples will help
+        users understand how to operate the cloud, thereby reducing
+        calls and tickets filed with the help desk.</para></section>
+</section>

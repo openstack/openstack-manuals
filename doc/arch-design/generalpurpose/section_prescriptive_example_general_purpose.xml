@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="5.0"
+    xml:id="prescriptive-example-online-classifieds">
+    <?dbhtml stop-chunking?>
+    <title>Prescriptive Example</title>
+    <para>An online classified advertising company wants to run web applications
+        consisting of Tomcat, Nginx and MariaDB in a private cloud. In order to
+        meet policy requirements, the cloud infrastructure will run in their own
+        data center. They have predictable load requirements but require an
+        element of scaling to cope with nightly increases in demand. Their
+        current environment is not flexible enough to align with their goal of
+        running an open source API driven environment. Their current environment
+        consists of the following:</para>
+    <itemizedlist>
+        <listitem>
+            <para>Between 120 and 140 installations of Nginx and
+                Tomcat, each with 2 vCPUs and 4 GB of RAM</para>
+        </listitem>
+        <listitem>
+            <para>A three-node MariaDB and Galera cluster, each with 4
+                vCPUs and 8 GB RAM</para>
+        </listitem>
+    </itemizedlist>
+    <para>The company runs hardware load balancers and multiple web
+        applications serving the sites. The company orchestrates their
+        environment using a combination of scripts and Puppet. The
+        websites generate a large amount of log data each day that
+        needs to be archived.</para>
+    <para>The solution would consist of the following OpenStack
+        components:</para>
+    <itemizedlist>
+        <listitem>
+            <para>A firewall, switches and load balancers on the
+                public facing network connections.</para>
+        </listitem>
+        <listitem>
+            <para>OpenStack Controller services running Image,
+                Identity, Networking and supporting services such as
+                MariaDB and RabbitMQ. The controllers will run in a
+                highly available configuration on at least three
+                controller nodes.</para>
+        </listitem>
+        <listitem>
+            <para>OpenStack Compute nodes running the KVM
+                hypervisor.</para>
+        </listitem>
+        <listitem>
+            <para>OpenStack Block Storage for use by compute instances
+                that require persistent storage such as databases for
+                dynamic sites.</para>
+        </listitem>
+        <listitem>
+            <para>OpenStack Object Storage for serving static objects
+                such as images.</para>
+        </listitem>
+    </itemizedlist>
+    <para><inlinemediaobject><imageobject><imagedata
+                    fileref="../images/General_Architecture3.png"
+                /></imageobject></inlinemediaobject>Running up to 140
+        web instances and the small number of MariaDB instances
+        requires 292 vCPUs available, as well as 584 GB RAM. On a
+        typical 1U server using dual-socket hex-core Intel CPUs with
+        Hyperthreading, and assuming 2:1 CPU overcommit ratio, this
+        would require 8 OpenStack Compute nodes.</para>
+    <para>The web application instances run from local storage on each
+        of the OpenStack Compute nodes. The web application instances
+        are stateless, meaning that any of the instances can fail and
+        the application will continue to function.</para>
+    <para>MariaDB server instances store their data on shared
+        enterprise storage, such as NetApp or Solidfire devices. If a
+        MariaDB instance fails, storage would be expected to be
+        re-attached to another instance and rejoined to the Galera
+        cluster.</para>
+    <para>Logs from the web application servers are shipped to
+        OpenStack Object Storage for later processing and
+        archiving.</para>
+    <para>In this scenario, additional capabilities can be realized by
+        moving static web content to be served from OpenStack Object
+        Storage containers, and backing the OpenStack Image Service
+        with OpenStack Object Storage. Note that an increase in
+        OpenStack Object Storage means that network bandwidth needs to
+        be taken in to consideration. It is best to run OpenStack
+        Object Storage with network connections offering 10 GbE or
+        better connectivity.</para>
+    <para>There is also a potential to leverage the Orchestration and
+        Telemetry OpenStack modules to provide an auto-scaling,
+        orchestrated web application environment. Defining the web
+        applications in Heat Orchestration Templates (HOT) would
+        negate the reliance on the scripted Puppet solution currently
+        employed.</para>
+    <para>OpenStack Networking can be used to control hardware load
+        balancers through the use of plug-ins and the Networking API.
+        This would allow a user to control hardware load balance pools
+        and instances as members in these pools, but their use in
+        production environments must be carefully weighed against
+        current stability.</para>
+</section>

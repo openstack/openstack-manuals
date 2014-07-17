@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="5.0"
+    xml:id="operational-considerations-massive-scale">
+    <?dbhtml stop-chunking?>
+    <title>Operational Considerations</title>
+    <para>In order to run at massive scale, it is important to plan on
+        the automation of as many of the operational processes as
+        possible. Automation includes the configuration of
+        provisioning, monitoring and alerting systems. Part of the
+        automation process includes the capability to determine when
+        human intervention is required and who should act. The
+        objective is to increase the ratio of operational staff to
+        running systems as much as possible to reduce maintenance
+        costs. In a massively scaled environment, it is impossible for
+        staff to give each system individual care.</para>
+    <para>Configuration management tools such as Puppet or Chef allow
+        operations staff to categorize systems into groups based on
+        their role and thus create configurations and system states
+        that are enforced through the provisioning system. Systems
+        that fall out of the defined state due to errors or failures
+        are quickly removed from the pool of active nodes and
+        replaced.</para>
+    <para>At large scale the resource cost of diagnosing individual
+        systems that have failed is far greater than the cost of
+        replacement. It is more economical to immediately replace the
+        system with a new system that can be provisioned and
+        configured automatically and quickly brought back into the
+        pool of active nodes. By automating tasks that are labor
+        intensive, repetitive, and critical to operations with
+        automation, cloud operations teams are able to be managed more
+        efficiently because fewer resources are needed for these
+        babysitting tasks. Administrators are then free to tackle
+        tasks that cannot be easily automated and have longer-term
+        impacts on the business such as capacity planning.</para>
+    <section xml:id="the-bleeding-edge"><title>The Bleeding Edge</title>
+    <para>Running OpenStack at massive scale requires striking a
+        balance between stability and features. For example, it might
+        be tempting to run an older stable release branch of OpenStack
+        to make deployments easier. However, when running at massive
+        scale, known issues that may be of some concern or only have
+        minimal impact in smaller deployments could become pain points
+        at massive scale. If the issue is well known, in many cases,
+        it may be resolved in more recent releases. The OpenStack
+        community can help resolve any issues reported by the applying
+        the collective expertise of the OpenStack developers.</para>
+    <para>When issues crop up, the number of organizations running at
+        a similar scale is a relatively tiny proportion of the
+        OpenStack community, therefore it is important to share these
+        issues with the community and be a vocal advocate for
+        resolving them. Some issues only manifest when operating at
+        large scale and the number of organizations able to duplicate
+        and validate an issue is small, so it will be important to
+        document and dedicate resources to their resolution.</para>
+    <para>In some cases, the resolution to the problem is ultimately
+        to deploy a more recent version of OpenStack. Alternatively,
+        when the issue needs to be resolved in a production
+        environment where rebuilding the entire environment is not an
+        option, it is possible to deploy just the more recent separate
+        underlying components required to resolve issues or gain
+        significant performance improvements. At first glance, this
+        could be perceived as potentially exposing the deployment to
+        increased risk to and instability. However, in many cases it
+        could be an issue that has not been discovered yet.</para>
+    <para>It is advisable to cultivate a development and operations
+        organization that is responsible for creating desired
+        features, diagnose and resolve issues, and also build the
+        infrastructure for large scale continuous integration tests
+        and continuous deployment. This helps catch bugs early and
+        make deployments quicker and less painful. In addition to
+        development resources, the recruitment of experts in the
+        fields of message queues, databases, distributed systems, and
+        networking, cloud and storage is also advisable.</para></section>
+    <section xml:id="growth-and-capacity-planning"><title>Growth and Capacity Planning</title>
+    <para>An important consideration in running at massive scale is
+        projecting growth and utilization trends to plan capital
+        expenditures for the near and long term. Utilization metrics
+        for compute, network, and storage as well as a historical
+        record of these metrics are required. While securing major
+        anchor tenants can lead to rapid jumps in the utilization
+        rates of all resources, the steady adoption of the cloud
+        inside an organizations or by public consumers in a public
+        offering will also create a steady trend of increased
+        utilization.</para></section>
+    <section xml:id="skills-and-training"><title>Skills and Training</title>
+    <para>Projecting growth for storage, networking, and compute is
+        only one aspect of a growth plan for running OpenStack at
+        massive scale. Growing and nurturing development and
+        operational staff is an additional consideration. Sending team
+        members to OpenStack conferences, meetup events, and
+        encouraging active participation in the mailing lists and
+        committees is a very important way to maintain skills and
+        forge relationships in the community. A list of OpenStack
+        training providers in the marketplace can be found here:
+        http://www.openstack.org/marketplace/training/.</para>
+    </section>
+</section>

@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="5.0"
+    xml:id="user-requirements-multi-site">
+    <?dbhtml stop-chunking?>
+    <title>User Requirements</title>
+    <para>A multi-site architecture is complex and has its own risks
+        and considerations, therefore it is important to make sure
+        when contemplating the design such an architecture that it
+        meets the user and business requirements.</para>
+    <para>Many jurisdictions have legislative and regulatory
+        requirements governing the storage and management of data in
+        cloud environments. Common areas of regulation include:</para>
+    <itemizedlist>
+        <listitem>
+            <para>Data retention policies ensuring storage of
+                persistent data and records management to meet data
+                archival requirements.</para>
+        </listitem>
+        <listitem>
+            <para>Data ownership policies governing the possession and
+                responsibility for data.</para>
+        </listitem>
+        <listitem>
+            <para>Data sovereignty policies governing the storage of
+                data in foreign countries or otherwise separate
+                jurisdictions.</para>
+        </listitem>
+        <listitem>
+            <para>Data compliance policies governing types of
+                information that needs to reside in certain locations
+                due to regular issues and, more importantly, cannot
+                reside in other locations for the same reason.</para>
+        </listitem>
+    </itemizedlist>
+    <para>Examples of such legal frameworks include the data
+        protection framework of the European Union
+        (http://ec.europa.eu/justice/data-protection) and the
+        requirements of the Financial Industry Regulatory Authority
+        (http://www.finra.org/Industry/Regulation/FINRARules) in the
+        United States. Consult a local regulatory body for more
+        information.</para>
+    <section xml:id="workload-characteristics"><title>Workload Characteristics</title>
+    <para>The expected workload is a critical requirement that needs
+        to be captured to guide decision-making. An understanding of
+        the workloads in the context of the desired multi-site
+        environment and use case is important. Another way of thinking
+        about a workload is to think of it as the way the systems are
+        used. A workload could be a single application or a suite of
+        applications that work together. It could also be a duplicate
+        set of applications that need to run in multiple cloud
+        environments. Often in a multi-site deployment the same
+        workload will need to work identically in more than one
+        physical location.</para>
+    <para>This multi-site scenario likely includes one or more of the
+        other scenarios in this book with the additional requirement
+        of having the workloads in two or more locations. The
+        following are some possible scenarios:</para>
+    <para>For many use cases the proximity of the user to their
+        workloads has a direct influence on the performance of the
+        application and therefore should be taken into consideration
+        in the design. Certain applications require zero to minimal
+        latency that can only be achieved by deploying the cloud in
+        multiple locations. These locations could be in different data
+        centers, cities, countries or geographical regions, depending
+        on the user requirement and location of the users.</para></section>
+    <section xml:id="consistency-images-templates-across-sites">
+        <title>Consistency of images and templates across different
+        sites</title>
+    <para>It is essential that the deployment of instances is
+        consistent across the different sites. This needs to be built
+        into the infrastructure. If OpenStack Object Store is used as
+        a back end for Glance, it is possible to create repositories of
+        consistent images across multiple sites. Having a central
+        endpoint with multiple storage nodes will allow for a
+        consistent centralized storage for each and every site.</para>
+    <para>Not using a centralized object store will increase
+        operational overhead so that a consistent image library can be
+        maintained. This could include development of a replication
+        mechanism to handle the transport of images and the changes to
+        the images across multiple sites.</para></section>
+    <section xml:id="high-availability-multi-site"><title>High Availability</title>
+    <para>If high availability is a requirement to provide continuous
+        infrastructure operations, a basic requirement of High
+        Availability should be defined.</para>
+    <para>The OpenStack management components need to have a basic and
+        minimal level of redundancy. The simplest example is the loss
+        of any single site has no significant impact on the
+        availability of the OpenStack services of the entire
+        infrastructure.</para>
+    <para>The OpenStack High Availability Guide
+        (http://docs.openstack.org/high-availability-guide/content/)
+        contains more information on how to provide redundancy for the
+        OpenStack components.</para>
+    <para>Multiple network links should be deployed between sites to
+        provide redundancy for all components. This includes storage
+        replication, which should be isolated to a dedicated network
+        or VLAN with the ability to assign QoS to control the
+        replication traffic or provide priority for this traffic. Note
+        that if the data store is highly changeable, the network
+        requirements could have a significant effect on the
+        operational cost of maintaining the sites.</para>
+    <para>The ability to maintain object availability in both sites
+        has significant implications on the object storage design and
+        implementation. It will also have a significant impact on the
+        WAN network design between the sites.</para>
+    <para>Connecting more than two sites increases the challenges and
+        adds more complexity to the design considerations. Multi-site
+        implementations require extra planning to address the
+        additional topology complexity used for internal and external
+        connectivity. Some options include full mesh topology, hub
+        spoke, spine leaf, or 3d Torus.</para>
+    <para>Not all the applications running in a cloud are cloud-aware.
+        If that is the case, there should be clear measures and
+        expectations to define what the infrastructure can support
+        and, more importantly, what it cannot. An example would be
+        shared storage between sites. It is possible, however such a
+        solution is not native to OpenStack and requires a third-party
+        hardware vendor to fulfill such a requirement. Another example
+        can be seen in applications that are able to consume resources
+        in object storage directly. These applications need to be
+        cloud aware to make good use of an OpenStack Object
+        Store.</para></section>
+    <section xml:id="application-readiness"><title>Application readiness</title>
+    <para>Some applications are tolerant of the lack of synchronized
+        object storage, while others may need those objects to be
+        replicated and available across regions. Understanding of how
+        the cloud implementation impacts new and existing applications
+        is important for risk mitigation and the overall success of a
+        cloud project. Applications may have to be written to expect
+        an infrastructure with little to no redundancy. Existing
+        applications not developed with the cloud in mind may need to
+        be rewritten.</para></section>
+    <section xml:id="cost-multi-site"><title>Cost</title>
+    <para>The requirement of having more than one site has a cost
+        attached to it. The greater the number of sites, the greater
+        the cost and complexity. Costs can be broken down into the
+        following categories</para>
+    <itemizedlist>
+        <listitem>
+            <para>Compute Resources</para>
+        </listitem>
+        <listitem>
+            <para>Networking resources</para>
+        </listitem>
+        <listitem>
+            <para>Replication</para>
+        </listitem>
+        <listitem>
+            <para>Storage</para>
+        </listitem>
+        <listitem>
+            <para>Management</para>
+        </listitem>
+        <listitem>
+            <para>Operational costs</para>
+        </listitem>
+    </itemizedlist></section>
+    <section xml:id="site-loss-and-recovery"><title>Site Loss and Recovery</title>
+    <para>Outages can cause loss of partial or full functionality of a
+        site. Strategies should be implemented to understand and plan
+        for recovery scenarios.</para>
+    <itemizedlist>
+        <listitem>
+            <para>The deployed applications need to continue to
+                function and, more importantly, consideration should
+                be taken of the impact on the performance and
+                reliability of the application when a site is
+                unavailable.</para>
+        </listitem>
+        <listitem>
+            <para>It is important to understand what will happen to
+                replication of objects and data between the sites when
+                a site goes down. If this causes queues to start
+                building up, considering how long these queues can
+                safely exist until something explodes.</para>
+        </listitem>
+        <listitem>
+            <para>Ensure determination of the method for resuming
+                proper operations of a site when it comes back online
+                after a disaster. It is recommended to architect the
+                recovery to avoid race conditions.</para>
+        </listitem>
+    </itemizedlist></section>
+    <section xml:id="compliance-and-geo-location-multi-site"><title>Compliance and Geo-location</title>
+    <para>An organization could have certain legal obligations and
+        regulatory compliance measures which could require certain
+        workloads or data to not be located in certain regions.</para></section>
+    <section xml:id="auditing-multi-site"><title>Auditing</title>
+    <para>A well thought-out auditing strategy is important in order
+        to be able to quickly track down issues. Keeping track of
+        changes made to security groups and tenant changes can be
+        useful in rolling back the changes if they affect production.
+        For example, if all security group rules for a tenant
+        disappeared, the ability to quickly track down the issue would
+        be important for operational and legal reasons.</para></section>
+    <section xml:id="separation-of-duties"><title>Separation of duties</title>
+    <para>A common requirement is to define different roles for the
+        different cloud administration functions. An example would be
+        a requirement to segregate the duties and permissions by
+        site.</para></section>
+    <section xml:id="authentication-between-sites">
+        <title>Authentication between sites</title>
+    <para>Ideally it is best to have a single authentication domain
+        and not need a separate implementation for each and every
+        site. This will, of course, require an authentication
+        mechanism that is highly available and distributed to ensure
+        continuous operation. Authentication server locality is also
+        something that might be needed as well and should be planned
+        for.</para></section>
+</section>

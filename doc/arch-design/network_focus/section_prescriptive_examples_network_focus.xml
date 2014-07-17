@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="5.0"
+    xml:id="prescriptive-example-large-scale-web-app">
+    <?dbhtml stop-chunking?>
+    <title>Prescriptive Examples</title>
+    <para>A large-scale web application has been designed with cloud
+        principles in mind. The application is designed to scale
+        horizontally in a bursting fashion and will generate a high
+        instance count. The application requires an SSL connection to
+        secure data and must not lose connection state to individual
+        servers.</para>
+    <para>An example design for this workload is depicted in the
+        figure below. In this example, a hardware load balancer is
+        configured to provide SSL offload functionality and to connect
+        to tenant networks in order to reduce address consumption.
+        This load balancer is linked to the routing architecture as it
+        will service the VIP for the application. The router and load
+        balancer are configured with GRE tunnel ID of the
+        application's tenant network and provided an IP address within
+        the tenant subnet but outside of the address pool. This is to
+        ensure that the load balancer can communicate with the
+        application's HTTP servers without requiring the consumption
+        of a public IP address.</para>
+    <para>Since sessions must remain until closing, the routing and
+        switching architecture is designed for high availability.
+        Switches are meshed to each hypervisor and to each other, and
+        also provide an MLAG implementation to ensure layer 2
+        connectivity does not fail. Routers are configured with VRRP
+        and fully meshed with switches to ensure layer 3 connectivity.
+        Since GRE is used as an overlay network, Neutron is installed
+        and configured to use the Open vSwitch agent in GRE tunnel
+        mode. This ensures all devices can reach all other devices and
+        that tenant networks can be created for private addressing
+        links to the load balancer.</para>
+    <mediaobject>
+        <imageobject>
+            <imagedata
+                fileref="../images/Network_Web_Services1.png"
+            />
+        </imageobject>
+    </mediaobject>
+    <para>A web service architecture has many options and optional
+        components. Due to this, it can fit into a large number of
+        other OpenStack designs however a few key components will need
+        to be in place to handle the nature of most web-scale
+        workloads. The user needs the following components:</para>
+    <itemizedlist>
+        <listitem>
+            <para>OpenStack Controller services (Image, Identity,
+                Networking and supporting services such as MariaDB and
+                RabbitMQ)</para>
+        </listitem>
+        <listitem>
+            <para>OpenStack Compute running KVM hypervisor</para>
+        </listitem>
+        <listitem>
+            <para>OpenStack Object Storage</para>
+        </listitem>
+        <listitem>
+            <para>OpenStack Orchestration</para>
+        </listitem>
+        <listitem>
+            <para>OpenStack Telemetry</para>
+        </listitem>
+    </itemizedlist>
+    <para>Beyond the normal Keystone, Nova, Glance and Swift
+        components, Heat is a recommended component to handle properly
+        scaling the workloads to adjust to demand. Ceilometer will
+        also need to be included in the design due to the requirement
+        for auto-scaling. Web services tend to be bursty in load, have
+        very defined peak and valley usage patterns and, as a result,
+        benefit from automatic scaling of instances based upon
+        traffic. At a network level, a split network configuration
+        will work well with databases residing on private tenant
+        networks since these do not emit a large quantity of broadcast
+        traffic and may need to interconnect to some databases for
+        content.</para>
+    <section xml:id="load-balancing"><title>Load Balancing</title>
+    <para>Load balancing was included in this design to spread
+        requests across multiple instances. This workload scales well
+        horizontally across large numbers of instances. This allows
+        instances to run without publicly routed IP addresses and
+        simply rely on the load balancer for the service to be
+        globally reachable. Many of these services do not require
+        direct server return. This aids in address planning and
+        utilization at scale since only the virtual IP (VIP) must be
+        public.</para></section>
+    <section xml:id="overlay-networks"><title>Overlay Networks</title>
+    <para>OpenStack Networking using the Open vSwitch GRE tunnel mode
+        was included in the design to provide overlay functionality.
+        In this case, the layer 3 external routers will be in a pair
+        with VRRP and switches should be paired with an implementation
+        of MLAG running to ensure that there is no loss of
+        connectivity with the upstream routing infrastructure.</para></section>
+    <section xml:id="performance-tuning"><title>Performance Tuning</title>
+    <para>Network level tuning for this workload is minimal.
+        Quality-of-Service (QoS) will be applied to these workloads
+        for a middle ground Class Selector depending on existing
+        policies. It will be higher than a best effort queue but lower
+        than an Expedited Forwarding or Assured Forwarding queue.
+        Since this type of application generates larger packets with
+        longer-lived connections, bandwidth utilization can be
+        optimized for long duration TCP. Normal bandwidth planning
+        applies here with regards to benchmarking a session's usage
+        multiplied by the expected number of concurrent sessions with
+        overhead.</para></section>
+    <section xml:id="network-functions"><title>Network Functions</title>
+    <para>Network functions is a broad category but encompasses
+        workloads that support the rest of a system's network. These
+        workloads tend to consist of large amounts of small packets
+        that are very short lived, such as DNS queries or SNMP traps.
+        These messages need to arrive quickly and do not deal with
+        packet loss as there can be a very large volume of them. There
+        are a few extra considerations to take into account for this
+        type of workload and this can change a configuration all the
+        way to the hypervisor level. For an application that generates
+        10 TCP sessions per user with an average bandwidth of 512
+        kilobytes per second per flow and expected user count of ten
+        thousand concurrent users, the expected bandwidth plan is
+        approximately 4.88 gigabits per second.</para>
+    <para>The supporting network for this type of configuration needs
+        to have a low latency and evenly distributed availability.
+        This workload benefits from having services local to the
+        consumers of the service. A multi-site approach is used as
+        well as deploying many copies of the application to handle
+        load as close as possible to consumers. Since these
+        applications function independently, they do not warrant
+        running overlays to interconnect tenant networks. Overlays
+        also have the drawback of performing poorly with rapid flow
+        setup and may incur too much overhead with large quantities of
+        small packets and are therefore not recommended.</para>
+    <para>QoS is desired for some workloads to ensure delivery. DNS
+        has a major impact on the load times of other services and
+        needs to be reliable and provide rapid responses. It is to
+        configure rules in upstream devices to apply a higher Class
+        Selector to DNS to ensure faster delivery or a better spot in
+        queuing algorithms.</para></section>
+    <section xml:id="cloud-storage"><title>Cloud Storage</title>
+    <para>Another common use case for OpenStack environments is to
+        provide a cloud based file storage and sharing service. While
+        this may initially be considered to be a storage focused use
+        case there are also major requirements on the network side
+        that place it in the realm of requiring a network focused
+        architecture. An example for this application is cloud
+        backup.</para>
+    <para>There are two specific behaviors of this workload that have
+        major and different impacts on the network. Since this is both
+        an externally facing service and internally replicating
+        application there are both North-South and East-West traffic
+        considerations.</para>
+    <para>North-South traffic is primarily user facing. This means
+        that when a user uploads content for storage it will be coming
+        into the OpenStack installation. Users who download this
+        content will be drawing traffic from the OpenStack
+        installation. Since the service is intended primarily as a
+        backup the majority of the traffic will be southbound into the
+        environment. In this case it is beneficial to configure a
+        network to be asymmetric downstream as the traffic entering
+        the OpenStack installation will be greater than traffic
+        leaving.</para>
+    <para>East-West traffic is likely to be fully symmetric. Since
+        replication will originate from any node and may target
+        multiple other nodes algorithmically, it is less likely for
+        this traffic to have a larger volume in any specific
+        direction. However this traffic may interfere with north-south
+        traffic.</para>
+    <mediaobject>
+        <imageobject>
+            <imagedata
+                fileref="../images/Network_Cloud_Storage2.png"
+            />
+        </imageobject>
+    </mediaobject>
+    <para>This application will prioritize the North-South traffic
+        over East-West traffic as it is the customer-facing data. QoS
+        is implemented on East-West traffic to be a lower priority
+        Class Selector, while North-South traffic requires a higher
+        level in the priority queue because of this.</para>
+    <para>The network design in this case is less dependant on
+        availability and more dependant on being able to handle high
+        bandwidth. As a direct result, it is beneficial to forego
+        redundant links in favor of bonding those connections. This
+        increases available bandwidth. It is also beneficial to
+        configure all devices in the path, including OpenStack, to
+        generate and pass jumbo frames.</para></section>
+</section>
