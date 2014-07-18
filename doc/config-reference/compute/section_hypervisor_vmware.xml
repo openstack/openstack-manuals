@@ -68,7 +68,7 @@
     <para>The figure does not show how networking fits into the
       architecture. Both <systemitem class="service">nova-network</systemitem>
       and the OpenStack Networking Service are supported. For details, see
-      <xref linkend="VMWare_networking"/>.</para>
+      <xref linkend="VMware_networking"/>.</para>
   </section>
   <section xml:id="vmware_configuration_overview">
     <title>Configuration overview</title>
@@ -80,15 +80,15 @@
       </listitem>
       <listitem>
         <para>Configure the VMware
-          vCenter driver in the <filename>nova.conf</filename> file. See <xref linkend="VMWareVCDriver_details"/>.</para>
+          vCenter driver in the <filename>nova.conf</filename> file. See <xref linkend="VMwareVCDriver_details"/>.</para>
       </listitem>
       <listitem>
         <para>Load desired VMDK images into the OpenStack Image
-          Service. See <xref linkend="VMWare_images"/>.</para>
+          Service. See <xref linkend="VMware_images"/>.</para>
       </listitem>
       <listitem>
         <para>Configure networking with either <systemitem class="service">nova-network</systemitem>
-        or the OpenStack Networking Service. See <xref linkend="VMWare_networking"/>.</para>
+        or the OpenStack Networking Service. See <xref linkend="VMware_networking"/>.</para>
       </listitem>
     </orderedlist>
   </section>
@@ -126,7 +126,7 @@
       <listitem>
         <para><emphasis role="bold">Networking</emphasis>. The
           networking configuration depends on the desired networking
-          model. See <xref linkend="VMWare_networking"/>.</para>
+          model. See <xref linkend="VMware_networking"/>.</para>
       </listitem>
       <listitem>
         <para><emphasis role="bold">Security groups</emphasis>. If you
@@ -532,14 +532,14 @@
         </tbody>
       </table>
 </section>
-<section xml:id="VMWareVCDriver_details">
+<section xml:id="VMwareVCDriver_details">
     <title>VMware vCenter driver</title>
     <para>Use the VMware vCenter driver (VMwareVCDriver) to connect
       OpenStack Compute with vCenter. This recommended configuration
       enables access through vCenter to advanced vSphere features like
       vMotion, High Availability, and Dynamic Resource Scheduling
       (DRS).</para>
-    <section xml:id="VMWareVCDriver_configuration_options">
+    <section xml:id="VMwareVCDriver_configuration_options">
       <title>VMwareVCDriver configuration options</title>
       <para>When you use the VMwareVCDriver (vCenter versions 5.1 and
         later) with OpenStack Compute, add the following
@@ -562,7 +562,7 @@ datastore_regex=&lt;optional datastore regex&gt;</programlisting>
             <code>wsdl_location=http://127.0.0.1:8080/vmware/SDK/wsdl/vim25/vimService.wsdl</code>
               setting to the above configuration. For more
               information, see
-              <link linkend="VMWare_additional_config">vSphere 5.0 and
+              <link linkend="VMware_additional_config">vSphere 5.0 and
               earlier additional set up</link>.</para>
           </listitem>
           <listitem>
@@ -607,10 +607,10 @@ datastore_regex=&lt;optional datastore regex&gt;</programlisting>
           to libvirt but do not apply to this driver.</para>
       </note>
       <para>You must complete additional configuration for
-        environments that use vSphere 5.0 and earlier. See <xref linkend="VMWare_additional_config"/>.</para>
+        environments that use vSphere 5.0 and earlier. See <xref linkend="VMware_additional_config"/>.</para>
     </section>
   </section>
-  <section xml:id="VMWare_images">
+  <section xml:id="VMware_images">
     <title>Images with VMware vSphere</title>
     <para>The vCenter driver supports images in the VMDK format. Disks
       in this format can be obtained from VMware Fusion or from an ESX
@@ -833,7 +833,7 @@ precise-server-cloudimg-amd64-disk1.vmdk</userinput></screen>
       <para>Even with a cached VMDK, there is still a copy operation
         from the cache location to the hypervisor file directory in
         the shared data store. To avoid this copy, boot the image in
-        linked_clone mode. To learn how to enable this mode, see <xref linkend="VMWare_config"/>.</para>
+        linked_clone mode. To learn how to enable this mode, see <xref linkend="VMware_config"/>.</para>
       <note><para>You can also use
         the <code>vmware_linked_clone</code> property in the OpenStack
         Image Service to
@@ -859,7 +859,7 @@ precise-server-cloudimg-amd64-disk1.vmdk</userinput></screen>
       </variablelist>
     </section>
   </section>
-  <section xml:id="VMWare_networking">
+  <section xml:id="VMware_networking">
     <title>Networking with VMware vSphere</title>
     <para>The VMware driver supports networking with the <systemitem class="service">nova-network</systemitem> service or the
       OpenStack Networking Service. Depending on your installation,
@@ -908,7 +908,7 @@ precise-server-cloudimg-amd64-disk1.vmdk</userinput></screen>
       </listitem>
     </itemizedlist>
   </section>
-  <section xml:id="VMWare_volumes">
+  <section xml:id="VMware_volumes">
     <title>Volumes with VMware vSphere</title>
     <para>The VMware driver supports attaching volumes from the
       OpenStack Block Storage service. The VMware VMDK driver for
@@ -918,7 +918,7 @@ precise-server-cloudimg-amd64-disk1.vmdk</userinput></screen>
       provides limited support and can be used only for
       attachments.</para>
   </section>
-  <section xml:id="VMWare_additional_config">
+  <section xml:id="VMware_additional_config">
     <title>vSphere 5.0 and earlier additional set up</title>
     <para>Users of vSphere 5.0 or earlier must host their WSDL files
       locally. These steps are applicable for vCenter 5.0 or ESXi 5.0
@@ -929,7 +929,7 @@ precise-server-cloudimg-amd64-disk1.vmdk</userinput></screen>
     <para>When setting the VMwareVCDriver configuration options, you
       must include the <code>wsdl_location</code> option. For more
       information, see
-      <link linkend="VMWareVCDriver_configuration_options">VMwareVCDriver
+      <link linkend="VMwareVCDriver_configuration_options">VMwareVCDriver
       configuration options</link> above.</para>
     <procedure>
       <title>To mirror WSDL from vCenter (or ESXi)</title>
@@ -1005,18 +1005,18 @@ wsdl_location=file:///opt/stack/vmware/wsdl/5.0/vimService.wsdl</programlisting>
     <programlisting language="ini">[vmware]
 wsdl_location=file:///opt/stack/vmware/SDK/wsdl/vim25/vimService.wsdl</programlisting>
   </section>
-  <section xml:id="VMWareESXDriver_details">
+  <section xml:id="VMwareESXDriver_details">
     <title>VMware ESX driver</title>
     <para>This section covers details of using the VMwareESXDriver.
       The ESX Driver has not been extensively tested and is not
       recommended. To configure the VMware vCenter driver instead, see
-        <xref linkend="VMWareVCDriver_details"/>.</para>
+        <xref linkend="VMwareVCDriver_details"/>.</para>
         <warning>
           <para>
-            The VMWare ESX driver has been deprecated in the Icehouse
+            The VMware ESX driver has been deprecated in the Icehouse
             release and will be removed with the Juno release.</para>
         </warning>
-    <section xml:id="VMWareESXDriver_configuration_options">
+    <section xml:id="VMwareESXDriver_configuration_options">
       <title>VMwareESXDriver configuration options</title>
       <para>When you use the VMwareESXDriver (no vCenter) with
         OpenStack Compute, add the following VMware-specific
@@ -1045,7 +1045,7 @@ wsdl_location=http://127.0.0.1:8080/vmware/SDK/wsdl/vim25/vimService.wsdl</progr
         DRS.</para>
     </section>
   </section>
-  <section xml:id="VMWare_config">
+  <section xml:id="VMware_config">
     <title>Configuration reference</title>
     <para>To customize the VMware driver, use the configuration option settings
         documented in <xref linkend="config_table_nova_vmware"/>.</para>
