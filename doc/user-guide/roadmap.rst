@@ -9,7 +9,6 @@ May 20, 2014
 To do tasks:
 - Add a chapter describing the HOT templates for Orchestration, how to use them
 - Add reference information about HOT templates for Orchestration; attempt to automate
-- Add audience information; who is this book intended for
 
 Ongoing tasks:
 - Ensure it meets conventions and standards
