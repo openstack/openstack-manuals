@@ -159,21 +159,6 @@ glance_host = <replaceable>controller</replaceable></programlisting>
           <programlisting language="ini">[libvirt]
 ...
 virt_type = qemu</programlisting>
-          <warning os="ubuntu">
-            <para>On Ubuntu 12.04, kernels backported from newer releases may
-              not automatically load the KVM modules for hardware acceleration
-              when the compute node boots. In this case, launching an instance
-              will fail with the following message in the
-              <filename>/var/log/nova/nova-compute.log</filename> file:</para>
-            <screen><computeroutput>libvirtError: internal error: no supported architecture for os type 'hvm'</computeroutput></screen>
-            <para>As a workaround for this issue, you must add the appropriate
-              module for your compute node to the
-              <filename>/etc/modules</filename> file.</para>
-            <para>For systems with Intel processors:</para>
-            <screen><prompt>#</prompt> <userinput>echo 'kvm_intel' >> /etc/modules</userinput></screen>
-            <para>For systems with AMD processors:</para>
-            <screen><prompt>#</prompt> <userinput>echo 'kvm_amd' >> /etc/modules</userinput></screen>
-          </warning>
         </step>
       </substeps>
     </step>
