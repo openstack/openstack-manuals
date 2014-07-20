@@ -10,7 +10,7 @@
         community.</para>
     <section xml:id="section_provider_networks">
         <title>Provider networks</title>
-        <para>Networks can be categorized as either "tenant networks" or "provider networks". Tenant
+        <para>Networks can be categorized as either tenant networks or provider networks. Tenant
             networks are created by normal users and details about how they are physically realized
             are hidden from those users. Provider networks are created with administrative
             credentials, specifying the details of how the network is physically realized, usually
@@ -189,39 +189,39 @@
           <listitem>
                             <para>Shows all attributes of a network, including provider
                                 attributes:</para>
-                            <screen><prompt>$</prompt> <userinput>neutron net-show &lt;name or net-id&gt;</userinput></screen>
+                            <screen><prompt>$</prompt> <userinput>neutron net-show <replaceable>NAME_OR_NET_ID</replaceable></userinput></screen>
           </listitem>
           <listitem>
                             <para>Creates a local provider network:</para>
-                            <screen><prompt>$</prompt> <userinput>neutron net-create &lt;name&gt; --tenant_id &lt;tenant-id&gt; --provider:network_type local</userinput></screen>
+                            <screen><prompt>$</prompt> <userinput>neutron net-create <replaceable>NAME</replaceable> --tenant_id <replaceable>TENANT_ID</replaceable> --provider:network_type local</userinput></screen>
           </listitem>
           <listitem>
                             <para>When you create flat networks,
-                                &lt;phys-net-name&gt; must be known to the plug-in. See the
+                                <replaceable>PHYS_NET_NAME</replaceable> must be known to the plug-in. See the
                                     <citetitle>OpenStack
                                     Configuration Reference</citetitle> for details. Creates a flat provider network:</para>
-                            <screen><prompt>$</prompt> <userinput>neutron net-create &lt;name&gt; --tenant_id &lt;tenant-id&gt; --provider:network_type flat --provider:physical_network &lt;phys-net-name&gt;</userinput></screen>
+                            <screen><prompt>$</prompt> <userinput>neutron net-create <replaceable>NAME</replaceable> --tenant_id <replaceable>TENANT_ID</replaceable> --provider:network_type flat --provider:physical_network <replaceable>PHYS_NET_NAME</replaceable></userinput></screen>
           </listitem>
           <listitem>
                             <para>When you create VLAN networks,
-                                &lt;phys-net-name&gt; must be known to the plug-in. See the
+                                <replaceable>PHYS_NET_NAME</replaceable> must be known to the plug-in. See the
                                     <citetitle>OpenStack
                                     Configuration Reference</citetitle> for details on configuring
                                 network_vlan_ranges to identify all physical networks. When you
-                                create VLAN networks, &lt;VID&gt; can fall either within or outside
+                                create VLAN networks, <replaceable>VID</replaceable> can fall either within or outside
                                 any configured ranges of VLAN IDs from which tenant networks are
                                 allocated. Creates a VLAN provider network:</para>
-                            <screen><prompt>$</prompt> <userinput>neutron net-create &lt;name&gt; --tenant_id &lt;tenant-id&gt; --provider:network_type vlan --provider:physical_network &lt;phys-net-name&gt; --provider:segmentation_id &lt;VID&gt;</userinput></screen>
+                            <screen><prompt>$</prompt> <userinput>neutron net-create <replaceable>NAME</replaceable> --tenant_id <replaceable>TENANT_ID</replaceable> --provider:network_type vlan --provider:physical_network <replaceable>PHYS_NET_NAME</replaceable> --provider:segmentation_id <replaceable>VID</replaceable></userinput></screen>
           </listitem>
           <listitem>
                             <para>When you create GRE networks,
-                                &lt;tunnel-id&gt; can be either inside or outside any tunnel ID
+                                <replaceable>TUNNEL_ID</replaceable> can be either inside or outside any tunnel ID
                                 ranges from which tenant networks are allocated.</para>
                             <para>After you create provider networks, you can allocate subnets,
                                 which you can use in the same way as other virtual networks, subject
                                 to authorization policy based on the specified
-                                &lt;tenant_id&gt;. Creates a GRE provider network:</para>
-                            <screen><prompt>$</prompt> <userinput>neutron net-create &lt;name&gt; --tenant_id &lt;tenant-id&gt; --provider:network_type gre --provider:segmentation_id &lt;tunnel-id&gt;</userinput></screen>
+                                <replaceable>TENANT_ID</replaceable>. Creates a GRE provider network:</para>
+                            <screen><prompt>$</prompt> <userinput>neutron net-create <replaceable>NAME</replaceable> --tenant_id <replaceable>TENANT_ID</replaceable> --provider:network_type gre --provider:segmentation_id <replaceable>TUNNEL_ID</replaceable></userinput></screen>
           </listitem>
         </itemizedlist>
         </section>
@@ -421,8 +421,8 @@
 <prompt>$</prompt> <userinput>neutron net-create net2</userinput>
 <prompt>$</prompt> <userinput>neutron subnet-create net2 10.0.1.0/24</userinput>
 <prompt>$</prompt> <userinput>neutron router-create router1</userinput>
-<prompt>$</prompt> <userinput>neutron router-interface-add router1 &lt;subnet1-uuid&gt;</userinput>
-<prompt>$</prompt> <userinput>neutron router-interface-add router1 &lt;subnet2-uuid&gt;</userinput></screen>
+<prompt>$</prompt> <userinput>neutron router-interface-add router1 <replaceable>SUBNET1_UUID</replaceable></userinput>
+<prompt>$</prompt> <userinput>neutron router-interface-add router1 <replaceable>SUBNET2_UUID</replaceable></userinput></screen>
                         </td>
                     </tr>
                     <tr>
@@ -431,7 +431,7 @@
                                 router to act as a NAT gateway for external connectivity.</para>
                         </td>
                         <td>
-                            <screen><prompt>$</prompt> <userinput>neutron router-gateway-set router1 &lt;ext-net-id&gt;</userinput></screen>
+                            <screen><prompt>$</prompt> <userinput>neutron router-gateway-set router1 <replaceable>EXT_NET_ID</replaceable></userinput></screen>
                             <para>The router obtains an interface with the gateway_ip address of the
                                 subnet and this interface is attached to a port on the L2
                                 Networking network associated with the subnet. The router also gets
@@ -454,27 +454,31 @@
                             <para>Shows information for a specified router.</para>
                         </td>
                         <td>
-                            <screen><prompt>$</prompt> <userinput>neutron router-show &lt;router_id&gt;</userinput></screen>
+                            <screen><prompt>$</prompt> <userinput>neutron router-show <replaceable>ROUTER_ID</replaceable></userinput></screen>
                         </td>
                     </tr>
                     <tr>
                         <td>
                             <para>Shows all internal interfaces for a router.</para>
                         </td>
+                        <td>
+                            <screen><prompt>$</prompt> <userinput>neutron router-port-list <replaceable>ROUTER_ID</replaceable></userinput>
+<prompt>$</prompt> <userinput>neutron router-port-list <replaceable>ROUTER_NAME</replaceable></userinput></screen>
+                        </td>
                     </tr>
                     <tr>
                         <td>
-                            <para>Identifies the <literal>port-id</literal> that represents the VM
+                            <para>Identifies the <replaceable>PORT_ID</replaceable> that represents the VM
                                 NIC to which the floating IP should map.</para>
                         </td>
                         <td>
-                            <screen><prompt>$</prompt> <userinput>neutron port-list -c id -c fixed_ips -- --device_id=&lt;instance_id&gt;</userinput></screen>
+                            <screen><prompt>$</prompt> <userinput>neutron port-list -c id -c fixed_ips -- --device_id=<replaceable>INSTANCE_ID</replaceable></userinput></screen>
                             <para>This port must be on an Networking subnet that is attached to a
                                 router uplinked to the external network used to create the floating
                                 IP. Conceptually, this is because the router must be able to perform
-                                the Destination NAT (DNAT) rewriting of packets from the Floating IP
+                                the Destination NAT (DNAT) rewriting of packets from the floating IP
                                 address (chosen from a subnet on the external network) to the
-                                internal Fixed IP (chosen from a private subnet that is behind the
+                                internal fixed IP (chosen from a private subnet that is behind the
                                 router).</para>
                         </td>
                     </tr>
@@ -484,8 +488,8 @@
                                 port.</para>
                         </td>
                         <td>
-                            <screen><prompt>$</prompt> <userinput>neutron floatingip-create &lt;ext-net-id&gt;</userinput>
-<prompt>$</prompt> <userinput>neutron floatingip-associate &lt;floatingip-id&gt; &lt;internal VM port-id&gt;</userinput></screen>
+                            <screen><prompt>$</prompt> <userinput>neutron floatingip-create <replaceable>EXT_NET_ID</replaceable></userinput>
+<prompt>$</prompt> <userinput>neutron floatingip-associate <replaceable>FLOATING_IP_ID</replaceable> <replaceable>INTERNAL_VM_PORT_ID</replaceable></userinput></screen>
                         </td>
                     </tr>
                     <tr>
@@ -494,7 +498,7 @@
                                 single step.</para>
                         </td>
                         <td>
-                            <screen><prompt>$</prompt> <userinput>neutron floatingip-create --port_id &lt;internal VM port-id&gt; &lt;ext-net-id&gt;</userinput></screen>
+                            <screen><prompt>$</prompt> <userinput>neutron floatingip-create --port_id <replaceable>INTERNAL_VM_PORT_ID</replaceable> <replaceable>EXT_NET_ID</replaceable></userinput></screen>
                         </td>
                     </tr>
                     <tr>
@@ -518,7 +522,7 @@
                             <para>Disassociates a floating IP address.</para>
                         </td>
                         <td>
-                            <screen><prompt>$</prompt> <userinput>neutron floatingip-disassociate &lt;floatingip-id&gt;</userinput></screen>
+                            <screen><prompt>$</prompt> <userinput>neutron floatingip-disassociate <replaceable>FLOATING_IP_ID</replaceable></userinput></screen>
                         </td>
                     </tr>
                     <tr>
@@ -526,7 +530,7 @@
                             <para>Deletes the floating IP address.</para>
                         </td>
                         <td>
-                            <screen><prompt>$</prompt> <userinput>neutron floatingip-delete &lt;floatingip-id&gt;</userinput></screen>
+                            <screen><prompt>$</prompt> <userinput>neutron floatingip-delete <replaceable>FLOATING_IP_ID</replaceable></userinput></screen>
                         </td>
                     </tr>
                     <tr>
@@ -542,7 +546,7 @@
                             <para>Removes the interfaces from the router.</para>
                         </td>
                         <td>
-                            <screen><prompt>$</prompt> <userinput>neutron router-interface-delete router1 &lt;subnet-id&gt;</userinput></screen>
+                            <screen><prompt>$</prompt> <userinput>neutron router-interface-delete router1 <replaceable>SUBNET_ID</replaceable></userinput></screen>
                         </td>
                     </tr>
                     <tr>
@@ -759,7 +763,7 @@
                             <para>Creates a security group rule to allow port 80 ingress.</para>
                         </td>
                         <td>
-                            <screen><prompt>$</prompt> <userinput>neutron security-group-rule-create --direction ingress --protocol tcp --port_range_min 80 --port_range_max 80 &lt;security_group_uuid&gt;</userinput></screen>
+                            <screen><prompt>$</prompt> <userinput>neutron security-group-rule-create --direction ingress --protocol tcp --port_range_min 80 --port_range_max 80 <replaceable>SECURITY_GROUP_UUID</replaceable></userinput></screen>
                         </td>
                     </tr>
                     <tr>
@@ -775,7 +779,7 @@
                             <para>Deletes a security group rule.</para>
                         </td>
                         <td>
-                            <screen><prompt>$</prompt> <userinput>neutron security-group-rule-delete &lt;security_group_rule_uuid&gt;</userinput></screen>
+                            <screen><prompt>$</prompt> <userinput>neutron security-group-rule-delete <replaceable>SECURITY_GROUP_RULE_UUID</replaceable></userinput></screen>
                         </td>
                     </tr>
                     <tr>
@@ -783,7 +787,7 @@
                             <para>Deletes a security group.</para>
                         </td>
                         <td>
-                            <screen><prompt>$</prompt> <userinput>neutron security-group-delete &lt;security_group_uuid&gt;</userinput></screen>
+                            <screen><prompt>$</prompt> <userinput>neutron security-group-delete <replaceable>SECURITY_GROUP_UUID</replaceable></userinput></screen>
                         </td>
                     </tr>
                     <tr>
@@ -791,7 +795,7 @@
                             <para>Creates a port and associates two security groups.</para>
                         </td>
                         <td>
-                            <screen><prompt>$</prompt> <userinput>neutron port-create --security-group &lt;security_group_id1&gt; --security-group &lt;security_group_id2&gt; &lt;network_id&gt;</userinput></screen>
+                            <screen><prompt>$</prompt> <userinput>neutron port-create --security-group <replaceable>SECURITY_GROUP_ID1</replaceable> --security-group <replaceable>SECURITY_GROUP_ID2</replaceable> <replaceable>NETWORK_ID</replaceable></userinput></screen>
                         </td>
                     </tr>
                     <tr>
@@ -799,7 +803,7 @@
                             <para>Removes security groups from a port.</para>
                         </td>
                         <td>
-                            <screen><prompt>$</prompt> <userinput>neutron port-update --no-security-groups &lt;port_id&gt;</userinput></screen>
+                            <screen><prompt>$</prompt> <userinput>neutron port-update --no-security-groups <replaceable>PORT_ID</replaceable></userinput></screen>
                         </td>
                     </tr>
                 </tbody>
@@ -826,26 +830,26 @@
                                 <filename>neutron.conf</filename> file. If no default provider is
                             specified for LBaaS, the <parameter>--provider</parameter> option is
                             required for pool creation.</para>
-                        <screen><prompt>$</prompt> <userinput>neutron lb-pool-create --lb-method ROUND_ROBIN --name mypool --protocol HTTP --subnet-id &lt;subnet-uuid&gt; <parameter>--provider &lt;provider_name&gt;</parameter></userinput></screen>
+                        <screen><prompt>$</prompt> <userinput>neutron lb-pool-create --lb-method ROUND_ROBIN --name mypool --protocol HTTP --subnet-id <replaceable>SUBNET_UUID</replaceable> <parameter>--provider <replaceable>PROVIDER_NAME</replaceable></parameter></userinput></screen>
           </listitem>
           <listitem>
                         <para>Associates two web servers with pool.</para>
-                        <screen><prompt>$</prompt> <userinput>neutron lb-member-create --address  &lt;webserver one IP&gt; --protocol-port 80 mypool</userinput>
-<prompt>$</prompt> <userinput>neutron lb-member-create --address  &lt;webserver two IP&gt; --protocol-port 80 mypool</userinput></screen>
+                        <screen><prompt>$</prompt> <userinput>neutron lb-member-create --address  <replaceable>WEBSERVER1_IP</replaceable> --protocol-port 80 mypool</userinput>
+<prompt>$</prompt> <userinput>neutron lb-member-create --address  <replaceable>WEBSERVER2_IP</replaceable> --protocol-port 80 mypool</userinput></screen>
           </listitem>
           <listitem>
-                        <para>Creates a health monitor which checks to make sure our instances are
-                            still running on the specified protocol-port.</para>
+                        <para>Creates a health monitor that checks to make sure our instances are
+                    still running on the specified protocol-port.</para>
                         <screen><prompt>$</prompt> <userinput>neutron lb-healthmonitor-create --delay 3 --type HTTP --max-retries 3 --timeout 3</userinput></screen>
           </listitem>
           <listitem>
                         <para>Associates a health monitor with pool.</para>
-                        <screen><prompt>$</prompt> <userinput>neutron lb-healthmonitor-associate  &lt;healthmonitor-uuid&gt; mypool</userinput></screen>
+                        <screen><prompt>$</prompt> <userinput>neutron lb-healthmonitor-associate  <replaceable>HEALTHMONITOR_UUID</replaceable> mypool</userinput></screen>
           </listitem>
           <listitem>
                         <para>Creates a virtual IP (VIP) address that, when accessed through the
                             load balancer, directs the requests to one of the pool members.</para>
-                        <screen><prompt>$</prompt> <userinput>neutron lb-vip-create --name myvip --protocol-port 80 --protocol HTTP --subnet-id &lt;subnet-uuid&gt; mypool</userinput></screen>
+                        <screen><prompt>$</prompt> <userinput>neutron lb-vip-create --name myvip --protocol-port 80 --protocol HTTP --subnet-id <replaceable>SUBNET_UUID</replaceable> mypool</userinput></screen>
           </listitem>
         </itemizedlist>
     </section>
@@ -894,7 +898,7 @@
                         <td>description</td>
                         <td>String</td>
                         <td>None</td>
-                        <td>Human readable description for the firewall rule (1024 characters
+                        <td>Human-readable description for the firewall rule (1024 characters
                             limit).</td>
                     </tr>
                     <tr>
@@ -919,13 +923,13 @@
                         <td>protocol</td>
                         <td>String</td>
                         <td>None</td>
-                        <td>IP Protocol (icmp, tcp, udp, None).</td>
+                        <td>IP protocol (icmp, tcp, udp, None).</td>
                     </tr>
                     <tr>
                         <td>ip_version</td>
                         <td>Integer or String</td>
                         <td>4</td>
-                        <td>IP Version (4, 6).</td>
+                        <td>IP version (4, 6).</td>
                     </tr>
                     <tr>
                         <td>source_ip_address</td>
@@ -972,9 +976,9 @@
                         <td>enabled</td>
                         <td>Boolean</td>
                         <td>True</td>
-                        <td>When set to False, disables this rule in the firewall policy.
-                            Facilitates selectively turning off rules without having to disassociate
-                            the rule from the firewall policy.</td>
+                        <td>When set to <literal>False</literal>, disables this rule in the firewall
+                            policy. Facilitates selectively turning off rules without having to
+                            disassociate the rule from the firewall policy.</td>
                     </tr>
                 </tbody>
             </table>
@@ -1040,7 +1044,7 @@
                         <td>False</td>
                         <td>When set to True by the policy owner indicates that the firewall policy
                             has been audited. This attribute is meant to aid in the firewall policy
-                            audit workflows. Each time the firewall policy or the associated
+                            audit work flows. Each time the firewall policy or the associated
                             firewall rules are changed, this attribute is set to False and must be
                             explicitly set to True through an update operation.</td>
                     </tr>
@@ -1252,10 +1256,10 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    <para>Creates QoS Queue (admin-only).</para>
+                                    <para>Creates QoS queue (admin-only).</para>
                                 </td>
                                 <td>
-                                    <screen><prompt>$</prompt> <userinput>neutron queue-create--min 10 --max 1000 myqueue</userinput></screen>
+                                    <screen><prompt>$</prompt> <userinput>neutron queue-create --min 10 --max 1000 myqueue</userinput></screen>
                                 </td>
                             </tr>
                             <tr>
@@ -1263,7 +1267,7 @@
                                     <para>Associates a queue with a network.</para>
                                 </td>
                                 <td>
-                                    <screen><prompt>$</prompt> <userinput>neutron net-create network --queue_id=&lt;queue_id&gt;</userinput></screen>
+                                    <screen><prompt>$</prompt> <userinput>neutron net-create network --queue_id=<replaceable>QUEUE_ID</replaceable></userinput></screen>
                                 </td>
                             </tr>
                             <tr>
@@ -1287,7 +1291,7 @@
                                     <para>Deletes a QoS queue.</para>
                                 </td>
                                 <td>
-                                    <screen><prompt>$</prompt> <userinput>neutron queue-delete &lt;queue_id or name&gt;'</userinput></screen>
+                                    <screen><prompt>$</prompt> <userinput>neutron queue-delete <replaceable>QUEUE_ID_OR_NAME</replaceable>'</userinput></screen>
                                 </td>
                             </tr>
                         </tbody>
@@ -1344,7 +1348,7 @@
                 <title>VMware NSX L3 extension</title>
                 <para>NSX exposes its L3 capabilities through gateway services which are usually
                     configured out of band from OpenStack. To use NSX with L3 capabilities, first
-                    create a L3 gateway service in the NSX Manager. Next, in <filename>
+                    create an L3 gateway service in the NSX Manager. Next, in <filename>
                         /etc/neutron/plugins/vmware/nsx.ini</filename> set
                         <literal>default_l3_gw_service_uuid</literal> to this value. By default,
                     routers are mapped to this gateway service.</para>
@@ -1353,10 +1357,10 @@
                     <para>Create external network and map it to a specific NSX gateway
                         service:</para>
                     <screen><prompt>$</prompt> <userinput>neutron net-create public --router:external=True --provider:network_type l3_ext \
---provider:physical_network &lt;L3-Gateway-Service-UUID&gt;</userinput></screen>
+--provider:physical_network <replaceable>L3_GATEWAY_SERVICE_UUID</replaceable></userinput></screen>
                     <para>Terminate traffic on a specific VLAN from a NSX gateway service:</para>
                     <screen><prompt>$</prompt> <userinput>neutron net-create public --router:external=True --provider:network_type l3_ext \
---provider:physical_network &lt;L3-Gateway-Service-UUID&gt; --provider:segmentation_id &lt;VLAN_ID&gt;</userinput></screen>
+--provider:physical_network <replaceable>L3_GATEWAY_SERVICE_UUID</replaceable> --provider:segmentation_id <replaceable>VLAN_ID</replaceable></userinput></screen>
                 </section>
             </section>
             <section xml:id="section_vmware_nsx_plugin_status_sync">
@@ -1463,7 +1467,7 @@
                 <para>The <parameter>fields=status</parameter> parameter in Networking API requests
                     always triggers an explicit query to the NSX back end, even when you enable
                     asynchronous state synchronization. For example, <code>GET
-                        /v2.0/networks/&lt;net-id>?fields=status&amp;fields=name</code>.</para>
+                        /v2.0/networks/<replaceable>NET_ID</replaceable>?fields=status&amp;fields=name</code>.</para>
             </section>
         </section>
         <section xml:id="section_bigswitch_extensions">
@@ -1545,15 +1549,15 @@
                         provided at the same time.</para>
                     <para>Update a router with rules to permit traffic by default but block traffic
                         from external networks to the 10.10.10.0/24 subnet:</para>
-                    <screen><prompt>$</prompt> <userinput>neutron router-update <replaceable>Router-UUID</replaceable> --router_rules type=dict list=true\
+                    <screen><prompt>$</prompt> <userinput>neutron router-update <replaceable>ROUTER_UUID</replaceable> --router_rules type=dict list=true\
 source=any,destination=any,action=permit \
 source=external,destination=10.10.10.0/24,action=deny</userinput></screen>
                     <para>Specify alternate next-hop addresses for a specific subnet:</para>
-                    <screen><prompt>$</prompt> <userinput>neutron router-update <replaceable>Router-UUID</replaceable> --router_rules type=dict list=true\
+                    <screen><prompt>$</prompt> <userinput>neutron router-update <replaceable>ROUTER_UUID</replaceable> --router_rules type=dict list=true\
 source=any,destination=any,action=permit \
 source=10.10.10.0/24,destination=any,action=permit,nexthops=10.10.10.254+10.10.10.253</userinput></screen>
                     <para>Block traffic between two subnets while allowing everything else:</para>
-                    <screen><prompt>$</prompt> <userinput>neutron router-update <replaceable>Router-UUID</replaceable> --router_rules type=dict list=true\
+                    <screen><prompt>$</prompt> <userinput>neutron router-update <replaceable>ROUTER_UUID</replaceable> --router_rules type=dict list=true\
 source=any,destination=any,action=permit \
 source=10.10.10.0/24,destination=10.20.20.20/24,action=deny</userinput></screen>
                 </section>
@@ -1688,7 +1692,7 @@ source=10.10.10.0/24,destination=10.20.20.20/24,action=deny</userinput></screen>
                             <para>Creates a metering label.</para>
                         </td>
                         <td>
-                            <screen><prompt>$</prompt> <userinput>neutron meter-label-create <replaceable>label1</replaceable> --description <replaceable>"description of label1"</replaceable></userinput></screen>
+                            <screen><prompt>$</prompt> <userinput>neutron meter-label-create <replaceable>LABEL1</replaceable> --description "<replaceable>DESCRIPTION_LABEL1</replaceable>"</userinput></screen>
                         </td>
                     </tr>
                     <tr>
@@ -1704,8 +1708,8 @@ source=10.10.10.0/24,destination=10.20.20.20/24,action=deny</userinput></screen>
                             <para>Shows information for a specified label.</para>
                         </td>
                         <td>
-                            <screen><prompt>$</prompt> <userinput>neutron meter-label-show <replaceable>label-uuid</replaceable></userinput>
-<prompt>$</prompt> <userinput>neutron meter-label-show <replaceable>label1</replaceable></userinput></screen>
+                            <screen><prompt>$</prompt> <userinput>neutron meter-label-show <replaceable>LABEL_UUID</replaceable></userinput>
+<prompt>$</prompt> <userinput>neutron meter-label-show <replaceable>LABEL1</replaceable></userinput></screen>
                         </td>
                     </tr>
                     <tr>
@@ -1713,8 +1717,8 @@ source=10.10.10.0/24,destination=10.20.20.20/24,action=deny</userinput></screen>
                             <para>Deletes a metering label.</para>
                         </td>
                         <td>
-                            <screen><prompt>$</prompt> <userinput>neutron meter-label-delete <replaceable>label-uuid</replaceable></userinput>
-<prompt>$</prompt> <userinput>neutron meter-label-delete <replaceable>label1</replaceable></userinput></screen>
+                            <screen><prompt>$</prompt> <userinput>neutron meter-label-delete <replaceable>LABEL_UUID</replaceable></userinput>
+<prompt>$</prompt> <userinput>neutron meter-label-delete <replaceable>LABEL1</replaceable></userinput></screen>
                         </td>
                     </tr>
                     <tr>
@@ -1722,9 +1726,10 @@ source=10.10.10.0/24,destination=10.20.20.20/24,action=deny</userinput></screen>
                             <para>Creates a metering rule.</para>
                         </td>
                         <td>
-                            <screen><prompt>$</prompt> <userinput>neutron meter-label-rule-create <replaceable>label-uuid</replaceable> <replaceable>cidr</replaceable> --direction <replaceable>direction</replaceable> --excluded</userinput>
-<prompt>$</prompt> <userinput>neutron meter-label-rule-create <replaceable>label1</replaceable> <replaceable>10.0.0.0/24</replaceable> --direction <replaceable>ingress</replaceable></userinput>
-<prompt>$</prompt> <userinput>neutron meter-label-rule-create <replaceable>label1</replaceable> <replaceable>20.0.0.0/24</replaceable> --excluded</userinput></screen>
+                            <screen><prompt>$</prompt> <userinput>neutron meter-label-rule-create <replaceable>LABEL_UUID</replaceable> <replaceable>CIDR</replaceable> --direction <replaceable>DIRECTION</replaceable> --excluded</userinput></screen>
+                            <para>For example:</para>
+                            <screen><prompt>$</prompt> <userinput>neutron meter-label-rule-create label1 10.0.0.0/24 --direction ingress</userinput>
+<prompt>$</prompt> <userinput>neutron meter-label-rule-create label1 20.0.0.0/24 --excluded</userinput></screen>
                         </td>
                     </tr>
                     <tr>
@@ -1740,13 +1745,13 @@ source=10.10.10.0/24,destination=10.20.20.20/24,action=deny</userinput></screen>
                             <para>Shows information for a specified label rule.</para>
                         </td>
                         <td>
-                            <screen><prompt>$</prompt> <userinput>neutron meter-label-rule-show <replaceable>rule-uuid</replaceable></userinput></screen>
+                            <screen><prompt>$</prompt> <userinput>neutron meter-label-rule-show <replaceable>RULE_UUID</replaceable></userinput></screen>
                         </td>
                     </tr>
                     <tr>
                         <td>Deletes a metering label rule.</td>
                         <td>
-                            <screen><prompt>$</prompt> <userinput>neutron meter-label-rule-delete <replaceable>rule-uuid</replaceable></userinput></screen>
+                            <screen><prompt>$</prompt> <userinput>neutron meter-label-rule-delete <replaceable>RULE_UUID</replaceable></userinput></screen>
                         </td>
                     </tr>
                 </tbody>
