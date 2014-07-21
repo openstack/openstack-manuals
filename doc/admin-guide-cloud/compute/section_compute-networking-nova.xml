@@ -1,21 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<section xmlns="http://docbook.org/ns/docbook"
-  xmlns:xi="http://www.w3.org/2001/XInclude"
-  xmlns:xlink="http://www.w3.org/1999/xlink"
-  version="5.0"
-  xml:id="section_networking-nova">
+<section xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0" xml:id="section_networking-nova">
     <title>Networking with nova-network</title>
-        <para>Understanding the networking configuration options helps
-            you design the best configuration for your Compute
-            instances.</para>
+    <para>Understanding the networking configuration options helps you design the best configuration
+        for your Compute instances.</para>
     <para>You can choose to either install and configure <systemitem class="service"
             >nova-network</systemitem> for networking between VMs or use the OpenStack Networking
         service (neutron) for networking. To configure Compute networking options with OpenStack
-        Networking, see the <xref linkend="ch_networking"/>.</para>
-        <section xml:id="section_networking-options">
-            <title>Networking concepts</title>
-            <para>This section offers a brief overview of networking concepts for Compute.</para>
-            <para>Compute assigns a private IP address to each VM instance. (Currently, Compute with
+        Networking, see <xref linkend="ch_networking"/>.</para>
+    <section xml:id="section_networking-options">
+        <title>Networking concepts</title>
+        <para>This section offers a brief overview of networking concepts for Compute.</para>
+        <para>Compute assigns a private IP address to each VM instance. (Currently, Compute with
                 <systemitem class="service">nova-network</systemitem> only supports Linux bridge
             networking that enables the virtual interfaces to connect to the outside network through
             the physical interface.) Compute makes a distinction between <emphasis role="italic"
@@ -25,39 +21,44 @@
             be dynamically associated with an instance. A floating IP address can be disassociated
             and associated with another instance at any time. A user can reserve a floating IP for
             their project.</para>
-            <para>The network controller with <systemitem class="service">nova-network</systemitem>
+        <para>The network controller with <systemitem class="service">nova-network</systemitem>
             provides virtual networks to enable compute servers to interact with each other and with
             the public network. Compute with <systemitem class="service">nova-network</systemitem>
             supports the following network modes, which are implemented as “Network Manager”
             types.</para>
-            <variablelist>
-                <varlistentry><term>Flat Network Manager</term>
-                    <listitem><para>In <emphasis role="bold">Flat</emphasis> mode, a network administrator specifies a subnet. IP
-                        addresses for VM instances are assigned from the subnet, and then injected
-                        into the image on launch. Each instance receives a fixed IP address from the
-                        pool of available addresses. A system administrator must create the Linux
-                        networking bridge (typically named <literal>br100</literal>, although this
-                        is configurable) on the systems running the <systemitem class="service"
-                            >nova-network</systemitem> service. All instances of the system are
-                        attached to the same bridge, and this is configured manually by the network
-                        administrator.</para>
-                        <note>
-                            <para>Configuration injection currently only works on Linux-style
-                            systems that keep networking configuration in
+        <variablelist>
+            <varlistentry>
+                <term>Flat Network Manager</term>
+                <listitem>
+                    <para>In <emphasis role="bold">Flat</emphasis> mode, a network administrator
+                        specifies a subnet. IP addresses for VM instances are assigned from the
+                        subnet, and then injected into the image on launch. Each instance receives a
+                        fixed IP address from the pool of available addresses. A system
+                        administrator must create the Linux networking bridge (typically named
+                            <literal>br100</literal>, although this is configurable) on the systems
+                        running the <systemitem class="service">nova-network</systemitem> service.
+                        All instances of the system are attached to the same bridge, and this is
+                        configured manually by the network administrator.</para>
+                    <note>
+                        <para>Configuration injection currently only works on Linux-style systems
+                            that keep networking configuration in
                                 <filename>/etc/network/interfaces</filename>.</para>
-                        </note></listitem>
-                </varlistentry>
-                <varlistentry><term>Flat DHCP Network Manager</term>
-                    <listitem><para>In <emphasis role="bold">FlatDHCP</emphasis> mode, OpenStack starts a DHCP server
-                            (<systemitem>dnsmasq</systemitem>) to allocate IP addresses to VM
+                    </note>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term>Flat DHCP Network Manager</term>
+                <listitem>
+                    <para>In <emphasis role="bold">FlatDHCP</emphasis> mode, OpenStack starts a DHCP
+                        server (<systemitem>dnsmasq</systemitem>) to allocate IP addresses to VM
                         instances from the specified subnet, in addition to manually configuring the
                         networking bridge. IP addresses for VM instances are assigned from a subnet
                         specified by the network administrator.</para>
-                        <para>Like Flat Mode, all instances are attached to a single bridge on the
+                    <para>Like Flat Mode, all instances are attached to a single bridge on the
                         compute node. Additionally, a DHCP server is running to configure instances
                         (depending on single-/multi-host mode, alongside each <systemitem
                             class="service">nova-network</systemitem>). In this mode, Compute does a
-                        bit more configuration in that it attempts to bridge into an ethernet device
+                        bit more configuration in that it attempts to bridge into an Ethernet device
                             (<literal>flat_interface</literal>, eth0 by default). For every
                         instance, Compute allocates a fixed IP address and configures dnsmasq with
                         the MAC/IP pair for the VM. Dnsmasq does not take part in the IP address
@@ -65,8 +66,8 @@
                         Compute. Instances receive their fixed IPs by doing a
                             <command>dhcpdiscover</command>. These IPs are <emphasis role="italic"
                             >not</emphasis> assigned to any of the host's network interfaces, only
-                        to the VM's guest-side interface.</para>
-                        <para>In any setup with flat networking, the hosts providing the <systemitem
+                        to the guest-side interface for the VM.</para>
+                    <para>In any setup with flat networking, the hosts providing the <systemitem
                             class="service">nova-network</systemitem> service are responsible for
                         forwarding traffic from the private network. They also run and configure
                             <systemitem>dnsmasq</systemitem> as a DHCP server listening on this
@@ -80,41 +81,45 @@
                         the bridge parameter in order to avoid raising an error. Compute nodes have
                         iptables/ebtables entries created for each project and instance to protect
                         against IP/MAC address spoofing and ARP poisoning.</para>
-                        <note>
-                            <para>In single-host Flat DHCP mode you <emphasis role="italic"
+                    <note>
+                        <para>In single-host Flat DHCP mode you <emphasis role="italic"
                                 >will</emphasis> be able to ping VMs through their fixed IP from the
                                 <systemitem>nova-network</systemitem> node, but you <emphasis
                                 role="italic">cannot</emphasis> ping them from the compute nodes.
                             This is expected behavior.</para>
-                        </note></listitem>
-                </varlistentry>
-                <varlistentry><term>VLAN Network Manager</term>
-                    <listitem><para><emphasis role="bold">VLANManager</emphasis> mode is the default mode for OpenStack Compute.
-                        In this mode, Compute creates a VLAN and bridge for each tenant. For
-                        multiple-machine installation, the VLAN Network Mode requires a switch that
-                        supports VLAN tagging (IEEE 802.1Q). The tenant gets a range of private IPs
-                        that are only accessible from inside the VLAN. In order for a user to access
-                        the instances in their tenant, a special VPN instance (code named cloudpipe)
-                        needs to be created. Compute generates a certificate and key for the user to
-                        access the VPN and starts the VPN automatically. It provides a private
-                        network segment for each tenant's instances that can be accessed through a
-                        dedicated VPN connection from the Internet. In this mode, each tenant gets
-                        its own VLAN, Linux networking bridge, and subnet.</para>
-                        <para>The subnets are specified by the network administrator, and are
-                        assigned dynamically to a tenant when required. A DHCP Server is started for
-                        each VLAN to pass out IP addresses to VM instances from the subnet assigned
-                        to the tenant. All instances belonging to one tenant are bridged into the
-                        same VLAN for that tenant. OpenStack Compute creates the Linux networking
-                        bridges and VLANs when required.</para></listitem>
-                </varlistentry>
-            </variablelist>
-            <para>These network managers can co-exist in a cloud system. However, because you cannot
+                    </note>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term>VLAN Network Manager</term>
+                <listitem>
+                    <para><emphasis role="bold">VLANManager</emphasis> mode is the default mode for
+                        OpenStack Compute. In this mode, Compute creates a VLAN and bridge for each
+                        tenant. For multiple-machine installation, the VLAN Network Mode requires a
+                        switch that supports VLAN tagging (IEEE 802.1Q). The tenant gets a range of
+                        private IPs that are only accessible from inside the VLAN. In order for a
+                        user to access the instances in their tenant, a special VPN instance (code
+                        named cloudpipe) needs to be created. Compute generates a certificate and
+                        key for the user to access the VPN and starts the VPN automatically. It
+                        provides a private network segment for each tenant's instances that can be
+                        accessed through a dedicated VPN connection from the Internet. In this mode,
+                        each tenant gets its own VLAN, Linux networking bridge, and subnet.</para>
+                    <para>The subnets are specified by the network administrator, and are assigned
+                        dynamically to a tenant when required. A DHCP Server is started for each
+                        VLAN to pass out IP addresses to VM instances from the subnet assigned to
+                        the tenant. All instances belonging to one tenant are bridged into the same
+                        VLAN for that tenant. OpenStack Compute creates the Linux networking bridges
+                        and VLANs when required.</para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <para>These network managers can co-exist in a cloud system. However, because you cannot
             select the type of network for a given tenant, you cannot configure multiple network
             types in a single Compute installation.</para>
         <para>All network managers configure the network using <emphasis role="italic">network
                 drivers</emphasis>. For example, the Linux L3 driver (<literal>l3.py</literal> and
                 <literal>linux_net.py</literal>), which makes use of <literal>iptables</literal>,
-                <literal>route</literal> and other network management facilities, and libvirt's
+                <literal>route</literal> and other network management facilities, and the libvirt
                 <link xlink:href="http://libvirt.org/formatnwfilter.html">network filtering
                 facilities</link>. The driver is not tied to any particular network manager; all
             network managers use the same driver. The driver usually initializes (creates bridges
@@ -128,121 +133,108 @@
             cases, all traffic between VMs and the outer world flows through <systemitem
                 class="service">nova-network</systemitem>. Each mode has its pros and cons (see the
                 <citetitle>Network Topology</citetitle> section in the <link
-                    xlink:href="http://docs.openstack.org/openstack-ops/content/"
-                    ><citetitle>OpenStack Operations Guide</citetitle></link>.</para>
-            <note>
-                <para>All networking options require network connectivity to be already set up
-                between OpenStack physical nodes. OpenStack does not configure any physical network
+                xlink:href="http://docs.openstack.org/openstack-ops/content/"><citetitle>OpenStack
+                    Operations Guide</citetitle></link>.</para>
+        <note>
+            <para>All networking options require network connectivity to be already set up between
+                OpenStack physical nodes. OpenStack does not configure any physical network
                 interfaces. All network managers automatically create VM virtual interfaces. Some,
                 but not all, managers create network bridges such as
                 <literal>br100</literal>.</para>
-                <para>All machines must have a <emphasis role="italic"
-                        >public</emphasis> and <emphasis role="italic"
-                        >internal</emphasis> network interface
-                    (controlled by the options:
-                        <literal>public_interface</literal> for the
-                    public interface, and
-                        <literal>flat_interface</literal> and
-                        <literal>vlan_interface</literal> for the
-                    internal interface with flat / VLAN managers).
-                    This guide refers to the public network as the
-                    external network and the private network as the
-                    internal or tenant network.</para>
-                <para>The internal network interface is used for communication with VMs; the
-                interface should not have an IP address attached to it before OpenStack installation
-                (it serves merely as a fabric where the actual endpoints are VMs and dnsmasq). Also,
-                you must put the internal network interface in <emphasis role="italic">promiscuous
+            <para>All machines must have a <emphasis role="italic">public</emphasis> and <emphasis
+                    role="italic">internal</emphasis> network interface (controlled by the options:
+                    <literal>public_interface</literal> for the public interface, and
+                    <literal>flat_interface</literal> and <literal>vlan_interface</literal> for the
+                internal interface with flat / VLAN managers). This guide refers to the public
+                network as the external network and the private network as the internal or tenant
+                network.</para>
+            <para>The internal network interface is used for communication with VMs; the interface
+                should not have an IP address attached to it before OpenStack installation (it
+                serves merely as a fabric where the actual endpoints are VMs and dnsmasq). Also, you
+                must put the internal network interface in <emphasis role="italic">promiscuous
                     mode</emphasis>, because it must receive packets whose target MAC address is of
                 the guest VM, not of the host.</para>
-                <para>Throughout this documentation, the public
-                    network is sometimes referred to as the external
-                    network, while the internal network is also
-                    sometimes referred to as the private network or
-                    tenant network.</para>
-            </note>
+            <para>Throughout this documentation, the public network is sometimes referred to as the
+                external network, while the internal network is also sometimes referred to as the
+                private network or tenant network.</para>
+        </note>
         <para>For flat and flat DHCP modes, use the following command to create a network:</para>
-            <screen><prompt>$</prompt> <userinput>nova network-create vmnet \
+        <screen><prompt>$</prompt> <userinput>nova network-create vmnet \
   --fixed-range-v4=10.0.0.0/24 --fixed-cidr=10.20.0.0/16 --bridge=br100</userinput></screen>
-            <para>Where:<itemizedlist>
-                <listitem>
-                    <para><option>--fixed-range-v4-</option> specifies the network subnet.</para>
-                </listitem>
-                <listitem>
-                    <para><option>--fixed-cidr</option> specifies a range of fixed IP addresses to
-                        allocate, and can be a subset of the <option>--fixed-range-v4</option>
-                        argument.</para>
-                </listitem>
-                <listitem>
-                    <para><option>--bridge</option> specifies the bridge device to which this
-                        network is connected on every compute node.</para>
-                </listitem>
-            </itemizedlist></para>
-        </section>
-        <section xml:id="section_dnsmasq">
-            <title>DHCP server: dnsmasq</title>
-            <para>The Compute service uses <link
+        <para>Where:</para>
+        <itemizedlist>
+            <listitem>
+                <para><option>--fixed-range-v4-</option> specifies the network subnet.</para>
+            </listitem>
+            <listitem>
+                <para><option>--fixed-cidr</option> specifies a range of fixed IP addresses to
+                    allocate, and can be a subset of the <option>--fixed-range-v4</option>
+                    argument.</para>
+            </listitem>
+            <listitem>
+                <para><option>--bridge</option> specifies the bridge device to which this network is
+                    connected on every compute node.</para>
+            </listitem>
+        </itemizedlist>
+    </section>
+    <section xml:id="section_dnsmasq">
+        <title>DHCP server: dnsmasq</title>
+        <para>The Compute service uses <link
                 xlink:href="http://www.thekelleys.org.uk/dnsmasq/doc.html">dnsmasq</link> as the
             DHCP server when running with either that Flat DHCP Network Manager or the VLAN Network
             Manager. The <systemitem class="service">nova-network</systemitem> service is
             responsible for starting up <systemitem>dnsmasq</systemitem> processes.</para>
-            <para>The behavior of <systemitem>dnsmasq</systemitem> can be customized by creating a
+        <para>The behavior of <systemitem>dnsmasq</systemitem> can be customized by creating a
                 <systemitem>dnsmasq</systemitem> configuration file. Specify the configuration file
             using the <literal>dnsmasq_config_file</literal> configuration option. For
             example:</para>
-            <programlisting language="ini">dnsmasq_config_file=/etc/dnsmasq-nova.conf</programlisting>
-            <para>For an example of how to change the behavior of <systemitem>dnsmasq</systemitem>
-                using a <systemitem>dnsmasq</systemitem> configuration file, see the <link
+        <programlisting language="ini">dnsmasq_config_file=/etc/dnsmasq-nova.conf</programlisting>
+        <para>For an example of how to change the behavior of <systemitem>dnsmasq</systemitem> using
+            a <systemitem>dnsmasq</systemitem> configuration file, see the <link
                 xlink:href="http://docs.openstack.org/trunk/config-reference/content/"
-                    ><citetitle>OpenStack Configuration Reference</citetitle></link>.
-                The <systemitem>dnsmasq</systemitem> documentation also has a more comprehensive <link
+                    ><citetitle>OpenStack Configuration Reference</citetitle></link>. The
+                <systemitem>dnsmasq</systemitem> documentation also has a more comprehensive <link
                 xlink:href="http://www.thekelleys.org.uk/dnsmasq/docs/dnsmasq.conf.example">dnsmasq
                 configuration file example</link>.</para>
-            <para><systemitem>dnsmasq</systemitem> also acts as a caching DNS server for instances.
-            You can explicitly specify the DNS server that <systemitem>dnsmasq</systemitem> should
-            use by setting the <literal>dns_server</literal> configuration option in
+        <para><systemitem>dnsmasq</systemitem> also acts as a caching DNS server for instances. You
+            can explicitly specify the DNS server that <systemitem>dnsmasq</systemitem> should use
+            by setting the <literal>dns_server</literal> configuration option in
                 <filename>/etc/nova/nova.conf</filename>. The following example would configure
                 <systemitem>dnsmasq</systemitem> to use Google's public DNS server:</para>
-            <programlisting language="ini">dns_server=8.8.8.8</programlisting>
-            <para>Logging output for <systemitem>dnsmasq</systemitem> goes to the
+        <programlisting language="ini">dns_server=8.8.8.8</programlisting>
+        <para>Logging output for <systemitem>dnsmasq</systemitem> goes to the
                 <systemitem>syslog</systemitem> (typically <filename>/var/log/syslog</filename> or
                 <filename>/var/log/messages</filename>, depending on Linux distribution).
                 <systemitem>dnsmasq</systemitem> logging output can be useful for troubleshooting if
             VM instances boot successfully but are not reachable over the network.</para>
-            <para>A network administrator can run <code>nova-manage
-                    fixed reserve
-                        --address=<replaceable>x.x.x.x</replaceable></code>
-                to specify the starting point IP address (x.x.x.x) to
-                reserve with the DHCP server. This reservation only
-                affects which IP address the VMs start at, not the
-                fixed IP addresses that the <systemitem
-                    class="service">nova-network</systemitem> service
-                places on the bridges.</para>
-        </section>
-        <xi:include href="section_compute-configure-ipv6.xml"/>
-        <section xml:id="section_metadata-service">
-            <title>Metadata service</title>
-            <simplesect>
-                <title>Introduction</title>
-                <para>The Compute service uses a special metadata
-                    service to enable virtual machine instances to
-                    retrieve instance-specific data. Instances access
-                    the metadata service at
-                        <literal>http://169.254.169.254</literal>. The
-                    metadata service supports two sets of APIs: an
-                    OpenStack metadata API and an EC2-compatible API.
-                    Each of the APIs is versioned by date.</para>
-                <para>To retrieve a list of supported versions for the
-                    OpenStack metadata API, make a GET request to
-                        <literal>http://169.254.169.254/openstack</literal>
-                    For example:</para>
-                <screen><prompt>$</prompt> <userinput>curl http://169.254.169.254/openstack</userinput>
+        <para>A network administrator can run <code>nova-manage fixed reserve
+                    --address=<replaceable>IP_ADDRESS</replaceable></code> to specify the starting
+            point IP address
+                (<replaceable>n</replaceable>.<replaceable>n</replaceable>.<replaceable>n</replaceable>.<replaceable>n</replaceable>)
+            to reserve with the DHCP server. This reservation only affects which IP address the VMs
+            start at, not the fixed IP addresses that the <systemitem class="service"
+                >nova-network</systemitem> service places on the bridges.</para>
+    </section>
+    <xi:include href="section_compute-configure-ipv6.xml"/>
+    <section xml:id="section_metadata-service">
+        <title>Metadata service</title>
+        <simplesect>
+            <title>Introduction</title>
+            <para>The Compute service uses a special metadata service to enable virtual machine
+                instances to retrieve instance-specific data. Instances access the metadata service
+                at <literal>http://169.254.169.254</literal>. The metadata service supports two sets
+                of APIs: an OpenStack metadata API and an EC2-compatible API. Each of the APIs is
+                versioned by date.</para>
+            <para>To retrieve a list of supported versions for the OpenStack metadata API, make a
+                GET request to <literal>http://169.254.169.254/openstack</literal> For
+                example:</para>
+            <screen><prompt>$</prompt> <userinput>curl http://169.254.169.254/openstack</userinput>
 <computeroutput>2012-08-10
 latest</computeroutput></screen>
-                <para>To list supported versions for the
-                    EC2-compatible metadata API, make a GET request to
-                        <literal>http://169.254.169.254</literal>.</para>
-                <para>For example:</para>
-                <screen><prompt>$</prompt> <userinput>curl http://169.254.169.254</userinput>
+            <para>To list supported versions for the EC2-compatible metadata API, make a GET request
+                to <literal>http://169.254.169.254</literal>.</para>
+            <para>For example:</para>
+            <screen><prompt>$</prompt> <userinput>curl http://169.254.169.254</userinput>
 <computeroutput>1.0
 2007-01-19
 2007-03-01
@@ -253,47 +245,40 @@ latest</computeroutput></screen>
 2008-09-01
 2009-04-04
 latest</computeroutput></screen>
-                <para>If you write a consumer for one of these APIs,
-                    always attempt to access the most recent API
-                    version supported by your consumer first, then
-                    fall back to an earlier version if the most recent
-                    one is not available.</para>
-            </simplesect>
-            <simplesect>
-                <title>OpenStack metadata API</title>
-                <para>Metadata from the OpenStack API is distributed
-                    in JSON format. To retrieve the metadata, make a
-                    GET request to
-                        <literal>http://169.254.169.254/openstack/2012-08-10/meta_data.json</literal>.</para>
-                <para>For example:</para>
-                <screen><prompt>$</prompt> <userinput>curl http://169.254.169.254/openstack/2012-08-10/meta_data.json</userinput></screen>
-                <programlisting language="json"><xi:include href="../../common/samples/list_metadata.json" parse="text"/></programlisting>
-                <para>Instances also retrieve user data (passed as the
-                        <literal>user_data</literal> parameter in the
-                    API call or by the <literal>--user_data</literal>
-                    flag in the <command>nova boot</command> command)
-                    through the metadata service, by making a GET
-                    request to
-                        <literal>http://169.254.169.254/openstack/2012-08-10/user_data</literal>.</para>
-                <para>For example:</para>
-                <screen><prompt>$</prompt> <userinput>curl http://169.254.169.254/openstack/2012-08-10/user_data</userinput>
+            <para>If you write a consumer for one of these APIs, always attempt to access the most
+                recent API version supported by your consumer first, then fall back to an earlier
+                version if the most recent one is not available.</para>
+        </simplesect>
+        <simplesect>
+            <title>OpenStack metadata API</title>
+            <para>Metadata from the OpenStack API is distributed in JSON format. To retrieve the
+                metadata, make a GET request to
+                    <literal>http://169.254.169.254/openstack/2012-08-10/meta_data.json</literal>.</para>
+            <para>For example:</para>
+            <screen><prompt>$</prompt> <userinput>curl http://169.254.169.254/openstack/2012-08-10/meta_data.json</userinput></screen>
+            <programlisting language="json"><xi:include href="../../common/samples/list_metadata.json" parse="text"/></programlisting>
+            <para>Instances also retrieve user data (passed as the <literal>user_data</literal>
+                parameter in the API call or by the <literal>--user_data</literal> flag in the
+                    <command>nova boot</command> command) through the metadata service, by making a
+                GET request to
+                    <literal>http://169.254.169.254/openstack/2012-08-10/user_data</literal>.</para>
+            <para>For example:</para>
+            <screen><prompt>$</prompt> <userinput>curl http://169.254.169.254/openstack/2012-08-10/user_data</userinput>
                         <computeroutput>#!/bin/bash
 echo 'Extra user data here'</computeroutput></screen>
-            </simplesect>
-            <simplesect>
-                <title>EC2 metadata API</title>
-                <para>The metadata service has an API that is
-                    compatible with version 2009-04-04 of the <link
-                        xlink:href="http://docs.amazonwebservices.com/AWSEC2/2009-04-04/UserGuide/AESDG-chapter-instancedata.html"
-                        >Amazon EC2 metadata service</link>; virtual
-                    machine images that are designed for EC2 work
-                    properly with OpenStack.</para>
-                <para>The EC2 API exposes a separate URL for each
-                    metadata. You can retrieve a listing of these
-                    elements by making a GET query to
-                        <literal>http://169.254.169.254/2009-04-04/meta-data/</literal></para>
-                <para>For example:</para>
-                <screen><prompt>$</prompt> <userinput>curl http://169.254.169.254/2009-04-04/meta-data/</userinput>
+        </simplesect>
+        <simplesect>
+            <title>EC2 metadata API</title>
+            <para>The metadata service has an API that is compatible with version 2009-04-04 of the
+                    <link
+                    xlink:href="http://docs.amazonwebservices.com/AWSEC2/2009-04-04/UserGuide/AESDG-chapter-instancedata.html"
+                    >Amazon EC2 metadata service</link>; virtual machine images that are designed
+                for EC2 work properly with OpenStack.</para>
+            <para>The EC2 API exposes a separate URL for each metadata. You can retrieve a listing
+                of these elements by making a GET query to
+                    <literal>http://169.254.169.254/2009-04-04/meta-data/</literal></para>
+            <para>For example:</para>
+            <screen><prompt>$</prompt> <userinput>curl http://169.254.169.254/2009-04-04/meta-data/</userinput>
 <computeroutput>ami-id
 ami-launch-index
 ami-manifest-path
@@ -312,30 +297,28 @@ public-keys/
 ramdisk-id
 reservation-id
 security-groups</computeroutput></screen>
-                <screen><prompt>$</prompt> <userinput>curl http://169.254.169.254/2009-04-04/meta-data/block-device-mapping/</userinput>
+            <screen><prompt>$</prompt> <userinput>curl http://169.254.169.254/2009-04-04/meta-data/block-device-mapping/</userinput>
 <computeroutput>ami</computeroutput></screen>
-                <screen><prompt>$</prompt> <userinput>curl http://169.254.169.254/2009-04-04/meta-data/placement/</userinput>
+            <screen><prompt>$</prompt> <userinput>curl http://169.254.169.254/2009-04-04/meta-data/placement/</userinput>
 <computeroutput>availability-zone</computeroutput></screen>
-                <screen><prompt>$</prompt> <userinput>curl http://169.254.169.254/2009-04-04/meta-data/public-keys/</userinput>
+            <screen><prompt>$</prompt> <userinput>curl http://169.254.169.254/2009-04-04/meta-data/public-keys/</userinput>
 <computeroutput>0=mykey</computeroutput></screen>
-                <para>Instances can retrieve the public SSH key
-                    (identified by keypair name when a user requests a
-                    new instance) by making a GET request to
-                        <literal>http://169.254.169.254/2009-04-04/meta-data/public-keys/0/openssh-key</literal>.</para>
-                <para>For example:</para>
-                <screen><prompt>$</prompt> <userinput>curl http://169.254.169.254/2009-04-04/meta-data/public-keys/0/openssh-key</userinput>
+            <para>Instances can retrieve the public SSH key (identified by keypair name when a user
+                requests a new instance) by making a GET request to
+                    <literal>http://169.254.169.254/2009-04-04/meta-data/public-keys/0/openssh-key</literal>.</para>
+            <para>For example:</para>
+            <screen><prompt>$</prompt> <userinput>curl http://169.254.169.254/2009-04-04/meta-data/public-keys/0/openssh-key</userinput>
 <computeroutput>ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAgQDYVEprvtYJXVOBN0XNKVVRNCRX6BlnNbI+USLGais1sUWPwtSg7z9K9vhbYAPUZcq8c/s5S9dg5vTHbsiyPCIDOKyeHba4MUJq8Oh5b2i71/3BISpyxTBH/uZDHdslW2a+SrPDCeuMMoss9NFhBdKtDkdG9zyi0ibmCP6yMdEX8Q== Generated by Nova</computeroutput></screen>
-                <para>Instances can retrieve user data by making a GET
-                    request to
-                        <literal>http://169.254.169.254/2009-04-04/user-data</literal>.</para>
-                <para>For example:</para>
-                <screen><prompt>$</prompt> <userinput>curl http://169.254.169.254/2009-04-04/user-data</userinput>
+            <para>Instances can retrieve user data by making a GET request to
+                    <literal>http://169.254.169.254/2009-04-04/user-data</literal>.</para>
+            <para>For example:</para>
+            <screen><prompt>$</prompt> <userinput>curl http://169.254.169.254/2009-04-04/user-data</userinput>
 <computeroutput>#!/bin/bash
 echo 'Extra user data here'</computeroutput></screen>
-            </simplesect>
-            <simplesect>
-                <title>Run the metadata service</title>
-                <para>The metadata service is implemented by either the <systemitem class="service"
+        </simplesect>
+        <simplesect>
+            <title>Run the metadata service</title>
+            <para>The metadata service is implemented by either the <systemitem class="service"
                     >nova-api</systemitem> service or the <systemitem class="service"
                     >nova-api-metadata</systemitem> service. (The <systemitem class="service"
                     >nova-api-metadata</systemitem> service is generally only used when running in
@@ -346,309 +329,266 @@ echo 'Extra user data here'</computeroutput></screen>
                     <filename>/etc/nova/nova.conf</filename>. The default
                     <literal>enabled_apis</literal> configuration setting includes the metadata
                 service, so you should not need to modify it.</para>
-                <para>Hosts access the service at <literal>169.254.169.254:80</literal>, and this is
+            <para>Hosts access the service at <literal>169.254.169.254:80</literal>, and this is
                 translated to <literal>metadata_host:metadata_port</literal> by an iptables rule
                 established by the <systemitem class="service">nova-network</systemitem> service. In
                 multi-host mode, you can set <option>metadata_host</option> to
                     <literal>127.0.0.1</literal>.</para>
-                <para>To enable instances to reach the metadata
-                    service, the <systemitem class="service"
-                        >nova-network</systemitem> service configures
-                    iptables to NAT port <literal>80</literal> of the
-                        <literal>169.254.169.254</literal> address to
-                    the IP address specified in
-                        <option>metadata_host</option> (default
-                        <literal>$my_ip</literal>, which is the IP
-                    address of the <systemitem class="service"
-                        >nova-network</systemitem> service) and port
-                    specified in <option>metadata_port</option>
-                    (default <literal>8775</literal>) in
-                        <filename>/etc/nova/nova.conf</filename>.</para>
-                <warning>
-                    <para>The <literal>metadata_host</literal>
-                        configuration option must be an IP address,
-                        not a host name.</para>
-                </warning>
-                <note>
-                    <para>The default Compute service settings assume
-                        that the <systemitem class="service"
-                            >nova-network</systemitem> service and the
-                            <systemitem class="service"
-                            >nova-api</systemitem> service are running
-                        on the same host. If this is not the case, you
-                        must make this change in the
-                            <filename>/etc/nova/nova.conf</filename>
-                        file on the host running the <systemitem
-                            class="service">nova-network</systemitem>
-                        service:</para>
-                    <para>Set the <literal>metadata_host</literal>
-                        configuration option to the IP address of the
-                        host where the <systemitem class="service"
-                            >nova-api</systemitem> service
-                        runs.</para>
-                </note>
-                <xi:include href="../../common/tables/nova-metadata.xml"
-                />
-            </simplesect>
-        </section>
-        <section xml:id="section_enable-ping-and-ssh-on-vms">
-            <title>Enable ping and SSH on VMs</title>
-            <para>Be sure you enable access to your VMs by using the
-                    <command>euca-authorize</command> or <command>nova
-                    secgroup-add-rule</command> command. These
-                commands enable you to <command>ping</command> and
-                    <command>ssh</command> to your VMs:</para>
+            <para>To enable instances to reach the metadata service, the <systemitem class="service"
+                    >nova-network</systemitem> service configures iptables to NAT port
+                    <literal>80</literal> of the <literal>169.254.169.254</literal> address to the
+                IP address specified in <option>metadata_host</option> (default
+                    <literal>$my_ip</literal>, which is the IP address of the <systemitem
+                    class="service">nova-network</systemitem> service) and port specified in
+                    <option>metadata_port</option> (default <literal>8775</literal>) in
+                    <filename>/etc/nova/nova.conf</filename>.</para>
+            <warning>
+                <para>The <literal>metadata_host</literal> configuration option must be an IP
+                    address, not a host name.</para>
+            </warning>
             <note>
-                <para>You must run these commands as root only if the
-                    credentials used to interact with <systemitem
-                        class="service">nova-api</systemitem> are in
-                        <filename>/root/.bashrc</filename>. If the EC2
-                    credentials are the <filename>.bashrc</filename>
-                    file for another user, you must run these commands
-                    as the user.</para>
+                <para>The default Compute service settings assume that the <systemitem
+                        class="service">nova-network</systemitem> service and the <systemitem
+                        class="service">nova-api</systemitem> service are running on the same host.
+                    If this is not the case, you must make this change in the
+                        <filename>/etc/nova/nova.conf</filename> file on the host running the
+                        <systemitem class="service">nova-network</systemitem> service:</para>
+                <para>Set the <literal>metadata_host</literal> configuration option to the IP
+                    address of the host where the <systemitem class="service">nova-api</systemitem>
+                    service runs.</para>
             </note>
-            <para>Run <command>nova</command> commands:</para>
-            <screen><prompt>$</prompt> <userinput>nova secgroup-add-rule default icmp -1 -1 0.0.0.0/0</userinput>
+            <xi:include href="../../common/tables/nova-metadata.xml"/>
+        </simplesect>
+    </section>
+    <section xml:id="section_enable-ping-and-ssh-on-vms">
+        <title>Enable ping and SSH on VMs</title>
+        <para>Be sure you enable access to your VMs by using the <command>euca-authorize</command>
+            or <command>nova secgroup-add-rule</command> command. These commands enable you to
+                <command>ping</command> and <command>ssh</command> to your VMs:</para>
+        <note>
+            <para>You must run these commands as root only if the credentials used to interact with
+                    <systemitem class="service">nova-api</systemitem> are in
+                    <filename>/root/.bashrc</filename>. If the EC2 credentials are the
+                    <filename>.bashrc</filename> file for another user, you must run these commands
+                as the user.</para>
+        </note>
+        <para>Run <command>nova</command> commands:</para>
+        <screen><prompt>$</prompt> <userinput>nova secgroup-add-rule default icmp -1 -1 0.0.0.0/0</userinput>
 <prompt>$</prompt> <userinput>nova secgroup-add-rule default tcp 22 22 0.0.0.0/0</userinput>           </screen>
-            <para>Using euca2ools:</para>
-            <screen><prompt>$</prompt> <userinput>euca-authorize -P icmp -t -1:-1 -s 0.0.0.0/0 default</userinput>
+        <para>Using euca2ools:</para>
+        <screen><prompt>$</prompt> <userinput>euca-authorize -P icmp -t -1:-1 -s 0.0.0.0/0 default</userinput>
 <prompt>$</prompt> <userinput>euca-authorize -P tcp -p 22 -s 0.0.0.0/0 default</userinput>         </screen>
-            <para>If you still cannot ping or SSH your instances after issuing the <command>nova
+        <para>If you still cannot ping or SSH your instances after issuing the <command>nova
                 secgroup-add-rule</command> commands, look at the number of
                 <literal>dnsmasq</literal> processes that are running. If you have a running
             instance, check to see that TWO <literal>dnsmasq</literal> processes are running. If
             not, perform the following commands as root:</para>
-            <screen><prompt>#</prompt> <userinput>killall dnsmasq</userinput>
+        <screen><prompt>#</prompt> <userinput>killall dnsmasq</userinput>
 <prompt>#</prompt> <userinput>service nova-network restart</userinput>         </screen>
-        </section>
-        <section xml:id="nova-associate-public-ip">
-            <title>Configure public (floating) IP addresses</title>
-            <?dbhtml stop-chunking?>
-            <para>If you are using Compute's <systemitem class="service">nova-network</systemitem>
+    </section>
+    <section xml:id="nova-associate-public-ip">
+        <title>Configure public (floating) IP addresses</title>
+        <?dbhtml stop-chunking?>
+        <para>If you are using Compute's <systemitem class="service">nova-network</systemitem>
             instead of OpenStack Networking (neutron) for networking in OpenStack, use procedures in
             this section to configure floating IP addresses. For instructions on how to configure
             OpenStack Networking (neutron) to provide access to instances through floating IP
             addresses, see <xref linkend="section_l3_router_and_nat"/>.</para>
-            <section xml:id="private-and-public-IP-addresses">
-                <title>Private and public IP addresses</title>
-                <para>Every virtual instance is automatically assigned
-                    a private IP address. You can optionally assign
-                    public IP addresses to instances. The term
-                        <glossterm baseform="floating IP address"
-                        >floating IP</glossterm> refers to an IP
-                    address, typically public, that you can
-                    dynamically add to a running virtual instance.
-                    OpenStack Compute uses Network Address Translation
-                    (NAT) to assign floating IPs to virtual
-                    instances.</para>
-                <para>If you plan to use this feature, you must add
-                    edit the <filename>/etc/nova/nova.conf</filename>
-                    file to specify to which interface the <systemitem
-                        class="service">nova-network</systemitem>
-                    service binds public IP addresses, as
-                    follows:</para>
-                <programlisting language="ini">public_interface=<replaceable>vlan100</replaceable></programlisting>
-                <para>If you make changes to the
-                        <filename>/etc/nova/nova.conf</filename> file
-                    while the <systemitem class="service"
-                        >nova-network</systemitem> service is running,
-                    you must restart the service.</para>
-                <note>
-                    <title>Traffic between VMs using floating
-                        IPs</title>
-                    <para>Because floating IPs are implemented by using a source NAT (SNAT rule in
+        <section xml:id="private-and-public-IP-addresses">
+            <title>Private and public IP addresses</title>
+            <para>Every virtual instance is automatically assigned a private IP address. You can
+                optionally assign public IP addresses to instances. The term <glossterm
+                    baseform="floating IP address">floating IP</glossterm> refers to an IP address,
+                typically public, that you can dynamically add to a running virtual instance.
+                OpenStack Compute uses Network Address Translation (NAT) to assign floating IPs to
+                virtual instances.</para>
+            <para>If you plan to use this feature, you must add edit the
+                    <filename>/etc/nova/nova.conf</filename> file to specify to which interface the
+                    <systemitem class="service">nova-network</systemitem> service binds public IP
+                addresses, as follows:</para>
+            <programlisting language="ini">public_interface=<replaceable>VLAN100</replaceable></programlisting>
+            <para>If you make changes to the <filename>/etc/nova/nova.conf</filename> file while the
+                    <systemitem class="service">nova-network</systemitem> service is running, you
+                must restart the service.</para>
+            <note>
+                <title>Traffic between VMs using floating IPs</title>
+                <para>Because floating IPs are implemented by using a source NAT (SNAT rule in
                     iptables), security groups can display inconsistent behavior if VMs use their
                     floating IP to communicate with other VMs, particularly on the same physical
                     host. Traffic from VM to VM across the fixed network does not have this issue,
                     and so this is the recommended path. To ensure that traffic does not get SNATed
-                    to the floating range, explicitly set:
-                    <programlisting language="ini">dmz_cidr=x.x.x.x/y</programlisting>The
-                        <literal>x.x.x.x/y</literal> value specifies the range of floating IPs for
+                    to the floating range, explicitly set:</para>
+                <programlisting language="ini">dmz_cidr=x.x.x.x/y</programlisting>
+                <para>The <literal>x.x.x.x/y</literal> value specifies the range of floating IPs for
                     each pool of floating IPs that you define. If the VMs in the source group have
                     floating IPs, this configuration is also required.</para>
-                </note>
-            </section>
-            <section xml:id="Enabling_ip_forwarding">
-                <title>Enable IP forwarding</title>
-                <para>By default, IP forwarding is disabled on most
-                    Linux distributions. To use the floating IP
-                    feature, you must enable IP forwarding.</para>
-                <note>
-                    <para>You must enable IP forwarding only on the nodes that run the <systemitem
+            </note>
+        </section>
+        <section xml:id="Enabling_ip_forwarding">
+            <title>Enable IP forwarding</title>
+            <para>By default, IP forwarding is disabled on most Linux distributions. To use the
+                floating IP feature, you must enable IP forwarding.</para>
+            <note>
+                <para>You must enable IP forwarding only on the nodes that run the <systemitem
                         class="service">nova-network</systemitem> service. If you use
                         <literal>multi_host</literal> mode, ensure that you enable it on all compute
                     nodes. Otherwise, enable it on only the node that runs the <systemitem
                         class="service">nova-network</systemitem> service.</para>
-                </note>
-                <para>To check whether forwarding is enabled, run:</para>
-                <screen><prompt>$</prompt> <userinput>cat /proc/sys/net/ipv4/ip_forward</userinput>
+            </note>
+            <para>To check whether forwarding is enabled, run:</para>
+            <screen><prompt>$</prompt> <userinput>cat /proc/sys/net/ipv4/ip_forward</userinput>
 <computeroutput>0</computeroutput></screen>
-                <para>Alternatively, you can run:</para>
-                <screen><prompt>$</prompt> <userinput>sysctl net.ipv4.ip_forward</userinput>
+            <para>Alternatively, you can run:</para>
+            <screen><prompt>$</prompt> <userinput>sysctl net.ipv4.ip_forward</userinput>
 <computeroutput>net.ipv4.ip_forward = 0</computeroutput></screen>
-                <para>In the previous example, IP forwarding is <emphasis role="bold"
+            <para>In the previous example, IP forwarding is <emphasis role="bold"
                     >disabled</emphasis>. To enable it dynamically, run:</para>
-                <screen><prompt>#</prompt> <userinput>sysctl -w net.ipv4.ip_forward=1</userinput></screen>
-                <para>Or:</para>
-                <screen><prompt>#</prompt> <userinput>echo 1 > /proc/sys/net/ipv4/ip_forward</userinput></screen>
-                <para>To make the changes permanent, edit the
-                        <filename>/etc/sysctl.conf</filename> file and
-                    update the IP forwarding setting:</para>
-                <programlisting language="ini">net.ipv4.ip_forward = 1</programlisting>
-                <para>Save the file and run the following command to apply the changes:</para>
-                <screen><prompt>#</prompt> <userinput>sysctl -p</userinput></screen>
-                <para>You can also update the setting by restarting the network service:</para>
+            <screen><prompt>#</prompt> <userinput>sysctl -w net.ipv4.ip_forward=1</userinput></screen>
+            <para>Or:</para>
+            <screen><prompt>#</prompt> <userinput>echo 1 > /proc/sys/net/ipv4/ip_forward</userinput></screen>
+            <para>To make the changes permanent, edit the <filename>/etc/sysctl.conf</filename> file
+                and update the IP forwarding setting:</para>
+            <programlisting language="ini">net.ipv4.ip_forward = 1</programlisting>
+            <para>Save the file and run the following command to apply the changes:</para>
+            <screen><prompt>#</prompt> <userinput>sysctl -p</userinput></screen>
+            <para>You can also update the setting by restarting the network service:</para>
             <itemizedlist>
                 <listitem>
-                        <para>On Ubuntu, run:</para>
-                        <screen><userinput><prompt>#</prompt>/etc/init.d/procps.sh restart</userinput></screen>
+                    <para>On Ubuntu, run:</para>
+                    <screen><userinput><prompt>#</prompt>/etc/init.d/procps.sh restart</userinput></screen>
                 </listitem>
                 <listitem>
-                        <para>On RHEL/Fedora/CentOS, run:</para>
-                        <screen><prompt>#</prompt> <userinput>service network restart</userinput></screen>
+                    <para>On RHEL/Fedora/CentOS, run:</para>
+                    <screen><prompt>#</prompt> <userinput>service network restart</userinput></screen>
                 </listitem>
             </itemizedlist>
-            </section>
-            <section xml:id="create_list_of_available_floating_ips">
-                <title>Create a list of available floating IP
-                    addresses</title>
-                <para>Compute maintains a list of floating IP addresses that you can assign to
+        </section>
+        <section xml:id="create_list_of_available_floating_ips">
+            <title>Create a list of available floating IP addresses</title>
+            <para>Compute maintains a list of floating IP addresses that you can assign to
                 instances. Use the <command>nova-manage floating create</command> command to add
                 entries to this list.</para>
-                <para>For example:</para>
-                <screen><prompt>#</prompt> <userinput>nova-manage floating create --pool=nova --ip_range=68.99.26.170/31</userinput></screen>
-                <para>You can use the following
-                        <command>nova-manage</command> commands to
-                    perform floating IP operations:</para>
-                <itemizedlist>
-                    <listitem>
-                        <screen><prompt>#</prompt> <userinput>nova-manage floating list</userinput></screen>
-                        <para>Lists the floating IP addresses in the
-                            pool.</para>
-                    </listitem>
-                    <listitem>
-<screen><prompt>#</prompt> <userinput>nova-manage floating create --pool=<replaceable>[pool name]</replaceable> --ip_range=<replaceable>[CIDR]</replaceable></userinput></screen>
-                        <para>Creates specific floating IPs for either
-                            a single address or a subnet.</para>
-                    </listitem>
-                    <listitem>
-                        <screen><prompt>#</prompt> <userinput>nova-manage floating delete <replaceable>[CIDR]</replaceable></userinput></screen>
-                        <para>Removes floating IP addresses using the
-                            same parameters as the create
-                            command.</para>
-                    </listitem>
-                </itemizedlist>
-                <para>For information about how administrators can
-                    associate floating IPs with instances, see <link
-                        xlink:href="http://docs.openstack.org/user-guide-admin/content/manage_ip_addresses.html"
-                        >Manage IP addresses</link> in the
-                        <citetitle>OpenStack Admin User
-                        Guide</citetitle>.</para>
-            </section>
-            <section xml:id="Automatically_adding_floating_IPs">
-                <title>Automatically add floating IPs</title>
-                <para>You can configure the <systemitem
-                        class="service">nova-network</systemitem>
-                    service to automatically allocate and assign a
-                    floating IP address to virtual instances when they
-                    are launched. Add the following line to the
-                        <filename>/etc/nova/nova.conf</filename> file
-                    and restart the <systemitem class="service"
-                        >nova-network</systemitem> service:</para>
-                <programlisting language="ini">auto_assign_floating_ip=True</programlisting>
-                <note>
-                    <para>If you enable this option and all floating
-                        IP addresses have already been allocated, the
-                            <command>nova boot</command> command
-                        fails.</para>
-                </note>
-            </section>
-        </section>
-        <section xml:id="section_remove-network-from-project">
-            <title>Remove a network from a project</title>
-            <para>You cannot remove a network that has already been
-                associated to a project by simply deleting it.</para>
-            <para>To determine the project ID, you must have administrative rights. You can
-            disassociate the project from the network with a scrub command and the project ID as the
-            final parameter:</para>
-            <screen><prompt>#</prompt> <userinput>nova-manage project scrub --project=<replaceable>&lt;id></replaceable></userinput></screen>
-        </section>
-        <section xml:id="section_use-multi-nics">
-            <title>Multiple interfaces for your instances
-                (multinic)</title>
-            <?dbhtml stop-chunking?>
-            <para>The multinic feature allows you to plug more than one interface to your instances,
-            making it possible to make several use cases available:</para>
+            <para>For example:</para>
+            <screen><prompt>#</prompt> <userinput>nova-manage floating create --pool=nova --ip_range=68.99.26.170/31</userinput></screen>
+            <para>You can use the following <command>nova-manage</command> commands to perform
+                floating IP operations:</para>
             <itemizedlist>
                 <listitem>
-                    <para>SSL Configurations (VIPs)</para>
+                    <screen><prompt>#</prompt> <userinput>nova-manage floating list</userinput></screen>
+                    <para>Lists the floating IP addresses in the pool.</para>
                 </listitem>
                 <listitem>
-                    <para>Services failover/ HA</para>
+                    <screen><prompt>#</prompt> <userinput>nova-manage floating create --pool=<replaceable>POOL_NAME</replaceable> --ip_range=<replaceable>CIDR</replaceable></userinput></screen>
+                    <para>Creates specific floating IPs for either a single address or a
+                        subnet.</para>
                 </listitem>
                 <listitem>
-                    <para>Bandwidth Allocation</para>
-                </listitem>
-                <listitem>
-                    <para>Administrative/ Public access to your
-                        instances</para>
+                    <screen><prompt>#</prompt> <userinput>nova-manage floating delete <replaceable>CIDR</replaceable></userinput></screen>
+                    <para>Removes floating IP addresses using the same parameters as the create
+                        command.</para>
                 </listitem>
             </itemizedlist>
-            <para>Each VIF is representative of a separate network with its own IP block. Every
-            network mode introduces its own set of changes regarding the multinic usage: <figure>
-                <title>multinic flat manager</title>
-                <mediaobject>
-                    <imageobject>
-                        <imagedata scale="40"
-                            fileref="../../common/figures/SCH_5007_V00_NUAC-multi_nic_OpenStack-Flat-manager.jpg"
-                        />
-                    </imageobject>
-                </mediaobject>
-            </figure>
-            <figure>
-                <title>multinic flatdhcp manager</title>
-                <mediaobject>
-                    <imageobject>
-                        <imagedata scale="40"
-                            fileref="../../common/figures/SCH_5007_V00_NUAC-multi_nic_OpenStack-Flat-DHCP-manager.jpg"
-                        />
-                    </imageobject>
-                </mediaobject>
-            </figure>
-            <figure>
-                <title>multinic VLAN manager</title>
-                <mediaobject>
-                    <imageobject>
-                        <imagedata scale="40"
-                            fileref="../../common/figures/SCH_5007_V00_NUAC-multi_nic_OpenStack-VLAN-manager.jpg"
-                        />
-                    </imageobject>
-                </mediaobject>
-            </figure>
-        </para>
-            <section xml:id="using-multiple-nics-usage">
-                <title>Use the multinic feature</title>
-                <para>In order to use the multinic feature, first create two networks, and attach
-                them to your tenant (still named 'project' on the command line):
+            <para>For information about how administrators can associate floating IPs with
+                instances, see <link
+                    xlink:href="http://docs.openstack.org/user-guide-admin/content/manage_ip_addresses.html"
+                    >Manage IP addresses</link> in the <citetitle>OpenStack Admin User
+                    Guide</citetitle>.</para>
+        </section>
+        <section xml:id="Automatically_adding_floating_IPs">
+            <title>Automatically add floating IPs</title>
+            <para>You can configure the <systemitem class="service">nova-network</systemitem>
+                service to automatically allocate and assign a floating IP address to virtual
+                instances when they are launched. Add the following line to the
+                    <filename>/etc/nova/nova.conf</filename> file and restart the <systemitem
+                    class="service">nova-network</systemitem> service:</para>
+            <programlisting language="ini">auto_assign_floating_ip=True</programlisting>
+            <note>
+                <para>If you enable this option and all floating IP addresses have already been
+                    allocated, the <command>nova boot</command> command fails.</para>
+            </note>
+        </section>
+    </section>
+    <section xml:id="section_remove-network-from-project">
+        <title>Remove a network from a project</title>
+        <para>You cannot remove a network that has already been associated to a project by simply
+            deleting it.</para>
+        <para>To determine the project ID, you must have administrative rights. You can disassociate
+            the project from the network with a scrub command and the project ID as the final
+            parameter:</para>
+        <screen><prompt>#</prompt> <userinput>nova-manage project scrub --project=<replaceable>ID</replaceable></userinput></screen>
+    </section>
+    <section xml:id="section_use-multi-nics">
+        <title>Multiple interfaces for your instances (multinic)</title>
+        <?dbhtml stop-chunking?>
+        <para>The multinic feature allows you to plug more than one interface to your instances,
+            making it possible to make several use cases available:</para>
+        <itemizedlist>
+            <listitem>
+                <para>SSL Configurations (VIPs)</para>
+            </listitem>
+            <listitem>
+                <para>Services failover/ HA</para>
+            </listitem>
+            <listitem>
+                <para>Bandwidth Allocation</para>
+            </listitem>
+            <listitem>
+                <para>Administrative/ Public access to your instances</para>
+            </listitem>
+        </itemizedlist>
+        <para>Each VIF is representative of a separate network with its own IP block. Every network
+            mode introduces its own set of changes regarding the multinic usage:</para>
+        <figure>
+            <title>multinic flat manager</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata scale="40"
+                        fileref="../../common/figures/SCH_5007_V00_NUAC-multi_nic_OpenStack-Flat-manager.jpg"
+                    />
+                </imageobject>
+            </mediaobject>
+        </figure>
+        <figure>
+            <title>multinic flatdhcp manager</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata scale="40"
+                        fileref="../../common/figures/SCH_5007_V00_NUAC-multi_nic_OpenStack-Flat-DHCP-manager.jpg"
+                    />
+                </imageobject>
+            </mediaobject>
+        </figure>
+        <figure>
+            <title>multinic VLAN manager</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata scale="40"
+                        fileref="../../common/figures/SCH_5007_V00_NUAC-multi_nic_OpenStack-VLAN-manager.jpg"
+                    />
+                </imageobject>
+            </mediaobject>
+        </figure>
+        <section xml:id="using-multiple-nics-usage">
+            <title>Use the multinic feature</title>
+            <para>In order to use the multinic feature, first create two networks, and attach them
+                to your tenant (still named 'project' on the command line):
                 <screen><prompt>$</prompt> <userinput>nova network-create first-net --fixed-range-v4=20.20.0.0/24 --project-id=$your-project</userinput>
 <prompt>$</prompt> <userinput>nova network-create second-net --fixed-range-v4=20.20.10.0/24 --project-id=$your-project</userinput>              </screen>
                 Now every time you spawn a new instance, it gets two IP addresses from the
                 respective DHCP servers:</para>
-                <screen><prompt>$</prompt> <userinput>nova list</userinput>
+            <screen><prompt>$</prompt> <userinput>nova list</userinput>
 <computeroutput>+-----+------------+--------+----------------------------------------+
  |  ID |    Name    | Status |                Networks                |
  +-----+------------+--------+----------------------------------------+
  | 124 | Server 124 | ACTIVE | network2=20.20.0.3; private=20.20.10.14|
  +-----+------------+--------+----------------------------------------+</computeroutput></screen>
-                <note>
-                    <para>Make sure to power up the second interface
-                        on the instance, otherwise that last won't be
-                        reachable through its second IP. Here is an
-                        example of how to setup the interfaces within
-                        the instance (this is the configuration that
-                        needs to be applied inside the image):</para>
-                    <para><filename>/etc/network/interfaces</filename></para>
-                    <programlisting language="bash"># The loopback network interface
+            <note>
+                <para>Make sure to power up the second interface on the instance, otherwise that
+                    last won't be reachable through its second IP. Here is an example of how to
+                    setup the interfaces within the instance (this is the configuration that needs
+                    to be applied inside the image):</para>
+                <para><filename>/etc/network/interfaces</filename></para>
+                <programlisting language="bash"># The loopback network interface
 auto lo
 iface lo inet loopback
 
@@ -657,157 +597,148 @@ iface eth0 inet dhcp
 
 auto eth1
 iface eth1 inet dhcp</programlisting>
-                </note>
-                <note>
-                    <para>If the Virtual Network Service Neutron is
-                        installed, it is possible to specify the
-                        networks to attach to the respective
-                        interfaces by using the
-                            <literal>--nic</literal> flag when
-                        invoking the <literal>nova</literal> command:
-                        <screen><prompt>$</prompt> <userinput>nova boot --image ed8b2a37-5535-4a5f-a615-443513036d71 --flavor 1 --nic net-id= &lt;id of first network&gt;  --nic net-id= &lt;id of second network&gt;  test-vm1</userinput></screen>
-                    </para>
-                </note>
-            </section>
+            </note>
+            <note>
+                <para>If the Virtual Network Service Neutron is installed, it is possible to specify
+                    the networks to attach to the respective interfaces by using the
+                        <literal>--nic</literal> flag when invoking the <literal>nova</literal>
+                    command:</para>
+                <screen><prompt>$</prompt> <userinput>nova boot --image ed8b2a37-5535-4a5f-a615-443513036d71 --flavor 1 --nic net-id=<replaceable>NETWORK1_ID</replaceable> --nic net-id=<replaceable>NETWORK2_ID</replaceable> test-vm1</userinput></screen>
+            </note>
         </section>
-        <section xml:id="section_network-troubleshoot">
-            <title>Troubleshoot Networking</title>
-            <simplesect>
-                <title>Cannot reach floating IPs</title>
-                <para>If you cannot reach your instances through the floating IP address, check the following:</para>
-                <itemizedlist>
-                    <listitem><para>Ensure the default security group allows ICMP (ping) and SSH (port 22), so that you can reach
-                        the instances:</para>
-                        <screen><prompt>$</prompt> <userinput>nova secgroup-list-rules default</userinput>
+    </section>
+    <section xml:id="section_network-troubleshoot">
+        <title>Troubleshoot Networking</title>
+        <simplesect>
+            <title>Cannot reach floating IPs</title>
+            <para>If you cannot reach your instances through the floating IP address, check the
+                following:</para>
+            <itemizedlist>
+                <listitem>
+                    <para>Ensure the default security group allows ICMP (ping) and SSH (port 22), so
+                        that you can reach the instances:</para>
+                    <screen><prompt>$</prompt> <userinput>nova secgroup-list-rules default</userinput>
 <computeroutput>+-------------+-----------+---------+-----------+--------------+
 | IP Protocol | From Port | To Port |  IP Range | Source Group |
 +-------------+-----------+---------+-----------+--------------+
 | icmp        | -1        | -1      | 0.0.0.0/0 |              |
 | tcp         | 22        | 22      | 0.0.0.0/0 |              |
 +-------------+-----------+---------+-----------+--------------+</computeroutput></screen>
-                    </listitem>
-                    <listitem><para>Ensure the NAT rules have been added to <systemitem>iptables</systemitem> on the node that
-                            <systemitem>nova-network</systemitem> is running on, as root:</para>
-                        <screen><prompt>#</prompt> <userinput>iptables -L -nv -t nat</userinput>
+                </listitem>
+                <listitem>
+                    <para>Ensure the NAT rules have been added to <systemitem>iptables</systemitem>
+                        on the node that <systemitem>nova-network</systemitem> is running on, as
+                        root:</para>
+                    <screen><prompt>#</prompt> <userinput>iptables -L -nv -t nat</userinput>
 <computeroutput>-A nova-network-PREROUTING -d 68.99.26.170/32 -j DNAT --to-destination 10.0.0.3
--A nova-network-floating-snat -s 10.0.0.3/32 -j SNAT --to-source 68.99.26.170</computeroutput></screen></listitem>
-                    <listitem><para>Check that the public address, in this example "68.99.26.170", has been added to your public
-                        interface. You should see the address in the listing when you enter "ip
-                        addr" at the command prompt.</para>
-                        <screen><prompt>$</prompt> <userinput>ip addr</userinput>
+-A nova-network-floating-snat -s 10.0.0.3/32 -j SNAT --to-source 68.99.26.170</computeroutput></screen>
+                </listitem>
+                <listitem>
+                    <para>Check that the public address, in this example "68.99.26.170", has been
+                        added to your public interface. You should see the address in the listing
+                        when you enter "ip addr" at the command prompt.</para>
+                    <screen><prompt>$</prompt> <userinput>ip addr</userinput>
 <computeroutput>2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc mq state UP qlen 1000
 link/ether xx:xx:xx:17:4b:c2 brd ff:ff:ff:ff:ff:ff
 inet 13.22.194.80/24 brd 13.22.194.255 scope global eth0
 inet 68.99.26.170/32 scope global eth0
 inet6 fe80::82b:2bf:fe1:4b2/64 scope link
 valid_lft forever preferred_lft forever</computeroutput></screen>
-                        <para>Note that you cannot SSH to an instance with a
-                            public IP from within the same server as the
-                            routing configuration won't allow it.</para></listitem>
-                    <listitem><para>You can use <command>tcpdump</command> to identify if packets are being routed to the inbound
-                        interface on the compute host. If the packets are reaching the compute hosts
-                        but the connection is failing, the issue may be that the packet is being
-                        dropped by reverse path filtering. Try disabling reverse-path filtering on
-                        the inbound interface. For example, if the inbound interface is
-                            <literal>eth2</literal>, as root, run:</para>
-                        <screen><prompt>#</prompt> <userinput>sysctl -w net.ipv4.conf.<replaceable>eth2</replaceable>.rp_filter=0</userinput></screen>
-                        <para>If this solves your issue, add the following line to
+                    <note>
+                        <para>You cannot <command>ssh</command> to an instance with a public IP from
+                            within the same server because the routing configuration does not allow
+                            it.</para>
+                    </note>
+                </listitem>
+                <listitem>
+                    <para>You can use <command>tcpdump</command> to identify if packets are being
+                        routed to the inbound interface on the compute host. If the packets are
+                        reaching the compute hosts but the connection is failing, the issue may be
+                        that the packet is being dropped by reverse path filtering. Try disabling
+                        reverse-path filtering on the inbound interface. For example, if the inbound
+                        interface is <literal>eth2</literal>, as root, run:</para>
+                    <screen><prompt>#</prompt> <userinput>sysctl -w net.ipv4.conf.<replaceable>ETH2</replaceable>.rp_filter=0</userinput></screen>
+                    <para>If this solves your issue, add the following line to
                             <filename>/etc/sysctl.conf</filename> so that the reverse-path filter is
-                        disabled the next time the compute host reboots:
-                        <programlisting language="ini">net.ipv4.conf.rp_filter=0</programlisting></para></listitem>
-                </itemizedlist>
-            </simplesect>
-            <simplesect>
-                <title>Disable firewall</title>
-                <para>To help debug networking issues with reaching
-                    VMs, you can disable the firewall by setting the
-                    following option in
-                        <filename>/etc/nova/nova.conf</filename>:</para>
-                <programlisting language="ini">firewall_driver=nova.virt.firewall.NoopFirewallDriver</programlisting>
-                <para>We strongly recommend you remove this line to
-                    re-enable the firewall once your networking issues
-                    have been resolved.</para>
-            </simplesect>
-            <simplesect>
-                <title>Packet loss from instances to nova-network
-                    server (VLANManager mode)</title>
-                <para>If you can SSH to your instances but you find
-                    that the network interactions to your instance is
-                    slow, or if you find that running certain
-                    operations are slower than they should be (for
-                    example, <command>sudo</command>), then there may
-                    be packet loss occurring on the connection to the
-                    instance.</para>
-                <para>Packet loss can be caused by Linux networking
-                    configuration settings related to bridges. Certain
-                    settings can cause packets to be dropped between
-                    the VLAN interface (for example,
-                        <literal>vlan100</literal>) and the associated
-                    bridge interface (for example,
-                        <literal>br100</literal>) on the host running
-                    the <systemitem class="service"
-                        >nova-network</systemitem> service.</para>
-                <para>One way to check whether this is the issue in your setup, is to open up three
+                        disabled the next time the compute host reboots:</para>
+                    <programlisting language="ini">net.ipv4.conf.rp_filter=0</programlisting>
+                </listitem>
+            </itemizedlist>
+        </simplesect>
+        <simplesect>
+            <title>Disable firewall</title>
+            <para>To help debug networking issues with reaching VMs, you can disable the firewall by
+                setting the following option in <filename>/etc/nova/nova.conf</filename>:</para>
+            <programlisting language="ini">firewall_driver=nova.virt.firewall.NoopFirewallDriver</programlisting>
+            <para>We strongly recommend you remove this line to re-enable the firewall once your
+                networking issues have been resolved.</para>
+        </simplesect>
+        <simplesect>
+            <title>Packet loss from instances to nova-network server (VLANManager mode)</title>
+            <para>If you can SSH to your instances but you find that the network interactions to
+                your instance is slow, or if you find that running certain operations are slower
+                than they should be (for example, <command>sudo</command>), then there may be packet
+                loss occurring on the connection to the instance.</para>
+            <para>Packet loss can be caused by Linux networking configuration settings related to
+                bridges. Certain settings can cause packets to be dropped between the VLAN interface
+                (for example, <literal>vlan100</literal>) and the associated bridge interface (for
+                example, <literal>br100</literal>) on the host running the <systemitem
+                    class="service">nova-network</systemitem> service.</para>
+            <para>One way to check whether this is the issue in your setup, is to open up three
                 terminals and run the following commands:</para>
-            <para>
-                <orderedlist>
-                    <listitem>
-                        <para>In the first terminal, on the host running nova-network, use <command>tcpdump</command> on the
-                                VLAN interface to monitor DNS-related traffic (UDP, port 53). As
-                                root, run:</para>
-                            <screen><prompt>#</prompt> <userinput>tcpdump -K -p -i vlan100 -v -vv udp port 53</userinput></screen>
-                    </listitem>
-                    <listitem><para>In the second terminal, also on the host running nova-network, use <command>tcpdump</command>
-                            to monitor DNS-related traffic on the bridge interface. As root,
-                            run:</para>
-                        <screen><prompt>#</prompt> <userinput>tcpdump -K -p -i br100 -v -vv udp port 53</userinput></screen></listitem>
-                    <listitem><para>In the third terminal, SSH inside of the
-                        instance and generate DNS requests by using the
-                        <command>nslookup</command> command:</para>
-                        <screen><prompt>$</prompt> <userinput>nslookup www.google.com</userinput></screen>
-                        <para>The symptoms may be intermittent, so try running
-                            <command>nslookup</command> multiple times. If
-                            the network configuration is correct, the command
-                            should return immediately each time. If it is not
-                            functioning properly, the command hangs for
-                            several seconds.</para></listitem>
-                    <listitem><para>If the <command>nslookup</command> command sometimes hangs, and there are packets that appear
-                            in the first terminal but not the second, then the problem may be due to
-                            filtering done on the bridges. Try to disable filtering, run the
-                            following commands as root:</para>
-                        <screen><prompt>#</prompt> <userinput>sysctl -w net.bridge.bridge-nf-call-arptables=0</userinput>
+            <orderedlist>
+                <listitem>
+                    <para>In the first terminal, on the host running nova-network, use
+                            <command>tcpdump</command> on the VLAN interface to monitor DNS-related
+                        traffic (UDP, port 53). As root, run:</para>
+                    <screen><prompt>#</prompt> <userinput>tcpdump -K -p -i vlan100 -v -vv udp port 53</userinput></screen>
+                </listitem>
+                <listitem>
+                    <para>In the second terminal, also on the host running nova-network, use
+                            <command>tcpdump</command> to monitor DNS-related traffic on the bridge
+                        interface. As root, run:</para>
+                    <screen><prompt>#</prompt> <userinput>tcpdump -K -p -i br100 -v -vv udp port 53</userinput></screen>
+                </listitem>
+                <listitem>
+                    <para>In the third terminal, SSH inside of the instance and generate DNS
+                        requests by using the <command>nslookup</command> command:</para>
+                    <screen><prompt>$</prompt> <userinput>nslookup www.google.com</userinput></screen>
+                    <para>The symptoms may be intermittent, so try running
+                            <command>nslookup</command> multiple times. If the network configuration
+                        is correct, the command should return immediately each time. If it is not
+                        functioning properly, the command hangs for several seconds.</para>
+                </listitem>
+                <listitem>
+                    <para>If the <command>nslookup</command> command sometimes hangs, and there are
+                        packets that appear in the first terminal but not the second, then the
+                        problem may be due to filtering done on the bridges. Try to disable
+                        filtering, run the following commands as root:</para>
+                    <screen><prompt>#</prompt> <userinput>sysctl -w net.bridge.bridge-nf-call-arptables=0</userinput>
 <prompt>#</prompt> <userinput>sysctl -w net.bridge.bridge-nf-call-iptables=0</userinput>
 <prompt>#</prompt> <userinput>sysctl -w net.bridge.bridge-nf-call-ip6tables=0</userinput></screen>
-                        <para>If this solves your issue, add the following line to
-                                <filename>/etc/sysctl.conf</filename> so that these changes take
-                            effect the next time the host reboots:</para>
-                        <programlisting language="ini">net.bridge.bridge-nf-call-arptables=0
+                    <para>If this solves your issue, add the following line to
+                            <filename>/etc/sysctl.conf</filename> so that these changes take effect
+                        the next time the host reboots:</para>
+                    <programlisting language="ini">net.bridge.bridge-nf-call-arptables=0
 net.bridge.bridge-nf-call-iptables=0
-net.bridge.bridge-nf-call-ip6tables=0</programlisting></listitem>
-                </orderedlist>
-            </para>
-            </simplesect>
-            <simplesect>
-                <title>KVM: Network connectivity works initially, then
-                    fails</title>
-                <para>Some administrators have observed an issue with
-                    the KVM hypervisor where instances running Ubuntu
-                    12.04 sometimes loses network connectivity after
-                    functioning properly for a period of time. Some
-                    users have reported success with loading the
-                    vhost_net kernel module as a workaround for this
-                    issue (see <link
-                        xlink:href="https://bugs.launchpad.net/ubuntu/+source/libvirt/+bug/997978/"
-                        >bug #997978</link>) . This kernel module may
-                    also <link
-                        xlink:href="http://www.linux-kvm.org/page/VhostNet"
-                        >improve network performance on KVM</link>. To
-                    load the kernel module, as root:</para>
-                <screen><prompt>#</prompt> <userinput>modprobe vhost_net</userinput></screen>
-                <note>
-                    <para>Loading the module has no effect on running
-                        instances.</para>
-                </note>
-            </simplesect>
-        </section>
+net.bridge.bridge-nf-call-ip6tables=0</programlisting>
+                </listitem>
+            </orderedlist>
+        </simplesect>
+        <simplesect>
+            <title>KVM: Network connectivity works initially, then fails</title>
+            <para>Some administrators have observed an issue with the KVM hypervisor where instances
+                running Ubuntu 12.04 sometimes loses network connectivity after functioning properly
+                for a period of time. Some users have reported success with loading the vhost_net
+                kernel module as a workaround for this issue (see <link
+                    xlink:href="https://bugs.launchpad.net/ubuntu/+source/libvirt/+bug/997978/">bug
+                    #997978</link>) . This kernel module may also <link
+                    xlink:href="http://www.linux-kvm.org/page/VhostNet">improve network performance
+                    on KVM</link>. To load the kernel module, as root:</para>
+            <screen><prompt>#</prompt> <userinput>modprobe vhost_net</userinput></screen>
+            <note>
+                <para>Loading the module has no effect on running instances.</para>
+            </note>
+        </simplesect>
     </section>
+</section>

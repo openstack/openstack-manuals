@@ -1,32 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<section xmlns="http://docbook.org/ns/docbook"
-  xmlns:xi="http://www.w3.org/2001/XInclude"
-  xmlns:xlink="http://www.w3.org/1999/xlink"
-  version="5.0"
-  xml:id="volume-backup-restore">
-    <title>Back up and restore volumes</title>
-    <para>The <command>cinder</command> command-line interface
-    provides the tools for creating a volume backup. You can restore
-    a volume from a backup as long as the backup's associated database
-    information (or backup metadata) is intact in the Block Storage
-    database.
-    </para>
-    <para>Run this command to create a backup of a volume:</para>
-    <screen><prompt>$</prompt> <userinput>cinder backup-create <replaceable>VOLUME</replaceable></userinput></screen>
-    <para>Where <replaceable>VOLUME</replaceable> is the name or ID of
-    the volume.</para>
-    <para>The previous command will also return a backup ID. Use this
-    backup ID when restoring the volume, as in:</para>
-    <screen><prompt>$</prompt> <userinput>cinder backup-restore <replaceable>backup_ID</replaceable></userinput></screen>
-    <para>As mentioned earlier, volume backups are dependent on the
-    Block Storage database. Because of this, we recommend that you
-    also back up your Block Storage database regularly in order to
-    ensure data recovery.</para>
-    <note><para>Alternatively, you can export and save the metadata of
-    selected volume backups. Doing so will preclude the need to
-    back up the entire Block Storage database. This is particularly
-    useful if you only need a small subset of volumes to survive a
-    catastrophic database failure.</para>
-    <para>For more information on how to export and import volume
-    backup metadata, see <xref linkend="volume-backup-restore-export-import"/>.</para></note>
+<section xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0" xml:id="volume-backup-restore">
+  <title>Back up and restore volumes</title>
+  <para>The <command>cinder</command> command-line interface provides the tools for creating a
+    volume backup. You can restore a volume from a backup as long as the backup's associated
+    database information (or backup metadata) is intact in the Block Storage database.</para>
+  <para>Run this command to create a backup of a volume:</para>
+  <screen><prompt>$</prompt> <userinput>cinder backup-create <replaceable>VOLUME</replaceable></userinput></screen>
+  <para>Where <replaceable>VOLUME</replaceable> is the name or ID of the volume.</para>
+  <para>This command also returns a backup ID. Use this backup ID when restoring the volume:</para>
+  <screen><prompt>$</prompt> <userinput>cinder backup-restore <replaceable>BACKUP_ID</replaceable></userinput></screen>
+  <para>Because volume backups are dependent on the Block Storage database, you must also back up
+    your Block Storage database regularly to ensure data recovery.</para>
+  <note>
+    <para>Alternatively, you can export and save the metadata of selected volume backups. Doing so
+      precludes the need to back up the entire Block Storage database. This is useful if you need
+      only a small subset of volumes to survive a catastrophic database failure.</para>
+    <para>For more information about how to export and import volume backup metadata, see <xref
+        linkend="volume-backup-restore-export-import"/>.</para>
+  </note>
 </section>

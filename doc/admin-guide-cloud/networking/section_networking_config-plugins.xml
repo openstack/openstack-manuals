@@ -1,49 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<section xmlns="http://docbook.org/ns/docbook"
-  xmlns:xi="http://www.w3.org/2001/XInclude"
-  xmlns:xlink="http://www.w3.org/1999/xlink"
-  version="5.0"
-  xml:id="section_plugin-config">
+<section xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0" xml:id="section_plugin-config">
     <title>Plug-in configurations</title>
     <para>For configurations options, see <link
             xlink:href="http://docs.openstack.org/icehouse/config-reference/content/section_networking-options-reference.html"
-            >Networking configuration options</link> in
-            <citetitle>Configuration Reference</citetitle>.
-        These sections explain how to configure specific
-        plug-ins.</para>
+            >Networking configuration options</link> in <citetitle>Configuration
+            Reference</citetitle>. These sections explain how to configure specific plug-ins.</para>
     <section xml:id="bigswitch_floodlight_plugin">
         <title>Configure Big Switch (Floodlight REST Proxy) plug-in</title>
         <procedure>
-            <title>To use the REST Proxy plug-in with
-                OpenStack Networking</title>
+            <title>To use the REST proxy plug-in with OpenStack Networking</title>
             <step>
-                <para>Edit the
-                        <filename>/etc/neutron/neutron.conf</filename>
-                    file and add this line:</para>
+                <para>Edit the <filename>/etc/neutron/neutron.conf</filename> file and add this
+                    line:</para>
                 <programlisting language="ini">core_plugin = bigswitch</programlisting>
             </step>
             <step>
-                <para>Edit the
-                        <filename>/etc/neutron/plugins/bigswitch/restproxy.ini</filename>
-                    file for the plug-in and specify a
-                    comma-separated list of
-                        <systemitem>controller_ip:port</systemitem>
-                    pairs:</para>
-                <programlisting language="ini">server = &lt;controller-ip&gt;:&lt;port&gt;</programlisting>
+                <para>Edit the <filename>/etc/neutron/plugins/bigswitch/restproxy.ini</filename>
+                    file for the plug-in and specify a comma-separated list of
+                        <systemitem>controller_ip:port</systemitem> pairs:</para>
+                <programlisting language="ini">server = <replaceable>CONTROLLER_IP</replaceable>:<replaceable>PORT</replaceable></programlisting>
                 <para>For database configuration, see <link
                         xlink:href="http://docs.openstack.org/icehouse/install-guide/install/apt/content/neutron-ml2-controller-node.html"
-                        >Install Networking Services</link> in
-                    the <citetitle>Installation
-                        Guide</citetitle> in the <link
-                        xlink:href="http://docs.openstack.org"
-                        >OpenStack Documentation index</link>.
-                    (The link defaults to the Ubuntu
+                        >Install Networking Services</link> in the <citetitle>Installation
+                        Guide</citetitle> in the <link xlink:href="http://docs.openstack.org"
+                        >OpenStack Documentation index</link>. (The link defaults to the Ubuntu
                     version.)</para>
             </step>
             <step>
-                <para>Restart <systemitem class="service"
-                        >neutron-server</systemitem> to apply
-                    the settings:</para>
+                <para>Restart <systemitem class="service">neutron-server</systemitem> to apply the
+                    settings:</para>
                 <screen><prompt>#</prompt> <userinput>service neutron-server restart</userinput></screen>
             </step>
         </procedure>
@@ -51,67 +37,52 @@
     <section xml:id="brocade_plugin">
         <title>Configure Brocade plug-in</title>
         <procedure>
-            <title>To use the Brocade plug-in with OpenStack
-                Networking</title>
+            <title>To use the Brocade plug-in with OpenStack Networking</title>
             <step>
-                <para>Install the Brocade-modified Python
-                    netconf client (ncclient) library, which
-                    is available at <link
-                        xlink:href="https://github.com/brocade/ncclient"
+                <para>Install the Brocade-modified Python netconf client (ncclient) library, which
+                    is available at <link xlink:href="https://github.com/brocade/ncclient"
                         >https://github.com/brocade/ncclient</link>:</para>
                 <screen><prompt>$</prompt> <userinput>git clone https://www.github.com/brocade/ncclient</userinput></screen>
-                <para>As <systemitem class="username"
-                        >root</systemitem>, run this
-                    command:</para>
+                <para>As <systemitem class="username">root</systemitem>, run this command:</para>
                 <screen><prompt>#</prompt> <userinput>cd ncclient;python setup.py install</userinput></screen>
             </step>
             <step>
-                <para>Edit the
-                        <filename>/etc/neutron/neutron.conf</filename>
-                    file and set the following option:</para>
+                <para>Edit the <filename>/etc/neutron/neutron.conf</filename> file and set the
+                    following option:</para>
                 <programlisting language="ini">core_plugin = brocade</programlisting>
             </step>
             <step>
-                <para>Edit the
-                        <filename>/etc/neutron/plugins/brocade/brocade.ini</filename>
-                    file for the Brocade plug-in and specify
-                    the admin user name, password, and IP
+                <para>Edit the <filename>/etc/neutron/plugins/brocade/brocade.ini</filename> file
+                    for the Brocade plug-in and specify the admin user name, password, and IP
                     address of the Brocade switch:</para>
                 <programlisting language="ini">[SWITCH]
-username = <replaceable>admin</replaceable>
-password = <replaceable>password</replaceable>
-address  = <replaceable>switch mgmt ip address</replaceable>
+username = <replaceable>ADMIN</replaceable>
+password = <replaceable>PASSWORD</replaceable>
+address  = <replaceable>SWITCH_MGMT_IP_ADDRESS</replaceable>
 ostype   = NOS</programlisting>
                 <para>For database configuration, see <link
                         xlink:href="http://docs.openstack.org/icehouse/install-guide/install/apt/content/neutron-ml2-controller-node.html"
-                        >Install Networking Services</link> in
-                    any of the <citetitle>Installation
-                        Guides</citetitle> in the <link
-                        xlink:href="http://docs.openstack.org"
-                        >OpenStack Documentation index</link>.
-                    (The link defaults to the Ubuntu
+                        >Install Networking Services</link> in any of the <citetitle>Installation
+                        Guides</citetitle> in the <link xlink:href="http://docs.openstack.org"
+                        >OpenStack Documentation index</link>. (The link defaults to the Ubuntu
                     version.)</para>
             </step>
             <step>
-                <para>Restart the <systemitem class="service"
-                        >neutron-server</systemitem> service
-                    to apply the settings:</para>
+                <para>Restart the <systemitem class="service">neutron-server</systemitem> service to
+                    apply the settings:</para>
                 <screen><prompt>#</prompt> <userinput>service neutron-server restart</userinput></screen>
             </step>
         </procedure>
     </section>
     <section xml:id="openvswitch_plugin">
         <title>Configure OVS plug-in</title>
-        <para>If you use the Open vSwitch (OVS) plug-in in a
-            deployment with multiple hosts, you must use
-            either tunneling or vlans to isolate traffic from
-            multiple networks. Tunneling is easier to deploy
-            because it does not require that you configure
-            VLANs on network switches.</para>
+        <para>If you use the Open vSwitch (OVS) plug-in in a deployment with multiple hosts, you
+            must use either tunneling or vlans to isolate traffic from multiple networks. Tunneling
+            is easier to deploy because it does not require that you configure VLANs on network
+            switches.</para>
         <para>This procedure uses tunneling:</para>
         <procedure>
-            <title>To configure OpenStack Networking to use
-                the OVS plug-in</title>
+            <title>To configure OpenStack Networking to use the OVS plug-in</title>
             <step>
                 <para>Edit
                         <filename>/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>
@@ -120,35 +91,29 @@ ostype   = NOS</programlisting>
 tenant_network_type=gre
 tunnel_id_ranges=1:1000
 # only required for nodes running agents
-local_ip=&lt;data-net-IP-address-of-node&gt;</programlisting>
+local_ip=<replaceable>DATA_NET_IP_NODE_ADDRESS</replaceable></programlisting>
                 <para>For database configuration, see <link
                         xlink:href="http://docs.openstack.org/icehouse/install-guide/install/apt/content/neutron-ml2-controller-node.html"
-                        >Install Networking Services</link> in
-                        <citetitle>Installation
+                        >Install Networking Services</link> in the <citetitle>Installation
                         Guide</citetitle>.</para>
             </step>
             <step>
-                <para>If you use the neutron DHCP agent, add
-                    these lines to the
-                        <filename>/etc/neutron/dhcp_agent.ini</filename>
-                    file:</para>
+                <para>If you use the neutron DHCP agent, add these lines to the
+                        <filename>/etc/neutron/dhcp_agent.ini</filename> file:</para>
                 <programlisting language="ini">dnsmasq_config_file=/etc/neutron/dnsmasq/dnsmasq-neutron.conf</programlisting>
-                <para>Restart the DHCP service to apply the
-                    settings:</para>
+                <para>Restart the DHCP service to apply the settings:</para>
                 <screen><prompt>#</prompt> <userinput>service neutron-dhcp-agent restart</userinput></screen>
             </step>
             <step>
-                <para>To lower the MTU size on instances and
-                    prevent packet fragmentation over the GRE
-                    tunnel, create the
-                        <filename>/etc/neutron/dnsmasq/dnsmasq-neutron.conf</filename>
-                    file and add these values:</para>
+                <para>To lower the MTU size on instances and prevent packet fragmentation over the
+                    GRE tunnel, create the
+                        <filename>/etc/neutron/dnsmasq/dnsmasq-neutron.conf</filename> file and add
+                    these values:</para>
                 <programlisting language="ini">dhcp-option-force=26,1400</programlisting>
             </step>
             <step>
-                <para>Restart the <systemitem
-                        class="service">neutron-server</systemitem>
-                    service to apply the settings:</para>
+                <para>Restart the <systemitem class="service">neutron-server</systemitem> service to
+                    apply the settings:</para>
                 <screen><prompt>#</prompt> <userinput>service neutron-server restart</userinput></screen>
             </step>
         </procedure>
@@ -156,110 +121,81 @@ local_ip=&lt;data-net-IP-address-of-node&gt;</programlisting>
     <section xml:id="nsx_plugin">
         <title>Configure NSX plug-in</title>
         <procedure>
-            <title>To configure OpenStack Networking to use
-                the NSX plug-in</title>
-            <para>While the instructions in this section refer
-                to the VMware NSX platform, this is formerly
-                known as Nicira NVP.</para>
+            <title>To configure OpenStack Networking to use the NSX plug-in</title>
+            <para>While the instructions in this section refer to the VMware NSX platform, this is
+                formerly known as Nicira NVP.</para>
             <step>
                 <para>Install the NSX plug-in:</para>
                 <screen><prompt>#</prompt> <userinput>apt-get install neutron-plugin-vmware</userinput></screen>
             </step>
             <step>
-                <para>Edit the
-                        <filename>/etc/neutron/neutron.conf</filename>
-                    file and set this line:</para>
+                <para>Edit the <filename>/etc/neutron/neutron.conf</filename> file and set this
+                    line:</para>
                 <programlisting language="ini">core_plugin = vmware</programlisting>
-                <para>Example
-                        <filename>neutron.conf</filename> file
-                    for NSX:</para>
+                <para>Example <filename>neutron.conf</filename> file for NSX:</para>
                 <programlisting language="ini">core_plugin = vmware
 rabbit_host = 192.168.203.10
 allow_overlapping_ips = True</programlisting>
             </step>
             <step>
-                <para>To configure the NSX controller cluster
-                    for OpenStack Networking, locate the
-                        <literal>[default]</literal> section
-                    in the
-                        <filename>/etc/neutron/plugins/vmware/nsx.ini</filename>
-                    file and add the following entries:</para>
+                <para>To configure the NSX controller cluster for OpenStack Networking, locate the
+                        <literal>[default]</literal> section in the
+                        <filename>/etc/neutron/plugins/vmware/nsx.ini</filename> file and add the
+                    following entries:</para>
                 <itemizedlist>
                     <listitem>
-                        <para>To establish and configure the
-                           connection with the controller
-                           cluster you must set some
-                           parameters, including NSX API
-                           endpoints, access credentials, and
-                           settings for HTTP redirects and
-                           retries in case of connection
-                           failures:</para>
-                        <programlisting language="ini">nsx_user = &lt;admin user name>
-nsx_password = &lt;password for nsx_user>
-req_timeout = &lt;timeout in seconds for NSX_requests> # default 30 seconds
-http_timeout = &lt;tiemout in seconds for single HTTP request> # default 10 seconds
-retries = &lt;number of HTTP request retries> # default 2
-redirects = &lt;maximum allowed redirects for a HTTP request> # default 3
-nsx_controllers = &lt;comma separated list of API endpoints></programlisting>
-                        <para>To ensure correct operations,
-                           the <literal>nsx_user</literal>
-                           user must have administrator
-                           credentials on the NSX
-                           platform.</para>
-                        <para>A controller API endpoint
-                           consists of the IP address and port
-                           for the controller; if you omit the
-                           port, port 443 is used. If multiple
-                           API endpoints are specified, it is
-                           up to the user to ensure that all
-                           these endpoints belong to the same
-                           controller cluster. The OpenStack
-                           Networking VMware NSX plug-in does
-                           not perform this check, and results
-                           might be unpredictable.</para>
-                        <para>When you specify multiple API
-                           endpoints, the plug-in
-                           load-balances requests on the
-                           various API endpoints.</para>
+                        <para>To establish and configure the connection with the controller cluster
+                            you must set some parameters, including NSX API endpoints, access
+                            credentials, and settings for HTTP redirects and retries in case of
+                            connection failures:</para>
+                        <programlisting language="ini">nsx_user = <replaceable>ADMIN_USER_NAME</replaceable>
+nsx_password = <replaceable>NSX_USER_PASSWORD</replaceable>
+req_timeout = <replaceable>NSX_REQUEST_TIMEOUT</replaceable> # (seconds) default 30 seconds
+http_timeout = <replaceable>HTTP_REQUEST_TIMEOUT</replaceable> # (seconds) default 10 seconds
+retries = <replaceable>HTTP_REQUEST_RETRIES</replaceable> # default 2
+redirects = <replaceable>HTTP_REQUEST_MAX_REDIRECTS</replaceable> # default 3
+nsx_controllers = <replaceable>API_ENDPOINT_LIST</replaceable> # comma-separated list</programlisting>
+                        <para>To ensure correct operations, the <literal>nsx_user</literal> user
+                            must have administrator credentials on the NSX platform.</para>
+                        <para>A controller API endpoint consists of the IP address and port for the
+                            controller; if you omit the port, port 443 is used. If multiple API
+                            endpoints are specified, it is up to the user to ensure that all these
+                            endpoints belong to the same controller cluster. The OpenStack
+                            Networking VMware NSX plug-in does not perform this check, and results
+                            might be unpredictable.</para>
+                        <para>When you specify multiple API endpoints, the plug-in load-balances
+                            requests on the various API endpoints.</para>
                     </listitem>
                     <listitem>
-                        <para>The UUID of the NSX Transport
-                           Zone that should be used by default
-                           when a tenant creates a network.
-                           You can get this value from the NSX
-                           Manager's Transport Zones
-                           page:</para>
-                        <programlisting language="ini">default_tz_uuid = &lt;uuid_of_the_transport_zone&gt;</programlisting>
+                        <para>The UUID of the NSX transport zone that should be used by default when
+                            a tenant creates a network. You can get this value from the
+                                <guilabel>Transport Zones</guilabel> page for the NSX
+                            Manager:</para>
+                        <programlisting language="ini">default_tz_uuid = <replaceable>TRANSPORT_ZONE_UUID</replaceable></programlisting>
                     </listitem>
                     <listitem>
-                        <programlisting language="ini">default_l3_gw_service_uuid = &lt;uuid_of_the_gateway_service&gt;</programlisting>
+                        <programlisting language="ini">default_l3_gw_service_uuid = <replaceable>GATEWAY_SERVICE_UUID</replaceable></programlisting>
                         <warning>
-                           <para>Ubuntu packaging currently
-                           does not update the Neutron init
-                           script to point to the NSX
-                           configuration file. Instead, you
-                           must manually update
-                           <filename>/etc/default/neutron-server</filename>
-                           to add this line:</para>
-                           <programlisting language="ini">NEUTRON_PLUGIN_CONFIG = /etc/neutron/plugins/vmware/nsx.ini</programlisting>
+                            <para>Ubuntu packaging currently does not update the Neutron init script
+                                to point to the NSX configuration file. Instead, you must manually
+                                update <filename>/etc/default/neutron-server</filename> to add this
+                                line:</para>
+                            <programlisting language="ini">NEUTRON_PLUGIN_CONFIG = /etc/neutron/plugins/vmware/nsx.ini</programlisting>
                         </warning>
                     </listitem>
                 </itemizedlist>
                 <para>For database configuration, see <link
                         xlink:href="http://docs.openstack.org/icehouse/install-guide/install/apt/content/neutron-ml2-controller-node.html"
-                        >Install Networking Services</link> in
-                        <citetitle>Installation
+                        >Install Networking Services</link> in the <citetitle>Installation
                         Guide</citetitle>.</para>
             </step>
             <step>
-                <para>Restart <systemitem class="service"
-                        >neutron-server</systemitem> to apply
+                <para>Restart <systemitem class="service">neutron-server</systemitem> to apply
                     settings:</para>
                 <screen><prompt>#</prompt> <userinput>service neutron-server restart</userinput></screen>
             </step>
         </procedure>
-        <para>Example <filename>nsx.ini</filename>
-            file:</para>
+        <para>Example <filename>nsx.ini</filename> file:</para>
         <programlisting language="ini">[DEFAULT]
 default_tz_uuid = d3afb164-b263-4aaa-a3e4-48e0e09bb33c
 default_l3_gw_service_uuid=5c8622cc-240a-40a1-9693-e6a5fca4e3cf
@@ -267,85 +203,58 @@ nsx_user=admin
 nsx_password=changeme
 nsx_controllers=10.127.0.100,10.127.0.200:8888</programlisting>
         <note>
-            <para>To debug <filename>nsx.ini</filename>
-                configuration issues, run this command from
-                the host that runs <systemitem class="service"
-                    >neutron-server</systemitem>:</para>
-            <screen><prompt>#</prompt> <userinput>neutron-check-nsx-config &lt;path/to/nsx.ini&gt;</userinput></screen>
-            <para>This command tests whether <systemitem
-                    class="service"
-                    >neutron-server</systemitem> can log into
-                all of the NSX Controllers and the SQL server,
-                and whether all UUID values are
-                correct.</para>
+            <para>To debug <filename>nsx.ini</filename> configuration issues, run this command from
+                the host that runs <systemitem class="service">neutron-server</systemitem>:</para>
+            <screen><prompt>#</prompt> <userinput>neutron-check-nsx-config <replaceable>PATH_TO_NSX.INI</replaceable></userinput></screen>
+            <para>This command tests whether <systemitem class="service">neutron-server</systemitem>
+                can log into all of the NSX Controllers and the SQL server, and whether all UUID
+                values are correct.</para>
         </note>
         <section xml:id="LBaaS_and_FWaaS">
-            <title>Load-Balancer-as-a-Service and
-                Firewall-as-a-Service</title>
-            <para>The NSX LBaaS and FWaaS services use the
-                standard OpenStack API with the exception of
-                requiring routed-insertion extension
-                support.</para>
-            <para>The NSX implementation and the community
-                reference implementation of these services
-                differ, as follows:</para>
+            <title>Load-Balancer-as-a-Service and Firewall-as-a-Service</title>
+            <para>The NSX LBaaS and FWaaS services use the standard OpenStack API with the exception
+                of requiring routed-insertion extension support.</para>
+            <para>The NSX implementation and the community reference implementation of these
+                services differ, as follows:</para>
             <orderedlist>
                 <listitem>
-                    <para>The NSX LBaaS and FWaaS plug-ins
-                        require the routed-insertion
-                        extension, which adds the
-                           <code>router_id</code> attribute to
-                        the VIP (Virtual IP address) and
-                        firewall resources and binds these
-                        services to a logical router.</para>
+                    <para>The NSX LBaaS and FWaaS plug-ins require the routed-insertion extension,
+                        which adds the <code>router_id</code> attribute to the VIP (Virtual IP
+                        address) and firewall resources and binds these services to a logical
+                        router.</para>
                 </listitem>
                 <listitem>
-                    <para>The community reference
-                        implementation of LBaaS only supports
-                        a one-arm model, which restricts the
-                        VIP to be on the same subnet as the
-                        back-end servers. The NSX LBaaS
-                        plug-in only supports a two-arm model
-                        between north-south traffic, which
-                        means that you can create the VIP on
-                        only the external (physical)
-                        network.</para>
+                    <para>The community reference implementation of LBaaS only supports a one-arm
+                        model, which restricts the VIP to be on the same subnet as the back-end
+                        servers. The NSX LBaaS plug-in only supports a two-arm model between
+                        north-south traffic, which means that you can create the VIP on only the
+                        external (physical) network.</para>
                 </listitem>
                 <listitem>
-                    <para>The community reference
-                        implementation of FWaaS applies
-                        firewall rules to all logical routers
-                        in a tenant, while the NSX FWaaS
-                        plug-in applies firewall rules only to
-                        one logical router according to the
-                           <code>router_id</code> of the
-                        firewall entity.</para>
+                    <para>The community reference implementation of FWaaS applies firewall rules to
+                        all logical routers in a tenant, while the NSX FWaaS plug-in applies
+                        firewall rules only to one logical router according to the
+                            <code>router_id</code> of the firewall entity.</para>
                 </listitem>
             </orderedlist>
             <procedure>
-                <title>To configure Load-Balancer-as-a-Service
-                    and Firewall-as-a-Service with NSX</title>
+                <title>To configure Load-Balancer-as-a-Service and Firewall-as-a-Service with
+                    NSX</title>
                 <step>
-                    <para>Edit the
-                           <filename>/etc/neutron/neutron.conf</filename>
-                        file:</para>
+                    <para>Edit the <filename>/etc/neutron/neutron.conf</filename> file:</para>
                     <programlisting language="ini">core_plugin = neutron.plugins.vmware.plugin.NsxServicePlugin
 # Note: comment out service_plug-ins. LBaaS &amp; FWaaS is supported by core_plugin NsxServicePlugin
 # service_plugins = </programlisting>
                 </step>
                 <step>
-                    <para>Edit the
-                           <filename>/etc/neutron/plugins/vmware/nsx.ini</filename>
+                    <para>Edit the <filename>/etc/neutron/plugins/vmware/nsx.ini</filename>
                         file:</para>
-                    <para>In addition to the original NSX
-                        configuration, the
-                           <code>default_l3_gw_service_uuid</code>
-                        is required for the NSX Advanced
-                        plug-in and you must add a
-                           <code>vcns</code> section:</para>
+                    <para>In addition to the original NSX configuration, the
+                            <code>default_l3_gw_service_uuid</code> is required for the NSX Advanced
+                        plug-in and you must add a <code>vcns</code> section:</para>
                     <programlisting language="ini">[DEFAULT]
-nsx_password = <replaceable>admin</replaceable>
-nsx_user = <replaceable>admin</replaceable>
+nsx_password = <replaceable>ADMIN</replaceable>
+nsx_user = <replaceable>ADMIN</replaceable>
 nsx_controllers = <replaceable>10.37.1.137:443</replaceable>
 default_l3_gw_service_uuid = <replaceable>aae63e9b-2e4e-4efe-81a1-92cf32e308bf</replaceable>
 default_tz_uuid = <replaceable>2702f27a-869a-49d1-8781-09331a0f6b9e</replaceable>
@@ -355,10 +264,10 @@ default_tz_uuid = <replaceable>2702f27a-869a-49d1-8781-09331a0f6b9e</replaceable
 manager_uri = <replaceable>https://10.24.106.219</replaceable>
 
 # VSM admin user name
-user = <replaceable>admin</replaceable>
+user = <replaceable>ADMIN</replaceable>
 
 # VSM admin password
-password = <replaceable>default</replaceable>
+password = <replaceable>DEFAULT</replaceable>
 
 # UUID of a logical switch on NSX which has physical network connectivity (currently using bridge transport type)
 external_network = <replaceable>f2c023cf-76e2-4625-869b-d0dabcfcc638</replaceable>
@@ -370,8 +279,7 @@ external_network = <replaceable>f2c023cf-76e2-4625-869b-d0dabcfcc638</replaceabl
 # task_status_check_interval =</programlisting>
                 </step>
                 <step>
-                    <para>Restart the <systemitem
-                            class="service">neutron-server</systemitem>
+                    <para>Restart the <systemitem class="service">neutron-server</systemitem>
                         service to apply the settings:</para>
                     <screen><prompt>#</prompt> <userinput>service neutron-server restart</userinput></screen>
                 </step>
@@ -381,22 +289,17 @@ external_network = <replaceable>f2c023cf-76e2-4625-869b-d0dabcfcc638</replaceabl
     <section xml:id="PLUMgridplugin">
         <title>Configure PLUMgrid plug-in</title>
         <procedure>
-            <title>To use the PLUMgrid plug-in with OpenStack
-                Networking</title>
+            <title>To use the PLUMgrid plug-in with OpenStack Networking</title>
             <step>
-                <para>Edit the
-                        <filename>/etc/neutron/neutron.conf</filename>
-                    file and set this line:</para>
+                <para>Edit the <filename>/etc/neutron/neutron.conf</filename> file and set this
+                    line:</para>
                 <programlisting language="ini">core_plugin = plumgrid</programlisting>
             </step>
             <step>
-                <para>Edit the
-                        <systemitem>[PLUMgridDirector]</systemitem>
-                    section in the
-                        <filename>/etc/neutron/plugins/plumgrid/plumgrid.ini</filename>
-                    file and specify the IP address, port,
-                    admin user name, and password of the
-                    PLUMgrid Director:</para>
+                <para>Edit the <systemitem>[PLUMgridDirector]</systemitem> section in the
+                        <filename>/etc/neutron/plugins/plumgrid/plumgrid.ini</filename> file and
+                    specify the IP address, port, admin user name, and password of the PLUMgrid
+                    Director:</para>
                 <programlisting language="ini">[PLUMgridDirector]
 director_server = "PLUMgrid-director-ip-address"
 director_server_port = "PLUMgrid-director-port"
@@ -404,14 +307,12 @@ username = "PLUMgrid-director-admin-username"
 password = "PLUMgrid-director-admin-password"</programlisting>
                 <para>For database configuration, see <link
                         xlink:href="http://docs.openstack.org/icehouse/install-guide/install/apt/content/neutron-ml2-controller-node.html"
-                        >Install Networking Services</link> in
-                    the <citetitle>Installation
+                        >Install Networking Services</link> in the <citetitle>Installation
                         Guide</citetitle>.</para>
             </step>
             <step>
-                <para>Restart the <systemitem class="service"
-                        >neutron-server</systemitem> service to apply
-                    the settings:</para>
+                <para>Restart the <systemitem class="service">neutron-server</systemitem> service to
+                    apply the settings:</para>
                 <screen><prompt>#</prompt> <userinput>service neutron-server restart</userinput></screen>
             </step>
         </procedure>
@@ -419,74 +320,52 @@ password = "PLUMgrid-director-admin-password"</programlisting>
     <section xml:id="ryu_plugin">
         <title>Configure Ryu plug-in</title>
         <procedure>
-            <title>To use the Ryu plug-in with OpenStack
-                Networking</title>
+            <title>To use the Ryu plug-in with OpenStack Networking</title>
             <step>
                 <para>Install the Ryu plug-in:</para>
                 <screen><prompt>#</prompt> <userinput>apt-get install neutron-plugin-ryu</userinput> </screen>
             </step>
             <step>
-                <para>Edit the
-                        <filename>/etc/neutron/neutron.conf</filename>
-                    file and set this line:</para>
+                <para>Edit the <filename>/etc/neutron/neutron.conf</filename> file and set this
+                    line:</para>
                 <programlisting language="ini">core_plugin = ryu</programlisting>
             </step>
             <step>
-                <para>Edit the
-                        <filename>/etc/neutron/plugins/ryu/ryu.ini</filename>
-                    file and update these options in the
-                        <literal>[ovs]</literal> section
-                    for the
-                        <systemitem class="service">ryu-neutron-agent</systemitem>:</para>
+                <para>Edit the <filename>/etc/neutron/plugins/ryu/ryu.ini</filename> file and update
+                    these options in the <literal>[ovs]</literal> section for the <systemitem
+                        class="service">ryu-neutron-agent</systemitem>:</para>
                 <itemizedlist>
                     <listitem>
-                        <para><option>openflow_rest_api</option>.
-                           Defines where Ryu is listening for
-                           REST API. Substitute
-                           <option>ip-address</option>
-                           and
-                           <option>port-no</option>
-                           based on your Ryu setup.</para>
+                        <para><option>openflow_rest_api</option>. Defines where Ryu is listening for
+                            REST API. Substitute <option>ip-address</option> and
+                                <option>port-no</option> based on your Ryu setup.</para>
                     </listitem>
                     <listitem>
-                        <para><option>ovsdb_interface</option>.
-                           Enables Ryu to access the
-                           <systemitem>ovsdb-server</systemitem>.
-                           Substitute <literal>eth0</literal>
-                           based on your setup. The IP address
-                           is derived from the interface name.
-                           If you want to change this value
-                           irrespective of the interface name,
-                           you can specify
-                           <option>ovsdb_ip</option>.
-                           If you use a non-default port for
-                           <systemitem>ovsdb-server</systemitem>,
-                           you can specify
-                           <option>ovsdb_port</option>.</para>
+                        <para><option>ovsdb_interface</option>. Enables Ryu to access the
+                                <systemitem>ovsdb-server</systemitem>. Substitute
+                                <literal>eth0</literal> based on your setup. The IP address is
+                            derived from the interface name. If you want to change this value
+                            irrespective of the interface name, you can specify
+                                <option>ovsdb_ip</option>. If you use a non-default port for
+                                <systemitem>ovsdb-server</systemitem>, you can specify
+                                <option>ovsdb_port</option>.</para>
                     </listitem>
                     <listitem>
-                        <para><option>tunnel_interface</option>.
-                           Defines which IP address is used
-                           for tunneling. If you do not use
-                           tunneling, this value is ignored.
-                           The IP address is derived from the
-                           network interface name.</para>
+                        <para><option>tunnel_interface</option>. Defines which IP address is used
+                            for tunneling. If you do not use tunneling, this value is ignored. The
+                            IP address is derived from the network interface name.</para>
                     </listitem>
                 </itemizedlist>
                 <para>For database configuration, see <link
                         xlink:href="http://docs.openstack.org/icehouse/install-guide/install/apt/content/neutron-ml2-controller-node.html"
-                        >Install Networking Services</link> in
-                        <citetitle>Installation
+                        >Install Networking Services</link> in <citetitle>Installation
                         Guide</citetitle>.</para>
-                <para>You can use the same configuration file
-                    for many compute nodes by using a network
-                    interface name with a different IP
-                    address:</para>
-                <programlisting language="ini">openflow_rest_api = &lt;ip-address&gt;:&lt;port-no&gt; ovsdb_interface = &lt;eth0&gt; tunnel_interface = &lt;eth0&gt;</programlisting>
+                <para>You can use the same configuration file for many compute nodes by using a
+                    network interface name with a different IP address:</para>
+                <programlisting language="ini">openflow_rest_api = <replaceable>IP_ADDRESS</replaceable>:<replaceable>PORT</replaceable> ovsdb_interface = <replaceable>ETH0</replaceable> tunnel_interface = <replaceable>ETH0</replaceable></programlisting>
             </step>
             <step>
-                <para>Restart the <systemitem class="service"
-                        >neutron-server</systemitem> to apply
+                <para>Restart the <systemitem class="service">neutron-server</systemitem> to apply
                     the settings:</para>
                 <screen><prompt>#</prompt> <userinput>service neutron-server restart</userinput></screen>
             </step>

@@ -103,7 +103,7 @@
             </varlistentry>
             <varlistentry>
                 <term><code>ssl_cert_file =
-                            <replaceable>/path/to/certfile</replaceable></code></term>
+                            <replaceable>PATH_TO_CERTFILE</replaceable></code></term>
                 <listitem>
                     <para>Certificate file that is used when you
                         securely start the Networking API
@@ -112,7 +112,7 @@
             </varlistentry>
             <varlistentry>
                 <term><code>ssl_key_file =
-                            <replaceable>/path/to/keyfile</replaceable></code></term>
+                            <replaceable>PATH_TO_KEYFILE</replaceable></code></term>
                 <listitem>
                     <para>Private key file that is used when you
                         securely start the Networking API
@@ -121,7 +121,7 @@
             </varlistentry>
             <varlistentry>
                 <term><code>ssl_ca_file =
-                            <replaceable>/path/to/cafile</replaceable></code></term>
+                            <replaceable>PATH_TO_CAFILE</replaceable></code></term>
                 <listitem>
                     <para>Optional. CA certificate file that is used
                         when you securely start the Networking API
@@ -302,16 +302,16 @@ enabled = True</programlisting>
                 the policy.</para>
             <step>
                 <para>Create a firewall rule:</para>
-                <screen><prompt>$</prompt> <userinput>neutron firewall-rule-create --protocol &lt;tcp|udp|icmp|any&gt; --destination-port &lt;port-range&gt; --action &lt;allow|deny&gt;</userinput></screen>
+                <screen><prompt>$</prompt> <userinput>neutron firewall-rule-create --protocol {tcp|udp|icmp|any} --destination-port <replaceable>PORT_RANGE</replaceable> --action {allow|deny}</userinput></screen>
                 <para>The Networking client requires a protocol value;
                     if the rule is protocol agnostic, you can use the
                         <literal>any</literal> value.</para>
             </step>
             <step>
                 <para>Create a firewall policy:</para>
-                <screen><prompt>$</prompt> <userinput>neutron firewall-policy-create --firewall-rules  "&lt;firewall-rule IDs or names separated by space&gt;" myfirewallpolicy</userinput></screen>
-                <para>The order in which you specify the rules is
-                    important.</para>
+                <screen><prompt>$</prompt> <userinput>neutron firewall-policy-create --firewall-rules  "<replaceable>FIREWALL_RULE_IDS_OR_NAMES</replaceable>" myfirewallpolicy</userinput></screen>
+                <para>Separate firewall rule IDs or names with spaces. The order in which you
+                    specify the rules is important.</para>
                 <para>You can create a firewall policy without any
                     rules and add rules later, as follows:<itemizedlist>
                         <listitem>
@@ -337,7 +337,7 @@ enabled = True</programlisting>
             </step>
             <step>
                 <para>Create a firewall:</para>
-                <screen><prompt>$</prompt> <userinput>neutron firewall-create  &lt;firewall-policy-uuid&gt;</userinput></screen>
+                <screen><prompt>$</prompt> <userinput>neutron firewall-create  <replaceable>FIREWALL_POLICY_UUID</replaceable></userinput></screen>
                 <note>
                     <para>The firewall remains in
                             <guilabel>PENDING_CREATE</guilabel> state
@@ -367,12 +367,12 @@ enabled = True</programlisting>
                     <listitem>
                         <para>Create a port with a specified allowed
                             address pairs:</para>
-                        <screen><prompt>$</prompt> <userinput>neutron port-create net1 --allowed-address-pairs type=dict list=true mac_address=&lt;mac_address&gt;,ip_address=&lt;ip_cidr&gt;</userinput></screen>
+                        <screen><prompt>$</prompt> <userinput>neutron port-create net1 --allowed-address-pairs type=dict list=true mac_address=<replaceable>MAC_ADDRESS</replaceable>,ip_address=<replaceable>IP_CIDR</replaceable></userinput></screen>
                     </listitem>
                     <listitem>
                         <para>Update a port by adding allowed address
                             pairs:</para>
-                        <screen><prompt>$</prompt> <userinput>neutron port-update  &lt;port-uuid&gt; --allowed-address-pairs type=dict list=true mac_address=&lt;mac_address&gt;,ip_address=&lt;ip_cidr&gt;</userinput></screen>
+                        <screen><prompt>$</prompt> <userinput>neutron port-update <replaceable>PORT_UUID</replaceable> --allowed-address-pairs type=dict list=true mac_address=<replaceable>MAC_ADDRESS</replaceable>,ip_address=<replaceable>IP_CIDR</replaceable></userinput></screen>
                     </listitem>
                 </itemizedlist></para>
         </formalpara>
