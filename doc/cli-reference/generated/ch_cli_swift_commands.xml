@@ -12,12 +12,12 @@
     <title>Object Storage command-line client</title>
     <para>The <command>swift</command> client is the command-line interface
          (CLI) for the OpenStack Object Storage API and its extensions. This chapter documents
-         <command>swift</command> version 2.1.0.
+         <command>swift</command> version 2.2.0.
     </para>
     <para>For help on a specific <command>swift</command>
        command, enter:
     </para>
-    <screen><prompt>$</prompt> <userinput><command>swift</command> <option>help</option> <replaceable>COMMAND</replaceable></userinput></screen>
+    <screen><prompt>$</prompt> <userinput><command>swift</command> <replaceable>COMMAND</replaceable> <option>--help</option></userinput></screen>
 
     <section xml:id="swiftclient_command_usage">
        <title>swift usage</title>
@@ -33,7 +33,7 @@
              [--os-endpoint-type &lt;endpoint-type&gt;]
              [--os-cacert &lt;ca-certificate&gt;] [--insecure]
              [--no-ssl-compression]
-             &lt;subcommand&gt; ...</computeroutput></screen>
+             &lt;subcommand&gt; [--help]</computeroutput></screen>
   <variablelist wordsize="10">
     <title>Subcommands</title>
   <varlistentry>
@@ -95,11 +95,20 @@
       </para>
     </listitem>
   </varlistentry>
+  <varlistentry>
+    <term><command>tempurl</command></term>
+    <listitem>
+      <para>
+        Create a temporary URL
+      </para>
+    </listitem>
+  </varlistentry>
  </variablelist>
     </section>
     <section xml:id="swiftclient_command_examples">
         <title>swift examples</title>
-        <screen><computeroutput>  swift -A https://auth.api.rackspacecloud.com/v1.0 -U user -K api_key stat -v
+        <screen><computeroutput>  swift download --help
+  swift -A https://auth.api.rackspacecloud.com/v1.0 -U user -K api_key stat -v
   swift --os-auth-url https://api.example.com/v2.0 --os-tenant-name tenant \
       --os-username user --os-password password list
   swift --os-auth-token 6ee5eb33efad4e45ab46806eac010566 \
