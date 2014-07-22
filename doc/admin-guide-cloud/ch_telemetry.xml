@@ -8,7 +8,37 @@
   <para>The Telemetry module is the metering service in OpenStack.</para>
   <section xml:id="section_telemetry-introduction">
     <title>Introduction</title>
-    <para>TBD</para>
+    <para>Even in the cloud industry, providers must use a multi-step
+      process for billing. The required steps to bill for usage in a
+      cloud environment are metering, rating, and billing. Because the
+      provider's requirements may be far too specific for a shared
+      solution, rating and billing solutions cannot be designed a
+      common module that satisfies all. Providing users with measurements
+      on cloud services is required to meet the "measured service"
+      definition of cloud computing.</para>
+    <para>The Telemetry module was originally designed to support billing
+      systems for OpenStack cloud resources. This project only covers the
+      metering portion of the required processing for billing. This module
+      collects information about the system and stores it in the form of
+      samples in order to provide data about anything that can be billed.
+    </para>
+    <para>The list of meters is continuously growing, which makes it
+      possible to use the data collected by Telemetry for different
+      purposes, other than billing. For example, the autoscaling feature
+      in the Orchestration module can be triggered by alarms this module
+      sets and then gets notified within Telemetry.</para>
+    <para>The sections in this document contain information about the
+      architecture and usage of Telemetry. The first section contains a
+      brief summary about the system architecture used in a typical
+      OpenStack deployment. The second section describes the data collection
+      mechanisms. You can also read about alarming to understand how alarm
+      definitions can be posted to Telemetry and what actions can happen if
+      an alarm is raised. The last section contains a troubleshooting
+      guide, which mentions error situations and possible solutions for the
+      problems.</para>
+    <para>You can retrieve the collected samples three different ways: with
+      the REST API, with the command line interface, or with the Metering tab
+      on an OpenStack dashboard.</para>
   </section>
   <xi:include href="telemetry/section_telemetry-system-architecture.xml"/>
   <xi:include href="telemetry/section_telemetry-data-collection.xml"/>

@@ -5,5 +5,216 @@
   version="5.0"
   xml:id="section_telemetry-system-architecture">
   <title>System architecture</title>
-  <para>TBD</para>
+  <para>The Telemetry module uses an agent-based architecture.
+    Several modules combine their responsibilities to collect data,
+    store samples in a database, or provide an API service for handling
+    incoming requests.</para>
+  <para>The Telemetry module is built from the following agents and
+    services:</para>
+  <para>
+    <variablelist>
+      <varlistentry>
+        <term><systemitem class="service">ceilometer-api</systemitem></term>
+          <listitem>
+              <para>Presents aggregated metering data to consumers
+                (such as billing engines, analytics tools and so forth).</para>
+          </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><systemitem class="service">ceilometer-agent-central</systemitem></term>
+          <listitem>
+            <para>Polls the public RESTful APIs of other OpenStack
+              services such as Compute service and Image service, in order to
+              keep tabs on resource existence.</para>
+          </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><systemitem class="service">ceilometer-agent-compute</systemitem></term>
+          <listitem>
+            <para>Polls the local hypervisor or libvirt daemon to acquire
+              performance data for the local instances, messages and emits these
+              data as AMQP messages.</para>
+          </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><systemitem class="service">ceilometer-agent-notification</systemitem></term>
+          <listitem>
+            <para>Consumes AMQP messages from other OpenStack services.</para>
+          </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><systemitem class="service">ceilometer-collector</systemitem></term>
+          <listitem>
+            <para>Consumes AMQP notifications from the agents, then dispatches
+              these data to the metering store.</para>
+          </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><systemitem class="service">ceilometer-alarm-evaluator</systemitem></term>
+          <listitem>
+            <para>Determines when alarms fire due to the associated statistic
+              trend crossing a threshold over a sliding time window.</para>
+          </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><systemitem class="service">ceilometer-alarm-notifier</systemitem></term>
+          <listitem>
+            <para>Initiates alarm actions, for example calling out to a webhook
+              with a description of the alarm state transition.</para>
+          </listitem>
+      </varlistentry>
+    </variablelist>
+  </para>
+  <para>Besides the <systemitem class="service">ceilometer-agent-compute</systemitem> service,
+    all the other services are placed on one or more controller nodes.</para>
+    <note>
+      <para>The <systemitem class="service">ceilometer-agent-central</systemitem> service does
+        not support multiple running instances at a time, it can have only one.</para>
+    </note>
+  <para>The Telemetry architecture highly depends on the AMQP service both for consuming
+    notifications coming from OpenStack services and internal communication.</para>
+  <section xml:id="section_telemetry-supported-dbs">
+    <title>Supported databases</title>
+    <para>The other key external component of Telemetry is the database, where the samples, alarm
+      definitions and alarms are stored.</para>
+    <note>
+      <para>Multiple database backends can be configured in order to store samples and alarms
+        separately.</para>
+    </note>
+    <para>The list of supported database backends:</para>
+    <para>
+      <itemizedlist>
+        <listitem>
+          <para><link xlink:href="http://www.mongodb.org/">MongoDB</link></para>
+        </listitem>
+        <listitem>
+          <para><link xlink:href="http://www.mysql.com/">MySQL</link></para>
+        </listitem>
+        <listitem>
+          <para><link xlink:href="http://www.postgresql.org/">PostgreSQL</link></para>
+        </listitem>
+        <listitem>
+          <para><link xlink:href="http://hbase.apache.org/">HBase</link></para>
+        </listitem>
+        <listitem>
+          <para><link xlink:href="http://www-01.ibm.com/software/data/db2/">DB2</link>
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+  </section>
+  <section xml:id="section_telemetry-supported-hypervisors">
+    <title>Supported hypervisors</title>
+    <para>The Telemetry module collects information about the virtual machines, which requires
+      close connection to the hypervisor that runs on the compute hosts.</para>
+    <para>The list of supported hypervisors is:</para>
+    <para>
+      <itemizedlist>
+        <listitem>
+          <para>The following hypervisors are supported via
+            <link xlink:href="http://libvirt.org/">Libvirt</link>:</para>
+          <itemizedlist>
+            <listitem>
+              <para>
+                <link xlink:href="http://www.linux-kvm.org/page/Main_Page">Kernel-based
+                 Virtual Machine (KVM)</link>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <link xlink:href="http://wiki.qemu.org/Main_Page">Quick Emulator (QEMU)</link>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <link xlink:href="https://linuxcontainers.org/">Linux Containers (LXC)</link>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <link xlink:href="http://www.xenproject.org/help/documentation.html">XEN</link>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <link xlink:href="http://user-mode-linux.sourceforge.net/">
+                User-mode Linux (UML)</link>
+              </para>
+            </listitem>
+          </itemizedlist>
+          <note>
+            <para>For details about hypervisor support in Libvirt please check the
+              <link xlink:href="http://libvirt.org/hvsupport.html">Libvirt API
+              support matrix</link>.
+            </para>
+          </note>
+        </listitem>
+        <listitem>
+          <para><link
+            xlink:href="http://www.microsoft.com/en-us/server-cloud/hyper-v-server/default.aspx"
+            >Hyper-V</link>
+          </para>
+        </listitem>
+        <listitem>
+          <para><link
+            xlink:href="http://www.vmware.com/products/vsphere-hypervisor/support.html"
+            >VMWare vSphere</link>
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+  </section>
+  <section xml:id="section_telemetry-supported-networking-services">
+    <title>Suported networking services</title>
+    <para>Telemetry is able to retrieve information from OpenStack Networking
+      and external networking services:</para>
+    <para>
+      <itemizedlist>
+        <listitem>
+          <para>OpenStack Networking:
+            <itemizedlist>
+              <listitem>
+                <para>Basic network metrics</para>
+              </listitem>
+              <listitem>
+                <para>Firewall-as-a-Service (FWaaS) metrics</para>
+              </listitem>
+              <listitem>
+                <para>Loadbalancer-as-a-Service (LBaaS) metrics</para>
+              </listitem>
+              <listitem>
+                <para>VPN-as-a-Service (VPNaaS) metrics</para>
+              </listitem>
+            </itemizedlist>
+          </para>
+        </listitem>
+        <listitem>
+          <para>SDN controller metrics:
+            <itemizedlist>
+              <listitem>
+                <para><link xlink:href="http://www.opendaylight.org/software">
+                  OpenDaylight</link></para>
+              </listitem>
+              <listitem>
+                <para><link xlink:href="http://opencontrail.org/">OpenContrail</link></para>
+              </listitem>
+            </itemizedlist>
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+  </section>
+  <section xml:id="section_telemetry-users-roles">
+    <title>Users, roles and tenants</title>
+    <para>This module of OpenStack uses OpenStack Identity for authenticating and authorizing
+      users. The required configuration options are listed in the <link xlink:href=
+      "http://docs.openstack.org/trunk/config-reference/content/ch_configuring-openstack-telemetry.html">
+      Telemetry section</link> in the <citetitle>OpenStack Configuration Reference</citetitle>.</para>
+    <para>Two roles are used in the system basically, which are the 'admin' and 'non-admin'. The
+      authorization happens before processing each API request. The amount of returned data depends
+      on the role the requestor owns.</para>
+    <para>The creation of alarm definitions also highly depends on the role of the user, who
+      initiated the action. Further details about alarm handling can be found in
+      <xref linkend="section_telemetry-alarms"/> in this guide.</para>
+  </section>
 </section>

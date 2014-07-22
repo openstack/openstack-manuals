@@ -5,5 +5,713 @@
   version="5.0"
   xml:id="section_telemetry-data-collection">
   <title>Data collection</title>
-  <para>TBD</para>
+  <para>The main responsibility of Telemetry in OpenStack is to collect
+    information about the system that can be used by billing systems or any
+    kinds of analytic tools for instance. The original focus, regarding to
+    the collected data, was on the counters that can be used for billing,
+    but the range is getting wider continuously.</para>
+  <para>Collected data can be stored in the form of samples or events in the
+    supported databases, listed in
+    <xref linkend="section_telemetry-supported-dbs"/>.</para>
+  <para>Samples can have various sources regarding to the needs
+    and configuration of Telemetry, which requires multiple methods to
+    collect data.</para>
+  <para>The available data collection mechanisms are:</para>
+  <para>
+    <variablelist>
+      <varlistentry>
+        <term>Notifications</term>
+        <listitem>
+          <para>Processing notifications from other OpenStack services, by
+            consuming messages from the configured message queue system.</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Polling</term>
+        <listitem>
+          <para>Retrieve information directly from the hypervisor or from the host
+            machine using SNMP, or by using the APIs of other OpenStack services.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>RESTful API</term>
+        <listitem>
+          <para>Pushing samples via the RESTful API of Telemetry.</para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </para>
+  <section xml:id="section_telemetry-notifications">
+    <title>Notifications</title>
+    <para>All the services send notifications about the executed operations or system
+      state in OpenStack. Several notifications carry information that can be metered,
+      like when a new VM instance was created by OpenStack Compute service.</para>
+    <para>The Telemetry module has a separate agent that is responsible for consuming
+      notifications, namely the notification agent. This component is responsible for
+      consuming from the message bus and transforming notifications into new samples.
+    </para>
+    <para>The different OpenStack services emit several notifications about the various
+      types of events that happen in the system during normal operation. Not all these
+      notifications are consumed by the Telemetry module, as the intention is only to
+      capture the billable events and all those notifications that can be used for
+      monitoring or profiling purposes. The notification agent filters by the event
+      type, that is contained by each notification message. The following table
+      contains the event types by each OpenStack service that are transformed to samples
+      by Telemetry.</para>
+    <table rules="all">
+      <caption>Consumed event types from OpenStack services</caption>
+      <col width="33%"/>
+      <col width="33%"/>
+      <col width="33%"/>
+      <thead>
+        <tr>
+          <td>OpenStack service</td>
+          <td>Event types</td>
+          <td>Note</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>OpenStack Compute</td>
+          <td><para>scheduler.run_instance.scheduled</para>
+            <para>compute.instance.*</para></td>
+            <td>For a more detailed list of Compute notifications please check the
+              <link xlink:href="https://wiki.openstack.org/wiki/SystemUsageData">
+              System Usage Data wiki page</link>.</td>
+        </tr>
+        <tr>
+          <td>Bare metal module for OpenStack</td>
+          <td>hardware.ipmi.*</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>OpenStack Image Service</td>
+          <td><para>image.update</para>
+            <para>image.upload</para>
+            <para>image.delete</para>
+            <para>image.send</para></td>
+          <td>The required configuration for Image service can be found in the
+            <link xlink:href=
+            "http://docs.openstack.org/trunk/install-guide/install/apt/content/ceilometer-install-glance.html">
+            Configure the Image Service for Telemetry section</link> section
+            in the <citetitle>OpenStack Installation Guide</citetitle>.</td>
+        </tr>
+        <tr>
+          <td>OpenStack Networking</td>
+          <td><para>floatingip.create.end</para>
+            <para>floatingip.update.*</para>
+            <para>floatingip.exists</para>
+            <para>network.create.end</para>
+            <para>network.update.*</para>
+            <para>network.exists</para>
+            <para>port.create.end</para>
+            <para>port.update.*</para>
+            <para>port.exists</para>
+            <para>router.create.end</para>
+            <para>router.update.*</para>
+            <para>router.exists</para>
+            <para>subnet.create.end</para>
+            <para>subnet.update.*</para>
+            <para>subnet.exists</para>
+            <para>l3.meter</para></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Orchestration module</td>
+          <td><para>orchestration.stack.create.end</para>
+            <para>orchestration.stack.update.end</para>
+            <para>orchestration.stack.delete.end</para>
+            <para>orchestration.stack.resume.end</para>
+            <para>orchestration.stack.suspend.end</para></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>OpenStack Block Storage</td>
+          <td><para>volume.exists</para>
+            <para>volume.create.*</para>
+            <para>volume.delete.*</para>
+            <para>volume.resize.*</para>
+            <para>snapshot.exists</para>
+            <para>snapshot.create.*</para>
+            <para>snapshot.delete.*</para>
+            <para>snapshot.resize.*</para></td>
+          <td>The required configuration for Block Storage service can be found in the
+            <link xlink:href=
+            "http://docs.openstack.org/trunk/install-guide/install/apt/content/ceilometer-install-cinder.html">
+            Add the Block Storage service agent for Telemetry section</link>
+            section in the <citetitle>OpenStack Installation Guide</citetitle>.</td>
+        </tr>
+      </tbody>
+    </table>
+    <note>
+      <para>Some services require additional configuration to emit the notifications
+        using the correct control exchange on the message queue and so forth. These
+        configuration needs are referred in the above table for each OpenStack service
+        that needs it.</para>
+    </note>
+    <note>
+      <para>When the <literal>store_events</literal> option is set to True in
+        <filename>ceilometer.conf</filename>, the notification agent needs database access
+        in order to work properly.</para>
+    </note>
+    <section xml:id="section_telemetry-objectstore-middleware">
+      <title>Middleware for OpenStack Object Storage service</title>
+      <para>A subset of Object Store statistics requires an additional middleware to be installed
+        behind the proxy of Object Store. This additional component emits notifications containing
+        the data-flow-oriented meters, namely the storage.objects.(incoming|outgoing).bytes values.
+        The list of these meters are listed in the <link xlink:href=
+        "http://docs.openstack.org/developer/ceilometer/measurements.html#object-storage-swift">
+        Swift</link> table section in the <citetitle>Telemetry Measurements Reference</citetitle>,
+        marked with <literal>notification</literal> as origin.</para>
+      <para>The instructions on how to install this middleware can be found in <link xlink:href=
+        "http://docs.openstack.org/trunk/install-guide/install/apt/content/ceilometer-install-swift.html">
+        Configure the Object Storage service for Telemetry</link>
+        section in the <citetitle>OpenStack Installation Guide</citetitle>.
+      </para>
+    </section>
+    <section xml:id="section_telemetry-middleware">
+      <title>Telemetry middleware</title>
+      <para>Telemetry provides the capability of counting the HTTP requests and responses
+        for each API endpoint in OpenStack. This is achieved by storing a sample for each
+        event marked as <literal>http.request</literal> or <literal>http.response</literal>.</para>
+      <para>Telemetry can consume these events if the services are configured to emit
+        notifications with these two event types.</para>
+    </section>
+  </section>
+  <section xml:id="section_telemetry-polling">
+    <title>Polling</title>
+    <para>The Telemetry module is intended to store a complex picture of the
+      infrastructure. This goal requires additional information than what is
+      provided by the events and notifications published by each service.
+      Some information is not emitted directly, like resource usage of the VM
+      instances.</para>
+    <para>Therefore Telemetry uses another method to gather this data by polling
+      the infrastructure including the APIs of the different OpenStack services and
+      other assets, like hypervisors. The latter case requires closer interaction with
+      the compute hosts. To solve this issue, Telemetry uses an agent based
+      architecture to fulfill the requirements against the data collection.</para>
+    <para>There are two agents supporting the polling mechanism, namely the compute
+      agent and the central agent. The following subsections give further information
+      regarding to the archticetural and configuration details of these components.
+    </para>
+    <section xml:id="section_telemetry-central-agent">
+      <title>Central agent</title>
+      <para>As the name of this agent shows, it is a central component in the
+        Telemetry architecture. This agent is responsible for polling public REST APIs
+        to retrieve additional information on OpenStack resources not already surfaced
+        via notifications, and also for polling hardware resources over SNMP.</para>
+      <para>The follwoing services can be polled with this agent:
+      </para>
+      <itemizedlist>
+        <listitem>
+          <para>OpenStack Networking</para>
+        </listitem>
+        <listitem>
+          <para>OpenStack Object Storage</para>
+        </listitem>
+        <listitem>
+          <para>OpenStack Block Storage</para>
+        </listitem>
+        <listitem>
+          <para>Hardware resources via SNMP</para>
+        </listitem>
+        <listitem>
+          <para>Energy consumption metrics via <link xlink:href="https://launchpad.net/kwapi">
+            Kwapi</link> framework</para>
+        </listitem>
+      </itemizedlist>
+      <para>To install and configure this service use the <link xlink:href=
+        "http://docs.openstack.org/trunk/install-guide/install/apt/content/ceilometer-install.html">
+        Install the Telemtery module</link> section in the <citetitle>OpenStack
+        Installation Guide</citetitle>.</para>
+      <para>The central agent can be run as a single instance currently. It does not need
+        any database connection directly. The samples collected by this agent are sent via
+        message queue to the collector service, which is responsible for persisting the
+        data into the configured database backend.</para>
+    </section>
+    <section xml:id="section_telemetry-compute-agent">
+      <title>Compute agent</title>
+      <para>This agent is responsible for collecting resource usage data of VM
+        instances on individual compute nodes within an OpenStack deployment. This
+        mechanism requires a closer interaction with the hypervisor, therefore a
+        separate agent type fulfills the collection of the related meters, which
+        placed on the host machines to locally retrieve this information.</para>
+      <para>A compute agent instance has to be installed on each and every compute node,
+        installation instructions can be found in the <link xlink:href=
+        "http://docs.openstack.org/trunk/install-guide/install/apt/content/ceilometer-install-nova.html">
+        Install the Compute agent for Telemetry</link> section in the
+        <citetitle>OpenStack Installation Guide</citetitle>.
+      </para>
+      <para>Just like the central agent, this component also does not need a direct database
+        access. The samples are sent via AMQP to the collector.
+      </para>
+      <para>The list of supported hypervisors can be found in
+        <xref linkend="section_telemetry-supported-hypervisors"/>.
+        The compute agent uses the API of the hypervisor installed on the compute hosts.
+        Therefore the supported meters can be different in case of each virtualization
+        backend, as these tools provide different set of metrics.</para>
+      <para>The list of collected meters can be found in the <link xlink:href=
+        "http://docs.openstack.org/developer/ceilometer/measurements.html#compute-nova">
+        Compute section</link> in the <citetitle>Telemetery Measurements Reference</citetitle>.
+        The support column provides the information that which meter is available for
+        each hypervisor supported by the Telemetry module.</para>
+      <note>
+        <para>Telemetry supports Libvirt, which hides the hypervisor under it.</para>
+      </note>
+    </section>
+  </section>
+  <section xml:id="section_telemetry-post-api">
+    <title>Send samples to Telemetry</title>
+    <para>Most parts of the data collections in the Telemtery module are automated.
+      Telemetry provides the possibility to submit samples via the REST API to allow
+      users to send custom samples into this module.</para>
+    <para>This option makes it possible to send any kind of samples without the need
+      of writing extra code lines or making configuration changes.</para>
+    <para>The samples that can be sent to Telemetry are not limited to the actually
+      existing meters. There is a possibility to provide data for any new, customer
+      defined counter by filling out all the required fields of the POST request.
+    </para>
+    <para>If the sample corresponds to an existing meter, then the fields like
+      <literal>meter-type</literal> and meter name should be matched accordingly.</para>
+    <para>The required fields for sending a sample using the command line client
+      are:
+      <itemizedlist>
+        <listitem>
+          <para>ID of the corresponding resource. (<parameter>--resource-id</parameter>)</para>
+        </listitem>
+        <listitem>
+          <para>Name of meter. (<parameter>--meter-name</parameter>)</para>
+        </listitem>
+        <listitem>
+          <para>Type of meter. (<parameter>--meter-type</parameter>)</para>
+          <para>Predefined meter types:</para>
+          <itemizedlist>
+            <listitem>
+              <para>Gauge</para>
+            </listitem>
+            <listitem>
+              <para>Delta</para>
+            </listitem>
+            <listitem>
+              <para>Cumulative</para>
+            </listitem>
+          </itemizedlist>
+        </listitem>
+        <listitem>
+          <para>Unit of meter. (<parameter>--meter-unit</parameter>)</para>
+        </listitem>
+        <listitem>
+          <para>Volume of sample. (<parameter>--sample-volume</parameter>)</para>
+        </listitem>
+      </itemizedlist>
+    </para>
+    <para>The <literal>memory.usage</literal> meter is not supported when Libvirt is used in an
+      Openstack deployment. There is still a possibility to provide samples for
+      this meter based on any custom measurements. To send samples to Telemetry
+      using the command line client, the follwoing command should be invoked:
+    <screen><prompt>$</prompt> <userinput>ceilometer sample-create -r 37128ad6-daaa-4d22-9509-b7e1c6b08697 \
+  -m memory.usage --meter-type gauge --meter-unit MB --sample-volume 48</userinput>
+<?db-font-size 75%?><computeroutput>+-------------------+--------------------------------------------+
+| Property          | Value                                      |
++-------------------+--------------------------------------------+
+| message_id        | 6118820c-2137-11e4-a429-08002715c7fb       |
+| name              | memory.usage                               |
+| project_id        | e34eaa91d52a4402b4cb8bc9bbd308c1           |
+| resource_id       | 37128ad6-daaa-4d22-9509-b7e1c6b08697       |
+| resource_metadata | {}                                         |
+| source            | e34eaa91d52a4402b4cb8bc9bbd308c1:openstack |
+| timestamp         | 2014-08-11T09:10:46.358926                 |
+| type              | gauge                                      |
+| unit              | MB                                         |
+| user_id           | 679b0499e7a34ccb9d90b64208401f8e           |
+| volume            | 48.0                                       |
++-------------------+--------------------------------------------+</computeroutput></screen>
+    </para>
+  </section>
+  <section xml:id="section_telemetry-data-collection-processing">
+    <title>Data collection and processing</title>
+    <para>The mechanism via the data is collected and processed is called
+      pipeline. Pipelines on configuration level describe a coupling between
+      sources of samples and the corresponding sinks for transformation and
+      publication of these data.</para>
+    <para>A source is a producer of samples, in effect a set of pollsters
+      and/or notification handlers emitting samples for a set of matching meters.
+    </para>
+    <para>Each source configuration encapsulates meter name matching, polling
+      interval determination, optional resource enumeration or discovery, and
+      mapping to one or more sinks for publication.</para>
+    <para>A sink on the other hand is a consumer of samples, providing logic
+      for the transformation and publication of samples emitted from related
+      sources. Each sink configuration is concerned only with the
+      transformation rules and publication conduits for samples.</para>
+    <para>In effect, a sink describes a chain of handlers. The chain starts
+      with zero or more transformers and ends with one or more publishers.
+      The first transformer in the chain is passed samples from the corresponding
+      source, takes some action such as deriving rate of change, performing unit
+      conversion, or aggregating, before passing the modified sample to the
+      next step that is described in
+      <xref linkend="section_telemetry-publishers"/>.</para>
+    <section xml:id="section_telemetry-pipeline-configuration">
+      <title>Pipeline configuration</title>
+      <para>Pipeline configuration by default, is stored in a separate configuration
+        file, called <filename>pipeline.yaml</filename>, next to the
+        <filename>ceilometer.conf</filename> file. The pipeline
+        configuration file can be set in the <parameter>pipeline_cfg_file</parameter>
+        parameter listed in the <link xlink:href=
+        "http://docs.openstack.org/trunk/config-reference/content/ch_configuring-openstack-telemetry.html"
+        >Description of configuration options for api table</link> section in the
+        <citetitle>OpenStack Configuration Reference</citetitle>. Multiple chains
+        can be defined in one pipeline configuration file.</para>
+      <para>The chain definition looks like the following:</para>
+      <programlisting>---
+sources:
+  - name: 'source name'
+    interval: 'how often should the samples be injected into the pipeline'
+    meters:
+      - 'meter filter'
+    resources:
+      - 'list of resource URLs'
+    sinks
+      - 'sink name'
+sinks:
+  - name: 'sink name'
+    transformers: 'definition of transformers'
+    publishers:
+      - 'list of publishers'</programlisting>
+      <para>The interval parameter in the sources section should be defined in seconds.
+        It determines the cadence of sample injection into the pipeline, where samples
+        are produced under the direct control of an agent, for instance via a polling
+        cycle as opposed to incoming notifications.</para>
+      <para>There are several ways to define the list of meters for a pipeline source.
+        The list of valid meters can be found in the <link xlink:href=
+        "http://docs.openstack.org/developer/ceilometer/measurements.html"> Telemetry
+        Measurements Reference</link> document. There is a possibility to define all
+        the meters, or just included or excluded meters, with  which a source should
+        operate:</para>
+      <itemizedlist>
+        <listitem>
+          <para>To include all meters, use the <literal>*</literal> wildcard symbol.</para>
+        </listitem>
+        <listitem>
+          <para>To define the list of meters, use either of the following:</para>
+          <itemizedlist>
+            <listitem>
+              <para>To define the list of included meters, use the <literal>meter_name</literal>
+                syntax.</para>
+            </listitem>
+            <listitem>
+              <para>To define the list of excluded meters, use the <literal>!meter_name</literal>
+                syntax.</para>
+            </listitem>
+            <listitem>
+              <para>For meters, which have variants identified by a complex name field,
+                use the wildcard symbol to select all, e.g. for “instance:m1.tiny”, use
+                “instance:*”.</para>
+            </listitem>
+          </itemizedlist>
+        </listitem>
+      </itemizedlist>
+      <para>The above definition methods can be used in the following combinations:</para>
+      <itemizedlist>
+        <listitem>
+          <para>Use only the wildcard symbol.</para>
+        </listitem>
+        <listitem>
+          <para>Use the list of included meters.</para>
+        </listitem>
+        <listitem>
+          <para>Use the list of excluded meters.</para>
+        </listitem>
+        <listitem>
+          <para>Use wildcard symbol with the list of excluded meters.</para>
+        </listitem>
+      </itemizedlist>
+      <note>
+        <para>At least one of the above variations should be included in the meters section.
+          Included and excluded meters cannot co-exist in the same pipeline. Wildcard and
+          included meters cannot co-exist in the same pipeline definition section.</para>
+      </note>
+      <para>The optional resources section of a pipeline source allows a static list of
+        resource URLs to be configured for polling.</para>
+      <para>The transformers section of a pipeline sink provides the possibility to add a list
+        of transformer definitions. The available transformers are:</para>
+      <table rules="all">
+      <caption>List of available transformers</caption>
+      <col width="50%"/>
+      <col width="50%"/>
+      <thead>
+        <tr>
+          <td>Name of transformer</td>
+          <td>Reference name for configuration</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Accumulator</td>
+          <td>accumulator</td>
+        </tr>
+        <tr>
+          <td>Aggregator</td>
+          <td>aggregator</td>
+        </tr>
+        <tr>
+          <td>Arithmetic</td>
+          <td>arithmetic</td>
+        </tr>
+        <tr>
+          <td>Rate of change</td>
+          <td>rate_of_change</td>
+        </tr>
+        <tr>
+          <td>Unit conversion</td>
+          <td>unit_conversion</td>
+        </tr>
+      </tbody>
+    </table>
+      <para>The publishers section contains the list of publishers, where the samples data should
+        be sent after the possible transformations.</para>
+      <section xml:id="section_telemetry-pipeline-transformers">
+        <title>Transformers</title>
+        <para>The definition of transformers can contain the following fields:</para>
+        <para>
+          <variablelist>
+            <varlistentry>
+              <term>name</term>
+                <listitem>
+                  <para>Name of the transformer.</para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>parameters</term>
+                <listitem>
+                  <para>Parameters of the transformer.</para>
+                </listitem>
+            </varlistentry>
+          </variablelist>
+        </para>
+        <para>The parameters section can contain transformer specific fields, like source and
+          target fields with different subfields in case of the rate of change, which depends on
+          the implementation of the transformer.</para>
+        <simplesect>
+          <title>Rate of change transformer</title>
+          <para>In the case of the transformer that creates the
+            <literal>cpu_util</literal> meter, the definition looks like the following:</para>
+          <programlisting>transformers:
+    - name: "rate_of_change"
+      parameters:
+          target:
+              name: "cpu_util"
+              unit: "%"
+              type: "gauge"
+              scale: "100.0 / (10**9 * (resource_metadata.cpu_number or 1))"</programlisting>
+          <para>The rate of change transformer generates the <literal>cpu_util</literal>meter
+            from the sample values of the <literal>cpu</literal> counter, which represents
+            cumulative CPU time in nanoseconds. The transformer definition above defines a
+            scale factor (for nanoseconds, multiple CPUs, etc.), which is applied before the
+            transformation derives a sequence of gauge samples with unit ‘%’, from sequential
+            values of the <literal>cpu</literal> meter.</para>
+          <para>The definition for the disk I/O rate, which is also generated by the rate of change
+            transformer:</para>
+          <programlisting>transformers:
+    - name: "rate_of_change"
+      parameters:
+          source:
+              map_from:
+                  name: "disk\\.(read|write)\\.(bytes|requests)"
+                  unit: "(B|request)"
+          target:
+              map_to:
+                  name: "disk.\\1.\\2.rate"
+                  unit: "\\1/s"
+              type: "gauge"</programlisting>
+        </simplesect>
+        <simplesect>
+          <title>Unit conversion transformer</title>
+          <para>Transformer to apply a unit conversion. It takes the volume of the meter and
+            multiplies it with the given ‘scale’ expression. Also supports <literal>map_from
+            </literal> and <literal>map_to</literal> like the rate of change transformer.</para>
+          <para>Sample configuration:</para>
+          <programlisting>transformers:
+    - name: "unit_conversion"
+      parameters:
+          target:
+              name: "disk.kilobytes"
+              unit: "KB"
+              scale: "1.0 / 1024.0"</programlisting>
+          <para>With the <parameter>map_from</parameter> and <parameter>map_to</parameter>
+            :</para>
+          <programlisting>transformers:
+    - name: "unit_conversion"
+      parameters:
+          source:
+              map_from:
+                  name: "disk\\.(read|write)\\.bytes"
+          target:
+              map_to:
+                  name: "disk.\\1.kilobytes"
+              scale: "1.0 / 1024.0"
+              unit: "KB"</programlisting>
+        </simplesect>
+        <simplesect>
+          <title>Aggregator transformer</title>
+          <para>A transformer that sums up the incoming samples until enough samples have
+            come in or a timeout has been reached.</para>
+          <para>Timeout can be specified with the <parameter>retention_time</parameter> parameter.
+            If we want to flush the aggregation after a set number of samples have been
+            aggregated, we can specify the size parameter.</para>
+          <para>The volume of the created sample is the sum of the volumes of samples that came
+            into the transformer. Samples can be aggregated by the attributes <parameter>project_id
+            </parameter>, <parameter>user_id</parameter> and <parameter>resource_metadata</parameter>.
+            To aggregate by the chosen attributes, specify them in the configuration and set
+            which value of the attribute to take for the new sample (first to take the first
+            sample’s attribute, last to take the last sample’s attribute, and drop to discard
+            the attribute).</para>
+          <para>To aggregate 60s worth of samples by <parameter>resource_metadata</parameter>
+            and keep the <parameter>resource_metadata</parameter> of the latest received
+            sample:</para>
+          <programlisting>transformers:
+    - name: "aggregator"
+      parameters:
+          retention_time: 60
+          resource_metadata: last</programlisting>
+          <para>To aggregate each 15 samples by <parameter>user_id</parameter> and <parameter>resource_metadata
+            </parameter> and keep the <parameter>user_id</parameter> of the first received sample and
+            drop the <parameter>resource_metadata</parameter>:</para>
+          <programlisting>transformers:
+    - name: "aggregator"
+      parameters:
+          size: 15
+          user_id: first
+          resource_metadata: drop</programlisting>
+        </simplesect>
+        <simplesect>
+          <title>Accumulator transformer</title>
+          <para>This transformer simply caches the samples until enough samples have arrived and
+            then flushes them all down the pipeline at once.</para>
+          <programlisting>transformers:
+    - name: "accumulator"
+      parameters:
+          size: 15</programlisting>
+        </simplesect>
+        <simplesect>
+          <title>Multi meter arithmetic transformer</title>
+          <para>This transformer enables us to perform arithmetic calculations over one or more
+            meters and/or their metadata, for example:</para>
+          <programlisting>memory_util = 100 * memory.usage / memory</programlisting>
+          <para>A new sample is created with the properties described in the <literal>target
+            </literal> section of the transformer’s configuration. The sample’s volume is the
+            result of the provided expression. The calculation is performed on samples from
+            the same resource.</para>
+          <note>
+            <para>The calculation is limited to meters with the same interval.</para>
+          </note>
+          <para>Example configuration:</para>
+          <programlisting>transformers:
+    - name: "arithmetic"
+      parameters:
+        target:
+          name: "memory_util"
+          unit: "%"
+          type: "gauge"
+          expr: "100 * $(memory.usage) / $(memory)"</programlisting>
+          <para>To demonstrate the use of metadata, here is the implementation of a silly metric
+            that shows average CPU time per core:</para>
+          <programlisting>transformers:
+    - name: "arithmetic"
+      parameters:
+        target:
+          name: "avg_cpu_per_core"
+          unit: "ns"
+          type: "cumulative"
+          expr: "$(cpu) / ($(cpu).resource_metadata.cpu_number or 1)"</programlisting>
+          <note>
+            <para>Expression evaluation gracefully handles NaNs and exceptions. In such a case it
+              does not create a new sample but only logs a warning.</para>
+          </note>
+        </simplesect>
+      </section>
+    </section>
+  </section>
+  <section xml:id="section_telemetry-storing-data">
+    <title>Storing samples</title>
+    <para>The Telemetry module has a separate service that is responsible for persisting the data
+      that is coming from the pollsters or received as notifications. The data is stored in
+      a database backend, the list of supported databases can be found in
+      <xref linkend="section_telemetry-supported-dbs"/>.
+    </para>
+    <para>The <systemitem class="service">ceilometer-collector</systemitem> service receives the
+      samples as metering messages from the message bus of the configured AMQP service. It stores
+      these samples without any modification in the configured backend. The service has to run on
+      a host machine from which it has access to the database.</para>
+    <para>Multiple <systemitem class="service">ceilometer-collector</systemitem> process can be
+      run at a time. It is also supported to start multiple worker threads per collector process.
+      The <parameter>collector_workers</parameter> configuration option has to be modified in the
+      <link xlink:href=
+      "http://docs.openstack.org/trunk/config-reference/content/ch_configuring-openstack-telemetry.html">
+      collector section</link> of the <filename>ceilometer.conf</filename> configuration file.</para>
+    <note>
+      <para>Using multiple workers per collector process is not recommended to be used with
+        PostgreSQL as database backend.</para>
+    </note>
+    <para>By default the time to live value (ttl) for samples is set to -1, which means that they
+      are kept in the database forever. This can be changed by modifying the <parameter>time_to_live
+      </parameter> parameter in <filename>ceilometer.conf</filename>. The value has to be specified
+      in seconds and it means that every sample that based on its timestamp is older, than the
+      specified value will be deleted from the database.</para>
+    <para>When the samples are deleted, there are cases, when users and resources remain in the
+      database without any corresponding sample. There is a command line script, that deletes
+      these useless entries, which is called <systemitem class="service">ceilometer-expirer</systemitem>.
+      This script should be run periodically, for instance in a cron job, to ensure that the
+      database is cleaned up properly.</para>
+    <para>The level of support differs in case of the configured backend:</para>
+    <table rules="all">
+      <caption>Time-to-live support for database backends</caption>
+      <col width="24%"/>
+      <col width="38%"/>
+      <col width="38%"/>
+      <thead>
+        <tr>
+          <td>Database</td>
+          <td>ttl value support</td>
+          <td><systemitem class="service">ceilometer-expirer</systemitem>
+            capabilities</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>MongoDB</td>
+          <td>MongoDB has a built-in mechanism for deleting samples that are older
+            than the configured ttl value.</td>
+          <td>In case of this database, only the lingering dead resource,
+            user and project entries entries will be deleted by
+            <systemitem class="service">ceilometer-expirer</systemitem>.
+          </td>
+        </tr>
+        <tr>
+          <td>SQL-based backends</td>
+          <td>The library (SQLAlchemy) that is used for accessing SQL-based backends does
+            not support using the ttl value.</td>
+          <td><systemitem class="service">ceilometer-expirer</systemitem> has to be
+            used for deleting both the samples and the remaining entires in other
+            database tables. The script will delete samples based on the
+            <parameter>time_to_live</parameter> value that is set in the
+            configuration file.</td>
+        </tr>
+        <tr>
+          <td>HBase</td>
+          <td>HBase does not support this functionality currently, therefore the ttl value
+            in the configuration file is ignored.</td>
+          <td>The samples are not deleted by using
+            <systemitem class="service">ceilometer-expirer</systemitem>,
+            this functionality is not supported.</td>
+        </tr>
+        <tr>
+          <td>DB2</td>
+          <td>Same as in case of MongoDB.</td>
+          <td>Same as in case of MongoDB.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
 </section>
