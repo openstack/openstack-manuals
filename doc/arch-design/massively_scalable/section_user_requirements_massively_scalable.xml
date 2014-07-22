@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="5.0"
+    xml:id="user-requirements-massive-scale-overview">
+    <?dbhtml stop-chunking?>
+    <title>User Requirements</title>
+    <para>More so than other scenarios, defining user requirements for
+        a massively scalable OpenStack design architecture dictates
+        approaching the design from two different, yet sometimes
+        opposing, perspectives: the cloud user, and the cloud
+        operator. The expectations and perceptions of the consumption
+        and management of resources of a massively scalable OpenStack
+        cloud from the user point of view is distinctly different from
+        that of the cloud operator.</para>
+    <para>Many jurisdictions have legislative and regulatory
+        requirements governing the storage and management of data in
+        cloud environments. Common areas of regulation include:</para>
+    <itemizedlist>
+        <listitem>
+            <para>Data retention policies ensuring storage of
+                persistent data and records management to meet data
+                archival requirements.</para>
+        </listitem>
+        <listitem>
+            <para>Data ownership policies governing the possession and
+                responsibility for data.</para>
+        </listitem>
+        <listitem>
+            <para>Data sovereignty policies governing the storage of
+                data in foreign countries or otherwise separate
+                jurisdictions.</para>
+        </listitem>
+        <listitem>
+            <para>Data compliance policies governing certain types of
+                information needs to reside in certain locations due
+                to regular issues and, more importantly, cannot reside
+                in other locations for the same reason.</para>
+        </listitem>
+    </itemizedlist>
+    <para>Examples of such legal frameworks include the data
+        protection framework of the European Union
+        (http://ec.europa.eu/justice/data-protection/ ) and the
+        requirements of the Financial Industry Regulatory Authority
+        (http://www.finra.org/Industry/Regulation/FINRARules/ ) in the
+        United States. Consult a local regulatory body for more
+        information.</para>
+    <section xml:id="user-requirements-massive-scale"><title>User Requirements</title>
+    <para>Massively scalable OpenStack clouds have the following user
+        requirements:</para>
+    <itemizedlist>
+        <listitem>
+            <para>The cloud user expects repeatable, dependable, and
+                deterministic processes for launching and deploying
+                cloud resources. This could be delivered through a
+                web-based interface or publicly available API
+                endpoints. All appropriate options for requesting
+                cloud resources need to be available through some type
+                of user interface, a command-line interface (CLI), or
+                API endpoints.</para>
+        </listitem>
+        <listitem>
+            <para>Cloud users expect a fully self-service and
+                on-demand consumption model. When an OpenStack cloud
+                reaches the "massively scalable" size, it means it is
+                expected to be consumed "as a service" in each and
+                every way.</para>
+        </listitem>
+        <listitem>
+            <para>For a user of a massively scalable OpenStack public
+                cloud, there will be no expectations for control over
+                security, performance, or availability. Only SLAs
+                related to uptime of API services are expected, and
+                very basic SLAs expected of services offered. The user
+                understands it is his or her responsibility to address
+                these issues on their own. The exception to this
+                expectation is the rare case of a massively scalable
+                cloud infrastructure built for a private or government
+                organization that has specific requirements.</para>
+        </listitem>
+    </itemizedlist>
+    <para>As might be expected, the cloud user requirements or
+        expectations that determine the design are all focused on the
+        consumption model. The user expects to be able to easily
+        consume cloud resources in an automated and deterministic way,
+        without any need for knowledge of the capacity, scalability,
+        or other attributes of the cloud's underlying
+        infrastructure.</para></section>
+    <section xml:id="operator-requirements-massive-scale"><title>Operator Requirements</title>
+    <para>Whereas the cloud user should be completely unaware of the
+        underlying infrastructure of the cloud and its attributes, the
+        operator must be able to build and support the infrastructure,
+        as well as how it needs to operate at scale. This presents a
+        very demanding set of requirements for building such a cloud
+        from the operator's perspective:</para>
+    <itemizedlist>
+        <listitem>
+            <para>First and foremost, everything must be capable of
+                automation. From the deployment of new hardware,
+                compute hardware, storage hardware, or networking
+                hardware, to the installation and configuration of the
+                supporting software, everything must be capable of
+                being automated. Manual processes will not suffice in
+                a massively scalable OpenStack design
+                architecture.</para>
+        </listitem>
+        <listitem>
+            <para>The cloud operator requires that capital expenditure
+                (CapEx) is minimized at all layers of the stack.
+                Operators of massively scalable OpenStack clouds
+                require the use of dependable commodity hardware and
+                freely available open source software components to
+                reduce deployment costs and operational expenses.
+                Initiatives like OpenCompute (more information
+                available at http://www.opencompute.org) provide
+                additional information and pointers. To cut costs,
+                many operators sacrifice redundancy. For example,
+                redundant power supplies, redundant network
+                connections, and redundant rack switches.</para>
+        </listitem>
+        <listitem>
+            <para>Companies operating a massively scalable OpenStack
+                cloud also require that operational expenditures
+                (OpEx) be minimized as much as possible. It is
+                recommended that cloud-optimized hardware is a good
+                approach when managing operational overhead. Some of
+                the factors that need to be considered include power,
+                cooling, and the physical design of the chassis. It is
+                possible to customize the hardware and systems so they
+                are optimized for this type of workload because of the
+                scale of these implementations.</para>
+        </listitem>
+        <listitem>
+            <para>Massively scalable OpenStack clouds require
+                extensive metering and monitoring functionality to
+                maximize the operational efficiency by keeping the
+                operator informed about the status and state of the
+                infrastructure. This includes full scale metering of
+                the hardware and software status. A corresponding
+                framework of logging and alerting is also required to
+                store and allow operations to act upon the metrics
+                provided by the metering and monitoring solution(s).
+                The cloud operator also needs a solution that uses the
+                data provided by the metering and monitoring solution
+                to provide capacity planning and capacity trending
+                analysis.</para>
+        </listitem>
+        <listitem>
+            <para>A massively scalable OpenStack cloud will be a
+                multi-site cloud. Therefore, the user-operator
+                requirements for a multi-site OpenStack architecture
+                design are also applicable here. This includes various
+                legal requirements for data storage, data placement,
+                and data retention; other jurisdictional legal or
+                compliance requirements; image
+                consistency-availability; storage replication and
+                availability (both block and file/object storage); and
+                authentication, authorization, and auditing (AAA),
+                just to name a few. Refer to the "Multi-Site" section
+                for more details on requirements and considerations
+                for multi-site OpenStack clouds.</para>
+        </listitem>
+        <listitem>
+            <para>Considerations around physical facilities such as
+                space, floor weight, rack height and type,
+                environmental considerations, power usage and power
+                usage efficiency (PUE), and physical security must
+                also be addressed by the design architecture of a
+                massively scalable OpenStack cloud.</para>
+        </listitem>
+    </itemizedlist></section>
+</section>

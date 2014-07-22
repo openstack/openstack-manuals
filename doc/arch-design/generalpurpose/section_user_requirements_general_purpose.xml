@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="5.0"
+    xml:id="user-requirements-general-purpose">
+    <?dbhtml stop-chunking?>
+    <title>User Requirements</title>
+    <para>The general purpose cloud is built following the
+        Infrastructure-as-a-Service (IaaS) model; as a platform best
+        suited for use cases with simple requirements. The general
+        purpose cloud user requirements themselves are typically not
+        complex. However, it is still important to capture them even
+        if the project has minimum business and technical requirements
+        such as a Proof of Concept (PoC) or a small lab
+        platform.</para>
+    <para>These user considerations are written from the perspective
+        of the organization that is building the cloud, not from the
+        perspective of the end-users who will consume cloud services
+        provided by this design.</para>
+    <itemizedlist>
+        <listitem>
+            <para>Cost: Financial factors are a primary concern for
+                any organization. Since general purpose clouds are
+                considered the baseline from which all other cloud
+                architecture environments derive, cost will commonly
+                be an important criteria. This type of cloud, however,
+                does not always provide the most cost-effective
+                environment for a specialized application or
+                situation. Unless razor-thin margins and costs have
+                been mandated as a critical factor, cost should not be
+                the sole consideration when choosing or designing a
+                general purpose architecture.</para>
+        </listitem>
+        <listitem>
+            <para>Time to market: Another common business factor in
+                building a general purpose cloud is the ability to
+                deliver a service or product more quickly and
+                flexibly. In the modern hyper-fast business world,
+                being able to deliver a product in six months instead
+                of two years is often a major driving force behind the
+                decision to build a general purpose cloud. General
+                purpose clouds allow users to self-provision and gain
+                access to compute, network, and storage resources
+                on-demand thus decreasing time to market. It may
+                potentially make more sense to build a general purpose
+                PoC as opposed to waiting to finalize the ultimate use
+                case for the system. The tradeoff with taking this
+                approach is the risk that the general purpose cloud is
+                not optimized for the actual final workloads. The
+                final decision on which approach to take will be
+                dependent on the specifics of the business objectives
+                and time frame for the project.</para>
+        </listitem>
+        <listitem>
+            <para>Revenue opportunity: The revenue opportunity for a
+                given cloud will vary greatly based on the intended
+                use case of that particular cloud. Some general
+                purpose clouds are built for commercial customer
+                facing products, but there are plenty of other reasons
+                that might make the general purpose cloud the right
+                choice. A small cloud service provider (CSP) might
+                want to build a general purpose cloud rather than a
+                massively scalable cloud because they do not have the
+                deep financial resources needed, or because they do
+                not or will not know in advance the purposes for which
+                their customers are going to use the cloud. For some
+                users, the advantages cloud itself offers mean an
+                enhancement of revenue opportunity. For others, the
+                fact that a general purpose cloud provides only
+                baseline functionality will be a disincentive for use,
+                leading to a potential stagnation of potential revenue
+                opportunities.</para>
+        </listitem>
+    </itemizedlist>
+    <section xml:id="legal-requirements-general-purpose"><title>Legal Requirements</title>
+    <para>Many jurisdictions have legislative and regulatory
+        requirements governing the storage and management of data in
+        cloud environments. Common areas of regulation include:</para>
+    <itemizedlist>
+        <listitem>
+            <para>Data retention policies ensuring storage of
+                persistent data and records management to meet data
+                archival requirements.</para>
+        </listitem>
+        <listitem>
+            <para>Data ownership policies governing the possession and
+                responsibility for data.</para>
+        </listitem>
+        <listitem>
+            <para>Data sovereignty policies governing the storage of
+                data in foreign countries or otherwise separate
+                jurisdictions.</para>
+        </listitem>
+        <listitem>
+            <para>Data compliance policies governing certain types of
+                information need to reside in certain locations due to
+                regular issues - and more important cannot reside in
+                other locations for the same reason.</para>
+        </listitem>
+    </itemizedlist>
+    <para>Examples of such legal frameworks include the data
+        protection framework of the European Union
+        (http://ec.europa.eu/justice/data-protection/ ) and the
+        requirements of the Financial Industry Regulatory Authority
+        (http://www.finra.org/Industry/Regulation/FINRARules/ ) in the
+        United States. Consult a local regulatory body for more
+        information.</para></section>
+    <section xml:id="technical-requirements"><title>Technical Requirements</title>
+    <para>Technical cloud architecture requirements should be weighted
+        against the business requirements.</para>
+    <itemizedlist>
+        <listitem>
+            <para>Performance: As a baseline product, general purpose
+                clouds do not provide optimized performance for any
+                particular function. While a general purpose cloud
+                should provide enough performance to satisfy average
+                user considerations, performance is not a general
+                purpose cloud customer driver.</para>
+        </listitem>
+        <listitem>
+            <para>No predefined usage model: The lack of a pre-defined
+                usage model enables the user to run a wide variety of
+                applications without having to know the application
+                requirements in advance. This provides a degree of
+                independence and flexibility that no other cloud
+                scenarios are able to provide.</para>
+        </listitem>
+        <listitem>
+            <para>On-demand and self-service application: By
+                definition, a cloud provides end users with the
+                ability to self-provision computing power, storage,
+                networks, and software in a simple and flexible way.
+                The user must be able to scale their resources up to a
+                substantial level without disrupting the underlying
+                host operations. One of the benefits of using a
+                general purpose cloud architecture is the ability to
+                start with limited resources and increase them over
+                time as the user demand grows.</para>
+        </listitem>
+        <listitem>
+            <para>Public cloud: For a company interested in building a
+                commercial public cloud offering based on OpenStack,
+                the general purpose architecture model might be the
+                best choice because the designers are not going to
+                know the purposes or workloads for which the end users
+                will use the cloud.</para>
+        </listitem>
+        <listitem>
+            <para>Internal consumption (private) cloud: Organizations
+                need to determine if it makes the most sense to create
+                their own clouds internally. The main advantage of a
+                private cloud is that it allows the organization to
+                maintain complete control over all the architecture
+                and the cloud components. One caution is to think
+                about the possibility that users will want to combine
+                using the internal cloud with access to an external
+                cloud. If that case is likely, it might be worth
+                exploring the possibility of taking a multi-cloud
+                approach with regard to at least some of the
+                architectural elements. Designs that incorporate the
+                use of multiple clouds, such as a private cloud and a
+                public cloud offering, are described in the
+                "Multi-Cloud" scenario.</para>
+        </listitem>
+        <listitem>
+            <para>Security: Security should be implemented according
+                to asset, threat, and vulnerability risk assessment
+                matrices. For cloud domains that require increased
+                computer security, network security, or information
+                security, general purpose cloud is not considered an
+                appropriate choice.</para>
+        </listitem>
+    </itemizedlist></section>
+</section>

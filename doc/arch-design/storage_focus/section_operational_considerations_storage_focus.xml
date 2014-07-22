@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="5.0"
+    xml:id="operational-considerations-storage-focus">
+    <?dbhtml stop-chunking?>
+    <title>Operational Considerations</title>
+    <itemizedlist>
+        <listitem>
+            <para>Maintenance tasks: The storage solution should take
+                into account storage maintenance and the impact on
+                underlying workloads.</para>
+        </listitem>
+        <listitem>
+            <para>Reliability and availability: Reliability and
+                availability depends on wide area network availability
+                and on the level of precautions taken by the service
+                provider.</para>
+        </listitem>
+        <listitem>
+            <para>Flexibility: Organizations need to have the
+                flexibility to choose between off-premise and
+                on-premise cloud storage options. This concept relies
+                on relevant decision criteria that is complementary to
+                initial direct cost savings potential. For example,
+                continuity of operations, disaster recovery, security,
+                and records retention laws, regulations, and
+                policies.</para>
+        </listitem>
+    </itemizedlist>
+    <para>In a cloud environment with very high demands on storage
+        resources, it becomes vitally important to ensure that
+        monitoring and alerting services have been installed and
+        configured to provide a real-time view into the health and
+        performance of the storage systems. Using an integrated
+        management console, or other dashboards capable of visualizing
+        SNMP data, will be helpful in discovering and resolving issues
+        that might arise within the storage cluster. An example of
+        this is Ceph’s Calamari.</para>
+    <para>A storage-focused cloud design should include:</para>
+    <itemizedlist>
+        <listitem>
+            <para>Monitoring of physical hardware resources.</para>
+        </listitem>
+        <listitem>
+            <para>Monitoring of environmental resources such as
+                temperature and humidity.</para>
+        </listitem>
+        <listitem>
+            <para>Monitoring of storage resources such as available
+                storage, memory and CPU.</para>
+        </listitem>
+        <listitem>
+            <para>Monitoring of advanced storage performance data to
+                ensure that storage systems are performing as
+                expected.</para>
+        </listitem>
+        <listitem>
+            <para>Monitoring of network resources for service
+                disruptions which would affect access to
+                storage.</para>
+        </listitem>
+        <listitem>
+            <para>Centralized log collection.</para>
+        </listitem>
+        <listitem>
+            <para>Log analytics capabilities.</para>
+        </listitem>
+        <listitem>
+            <para>Ticketing system (or integration with a ticketing
+                system) to track issues.</para>
+        </listitem>
+        <listitem>
+            <para>Alerting and notification of responsible teams or
+                automated systems which will remediate problems with
+                storage as they arise.</para>
+        </listitem>
+        <listitem>
+            <para>Network Operations Center (NOC) staffed and always
+                available to resolve issues.</para>
+        </listitem>
+    </itemizedlist>
+    <section xml:id="management-efficiency"><title>Management Efficiency</title>
+    <para>When designing a storage solution at scale, ease of
+        management of the storage devices is an important
+        consideration. Within a storage cluster, operations personnel
+        will often be required to replace failed drives or nodes and
+        provide ongoing maintenance of the storage hardware. When the
+        cloud is designed and planned properly, the process can be
+        performed in a seamless and organized manner that does not
+        have an impact on operational efficiency.</para>
+    <para>Provisioning and configuration of new or upgraded storage is
+        another important consideration when it comes to management of
+        resources. The ability to easily deploy, configure, and manage
+        storage hardware will result in a solution which is easy to
+        manage. This also makes use of management systems that can
+        automate other pieces of the overall solution. For example,
+        replication, retention, data backup and recovery.</para></section>
+    <section xml:id="application-awareness"><title>Application Awareness</title>
+    <para>When designing applications that will leverage storage
+        solutions in the cloud, design the application to be aware of
+        the underlying storage subsystem and the features available.
+        As an example, when creating an application that requires
+        replication, it is recommended that the application can detect
+        whether replication is a feature natively available in the
+        storage subsystem. In the event that replication is not
+        available, the application can be designed to react in a
+        manner such that it will be able to provide its own
+        replication services. An application that is designed to be
+        aware of the underlying storage systems can be deployed in a
+        wide variety of infrastructures and still have the same basic
+        behavior regardless of the differences in the underlying
+        infrastructure.</para></section>
+    <section xml:id="fault-tolerance-and-availability"><title>Fault Tolerance and Availability</title>
+    <para>Designing for fault tolerance and availability of storage
+        systems in an OpenStack cloud is vastly different when
+        comparing the block storage and object storage services. The
+        object storage service is designed to have consistency and
+        partition tolerance as a function of the application.
+        Therefore, it does not have any reliance on hardware RAID
+        controllers to provide redundancy for physical disks. In
+        contrast, block storage resource nodes are commonly configured
+        with advanced RAID controllers and high performance disks that
+        are designed to provide fault tolerance at the hardware
+        level.</para>
+    <para>In cases where applications require extreme performance out
+        of block storage devices, it is recommended to deploy high
+        performing storage solutions such as SSD disk drives or flash
+        storage systems. When considering these solutions, it is
+        important to consider the availability of software and support
+        to ease with the hardware and software integration
+        process.</para>
+    <para>In environments that place extreme demands on block storage,
+        it is advisable to take advantage of multiple storage pools.
+        In this case, each pool of devices should have a similar
+        hardware design and disk configuration across all hardware
+        nodes in that pool. This allows for a design that provides
+        applications with access to a wide variety of block storage
+        pools, each with their own redundancy, availability, and
+        performance characteristics. When deploying multiple pools of
+        storage it is also important to consider the impact on the
+        block storage scheduler which is responsible for provisioning
+        storage across resource nodes. Ensuring that applications can
+        schedule volumes in multiple regions, each with their own
+        network, power, and cooling infrastructure, can give tenants
+        the ability to build fault tolerant applications that will be
+        distributed across multiple availability zones.</para>
+    <para>In addition to the block storage resource nodes, it is
+        important to design for high availability and redundancy of
+        the APIs and related services that are responsible for
+        provisioning and providing access to storage. It is
+        recommended to design a layer of hardware or software load
+        balancers in order to achieve high availability of the
+        appropriate REST API services to provide uninterrupted
+        service. In some cases, it may also be necessary to deploy an
+        additional layer of load balancing to provide access to
+        back-end database services responsible for servicing and
+        storing the state of block storage volumes. Designing a highly
+        available database solution to store the Cinder databases is
+        also recommended. A number of highly available database
+        solutions such as Galera and MariaDB can be leveraged to help
+        keep database services online to provide uninterrupted access
+        so that tenants can manage block storage volumes.</para>
+    <para>In a cloud with extreme demands on block storage the network
+        architecture should take into account the amount of East-West
+        bandwidth that will be required for instances to make use of
+        the available storage resources. Network devices selected
+        should support jumbo frames for transferring large blocks of
+        data. In some cases, it may be necessary to create an
+        additional back-end storage network dedicated to providing
+        connectivity between instances and block storage resources so
+        that there is no contention of network resources.</para></section>
+    <section xml:id="object-storage-fault-tolerance-and-availability">
+        <title>Object Storage Fault Tolerance and
+        Availability</title>
+    <para>While consistency and partition tolerance are both inherent
+        features of the object storage service, it is important to
+        design the overall storage architecture to ensure that those
+        goals can be met by the system being implemented. The
+        OpenStack object storage service places a specific number of
+        data replicas as objects on resource nodes. These replicas are
+        distributed throughout the cluster based on a consistent hash
+        ring which exists on all nodes in the cluster.</para>
+    <para>The object storage system should be designed with sufficient
+        number of zones to provide quorum for the number of replicas
+        defined. As an example, with three replicas configured in the
+        Swift cluster, the recommended number of zones to configure
+        within the object storage cluster in order to achieve quorum
+        is 5. While it is possible to deploy a solution with fewer
+        zones, the implied risk of doing so is that some data may not
+        be available and API requests to certain objects stored in the
+        cluster might fail. For this reason, ensure the number of
+        zones in the object storage cluster is properly accounted for.</para>
+    <para>Each object storage zone should be self-contained within its
+        own availability zone. Each availability zone should have
+        independent access to network, power and cooling
+        infrastructure to ensure uninterrupted access to data. In
+        addition, each availability zone should be serviced by a pool
+        of object storage proxy servers which will provide access to
+        data stored on the object nodes. Object proxies in each region
+        should leverage local read and write affinity so that access
+        to objects is facilitated by local storage resources wherever
+        possible. It is recommended that upstream load balancing be
+        deployed to ensure that proxy services can be distributed
+        across the multiple zones and, in some cases, it may be
+        necessary to make use of third party solutions to aid with
+        geographical distribution of services.</para>
+    <para>A zone within an object storage cluster is a logical
+        division. A zone can be represented as a disk within a single
+        node, the node itself, a group of nodes in a rack, an entire
+        rack, a data center or even a geographic region. Deciding on
+        the proper zone design is crucial for allowing the object
+        storage cluster to scale while providing an available and
+        redundant storage system. Furthermore, it may be necessary to
+        configure storage policies that have different requirements
+        with regards to replicas, retention and other factors that
+        could heavily affect the design of storage in a specific
+        zone.</para></section>
+    <section xml:id="scaling-storage-services"><title>Scaling Storage Services</title>
+    <para>Adding storage capacity and bandwidth is a very different
+        process when comparing the block and object storage services.
+        While adding block storage capacity is a relatively simple
+        process, adding capacity and bandwidth to the object storage
+        systems is a complex task that requires careful planning and
+        consideration during the design phase.</para></section>
+    <section xml:id="scaling-block-storage"><title>Scaling Block Storage</title>
+    <para>Block storage pools can be upgraded to add storage capacity
+        rather easily without interruption to the overall block
+        storage service. Nodes can be added to the pool by simply
+        installing and configuring the appropriate hardware and
+        software and then allowing that node to report in to the
+        proper storage pool via the message bus. This is because block
+        storage nodes report into the scheduler service advertising
+        their availability. Once the node is online and available
+        tenants can make use of those storage resources
+        instantly.</para>
+    <para>In some cases, the demand on block storage from instances
+        may exhaust the available network bandwidth. As a result,
+        design network infrastructure that services block storage
+        resources in such a way that capacity and bandwidth can be
+        added relatively easily. This often involves the use of
+        dynamic routing protocols or advanced networking solutions to
+        allow capacity to be added to downstream devices easily. Both
+        the front-end and back-end storage network designs should
+        encompass the ability to quickly and easily add capacity and
+        bandwidth.</para></section>
+    <section xml:id="scaling-object-storage"><title>Scaling Object Storage</title>
+    <para>Adding back-end storage capacity to an object storage
+        cluster requires careful planning and consideration. In the
+        design phase it is important to determine the maximum
+        partition power required by the object storage service, which
+        determines the maximum number of partitions which can exist.
+        Object storage distributes data among all available storage,
+        but a partition cannot span more than one disk, so the maximum
+        number of partitions can only be as high as the number of
+        disks.</para>
+    <para>For example, a system that starts with a single disk and a
+        partition power of 3 can have 8 (2^3) partitions. Adding a
+        second disk means that each will (usually) have 4 partitions.
+        The one-disk-per-partition limit means that this system can
+        never have more than 8 disks, limiting its scalability.
+        However, a system that starts with a single disk and a
+        partition power of 10 can have up to 1024 (2^10) disks.</para>
+    <para>As back-end storage capacity is added to the system, the
+        partition maps cause data to be redistributed amongst storage
+        nodes. In some cases, this replication can consist of
+        extremely large data sets. In these cases, it is recommended
+        to make use of back-end replication links which will not
+        contend with tenants’ access to data.</para>
+    <para>As more tenants begin to access data within the cluster and
+        their data sets grow it will become necessary to add front-end
+        bandwidth to service data access requests. Adding front-end
+        bandwidth to an object storage cluster requires careful
+        planning and design of the object storage proxies that will be
+        used by tenants to gain access to the data, along with the
+        high availability solutions that enable easy scaling of the
+        proxy layer. It is recommended to design a front-end load
+        balancing layer that tenants and consumers use to gain access
+        to data stored within the cluster. This load balancing layer
+        may be distributed across zones, regions or even across
+        geographic boundaries, which may also require that the design
+        encompass geo-location solutions.</para>
+    <para>In some cases, adding bandwidth and capacity to the network
+        resources servicing requests between proxy servers and storage
+        nodes will be required. For this reason, the network
+        architecture used for access to storage nodes and proxy
+        servers should make use of a design which is scalable.</para></section>
+</section>

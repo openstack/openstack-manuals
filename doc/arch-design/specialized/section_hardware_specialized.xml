@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="5.0"
+    xml:id="specialized-hardware">
+    <?dbhtml stop-chunking?>
+    <title>Specialized Hardware</title>
+    <para>Certain workloads require specialized hardware devices that
+        are either difficult to virtualize or impossible to share.
+        Applications such as load balancers, highly parallel brute
+        force computing, and direct to wire networking may need
+        capabilities that basic OpenStack components do not
+        provide.</para>
+    <section xml:id="challenges-specialized-hardware"><title>Challenges</title>
+    <para>Some applications need access to hardware devices to either
+        improve performance or provide capabilities that are not
+        virtual CPU, RAM, network or storage. These can be a shared
+        resource, such as a cryptography processor, or a dedicated
+        resource such as a Graphics Processing Unit. OpenStack has
+        ways of providing some of these, while others may need extra
+        work.</para></section>
+    <section xml:id="solutions-specialized-hardware"><title>Solutions</title>
+    <para>In order to provide cryptography offloading to a set of
+        instances, it is possible to use Glance configuration options
+        to assign the cryptography chip to a device node in the guest.
+        The documentation at
+        http://docs.openstack.org/cli-reference/content/chapter_cli-glance-property.html
+        contains further information on configuring this solution, but
+        it allows all guests using the configured images to access the
+        hypervisor cryptography device.</para>
+    <para>If direct access to a specific device is required, it can be
+        dedicated to a single instance per hypervisor through the use
+        of PCI pass-through. The OpenStack administrator needs to
+        define a flavor that specifically has the PCI device in order
+        to properly schedule instances. More information regarding PCI
+        pass-through, including instructions for implementing and
+        using it, is available at
+        https://wiki.openstack.org/wiki/Pci_passthrough#How_to_check_PCI_status_with_PCI_api_patches.</para>
+    <mediaobject>
+        <imageobject>
+            <imagedata fileref="../images/Specialized_Hardware2.png"/>
+        </imageobject>
+    </mediaobject></section>
+</section>

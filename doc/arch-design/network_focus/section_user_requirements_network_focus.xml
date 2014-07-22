@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="5.0"
+    xml:id="user-requirements-network-focus">
+    <?dbhtml stop-chunking?>
+    <title>User Requirements</title>
+    <para>Network focused architectures vary from the general purpose
+        designs. They are heavily influenced by a specific subset of
+        applications that interact with the network in a more
+        impacting way. Some of the business requirements that will
+        influence the design include:</para>
+    <itemizedlist>
+        <listitem>
+            <para>User experience: User experience is impacted by
+                network latency through slow page loads, degraded
+                video streams, and low quality VoIP sessions. Users
+                are often not aware of how network design and
+                architecture affects their experiences. Both
+                enterprise customers and end-users rely on the network
+                for delivery of an application. Network performance
+                problems can provide a negative experience for the
+                end-user, as well as productivity and economic loss.
+           </para>
+        </listitem>
+        <listitem>
+            <para>Regulatory requirements: Networks need to take into
+                consideration any regulatory requirements about the
+                physical location of data as it traverses the network.
+                For example, Canadian medical records cannot pass
+                outside of Canadian sovereign territory. Another
+                network consideration is maintaining network
+                segregation of private data flows and ensuring that
+                the network between cloud locations is encrypted where
+                required. Network architectures are affected by
+                regulatory requirements for encryption and protection
+                of data in flight as the data moves through various
+                networks.</para>
+        </listitem>
+    </itemizedlist>
+    <para>Many jurisdictions have legislative and regulatory
+        requirements governing the storage and management of data in
+        cloud environments. Common areas of regulation include:</para>
+    <itemizedlist>
+        <listitem>
+            <para>Data retention policies ensuring storage of
+                persistent data and records management to meet data
+                archival requirements.</para>
+        </listitem>
+        <listitem>
+            <para>Data ownership policies governing the possession and
+                responsibility for data.</para>
+        </listitem>
+        <listitem>
+            <para>Data sovereignty policies governing the storage of
+                data in foreign countries or otherwise separate
+                jurisdictions.</para>
+        </listitem>
+        <listitem>
+            <para>Data compliance policies governing where information
+                needs to reside in certain locations due to regular
+                issues and, more importantly, where it cannot reside
+                in other locations for the same reason.</para>
+        </listitem>
+    </itemizedlist>
+    <para>Examples of such legal frameworks include the data
+        protection framework of the European Union
+        (http://ec.europa.eu/justice/data-protection/ ) and the
+        requirements of the Financial Industry Regulatory Authority
+        (http://www.finra.org/Industry/Regulation/FINRARules) in the
+        United States. Consult a local regulatory body for more
+        information.</para>
+    <section xml:id="high-availability-issues-network-focus"><title>High Availability Issues</title>
+    <para>OpenStack installations with high demand on network
+        resources have high availability requirements that are
+        determined by the application and use case. Financial
+        transaction systems will have a much higher requirement for
+        high availability than a development application. Forms of
+        network availability, for example quality of service (QoS),
+        can be used to improve the network performance of sensitive
+        applications, for example VoIP and video streaming.</para>
+    <para>Often, high performance systems will have SLA requirements
+        for a minimum QoS with regard to guaranteed uptime, latency
+        and bandwidth. The level of the SLA can have a significant
+        impact on the network architecture and requirements for
+        redundancy in the systems.</para></section>
+    <section xml:id="risks-network-focus"><title>Risks</title>
+    <itemizedlist>
+        <listitem>
+            <para>Network Misconfigurations: Configuring incorrect IP
+                addresses, VLANs, and routes can cause outages to
+                areas of the network or, in the worst case scenario,
+                the entire cloud infrastructure. Misconfigurations can
+                cause disruptive problems and should be automated to
+                minimize the opportunity for operator error.</para>
+        </listitem>
+        <listitem>
+            <para>Capacity Planning: Cloud networks need to be managed
+                for capacity and growth over time. There is a risk
+                that the network will not grow to support the
+                workload. Capacity planning includes the purchase of
+                network circuits and hardware that can potentially
+                have lead times measured in months or more.</para>
+        </listitem>
+        <listitem>
+            <para>Network Tuning: Cloud networks need to be configured
+                to minimize link loss, packet loss, packet storms,
+                broadcast storms, and loops.</para>
+        </listitem>
+        <listitem>
+            <para>Single Point Of Failure (SPOF): High availability
+                must be taken into account even at the physical and
+                environmental layers. If there is a single point of
+                failure due to only one upstream link, or only one
+                power supply, an outage becomes unavoidable.</para>
+        </listitem>
+        <listitem>
+            <para>Complexity: An overly complex network design becomes
+                difficult to maintain and troubleshoot. While
+                automated tools that handle overlay networks or device
+                level configuration can mitigate this, non-traditional
+                interconnects between functions and specialized
+                hardware need to be well documented or avoided to
+                prevent outages.</para>
+        </listitem>
+        <listitem>
+            <para>Non-standard features: There are additional risks
+                that arise from configuring the cloud network to take
+                advantage of vendor specific features. One example is
+                multi-link aggregation (MLAG) that is being used to
+                provide redundancy at the aggregator switch level of
+                the network. MLAG is not a standard and, as a result,
+                each vendor has their own proprietary implementation
+                of the feature. MLAG architectures are not
+                interoperable across switch vendors, which leads to
+                vendor lock-in, and can cause delays or inability when
+                upgrading components.</para>
+        </listitem>
+    </itemizedlist></section>
+    <section xml:id="security-network-focus"><title>Security</title>
+    <para>Security is often overlooked or added after a design has
+        been implemented. Consider security implications and
+        requirements before designing the physical and logical network
+        topologies. Some of the factors that need to be addressed
+        include making sure the networks are properly segregated and
+        traffic flows are going to the correct destinations without
+        crossing through locations that are undesirable. Some examples
+        of factors that need to be taken into consideration are:</para>
+    <itemizedlist>
+        <listitem>
+            <para>Firewalls</para>
+        </listitem>
+        <listitem>
+            <para>Overlay interconnects for joining separated tenant
+                networks</para>
+        </listitem>
+        <listitem>
+            <para>Routing through or avoiding specific networks</para>
+        </listitem>
+    </itemizedlist>
+    <para>Another security vulnerability that must be taken into
+        account is how networks are attached to hypervisors. If a
+        network must be separated from other systems at all costs, it
+        may be necessary to schedule instances for that network onto
+        dedicated compute nodes. This may also be done to mitigate
+        against exploiting a hypervisor breakout allowing the attacker
+        access to networks from a compromised instance.</para>
+    </section>
+</section>

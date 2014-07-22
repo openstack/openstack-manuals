@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="5.0"
+    xml:id="architecture-network-focus">
+    <title>Architecture</title>
+    <para>Network focused OpenStack architectures have many
+        similarities to other OpenStack architecture use cases. There
+        a number of very specific considerations to keep in mind when
+        designing for a network-centric or network-heavy application
+        environment.</para>
+    <para>Networks exist to serve a as medium of transporting data
+        between systems. It is inevitable that an OpenStack design
+        have inter-dependencies with non-network portions of OpenStack
+        as well as on external systems. Depending on the specific
+        workload, there may be major interactions with storage systems
+        both within and external to the OpenStack environment. For
+        example, if the workload is a content delivery network, then
+        the interactions with storage will be two-fold. There will be
+        traffic flowing to and from the storage array for ingesting
+        and serving content in a north-south direction. In addition,
+        there is replication traffic flowing in an east-west
+        direction.</para>
+    <para>Compute-heavy workloads may also induce interactions with
+        the network. Some high performance compute applications
+        require network-based memory mapping and data sharing and, as
+        a result, will induce a higher network load when they transfer
+        results and data sets. Others may be highly transactional and
+        issue transaction locks, perform their functions and rescind
+        transaction locks at very high rates. This also has an impact
+        on the network performance.</para>
+    <para>Some network dependencies are going to be external to
+        OpenStack. While Neutron is capable of providing network
+        ports, IP addresses, some level of routing, and overlay
+        networks, there are some other functions that it cannot
+        provide. For many of these, external systems or equipment may
+        be required to fill in the functional gaps. Hardware load
+        balancers are an example of equipment that may be necessary to
+        distribute workloads or offload certain functions. Note that,
+        as of the icehouse release, dynamic routing is currently in
+        its infancy within OpenStack and may need to be implemented
+        either by an external device or a specialized service instance
+        within OpenStack. Tunneling is a feature provided by Neutron,
+        however it is constrained to a Neutron-managed region. If the
+        need arises to extend a tunnel beyond the OpenStack region to
+        either another region or an external system, it is necessary
+        to implement the tunnel itself outside OpenStack or by using a
+        tunnel management system to map the tunnel or overlay to an
+        external tunnel. OpenStack does not currently provide quotas
+        for network resources. Where network quotas are required, it
+        is necessary to implement quality of service management
+        outside of OpenStack. In many of these instances, similar
+        solutions for traffic shaping or other network functions will
+        be needed.</para>
+    <para>Depending on the selected design, Neutron itself may not
+        even support the required layer 3 network functionality. If it
+        is necessary or advantageous to use the provider networking
+        mode of Neutron without running the layer 3 agent, then an
+        external router will be required to provide layer 3
+        connectivity to outside systems.</para>
+    <para>Interaction with orchestration services is inevitable in
+        larger-scale deployments. Heat is capable of allocating
+        network resource defined in templates to map to tenant
+        networks and for port creation, as well as allocating floating
+        IPs. If there is a requirement to define and manage network
+        resources in using orchestration, it is recommended that the
+        design include OpenStack Orchestration to meet the demands of
+        users.</para>
+    <section xml:id="desing-impacts"><title>Design Impacts</title>
+    <para>A wide variety of factors can affect a network focused
+        OpenStack architecture. While there are some considerations
+        shared with a general use case, specific workloads related to
+        network requirements will influence network design
+        decisions.</para>
+    <para>One decision includes whether or not to use Network Address
+        Translation (NAT) and where to implement it. If there is a
+        requirement for floating IPs to be available instead of using
+        public fixed addresses then NAT is required. This can be seen
+        in network management applications that rely on an IP
+        endpoint. An example of this is a DHCP relay that needs to
+        know the IP of the actual DHCP server. In these cases it is
+        easier to automate the infrastructure to apply the target IP
+        to a new instance rather than reconfigure legacy or external
+        systems for each new instance.</para>
+    <para>NAT for floating IPs managed by Neutron will reside within
+        the hypervisor but there are also versions of NAT that may be
+        running elsewhere. If there is a shortage of IPv4 addresses
+        there are two common methods to mitigate this externally to
+        OpenStack. The first is to run a load balancer either within
+        OpenStack as a instance, or use an external load balancing
+        solution. In the internal scenario, load balancing software,
+        such as HAproxy, can be managed with Neutron's Load Balancer
+        as a Service (LBaaS). This is specifically to manage the
+        Virtual IP (VIPs) while a dual-homed connection from the
+        HAproxy instance connects the public network with the tenant
+        private network that hosts all of the content servers. In the
+        external scenario, a load balancer would need to serve the VIP
+        and also be joined to the tenant overlay network through
+        external means or routed to it via private addresses.</para>
+    <para>Another kind of NAT that may be useful is protocol NAT. In
+        some cases it may be desirable to use only IPv6 addresses on
+        instances and operate either an instance or an external
+        service to provide a NAT-based transition technology such as
+        NAT64 and DNS64. This provides the ability to have a globally
+        routable IPv6 address while only consuming IPv4 addresses as
+        necessary or in a shared manner.</para>
+    <para>Application workloads will affect the design of the
+        underlying network architecture. If a workload requires
+        network-level redundancy, the routing and switching
+        architecture will have to accommodate this. There are
+        differing methods for providing this that are dependent on the
+        network hardware selected, the performance of the hardware,
+        and which networking model is deployed. Some examples of this
+        are the use of Link aggregation (LAG) or Hot Standby Router
+        Protocol (HSRP). There are also the considerations of whether
+        to deploy Neutron or Nova-network and which plug-in to select
+        for Neutron. If using an external system, Neutron will need to
+        be configured to run layer 2 with a provider network
+        configuration. For example, it may be necessary to implement
+        HSRP to terminate layer 3 connectivity.</para>
+    <para>Depending on the workload, overlay networks may or may not
+        be a recommended configuration. Where application network
+        connections are small, short lived or bursty, running a
+        dynamic overlay can generate as much bandwidth as the packets
+        it carries. It also can induce enough latency to cause issues
+        with certain applications. There is an impact to the device
+        generating the overlay which, in most installations, will be
+        the hypervisor. This will cause performance degradation on
+        packet per second and connection per second rates.</para>
+    <para>Overlays also come with a secondary option that may or may
+        not be appropriate to a specific workload. While all of them
+        will operate in full mesh by default, there might be good
+        reasons to disable this function because it may cause
+        excessive overhead for some workloads. Conversely, other
+        workloads will operate without issue. For example, most web
+        services applications will not have major issues with a full
+        mesh overlay network, while some network monitoring tools or
+        storage replication workloads will have performance issues
+        with throughput or excessive broadcast traffic.</para>
+    <para>A design decision that many overlook is a choice of layer 3
+        protocols. While OpenStack was initially built with only IPv4
+        support, Neutron now supports IPv6 and dual-stacked networks.
+        Note that, as of the icehouse release, this only includes
+        stateless address autoconfiguration but the work is in
+        progress to support stateless and stateful dhcpv6 as well as
+        IPv6 floating IPs without NAT. Some workloads become possible
+        through the use of IPv6 and IPv6 to IPv4 reverse transition
+        mechanisms such as NAT64 and DNS64 or 6to4, because these
+        options are available. This will alter the requirements for
+        any address plan as single-stacked and transitional IPv6
+        deployments can alleviate the need for IPv4 addresses.</para>
+    <para>As of the icehouse release, OpenStack has limited support
+        for dynamic routing, however there are a number of options
+        available by incorporating third party solutions to implement
+        routing within the cloud including network equipment, hardware
+        nodes, and instances. Some workloads will perform well with
+        nothing more than static routes and default gateways
+        configured at the layer 3 termination point. In most cases
+        this will suffice, however some cases require the addition of
+        at least one type of dynamic routing protocol if not multiple
+        protocols. Having a form of interior gateway protocol (IGP)
+        available to the instances inside an OpenStack installation
+        opens up the possibility of use cases for anycast route
+        injection for services that need to use it as a geographic
+        location or failover mechanism. Other applications may wish to
+        directly participate in a routing protocol, either as a
+        passive observer as in the case of a looking glass, or as an
+        active participant in the form of a route reflector. Since an
+        instance might have a large amount of compute and memory
+        resources, it is trivial to hold an entire unpartitioned
+        routing table and use it to provide services such as network
+        path visibility to other applications or as a monitoring
+        tool.</para>
+    <para>A lesser known, but harder to diagnose issue, is that of
+        path Maximum Transmission Unit (MTU) failures. It is less of
+        an optional design consideration and more a design warning
+        that MTU must be at least large enough to handle normal
+        traffic, plus any overhead from an overlay network, and the
+        desired layer 3 protocol. Adding externally built tunnels will
+        further lessen the MTU packet size making it imperative to pay
+        attention to the fully calculated MTU as some systems may be
+        configured to ignore or drop path MTU discovery
+        packets.</para></section>
+    <section xml:id="tunables">
+        <title>Tunable networking components</title>
+        <para>Consider configurable networking components related to an
+            OpenStack architecture design when designing for network intensive
+            workloads include MTU and QoS. Some workloads will require a larger
+            MTU than normal based on a requirement to transfer large blocks of
+            data. When providing network service for applications such as video
+            streaming or storage replication, it is recommended to ensure that
+            both OpenStack hardware nodes and the supporting network equipment
+            are configured for jumbo frames where possible. This will allow for
+            a better utilization of available bandwidth. Configuration of jumbo
+            frames should be done across the complete path the packets will
+            traverse. If one network component is not capable of handling jumbo
+            frames then the entire path will revert to the default MTU.</para>
+        <para>Quality of Service (QoS) also has a great impact on network
+            intensive workloads by providing instant service to packets which
+            have a higher priority due to their ability to be impacted by poor
+            network performance. In applications such as Voice over IP (VoIP)
+            differentiated services code points are a near requirement for
+            proper operation. QoS can also be used in the opposite direction for
+            mixed workloads to prevent low priority but high bandwidth
+            applications, for example backup services, video conferencing or
+            file sharing, from blocking bandwidth that is needed for the proper
+            operation of other workloads. It is possible to tag file storage
+            traffic as a lower class, such as best effort or scavenger, to allow
+            the higher priority traffic through. In cases where regions within a
+            cloud might be geographically distributed it may also be necessary
+            to plan accordingly to implement WAN optimization to combat latency
+            or packet loss.</para>
+    </section>
+</section>

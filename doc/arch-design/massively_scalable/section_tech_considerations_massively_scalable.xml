@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="5.0"
+    xml:id="technical-considerations-massive-scale">
+    <?dbhtml stop-chunking?>
+    <title>Technical Considerations</title>
+    <para>Converting an existing OpenStack environment that was
+        designed for a different purpose to be massively scalable is a
+        formidable task. When building a massively scalable
+        environment from the ground up, make sure the initial
+        deployment is built with the same principles and choices that
+        apply as the environment grows. For example, a good approach
+        is to deploy the first site as a multi-site environment. This
+        allows the same deployment and segregation methods to be used
+        as the environment grows to separate locations across
+        dedicated links or wide area networks. In a hyperscale cloud,
+        scale trumps redundancy. Applications must be modified with
+        this in mind, relying on the scale and homogeneity of the
+        environment to provide reliability rather than redundant
+        infrastructure provided by non-commodity hardware
+        solutions.</para>
+    <section xml:id="infrastructure-segregation-massive-scale"><title>Infrastructure Segregation</title>
+    <para>Fortunately, OpenStack services are designed to support
+        massive horizontal scale. Be aware that this is not the case
+        for the entire supporting infrastructure. This is particularly
+        a problem for the database management systems and message
+        queues used by the various OpenStack services for data storage
+        and remote procedure call communications.</para>
+    <para>Traditional clustering techniques are typically used to
+        provide high availability and some additional scale for these
+        environments. In the quest for massive scale, however,
+        additional steps need to be taken to relieve the performance
+        pressure on these components to prevent them from negatively
+        impacting the overall performance of the environment. It is
+        important to make sure that all the components are in balance
+        so that, if and when the massively scalable environment fails,
+        all the components are at, or close to, maximum
+        capacity.</para>
+    <para>Regions are used to segregate completely independent
+        installations linked only by an Identity and Dashboard
+        (optional) installation. Services are installed with separate
+        API endpoints for each region, complete with separate database
+        and queue installations. This exposes some awareness of the
+        environment's fault domains to users and gives them the
+        ability to ensure some degree of application resiliency while
+        also imposing the requirement to specify which region their
+        actions must be applied to.</para>
+    <para>Environments operating at massive scale typically need their
+        regions or sites subdivided further without exposing the
+        requirement to specify the failure domain to the user. This
+        provides the ability to further divide the installation into
+        failure domains while also providing a logical unit for
+        maintenance and the addition of new hardware. At hyperscale,
+        instead of adding single compute nodes, administrators may add
+        entire racks or even groups of racks at a time with each new
+        addition of nodes exposed via one of the segregation concepts
+        mentioned herein.</para>
+    <para>Cells provide the ability to subdivide the compute portion
+        of an OpenStack installation, including regions, while still
+        exposing a single endpoint. In each region an API cell is
+        created along with a number of compute cells where the
+        workloads actually run. Each cell gets its own database and
+        message queue setup (ideally clustered), providing the ability
+        to subdivide the load on these subsystems, improving overall
+        performance.</para>
+    <para>Within each compute cell a complete compute installation is
+        provided, complete with full database and queue installations,
+        scheduler, conductor, and multiple compute hosts. The cells
+        scheduler handles placement of user requests from the single
+        API endpoint to a specific cell from those available. The
+        normal filter scheduler then handles placement within the
+        cell.</para>
+    <para>The downside of using cells is that they are not well
+        supported by any of the OpenStack services other than compute.
+        Also, they do not adequately support some relatively standard
+        OpenStack functionality such as security groups and host
+        aggregates. Due to their relative newness and specialized use,
+        they receive relatively little testing in the OpenStack gate.
+        Despite these issues, however, cells are used in some very
+        well known OpenStack installations operating at massive scale
+        including those at CERN and Rackspace.</para></section>
+    <section xml:id="host-aggregates"><title>Host Aggregates</title>
+    <para>Host Aggregates enable partitioning of OpenStack Compute
+        deployments into logical groups for load balancing and
+        instance distribution. Host aggregates may also be used to
+        further partition an availability zone. Consider a cloud which
+        might use host aggregates to partition an availability zone
+        into groups of hosts that either share common resources, such
+        as storage and network, or have a special property, such as
+        trusted computing hardware. Host aggregates are not explicitly
+        user-targetable; instead they are implicitly targeted via the
+        selection of instance flavors with extra specifications that
+        map to host aggregate metadata.</para></section>
+    <section xml:id="availability-zones"><title>Availability Zones</title>
+    <para>Availability zones provide another mechanism for subdividing
+        an installation or region. They are, in effect, Host
+        aggregates that are exposed for (optional) explicit targeting
+        by users.</para>
+    <para>Unlike cells, they do not have their own database server or
+        queue broker but simply represent an arbitrary grouping of
+        compute nodes. Typically, grouping of nodes into availability
+        zones is based on a shared failure domain based on a physical
+        characteristic such as a shared power source, physical network
+        connection, and so on. Availability Zones are exposed to the
+        user because they can be targeted; however, users are not
+        required to target them. An alternate approach is for the
+        operator to set a default availability zone to schedule
+        instances to other than the default availability zone of
+        nova.</para></section>
+    <section xml:id="segregation-example"><title>Segregation Example</title>
+    <para>In this example the cloud is divided into two regions, one
+        for each site, with two availability zones in each based on
+        the power layout of the data centers. A number of host
+        aggregates have also been defined to allow targeting of
+        virtual machine instances using flavors, that require special
+        capabilities shared by the target hosts such as SSDs, 10 G
+        networks, or GPU cards.</para>
+    <mediaobject>
+        <imageobject>
+            <imagedata
+                fileref="../images/Massively_Scalable_Cells_+_regions_+_azs.png"
+            />
+        </imageobject>
+    </mediaobject></section>
+</section>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="5.0"
+    xml:id="prescriptive-example-compute-focus">
+    <?dbhtml stop-chunking?>
+    <title>Prescriptive Examples</title>
+    <para>The Conseil Européen pour la Recherche Nucléaire (CERN),
+        also known as the European Organization for, Nuclear Research
+        provides particle accelerators and other infrastructure for
+        high-energy physics research.</para>
+    <para>As of 2011 CERN operated these two compute centers in Europe
+        with plans to add a third:</para>
+    <para>To support a growing number of compute heavy users of
+        experiments related to the Large Hadron Collider (LHC) CERN
+        ultimately elected to deploy an OpenStack cloud using
+        Scientific Linux and RDO. This effort aimed to simplify the
+        management of the center's compute resources with a view to
+        doubling compute capacity through the addition of an
+        additional data center in 2013 while maintaining the same
+        levels of compute staff.</para>
+    <para>The CERN solution uses Cells for segregation of compute
+        resources and to transparently scale between different data
+        centers. This decision meant trading off support for security
+        groups and live migration. In addition some details like
+        flavors needed to be manually replicated across cells. In
+        spite of these drawbacks cells were determined to provide the
+        required scale while exposing a single public API endpoint to
+        users.</para>
+    <para>A compute cell was created for each of the two original data
+        centers and a third was created when a new data center was
+        added in 2013. Each cell contains three availability zones to
+        further segregate compute resources and at least three
+        RabbitMQ message brokers configured to be clustered with
+        mirrored queues for high availability.</para>
+    <para>The API cell, which resides behind a HAProxy load balancer,
+        is located in the data center in Switzerland and directs API
+        calls to compute cells using a customized variation of the
+        cell scheduler. The customizations allow certain workloads to
+        be directed to a specific data center or "all" data centers
+        with cell selection determined by cell RAM availability in the
+        latter case.</para>
+    <mediaobject>
+        <imageobject>
+            <imagedata fileref="../images/Generic_CERN_Example.png"/>
+        </imageobject>
+    </mediaobject>
+    <para>There is also some customization of the filter scheduler
+        that handles placement within the cells:</para>
+    <itemizedlist>
+        <listitem>
+            <para>ImagePropertiesFilter - To provide special handling
+                depending on the guest operating system in use
+                (Linux-based or Windows-based).</para>
+        </listitem>
+        <listitem>
+            <para>ProjectsToAggregateFilter - To provide special
+                handling depending on the project the instance is
+                associated with.</para>
+        </listitem>
+        <listitem>
+            <para>default_schedule_zones - Allows the selection of
+                multiple default availability zones, rather than a
+                single default.</para>
+        </listitem>
+    </itemizedlist>
+    <para>The MySQL database server in each cell is managed by a
+        central database team and configured in an active/passive
+        configuration with a NetApp storage back end. Backups are
+        performed ever 6 hours.</para>
+    <section xml:id="network-architecture"><title>Network Architecture</title>
+    <para>To integrate with existing CERN networking infrastructure
+        customizations were made to Nova Networking. This was in the
+        form of a driver to integrate with CERN's existing database
+        for tracking MAC and IP address assignments.</para>
+    <para>The driver facilitates selection of a MAC address and IP for
+        new instances based on the compute node the scheduler places
+        the instance on</para>
+    <para>The driver considers the compute node that the scheduler
+        placed an instance on and then selects a MAC address and IP
+        from the pre-registered list associated with that node in the
+        database. The database is then updated to reflect the instance
+        the addresses were assigned to.</para></section>
+    <section xml:id="storage-architecture"><title>Storage Architecture</title>
+    <para>The OpenStack image service is deployed in the API cell and
+        configured to expose version 1 (V1) of the API. As a result
+        the image registry is also required. The storage back end in
+        use is a 3 PB Ceph cluster.</para>
+    <para>A small set of "golden" Scientific Linux 5 and 6 images are
+        maintained which applications can in turn be placed on using
+        orchestration tools. Puppet is used for instance configuration
+        management and customization but Heat deployment is
+        expected.</para></section>
+    <section xml:id="monitoring"><title>Monitoring</title>
+    <para>Although direct billing is not required, OpenStack Telemetry
+        is used to perform metering for the purposes of adjusting
+        project quotas. A sharded, replicated, MongoDB back end is
+        used. To spread API load, instances of the nova-api service
+        were deployed within the child cells for Telemetry to query
+        against. This also meant that some supporting services
+        including keystone, glance-api and glance-registry needed to
+        also be configured in the child cells.</para>
+    <mediaobject>
+        <imageobject>
+            <imagedata
+                fileref="../images/Generic_CERN_Architecture.png"/>
+        </imageobject>
+    </mediaobject>
+    <para>Additional monitoring tools in use include Flume
+        (http://flume.apache.org/), Elastic Search, Kibana
+        (http://www.elasticsearch.org/overview/kibana/), and the CERN
+        developed Lemon (http://lemon.web.cern.ch/lemon/index.shtml)
+        project.</para></section>
+    <section xml:id="references-cern-resources"><title>References</title>
+    <para>The authors of the Architecture Design Guide would like to
+        thank CERN for publicly documenting their OpenStack deployment
+        in these resources, which formed the basis for this
+        chapter:</para>
+    <itemizedlist>
+        <listitem>
+            <para>http://openstack-in-production.blogspot.fr/</para>
+        </listitem>
+        <listitem>
+            <para>http://www.openstack.org/assets/presentation-media/Deep-Dive-into-the-CERN-Cloud-Infrastructure.pdf</para>
+        </listitem>
+    </itemizedlist></section>
+</section>

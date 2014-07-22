@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="5.0"
+    xml:id="technical-considerations-storage-focus">
+    <?dbhtml stop-chunking?>
+    <title>Technical Considerations</title>
+    <para>Some of the key technical considerations that are critical
+        to a storage focused OpenStack design architecture
+        include:</para>
+    <itemizedlist>
+        <listitem>
+            <para>I-O requirements: I-O performance requirements need
+                to be researched and modeled before deciding on a
+                final storage framework. Running benchmarks for I-O
+                performance will help provide a baseline for expected
+                performance levels. If these tests include details,
+                for example, object size in an object storage system
+                or varying capacity levels for both object storage and
+                block storage, then the resulting data can help model
+                behavior and results during different workloads.
+                Running scripted smaller benchmarks during the
+                life cycle of the architecture helps record the system
+                health at different points in time. The data from
+                these scripted benchmarks will assist in future
+                scoping and gaining a deeper understanding of an
+                organization's needs.</para>
+        </listitem>
+        <listitem>
+            <para>Scale: The scale of the storage solution in a
+                storage focused OpenStack architecture design is
+                driven both by initial requirements, including IOPS,
+                capacity, and bandwidth, as well as future needs.
+                Planning capacity based on projected needs over the
+                course of a budget cycle is important for a design.
+                Ideally, the chosen architecture should balance cost
+                and capacity while also allowing enough flexibility
+                for new technologies and methods to be implemented as
+                they become available.</para>
+        </listitem>
+        <listitem>
+            <para>Security: Security design around data has multiple
+                points of focus that vary depending on SLAs, legal
+                requirements, industry regulations, and certifications
+                needed for systems or people. HIPPA, ISO9000, and SOX
+                compliance should be considered based on the type of
+                data. Levels of access control can be important for
+                certain organizations.</para>
+        </listitem>
+        <listitem>
+            <para>OpenStack compatibility: Interoperability and
+                integration with OpenStack can be paramount in
+                deciding on a storage hardware and storage management
+                platform. Interoperability and integration includes
+                factors such as OpenStack Cinder interoperability,
+                OpenStack Swift compatibility, and hypervisor
+                compatibility (which affects the ability to use
+                storage for ephemeral instance storage).</para>
+        </listitem>
+        <listitem>
+            <para>Storage management: A range of storage
+                management-related considerations must be addressed in
+                the design of a storage focused OpenStack cloud. These
+                considerations include, but are not limited to, backup
+                strategy (and restore strategy, since a backup that
+                can not be restored is useless), data
+                valuation-hierarchical storage management, retention
+                strategy, data placement, and workflow
+                automation.</para>
+        </listitem>
+        <listitem>
+            <para>Data Grids: Data grids can be helpful in
+                deterministically answering questions around data
+                valuation. A fundamental challenge of today’s
+                information sciences is determining which data is
+                worth keeping, on what tier of access and performance
+                should it reside, and how long should it remain in a
+                storage system. Data grids improve decision making
+                through correlation of access patterns, ownership, and
+                business-unit revenue with other metadata values to
+                deliver actionable information about data.</para>
+        </listitem>
+    </itemizedlist>
+    <para>Strive to build a flexible design that is based on a
+        industry standard core. One way of accomplishing this might be
+        through the use of different back ends serving different use
+        cases.</para>
+</section>

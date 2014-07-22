@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="5.0"
+    xml:id="prescriptive-examples-multi-cloud">
+    <?dbhtml stop-chunking?>
+    <title>Prescriptive Examples</title>
+    <para>Multi-cloud environments are typically created to facilitate
+        these use cases:</para>
+    <itemizedlist>
+        <listitem>
+            <para>Bursting workloads from private to public OpenStack
+                clouds</para>
+        </listitem>
+        <listitem>
+            <para>Bursting workloads from private to public
+                non-OpenStack clouds</para>
+        </listitem>
+        <listitem>
+            <para>High Availability across clouds (for technical
+                diversity)</para>
+        </listitem>
+    </itemizedlist>
+    <para>Examples of environments that address each of these use
+        cases will be discussed in this chapter.</para>
+    <para>Company A's data center is running dangerously low on
+        capacity. The option of expanding the data center will not be
+        possible in the foreseeable future. In order to accommodate
+        the continuously growing need for development resources in the
+        organization, the decision was make use of resource in the
+        public cloud.</para>
+    <para>The company has an internal cloud management platform that
+        will direct requests to the appropriate cloud, depending on
+        the currently local capacity.</para>
+    <para>This is a custom in-house application that has been written
+        for this specific purpose.</para>
+    <para>An example for such a solution is described in the figure
+        below.</para>
+    <mediaobject>
+        <imageobject>
+            <imagedata
+                fileref="../images/Multi-Cloud_Priv-Pub3.png"
+            />
+        </imageobject>
+    </mediaobject>
+    <para>This example shows two clouds, with a Cloud Management
+        Platform (CMP) connecting them. This guide does not attempt to
+        cover a specific CMP, but describes how workloads are
+        typically orchestrated using the Orchestration and Telemetry
+        services as shown in the diagram above. It is also possibly to
+        connect directly to the other OpenStack APIs with a
+        CMP.</para>
+    <para>The private cloud is an OpenStack cloud with one or more
+        controllers and one or more compute nodes. It includes
+        metering provided by OpenStack Telemetry. As load increases
+        Telemetry captures this and the information is in turn
+        processed by the CMP. As long as capacity is available, the
+        CMP uses the OpenStack API to call the Orchestration service
+        to create instances on the private cloud in response to user
+        requests. When capacity is not available on the private cloud,
+        the CMP issues a request to the Orchestration service API of
+        the public cloud to create the instance on the public
+        cloud.</para>
+    <para>In this example, the whole deployment was not directed to an
+        external public cloud because of the company's fear of lack of
+        resource control and security concerns over control and
+        increased operational expense.</para>
+    <para>In addition, CompanyA has already established a data center
+        with a substantial amount of hardware, and migrating all the
+        workloads out to a public cloud was not feasible.</para>
+    <section xml:id="bursting-to-public-nonopenstack-cloud"><title>Bursting to a Public non-OpenStack Cloud</title>
+    <para>Another common scenario is bursting workloads from the
+        private cloud into a non-OpenStack public cloud such as Amazon
+        Web Services (AWS) to take advantage of additional capacity
+        and scale applications as needed.</para>
+    <para>For an OpenStack-to-AWS hybrid cloud, the architecture looks
+        similar to the figure below:</para>
+    <mediaobject>
+        <imageobject>
+            <imagedata
+                fileref="../images/Multi-Cloud_Priv-AWS4.png"
+            />
+        </imageobject>
+    </mediaobject>
+    <para>In this scenario CompanyA has an additional requirement in
+        that the developers were already using AWS for some of their
+        work and did not want to change the cloud provider. Primarily
+        due to excessive overhead with network firewall rules that
+        needed to be created and corporate financial procedures that
+        required entering into an agreement with a new
+        provider.</para>
+    <para>As long as the CMP is capable of connecting an external
+        cloud provider with the appropriate API, the workflow process
+        will remain the same as the previous scenario. The actions the
+        CMP takes such as monitoring load, creating new instances, and
+        so forth are the same, but they would be performed in the
+        public cloud using the appropriate API calls. For example, if
+        the public cloud is Amazon Web Services, the CMP would use the
+        EC2 API to create a new instance and assign an Elastic IP.
+        That IP can then be added to HAProxy in the private cloud,
+        just as it was before. The CMP can also reference AWS-specific
+        tools such as CloudWatch and CloudFormation.</para>
+    <para>Several open source tool kits for building CMPs are now
+        available that can handle this kind of translation, including
+        ManageIQ, jClouds, and JumpGate.</para></section>
+    <section xml:id="high-availability-disaster-recovery"><title>High Availability/Disaster Recovery</title>
+    <para>CompanyA has a requirement to be able to recover from
+        catastrophic failure in their local data center. Some of the
+        workloads currently in use are running on their private
+        OpenStack cloud. Protecting the data involves block storage,
+        object storage, and a database. The architecture is designed
+        to support the failure of large components of the system, yet
+        ensuring that the system will continue to deliver services.
+        While the services remain available to users, the failed
+        components are restored in the background based on standard
+        best practice DR policies. To achieve the objectives, data is
+        replicated to a second cloud, in a geographically distant
+        location. The logical diagram of the system is described in
+        the figure below:</para>
+    <mediaobject>
+        <imageobject>
+            <imagedata
+                fileref="../images/Multi-Cloud_failover2.png"
+            />
+        </imageobject>
+    </mediaobject>
+    <para>This example includes two private OpenStack clouds connected
+        with a Cloud Management Platform (CMP). The source cloud,
+        OpenStack Cloud 1, includes a controller and at least one
+        instance running MySQL. It also includes at least one block
+        storage volume and one object storage volume so that the data
+        is available to the users at all times. The details of the
+        method for protecting each of these sources of data
+        differs.</para>
+    <para>The object storage relies on the replication capabilities of
+        the object storage provider. OpenStack Object Storage is
+        enabled so that it creates geographically separated replicas
+        that take advantage of this feature. It is configured so that
+        at least one replica exists in each cloud. In order to make
+        this work a single array spanning both clouds is configured
+        with OpenStack Identity that uses Federated Identity and talks
+        to both clouds, communicating with OpenStack Object Storage
+        through the Swift proxy.</para>
+    <para>For block storage, the replication is a little more
+        difficult, and involves tools outside of OpenStack itself. The
+        OpenStack Block Storage volume is not set as the drive itself
+        but as a logical object that points to a physical back end. The
+        disaster recovery is configured for Block Storage for
+        synchronous backup for the highest level of data protection,
+        but asynchronous backup could have been set as an alternative
+        that is not as latency sensitive. For asynchronous backup, the
+        Cinder API makes it possible to export the data and also the
+        metadata of a particular volume, so that it can be moved and
+        replicated elsewhere. More information can be found here:
+        https://blueprints.launchpad.net/cinder/+spec/cinder-backup-volume-metadata-support.</para>
+    <para>The synchronous backups create an identical volume in both
+        clouds and chooses the appropriate flavor so that each cloud
+        has an identical back end. This was done by creating volumes
+        through the CMP, because the CMP knows to create identical
+        volumes in both clouds. Once this is configured, a solution,
+        involving DRDB, is used to synchronize the actual physical
+        drives.</para>
+    <para>The database component is backed up using synchronous
+        backups. MySQL does not support geographically diverse
+        replication, so disaster recovery is provided by replicating
+        the file itself. As it is not possible to use object storage
+        as the back end of a database like MySQL, Swift replication
+        was not an option. It was decided not to store the data on
+        another geo-tiered storage system, such as Ceph, as block
+        storage. This would have given another layer of protection.
+        Another option would have been to store the database on an
+        OpenStack Block Storage volume and backing it up just as any
+        other block storage.</para></section>
+</section>

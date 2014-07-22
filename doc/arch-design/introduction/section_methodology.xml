@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="5.0"
+    xml:id="methodology">
+    <title>Methodology</title>
+    <para>The magic of the cloud is that it can do anything. It is both robust
+        and flexible, the best of both worlds. Yes, the cloud is highly flexible
+        and it can do almost anything, but to get the most out of a cloud
+        investment, it is important to define how the cloud will be used by
+        creating and testing use cases. This is the chapter that describes the
+        thought process behind how to design a cloud architecture that best
+        suits the intended use.</para>
+    <mediaobject>
+        <imageobject>
+            <imagedata fileref="../images/Methodology.png"/>
+        </imageobject>
+    </mediaobject>
+    <para>The diagram shows at a very abstract level the process for capturing
+        requirements and building use cases. Once a set of use cases has been
+        defined, it can then be used to design the cloud architecture.</para>
+    <para>Use case planning can seem counter-intuitive. After all, it takes
+        about five minutes to sign up for a server with Amazon. Amazon does not
+        know in advance what any given user is planning on doing with it, right?
+        Wrong. Amazon’s product management department spends plenty of time
+        figuring out exactly what would be attractive to their typical customer
+        and honing the service to deliver it. For the enterprise, the planning
+        process is no different, but instead of planning for an external paying
+        customer, for example, the use could be for internal application
+        developers or a web portal. The following is a list of the high level
+        objectives that need to be incorporated into the thinking about creating
+        a use case.</para>
+    <para>Overall business objectives</para>
+    <itemizedlist>
+        <listitem>
+            <para>Develop clear definition of business goals and requirements
+            </para>
+        </listitem>
+        <listitem>
+            <para>Increase project support and engagement with business,
+                customers and end users.</para>
+        </listitem>
+    </itemizedlist>
+    <para>Technology</para>
+    <itemizedlist>
+        <listitem>
+            <para>Coordinate the OpenStack architecture across the project and
+                leverage OpenStack community efforts more effectively.</para>
+        </listitem>
+        <listitem>
+            <para>Architect for automation as much as possible to speed
+                development and deployment.</para>
+        </listitem>
+        <listitem>
+            <para>Use the appropriate tools for the development effort.</para>
+        </listitem>
+        <listitem>
+            <para>Create better and more test metrics and test harnesses to
+                support continuous and integrated development, test processes
+                and automation.</para>
+        </listitem>
+    </itemizedlist>
+    <para>Organization</para>
+    <itemizedlist>
+        <listitem>
+            <para>Better messaging of management support of team efforts</para>
+        </listitem>
+        <listitem>
+            <para>Develop better cultural understanding of Open Source, cloud
+                architectures, Agile methodologies, continuous development, test
+                and integration, overall development concepts in general</para>
+        </listitem>
+    </itemizedlist>
+    <para>As an example of how this works, consider a business goal of using the
+        cloud for the company’s E-commerce website. This goal means planning for
+        applications that will support thousands of sessions per second,
+        variable workloads, and lots of complex and changing data. By
+        identifying the key metrics, such as number of concurrent transactions
+        per second, size of database, and so on, it is possible to then build a
+        method for testing the assumptions.</para>
+    <para>Develop functional user scenarios: Develop functional user scenarios
+        that can be used to develop test cases that can be used to measure
+        overall project trajectory. If the organization is not ready to commit
+        to an application or applications that can be used to develop user
+        requirements, it needs to create requirements to build valid test
+        harnesses and develop useable metrics. Once the metrics are established,
+        as requirements change, it is easier to respond to the changes quickly
+        without having to worry overly much about setting the exact requirements
+        in advance. Think of this as creating ways to configure the system,
+        rather than redesigning it every time there is a requirements change.</para>
+    <para>Limit cloud feature set: Create requirements that address the pain
+        points, but do not recreate the entire OpenStack tool suite. The
+        requirement to build OpenStack, only better, is self-defeating. It is
+        important to limit scope creep by concentrating on developing a platform
+        that will address tool limitations for the requirements, but not
+        recreating the entire suite of tools. Work with technical product owners
+        to establish critical features that are needed for a successful cloud
+        deployment.</para>
+    <section xml:id="application-cloud-readiness-methods">
+        <title>Application Cloud Readiness</title>
+        <para>Although the cloud is designed to make things easier, it is
+            important to realize that "using cloud" is more than just firing up
+            an instance and dropping an application on it. The "lift and shift"
+            approach works in certain situations, but there is a fundamental
+            difference between clouds and traditional bare-metal-based
+            environments, or even traditional virtualized environments.</para>
+        <para>In traditional environments, with traditional enterprise
+            applications, the applications and the servers that run on them are
+            "pets". They're lovingly crafted and cared for, the servers have
+            names like Gandalf or Tardis, and if they get sick, someone nurses
+            them back to health. All of this is designed so that the application
+            does not experience an outage.</para>
+        <para>In cloud environments, on the other hand, servers are more like
+            cattle. There are thousands of them, they get names like NY-1138-Q,
+            and if they get sick, they get put down and a sysadmin installs
+            another one. Traditional applications that are unprepared for this
+            kind of environment, naturally will suffer outages, lost data, or
+            worse.</para>
+        <para>There are other reasons to design applications with cloud in mind.
+            Some are defensive, such as the fact that applications cannot be
+            certain of exactly where or on what hardware they will be launched,
+            they need to be flexible, or at least adaptable. Others are
+            proactive. For example, one of the advantages of using the cloud is
+            scalability, so applications need to be designed in such a way that
+            they t can take advantage of those and other opportunities.</para>
+    </section>
+    <section xml:id="determining-whether-an-application-is-cloud-ready">
+        <title>Determining whether an application is cloud-ready</title>
+        <para>There are several factors to take into consideration when looking
+            at whether an application is a good fit for the cloud.</para>
+        <para>Structure: A large, monolithic, single-tiered legacy application
+            typically isn't a good fit for the cloud. Efficiencies are gained
+            when load can be spread over several instances, so that a failure in
+            one part of the system can be mitigated without affecting other
+            parts of the system, or so that scaling can take place where the app
+            needs it.</para>
+        <para>Dependencies: Applications that depend on specific hardware --
+            such as a particular chip set or an external device such as a
+            fingerprint reader -- might not be a good fit for the cloud, unless
+            those dependencies are specifically addressed. Similarly, if an
+            application depends on an operating system or set of libraries that
+            cannot be used in the cloud, or cannot be virtualized, that is a
+            problem.</para>
+        <para>Connectivity: Self-contained applications or those that depend on
+            resources that are not reachable by the cloud in question, will not
+            run. In some situations, work around these issues with custom
+            network setup, but how well this works depends on the chosen cloud
+            environment.</para>
+        <para>Durability and Resilience: Despite the existence of SLAs, the one
+            reality of the cloud is that Things Break. Servers go down, network
+            connections are disrupted, other tenants on a server ramp up the
+            load to make the server unusable. Any number of things can happen,
+            and an application that isn't built to withstand this kind of
+            disruption isn't going to work properly.</para>
+    </section>
+    <section xml:id="designing-for-the-cloud">
+        <title>Designing for the cloud</title>
+        <para>Here are some guidelines to keep in mind when designing an
+            application for the cloud:</para>
+        <itemizedlist>
+            <listitem>
+                <para>Be a pessimist: Assume everything fails and design
+                    backwards. Love your chaos monkey.</para>
+            </listitem>
+            <listitem>
+                <para>Put your eggs in multiple baskets: Leverage multiple
+                    providers, geographic regions and availability zones to
+                    accommodate for local availability issues. Design for
+                    portability.</para>
+            </listitem>
+            <listitem>
+                <para>Think efficiency: Inefficient designs will not scale.
+                    Efficient designs become cheaper as they scale. Kill off
+                    unneeded components or capacity.</para>
+            </listitem>
+            <listitem>
+                <para>Be paranoid: Design for defense in depth and zero
+                    tolerance by building in security at every level and between
+                    every component. Trust no one.</para>
+            </listitem>
+            <listitem>
+                <para>But not too paranoid: Not every application needs the
+                    platinum solution. Architect for different SLA’s, service
+                    tiers and security levels.</para>
+            </listitem>
+            <listitem>
+                <para>Manage the data: Data is usually the most inflexible and
+                    complex area of a cloud and cloud integration architecture.
+                    Don’t short change the effort in analyzing and addressing
+                    data needs.</para>
+            </listitem>
+            <listitem>
+                <para>Hands off: Leverage automation to increase consistency and
+                    quality and reduce response times.</para>
+            </listitem>
+            <listitem>
+                <para>Divide and conquer: Pursue partitioning and
+                    parallel layering wherever possible. Make components as small
+                    and portable as possible. Use load balancing between layers.
+                </para>
+            </listitem>
+            <listitem>
+                <para>Think elasticity: Increasing resources should result in a
+                    proportional increase in performance and scalability.
+                    Decreasing resources should have the opposite effect.
+                </para>
+            </listitem>
+            <listitem>
+                <para>Be dynamic: Enable dynamic configuration changes such as
+                    auto scaling, failure recovery and resource discovery to
+                    adapt to changing environments, faults and workload volumes.
+                </para>
+            </listitem>
+            <listitem>
+                <para>Stay close: Reduce latency by moving highly interactive
+                    components and data near each other.</para>
+            </listitem>
+            <listitem>
+                <para>Keep it loose: Loose coupling, service interfaces,
+                    separation of concerns, abstraction and well defined API’s
+                    deliver flexibility.</para>
+            </listitem>
+            <listitem>
+                <para>Be cost aware: Autoscaling, data transmission, virtual
+                    software licenses, reserved instances, and so on can rapidly
+                    increase monthly usage charges. Monitor usage closely.
+                </para>
+            </listitem>
+        </itemizedlist>
+    </section>
+</section>

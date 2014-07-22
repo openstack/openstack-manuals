@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="arch-design-architecture-multiple-site">
+    <?dbhtml stop-chunking?>
+    <title>Architecture</title>
+    <para>This graphic is a high level diagram of a multiple site OpenStack
+        architecture. Each site is an OpenStack cloud but it may be necessary to
+        architect the sites on different versions. For example, if the second
+        site is intended to be a replacement for the first site, they would be
+        different. Another common design would be a private OpenStack cloud with
+        replicated site that would be used for high availability or disaster
+        recovery. The most important design decision is how to configure the
+        storage. It can be configured as a single shared pool or separate pools,
+        depending on the user and technical requirements.</para>
+    <mediaobject>
+        <imageobject>
+            <imagedata
+                fileref="../images/Multi-Site_shared_keystone_horizon_swift1.png"/>
+        </imageobject>
+    </mediaobject>
+    <section xml:id="openstack-services-architecture">
+        <title>OpenStack Services Architecture</title>
+        <para>The OpenStack Identity service, which is used by all other
+            OpenStack components for authorization and the catalog of service
+            endpoints, supports the concept of regions. A region is a logical
+            construct that can be used to group OpenStack services that are in
+            close proximity to one another. The concept of regions is flexible;
+            it may can contain OpenStack service endpoints located within a
+            distinct geographic region, or regions. It may be smaller in scope,
+            where a region is a single rack within a data center or even a
+            single blade chassis, with multiple regions existing in adjacent
+            racks in the same data center.</para>
+        <para>The majority of OpenStack components are designed to run within
+            the context of a single region. The OpenStack Compute service is
+            designed to manage compute resources within a region, with support
+            for subdivisions of compute resources by using Availability Zones
+            and Cells. The OpenStack Networking service can be used to manage
+            network resources in the same broadcast domain or collection of
+            switches that are linked. The OpenStack Block Storage service
+            controls storage resources within a region with all storage
+            resources residing on the same storage network. Like the OpenStack
+            Compute service, the OpenStack Block Storage Service also supports
+            the Availability Zone construct,which can be used to subdivide
+            storage resources.</para>
+        <para>The OpenStack Dashboard, OpenStack Identity Service, and OpenStack
+            Object Storage services are components that can each be deployed
+            centrally in order to serve multiple regions.</para>
+    </section>
+    <section xml:id="arch-multi-storage">
+        <title>Storage</title>
+        <para>With multiple OpenStack regions, having a single OpenStack Object
+            Storage Service endpoint that delivers shared file storage for all
+            regions is desirable. The Object Storage service internally
+            replicates files to multiple nodes. The advantages of this are that,
+            if a file placed into the Object Storage service is visible to all
+            regions, it can be used by applications or workloads in any or all
+            of the regions. This simplifies high availability failover and
+            disaster recovery rollback.</para>
+        <para>In order to scale the Object Storage service to meet the workload
+            of multiple regions, multiple proxy workers are run and
+            load-balanced, storage nodes are installed in each region, and the
+            entire Object Storage Service can be fronted by an HTTP caching
+            layer. This is done so client requests for objects can be served out
+            of caches rather than directly from the storage modules themselves,
+            reducing the actual load on the storage network. In addition to an
+            HTTP caching layer, use a caching layer like Memcache to cache
+            objects between the proxy and storage nodes.</para>
+        <para>If the cloud is designed without a single Object Storage Service
+            endpoint for multiple regions, and instead a separate Object Storage
+            Service endpoint is made available in each region, applications are
+            required to handle synchronization (if desired) and other management
+            operations to ensure consistency across the nodes. For some
+            applications, having multiple Object Storage Service endpoints
+            located in the same region as the application may be desirable due
+            to reduced latency, cross region bandwidth, and ease of
+            deployment.</para>
+        <para>For the Block Storage service, the most important decisions are
+            the selection of the storage technology and whether or not a
+            dedicated network is used to carry storage traffic from the storage
+            service to the compute nodes.</para>
+    </section>
+    <section xml:id="arch-networking-multiple">
+        <title>Networking</title>
+        <para>When connecting multiple regions together there are several design
+            considerations. The overlay network technology choice determines how
+            packets are transmitted between regions and how the logical network
+            and addresses present to the application. If there are security or
+            regulatory requirements, encryption should be implemented to secure
+            the traffic between regions. For networking inside a region, the
+            overlay network technology for tenant networks is equally important.
+            The overlay technology and the network traffic of an application
+            generates or receives can be either complementary or be at cross
+            purpose. For example, using an overlay technology for an application
+            that transmits a large amount of small packets could add excessive
+            latency or overhead to each packet if not configured
+            properly.</para>
+    </section>
+    <section xml:id="arch-dependencies-multiple">
+        <title>Dependencies</title>
+        <para>The architecture for a multi-site installation of OpenStack is
+            dependent on a number of factors. One major dependency to consider
+            is storage. When designing the storage system, the storage mechanism
+            needs to be determined. Once the storage type is determined, how it
+            will be accessed is critical. For example, it is recommended that
+            storage should utilize a dedicated network. Another concern is how
+            the storage is configured to protect the data. For example, the
+            recovery point objective (RPO) and the recovery time objective
+            (RTO). How quickly can the recovery from a fault be completed, will
+            determine how often the replication of data be required. Ensure that
+            enough storage is allocated to support the data protection
+            strategy.</para>
+        <para>Networking decisions include the encapsulation mechanism that will
+            be used for the tenant networks, how large the broadcast domains
+            should be, and the contracted SLAs for the interconnects.</para>
+    </section>
+</section>

@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="5.0"
+    xml:id="prescriptive-example-multisite">
+    <?dbhtml stop-chunking?>
+    <title>Prescriptive Examples</title>
+    <para>Based on the needs of the intended workloads, there are
+        multiple ways to build a multi-site OpenStack installation.
+        Below are example architectures based on different
+        requirements. These examples are meant as a reference, and not
+        a hard and fast rule for deployments. Use the previous
+        sections of this chapter to assist in selecting specific
+        components and implementations based on specific needs.</para>
+    <para>A large content provider needs to deliver content to
+        customers that are geographically dispersed. The workload is
+        very sensitive to latency and needs a rapid response to
+        end-users. After reviewing the user, technical and operational
+        considerations, it is determined beneficial to build a number
+        of regions local to the customer’s edge. In this case rather
+        than build a few large, centralized data centers, the intent
+        of the architecture is to provide a pair of small data centers
+        in locations that are closer to the customer. In this use
+        case, spreading applications out allows for different
+        horizontal scaling than a traditional compute workload scale.
+        The intent is to scale by creating more copies of the
+        application in closer proximity to the users that need it
+        most, in order to ensure faster response time to user
+        requests. This provider will deploy two datacenters at each of
+        the four chosen regions. The implications of this design are
+        based around the method of placing copies of resources in each
+        of the remote regions. Swift objects, Glance images, and block
+        storage will need to be manually replicated into each region.
+        This may be beneficial for some systems, such as the case of
+        content service, where only some of the content needs to exist
+        in some but not all regions. A centralized Keystone is
+        recommended to ensure authentication and that access to the
+        API endpoints is easily manageable.</para>
+    <para>Installation of an automated DNS system such as Designate is
+        highly recommended. Unless an external Dynamic DNS system is
+        available, application administrators will need a way to
+        manage the mapping of which application copy exists in each
+        region and how to reach it. Designate will assist by making
+        the process automatic and by populating the records in the
+        each region's zone.</para>
+    <para>Telemetry for each region is also deployed, as each region
+        may grow differently or be used at a different rate.
+        Ceilometer will run to collect each region's metrics from each
+        of the controllers and report them back to a central location.
+        This is useful both to the end user and the administrator of
+        the OpenStack environment. The end user will find this method
+        useful, in that it is possible to determine if certain
+        locations are experiencing higher load than others, and take
+        appropriate action. Administrators will also benefit by
+        possibly being able to forecast growth per region, rather than
+        expanding the capacity of all regions simultaneously,
+        therefore maximizing the cost-effectiveness of the multi-site
+        design.</para>
+    <para>One of the key decisions of running this sort of
+        infrastructure is whether or not to provide a redundancy
+        model. Two types of redundancy and high availability models in
+        this configuration will be implemented. The first type
+        revolves around the availability of the central OpenStack
+        components. Keystone will be made highly available in three
+        central data centers that will host the centralized OpenStack
+        components. This prevents a loss of any one of the regions
+        causing an outage in service. It also has the added benefit of
+        being able to run a central storage repository as a primary
+        cache for distributing content to each of the regions.</para>
+    <para>The second redundancy topic is that of the edge data center
+        itself. A second data center in each of the edge regional
+        locations will house a second region near the first. This
+        ensures that the application will not suffer degraded
+        performance in terms of latency and availability.</para>
+    <para>This figure depicts the solution designed to have both a
+        centralized set of core data centers for OpenStack services
+        and paired edge data centers:</para>
+    <mediaobject>
+        <imageobject>
+            <imagedata
+                fileref="../images/Multi-Site_Customer_Edge.png"/>
+        </imageobject>
+    </mediaobject>
+    <section xml:id="geo-redundant-load-balancing"><title>Geo-redundant load balancing</title>
+    <para>A large-scale web application has been designed with cloud
+        principles in mind. The application is designed provide
+        service to application store, on a 24/7 basis. The company has
+        typical 2-tier architecture with a web front-end servicing the
+        customer requests and a NoSQL database back end storing the
+        information.</para>
+    <para>As of late there has been several outages in number of major
+        public cloud providers - usually due to the fact these
+        applications were running out of a single geographical
+        location. The design therefore should mitigate the chance of a
+        single site causing an outage for their business.</para>
+    <para>The solution would consist of the following OpenStack
+        components:</para>
+    <itemizedlist>
+        <listitem>
+            <para>A firewall, switches and load balancers on the
+                public facing network connections.</para>
+        </listitem>
+        <listitem>
+            <para>OpenStack Controller services running, Networking,
+                Horizon, Cinder and Nova compute running locally in
+                each of the three regions. The other services,
+                Keystone, Heat Ceilometer, Glance and Swift will be
+                installed centrally - with nodes in each of the region
+                providing a redundant OpenStack Controller plane
+                throughout the globe.</para>
+        </listitem>
+        <listitem>
+            <para>OpenStack Compute nodes running the KVM
+                hypervisor.</para>
+        </listitem>
+        <listitem>
+            <para>OpenStack Object Storage for serving static objects
+                such as images will be used to ensure that all images
+                are standardized across all the regions, and
+                replicated on a regular basis.</para>
+        </listitem>
+        <listitem>
+            <para>A Distributed DNS service available to all regions -
+                that allows for dynamic update of DNS records of
+                deployed instances.</para>
+        </listitem>
+        <listitem>
+            <para>A geo-redundant load balancing service will be used
+                to service the requests from the customers based on
+                their origin.</para>
+        </listitem>
+    </itemizedlist>
+    <para>An autoscaling heat template will used to deploy the
+        application in the three regions. This template will
+        include:</para>
+    <itemizedlist>
+        <listitem>
+            <para>Web Servers, running Apache.</para>
+        </listitem>
+        <listitem>
+            <para>Appropriate user_data to populate the central DNS
+                servers upon instance launch.</para>
+        </listitem>
+        <listitem>
+            <para>Appropriate Ceilometer alarms that maintain state of
+                the application and allow for handling of region or
+                instance failure.</para>
+        </listitem>
+    </itemizedlist>
+    <para>Another autoscaling Heat template will be used to deploy a
+        distributed MongoDB shard over the three locations - with the
+        option of storing required data on a globally available Swift
+        container. according to the usage and load on the database
+        server - additional shards will be provisioned according to
+        the thresholds defined in Ceilometer.</para>
+    <para>The reason that 3 regions were selected here was because of
+        the fear of having abnormal load on a single region in the
+        event of a failure. Two data center would have been sufficient
+        had the requirements been met.</para>
+    <para>Heat is used because of the built-in functionality of
+        autoscaling and auto healing in the event of increased load.
+        Additional configuration management tools, such as Puppet or
+        Chef could also have been used in this scenario, but were not
+        chosen due to the fact that Heat had the appropriate built-in
+        hooks into the OpenStack cloud - whereas the other tools were
+        external and not native to OpenStack. In addition - since this
+        deployment scenario was relatively straight forward - the
+        external tools were not needed.</para>
+    <para>Swift is used here to serve as a back end for Glance and
+        Object storage since was the most suitable solution for a
+        globally distributed storage solution - with its own
+        replication mechanism. Home grown solutions could also have
+        been used including the handling of replication - but were not
+        chosen, because Swift is already an intricate part of the
+        infrastructure - and proven solution.</para>
+    <para>An external load balancing service was used and not the
+        LBaaS in OpenStack because the solution in OpenStack is not
+        redundant and does have any awareness of geo location.</para>
+    <mediaobject>
+        <imageobject>
+            <imagedata
+                fileref="../images/Multi-site_Geo_Redundant_LB.png"/>
+        </imageobject>
+    </mediaobject></section>
+    <section xml:id="location-local-services"><title>Location-local service</title>
+    <para>A common use for a multi-site deployment of OpenStack, is
+        for creating a Content Delivery Network. An application that
+        uses a location-local architecture will require low network
+        latency and proximity to the user, in order to provide an
+        optimal user experience, in addition to reducing the cost of
+        bandwidth and transit, since the content resides on sites
+        closer to the customer, instead of a centralized content store
+        that would require utilizing higher cost cross country
+        links.</para>
+    <para>This architecture usually includes a geo-location component
+        that places user requests at the closest possible node. In
+        this scenario, 100% redundancy of content across every site is
+        a goal rather than a requirement, with the intent being to
+        maximize the amount of content available that is within a
+        minimum number of network hops for any given end user. Despite
+        these differences, the storage replication configuration has
+        significant overlap with that of a geo-redundant load
+        balancing use case.</para>
+    <para>In this example, the application utilizing this multi-site
+        OpenStack install that is location aware would launch web
+        server or content serving instances on the compute cluster in
+        each site. Requests from clients will first be sent to a
+        global services load balancer that determines the location of
+        the client, then routes the request to the closest OpenStack
+        site where the application completes the request.</para>
+    <mediaobject>
+        <imageobject>
+            <imagedata
+                fileref="../images/Multi-Site_shared_keystone1.png"/>
+        </imageobject>
+    </mediaobject></section>
+</section>
