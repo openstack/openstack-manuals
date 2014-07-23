@@ -12,7 +12,7 @@
     <title>Identity service command-line client</title>
     <para>The <command>keystone</command> client is the command-line interface
          (CLI) for the OpenStack Identity API and its extensions. This chapter documents
-         <command>keystone</command> version 0.9.0.
+         <command>keystone</command> version 0.10.0.
     </para>
     <para>For help on a specific <command>keystone</command>
        command, enter:
@@ -21,18 +21,17 @@
 
     <section xml:id="keystoneclient_command_usage">
        <title>keystone usage</title>
-        <screen><computeroutput>usage: keystone [--version] [--timeout &lt;seconds&gt;]
-                [--os-username &lt;auth-user-name&gt;]
+        <screen><computeroutput>usage: keystone [--version] [--debug] [--os-username &lt;auth-user-name&gt;]
                 [--os-password &lt;auth-password&gt;]
                 [--os-tenant-name &lt;auth-tenant-name&gt;]
                 [--os-tenant-id &lt;tenant-id&gt;] [--os-auth-url &lt;auth-url&gt;]
                 [--os-region-name &lt;region-name&gt;]
                 [--os-identity-api-version &lt;identity-api-version&gt;]
                 [--os-token &lt;service-token&gt;]
-                [--os-endpoint &lt;service-endpoint&gt;]
-                [--os-cacert &lt;ca-certificate&gt;] [--insecure]
-                [--os-cert &lt;certificate&gt;] [--os-key &lt;key&gt;] [--os-cache]
-                [--force-new-token] [--stale-duration &lt;seconds&gt;]
+                [--os-endpoint &lt;service-endpoint&gt;] [--os-cache]
+                [--force-new-token] [--stale-duration &lt;seconds&gt;] [--insecure]
+                [--os-cacert &lt;ca-certificate&gt;] [--os-cert &lt;certificate&gt;]
+                [--os-key &lt;key&gt;] [--timeout &lt;seconds&gt;]
                 &lt;subcommand&gt; ...</computeroutput></screen>
   <variablelist wordsize="10">
     <title>Subcommands</title>
@@ -233,7 +232,7 @@
     <term><command>user-create</command></term>
     <listitem>
       <para>
-        Create new user
+        Create new user.
       </para>
     </listitem>
   </varlistentry>
@@ -350,10 +349,12 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--timeout &lt;seconds&gt;</command></term>
+    <term><command>--debug</command></term>
     <listitem>
       <para>
-        Set request timeout (in seconds).
+        Prints debugging output onto the console, this
+      includes the curl request and response calls. Helpful
+      for debugging and understanding the API calls.
       </para>
     </listitem>
   </varlistentry>
@@ -441,43 +442,6 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--os-cacert &lt;ca-certificate&gt;</command></term>
-    <listitem>
-      <para>
-      Specify a CA bundle file to use in verifying a TLS
-      (https) server certificate. Defaults to
-      <code>env[OS_CACERT]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--insecure</command></term>
-    <listitem>
-      <para>
-        Explicitly allow keystoneclient to perform "insecure"
-      TLS (https) requests. The server's certificate will
-      not be verified against any certificate authorities.
-      This option should be used with caution.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-cert &lt;certificate&gt;</command></term>
-    <listitem>
-      <para>
-      Defaults to <code>env[OS_CERT]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-key &lt;key&gt;</command></term>
-    <listitem>
-      <para>
-        Defaults to <code>env[OS_KEY]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
     <term><command>--os-cache</command></term>
     <listitem>
       <para>
@@ -504,6 +468,51 @@
       a token has expired when retrieving it from keyring.
       This is useful in mitigating process or network
       delays. Default is 30 seconds.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--insecure</command></term>
+    <listitem>
+      <para>
+        Explicitly allow client to perform "insecure" TLS
+      (https) requests. The server's certificate will not be
+      verified against any certificate authorities. This
+      option should be used with caution.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-cacert &lt;ca-certificate&gt;</command></term>
+    <listitem>
+      <para>
+      Specify a CA bundle file to use in verifying a TLS
+      (https) server certificate. Defaults to
+      <code>env[OS_CACERT]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-cert &lt;certificate&gt;</command></term>
+    <listitem>
+      <para>
+      Defaults to <code>env[OS_CERT]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-key &lt;key&gt;</command></term>
+    <listitem>
+      <para>
+        Defaults to <code>env[OS_KEY]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--timeout &lt;seconds&gt;</command></term>
+    <listitem>
+      <para>
+        Set request timeout (in seconds).
       </para>
     </listitem>
   </varlistentry>
@@ -1099,7 +1108,7 @@ Display the current user token.
                             [--pass [&lt;pass&gt;]] [--email &lt;email&gt;]
                             [--enabled &lt;true|false&gt;]</computeroutput></screen>
         <para>
-Create new user
+Create new user.
         </para>  <variablelist wordsize="10">
     <title>Arguments</title>
   <varlistentry>
