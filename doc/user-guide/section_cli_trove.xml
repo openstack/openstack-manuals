@@ -3,26 +3,32 @@
 <!ENTITY % openstack SYSTEM "../common/entities/openstack.ent">
 %openstack;
 ]>
-<section xmlns="http://docbook.org/ns/docbook"
-  xmlns:xi="http://www.w3.org/2001/XInclude"
-  xmlns:xlink="http://www.w3.org/1999/xlink"
-  version="5.0"
-  xml:id="trove-manage-db">
-    <?dbhtml stop-chunking?>
-    <title>Create and manage databases</title>
-    <para>The Database service provides scalable and reliable cloud provisioning functionality for both relational and non-relational database engines. Users can quickly and easily use database features without the burden of handling complex administrative tasks.</para>
-    <section xml:id="create_db">
-        <title>Create and access a database</title>
-        <para>Assuming you have already installed the Database service and stocked your datastore with images for the type and versions of databases you want, you can create and access a database. This example shows you how to create and access a MySQL 5.5 database.</para>
-        <procedure>
-          <title>To create and access a database</title>
-          <step>
-            <formalpara>
-              <title>Determine the flavor to use for your database.</title>
-              <para>When you create a database instance, you must specify a nova flavor. The flavor indicates various characteristics of the instance, such as RAM, root volume size, and so on. The default nova flavors do not cover what you need for database instances. Therefore, you may need to create (or obtain) some new nova flavors that will work for databases.</para>
-              </formalpara>
-              <para>The first step is to list the existing flavors, using the nova <command>flavor-list</command> command. Here are the default flavors, although you may have additional custom flavors in your environment:</para>
-<screen><prompt>$</prompt> <userinput>nova flavor-list</userinput>
+<section xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0" xml:id="trove-manage-db">
+  <?dbhtml stop-chunking?>
+  <title>Create and manage databases</title>
+  <para>The Database service provides scalable and reliable cloud provisioning functionality for
+    both relational and non-relational database engines. Users can quickly and easily use database
+    features without the burden of handling complex administrative tasks.</para>
+  <section xml:id="create_db">
+    <title>Create and access a database</title>
+    <para>Assume that you have installed the Database service and populated your data store with
+      images for the type and versions of databases that you want, and that you can create and
+      access a database.</para>
+    <para>This example shows you how to create and access a MySQL 5.5 database.</para>
+    <procedure>
+      <title>To create and access a database</title>
+      <step>
+        <title>Determine which flavor to use for your database</title>
+        <para>When you create a database instance, you must specify a nova flavor. The flavor
+          indicates various characteristics of the instance, such as RAM, root volume size, and so
+          on. The default nova flavors are not sufficient to create database instances. You might
+          need to create or obtain some new nova flavors that work for databases.</para>
+        <para>The first step is to list flavors by using the nova <command>flavor-list</command>
+          command.</para>
+        <para>Here are the default flavors, although you may have additional custom flavors in your
+          environment:</para>
+        <screen><prompt>$</prompt> <userinput>nova flavor-list</userinput>
 <computeroutput>+----+-----------+-----------+------+-----------+------+-------+-------------+-----------+
 | ID | Name      | Memory_MB | Disk | Ephemeral | Swap | VCPUs | RXTX_Factor | Is_Public |
 +----+-----------+-----------+------+-----------+------+-------+-------------+-----------+
@@ -31,124 +37,152 @@
 | 3  | m1.medium | 4096      | 40   | 0         |      | 2     | 1.0         | True      |
 | 4  | m1.large  | 8192      | 80   | 0         |      | 4     | 1.0         | True      |
 | 5  | m1.xlarge | 16384     | 160  | 0         |      | 8     | 1.0         | True      |
-+----+-----------+-----------+------+-----------+------+-------+-------------+-----------+
-</computeroutput></screen>
-<para>Now take a look at the minimum requirements for various database instances:</para>
-<informaltable rules="all" width="60%">
-    <col width="25%"/>
-    <col width="25%"/>
-    <col width="25%"/>
-    <col width="25%"/>
++----+-----------+-----------+------+-----------+------+-------+-------------+-----------+</computeroutput></screen>
+        <para>Now take a look at the minimum requirements for various database instances:</para>
+        <informaltable rules="all" width="60%">
+          <col width="25%"/>
+          <col width="25%"/>
+          <col width="25%"/>
+          <col width="25%"/>
 
-<thead>
-      <tr>
-        <th>Database</th>
-        <th>RAM (in MB)</th>
-        <th>Disk (in GB)</th>
-        <th>VCPUs</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          <para>MySQL</para>
-        </td>
-        <td>
-          <para>512</para>
-        </td>
-        <td>
-          <para>5</para>
-        </td>
-        <td>
-          <para>1</para>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <para>Cassandra</para>
-        </td>
-        <td>
-          <para>2048</para>
-        </td>
-        <td>
-          <para>5</para>
-        </td>
-        <td>
-          <para>1</para>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <para>MongoDB</para>
-        </td>
-        <td>
-          <para>1024</para>
-        </td>
-        <td>
-          <para>5</para>
-        </td>
-        <td>
-          <para>1</para>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <para>Redis</para>
-        </td>
-        <td>
-          <para>512</para>
-        </td>
-        <td>
-          <para>5</para>
-        </td>
-        <td>
-          <para>1</para>
-        </td>
-      </tr>
-    </tbody>
-    </informaltable>
-    <itemizedlist>
-      <listitem>
-        <para>If you have a custom flavor that meets the needs of the database you want to create, you can simply use that flavor. In this case, skip the rest of this step and move on to the next step in this procedure.</para>
-      </listitem>
-      <listitem>
-        <para>If your environment does not have a suitable flavor, an admin user needs to create a custom flavor, using the nova <command>flavor-create</command> command.</para>
-    </listitem>
-    </itemizedlist>
-    <formalpara><title>MySQL example.</title> <para>This example creates a flavor that you can use with a MySQL database. This example has the following attributes:</para></formalpara>
-<itemizedlist>
-  <listitem><para>Flavor name: <literal>mysql_minimum</literal></para></listitem>
-  <listitem><para>Flavor ID: You need to use an ID that is not already in use. In this example, IDs 1 through 5 are already in use, so the ID can be <literal>6</literal>.</para></listitem>
-  <listitem><para>RAM: <literal>512</literal></para></listitem>
-  <listitem><para>Root volume size in GB: <literal>5</literal></para></listitem>
-  <listitem><para>Virtual CPUs: <literal>1</literal></para></listitem>
-</itemizedlist>
-<screen><prompt>$</prompt> <userinput>nova flavor-create mysql-minimum 6 512 5 1</userinput>
+          <thead>
+            <tr>
+              <th>Database</th>
+              <th>RAM (MB)</th>
+              <th>Disk (GB)</th>
+              <th>VCPUs</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <para>MySQL</para>
+              </td>
+              <td>
+                <para>512</para>
+              </td>
+              <td>
+                <para>5</para>
+              </td>
+              <td>
+                <para>1</para>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <para>Cassandra</para>
+              </td>
+              <td>
+                <para>2048</para>
+              </td>
+              <td>
+                <para>5</para>
+              </td>
+              <td>
+                <para>1</para>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <para>MongoDB</para>
+              </td>
+              <td>
+                <para>1024</para>
+              </td>
+              <td>
+                <para>5</para>
+              </td>
+              <td>
+                <para>1</para>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <para>Redis</para>
+              </td>
+              <td>
+                <para>512</para>
+              </td>
+              <td>
+                <para>5</para>
+              </td>
+              <td>
+                <para>1</para>
+              </td>
+            </tr>
+          </tbody>
+        </informaltable>
+        <itemizedlist>
+          <listitem>
+            <para>If you have a custom flavor that meets the needs of the database that you want to
+              create, proceed to <xref linkend="create-database-instance"/> and use that
+              flavor.</para>
+          </listitem>
+          <listitem>
+            <para>If your environment does not have a suitable flavor, an administrative user must
+              create a custom flavor by using the nova <command>flavor-create</command>
+              command.</para>
+          </listitem>
+        </itemizedlist>
+        <formalpara>
+          <title>MySQL example</title>
+          <para>This example creates a flavor that you can use with a MySQL database. This example
+            has the following attributes:</para>
+        </formalpara>
+        <itemizedlist>
+          <listitem>
+            <para>Flavor name: <literal>mysql_minimum</literal></para>
+          </listitem>
+          <listitem>
+            <para>Flavor ID: You must use an ID that is not already in use. In this example, IDs 1
+              through 5 are in use, so use ID <literal>6</literal>.</para>
+          </listitem>
+          <listitem>
+            <para>RAM: <literal>512</literal></para>
+          </listitem>
+          <listitem>
+            <para>Root volume size in GB: <literal>5</literal></para>
+          </listitem>
+          <listitem>
+            <para>Virtual CPUs: <literal>1</literal></para>
+          </listitem>
+        </itemizedlist>
+        <screen><prompt>$</prompt> <userinput>nova flavor-create mysql-minimum 6 512 5 1</userinput>
 <computeroutput>+----+---------------+-----------+------+-----------+------+-------+-------------+-----------+
 | ID | Name          | Memory_MB | Disk | Ephemeral | Swap | VCPUs | RXTX_Factor | Is_Public |
 +----+---------------+-----------+------+-----------+------+-------+-------------+-----------+
 | 6  | mysql-minimum | 512       | 5    | 0         |      | 1     | 1.0         | True      |
-+----+---------------+-----------+------+-----------+------+-------+-------------+-----------+
-</computeroutput></screen>
-          </step>
-
-          <step>
-            <formalpara>
-              <title>Create a database instance.</title>
-              <para>This example creates a database instance with the following characteristics:</para>
-          </formalpara>
-           <itemizedlist>
-            <listitem><para>Name of the instance: <literal>mysql_instance_1</literal></para></listitem>
-           <listitem><para>Database flavor: <literal>6</literal></para></listitem>
-          </itemizedlist>
-          <para>In addition, this command uses various options to specify that:</para>
-          <itemizedlist>
-            <listitem><para>The instance has a volume size of <literal>5</literal> (meaning 5 GB).</para></listitem>
-            <listitem><para>It has a database called <literal>myDB</literal>.</para></listitem>
-            <listitem><para>It has a user called <literal>userA</literal> with a password of <literal>password</literal>.</para></listitem>
-            <listitem><para>The database is based on a datastore called <literal>mysql</literal> and a datastore_version called <literal>mysql-5.5</literal>.</para></listitem>
-          </itemizedlist>
-          <screen><prompt>$</prompt> <userinput>trove create mysql_instance_1 6 --size 5 --databases myDB \
++----+---------------+-----------+------+-----------+------+-------+-------------+-----------+</computeroutput></screen>
+      </step>
+      <step xml:id="create-database-instance">
+        <title>Create a database instance</title>
+        <para>This example creates a database instance with the following characteristics:</para>
+        <itemizedlist>
+          <listitem>
+            <para>Name of the instance: <literal>mysql_instance_1</literal></para>
+          </listitem>
+          <listitem>
+            <para>Database flavor: <literal>6</literal></para>
+          </listitem>
+        </itemizedlist>
+        <para>In addition, this command specifies these options for the instance:</para>
+        <itemizedlist>
+          <listitem>
+            <para>A volume size of <literal>5</literal> (5 GB).</para>
+          </listitem>
+          <listitem>
+            <para>The <literal>myDB</literal> database.</para>
+          </listitem>
+          <listitem>
+            <para>The database is based on the <literal>mysql</literal> data store and the
+                <literal>mysql-5.5</literal> datastore_version.</para>
+          </listitem>
+          <listitem>
+            <para>The <literal>userA</literal> user with the <literal>password</literal>
+              password.</para>
+          </listitem>
+        </itemizedlist>
+        <screen><prompt>$</prompt> <userinput>trove create mysql_instance_1 6 --size 5 --databases myDB \
     --users userA:password --datastore_version mysql-5.5 \
     --datastore mysql</userinput>
 <computeroutput>+-------------------+---------------------------------------------------------------------------------------t------------------------------------------------------------------------------------------------------------------+
@@ -163,25 +197,24 @@
 |       status      |                                                                                                  BUILD                                                                                                  |
 |      updated      |                                                                                           2014-05-29T21:26:21                                                                                           |
 |       volume      |                                                                                               {u'size': 5}                                                                                              |
-+-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-</computeroutput></screen>
-          </step>
-
-          <step>
-            <formalpara>
-              <title>Get the IP address of the database instance.</title>
-              <para>First, use the trove <command>list</command> command to list all instances and their IDs:</para>
-           </formalpara>
-           <screen><prompt>$</prompt> <userinput>trove list</userinput>
-           <computeroutput>
-+--------------------------------------+------------------+-----------+-------------------+--------+-----------+------+
++-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+</computeroutput></screen>
+      </step>
+      <step>
+        <title>Get the IP address of the database instance</title>
+        <para>First, use the trove <command>list</command> command to list all instances and their
+          IDs:</para>
+        <screen><prompt>$</prompt> <userinput>trove list</userinput>
+<computeroutput>+--------------------------------------+------------------+-----------+-------------------+--------+-----------+------+
 |                  id                  |       name       | datastore | datastore_version | status | flavor_id | size |
 +--------------------------------------+------------------+-----------+-------------------+--------+-----------+------+
 | 5599dad6-731e-44df-bb60-488da3da9cfe | mysql_instance_1 |   mysql   |     mysql-5.5     | BUILD  |     6     |  5   |
-+--------------------------------------+------------------+-----------+-------------------+--------+-----------+------+
-</computeroutput></screen>
-            <para>This command returns the instance ID of your new instance. You can now pass in the instance ID with the trove <command>show</command> command to get the IP address of the instance. In this example, you would replace <replaceable>INSTANCE_ID</replaceable> with 5599dad6-731e-44df-bb60-488da3da9cfe.</para>
-<screen><prompt>$</prompt> <userinput>trove show <replaceable>INSTANCE_ID</replaceable></userinput>
++--------------------------------------+------------------+-----------+-------------------+--------+-----------+------+</computeroutput></screen>
+        <para>This command returns the instance ID of your new instance.</para>
+        <para>You can now pass in the instance ID with the trove <command>show</command> command to
+          get the IP address of the instance. In this example, replace
+            <replaceable>INSTANCE_ID</replaceable> with
+            <literal>5599dad6-731e-44df-bb60-488da3da9cfe</literal>.</para>
+        <screen><prompt>$</prompt> <userinput>trove show <replaceable>INSTANCE_ID</replaceable></userinput>
 <computeroutput>+-------------------+--------------------------------------+
 |      Property     |                Value                 |
 +-------------------+--------------------------------------+
@@ -195,58 +228,61 @@
 |       status      |                BUILD                 |
 |      updated      |         2014-05-29T21:26:54          |
 |       volume      |                  5                   |
-+-------------------+--------------------------------------+
-
-</computeroutput></screen>
-          <para>This command returns the IP address of the database instance.</para>
-          </step>
-
-          <step>
-            <formalpara>
-              <title>Access the new database.</title>
-              <para>You can now access the new database you just created (myDB) using typical database access commands. In this MySQL example, you would replace <replaceable>IP_ADDRESS</replaceable> with 172.16.200.2.</para>
-            </formalpara>
-            <screen><prompt>$</prompt> <userinput>mysql -u userA -ppassword -h <replaceable>IP_ADDRESS</replaceable> myDB</userinput></screen>
-          </step>
-      </procedure>
++-------------------+--------------------------------------+</computeroutput></screen>
+        <para>This command returns the IP address of the database instance.</para>
+      </step>
+      <step>
+        <title>Access the new database</title>
+        <para>You can now access the new database you just created (myDB) by using typical database
+          access commands. In this MySQL example, replace <replaceable>IP_ADDRESS</replaceable> with
+            <literal>172.16.200.2</literal>.</para>
+        <screen><prompt>$</prompt> <userinput>mysql -u userA -ppassword -h <replaceable>IP_ADDRESS</replaceable> myDB</userinput></screen>
+      </step>
+    </procedure>
   </section>
   <section xml:id="backup_db">
     <title>Backup and restore a database</title>
-    <para>You can use Database services to backup a database and store the backup artifact in the Object Storage module. Later on, if the original database is damaged, you can use the backup artifact to restore the database. The restore process creates a new database instance.</para>
-    <para>This example shows you how to backup and restore a MySQL database.</para>
+    <para>You can use Database services to backup a database and store the backup artifact in the
+      Object Storage module. Later on, if the original database is damaged, you can use the backup
+      artifact to restore the database. The restore process creates a database instance.</para>
+    <para>This example shows you how to back up and restore a MySQL database.</para>
     <procedure>
       <title>To backup and restore a database</title>
       <step>
-        <formalpara>
-          <title>Backup the database instance.</title>
-          <para>As background, assume that you have <link linkend="create_db">created a database instance</link> with the following characteristics:</para>
-        </formalpara>
+        <title>Backup the database instance</title>
+        <para>As background, assume that you have <link xlink:href="create_db">created a database
+            instance</link> with the following characteristics:</para>
         <itemizedlist>
           <listitem>
             <para>Name of the database instance: <literal>guest1</literal></para>
-        </listitem>
+          </listitem>
           <listitem>
             <para>Flavor ID: <literal>10</literal></para>
-        </listitem>
+          </listitem>
           <listitem>
             <para>Root volume size: <literal>2</literal></para>
-        </listitem>
+          </listitem>
           <listitem>
             <para>Databases: <literal>db1</literal> and <literal>db2</literal></para>
-        </listitem>
+          </listitem>
           <listitem>
-            <para>Users: One user named <literal>user1</literal> with a password of <literal>password</literal></para>
-        </listitem>
-      </itemizedlist>
-      <para>First, get the ID of the <literal>guest1</literal> database instance by using the trove <command>list</command> command:</para>
-<screen><prompt>$</prompt> <userinput>trove list</userinput>
+            <para>Users: The <literal>user1</literal> user with the <literal>password</literal>
+              password</para>
+          </listitem>
+        </itemizedlist>
+        <para>First, get the ID of the <literal>guest1</literal> database instance by using the
+          trove <command>list</command> command:</para>
+        <screen><prompt>$</prompt> <userinput>trove list</userinput>
 <computeroutput>+--------------------------------------+--------+-----------+-------------------+--------+-----------+------+
 |                  id                  |  name  | datastore | datastore_version | status | flavor_id | size |
 +--------------------------------------+--------+-----------+-------------------+--------+-----------+------+
 | 97b4b853-80f6-414f-ba6f-c6f455a79ae6 | guest1 |   mysql   |     mysql-5.5     | ACTIVE |     10    |  2   |
 +--------------------------------------+--------+-----------+-------------------+--------+-----------+------+</computeroutput></screen>
-      <para>Backup the database instance by using the trove <command>backup-create</command> command. In this example, the backup is called <literal>backup1</literal>. In this example, you would replace <replaceable>INSTANCE_ID</replaceable> with 97b4b853-80f6-414f-ba6f-c6f455a79ae6:</para>
-<screen><prompt>$</prompt> <userinput>trove backup-create backup1 <replaceable>INSTANCE_ID</replaceable></userinput>
+        <para>Back up the database instance by using the trove <command>backup-create</command>
+          command. In this example, the backup is called <literal>backup1</literal>. In this
+          example, replace <replaceable>INSTANCE_ID</replaceable> with
+            <literal>97b4b853-80f6-414f-ba6f-c6f455a79ae6</literal>:</para>
+        <screen><prompt>$</prompt> <userinput>trove backup-create backup1 <replaceable>INSTANCE_ID</replaceable></userinput>
 <computeroutput>+-------------+--------------------------------------+
 |   Property  |                Value                 |
 +-------------+--------------------------------------+
@@ -261,16 +297,22 @@
 |    status   |                 NEW                  |
 |   updated   |         2014-03-18T17:09:07          |
 +-------------+--------------------------------------+</computeroutput></screen>
-      <para>Note that the command returns both the ID of the original instance (<literal>instance_id</literal>) and the ID of the backup artifact (<literal>id</literal>).</para>
-      <para>Later on, you can obtain this same information by using the trove <command>backup-list</command> command:</para>
-<screen><prompt>$</prompt> <userinput>trove backup-list</userinput>
+        <para>Note that the command returns both the ID of the original instance
+            (<literal>instance_id</literal>) and the ID of the backup artifact
+            (<literal>id</literal>).</para>
+        <para>Later on, use the trove <command>backup-list</command> command to get this
+          information:</para>
+        <screen><prompt>$</prompt> <userinput>trove backup-list</userinput>
 <computeroutput>+--------------------------------------+--------------------------------------+---------+-----------+-----------+---------------------+
 |                  id                  |             instance_id              |   name  |   status  | parent_id |       updated       |
 +--------------------------------------+--------------------------------------+---------+-----------+-----------+---------------------+
 | 8af30763-61fd-4aab-8fe8-57d528911138 | 97b4b853-80f6-414f-ba6f-c6f455a79ae6 | backup1 | COMPLETED |    None   | 2014-03-18T17:09:11 |
 +--------------------------------------+--------------------------------------+---------+-----------+-----------+---------------------+</computeroutput></screen>
-      <para>You can get additional information about the backup by using the trove <command>backup-show</command> command and passing in the <replaceable>BACKUP_ID</replaceable>, which in this case is 8af30763-61fd-4aab-8fe8-57d528911138.</para>
-<screen><prompt>$</prompt> <userinput>trove backup-show <replaceable>BACKUP_ID</replaceable></userinput>
+        <para>You can get additional information about the backup by using the trove
+            <command>backup-show</command> command and passing in the
+            <replaceable>BACKUP_ID</replaceable>, which is
+            <literal>8af30763-61fd-4aab-8fe8-57d528911138</literal>.</para>
+        <screen><prompt>$</prompt> <userinput>trove backup-show <replaceable>BACKUP_ID</replaceable></userinput>
 <computeroutput>+-------------+-------------------------------------------------------------------------------------------------------------------------------------+
 |   Property  |                                                                Value                                                                |
 +-------------+-------------------------------------------------------------------------------------------------------------------------------------+
@@ -285,21 +327,26 @@
 |    status   |                                                              COMPLETED                                                              |
 |   updated   |                                                         2014-03-18T17:09:11                                                         |
 +-------------+-------------------------------------------------------------------------------------------------------------------------------------+</computeroutput></screen>
-    </step>
-    <step>
-      <formalpara>
-        <title>Restore a database instance.</title>
-        <para>Now assume that your <literal>guest1</literal> database instance is damaged and you need to restore it. In this example, you use the trove <command>create</command> command to create a new database instance called <literal>guest2</literal>.</para>
-      </formalpara>
-      <itemizedlist>
-        <listitem>
-          <para>You specify that the new <literal>guest2</literal> instance has the same flavor (<literal>10</literal>) and the same root volume size (<literal>2</literal>) as the original <literal>guest1</literal> instance.</para>
-        </listitem>
-        <listitem>
-          <para>You use the <code>--backup</code> argument to indicate that this new instance is based on the backup artifact identified by <replaceable>BACKUP_ID</replaceable>. In this example, you would replace <replaceable>BACKUP_ID</replaceable> with 8af30763-61fd-4aab-8fe8-57d528911138.</para>
-        </listitem>
-      </itemizedlist>
-<screen><prompt>$</prompt> <userinput>trove create guest2 10 --size 2 --backup <replaceable>BACKUP_ID</replaceable></userinput>
+      </step>
+      <step>
+        <title>Restore a database instance</title>
+        <para>Now assume that your <literal>guest1</literal> database instance is damaged and you
+          need to restore it. In this example, you use the trove <command>create</command> command
+          to create a new database instance called <literal>guest2</literal>.</para>
+        <itemizedlist>
+          <listitem>
+            <para>You specify that the new <literal>guest2</literal> instance has the same flavor
+                (<literal>10</literal>) and the same root volume size (<literal>2</literal>) as the
+              original <literal>guest1</literal> instance.</para>
+          </listitem>
+          <listitem>
+            <para>You use the <code>--backup</code> argument to indicate that this new instance is
+              based on the backup artifact identified by <replaceable>BACKUP_ID</replaceable>. In
+              this example, replace <replaceable>BACKUP_ID</replaceable> with
+                <literal>8af30763-61fd-4aab-8fe8-57d528911138</literal>.</para>
+          </listitem>
+        </itemizedlist>
+        <screen><prompt>$</prompt> <userinput>trove create guest2 10 --size 2 --backup <replaceable>BACKUP_ID</replaceable></userinput>
 <computeroutput>+-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |      Property     |                                                                                                     Value                                                                                                      |
 +-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -313,22 +360,23 @@
 |      updated      |                                                                                              2014-03-18T17:12:03                                                                                               |
 |       volume      |                                                                                                  {u'size': 2}                                                                                                  |
 +-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+</computeroutput></screen>
-    </step>
-    <step>
-      <formalpara>
-        <title>Verify backup.</title>
-        <para>Now check that the new <literal>guest2</literal> instance has the same characteristics as the original <literal>guest1</literal> instance.</para>
-      </formalpara>
-      <para>Start by getting the ID of the new <literal>guest2</literal> instance.</para>
-<screen><prompt>$</prompt> <userinput>trove list</userinput>
+      </step>
+      <step>
+        <title>Verify backup</title>
+        <para>Now check that the new <literal>guest2</literal> instance has the same characteristics
+          as the original <literal>guest1</literal> instance.</para>
+        <para>Start by getting the ID of the new <literal>guest2</literal> instance.</para>
+        <screen><prompt>$</prompt> <userinput>trove list</userinput>
 <computeroutput>+--------------------------------------+--------+-----------+-------------------+--------+-----------+------+
 |                  id                  |  name  | datastore | datastore_version | status | flavor_id | size |
 +--------------------------------------+--------+-----------+-------------------+--------+-----------+------+
 | 97b4b853-80f6-414f-ba6f-c6f455a79ae6 | guest1 |   mysql   |     mysql-5.5     | ACTIVE |     10    |  2   |
 | ac7a2b35-a9b4-4ff6-beac-a1bcee86d04b | guest2 |   mysql   |     mysql-5.5     | ACTIVE |     10    |  2   |
 +--------------------------------------+--------+-----------+-------------------+--------+-----------+------+</computeroutput></screen>
-      <para>Use the trove <command>show</command> command to display information about the new guest2 instance. Pass in guest2's <replaceable>INSTANCE_ID</replaceable>, which in this case is ac7a2b35-a9b4-4ff6-beac-a1bcee86d04b.</para>
-<screen><prompt>$</prompt> <userinput>trove show <replaceable>INSTANCE_ID</replaceable></userinput>
+        <para>Use the trove <command>show</command> command to display information about the new
+          guest2 instance. Pass in guest2's <replaceable>INSTANCE_ID</replaceable>, which is
+            <literal>ac7a2b35-a9b4-4ff6-beac-a1bcee86d04b</literal>.</para>
+        <screen><prompt>$</prompt> <userinput>trove show <replaceable>INSTANCE_ID</replaceable></userinput>
 <computeroutput>+-------------------+--------------------------------------+
 |      Property     |                Value                 |
 +-------------------+--------------------------------------+
@@ -344,9 +392,12 @@
 |       volume      |                  2                   |
 |    volume_used    |                 0.18                 |
 +-------------------+--------------------------------------+</computeroutput></screen>
-      <para>Note that the datastore, flavor ID and volume size are the same as the original <literal>guest1</literal> instance.</para>
-      <para>Use the trove <command>database-list</command> command to check that the original databases (<literal>db1</literal> and <literal>db2</literal>) are present on the restored instance.</para>
-<screen><prompt>$</prompt> <userinput>trove database-list <replaceable>INSTANCE_ID</replaceable></userinput>
+        <para>Note that the data store, flavor ID, and volume size have the same values as in the
+          original <literal>guest1</literal> instance.</para>
+        <para>Use the trove <command>database-list</command> command to check that the original
+          databases (<literal>db1</literal> and <literal>db2</literal>) are present on the restored
+          instance.</para>
+        <screen><prompt>$</prompt> <userinput>trove database-list <replaceable>INSTANCE_ID</replaceable></userinput>
 <computeroutput>+--------------------+
 |        name        |
 +--------------------+
@@ -355,68 +406,79 @@
 | performance_schema |
 |        test        |
 +--------------------+</computeroutput></screen>
-      <para>Use the trove <command>user-list</command> command to check that the original user (<literal>user1</literal>) is present on the restored instance.</para>
-<screen><prompt>$</prompt> <userinput>trove user-list <replaceable>INSTANCE_ID</replaceable></userinput>
+        <para>Use the trove <command>user-list</command> command to check that the original user
+            (<literal>user1</literal>) is present on the restored instance.</para>
+        <screen><prompt>$</prompt> <userinput>trove user-list <replaceable>INSTANCE_ID</replaceable></userinput>
 <computeroutput>+--------+------+-----------+
 |  name  | host | databases |
 +--------+------+-----------+
 | user1  |  %   |  db1, db2 |
 +--------+------+-----------+</computeroutput></screen>
-    </step>
-    <step>
-      <formalpara>
-        <title>Notify users.</title>
-        <para>Tell the users who were accessing the now-disabled <literal>guest1</literal> database instance that they can now access <literal>guest2</literal>. Provide them with <literal>guest2</literal>'s name, IP address, and any other information they might need. (You can get this information by using the trove <command>show</command> command as listed above.)</para>
-      </formalpara>
-    </step>
-    <step>
-      <formalpara>
-        <title>Clean up.</title>
-        <para>At this point, you may also want to delete the disabled <literal>guest1</literal> instance, by using the trove <command>delete</command> command.</para>
-      </formalpara>
-<screen><prompt>$</prompt> <userinput>trove delete <replaceable>INSTANCE_ID</replaceable></userinput></screen>
-    </step>
+      </step>
+      <step>
+        <title>Notify users</title>
+        <para>Tell the users who were accessing the now-disabled <literal>guest1</literal> database
+          instance that they can now access <literal>guest2</literal>. Provide them with
+            <literal>guest2</literal>'s name, IP address, and any other information they might need.
+          (You can get this information by using the trove <command>show</command> command.)</para>
+      </step>
+      <step>
+        <title>Clean up</title>
+        <para>At this point, you might want to delete the disabled <literal>guest1</literal>
+          instance, by using the trove <command>delete</command> command.</para>
+        <screen><prompt>$</prompt> <userinput>trove delete <replaceable>INSTANCE_ID</replaceable></userinput></screen>
+      </step>
     </procedure>
   </section>
   <section xml:id="backup_db_incremental">
     <title>Use incremental backups</title>
-    <para>Incremental backups let you chain together a series of backups. You start with a regular backup. Then, when you want to create a subsequent incremental backup, you specify the parent backup.</para>
-    <para>Restoring a database instance from an incremental backup is the same as creating a database instance from a regular backup&mdash;the Database service handles the complexities of applying the chain of incremental backups.</para>
+    <para>Incremental backups let you chain together a series of backups. You start with a regular
+      backup. Then, when you want to create a subsequent incremental backup, you specify the parent
+      backup.</para>
+    <para>Restoring a database instance from an incremental backup is the same as creating a
+      database instance from a regular backup&mdash;the Database service handles the complexities of
+      applying the chain of incremental backups.</para>
     <para>This example shows you how to use incremental backups with a MySQL database.</para>
     <formalpara>
-      <title>Assumptions.</title>
-      <para>Assume that you have <link linkend="backup_db">created a regular backup</link> for the following database instance:</para>
+      <title>Assumptions</title>
+      <para>Assume that you have <link xlink:href="backup_db">created a regular backup</link> for
+        the following database instance:</para>
     </formalpara>
     <itemizedlist>
       <listitem>
         <para>Instance name: <literal>guest1</literal></para>
       </listitem>
       <listitem>
-        <para>ID of the instance (<replaceable>INSTANCE_ID</replaceable>): <literal>792a6a56-278f-4a01-9997-d997fa126370</literal></para>
+        <para>ID of the instance (<replaceable>INSTANCE_ID</replaceable>):
+            <literal>792a6a56-278f-4a01-9997-d997fa126370</literal></para>
       </listitem>
       <listitem>
-        <para>ID of the regular backup artifact (<replaceable>BACKUP_ID</replaceable>): <literal>6dc3a9b7-1f3e-4954-8582-3f2e4942cddd</literal></para>
+        <para>ID of the regular backup artifact (<replaceable>BACKUP_ID</replaceable>):
+            <literal>6dc3a9b7-1f3e-4954-8582-3f2e4942cddd</literal></para>
       </listitem>
     </itemizedlist>
     <procedure>
       <title>To create and use incremental backups</title>
       <step>
-        <formalpara>
-          <title>Create your first incremental backup.</title>
-          <para>Use the trove <command>backup-create</command> command and specify:</para>
-        </formalpara>
+        <title>Create your first incremental backup</title>
+        <para>Use the trove <command>backup-create</command> command and specify:</para>
         <itemizedlist>
           <listitem>
-            <para>The name of the incremental backup you are creating: <literal>backup1.1</literal></para>
+            <para>The name of the incremental backup you are creating:
+              <literal>backup1.1</literal></para>
           </listitem>
           <listitem>
-            <para>The <replaceable>INSTANCE_ID</replaceable> of the database instance you are doing the incremental backup for (in this example, <literal>792a6a56-278f-4a01-9997-d997fa126370</literal>)</para>
+            <para>The <replaceable>INSTANCE_ID</replaceable> of the database instance you are doing
+              the incremental backup for (in this example,
+                <literal>792a6a56-278f-4a01-9997-d997fa126370</literal>)</para>
           </listitem>
           <listitem>
-            <para>The <replaceable>BACKUP_ID</replaceable> of the parent backup. In this case, the parent is the regular backup, with an ID of <literal>6dc3a9b7-1f3e-4954-8582-3f2e4942cddd</literal></para>
+            <para>The <replaceable>BACKUP_ID</replaceable> of the parent backup. In this case, the
+              parent is the regular backup, with an ID of
+                <literal>6dc3a9b7-1f3e-4954-8582-3f2e4942cddd</literal></para>
           </listitem>
         </itemizedlist>
-<screen><prompt>$</prompt> <userinput>trove backup-create backup1.1 <replaceable>INSTANCE_ID</replaceable> --parent <replaceable>BACKUP_ID</replaceable></userinput>
+        <screen><prompt>$</prompt> <userinput>trove backup-create backup1.1 <replaceable>INSTANCE_ID</replaceable> --parent <replaceable>BACKUP_ID</replaceable></userinput>
 <computeroutput>+-------------+--------------------------------------+
 |   Property  |                Value                 |
 +-------------+--------------------------------------+
@@ -431,14 +493,17 @@
 |    status   |                 NEW                  |
 |   updated   |         2014-03-19T14:09:13          |
 +-------------+--------------------------------------+</computeroutput></screen>
-      <para>Note that this command returns both the ID of the database instance you are incrementally backing up (<literal>instance_id</literal>) and a new ID for the new incremental backup artifact you just created (<literal>id</literal>).</para>
+        <para>Note that this command returns both the ID of the database instance you are
+          incrementally backing up (<literal>instance_id</literal>) and a new ID for the new
+          incremental backup artifact you just created (<literal>id</literal>).</para>
       </step>
       <step>
-        <formalpara>
-          <title>Create your second incremental backup.</title>
-          <para>The name of your second incremental backup is <literal>backup1.2</literal>. This time, when you specify the parent, pass in the ID of the incremental backup you just created in the previous step (<literal>backup1.1</literal>). In this example, it would be <literal>1d474981-a006-4f62-b25f-43d7b8a7097e</literal>.</para>
-        </formalpara>
-<screen><prompt>$</prompt> <userinput>trove backup-create backup1.2 <replaceable>INSTANCE_ID</replaceable> --parent <replaceable>BACKUP_ID</replaceable></userinput>
+        <title>Create your second incremental backup</title>
+        <para>The name of your second incremental backup is <literal>backup1.2</literal>. This time,
+          when you specify the parent, pass in the ID of the incremental backup you just created in
+          the previous step (<literal>backup1.1</literal>). In this example, it is
+            <literal>1d474981-a006-4f62-b25f-43d7b8a7097e</literal>.</para>
+        <screen><prompt>$</prompt> <userinput>trove backup-create backup1.2 <replaceable>INSTANCE_ID</replaceable> --parent <replaceable>BACKUP_ID</replaceable></userinput>
 <computeroutput>+-------------+--------------------------------------+
 |   Property  |                Value                 |
 +-------------+--------------------------------------+
@@ -455,12 +520,16 @@
 +-------------+--------------------------------------+</computeroutput></screen>
       </step>
       <step>
-        <formalpara>
-          <title>Restore using incremental backups.</title>
-          <para>Now assume that your <literal>guest1</literal> database instance is damaged and you need to restore it from your incremental backups.  In this example, you use the trove <command>create</command> command to create a new database instance called <literal>guest2</literal>.</para>
-        </formalpara>
-        <para>To incorporate your incremental backups, you simply use the <code>--backup</code> argument to pass in the <replaceable>BACKUP_ID</replaceable> of your most recent incremental backup. The Database service handles the complexities of applying the chain of all previous incremental backups.</para>
-<screen><prompt>$</prompt> <userinput>trove create guest2 10 --size 1 --backup <replaceable>BACKUP_ID</replaceable></userinput>
+        <title>Restore using incremental backups</title>
+        <para>Now assume that your <literal>guest1</literal> database instance is damaged and you
+          need to restore it from your incremental backups. In this example, you use the trove
+            <command>create</command> command to create a new database instance called
+            <literal>guest2</literal>.</para>
+        <para>To incorporate your incremental backups, you simply use the <code>--backup</code>
+          parameter to pass in the <replaceable>BACKUP_ID</replaceable> of your most recent
+          incremental backup. The Database service handles the complexities of applying the chain of
+          all previous incremental backups.</para>
+        <screen><prompt>$</prompt> <userinput>trove create guest2 10 --size 1 --backup <replaceable>BACKUP_ID</replaceable></userinput>
 <computeroutput>+-------------------+-----------------------------------------------------------+
 |      Property     |                       Value                               |
 +-------------------+-----------------------------------------------------------+
@@ -480,5 +549,204 @@
 +-------------------+-----------------------------------------------------------+</computeroutput></screen>
       </step>
     </procedure>
+  </section>
+  <section xml:id="manage_db_config">
+    <title>Manage database configuration</title>
+    <para>You can manage database configuration tasks by using configuration groups. Configuration
+      groups let you set configuration options, in bulk, on one or more databases.</para>
+    <para>This example assumes you have <link xlink:href="create_db">created a MySQL database</link>
+      and shows you how to use a configuration group to configure it. Although this example sets
+      just one option on one database, you can use these same procedures to set multiple options on
+      multiple database instances throughout your environment. This can provide significant time
+      savings in managing your cloud.</para>
+    <procedure>
+      <title>To bulk-configure a database or databases</title>
+      <step>
+        <title>List available options</title>
+        <para>First, determine which configuration options you can set. Different data store
+          versions have different configuration options.</para>
+        <para>List the names and IDs of all available versions of the <literal>mysql</literal> data
+          store:</para>
+        <screen><prompt>$</prompt> <userinput>trove datastore-version-list mysql</userinput>
+<computeroutput>+--------------------------------------+-----------+
+|                  id                  |    name   |
++--------------------------------------+-----------+
+| eeb574ce-f49a-48b6-820d-b2959fcd38bb | mysql-5.5 |
++--------------------------------------+-----------+</computeroutput></screen>
+        <para>Pass in the data store version ID with the trove
+            <command>configuration-parameter-list</command> command to get the available
+          options:</para>
+        <screen><prompt>$</prompt> <userinput>trove configuration-parameter-list <replaceable>DATASTORE_VERSION_ID</replaceable></userinput>
+<computeroutput>+--------------------------------+---------+---------+----------------------+------------------+
+|              name              |   type  |   min   |         max          | restart_required |
++--------------------------------+---------+---------+----------------------+------------------+
+|    auto_increment_increment    | integer |    1    |        65535         |      False       |
+|     auto_increment_offset      | integer |    1    |        65535         |      False       |
+|           autocommit           | integer |    0    |          1           |      False       |
+|    bulk_insert_buffer_size     | integer |    0    | 18446744073709547520 |      False       |
+|      character_set_client      |  string |         |                      |      False       |
+|    character_set_connection    |  string |         |                      |      False       |
+|     character_set_database     |  string |         |                      |      False       |
+|    character_set_filesystem    |  string |         |                      |      False       |
+|     character_set_results      |  string |         |                      |      False       |
+|      character_set_server      |  string |         |                      |      False       |
+|      collation_connection      |  string |         |                      |      False       |
+|       collation_database       |  string |         |                      |      False       |
+|        collation_server        |  string |         |                      |      False       |
+|        connect_timeout         | integer |    1    |        65535         |      False       |
+|        expire_logs_days        | integer |    1    |        65535         |      False       |
+|    innodb_buffer_pool_size     | integer |    0    |     68719476736      |       True       |
+|     innodb_file_per_table      | integer |    0    |          1           |       True       |
+| innodb_flush_log_at_trx_commit | integer |    0    |          2           |      False       |
+|     innodb_log_buffer_size     | integer | 1048576 |      4294967296      |       True       |
+|       innodb_open_files        | integer |    10   |      4294967296      |       True       |
+|   innodb_thread_concurrency    | integer |    0    |         1000         |      False       |
+|      interactive_timeout       | integer |    1    |        65535         |      False       |
+|        join_buffer_size        | integer |    0    |      4294967296      |      False       |
+|        key_buffer_size         | integer |    0    |      4294967296      |      False       |
+|          local_infile          | integer |    0    |          1           |      False       |
+|       max_allowed_packet       | integer |   1024  |      1073741824      |      False       |
+|       max_connect_errors       | integer |    1    | 18446744073709547520 |      False       |
+|        max_connections         | integer |    1    |        65535         |      False       |
+|      max_user_connections      | integer |    1    |        100000        |      False       |
+|    myisam_sort_buffer_size     | integer |    4    | 18446744073709547520 |      False       |
+|           server_id            | integer |    1    |        100000        |       True       |
+|        sort_buffer_size        | integer |  32768  | 18446744073709547520 |      False       |
+|          sync_binlog           | integer |    0    | 18446744073709547520 |      False       |
+|          wait_timeout          | integer |    1    |       31536000       |      False       |
++--------------------------------+---------+---------+----------------------+------------------+</computeroutput></screen>
+        <para>In this example, the <command>configuration-parameter-list</command> command returns a
+          list of options that work with MySQL 5.5.</para>
+      </step>
+      <step>
+        <title>Create a configuration group</title>
+        <para>A configuration group contains a comma-separated list of key-value pairs. Each pair
+          consists of a configuration option and its value.</para>
+        <para>You can create a configuration group by using the trove
+            <command>configuration-create</command> command. The general syntax for this command
+          is:</para>
+        <screen><prompt>$</prompt> <userinput>trove configuration-create <replaceable>NAME</replaceable> <replaceable>VALUES</replaceable> --datastore <replaceable>DATASTORE_NAME</replaceable></userinput></screen>
+        <itemizedlist>
+          <listitem>
+            <para><replaceable>NAME</replaceable>. The name you want to use for this group.</para>
+          </listitem>
+          <listitem>
+            <para><replaceable>VALUES</replaceable>. The list of key-value pairs.</para>
+          </listitem>
+          <listitem>
+            <para><replaceable>DATASTORE_NAME</replaceable>. The name of the associated data
+              store.</para>
+          </listitem>
+        </itemizedlist>
+        <para>Set <replaceable>VALUES</replaceable> as a JSON dictionary, for example:</para>
+        <programlisting language="json">{"myFirstKey" : "someString", "mySecondKey" : someInt}</programlisting>
+        <para>This example creates a configuration group called <literal>group1</literal>.
+            <literal>group1</literal> contains just one key and value pair, and this pair sets the
+            <option>sync_binlog</option> option to <literal>1</literal>.</para>
+        <screen><prompt>$</prompt> <userinput>trove configuration-create group1 '{"sync_binlog" : 1}' --datastore mysql</userinput>
+<computeroutput>+----------------------+--------------------------------------+
+|       Property       |                Value                 |
++----------------------+--------------------------------------+
+| datastore_version_id | eeb574ce-f49a-48b6-820d-b2959fcd38bb |
+|     description      |                 None                 |
+|          id          | 9a9ef3bc-079b-476a-9cbf-85aa64f898a5 |
+|         name         |                group1                |
+|        values        |          {"sync_binlog": 1}          |
++----------------------+--------------------------------------+</computeroutput></screen>
+      </step>
+      <step>
+        <title>Examine your existing configuration</title>
+        <para>Before you use the newly-created configuration group, look at how the
+            <option>sync_binlog</option> option is configured on your database. Replace the
+          following sample connection values with values that connect to your database:</para>
+        <screen><prompt>$</prompt> <userinput>mysql -u user7 -ppassword -h 172.16.200.2 myDB7</userinput>
+<computeroutput>Welcome to the MySQL monitor.  Commands end with ; or \g.
+...</computeroutput>
+<prompt>mysql&gt;</prompt> <userinput>show variables like 'sync_binlog';</userinput>
+<computeroutput>+---------------+-------+
+| Variable_name | Value |
++---------------+-------+
+| sync_binlog   | 0     |
++---------------+-------+</computeroutput></screen>
+        <para>As you can see, the <option>sync_binlog</option> option is currently set to
+            <literal>0</literal> for the <literal>myDB7</literal> database.</para>
+      </step>
+      <step>
+        <title>Change the database configuration using a configuration group</title>
+        <para>You can change a database's configuration by attaching a configuration group to a
+          database instance. You do this by using the trove <command>configuration-attach</command>
+          command and passing in the ID of the configuration group and the ID of the database
+          instance.</para>
+        <para>Get the ID of the configuration group:</para>
+        <screen><prompt>$</prompt> <userinput>trove configuration-list</userinput>
+<computeroutput>+--------------------------------------+--------+-------------+--------------------------------------+
+|                  id                  |  name  | description |         datastore_version_id         |
++--------------------------------------+--------+-------------+--------------------------------------+
+| 9a9ef3bc-079b-476a-9cbf-85aa64f898a5 | group1 |     None    | eeb574ce-f49a-48b6-820d-b2959fcd38bb |
++--------------------------------------+--------+-------------+--------------------------------------+</computeroutput></screen>
+        <para>Get the ID of the database instance:</para>
+        <screen><prompt>$</prompt> <userinput>trove list</userinput>
+<computeroutput>+--------------------------------------+------------------+-----------+-------------------+--------+-----------+------+
+|                  id                  |       name       | datastore | datastore_version | status | flavor_id | size |
++--------------------------------------+------------------+-----------+-------------------+--------+-----------+------+
+| 26a265dd-1c88-4333-b3ed-6b4e9e87ffbb | mysql_instance_7 |   mysql   |     mysql-5.5     | ACTIVE |     6     |  5   |
++--------------------------------------+------------------+-----------+-------------------+--------+-----------+------+</computeroutput></screen>
+        <para>Attach the configuration group to the database instance:</para>
+        <screen><prompt>$</prompt> <userinput>trove configuration-attach <replaceable>CONFIG_GROUP_ID</replaceable> <replaceable>DB_INSTANCE_ID</replaceable></userinput></screen>
+      </step>
+      <step>
+        <title>Re-examine the database configuration</title>
+        <para>Display the <option>sync_binlog</option> setting again:</para>
+        <screen><prompt>mysql&gt;</prompt> <userinput>show variables like 'sync_binlog';</userinput>
+<computeroutput>+---------------+-------+
+| Variable_name | Value |
++---------------+-------+
+| sync_binlog   | 1     |
++---------------+-------+</computeroutput></screen>
+        <para>As you can see, the <option>sync_binlog</option> option is now set to
+            <literal>1</literal>, as specified in the <literal>group1</literal> configuration
+          group.</para>
+      </step>
+    </procedure>
+    <formalpara>
+      <title>Conclusion</title>
+      <para>Using a configuration group to set a single option on a single database is obviously a
+        trivial example. However, configuration groups can provide major efficiencies when you
+        consider that:</para>
+    </formalpara>
+    <itemizedlist>
+      <listitem>
+        <para>A configuration group can specify a large number of option values.</para>
+      </listitem>
+      <listitem>
+        <para>You can apply a configuration group to hundreds or thousands of database instances in
+          your environment.</para>
+      </listitem>
+    </itemizedlist>
+    <para>Used in this way, configuration groups let you modify your database cloud configuration,
+      on the fly, on a massive scale.</para>
+    <formalpara>
+      <title>Maintenance</title>
+      <para>There are also a number of useful maintenance features for working with configuration
+        groups. You can:</para>
+    </formalpara>
+    <itemizedlist>
+      <listitem>
+        <para>Disassociate a configuration group from a database instance, using the trove
+            <command>configuration-detach</command> command.</para>
+      </listitem>
+      <listitem>
+        <para>Modify a configuration group on the fly, using the trove
+            <command>configuration-patch</command> command.</para>
+      </listitem>
+      <listitem>
+        <para>Find out what instances are using a configuration group, using the trove
+            <command>configuration-instances</command> command.</para>
+      </listitem>
+      <listitem>
+        <para>Delete a configuration group, using the trove <command>configuration-delete</command>
+          command. You might want to do this if no instances use a group.</para>
+      </listitem>
+    </itemizedlist>
   </section>
 </section>
