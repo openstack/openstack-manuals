@@ -9,6 +9,7 @@ For more details, see the `OpenStack Documentation wiki page
 It includes these manuals:
 
  * Admin User Guide
+ * Architecture Design Guide
  * Cloud Administrator Guide
  * Command-Line Interface Reference
  * Configuration Reference
