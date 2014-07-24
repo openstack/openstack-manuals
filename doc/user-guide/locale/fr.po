@@ -11,9 +11,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenStack Manuals\n"
-"POT-Creation-Date: 2014-07-23 06:00+0000\n"
-"PO-Revision-Date: 2014-07-23 05:01+0000\n"
-"Last-Translator: Frédéric <frosmont@free.fr>\n"
+"POT-Creation-Date: 2014-07-24 02:16+0000\n"
+"PO-Revision-Date: 2014-07-23 15:31+0000\n"
+"Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
 "Language-Team: French (http://www.transifex.com/projects/p/openstack-manuals-i18n/language/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1552,6 +1552,7 @@ msgstr "Créer un nouveau utilisateur"
 #: ./doc/user-guide/app_cheat_sheet.xml274(replaceable)
 #: ./doc/user-guide/app_cheat_sheet.xml342(replaceable)
 #: ./doc/user-guide/app_cheat_sheet.xml386(replaceable)
+#: ./doc/user-guide/section_cli_trove.xml628(replaceable)
 msgid "NAME"
 msgstr "NOM"
 
@@ -1850,14 +1851,14 @@ msgid ""
 msgstr "Attacher un volume à une instance après qu'ine instance soit active et que le volume soit disponible"
 
 #: ./doc/user-guide/app_cheat_sheet.xml406(replaceable)
-#: ./doc/user-guide/section_cli_trove.xml184(replaceable)
-#: ./doc/user-guide/section_cli_trove.xml249(replaceable)
-#: ./doc/user-guide/section_cli_trove.xml331(replaceable)
-#: ./doc/user-guide/section_cli_trove.xml349(replaceable)
-#: ./doc/user-guide/section_cli_trove.xml359(replaceable)
-#: ./doc/user-guide/section_cli_trove.xml377(replaceable)
-#: ./doc/user-guide/section_cli_trove.xml419(replaceable)
-#: ./doc/user-guide/section_cli_trove.xml441(replaceable)
+#: ./doc/user-guide/section_cli_trove.xml217(replaceable)
+#: ./doc/user-guide/section_cli_trove.xml285(replaceable)
+#: ./doc/user-guide/section_cli_trove.xml379(replaceable)
+#: ./doc/user-guide/section_cli_trove.xml400(replaceable)
+#: ./doc/user-guide/section_cli_trove.xml411(replaceable)
+#: ./doc/user-guide/section_cli_trove.xml429(replaceable)
+#: ./doc/user-guide/section_cli_trove.xml481(replaceable)
+#: ./doc/user-guide/section_cli_trove.xml506(replaceable)
 msgid "INSTANCE_ID"
 msgstr ""
 
@@ -3225,11 +3226,11 @@ msgid ""
 "drive."
 msgstr "Le tableau suivant affiche les options de configuration pour le lecteur de configuration."
 
-#: ./doc/user-guide/section_cli_trove.xml12(title)
+#: ./doc/user-guide/section_cli_trove.xml9(title)
 msgid "Create and manage databases"
 msgstr "Créer et gérer des base de données"
 
-#: ./doc/user-guide/section_cli_trove.xml13(para)
+#: ./doc/user-guide/section_cli_trove.xml10(para)
 msgid ""
 "The Database service provides scalable and reliable cloud provisioning "
 "functionality for both relational and non-relational database engines. Users"
@@ -3237,331 +3238,340 @@ msgid ""
 " complex administrative tasks."
 msgstr ""
 
-#: ./doc/user-guide/section_cli_trove.xml15(title)
+#: ./doc/user-guide/section_cli_trove.xml14(title)
 msgid "Create and access a database"
 msgstr "Créer et accéder à une base de donnée"
 
-#: ./doc/user-guide/section_cli_trove.xml16(para)
+#: ./doc/user-guide/section_cli_trove.xml15(para)
 msgid ""
-"Assuming you have already installed the Database service and stocked your "
-"datastore with images for the type and versions of databases you want, you "
-"can create and access a database. This example shows you how to create and "
-"access a MySQL 5.5 database."
+"Assume that you have installed the Database service and populated your data "
+"store with images for the type and versions of databases that you want, and "
+"that you can create and access a database."
 msgstr ""
 
-#: ./doc/user-guide/section_cli_trove.xml18(title)
+#: ./doc/user-guide/section_cli_trove.xml18(para)
+msgid "This example shows you how to create and access a MySQL 5.5 database."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml20(title)
 msgid "To create and access a database"
 msgstr "Pour créer et accéder à une base de donnée"
 
-#: ./doc/user-guide/section_cli_trove.xml21(title)
-msgid "Determine the flavor to use for your database."
-msgstr "Déterminer le type d'instance à utiliser pour votre base de données."
+#: ./doc/user-guide/section_cli_trove.xml22(title)
+msgid "Determine which flavor to use for your database"
+msgstr ""
 
-#: ./doc/user-guide/section_cli_trove.xml22(para)
+#: ./doc/user-guide/section_cli_trove.xml23(para)
 msgid ""
 "When you create a database instance, you must specify a nova flavor. The "
 "flavor indicates various characteristics of the instance, such as RAM, root "
-"volume size, and so on. The default nova flavors do not cover what you need "
-"for database instances. Therefore, you may need to create (or obtain) some "
-"new nova flavors that will work for databases."
-msgstr "Quand vous créez une instance de base de donnée, vous devez spécifier un type d'instance nova. Ce type d'instance indique les différentes caractéristiques de l'instance, comme la RAM, la taille du volume racine, et plus encore. Le type d'instance nova par défaut ne couvre pas ce dont vous avez besoin pour les instances de base de donnée. Par conséquent, vous aurez peut-être besoin de créer (pour obtenir) de nouveaux types d'instance nova qui fonctionneront pour les bases de donnée."
+"volume size, and so on. The default nova flavors are not sufficient to "
+"create database instances. You might need to create or obtain some new nova "
+"flavors that work for databases."
+msgstr ""
 
-#: ./doc/user-guide/section_cli_trove.xml24(para)
+#: ./doc/user-guide/section_cli_trove.xml27(para)
 msgid ""
-"The first step is to list the existing flavors, using the nova "
-"<placeholder-1/> command. Here are the default flavors, although you may "
-"have additional custom flavors in your environment:"
-msgstr "La première étape est de lister les types d'instance existants, en utilisant la commande <placeholder-1/>. Voici les types d'instance par défaut, malgré les types d'instance personnalisés que vous avez peut-être dans votre environnement."
+"The first step is to list flavors by using the nova <placeholder-1/> "
+"command."
+msgstr ""
 
-#: ./doc/user-guide/section_cli_trove.xml36(para)
+#: ./doc/user-guide/section_cli_trove.xml29(para)
+msgid ""
+"Here are the default flavors, although you may have additional custom "
+"flavors in your environment:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml41(para)
 msgid ""
 "Now take a look at the minimum requirements for various database instances:"
 msgstr "Consulter maintenant les prérequis minimums pour les instances des diverses bases de donnée:"
 
-#: ./doc/user-guide/section_cli_trove.xml45(th)
+#: ./doc/user-guide/section_cli_trove.xml50(th)
 msgid "Database"
 msgstr "Base de données"
 
-#: ./doc/user-guide/section_cli_trove.xml46(th)
-msgid "RAM (in MB)"
-msgstr "RAM (en Mo)"
+#: ./doc/user-guide/section_cli_trove.xml51(th)
+msgid "RAM (MB)"
+msgstr "RAM (Mo)"
 
-#: ./doc/user-guide/section_cli_trove.xml47(th)
-msgid "Disk (in GB)"
-msgstr "Disque (en Go)"
+#: ./doc/user-guide/section_cli_trove.xml52(th)
+msgid "Disk (GB)"
+msgstr "Disque (Go)"
 
-#: ./doc/user-guide/section_cli_trove.xml48(th)
+#: ./doc/user-guide/section_cli_trove.xml53(th)
 msgid "VCPUs"
 msgstr "VCPUs"
 
-#: ./doc/user-guide/section_cli_trove.xml54(para)
+#: ./doc/user-guide/section_cli_trove.xml59(para)
 msgid "MySQL"
 msgstr "MySQL"
 
-#: ./doc/user-guide/section_cli_trove.xml57(para)
-#: ./doc/user-guide/section_cli_trove.xml99(para)
+#: ./doc/user-guide/section_cli_trove.xml62(para)
+#: ./doc/user-guide/section_cli_trove.xml104(para)
 msgid "512"
 msgstr "512"
 
-#: ./doc/user-guide/section_cli_trove.xml60(para)
-#: ./doc/user-guide/section_cli_trove.xml74(para)
-#: ./doc/user-guide/section_cli_trove.xml88(para)
-#: ./doc/user-guide/section_cli_trove.xml102(para)
+#: ./doc/user-guide/section_cli_trove.xml65(para)
+#: ./doc/user-guide/section_cli_trove.xml79(para)
+#: ./doc/user-guide/section_cli_trove.xml93(para)
+#: ./doc/user-guide/section_cli_trove.xml107(para)
 msgid "5"
 msgstr "5"
 
-#: ./doc/user-guide/section_cli_trove.xml63(para)
-#: ./doc/user-guide/section_cli_trove.xml77(para)
-#: ./doc/user-guide/section_cli_trove.xml91(para)
-#: ./doc/user-guide/section_cli_trove.xml105(para)
+#: ./doc/user-guide/section_cli_trove.xml68(para)
+#: ./doc/user-guide/section_cli_trove.xml82(para)
+#: ./doc/user-guide/section_cli_trove.xml96(para)
+#: ./doc/user-guide/section_cli_trove.xml110(para)
 msgid "1"
 msgstr "1"
 
-#: ./doc/user-guide/section_cli_trove.xml68(para)
+#: ./doc/user-guide/section_cli_trove.xml73(para)
 msgid "Cassandra"
 msgstr "Cassandra"
 
-#: ./doc/user-guide/section_cli_trove.xml71(para)
+#: ./doc/user-guide/section_cli_trove.xml76(para)
 msgid "2048"
 msgstr "2048"
 
-#: ./doc/user-guide/section_cli_trove.xml82(para)
+#: ./doc/user-guide/section_cli_trove.xml87(para)
 msgid "MongoDB"
 msgstr "MongoDB"
 
-#: ./doc/user-guide/section_cli_trove.xml85(para)
+#: ./doc/user-guide/section_cli_trove.xml90(para)
 msgid "1024"
 msgstr "1024"
 
-#: ./doc/user-guide/section_cli_trove.xml96(para)
+#: ./doc/user-guide/section_cli_trove.xml101(para)
 msgid "Redis"
 msgstr "Redis"
 
-#: ./doc/user-guide/section_cli_trove.xml112(para)
+#: ./doc/user-guide/section_cli_trove.xml117(para)
 msgid ""
-"If you have a custom flavor that meets the needs of the database you want to"
-" create, you can simply use that flavor. In this case, skip the rest of this"
-" step and move on to the next step in this procedure."
-msgstr "Si vous avez un type d'instance personnalisé qui convienne aux besoins de la base de donnée que vous voulez créer, vous pouvez simplement utiliser ce type d'instance. Dans ce cas, sauter le reste de cette étape et passer à la prochaine étape de cette procédure."
+"If you have a custom flavor that meets the needs of the database that you "
+"want to create, proceed to <xref linkend=\"create-database-instance\"/> and "
+"use that flavor."
+msgstr ""
 
-#: ./doc/user-guide/section_cli_trove.xml115(para)
+#: ./doc/user-guide/section_cli_trove.xml122(para)
 msgid ""
-"If your environment does not have a suitable flavor, an admin user needs to "
-"create a custom flavor, using the nova <placeholder-1/> command."
-msgstr "Si votre environnement ne possède pas le type d'instance qui convient, un utilisateur administrateur a besoin de créer un type d'instance personnalisé en utilisant la commande nova <placeholder-1/>."
+"If your environment does not have a suitable flavor, an administrative user "
+"must create a custom flavor by using the nova <placeholder-1/> command."
+msgstr ""
 
-#: ./doc/user-guide/section_cli_trove.xml118(title)
-msgid "MySQL example."
-msgstr "Exemple MySQL."
+#: ./doc/user-guide/section_cli_trove.xml128(title)
+msgid "MySQL example"
+msgstr ""
 
-#: ./doc/user-guide/section_cli_trove.xml118(para)
+#: ./doc/user-guide/section_cli_trove.xml129(para)
 msgid ""
 "This example creates a flavor that you can use with a MySQL database. This "
 "example has the following attributes:"
 msgstr "Cet exemple crée un type d'instance que vous pouvez utiliser avec une base de donnée MySQL. Cet exemple a les attributs suivants:"
 
-#: ./doc/user-guide/section_cli_trove.xml120(para)
+#: ./doc/user-guide/section_cli_trove.xml134(para)
 msgid "Flavor name: <literal>mysql_minimum</literal>"
 msgstr "Nom de la base de donnée: <literal>mysql_minimum</literal>"
 
-#: ./doc/user-guide/section_cli_trove.xml121(para)
+#: ./doc/user-guide/section_cli_trove.xml137(para)
 msgid ""
-"Flavor ID: You need to use an ID that is not already in use. In this "
-"example, IDs 1 through 5 are already in use, so the ID can be "
-"<literal>6</literal>."
-msgstr "ID du type d'instance: Vous avez besoin d'utiliser une ID qui n'est déjà pas utilisé. Dans cette exemple, les ID 1 à 5 sont déjà utilisés, alors l'ID peut-être <literal>6</literal>."
+"Flavor ID: You must use an ID that is not already in use. In this example, "
+"IDs 1 through 5 are in use, so use ID <literal>6</literal>."
+msgstr ""
 
-#: ./doc/user-guide/section_cli_trove.xml122(para)
+#: ./doc/user-guide/section_cli_trove.xml141(para)
 msgid "RAM: <literal>512</literal>"
 msgstr "RAM: <literal>512</literal>"
 
-#: ./doc/user-guide/section_cli_trove.xml123(para)
+#: ./doc/user-guide/section_cli_trove.xml144(para)
 msgid "Root volume size in GB: <literal>5</literal>"
 msgstr "Taille du volume racine en Go: <literal>5</literal>"
 
-#: ./doc/user-guide/section_cli_trove.xml124(para)
+#: ./doc/user-guide/section_cli_trove.xml147(para)
 msgid "Virtual CPUs: <literal>1</literal>"
 msgstr "CPU virtuels: <literal>1</literal>"
 
-#: ./doc/user-guide/section_cli_trove.xml137(title)
-msgid "Create a database instance."
-msgstr "Créer une instance de base de donnée."
+#: ./doc/user-guide/section_cli_trove.xml158(title)
+msgid "Create a database instance"
+msgstr ""
 
-#: ./doc/user-guide/section_cli_trove.xml138(para)
+#: ./doc/user-guide/section_cli_trove.xml159(para)
 msgid ""
 "This example creates a database instance with the following characteristics:"
 msgstr "Cet exemple crée une instance de base de donnée avec les caractéristiques suivantes:"
 
-#: ./doc/user-guide/section_cli_trove.xml141(para)
+#: ./doc/user-guide/section_cli_trove.xml162(para)
 msgid "Name of the instance: <literal>mysql_instance_1</literal>"
 msgstr "Nom de l'instance: <literal>mysql_instance_1</literal>"
 
-#: ./doc/user-guide/section_cli_trove.xml142(para)
+#: ./doc/user-guide/section_cli_trove.xml165(para)
 msgid "Database flavor: <literal>6</literal>"
 msgstr "Base de donnée d'un type d'instance: <literal>6</literal>"
 
-#: ./doc/user-guide/section_cli_trove.xml144(para)
-msgid "In addition, this command uses various options to specify that:"
+#: ./doc/user-guide/section_cli_trove.xml168(para)
+msgid "In addition, this command specifies these options for the instance:"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_trove.xml146(para)
-msgid "The instance has a volume size of <literal>5</literal> (meaning 5 GB)."
+#: ./doc/user-guide/section_cli_trove.xml171(para)
+msgid "A volume size of <literal>5</literal> (5 GB)."
 msgstr ""
 
-#: ./doc/user-guide/section_cli_trove.xml147(para)
-msgid "It has a database called <literal>myDB</literal>."
+#: ./doc/user-guide/section_cli_trove.xml174(para)
+msgid "The <literal>myDB</literal> database."
 msgstr ""
 
-#: ./doc/user-guide/section_cli_trove.xml148(para)
+#: ./doc/user-guide/section_cli_trove.xml177(para)
 msgid ""
-"It has a user called <literal>userA</literal> with a password of "
-"<literal>password</literal>."
+"The database is based on the <literal>mysql</literal> data store and the "
+"<literal>mysql-5.5</literal> datastore_version."
 msgstr ""
 
-#: ./doc/user-guide/section_cli_trove.xml149(para)
+#: ./doc/user-guide/section_cli_trove.xml181(para)
 msgid ""
-"The database is based on a datastore called <literal>mysql</literal> and a "
-"datastore_version called <literal>mysql-5.5</literal>."
+"The <literal>userA</literal> user with the <literal>password</literal> "
+"password."
 msgstr ""
 
-#: ./doc/user-guide/section_cli_trove.xml172(title)
-msgid "Get the IP address of the database instance."
-msgstr "Obtenir l'adresse IP de l'instance de la base de donnée."
+#: ./doc/user-guide/section_cli_trove.xml203(title)
+msgid "Get the IP address of the database instance"
+msgstr ""
 
-#: ./doc/user-guide/section_cli_trove.xml173(para)
+#: ./doc/user-guide/section_cli_trove.xml204(para)
 msgid ""
 "First, use the trove <placeholder-1/> command to list all instances and "
 "their IDs:"
 msgstr "Premièrement, utiliser la commande trove <placeholder-1/> pour lister toutes les instances et leurs ID:"
 
-#: ./doc/user-guide/section_cli_trove.xml183(para)
-msgid ""
-"This command returns the instance ID of your new instance. You can now pass "
-"in the instance ID with the trove <placeholder-1/> command to get the IP "
-"address of the instance. In this example, you would replace "
-"<replaceable>INSTANCE_ID</replaceable> with 5599dad6-731e-44df-"
-"bb60-488da3da9cfe."
+#: ./doc/user-guide/section_cli_trove.xml212(para)
+msgid "This command returns the instance ID of your new instance."
 msgstr ""
 
-#: ./doc/user-guide/section_cli_trove.xml201(para)
+#: ./doc/user-guide/section_cli_trove.xml213(para)
+msgid ""
+"You can now pass in the instance ID with the trove <placeholder-1/> command "
+"to get the IP address of the instance. In this example, replace "
+"<replaceable>INSTANCE_ID</replaceable> with <literal>5599dad6-731e-44df-"
+"bb60-488da3da9cfe</literal>."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml232(para)
 msgid "This command returns the IP address of the database instance."
 msgstr "Cette commande retourne l'adresse IP de l'instance de la base de donnée."
 
-#: ./doc/user-guide/section_cli_trove.xml206(title)
-msgid "Access the new database."
-msgstr "Accéder à la nouvelle base de donnée."
-
-#: ./doc/user-guide/section_cli_trove.xml207(para)
-msgid ""
-"You can now access the new database you just created (myDB) using typical "
-"database access commands. In this MySQL example, you would replace "
-"<replaceable>IP_ADDRESS</replaceable> with 172.16.200.2."
+#: ./doc/user-guide/section_cli_trove.xml235(title)
+msgid "Access the new database"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_trove.xml209(replaceable)
+#: ./doc/user-guide/section_cli_trove.xml236(para)
+msgid ""
+"You can now access the new database you just created (myDB) by using typical"
+" database access commands. In this MySQL example, replace "
+"<replaceable>IP_ADDRESS</replaceable> with <literal>172.16.200.2</literal>."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml239(replaceable)
 msgid "IP_ADDRESS"
 msgstr "ADDRESSE_IP"
 
-#: ./doc/user-guide/section_cli_trove.xml214(title)
+#: ./doc/user-guide/section_cli_trove.xml244(title)
 msgid "Backup and restore a database"
 msgstr "Sauvegarder et restaurer une base de donnée"
 
-#: ./doc/user-guide/section_cli_trove.xml215(para)
+#: ./doc/user-guide/section_cli_trove.xml245(para)
 msgid ""
 "You can use Database services to backup a database and store the backup "
 "artifact in the Object Storage module. Later on, if the original database is"
 " damaged, you can use the backup artifact to restore the database. The "
-"restore process creates a new database instance."
+"restore process creates a database instance."
 msgstr ""
 
-#: ./doc/user-guide/section_cli_trove.xml216(para)
-msgid "This example shows you how to backup and restore a MySQL database."
-msgstr "Cet exemple vous montre comment sauvegarder et restaurer une base de donnée MySQL."
+#: ./doc/user-guide/section_cli_trove.xml248(para)
+msgid "This example shows you how to back up and restore a MySQL database."
+msgstr ""
 
-#: ./doc/user-guide/section_cli_trove.xml218(title)
+#: ./doc/user-guide/section_cli_trove.xml250(title)
 msgid "To backup and restore a database"
 msgstr "Pour sauvegarder et restaurer une base de donnée"
 
-#: ./doc/user-guide/section_cli_trove.xml221(title)
-msgid "Backup the database instance."
-msgstr "Sauvegarde de l'instance de la base de donnée."
+#: ./doc/user-guide/section_cli_trove.xml252(title)
+msgid "Backup the database instance"
+msgstr ""
 
-#: ./doc/user-guide/section_cli_trove.xml222(para)
+#: ./doc/user-guide/section_cli_trove.xml253(para)
 msgid ""
-"As background, assume that you have <link linkend=\"create_db\">created a "
+"As background, assume that you have <link href=\"create_db\">created a "
 "database instance</link> with the following characteristics:"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_trove.xml226(para)
+#: ./doc/user-guide/section_cli_trove.xml257(para)
 msgid "Name of the database instance: <literal>guest1</literal>"
 msgstr "Nom de l'instance de la base de donnée: <literal>guest1</literal>"
 
-#: ./doc/user-guide/section_cli_trove.xml229(para)
+#: ./doc/user-guide/section_cli_trove.xml260(para)
 msgid "Flavor ID: <literal>10</literal>"
 msgstr "ID d'un type d'instance: <literal>10</literal> "
 
-#: ./doc/user-guide/section_cli_trove.xml232(para)
+#: ./doc/user-guide/section_cli_trove.xml263(para)
 msgid "Root volume size: <literal>2</literal>"
 msgstr "Taille du volume racine: <literal>2</literal>"
 
-#: ./doc/user-guide/section_cli_trove.xml235(para)
+#: ./doc/user-guide/section_cli_trove.xml266(para)
 msgid "Databases: <literal>db1</literal> and <literal>db2</literal>"
 msgstr "Bases de données: <literal>db1</literal> et <literal>db2</literal>"
 
-#: ./doc/user-guide/section_cli_trove.xml238(para)
+#: ./doc/user-guide/section_cli_trove.xml269(para)
 msgid ""
-"Users: One user named <literal>user1</literal> with a password of "
-"<literal>password</literal>"
-msgstr "Utilisateurs: Un utilisateur nommé  <literal>user1</literal> avec le mot de passe <literal>password</literal>"
+"Users: The <literal>user1</literal> user with the "
+"<literal>password</literal> password"
+msgstr ""
 
-#: ./doc/user-guide/section_cli_trove.xml241(para)
+#: ./doc/user-guide/section_cli_trove.xml273(para)
 msgid ""
 "First, get the ID of the <literal>guest1</literal> database instance by "
 "using the trove <placeholder-1/> command:"
 msgstr "Premièrement, obtenir l'ID de l'instance de la base de donnée en utilisant la commande trove <placeholder-1/>:"
 
-#: ./doc/user-guide/section_cli_trove.xml248(para)
+#: ./doc/user-guide/section_cli_trove.xml281(para)
 msgid ""
-"Backup the database instance by using the trove <placeholder-1/> command. In"
-" this example, the backup is called <literal>backup1</literal>. In this "
-"example, you would replace <replaceable>INSTANCE_ID</replaceable> with "
-"97b4b853-80f6-414f-ba6f-c6f455a79ae6:"
-msgstr "Sauvegarder l'instance de la base de donnée en utilisant la commande trove <placeholder-1/>. Dans cet exemple, la sauvegarde est appelée<literal>backup1</literal>. Dans cet exemple, vous devrez remplacer <replaceable>INSTANCE_ID</replaceable> avec 97b4b853-80f6-414f-ba6f-c6f455a79ae6:  "
+"Back up the database instance by using the trove <placeholder-1/> command. "
+"In this example, the backup is called <literal>backup1</literal>. In this "
+"example, replace <replaceable>INSTANCE_ID</replaceable> with "
+"<literal>97b4b853-80f6-414f-ba6f-c6f455a79ae6</literal>:"
+msgstr ""
 
-#: ./doc/user-guide/section_cli_trove.xml264(para)
+#: ./doc/user-guide/section_cli_trove.xml300(para)
 msgid ""
 "Note that the command returns both the ID of the original instance "
 "(<literal>instance_id</literal>) and the ID of the backup artifact "
 "(<literal>id</literal>)."
 msgstr "Noter que la commande retourne à la fois l'ID de l'instance originale (<literal>instance_id</literal>) et l'ID de l'artefact de la sauvegarde (<literal>id</literal>)."
 
-#: ./doc/user-guide/section_cli_trove.xml265(para)
+#: ./doc/user-guide/section_cli_trove.xml303(para)
 msgid ""
-"Later on, you can obtain this same information by using the trove "
-"<placeholder-1/> command:"
-msgstr "Ensuite, vous pouvez obtenir la même information en utilisant la commande trove <placeholder-1/>:"
+"Later on, use the trove <placeholder-1/> command to get this information:"
+msgstr ""
 
-#: ./doc/user-guide/section_cli_trove.xml272(para)
+#: ./doc/user-guide/section_cli_trove.xml311(para)
 msgid ""
 "You can get additional information about the backup by using the trove "
 "<placeholder-1/> command and passing in the "
-"<replaceable>BACKUP_ID</replaceable>, which in this case is 8af30763-61fd-"
-"4aab-8fe8-57d528911138."
-msgstr "Vous pouvez avoir des informations supplémentaires sur la sauvegarde en utilisant la commande trove <placeholder-1/> et en passant par <replaceable>BACKUP_ID</replaceable>, qui dans ce cas est 8af30763-61fd-4aab-8fe8-57d528911138."
+"<replaceable>BACKUP_ID</replaceable>, which is <literal>8af30763-61fd-4aab-"
+"8fe8-57d528911138</literal>."
+msgstr ""
 
-#: ./doc/user-guide/section_cli_trove.xml273(replaceable)
-#: ./doc/user-guide/section_cli_trove.xml302(replaceable)
-#: ./doc/user-guide/section_cli_trove.xml419(replaceable)
-#: ./doc/user-guide/section_cli_trove.xml441(replaceable)
-#: ./doc/user-guide/section_cli_trove.xml463(replaceable)
+#: ./doc/user-guide/section_cli_trove.xml315(replaceable)
+#: ./doc/user-guide/section_cli_trove.xml349(replaceable)
+#: ./doc/user-guide/section_cli_trove.xml481(replaceable)
+#: ./doc/user-guide/section_cli_trove.xml506(replaceable)
+#: ./doc/user-guide/section_cli_trove.xml532(replaceable)
 msgid "BACKUP_ID"
 msgstr "ID_SAUVEGARDE"
 
-#: ./doc/user-guide/section_cli_trove.xml291(title)
-msgid "Restore a database instance."
-msgstr "Restaurer une instance de base de donnée."
+#: ./doc/user-guide/section_cli_trove.xml332(title)
+msgid "Restore a database instance"
+msgstr ""
 
-#: ./doc/user-guide/section_cli_trove.xml292(para)
+#: ./doc/user-guide/section_cli_trove.xml333(para)
 msgid ""
 "Now assume that your <literal>guest1</literal> database instance is damaged "
 "and you need to restore it. In this example, you use the trove "
@@ -3569,168 +3579,168 @@ msgid ""
 "<literal>guest2</literal>."
 msgstr "Supposons maintenant que l'instance de votre base de donnée <literal>guest1</literal> est abimée et que vous avez besoin de la restaurer. Dans cet exemple, vous utilisez la commande trove <placeholder-1/> pour créer une nouvelle instance de base de donnée appelée <literal>guest2</literal>."
 
-#: ./doc/user-guide/section_cli_trove.xml296(para)
+#: ./doc/user-guide/section_cli_trove.xml338(para)
 msgid ""
 "You specify that the new <literal>guest2</literal> instance has the same "
 "flavor (<literal>10</literal>) and the same root volume size "
 "(<literal>2</literal>) as the original <literal>guest1</literal> instance."
 msgstr "Vous spécifiez que la nouvelle instance <literal>guest2</literal> a le même type d'instance (<literal>10</literal>) et la même taille de volume racine (<literal>2</literal>) que l'instance originale <literal>guest1</literal>. "
 
-#: ./doc/user-guide/section_cli_trove.xml299(para)
+#: ./doc/user-guide/section_cli_trove.xml343(para)
 msgid ""
 "You use the <code>--backup</code> argument to indicate that this new "
 "instance is based on the backup artifact identified by "
-"<replaceable>BACKUP_ID</replaceable>. In this example, you would replace "
-"<replaceable>BACKUP_ID</replaceable> with 8af30763-61fd-4aab-"
-"8fe8-57d528911138."
-msgstr "Vous utilisez l'argument <code>--backup</code> pour indiquer que la nouvelle instance est basée sur un artefact de sauvegarde identifié par <replaceable>BACKUP_ID</replaceable>. Dans cet exemple, vous pouvez remplacer <replaceable>BACKUP_ID</replaceable> avec 8af30763-61fd-4aab-8fe8-57d528911138."
+"<replaceable>BACKUP_ID</replaceable>. In this example, replace "
+"<replaceable>BACKUP_ID</replaceable> with <literal>8af30763-61fd-4aab-"
+"8fe8-57d528911138</literal>."
+msgstr ""
 
-#: ./doc/user-guide/section_cli_trove.xml319(title)
-msgid "Verify backup."
-msgstr "Vérifier la sauvegarde."
+#: ./doc/user-guide/section_cli_trove.xml365(title)
+msgid "Verify backup"
+msgstr ""
 
-#: ./doc/user-guide/section_cli_trove.xml320(para)
+#: ./doc/user-guide/section_cli_trove.xml366(para)
 msgid ""
 "Now check that the new <literal>guest2</literal> instance has the same "
 "characteristics as the original <literal>guest1</literal> instance."
 msgstr "Vérifier maintenant que l'instance du nouveau <literal>guest2</literal> a les mêmes caractéristiques que l'instance originale <literal>guest1</literal>."
 
-#: ./doc/user-guide/section_cli_trove.xml322(para)
+#: ./doc/user-guide/section_cli_trove.xml368(para)
 msgid "Start by getting the ID of the new <literal>guest2</literal> instance."
 msgstr "Commencer en obtenant l'ID de la nouvelle instance <literal>guest2</literal>."
 
-#: ./doc/user-guide/section_cli_trove.xml330(para)
+#: ./doc/user-guide/section_cli_trove.xml376(para)
 msgid ""
 "Use the trove <placeholder-1/> command to display information about the new "
 "guest2 instance. Pass in guest2's <replaceable>INSTANCE_ID</replaceable>, "
-"which in this case is ac7a2b35-a9b4-4ff6-beac-a1bcee86d04b."
-msgstr "Utiliser la commande trove <placeholder-1/> pour afficher l'information sur la nouvelle instance guest2. Passer <replaceable>INSTANCE_ID</replaceable> de guest2, qui dans ce cas est ac7a2b35-a9b4-4ff6-beac-a1bcee86d04b."
+"which is <literal>ac7a2b35-a9b4-4ff6-beac-a1bcee86d04b</literal>."
+msgstr ""
 
-#: ./doc/user-guide/section_cli_trove.xml347(para)
+#: ./doc/user-guide/section_cli_trove.xml395(para)
 msgid ""
-"Note that the datastore, flavor ID and volume size are the same as the "
-"original <literal>guest1</literal> instance."
-msgstr "Noter que le stockage de donnée, l'ID du type d'instance et la taille du volume sont les mêmes que l'instance d'origine de <literal>guest1</literal>. "
+"Note that the data store, flavor ID, and volume size have the same values as"
+" in the original <literal>guest1</literal> instance."
+msgstr ""
 
-#: ./doc/user-guide/section_cli_trove.xml348(para)
+#: ./doc/user-guide/section_cli_trove.xml397(para)
 msgid ""
 "Use the trove <placeholder-1/> command to check that the original databases "
 "(<literal>db1</literal> and <literal>db2</literal>) are present on the "
 "restored instance."
 msgstr "Utiliser la commande trove <placeholder-1/> pour vérifier que les bases de données originelles (<literal>db1</literal> et <literal>db2</literal>) sont présents dans l'instance restaurée."
 
-#: ./doc/user-guide/section_cli_trove.xml358(para)
+#: ./doc/user-guide/section_cli_trove.xml409(para)
 msgid ""
 "Use the trove <placeholder-1/> command to check that the original user "
 "(<literal>user1</literal>) is present on the restored instance."
 msgstr "Utiliser la commande trove <placeholder-1/> pour vérifier que l'utilisateur originel (<literal>user1</literal>) est présent dans l'instance restaurée."
 
-#: ./doc/user-guide/section_cli_trove.xml368(title)
-msgid "Notify users."
-msgstr "Notifier les utilisateurs."
+#: ./doc/user-guide/section_cli_trove.xml419(title)
+msgid "Notify users"
+msgstr ""
 
-#: ./doc/user-guide/section_cli_trove.xml369(para)
+#: ./doc/user-guide/section_cli_trove.xml420(para)
 msgid ""
 "Tell the users who were accessing the now-disabled <literal>guest1</literal>"
 " database instance that they can now access <literal>guest2</literal>. "
 "Provide them with <literal>guest2</literal>'s name, IP address, and any "
 "other information they might need. (You can get this information by using "
-"the trove <placeholder-1/> command as listed above.)"
-msgstr "Dire aux utilisateurs qui accédaient à l'instance de base de donnée désactivée <literal>guest1</literal> qu'ils peuvent maintenant accéder à <literal>guest2</literal>. Leur fournir le nom de <literal>guest2</literal>, l'adresse IP et toute information dont ils auraient besoin. (Vous pouvez obtenir cette information en utilisant une commande trove <placeholder-1/> listée au-dessus.)"
+"the trove <placeholder-1/> command.)"
+msgstr ""
 
-#: ./doc/user-guide/section_cli_trove.xml374(title)
-msgid "Clean up."
-msgstr "Nettoyer."
+#: ./doc/user-guide/section_cli_trove.xml426(title)
+msgid "Clean up"
+msgstr ""
 
-#: ./doc/user-guide/section_cli_trove.xml375(para)
+#: ./doc/user-guide/section_cli_trove.xml427(para)
 msgid ""
-"At this point, you may also want to delete the disabled "
+"At this point, you might want to delete the disabled "
 "<literal>guest1</literal> instance, by using the trove <placeholder-1/> "
 "command."
-msgstr "A ce niveau, vous voudrez peut-être supprimer l'instance désactivée <literal>guest1</literal>, en utilisant la commande trove <placeholder-1/>."
+msgstr ""
 
-#: ./doc/user-guide/section_cli_trove.xml382(title)
+#: ./doc/user-guide/section_cli_trove.xml434(title)
 msgid "Use incremental backups"
 msgstr "Utiliser les sauvegardes incrémentales"
 
-#: ./doc/user-guide/section_cli_trove.xml383(para)
+#: ./doc/user-guide/section_cli_trove.xml435(para)
 msgid ""
 "Incremental backups let you chain together a series of backups. You start "
 "with a regular backup. Then, when you want to create a subsequent "
 "incremental backup, you specify the parent backup."
 msgstr "Les sauvegardes incrémentales vous permettent de chaîner ensemble une série de sauvegardes. Vous commencez avec une sauvegarde habituelle. Ensuite, quand vous voulez créer la sauvegarde incrémentale suivante, vous spécifiez le parent de la sauvegarde."
 
-#: ./doc/user-guide/section_cli_trove.xml384(para)
+#: ./doc/user-guide/section_cli_trove.xml438(para)
 msgid ""
 "Restoring a database instance from an incremental backup is the same as "
 "creating a database instance from a regular backupthe Database service "
 "handles the complexities of applying the chain of incremental backups."
 msgstr "Restaurer une instance de base de donnée à partir d'une sauvegarde incrémentale est identique à créer une instance de base de donnée à partir d'une sauvegarde régulière. Le service Base de donnée traite la complexité du chaînage des sauvegardes incrémentales."
 
-#: ./doc/user-guide/section_cli_trove.xml385(para)
+#: ./doc/user-guide/section_cli_trove.xml441(para)
 msgid ""
 "This example shows you how to use incremental backups with a MySQL database."
 msgstr "Cet exemple vous montre comment utiliser les sauvegardes incrémentales avec une base de donnée MySQL."
 
-#: ./doc/user-guide/section_cli_trove.xml387(title)
-msgid "Assumptions."
+#: ./doc/user-guide/section_cli_trove.xml443(title)
+msgid "Assumptions"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_trove.xml388(para)
+#: ./doc/user-guide/section_cli_trove.xml444(para)
 msgid ""
-"Assume that you have <link linkend=\"backup_db\">created a regular "
+"Assume that you have <link href=\"backup_db\">created a regular "
 "backup</link> for the following database instance:"
-msgstr "S'assurer que vous avez <link linkend=\"backup_db\">created a regular backup</link> pour l'instance de la base de donnée qui suit:"
+msgstr ""
 
-#: ./doc/user-guide/section_cli_trove.xml392(para)
+#: ./doc/user-guide/section_cli_trove.xml449(para)
 msgid "Instance name: <literal>guest1</literal>"
 msgstr "Nom de l'instance :  <literal>guest1</literal>"
 
-#: ./doc/user-guide/section_cli_trove.xml395(para)
+#: ./doc/user-guide/section_cli_trove.xml452(para)
 msgid ""
 "ID of the instance (<replaceable>INSTANCE_ID</replaceable>): "
 "<literal>792a6a56-278f-4a01-9997-d997fa126370</literal>"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_trove.xml398(para)
+#: ./doc/user-guide/section_cli_trove.xml456(para)
 msgid ""
 "ID of the regular backup artifact (<replaceable>BACKUP_ID</replaceable>): "
 "<literal>6dc3a9b7-1f3e-4954-8582-3f2e4942cddd</literal>"
 msgstr "ID d'un artefact d'une sauvegarde régulière (<replaceable>BACKUP_ID</replaceable>): <literal>6dc3a9b7-1f3e-4954-8582-3f2e4942cddd</literal>"
 
-#: ./doc/user-guide/section_cli_trove.xml402(title)
+#: ./doc/user-guide/section_cli_trove.xml461(title)
 msgid "To create and use incremental backups"
 msgstr "Pour créer et utiliser des sauvegardes incrémentales"
 
-#: ./doc/user-guide/section_cli_trove.xml405(title)
-msgid "Create your first incremental backup."
-msgstr "Créer votre première sauvegarde incrémentale."
+#: ./doc/user-guide/section_cli_trove.xml463(title)
+msgid "Create your first incremental backup"
+msgstr ""
 
-#: ./doc/user-guide/section_cli_trove.xml406(para)
+#: ./doc/user-guide/section_cli_trove.xml464(para)
 msgid "Use the trove <placeholder-1/> command and specify:"
 msgstr "Utiliser la commande trove <placeholder-1/> et spécifier:"
 
-#: ./doc/user-guide/section_cli_trove.xml410(para)
+#: ./doc/user-guide/section_cli_trove.xml467(para)
 msgid ""
 "The name of the incremental backup you are creating: "
 "<literal>backup1.1</literal>"
 msgstr "Le nom de la sauvegarde incrémentale que vous êtes en train de créer: <literal>backup1.1</literal>"
 
-#: ./doc/user-guide/section_cli_trove.xml413(para)
+#: ./doc/user-guide/section_cli_trove.xml471(para)
 msgid ""
 "The <replaceable>INSTANCE_ID</replaceable> of the database instance you are "
 "doing the incremental backup for (in this example, <literal>792a6a56-278f-"
 "4a01-9997-d997fa126370</literal>)"
 msgstr "L' <replaceable>INSTANCE_ID</replaceable> de l'instance de la base de donnée pour laquelle vous créez la sauvegarde incrémentale (dans cette exemple, <literal>792a6a56-278f-4a01-9997-d997fa126370</literal>)"
 
-#: ./doc/user-guide/section_cli_trove.xml416(para)
+#: ./doc/user-guide/section_cli_trove.xml476(para)
 msgid ""
 "The <replaceable>BACKUP_ID</replaceable> of the parent backup. In this case,"
 " the parent is the regular backup, with an ID of "
 "<literal>6dc3a9b7-1f3e-4954-8582-3f2e4942cddd</literal>"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_trove.xml434(para)
+#: ./doc/user-guide/section_cli_trove.xml496(para)
 msgid ""
 "Note that this command returns both the ID of the database instance you are "
 "incrementally backing up (<literal>instance_id</literal>) and a new ID for "
@@ -3738,24 +3748,24 @@ msgid ""
 "(<literal>id</literal>)."
 msgstr "Noter que la commande retourne à la fois l'ID de l'instance de la base de donnée que vous sauvegardez de façon incrémentielle (<literal>instance_id</literal>) et la nouvelle ID de l'artefact de la nouvelle sauvegarde incrémentale que vous venez juste de créer (<literal>id</literal>)."
 
-#: ./doc/user-guide/section_cli_trove.xml438(title)
-msgid "Create your second incremental backup."
-msgstr "Créer votre seconde sauvegarde incrémentale."
+#: ./doc/user-guide/section_cli_trove.xml501(title)
+msgid "Create your second incremental backup"
+msgstr ""
 
-#: ./doc/user-guide/section_cli_trove.xml439(para)
+#: ./doc/user-guide/section_cli_trove.xml502(para)
 msgid ""
 "The name of your second incremental backup is <literal>backup1.2</literal>. "
 "This time, when you specify the parent, pass in the ID of the incremental "
 "backup you just created in the previous step (<literal>backup1.1</literal>)."
-" In this example, it would be <literal>1d474981-a006-4f62-b25f-"
+" In this example, it is <literal>1d474981-a006-4f62-b25f-"
 "43d7b8a7097e</literal>."
 msgstr ""
 
-#: ./doc/user-guide/section_cli_trove.xml459(title)
-msgid "Restore using incremental backups."
-msgstr "Restaurer en utilisant les sauvegardes incrémentales."
+#: ./doc/user-guide/section_cli_trove.xml523(title)
+msgid "Restore using incremental backups"
+msgstr ""
 
-#: ./doc/user-guide/section_cli_trove.xml460(para)
+#: ./doc/user-guide/section_cli_trove.xml524(para)
 msgid ""
 "Now assume that your <literal>guest1</literal> database instance is damaged "
 "and you need to restore it from your incremental backups. In this example, "
@@ -3763,14 +3773,248 @@ msgid ""
 " called <literal>guest2</literal>."
 msgstr "Supposons maintenant que l'instance de votre base de donnée <literal>guest1</literal> est abimée et que vous avez besoin de la restaurer à partir de vos sauvegardes incrémentales. Dans cet exemple, vous utilisez la commande trove <placeholder-1/>  pour créer une nouvelle instance de base de donnée appelée <literal>guest2</literal>."
 
-#: ./doc/user-guide/section_cli_trove.xml462(para)
+#: ./doc/user-guide/section_cli_trove.xml528(para)
 msgid ""
 "To incorporate your incremental backups, you simply use the "
-"<code>--backup</code> argument to pass in the "
+"<code>--backup</code> parameter to pass in the "
 "<replaceable>BACKUP_ID</replaceable> of your most recent incremental backup."
 " The Database service handles the complexities of applying the chain of all "
 "previous incremental backups."
-msgstr "Pour incorporer vos sauvegardes incrémentales, vous utilisez simplement l'argument <code>--backup</code> à passer dans l'<replaceable>ID_SAUVEGARDE</replaceable> de votre sauvegarde incrémentale la plus récente. Le service Base de donnée prend en charge la complexité de chaînage des précédentes sauvegardes incrémentales. "
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml554(title)
+msgid "Manage database configuration"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml555(para)
+msgid ""
+"You can manage database configuration tasks by using configuration groups. "
+"Configuration groups let you set configuration options, in bulk, on one or "
+"more databases."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml557(para)
+msgid ""
+"This example assumes you have <link href=\"create_db\">created a MySQL "
+"database</link> and shows you how to use a configuration group to configure "
+"it. Although this example sets just one option on one database, you can use "
+"these same procedures to set multiple options on multiple database instances"
+" throughout your environment. This can provide significant time savings in "
+"managing your cloud."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml563(title)
+msgid "To bulk-configure a database or databases"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml565(title)
+msgid "List available options"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml566(para)
+msgid ""
+"First, determine which configuration options you can set. Different data "
+"store versions have different configuration options."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml568(para)
+msgid ""
+"List the names and IDs of all available versions of the "
+"<literal>mysql</literal> data store:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml576(para)
+msgid ""
+"Pass in the data store version ID with the trove <placeholder-1/> command to"
+" get the available options:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml579(replaceable)
+msgid "DATASTORE_VERSION_ID"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml618(para)
+msgid ""
+"In this example, the <placeholder-1/> command returns a list of options that"
+" work with MySQL 5.5."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml622(title)
+msgid "Create a configuration group"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml623(para)
+msgid ""
+"A configuration group contains a comma-separated list of key-value pairs. "
+"Each pair consists of a configuration option and its value."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml625(para)
+msgid ""
+"You can create a configuration group by using the trove <placeholder-1/> "
+"command. The general syntax for this command is:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml628(replaceable)
+msgid "VALUES"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml628(replaceable)
+msgid "DATASTORE_NAME"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml631(para)
+msgid ""
+"<replaceable>NAME</replaceable>. The name you want to use for this group."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml634(para)
+msgid "<replaceable>VALUES</replaceable>. The list of key-value pairs."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml637(para)
+msgid ""
+"<replaceable>DATASTORE_NAME</replaceable>. The name of the associated data "
+"store."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml641(para)
+msgid ""
+"Set <replaceable>VALUES</replaceable> as a JSON dictionary, for example:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml643(para)
+msgid ""
+"This example creates a configuration group called <literal>group1</literal>."
+" <literal>group1</literal> contains just one key and value pair, and this "
+"pair sets the <option>sync_binlog</option> option to <literal>1</literal>."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml658(title)
+msgid "Examine your existing configuration"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml659(para)
+msgid ""
+"Before you use the newly-created configuration group, look at how the "
+"<option>sync_binlog</option> option is configured on your database. Replace "
+"the following sample connection values with values that connect to your "
+"database:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml671(para)
+msgid ""
+"As you can see, the <option>sync_binlog</option> option is currently set to "
+"<literal>0</literal> for the <literal>myDB7</literal> database."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml675(title)
+msgid "Change the database configuration using a configuration group"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml676(para)
+msgid ""
+"You can change a database's configuration by attaching a configuration group"
+" to a database instance. You do this by using the trove <placeholder-1/> "
+"command and passing in the ID of the configuration group and the ID of the "
+"database instance."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml680(para)
+msgid "Get the ID of the configuration group:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml687(para)
+msgid "Get the ID of the database instance:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml694(para)
+msgid "Attach the configuration group to the database instance:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml695(replaceable)
+msgid "CONFIG_GROUP_ID"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml695(replaceable)
+msgid "DB_INSTANCE_ID"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml698(title)
+msgid "Re-examine the database configuration"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml699(para)
+msgid "Display the <option>sync_binlog</option> setting again:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml706(para)
+msgid ""
+"As you can see, the <option>sync_binlog</option> option is now set to "
+"<literal>1</literal>, as specified in the <literal>group1</literal> "
+"configuration group."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml712(title)
+msgid "Conclusion"
+msgstr "Conclusion"
+
+#: ./doc/user-guide/section_cli_trove.xml713(para)
+msgid ""
+"Using a configuration group to set a single option on a single database is "
+"obviously a trivial example. However, configuration groups can provide major"
+" efficiencies when you consider that:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml719(para)
+msgid "A configuration group can specify a large number of option values."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml722(para)
+msgid ""
+"You can apply a configuration group to hundreds or thousands of database "
+"instances in your environment."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml726(para)
+msgid ""
+"Used in this way, configuration groups let you modify your database cloud "
+"configuration, on the fly, on a massive scale."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml729(title)
+msgid "Maintenance"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml730(para)
+msgid ""
+"There are also a number of useful maintenance features for working with "
+"configuration groups. You can:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml735(para)
+msgid ""
+"Disassociate a configuration group from a database instance, using the trove"
+" <placeholder-1/> command."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml739(para)
+msgid ""
+"Modify a configuration group on the fly, using the trove <placeholder-1/> "
+"command."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml743(para)
+msgid ""
+"Find out what instances are using a configuration group, using the trove "
+"<placeholder-1/> command."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml747(para)
+msgid ""
+"Delete a configuration group, using the trove <placeholder-1/> command. You "
+"might want to do this if no instances use a group."
+msgstr ""
 
 #: ./doc/user-guide/section_dashboard_launch_instances.xml7(title)
 msgid "Launch and manage instances"
