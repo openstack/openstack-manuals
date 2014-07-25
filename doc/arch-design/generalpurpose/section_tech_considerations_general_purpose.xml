@@ -5,7 +5,7 @@
   version="5.0"
   xml:id="technical-considerations-general-purpose">
     <?dbhtml stop-chunking?>
-    <title>Technical Considerations</title>
+    <title>Technical considerations</title>
     <para>When designing a general purpose cloud, there is an implied
         requirement to design for all of the base services generally
         associated with providing Infrastructure-as-a-Service:
@@ -27,7 +27,7 @@
         factors play heavily into the overall architecture of an
         OpenStack cloud.</para>
     <section xml:id="designing-compute-resources-tech-considerations">
-        <title>Designing Compute Resources</title>
+        <title>Designing compute resources</title>
     <para>It is recommended to design compute resources as pools of
         resources which will be addressed on-demand. When designing
         compute resource pools, a number of factors impact your design
@@ -108,7 +108,7 @@
         new hardware node designs and resource pools as they become
         justified at a later time.</para></section>
     <section xml:id="designing-network-resources-tech-considerations">
-        <title>Designing Network Resources</title>
+        <title>Designing network resources</title>
     <para>An OpenStack cloud traditionally has multiple network
         segments, each of which provides access to resources within
         the cloud to both operators and tenants. In addition, the
@@ -194,7 +194,8 @@
         segment, as will any network gateway services which allow
         application data to access the physical network outside of the
         cloud.</para></section>
-    <section xml:id="designing-storage-resources-tech-considerations"><title>Designing Storage Resources</title>
+    <section xml:id="designing-storage-resources-tech-considerations">
+      <title>Designing storage resources</title>
     <para>OpenStack has two independent storage services to consider,
         each with its own specific design requirements and goals. In
         addition to services which provide storage as their primary
@@ -244,7 +245,8 @@
         The object storage service is a chatty protocol, therefore
         making use of multiple processors that have higher core counts
         will ensure the IO requests do not inundate the server.</para></section>
-    <section xml:id="designing-openstack-block-storage"><title>Designing OpenStack Block Storage</title>
+    <section xml:id="designing-openstack-block-storage">
+      <title>Designing OpenStack Block Storage</title>
     <para>When designing OpenStack Block Storage resource nodes, it is
         helpful to understand the workloads and requirements that will
         drive the use of block storage in the cloud. In a general
@@ -285,7 +287,7 @@
         necessary to make use of high speed SSD disk drives' high
         performing flash storage solutions.</para></section>
     <section xml:id="software-selection-tech-considerations">
-        <title>Software Selection</title>
+        <title>Software selection</title>
     <para>The software selection process can play a large role in the
         architecture of a general purpose cloud. Choice of operating
         system, selection of OpenStack software components, choice of
@@ -334,7 +336,8 @@
                 requirements.</para>
         </listitem>
     </itemizedlist></section>
-    <section xml:id="hypervisor-tech-considerations"><title>Hypervisor</title>
+    <section xml:id="hypervisor-tech-considerations">
+      <title>Hypervisor</title>
     <para>OpenStack supports a wide variety of hypervisors, one or
         more of which can be used in a single cloud. These hypervisors
         include:</para>
@@ -392,7 +395,8 @@
         particular requirements. This functionality can be exposed
         explicitly to the end user, or accessed through defined
         metadata within a particular flavor of an instance.</para></section>
-    <section xml:id="openstack-components-tech-considerations"><title>OpenStack Components</title>
+    <section xml:id="openstack-components-tech-considerations">
+      <title>OpenStack components</title>
     <para>A general purpose OpenStack cloud design should incorporate
         the core OpenStack services to provide a wide range of
         services to end-users. The OpenStack core services recommended
@@ -422,7 +426,8 @@
         selected to provide persistent storage to applications and
         instances although, depending on the use case, this could be
         optional.</para></section>
-    <section xml:id="supplemental-software-tech-considerations"><title>Supplemental Software</title>
+    <section xml:id="supplemental-software-tech-considerations">
+      <title>Supplemental software</title>
     <para>A general purpose OpenStack deployment consists of more than
         just OpenStack-specific components. A typical deployment
         involves services that provide supporting functionality,
@@ -460,14 +465,15 @@
         memcached or Redis does not affect the overall design of your
         architecture as they tend to be deployed onto the
         infrastructure nodes providing the OpenStack services.</para></section>
-    <section xml:id="performance-tech-considerations"><title>Performance</title>
+    <section xml:id="performance-tech-considerations">
+      <title>Performance</title>
     <para>Performance of an OpenStack deployment is dependent on a
         number of factors related to the infrastructure and controller
         services. The user requirements can be split into general
         network performance, performance of compute resources, and
         performance of storage systems.</para></section>
     <section xml:id="controller-infrastructure-tech-considerations">
-        <title>Controller Infrastructure</title>
+        <title>Controller infrastructure</title>
     <para>The Controller infrastructure nodes provide management
         services to the end-user as well as providing services
         internally for the operating of the cloud. The Controllers
@@ -493,7 +499,8 @@
         internally to OpenStack itself and to end-users. This service
         can lead to a degradation of overall performance if this is
         not sized appropriately.</para></section>
-    <section xml:id="network-performance-tech-considerations"><title>Network Performance</title>
+    <section xml:id="network-performance-tech-considerations">
+      <title>Network performance</title>
     <para>In a general purpose OpenStack cloud, the requirements of
         the network help determine its performance capabilities. For
         example, small deployments may employ 1 Gibabit Ethernet (GbE)
@@ -517,7 +524,8 @@
         environment. When implementing SSL offloading, it is important
         to understand the SSL offloading capabilities of the devices
         selected.</para></section>
-    <section xml:id="compute-host-tech-considerations"><title>Compute Host</title>
+    <section xml:id="compute-host-tech-considerations">
+      <title>Compute host</title>
     <para>The choice of hardware specifications used in compute nodes
         including CPU, memory and disk type directly affects the
         performance of the instances. Other factors which can directly
@@ -531,7 +539,8 @@
         general purpose OpenStack environments it is possible to keep
         to the defaults, but make sure to monitor your environment as
         usage increases.</para></section>
-    <section xml:id="storage-performance-tech-considerations"><title>Storage Performance</title>
+    <section xml:id="storage-performance-tech-considerations">
+      <title>Storage performance</title>
     <para>When considering performance of OpenStack Block Storage,
         hardware and architecture choice is important. Block Storage
         can use enterprise back-end systems such as NetApp or EMC, use
@@ -551,7 +560,8 @@
         of the data would affect performance of the overall system. In
         this case, 10 GbE (or better) networking is recommended
         throughout the storage network architecture.</para></section>
-    <section xml:id="availability-tech-considerations"><title>Availability</title>
+    <section xml:id="availability-tech-considerations">
+      <title>Availability</title>
     <para>In OpenStack, the infrastructure is integral to providing
         services and should always be available, especially when
         operating with SLAs. Ensuring network availability is
@@ -626,7 +636,8 @@
     <para>For more information on HA in OpenStack, see the OpenStack
         High Availability Guide found at
         http://docs.openstack.org/high-availability-guide.</para></section>
-    <section xml:id="security-tech-considerations"><title>Security</title>
+    <section xml:id="security-tech-considerations">
+      <title>Security</title>
     <para>A security domain comprises users, applications, servers or
         networks that share common trust requirements and expectations
         within a system. Typically they have the same authentication

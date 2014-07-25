@@ -5,7 +5,7 @@
   version="5.0"
   xml:id="technical-considerations-network-focus">
     <?dbhtml stop-chunking?>
-    <title>Technical Considerations</title>
+    <title>Technical considerations</title>
     <para>Designing an OpenStack network architecture involves a
         combination of layer 2 and layer 3 considerations. Layer 2
         decisions involve those made at the data-link layer, such as
@@ -89,7 +89,8 @@
         remote access for diagnostics, file transfer of configurations
         and software, and similar applications cannot run without IP
         addresses as well as MAC addresses.</para>
-    <section xml:id="layer-2-arch-limitations"><title>Layer 2 Architecture Limitations</title>
+    <section xml:id="layer-2-arch-limitations">
+      <title>Layer 2 architecture limitations</title>
     <para>Outside of the traditional data center the limitations of
         layer 2 network architectures become more obvious.</para>
     <itemizedlist>
@@ -150,7 +151,8 @@
         information in the backbone changes whenever an instance is
         started or stopped. As a result there is far too much churn in
         the MAC tables on the backbone switches.</para></section>
-    <section xml:id="layer-3-arch-advantages"><title>Layer 3 Architecture Advantages</title>
+    <section xml:id="layer-3-arch-advantages">
+      <title>Layer 3 architecture advantages</title>
     <para>In the layer 3 case, there is no churn in the routing tables
         due to instances starting and stopping. The only time there
         would be a routing state change would be in the case of a Top
@@ -187,7 +189,8 @@
                 of Service (QoS) to manage network performance.</para>
         </listitem>
     </itemizedlist>
-    <section xml:id="layer-3-arch-limitations"><title>Layer 3 Architecture Limitations</title>
+    <section xml:id="layer-3-arch-limitations">
+      <title>Layer 3 architecture limitations</title>
     <para>The main limitation of layer 3 is that there is no built-in
         isolation mechanism comparable to the VLANs in layer 2
         networks. Furthermore, the hierarchical nature of IP addresses
@@ -203,7 +206,7 @@
         addresses and to configure the interior gateway routing
         protocol in the switches.</para></section></section>
     <section xml:id="network-recommendations-overview">
-        <title>Network Recommendations Overview</title>
+        <title>Network recommendations overview</title>
     <para>OpenStack has complex networking requirements for several
         reasons. Many components interact at different levels of the
         system stack that adds complexity. Data flows are complex.
@@ -293,18 +296,21 @@
                 storage network.</para>
         </listitem>
     </itemizedlist></section>
-    <section xml:id="additional-considerations-network-focus"><title>Additional Considerations</title>
+    <section xml:id="additional-considerations-network-focus">
+      <title>Additional considerations</title>
     <para>There are numerous topics to consider when designing a
         network-focused OpenStack cloud.</para>
-    <section xml:id="openstack-networking-versus-nova-network"><title>OpenStack Networking versus Nova Network
-        Considerations</title>
+    <section xml:id="openstack-networking-versus-nova-network">
+      <title>OpenStack Networking versus Nova network
+        considerations</title>
     <para>Selecting the type of networking technology to implement
         depends on many factors. OpenStack Networking (Neutron) and
         Nova Network both have their advantages and disadvantages.
         They are both valid and supported options that fit different
         use cases as described in the following table.</para></section>
-    <section xml:id="redundant-networking-tor-switch-ha"><title>Redundant Networking: ToR Switch High Availability
-        Risk Analysis</title>
+    <section xml:id="redundant-networking-tor-switch-ha">
+      <title>Redundant networking: ToR switch high availability
+        risk analysis</title>
     <para>A technical consideration of networking is the idea that
         switching gear in the data center that should be installed
         with backup switches in case of hardware failure.</para>
@@ -325,7 +331,8 @@
         tolerate rack level outages without affecting normal
         operations since network and compute resources are easily
         provisioned and plentiful.</para></section>
-    <section xml:id="preparing-for-future-ipv6-support"><title>Preparing for the future: IPv6 Support</title>
+    <section xml:id="preparing-for-future-ipv6-support">
+      <title>Preparing for the future: IPv6 support</title>
     <para>One of the most important networking topics today is the
         impending exhaustion of IPv4 addresses. In early 2014, ICANN
         announced that they started allocating the final IPv4 address
@@ -345,7 +352,8 @@
         the feature. To enable it, simply create an IPv6 subnet in
         OpenStack Neutron and use IPv6 prefixes when creating security
         groups.</para></section>
-    <section xml:id="asymmetric-links"><title>Asymmetric Links</title>
+    <section xml:id="asymmetric-links">
+      <title>Asymmetric links</title>
     <para>When designing a network architecture, the traffic patterns
         of an application will heavily influence the allocation of
         total bandwidth and the number of links that are used to send
@@ -353,7 +361,8 @@
         for customers will allocate bandwidth and links to favor
         incoming traffic, whereas video streaming applications will
         allocate bandwidth and links to favor outgoing traffic.</para></section>
-    <section xml:id="performance-network-focus"><title>Performance</title>
+    <section xml:id="performance-network-focus">
+      <title>Performance</title>
     <para>It is important to analyze the applications' tolerance for
         latency and jitter when designing an environment to support
         network focused applications. Certain applications, for
