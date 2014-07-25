@@ -13,6 +13,14 @@
       OpenStack environment with at least the following components
       installed: Compute, Image Service, Identity.</para>
   </formalpara>
+  <itemizedlist>
+    <listitem>
+      <para>If you want to do backup and restore, you also need Object Storage.</para>
+    </listitem>
+    <listitem>
+      <para>If you want to provision datastores on block-storage volumes, you also need Block Storage.</para>
+    </listitem>
+  </itemizedlist>
   <para>To install the Database module on the controller:</para>
   <procedure>
     <step>
@@ -23,11 +31,8 @@
       <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-trove python-troveclient</userinput></screen>
     </step>
     <step os="debian">
-      <para>Respond to the prompts for <link
-        linkend="debconf-dbconfig-common">database management</link> and
-        <link linkend="debconf-keystone_authtoken"
-        ><literal>[keystone_authtoken]</literal> settings</link>,
-        and <link linkend="debconf-api-endpoints">API endpoint</link>
+      <para>Respond to the prompts for <link xlink:href="debconf-dbconfig-common">database management</link> and <link xlink:href="debconf-keystone_authtoken"><literal>[keystone_authtoken]</literal> settings</link>,
+        and <link xlink:href="debconf-api-endpoints">API endpoint</link>
         registration. The <command>trove-manage db_sync</command>
         command runs automatically.</para>
     </step>
