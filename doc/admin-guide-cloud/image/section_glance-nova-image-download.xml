@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE section [
+<!ENTITY % openstack SYSTEM "../../common/entities/openstack.ent">
+%openstack;
+]>
+<section xmlns="http://docbook.org/ns/docbook"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  version="5.0"
+  xml:id="glance-nova-image-download">
+  <title>Image download: how it works</title>
+  <para>
+    Prior to starting a virtual machine, the virtual machine image
+    used must be transferred to the compute node from the Image
+    Service. How this works can change depending on the settings
+    chosen for the compute node and the Image Service.
+  </para>
+  <para>
+    Typically, the Compute service will use the image identifier
+  passed to it by the scheduler service and request the image from the
+  Image API. Though images are not stored in glance&mdash;rather in a
+  back end, which could be Object Storage, a filesystem or any other
+  supported method&mdash;the connection is made from the compute node
+  to the Image Service and the image is transferred over this
+  connection. The Image Service streams the image from the back end to the
+  compute node.
+  </para>
+  <para>
+    Certain back ends support a more direct method, where on request
+    the Image Service will return a URL that can be used to
+    download the image directly from the back-end store. Currently the
+    only store to support the direct download approach is the
+    filesystem store. It can be configured using the
+    <option>filesystems</option> option in the
+    <literal>image_file_url</literal> section of the
+    <filename>nova.conf</filename> file on compute nodes.
+  </para>
+  <para>
+    Compute nodes also implement caching of images, meaning that if an
+    image has been used before it won't necessarily be downloaded
+    every time. Information on the configuration options for caching
+    on compute nodes can be found in the <link
+    xlink:href="http://docs.openstack.org/trunk/config-reference/content/"><citetitle>Configuration
+    Reference</citetitle></link>.
+  </para>
+</section>
