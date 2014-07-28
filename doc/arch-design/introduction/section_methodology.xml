@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE section [
+<!ENTITY % openstack SYSTEM "../../common/entities/openstack.ent">
+%openstack;
+]>
 <section xmlns="http://docbook.org/ns/docbook"
   xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -79,24 +83,37 @@
         identifying the key metrics, such as number of concurrent transactions
         per second, size of database, and so on, it is possible to then build a
         method for testing the assumptions.</para>
-    <para>Develop functional user scenarios: Develop functional user scenarios
-        that can be used to develop test cases that can be used to measure
-        overall project trajectory. If the organization is not ready to commit
-        to an application or applications that can be used to develop user
-        requirements, it needs to create requirements to build valid test
-        harnesses and develop usable metrics. Once the metrics are established,
-        as requirements change, it is easier to respond to the changes quickly
-        without having to worry overly much about setting the exact requirements
-        in advance. Think of this as creating ways to configure the system,
-        rather than redesigning it every time there is a requirements change.</para>
-    <para>Limit cloud feature set: Create requirements that address the pain
-        points, but do not recreate the entire OpenStack tool suite. The
-        requirement to build OpenStack, only better, is self-defeating. It is
-        important to limit scope creep by concentrating on developing a platform
-        that will address tool limitations for the requirements, but not
-        recreating the entire suite of tools. Work with technical product owners
-        to establish critical features that are needed for a successful cloud
-        deployment.</para>
+    <formalpara>
+      <title>Develop functional user scenarios</title>
+      <para>
+        Develop functional user scenarios that can be used to develop
+        test cases that can be used to measure overall project
+        trajectory. If the organization is not ready to commit to an
+        application or applications that can be used to develop user
+        requirements, it needs to create requirements to build valid
+        test harnesses and develop usable metrics. Once the metrics
+        are established, as requirements change, it is easier to
+        respond to the changes quickly without having to worry overly
+        much about setting the exact requirements in advance. Think of
+        this as creating ways to configure the system, rather than
+        redesigning it every time there is a requirements
+        change.
+      </para>
+    </formalpara>
+    <formalpara>
+      <title>Limit cloud feature set</title>
+      <para>
+        Create requirements that address the pain points, but do not
+        recreate the entire OpenStack tool suite. The requirement to
+        build OpenStack, only better, is self-defeating. It is
+        important to limit scope creep by concentrating on developing
+        a platform that will address tool limitations for the
+        requirements, but not recreating the entire suite of
+        tools. Work with technical product owners to establish
+        critical features that are needed for a successful cloud
+        deployment.
+      </para>
+    </formalpara>
     <section xml:id="application-cloud-readiness-methods">
         <title>Application cloud readiness</title>
         <para>Although the cloud is designed to make things easier, it is
@@ -129,30 +146,67 @@
         <title>Determining whether an application is cloud-ready</title>
         <para>There are several factors to take into consideration when looking
             at whether an application is a good fit for the cloud.</para>
-        <para>Structure: A large, monolithic, single-tiered legacy application
-            typically isn't a good fit for the cloud. Efficiencies are gained
-            when load can be spread over several instances, so that a failure in
-            one part of the system can be mitigated without affecting other
-            parts of the system, or so that scaling can take place where the app
-            needs it.</para>
-        <para>Dependencies: Applications that depend on specific hardware --
-            such as a particular chip set or an external device such as a
-            fingerprint reader -- might not be a good fit for the cloud, unless
-            those dependencies are specifically addressed. Similarly, if an
-            application depends on an operating system or set of libraries that
-            cannot be used in the cloud, or cannot be virtualized, that is a
-            problem.</para>
-        <para>Connectivity: Self-contained applications or those that depend on
-            resources that are not reachable by the cloud in question, will not
-            run. In some situations, work around these issues with custom
-            network setup, but how well this works depends on the chosen cloud
-            environment.</para>
-        <para>Durability and Resilience: Despite the existence of SLAs, the one
-            reality of the cloud is that Things Break. Servers go down, network
-            connections are disrupted, other tenants on a server ramp up the
-            load to make the server unusable. Any number of things can happen,
-            and an application that isn't built to withstand this kind of
-            disruption isn't going to work properly.</para>
+            <variablelist>
+              <varlistentry>
+                <term>Structure</term>
+                <listitem>
+                  <para>
+                    A large, monolithic, single-tiered legacy
+                    application typically isn't a good fit for the
+                    cloud. Efficiencies are gained when load can be
+                    spread over several instances, so that a failure
+                    in one part of the system can be mitigated without
+                    affecting other parts of the system, or so that
+                    scaling can take place where the app needs
+                    it.
+                  </para>
+                </listitem>
+              </varlistentry>
+              <varlistentry>
+                <term>Dependencies</term>
+                <listitem>
+                  <para>
+                    Applications that depend on specific
+                    hardware&mdash;such as a particular chip set or an
+                    external device such as a fingerprint
+                    reader&mdash;might not be a good fit for the
+                    cloud, unless those dependencies are specifically
+                    addressed. Similarly, if an application depends on
+                    an operating system or set of libraries that
+                    cannot be used in the cloud, or cannot be
+                    virtualized, that is a problem.
+                  </para>
+                </listitem>
+              </varlistentry>
+              <varlistentry>
+                <term>Connectivity</term>
+                <listitem>
+                  <para>
+                    Self-contained applications or those that depend
+                    on resources that are not reachable by the cloud
+                    in question, will not run. In some situations,
+                    work around these issues with custom network
+                    setup, but how well this works depends on the
+                    chosen cloud environment.
+                  </para>
+                </listitem>
+              </varlistentry>
+              <varlistentry>
+                <term>Durability and resilience</term>
+                <listitem>
+                  <para>
+                    Despite the existence of SLAs, the one reality of
+                    the cloud is that Things Break. Servers go down,
+                    network connections are disrupted, other tenants
+                    on a server ramp up the load to make the server
+                    unusable. Any number of things can happen, and an
+                    application that isn't built to withstand this
+                    kind of disruption isn't going to work
+                    properly.
+                  </para>
+                </listitem>
+              </varlistentry>
+            </variablelist>
     </section>
     <section xml:id="designing-for-the-cloud">
         <title>Designing for the cloud</title>
