@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE section [
+<!ENTITY % openstack SYSTEM "../../common/entities/openstack.ent">
+%openstack;
+]>
 <section xmlns="http://docbook.org/ns/docbook"
   xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -54,12 +58,13 @@
             <para>1600 = (16 x (number of physical cores)) / 2</para>
         </listitem>
         <listitem>
-            <para>storage required = 50 GB x 1600</para>
+            <para>storage required = 50&nbsp;GB x 1600</para>
         </listitem>
     </itemizedlist>
     <para>On the surface, the equations reveal the need for 200
-        physical cores and 80 TB of storage for
-        /var/lib/nova/instances/. However, it is also important to
+        physical cores and 80&nbsp;TB of storage for
+        <filename>/var/lib/nova/instances/</filename>. However,
+        it is also important to
         look at patterns of usage to estimate the load that the API
         services, database servers, and queue servers are likely to
         encounter.</para>
@@ -94,12 +99,8 @@
         (CPU/core).</para>
     <para>The cloud resource calculator is a useful tool in examining
         the impacts of different hardware and instance load outs. It
-        is available at:</para>
-    <itemizedlist>
-        <listitem>
-            <para>https://github.com/noslzzp/cloud-resource-calculator/blob/master/cloud-resource-calculator.ods</para>
-        </listitem>
-    </itemizedlist>
+        is available at: <link xlink:href="https://github.com/noslzzp/cloud-resource-calculator/blob/master/cloud-resource-calculator.ods">https://github.com/noslzzp/cloud-resource-calculator/blob/master/cloud-resource-calculator.ods</link>
+    </para>
     <section xml:id="expansion-planning-compute-focus">
         <title>Expansion planning</title>
     <para>A key challenge faced when planning the expansion of cloud
@@ -144,7 +145,7 @@
         workloads with both Hyper-Threading on and off can help
         determine what is more appropriate in any particular
         case.</para>
-    <para>If the Libvirt/KVM Hypervisor driver are the intended use
+    <para>If the Libvirt/KVM hypervisor driver are the intended use
         cases, then the CPUs used in the compute nodes must support
         virtualization by way of the VT-x extensions for Intel chips
         and AMD-v extensions for AMD chips to provide full
@@ -408,7 +409,7 @@
         processing, this cloud will utilize mainly memory or CPU, so
         the need for add-on storage to each instance is not a likely
         requirement. This does not mean the OpenStack Block Storage
-        service (Cinder) will not be used in the infrastructure, but
+        service (cinder) will not be used in the infrastructure, but
         typically it will not be used as a central component.</para>
     <itemizedlist>
         <listitem>
