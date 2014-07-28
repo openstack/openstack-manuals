@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE section [
+<!ENTITY % openstack SYSTEM "../../common/entities/openstack.ent">
+%openstack;
+]>
 <section xmlns="http://docbook.org/ns/docbook"
   xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -56,22 +60,22 @@
         easier to deploy, support and maintain those nodes throughout
         their life cycle in the cloud.</para>
     <para>OpenStack provides the ability to configure overcommit
-        ratio--the ratio of virtual resources available for allocation
-        to physical resources present--for both CPU and memory. The
+        ratio&mdash;the ratio of virtual resources available for allocation
+        to physical resources present&mdash;for both CPU and memory. The
         default CPU overcommit ratio is 16:1 and the default memory
         overcommit ratio is 1.5:1. Determine the tuning of the
         overcommit ratios for both of these options during the design
         phase, as this has a direct impact on the hardware layout of
         your compute nodes.</para>
     <para>As an example, consider that a m1.small instance uses 1
-        vCPU, 20 GB of ephemeral storage and 2,048 MB of RAM. When
+        vCPU, 20&nbsp;GB of ephemeral storage and 2,048&nbsp;MB of RAM. When
         designing a hardware node as a compute resource pool to
         service instances, take into consideration the number of
         processor cores available on the node as well as the required
         disk and memory to service instances running at capacity. For
         a server with 2 CPUs of 10 cores each, with hyperthreading
         turned on, the default CPU overcommit ratio of 16:1 would
-        allow for 640 (2 x 10 x 2 x 16) total m1.small instances. By
+        allow for 640 (2 x 10 x 2 x 16) total <literal>m1.small</literal> instances. By
         the same reasoning, using the default memory overcommit ratio
         of 1.5:1 you can determine that the server will need at least
         853GB (640 x 2,048 MB % 1.5) of RAM. When sizing nodes for
@@ -366,7 +370,8 @@
     </itemizedlist>
     <para>A complete list of supported hypervisors and their
         capabilities can be found at
-        https://wiki.openstack.org/wiki/HypervisorSupportMatrix.</para>
+        <link xlink:href="https://wiki.openstack.org/wiki/HypervisorSupportMatrix">https://wiki.openstack.org/wiki/HypervisorSupportMatrix</link>.
+    </para>
     <para>General purpose clouds should make use of hypervisors that
         support the most general purpose use cases, such as KVM and
         Xen. More specific hypervisors should then be chosen to
@@ -403,22 +408,22 @@
         in a general purpose cloud are:</para>
     <itemizedlist>
         <listitem>
-            <para>OpenStack Compute (Nova)</para>
+            <para>OpenStack Compute (nova)</para>
         </listitem>
         <listitem>
-            <para>OpenStack Networking (Neutron)</para>
+            <para>OpenStack Networking (neutron)</para>
         </listitem>
         <listitem>
-            <para>OpenStack Image Service (Glance)</para>
+            <para>OpenStack Image Service (glance)</para>
         </listitem>
         <listitem>
-            <para>OpenStack Identity Service (Keystone)</para>
+            <para>OpenStack Identity (keystone)</para>
         </listitem>
         <listitem>
-            <para>OpenStack Dashboard (Horizon)</para>
+            <para>OpenStack dashboard (horizon)</para>
         </listitem>
         <listitem>
-            <para>OpenStack Telemetry (Ceilometer)</para>
+            <para>Telemetry module (ceilometer)</para>
         </listitem>
     </itemizedlist>
     <para>A general purpose cloud may also include OpenStack Object
@@ -503,10 +508,10 @@
       <title>Network performance</title>
     <para>In a general purpose OpenStack cloud, the requirements of
         the network help determine its performance capabilities. For
-        example, small deployments may employ 1 Gibabit Ethernet (GbE)
+        example, small deployments may employ 1 Gigabit Ethernet (GbE)
         networking, whereas larger installations serving multiple
-        departments or many users would be better architected with 10
-        GbE networking. The performance of the running instances will
+        departments or many users would be better architected with
+        10&nbsp;GbE networking. The performance of the running instances will
         be limited by these speeds. It is possible to design OpenStack
         environments that run a mix of networking capabilities. By
         utilizing the different interface speeds, the users of the
@@ -514,7 +519,7 @@
         their purpose. For example, web application instances may run
         on a public network presented through OpenStack Networking
         that has 1 GbE capability, whereas the back-end database uses
-        an OpenStack Networking network that has 10 GbE capability to
+        an OpenStack Networking network that has 10&nbsp;GbE capability to
         replicate its data or, in some cases, the design may
         incorporate link aggregation for greater throughput.</para>
     <para>Network performance can be boosted considerably by
@@ -608,7 +613,7 @@
         Networking, and instead rely on hardware routing capabilities.
         In this case, the switching infrastructure must support L3
         routing.</para>
-    <para>OpenStack Networking (Neutron) and Nova Network both have
+    <para>OpenStack Networking (neutron) and nova-network both have
         their advantages and disadvantages. They are both valid and
         supported options that fit different use cases as described in
         the following table.</para>
@@ -633,9 +638,12 @@
         may include utilizing shared file systems on enterprise
         storage or OpenStack Block storage to provide a level of
         guarantee to match service features.</para>
-    <para>For more information on HA in OpenStack, see the OpenStack
-        High Availability Guide found at
-        http://docs.openstack.org/high-availability-guide.</para></section>
+    <para>
+      For more information on HA in OpenStack, see the <link
+      xlink:href="http://docs.openstack.org/high-availability-guide"><citetitle>OpenStack
+      High Availability Guide</citetitle></link>.
+        </para>
+      </section>
     <section xml:id="security-tech-considerations">
       <title>Security</title>
     <para>A security domain comprises users, applications, servers or
@@ -719,8 +727,10 @@
         passwords and authentication tokens. For this reason, placing
         the API services behind hardware that performs SSL termination
         is strongly recommended.</para>
-    <para>For more information OpenStack Security, see the OpenStack
-        Security Guide, at
-        http://docs.openstack.org/security-guide/.</para>
-</section>
+    <para>
+      For more information OpenStack Security, see the <link
+      xlink:href="http://docs.openstack.org/security-guide/"><citetitle>OpenStack
+      Security Guide</citetitle></link>
+    </para>
+  </section>
 </section>

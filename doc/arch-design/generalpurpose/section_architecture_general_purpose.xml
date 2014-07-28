@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE section [
+<!ENTITY % openstack SYSTEM "../../common/entities/openstack.ent">
+%openstack;
+]>
 <section xmlns="http://docbook.org/ns/docbook"
   xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -37,29 +41,42 @@
         and storage capacity (gigabytes or terabytes as well as I-O
         Operations Per Second (IOPS).</para>
     <para>Server hardware is evaluated around four conflicting
-        dimensions:</para>
-    <itemizedlist>
+        dimensions:
+    </para>
+    <variablelist>
+      <varlistentry>
+        <term>Server density</term>
         <listitem>
-            <para>Server density: A measure of how many servers can
-                fit into a given measure of physical space, such as a
-                rack unit [U].</para>
+          <para>A measure of how many servers can
+            fit into a given measure of physical space, such as a
+            rack unit [U].</para>
         </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Resource capacity</term>
         <listitem>
-            <para>Resource capacity: The number of CPU cores, how much
-                RAM, or how much storage a given server will
-                deliver.</para>
+          <para>The number of CPU cores, how much
+            RAM, or how much storage a given server will
+            deliver.</para>
         </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Expandability</term>
         <listitem>
-            <para>Expandability: The number of additional resources
-                that can be added to a server before it has reached
-                its limit.</para>
+          <para>The number of additional resources
+            that can be added to a server before it has reached
+            its limit.</para>
         </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Cost</term>
         <listitem>
-            <para>Cost: The relative purchase price of the hardware
-                weighted against the level of design effort needed to
-                build the system.</para>
+          <para>The relative purchase price of the hardware
+             weighted against the level of design effort needed to
+             build the system.</para>
         </listitem>
-    </itemizedlist>
+      </varlistentry>
+    </variablelist>
     <para>Increasing server density means sacrificing resource
         capacity or expandability, however, increasing resource
         capacity and expandability increases cost and decreases server
@@ -122,10 +139,13 @@
         must flow out of the user requirements, technical
         considerations, and operational considerations. Here are some
         of the key factors that influence the selection of server
-        hardware:</para>
-    <itemizedlist>
+        hardware:
+    </para>
+    <variablelist>
+      <varlistentry>
+        <term>Instance density</term>
         <listitem>
-            <para>Instance density: Sizing is an important
+            <para>Sizing is an important
                 consideration for a general purpose OpenStack cloud.
                 The expected or anticipated number of instances that
                 each hypervisor can host is a common metric used in
@@ -133,8 +153,11 @@
                 needs to support the expected or anticipated instance
                 density.</para>
         </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Host density</term>
         <listitem>
-            <para>Host density: Physical data centers have limited
+            <para>Physical data centers have limited
                 physical space, power, and cooling. The number of
                 hosts (or hypervisors) that can be fitted into a given
                 metric (rack, rack unit, or floor tile) is another
@@ -145,8 +168,11 @@
                 need to be applied as part of the host density
                 calculation and server hardware selection.</para>
         </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Power density</term>
         <listitem>
-            <para>Power density: Data centers have a specified amount
+            <para>Data centers have a specified amount
                 of power fed to a given rack or set of racks. Older
                 data centers may have a power density as power as low
                 as 20 AMPs per rack, while more recent data centers
@@ -154,8 +180,11 @@
                 as 120 AMP per rack. The selected server hardware must
                 take power density into account.</para>
         </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Network connectivity</term>
         <listitem>
-            <para>Network connectivity: The selected server hardware
+            <para>The selected server hardware
                 must have the appropriate number of network
                 connections, as well as the right type of network
                 connections, in order to support the proposed
@@ -167,11 +196,12 @@
                 providers. Many data centers have that capacity
                 available.</para>
         </listitem>
-    </itemizedlist>
+      </varlistentry>
+    </variablelist>
     <para>The selection of certain form factors or architectures will
         affect the selection of server hardware. For example, if the
-        design calls for a scale-out storage architecture (For
-        example, leveraging Ceph, Gluster, or a similar commercial
+        design calls for a scale-out storage architecture (such as
+        leveraging Ceph, Gluster, or a similar commercial
         solution), then the server hardware selection will need to be
         carefully considered to match the requirements set by the
         commercial solution. Ensure that the selected server hardware
@@ -197,10 +227,13 @@
         <title>Selecting storage hardware</title>
     <para>The selection of storage hardware is largely determined by
         the proposed storage architecture. Factors that need to be
-        incorporated into the storage architecture include:</para>
-    <itemizedlist>
+        incorporated into the storage architecture include:
+    </para>
+    <variablelist>
+      <varlistentry>
+        <term>Cost</term>
         <listitem>
-            <para>Cost: Storage can be a significant portion of the
+            <para>Storage can be a significant portion of the
                 overall system cost that should be factored into the
                 design decision. For an organization that is concerned
                 with vendor support, a commercial storage solution is
@@ -211,15 +244,21 @@
                 higher support costs and a greater risk of
                 incompatibility and interoperability issues.</para>
         </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Performance</term>
         <listitem>
-            <para>Performance: Storage performance, measured by
+            <para>Storage performance, measured by
                 observing the latency of storage I-O requests, is not
                 a critical factor for a general purpose OpenStack
                 cloud as overall systems performance is not a design
                 priority.</para>
         </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Scalability</term>
         <listitem>
-            <para>Scalability: The term "scalability" refers to how
+            <para>The term "scalability" refers to how
                 well the storage solution performs as it expands up to
                 its maximum designed size. A solution that continues
                 to perform well at maximum expansion is considered
@@ -237,11 +276,14 @@
                 continue to perform well as it expands is
                 important.</para>
         </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Expandability</term>
         <listitem>
-            <para>Expandability: This refers to the overall ability of
+            <para>This refers to the overall ability of
                 the solution to grow. A storage solution that expands
-                to 50 PB is considered more expandable than a solution
-                that only scales to 10 PB. This metric is related to,
+                to 50&nbsp;PB is considered more expandable than a solution
+                that only scales to 10&nbsp;PB. This metric is related to,
                 but different, from scalability, which is a measure of
                 the solution's performance as it expands.
                 Expandability is a major architecture factor for
@@ -252,7 +294,8 @@
                 requirements as a cloud that is intended for a
                 commercial product.</para>
         </listitem>
-    </itemizedlist>
+      </varlistentry>
+    </variablelist>
     <para>Storage hardware architecture is largely determined by the
         selected storage architecture. The selection of storage
         architecture, as well as the corresponding storage hardware,
@@ -287,10 +330,13 @@
     <para>This list expands upon the potential impacts for including a
         particular storage architecture (and corresponding storage
         hardware) into the design for a general purpose OpenStack
-        cloud:</para>
-    <itemizedlist>
+        cloud:
+    </para>
+    <variablelist>
+      <varlistentry>
+        <term>Connectivity</term>
         <listitem>
-            <para>Connectivity: Ensure that, if storage protocols
+            <para>Ensure that, if storage protocols
                 other than Ethernet are part of the storage solution,
                 the appropriate hardware has been selected. Some
                 examples include InfiniBand, FDDI and Fibre Channel.
@@ -298,44 +344,59 @@
                 that the hypervisor will be able to connect to that
                 storage array for image storage.</para>
         </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Usage</term>
         <listitem>
-            <para>Usage: How the particular storage architecture will
+            <para>How the particular storage architecture will
                 be used is critical for determining the architecture.
                 Some of the configurations that will influence the
                 architecture include whether it will be used by the
                 hypervisors for ephemeral instance storage or if
-                OpenStack Swift will use it for object storage. All of
+                OpenStack Object Storage will use it for object storage. All of
                 these usage models are affected by the selection of
                 particular storage architecture and the corresponding
                 storage hardware to support that architecture.</para>
         </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Instance and image locations</term>
         <listitem>
-            <para>Instance and image locations: Where instances and
-                images will be stored will influence the architecture.
-                For example, instances can be stored in a number of
-                options. OpenStack Cinder is a good location for
-                instances because it is persistent block storage,
-                however, Swift can be used if storage latency is less
-                of a concern. The same argument applies to the
-                appropriate image storage location.</para>
+            <para>
+              Where instances and images will be stored will influence
+              the architecture.  For example, instances can be stored
+              in a number of options. OpenStack Block Storage is a
+              good location for instances because it is persistent
+              block storage, however, OpenStack Object Storage can be
+              used if storage latency is less of a concern. The same
+              argument applies to the appropriate image storage
+              location.
+            </para>
         </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Server hardware</term>
         <listitem>
-            <para>Server Hardware: If the solution is a scale-out
+            <para>If the solution is a scale-out
                 storage architecture that includes DAS, naturally that
                 will affect the server hardware selection. This could
                 ripple into the decisions that affect host density,
                 instance density, power density, OS-hypervisor,
                 management tools and others.</para>
         </listitem>
-    </itemizedlist>
+      </varlistentry>
+    </variablelist>
     <para>General purpose OpenStack cloud has multiple options. As a
         result, there is no single decision that will apply to all
         implementations. The key factors that will have an influence
         on selection of storage hardware for a general purpose
-        OpenStack cloud are as follows:</para>
-    <itemizedlist>
+        OpenStack cloud are as follows:
+    </para>
+    <variablelist>
+      <varlistentry>
+        <term>Capacity</term>
         <listitem>
-            <para>Capacity: Hardware resources selected for the
+            <para>Hardware resources selected for the
                 resource nodes should be capable of supporting enough
                 storage for the cloud services that will use them. It
                 is important to clearly define the initial
@@ -354,8 +415,11 @@
                 replacing and repairing degraded or destroyed storage
                 devices within the cloud.</para>
         </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Performance</term>
         <listitem>
-            <para>Performance: Disks selected for the object storage
+            <para>Disks selected for the object storage
                 service do not need to be fast performing disks. It is
                 recommended that object storage nodes take advantage
                 of the best cost per terabyte available for storage at
@@ -372,8 +436,11 @@
                 similar hardware solutions to block storage in order
                 to increase the storage performance.</para>
         </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Fault tolerance</term>
         <listitem>
-            <para>Fault Tolerance: Object storage resource nodes have
+            <para>Object storage resource nodes have
                 no requirements for hardware fault tolerance or RAID
                 controllers. It is not necessary to plan for fault
                 tolerance within the object storage hardware because
@@ -387,7 +454,8 @@
                 performance and availability requirements of the
                 cloud.</para>
         </listitem>
-    </itemizedlist>
+      </varlistentry>
+    </variablelist>
     </section>
     <section xml:id="selecting-networking-hardware">
         <title>Selecting networking hardware</title>
@@ -398,7 +466,7 @@
         obvious, for example, selecting networking hardware that only
         supports Gigabit Ethernet (GbE) will naturally have an impact
         on many different areas of the overall design. Similarly,
-        deciding to use 10 Gigabit Ethernet (10 GbE) has a number of
+        deciding to use 10 Gigabit Ethernet (10&nbsp;GbE) has a number of
         impacts on various areas of the overall design.</para>
     <para>As an example, selecting Cisco networking hardware implies
         that the architecture will be using Cisco networking software
@@ -417,18 +485,24 @@
         capable of running on a number of switch vendor’s hardware
         solutions.</para>
     <para>Some of the key considerations that should be included in
-        the selection of networking hardware include:</para>
-    <itemizedlist>
+        the selection of networking hardware include:
+    </para>
+    <variablelist>
+      <varlistentry>
+        <term>Port count</term>
         <listitem>
-            <para>Port count: The design will require networking
+            <para>The design will require networking
                 hardware that has the requisite port count.</para>
         </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Port density</term>
         <listitem>
-            <para>Port density: The network design will be affected by
+            <para>The network design will be affected by
                 the physical space that is required to provide the
-                requisite port count. A switch that can provide 48 10
-                GbE ports in 1U has a much higher port density than a
-                switch that provides 24 10 GbE ports in 2U. A higher
+                requisite port count. A switch that can provide 48
+                10&nbsp;GbE ports in 1U has a much higher port density than a
+                switch that provides 24 10&nbsp;GbE ports in 2U. A higher
                 port density is preferred, as it leaves more rack
                 space for compute or storage components that may be
                 required by the design. This can also lead into
@@ -438,13 +512,21 @@
                 important not to over design the network if it is not
                 required.</para>
         </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Port speed</term>
         <listitem>
-            <para>Port speed: The networking hardware must support the
-                proposed network speed, for example: 1 GbE, 10 GbE, or
-                40 GbE (or even 100 GbE).</para>
+            <para>
+              The networking hardware must support the proposed
+              network speed, for example: 1&nbsp;GbE, 10&nbsp;GbE, or
+              40&nbsp;GbE (or even 100&nbsp;GbE).
+            </para>
         </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Redundancy</term>
         <listitem>
-            <para>Redundancy: The level of network hardware redundancy
+            <para>The level of network hardware redundancy
                 required is influenced by the user requirements for
                 high availability and cost considerations. Network
                 redundancy can be achieved by adding redundant power
@@ -453,23 +535,30 @@
                 User requirements will determine if a completely
                 redundant network infrastructure is required.</para>
         </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Power requirements</term>
         <listitem>
-            <para>Power requirements: Make sure that the physical data
+            <para>Make sure that the physical data
                 center provides the necessary power for the selected
                 network hardware. This is not an issue for top of rack
                 (ToR) switches, but may be an issue for spine switches
                 in a leaf and spine fabric, or end of row (EoR)
                 switches.</para>
         </listitem>
-    </itemizedlist>
+      </varlistentry>
+    </variablelist>
     <para>There is no single best practice architecture for the
         networking hardware supporting a general purpose OpenStack
         cloud that will apply to all implementations. Some of the key
         factors that will have a strong influence on selection of
-        networking hardware include:</para>
-    <itemizedlist>
+        networking hardware include:
+    </para>
+    <variablelist>
+      <varlistentry>
+        <term>Connectivity</term>
         <listitem>
-            <para>Connectivity: All nodes within an OpenStack cloud
+            <para>All nodes within an OpenStack cloud
                 require some form of network connectivity. In some
                 cases, nodes require access to more than one network
                 segment. The design must encompass sufficient network
@@ -478,15 +567,21 @@
                 east-west traffic have sufficient resources
                 available.</para>
         </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Scalability</term>
         <listitem>
-            <para>Scalability: The chosen network design should
+            <para>The chosen network design should
                 encompass a physical and logical network design that
                 can be easily expanded upon. Network hardware should
                 offer the appropriate types of interfaces and speeds
                 that are required by the hardware nodes.</para>
         </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Availability</term>
         <listitem>
-            <para>Availability: To ensure that access to nodes within
+            <para>To ensure that access to nodes within
                 the cloud is not interrupted, it is recommended that
                 the network architecture identify any single points of
                 failure and provide some level of redundancy or fault
@@ -501,7 +596,8 @@
                 solutions within the network architecture to
                 accommodate for these requirements.</para>
         </listitem>
-    </itemizedlist>
+      </varlistentry>
+    </variablelist>
     </section>
     <section xml:id="software-selection">
         <title>Software selection</title>
@@ -534,10 +630,13 @@
       Control Protocol (LACP), the OS and hypervisor both need to
       support it.</para>
     <para>Some areas that could be impacted by the selection of OS and
-        hypervisor include:</para>
-    <itemizedlist>
+        hypervisor include:
+    </para>
+    <variablelist>
+      <varlistentry>
+        <term>Cost</term>
         <listitem>
-            <para>Cost: Selecting a commercially supported hypervisor,
+            <para>Selecting a commercially supported hypervisor,
                 such as Microsoft Hyper-V, will result in a different
                 cost model rather than community-supported open source
                 hypervisors including KVM, Kinstance or Xen. When
@@ -547,16 +646,22 @@
                 business or application requirements may dictate a
                 specific or commercially supported hypervisor.</para>
         </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Supportability</term>
         <listitem>
-            <para>Supportability: Depending on the selected
+            <para>Depending on the selected
                 hypervisor, the staff should have the appropriate
                 training and knowledge to support the selected OS and
                 hypervisor combination. If they do not, training will
                 need to be provided which could have a cost impact on
                 the design.</para>
         </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Management tools</term>
         <listitem>
-            <para>Management tools: The management tools used for
+            <para>The management tools used for
                 Ubuntu and Kinstance differ from the management tools
                 for VMware vSphere. Although both OS and hypervisor
                 combinations are supported by OpenStack, there will be
@@ -564,24 +669,33 @@
                 result of the selection of one combination versus the
                 other.</para>
         </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Scale and performance</term>
         <listitem>
-            <para>Scale and performance: Ensure that selected OS and
+            <para>Ensure that selected OS and
                 hypervisor combinations meet the appropriate scale and
                 performance requirements. The chosen architecture will
                 need to meet the targeted instance-host ratios with
                 the selected OS-hypervisor combinations.</para>
         </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Security</term>
         <listitem>
-            <para>Security: Ensure that the design can accommodate the
+            <para>Ensure that the design can accommodate the
                 regular periodic installation of application security
                 patches while maintaining the required workloads. The
-                frequency of security patches for the proposed OS -
-                hypervisor combination will have an impact on
+                frequency of security patches for the proposed
+                OS-hypervisor combination will have an impact on
                 performance and the patch installation process could
                 affect maintenance windows.</para>
         </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Supported features</term>
         <listitem>
-            <para>Supported features: Determine which features of
+            <para>Determine which features of
                 OpenStack are required. This will often determine the
                 selection of the OS-hypervisor combination. Certain
                 features are only available with specific OSs or
@@ -589,8 +703,11 @@
                 available, the design might need to be modified to
                 meet the user requirements.</para>
         </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Interoperability</term>
         <listitem>
-            <para>Interoperability: Consideration should be given to
+            <para>Consideration should be given to
                 the ability of the selected OS-hypervisor combination
                 to interoperate or co-exist with other OS-hypervisors
                 as well as other software solutions in the overall
@@ -601,26 +718,27 @@
                 address if the two sets of tools need to interoperate.
            </para>
         </listitem>
-    </itemizedlist>
+      </varlistentry>
+    </variablelist>
     </section>
     <section xml:id="openstack-components">
         <title>OpenStack components</title>
     <para>The selection of which OpenStack components are included has
         a significant impact on the overall design. While there are
-        certain components that will always be present, (Nova and
-        Glance, for example) there are other services that may not be
+        certain components that will always be present, (Compute and
+        Image Service, for example) there are other services that may not be
         required. As an example, a certain design might not need
-        OpenStack Heat. Omitting Heat would not have a significant
+        Orchestration. Omitting Orchestration would not have a significant
         impact on the overall design of a cloud; however, if the
         architecture uses a replacement for OpenStack Swift for its
         storage component, it could potentially have significant
         impacts on the rest of the design.</para>
     <para>The exclusion of certain OpenStack components might also
         limit or constrain the functionality of other components. If
-        the architecture includes Heat but excludes Ceilometer, then
-        the design will not be able to take advantage of Heat's auto
+        the architecture includes Orchestration but excludes Telemetry, then
+        the design will not be able to take advantage of Orchestrations' auto
         scaling functionality (which relies on information from
-        Ceilometer). It is important to research the component
+        Telemetry). It is important to research the component
         interdependencies in conjunction with the technical
         requirements before deciding what components need to be
         included and what components can be dropped from the final
@@ -635,14 +753,17 @@
     </section>
     <section xml:id="networking-software">
       <title>Networking software</title>
-    <para>OpenStack Neutron provides a wide variety of networking
+    <para>OpenStack Networking provides a wide variety of networking
         services for instances. There are many additional networking
         software packages that might be useful to manage the OpenStack
         components themselves. Some examples include software to
         provide load balancing, network redundancy protocols, and
         routing daemons. Some of these software packages are described
-        in more detail in the OpenStack HA Guide (refer to Chapter 8
-        of the OpenStack High Availability Guide).</para>
+        in more detail in the <citetitle>OpenStack High Availability
+        Guide</citetitle> (refer to the <link
+        xlink:href="http://docs.openstack.org/high-availability-guide/content/ch-network.html">Network
+        controller cluster stack chapter</link> of the OpenStack High
+        Availability Guide).</para>
     <para>For a general purpose OpenStack cloud, the OpenStack
         infrastructure components will need to be highly available. If
         the design does not include hardware load balancing,
@@ -655,13 +776,14 @@
         affects the overall OpenStack cloud design. This includes
         software for providing clustering, logging, monitoring and
         alerting.</para>
-    <para>Inclusion of clustering Software, such as Corosync or
+    <para>Inclusion of clustering software, such as Corosync or
         Pacemaker, is determined primarily by the availability
         requirements. Therefore, the impact of including (or not
         including) these software packages is primarily determined by
         the availability of the cloud infrastructure and the
         complexity of supporting the configuration after it is
-        deployed. The OpenStack High Availability Guide provides more
+        deployed. The <link xlink:href="http://docs.openstack.org/high-availability-guide/"><citetitle>OpenStack High Availability Guide</citetitle></link>
+        provides more
         details on the installation and configuration of Corosync and
         Pacemaker, should these packages need to be included in the
         design.</para>
@@ -683,7 +805,7 @@
         design impacts include:</para>
     <itemizedlist>
         <listitem>
-            <para>OS - Hypervisor combination: Ensure that the
+            <para>OS-hypervisor combination: Ensure that the
                 selected logging, monitoring, or alerting tools
                 support the proposed OS-hypervisor combination.</para>
         </listitem>
@@ -702,13 +824,13 @@
         that will satisfy the availability and fault tolerance
         requirements of the OpenStack services is required. OpenStack
         services supports connecting to any database that is supported
-        by the sqlalchemy python drivers, however, most common
-        database deployments make use of mySQL or variations of it. It
+        by the SQLAlchemy python drivers, however, most common
+        database deployments make use of MySQL or variations of it. It
         is recommended that the database which provides back-end
         service within a general purpose cloud be made highly
         available when using an available technology which can
         accomplish that goal. Some of the more common software
-        solutions used include Galera, MariaDB and mySQL with
+        solutions used include Galera, MariaDB and MySQL with
         multi-master replication.</para>
     </section>
     <section xml:id="addressing-performance-sensitive-workloads">
@@ -733,7 +855,7 @@
         priority given to storage and network performance, other than
         what is required to support the intended compute workloads.
         For guidance on designing for this type of cloud, please refer
-        to the section on Compute Focused clouds.</para>
+        to <xref linkend="compute_focus"/>.</para>
     </section>
     <section xml:id="network-focused-workloads">
       <title>Network-focused workloads</title>
@@ -742,14 +864,16 @@
         Network-focused workloads have extreme demands on network
         bandwidth and services that require specialized consideration
         and planning. For guidance on designing for this type of
-        cloud, please refer to the section on Network-Focused clouds.</para>
+        cloud, please refer to <xref linkend="network_focus"/>.</para>
     </section>
     <section xml:id="storage-focused-workloads">
       <title>Storage-focused workloads</title>
-    <para>Storage focused OpenStack clouds need to be designed to
+      <para>
+        Storage focused OpenStack clouds need to be designed to
         accommodate workloads that have extreme demands on either
         object or block storage services that require specialized
         consideration and planning. For guidance on designing for this
-        type of cloud, please refer to the section on Storage-Focused
-        clouds.</para></section>
+        type of cloud, please refer to <xref linkend="storage_focus"/>.
+      </para>
+    </section>
 </section>
