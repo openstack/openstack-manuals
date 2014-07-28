@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE section [
+<!ENTITY % openstack SYSTEM "../../common/entities/openstack.ent">
+%openstack;
+]>
 <section xmlns="http://docbook.org/ns/docbook"
   xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -9,24 +13,33 @@
     <para>Compute intensive workloads are defined by their high
         utilization of CPU, RAM, or both. User requirements will
         determine if a cloud must be built to accommodate anticipated
-        performance demands.</para>
-    <itemizedlist>
+        performance demands.
+    </para>
+    <variablelist>
+      <varlistentry>
+        <term>Cost</term>
         <listitem>
-            <para>Cost: Cost is not generally a primary concern for a
+            <para>Cost is not generally a primary concern for a
                 compute-focused cloud, however some organizations
                 might be concerned with cost avoidance. Repurposing
                 existing resources to tackle compute-intensive tasks
                 instead of needing to acquire additional resources may
                 offer cost reduction opportunities.</para>
         </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Time to market</term>
         <listitem>
-            <para>Time to Market: Compute-focused clouds can be used
+            <para>Compute-focused clouds can be used
                 to deliver products more quickly, for example,
                 speeding up a company's software development life cycle
                 (SDLC) for building products and applications.</para>
         </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Revenue opportunity</term>
         <listitem>
-            <para>Revenue Opportunity: Companies that are interested
+            <para>Companies that are interested
                 in building services or products that rely on the
                 power of the compute resources will benefit from a
                 compute-focused cloud. Examples include the analysis
@@ -35,7 +48,8 @@
                 rendering, scientific computation, or
                 simulations.</para>
         </listitem>
-    </itemizedlist>
+      </varlistentry>
+    </variablelist>
     <section xml:id="legal-requirements-compute-focus">
       <title>Legal requirements</title>
     <para>Many jurisdictions have legislative and regulatory
@@ -57,33 +71,41 @@
                 jurisdictions.</para>
         </listitem>
         <listitem>
-            <para>Data compliance - certain types of information needs
-                to reside in certain locations due to regular issues -
-                and more important cannot reside in other locations
+            <para>Data compliance&mdash;certain types of information needs
+                to reside in certain locations due to regular issues&mdash;and
+                more important cannot reside in other locations
                 for the same reason.</para>
         </listitem>
     </itemizedlist>
-    <para>Examples of such legal frameworks include the data
-        protection framework of the European Union
-        (http://ec.europa.eu/justice/data-protection/ ) and the
-        requirements of the Financial Industry Regulatory Authority
-        (http://www.finra.org/Industry/Regulation/FINRARules/ ) in the
-        United States. Consult a local regulatory body for more
-        information.</para></section>
+    <para>
+      Examples of such legal frameworks include the <link
+      xlink:href="http://ec.europa.eu/justice/data-protection/">data
+      protection framework</link> of the European Union and the
+      requirements of the <link
+      xlink:href="http://www.finra.org/Industry/Regulation/FINRARules/">Financial
+      Industry Regulatory Authority</link> in the United
+      States. Consult a local regulatory body for more
+      information.</para></section>
     <section xml:id="technical-considerations-compute-focus-user">
       <title>Technical considerations</title>
     <para>The following are some technical requirements that need to
-        be incorporated into the architecture design.</para>
-    <itemizedlist>
+        be incorporated into the architecture design.
+    </para>
+    <variablelist>
+      <varlistentry>
+        <term>Performance</term>
         <listitem>
-            <para>Performance: If a primary technical concern is for
+            <para>If a primary technical concern is for
                 the environment to deliver high performance
                 capability, then a compute-focused design is an
                 obvious choice because it is specifically designed to
                 host compute-intensive workloads.</para>
         </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Workload persistence</term>
         <listitem>
-            <para>Workload persistence: Workloads can be either
+            <para>Workloads can be either
                 short-lived or long running. Short-lived workloads
                 might include continuous integration and continuous
                 deployment (CI-CD) jobs, where large numbers of
@@ -104,8 +126,11 @@
                 workloads is legacy applications that typically are
                 persistent over time.</para>
         </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Storage</term>
         <listitem>
-            <para>Storage: Workloads targeted for a compute-focused
+            <para>Workloads targeted for a compute-focused
                 OpenStack cloud generally do not require any
                 persistent block storage (although some usages of
                 Hadoop with HDFS may dictate the use of persistent
@@ -118,8 +143,11 @@
                 scale the object store or shared file system to match
                 the storage demand.</para>
         </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>User interface</term>
         <listitem>
-            <para>User Interface: Like any other cloud architecture, a
+            <para>Like any other cloud architecture, a
                 compute-focused OpenStack cloud requires an on-demand
                 and self-service user interface. End users must be
                 able to provision computing power, storage, networks
@@ -127,8 +155,11 @@
                 scaling the infrastructure up to a substantial level
                 without disrupting host operations.</para>
         </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Security</term>
         <listitem>
-            <para>Security: Security is going to be highly dependent
+            <para>Security is going to be highly dependent
                 on the business requirements. For example, a
                 computationally intense drug discovery application
                 will obviously have much higher security requirements
@@ -137,11 +168,14 @@
                 recommendations and guidelines provided in the
                 OpenStack Security Guide are applicable.</para>
         </listitem>
-    </itemizedlist></section>
+      </varlistentry>
+    </variablelist>
+  </section>
     <section xml:id="operational-considerations-compute-focus-user">
       <title>Operational considerations</title>
     <para>The compute intensive cloud from the operational perspective
         is similar to the requirements for the general-purpose cloud.
         More details on operational requirements can be found in the
-        general-purpose design section.</para></section>
+        general-purpose design section.</para>
+    </section>
 </section>
