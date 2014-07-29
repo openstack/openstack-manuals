@@ -434,11 +434,15 @@ interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver</programlist
                 <programlisting language="ini">driver = neutron.services.metering.drivers.iptables.iptables_driver.IptablesMeteringDriver</programlisting>
             </step>
             <step>
-                <para>Set this parameter in the
-                        <filename>neutron.conf</filename> file on
+                <para>Set the <option>service_plugins</option> option in the
+                    <filename>/etc/neutron/neutron.conf</filename> file on
                     the host that runs <systemitem class="service"
                         >neutron-server</systemitem>:</para>
                 <programlisting language="ini">service_plugins = metering</programlisting>
+                <para>If this option is already defined, add
+                    <literal>lbaas</literal> to the list, using a coma as
+                    separator. For example:</para>
+                <programlisting language="ini">service_plugins = router,metering</programlisting>
             </step>
         </procedure>
     </section>
@@ -465,13 +469,25 @@ interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver</programlist
                         <filename>/etc/neutron/neutron.conf</filename>
                     file:</para>
                 <programlisting language="ini">service_provider = LOADBALANCER:Haproxy:neutron.services.loadbalancer.drivers.haproxy.plugin_driver.HaproxyOnHostPluginDriver:default</programlisting>
+                <warning>
+                    <para>The <option>service_provider</option> option is
+                        already defined in the
+                        <filename>/usr/share/neutron/neutron-dist.conf</filename>
+                        file on Red Hat based systems. Do not define it in
+                        <filename>neutron.conf</filename> otherwise the
+                        Networking services will fail to restart.</para>
+                </warning>
             </step>
             <step>
                 <para>Enable the load-balancing plug-in by using the
-                        <option>service_plugin</option> option in the
+                        <option>service_plugins</option> option in the
                         <filename>/etc/neutron/neutron.conf</filename>
                     file:</para>
                 <programlisting language="ini">service_plugins = lbaas</programlisting>
+                <para>If this option is already defined, add
+                    <literal>lbaas</literal> to the list, using a coma as
+                    separator. For example:</para>
+                <programlisting language="ini">service_plugins = router,lbaas</programlisting>
             </step>
             <step>
                 <para>Enable the
@@ -513,7 +529,10 @@ interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver</programlist
                     to <parameter>True</parameter> in the
                         <filename>/etc/openstack-dashboard/local_settings</filename>
                     file:</para>
-                <programlisting language="python">OPENSTACK_NEUTRON_NETWORK = {'enable_lb': True,</programlisting>
+                <programlisting language="python">OPENSTACK_NEUTRON_NETWORK = {
+    'enable_lb': True,
+    ...
+}</programlisting>
                 <para>Apply the settings by restarting the
                         <systemitem>httpd</systemitem> service.
                     You can now view the Load Balancer management
