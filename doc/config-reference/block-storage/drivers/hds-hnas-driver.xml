@@ -1,0 +1,496 @@
+<!DOCTYPE section [
+<!ENTITY % openstack SYSTEM "../../../common/entities/openstack.ent">
+%openstack;
+]>
+<section xml:id="hds-hnas-driver"
+         xmlns="http://docbook.org/ns/docbook"
+         xmlns:xi="http://www.w3.org/2001/XInclude"
+         xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+        <title>HDS HNAS iSCSI and NFS driver</title>
+        <?dbhtml stop-chunking?>
+        <para>This Block Storage volume driver provides iSCSI and NFS support for <link
+                        xlink:href="http://www.hds.com/products/file-and-content/network-attached-storage/"
+                        >HNAS (Hitachi Network-attached Storage)</link> arrays such as,
+                        HNAS 3000 and 4000 family.</para>
+        <section xml:id="hds-hnas-reqs">
+                <title>System requirements</title>
+                <para>Use the HDS <command>ssc</command> command to
+                        communicate with an HNAS array. This utility package is available in the
+                        physical media distributed with the hardware or it can be copied from
+                        the SMU (<filename>/usr/local/bin/ssc</filename>).</para>
+                <para>Platform: Ubuntu 12.04LTS or newer.</para>
+        </section>
+        <section xml:id="hds-hnas-supported-operations">
+                <title>Supported operations</title>
+                <para>These operations are supported through a combination of
+                    the base NFS driver and the extensions in the HNAS driver:</para>
+                <itemizedlist>
+                        <listitem>
+                                <para>Create volume</para>
+                        </listitem>
+                        <listitem>
+                                <para>Delete volume</para>
+                        </listitem>
+                        <listitem>
+                                <para>Attach volume</para>
+                        </listitem>
+                        <listitem>
+                                <para>Detach volume</para>
+                        </listitem>
+                        <listitem>
+                                <para>Clone volume</para>
+                        </listitem>
+                        <listitem>
+                                <para>Extend volume</para>
+                        </listitem>
+                        <listitem>
+                                <para>Create snapshot</para>
+                        </listitem>
+                        <listitem>
+                                <para>Delete snapshot</para>
+                        </listitem>
+                        <listitem>
+                                <para>Copy image to volume</para>
+                        </listitem>
+                        <listitem>
+                                <para>Copy volume to image</para>
+                        </listitem>
+                        <listitem>
+                                <para>Create volume from snapshot</para>
+                        </listitem>
+                        <listitem>
+                                <para>Get statistics</para>
+                        </listitem>
+                </itemizedlist>
+        </section>
+        <section xml:id="hds-hnas-config">
+                <title>Configuration</title>
+                <para>The HDS driver supports the concept of differentiated services
+                        (also referred to as quality of service) by mapping volume types
+                        to services provided through HNAS. HNAS supports a variety of
+                        storage options and file system capabilities which are selected
+                        through volume typing and the use of multiple back-ends. The HDS driver
+                        maps up to 4 volume types into separate exports/filesystems, and can
+                        support any number using multiple back-ends.</para>
+                <para>Configuration is read from an XML-formatted file (one per backend). Examples
+                        are shown for single and multi back-end cases.</para>
+                <note>
+                        <itemizedlist>
+                                <listitem>
+                                        <para>Configuration is read from an XML file. This
+                                                example shows the configuration for single
+                                                back-end and for multi-back-end cases.</para>
+                                </listitem>
+                        </itemizedlist>
+                        <itemizedlist>
+                                <listitem>
+                                        <para>The <literal>default</literal> volume type
+                                                needs to be set in configuration file. If there is no
+                                                <literal>default</literal> volume type,
+                                                only matching volume types will work.</para>
+                                </listitem>
+                        </itemizedlist>
+                </note>
+                <xi:include href="../../../common/tables/cinder-hds-hnas.xml"/>
+                <simplesect>
+                        <title>HNAS setup</title>
+                        <para>Before using iSCSI and NFS services, use the HNAS Web Interface to create storage pool(s),
+                            filesystem(s), and assign an EVS. For NFS, NFS exports should be created.
+                            For iSCSI, a SCSI Domain needs to be set.</para>
+                </simplesect>
+                <simplesect>
+                        <title>Single back-end</title>
+                        <para>In a single back-end deployment, only one OpenStack Block Storage
+                                instance runs on the OpenStack Block Storage server and controls one
+                                HNAS array: this deployment requires these configuration
+                                files:</para>
+                        <orderedlist>
+                                <listitem>
+                                        <para>Set the
+                                                        <option>hds_hnas_iscsi_config_file</option>
+                                                option in the
+                                                        <filename>/etc/cinder/cinder.conf</filename>
+                                                file to use the HNAS iSCSI volume driver. Or
+                                                        <option>hds_hnas_nfs_config_file</option>
+                                                to use HNAS NFS driver. This option
+                                                points to a configuration file.<footnote
+                                                        xml:id="hds-hnas-no-fixed-location-1">
+                                                        <para>The configuration file location
+                                                                may differ.</para>
+                                                </footnote></para>
+                                        <para>For HNAS iSCSI driver:</para>
+                                        <programlisting language="ini">volume_driver = cinder.volume.drivers.hds.iscsi.HDSISCSIDriver
+hds_hnas_iscsi_config_file = /opt/hds/hnas/cinder_iscsi_conf.xml</programlisting>
+                                        <para>For HNAS NFS driver:</para>
+                                        <programlisting language="ini">volume_driver = cinder.volume.drivers.hds.nfs.HDSNFSDriver
+hds_hnas_nfs_config_file = /opt/hds/hnas/cinder_nfs_conf.xml</programlisting>
+                                </listitem>
+                                <listitem>
+                                        <para>For HNAS iSCSI, configure
+                                                        <option>hds_hnas_iscsi_config_file</option> at
+                                                the location specified previously. For
+                                                example,
+                                                        <filename>/opt/hds/hnas/cinder_iscsi_conf.xml</filename>:</para>
+                                        <programlisting language="xml">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
+&lt;config&gt;
+    &lt;mgmt_ip0&gt;172.17.44.16&lt;/mgmt_ip0&gt;
+    &lt;hnas_cmd&gt;ssc&lt;/hnas_cmd&gt;
+    &lt;chap_enabled&gt;True&lt;/chap_enabled&gt;
+    &lt;username&gt;supervisor&lt;/username&gt;
+    &lt;password&gt;supervisor&lt;/password&gt;
+    &lt;svc_0&gt;
+        &lt;volume_type&gt;default&lt;/volume_type&gt;
+        &lt;iscsi_ip&gt;172.17.39.132&lt;/iscsi_ip&gt;
+        &lt;hdp&gt;fs-01&lt;/hdp&gt;
+    &lt;/svc_0&gt;
+&lt;/config&gt;</programlisting>
+                                        <para>For HNAS NFS, configure
+                                                        <option>hds_hnas_nfs_config_file</option> at
+                                                the location specified previously. For
+                                                example,
+                                                        <filename>/opt/hds/hnas/cinder_nfs_conf.xml</filename>:</para>
+                                        <programlisting language="xml">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
+&lt;config&gt;
+    &lt;mgmt_ip0&gt;172.17.44.16&lt;/mgmt_ip0&gt;
+    &lt;hnas_cmd&gt;ssc&lt;/hnas_cmd&gt;
+    &lt;username&gt;supervisor&lt;/username&gt;
+    &lt;password&gt;supervisor&lt;/password&gt;
+    &lt;chap_enabled&gt;False&lt;/chap_enabled&gt;
+    &lt;svc_0&gt;
+        &lt;volume_type&gt;default&lt;/volume_type&gt;
+        &lt;hdp&gt;172.17.44.100:/virtual-01&lt;/hdp&gt;
+    &lt;/svc_0&gt;
+&lt;/config&gt;</programlisting>
+                                </listitem>
+                        </orderedlist>
+                        <para>Up to 4 service stanzas can be included in the XML file; named
+                            <literal>svc_0</literal>, <literal>svc_1</literal>,
+                            <literal>svc_2</literal> and <literal>svc_3</literal>.
+                            Additional services can be enabled using multi-backend
+                            as described below.</para>
+                </simplesect>
+                <simplesect>
+                        <title>Multi back-end</title>
+                        <para>In a multi back-end deployment, more than one OpenStack Block Storage
+                                instance runs on the same server. In this example, two
+                                HNAS arrays are used, possibly providing different
+                                storage performance:</para>
+                        <procedure>
+                                <step>
+                                        <para>For HNAS iSCSI, configure
+                                                        <filename>/etc/cinder/cinder.conf</filename>:
+                                                the <literal>hnas1</literal> and
+                                                <literal>hnas2</literal> configuration blocks are
+                                                created. Set the
+                                                        <option>hds_hnas_iscsi_config_file</option>
+                                                option to point to an unique configuration
+                                                file for each block. Set the
+                                                        <option>volume_driver</option> option for
+                                                each back-end to
+                                                        <literal>cinder.volume.drivers.hds.iscsi.HDSISCSIDriver</literal>.</para>
+                                        <programlisting language="ini">enabled_backends=hnas1,hnas2
+
+[hnas1]
+volume_driver = cinder.volume.drivers.hds.iscsi.HDSISCSIDriver
+hds_hnas_iscsi_config_file = /opt/hds/hnas/cinder_iscsi1_conf.xml
+volume_backend_name=hnas-1
+
+[hnas2]
+volume_driver = cinder.volume.drivers.hds.iscsi.HDSISCSIDriver
+hds_hnas_iscsi_config_file = /opt/hds/hnas/cinder_iscsi2_conf.xml
+volume_backend_name=hnas-2</programlisting>
+                                </step>
+                                <step>
+                                        <para>Configure the
+                                                        <filename>/opt/hds/hnas/cinder_iscsi1_conf.xml</filename>
+                                                file:</para>
+                                        <programlisting language="xml">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
+&lt;config&gt;
+    &lt;mgmt_ip0&gt;172.17.44.16&lt;/mgmt_ip0&gt;
+    &lt;hnas_cmd&gt;ssc&lt;/hnas_cmd&gt;
+    &lt;chap_enabled&gt;True&lt;/chap_enabled&gt;
+    &lt;username&gt;supervisor&lt;/username&gt;
+    &lt;password&gt;supervisor&lt;/password&gt;
+    &lt;svc_0&gt;
+        &lt;volume_type&gt;regular&lt;/volume_type&gt;
+        &lt;iscsi_ip&gt;172.17.39.132&lt;/iscsi_ip&gt;
+        &lt;hdp&gt;fs-01&lt;/hdp&gt;
+    &lt;/svc_0&gt;
+&lt;/config&gt;</programlisting>
+                                </step>
+                                <step>
+                                        <para>Configure the
+                                                        <filename>/opt/hds/hnas/cinder_iscsi2_conf.xml</filename>
+                                                file:</para>
+                                        <programlisting language="xml">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
+&lt;config&gt;
+    &lt;mgmt_ip0&gt;172.17.44.20&lt;/mgmt_ip0&gt;
+    &lt;hnas_cmd&gt;ssc&lt;/hnas_cmd&gt;
+    &lt;chap_enabled&gt;True&lt;/chap_enabled&gt;
+    &lt;username&gt;supervisor&lt;/username&gt;
+    &lt;password&gt;supervisor&lt;/password&gt;
+    &lt;svc_0&gt;
+        &lt;volume_type&gt;platinum&lt;/volume_type&gt;
+        &lt;iscsi_ip&gt;172.17.30.130&lt;/iscsi_ip&gt;
+        &lt;hdp&gt;fs-02&lt;/hdp&gt;
+    &lt;/svc_0&gt;
+&lt;/config&gt;</programlisting>
+                                </step>
+                        </procedure>
+                        <procedure>
+                                <step>
+                                        <para>For NFS, configure
+                                                        <filename>/etc/cinder/cinder.conf</filename>:
+                                                the <literal>hnas1</literal> and
+                                                <literal>hnas2</literal> configuration blocks are
+                                                created. Set the
+                                                        <option>hds_hnas_nfs_config_file</option>
+                                                option to point to an unique configuration
+                                                file for each block. Set the
+                                                        <option>volume_driver</option> option for
+                                                each back-end to
+                                                        <literal>cinder.volume.drivers.hds.nfs.HDSNFSDriver</literal>.</para>
+                                        <programlisting language="ini">enabled_backends=hnas1,hnas2
+
+[hnas1]
+volume_driver = cinder.volume.drivers.hds.nfs.HDSNFSDriver
+hds_hnas_nfs_config_file = /opt/hds/hnas/cinder_nfs1_conf.xml
+volume_backend_name=hnas-1
+
+[hnas2]
+volume_driver = cinder.volume.drivers.hds.nfs.HDSNFSDriver
+hds_hnas_nfs_config_file = /opt/hds/hnas/cinder_nfs2_conf.xml
+volume_backend_name=hnas-2</programlisting>
+                                </step>
+                                <step>
+                                        <para>Configure the
+                                                        <filename>/opt/hds/hnas/cinder_nfs1_conf.xml</filename>
+                                                file:</para>
+                                        <programlisting language="xml">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
+&lt;config&gt;
+    &lt;mgmt_ip0&gt;172.17.44.16&lt;/mgmt_ip0&gt;
+    &lt;hnas_cmd&gt;ssc&lt;/hnas_cmd&gt;
+    &lt;username&gt;supervisor&lt;/username&gt;
+    &lt;password&gt;supervisor&lt;/password&gt;
+    &lt;chap_enabled&gt;False&lt;/chap_enabled&gt;
+    &lt;svc_0&gt;
+        &lt;volume_type&gt;regular&lt;/volume_type&gt;
+        &lt;hdp&gt;172.17.44.100:/virtual-01&lt;/hdp&gt;
+    &lt;/svc_0&gt;
+&lt;/config&gt;</programlisting>
+                                </step>
+                                <step>
+                                        <para>Configure the
+                                                        <filename>/opt/hds/hnas/cinder_nfs2_conf.xml</filename>
+                                                file:</para>
+                                        <programlisting language="xml">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
+&lt;config&gt;
+    &lt;mgmt_ip0&gt;172.17.44.20&lt;/mgmt_ip0&gt;
+    &lt;hnas_cmd&gt;ssc&lt;/hnas_cmd&gt;
+    &lt;username&gt;supervisor&lt;/username&gt;
+    &lt;password&gt;supervisor&lt;/password&gt;
+    &lt;chap_enabled&gt;False&lt;/chap_enabled&gt;
+    &lt;svc_0&gt;
+        &lt;volume_type&gt;platinum&lt;/volume_type&gt;
+        &lt;hdp&gt;172.17.44.100:/virtual-02&lt;/hdp&gt;
+    &lt;/svc_0&gt;
+&lt;/config&gt;</programlisting>
+                                </step>
+                        </procedure>
+                </simplesect>
+                <simplesect>
+                        <title>Type extra specs: <option>volume_backend</option>
+                                and volume type</title>
+                        <para>If you use volume types, you must configure them in
+                                the configuration file and set the
+                                        <option>volume_backend_name</option> option to the
+                                appropriate back-end. In the previous multi back-end
+                                example, the <literal>platinum</literal> volume type
+                                is served by hnas-2, and the <literal>regular</literal>
+                                volume type is served by hnas-1.</para>
+                        <programlisting>cinder type-key regular set volume_backend_name=hnas-1
+cinder type-key platinum set volume_backend_name=hnas-2</programlisting>
+                </simplesect>
+                <simplesect>
+                        <title>Non-differentiated deployment of HNAS arrays</title>
+                        <para>You can deploy multiple OpenStack HNAS drivers instances that each
+                                control a separate HNAS array. Each instance does not need to have a
+                                volume type associated with it. The OpenStack Block Storage filtering
+                                algorithm selects the HNAS array with the largest
+                                available free space. In each configuration file, you
+                                must define the <literal>default</literal>
+                                volume type in the service labels.</para>
+                </simplesect>
+        </section>
+        <section xml:id="hds-hnas-options">
+                <title>HDS HNAS volume driver configuration options</title>
+                <para>These details apply to the XML format configuration file
+                        that is read by HDS volume driver. These differentiated
+                        service labels are predefined: <literal>svc_0</literal>,
+                                <literal>svc_1</literal>, <literal>svc_2</literal>
+                        and <literal>svc_3</literal><footnote
+                                xml:id="hds-hnas-no-weight">
+                                <para>There is no relative precedence or weight among
+                                        these four labels.</para>
+                        </footnote>. Each respective service label associates with
+                        these parameters and tags:</para>
+                <variablelist>
+                        <varlistentry><term>volume_type</term>
+                                <listitem><para>A create_volume
+                                        call with a certain volume type shall be matched
+                                        up with this tag. The value <literal>default</literal>
+                                        is special in that any service associated with this
+                                        type is used to create volume when no other labels
+                                        match. Other labels are case sensitive and should
+                                        exactly match. If no configured volume types match
+                                        the incoming requested type, an error occurs in
+                                        volume creation.</para></listitem>
+                        </varlistentry>
+                        <varlistentry><term>hdp</term>
+                                <listitem>
+                                        <para>(iSCSI only) Virtual filesystem label associated
+                                            with the service.</para>
+                                        <para>(NFS only) Path to the volume
+                                            <literal>&lt;ip_address&gt;:/&lt;path&gt;</literal> associated with
+                                            the service. Additionally, this entry must be added
+                                            in the file used to list available NFS shares. This file is located,
+                                            by default, in <filename>/etc/cinder/nfs_shares</filename>
+                                            or you can specify the location in the <option>nfs_shares_config</option>
+                                            option in the cinder configuration file.</para>
+                                </listitem>
+                        </varlistentry>
+                        <varlistentry><term>iscsi_ip</term>
+                                <listitem><para>(iSCSI only) An iSCSI IP address dedicated
+                                        to the service.</para></listitem>
+                        </varlistentry>
+                </variablelist>
+                <para>Typically a OpenStack Block Storage volume instance has only one such
+                        service label. For example, any <literal>svc_0</literal>,
+                                <literal>svc_1</literal>, <literal>svc_2</literal> or
+                                <literal>svc_3</literal> can be associated with it.
+                        But any mix of these service labels can be used in the
+                        same instance <footnote xml:id="hds-hnas-stats-all-hdp">
+                                <para>The <code>get_volume_stats()</code> function always provides the available
+                                        capacity based on the combined sum of all the HDPs
+                                        that are used in these services labels.</para>
+                        </footnote>.</para>
+                <table rules="all">
+                        <caption>Configuration options</caption>
+                        <col width="25%"/>
+                        <col width="10%"/>
+                        <col width="15%"/>
+                        <col width="50%"/>
+                        <thead>
+                                <tr>
+                                        <td>Option</td>
+                                        <td>Type</td>
+                                        <td>Default</td>
+                                        <td>Description</td>
+                                </tr>
+                        </thead>
+                        <tbody>
+                                <tr>
+                                        <td><para><option>mgmt_ip0</option></para>
+                                        </td>
+                                        <td><para>Required</para></td>
+                                        <td><para/></td>
+                                        <td><para>Management Port 0 IP address. Should be the IP
+                                                address of the 'Admin' EVS.</para>
+                                        </td>
+                                </tr>
+                                <tr>
+                                        <td><para><option>hnas_cmd</option></para>
+                                        </td>
+                                        <td><para>Optional</para></td>
+                                        <td><para><command>ssc</command></para></td>
+                                        <td>
+                                                <para><option>hnas_cmd</option> is a command to
+                                                communicate to HNAS array.</para>
+                                        </td>
+                                </tr>
+                                <tr>
+                                        <td><para><option>chap_enabled</option></para>
+                                        </td>
+                                        <td><para>Optional</para></td>
+                                        <td><para>True</para></td>
+                                        <td>
+                                                <para>(iSCSI only) <option>chap_enabled</option> is a boolean tag used
+                                                        to enable CHAP authentication protocol.</para>
+                                        </td>
+                                </tr>
+                                <tr>
+                                        <td><para><option>username</option></para>
+                                        </td>
+                                        <td><para>Required</para></td>
+                                        <td><para>supervisor</para></td>
+                                        <td>
+                                                <para>Username is always required on HNAS.</para>
+                                        </td>
+                                </tr>
+                                <tr>
+                                        <td><para><option>password</option></para>
+                                        </td>
+                                        <td><para>Required</para></td>
+                                        <td><para>supervisor</para></td>
+                                        <td>
+                                                <para>Password is always required on HNAS.</para>
+                                        </td>
+                                </tr>
+                                <tr>
+                                        <td>
+                                                <para><option>svc_0, svc_1, svc_2, svc_3
+                                                        </option></para>
+                                        </td>
+                                        <td><para>Optional</para></td>
+                                        <td><para>(at least one label has to be
+                                                        defined)</para></td>
+                                        <td>
+                                                <para>Service labels: these four predefined
+                                                        names help four different sets of
+                                                        configuration options -- each can specify
+                                                        HDP and an unique volume type.</para>
+                                        </td>
+                                </tr>
+                                <tr>
+                                        <td>
+                                                <para><option>volume_type</option></para>
+                                        </td>
+                                        <td><para>Required</para></td>
+                                        <td><para><literal>default</literal></para></td>
+                                        <td>
+                                                <para>volume_type tag is used
+                                                        to match volume type.
+                                                                <literal>default</literal> meets any
+                                                        type of volume type, or
+                                                        if it is not specified. Any other
+                                                        volume type is selected if exactly matched
+                                                        during volume creation.</para>
+                                        </td>
+                                </tr>
+                                <tr>
+                                        <td>
+                                                <para><option>iscsi_ip</option></para>
+                                        </td>
+                                        <td><para>Required</para></td>
+                                        <td><para/></td>
+                                        <td>
+                                                <para>(iSCSI only) iSCSI IP address where volume
+                                                        attaches for this volume type.</para>
+                                        </td>
+                                </tr>
+                                <tr>
+                                        <td>
+                                                <para><option>hdp</option></para>
+                                        </td>
+                                        <td><para>Required</para></td>
+                                        <td><para/></td>
+                                        <td>
+                                                <para>HDP, for HNAS iSCSI is the virtual filesystem label
+                                                        or the path (for HNAS NFS) where volume, or
+                                                        snapshot should be created.</para>
+                                        </td>
+                                </tr>
+                        </tbody>
+                </table>
+        </section>
+</section>
