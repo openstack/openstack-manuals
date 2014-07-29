@@ -19,20 +19,19 @@ Pacemaker.</para>
           <para>First of all, you need to download the resource agent to your system:</para>
           <screen><prompt>#</prompt> <userinput>cd /usr/lib/ocf/resource.d/openstack</userinput>
 <prompt>#</prompt> <userinput>wget https://raw.github.com/madkiss/openstack-resource-agents/master/ocf/neutron-agent-dhcp</userinput>
-<prompt>#</prompt> <userinput>chmod a+rx neutron-dhcp-agent</userinput></screen>
+<prompt>#</prompt> <userinput>chmod a+rx neutron-agent-dhcp</userinput></screen>
           <para>You may now proceed with adding the Pacemaker configuration for
 neutron DHCP agent resource. Connect to the Pacemaker cluster with <literal>crm
 configure</literal>, and add the following cluster resources:</para>
-          <programlisting>primitive p_neutron-dhcp-agent ocf:openstack:neutron-dhcp-agent \
+          <programlisting>primitive p_neutron-dhcp-agent ocf:openstack:neutron-agent-dhcp \
     params config="/etc/neutron/neutron.conf" \
     plugin_config="/etc/neutron/dhcp_agent.ini" \
     op monitor interval="30s" timeout="30s"</programlisting>
-          <para>This configuration creates</para>
+          <para>This configuration creates:</para>
           <itemizedlist>
             <listitem>
-              <para><literal>p_neutron-dhcp-agent</literal>, a resource for manage Neutron DHCP Agent
-service
-</para>
+              <para><literal>p_neutron-agent-dhcp</literal>, a
+          resource for manage Neutron DHCP Agent service.</para>
             </listitem>
           </itemizedlist>
           <para><literal>crm configure</literal> supports batch input, so you may copy and paste the
