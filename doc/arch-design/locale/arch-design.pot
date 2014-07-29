@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-07-28 06:07+0000\n"
+"POT-Creation-Date: 2014-07-29 06:09+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -266,7 +266,7 @@ msgid "Packet Storm - A cause of degraded service or failure that occurs when a 
 msgstr ""
 
 #: ./doc/arch-design/ch_glossary.xml:409(para)
-msgid "Platform as a Service (PaaS) - Platform as a Service is a category of cloud computing services that provides a computing platform and a solution stack as a service."
+msgid "Platform-as-a-Service (PaaS) - Platform-as-a-Service is a category of cloud computing services that provides a computing platform and a solution stack as a service."
 msgstr ""
 
 #: ./doc/arch-design/ch_glossary.xml:415(para)
@@ -369,16 +369,20 @@ msgstr ""
 msgid "Introduction"
 msgstr ""
 
-#: ./doc/arch-design/ch_hybrid.xml:7(title) ./doc/arch-design/ch_generalpurpose.xml:7(title)
-msgid "General purpose"
+#: ./doc/arch-design/ch_hybrid.xml:7(title)
+msgid "Hybrid"
 msgstr ""
 
 #: ./doc/arch-design/ch_multi_site.xml:7(title)
-msgid "Hybrid"
+msgid "Multi-site"
 msgstr ""
 
 #: ./doc/arch-design/ch_storage_focus.xml:7(title)
 msgid "Storage focused"
+msgstr ""
+
+#: ./doc/arch-design/ch_generalpurpose.xml:7(title)
+msgid "General purpose"
 msgstr ""
 
 #: ./doc/arch-design/bk-openstack-arch-design.xml:7(title)
@@ -1758,46 +1762,46 @@ msgid "One decision includes whether or not to use Network Address Translation (
 msgstr ""
 
 #: ./doc/arch-design/network_focus/section_architecture_network_focus.xml:87(para)
-msgid "NAT for floating IPs managed by Neutron will reside within the hypervisor but there are also versions of NAT that may be running elsewhere. If there is a shortage of IPv4 addresses there are two common methods to mitigate this externally to OpenStack. The first is to run a load balancer either within OpenStack as an instance, or use an external load balancing solution. In the internal scenario, load balancing software, such as HAproxy, can be managed with Neutron's Load Balancer as a Service (LBaaS). This is specifically to manage the Virtual IP (VIPs) while a dual-homed connection from the HAproxy instance connects the public network with the tenant private network that hosts all of the content servers. In the external scenario, a load balancer would need to serve the VIP and also be joined to the tenant overlay network through external means or routed to it via private addresses."
+msgid "NAT for floating IPs managed by Neutron will reside within the hypervisor but there are also versions of NAT that may be running elsewhere. If there is a shortage of IPv4 addresses there are two common methods to mitigate this externally to OpenStack. The first is to run a load balancer either within OpenStack as an instance, or use an external load balancing solution. In the internal scenario, load balancing software, such as HAproxy, can be managed with Neutron's Load-Balancer-as-a-Service (LBaaS). This is specifically to manage the Virtual IP (VIP) while a dual-homed connection from the HAproxy instance connects the public network with the tenant private network that hosts all of the content servers. In the external scenario, a load balancer would need to serve the VIP and also be joined to the tenant overlay network through external means or routed to it via private addresses."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_architecture_network_focus.xml:102(para)
+#: ./doc/arch-design/network_focus/section_architecture_network_focus.xml:103(para)
 msgid "Another kind of NAT that may be useful is protocol NAT. In some cases it may be desirable to use only IPv6 addresses on instances and operate either an instance or an external service to provide a NAT-based transition technology such as NAT64 and DNS64. This provides the ability to have a globally routable IPv6 address while only consuming IPv4 addresses as necessary or in a shared manner."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_architecture_network_focus.xml:109(para)
+#: ./doc/arch-design/network_focus/section_architecture_network_focus.xml:110(para)
 msgid "Application workloads will affect the design of the underlying network architecture. If a workload requires network-level redundancy, the routing and switching architecture will have to accommodate this. There are differing methods for providing this that are dependent on the network hardware selected, the performance of the hardware, and which networking model is deployed. Some examples of this are the use of Link aggregation (LAG) or Hot Standby Router Protocol (HSRP). There are also the considerations of whether to deploy Neutron or Nova-network and which plug-in to select for Neutron. If using an external system, Neutron will need to be configured to run layer 2 with a provider network configuration. For example, it may be necessary to implement HSRP to terminate layer 3 connectivity."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_architecture_network_focus.xml:123(para)
+#: ./doc/arch-design/network_focus/section_architecture_network_focus.xml:124(para)
 msgid "Depending on the workload, overlay networks may or may not be a recommended configuration. Where application network connections are small, short lived or bursty, running a dynamic overlay can generate as much bandwidth as the packets it carries. It also can induce enough latency to cause issues with certain applications. There is an impact to the device generating the overlay which, in most installations, will be the hypervisor. This will cause performance degradation on packet per second and connection per second rates."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_architecture_network_focus.xml:132(para)
+#: ./doc/arch-design/network_focus/section_architecture_network_focus.xml:133(para)
 msgid "Overlays also come with a secondary option that may or may not be appropriate to a specific workload. While all of them will operate in full mesh by default, there might be good reasons to disable this function because it may cause excessive overhead for some workloads. Conversely, other workloads will operate without issue. For example, most web services applications will not have major issues with a full mesh overlay network, while some network monitoring tools or storage replication workloads will have performance issues with throughput or excessive broadcast traffic."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_architecture_network_focus.xml:142(para)
+#: ./doc/arch-design/network_focus/section_architecture_network_focus.xml:143(para)
 msgid "A design decision that many overlook is a choice of layer 3 protocols. While OpenStack was initially built with only IPv4 support, Neutron now supports IPv6 and dual-stacked networks. Note that, as of the icehouse release, this only includes stateless address autoconfiguration but the work is in progress to support stateless and stateful dhcpv6 as well as IPv6 floating IPs without NAT. Some workloads become possible through the use of IPv6 and IPv6 to IPv4 reverse transition mechanisms such as NAT64 and DNS64 or 6to4, because these options are available. This will alter the requirements for any address plan as single-stacked and transitional IPv6 deployments can alleviate the need for IPv4 addresses."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_architecture_network_focus.xml:154(para)
+#: ./doc/arch-design/network_focus/section_architecture_network_focus.xml:155(para)
 msgid "As of the icehouse release, OpenStack has limited support for dynamic routing, however there are a number of options available by incorporating third party solutions to implement routing within the cloud including network equipment, hardware nodes, and instances. Some workloads will perform well with nothing more than static routes and default gateways configured at the layer 3 termination point. In most cases this will suffice, however some cases require the addition of at least one type of dynamic routing protocol if not multiple protocols. Having a form of interior gateway protocol (IGP) available to the instances inside an OpenStack installation opens up the possibility of use cases for anycast route injection for services that need to use it as a geographic location or failover mechanism. Other applications may wish to directly participate in a routing protocol, either as a passive observer as in the case of a looking glass, or as an active participant in the form of a route reflector. Since an instance might have a large amount of compute and memory resources, it is trivial to hold an entire unpartitioned routing table and use it to provide services such as network path visibility to other applications or as a monitoring tool."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_architecture_network_focus.xml:176(para)
+#: ./doc/arch-design/network_focus/section_architecture_network_focus.xml:177(para)
 msgid "A lesser known, but harder to diagnose issue, is that of path Maximum Transmission Unit (MTU) failures. It is less of an optional design consideration and more a design warning that MTU must be at least large enough to handle normal traffic, plus any overhead from an overlay network, and the desired layer 3 protocol. Adding externally built tunnels will further lessen the MTU packet size making it imperative to pay attention to the fully calculated MTU as some systems may be configured to ignore or drop path MTU discovery packets."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_architecture_network_focus.xml:187(title)
+#: ./doc/arch-design/network_focus/section_architecture_network_focus.xml:188(title)
 msgid "Tunable networking components"
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_architecture_network_focus.xml:188(para)
+#: ./doc/arch-design/network_focus/section_architecture_network_focus.xml:189(para)
 msgid "Consider configurable networking components related to an OpenStack architecture design when designing for network intensive workloads include MTU and QoS. Some workloads will require a larger MTU than normal based on a requirement to transfer large blocks of data. When providing network service for applications such as video streaming or storage replication, it is recommended to ensure that both OpenStack hardware nodes and the supporting network equipment are configured for jumbo frames where possible. This will allow for a better utilization of available bandwidth. Configuration of jumbo frames should be done across the complete path the packets will traverse. If one network component is not capable of handling jumbo frames then the entire path will revert to the default MTU."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_architecture_network_focus.xml:200(para)
+#: ./doc/arch-design/network_focus/section_architecture_network_focus.xml:201(para)
 msgid "Quality of Service (QoS) also has a great impact on network intensive workloads by providing instant service to packets which have a higher priority due to their ability to be impacted by poor network performance. In applications such as Voice over IP (VoIP) differentiated services code points are a near requirement for proper operation. QoS can also be used in the opposite direction for mixed workloads to prevent low priority but high bandwidth applications, for example backup services, video conferencing or file sharing, from blocking bandwidth that is needed for the proper operation of other workloads. It is possible to tag file storage traffic as a lower class, such as best effort or scavenger, to allow the higher priority traffic through. In cases where regions within a cloud might be geographically distributed it may also be necessary to plan accordingly to implement WAN optimization to combat latency or packet loss."
 msgstr ""
 
@@ -3346,7 +3350,7 @@ msgid "Introduction to the OpenStack Architecture Design Guide"
 msgstr ""
 
 #: ./doc/arch-design/introduction/section_introduction_to_openstack_architecture_design_guide.xml:9(para)
-msgid "OpenStack is a leader in the cloud technology gold rush, as organizations of all stripes discover the increased flexibility and speed to market that self-service cloud and Infrastructure as a Service (IaaS) provides. To truly reap those benefits, however, the cloud must be designed and architected properly."
+msgid "OpenStack is a leader in the cloud technology gold rush, as organizations of all stripes discover the increased flexibility and speed to market that self-service cloud and Infrastructure-as-a-Service (IaaS) provides. To truly reap those benefits, however, the cloud must be designed and architected properly."
 msgstr ""
 
 #: ./doc/arch-design/introduction/section_introduction_to_openstack_architecture_design_guide.xml:15(para)
@@ -4332,7 +4336,7 @@ msgid "Software-Defined Networking: This use case details both running an SDN co
 msgstr ""
 
 #: ./doc/arch-design/specialized/section_introduction_specialized.xml:31(para)
-msgid "Desktop as a Service: This is for organizations that want to run a virtualized desktop environment on a cloud. This can apply to private or public clouds."
+msgid "Desktop-as-a-Service: This is for organizations that want to run a virtualized desktop environment on a cloud. This can apply to private or public clouds."
 msgstr ""
 
 #: ./doc/arch-design/specialized/section_introduction_specialized.xml:37(para)
@@ -4652,7 +4656,7 @@ msgid "Create a baseline of upper-layer services that are implemented across all
 msgstr ""
 
 #: ./doc/arch-design/hybrid/section_architecture_hybrid.xml:90(para)
-msgid "Deploy a Platform as a Service (PaaS) technology such as Cloud Foundry or OpenShift that abstracts the upper-layer services from the underlying cloud platform. The unit of application deployment and migration is the PaaS and leverages the services of the PaaS and only consumes the base infrastructure services of the cloud platform. The downside to this approach is that the PaaS itself then potentially becomes a source of lock-in."
+msgid "Deploy a Platform-as-a-Service (PaaS) technology such as Cloud Foundry or OpenShift that abstracts the upper-layer services from the underlying cloud platform. The unit of application deployment and migration is the PaaS and leverages the services of the PaaS and only consumes the base infrastructure services of the cloud platform. The downside to this approach is that the PaaS itself then potentially becomes a source of lock-in."
 msgstr ""
 
 #: ./doc/arch-design/hybrid/section_architecture_hybrid.xml:101(para)
@@ -4956,7 +4960,7 @@ msgid "If the security of instances is not considered important, there may not b
 msgstr ""
 
 #: ./doc/arch-design/hybrid/section_tech_considerations_hybrid.xml:205(para)
-msgid "There are other services worth considering that provide a bare metal instance instead of a cloud. In other cases, it is possible to replicate a second private cloud by integrating with a Private Cloud as a Service deployment, in which an organization does not buy hardware, but also does not share it with other tenants. It is also possible use a provider that hosts a bare-metal \"public\" cloud instance for which the hardware is dedicated only to one customer, or a provider that offers Private Cloud as a Service."
+msgid "There are other services worth considering that provide a bare metal instance instead of a cloud. In other cases, it is possible to replicate a second private cloud by integrating with a private Cloud-as-a-Service deployment, in which an organization does not buy hardware, but also does not share it with other tenants. It is also possible use a provider that hosts a bare-metal \"public\" cloud instance for which the hardware is dedicated only to one customer, or a provider that offers private Cloud-as-a-Service."
 msgstr ""
 
 #: ./doc/arch-design/hybrid/section_tech_considerations_hybrid.xml:214(para)

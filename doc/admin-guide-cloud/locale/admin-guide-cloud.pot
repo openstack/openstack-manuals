@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-07-28 06:07+0000\n"
+"POT-Creation-Date: 2014-07-29 06:09+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -8819,7 +8819,7 @@ msgid "You can add and remove additional resources from running instances, such 
 msgstr ""
 
 #: ./doc/admin-guide-cloud/compute/section_compute-images-instances.xml:45(para)
-msgid "This diagram shows the system state prior to launching an instance. The image store, fronted by the Image service (glance) has a number of predefined images. Inside the cloud, a compute node contains the available vCPU, memory, and local disk resources. Additionally, the <systemitem class=\"service\">cinder-volume</systemitem> service provides a number of predefined volumes."
+msgid "This diagram shows the system state prior to launching an instance. The image store, fronted by the Image Service (glance) has a number of predefined images. Inside the cloud, a compute node contains the available vCPU, memory, and local disk resources. Additionally, the <systemitem class=\"service\">cinder-volume</systemitem> service provides a number of predefined volumes."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/compute/section_compute-images-instances.xml:51(title)
@@ -8858,15 +8858,15 @@ msgstr ""
 msgid "End state of image and volume after instance exits"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-images-instances.xml:105(title)
+#: ./doc/admin-guide-cloud/compute/section_compute-images-instances.xml:106(title)
 msgid "Control where instances run"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-images-instances.xml:106(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-images-instances.xml:107(para)
 msgid "The <link href=\"http://docs.openstack.org/trunk/config-reference/content/\"><citetitle>OpenStack Configuration Reference</citetitle></link> provides detailed information on controlling where your instances run, including ensuring a set of instances run on different compute nodes for service resiliency or on the same node for high performance inter-instance communications."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-images-instances.xml:111(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-images-instances.xml:112(para)
 msgid "Administrative users can specify on which compute node to run instances. To do so, specify the <parameter>--availability-zone <replaceable>AVAILABILITY_ZONE</replaceable>:<replaceable>COMPUTE_HOST</replaceable></parameter> parameter."
 msgstr ""
 
@@ -9700,6 +9700,26 @@ msgstr ""
 
 #: ./doc/admin-guide-cloud/compute/section_compute-recover-nodes.xml:391(para)
 msgid "Do not forget the <literal>-r</literal> flag. Otherwise, you close ALL sessions."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/image/section_glance-nova-image-download.xml:11(title)
+msgid "Image download: how it works"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/image/section_glance-nova-image-download.xml:12(para)
+msgid "Prior to starting a virtual machine, the virtual machine image used must be transferred to the compute node from the Image Service. How this works can change depending on the settings chosen for the compute node and the Image Service."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/image/section_glance-nova-image-download.xml:18(para)
+msgid "Typically, the Compute service will use the image identifier passed to it by the scheduler service and request the image from the Image API. Though images are not stored in glancerather in a back end, which could be Object Storage, a filesystem or any other supported methodthe connection is made from the compute node to the Image Service and the image is transferred over this connection. The Image Service streams the image from the back end to the compute node."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/image/section_glance-nova-image-download.xml:28(para)
+msgid "Certain back ends support a more direct method, where on request the Image Service will return a URL that can be used to download the image directly from the back-end store. Currently the only store to support the direct download approach is the filesystem store. It can be configured using the <option>filesystems</option> option in the <literal>image_file_url</literal> section of the <filename>nova.conf</filename> file on compute nodes."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/image/section_glance-nova-image-download.xml:38(para)
+msgid "Compute nodes also implement caching of images, meaning that if an image has been used before it won't necessarily be downloaded every time. Information on the configuration options for caching on compute nodes can be found in the <link href=\"http://docs.openstack.org/trunk/config-reference/content/\"><citetitle>Configuration Reference</citetitle></link>."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/image/section_glance-property-protection.xml:7(title)
