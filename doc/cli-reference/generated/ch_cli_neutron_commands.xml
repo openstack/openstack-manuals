@@ -12,7 +12,7 @@
     <title>Networking command-line client</title>
     <para>The <command>neutron</command> client is the command-line interface
          (CLI) for the OpenStack Networking API and its extensions. This chapter documents
-         <command>neutron</command> version 2.3.5.
+         <command>neutron</command> version 2.3.6.
     </para>
     <para>For help on a specific <command>neutron</command>
        command, enter:
@@ -28,7 +28,7 @@
                [--os-username &lt;auth-username&gt;] [--os-user-id &lt;auth-user-id&gt;]
                [--os-password &lt;auth-password&gt;]
                [--os-region-name &lt;auth-region-name&gt;] [--os-token &lt;token&gt;]
-               [--service-type &lt;service-type&gt;]
+               [--service-type &lt;service-type&gt;] [--timeout &lt;seconds&gt;]
                [--endpoint-type &lt;endpoint-type&gt;] [--os-url &lt;url&gt;]
                [--os-cacert &lt;ca-certificate&gt;] [--insecure]</computeroutput></screen>
     </section>
@@ -150,6 +150,16 @@
     <listitem>
       <para>
       Defaults to <code>env[OS_NETWORK_SERVICE_TYPE]</code> or network.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--timeout &lt;seconds&gt;</command></term>
+    <listitem>
+      <para>
+        Timeout in seconds to wait for an HTTP response.
+      Defaults to <code>env[OS_NETWORK_TIMEOUT]</code> or None if not
+      specified.
       </para>
     </listitem>
   </varlistentry>
@@ -615,7 +625,7 @@
     <term><command>ipsec-site-connection-delete</command></term>
     <listitem>
       <para>
-        Delete a given IPsecSiteConnection.
+        Delete a given IPsec site connection.
       </para>
     </listitem>
   </varlistentry>
@@ -623,7 +633,7 @@
     <term><command>ipsec-site-connection-list</command></term>
     <listitem>
       <para>
-        List IPsecSiteConnections that belong to a given tenant.
+        List IPsec site connections that belong to a given tenant.
       </para>
     </listitem>
   </varlistentry>
@@ -631,7 +641,7 @@
     <term><command>ipsec-site-connection-show</command></term>
     <listitem>
       <para>
-        Show information of a given IPsecSiteConnection.
+        Show information of a given IPsec site connection.
       </para>
     </listitem>
   </varlistentry>
@@ -639,7 +649,7 @@
     <term><command>ipsec-site-connection-update</command></term>
     <listitem>
       <para>
-        Update a given IPsecSiteConnection.
+        Update a given IPsec site connection.
       </para>
     </listitem>
   </varlistentry>
@@ -1579,7 +1589,7 @@ Delete a given agent.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -1608,7 +1618,7 @@ List agents.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -1616,7 +1626,7 @@ List agents.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -1686,7 +1696,7 @@ Show information of a given agent.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -1694,7 +1704,7 @@ Show information of a given agent.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -1739,7 +1749,7 @@ Update a given agent.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -1790,7 +1800,7 @@ Creates a credential.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -1851,7 +1861,7 @@ Delete a given credential.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -1880,7 +1890,7 @@ List credentials that belong to a given tenant.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -1888,7 +1898,7 @@ List credentials that belong to a given tenant.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -1938,7 +1948,7 @@ Show information of a given credential.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -1946,7 +1956,7 @@ Show information of a given credential.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -2012,7 +2022,7 @@ Creates a network profile.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -2099,7 +2109,7 @@ Delete a given network profile.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -2128,7 +2138,7 @@ List network profiles that belong to a given tenant.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -2136,7 +2146,7 @@ List network profiles that belong to a given tenant.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -2187,7 +2197,7 @@ Show information of a given network profile.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -2195,7 +2205,7 @@ Show information of a given network profile.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -2241,7 +2251,7 @@ Update network profile's information.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -2270,7 +2280,7 @@ List policy profiles that belong to a given tenant.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -2278,7 +2288,7 @@ List policy profiles that belong to a given tenant.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -2329,7 +2339,7 @@ Show information of a given policy profile.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -2337,7 +2347,7 @@ Show information of a given policy profile.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -2383,7 +2393,7 @@ Update policy profile's information.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -2424,7 +2434,7 @@ List DHCP agents hosting a network.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -2432,7 +2442,7 @@ List DHCP agents hosting a network.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -2486,7 +2496,7 @@ Add a network to a DHCP agent.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -2531,7 +2541,7 @@ Remove a network from a DHCP agent.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -2559,7 +2569,7 @@ List all extensions.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -2567,7 +2577,7 @@ List all extensions.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -2616,7 +2626,7 @@ Show information of a given resource.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -2624,7 +2634,7 @@ Show information of a given resource.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -2675,7 +2685,7 @@ Create a firewall.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -2751,7 +2761,7 @@ Delete a given firewall.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -2781,7 +2791,7 @@ List firewalls that belong to a given tenant.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -2789,7 +2799,7 @@ List firewalls that belong to a given tenant.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -2872,7 +2882,7 @@ Create a firewall policy.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -2950,7 +2960,7 @@ Delete a given firewall policy.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -2997,7 +3007,7 @@ Insert a rule into a given firewall policy.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -3043,7 +3053,7 @@ List firewall policies that belong to a given tenant.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -3051,7 +3061,7 @@ List firewall policies that belong to a given tenant.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -3135,7 +3145,7 @@ Remove a rule from a given firewall policy.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -3176,7 +3186,7 @@ Show information of a given firewall policy.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -3184,7 +3194,7 @@ Show information of a given firewall policy.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -3230,7 +3240,7 @@ Update a given firewall policy.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -3266,7 +3276,7 @@ Create a firewall rule.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -3392,7 +3402,7 @@ Delete a given firewall rule.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -3422,7 +3432,7 @@ List firewall rules that belong to a given tenant.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -3430,7 +3440,7 @@ List firewall rules that belong to a given tenant.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -3510,7 +3520,7 @@ Show information of a given firewall rule.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -3518,7 +3528,7 @@ Show information of a given firewall rule.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -3565,7 +3575,7 @@ Update a given firewall rule.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -3613,7 +3623,7 @@ Show information of a given firewall.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -3621,7 +3631,7 @@ Show information of a given firewall.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -3666,7 +3676,7 @@ Update a given firewall.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -3713,7 +3723,7 @@ Create a mapping between a floating IP and a fixed IP.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -3764,7 +3774,7 @@ Create a floating IP for a given tenant.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -3825,7 +3835,7 @@ Delete a given floating IP.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -3862,7 +3872,7 @@ Remove a mapping from a floating IP to a fixed IP.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -3892,7 +3902,7 @@ List floating IPs that belong to a given tenant.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -3900,7 +3910,7 @@ List floating IPs that belong to a given tenant.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -3979,7 +3989,7 @@ Show information of a given floating IP.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -3987,7 +3997,7 @@ Show information of a given floating IP.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -4040,7 +4050,7 @@ Create a network gateway device.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -4124,7 +4134,7 @@ Delete a given network gateway device.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -4153,7 +4163,7 @@ List network gateway devices for a given tenant.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -4161,7 +4171,7 @@ List network gateway devices for a given tenant.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -4211,7 +4221,7 @@ Show information for a given network gateway device.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -4219,7 +4229,7 @@ Show information for a given network gateway device.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -4269,7 +4279,7 @@ Update a network gateway device.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -4358,7 +4368,7 @@ Create an IPsec site connection.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -4489,7 +4499,7 @@ Create an IPsec site connection.
         <screen><computeroutput>usage: neutron ipsec-site-connection-delete [-h] [--request-format {json,xml}]
                                             IPSEC_SITE_CONNECTION</computeroutput></screen>
         <para>
-Delete a given IPsecSiteConnection.
+Delete a given IPsec site connection.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
@@ -4515,7 +4525,7 @@ Delete a given IPsecSiteConnection.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -4531,7 +4541,7 @@ Delete a given IPsecSiteConnection.
                                           [--sort-key FIELD]
                                           [--sort-dir {asc,desc}]</computeroutput></screen>
         <para>
-List IPsecSiteConnections that belong to a given tenant.
+List IPsec site connections that belong to a given tenant.
         </para>  <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
@@ -4546,7 +4556,7 @@ List IPsecSiteConnections that belong to a given tenant.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -4554,7 +4564,7 @@ List IPsecSiteConnections that belong to a given tenant.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -4609,7 +4619,7 @@ List IPsecSiteConnections that belong to a given tenant.
                                           [-F FIELD]
                                           IPSEC_SITE_CONNECTION</computeroutput></screen>
         <para>
-Show information of a given IPsecSiteConnection.
+Show information of a given IPsec site connection.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
@@ -4635,7 +4645,7 @@ Show information of a given IPsecSiteConnection.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -4643,7 +4653,7 @@ Show information of a given IPsecSiteConnection.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -4664,7 +4674,7 @@ Show information of a given IPsecSiteConnection.
                                             [--dpd action=ACTION,interval=INTERVAL,timeout=TIMEOUT]
                                             IPSEC_SITE_CONNECTION</computeroutput></screen>
         <para>
-Update a given IPsecSiteConnection.
+Update a given IPsec site connection.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
@@ -4690,7 +4700,7 @@ Update a given IPsecSiteConnection.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -4699,7 +4709,7 @@ Update a given IPsecSiteConnection.
     <listitem>
       <para>
         action=ACTION,interval=INTERVAL,timeout=TIMEOUT
-      Ipsec connection Dead Peer Detection attributes.
+      Ipsec connection. Dead Peer Detection attributes.
       'action'-hold,clear,disabled,restart,restart-by-peer.
       'interval' and 'timeout' are non negative integers.
       'interval' should be less than 'timeout' value.
@@ -4745,7 +4755,7 @@ List L3 agents hosting a router.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -4753,7 +4763,7 @@ List L3 agents hosting a router.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -4807,7 +4817,7 @@ Add a router to a L3 agent.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -4852,7 +4862,7 @@ Remove a router from a L3 agent.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -4895,7 +4905,7 @@ schedulers
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -4903,7 +4913,7 @@ schedulers
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -4958,7 +4968,7 @@ Create a mapping between a health monitor and a pool.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -4993,7 +5003,7 @@ Create a healthmonitor.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -5112,7 +5122,7 @@ Delete a given healthmonitor.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -5159,7 +5169,7 @@ Remove a mapping from a health monitor to a pool.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -5189,7 +5199,7 @@ List healthmonitors that belong to a given tenant.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -5197,7 +5207,7 @@ List healthmonitors that belong to a given tenant.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -5277,7 +5287,7 @@ Show information of a given healthmonitor.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -5285,7 +5295,7 @@ Show information of a given healthmonitor.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -5331,7 +5341,7 @@ Update a given healthmonitor.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -5374,7 +5384,7 @@ Create a member.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -5452,7 +5462,7 @@ Delete a given member.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -5482,7 +5492,7 @@ List members that belong to a given tenant.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -5490,7 +5500,7 @@ List members that belong to a given tenant.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -5569,7 +5579,7 @@ Show information of a given member.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -5577,7 +5587,7 @@ Show information of a given member.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -5622,7 +5632,7 @@ Update a given member.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -5654,7 +5664,7 @@ Create a pool.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -5756,7 +5766,7 @@ Delete a given pool.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -5786,7 +5796,7 @@ List pools that belong to a given tenant.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -5794,7 +5804,7 @@ List pools that belong to a given tenant.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -5874,7 +5884,7 @@ List the pools on a loadbalancer agent.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -5882,7 +5892,7 @@ List the pools on a loadbalancer agent.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -5931,7 +5941,7 @@ Show information of a given pool.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -5939,7 +5949,7 @@ Show information of a given pool.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -5988,7 +5998,7 @@ Retrieve stats for a given pool.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -5996,7 +6006,7 @@ Retrieve stats for a given pool.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -6041,7 +6051,7 @@ Update a given pool.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -6086,7 +6096,7 @@ Create a vip.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -6197,7 +6207,7 @@ Delete a given vip.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -6227,7 +6237,7 @@ List vips that belong to a given tenant.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -6235,7 +6245,7 @@ List vips that belong to a given tenant.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -6314,7 +6324,7 @@ Show information of a given vip.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -6322,7 +6332,7 @@ Show information of a given vip.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -6367,7 +6377,7 @@ Update a given vip.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -6409,7 +6419,7 @@ Create a metering label for a given tenant.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -6470,7 +6480,7 @@ Delete a given metering label.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -6500,7 +6510,7 @@ List metering labels that belong to a given tenant.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -6508,7 +6518,7 @@ List metering labels that belong to a given tenant.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -6598,7 +6608,7 @@ Create a metering label rule for a given label.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -6660,7 +6670,7 @@ Delete a given metering label.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -6690,7 +6700,7 @@ List metering labels that belong to a given label.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -6698,7 +6708,7 @@ List metering labels that belong to a given label.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -6778,7 +6788,7 @@ Show information of a given metering label rule.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -6786,7 +6796,7 @@ Show information of a given metering label rule.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -6835,7 +6845,7 @@ Show information of a given metering label.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -6843,7 +6853,7 @@ Show information of a given metering label.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -6905,7 +6915,7 @@ Create a packet filter for a given tenant.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -7058,7 +7068,7 @@ Delete a given packet filter.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -7088,7 +7098,7 @@ List packet filters that belong to a given tenant.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -7096,7 +7106,7 @@ List packet filters that belong to a given tenant.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -7176,7 +7186,7 @@ Show information of a given packet filter.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -7184,7 +7194,7 @@ Show information of a given packet filter.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -7241,7 +7251,7 @@ Update packet filter's information.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -7381,7 +7391,7 @@ Create a network for a given tenant.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -7441,7 +7451,7 @@ Delete a given network.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -7471,7 +7481,7 @@ List external networks that belong to a given tenant.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -7479,7 +7489,7 @@ List external networks that belong to a given tenant.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -7565,7 +7575,7 @@ Add an internal network interface to a router.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -7625,7 +7635,7 @@ Create a network gateway.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -7680,7 +7690,7 @@ Delete a given network gateway.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -7727,7 +7737,7 @@ Remove a network from a network gateway.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -7773,7 +7783,7 @@ List network gateways for a given tenant.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -7781,7 +7791,7 @@ List network gateways for a given tenant.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -7830,7 +7840,7 @@ Show information of a given network gateway.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -7838,7 +7848,7 @@ Show information of a given network gateway.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -7884,7 +7894,7 @@ Update the name for a network gateway.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -7913,7 +7923,7 @@ List networks that belong to a given tenant.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -7921,7 +7931,7 @@ List networks that belong to a given tenant.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -8002,7 +8012,7 @@ List the networks on a DHCP agent.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -8010,7 +8020,7 @@ List the networks on a DHCP agent.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -8089,7 +8099,7 @@ Show information of a given network.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -8097,7 +8107,7 @@ Show information of a given network.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -8142,7 +8152,7 @@ Update network's information.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -8184,7 +8194,7 @@ Create a netpartition for a given tenant.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -8229,7 +8239,7 @@ Delete a given netpartition.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -8258,7 +8268,7 @@ List netpartitions that belong to a given tenant.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -8266,7 +8276,7 @@ List netpartitions that belong to a given tenant.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -8316,7 +8326,7 @@ Show information of a given netpartition.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -8324,7 +8334,7 @@ Show information of a given netpartition.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -8378,7 +8388,7 @@ Create a port for a given tenant.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -8492,7 +8502,7 @@ Delete a given port.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -8521,7 +8531,7 @@ List ports that belong to a given tenant.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -8529,7 +8539,7 @@ List ports that belong to a given tenant.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -8608,7 +8618,7 @@ Show information of a given port.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -8616,7 +8626,7 @@ Show information of a given port.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -8664,7 +8674,7 @@ Update port's information.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -8733,7 +8743,7 @@ Create a queue.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -8818,7 +8828,7 @@ Delete a given queue.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -8846,7 +8856,7 @@ List queues that belong to a given tenant.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -8854,7 +8864,7 @@ List queues that belong to a given tenant.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -8903,7 +8913,7 @@ Show information of a given queue.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -8911,7 +8921,7 @@ Show information of a given queue.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -8946,7 +8956,7 @@ Delete defined quotas of a given tenant.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -8983,7 +8993,7 @@ List quotas of all tenants who have non-default quota values.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -9011,7 +9021,7 @@ Show quotas of a given tenant.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -9054,7 +9064,7 @@ Define tenant's quotas not to use defaults.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -9184,7 +9194,7 @@ Create a router for a given tenant.
     <term><command>distributed</command></term>
     <listitem>
       <para>
-        Create a distributed router (VMware NSX plugin only).
+        Create a distributed router.
       </para>
     </listitem>
   </varlistentry>
@@ -9203,7 +9213,7 @@ Create a router for a given tenant.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -9255,7 +9265,7 @@ Delete a given router.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -9292,7 +9302,7 @@ Remove an external network gateway from a router.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -9338,7 +9348,7 @@ Set the external network gateway for a router.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -9394,7 +9404,7 @@ Add an internal network interface to a router.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -9442,7 +9452,7 @@ Remove an internal network interface from a router.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -9472,7 +9482,7 @@ List routers that belong to a given tenant.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -9480,7 +9490,7 @@ List routers that belong to a given tenant.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -9560,7 +9570,7 @@ List the routers on a L3 agent.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -9568,7 +9578,7 @@ List the routers on a L3 agent.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -9619,7 +9629,7 @@ List ports that belong to a given tenant, with specified router.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -9627,7 +9637,7 @@ List ports that belong to a given tenant, with specified router.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -9706,7 +9716,7 @@ Show information of a given router.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -9714,7 +9724,7 @@ Show information of a given router.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -9759,7 +9769,7 @@ Update router's information.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -9801,7 +9811,7 @@ Create a security group.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -9854,7 +9864,7 @@ Delete a given security group.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -9884,7 +9894,7 @@ List security groups that belong to a given tenant.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -9892,7 +9902,7 @@ List security groups that belong to a given tenant.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -9980,7 +9990,7 @@ Create a security group rule.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -10081,7 +10091,7 @@ Delete a given security group rule.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -10113,7 +10123,7 @@ List security group rules that belong to a given tenant.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -10121,7 +10131,7 @@ List security group rules that belong to a given tenant.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -10210,7 +10220,7 @@ Show information of a given security group rule.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -10218,7 +10228,7 @@ Show information of a given security group rule.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -10268,7 +10278,7 @@ Show information of a given security group.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -10276,7 +10286,7 @@ Show information of a given security group.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -10323,7 +10333,7 @@ Update a given security group.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -10369,7 +10379,7 @@ List service providers.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -10377,7 +10387,7 @@ List service providers.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -10433,6 +10443,8 @@ List service providers.
                              [--host-route destination=CIDR,nexthop=IP_ADDR]
                              [--dns-nameserver DNS_NAMESERVER]
                              [--disable-dhcp] [--enable-dhcp]
+                             [--ipv6-ra-mode {dhcpv6-stateful,dhcpv6-stateless,slaac}]
+                             [--ipv6-address-mode {dhcpv6-stateful,dhcpv6-stateless,slaac}]
                              [--ip-version {4,6}]
                              NETWORK CIDR</computeroutput></screen>
         <para>
@@ -10470,7 +10482,7 @@ Create a subnet for a given tenant.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -10551,6 +10563,22 @@ Create a subnet for a given tenant.
     </listitem>
   </varlistentry>
   <varlistentry>
+    <term><command>--ipv6-ra-mode {dhcpv6-stateful,dhcpv6-stateless,slaac}</command></term>
+    <listitem>
+      <para>
+      IPv6 RA (Router Advertisement) mode.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--ipv6-address-mode {dhcpv6-stateful,dhcpv6-stateless,slaac}</command></term>
+    <listitem>
+      <para>
+      IPv6 address mode.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
     <term><command>--ip-version {4,6} IP</command></term>
     <listitem>
       <para>
@@ -10590,7 +10618,7 @@ Delete a given subnet.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -10620,7 +10648,7 @@ List subnets that belong to a given tenant.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -10628,7 +10656,7 @@ List subnets that belong to a given tenant.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -10707,7 +10735,7 @@ Show information of a given subnet.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -10715,7 +10743,7 @@ Show information of a given subnet.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -10738,6 +10766,8 @@ Show information of a given subnet.
                              [--host-route destination=CIDR,nexthop=IP_ADDR]
                              [--dns-nameserver DNS_NAMESERVER]
                              [--disable-dhcp] [--enable-dhcp]
+                             [--ipv6-ra-mode {dhcpv6-stateful,dhcpv6-stateless,slaac}]
+                             [--ipv6-address-mode {dhcpv6-stateful,dhcpv6-stateless,slaac}]
                              SUBNET</computeroutput></screen>
         <para>
 Update subnet's information.
@@ -10766,7 +10796,7 @@ Update subnet's information.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -10838,6 +10868,22 @@ Update subnet's information.
       </para>
     </listitem>
   </varlistentry>
+  <varlistentry>
+    <term><command>--ipv6-ra-mode {dhcpv6-stateful,dhcpv6-stateless,slaac}</command></term>
+    <listitem>
+      <para>
+      IPv6 RA (Router Advertisement) mode.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--ipv6-address-mode {dhcpv6-stateful,dhcpv6-stateless,slaac}</command></term>
+    <listitem>
+      <para>
+      IPv6 address mode.
+      </para>
+    </listitem>
+  </varlistentry>
  </variablelist>
     </section>
     <section xml:id="neutronclient_subcommand_vpn-ikepolicy-create">
@@ -10849,7 +10895,7 @@ Update subnet's information.
                                     [--tenant-id TENANT_ID]
                                     [--description DESCRIPTION]
                                     [--auth-algorithm {sha1}]
-                                    [--encryption-algorithm {3des,aes-128,aes-192,aes-256}]
+                                    [--encryption-algorithm ENCRYPTION_ALGORITHM]
                                     [--phase1-negotiation-mode {main}]
                                     [--ike-version {v1,v2}]
                                     [--pfs {group2,group5,group14}]
@@ -10882,7 +10928,7 @@ Create an IKE policy.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -10911,7 +10957,7 @@ Create an IKE policy.
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--encryption-algorithm {3des,aes-128,aes-192,aes-256}</command></term>
+    <term><command>--encryption-algorithm ENCRYPTION_ALGORITHM</command></term>
     <listitem>
       <para>
       Encryption algorithm in lowercase, default:aes-128
@@ -10986,7 +11032,7 @@ Delete a given IKE policy.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -11016,7 +11062,7 @@ List IKE policies that belong to a tenant.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -11024,7 +11070,7 @@ List IKE policies that belong to a tenant.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -11104,7 +11150,7 @@ Show information of a given IKE policy.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -11112,7 +11158,7 @@ Show information of a given IKE policy.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -11159,7 +11205,7 @@ Update a given IKE policy.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -11186,7 +11232,7 @@ Update a given IKE policy.
                                       [--description DESCRIPTION]
                                       [--transform-protocol {esp,ah,ah-esp}]
                                       [--auth-algorithm {sha1}]
-                                      [--encryption-algorithm {3des,aes-128,aes-192,aes-256}]
+                                      [--encryption-algorithm ENCRYPTION_ALGORITHM]
                                       [--encapsulation-mode {tunnel,transport}]
                                       [--pfs {group2,group5,group14}]
                                       [--lifetime units=UNITS,value=VALUE]
@@ -11218,7 +11264,7 @@ Create an IPsec policy.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -11255,7 +11301,7 @@ Create an IPsec policy.
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--encryption-algorithm {3des,aes-128,aes-192,aes-256}</command></term>
+    <term><command>--encryption-algorithm ENCRYPTION_ALGORITHM</command></term>
     <listitem>
       <para>
       Encryption algorithm in lowercase, default:aes-128
@@ -11322,7 +11368,7 @@ Delete a given IPsec policy.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -11352,7 +11398,7 @@ List ipsecpolicies that belongs to a given tenant connection.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -11360,7 +11406,7 @@ List ipsecpolicies that belongs to a given tenant connection.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -11440,7 +11486,7 @@ Show information of a given IPsec policy.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -11448,7 +11494,7 @@ Show information of a given IPsec policy.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -11495,7 +11541,7 @@ Update a given IPsec policy.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -11557,7 +11603,7 @@ Create a VPN service.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -11626,7 +11672,7 @@ Delete a given VPN service.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -11656,7 +11702,7 @@ List VPN service configurations that belong to a given tenant.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -11664,7 +11710,7 @@ List VPN service configurations that belong to a given tenant.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -11743,7 +11789,7 @@ Show information of a given VPN service.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
@@ -11751,7 +11797,7 @@ Show information of a given VPN service.
     <term><command>-D, --show-details</command></term>
     <listitem>
       <para>
-        Show detailed info.
+        Show detailed information.
       </para>
     </listitem>
   </varlistentry>
@@ -11797,7 +11843,7 @@ Update a given VPN service.
     <term><command>--request-format {json,xml}</command></term>
     <listitem>
       <para>
-      The xml or json request format.
+      The XML or JSON request format.
       </para>
     </listitem>
   </varlistentry>
