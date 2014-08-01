@@ -48,25 +48,23 @@ function test_fr {
 function test_ja {
     setup_lang 'ja'
 
+    setup_directory 'ja' 'high-availability-guide' \
+        'image-guide' 'install-guide' 'user-guide' \
+        'user-guide-admin'
     case "$PURPOSE" in
         test)
-            setup_directory 'ja' 'high-availability-guide' \
-                'image-guide' 'install-guide'  'user-guide' \
-                'user-guide-admin'
             openstack-doc-test -v --check-build -l ja \
                 --only-book high-availability-guide \
-                --only-book install-guide \
                 --only-book image-guide \
+                --only-book install-guide \
                 --only-book user-guide \
                 --only-book user-guide-admin
             RET=$?
             ;;
         publish)
-            setup_directory 'ja' 'high-availability-guide' \
-                'install-guide' 'user-guide' \
-                'user-guide-admin'
             openstack-doc-test -v --publish --check-build -l ja \
                 --only-book high-availability-guide \
+                --only-book image-guide \
                 --only-book install-guide \
                 --only-book user-guide \
                 --only-book user-guide-admin
