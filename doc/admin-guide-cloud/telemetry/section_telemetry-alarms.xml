@@ -5,5 +5,217 @@
   version="5.0"
   xml:id="section_telemetry-alarms">
   <title>Alarms</title>
-  <para>TBD</para>
+  <para>Alarms provide user-oriented Monitoring-as-a-Service for resources running on OpenStack. This type of monitoring ensures you can automatically scale in or out a group of instances through the Orchestration module, but you can also use alarms for general-purpose awareness of your cloud resources' health.</para>
+  <para>These alarms follow a tri-state model:</para>
+  <para>
+    <variablelist>
+      <varlistentry>
+        <term>ok</term>
+        <listitem>
+          <para>The rule governing the alarm has been evaluated as <literal>False</literal>.</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>alarm</term>
+        <listitem>
+          <para>The rule governing the alarm have been evaluated as <literal>True</literal>.</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>insufficient data</term>
+        <listitem>
+          <para>There are not enough datapoints available in the evaluation periods to meaningfully determine the alarm state.</para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </para>
+  <section xml:id="section_telemetry-alarm-definitions">
+    <title>Alarm definitions</title>
+    <para>The definition of an alarm provides the rules that govern when a state transition should occur, and the actions to be taken thereon. The nature of these rules depend on the alarm type.</para>
+    <section xml:id="section_telemetry-threshold">
+      <title>Threshold rule alarms</title>
+      <para>For conventional threshold-oriented alarms, state transitions are governed by:</para>
+      <para>
+        <itemizedlist>
+          <listitem>
+            <para>A static threshold value with a comparison operator such as greater than or less than.</para>
+          </listitem>
+          <listitem>
+            <para>A statistic selection to aggregate the data.</para>
+          </listitem>
+          <listitem>
+            <para>A sliding time window to indicate how far back into the recent past you want to look.</para>
+          </listitem>
+        </itemizedlist>
+      </para>
+    </section>
+    <section xml:id="section_telemetry-combination">
+      <title>Combination rule alarms</title>
+      <para>The Telemetry module also supports the concept of a meta-alarm, which aggregates over the current state of a set of underlying basic alarms combined via a logical operator (AND or OR).</para>
+    </section>
+  </section>
+  <section xml:id="section_telemetry-alarm-dimensioning">
+    <title>Alarm dimensioning</title>
+    <para>A key associated concept is the notion of <emphasis>dimensioning</emphasis> which defines the set of matching meters that feed into an alarm evaluation. Recall that meters are per-resource-instance, so in the simplest case an alarm might be defined over a particular meter applied to all resources visible to a particular user. More useful however would be the option to explicitly select which specific resources you are interested in alarming on.</para>
+    <para>At one extreme you might have narrowly dimensioned alarms where this selection would have only a single target (identified by resource ID). At the other extreme, you could have widely dimensioned alarms where this selection identifies many resources over which the statistic is aggregated. For example all instances booted from a particular image or all instances with matching user metadata (the latter is how the Orchestration module identifies autoscaling groups).</para>
+  </section>
+  <section xml:id="section_telemetry-alarm-evaluation">
+    <title>Alarm evaluation</title>
+    <para>Alarms are evaluated by the <systemitem class="service">alarm-evaluator</systemitem> service on a periodic basis, defaulting to once every minute.</para>
+    <section xml:id="section_telemetry-alarm-actions">
+      <title>Alarm actions</title>
+      <para>Any state transition of individual alarm (to <literal>ok</literal>, <literal>alarm</literal>, or <literal>insufficient data</literal>) may have one or more actions associated with it. These actions effectively send a signal to a consumer that the state transition has occurred, and provide some additional context. This includes the new and previous states, with some reason data describing the disposition with respect to the threshold, the number of datapoints involved and most recent of these. State transitions are detected by the <systemitem class="service">alarm-evaluator</systemitem>, whereas the <systemitem class="service">alarm-notifier</systemitem> effects the actual notification action.</para>
+      <section xml:id="section_telemetry-http-callback">
+        <title>Webhooks</title>
+        <para>These are the <emphasis>de facto</emphasis> notification type used by Telemetry alarming and simply involve a HTTP POST request being sent to an endpoint, with a request body containing a description of the state transition encoded as a JSON fragment.</para>
+      </section>
+      <section xml:id="section_telemetry-log">
+        <title>Log actions</title>
+        <para>These are a lightweight alternative to webhooks, whereby the state transition is simply logged by the <systemitem class="service">alarm-notifier</systemitem>, and are intended primarily for testing purposes.</para>
+      </section>
+    </section>
+  </section>
+  <section xml:id="section_telemetry-alarm-usage">
+    <title>Using alarms</title>
+    <para>The <command>ceilometer</command> CLI provides simple verbs for creating and manipulating alarms.</para>
+    <section xml:id="section_telemetry-alarm-usage-creation">
+      <title>Alarm creation</title>
+      <para>An example of creating a threshold-oriented alarm, based on an upper bound on the CPU utilization for a particular instance:</para>
+      <screen><prompt>$</prompt> <userinput>ceilometer alarm-threshold-create --name cpu_hi \
+  --description 'instance running hot' \
+  --meter-name cpu_util --threshold 70.0 \
+  --comparison-operator gt --statistic avg \
+  --period 600 --evaluation-periods 3 \
+  --alarm-action 'log://' \
+  --query resource_id=<replaceable>INSTANCE_ID</replaceable></userinput></screen>
+      <para>This creates an alarm that will fire when the average CPU utilization for an individual instance exceeds 70% for three consecutive 10 minute periods. The notification in this case is simply a log message, though it could alternatively be a webhook URL.</para>
+      <note>
+        <para>Alarm names must be unique for the alarms associated with an individual project.</para>
+      </note>
+      <para>The sliding time window over which the alarm is evaluated is 30 minutes in this example. This window is not clamped to wall-clock time boundaries, rather it's anchored on the current time for each evaluation cycle, and continually creeps forward as each evaluation cycle rolls around (by default, this occurs every minute).</para>
+      <para>The period length is set to 600s in this case to reflect the out-of-the-box default cadence for collection of the associated metric. This period matching illustrates an important general principal to keep in mind for alarms:</para>
+      <note>
+        <para>The alarm period should be a whole number multiple (1 or more) of the interval configured in the pipeline corresponding to the target meter.</para>
+      </note>
+      <para>Otherwise the alarm will tend to flit in and out of the <literal>insufficient data</literal> state due to the mismatch between the actual frequency of datapoints in the metering store and the statistics queries used to compare against the alarm threshold. If a shorter alarm period is needed, then the corresponding interval should be adjusted in the <filename>pipeline.yaml</filename> file.</para>
+      <para>Other notable alarm attributes that may be set on creation, or via a subsequent update, include:</para>
+      <para>
+        <variablelist>
+           <varlistentry>
+            <term>state</term>
+            <listitem>
+              <para>The initial alarm state (defaults to <literal>insufficient data</literal>).</para>
+            </listitem>
+          </varlistentry>
+           <varlistentry>
+            <term>description</term>
+            <listitem>
+              <para>A free-text description of the alarm (defaults to a synopsis of the alarm rule).</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>enabled</term>
+            <listitem>
+              <para>True if evaluation and actioning is to be enabled for this alarm (defaults to True).</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>repeat-actions</term>
+            <listitem>
+              <para>True if actions should be repeatedly notified while the alarm remains in the target state (defaults to False).</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>ok-action</term>
+            <listitem>
+              <para>An action to invoke when the alarm state transitions to <literal>ok</literal>.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>insufficient-data-action</term>
+            <listitem>
+              <para>An action to invoke when the alarm state transitions to <literal>insufficient data</literal>.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>time-constraint</term>
+            <listitem>
+              <para>Used to restrict evaluation of the alarm to certain times of the day or days of the week (expressed as <literal>cron</literal> expression with an optional timezone).</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </para>
+      <para>An example of creating a combination alarm, based on the combined state of two underlying alarms:</para>
+      <screen><prompt>$</prompt> <userinput>ceilometer alarm-combination-create --name meta \
+  --alarm_ids <replaceable>ALARM_ID1</replaceable> \
+  --alarm_ids <replaceable>ALARM_ID2</replaceable> \
+  --operator or \
+  --alarm-action 'http://example.org/notify'</userinput></screen>
+      <para>This creates an alarm that will fire when ether one of two underlying alarms transition into the alarm state. The notification in this case is a webhook call. Any number of underlying alarms can be combined in this way, using either <literal>and</literal> or <literal>or</literal>.</para>
+    </section>
+    <section xml:id="section_telemetry-alarm-usage-retrieval">
+      <title>Alarm retrieval</title>
+      <para>You can display all your alarms via (some attributes are omitted for brevity):</para>
+      <screen><prompt>$</prompt> <userinput>ceilometer alarm-list</userinput>
+<computeroutput>+----------+--------+-------------------+---------------------------------+
+| Alarm ID | Name   | State             | Alarm condition                 |
++----------+--------+-------------------+---------------------------------+
+| <replaceable>ALARM_ID</replaceable> | cpu_hi | insufficient data | cpu_util > 70.0 during 3 x 600s |
++----------+--------+-------------------+---------------------------------+</computeroutput></screen>
+      <para>In this case, the state is reported as <literal>insufficient data</literal> which could indicate that:</para>
+      <itemizedlist>
+         <listitem>
+           <para>metrics have not yet been gathered about this instance over the evaluation window into the recent past (for example a brand-new instance)</para>
+         </listitem>
+         <listitem>
+           <para><emphasis>or</emphasis>, that the identified instance is not visible to the user/tenant owning the alarm</para>
+         </listitem>
+         <listitem>
+           <para><emphasis>or</emphasis>, simply that an alarm evaluation cycle hasn't kicked off since the alarm was created (by default, alarms are evaluated once per minute).</para>
+         </listitem>
+       </itemizedlist>
+       <note>
+         <para>The visibility of alarms depends on the role and project associated with the user issuing the query:</para>
+         <itemizedlist>
+           <listitem>
+             <para>admin users see <emphasis>all</emphasis> alarms, regardless of the owner</para>
+           </listitem>
+           <listitem>
+             <para>non-admin users see only the alarms associated with their project (as per the normal tenant segregation in OpenStack)</para>
+           </listitem>
+         </itemizedlist>
+      </note>
+    </section>
+    <section xml:id="section_telemetry-alarm-usage-update">
+      <title>Alarm update</title>
+      <para>Once the state of the alarm has settled down, we might decide that we set that bar too low with 70%, in which case the threshold (or most any other alarm attribute) can be updated thusly:</para>
+      <screen><prompt>$</prompt> <userinput>ceilometer alarm-update --threshold 75 -a <replaceable>ALARM_ID</replaceable></userinput></screen>
+      <para>The change will take effect from the next evaluation cycle, which by default occurs every minute.</para>
+      <para>Most alarm attributes can be changed in this way, but there is also a convenient short-cut for getting and setting the alarm state:</para>
+      <screen><prompt>$</prompt> <userinput>ceilometer alarm-state-get -a <replaceable>ALARM_ID</replaceable></userinput>
+<prompt>$</prompt> <userinput>ceilometer alarm-state-set --state ok -a <replaceable>ALARM_ID</replaceable></userinput></screen>
+      <para>Over time the state of the alarm may change often, especially if the threshold is chosen to be close to the trending value of the statistic. You can follow the history of an alarm over its lifecycle via the audit API:</para>
+      <screen><prompt>$</prompt> <userinput>ceilometer alarm-history -a <replaceable>ALARM_ID</replaceable></userinput>
+<computeroutput>+------------------+-----------+---------------------------------------+
+| Type             | Timestamp | Detail                                |
++------------------+-----------+---------------------------------------+
+| creation         | <replaceable>time0</replaceable>     | name: cpu_hi                          |
+|                  |           | description: instance running hot     |
+|                  |           | type: threshold                       |
+|                  |           | rule: cpu_util > 70.0 during 3 x 600s |
+| state transition | <replaceable>time1</replaceable>     | state: ok                             |
+| rule change      | <replaceable>time2</replaceable>     | rule: cpu_util > 75.0 during 3 x 600s |
++------------------+-----------+---------------------------------------+</computeroutput></screen>
+    </section>
+    <section xml:id="section_telemetry-alarm-usage-deletion">
+      <title>Alarm deletion</title>
+      <para>An alarm that's no longer required can be disabled so that it is no longer actively evaluated:</para>
+      <screen><prompt>$</prompt> <userinput>ceilometer alarm-update --enabled False -a <replaceable>ALARM_ID</replaceable></userinput></screen>
+      <para>or even deleted permanently (an irreversible step):</para>
+      <screen><prompt>$</prompt> <userinput>ceilometer alarm-delete -a <replaceable>ALARM_ID</replaceable></userinput></screen>
+      <note>
+        <para>By default, alarm history is retained for deleted alarms.</para>
+      </note>
+    </section>
+  </section>
 </section>
