@@ -31,7 +31,8 @@ IDENTIFIED BY '<replaceable>NEUTRON_DBPASS</replaceable>';</userinput></screen>
           <para>Replace <replaceable>NEUTRON_PASS</replaceable> with a suitable
             password and <replaceable>neutron@example.com</replaceable> with
             a suitable e-mail address.</para>
-          <screen><prompt>$</prompt> <userinput>keystone user-create --name neutron --pass <replaceable>NEUTRON_PASS</replaceable> --email <replaceable>neutron@example.com</replaceable></userinput></screen>
+          <screen><prompt>$</prompt> <userinput>keystone user-create --name neutron --pass <replaceable>NEUTRON_PASS</replaceable> \
+  --email <replaceable>neutron@example.com</replaceable></userinput></screen>
         </step>
         <step>
           <para>Link the <literal>neutron</literal> user to the
@@ -41,12 +42,14 @@ IDENTIFIED BY '<replaceable>NEUTRON_DBPASS</replaceable>';</userinput></screen>
         </step>
         <step>
           <para>Create the <literal>neutron</literal> service:</para>
-          <screen><prompt>$</prompt> <userinput>keystone service-create --name neutron --type network --description "OpenStack Networking"</userinput></screen>
+          <screen><prompt>$</prompt> <userinput>keystone service-create --name neutron --type network \
+  --description "OpenStack Networking"</userinput></screen>
         </step>
         <step>
           <para>Create the service endpoint:</para>
           <screen><prompt>$</prompt> <userinput>keystone endpoint-create \
-  --service-id $(keystone service-list | awk '/ network / {print $2}') \
+  --service-id \
+    $(keystone service-list | awk '/ network / {print $2}') \
   --publicurl http://<replaceable>controller</replaceable>:9696 \
   --adminurl http://<replaceable>controller</replaceable>:9696 \
   --internalurl http://<replaceable>controller</replaceable>:9696</userinput></screen>
