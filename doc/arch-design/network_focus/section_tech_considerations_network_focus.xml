@@ -78,7 +78,9 @@
         virtual machine addresses and networks. In these data centers,
         it is not uncommon for one physical node to support 30-40
         instances.</para>
-    <para>Important Note: Networking at the frame level says nothing
+    <important>
+      <para>
+        Networking at the frame level says nothing
         about the presence or absence of IP addresses at the packet
         level. Almost all ports, links, and devices on a network of
         LAN switches still have IP addresses, as do all the source and
@@ -89,6 +91,7 @@
         remote access for diagnostics, file transfer of configurations
         and software, and similar applications cannot run without IP
         addresses as well as MAC addresses.</para>
+    </important>
     <section xml:id="layer-2-arch-limitations">
       <title>Layer 2 architecture limitations</title>
     <para>Outside of the traditional data center the limitations of
@@ -161,7 +164,7 @@
         include:</para>
     <itemizedlist>
         <listitem>
-            <para>layer 3 networks provide the same level of
+            <para>Layer 3 networks provide the same level of
                 resiliency and scalability as the Internet.</para>
         </listitem>
         <listitem>
@@ -169,7 +172,7 @@
                 straightforward.</para>
         </listitem>
         <listitem>
-            <para>layer 3 can be configured to use BGP confederation
+            <para>Layer 3 can be configured to use BGP confederation
                 for scalability so core routers have state
                 proportional to number of racks, not to the number of
                 servers or instances.</para>
@@ -185,7 +188,7 @@
                 example ICMP, to monitor and manage traffic.</para>
         </listitem>
         <listitem>
-            <para>layer 3 architectures allow for the use of Quality
+            <para>Layer 3 architectures allow for the use of Quality
                 of Service (QoS) to manage network performance.</para>
         </listitem>
     </itemizedlist>
@@ -348,16 +351,19 @@
     <para>A technical consideration of networking is the idea that
         switching gear in the data center that should be installed
         with backup switches in case of hardware failure.</para>
-    <para>Research into the mean time between failures (MTBF) on
-        switches is between 100,000 and 200,000 hours. This number is
-        dependent on the ambient temperature of the switch in the data
-        center. When properly cooled and maintained, this translates
-        to between 11 and 22 years before failure. Even in the worst
-        case of poor ventilation and high ambient temperatures in the
-        data center, the MTBF is still 2-3 years. This is based on
-        published research found at
-        http://www.garrettcom.com/techsupport/papers/ethernet_switch_reliability.pdf
-        and http://www.n-tron.com/pdf/network_availability.pdf</para>
+    <para>
+      Research into the mean time between failures (MTBF) on switches
+      is between 100,000 and 200,000 hours. This number is dependent
+      on the ambient temperature of the switch in the data
+      center. When properly cooled and maintained, this translates to
+      between 11 and 22 years before failure. Even in the worst case
+      of poor ventilation and high ambient temperatures in the data
+      center, the MTBF is still 2-3 years. This is based on published
+      research found at <link
+      xlink:href="http://www.garrettcom.com/techsupport/papers/ethernet_switch_reliability.pdf">http://www.garrettcom.com/techsupport/papers/ethernet_switch_reliability.pdf</link>
+      and <link
+      xlink:href="http://www.n-tron.com/pdf/network_availability.pdf">http://www.n-tron.com/pdf/network_availability.pdf</link>.
+    </para>
     <para>In most cases, it is much more economical to only use a
         single switch with a small pool of spare switches to replace
         failed units than it is to outfit an entire data center with
@@ -367,16 +373,17 @@
         provisioned and plentiful.</para></section>
     <section xml:id="preparing-for-future-ipv6-support">
       <title>Preparing for the future: IPv6 support</title>
-    <para>One of the most important networking topics today is the
-        impending exhaustion of IPv4 addresses. In early 2014, ICANN
-        announced that they started allocating the final IPv4 address
-        blocks to the Regional Internet Registries
-        http://www.internetsociety.org/deploy360/blog/2014/05/goodbye-ipv4-iana-starts-allocating-final-address-blocks/.
-        This means the IPv4 address space is close to being fully
-        allocated. As a result, it will soon become difficult to
-        allocate more IPv4 addresses to an application that has
-        experienced growth, or is expected to scale out, due to the
-        lack of unallocated IPv4 address blocks.</para>
+    <para>
+      One of the most important networking topics today is the
+      impending exhaustion of IPv4 addresses. In early 2014, ICANN
+      announced that they started allocating the final IPv4 address
+      blocks to the Regional Internet Registries (<link
+      xlink:href="http://www.internetsociety.org/deploy360/blog/2014/05/goodbye-ipv4-iana-starts-allocating-final-address-blocks/">http://www.internetsociety.org/deploy360/blog/2014/05/goodbye-ipv4-iana-starts-allocating-final-address-blocks/</link>).
+      This means the IPv4 address space is close to being fully
+      allocated. As a result, it will soon become difficult to
+      allocate more IPv4 addresses to an application that has
+      experienced growth, or is expected to scale out, due to the lack
+      of unallocated IPv4 address blocks.</para>
     <para>For network focused applications the future is the IPv6
         protocol. IPv6 increases the address space significantly,
         fixes long standing issues in the IPv4 protocol, and will
@@ -441,5 +448,7 @@
         upstream network devices, impacting service to the cloud.
         Since OpenStack does not currently provide a mechanism for
         traffic shaping or rate limiting, it is necessary to implement
-        these features at the network hardware level.</para></section></section>
+        these features at the network hardware level.</para>
+      </section>
+    </section>
 </section>
