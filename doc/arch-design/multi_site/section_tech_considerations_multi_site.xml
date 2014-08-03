@@ -29,8 +29,8 @@
         two sites to support a single Swift endpoint and a shared
         object storage capability between them. (An example of this
         technique, as well as a configuration walk-through, is
-        available at
-        http://docs.openstack.org/developer/swift/replication_network.html#dedicated-replication-network).
+        available at <link
+        xlink:href="http://docs.openstack.org/developer/swift/replication_network.html#dedicated-replication-network">http://docs.openstack.org/developer/swift/replication_network.html#dedicated-replication-network</link>).
         Another option in this scenario is to build a dedicated set of
         tenant private networks across the secondary link using
         overlay networks with a third party mapping the site overlays
@@ -41,9 +41,9 @@
         small packets, for example RPC calls, may encounter issues
         communicating with each other or operating properly.
         Additionally, OpenStack may encounter similar types of issues.
-        To mitigate this, tuning of the Keystone call timeouts may be
+        To mitigate this, tuning of the Identity service call timeouts may be
         necessary to prevent issues authenticating against a central
-        Identity Service.</para>
+        Identity service.</para>
     <para>Another capacity consideration when it comes to networking
         for a multi-site deployment is the available amount and
         performance of overlay networks for tenant networks. If using
@@ -81,19 +81,19 @@
         goal of this guide, the real test is whether an application
         can utilize it.</para>
     <para>Identity is normally the first interface for the majority of
-        OpenStack users. Interacting with Keystone is required for
+        OpenStack users. Interacting with the Identity service is required for
         almost all major operations within OpenStack. Therefore, it is
         important to ensure that you provide users with a single URL
-        for Keystone authentication. Equally important is proper
-        documentation and configuration of regions within Keystone.
+        for Identity service authentication. Equally important is proper
+        documentation and configuration of regions within the Identity service.
         Each of the sites defined in your installation is considered
-        to be a region in Keystone nomenclature. This is important for
-        the users of the system, when reading Keystone documentation,
-        as it is required to define the Region name when providing
-        actions to an API endpoint or in Horizon.</para>
+        to be a region in Identity nomenclature. This is important for
+        the users of the system, when reading Identity documentation,
+        as it is required to define the region name when providing
+        actions to an API endpoint or in the dashboard.</para>
     <para>Load balancing is another common issue with multi-site
         installations. While it is still possible to run HAproxy
-        instances with load balancer as a service, these will be local
+        instances with Load-Balancer-as-a-Service, these will be local
         to a specific region. Some applications may be able to cope
         with this via internal mechanisms. Others, however, may
         require the implementation of an external system including
@@ -107,7 +107,7 @@
         object available to more than one region will need to do the
         cross-site replication themselves. With a centralized swift
         proxy, however, the user may need to benchmark the replication
-        timing of the Swift back end. Benchmarking allows the
+        timing of the Object Storage back end. Benchmarking allows the
         operational staff to provide users with an understanding of
         the amount of time required for a stored or modified object to
         become available to the entire environment.</para></section>
@@ -122,16 +122,16 @@
         communicating across regions. This can especially impact
         systems like the OpenStack Identity service when making
         authentication attempts from regions that do not contain the
-        centralized Keystone implementation. It can also affect
+        centralized Identity implementation. It can also affect
         certain applications which rely on remote procedure call (RPC)
         for normal operation. An example of this can be seen in High
         Performance Computing workloads.</para>
     <para>Storage availability can also be impacted by the
         architecture of a multi-site deployment. A centralized Object
-        Storage Service requires more time for an object to be
+        Storage service requires more time for an object to be
         available to instances locally in regions where the object was
         not created. Some applications may need to be tuned to account
-        for this effect. Block storage does not currently have a
+        for this effect. Block Storage does not currently have a
         method for replicating data across multiple regions, so
         applications that depend on available block storage will need
         to manually cope with this limitation by creating duplicate
@@ -168,30 +168,34 @@
     <section xml:id="openstack-components-multi-site">
       <title>OpenStack components</title>
     <para>Most OpenStack installations require a bare minimum set of
-        pieces to function. These include Keystone for authentication,
-        Nova for compute, Glance for image storage, Neutron for
-        networking, and potentially an object store in the form of
-        Swift. Bringing multi-site into play also demands extra
+        pieces to function. These include the OpenStack Identity
+        (keystone) for authentication, OpenStack Compute
+        (nova) for compute, OpenStack Image Service (glance) for image
+        storage, OpenStack Networking (neutron) for networking, and
+        potentially an object store in the form of OpenStack Object
+        Storage (swift). Bringing multi-site into play also demands extra
         components in order to coordinate between regions. Centralized
-        Keystone is necessary to provide the single authentication
-        point. Centralized Horizon is also recommended to provide a
+        Identity service is necessary to provide the single authentication
+        point. Centralized dashboard is also recommended to provide a
         single login point and a mapped experience to the API and CLI
-        options available. If necessary, a centralized Swift may be
-        used and will require the installation of the Swift proxy
-        service.</para>
+        options available. If necessary, a centralized Object Storage
+        service may be used and will require the installation of the
+        swift proxy service.</para>
     <para>It may also be helpful to install a few extra options in
         order to facilitate certain use cases. For instance,
-        installing Designate may assist in automatically generating
+        installing designate may assist in automatically generating
         DNS domains for each region with an automatically-populated
         zone full of resource records for each instance. This
         facilitates using DNS as a mechanism for determining which
         region would be selected for certain applications.</para>
     <para>Another useful tool for managing a multi-site installation
-        is Orchestration. Heat allows the use of templates to define a set of
-        instances to be launched together or for scaling existing
-        sets. It can also be used to setup matching or differentiated
-        groupings based on regions. For instance, if an application
-        requires an equally balanced number of nodes across sites, the
-        same heat template can be used to cover each site with small
-        alterations to only the region name.</para></section>
+        is Orchestration (heat). The Orchestration module allows the
+        use of templates to define a set of instances to be launched
+        together or for scaling existing sets. It can also be used to
+        setup matching or differentiated groupings based on
+        regions. For instance, if an application requires an equally
+        balanced number of nodes across sites, the same heat template
+        can be used to cover each site with small alterations to only
+        the region name.</para>
+    </section>
 </section>
