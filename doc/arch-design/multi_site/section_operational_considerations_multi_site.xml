@@ -19,8 +19,11 @@
     <para>Note that, as of the Icehouse release, documentation for
         implementing this feature is in progress. See this bug for
         more information:
-        https://bugs.launchpad.net/openstack-manuals/+bug/1340509</para>
-    <section xml:id="licensing"><title>Licensing</title>
+        <link
+        xlink:href="https://bugs.launchpad.net/openstack-manuals/+bug/1340509">https://bugs.launchpad.net/openstack-manuals/+bug/1340509</link>.
+    </para>
+    <section xml:id="licensing">
+      <title>Licensing</title>
     <para>Multi-site OpenStack deployments present additional
         licensing considerations over and above regular OpenStack
         clouds, particularly where site licenses are in use to provide
@@ -56,11 +59,12 @@
       <title>Logging and monitoring</title>
     <para>Logging and monitoring does not significantly differ for a
         multi-site OpenStack cloud. The same well known tools
-        described in the Operations Guide
-        (http://docs.openstack.org/openstack-ops/content/logging_monitoring.html)
-        remain applicable. Logging and monitoring can be provided both
-        on a per-site basis and in a common centralized
-        location.</para>
+        described in the <link
+        xlink:href="http://docs.openstack.org/openstack-ops/content/logging_monitoring.html">Logging
+        and monitoring chapter</link> of the <citetitle>Operations
+        Guide</citetitle> remain applicable. Logging and monitoring
+        can be provided both on a per-site basis and in a common
+        centralized location.</para>
     <para>When attempting to deploy logging and monitoring facilities
         to a centralized location, care must be taken with regards to
         the load placed on the inter-site networking links.</para></section>
@@ -71,49 +75,51 @@
         which is linked to the others by using centralized services
         such as Identity which are shared between sites. At a high
         level the recommended order of operations to upgrade an
-        individual OpenStack environment is
-        (http://docs.openstack.org/openstack-ops/content/ops_upgrades-general-steps.html):</para>
+        individual OpenStack environment is (see the <link
+        xlink:href="http://docs.openstack.org/openstack-ops/content/ops_upgrades-general-steps.html">Upgrades
+        chapter</link> of the <citetitle>Operations Guide</citetitle>
+        for details):</para>
     <orderedlist>
         <listitem>
-            <para>Upgrade the OpenStack Identity Service
-                (Keystone).</para>
+            <para>Upgrade the OpenStack Identity service
+                (keystone).</para>
         </listitem>
         <listitem>
-            <para>Upgrade the OpenStack Image Service (Glance).</para>
+            <para>Upgrade the OpenStack Image Service (glance).</para>
         </listitem>
         <listitem>
-            <para>Upgrade OpenStack Compute (Nova), including
+            <para>Upgrade OpenStack Compute (nova), including
                 networking components.</para>
         </listitem>
         <listitem>
-            <para>Upgrade OpenStack Block Storage (Cinder).</para>
+            <para>Upgrade OpenStack Block Storage (cinder).</para>
         </listitem>
         <listitem>
-            <para>Upgrade the OpenStack dashboard.(Horizon)</para>
+            <para>Upgrade the OpenStack dashboard (horizon).</para>
         </listitem>
     </orderedlist>
     <para>The process for upgrading a multi-site environment is not
         significantly different:</para>
     <orderedlist>
         <listitem>
-            <para>Upgrade the shared OpenStack Identity Service
-                (Keystone) deployment.</para>
+            <para>Upgrade the shared OpenStack Identity service
+                (keystone) deployment.</para>
         </listitem>
         <listitem>
             <para>Upgrade the OpenStack Image Service (glance) at each
                 site.</para>
         </listitem>
         <listitem>
-            <para>Upgrade OpenStack Compute (Nova), including
+            <para>Upgrade OpenStack Compute (nova), including
                 networking components, at each site.</para>
         </listitem>
         <listitem>
-            <para>Upgrade OpenStack Block Storage (Cinder) at each
+            <para>Upgrade OpenStack Block Storage (cinder) at each
                 site.</para>
         </listitem>
         <listitem>
-            <para>Upgrade the OpenStack dashboard (Horizon), at each
-                site - or in the single central location if it is
+            <para>Upgrade the OpenStack dashboard (horizon), at each
+                site or in the single central location if it is
                 shared.</para>
         </listitem>
     </orderedlist>
@@ -143,10 +149,12 @@
         user may launch a total of 50 instances spread across both
         regions. They may not, however, launch more than 25 instances
         in any single region.</para>
-    <para>For more information on managing quotas refer to Chapter 9.
-        Managing Projects and Users
-        (http://docs.openstack.org/openstack-ops/content/projects_users.html)
-        of the OpenStack Operators Guide.</para></section>
+    <para>For more information on managing quotas refer to the
+        <link
+        xlink:href="http://docs.openstack.org/openstack-ops/content/projects_users.html">Managing
+        projects and users chapter</link> of the <citetitle>OpenStack
+        Operators Guide</citetitle>.</para>
+    </section>
     <section xml:id="policy-management-multi-site">
       <title>Policy management</title>
     <para>OpenStack provides a default set of Role Based Access
@@ -170,7 +178,7 @@
         OpenStack will schedule instances on a compute node
         automatically. However, when multiple regions are available,
         it is left to the end user to decide in which region to
-        schedule the new instance. Horizon will present the user with
+        schedule the new instance. The dashboard will present the user with
         the first region in your configuration. The API and CLI tools
         will not execute commands unless a valid region is specified.
         It is therefore important to provide documentation to your

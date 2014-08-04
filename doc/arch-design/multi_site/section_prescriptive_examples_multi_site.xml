@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE section [
+<!ENTITY % openstack SYSTEM "../../common/entities/openstack.ent">
+%openstack;
+]>
 <section xmlns="http://docbook.org/ns/docbook"
   xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -91,7 +95,7 @@
         customer requests and a NoSQL database back end storing the
         information.</para>
     <para>As of late there has been several outages in number of major
-        public cloud providers - usually due to the fact these
+        public cloud providers&mdash;usually due to the fact these
         applications were running out of a single geographical
         location. The design therefore should mitigate the chance of a
         single site causing an outage for their business.</para>
@@ -108,7 +112,7 @@
                 each of the three regions. The other services,
                 Identity, Orchestration, Telemetry, Image Service and
                 Block Storage will be
-                installed centrally - with nodes in each of the region
+                installed centrally&mdash;with nodes in each of the region
                 providing a redundant OpenStack Controller plane
                 throughout the globe.</para>
         </listitem>
@@ -123,8 +127,8 @@
                 replicated on a regular basis.</para>
         </listitem>
         <listitem>
-            <para>A Distributed DNS service available to all regions -
-                that allows for dynamic update of DNS records of
+            <para>A Distributed DNS service available to all
+                regions&mdash;that allows for dynamic update of DNS records of
                 deployed instances.</para>
         </listitem>
         <listitem>
@@ -141,22 +145,22 @@
             <para>Web Servers, running Apache.</para>
         </listitem>
         <listitem>
-            <para>Appropriate user_data to populate the central DNS
+            <para>Appropriate <literal>user_data</literal> to populate the central DNS
                 servers upon instance launch.</para>
         </listitem>
         <listitem>
-            <para>Appropriate Ceilometer alarms that maintain state of
+            <para>Appropriate Telemetry alarms that maintain state of
                 the application and allow for handling of region or
                 instance failure.</para>
         </listitem>
     </itemizedlist>
     <para>Another autoscaling Heat template will be used to deploy a
-        distributed MongoDB shard over the three locations - with the
-        option of storing required data on a globally available Swift
+        distributed MongoDB shard over the three locations&mdash;with the
+        option of storing required data on a globally available swift
         container. according to the usage and load on the database
-        server - additional shards will be provisioned according to
-        the thresholds defined in Ceilometer.</para>
-    <para>The reason that 3 regions were selected here was because of
+        server&mdash;additional shards will be provisioned according to
+        the thresholds defined in Telemetry.</para>
+    <para>The reason that three regions were selected here was because of
         the fear of having abnormal load on a single region in the
         event of a failure. Two data center would have been sufficient
         had the requirements been met.</para>
@@ -165,20 +169,21 @@
         Additional configuration management tools, such as Puppet or
         Chef could also have been used in this scenario, but were not
         chosen due to the fact that Orchestration had the appropriate built-in
-        hooks into the OpenStack cloud - whereas the other tools were
-        external and not native to OpenStack. In addition - since this
-        deployment scenario was relatively straight forward - the
+        hooks into the OpenStack cloud&mdash;whereas the other tools were
+        external and not native to OpenStack. In addition&mdash;since this
+        deployment scenario was relatively straight forward&mdash;the
         external tools were not needed.</para>
-    <para>Swift is used here to serve as a back end for Glance and
-        Object storage since was the most suitable solution for a
-        globally distributed storage solution - with its own
+    <para>
+        OpenStack Object Storage is used here to serve as a back end for
+        the Image Service since was the most suitable solution for a
+        globally distributed storage solution&mdash;with its own
         replication mechanism. Home grown solutions could also have
-        been used including the handling of replication - but were not
-        chosen, because Swift is already an intricate part of the
-        infrastructure - and proven solution.</para>
+        been used including the handling of replication&mdash;but were not
+        chosen, because Object Storage is already an intricate part of the
+        infrastructure&mdash;and proven solution.</para>
     <para>An external load balancing service was used and not the
         LBaaS in OpenStack because the solution in OpenStack is not
-        redundant and does have any awareness of geo location.</para>
+        redundant and does not have any awareness of geo location.</para>
     <mediaobject>
         <imageobject>
             <imagedata contentwidth="4in"
