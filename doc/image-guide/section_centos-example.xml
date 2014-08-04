@@ -28,7 +28,7 @@
         </step>
         <step>
             <para>Click the netinstall ISO image that you want to download. For example,
-                    <filename>CentOS-6.4-x86_64-netinstall.iso</filename> is a good choice because
+                <filename>CentOS-6.4-x86_64-netinstall.iso</filename> is a good choice because
                 it is a smaller image that downloads missing packages from the Internet during
                 installation.</para>
         </step>
@@ -39,18 +39,27 @@
                 <command>virt-install</command> as described in the previous section. If you use
                 <command>virt-install</command>, do not forget to connect your VNC client to the
             virtual machine.</para>
-        <para>Assume that the name of your virtual machine image is <literal>centos-6.4</literal>;
-            you need this name when you use <command>virsh</command> commands to manipulate the
-            state of the image.</para>
+        <para>Assume that:</para>
+        <itemizedlist>
+            <listitem>
+                <para>The name of your virtual machine image is <literal>centos-6.4</literal>;
+                    you need this name when you use <command>virsh</command> commands to manipulate the
+                    state of the image.</para>
+            </listitem>
+            <listitem>
+                <para>You saved the netinstall ISO image to the <filename>/data/isos</filename> directory.</para>
+            </listitem>
+        </itemizedlist>
         <para>If you use <command>virt-install</command>, the commands should look something like
             this:</para>
         <screen><prompt>#</prompt> <userinput>qemu-img create -f qcow2 /tmp/centos-6.4.qcow2 10G</userinput>
 <prompt>#</prompt> <userinput>virt-install --virt-type kvm --name centos-6.4 --ram 1024 \
---cdrom=/data/isos/CentOS-6.4-x86_64-netinstall.iso \
 --disk /tmp/centos-6.4.qcow2,format=qcow2 \
 --network network=default \
 --graphics vnc,listen=0.0.0.0 --noautoconsole \
---os-type=linux --os-variant=rhel6</userinput></screen>
+--os-type=linux --os-variant=rhel6 \
+--extra-args="console=tty0 console=ttyS0,115200n8 serial" \
+--location=/data/isos/CentOS-6.4-x86_64-netinstall.iso</userinput></screen>
     </simplesect>
     <simplesect>
         <title>Step through the installation</title>
