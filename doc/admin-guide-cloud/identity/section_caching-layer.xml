@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  version="5.0"
+  xml:id="section_caching-layer">
+  <?dbhtml stop-chunking?>
+    <title>Caching layer</title>
+    <para>OpenStack Identity supports a caching layer that is above the
+    configurable subsystems (for example, token, assignment). OpenStack Identity
+    uses the <link xlink:href="http://dogpilecache.readthedocs.org/en/latest/">
+    <literal>dogpile.cache</literal></link> library which allows flexible
+    cache backends. The majority of the caching configuration options are set in
+    the <literal>[cache]</literal> section of the <filename>keystone.conf</filename>
+    file. However, each section that has the capability to be cached usually
+    has a caching boolean value that toggles caching.</para>
+  <para>So to enable only the token backend caching, set the values as follows:</para>
+<programlisting language="ini">[cache]
+enabled=true
+
+[assignment]
+caching=false
+
+[token]
+caching=true</programlisting>
+<note><para>For the Juno release, the default setting is enabled for subsystem
+    caching, but the global toggle is disabled. As a result, no caching in available
+    unless the global toggle for <literal>[cache]</literal> is enabled by setting
+    the value to <literal>true</literal>.</para></note>
+    <section xml:id="caching_layer-token">
+      <title>Caching for tokens and tokens validation</title>
+      <para>
+        The token system has a separate <literal>cache_time</literal> configuration
+        option, that can be set to a value above or below the global
+        <literal>expiration_time</literal> default, allowing for different caching
+        behavior from the other systems in OpenStack Identity. This option
+        is set in the <literal>[token]</literal> section of the configuration file.
+    </para>
+    <para>
+      The token revocation list cache time is handled by the configuration
+      option <literal>revocation_cache_time</literal> in the <literal>[token]</literal>
+      section. The revocation list is refreshed whenever a token is revoked. It
+      typically sees significantly more requests than specific token retrievals
+      or token validation calls.
+      </para>
+      <para>Here is a list of actions that are affected by the cached time:
+        getting a new token, revoking tokens, validating tokens, checking v2 tokens,
+        and checking v3 tokens.</para>
+    <para>The delete token API calls invalidate the cache for the tokens being
+      acted upon, as well as invalidating the cache for the revoked token list
+      and the validate/check token calls.</para>
+    <para>Token caching is configurable independently of the <literal>revocation_list</literal>
+      caching. Lifted expiration checks from the token drivers to the token manager.
+      This ensures that cached tokens will still raise a <literal>TokenNotFound</literal>
+      flag when expired.</para>
+    <para>For cache consistency, all token IDs are transformed into the short
+      token hash at the provider and token driver level. Some methods have access
+      to the full ID (PKI Tokens), and some methods do not. Cache invalidation is
+      inconsistent without token ID normalization.</para>
+  </section>
+  <section xml:id="caching_layer-assignment">
+    <title>Caching around assignment CRUD</title>
+    <para>The assignment system has a separate <literal>cache_time</literal>
+      configuration option, that can be set to a value above or below the global
+      <literal>expiration_time</literal> default, allowing for different caching
+      behavior from the other systems in Identity service. This option
+      is set in the <literal>[assignment]</literal> section of the configuration file.</para>
+    <para>
+      Currently <literal>assignment</literal> has caching for <literal>project</literal>,
+      <literal>domain</literal>, and <literal>role</literal> specific requests
+      (primarily around the CRUD actions). Caching is currently not implemented
+      on grants. The <literal>list</literal> methods are not subject to caching.</para>
+    <para>Here is a list of actions that are affected by the assignment:
+      assign domain API, assign project API, and assign role API.</para>
+      <para>The create, update, and delete actions for domains, projects and
+        roles will perform proper invalidations of the cached methods listed
+        above.</para>
+      <note>
+        <para>
+          If a read-only <literal>assignment</literal> back end is in
+          use, the cache will not immediately reflect changes on the back end. Any
+          given change may take up to the <literal>cache_time</literal> (if set in
+          the <literal>[assignment]</literal> section of the configuration file)
+          or the global <literal>expiration_time</literal> (set in the <literal>[cache]</literal>
+          section of the configuration file) before it is reflected. If this type
+          of delay (when using a read-only <literal>assignment</literal> backend)
+          is an issue, it is recommended that caching be disabled on
+          <literal>assignment</literal>. To disable caching specifically on
+          <literal>assignment</literal>, in the <literal>[assignment]</literal>
+          section of the configuration set <literal>caching</literal> to
+          <literal>False</literal>.</para>
+      </note>
+      <para>For more information about the different backends (and configuration options), see:</para>
+        <itemizedlist>
+          <listitem><para><link xlink:href="http://dogpilecache.readthedocs.org/en/latest/api.html#memory-backend">
+                <literal>dogpile.cache.backends.memory</literal></link></para></listitem>
+          <listitem><para><link xlink:href="http://dogpilecache.readthedocs.org/en/latest/api.html#memcached-backends">
+                <literal>dogpile.cache.backends.memcached</literal></link></para>
+            <note><para>The memory backend is not suitable for use in a production environment.</para></note></listitem>
+          <listitem><para><link xlink:href="http://dogpilecache.readthedocs.org/en/latest/api.html#redis-backends">
+                <literal>dogpile.cache.backends.redis</literal></link></para></listitem>
+          <listitem><para><link xlink:href="http://dogpilecache.readthedocs.org/en/latest/api.html#file-backends">
+                <literal>dogpile.cache.backends.file</literal></link></para></listitem>
+          <listitem><para><literal>keystone.common.cache.backends.mongo</literal></para></listitem>
+        </itemizedlist>
+        <example>
+          <title>Configure the Memcached backend</title>
+          <para>The following example shows how to configure the memcached backend:</para>
+<programlisting language="ini">[cache]
+
+enabled = true
+backend = dogpile.cache.memcached
+backend_argument = url:<replaceable>127.0.0.1</replaceable>:11211</programlisting>
+<para>You need to specify the URL to reach the <literal>memcached</literal> instance with the <literal>backend_argument</literal> parameter.</para>
+        </example>
+  </section>
+</section>
