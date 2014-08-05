@@ -8,70 +8,78 @@
   xmlns:xlink="http://www.w3.org/1999/xlink"
   version="5.0"
   xml:id="arch-guide-openstack-on-openstack">
-    <?dbhtml stop-chunking?>
-    <title>OpenStack on OpenStack</title>
-    <para>In some cases it is necessary to run OpenStack nested on top
-        of another OpenStack cloud. This scenario allows for complete
-        OpenStack cloud environments to be managed and provisioned on
-        instances running on hypervisors and servers controlled by the
-        underlying OpenStack cloud. Public cloud providers can use
-        this technique to effectively manage the upgrade and
-        maintenance process on complete OpenStack-based clouds.
-        Developers and those testing OpenStack can also use the
-        guidance to provision their own OpenStack environments on
-        available OpenStack Compute resources, whether public or
-        private.</para>
-    <section xml:id="challenges-for-nested-cloud"><title>Challenges</title>
+  <?dbhtml stop-chunking?>
+  <title>OpenStack on OpenStack</title>
+  <para>In some cases it is necessary to run OpenStack nested on top
+    of another OpenStack cloud. This scenario allows for complete
+    OpenStack cloud environments to be managed and provisioned on
+    instances running on hypervisors and servers controlled by the
+    underlying OpenStack cloud. Public cloud providers can use
+    this technique to effectively manage the upgrade and
+    maintenance process on complete OpenStack-based clouds.
+    Developers and those testing OpenStack can also use the
+    guidance to provision their own OpenStack environments on
+    available OpenStack Compute resources, whether public or
+    private.</para>
+  <section xml:id="challenges-for-nested-cloud">
+    <title>Challenges</title>
     <para>The network aspect of deploying a nested cloud is the most
-        complicated aspect of this architecture. When using VLANs,
-        these will need to be exposed to the physical ports on which
-        the undercloud runs, as the bare metal cloud owns all the
-        hardware, but they also need to be exposed to the nested
-        levels as well. Alternatively, network overlay technologies
-        can be used on the overcloud (the OpenStack cloud running on
-        OpenStack) to provide the required software defined networking
-        for the deployment.</para></section>
-    <section xml:id="hypervisor-nested-cloud"><title>Hypervisor</title>
+      complicated aspect of this architecture. When using VLANs,
+      these will need to be exposed to the physical ports on which
+      the undercloud runs, as the bare metal cloud owns all the
+      hardware, but they also need to be exposed to the nested
+      levels as well. Alternatively, network overlay technologies
+      can be used on the overcloud (the OpenStack cloud running on
+      OpenStack) to provide the required software defined networking
+      for the deployment.</para>
+  </section>
+  <section xml:id="hypervisor-nested-cloud">
+    <title>Hypervisor</title>
     <para>A key question to address in this scenario is the decision
-        about which approach should be taken to provide a nested
-        hypervisor in OpenStack. This decision influences which
-        operating systems can be used for the deployment of the nested
-        OpenStack deployments.</para></section>
-    <section xml:id="possible-solutions-nested-cloud-deployment">
-      <title>Possible solutions: deployment</title>
+      about which approach should be taken to provide a nested
+      hypervisor in OpenStack. This decision influences which
+      operating systems can be used for the deployment of the nested
+      OpenStack deployments.</para>
+  </section>
+  <section xml:id="possible-solutions-nested-cloud-deployment">
+    <title>Possible solutions: deployment</title>
     <para>Deployment of a full stack can be challenging but this
-        difficulty can be readily be mitigated by creating a Heat
-        template to deploy the entire stack or a configuration
-        management system. Once the Heat template is created,
-        deploying additional stacks will be a trivial thing and can be
-        performed in an automated fashion.</para>
+      difficulty can be readily be mitigated by creating a Heat
+      template to deploy the entire stack or a configuration
+      management system. Once the Heat template is created,
+      deploying additional stacks will be a trivial thing and can be
+      performed in an automated fashion.</para>
     <para>The OpenStack-On-OpenStack project (TripleO) is addressing
-        this issue&mdash;although at the current time the project does
-        not provide comprehensive coverage for the nested stacks. More
-        information can be found at <link
-        xlink:href="https://wiki.openstack.org/wiki/TripleO">https://wiki.openstack.org/wiki/TripleO</link>.
+      this issue&mdash;although at the current time the project does
+      not provide comprehensive coverage for the nested stacks. More
+      information can be found at <link
+      xlink:href="https://wiki.openstack.org/wiki/TripleO">
+      https://wiki.openstack.org/wiki/TripleO</link>.
     </para>
-    </section>
-    <section xml:id="possible-solutions-nested-cloud-hypervisor">
-      <title>Possible solutions: hypervisor</title>
+  </section>
+  <section xml:id="possible-solutions-nested-cloud-hypervisor">
+    <title>Possible solutions: hypervisor</title>
     <para>In the case of running TripleO, the underlying OpenStack
-        cloud deploys the Compute nodes as bare-metal. OpenStack would
-        then be deployed on these Compute bare-metal servers with the
-        appropriate hypervisor, such as KVM.</para>
+      cloud deploys the Compute nodes as bare-metal. OpenStack would
+      then be deployed on these Compute bare-metal servers with the
+      appropriate hypervisor, such as KVM.</para>
     <para>In the case of running smaller OpenStack clouds for testing
-        purposes, and performance would not be a critical factor, QEMU
-        can be utilized instead. It is also possible to run a KVM
-        hypervisor in an instance
-        (see <link
-        xlink:href="http://davejingtian.org/2014/03/30/nested-kvm-just-for-fun/">http://davejingtian.org/2014/03/30/nested-kvm-just-for-fun/</link>),
-        though this is not a supported configuration, and could be a
-        complex solution for such a use case.</para></section>
-    <section xml:id="nested-cloud-diagram"><title>Diagram</title>
-    <para><mediaobject>
+      purposes, and performance would not be a critical factor, QEMU
+      can be utilized instead. It is also possible to run a KVM
+      hypervisor in an instance
+      (see <link xlink:href="http://davejingtian.org/2014/03/30/nested-kvm-just-for-fun/">
+      http://davejingtian.org/2014/03/30/nested-kvm-just-for-fun/</link>),
+      though this is not a supported configuration, and could be a
+      complex solution for such a use case.</para>
+  </section>
+  <section xml:id="nested-cloud-diagram">
+    <title>Diagram</title>
+    <para>
+      <mediaobject>
         <imageobject>
-            <imagedata contentwidth="4in"
-                fileref="../images/Specialized_OOO.png"
-            />
+          <imagedata contentwidth="4in" fileref="../images/Specialized_OOO.png"/>
         </imageobject>
-    </mediaobject></para></section>
+      </mediaobject>
+    </para>
+  </section>
 </section>

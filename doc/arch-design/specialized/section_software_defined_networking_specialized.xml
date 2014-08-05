@@ -4,48 +4,52 @@
   xmlns:xlink="http://www.w3.org/1999/xlink"
   version="5.0"
   xml:id="software-defined-networking-sdn">
-    <?dbhtml stop-chunking?>
-    <title>Software Defined Networking</title>
-    <para>Software Defined Networking (SDN) is the separation of the data
-        plane and control plane. SDN has become a popular method of
-        managing and controlling packet flows within networks. SDN
-        uses overlays or directly controlled layer 2 devices to
-        determine flow paths, and as such presents challenges to a
-        cloud environment. Some designers may wish to run their
-        controllers within an OpenStack installation. Others may wish
-        to have their installations participate in an SDN-controlled
-        network.</para>
-    <section xml:id="challenges-sdn"><title>Challenges</title>
+  <?dbhtml stop-chunking?>
+  <title>Software Defined Networking</title>
+  <para>Software Defined Networking (SDN) is the separation of the data
+    plane and control plane. SDN has become a popular method of
+    managing and controlling packet flows within networks. SDN
+    uses overlays or directly controlled layer 2 devices to
+    determine flow paths, and as such presents challenges to a
+    cloud environment. Some designers may wish to run their
+    controllers within an OpenStack installation. Others may wish
+    to have their installations participate in an SDN-controlled
+    network.</para>
+  <section xml:id="challenges-sdn">
+    <title>Challenges</title>
     <para>SDN is a relatively new concept that is not yet
-        standardized, so SDN systems come in a variety of different
-        implementations. Because of this, a truly prescriptive
-        architecture is not feasible. Instead, examine the differences
-        between an existing or intended OpenStack design and determine
-        where the potential conflict and gaps can be found.</para></section>
-    <section xml:id="possible-solutions-sdn">
-      <title>Possible solutions</title>
+      standardized, so SDN systems come in a variety of different
+      implementations. Because of this, a truly prescriptive
+      architecture is not feasible. Instead, examine the differences
+      between an existing or intended OpenStack design and determine
+      where the potential conflict and gaps can be found.</para>
+  </section>
+  <section xml:id="possible-solutions-sdn">
+    <title>Possible solutions</title>
     <para>If an SDN implementation requires layer 2 access because it
-        directly manipulates switches, then running an overlay network
-        or a layer 3 agent may not be advisable. If the controller
-        resides within an OpenStack installation, it may be necessary
-        to build an ML2 plug-in and schedule the controller instances
-        to connect to tenant VLANs that then talk directly to the
-        switch hardware. Alternatively, depending on the external
-        device support, use a tunnel that terminates at the switch
-        hardware itself.</para></section>
-    <section xml:id="diagram-sdn"><title>Diagram</title>
+      directly manipulates switches, then running an overlay network
+      or a layer 3 agent may not be advisable. If the controller
+      resides within an OpenStack installation, it may be necessary
+      to build an ML2 plug-in and schedule the controller instances
+      to connect to tenant VLANs that then talk directly to the
+      switch hardware. Alternatively, depending on the external
+      device support, use a tunnel that terminates at the switch
+      hardware itself.</para>
+  </section>
+  <section xml:id="diagram-sdn">
+    <title>Diagram</title>
     <para>OpenStack hosted SDN controller:
-    <mediaobject>
+      <mediaobject>
         <imageobject>
-            <imagedata fileref="../images/Special_case_SDN_hosted.png"
-            />
+          <imagedata fileref="../images/Special_case_SDN_hosted.png"/>
         </imageobject>
-    </mediaobject></para>
+      </mediaobject>
+    </para>
     <para>OpenStack participating in an SDN controller network:
-    <mediaobject>
+      <mediaobject>
         <imageobject>
-            <imagedata
-                fileref="../images/Special_case_SDN_external.png"/>
+          <imagedata fileref="../images/Special_case_SDN_external.png"/>
         </imageobject>
-    </mediaobject></para></section>
+      </mediaobject></para>
+  </section>
 </section>
