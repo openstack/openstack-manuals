@@ -1,0 +1,276 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+  <meta content="HTML Tidy for Linux/x86 (vers 11 February 2007), see www.w3.org" name="generator"/>
+  <meta content="text/html; charset=utf8" http-equiv="Content-Type"/>
+  <meta content="Ip5yk0nd8yQHEo8I7SjzVfAiadlHvTvqQHLGwn1GFyU" name="google-site-verification"/>
+  <title>
+   OpenStack Docs: Architecture Design Guide
+  </title>
+  <!-- Google Fonts -->
+  <link href="http://fonts.googleapis.com/css?family=PT+Sans&amp;subset=latin" rel="stylesheet" type="text/css"/>
+  <!-- Framework CSS -->
+  <link href="http://openstack.org/themes/openstack/css/blueprint/screen.css" media="screen, projection" rel="stylesheet" type="text/css"/>
+  <link href="http://openstack.org/themes/openstack/css/blueprint/print.css" media="print" rel="stylesheet" type="text/css"/>
+  <!--[if lt IE 8]><link rel="stylesheet" href="http://openstack.org/themes/openstack/css/blueprint/ie.css" type="text/css" media="screen, projection"><![endif]-->
+  <!-- OpenStack Specific CSS -->
+  <link href="http://openstack.org/themes/openstack/css/main.css" media="screen, projection, print" rel="stylesheet" type="text/css"/>
+  <script type="text/javascript">
+   // Used to record outbound links before the browser resets to the new site
+
+function recordOutboundLink(link, category, action) {
+  try {
+  _gaq.push(['._trackEvent', category , action ]);
+  setTimeout('document.location = "' + link.href + '"', 100)
+  }catch(err){}
+  }
+  </script>
+  <script type="text/javascript">
+   var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17511903-1']);
+  _gaq.push(['_setDomainName', '.openstack.org']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+  </script>
+ </head>
+ <body class="docshome" id="docshome">
+  <div class="container">
+   <div id="header">
+    <div class="span-5">
+     <h1 id="logo">
+      <a href="/">
+       OpenStack
+      </a>
+     </h1>
+    </div>
+    <div class="span-19 last blueLine">
+     <div class="span-19" id="navigation">
+      <ul id="Menu1">
+       <li>
+        <a href="http://www.openstack.org/" title="Go to the Home page">
+         Home
+        </a>
+       </li>
+       <li>
+        <a class="link" href="http://www.openstack.org/software/" title="Go to the Software page">
+         Software
+        </a>
+       </li>
+       <li>
+        <a class="link" href="http://www.openstack.org/user-stories/" title="Go to the User Stories page">
+         User Stories
+        </a>
+       </li>
+       <li>
+        <a class="link" href="http://www.openstack.org/community/" title="Go to the Community page">
+         Community
+        </a>
+       </li>
+       <li>
+        <a class="link" href="http://www.openstack.org/profile/" title="Go to the Profile page">
+         Profile
+        </a>
+       </li>
+       <li>
+        <a href="http://www.openstack.org/blog/" title="Go to the OpenStack Blog">
+         Blog
+        </a>
+       </li>
+       <li>
+        <a href="http://wiki.openstack.org/" title="Go to the OpenStack Wiki">
+         Wiki
+        </a>
+       </li>
+       <li>
+        <a class="current" href="http://docs.openstack.org/" title="Go to OpenStack Documentation">
+         Documentation
+        </a>
+       </li>
+      </ul>
+     </div>
+    </div>
+   </div>
+  </div>
+  <!-- Page Content -->
+  <div class="container">
+   <div class="span-12">
+    <h3 class="subhead">
+     <a href="http://docs.openstack.org/">
+      Documentation
+     </a>
+     &gt; Architecture Design Guide
+    </h3>
+   </div>
+   <div class="searchArea span-10 last">
+    <div id="cse" style="width: 100%;">
+     Loading
+    </div>
+    <script src="http://www.google.com/jsapi" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+     //<![CDATA[
+
+      google.load('search', '1', {language : 'en'});
+      var _gaq = _gaq || [];
+      _gaq.push(["_setAccount", "UA-17511903-6"]);
+      function _trackQuery(control, searcher, query) {
+      var gaQueryParamName = "q";
+      var loc = document.location;
+      var url = [
+      loc.pathname,
+      loc.search,
+      loc.search ? '&' : '?',
+      gaQueryParamName == '' ? 'q' : encodeURIComponent(gaQueryParamName),
+      '=',
+      encodeURIComponent(query)
+      ].join('');
+      _gaq.push(["_trackPageview", url]);
+      }
+      google.setOnLoadCallback(function() {
+      var customSearchControl = new google.search.CustomSearchControl('011012898598057286222:elxsl505o0o');
+      customSearchControl.setResultSetSize(google.search.Search.FILTERED_CSE_RESULTSET);
+      customSearchControl.setSearchStartingCallback(null, _trackQuery);
+      customSearchControl.draw('cse');
+      }, true);
+      //]]>
+    </script>
+   </div>
+  </div>
+  <div class="container">
+   <div class="span-12">
+    <div class="photo">
+     <img src="../common/images/arch-guide-cover.png" width="100%"/>
+    </div>
+    <p>
+     <a class="button" href="http://docs.openstack.org/arch-design/content/" onclick="recordOutboundLink(this, 'Outbound Links', 'arch-guide.html');return false;">
+      HTML
+     </a>
+     <a class="button" href="http://docs.openstack.org/arch-design/arch-design.pdf" onclick="recordOutboundLink(this, 'Outbound Links', arch-design.pdf');return false;">
+      PDF
+     </a>
+    </p>
+   </div>
+   <div class="span-12 last">
+    <div class="photo">
+     <img src="../common/images/openstack-arch-guide-team.png" width="100%"/>
+    </div>
+    <p>
+     <b>
+      The OpenStack Architecture Design Guide offers examples of OpenStack deployments for different use cases.
+     </b>
+    </p>
+    <p>
+     This book was written in a five-day book sprint with authors who have learned first-hand how to design clouds that meet users needs.
+    </p>
+    <p>
+     Read this book to learn about these types of use cases for OpenStack clouds:
+    </p>
+    <ul>
+     <li>
+      General purpose: compute, network, and storage components balanced for scale-out, general purpose applications.
+     </li>
+     <li>
+      Compute focused: built and designed specifically to support compute intensive workloads such as high performance computing, big data analysis, continuous integration or continuous deployment, and platform as a service.
+     </li>
+     <li>
+      Storage focused: data management through cloud storage solutions to support applications like archiving, data analytics, content storage and synchronization, media streaming, databases, and content distribution.
+     </li>
+     <li>
+      Network focused: when users require network services beyond the usual cloud use cases, such as content delivery networks, network services like VPN or GRE tunnels, and web portals or web services.
+     </li>
+     <li>
+      Multi-site clouds: when services are hosted in more than one data center to spread out the geographic footprint for redundancy or for location-sensitive data
+     </li>
+     <li>
+      Hybrid clouds: when the design spans more than one cloud, you plan for a hybrid cloud architecture.
+     </li>
+     <li>
+      Massively scalable: for large deployments serving many users with many resources available, often for public clouds
+     </li>
+     <li>
+      Specialized cases: describes multi-hypervisor examples, specialized networking, desktop-as-a-service, OpenStack on OpenStack, and the use of specialized hardware in a cloud's design.
+     </li>
+    </ul>
+    <p>
+     You can get the
+     <a href="http://docs.openstack.org/arch-design/arch-design.pdf" onclick="recordOutboundLink(this, 'Outbound Links', arch-design.pdf');return false;">
+      PDF
+     </a>
+     to print yourself. If you'd like a bound copy,
+     <a href="http://www.lulu.com/shop/openstack-foundation/openstack-architecture-design-guide/paperback/product-21740250.html" onclick="recordOutboundLink(this, 'Outbound Links', 'archlulu.com');return false;">
+      buy it from Lulu
+     </a>
+     and all proceeds go to the Foundation to support more book sprints efforts like this one.
+    </p>
+    <p>
+     <a href="http://www.lulu.com/commerce/index.php?fBuyContent=15006967"><img src="http://static.lulu.com/images/services/buy_now_buttons/en/blue.gif?20140805085029" border="0" alt="Support independent publishing: Buy this book on Lulu."></a>
+    </p>
+    <p align="right">
+     <a href="http://creativecommons.org/licenses/by/3.0/us/" rel="license">
+      <img alt="Creative Commons License" src="http://i.creativecommons.org/l/by/3.0/us/88x31.png" style="border-width:0"/>
+     </a>
+     <br/>
+     This work is licensed under a
+     <a href="http://creativecommons.org/licenses/by/3.0/us/" rel="license">
+      Creative Commons Attribution 3.0 United States License
+     </a>
+     .
+    </p>
+   </div>
+  </div>
+  <div class="container">
+   <div id="footer">
+    <hr/>
+    <p>
+     Documentation treated like code, powered by the community - interested? Here's
+     <a href="http://wiki.openstack.org/Documentation/HowTo">
+      how to contribute
+     </a>
+     .
+    </p>
+    <p>
+     The OpenStack project is provided under the Apache 2.0 license. OpenStack.org is powered by
+     <a href="http://www.rackspacecloud.com/">
+      Rackspace Cloud Computing
+     </a>
+     .
+    </p>
+   </div>
+  </div>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.js" type="text/javascript">
+  </script>
+  <script charset="utf-8" src="http://docs.openstack.org/common/jquery/jquery.hoverIntent.minified.js" type="text/javascript">
+  </script>
+  <script charset="utf-8" type="text/javascript">
+   //<![CDATA[
+    $(document).ready(function() {
+
+      function addMenu(){
+        $(".dropDown").addClass("menuHover");
+        }
+
+      function removeMenu(){
+        $(".dropDown").removeClass("menuHover");
+        }
+
+    var menuConfig = {
+         interval: 500,
+         sensitivity: 4,
+         over: addMenu,
+         timeout: 500,
+         out: removeMenu
+    };
+
+    $(".dropDownTrigger").hoverIntent(menuConfig);
+
+    });
+
+    //]]>
+  </script>
+ </body>
+</html>
