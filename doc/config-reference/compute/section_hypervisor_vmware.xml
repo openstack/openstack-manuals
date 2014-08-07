@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE chapter[
+<!DOCTYPE section[
 <!ENTITY % openstack SYSTEM "../../common/entities/openstack.ent">
 %openstack;
 ]>
@@ -1005,46 +1005,6 @@ wsdl_location=file:///opt/stack/vmware/wsdl/5.0/vimService.wsdl</programlisting>
       extra config option:</para>
     <programlisting language="ini">[vmware]
 wsdl_location=file:///opt/stack/vmware/SDK/wsdl/vim25/vimService.wsdl</programlisting>
-  </section>
-  <section xml:id="VMwareESXDriver_details">
-    <title>VMware ESX driver</title>
-    <para>This section covers details of using the VMwareESXDriver.
-      The ESX Driver has not been extensively tested and is not
-      recommended. To configure the VMware vCenter driver instead, see
-        <xref linkend="VMwareVCDriver_details"/>.</para>
-        <warning>
-          <para>
-            The VMware ESX driver has been deprecated in the Icehouse
-            release and will be removed with the Juno release.</para>
-        </warning>
-    <section xml:id="VMwareESXDriver_configuration_options">
-      <title>VMwareESXDriver configuration options</title>
-      <para>When you use the VMwareESXDriver (no vCenter) with
-        OpenStack Compute, add the following VMware-specific
-        configuration options to the <filename>nova.conf</filename>
-        file:</para>
-      <programlisting language="ini">[DEFAULT]
-compute_driver=vmwareapi.VMwareESXDriver
-
-[vmware]
-host_ip=&lt;ESXi host IP&gt;
-host_username=&lt;ESXi host username&gt;
-host_password=&lt;ESXi host password&gt;
-wsdl_location=http://127.0.0.1:8080/vmware/SDK/wsdl/vim25/vimService.wsdl</programlisting>
-      <para>Remember that you must have one <systemitem class="service">nova-compute</systemitem> service for each
-        ESXi host. It is recommended that this host run as a VM on the
-        same ESXi host that it manages.</para>
-      <note>
-        <para>Many <filename>nova.conf</filename> options are relevant
-          to libvirt but do not apply to this driver.</para>
-      </note>
-    </section>
-    <section xml:id="VMwareESXDriver_limitations">
-      <title>Requirements and limitations</title>
-      <para>The ESXDriver cannot use many of the vSphere platform
-        advanced capabilities, namely vMotion, high availability, and
-        DRS.</para>
-    </section>
   </section>
   <section xml:id="VMware_config">
     <title>Configuration reference</title>
