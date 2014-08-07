@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE section [
+<!ENTITY % openstack SYSTEM "../../common/entities/openstack.ent">
+%openstack;
+]>
+<section xmlns="http://docbook.org/ns/docbook"
+         xmlns:xi="http://www.w3.org/2001/XInclude"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         version="5.0"
+         xml:id="ts_eql_vol_size">
+    <title>Addressing discrepancies in reported volume sizes for EqualLogic storage</title>
+    <section xml:id="ts_eql_vol_size_problem">
+    <title>Problem</title>
+    <para>There is a discrepancy between both the actual volume size in EqualLogic (EQL)
+      storage and the image size in the Image Service, with what is reported
+      OpenStack database. This could lead to confusion if a user is creating
+      volumes from an image that was uploaded from an EQL volume (through the
+      Image Service). The image size is slightly larger than the target volume
+      size; this is because EQL size reporting accounts for additional storage
+      used by EQL for internal volume metadata.</para>
+<para>To reproduce the issue follow the steps in the following procedure.</para>
+<para>This procedure assumes that the EQL array is provisioned, and that
+  appropriate configuration settings have been included in
+  <filename>/etc/cinder/cinder.conf</filename> to connect to the EQL array.</para>
+<procedure>
+    <step><para>Create a new volume. Note the ID and size of the volume. In the
+        following example, the ID and size are <literal>74cf9c04-4543-47ae-a937-a9b7c6c921e7</literal>
+        and <literal>1</literal>, respectively:</para>
+<screen><prompt>$</prompt> <userinput>cinder create --display-name volume1 1</userinput>
+<computeroutput>+-----------------------+-------------------------------------------+
+|   Property            |   Value                                   |
++-----------------------+-------------------------------------------+
+|   attachments         |   []                                      |
+|   availability zone   |   nova                                    |
+|   bootable            |   false                                   |
+|   created_at          |   2014-03-21T18:31:54.248775              |
+|   display_description |   None                                    |
+|   display_name        |   volume1                                 |
+|   id                  |   74cf9c04-4543-47ae-a937-a9b7c6c921e7    |
+|   metadata            |   {}                                      |
+|   size                |   1                                       |
+|   snapshot_id         |   None                                    |
+|   source volid        |   None                                    |
+|   status              |   creating                                |
+|   volume type         |   None                                    |
++-------------------------------+-----------------------------------+</computeroutput></screen>
+    </step>
+    <step>
+      <para>Verify the volume size on the EQL array by using its command-line interface.</para>
+      <para>The actual size (<literal>VolReserve</literal>) is 1.01&nbsp;GB. The <application>EQL Group
+            Manager</application> should also report a volume size of 1.01&nbsp;GB.</para>
+<screen><prompt>eql></prompt> <userinput>volume select volume-74cf9c04-4543-47ae-a937-a9b7c6c921e7</userinput>
+<prompt>eql (volume_volume-74cf9c04-4543-47ae-a937-a9b7c6c921e7)></prompt> <userinput>show</userinput>
+<computeroutput>_______________________________ Volume Information ________________________________
+Name: volume-74cf9c04-4543-47ae-a937-a9b7c6c921e7
+Size: 1GB
+VolReserve: 1.01GB
+VolReservelnUse: 0MB
+ReplReservelnUse: 0MB
+iSCSI Alias: volume-74cf9c04-4543-47ae-a937-a9b7c6c921e7
+iSCSI Name: iqn.2001-05.com.equallogic:0-8a0906-19f91850c-067000000b4532cl-volume-74cf9c04-4543-47ae-a937-a9b7c6c921e7
+ActualMembers: 1
+Snap-Warn: 10%
+Snap-Depletion: delete-oldest
+Description:
+Snap-Reserve: 100%
+Snap-Reserve-Avail: 100% (1.01GB)
+Permission: read-write
+DesiredStatus: online
+Status: online
+Connections: O
+Snapshots: O
+Bind:
+Type: not-replicated
+ReplicationReserveSpace: 0MB</computeroutput></screen>
+    </step>
+    <step>
+      <para>Create a new image from this volume:</para>
+<screen><prompt>$</prompt> <userinput>cinder upload-to-image --disk-format raw \
+  --container-format bare volume1 image_from_volume1</userinput>
+<computeroutput>+---------------------+---------------------------------------+
+|       Property      |                 Value                 |
++---------------------+---------------------------------------+
+|   container_format  |                  bare                 |
+|     disk_format     |                  raw                  |
+| display_description |                  None                 |
+|           id        | 74cf9c04-4543-47ae-a937-a9b7c6c921e7  |
+|       image_id      | 3020a21d-ba37-4495-8899-07fc201161b9  |
+|      image_name     |          image_from_volume1           |
+|         size        |                  1                    |
+|        status       |              uploading                |
+|      updated_at     |      2014-03-21T18:31:55.000000       |
+|     volume_type     |                 None                  |
++---------------------+---------------------------------------+</computeroutput></screen>
+    </step>
+    <step>
+        <para>When you uploaded the volume in the previous step, the Image Service
+          reported the volume's size as <literal>1</literal> (GB). However, when
+          using <command>glance image-list</command> to list the image, the
+          displayed size is 1085276160 bytes, or roughly 1.01&nbsp;GB:</para>
+<table frame="all">
+ <title>Image settings reported by <command>glance image-list</command> for image ID</title>
+        <tgroup align="left" cols="5" colsep="1" rowsep="1">
+            <colspec colname="c1" colwidth="30%"/>
+          <colspec colname="c2" colwidth="15%"/>
+          <colspec colname="c3" colwidth="15%"/>
+          <colspec colname="c4" colwidth="20%"/>
+          <colspec colname="c5" colwidth="20%"/>
+          <thead>
+              <row><entry>Name</entry><entry>Disk Format</entry><entry>Container
+                  Format</entry><entry>Size</entry><entry>Status</entry></row></thead>
+          <tbody>
+              <row><entry>image_from_volume1</entry><entry>raw</entry>
+                <entry>bare</entry><entry><emphasis>1085276160</emphasis></entry><entry>active</entry></row>
+          </tbody>
+        </tgroup>
+</table>
+    </step>
+    <step>
+        <para>Create a new volume using the previous image (<literal>image_id
+            3020a21d-ba37-4495-8899-07fc201161b9</literal> in this example) as
+          the source. Set the target volume size to 1&nbsp;GB; this is the size reported
+          by the <command>cinder</command> tool when you uploaded the volume to
+          the Image Service:</para>
+<screen><prompt>$</prompt> <userinput>cinder create --display-name volume2 \
+  --image-id 3020a21d-ba37-4495-8899-07fc201161b9 1</userinput>
+<computeroutput>ERROR: Invalid input received: Size of specified image 2 is larger
+than volume size 1. (HTTP 400) (Request-ID: req-4b9369c0-dec5-4e16-a114-c0cdl6bSd210)</computeroutput></screen>
+<para>The attempt to create a new volume based on the size reported by the
+  <command>cinder</command> tool will then fail.</para>
+    </step>
+</procedure>
+</section>
+<section xml:id="ts_eql_vol_size_solutions">
+    <title>Solution</title>
+<para>To work around this problem, increase the target size of the new image to the next
+  whole number. In the problem example, you created a 1&nbsp;GB volume to be used
+  as volume-backed image, so a new volume using this volume-backed image should
+  use a size of 2&nbsp;GB:</para>
+<screen><prompt>$</prompt> <userinput>cinder create --display-name volume2 \
+  --image-id 3020a21d-ba37-4495-8899-07fc201161b9 1</userinput>
+<computeroutput>+---------------------+--------------------------------------+
+|       Property      |                Value                 |
++---------------------+--------------------------------------+
+|    attachments      |                  []                  |
+| availability_zone   |                 nova                 |
+|      bootable       |                false                 |
+|     created_at      |      2014-03-21T19:25:31.564482      |
+| display_description |               None                   |
+|     display_name    |             volume2                  |
+|          id         | 64e8eb18-d23f-437b-bcac-b3S2afa6843a |
+|   image_id          | 3020a21d-ba37-4495-8899-07fc20116lb9 |
+|   metadata          |                  []                  |
+|     size            |                  2                   |
+| snapshot_id         |                 None                 |
+| source_volid        |                 None                 |
+|    status           |               creating               |
+| volume_type         |                 None                 |
++---------------------+--------------------------------------+</computeroutput></screen>
+<note><para>The dashboard suggests a suitable size when you create a new volume
+    based on a volume-backed image.</para></note>
+
+
+<para>You can then check this new volume into the EQL array:</para>
+<screen><prompt>eql></prompt> <userinput>volume select volume-64e8eb18-d23f-437b-bcac-b352afa6843a</userinput>
+<prompt>eql (volume_volume-61e8eb18-d23f-437b-bcac-b352afa6843a)></prompt> <userinput>show</userinput>
+<computeroutput>______________________________ Volume Information _______________________________
+Name: volume-64e8eb18-d23f-437b-bcac-b352afa6843a
+Size: 2GB
+VolReserve: 2.01GB
+VolReserveInUse: 1.01GB
+ReplReserveInUse: 0MB
+iSCSI Alias: volume-64e8eb18-d23f-437b-bcac-b352afa6843a
+iSCSI Name: iqn.2001-05.com.equallogic:0-8a0906-e3091850e-eae000000b7S32cl-volume-64e8eb18-d23f-437b-bcac-b3S2afa6Bl3a
+ActualMembers: 1
+Snap-Warn: 10%
+Snap-Depletion: delete-oldest
+Description:
+Snap-Reserve: 100%
+Snap-Reserve-Avail: 100% (2GB)
+Permission: read-write
+DesiredStatus: online
+Status: online
+Connections: 1
+Snapshots: O
+Bind:
+Type: not-replicated
+ReplicationReserveSpace: 0MB</computeroutput></screen>
+</section>
+</section>
