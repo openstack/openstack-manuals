@@ -310,18 +310,18 @@
     <para>There are numerous topics to consider when designing a
         network-focused OpenStack cloud.</para>
     <section xml:id="openstack-networking-versus-nova-network">
-      <title>OpenStack Networking versus Nova network
+      <title>OpenStack Networking versus legacy networking (nova-network)
         considerations</title>
     <para>Selecting the type of networking technology to implement
-        depends on many factors. OpenStack Networking (Neutron) and
-        Nova Network both have their advantages and disadvantages.
+        depends on many factors. OpenStack Networking (neutron) and
+        legacy networking (nova-network) both have their advantages and disadvantages.
         They are both valid and supported options that fit different
         use cases as described in the following table.</para>
         <informaltable rules="all">
                 <col width="40%" />
                 <col width="60%" />
                 <thead>
-                    <tr><th>Nova Network</th>
+                    <tr><th>Legacy networking (nova-network)</th>
                         <th>OpenStack Networking</th></tr>
                 </thead>
             <tbody>
@@ -395,9 +395,9 @@
         fixes long standing issues in the IPv4 protocol, and will
         become an essential for network focused applications in the
         future.</para>
-    <para>Neutron supports IPv6 when configured to take advantage of
+    <para>OpenStack Networking supports IPv6 when configured to take advantage of
         the feature. To enable it, simply create an IPv6 subnet in
-        OpenStack Neutron and use IPv6 prefixes when creating security
+        Networking and use IPv6 prefixes when creating security
         groups.</para></section>
     <section xml:id="asymmetric-links">
       <title>Asymmetric links</title>
@@ -426,14 +426,14 @@
         designed to properly direct connections to those specific
         locations. Use a multi-site installation for these situations,
         where appropriate.</para>
-    <para>OpenStack networking can be implemented in two separate
-        ways. The legacy nova-network provides a flat DHCP network
+    <para>Networking can be implemented in two separate
+        ways. The legacy networking (nova-network) provides a flat DHCP network
         with a single broadcast domain. This implementation does not
         support tenant isolation networks or advanced plug-ins, but it
         is currently the only way to implement a distributed layer 3
-        agent using the multi_host configuration. Neutron is the
-        official current implementation of OpenStack Networking. It
-        provides a pluggable architecture that supports a large
+        agent using the multi_host configuration.
+        OpenStack Networking (neutron) is the official networking implementation
+        and provides a pluggable architecture that supports a large
         variety of network methods. Some of these include a layer 2
         only provider network model, external device plug-ins, or even
         OpenFlow controllers.</para>

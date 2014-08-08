@@ -130,21 +130,21 @@
     <para>Based on the requirements of instances being serviced in the
         cloud, the next design choice which will affect your design is
         the choice of network service which will be used to service
-        instances in the cloud. The choice between nova-network, as a
-        part of OpenStack Compute Service, and Neutron, the OpenStack
-        Networking Service, has tremendous implications and will have
+        instances in the cloud. The choice between legacy networking (nova-network), as a
+        part of OpenStack Compute Service, and OpenStack Networking
+        (neutron), has tremendous implications and will have
         a huge impact on the architecture and design of the cloud
         network infrastructure.</para>
-    <para>The nova-network service is primarily a layer 2 networking
+    <para>The legacy networking (nova-network) service is primarily a layer 2 networking
         service which has two main modes in which it will function.
-        The difference between the two modes in nova-network pertain
-        to whether or not nova-network uses VLANs. When using
-        nova-network in a flat network mode, all network hardware
+        The difference between the two modes in legacy networking pertain
+        to whether or not legacy networking uses VLANs. When using
+        legacy networking in a flat network mode, all network hardware
         nodes and devices throughout the cloud are connected to a
         single layer 2 network segment which provides access to
         application data.</para>
     <para>When the network devices in the cloud support segmentation
-        using VLANs, nova-network can operate in the second mode. In
+        using VLANs, legacy networking can operate in the second mode. In
         this design model, each tenant within the cloud is assigned a
         network subnet which is mapped to a VLAN on the physical
         network. It is especially important to remember the maximum
@@ -152,16 +152,16 @@
         domain. These limitations place hard limits on the amount of
         growth possible within the data center. When designing a
         general purpose cloud intended to support multiple tenants, it
-        is especially recommended to use nova-network with VLANs, and
+        is especially recommended to use legacy networking with VLANs, and
         not in flat network mode.</para>
     <para>Another consideration regarding network is the fact that
-        nova-network is entirely managed by the cloud operator;
+        legacy networking is entirely managed by the cloud operator;
         tenants do not have control over network resources. If tenants
         require the ability to manage and create network resources
         such as network segments and subnets, it will be necessary to
-        install the OpenStack Networking Service to provide network
+        install the OpenStack Networking service to provide network
         access to instances.</para>
-    <para>The OpenStack Networking Service is a first class networking
+    <para>OpenStack Networking is a first class networking
         service that gives full control over creation of virtual
         network resources to tenants. This is often accomplished in
         the form of tunneling protocols which will establish
@@ -316,7 +316,7 @@
         A cloud architect who selects Ubuntu or RHEL has some
         flexibility in hypervisor; KVM, Xen, and LXC are supported
         virtualization methods available under OpenStack Compute
-        (Nova) on these Linux distributions. A cloud architect who
+        (nova) on these Linux distributions. A cloud architect who
         selects Hyper-V, on the other hand, is limited to Windows
         Server. Similarly, a cloud architect who selects XenServer is
         limited to the CentOS-based dom0 operating system provided
@@ -427,7 +427,7 @@
         </listitem>
     </itemizedlist>
     <para>A general purpose cloud may also include OpenStack Object
-        Storage (Swift). OpenStack Block Storage (Cinder) may be
+        Storage (swift). OpenStack Block Storage (cinder) may be
         selected to provide persistent storage to applications and
         instances although, depending on the use case, this could be
         optional.</para></section>
@@ -591,34 +591,36 @@
         server utilization and response times, as well as load testing
         your systems, will help determine scale out decisions.</para>
     <para>Care must be taken when deciding network functionality.
-        Currently, OpenStack supports both the legacy Nova-network
+        Currently, OpenStack supports both the legacy networking (nova-network)
         system and the newer, extensible OpenStack Networking. Both
         have their pros and cons when it comes to providing highly
-        available access. Nova-network, which provides networking
+        available access. Legacy networking, which provides networking
         access maintained in the OpenStack Compute code, provides a
         feature that removes a single point of failure when it comes
         to routing, and this feature is currently missing in OpenStack
-        Networking. The effect of Nova network’s Multi-Host
+        Networking. The effect of legacy networking’s multi-host
         functionality restricts failure domains to the host running
         that instance.</para>
     <para>On the other hand, when using OpenStack Networking, the
-        OpenStack controller servers or separate OpenStack Networking
+        OpenStack controller servers or separate Networking
         hosts handle routing. For a deployment that requires features
-        available in only OpenStack Networking, it is possible to
+        available in only Networking, it is possible to
         remove this restriction by using third party software that
         helps maintain highly available L3 routes. Doing so allows for
         common APIs to control network hardware, or to provide complex
         multi-tier web applications in a secure manner. It is also
-        possible to completely remove routing from OpenStack
+        possible to completely remove routing from
         Networking, and instead rely on hardware routing capabilities.
         In this case, the switching infrastructure must support L3
         routing.</para>
-        <para>OpenStack Networking (neutron) and nova-network both have their
-            advantages and disadvantages. They are both valid and supported
-            options that fit different network deployment models described in
-            the <citetitle><link
-                    xlink:href="http://docs.openstack.org/openstack-ops/content/network_design.html#network_deployment_options"
-                    >OpenStack Operations Guide</link></citetitle>.</para>
+     <para>
+       OpenStack Networking (neutron) and legacy networking
+       (nova-network) both have their advantages and
+       disadvantages. They are both valid and supported options that
+       fit different network deployment models described in the
+       <citetitle><link
+       xlink:href="http://docs.openstack.org/openstack-ops/content/network_design.html#network_deployment_options"
+       >OpenStack Operations Guide</link></citetitle>.</para>
     <para>Ensure your deployment has adequate back-up capabilities. As
         an example, in a deployment that has two infrastructure
         controller nodes, the design should include controller

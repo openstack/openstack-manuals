@@ -31,7 +31,7 @@
         transaction locks at very high rates. This also has an impact
         on the network performance.</para>
     <para>Some network dependencies are going to be external to
-        OpenStack. While Neutron is capable of providing network
+        OpenStack. While OpenStack Networking is capable of providing network
         ports, IP addresses, some level of routing, and overlay
         networks, there are some other functions that it cannot
         provide. For many of these, external systems or equipment may
@@ -41,8 +41,8 @@
         as of the icehouse release, dynamic routing is currently in
         its infancy within OpenStack and may need to be implemented
         either by an external device or a specialized service instance
-        within OpenStack. Tunneling is a feature provided by Neutron,
-        however it is constrained to a Neutron-managed region. If the
+        within OpenStack. Tunneling is a feature provided by OpenStack Networking,
+        however it is constrained to a Networking-managed region. If the
         need arises to extend a tunnel beyond the OpenStack region to
         either another region or an external system, it is necessary
         to implement the tunnel itself outside OpenStack or by using a
@@ -53,12 +53,12 @@
         outside of OpenStack. In many of these instances, similar
         solutions for traffic shaping or other network functions will
         be needed.</para>
-    <para>Depending on the selected design, Neutron itself may not
+    <para>Depending on the selected design, Networking itself may not
         even support the required
         <glossterm baseform="Layer-3 network">layer 3 network</glossterm>
         functionality. If it
         is necessary or advantageous to use the provider networking
-        mode of Neutron without running the layer 3 agent, then an
+        mode of Networking without running the layer 3 agent, then an
         external router will be required to provide layer 3
         connectivity to outside systems.</para>
     <para>Interaction with orchestration services is inevitable in
@@ -86,14 +86,14 @@
         easier to automate the infrastructure to apply the target IP
         to a new instance rather than reconfigure legacy or external
         systems for each new instance.</para>
-    <para>NAT for floating IPs managed by Neutron will reside within
+    <para>NAT for floating IPs managed by Networking will reside within
         the hypervisor but there are also versions of NAT that may be
         running elsewhere. If there is a shortage of IPv4 addresses
         there are two common methods to mitigate this externally to
         OpenStack. The first is to run a load balancer either within
         OpenStack as an instance, or use an external load balancing
         solution. In the internal scenario, load balancing software,
-        such as HAproxy, can be managed with Neutron's
+        such as HAproxy, can be managed with Networking's
         Load-Balancer-as-a-Service (LBaaS). This is specifically to
         manage the
         Virtual IP (VIP) while a dual-homed connection from the
@@ -118,8 +118,9 @@
         and which networking model is deployed. Some examples of this
         are the use of Link aggregation (LAG) or Hot Standby Router
         Protocol (HSRP). There are also the considerations of whether
-        to deploy Neutron or Nova-network and which plug-in to select
-        for Neutron. If using an external system, Neutron will need to
+        to deploy OpenStack Networking or legacy networking (nova-network)
+        and which plug-in to select
+        for OpenStack Networking. If using an external system, Networking will need to
         be configured to run
         <glossterm baseform="Layer-2 network">layer 2</glossterm>
         with a provider network
@@ -146,7 +147,7 @@
         with throughput or excessive broadcast traffic.</para>
     <para>A design decision that many overlook is a choice of layer 3
         protocols. While OpenStack was initially built with only IPv4
-        support, Neutron now supports IPv6 and dual-stacked networks.
+        support, Networking now supports IPv6 and dual-stacked networks.
         Note that, as of the icehouse release, this only includes
         stateless address autoconfiguration but the work is in
         progress to support stateless and stateful dhcpv6 as well as
