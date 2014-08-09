@@ -7,32 +7,32 @@
     <?dbhtml stop-chunking?>
     <title>Technical considerations</title>
     <para>Designing an OpenStack network architecture involves a
-        combination of layer 2 and layer 3 considerations. Layer 2
+        combination of layer-2 and layer-3 considerations. Layer-2
         decisions involve those made at the data-link layer, such as
         the decision to use Ethernet versus Token Ring. Layer 3
         involve those made about the protocol layer and the point at
         which IP comes into the picture. As an example, a completely
         internal OpenStack network can exist at layer 2 and ignore
         layer 3 however, in order for any traffic to go outside of
-        that cloud, to another network, or to the Internet, a layer 3
+        that cloud, to another network, or to the Internet, a layer-3
         router or switch must be involved.</para>
     <para>The past few years have seen two competing trends in
         networking. There has been a trend towards building data
-        center network architectures based on layer 2 networking and
+        center network architectures based on layer-2 networking and
         simultaneously another network architecture approach is to
         treat the cloud environment essentially as a miniature version
         of the Internet. This represents a radically different
         approach to the network architecture from what is currently
         installed in the staging environment because the Internet is
-        based entirely on layer 3 routing rather than layer 2
+        based entirely on layer-3 routing rather than layer-2
         switching.</para>
     <para>In the data center context, there are advantages of
-        designing the network on layer 2 protocols rather than layer
+        designing the network on layer-2 protocols rather than layer
         3. In spite of the difficulties of using a bridge to perform
         the network role of a router, many vendors, customers, and
         service providers are attracted to the idea of using Ethernet
         in as many parts of their networks as possible. The benefits
-        of selecting a layer 2 design are:</para>
+        of selecting a layer-2 design are:</para>
     <itemizedlist>
         <listitem>
             <para>Ethernet frames contain all the essentials for
@@ -42,7 +42,7 @@
         </listitem>
         <listitem>
             <para>Ethernet frames can carry any kind of packet.
-                Networking at layer 2 is independent of the layer 3
+                Networking at layer 2 is independent of the layer-3
                 protocol.</para>
         </listitem>
         <listitem>
@@ -68,11 +68,11 @@
         of the benefits of Ethernet can be realized on the network.
         Though it is not a substitute for IP networking, networking at
         layer 2 can be a powerful adjunct to IP networking.</para>
-    <para>The basic reasoning behind using layer 2 Ethernet over layer
-        3 IP networks is the speed, the reduced overhead of the IP
+    <para>The basic reasoning behind using layer-2 Ethernet over layer-3
+        IP networks is the speed, the reduced overhead of the IP
         hierarchy, and the lack of requirement to keep track of IP
         address configuration as systems are moved around. Whereas the
-        simplicity of layer 2 protocols might work well in a data
+        simplicity of layer-2 protocols might work well in a data
         center with hundreds of physical machines, cloud data centers
         have the additional burden of needing to keep track of all
         virtual machine addresses and networks. In these data centers,
@@ -93,9 +93,9 @@
         addresses as well as MAC addresses.</para>
     </important>
     <section xml:id="layer-2-arch-limitations">
-      <title>Layer 2 architecture limitations</title>
+      <title>Layer-2 architecture limitations</title>
     <para>Outside of the traditional data center the limitations of
-        layer 2 network architectures become more obvious.</para>
+        layer-2 network architectures become more obvious.</para>
     <itemizedlist>
         <listitem>
             <para>Number of VLANs is limited to 4096.</para>
@@ -105,7 +105,7 @@
                 limited.</para>
         </listitem>
         <listitem>
-            <para>The need to maintain a set of layer 4 devices to
+            <para>The need to maintain a set of layer-4 devices to
                 handle traffic control must be accommodated.</para>
         </listitem>
         <listitem>
@@ -121,7 +121,7 @@
             <para>
               Configuring <glossterm
               baseform="Address Resolution Protocol (ARP)">ARP</glossterm>
-              is considered complicated on large layer 2 networks.</para>
+              is considered complicated on large layer-2 networks.</para>
         </listitem>
         <listitem>
             <para>All network devices need to be aware of all MACs,
@@ -141,8 +141,8 @@
         or shape the traffic, and network troubleshooting is very
         difficult. One reason for this difficulty is network devices
         have no IP addresses. As a result, there is no reasonable way
-        to check network delay in a layer 2 network.</para>
-    <para>On large layer 2 networks, configuring ARP learning can also
+        to check network delay in a layer-2 network.</para>
+    <para>On large layer-2 networks, configuring ARP learning can also
         be complicated. The setting for the MAC address timer on
         switches is critical and, if set incorrectly, can cause
         significant performance problems. As an example, the Cisco
@@ -151,22 +151,22 @@
         be a significant problem. In this case, the network
         information maintained in the switches could be out of sync
         with the new location of the instance.</para>
-    <para>In a layer 2 network, all devices are aware of all MACs,
+    <para>In a layer-2 network, all devices are aware of all MACs,
         even those that belong to instances. The network state
         information in the backbone changes whenever an instance is
         started or stopped. As a result there is far too much churn in
         the MAC tables on the backbone switches.</para></section>
     <section xml:id="layer-3-arch-advantages">
-      <title>Layer 3 architecture advantages</title>
+      <title>Layer-3 architecture advantages</title>
     <para>In the layer 3 case, there is no churn in the routing tables
         due to instances starting and stopping. The only time there
         would be a routing state change would be in the case of a Top
         of Rack (ToR) switch failure or a link failure in the backbone
-        itself. Other advantages of using a layer 3 architecture
+        itself. Other advantages of using a layer-3 architecture
         include:</para>
     <itemizedlist>
         <listitem>
-            <para>Layer 3 networks provide the same level of
+            <para>Layer-3 networks provide the same level of
                 resiliency and scalability as the Internet.</para>
         </listitem>
         <listitem>
@@ -191,14 +191,14 @@
                 example ICMP, to monitor and manage traffic.</para>
         </listitem>
         <listitem>
-            <para>Layer 3 architectures allow for the use of Quality
+            <para>Layer-3 architectures allow for the use of Quality
                 of Service (QoS) to manage network performance.</para>
         </listitem>
     </itemizedlist>
     <section xml:id="layer-3-arch-limitations">
-      <title>Layer 3 architecture limitations</title>
+      <title>Layer-3 architecture limitations</title>
     <para>The main limitation of layer 3 is that there is no built-in
-        isolation mechanism comparable to the VLANs in layer 2
+        isolation mechanism comparable to the VLANs in layer-2
         networks. Furthermore, the hierarchical nature of IP addresses
         means that an instance will also be on the same subnet as its
         physical host. This means that it cannot be migrated outside
@@ -270,7 +270,7 @@
         recommendations can be made:</para>
     <itemizedlist>
         <listitem>
-            <para>Layer 3 designs are preferred over layer 2
+            <para>Layer-3 designs are preferred over layer-2
                 architectures.</para>
         </listitem>
         <listitem>
@@ -298,7 +298,7 @@
         </listitem>
         <listitem>
             <para>Use iBGP to flatten the internal traffic on the
-                layer 3 mesh.</para>
+                layer-3 mesh.</para>
         </listitem>
         <listitem>
             <para>Determine the most effective configuration for block
@@ -430,18 +430,18 @@
         ways. The legacy networking (nova-network) provides a flat DHCP network
         with a single broadcast domain. This implementation does not
         support tenant isolation networks or advanced plug-ins, but it
-        is currently the only way to implement a distributed layer 3
+        is currently the only way to implement a distributed layer-3
         agent using the multi_host configuration.
         OpenStack Networking (neutron) is the official networking implementation
         and provides a pluggable architecture that supports a large
-        variety of network methods. Some of these include a layer 2
+        variety of network methods. Some of these include a layer-2
         only provider network model, external device plug-ins, or even
         OpenFlow controllers.</para>
     <para>Networking at large scales becomes a set of boundary
-        questions. The determination of how large a layer 2 domain
+        questions. The determination of how large a layer-2 domain
         needs to be is based on the amount of nodes within the domain
         and the amount of broadcast traffic that passes between
-        instances. Breaking layer 2 boundaries may require the
+        instances. Breaking layer-2 boundaries may require the
         implementation of overlay networks and tunnels. This decision
         is a balancing act between the need for a smaller overhead or
         a need for a smaller domain.</para>
