@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE section [
+        <!ENTITY % openstack SYSTEM "../../common/entities/openstack.ent">
+        %openstack;
+        ]>
+<section xmlns="http://docbook.org/ns/docbook"
+     xmlns:xi="http://www.w3.org/2001/XInclude"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     version="5.0"
+     xml:id="section_volume-encryption">
+    <title>Volume encryption with static key</title>
+    <para>This is an implementation of a key manager that reads its key from the project's
+        configuration options.</para>
+    <para>
+        This key manager implementation provides limited security, assuming that the
+        key remains secret. Volume encryption provides protection against a lost or
+        stolen disk, assuming that the configuration file that contains the key is
+        not stored on the disk.  Encryption also protects the confidentiality of data
+        as it is transmitted via iSCSI from the compute host to the storage host
+        as long as an attacker who intercepts the data does not know the secret key.</para>
+    <para>
+        Because this implementation uses a single, fixed key, it does not provide
+        protection if that key is compromised. In particular, different volumes
+        encrypted with a key provided by this key manager actually share the same
+        encryption key so <emphasis>any</emphasis> volume can be decrypted once the fixed key is known.</para>
+    <para>Updates are in the pipeline which will provide true key manager support via the key management service.
+        This will provide much better security once complete.</para>
+    <section xml:id="section_initial-configuration">
+        <title>Initial configuration</title>
+        <procedure>
+          <para>Configuration changes need to be made to any nodes running the <systemitem class="service">cinder-volume</systemitem> or
+              <systemitem class="service">nova-compute</systemitem> services.</para>
+          <para>Update <systemitem class="service">cinder-volume</systemitem> servers:</para>
+          <step>
+            <para>Edit the <filename>/etc/cinder/cinder.conf</filename> file and add or update the value of the option
+                <option>fixed_key</option> in the <literal>[keymgr]</literal> section:</para>
+            <programlisting>[keymgr]
+# Fixed key returned by key manager, specified in hex (string
+# value)
+fixed_key = 0000000000000000000000000000000000000000000000000000000000000000</programlisting>
+          </step>
+            <step>
+                <para>Restart <systemitem class="service">cinder-volume</systemitem>.</para>
+            </step>
+          </procedure>
+          <procedure>
+          <para>Update <systemitem class="service">nova-compute</systemitem> servers:</para>
+          <step>
+            <para>Edit the <filename>/etc/nova/nova.conf</filename> file and add or update the value of the option
+                <option>fixed_key</option> in the <literal>[keymgr]</literal> section (add a keymgr section as shown if needed):</para>
+            <programlisting>[keymgr]
+# Fixed key returned by key manager, specified in hex (string
+# value)
+fixed_key = 0000000000000000000000000000000000000000000000000000000000000000</programlisting>
+          </step>
+          <step>
+              <para>Restart <systemitem class="service">nova-compute</systemitem>.</para>
+          </step>
+        </procedure>
+    </section>
+    <section xml:id="section_create-encrypted-volume-type">
+    <title>Create encrypted volume type</title>
+        <para>Block Storage volume type assignment provides a mechanism to provide scheduling to a specific back-end,
+            and also can be used to specify specific information for a back-end storage device to act upon.</para>
+        <para>In this case we are creating a volume type called LUKS and providing configuration information that will tell the storage system to
+            encrypt or decrypt the volume.</para>
+        <procedure>
+          <step>
+              <para>Source your admin credentials:</para>
+              <screen><prompt>$</prompt> <userinput>source admin-openrc.sh</userinput></screen>
+          </step>
+          <step>
+              <para>Create the volume type:</para>
+              <screen><prompt>$</prompt> <userinput>cinder type-create LUKS</userinput>
+<computeroutput>+--------------------------------------+-------+
+|                  ID                  |  Name |
++--------------------------------------+-------+
+| e64b35a4-a849-4c53-9cc7-2345d3c8fbde | LUKS  |
++--------------------------------------+-------+</computeroutput></screen>
+        </step>
+        <step>
+            <para>Mark the volume type as encrypted and provide the necessary details:</para>
+            <screen><prompt>$</prompt> <userinput>cinder encryption-type-create --cipher aes-xts-plain64 --key_size 512 \
+  --control_location front-end LUKS nova.volume.encryptors.luks.LuksEncryptor</userinput>
+<computeroutput>+--------------------------------------+-------------------------------------------+-----------------+----------+------------------+
+|            Volume Type ID            |                  Provider                 |      Cipher     | Key Size | Control Location |
++--------------------------------------+-------------------------------------------+-----------------+----------+------------------+
+| e64b35a4-a849-4c53-9cc7-2345d3c8fbde | nova.volume.encryptors.luks.LuksEncryptor | aes-xts-plain64 |   512    |    front-end     |
++--------------------------------------+-------------------------------------------+-----------------+----------+------------------+</computeroutput></screen>
+        </step>
+        </procedure>
+        <para>Support for creating the volume type in the OpenStack dashboard (horizon) exists today,
+            however support for tagging the type as encrypted and providing the additional information needed is still in review.</para>
+    </section>
+    <section xml:id="section_create_volume">
+        <title>Create an encrypted volume</title>
+        <para>Use the OpenStack dashboard (horizon), or the <command>cinder</command> command to create volumes just as you normally would. For an encrypted volume use the LUKS tag,
+        for unencrypted leave the LUKS tag off.</para>
+            <procedure>
+            <step>
+                <para>Source your admin credentials:</para>
+                <screen><prompt>$</prompt> <userinput>source admin-openrc.sh</userinput></screen>
+            </step>
+            <step>
+              <para>Create an unencrypted 1&nbsp;GB test volume:</para>
+              <screen><prompt>$</prompt> <userinput>cinder create --display-name 'unencrypted volume' 1</userinput>
+<computeroutput>+--------------------------------+--------------------------------------+
+|            Property            |                Value                 |
++--------------------------------+--------------------------------------+
+|          attachments           |                  []                  |
+|       availability_zone        |                 nova                 |
+|            bootable            |                false                 |
+|           created_at           |      2014-08-10T01:24:03.000000      |
+|          description           |                 None                 |
+|           encrypted            |                False                 |
+|               id               | 081700fd-2357-44ff-860d-2cd78ad9c568 |
+|            metadata            |                  {}                  |
+|              name              |          unencrypted volume          |
+|     os-vol-host-attr:host      |              controller              |
+| os-vol-mig-status-attr:migstat |                 None                 |
+| os-vol-mig-status-attr:name_id |                 None                 |
+|  os-vol-tenant-attr:tenant_id  |   08fdea76c760475f82087a45dbe94918   |
+|              size              |                  1                   |
+|          snapshot_id           |                 None                 |
+|          source_volid          |                 None                 |
+|             status             |               creating               |
+|            user_id             |   7cbc6b58b372439e8f70e2a9103f1332   |
+|          volume_type           |                 None                 |
++--------------------------------+--------------------------------------+</computeroutput></screen>
+            </step>
+            <step>
+              <para>Create an encrypted 1&nbsp;GB test volume:</para>
+              <screen><prompt>$</prompt> <userinput>cinder create --display-name 'encrypted volume' --volume-type LUKS 1</userinput>
+<computeroutput>+--------------------------------+--------------------------------------+
+|            Property            |                Value                 |
++--------------------------------+--------------------------------------+
+|          attachments           |                  []                  |
+|       availability_zone        |                 nova                 |
+|            bootable            |                false                 |
+|           created_at           |      2014-08-10T01:24:24.000000      |
+|          description           |                 None                 |
+|           encrypted            |                 True                 |
+|               id               | 86060306-6f43-4c92-9ab8-ddcd83acd973 |
+|            metadata            |                  {}                  |
+|              name              |           encrypted volume           |
+|     os-vol-host-attr:host      |              controller              |
+| os-vol-mig-status-attr:migstat |                 None                 |
+| os-vol-mig-status-attr:name_id |                 None                 |
+|  os-vol-tenant-attr:tenant_id  |   08fdea76c760475f82087a45dbe94918   |
+|              size              |                  1                   |
+|          snapshot_id           |                 None                 |
+|          source_volid          |                 None                 |
+|             status             |               creating               |
+|            user_id             |   7cbc6b58b372439e8f70e2a9103f1332   |
+|          volume_type           |                 LUKS                 |
++--------------------------------+--------------------------------------+</computeroutput></screen>
+            </step>
+   </procedure>
+   <para>Notice the encrypted parameter; it will show True/False.  The option <option>volume_type</option> is also shown for easy review.</para>
+
+    </section>
+    <section xml:id="section_testing_encryption">
+        <title>Testing volume encryption</title>
+        <para>This is a simple test scenario to help validate your encryption.  It assumes an LVM based Block Storage server.</para>
+        <para>Perform these steps after completing the volume encryption setup and creating the volume-type for LUKS as described in the preceding sections.</para>
+        <procedure>
+            <step>
+                <para>Create a VM:</para>
+                <screen><prompt>$</prompt> <userinput>nova boot --flavor m1.tiny --image cirros-0.3.1-x86_64-disk vm-test</userinput></screen>
+            </step>
+            <step>
+                <para>Create two volumes, one encrypted and one not encrypted then attach them to your VM:</para>
+                <screen><prompt>$</prompt> <userinput>cinder create --display-name 'unencrypted volume' 1</userinput>
+<prompt>$</prompt> <userinput>cinder create --display-name 'encrypted volume' --volume-type LUKS 1</userinput>
+<prompt>$</prompt> <userinput>cinder list</userinput>
+<computeroutput>+--------------------------------------+-----------+--------------------+------+-------------+----------+-------------+
+|                  ID                  |   Status  |        Name        | Size | Volume Type | Bootable | Attached to |
++--------------------------------------+-----------+--------------------+------+-------------+----------+-------------+
+| 64b48a79-5686-4542-9b52-d649b51c10a2 | available | unencrypted volume |  1   |     None    |  false   |             |
+| db50b71c-bf97-47cb-a5cf-b4b43a0edab6 | available |  encrypted volume  |  1   |     LUKS    |  false   |             |
++--------------------------------------+-----------+--------------------+------+-------------+----------+-------------+</computeroutput>
+<prompt>$</prompt> <userinput>nova volume-attach vm-test 64b48a79-5686-4542-9b52-d649b51c10a2 /dev/vdb</userinput>
+<prompt>$</prompt> <userinput>nova volume-attach vm-test db50b71c-bf97-47cb-a5cf-b4b43a0edab6 /dev/vdc</userinput></screen>
+            </step>
+            <step>
+                <para>On the VM, send some text to the newly attached volumes and synchronize them:</para>
+                <screen><prompt>#</prompt> <userinput>echo "Hello, world (unencrypted /dev/vdb)" >> /dev/vdb</userinput>
+<prompt>#</prompt> <userinput>echo "Hello, world (encrypted /dev/vdc)" >> /dev/vdc</userinput>
+<prompt>#</prompt> <userinput>sync &amp;&amp; sleep 2</userinput>
+<prompt>#</prompt> <userinput>sync &amp;&amp; sleep 2</userinput></screen>
+            </step>
+            <step>
+                <para>On the system hosting cinder volume services, synchronize to flush the I/O cache then test to see if your strings can be found:</para>
+                <screen><prompt>#</prompt> <userinput>sync &amp;&amp; sleep 2</userinput>
+<prompt>#</prompt> <userinput>sync &amp;&amp; sleep 2</userinput>
+<prompt>#</prompt> <userinput>strings /dev/stack-volumes/volume-* | grep "Hello"</userinput>
+<computeroutput>Hello, world (unencrypted /dev/vdb)</computeroutput></screen>
+            </step>
+        </procedure>
+        <para>In the above example you see that the search returns the string written to the unencrypted volume, but not the encrypted one.</para>
+    </section>
+</section>
