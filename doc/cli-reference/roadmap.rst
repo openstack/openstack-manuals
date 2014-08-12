@@ -12,7 +12,9 @@ To do tasks:
 
 Ongoing tasks:
 - Ensure it meets conventions and standards
-- Continually add CLI commands for integrated projects; but only when the release occurs
+- Continually add CLI commands for integrated projects; but only when
+  the release occurs
 
 Wishlist tasks:
-- Add troubleshooting for clients - installation, environment variables. Can be common.
+- Add troubleshooting for clients - installation, environment
+  variables. Can be common.

@@ -17,22 +17,23 @@
 Heat Orchestration Template (HOT) Specification
 ===============================================
 
-HOT is a new template format meant to replace the Heat CloudFormation-compatible
-format (CFN) as the native format supported by the Heat over time.
-This specification explains in detail all elements of the HOT template format.
-An example driven guide to writing HOT templates can be found
-at :ref:`hot_guide`.
+HOT is a new template format meant to replace the Heat
+CloudFormation-compatible format (CFN) as the native format supported
+by the Heat over time. This specification explains in detail all
+elements of the HOT template format. An example driven guide to
+writing HOT templates can be found at :ref:`hot_guide`.
 
 ------
 Status
 ------
 
 HOT is considered reliable, supported, and standardized as of our
-Icehouse (April 2014) release.  The Heat core team may make improvements
-to the standard, which very likely would be backward compatible.  The template
-format is also versioned.  In our Juno release, Heat will support multiple
-different versions of the HOT specification if there is a need driven by the
-introduction of new features.
+Icehouse (April 2014) release.  The Heat core team may make
+improvements to the standard, which very likely would be backward
+compatible.  The template format is also versioned.  In our Juno
+release, Heat will support multiple different versions of the HOT
+specification if there is a need driven by the introduction of new
+features.
 
 
 ------------------
@@ -74,9 +75,9 @@ parameter_groups
     *optional* and can be omitted when necessary.
 
 parameters
-    This section allows for specifying input parameters that have to be provided
-    when instantiating the template. The section is *optional* and can be
-    omitted when no input is required.
+    This section allows for specifying input parameters that have to
+    be provided when instantiating the template. The section is
+    *optional* and can be omitted when no input is required.
 
 resources
     This section contains the declaration of the single resources of the
@@ -85,9 +86,9 @@ resources
     instantiated.
 
 outputs
-    This section allows for specifying output parameters available to users once
-    the template has been instantiated. This section is *optional* and can be
-    omitted when no output values are required.
+    This section allows for specifying output parameters available to
+    users once the template has been instantiated. This section is
+    *optional* and can be omitted when no output values are required.
 
 
 .. _hot_spec_parameter_groups:
@@ -165,12 +166,12 @@ type
     are *string*, *number*, *comma_delimited_list*, *json*, or *boolean*.
 
 label
-    This *optional* attribute allows for giving a human readable name of the
-    parameter.
+    This *optional* attribute allows for giving a human readable name
+    of the parameter.
 
 description
-    This *optional* attribute allows for giving a human readable description of
-    the parameter.
+    This *optional* attribute allows for giving a human readable
+    description of the parameter.
 
 default
     This *optional* attribute allows for defining a default value for the
@@ -209,13 +210,13 @@ provide a useful description and label for each parameter.
 Parameter Constraints
 ---------------------
 
-The *constraints* block of a parameter definition allows for defining additional
-validation constraints that apply to the value of the parameter. At
-instantiation time of the template, user provided parameter values are validated
-against those constraints to make sure the provided values match expectations of
-the template author.
-Constraints are defined in the form of a bulleted list according to the
-following syntax:
+The *constraints* block of a parameter definition allows for defining
+additional validation constraints that apply to the value of the
+parameter. At instantiation time of the template, user provided
+parameter values are validated against those constraints to make sure
+the provided values match expectations of the template author.
+Constraints are defined in the form of a bulleted list according to
+the following syntax:
 
 ::
 
@@ -331,9 +332,9 @@ For example:
 
 allowed_pattern
 ~~~~~~~~~~~~~~~
-The *allowed_pattern* constraint applies to parameters of type string and allows
-for specifying a regular expression against which a user provided parameter
-value must evaluate at deployment.
+The *allowed_pattern* constraint applies to parameters of type string
+and allows for specifying a regular expression against which a user
+provided parameter value must evaluate at deployment.
 The syntax of the allowed_pattern constraint is:
 
 ::
@@ -399,11 +400,11 @@ via the `get_param`_ intrinsic function just like user-defined parameters.
 Resources Section
 -----------------
 
-In the *resources* section, the templates for actual resources that will make up
-a stack deployed from the HOT template (e.g. compute instances, networks,
-storage volumes) are defined.
-Each resource is defined as a separate block in the resources section according
-to the syntax below.
+In the *resources* section, the templates for actual resources that
+will make up a stack deployed from the HOT template (e.g. compute
+instances, networks, storage volumes) are defined.
+Each resource is defined as a separate block in the resources section
+according to the syntax below.
 
 ::
 
@@ -506,10 +507,10 @@ following example:
 Outputs Section
 ---------------
 
-In the *outputs* section, any output parameters that should be available to the
-user can be defined. Typically, this would be, for example, parameters such as
-IP addresses of deployed instances, or URLs of web applications deployed as part
-of a stack.
+In the *outputs* section, any output parameters that should be
+available to the user can be defined. Typically, this would be, for
+example, parameters such as IP addresses of deployed instances, or
+URLs of web applications deployed as part of a stack.
 
 Each output parameter is defined as a separate block within the outputs section
 according to the following syntax:
@@ -522,8 +523,8 @@ according to the following syntax:
       value: <parameter value>
 
 parameter name
-    An output parameter block is headed by the output parameter name, which must
-    be unique within the outputs section of a template.
+    An output parameter block is headed by the output parameter name,
+    which must be unique within the outputs section of a template.
 description
     This element gives a short description of the output parameter.
 parameter value
@@ -532,8 +533,8 @@ parameter value
     of one of the stack's resources (see also
     :ref:`hot_spec_intrinsic_functions`).
 
-The example below shows, how the IP address of a compute resource can be defined
-as an output parameter.
+The example below shows, how the IP address of a compute resource can
+be defined as an output parameter.
 
 ::
 
@@ -556,9 +557,10 @@ below.
 
 get_attr
 --------
-The *get_attr* function allows referencing an attribute of a resource. At
-runtime, it will be resolved to the value of an attribute of a resource instance
-created from the respective resource definition of the template.
+The *get_attr* function allows referencing an attribute of a
+resource. At runtime, it will be resolved to the value of an attribute
+of a resource instance created from the respective resource definition
+of the template.
 The syntax of the get_attr function is as follows:
 
 ::
@@ -657,10 +659,10 @@ a *files* dictionary containing entries with keys
 
 get_param
 ---------
-The *get_param* function allows for referencing an input parameter of a template
-from anywhere within a template. At runtime, it will be resolved to the value
-provided for this input parameter. The syntax of the get_param function is as
-follows:
+The *get_param* function allows for referencing an input parameter of
+a template from anywhere within a template. At runtime, it will be
+resolved to the value provided for this input parameter. The syntax of
+the get_param function is as follows:
 
 ::
 
@@ -722,8 +724,8 @@ The syntax of the get_resource function is as follows:
 
   get_resource: <resource ID>
 
-The *resource ID* of the referenced resources as used in the current template is
-given as single parameter to the get_resource function.
+The *resource ID* of the referenced resources as used in the current
+template is given as single parameter to the get_resource function.
 
 
 list_join
@@ -748,9 +750,14 @@ This would resolve to "one, two, and three".
 
 resource_facade
 ---------------
-The *resource_facade* function allows a provider template to retrieve data
-about its resource facade in the parent template. (A provider template is used to provide a custom definition of a resource - the facade - in the form of a Heat template. The resource's properties are passed to the provider template as its parameters, but other resource data can be included using this function.)
-The syntax of the *resource_facade* function is as follows::
+
+The *resource_facade* function allows a provider template to retrieve
+data about its resource facade in the parent template. (A provider
+template is used to provide a custom definition of a resource - the
+facade - in the form of a Heat template. The resource's properties are
+passed to the provider template as its parameters, but other resource
+data can be included using this function.)  The syntax of the
+*resource_facade* function is as follows::
 
   resource_facade: <data type>
 
@@ -800,8 +807,9 @@ section of a template to build a URL for logging into a deployed application.
           params:
             host: { get_attr: [ my_instance, first_address ] }
 
-The str_replace function can also be used for constructing bigger chunks of text
-like scripts for initializing compute instances as shown in the example below:
+The str_replace function can also be used for constructing bigger
+chunks of text like scripts for initializing compute instances as
+shown in the example below:
 
 ::
 
