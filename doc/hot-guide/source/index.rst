@@ -6,3 +6,7 @@ HOT guide
 
    hot_guide
    hot_spec
+   basic_resources
+   software_deployment
+   advanced_topics
+   functions
