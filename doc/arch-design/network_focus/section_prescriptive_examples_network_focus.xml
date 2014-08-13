@@ -145,34 +145,50 @@
         queuing algorithms.</para></section>
     <section xml:id="cloud-storage">
       <title>Cloud storage</title>
-    <para>Another common use case for OpenStack environments is to
-        provide a cloud based file storage and sharing service. While
-        this may initially be considered to be a storage focused use
-        case there are also major requirements on the network side
-        that place it in the realm of requiring a network focused
-        architecture. An example for this application is cloud
-        backup.</para>
-    <para>There are two specific behaviors of this workload that have
-        major and different impacts on the network. Since this is both
-        an externally facing service and internally replicating
-        application there are both North-South and East-West traffic
-        considerations.</para>
-    <para>North-South traffic is primarily user facing. This means
-        that when a user uploads content for storage it will be coming
-        into the OpenStack installation. Users who download this
-        content will be drawing traffic from the OpenStack
-        installation. Since the service is intended primarily as a
-        backup the majority of the traffic will be southbound into the
-        environment. In this case it is beneficial to configure a
-        network to be asymmetric downstream as the traffic entering
-        the OpenStack installation will be greater than traffic
-        leaving.</para>
-    <para>East-West traffic is likely to be fully symmetric. Since
-        replication will originate from any node and may target
-        multiple other nodes algorithmically, it is less likely for
-        this traffic to have a larger volume in any specific
-        direction. However this traffic may interfere with north-south
-        traffic.</para>
+    <para>
+      Another common use case for OpenStack environments is to provide
+      a cloud-based file storage and sharing service. You might
+      consider this a storage-focused use case, but its network-side
+      requirements make it a network-focused use case.</para>
+    <para>
+      For example, consider a cloud backup application. This workload
+      has two specific behaviors that impact the network. Because this
+      workload is an externally-facing service and an
+      internally-replicating application, it has both <glossterm
+      baseform="north-south traffic">north-south</glossterm> and
+      <glossterm>east-west traffic</glossterm>
+      considerations, as follows:
+    </para>
+    <variablelist>
+      <varlistentry>
+        <term>north-south traffic</term>
+        <listitem>
+          <para>
+            When a user uploads and stores content, that content moves
+            into the OpenStack installation. When users download this
+            content, the content moves from the OpenStack
+            installation. Because this service is intended primarily
+            as a backup, most of the traffic moves southbound into the
+            environment.  In this situation, it benefits you to
+            configure a network to be asymmetrically downstream
+            because the traffic that enters the OpenStack installation
+            is greater than the traffic that leaves the installation.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>east-west traffic</term>
+        <listitem>
+          <para>
+            Likely to be fully symmetric. Because replication
+            originates from any node and might target multiple other
+            nodes algorithmically, it is less likely for this traffic
+            to have a larger volume in any specific direction. However
+            this traffic might interfere with north-south traffic.
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
     <mediaobject>
         <imageobject>
             <imagedata contentwidth="4in"
@@ -180,11 +196,11 @@
             />
         </imageobject>
     </mediaobject>
-    <para>This application will prioritize the North-South traffic
-        over East-West traffic as it is the customer-facing data. QoS
-        is implemented on East-West traffic to be a lower priority
-        Class Selector, while North-South traffic requires a higher
-        level in the priority queue because of this.</para>
+    <para>
+      This application prioritizes the north-south traffic over
+      east-west traffic: the north-south traffic involves
+      customer-facing data.
+    </para>
     <para>The network design in this case is less dependant on
         availability and more dependant on being able to handle high
         bandwidth. As a direct result, it is beneficial to forego
