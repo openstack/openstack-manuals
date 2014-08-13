@@ -131,7 +131,7 @@
         cloud, the next design choice which will affect your design is
         the choice of network service which will be used to service
         instances in the cloud. The choice between legacy networking (nova-network), as a
-        part of OpenStack Compute Service, and OpenStack Networking
+        part of OpenStack Compute, and OpenStack Networking
         (neutron), has tremendous implications and will have
         a huge impact on the architecture and design of the cloud
         network infrastructure.</para>
@@ -313,7 +313,7 @@
         the distribution vendor's OpenStack packages might be a
         requirement for support).</para>
     <para>OS selection also directly influences hypervisor selection.
-        A cloud architect who selects Ubuntu or RHEL has some
+        A cloud architect who selects Ubuntu, RHEL, or SLES has some
         flexibility in hypervisor; KVM, Xen, and LXC are supported
         virtualization methods available under OpenStack Compute
         (nova) on these Linux distributions. A cloud architect who
@@ -321,25 +321,35 @@
         Server. Similarly, a cloud architect who selects XenServer is
         limited to the CentOS-based dom0 operating system provided
         with XenServer.</para>
-    <para>The primary factors that play into OS/hypervisor selection
+    <para>The primary factors that play into OS-hypervisor selection
         include:</para>
-    <itemizedlist>
-        <listitem>
-            <para>User requirements: The selection of OS/hypervisor
+    <variablelist>
+        <varlistentry>
+          <term>User requirements</term>
+          <listitem>
+            <para>The selection of OS-hypervisor
                 combination first and foremost needs to support the
                 user requirements.</para>
-        </listitem>
-        <listitem>
-            <para>Support: The selected OS/hypervisor combination
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Support</term>
+          <listitem>
+            <para>The selected OS-hypervisor combination
                 needs to be supported by OpenStack.</para>
-        </listitem>
-        <listitem>
-            <para>Interoperability: The OS/hypervisor needs to be
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Interoperability</term>
+          <listitem>
+            <para>The OS-hypervisor needs to be
                 interoperable with other features and services in the
                 OpenStack design in order to meet the user
                 requirements.</para>
-        </listitem>
-    </itemizedlist></section>
+          </listitem>
+        </varlistentry>
+    </variablelist>
+    </section>
     <section xml:id="hypervisor-tech-considerations">
       <title>Hypervisor</title>
     <para>OpenStack supports a wide variety of hypervisors, one or
@@ -347,7 +357,7 @@
         include:</para>
     <itemizedlist>
         <listitem>
-            <para>KVM (and Qemu)</para>
+            <para>KVM (and QEMU)</para>
         </listitem>
         <listitem>
             <para>XCP/XenServer</para>
@@ -408,29 +418,38 @@
         in a general purpose cloud are:</para>
     <itemizedlist>
         <listitem>
-            <para>OpenStack Compute (nova)</para>
+            <para>OpenStack <glossterm>Compute</glossterm>
+            (<glossterm>nova</glossterm>)</para>
         </listitem>
         <listitem>
-            <para>OpenStack Networking (neutron)</para>
+            <para>OpenStack <glossterm>Networking</glossterm>
+            (<glossterm>neutron</glossterm>)</para>
         </listitem>
         <listitem>
-            <para>OpenStack Image Service (glance)</para>
+            <para>OpenStack <glossterm>Image Service</glossterm>
+            (<glossterm>glance</glossterm>)</para>
         </listitem>
         <listitem>
-            <para>OpenStack Identity (keystone)</para>
+            <para>OpenStack <glossterm>Identity</glossterm>
+            (<glossterm>keystone</glossterm>)</para>
         </listitem>
         <listitem>
-            <para>OpenStack dashboard (horizon)</para>
+            <para>OpenStack <glossterm>dashboard</glossterm>
+            (<glossterm>horizon</glossterm>)</para>
         </listitem>
         <listitem>
-            <para>Telemetry module (ceilometer)</para>
+            <para><glossterm>Telemetry</glossterm> module
+            (<glossterm>ceilometer</glossterm>)</para>
         </listitem>
     </itemizedlist>
-    <para>A general purpose cloud may also include OpenStack Object
-        Storage (swift). OpenStack Block Storage (cinder) may be
+    <para>A general purpose cloud may also include OpenStack
+        <glossterm>Object Storage</glossterm> (<glossterm>swift</glossterm>).
+        OpenStack <glossterm>Block Storage</glossterm>
+        (<glossterm>cinder</glossterm>) may be
         selected to provide persistent storage to applications and
         instances although, depending on the use case, this could be
-        optional.</para></section>
+        optional.</para>
+    </section>
     <section xml:id="supplemental-software-tech-considerations">
       <title>Supplemental software</title>
     <para>A general purpose OpenStack deployment consists of more than
@@ -455,7 +474,7 @@
         implementations are also made highly available. This high
         availability can be achieved by using software such as
         Keepalived or Pacemaker with Corosync. Pacemaker and Corosync
-        can provide Active-Active or Active-Passive highly available
+        can provide active-active or active-passive highly available
         configuration depending on the specific service in the
         OpenStack environment. Using this software can affect the
         design as it assumes at least a 2-node controller
