@@ -7,4 +7,3 @@ tool from the openstack-doc-tools package.
 
 Do not change these files - change openstack-auto-commands and the
 python commands itself.
- 

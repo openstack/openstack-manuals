@@ -15,8 +15,8 @@ To do tasks:
 - Unify chapter and section names (such as Overview)
 - Add sample output of each command and highlight important parts
 - Mention project as standard but tenant must be used for CLI params
-- Refer to generic SQL database and update for MariaDB (RHEL), MySQL, and
-PostgreSQL
+- Refer to generic SQL database and update for MariaDB (RHEL), MySQL,
+  and PostgreSQL
 - Provide sample configuration files for each node
 - Compute and network nodes should reference server on controller node
 - Update password list
@@ -27,4 +27,5 @@ Ongoing tasks:
 - Continually update with latest release information relevant to install
 
 Wishlist tasks:
-- Replace all individual client commands (like keystone, nova) with openstack client commands
+- Replace all individual client commands (like keystone, nova) with
+  openstack client commands

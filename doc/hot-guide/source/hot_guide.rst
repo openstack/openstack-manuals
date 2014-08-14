@@ -17,8 +17,9 @@
 Heat Orchestration Template (HOT) Guide
 =======================================
 
-HOT is a new template format meant to replace the Heat CloudFormation-compatible
-format (CFN) as the native format supported by the Heat over time.
+HOT is a new template format meant to replace the Heat
+CloudFormation-compatible format (CFN) as the native format supported
+by the Heat over time.
 This guide is targeted towards template authors and explains how to write
 HOT templates based on examples. A detailed specification of HOT can be found
 at :ref:`hot_spec`.
@@ -27,10 +28,10 @@ at :ref:`hot_spec`.
 Status
 ------
 
-HOT support is still under development and needs more work to provide access to
-all functionality currently available via the CFN compatible template interface.
-This guide will be updated periodically whenever new features get implemented
-for HOT.
+HOT support is still under development and needs more work to provide
+access to all functionality currently available via the CFN compatible
+template interface. This guide will be updated periodically whenever
+new features get implemented for HOT.
 
 ----------------------------------
 Writing a hello world HOT template
@@ -60,11 +61,12 @@ deploy a single compute instance.
         image: F18-x86_64-cfntools
         flavor: m1.small
 
-Each HOT template has to include the *heat_template_version* key with value
-'2013-05-23' (the current version of HOT). While the *description* is optional,
-it is good practice to include some useful text that describes what users can do
-with the template. In case you want to provide a longer description that does
-not fit on a single line, you can provide multi-line text in YAML, for example:
+Each HOT template has to include the *heat_template_version* key with
+value '2013-05-23' (the current version of HOT). While the
+*description* is optional, it is good practice to include some useful
+text that describes what users can do with the template. In case you
+want to provide a longer description that does not fit on a single
+line, you can provide multi-line text in YAML, for example:
 
 ::
 
@@ -76,20 +78,21 @@ The *resources* section is required and must contain at least one resource
 definition. In the example above, a compute instance is defined with fixed
 values for the 'key_name', 'image' and 'flavor' parameters.
 
-Note that all those elements, i.e. a key-pair with the given name, the image and
-the flavor have to exist in the OpenStack environment where the template is
-used. Typically a template is made more easily reusable, though, by defining a
-set of *input parameters* instead of hard-coding such values.
+Note that all those elements, i.e. a key-pair with the given name, the
+image and the flavor have to exist in the OpenStack environment where
+the template is used. Typically a template is made more easily
+reusable, though, by defining a set of *input parameters* instead of
+hard-coding such values.
 
 
 Template input parameters
 -------------------------
-Input parameters defined in the *parameters* section of a HOT template (see also
-:ref:`hot_spec_parameters`) allow users to customize a template during
-deployment. For example, this allows for providing custom key-pair names or
-image IDs to be used for a deployment.
-From a template author's perspective, this helps to make a template more easily
-reusable by avoiding hardcoded assumptions.
+Input parameters defined in the *parameters* section of a HOT template
+(see also :ref:`hot_spec_parameters`) allow users to customize a
+template during deployment. For example, this allows for providing
+custom key-pair names or image IDs to be used for a deployment.
+From a template author's perspective, this helps to make a template
+more easily reusable by avoiding hardcoded assumptions.
 
 Sticking to the example used above, it makes sense to allow users to provide
 their custom key-pairs, provide their own image, and to select a flavor for the
@@ -130,10 +133,11 @@ resource properties have been replaced by references to the corresponding
 input parameters by means of the *get_param* function (see also
 :ref:`hot_spec_intrinsic_functions`).
 
-You can also define default values for input parameters which will be used in
-case the user does not provide the respective parameter during deployment. For
-example, the following definition for the *instance_type* parameter would select
-the 'm1.small' flavor unless specified otherwise by the user.
+You can also define default values for input parameters which will be
+used in case the user does not provide the respective parameter during
+deployment. For example, the following definition for the
+*instance_type* parameter would select the 'm1.small' flavor unless
+specified otherwise by the user.
 
 ::
 
@@ -161,14 +165,15 @@ passwords as user input:
 
 Restricting user input
 ~~~~~~~~~~~~~~~~~~~~~~
-In some cases you might want to restrict the values of input parameters that
-users can supply. For example, you might know that the software running in a
-compute instance needs a certain amount of resources so you might want to
-restrict the *instance_type* parameter introduced above. Parameters in HOT
-templates can be restricted by adding a *constraints* section (see also
+In some cases you might want to restrict the values of input
+parameters that users can supply. For example, you might know that the
+software running in a compute instance needs a certain amount of
+resources so you might want to restrict the *instance_type* parameter
+introduced above. Parameters in HOT templates can be restricted by
+adding a *constraints* section (see also
 :ref:`hot_spec_parameters_constraints`).
-For example, the following would allow only three values to be provided as input
-for the *instance_type* parameter:
+For example, the following would allow only three values to be
+provided as input for the *instance_type* parameter:
 
 ::
 
