@@ -19,6 +19,7 @@ import logging
 import os
 import sys
 
+from bs4 import BeautifulSoup
 import jinja2
 
 
@@ -82,6 +83,8 @@ def main():
 
         try:
             output = template.render()
+            soup = BeautifulSoup(output)
+            output = soup.prettify()
         except Exception as e:
             logger.error("rendering template %s failed: %s" %
                          (templateFile, e))
