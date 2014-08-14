@@ -52,15 +52,17 @@
         is necessary to implement quality of service management
         outside of OpenStack. In many of these instances, similar
         solutions for traffic shaping or other network functions will
-        be needed.</para>
-    <para>Depending on the selected design, Networking itself may not
-        even support the required
-        <glossterm baseform="Layer-3 network">layer-3 network</glossterm>
-        functionality. If it
-        is necessary or advantageous to use the provider networking
-        mode of Networking without running the layer-3 agent, then an
-        external router will be required to provide layer-3
-        connectivity to outside systems.</para>
+        be needed.
+    </para>
+    <para>
+      Depending on the selected design, Networking itself might not
+      even support the required
+      <glossterm baseform="Layer-3 network">layer-3
+      network</glossterm> functionality. If you choose to use the
+      provider networking mode without running the layer-3 agent, you
+      must install an external router to provide layer-3 connectivity
+      to outside systems.
+    </para>
     <para>Interaction with orchestration services is inevitable in
         larger-scale deployments. The Orchestration module is capable of allocating
         network resource defined in templates to map to tenant
@@ -145,12 +147,13 @@
         mesh overlay network, while some network monitoring tools or
         storage replication workloads will have performance issues
         with throughput or excessive broadcast traffic.</para>
-    <para>A design decision that many overlook is a choice of layer-3
+    <para>Many people overlook an important design decision: The choice
+        of layer-3
         protocols. While OpenStack was initially built with only IPv4
         support, Networking now supports IPv6 and dual-stacked networks.
         Note that, as of the Icehouse release, this only includes
-        stateless address autoconfiguration but the work is in
-        progress to support stateless and stateful dhcpv6 as well as
+        stateless address autoconfiguration but work is in
+        progress to support stateless and stateful DHCPv6 as well as
         IPv6 floating IPs without NAT. Some workloads become possible
         through the use of IPv6 and IPv6 to IPv4 reverse transition
         mechanisms such as NAT64 and DNS64 or <glossterm>6to4</glossterm>,
@@ -180,16 +183,16 @@
         routing table and use it to provide services such as network
         path visibility to other applications or as a monitoring
         tool.</para>
-    <para>A lesser known, but harder to diagnose issue, is that of
-        path Maximum Transmission Unit (MTU) failures. It is less of
-        an optional design consideration and more a design warning
-        that MTU must be at least large enough to handle normal
-        traffic, plus any overhead from an overlay network, and the
-        desired layer-3 protocol. Adding externally built tunnels will
-        further lessen the MTU packet size making it imperative to pay
-        attention to the fully calculated MTU as some systems may be
-        configured to ignore or drop path MTU discovery
-        packets.</para></section>
+    <para>
+      Path maximum transmission unit (MTU) failures are lesser known
+      but harder to diagnose. The MTU must be large enough to handle
+      normal traffic, overhead from an overlay network, and the
+      desired layer-3 protocol. When you add externally built tunnels,
+      the MTU packet size is reduced. In this case, you must pay
+      attention to the fully calculated MTU size because some systems
+      are configured to ignore or drop path MTU discovery packets.
+    </para>
+    </section>
     <section xml:id="tunables">
         <title>Tunable networking components</title>
         <para>Consider configurable networking components related to an

@@ -6,33 +6,34 @@
   xml:id="technical-considerations-network-focus">
     <?dbhtml stop-chunking?>
     <title>Technical considerations</title>
-    <para>Designing an OpenStack network architecture involves a
-        combination of layer-2 and layer-3 considerations. Layer-2
+    <para>When you design an OpenStack network architecture, you must
+        consider layer-2 and layer-3 issues. Layer-2
         decisions involve those made at the data-link layer, such as
-        the decision to use Ethernet versus Token Ring. Layer 3
-        involve those made about the protocol layer and the point at
-        which IP comes into the picture. As an example, a completely
+        the decision to use Ethernet versus Token Ring. Layer-3 decisions
+        involve those made about the protocol layer and the point when
+        IP comes into the picture. As an example, a completely
         internal OpenStack network can exist at layer 2 and ignore
         layer 3 however, in order for any traffic to go outside of
         that cloud, to another network, or to the Internet, a layer-3
         router or switch must be involved.</para>
-    <para>The past few years have seen two competing trends in
-        networking. There has been a trend towards building data
-        center network architectures based on layer-2 networking and
-        simultaneously another network architecture approach is to
-        treat the cloud environment essentially as a miniature version
-        of the Internet. This represents a radically different
-        approach to the network architecture from what is currently
-        installed in the staging environment because the Internet is
-        based entirely on layer-3 routing rather than layer-2
-        switching.</para>
-    <para>In the data center context, there are advantages of
-        designing the network on layer-2 protocols rather than layer
-        3. In spite of the difficulties of using a bridge to perform
-        the network role of a router, many vendors, customers, and
-        service providers are attracted to the idea of using Ethernet
-        in as many parts of their networks as possible. The benefits
-        of selecting a layer-2 design are:</para>
+    <para>
+      The past few years have seen two competing trends in
+      networking. One trend leans towards building data center network
+      architectures based on layer-2 networking. Another trend treats
+      the cloud environment essentially as a miniature version of the
+      Internet. This approach is radically different from the network
+      architecture approach that is used in the staging environment:
+      the Internet is based entirely on layer-3 routing rather than
+      layer-2 switching.
+    </para>
+    <para>
+      A network designed on layer-2 protocols has advantages over one
+      designed on layer-3 protocols. In spite of the difficulties of
+      using a bridge to perform the network role of a router, many
+      vendors, customers, and service providers choose to use Ethernet
+      in as many parts of their networks as possible. The benefits of
+      selecting a layer-2 design are:
+    </para>
     <itemizedlist>
         <listitem>
             <para>Ethernet frames contain all the essentials for
@@ -67,17 +68,36 @@
         destination can be done in the form of Ethernet frames, more
         of the benefits of Ethernet can be realized on the network.
         Though it is not a substitute for IP networking, networking at
-        layer 2 can be a powerful adjunct to IP networking.</para>
-    <para>The basic reasoning behind using layer-2 Ethernet over layer-3
-        IP networks is the speed, the reduced overhead of the IP
-        hierarchy, and the lack of requirement to keep track of IP
-        address configuration as systems are moved around. Whereas the
-        simplicity of layer-2 protocols might work well in a data
-        center with hundreds of physical machines, cloud data centers
-        have the additional burden of needing to keep track of all
-        virtual machine addresses and networks. In these data centers,
-        it is not uncommon for one physical node to support 30-40
-        instances.</para>
+        layer 2 can be a powerful adjunct to IP networking.
+    </para>
+    <para>
+      Layer-2 Ethernet usage has these advantages over layer-3 IP
+      network usage:
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Speed
+        </para>
+      </listitem>
+      <listitem>
+          <para>
+            Reduced overhead of the IP hierarchy.
+          </para>
+      </listitem>
+      <listitem>
+        <para>
+          No need to keep track of address configuration as systems
+          are moved around. Whereas the simplicity of layer-2
+          protocols might work well in a data center with hundreds
+          of physical machines, cloud data centers have the
+          additional burden of needing to keep track of all virtual
+          machine addresses and networks. In these data centers, it
+          is not uncommon for one physical node to support 30-40
+          instances.
+        </para>
+      </listitem>
+    </itemizedlist>
     <important>
       <para>
         Networking at the frame level says nothing

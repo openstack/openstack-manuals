@@ -24,10 +24,10 @@
         ensure that the load balancer can communicate with the
         application's HTTP servers without requiring the consumption
         of a public IP address.</para>
-    <para>Since sessions must remain until closing, the routing and
+    <para>Because sessions persist until they are closed, the routing and
         switching architecture is designed for high availability.
-        Switches are meshed to each hypervisor and to each other, and
-        also provide an MLAG implementation to ensure layer-2
+        Switches are meshed to each hypervisor and each other, and
+        also provide an MLAG implementation to ensure that layer-2
         connectivity does not fail. Routers are configured with VRRP
         and fully meshed with switches to ensure layer-3 connectivity.
         Since GRE is used as an overlay network, Networking is installed
@@ -91,13 +91,18 @@
         direct server return. This aids in address planning and
         utilization at scale since only the virtual IP (VIP) must be
         public.</para></section>
-    <section xml:id="overlay-networks"><title>Overlay networks</title>
-    <para>OpenStack Networking using the Open vSwitch GRE tunnel mode
-        was included in the design to provide overlay functionality.
-        In this case, the layer-3 external routers will be in a pair
-        with VRRP and switches should be paired with an implementation
-        of MLAG running to ensure that there is no loss of
-        connectivity with the upstream routing infrastructure.</para></section>
+
+    <section xml:id="overlay-networks">
+      <title>Overlay networks</title>
+      <para>
+        The overlay functionality design includes OpenStack Networking
+        in Open vSwitch GRE tunnel mode.
+        In this case, the layer-3 external routers are paired with
+        VRRP and switches should be paired with an implementation of
+        MLAG running to ensure that you do not lose connectivity with
+        the upstream routing infrastructure.
+      </para>
+    </section>
     <section xml:id="performance-tuning">
       <title>Performance tuning</title>
     <para>Network level tuning for this workload is minimal.
