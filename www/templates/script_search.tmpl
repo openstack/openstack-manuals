@@ -1,0 +1,29 @@
+<script src="http://www.google.com/jsapi" type="text/javascript">
+</script>
+<script type="text/javascript">
+ //<![CDATA[
+                google.load('search', '1', {
+                    language: 'en'
+                });
+                var _gaq = _gaq ||[];
+                _gaq.push([ "_setAccount", "UA-17511903-1"]);
+                function _trackQuery(control, searcher, query) {
+                    var gaQueryParamName = "q";
+                    var loc = document.location;
+                    var url =[
+                    loc.pathname,
+                    loc.search,
+                    loc.search ? '&': '?',
+                    gaQueryParamName == '' ? 'q': encodeURIComponent(gaQueryParamName),
+                    '=',
+                    encodeURIComponent(query)].join('');
+                    _gaq.push([ "_trackPageview", url]);
+                }
+                google.setOnLoadCallback(function () {
+                    var customSearchControl = new google.search.CustomSearchControl('011012898598057286222:elxsl505o0o');
+                    customSearchControl.setResultSetSize(google.search.Search.FILTERED_CSE_RESULTSET);
+                    customSearchControl.setSearchStartingCallback(null, _trackQuery);
+                    customSearchControl.draw('cse');
+                },
+                true);//]]>
+</script>
