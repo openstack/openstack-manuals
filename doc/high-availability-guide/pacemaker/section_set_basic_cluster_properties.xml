@@ -25,10 +25,9 @@ Setting <literal>no-quorum-policy="ignore"</literal> is required in 2-node Pacem
 clusters for the following reason: if quorum enforcement is enabled,
 and one of the two nodes fails, then the remaining node can not
 establish a <emphasis>majority</emphasis> of quorum votes necessary to run services, and
-thus it is unable to take over any resources. The appropriate
-workaround is to ignore loss of quorum in the cluster. This is safe
-and necessary <emphasis>only</emphasis> in 2-node clusters. Do not set this property in
-Pacemaker clusters with more than two nodes.
+thus it is unable to take over any resources. In this case, the appropriate
+workaround is to ignore loss of quorum in the cluster. This should only <emphasis>only</emphasis> be done in 2-node clusters: do not set this property in
+Pacemaker clusters with more than two nodes. Note that a two-node cluster with this setting exposes a risk of split-brain because either half of the cluster, or both, are able to become active in the event that both nodes remain online but lose communication with one another. The preferred configuration is 3 or more nodes per cluster.
 </para>
           </callout>
           <callout arearefs="CO2-2">

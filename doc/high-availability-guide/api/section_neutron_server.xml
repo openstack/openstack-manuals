@@ -7,21 +7,21 @@
           <title>Highly available OpenStack Networking server</title>
 
         <para>OpenStack Networking is the network connectivity service in OpenStack.
-Making the OpenStack Networking Server service highly available in active / passive mode involves</para>
+Making the OpenStack Networking Server service highly available in active / passive mode involves the following tasks:</para>
         <itemizedlist>
           <listitem>
             <para>
-Configure OpenStack Networking to listen on the VIP address,
+Configure OpenStack Networking to listen on the virtual IP address,
 </para>
           </listitem>
           <listitem>
             <para>
-managing OpenStack Networking API Server daemon with the Pacemaker cluster manager,
+Manage the OpenStack Networking API Server daemon with the Pacemaker cluster manager,
 </para>
           </listitem>
           <listitem>
             <para>
-Configure OpenStack services to use this IP address.
+Configure OpenStack services to use the virtual IP address.
 </para>
           </listitem>
         </itemizedlist>
@@ -40,7 +40,7 @@ Configure OpenStack services to use this IP address.
 OpenStack Networking Server resource. Connect to the Pacemaker cluster with <literal>crm
 configure</literal>, and add the following cluster resources:</para>
           <programlisting>primitive p_neutron-server ocf:openstack:neutron-server \
-    params os_password="secrete" os_username="admin" os_tenant_name="admin" \
+    params os_password="secret" os_username="admin" os_tenant_name="admin" \
     keystone_get_token_url="http://192.168.42.103:5000/v2.0/tokens" \
     op monitor interval="30s" timeout="30s"</programlisting>
           <para>This configuration creates <literal>p_neutron-server</literal>, a resource for manage OpenStack Networking Server service</para>
