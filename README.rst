@@ -31,9 +31,9 @@ To install Maven 3 for Ubuntu 12.04 and later, and Debian wheezy and later::
 
     apt-get install maven
 
-On Fedora 15 and later::
+On Fedora 20 and later::
 
-    yum install maven3
+    yum install maven
 
 Building
 ========
