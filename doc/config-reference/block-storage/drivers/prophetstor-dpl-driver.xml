@@ -1,0 +1,116 @@
+<section xmlns="http://docbook.org/ns/docbook"
+         xmlns:xi="http://www.w3.org/2001/XInclude"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         version="5.0"
+         xml:id="prophetstor-dpl-driver">
+    <title>ProphetStor DPL Fibre Channel and iSCSI drivers</title>
+    <para>The <literal>DPLFCDriver</literal> and
+        <literal>DPLISCSIDriver</literal> drivers run
+        volume operations by communicating with the ProphetStor DPL storage
+        system over HTTPS.</para>
+    <section xml:id="prophetstor-dpl-driver-ops">
+        <title>Supported operations</title>
+        <itemizedlist>
+            <listitem>
+                <para>Volume create/delete.</para>
+            </listitem>
+            <listitem>
+                <para>Volume attach/detach.</para>
+            </listitem>
+            <listitem>
+                <para>Snapshot create/delete.</para>
+            </listitem>
+            <listitem>
+                <para>Create volume from snapshot.</para>
+            </listitem>
+            <listitem>
+                <para>Get volume stats.</para>
+            </listitem>
+            <listitem>
+                <para>Clone volume.</para>
+            </listitem>
+            <listitem>
+                <para>Extend volume.</para>
+            </listitem>
+            <listitem>
+                <para>Copy image to volume.</para>
+            </listitem>
+            <listitem>
+                <para>Copy volume to image.</para>
+            </listitem>
+        </itemizedlist>
+    </section>
+    <section xml:id="enable-prophetstor-dpl-iscsi-fb">
+        <title>Enable the Fibre Channel or iSCSI drivers</title>
+        <para>The <literal>DPLFCDriver</literal> and
+            <literal>DPLISCSIDriver</literal> are installed
+            with the OpenStack software.</para>
+        <procedure>
+            <step>
+                <para>Query DPL pool id for configure <literal>dpl_pool</literal> of the
+                <filename>cinder.conf</filename>.</para>
+                <substeps>
+                    <step>
+                        <para>Logon onto the DPL storage system with administrator
+                            access.</para>
+                        <screen><prompt>$</prompt> <userinput>ssh root@<replaceable>DPL IP ADDRESS</replaceable></userinput></screen>
+                    </step>
+                    <step>
+                        <para>View the current usable pool id.</para>
+                        <screen><prompt>$</prompt> <userinput>flvcli show pool list</userinput>
+<computeroutput>- d5bd40b58ea84e9da09dcf25a01fdc07 : default_pool_dc07</computeroutput></screen>
+                    </step>
+                    <step>
+                        <para>Use <literal>d5bd40b58ea84e9da09dcf25a01fdc07</literal>
+                        to config the <literal>dpl_pool</literal> of <filename>/etc/cinder/cinder.conf</filename>.</para>
+                    </step>
+                </substeps>
+                <note>
+                    <para>Other management command can reference by command help <command>flvcli -h</command>.</para>
+                </note>
+            </step>
+            <step>
+                <para>Make the following changes on the volume node
+                        <filename>/etc/cinder/cinder.conf</filename>
+                    file.</para>
+                <programlisting language="ini"># IP address of SAN controller (string value)
+san_ip=<replaceable>DPL IP ADDRESS</replaceable>
+
+# Username for SAN controller (string value)
+san_login=<replaceable>USERNAME</replaceable>
+
+# Password for SAN controller (string value)
+san_password=<replaceable>PASSWORD</replaceable>
+
+# Use thin provisioning for SAN volumes? (boolean value)
+san_thin_provision=true
+
+# DPL pool uuid in which DPL volumes are stored. (string value)
+dpl_pool=d5bd40b58ea84e9da09dcf25a01fdc07
+
+# DPL port number. (integer value)
+dpl_port=8357
+
+# Uncomment one of the next two option to enable Fibre channel or iSCSI
+# FIBRE CHANNEL(uncomment the next line to enable the FC driver)
+#volume_driver=cinder.volume.drivers.prophetstor.dpl_fc.DPLFCDriver
+# iSCSI (uncomment the next line to enable the iSCSI driver)
+#volume_driver=cinder.volume.drivers.prophetstor.dpl_iscsi.DPLISCSIDriver</programlisting>
+            </step>
+            <step>
+            <para>Save the changes to the
+                <filename>/etc/cinder/cinder.conf</filename> file and
+                restart the <systemitem class="service"
+                        >cinder-volume</systemitem> service.</para>
+            </step>
+        </procedure>
+        <para>The ProphetStor Fibre Channel or iSCSI drivers are now
+            enabled on your OpenStack system. If you experience
+            problems, review the Block Storage service log files for
+            errors.</para>
+        <para>The following table contains the options supported
+            by the ProphetStor DPL driver.</para>
+        <xi:include
+            href="../../../common/tables/cinder-prophststor_dpl.xml"/>
+    </section>
+</section>
