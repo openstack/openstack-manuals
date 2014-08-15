@@ -4,9 +4,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenStack Manuals\n"
-"POT-Creation-Date: 2014-07-27 05:14+0000\n"
-"PO-Revision-Date: 2014-07-24 18:05+0000\n"
-"Last-Translator: Tomoyuki KATO <tomo@dream.daynight.jp>\n"
+"POT-Creation-Date: 2014-08-15 05:33+0000\n"
+"PO-Revision-Date: 2014-08-09 17:01+0000\n"
+"Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
 "Language-Team: Japanese (http://www.transifex.com/projects/p/openstack-manuals-i18n/language/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -375,6 +375,7 @@ msgstr "groupName"
 #: ./doc/user-guide-admin/section_cli_cinder_quotas.xml81(para)
 #: ./doc/user-guide-admin/section_cli_cinder_quotas.xml101(para)
 #: ./doc/user-guide-admin/section_cli_nova_specify_host.xml17(para)
+#: ./doc/user-guide-admin/section_cli_keystone_services.xml102(para)
 msgid "For example:"
 msgstr "例:"
 
@@ -2308,6 +2309,7 @@ msgstr "ROLE_ID"
 #: ./doc/user-guide-admin/section_cli_keystone_manage_projects_users_roles.xml345(replaceable)
 #: ./doc/user-guide-admin/section_cli_keystone_manage_projects_users_roles.xml365(replaceable)
 #: ./doc/user-guide-admin/section_cli_keystone_manage_projects_users_roles.xml370(replaceable)
+#: ./doc/user-guide-admin/section_cli_cinder_quotas.xml60(replaceable)
 #: ./doc/user-guide-admin/section_cli_nova_manage_flavors.xml212(replaceable)
 msgid "TENANT_ID"
 msgstr "TENANT_ID"
@@ -3112,6 +3114,172 @@ msgid ""
 "In the <guilabel>Confirm Delete Users</guilabel> window, click "
 "<guibutton>Delete Users</guibutton> to confirm the deletion."
 msgstr "<guilabel>ユーザーの削除の確認</guilabel>ウィンドウで、削除の確認をするために<guibutton>ユーザーの削除</guibutton>をクリックします。"
+
+#: ./doc/user-guide-admin/section_cli_keystone_services.xml8(title)
+msgid "Create and manage services and service users"
+msgstr "サービスとサービスユーザーの作成と管理"
+
+#: ./doc/user-guide-admin/section_cli_keystone_services.xml9(para)
+msgid "The Identity Service enables you to define services, as follows:"
+msgstr "Identity  により、以下のようなサービスを定義できます。"
+
+#: ./doc/user-guide-admin/section_cli_keystone_services.xml13(para)
+msgid ""
+"Service catalog template. The Identity Service acts as a service catalog of "
+"endpoints for other OpenStack services. The "
+"<literal>etc/default_catalog.templates</literal> template file defines the "
+"endpoints for services. When the Identity Service uses a template file back "
+"end, any changes that are made to the endpoints are cached. These changes do"
+" not persist when you restart the service or reboot the machine."
+msgstr "サービスカタログテンプレート。Identity は、他の OpenStack サービスのエンドポイントのサービスカタログとして動作します。<literal>etc/default_catalog.templates</literal> テンプレートファイルは、サービスのエンドポイントを定義します。Identity がテンプレートファイルバックエンドを使用するとき、エンドポイントに対して実行された変更はすべてキャッシュされます。サービスの再起動やマシンの再起動をしたとき、これらの変更は保持されません。"
+
+#: ./doc/user-guide-admin/section_cli_keystone_services.xml24(para)
+msgid ""
+"A SQL back end for the catalog service. When the Identity Service is online,"
+" you must add the services to the catalog. When you deploy a system for "
+"production, use the SQL back end."
+msgstr "カタログサービスの SQL バックエンド。Identity がオンラインのとき、サービスをカタログに追加する必要があります。システムを本番環境に導入するとき、SQL バックエンドを使用します。"
+
+#: ./doc/user-guide-admin/section_cli_keystone_services.xml30(para)
+msgid ""
+"The <literal>auth_token</literal> middleware supports the use of either a "
+"shared secret or users for each service."
+msgstr "<literal>auth_token</literal> ミドルウェアは、共有シークレットの使用、各サービス用のユーザーの使用をサポートします。"
+
+#: ./doc/user-guide-admin/section_cli_keystone_services.xml33(para)
+msgid ""
+"To authenticate users against the Identity Service, you must create a "
+"service user for each OpenStack service. For example, create a service user "
+"for the Compute, Block Storage, and Networking services."
+msgstr "Identity に対してユーザーを認証するために、各 OpenStack サービスのサービスユーザーを作成する必要があります。例えば、Compute、Block Storage、Networking のサービスのサービスユーザーを作成します。"
+
+#: ./doc/user-guide-admin/section_cli_keystone_services.xml37(para)
+msgid ""
+"To configure the OpenStack services with service users, create a project for"
+" all services and create users for each service. Assign the admin role to "
+"each service user and project pair. This role enables users to validate "
+"tokens and authenticate and authorize other user requests."
+msgstr "サービスユーザーを持つ OpenStack サービスを設定するために、すべてのサービスのプロジェクトを作成し、各サービスのユーザーを作成します。各サービスユーザーとプロジェクトのペアに admin ロールを割り当てます。このロールにより、ユーザーがトークンを検証し、他のユーザーのリクエストを認証、認可できます。"
+
+#: ./doc/user-guide-admin/section_cli_keystone_services.xml43(title)
+msgid "Create a service"
+msgstr "サービスの作成"
+
+#: ./doc/user-guide-admin/section_cli_keystone_services.xml46(para)
+msgid "List the available services:"
+msgstr "利用可能なサービスを一覧表示します。"
+
+#: ./doc/user-guide-admin/section_cli_keystone_services.xml60(para)
+msgid "To create a service, run this command:"
+msgstr "サービスを作成するために、このコマンドを実行します。"
+
+#: ./doc/user-guide-admin/section_cli_keystone_services.xml61(replaceable)
+msgid "service_name"
+msgstr "service_name"
+
+#: ./doc/user-guide-admin/section_cli_keystone_services.xml61(replaceable)
+msgid "service_type"
+msgstr "service_type"
+
+#: ./doc/user-guide-admin/section_cli_keystone_services.xml61(replaceable)
+msgid "service_description"
+msgstr "service_description"
+
+#: ./doc/user-guide-admin/section_cli_keystone_services.xml62(para)
+msgid "The arguments are:"
+msgstr "引数は以下のとおりです。"
+
+#: ./doc/user-guide-admin/section_cli_keystone_services.xml65(para)
+msgid ""
+"<code><replaceable>service_name</replaceable></code>. The unique name of the"
+" new service."
+msgstr "<code><replaceable>service_name</replaceable></code>。新しいサービスの一意な名前。"
+
+#: ./doc/user-guide-admin/section_cli_keystone_services.xml69(para)
+msgid ""
+"<code><replaceable>service_type</replaceable></code>. The service type, such"
+" as <code>identity</code>, <code>compute</code>, <code>network</code>, "
+"<code>image</code>, <code>object-store</code> or any other service "
+"identifier string."
+msgstr "<code><replaceable>service_type</replaceable></code>。<code>identity</code>、<code>compute</code>、<code>network</code>、<code>image</code>、<code>object-store</code>、他のサービス識別文字列などのサービス種別。"
+
+#: ./doc/user-guide-admin/section_cli_keystone_services.xml79(para)
+msgid ""
+"<code><replaceable>service_description</replaceable></code>. The description"
+" of the service."
+msgstr "<code><replaceable>service_description</replaceable></code>。サービスの説明。"
+
+#: ./doc/user-guide-admin/section_cli_keystone_services.xml83(para)
+msgid ""
+"For example, to create a <literal>swift</literal> service of type <literal"
+">object-store</literal>, run this command:"
+msgstr "例えば、<literal>object-store</literal> 種別の <literal>swift</literal> サービスを作成するために、このコマンドを実行します。"
+
+#: ./doc/user-guide-admin/section_cli_keystone_services.xml99(para)
+msgid "To get details for a service, run this command:"
+msgstr "サービスの詳細を取得するために、このコマンドを実行します。"
+
+#: ./doc/user-guide-admin/section_cli_keystone_services.xml101(replaceable)
+msgid "service_ID"
+msgstr "service_ID"
+
+#: ./doc/user-guide-admin/section_cli_keystone_services.xml117(title)
+msgid "Create service users"
+msgstr "サービスユーザーの作成"
+
+#: ./doc/user-guide-admin/section_cli_keystone_services.xml120(para)
+msgid ""
+"Create a project for the service users. Typically, this project is named "
+"<literal>service</literal>, but choose any name you like:"
+msgstr "サービスユーザーのプロジェクトを作成します。このプロジェクトは一般的に、<literal>service</literal> という名前ですが、お好きなものを利用できます。"
+
+#: ./doc/user-guide-admin/section_cli_keystone_services.xml125(para)
+msgid "The output shows the ID for the project."
+msgstr "この出力はプロジェクトの ID を表示します。"
+
+#: ./doc/user-guide-admin/section_cli_keystone_services.xml126(para)
+msgid ""
+"Make a note of this ID. You need it to create service users and assign "
+"roles."
+msgstr "この ID を記録します。サービスユーザーの作成とロールの割り当てに必要になります。"
+
+#: ./doc/user-guide-admin/section_cli_keystone_services.xml138(para)
+msgid "Create service users for the relevant services for your deployment."
+msgstr "お使いの環境に関連するサービス用のサービスユーザーを作成します。"
+
+#: ./doc/user-guide-admin/section_cli_keystone_services.xml142(para)
+msgid ""
+"To assign the admin role to the service user-project pairs, run this command"
+" to get the ID of the admin role:"
+msgstr "サービスユーザーとプロジェクトのペアに admin ロールを割り当てるために、admin ロールの ID を取得するために、このコマンドを実行します。"
+
+#: ./doc/user-guide-admin/section_cli_keystone_services.xml158(para)
+msgid "Assign the admin role to the user-project pair:"
+msgstr "ユーザーとプロジェクトのペアに admin ロールを割り当てます。"
+
+#: ./doc/user-guide-admin/section_cli_keystone_services.xml160(replaceable)
+msgid "SERVICE_USER_ID"
+msgstr "SERVICE_USER_ID"
+
+#: ./doc/user-guide-admin/section_cli_keystone_services.xml160(replaceable)
+msgid "ADMIN_ROLE_ID"
+msgstr "ADMIN_ROLE_ID"
+
+#: ./doc/user-guide-admin/section_cli_keystone_services.xml160(replaceable)
+msgid "SERVICE_PROJECT_ID"
+msgstr "SERVICE_PROJECT_ID"
+
+#: ./doc/user-guide-admin/section_cli_keystone_services.xml165(title)
+msgid "Delete a service"
+msgstr "サービスの削除"
+
+#: ./doc/user-guide-admin/section_cli_keystone_services.xml166(para)
+msgid "To delete a specified service, specify its ID:"
+msgstr "指定したサービスを削除するために、その ID を指定します。"
+
+#: ./doc/user-guide-admin/section_cli_keystone_services.xml167(replaceable)
+msgid "SERVICE_ID"
+msgstr "SERVICE_ID"
 
 #: ./doc/user-guide-admin/section_cli_admin_manage_environment.xml7(title)
 msgid "Manage the OpenStack environment"

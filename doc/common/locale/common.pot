@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-08-04 06:09+0000\n"
+"POT-Creation-Date: 2014-08-15 06:09+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,42 +29,6 @@ msgstr ""
 
 #: ./doc/common/section_getstart_dashboard.xml:24(para)
 msgid "From a network architecture point of view, this service must be accessible to customers and the public API for each OpenStack service. To use the administrator functionality for other services, it must also connect to Admin API endpoints, which should not be accessible by customers."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_reboot.xml:7(title)
-msgid "Reboot an instance"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_reboot.xml:8(para)
-msgid "You can soft or hard reboot a running instance. A soft reboot attempts a graceful shut down and restart of the instance. A hard reboot power cycles the instance."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_reboot.xml:11(para)
-msgid "By default, when you reboot a server, it is a soft reboot."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_reboot.xml:12(replaceable) ./doc/common/section_cli_nova_reboot.xml:14(replaceable)
-msgid "SERVER"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_reboot.xml:13(para)
-msgid "To perform a hard reboot, pass the <parameter>--hard</parameter> parameter, as follows:"
-msgstr ""
-
-#: ./doc/common/section_xapi-ami-setup.xml:8(title)
-msgid "Prepare for AMI type images"
-msgstr ""
-
-#: ./doc/common/section_xapi-ami-setup.xml:9(para)
-msgid "To support AMI type images in your OpenStack installation, you must create a <filename>/boot/guest</filename> directory inside Dom0. The OpenStack VM extracts the kernel and ramdisk from the AKI and ARI images puts them in this location."
-msgstr ""
-
-#: ./doc/common/section_xapi-ami-setup.xml:13(para)
-msgid "OpenStack maintains the contents of this directory and its size should not increase during normal operation. However, in case of power failures or accidental shutdowns, some files might be left over. To prevent these files from filling the Dom0 disk, set up this directory as a symlink that points to a subdirectory of the local SR."
-msgstr ""
-
-#: ./doc/common/section_xapi-ami-setup.xml:19(para)
-msgid "Run these commands in Dom0 to achieve this setup:"
 msgstr ""
 
 #: ./doc/common/section_dashboard-configure-http.xml:7(title)
@@ -97,74 +61,6 @@ msgstr ""
 
 #: ./doc/common/section_dashboard-configure-http.xml:33(para)
 msgid "Next, restart memcached:"
-msgstr ""
-
-#: ./doc/common/section_rpc.xml:8(title) ./doc/common/section_rpc-for-networking.xml:8(title)
-msgid "Configure the Oslo RPC messaging system"
-msgstr ""
-
-#: ./doc/common/section_rpc.xml:9(para)
-msgid "OpenStack projects use AMQP, an open standard for messaging middleware. OpenStack services that run on multiple servers to talk to each other. OpenStack Oslo RPC supports three implementations of AMQP: <application>RabbitMQ</application>, <application>Qpid</application>, and <application>ZeroMQ</application>."
-msgstr ""
-
-#: ./doc/common/section_rpc.xml:16(title) ./doc/common/section_rpc-for-networking.xml:19(title)
-msgid "Configure RabbitMQ"
-msgstr ""
-
-#: ./doc/common/section_rpc.xml:17(para)
-msgid "OpenStack Oslo RPC uses <application>RabbitMQ</application> by default. Use these options to configure the <application>RabbitMQ</application> message system. The <literal>rpc_backend</literal> option is not required as long as <application>RabbitMQ</application> is the default messaging system. However, if it is included the configuration, you must set it to <literal>nova.openstack.common.rpc.impl_kombu</literal>."
-msgstr ""
-
-#: ./doc/common/section_rpc.xml:26(para)
-msgid "You can use these additional options to configure the <application>RabbitMQ</application> messaging system. You can configure messaging communication for different installation scenarios, tune retries for RabbitMQ, and define the size of the RPC thread pool. To monitor notifications through RabbitMQ, you must set the <option>notification_driver</option> option to <literal>nova.notifier.rabbit_notifier</literal> in the <filename>nova.conf</filename> file. The default for sending usage data is sixty seconds plus a random number of seconds from zero to sixty."
-msgstr ""
-
-#: ./doc/common/section_rpc.xml:40(title) ./doc/common/section_rpc-for-networking.xml:46(title)
-msgid "Configure Qpid"
-msgstr ""
-
-#: ./doc/common/section_rpc.xml:41(para)
-msgid "Use these options to configure the <application>Qpid</application> messaging system for OpenStack Oslo RPC. <application>Qpid</application> is not the default messaging system, so you must enable it by setting the <option>rpc_backend</option> option in the <filename>nova.conf</filename> file."
-msgstr ""
-
-#: ./doc/common/section_rpc.xml:48(para)
-msgid "This critical option points the compute nodes to the <application>Qpid</application> broker (server). Set <option>qpid_hostname</option> to the host name where the broker runs in the <filename>nova.conf</filename> file."
-msgstr ""
-
-#: ./doc/common/section_rpc.xml:53(para) ./doc/common/section_rpc-for-networking.xml:62(para)
-msgid "The <option>--qpid_hostname</option> option accepts a host name or IP address value."
-msgstr ""
-
-#: ./doc/common/section_rpc.xml:57(para) ./doc/common/section_rpc-for-networking.xml:69(para)
-msgid "If the <application>Qpid</application> broker listens on a port other than the AMQP default of <literal>5672</literal>, you must set the <option>qpid_port</option> option to that value:"
-msgstr ""
-
-#: ./doc/common/section_rpc.xml:62(para) ./doc/common/section_rpc-for-networking.xml:78(para)
-msgid "If you configure the <application>Qpid</application> broker to require authentication, you must add a user name and password to the configuration:"
-msgstr ""
-
-#: ./doc/common/section_rpc.xml:67(para) ./doc/common/section_rpc-for-networking.xml:87(para)
-msgid "By default, TCP is used as the transport. To enable SSL, set the <option>qpid_protocol</option> option:"
-msgstr ""
-
-#: ./doc/common/section_rpc.xml:70(para)
-msgid "This table lists additional options that you use to configure the Qpid messaging driver for OpenStack Oslo RPC. These options are used infrequently."
-msgstr ""
-
-#: ./doc/common/section_rpc.xml:76(title) ./doc/common/section_rpc-for-networking.xml:102(title)
-msgid "Configure ZeroMQ"
-msgstr ""
-
-#: ./doc/common/section_rpc.xml:77(para)
-msgid "Use these options to configure the <application>ZeroMQ</application> messaging system for OpenStack Oslo RPC. <application>ZeroMQ</application> is not the default messaging system, so you must enable it by setting the <option>rpc_backend</option> option in the <filename>nova.conf</filename> file."
-msgstr ""
-
-#: ./doc/common/section_rpc.xml:86(title) ./doc/common/section_rpc-for-networking.xml:112(title)
-msgid "Configure messaging"
-msgstr ""
-
-#: ./doc/common/section_rpc.xml:87(para)
-msgid "Use these options to configure the <application>RabbitMQ</application> and <application>Qpid</application> messaging drivers."
 msgstr ""
 
 #: ./doc/common/section_keystone-concepts-user-management.xml:7(title)
@@ -247,7 +143,7 @@ msgstr ""
 msgid "Quota name"
 msgstr ""
 
-#: ./doc/common/section_cli_nova_quotas.xml:21(th) ./doc/common/section_cli_nova_customize_flavors.xml:52(td) ./doc/common/section_cli_overview.xml:43(th) ./doc/common/section_cli_install.xml:31(th) ./doc/common/ch_getstart.xml:32(th) ./doc/common/tables/ceilometer-database.xml:13(th) ./doc/common/tables/neutron-openvswitch_agent.xml:13(th) ./doc/common/tables/heat-clients.xml:13(th) ./doc/common/tables/cinder-solidfire.xml:13(th) ./doc/common/tables/neutron-rpc.xml:13(th) ./doc/common/tables/trove-db_percona.xml:13(th) ./doc/common/tables/nova-periodic.xml:13(th) ./doc/common/tables/keystone-auth.xml:13(th) ./doc/common/tables/keystone-policy.xml:13(th) ./doc/common/tables/glance-auth_token.xml:13(th) ./doc/common/tables/cinder-netapp_7mode_nfs.xml:13(th) ./doc/common/tables/swift-container-server-container-sync.xml:15(th) ./doc/common/tables/swift-proxy-server-DEFAULT.xml:15(th) ./doc/common/tables/cinder-zoning_fabric.xml:13(th) ./doc/common/tables/ceilometer-redis.xml:13(th) ./doc/common/tables/cinder-storage_ceph.xml:13(th) ./doc/common/tables/ceilometer-vmware.xml:13(th) ./doc/common/tables/neutron-cisco.xml:13(th) ./doc/common/tables/nova-testing.xml:13(th) ./doc/common/tables/nova-metadata.xml:13(th) ./doc/common/tables/heat-clients_nova.xml:13(th) ./doc/common/tables/cinder-hp3par.xml:13(th) ./doc/common/tables/keystone-misc.xml:13(th) ./doc/common/tables/swift-proxy-server-filter-cname_lookup.xml:15(th) ./doc/common/tables/neutron-scheduler.xml:13(th) ./doc/common/tables/glance-rbd.xml:13(th) ./doc/common/tables/cinder-storage_xen.xml:13(th) ./doc/common/tables/ceilometer-common.xml:13(th) ./doc/common/tables/swift-container-reconciler-filter-catch_errors.xml:15(th) ./doc/common/tables/cinder-database.xml:13(th) ./doc/common/tables/ceilometer-logging.xml:13(th) ./doc/common/tables/heat-common.xml:13(th) ./doc/common/tables/nova-ipv6.xml:13(th) ./doc/common/tables/nova-vnc.xml:13(th) ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:13(th) ./doc/common/tables/ceilometer-nova_cells.xml:13(th) ./doc/common/tables/swift-container-reconciler-app-proxy-server.xml:15(th) ./doc/common/tables/neutron-ml2_cisco_apic.xml:13(th) ./doc/common/tables/trove-qpid.xml:13(th) ./doc/common/tables/keystone-api.xml:13(th) ./doc/common/tables/swift-object-expirer-pipeline-main.xml:15(th) ./doc/common/tables/swift-container-server-container-auditor.xml:15(th) ./doc/common/tables/swift-container-reconciler-DEFAULT.xml:15(th) ./doc/common/tables/glance-rpc.xml:13(th) ./doc/common/tables/neutron-policy.xml:13(th) ./doc/common/tables/glance-database.xml:13(th) ./doc/common/tables/nova-spice.xml:13(th) ./doc/common/tables/heat-clients_heat.xml:13(th) ./doc/common/tables/nova-xen.xml:13(th) ./doc/common/tables/trove-amqp.xml:13(th) ./doc/common/tables/glance-matchmaker.xml:13(th) ./doc/common/tables/ceilometer-auth_token.xml:13(th) ./doc/common/tables/nova-rabbitmq.xml:13(th) ./doc/common/tables/neutron-ml2_cisco.xml:13(th) ./doc/common/tables/nova-policy.xml:13(th) ./doc/common/tables/keystone-identity.xml:13(th) ./doc/common/tables/ceilometer-inspector.xml:13(th) ./doc/common/tables/cinder-scheduler.xml:13(th) ./doc/common/tables/trove-db_cassandra.xml:13(th) ./doc/common/tables/neutron-logging.xml:13(th) ./doc/common/tables/nova-availabilityzones.xml:13(th) ./doc/common/tables/keystone-catalog.xml:13(th) ./doc/common/tables/cinder-netapp_eseries_iscsi.xml:13(th) ./doc/common/tables/neutron-ml2_fslsdn.xml:13(th) ./doc/common/tables/neutron-rootwrap.xml:13(th) ./doc/common/tables/cinder-auth.xml:13(th) ./doc/common/tables/swift-swift-swift-constraints.xml:15(th) ./doc/common/tables/heat-qpid.xml:13(th) ./doc/common/tables/swift-object-expirer-filter-catch_errors.xml:15(th) ./doc/common/tables/swift-proxy-server-filter-slo.xml:15(th) ./doc/common/tables/nova-zookeeper.xml:13(th) ./doc/common/tables/nova-keymgr.xml:13(th) ./doc/common/tables/neutron-auth_token.xml:13(th) ./doc/common/tables/swift-swift-storage-policy-0.xml:15(th) ./doc/common/tables/swift-proxy-server-filter-cache.xml:15(th) ./doc/common/tables/nova-ldap.xml:13(th) ./doc/common/tables/swift-container-server-filter-recon.xml:15(th) ./doc/common/tables/swift-proxy-server-pipeline-main.xml:15(th) ./doc/common/tables/ceilometer-auth.xml:13(th) ./doc/common/tables/cinder-quota.xml:13(th) ./doc/common/tables/swift-proxy-server-filter-account-quotas.xml:15(th) ./doc/common/tables/keystone-os_inherit.xml:13(th) ./doc/common/tables/neutron-sdnve.xml:13(th) ./doc/common/tables/nova-compute.xml:13(th) ./doc/common/tables/keystone-rabbit.xml:13(th) ./doc/common/tables/cinder-backups_ceph.xml:13(th) ./doc/common/tables/nova-vmware.xml:13(th) ./doc/common/tables/heat-cfn_api.xml:13(th) ./doc/common/tables/neutron-vmware.xml:13(th) ./doc/common/tables/nova-rdp.xml:13(th) ./doc/common/tables/keystone-assignment.xml:13(th) ./doc/common/tables/nova-zeromq.xml:13(th) ./doc/common/tables/cinder-storage.xml:13(th) ./doc/common/tables/glance-registry.xml:13(th) ./doc/common/tables/swift-swift-storage-policy-1.xml:15(th) ./doc/common/tables/neutron-embrane.xml:13(th) ./doc/common/tables/heat-quota.xml:13(th) ./doc/common/tables/ceilometer-nova_import.xml:13(th) ./doc/common/tables/swift-account-server-filter-healthcheck.xml:15(th) ./doc/common/tables/nova-common.xml:13(th) ./doc/common/tables/swift-proxy-server-app-proxy-server.xml:15(th) ./doc/common/tables/nova-volumes.xml:13(th) ./doc/common/tables/neutron-redis.xml:13(th) ./doc/common/tables/trove-db_mysql.xml:13(th) ./doc/common/tables/heat-zeromq.xml:13(th) ./doc/common/tables/heat-amqp.xml:13(th) ./doc/common/tables/neutron-linuxbridge_agent.xml:13(th) ./doc/common/tables/nova-redis.xml:13(th) ./doc/common/tables/swift-container-server-DEFAULT.xml:15(th) ./doc/common/tables/glance-rabbitmq.xml:13(th) ./doc/common/tables/neutron-l3_agent.xml:13(th) ./doc/common/tables/swift-container-server-pipeline-main.xml:15(th) ./doc/common/tables/glance-policy.xml:13(th) ./doc/common/tables/nova-neutron.xml:13(th) ./doc/common/tables/cinder-backups.xml:13(th) ./doc/common/tables/cinder-keymgr.xml:13(th) ./doc/common/tables/keystone-ldap.xml:13(th) ./doc/common/tables/glance-vmware.xml:13(th) ./doc/common/tables/swift-account-server-filter-xprofile.xml:15(th) ./doc/common/tables/swift-proxy-server-filter-xprofile.xml:15(th) ./doc/common/tables/swift-proxy-server-filter-container-quotas.xml:15(th) ./doc/common/tables/cinder-zoning.xml:13(th) ./doc/common/tables/heat-notification.xml:13(th) ./doc/common/tables/swift-container-server-filter-healthcheck.xml:15(th) ./doc/common/tables/nova-vpn.xml:13(th) ./doc/common/tables/neutron-vpn.xml:13(th) ./doc/common/tables/swift-object-server-filter-xprofile.xml:15(th) ./doc/common/tables/swift-object-expirer-object-expirer.xml:15(th) ./doc/common/tables/trove-common.xml:13(th) ./doc/common/tables/trove-api.xml:13(th) ./doc/common/tables/cinder-zadara.xml:13(th) ./doc/common/tables/swift-object-server-filter-healthcheck.xml:15(th) ./doc/common/tables/nova-conductor.xml:13(th) ./doc/common/tables/swift-object-server-app-object-server.xml:15(th) ./doc/common/tables/swift-proxy-server-filter-catch_errors.xml:15(th) ./doc/common/tables/nova-livemigration.xml:13(th) ./doc/common/tables/swift-container-reconciler-container-reconciler.xml:15(th) ./doc/common/tables/heat-rabbitmq.xml:13(th) ./doc/common/tables/swift-proxy-server-filter-keystoneauth.xml:15(th) ./doc/common/tables/keystone-amqp.xml:13(th) ./doc/common/tables/keystone-rpc.xml:13(th) ./doc/common/tables/swift-object-server-DEFAULT.xml:15(th) ./doc/common/tables/cinder-zones.xml:13(th) ./doc/common/tables/cinder-scality.xml:13(th) ./doc/common/tables/swift-proxy-server-filter-tempauth.xml:15(th) ./doc/common/tables/neutron-agent.xml:13(th) ./doc/common/tables/cinder-emc.xml:13(th) ./doc/common/tables/cinder-vmware.xml:13(th) ./doc/common/tables/neutron-ml2_flat.xml:13(th) ./doc/common/tables/heat-metadata_api.xml:13(th) ./doc/common/tables/trove-rabbitmq.xml:13(th) ./doc/common/tables/nova-upgrade_levels.xml:13(th) ./doc/common/tables/cinder-netapp_cdot_iscsi.xml:13(th) ./doc/common/tables/neutron-ml2_ofa.xml:13(th) ./doc/common/tables/glance-api.xml:13(th) ./doc/common/tables/heat-waitcondition_api.xml:13(th) ./doc/common/tables/swift-proxy-server-filter-gatekeeper.xml:15(th) ./doc/common/tables/swift-rsyncd-container.xml:15(th) ./doc/common/tables/cinder-storwize.xml:13(th) ./doc/common/tables/cinder-hplefthand.xml:13(th) ./doc/common/tables/glance-s3.xml:13(th) ./doc/common/tables/nova-rootwrap.xml:13(th) ./doc/common/tables/heat-loadbalancer.xml:13(th) ./doc/common/tables/ceilometer-api.xml:13(th) ./doc/common/tables/ceilometer-exchange.xml:13(th) ./doc/common/tables/cinder-lvm.xml:13(th) ./doc/common/tables/trove-dns.xml:13(th) ./doc/common/tables/swift-container-reconciler-filter-proxy-logging.xml:15(th) ./doc/common/tables/nova-cells.xml:13(th) ./doc/common/tables/trove-volume.xml:13(th) ./doc/common/tables/heat-auth_token.xml:13(th) ./doc/common/tables/neutron-quotas.xml:13(th) ./doc/common/tables/nova-auth_token.xml:13(th) ./doc/common/tables/cinder-storage_nfs.xml:13(th) ./doc/common/tables/cinder-hds-hnas.xml:13(th) ./doc/common/tables/heat-api.xml:13(th) ./doc/common/tables/swift-proxy-server-filter-tempurl.xml:15(th) ./doc/common/tables/heat-clients_ceilometer.xml:13(th) ./doc/common/tables/neutron-ryu.xml:13(th) ./doc/common/tables/glance-logging.xml:13(th) ./doc/common/tables/swift-rsyncd-account.xml:15(th) ./doc/common/tables/neutron-metering_agent.xml:13(th) ./doc/common/tables/neutron-zeromq.xml:13(th) ./doc/common/tables/heat-clients_glance.xml:13(th) ./doc/common/tables/cinder-storage_glusterfs.xml:13(th) ./doc/common/tables/cinder-common.xml:13(th) ./doc/common/tables/glance-swift.xml:13(th) ./doc/common/tables/trove-quota.xml:13(th) ./doc/common/tables/cinder-auth_token.xml:13(th) ./doc/common/tables/ceilometer-alarm.xml:13(th) ./doc/common/tables/ceilometer-events.xml:13(th) ./doc/common/tables/neutron-lbaas_haproxy.xml:13(th) ./doc/common/tables/cinder-xiv.xml:13(th) ./doc/common/tables/swift-proxy-server-filter-name_check.xml:15(th) ./doc/common/tables/neutron-ml2_bigswitch.xml:13(th) ./doc/common/tables/nova-glance.xml:13(th) ./doc/common/tables/neutron-database.xml:13(th) ./doc/common/tables/keystone-auth_token.xml:13(th) ./doc/common/tables/nova-s3.xml:13(th) ./doc/common/tables/nova-pci.xml:13(th) ./doc/common/tables/swift-account-server-filter-recon.xml:15(th) ./doc/common/tables/heat-clients_cinder.xml:13(th) ./doc/common/tables/swift-proxy-server-filter-ratelimit.xml:15(th) ./doc/common/tables/keystone-revoke.xml:13(th) ./doc/common/tables/cinder-api.xml:13(th) ./doc/common/tables/trove-db_couchbase.xml:13(th) ./doc/common/tables/heat-clients_trove.xml:13(th) ./doc/common/tables/swift-account-server-account-replicator.xml:15(th) ./doc/common/tables/neutron-plumgrid.xml:13(th) ./doc/common/tables/trove-heat.xml:13(th) ./doc/common/tables/glance-sheepdog.xml:13(th) ./doc/common/tables/swift-container-sync-realms-DEFAULT.xml:15(th) ./doc/common/tables/cinder-windows.xml:13(th) ./doc/common/tables/cinder-san-solaris.xml:13(th) ./doc/common/tables/neutron-nuage.xml:13(th) ./doc/common/tables/keystone-zeromq.xml:13(th) ./doc/common/tables/neutron-bigswitch.xml:13(th) ./doc/common/tables/ceilometer-rpc.xml:13(th) ./doc/common/tables/swift-container-server-container-updater.xml:15(th) ./doc/common/tables/trove-db_mongodb.xml:13(th) ./doc/common/tables/swift-object-server-object-replicator.xml:15(th) ./doc/common/tables/glance-filesystem.xml:13(th) ./doc/common/tables/trove-rpc.xml:13(th) ./doc/common/tables/ceilometer-swift.xml:13(th) ./doc/common/tables/trove-backup.xml:13(th) ./doc/common/tables/nova-network.xml:13(th) ./doc/common/tables/glance-redis.xml:13(th) ./doc/common/tables/keystone-ssl.xml:13(th) ./doc/common/tables/nova-ca.xml:13(th) ./doc/common/tables/neutron-dhcp_agent.xml:13(th) ./doc/common/tables/ceilometer-collector.xml:13(th) ./doc/common/tables/cinder-hds-hus.xml:13(th) ./doc/common/tables/cinder-netapp_7mode_iscsi.xml:13(th) ./doc/common/tables/swift-swift-swift-hash.xml:15(th) ./doc/common/tables/neutron-ml2_gre.xml:13(th) ./doc/common/tables/neutron-varmour.xml:13(th) ./doc/common/tables/heat-debug.xml:13(th) ./doc/common/tables/swift-proxy-server-filter-dlo.xml:15(th) ./doc/common/tables/nova-kombu.xml:13(th) ./doc/common/tables/trove-guestagent.xml:13(th) ./doc/common/tables/nova-qpid.xml:13(th) ./doc/common/tables/glance-qpid.xml:13(th) ./doc/common/tables/neutron-lbaas_radware.xml:13(th) ./doc/common/tables/neutron-ml2_l2pop.xml:13(th) ./doc/common/tables/glance-amqp.xml:13(th) ./doc/common/tables/glance-zmq.xml:13(th) ./doc/common/tables/neutron-embrane_lb.xml:13(th) ./doc/common/tables/swift-object-expirer-DEFAULT.xml:15(th) ./doc/common/tables/swift-proxy-server-filter-authtoken.xml:15(th) ./doc/common/tables/neutron-testing.xml:13(th) ./doc/common/tables/swift-object-server-pipeline-main.xml:15(th) ./doc/common/tables/swift-memcache-memcache.xml:15(th) ./doc/common/tables/swift-account-server-app-account-server.xml:15(th) ./doc/common/tables/swift-proxy-server-filter-formpost.xml:15(th) ./doc/common/tables/trove-compute.xml:13(th) ./doc/common/tables/swift-proxy-server-filter-proxy-logging.xml:15(th) ./doc/common/tables/swift-container-server-filter-xprofile.xml:15(th) ./doc/common/tables/swift-object-expirer-filter-cache.xml:15(th) ./doc/common/tables/trove-db_redis.xml:13(th) ./doc/common/tables/cinder-rpc.xml:13(th) ./doc/common/tables/swift-container-sync-realms-realm2.xml:15(th) ./doc/common/tables/cinder-hpmsa.xml:13(th) ./doc/common/tables/nova-apiv3.xml:13(th) ./doc/common/tables/keystone-oauth.xml:13(th) ./doc/common/tables/cinder-storage_gpfs.xml:13(th) ./doc/common/tables/neutron-ml2_vlan.xml:13(th) ./doc/common/tables/swift-object-server-object-auditor.xml:15(th) ./doc/common/tables/trove-zeromq.xml:13(th) ./doc/common/tables/neutron-lbaas.xml:13(th) ./doc/common/tables/swift-container-reconciler-filter-cache.xml:15(th) ./doc/common/tables/cinder-backups_swift.xml:13(th) ./doc/common/tables/trove-database.xml:13(th) ./doc/common/tables/swift-container-server-app-container-server.xml:15(th) ./doc/common/tables/nova-authentication.xml:13(th) ./doc/common/tables/neutron-nvsd.xml:13(th) ./doc/common/tables/swift-account-server-pipeline-main.xml:15(th) ./doc/common/tables/glance-gridfs.xml:13(th) ./doc/common/tables/neutron-notifier.xml:13(th) ./doc/common/tables/nova-rpc_all.xml:13(th) ./doc/common/tables/neutron-hyperv_agent.xml:13(th) ./doc/common/tables/keystone-federation.xml:13(th) ./doc/common/tables/nova-scheduling.xml:13(th) ./doc/common/tables/cinder-ssl.xml:13(th) ./doc/common/tables/trove-ssl.xml:13(th) ./doc/common/tables/cinder-eqlx.xml:13(th) ./doc/common/tables/heat-redis.xml:13(th) ./doc/common/tables/nova-ec2.xml:13(th) ./doc/common/tables/keystone-credential.xml:13(th) ./doc/common/tables/cinder-block-device.xml:13(th) ./doc/common/tables/neutron-metadata.xml:13(th) ./doc/common/tables/nova-fping.xml:13(th) ./doc/common/tables/swift-proxy-server-filter-staticweb.xml:15(th) ./doc/common/tables/swift-container-server-container-replicator.xml:15(th) ./doc/common/tables/neutron-ml2_ncs.xml:13(th) ./doc/common/tables/neutron-ml2_arista.xml:13(th) ./doc/common/tables/nova-trustedcomputing.xml:13(th) ./doc/common/tables/swift-proxy-server-filter-bulk.xml:15(th) ./doc/common/tables/swift-object-expirer-app-proxy-server.xml:15(th) ./doc/common/tables/neutron-compute.xml:13(th) ./doc/common/tables/glance-imagecache.xml:13(th) ./doc/common/tables/neutron-ml2_brocade.xml:13(th) ./doc/common/tables/swift-account-server-account-auditor.xml:15(th) ./doc/common/tables/cinder-nas.xml:13(th) ./doc/common/tables/cinder-netapp_cdot_nfs.xml:13(th) ./doc/common/tables/heat-clients_swift.xml:13(th) ./doc/common/tables/keystone-logging.xml:13(th) ./doc/common/tables/neutron-brocade.xml:13(th) ./doc/common/tables/neutron-ml2_odl.xml:13(th) ./doc/common/tables/swift-object-server-filter-recon.xml:15(th) ./doc/common/tables/heat-rpc.xml:13(th) ./doc/common/tables/trove-taskmanager.xml:13(th) ./doc/common/tables/heat-cloudwatch_api.xml:13(th) ./doc/common/tables/cinder-images.xml:13(th) ./doc/common/tables/cinder-huawei.xml:13(th) ./doc/common/tables/neutron-lbaas_netscalar.xml:13(th) ./doc/common/tables/nova-console.xml:13(th) ./doc/common/tables/neutron-fwaas.xml:13(th) ./doc/common/tables/cinder-nexenta_nfs.xml:13(th) ./doc/common/tables/nova-database.xml:13(th) ./doc/common/tables/nova-quota.xml:13(th) ./doc/common/tables/heat-logging.xml:13(th) ./doc/common/tables/trove-redis.xml:13(th) ./doc/common/tables/keystone-stats.xml:13(th) ./doc/common/tables/heat-crypt.xml:13(th) ./doc/common/tables/neutron-ssl.xml:13(th) ./doc/common/tables/neutron-midonet.xml:13(th) ./doc/common/tables/cinder-coraid.xml:13(th) ./doc/common/tables/neutron-wsgi.xml:13(th) ./doc/common/tables/cinder-compute.xml:13(th) ./doc/common/tables/swift-rsyncd-object.xml:15(th) ./doc/common/tables/glance-wsgi.xml:13(th) ./doc/common/tables/swift-drive-audit-drive-audit.xml:15(th) ./doc/common/tables/nova-baremetal.xml:13(th) ./doc/common/tables/neutron-qpid.xml:13(th) ./doc/common/tables/nova-rpc.xml:13(th) ./doc/common/tables/cinder-backups_tsm.xml:13(th) ./doc/common/tables/cinder-san.xml:13(th) ./doc/common/tables/nova-logging.xml:13(th) ./doc/common/tables/neutron-nec.xml:13(th) ./doc/common/tables/keystone-security.xml:13(th) ./doc/common/tables/heat-clients_neutron.xml:13(th) ./doc/common/tables/nova-api.xml:13(th) ./doc/common/tables/neutron-ml2_mlnx.xml:13(th) ./doc/common/tables/trove-auth_token.xml:13(th) ./doc/common/tables/keystone-trust.xml:13(th) ./doc/common/tables/swift-container-reconciler-pipeline-main.xml:15(th) ./doc/common/tables/glance-cinder.xml:13(th) ./doc/common/tables/swift-object-server-object-updater.xml:15(th) ./doc/common/tables/glance-common.xml:13(th) ./doc/common/tables/neutron-ml2_vxlan.xml:13(th) ./doc/common/tables/swift-dispersion-dispersion.xml:15(th) ./doc/common/tables/swift-account-server-DEFAULT.xml:15(th) ./doc/common/tables/swift-proxy-server-filter-domain_remap.xml:15(th) ./doc/common/tables/trove-nova.xml:13(th) ./doc/common/tables/neutron-meta.xml:13(th) ./doc/common/tables/neutron-rabbitmq.xml:13(th) ./doc/common/tables/keystone-ec2.xml:13(th) ./doc/common/tables/heat-clients_keystone.xml:13(th) ./doc/common/tables/neutron-api.xml:13(th) ./doc/common/tables/trove-logging.xml:13(th) ./doc/common/tables/keystone-kvs.xml:13(th) ./doc/common/tables/keystone-redis.xml:13(th) ./doc/common/tables/nova-xvpnvncproxy.xml:13(th) ./doc/common/tables/glance-paste.xml:13(th) ./doc/common/tables/swift-proxy-server-filter-list-endpoints.xml:15(th) ./doc/common/tables/swift-account-server-account-reaper.xml:15(th) ./doc/common/tables/nova-hyperv.xml:13(th) ./doc/common/tables/swift-proxy-server-filter-container_sync.xml:15(th) ./doc/common/tables/heat-clients_backends.xml:13(th) ./doc/common/tables/glance-testing.xml:13(th) ./doc/common/tables/neutron-common.xml:13(th) ./doc/common/tables/nova-hypervisor.xml:13(th) ./doc/common/tables/keystone-qpid.xml:13(th) ./doc/common/tables/swift-container-sync-realms-realm1.xml:15(th) ./doc/common/tables/swift-proxy-server-filter-healthcheck.xml:15(th) ./doc/common/tables/nova-wsgi.xml:13(th) ./doc/common/tables/keystone-cache.xml:13(th) ./doc/common/tables/nova-configdrive.xml:13(th) ./doc/common/tables/keystone-token.xml:13(th) ./doc/common/tables/ceilometer-qpid.xml:13(th) ./doc/common/tables/heat-database.xml:13(th) ./doc/common/tables/ceilometer-rabbitmq.xml:13(th) ./doc/common/tables/neutron-ml2.xml:13(th) ./doc/common/tables/keystone-database.xml:13(th) ./doc/common/tables/keystone-memcache.xml:13(th) ./doc/common/tables/trove-debug.xml:13(th) ./doc/common/tables/trove-swift.xml:13(th) ./doc/common/tables/nova-tilera.xml:13(th) ./doc/common/tables/nova-libvirt.xml:13(th) ./doc/common/tables/neutron-mlnx.xml:13(th) ./doc/common/tables/cinder-zoning_manager.xml:13(th) ./doc/common/tables/ceilometer-amqp.xml:13(th) ./doc/common/tables/glance-ssl.xml:13(th) ./doc/common/tables/neutron-securitygroups.xml:13(th) ./doc/common/tables/keystone-debug.xml:13(th) ./doc/common/tables/cinder-rootwrap.xml:13(th) ./doc/common/tables/cinder-nexenta_iscsi.xml:13(th)
+#: ./doc/common/section_cli_nova_quotas.xml:21(th) ./doc/common/section_cli_nova_customize_flavors.xml:52(td) ./doc/common/section_cli_overview.xml:43(th) ./doc/common/section_cli_install.xml:31(th) ./doc/common/ch_getstart.xml:32(th) ./doc/common/tables/ceilometer-database.xml:13(th) ./doc/common/tables/neutron-openvswitch_agent.xml:13(th) ./doc/common/tables/heat-clients.xml:13(th) ./doc/common/tables/cinder-solidfire.xml:13(th) ./doc/common/tables/neutron-rpc.xml:13(th) ./doc/common/tables/trove-db_percona.xml:13(th) ./doc/common/tables/nova-periodic.xml:13(th) ./doc/common/tables/keystone-auth.xml:13(th) ./doc/common/tables/keystone-policy.xml:13(th) ./doc/common/tables/glance-auth_token.xml:13(th) ./doc/common/tables/cinder-netapp_7mode_nfs.xml:13(th) ./doc/common/tables/swift-container-server-container-sync.xml:15(th) ./doc/common/tables/swift-proxy-server-DEFAULT.xml:15(th) ./doc/common/tables/cinder-zoning_fabric.xml:13(th) ./doc/common/tables/ceilometer-redis.xml:13(th) ./doc/common/tables/cinder-storage_ceph.xml:13(th) ./doc/common/tables/ceilometer-vmware.xml:13(th) ./doc/common/tables/neutron-cisco.xml:13(th) ./doc/common/tables/nova-testing.xml:13(th) ./doc/common/tables/nova-metadata.xml:13(th) ./doc/common/tables/heat-clients_nova.xml:13(th) ./doc/common/tables/cinder-hp3par.xml:13(th) ./doc/common/tables/keystone-misc.xml:13(th) ./doc/common/tables/swift-proxy-server-filter-cname_lookup.xml:15(th) ./doc/common/tables/neutron-scheduler.xml:13(th) ./doc/common/tables/glance-rbd.xml:13(th) ./doc/common/tables/cinder-storage_xen.xml:13(th) ./doc/common/tables/ceilometer-common.xml:13(th) ./doc/common/tables/swift-container-reconciler-filter-catch_errors.xml:15(th) ./doc/common/tables/cinder-database.xml:13(th) ./doc/common/tables/ceilometer-logging.xml:13(th) ./doc/common/tables/heat-common.xml:13(th) ./doc/common/tables/nova-ipv6.xml:13(th) ./doc/common/tables/nova-vnc.xml:13(th) ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:13(th) ./doc/common/tables/ceilometer-nova_cells.xml:13(th) ./doc/common/tables/swift-container-reconciler-app-proxy-server.xml:15(th) ./doc/common/tables/neutron-ml2_cisco_apic.xml:13(th) ./doc/common/tables/trove-qpid.xml:13(th) ./doc/common/tables/keystone-api.xml:13(th) ./doc/common/tables/swift-object-expirer-pipeline-main.xml:15(th) ./doc/common/tables/swift-container-server-container-auditor.xml:15(th) ./doc/common/tables/swift-container-reconciler-DEFAULT.xml:15(th) ./doc/common/tables/glance-rpc.xml:13(th) ./doc/common/tables/neutron-policy.xml:13(th) ./doc/common/tables/glance-database.xml:13(th) ./doc/common/tables/nova-spice.xml:13(th) ./doc/common/tables/heat-clients_heat.xml:13(th) ./doc/common/tables/nova-xen.xml:13(th) ./doc/common/tables/trove-amqp.xml:13(th) ./doc/common/tables/glance-matchmaker.xml:13(th) ./doc/common/tables/ceilometer-auth_token.xml:13(th) ./doc/common/tables/nova-rabbitmq.xml:13(th) ./doc/common/tables/neutron-ml2_cisco.xml:13(th) ./doc/common/tables/nova-policy.xml:13(th) ./doc/common/tables/keystone-identity.xml:13(th) ./doc/common/tables/ceilometer-inspector.xml:13(th) ./doc/common/tables/cinder-scheduler.xml:13(th) ./doc/common/tables/trove-db_cassandra.xml:13(th) ./doc/common/tables/neutron-logging.xml:13(th) ./doc/common/tables/nova-availabilityzones.xml:13(th) ./doc/common/tables/keystone-catalog.xml:13(th) ./doc/common/tables/cinder-netapp_eseries_iscsi.xml:13(th) ./doc/common/tables/neutron-ml2_fslsdn.xml:13(th) ./doc/common/tables/neutron-rootwrap.xml:13(th) ./doc/common/tables/cinder-auth.xml:13(th) ./doc/common/tables/swift-swift-swift-constraints.xml:15(th) ./doc/common/tables/heat-qpid.xml:13(th) ./doc/common/tables/swift-object-expirer-filter-catch_errors.xml:15(th) ./doc/common/tables/swift-proxy-server-filter-slo.xml:15(th) ./doc/common/tables/nova-zookeeper.xml:13(th) ./doc/common/tables/nova-keymgr.xml:13(th) ./doc/common/tables/neutron-auth_token.xml:13(th) ./doc/common/tables/swift-swift-storage-policy-0.xml:15(th) ./doc/common/tables/swift-proxy-server-filter-cache.xml:15(th) ./doc/common/tables/nova-ldap.xml:13(th) ./doc/common/tables/swift-container-server-filter-recon.xml:15(th) ./doc/common/tables/swift-proxy-server-pipeline-main.xml:15(th) ./doc/common/tables/ceilometer-auth.xml:13(th) ./doc/common/tables/cinder-quota.xml:13(th) ./doc/common/tables/swift-proxy-server-filter-account-quotas.xml:15(th) ./doc/common/tables/keystone-os_inherit.xml:13(th) ./doc/common/tables/neutron-sdnve.xml:13(th) ./doc/common/tables/nova-compute.xml:13(th) ./doc/common/tables/keystone-rabbit.xml:13(th) ./doc/common/tables/cinder-backups_ceph.xml:13(th) ./doc/common/tables/nova-vmware.xml:13(th) ./doc/common/tables/heat-cfn_api.xml:13(th) ./doc/common/tables/neutron-vmware.xml:13(th) ./doc/common/tables/nova-rdp.xml:13(th) ./doc/common/tables/keystone-assignment.xml:13(th) ./doc/common/tables/nova-zeromq.xml:13(th) ./doc/common/tables/cinder-storage.xml:13(th) ./doc/common/tables/glance-registry.xml:13(th) ./doc/common/tables/swift-swift-storage-policy-1.xml:15(th) ./doc/common/tables/neutron-embrane.xml:13(th) ./doc/common/tables/heat-quota.xml:13(th) ./doc/common/tables/ceilometer-nova_import.xml:13(th) ./doc/common/tables/swift-account-server-filter-healthcheck.xml:15(th) ./doc/common/tables/nova-common.xml:13(th) ./doc/common/tables/swift-proxy-server-app-proxy-server.xml:15(th) ./doc/common/tables/nova-volumes.xml:13(th) ./doc/common/tables/neutron-redis.xml:13(th) ./doc/common/tables/trove-db_mysql.xml:13(th) ./doc/common/tables/heat-zeromq.xml:13(th) ./doc/common/tables/heat-amqp.xml:13(th) ./doc/common/tables/neutron-linuxbridge_agent.xml:13(th) ./doc/common/tables/nova-redis.xml:13(th) ./doc/common/tables/swift-container-server-DEFAULT.xml:15(th) ./doc/common/tables/glance-rabbitmq.xml:13(th) ./doc/common/tables/neutron-l3_agent.xml:13(th) ./doc/common/tables/swift-container-server-pipeline-main.xml:15(th) ./doc/common/tables/glance-policy.xml:13(th) ./doc/common/tables/nova-neutron.xml:13(th) ./doc/common/tables/cinder-backups.xml:13(th) ./doc/common/tables/cinder-keymgr.xml:13(th) ./doc/common/tables/keystone-ldap.xml:13(th) ./doc/common/tables/glance-vmware.xml:13(th) ./doc/common/tables/swift-account-server-filter-xprofile.xml:15(th) ./doc/common/tables/swift-proxy-server-filter-xprofile.xml:15(th) ./doc/common/tables/swift-proxy-server-filter-container-quotas.xml:15(th) ./doc/common/tables/cinder-zoning.xml:13(th) ./doc/common/tables/heat-notification.xml:13(th) ./doc/common/tables/swift-container-server-filter-healthcheck.xml:15(th) ./doc/common/tables/nova-vpn.xml:13(th) ./doc/common/tables/neutron-vpn.xml:13(th) ./doc/common/tables/swift-object-server-filter-xprofile.xml:15(th) ./doc/common/tables/swift-object-expirer-object-expirer.xml:15(th) ./doc/common/tables/trove-common.xml:13(th) ./doc/common/tables/trove-api.xml:13(th) ./doc/common/tables/cinder-zadara.xml:13(th) ./doc/common/tables/swift-object-server-filter-healthcheck.xml:15(th) ./doc/common/tables/nova-conductor.xml:13(th) ./doc/common/tables/swift-object-server-app-object-server.xml:15(th) ./doc/common/tables/swift-proxy-server-filter-catch_errors.xml:15(th) ./doc/common/tables/nova-livemigration.xml:13(th) ./doc/common/tables/swift-container-reconciler-container-reconciler.xml:15(th) ./doc/common/tables/heat-rabbitmq.xml:13(th) ./doc/common/tables/swift-proxy-server-filter-keystoneauth.xml:15(th) ./doc/common/tables/keystone-amqp.xml:13(th) ./doc/common/tables/keystone-rpc.xml:13(th) ./doc/common/tables/swift-object-server-DEFAULT.xml:15(th) ./doc/common/tables/cinder-zones.xml:13(th) ./doc/common/tables/cinder-scality.xml:13(th) ./doc/common/tables/swift-proxy-server-filter-tempauth.xml:15(th) ./doc/common/tables/neutron-agent.xml:13(th) ./doc/common/tables/cinder-emc.xml:13(th) ./doc/common/tables/cinder-vmware.xml:13(th) ./doc/common/tables/neutron-ml2_flat.xml:13(th) ./doc/common/tables/heat-metadata_api.xml:13(th) ./doc/common/tables/trove-rabbitmq.xml:13(th) ./doc/common/tables/nova-upgrade_levels.xml:13(th) ./doc/common/tables/cinder-netapp_cdot_iscsi.xml:13(th) ./doc/common/tables/neutron-ml2_ofa.xml:13(th) ./doc/common/tables/glance-api.xml:13(th) ./doc/common/tables/heat-waitcondition_api.xml:13(th) ./doc/common/tables/swift-proxy-server-filter-gatekeeper.xml:15(th) ./doc/common/tables/swift-rsyncd-container.xml:15(th) ./doc/common/tables/cinder-storwize.xml:13(th) ./doc/common/tables/cinder-hplefthand.xml:13(th) ./doc/common/tables/glance-s3.xml:13(th) ./doc/common/tables/nova-rootwrap.xml:13(th) ./doc/common/tables/heat-loadbalancer.xml:13(th) ./doc/common/tables/ceilometer-api.xml:13(th) ./doc/common/tables/ceilometer-exchange.xml:13(th) ./doc/common/tables/cinder-lvm.xml:13(th) ./doc/common/tables/trove-dns.xml:13(th) ./doc/common/tables/swift-container-reconciler-filter-proxy-logging.xml:15(th) ./doc/common/tables/nova-cells.xml:13(th) ./doc/common/tables/trove-volume.xml:13(th) ./doc/common/tables/heat-auth_token.xml:13(th) ./doc/common/tables/neutron-quotas.xml:13(th) ./doc/common/tables/nova-auth_token.xml:13(th) ./doc/common/tables/cinder-storage_nfs.xml:13(th) ./doc/common/tables/cinder-hds-hnas.xml:13(th) ./doc/common/tables/heat-api.xml:13(th) ./doc/common/tables/swift-proxy-server-filter-tempurl.xml:15(th) ./doc/common/tables/heat-clients_ceilometer.xml:13(th) ./doc/common/tables/neutron-ryu.xml:13(th) ./doc/common/tables/glance-logging.xml:13(th) ./doc/common/tables/swift-rsyncd-account.xml:15(th) ./doc/common/tables/neutron-metering_agent.xml:13(th) ./doc/common/tables/neutron-zeromq.xml:13(th) ./doc/common/tables/heat-clients_glance.xml:13(th) ./doc/common/tables/cinder-storage_glusterfs.xml:13(th) ./doc/common/tables/cinder-common.xml:13(th) ./doc/common/tables/glance-swift.xml:13(th) ./doc/common/tables/trove-quota.xml:13(th) ./doc/common/tables/cinder-auth_token.xml:13(th) ./doc/common/tables/ceilometer-alarm.xml:13(th) ./doc/common/tables/ceilometer-events.xml:13(th) ./doc/common/tables/neutron-lbaas_haproxy.xml:13(th) ./doc/common/tables/cinder-xiv.xml:13(th) ./doc/common/tables/swift-proxy-server-filter-name_check.xml:15(th) ./doc/common/tables/neutron-ml2_bigswitch.xml:13(th) ./doc/common/tables/nova-glance.xml:13(th) ./doc/common/tables/neutron-database.xml:13(th) ./doc/common/tables/keystone-auth_token.xml:13(th) ./doc/common/tables/nova-s3.xml:13(th) ./doc/common/tables/nova-pci.xml:13(th) ./doc/common/tables/swift-account-server-filter-recon.xml:15(th) ./doc/common/tables/heat-clients_cinder.xml:13(th) ./doc/common/tables/swift-proxy-server-filter-ratelimit.xml:15(th) ./doc/common/tables/keystone-revoke.xml:13(th) ./doc/common/tables/cinder-api.xml:13(th) ./doc/common/tables/trove-db_couchbase.xml:13(th) ./doc/common/tables/heat-clients_trove.xml:13(th) ./doc/common/tables/swift-account-server-account-replicator.xml:15(th) ./doc/common/tables/neutron-plumgrid.xml:13(th) ./doc/common/tables/trove-heat.xml:13(th) ./doc/common/tables/glance-sheepdog.xml:13(th) ./doc/common/tables/swift-container-sync-realms-DEFAULT.xml:15(th) ./doc/common/tables/cinder-windows.xml:13(th) ./doc/common/tables/cinder-san-solaris.xml:13(th) ./doc/common/tables/neutron-nuage.xml:13(th) ./doc/common/tables/keystone-zeromq.xml:13(th) ./doc/common/tables/neutron-bigswitch.xml:13(th) ./doc/common/tables/ceilometer-rpc.xml:13(th) ./doc/common/tables/swift-container-server-container-updater.xml:15(th) ./doc/common/tables/trove-db_mongodb.xml:13(th) ./doc/common/tables/swift-object-server-object-replicator.xml:15(th) ./doc/common/tables/glance-filesystem.xml:13(th) ./doc/common/tables/trove-rpc.xml:13(th) ./doc/common/tables/ceilometer-swift.xml:13(th) ./doc/common/tables/trove-backup.xml:13(th) ./doc/common/tables/nova-network.xml:13(th) ./doc/common/tables/glance-redis.xml:13(th) ./doc/common/tables/keystone-ssl.xml:13(th) ./doc/common/tables/nova-ca.xml:13(th) ./doc/common/tables/neutron-dhcp_agent.xml:13(th) ./doc/common/tables/ceilometer-collector.xml:13(th) ./doc/common/tables/cinder-hds-hus.xml:13(th) ./doc/common/tables/cinder-netapp_7mode_iscsi.xml:13(th) ./doc/common/tables/swift-swift-swift-hash.xml:15(th) ./doc/common/tables/neutron-ml2_gre.xml:13(th) ./doc/common/tables/neutron-varmour.xml:13(th) ./doc/common/tables/heat-debug.xml:13(th) ./doc/common/tables/swift-proxy-server-filter-dlo.xml:15(th) ./doc/common/tables/nova-kombu.xml:13(th) ./doc/common/tables/trove-guestagent.xml:13(th) ./doc/common/tables/nova-qpid.xml:13(th) ./doc/common/tables/glance-qpid.xml:13(th) ./doc/common/tables/neutron-lbaas_radware.xml:13(th) ./doc/common/tables/neutron-ml2_l2pop.xml:13(th) ./doc/common/tables/glance-amqp.xml:13(th) ./doc/common/tables/glance-zmq.xml:13(th) ./doc/common/tables/neutron-embrane_lb.xml:13(th) ./doc/common/tables/swift-object-expirer-DEFAULT.xml:15(th) ./doc/common/tables/swift-proxy-server-filter-authtoken.xml:15(th) ./doc/common/tables/neutron-testing.xml:13(th) ./doc/common/tables/swift-object-server-pipeline-main.xml:15(th) ./doc/common/tables/swift-memcache-memcache.xml:15(th) ./doc/common/tables/swift-account-server-app-account-server.xml:15(th) ./doc/common/tables/swift-proxy-server-filter-formpost.xml:15(th) ./doc/common/tables/trove-compute.xml:13(th) ./doc/common/tables/swift-proxy-server-filter-proxy-logging.xml:15(th) ./doc/common/tables/swift-container-server-filter-xprofile.xml:15(th) ./doc/common/tables/swift-object-expirer-filter-cache.xml:15(th) ./doc/common/tables/trove-db_redis.xml:13(th) ./doc/common/tables/cinder-rpc.xml:13(th) ./doc/common/tables/swift-container-sync-realms-realm2.xml:15(th) ./doc/common/tables/cinder-hpmsa.xml:13(th) ./doc/common/tables/nova-apiv3.xml:13(th) ./doc/common/tables/keystone-oauth.xml:13(th) ./doc/common/tables/cinder-storage_gpfs.xml:13(th) ./doc/common/tables/neutron-ml2_vlan.xml:13(th) ./doc/common/tables/swift-object-server-object-auditor.xml:15(th) ./doc/common/tables/trove-zeromq.xml:13(th) ./doc/common/tables/neutron-lbaas.xml:13(th) ./doc/common/tables/swift-container-reconciler-filter-cache.xml:15(th) ./doc/common/tables/cinder-backups_swift.xml:13(th) ./doc/common/tables/trove-database.xml:13(th) ./doc/common/tables/swift-container-server-app-container-server.xml:15(th) ./doc/common/tables/nova-authentication.xml:13(th) ./doc/common/tables/neutron-nvsd.xml:13(th) ./doc/common/tables/swift-account-server-pipeline-main.xml:15(th) ./doc/common/tables/glance-gridfs.xml:13(th) ./doc/common/tables/neutron-notifier.xml:13(th) ./doc/common/tables/nova-rpc_all.xml:13(th) ./doc/common/tables/neutron-hyperv_agent.xml:13(th) ./doc/common/tables/keystone-federation.xml:13(th) ./doc/common/tables/nova-scheduling.xml:13(th) ./doc/common/tables/cinder-ssl.xml:13(th) ./doc/common/tables/trove-ssl.xml:13(th) ./doc/common/tables/cinder-eqlx.xml:13(th) ./doc/common/tables/heat-redis.xml:13(th) ./doc/common/tables/nova-ec2.xml:13(th) ./doc/common/tables/keystone-credential.xml:13(th) ./doc/common/tables/cinder-block-device.xml:13(th) ./doc/common/tables/neutron-metadata.xml:13(th) ./doc/common/tables/nova-fping.xml:13(th) ./doc/common/tables/swift-proxy-server-filter-staticweb.xml:15(th) ./doc/common/tables/swift-container-server-container-replicator.xml:15(th) ./doc/common/tables/neutron-ml2_ncs.xml:13(th) ./doc/common/tables/neutron-ml2_arista.xml:13(th) ./doc/common/tables/nova-trustedcomputing.xml:13(th) ./doc/common/tables/swift-proxy-server-filter-bulk.xml:15(th) ./doc/common/tables/swift-object-expirer-app-proxy-server.xml:15(th) ./doc/common/tables/neutron-compute.xml:13(th) ./doc/common/tables/glance-imagecache.xml:13(th) ./doc/common/tables/neutron-ml2_brocade.xml:13(th) ./doc/common/tables/swift-account-server-account-auditor.xml:15(th) ./doc/common/tables/cinder-nas.xml:13(th) ./doc/common/tables/cinder-netapp_cdot_nfs.xml:13(th) ./doc/common/tables/heat-clients_swift.xml:13(th) ./doc/common/tables/keystone-logging.xml:13(th) ./doc/common/tables/neutron-brocade.xml:13(th) ./doc/common/tables/neutron-ml2_odl.xml:13(th) ./doc/common/tables/swift-object-server-filter-recon.xml:15(th) ./doc/common/tables/heat-rpc.xml:13(th) ./doc/common/tables/trove-taskmanager.xml:13(th) ./doc/common/tables/heat-cloudwatch_api.xml:13(th) ./doc/common/tables/cinder-images.xml:13(th) ./doc/common/tables/cinder-huawei.xml:13(th) ./doc/common/tables/neutron-lbaas_netscalar.xml:13(th) ./doc/common/tables/nova-console.xml:13(th) ./doc/common/tables/neutron-fwaas.xml:13(th) ./doc/common/tables/cinder-nexenta_nfs.xml:13(th) ./doc/common/tables/nova-database.xml:13(th) ./doc/common/tables/nova-quota.xml:13(th) ./doc/common/tables/heat-logging.xml:13(th) ./doc/common/tables/trove-redis.xml:13(th) ./doc/common/tables/keystone-stats.xml:13(th) ./doc/common/tables/heat-crypt.xml:13(th) ./doc/common/tables/neutron-ssl.xml:13(th) ./doc/common/tables/neutron-midonet.xml:13(th) ./doc/common/tables/cinder-coraid.xml:13(th) ./doc/common/tables/neutron-wsgi.xml:13(th) ./doc/common/tables/cinder-compute.xml:13(th) ./doc/common/tables/swift-rsyncd-object.xml:15(th) ./doc/common/tables/glance-wsgi.xml:13(th) ./doc/common/tables/swift-drive-audit-drive-audit.xml:15(th) ./doc/common/tables/nova-baremetal.xml:13(th) ./doc/common/tables/neutron-qpid.xml:13(th) ./doc/common/tables/nova-rpc.xml:13(th) ./doc/common/tables/cinder-backups_tsm.xml:13(th) ./doc/common/tables/cinder-san.xml:13(th) ./doc/common/tables/nova-logging.xml:13(th) ./doc/common/tables/neutron-nec.xml:13(th) ./doc/common/tables/keystone-security.xml:13(th) ./doc/common/tables/heat-clients_neutron.xml:13(th) ./doc/common/tables/nova-api.xml:13(th) ./doc/common/tables/neutron-ml2_mlnx.xml:13(th) ./doc/common/tables/trove-auth_token.xml:13(th) ./doc/common/tables/keystone-trust.xml:13(th) ./doc/common/tables/swift-container-reconciler-pipeline-main.xml:15(th) ./doc/common/tables/glance-cinder.xml:13(th) ./doc/common/tables/swift-object-server-object-updater.xml:15(th) ./doc/common/tables/glance-common.xml:13(th) ./doc/common/tables/neutron-ml2_vxlan.xml:13(th) ./doc/common/tables/swift-dispersion-dispersion.xml:15(th) ./doc/common/tables/swift-account-server-DEFAULT.xml:15(th) ./doc/common/tables/swift-proxy-server-filter-domain_remap.xml:15(th) ./doc/common/tables/trove-nova.xml:13(th) ./doc/common/tables/neutron-meta.xml:13(th) ./doc/common/tables/neutron-rabbitmq.xml:13(th) ./doc/common/tables/keystone-ec2.xml:13(th) ./doc/common/tables/heat-clients_keystone.xml:13(th) ./doc/common/tables/neutron-api.xml:13(th) ./doc/common/tables/trove-logging.xml:13(th) ./doc/common/tables/keystone-kvs.xml:13(th) ./doc/common/tables/keystone-redis.xml:13(th) ./doc/common/tables/nova-xvpnvncproxy.xml:13(th) ./doc/common/tables/glance-paste.xml:13(th) ./doc/common/tables/swift-proxy-server-filter-list-endpoints.xml:15(th) ./doc/common/tables/swift-account-server-account-reaper.xml:15(th) ./doc/common/tables/nova-hyperv.xml:13(th) ./doc/common/tables/swift-proxy-server-filter-container_sync.xml:15(th) ./doc/common/tables/heat-clients_backends.xml:13(th) ./doc/common/tables/glance-testing.xml:13(th) ./doc/common/tables/neutron-common.xml:13(th) ./doc/common/tables/nova-hypervisor.xml:13(th) ./doc/common/tables/cinder-prophststor_dpl.xml:14(th) ./doc/common/tables/keystone-qpid.xml:13(th) ./doc/common/tables/swift-container-sync-realms-realm1.xml:15(th) ./doc/common/tables/swift-proxy-server-filter-healthcheck.xml:15(th) ./doc/common/tables/nova-wsgi.xml:13(th) ./doc/common/tables/keystone-cache.xml:13(th) ./doc/common/tables/nova-configdrive.xml:13(th) ./doc/common/tables/keystone-token.xml:13(th) ./doc/common/tables/ceilometer-qpid.xml:13(th) ./doc/common/tables/heat-database.xml:13(th) ./doc/common/tables/ceilometer-rabbitmq.xml:13(th) ./doc/common/tables/neutron-ml2.xml:13(th) ./doc/common/tables/keystone-database.xml:13(th) ./doc/common/tables/keystone-memcache.xml:13(th) ./doc/common/tables/trove-debug.xml:13(th) ./doc/common/tables/trove-swift.xml:13(th) ./doc/common/tables/nova-tilera.xml:13(th) ./doc/common/tables/nova-libvirt.xml:13(th) ./doc/common/tables/neutron-mlnx.xml:13(th) ./doc/common/tables/cinder-zoning_manager.xml:13(th) ./doc/common/tables/ceilometer-amqp.xml:13(th) ./doc/common/tables/glance-ssl.xml:13(th) ./doc/common/tables/neutron-securitygroups.xml:13(th) ./doc/common/tables/keystone-debug.xml:13(th) ./doc/common/tables/cinder-rootwrap.xml:13(th) ./doc/common/tables/cinder-nexenta_iscsi.xml:13(th)
 msgid "Description"
 msgstr ""
 
@@ -359,7 +255,7 @@ msgstr ""
 msgid "List all default quotas for all tenants, as follows:"
 msgstr ""
 
-#: ./doc/common/section_cli_nova_quotas.xml:184(para) ./doc/common/section_cli_nova_quotas.xml:208(para) ./doc/common/section_cli_nova_quotas.xml:222(para) ./doc/common/section_cli_nova_quotas.xml:250(para) ./doc/common/section_cli_nova_quotas.xml:293(para) ./doc/common/section_cli_nova_quotas.xml:325(para) ./doc/common/section_objectstorage-ringbuilder.xml:83(para) ./doc/common/section_keystone_certificates-for-pki.xml:181(para) ./doc/common/section_cli_nova_boot_from_volume.xml:191(para) ./doc/common/section_cli_cinder_manage_volumes.xml:336(para) ./doc/common/section_cli_cinder_manage_volumes.xml:350(para) ./doc/common/section_cli_cinder_manage_volumes.xml:394(para) ./doc/common/section_cli_keystone_services.xml:102(para)
+#: ./doc/common/section_cli_nova_quotas.xml:184(para) ./doc/common/section_cli_nova_quotas.xml:208(para) ./doc/common/section_cli_nova_quotas.xml:222(para) ./doc/common/section_cli_nova_quotas.xml:250(para) ./doc/common/section_cli_nova_quotas.xml:293(para) ./doc/common/section_cli_nova_quotas.xml:325(para) ./doc/common/section_objectstorage-ringbuilder.xml:83(para) ./doc/common/section_keystone_certificates-for-pki.xml:181(para) ./doc/common/section_cli_nova_boot_from_volume.xml:191(para) ./doc/common/section_cli_cinder_manage_volumes.xml:336(para) ./doc/common/section_cli_cinder_manage_volumes.xml:350(para) ./doc/common/section_cli_cinder_manage_volumes.xml:394(para)
 msgid "For example:"
 msgstr ""
 
@@ -445,214 +341,6 @@ msgstr ""
 
 #: ./doc/common/section_cli_nova_quotas.xml:315(title)
 msgid "To update quota values for a tenant user"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_boot.xml:7(title)
-msgid "Launch instances"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_boot.xml:8(para) ./doc/common/section_dashboard_launch_instances_from_image.xml:9(para)
-msgid "Instances are virtual machines that run inside the cloud."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_boot.xml:10(para)
-msgid "Before you can launch an instance, gather the following parameters:"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_boot.xml:14(para)
-msgid "The <emphasis role=\"bold\">instance source</emphasis> can be an image, snapshot, or block storage volume that contains an image or snapshot."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_boot.xml:19(para)
-msgid "A <emphasis role=\"bold\">name</emphasis> for your instance."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_boot.xml:22(para) ./doc/common/section_dashboard_launch_instances_from_image.xml:38(para)
-msgid "The <emphasis role=\"bold\">flavor</emphasis> for your instance, which defines the compute, memory, and storage capacity of nova computing instances. A flavor is an available hardware configuration for a server. It defines the size of a virtual server that can be launched."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_boot.xml:30(para)
-msgid "Any <emphasis role=\"bold\">user data</emphasis> files. A user data file is a special key in the metadata service that holds a file that cloud-aware applications in the guest instance can access. For example, one application that uses user data is the <link href=\"https://help.ubuntu.com/community/CloudInit\">cloud-init</link> system, which is an open-source package from Ubuntu that is available on various Linux distributions and that handles early initialization of a cloud instance."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_boot.xml:43(para) ./doc/common/section_dashboard_launch_instances_from_image.xml:46(para)
-msgid "Access and security credentials, which include one or both of the following credentials:"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_boot.xml:47(para)
-msgid "A <emphasis role=\"bold\">key pair</emphasis> for your instance, which are SSH credentials that are injected into images when they are launched. For the key pair to be successfully injected, the image must contain the <literal>cloud-init</literal> package. Create at least one key pair for each project. If you already have generated a key pair with an external tool, you can import it into OpenStack. You can use the key pair for multiple instances that belong to that project."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_boot.xml:61(para)
-msgid "A <emphasis role=\"bold\">security group</emphasis> that defines which incoming network traffic is forwarded to instances. Security groups hold a set of firewall policies, known as <emphasis role=\"italic\">security group rules</emphasis>."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_boot.xml:72(para)
-msgid "If needed, you can assign a <emphasis role=\"bold\">floating (public) IP address</emphasis> to a running instance."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_boot.xml:77(para)
-msgid "You can also attach a block storage device, or <emphasis role=\"bold\">volume</emphasis>, for persistent storage."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_boot.xml:83(para)
-msgid "Instances that use the default security group cannot, by default, be accessed from any IP address outside of the cloud. If you want those IP addresses to access the instances, you must modify the rules for the default security group."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_boot.xml:88(para)
-msgid "You can also assign a floating IP address to a running instance to make it accessible from outside the cloud. See <xref linkend=\"manage_ip_addresses\"/>."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_boot.xml:92(para)
-msgid "After you gather the parameters that you need to launch an instance, you can launch it from an <link linkend=\"launch_from_image\">image</link> or a <link linkend=\"boot_from_volume\">volume</link>. You can launch an instance directly from one of the available OpenStack images or from an image that you have copied to a persistent volume. The OpenStack Image Service provides a pool of images that are accessible to members of different projects."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_boot.xml:102(title)
-msgid "Gather parameters to launch an instance"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_boot.xml:104(para)
-msgid "Before you begin, source the OpenStack RC file."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_boot.xml:107(para) ./doc/common/section_cli_nova_boot_from_volume.xml:170(para)
-msgid "List the available flavors:"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_boot.xml:109(para)
-msgid "Note the ID of the flavor that you want to use for your instance:"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_boot.xml:122(para) ./doc/common/section_cli_nova_boot_from_volume.xml:156(para)
-msgid "List the available images:"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_boot.xml:124(para)
-msgid "Note the ID of the image from which you want to boot your instance:"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_boot.xml:132(para)
-msgid "You can also filter the image list by using <placeholder-1/> to find a specific image, as follows:"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_boot.xml:139(para)
-msgid "List the available security groups:"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_boot.xml:141(para)
-msgid "If you are an admin user, specify the <option>--all-tenants</option> parameter to list groups for all tenants."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_boot.xml:146(para)
-msgid "Note the ID of the security group that you want to use for your instance:"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_boot.xml:152(para)
-msgid "If you have not created any security groups, you can assign the instance to only the default security group."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_boot.xml:155(para)
-msgid "You can view rules for a specified security group:"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_boot.xml:160(para)
-msgid "List the available key pairs and note the name of the key pair that you use for SSH access."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_boot.xml:169(title) ./doc/common/section_dashboard_launch_instances_from_image.xml:7(title)
-msgid "Launch an instance from an image"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_boot.xml:172(para)
-msgid "After you gather required parameters, run the following command to launch an instance. Specify the server name, flavor ID, and image ID."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_boot.xml:175(para)
-msgid "Optionally, you can provide a key name for access control and a security group for security. You can also include metadata key and value pairs. For example, you can add a description for your server by providing the <parameter>--meta description=\"My Server\"</parameter> parameter."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_boot.xml:182(para)
-msgid "You can pass user data in a local file at instance launch by using the <parameter>--user-data <replaceable>USER-DATA-FILE</replaceable></parameter> parameter."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_boot.xml:187(replaceable)
-msgid "FLAVOR_ID"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_boot.xml:187(replaceable) ./doc/common/section_cli_nova_boot_from_volume.xml:330(replaceable)
-msgid "IMAGE_ID"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_boot.xml:187(replaceable)
-msgid "KEY_NAME"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_boot.xml:188(replaceable)
-msgid "USER_DATA_FILE"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_boot.xml:188(replaceable)
-msgid "SEC_GROUP"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_boot.xml:188(replaceable)
-msgid "KEY=VALUE"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_boot.xml:189(replaceable) ./doc/common/section_cli_nova_startstop.xml:15(replaceable) ./doc/common/section_cli_nova_startstop.xml:19(replaceable) ./doc/common/section_cli_nova_startstop.xml:36(replaceable) ./doc/common/section_cli_nova_startstop.xml:41(replaceable) ./doc/common/section_cli_nova_get_console.xml:9(replaceable)
-msgid "INSTANCE_NAME"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_boot.xml:190(para)
-msgid "The following command launches the <literal>MyCirrosServer</literal> instance with the <literal>m1.small</literal> flavor (ID of <literal>1</literal>), <literal>cirros-0.3.2-x86_64-uec</literal> image (ID of <literal>397e713c-b95b-4186-ad46-6126863ea0a9</literal>), <literal>default</literal> security group, <literal>KeyPair01</literal> key, and a user data file called <filename>cloudinit.file</filename>:"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_boot.xml:203(replaceable)
-msgid "myCirrosServer"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_boot.xml:204(para)
-msgid "Depending on the parameters that you provide, the command returns a list of server properties."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_boot.xml:207(para)
-msgid "A status of <literal>BUILD</literal> indicates that the instance has started, but is not yet online."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_boot.xml:210(para)
-msgid "A status of <literal>ACTIVE</literal> indicates that the instance is active."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_boot.xml:242(para)
-msgid "Copy the server ID value from the <literal>id</literal> field in the output. You use this ID to get details for or delete your server."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_boot.xml:246(para)
-msgid "Copy the administrative password value from the <literal>adminPass</literal> field. You use this value to log in to your server."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_boot.xml:250(para)
-msgid "You can also place arbitrary local files into the instance file system at creation time by using the <option>--file &lt;dst-path=src-path&gt;</option> option. You can store up to five files. For example, if you have a special authorized keys file named <filename>special_authorized_keysfile</filename> that you want to put on the instance rather than using the regular SSH key injection, you can use the <option>--file</option> option as shown in the following example:"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_boot.xml:267(para)
-msgid "Check if the instance is online:"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_boot.xml:269(para)
-msgid "The list shows the ID, name, status, and private (and if assigned, public) IP addresses for all instances in the project to which you belong:"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_boot.xml:279(para)
-msgid "If the status for the instance is ACTIVE, the instance is online."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_boot.xml:281(para)
-msgid "To view the available options for the <placeholder-1/> command, run the following command:"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_boot.xml:288(para)
-msgid "If you did not provide a key pair, security groups, or rules, you can access the instance only from inside the cloud through VNC. Even pinging the instance is not possible."
 msgstr ""
 
 #: ./doc/common/section_user-data.xml:7(title)
@@ -811,142 +499,6 @@ msgstr ""
 
 #: ./doc/common/section_keystone-concepts-service-management.xml:30(para)
 msgid "For information about how to create services and endpoints, see the <link href=\"http://docs.openstack.org/user-guide-admin/content/index.html\"><citetitle>OpenStack Admin User Guide</citetitle></link>."
-msgstr ""
-
-#. When image changes, this message will be marked fuzzy or untranslated for you.
-#. It doesn't matter what you translate it to: it's not used at all.
-#: ./doc/common/section_trusted-compute-pools.xml:46(None) ./doc/common/section_trusted-compute-pools.xml:51(None)
-msgid "@@image: 'figures/OpenStackTrustedComputePool1.png'; md5=858fbd6148b927723cea5ad2c88d54bd"
-msgstr ""
-
-#. When image changes, this message will be marked fuzzy or untranslated for you.
-#. It doesn't matter what you translate it to: it's not used at all.
-#: ./doc/common/section_trusted-compute-pools.xml:151(None) ./doc/common/section_trusted-compute-pools.xml:156(None)
-msgid "@@image: 'figures/OpenStackTrustedComputePool2.png'; md5=077261c595464638c4b3fcc92b6afb9a"
-msgstr ""
-
-#: ./doc/common/section_trusted-compute-pools.xml:7(title)
-msgid "Trusted compute pools"
-msgstr ""
-
-#: ./doc/common/section_trusted-compute-pools.xml:8(para)
-msgid "Trusted compute pools enable administrators to designate a group of compute hosts as trusted. These hosts use hardware-based security features, such as the Intel Trusted Execution Technology (TXT), to provide an additional level of security. Combined with an external stand-alone, web-based remote attestation server, cloud providers can ensure that the compute node runs only software with verified measurements and can ensure a secure cloud stack."
-msgstr ""
-
-#: ./doc/common/section_trusted-compute-pools.xml:14(para)
-msgid "Using the trusted compute pools, cloud subscribers can request services to run on verified compute nodes."
-msgstr ""
-
-#: ./doc/common/section_trusted-compute-pools.xml:16(para)
-msgid "The remote attestation server performs node verification as follows:"
-msgstr ""
-
-#: ./doc/common/section_trusted-compute-pools.xml:20(para)
-msgid "Compute nodes boot with Intel TXT technology enabled."
-msgstr ""
-
-#: ./doc/common/section_trusted-compute-pools.xml:24(para)
-msgid "The compute node BIOS, hypervisor, and OS are measured."
-msgstr ""
-
-#: ./doc/common/section_trusted-compute-pools.xml:28(para)
-msgid "Measured data is sent to the attestation server when challenged by the attestation server."
-msgstr ""
-
-#: ./doc/common/section_trusted-compute-pools.xml:32(para)
-msgid "The attestation server verifies those measurements against a good and known database to determine node trustworthiness."
-msgstr ""
-
-#: ./doc/common/section_trusted-compute-pools.xml:36(para)
-msgid "A description of how to set up an attestation service is beyond the scope of this document. For an open source project that you can use to implement an attestation service, see the <link href=\"https://github.com/OpenAttestation/OpenAttestation\">Open Attestation</link> project."
-msgstr ""
-
-#: ./doc/common/section_trusted-compute-pools.xml:55(title)
-msgid "Configure Compute to use trusted compute pools"
-msgstr ""
-
-#: ./doc/common/section_trusted-compute-pools.xml:58(para)
-msgid "Enable scheduling support for trusted compute pools by adding the following lines in the <literal>DEFAULT</literal> section in the <filename>/etc/nova/nova.conf</filename> file:"
-msgstr ""
-
-#: ./doc/common/section_trusted-compute-pools.xml:67(para)
-msgid "Specify the connection information for your attestation service by adding the following lines to the <literal>trusted_computing</literal> section in the <filename>/etc/nova/nova.conf</filename> file:"
-msgstr ""
-
-#: ./doc/common/section_trusted-compute-pools.xml:79(para) ./doc/common/section_cli_nova_customize_flavors.xml:314(para) ./doc/common/section_keystone_config_ldap-hardening.xml:84(para)
-msgid "Where:"
-msgstr ""
-
-#: ./doc/common/section_trusted-compute-pools.xml:82(term)
-msgid "server"
-msgstr ""
-
-#: ./doc/common/section_trusted-compute-pools.xml:84(para)
-msgid "Host name or IP address of the host that runs the attestation service."
-msgstr ""
-
-#: ./doc/common/section_trusted-compute-pools.xml:89(term)
-msgid "port"
-msgstr ""
-
-#: ./doc/common/section_trusted-compute-pools.xml:91(para)
-msgid "HTTPS port for the attestation service."
-msgstr ""
-
-#: ./doc/common/section_trusted-compute-pools.xml:95(term)
-msgid "server_ca_file"
-msgstr ""
-
-#: ./doc/common/section_trusted-compute-pools.xml:97(para)
-msgid "Certificate file used to verify the attestation server's identity."
-msgstr ""
-
-#: ./doc/common/section_trusted-compute-pools.xml:102(term)
-msgid "api_url"
-msgstr ""
-
-#: ./doc/common/section_trusted-compute-pools.xml:104(para)
-msgid "The attestation service's URL path."
-msgstr ""
-
-#: ./doc/common/section_trusted-compute-pools.xml:108(term)
-msgid "auth_blob"
-msgstr ""
-
-#: ./doc/common/section_trusted-compute-pools.xml:110(para)
-msgid "An authentication blob, which is required by the attestation service."
-msgstr ""
-
-#: ./doc/common/section_trusted-compute-pools.xml:118(para)
-msgid "Restart the <systemitem class=\"service\">nova-compute</systemitem> and <systemitem class=\"service\">nova-scheduler</systemitem> services."
-msgstr ""
-
-#: ./doc/common/section_trusted-compute-pools.xml:125(title) ./doc/common/section_compute_config-api.xml:184(title)
-msgid "Configuration reference"
-msgstr ""
-
-#: ./doc/common/section_trusted-compute-pools.xml:126(para)
-msgid "To customize the trusted compute pools, use the following configuration option settings:"
-msgstr ""
-
-#: ./doc/common/section_trusted-compute-pools.xml:133(title)
-msgid "Specify trusted flavors"
-msgstr ""
-
-#: ./doc/common/section_trusted-compute-pools.xml:134(para)
-msgid "To designate hosts as trusted:"
-msgstr ""
-
-#: ./doc/common/section_trusted-compute-pools.xml:137(para)
-msgid "Configure one or more flavors as trusted by using the <placeholder-1/> command. For example, to set the <literal>m1.tiny</literal> flavor as trusted:"
-msgstr ""
-
-#: ./doc/common/section_trusted-compute-pools.xml:142(para)
-msgid "Request that your instance be run on a trusted host, by specifying a trusted flavor when booting the instance. For example:"
-msgstr ""
-
-#: ./doc/common/section_trusted-compute-pools.xml:146(title)
-msgid "Trusted compute pool"
 msgstr ""
 
 #: ./doc/common/section_cli_nova_images.xml:7(title)
@@ -1291,122 +843,6 @@ msgstr ""
 
 #: ./doc/common/section_cli_keystone_example_usage.xml:35(para)
 msgid "For information about using the keystone client commands to create and manage users, roles, and projects, see the <citetitle>OpenStack Admin User Guide</citetitle>."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_baremetal.xml:7(title)
-msgid "Manage bare-metal nodes"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_baremetal.xml:8(para)
-msgid "The bare-metal driver for OpenStack Compute manages provisioning of physical hardware by using common cloud APIs and tools such as Orchestration (Heat). The use case for this driver is for single tenant clouds such as a high-performance computing cluster or for deploying OpenStack itself."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_baremetal.xml:12(para)
-msgid "If you use the bare-metal driver, you must create a network interface and add it to a bare-metal node. Then, you can launch an instance from a bare-metal image."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_baremetal.xml:15(para)
-msgid "Development efforts are focused on moving the driver out of the Compute code base in the Icehouse release."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_baremetal.xml:17(para)
-msgid "You can list and delete bare-metal nodes. When you delete a node, any associated network interfaces are removed. You can list and remove network interfaces that are associated with a bare-metal node."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_baremetal.xml:21(title)
-msgid "Commands"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_baremetal.xml:22(para)
-msgid "The following commands can be used to manage bare-metal nodes."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_baremetal.xml:24(para)
-msgid "<placeholder-1/>. Adds a network interface to a bare-metal node."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_baremetal.xml:28(para)
-msgid "<placeholder-1/>. Lists network interfaces associated with a bare-metal node."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_baremetal.xml:32(para)
-msgid "<placeholder-1/>. Removes a network interface from a bare-metal node."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_baremetal.xml:36(para)
-msgid "<placeholder-1/>. Creates a bare-metal node."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_baremetal.xml:40(para)
-msgid "<placeholder-1/>. Removes a bare-metal node and any associated interfaces."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_baremetal.xml:44(para)
-msgid "<placeholder-1/>. Lists available bare-metal nodes."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_baremetal.xml:48(para)
-msgid "<placeholder-1/>. Shows information about a bare-metal node."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_baremetal.xml:53(title)
-msgid "Create a bare-metal node"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_baremetal.xml:54(para)
-msgid "When you create a bare-metal node, your PM address, user name, and password should match those that are configured in your hardware's BIOS/IPMI configuration."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_baremetal.xml:59(para)
-msgid "The following example shows the command and results from creating a node with the PM address <filename>1.2.3.4</filename>, the PM user name <systemitem class=\"username\">ipmi</systemitem>, and password <literal>ipmi</literal>."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_baremetal.xml:81(title)
-msgid "Add a network interface to the node:"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_baremetal.xml:82(para)
-msgid "For each NIC on the node, you must create an interface, specifying the interface's MAC address."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_baremetal.xml:94(title)
-msgid "Launch an instance from a bare-metal image:"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_baremetal.xml:96(para)
-msgid "A bare-metal instance is an instance created directly on a physical machine without any virtualization layer running underneath it. Nova retains power control via IPMI. In some situations, Nova may retain network control via Neutron and OpenFlow."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_baremetal.xml:109(para)
-msgid "Set the <parameter>--availability_zone</parameter> parameter to specify which zone or node to use to start the server. Separate the zone from the host name with a comma. For example:"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_baremetal.xml:112(replaceable)
-msgid "HOST"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_baremetal.xml:112(replaceable)
-msgid "NODE"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_baremetal.xml:113(para)
-msgid "<literal>host</literal> is optional for the <literal>--availability_zone</literal> parameter. You can specify simply <literal>zone:,node</literal>. You must still use the comma."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_baremetal.xml:120(title)
-msgid "List bare-metal nodes and interfaces:"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_baremetal.xml:122(para)
-msgid "Use the <placeholder-1/> command to view all bare-metal nodes and interfaces. When a node is in use, its status includes the UUID of the instance that runs on it:"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_baremetal.xml:132(title)
-msgid "Show details for a bare-metal node:"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_baremetal.xml:133(para)
-msgid "Use the <placeholder-1/> command to view the details for a bare-metal node."
 msgstr ""
 
 #: ./doc/common/section_identity-troubleshooting.xml:7(title)
@@ -1926,7 +1362,7 @@ msgid "Runs on a central management server to poll for resource utilization stat
 msgstr ""
 
 #: ./doc/common/section_getstart_telemetry.xml:50(term)
-msgid "A collector (<systemitem class=\"service\">ceilometer-collector</systemitem>"
+msgid "A collector (<systemitem class=\"service\">ceilometer-collector</systemitem>)"
 msgstr ""
 
 #: ./doc/common/section_getstart_telemetry.xml:52(para)
@@ -2335,6 +1771,14 @@ msgstr ""
 msgid "@@image: 'figures/instances.png'; md5=6b0f5cb3009d447334ff8b5c5b2cd121"
 msgstr ""
 
+#: ./doc/common/section_dashboard_launch_instances_from_image.xml:7(title)
+msgid "Launch an instance from an image"
+msgstr ""
+
+#: ./doc/common/section_dashboard_launch_instances_from_image.xml:9(para)
+msgid "Instances are virtual machines that run inside the cloud."
+msgstr ""
+
 #: ./doc/common/section_dashboard_launch_instances_from_image.xml:11(para)
 msgid "You can launch an instance directly from one of the available OpenStack images. The OpenStack Image Service provides a pool of images that are accessible to members of different projects. When you launch an instance from an image, OpenStack creates a local copy of the image on the respective compute node where the instance is started."
 msgstr ""
@@ -2357,6 +1801,14 @@ msgstr ""
 
 #: ./doc/common/section_dashboard_launch_instances_from_image.xml:34(para)
 msgid "A <guilabel>name</guilabel> for your instance."
+msgstr ""
+
+#: ./doc/common/section_dashboard_launch_instances_from_image.xml:38(para)
+msgid "The <emphasis role=\"bold\">flavor</emphasis> for your instance, which defines the compute, memory, and storage capacity of nova computing instances. A flavor is an available hardware configuration for a server. It defines the size of a virtual server that can be launched."
+msgstr ""
+
+#: ./doc/common/section_dashboard_launch_instances_from_image.xml:46(para)
+msgid "Access and security credentials, which include one or both of the following credentials:"
 msgstr ""
 
 #: ./doc/common/section_dashboard_launch_instances_from_image.xml:50(para)
@@ -2539,7 +1991,7 @@ msgstr ""
 msgid "For the available OpenStack documentation, see <link href=\"http://docs.openstack.org\">docs.openstack.org</link>."
 msgstr ""
 
-#: ./doc/common/app_support.xml:20(para) ./doc/common/app_support.xml:400(para) ./doc/common/ch_getstart.xml:209(para)
+#: ./doc/common/app_support.xml:20(para) ./doc/common/app_support.xml:400(para) ./doc/common/ch_getstart.xml:210(para)
 msgid "To provide feedback on documentation, join and use the <email>openstack-docs@lists.openstack.org</email> mailing list at <link href=\"http://lists.openstack.org/cgi-bin/mailman/listinfo/openstack-docs\">OpenStack Documentation Mailing List</link>, or <link href=\"https://bugs.launchpad.net/openstack-manuals/+filebug\">report a bug</link>."
 msgstr ""
 
@@ -2932,7 +2384,7 @@ msgid "A reseller marks an account for deletion by issuing a <code>DELETE</code>
 msgstr ""
 
 #: ./doc/common/section_objectstorage-account-reaper.xml:17(para)
-msgid "It's on the developers' to-do list to write a utility that performs this task, preferably through a ReST call."
+msgid "It's on the developers' to-do list to write a utility that performs this task, preferably through a REST call."
 msgstr ""
 
 #: ./doc/common/section_objectstorage-account-reaper.xml:12(para)
@@ -3233,6 +2685,10 @@ msgstr ""
 
 #: ./doc/common/section_cli_nova_customize_flavors.xml:313(replaceable)
 msgid "RATE-PERIOD"
+msgstr ""
+
+#: ./doc/common/section_cli_nova_customize_flavors.xml:314(para) ./doc/common/section_keystone_config_ldap-hardening.xml:84(para)
+msgid "Where:"
 msgstr ""
 
 #: ./doc/common/section_cli_nova_customize_flavors.xml:317(para)
@@ -4146,86 +3602,6 @@ msgstr ""
 msgid "Developers can either write directly to the Swift API or use one of the many client libraries that exist for all of the popular programming languages, such as Java, Python, Ruby, and C#. Amazon S3 and RackSpace Cloud Files users should be very familiar with Object Storage. Users new to object storage systems will have to adjust to a different approach and mindset than those required for a traditional filesystem."
 msgstr ""
 
-#: ./doc/common/section_cli_nova_startstop.xml:7(title)
-msgid "Stop and start an instance"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_startstop.xml:8(para)
-msgid "Use one of the following methods to stop and start an instance."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_startstop.xml:11(title)
-msgid "Pause and unpause an instance"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_startstop.xml:14(para)
-msgid "To pause an instance, run the following command:"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_startstop.xml:16(para)
-msgid "This command stores the state of the VM in RAM. A paused instance continues to run in a frozen state."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_startstop.xml:18(para)
-msgid "To unpause the instance, run the following command:"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_startstop.xml:24(title)
-msgid "Suspend and resume an instance"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_startstop.xml:26(para)
-msgid "Administrative users might want to suspend an instance if it is infrequently used or to perform system maintenance. When you suspend an instance, its VM state is stored on disk, all memory is written to disk, and the virtual machine is stopped. Suspending an instance is similar to placing a device in hibernation; memory and vCPUs become available to create other instances."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_startstop.xml:34(para)
-msgid "To initiate a hypervisor-level suspend operation, run the following command:"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_startstop.xml:39(para)
-msgid "To resume a suspended instance, run the following command:"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_startstop.xml:46(title)
-msgid "Shelve and unshelve an instance"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_startstop.xml:47(para)
-msgid "Shelving is useful if you have an instance that you are not using, but would like retain in your list of servers. For example, you can stop an instance at the end of a work week, and resume work again at the start of the next week. All associated data and resources are kept; however, anything still in memory is not retained. If a shelved instance is no longer needed, it can also be entirely removed."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_startstop.xml:52(para)
-msgid "You can complete the following shelving tasks:"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_startstop.xml:54(term)
-msgid "Shelve an instance"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_startstop.xml:55(para)
-msgid "Shuts down the instance, and stores it together with associated data and resources (a snapshot is taken if not volume backed). Anything in memory is lost. Use the following command:"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_startstop.xml:58(replaceable) ./doc/common/section_cli_nova_startstop.xml:63(replaceable) ./doc/common/section_cli_nova_startstop.xml:70(replaceable)
-msgid "SERVERNAME"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_startstop.xml:61(term)
-msgid "Unshelve an instance"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_startstop.xml:62(para)
-msgid "Restores the instance:"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_startstop.xml:66(term)
-msgid "Remove a shelved instance"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_startstop.xml:67(para)
-msgid "Removes the instance from the server; data and resource associations are deleted. If an instance is no longer needed, you can move that instance off the hypervisor in order to minimize resource usage:"
-msgstr ""
-
 #: ./doc/common/section_cli_nova_metadata.xml:8(title)
 msgid "Insert metadata during launch"
 msgstr ""
@@ -4841,7 +4217,7 @@ msgid "OpenStack Networking"
 msgstr ""
 
 #: ./doc/common/section_getstart_networking.xml:8(para)
-msgid "OpenStack Networking allows you to create and attach interface devices managed by other OpenStack services to networks. Plug-ins can be implemented to accomodate different networking equipment and software, providing flexibility to OpenStack architecture and deployment."
+msgid "OpenStack Networking allows you to create and attach interface devices managed by other OpenStack services to networks. Plug-ins can be implemented to accommodate different networking equipment and software, providing flexibility to OpenStack architecture and deployment."
 msgstr ""
 
 #: ./doc/common/section_getstart_networking.xml:16(systemitem)
@@ -4912,34 +4288,6 @@ msgstr ""
 msgid "To preserve the user disk data on the evacuated server, deploy OpenStack Compute with a shared file system. To configure your system, see <link href=\"http://docs.openstack.org/admin-guide-cloud/content/section_configuring-compute-migrations.html\">Configure migrations</link> in <citetitle>OpenStack Cloud Administrator Guide</citetitle>. In the following example, the password remains unchanged:"
 msgstr ""
 
-#: ./doc/common/section_cli_nova_terminate.xml:7(title)
-msgid "Delete an instance"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_terminate.xml:8(para)
-msgid "When you no longer need an instance, you can delete it."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_terminate.xml:10(para)
-msgid "List all instances:"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_terminate.xml:20(para)
-msgid "Run the <placeholder-1/> command to delete the instance. The following example shows deletion of the <filename>newServer</filename> instance, which is in <literal>ERROR</literal> state:"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_terminate.xml:23(para)
-msgid "The command does not notify that your server was deleted."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_terminate.xml:24(para)
-msgid "To verify that the server was deleted, run the <placeholder-1/> command:"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_terminate.xml:32(para)
-msgid "The deleted instance does not appear in the list."
-msgstr ""
-
 #: ./doc/common/section_compute-configure-spice.xml:7(title)
 msgid "SPICE console"
 msgstr ""
@@ -4965,7 +4313,7 @@ msgid "OpenStack Block Storage"
 msgstr ""
 
 #: ./doc/common/section_getstart_block-storage.xml:8(para)
-msgid "The Openstack Block Storage service (cinder) adds persistent storage to a virtual machine. Block Storage provides an infrastructure for managing volumes, and interacts with OpenStack Compute to provide volumes for instances. The service also enables management of volume snapshots, and volume types."
+msgid "The OpenStack Block Storage service (cinder) adds persistent storage to a virtual machine. Block Storage provides an infrastructure for managing volumes, and interacts with OpenStack Compute to provide volumes for instances. The service also enables management of volume snapshots, and volume types."
 msgstr ""
 
 #: ./doc/common/section_getstart_block-storage.xml:14(para)
@@ -5106,18 +4454,6 @@ msgstr ""
 
 #: ./doc/common/section_using-vnc-console.xml:69(para)
 msgid "Additionally, you can use the OpenStack dashboard, known as horizon, to access browser-based VNC consoles for instances."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_userdata.xml:7(title)
-msgid "Provide user data to instances"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_userdata.xml:8(para)
-msgid "A <glossterm baseform=\"user data\">user data</glossterm> file is a special key in the metadata service that holds a file that cloud-aware applications in the guest instance can access. For example, one application that uses user data is the <link href=\"https://help.ubuntu.com/community/CloudInit\">cloud-init</link> system, which is an open-source package from Ubuntu that is available on various Linux distributions and which handles early initialization of a cloud instance."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_userdata.xml:15(para)
-msgid "You can place user data in a local file and pass it through the <parameter>--user-data &lt;user-data-file&gt;</parameter> parameter at instance creation:"
 msgstr ""
 
 #: ./doc/common/section_cli_nova_sshkeys.xml:7(title)
@@ -5360,62 +4696,6 @@ msgstr ""
 msgid "If your certificate directory path is different from the default <filename>/etc/keystone/ssl/certs</filename>, make sure it is reflected in the <literal>[signing]</literal> section of the configuration file."
 msgstr ""
 
-#: ./doc/common/section_cli_nova_get_console.xml:7(title)
-msgid "Access an instance through a console"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_get_console.xml:8(para)
-msgid "To access an instance through a VNC console, run the following command:"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_get_console.xml:10(para)
-msgid "The command returns a URL from which you can access your instance:"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_get_console.xml:16(para)
-msgid "To access an instance through a non-VNC console, specify the <parameter>novnc</parameter> parameter instead of the <parameter>xvpvnc</parameter> parameter."
-msgstr ""
-
-#: ./doc/common/section_compute_config-firewalls.xml:7(title)
-msgid "Compute service node firewall requirements"
-msgstr ""
-
-#: ./doc/common/section_compute_config-firewalls.xml:8(para)
-msgid "Console connections for virtual machines, whether direct or through a proxy, are received on ports <literal>5900</literal> to <literal>5999</literal>. You must configure the firewall on each Compute service node to enable network traffic on these ports."
-msgstr ""
-
-#: ./doc/common/section_compute_config-firewalls.xml:12(title)
-msgid "Configure the service-node firewall"
-msgstr ""
-
-#: ./doc/common/section_compute_config-firewalls.xml:13(para)
-msgid "On the server that hosts the Compute service, log in as <systemitem>root</systemitem>."
-msgstr ""
-
-#: ./doc/common/section_compute_config-firewalls.xml:15(para)
-msgid "Edit the <filename>/etc/sysconfig/iptables</filename> file."
-msgstr ""
-
-#: ./doc/common/section_compute_config-firewalls.xml:21(para)
-msgid "Add an INPUT rule that allows TCP traffic on ports that range from <literal>5900</literal> to <literal>5999</literal>:"
-msgstr ""
-
-#: ./doc/common/section_compute_config-firewalls.xml:27(para)
-msgid "The new rule must appear before any INPUT rules that REJECT traffic."
-msgstr ""
-
-#: ./doc/common/section_compute_config-firewalls.xml:33(para)
-msgid "Save the changes to the <filename>/etc/sysconfig/iptables</filename> file."
-msgstr ""
-
-#: ./doc/common/section_compute_config-firewalls.xml:39(para)
-msgid "Restart the <systemitem>iptables</systemitem> service to ensure that the change takes effect."
-msgstr ""
-
-#: ./doc/common/section_compute_config-firewalls.xml:46(para)
-msgid "The <systemitem>iptables</systemitem> firewall now enables incoming connections to the Compute services. Repeat this process for each Compute service node."
-msgstr ""
-
 #: ./doc/common/section_about-object-storage.xml:7(title) ./doc/common/section_objectstorage-intro.xml:7(title)
 msgid "Introduction to Object Storage"
 msgstr ""
@@ -5524,8 +4804,16 @@ msgstr ""
 msgid "You can create a volume from an existing image, volume, or snapshot. This procedure shows you how to create a volume from an image, and use the volume to boot an instance."
 msgstr ""
 
+#: ./doc/common/section_cli_nova_boot_from_volume.xml:156(para)
+msgid "List the available images:"
+msgstr ""
+
 #: ./doc/common/section_cli_nova_boot_from_volume.xml:166(para)
 msgid "Note the ID of the image that you want to use to create a volume."
+msgstr ""
+
+#: ./doc/common/section_cli_nova_boot_from_volume.xml:170(para)
+msgid "List the available flavors:"
 msgstr ""
 
 #: ./doc/common/section_cli_nova_boot_from_volume.xml:184(para)
@@ -5652,32 +4940,12 @@ msgstr ""
 msgid "Boot an instance with a 512MB swap disk and 2GB ephemeral disk:"
 msgstr ""
 
+#: ./doc/common/section_cli_nova_boot_from_volume.xml:330(replaceable)
+msgid "IMAGE_ID"
+msgstr ""
+
 #: ./doc/common/section_cli_nova_boot_from_volume.xml:332(para)
 msgid "The flavor defines the maximum swap and ephemeral disk size. You cannot exceed these maximum values."
-msgstr ""
-
-#: ./doc/common/section_xapi-resize-setup.xml:8(title)
-msgid "Modify Dom0 for resize/migration support"
-msgstr ""
-
-#: ./doc/common/section_xapi-resize-setup.xml:9(para)
-msgid "To resize servers with XenServer and XCP, you must:"
-msgstr ""
-
-#: ./doc/common/section_xapi-resize-setup.xml:12(para)
-msgid "Establish a root trust between all hypervisor nodes of your deployment:"
-msgstr ""
-
-#: ./doc/common/section_xapi-resize-setup.xml:14(para)
-msgid "To do so, generate an ssh key-pair with the <placeholder-1/> command. Ensure that each of your dom0's <filename>authorized_keys</filename> file (located in <filename>/root/.ssh/authorized_keys</filename>) contains the public key fingerprint (located in <filename>/root/.ssh/id_rsa.pub</filename>)."
-msgstr ""
-
-#: ./doc/common/section_xapi-resize-setup.xml:23(para)
-msgid "Provide an <filename>/images</filename> mount point to the dom0 for your hypervisor:"
-msgstr ""
-
-#: ./doc/common/section_xapi-resize-setup.xml:25(para)
-msgid "Dom0 space is at a premium so creating a directory in dom0 is potentially dangerous and likely to fail especially when you resize large servers. The least you can do is to symlink <filename>/images</filename> to your local storage SR. The following instructions work for an English-based installation of XenServer (and XCP) and in the case of ext3-based SR (with which the resize functionality is known to work correctly)."
 msgstr ""
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
@@ -6726,30 +5994,6 @@ msgstr ""
 msgid "Verify that transfer list is now empty and that the volume is again available for transfer:"
 msgstr ""
 
-#: ./doc/common/section_cli_nova_search_ip.xml:7(title)
-msgid "Search for an instance using IP address"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_search_ip.xml:8(para)
-msgid "You can search for an instance using the IP address parameter, <literal>--ip</literal>, with the <placeholder-1/> command."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_search_ip.xml:11(parameter) ./doc/common/section_cli_nova_search_ip.xml:14(parameter)
-msgid "ip"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_search_ip.xml:11(replaceable)
-msgid "IP_ADDRESS"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_search_ip.xml:12(para)
-msgid "The following example shows the results of a search on <filename>10.0.0.4</filename>."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_search_ip.xml:14(replaceable)
-msgid "10.0.0.4"
-msgstr ""
-
 #: ./doc/common/section_getstart_compute.xml:7(title)
 msgid "OpenStack Compute"
 msgstr ""
@@ -7444,7 +6688,7 @@ msgstr ""
 msgid "Sections"
 msgstr ""
 
-#: ./doc/common/section_config_format.xml:135(literal) ./doc/common/tables/ceilometer-database.xml:18(th) ./doc/common/tables/neutron-openvswitch_agent.xml:18(th) ./doc/common/tables/heat-clients.xml:18(th) ./doc/common/tables/cinder-solidfire.xml:18(th) ./doc/common/tables/neutron-rpc.xml:18(th) ./doc/common/tables/nova-periodic.xml:18(th) ./doc/common/tables/keystone-policy.xml:18(th) ./doc/common/tables/glance-auth_token.xml:18(th) ./doc/common/tables/cinder-netapp_7mode_nfs.xml:18(th) ./doc/common/tables/swift-proxy-server-DEFAULT.xml:8(literal) ./doc/common/tables/ceilometer-redis.xml:18(th) ./doc/common/tables/cinder-storage_ceph.xml:18(th) ./doc/common/tables/nova-testing.xml:18(th) ./doc/common/tables/nova-metadata.xml:18(th) ./doc/common/tables/cinder-hp3par.xml:18(th) ./doc/common/tables/keystone-misc.xml:18(th) ./doc/common/tables/neutron-scheduler.xml:18(th) ./doc/common/tables/glance-rbd.xml:18(th) ./doc/common/tables/cinder-storage_xen.xml:18(th) ./doc/common/tables/ceilometer-common.xml:18(th) ./doc/common/tables/cinder-database.xml:18(th) ./doc/common/tables/ceilometer-logging.xml:18(th) ./doc/common/tables/heat-common.xml:18(th) ./doc/common/tables/nova-ipv6.xml:18(th) ./doc/common/tables/nova-vnc.xml:18(th) ./doc/common/tables/trove-qpid.xml:18(th) ./doc/common/tables/keystone-api.xml:18(th) ./doc/common/tables/swift-container-reconciler-DEFAULT.xml:8(literal) ./doc/common/tables/glance-rpc.xml:18(th) ./doc/common/tables/neutron-policy.xml:18(th) ./doc/common/tables/nova-xen.xml:18(th) ./doc/common/tables/trove-amqp.xml:18(th) ./doc/common/tables/glance-matchmaker.xml:18(th) ./doc/common/tables/nova-rabbitmq.xml:18(th) ./doc/common/tables/nova-policy.xml:18(th) ./doc/common/tables/ceilometer-inspector.xml:18(th) ./doc/common/tables/cinder-scheduler.xml:18(th) ./doc/common/tables/neutron-logging.xml:18(th) ./doc/common/tables/nova-availabilityzones.xml:18(th) ./doc/common/tables/cinder-netapp_eseries_iscsi.xml:18(th) ./doc/common/tables/neutron-rootwrap.xml:18(th) ./doc/common/tables/cinder-auth.xml:18(th) ./doc/common/tables/heat-qpid.xml:18(th) ./doc/common/tables/neutron-auth_token.xml:18(th) ./doc/common/tables/nova-ldap.xml:18(th) ./doc/common/tables/cinder-quota.xml:18(th) ./doc/common/tables/nova-compute.xml:18(th) ./doc/common/tables/keystone-rabbit.xml:18(th) ./doc/common/tables/cinder-backups_ceph.xml:18(th) ./doc/common/tables/heat-cfn_api.xml:18(th) ./doc/common/tables/neutron-vmware.xml:18(th) ./doc/common/tables/nova-zeromq.xml:18(th) ./doc/common/tables/cinder-storage.xml:18(th) ./doc/common/tables/glance-registry.xml:18(th) ./doc/common/tables/heat-quota.xml:18(th) ./doc/common/tables/ceilometer-nova_import.xml:18(th) ./doc/common/tables/nova-common.xml:18(th) ./doc/common/tables/nova-volumes.xml:18(th) ./doc/common/tables/neutron-redis.xml:18(th) ./doc/common/tables/heat-zeromq.xml:18(th) ./doc/common/tables/heat-amqp.xml:18(th) ./doc/common/tables/nova-redis.xml:18(th) ./doc/common/tables/swift-container-server-DEFAULT.xml:8(literal) ./doc/common/tables/glance-rabbitmq.xml:18(th) ./doc/common/tables/neutron-l3_agent.xml:18(th) ./doc/common/tables/glance-policy.xml:18(th) ./doc/common/tables/nova-neutron.xml:18(th) ./doc/common/tables/cinder-backups.xml:18(th) ./doc/common/tables/glance-vmware.xml:18(th) ./doc/common/tables/cinder-zoning.xml:18(th) ./doc/common/tables/heat-notification.xml:18(th) ./doc/common/tables/nova-vpn.xml:18(th) ./doc/common/tables/trove-common.xml:18(th) ./doc/common/tables/trove-api.xml:18(th) ./doc/common/tables/cinder-zadara.xml:18(th) ./doc/common/tables/nova-conductor.xml:18(th) ./doc/common/tables/nova-livemigration.xml:18(th) ./doc/common/tables/heat-rabbitmq.xml:18(th) ./doc/common/tables/keystone-amqp.xml:18(th) ./doc/common/tables/keystone-rpc.xml:18(th) ./doc/common/tables/swift-object-server-DEFAULT.xml:8(literal) ./doc/common/tables/cinder-zones.xml:18(th) ./doc/common/tables/cinder-scality.xml:18(th) ./doc/common/tables/neutron-agent.xml:18(th) ./doc/common/tables/cinder-emc.xml:18(th) ./doc/common/tables/cinder-vmware.xml:18(th) ./doc/common/tables/heat-metadata_api.xml:18(th) ./doc/common/tables/trove-rabbitmq.xml:18(th) ./doc/common/tables/cinder-netapp_cdot_iscsi.xml:18(th) ./doc/common/tables/neutron-ml2_ofa.xml:18(th) ./doc/common/tables/glance-api.xml:18(th) ./doc/common/tables/heat-waitcondition_api.xml:18(th) ./doc/common/tables/cinder-storwize.xml:18(th) ./doc/common/tables/cinder-hplefthand.xml:18(th) ./doc/common/tables/glance-s3.xml:18(th) ./doc/common/tables/nova-rootwrap.xml:18(th) ./doc/common/tables/heat-loadbalancer.xml:18(th) ./doc/common/tables/ceilometer-api.xml:18(th) ./doc/common/tables/ceilometer-exchange.xml:18(th) ./doc/common/tables/cinder-lvm.xml:18(th) ./doc/common/tables/trove-dns.xml:18(th) ./doc/common/tables/trove-volume.xml:18(th) ./doc/common/tables/heat-auth_token.xml:18(th) ./doc/common/tables/neutron-quotas.xml:18(th) ./doc/common/tables/cinder-storage_nfs.xml:18(th) ./doc/common/tables/cinder-hds-hnas.xml:18(th) ./doc/common/tables/heat-api.xml:18(th) ./doc/common/tables/glance-logging.xml:18(th) ./doc/common/tables/neutron-metering_agent.xml:18(th) ./doc/common/tables/neutron-zeromq.xml:18(th) ./doc/common/tables/cinder-storage_glusterfs.xml:18(th) ./doc/common/tables/cinder-common.xml:18(th) ./doc/common/tables/glance-swift.xml:18(th) ./doc/common/tables/trove-quota.xml:18(th) ./doc/common/tables/cinder-auth_token.xml:18(th) ./doc/common/tables/cinder-xiv.xml:18(th) ./doc/common/tables/nova-glance.xml:18(th) ./doc/common/tables/keystone-auth_token.xml:18(th) ./doc/common/tables/nova-s3.xml:18(th) ./doc/common/tables/nova-pci.xml:18(th) ./doc/common/tables/cinder-api.xml:18(th) ./doc/common/tables/trove-heat.xml:18(th) ./doc/common/tables/glance-sheepdog.xml:18(th) ./doc/common/tables/swift-container-sync-realms-DEFAULT.xml:8(literal) ./doc/common/tables/cinder-windows.xml:18(th) ./doc/common/tables/cinder-san-solaris.xml:18(th) ./doc/common/tables/keystone-zeromq.xml:18(th) ./doc/common/tables/ceilometer-rpc.xml:18(th) ./doc/common/tables/glance-filesystem.xml:18(th) ./doc/common/tables/trove-rpc.xml:18(th) ./doc/common/tables/ceilometer-swift.xml:18(th) ./doc/common/tables/trove-backup.xml:18(th) ./doc/common/tables/nova-network.xml:18(th) ./doc/common/tables/glance-redis.xml:18(th) ./doc/common/tables/nova-ca.xml:18(th) ./doc/common/tables/neutron-dhcp_agent.xml:18(th) ./doc/common/tables/ceilometer-collector.xml:18(th) ./doc/common/tables/cinder-hds-hus.xml:18(th) ./doc/common/tables/cinder-netapp_7mode_iscsi.xml:18(th) ./doc/common/tables/heat-debug.xml:18(th) ./doc/common/tables/nova-kombu.xml:18(th) ./doc/common/tables/trove-guestagent.xml:18(th) ./doc/common/tables/nova-qpid.xml:18(th) ./doc/common/tables/glance-qpid.xml:18(th) ./doc/common/tables/glance-amqp.xml:18(th) ./doc/common/tables/glance-zmq.xml:18(th) ./doc/common/tables/swift-object-expirer-DEFAULT.xml:8(literal) ./doc/common/tables/neutron-testing.xml:18(th) ./doc/common/tables/trove-compute.xml:18(th) ./doc/common/tables/cinder-rpc.xml:18(th) ./doc/common/tables/cinder-hpmsa.xml:18(th) ./doc/common/tables/cinder-storage_gpfs.xml:18(th) ./doc/common/tables/trove-zeromq.xml:18(th) ./doc/common/tables/neutron-lbaas.xml:18(th) ./doc/common/tables/cinder-backups_swift.xml:18(th) ./doc/common/tables/trove-database.xml:18(th) ./doc/common/tables/nova-authentication.xml:18(th) ./doc/common/tables/glance-gridfs.xml:18(th) ./doc/common/tables/neutron-notifier.xml:18(th) ./doc/common/tables/nova-rpc_all.xml:18(th) ./doc/common/tables/nova-scheduling.xml:18(th) ./doc/common/tables/cinder-eqlx.xml:18(th) ./doc/common/tables/heat-redis.xml:18(th) ./doc/common/tables/nova-ec2.xml:18(th) ./doc/common/tables/cinder-block-device.xml:18(th) ./doc/common/tables/neutron-metadata.xml:18(th) ./doc/common/tables/nova-fping.xml:18(th) ./doc/common/tables/neutron-compute.xml:18(th) ./doc/common/tables/glance-imagecache.xml:18(th) ./doc/common/tables/cinder-nas.xml:18(th) ./doc/common/tables/cinder-netapp_cdot_nfs.xml:18(th) ./doc/common/tables/keystone-logging.xml:18(th) ./doc/common/tables/heat-rpc.xml:18(th) ./doc/common/tables/trove-taskmanager.xml:18(th) ./doc/common/tables/heat-cloudwatch_api.xml:18(th) ./doc/common/tables/cinder-images.xml:18(th) ./doc/common/tables/cinder-huawei.xml:18(th) ./doc/common/tables/nova-console.xml:18(th) ./doc/common/tables/cinder-nexenta_nfs.xml:18(th) ./doc/common/tables/nova-database.xml:18(th) ./doc/common/tables/nova-quota.xml:18(th) ./doc/common/tables/heat-logging.xml:18(th) ./doc/common/tables/heat-crypt.xml:18(th) ./doc/common/tables/neutron-ssl.xml:18(th) ./doc/common/tables/cinder-coraid.xml:18(th) ./doc/common/tables/neutron-wsgi.xml:18(th) ./doc/common/tables/cinder-compute.xml:18(th) ./doc/common/tables/glance-wsgi.xml:18(th) ./doc/common/tables/neutron-qpid.xml:18(th) ./doc/common/tables/nova-rpc.xml:18(th) ./doc/common/tables/cinder-backups_tsm.xml:18(th) ./doc/common/tables/cinder-san.xml:18(th) ./doc/common/tables/nova-logging.xml:18(th) ./doc/common/tables/keystone-security.xml:18(th) ./doc/common/tables/nova-api.xml:18(th) ./doc/common/tables/trove-auth_token.xml:18(th) ./doc/common/tables/glance-cinder.xml:18(th) ./doc/common/tables/glance-common.xml:18(th) ./doc/common/tables/swift-account-server-DEFAULT.xml:8(literal) ./doc/common/tables/trove-nova.xml:18(th) ./doc/common/tables/neutron-rabbitmq.xml:18(th) ./doc/common/tables/keystone-ec2.xml:18(th) ./doc/common/tables/neutron-api.xml:18(th) ./doc/common/tables/trove-logging.xml:18(th) ./doc/common/tables/keystone-redis.xml:18(th) ./doc/common/tables/nova-xvpnvncproxy.xml:18(th) ./doc/common/tables/heat-clients_backends.xml:18(th) ./doc/common/tables/glance-testing.xml:18(th) ./doc/common/tables/neutron-common.xml:18(th) ./doc/common/tables/nova-hypervisor.xml:18(th) ./doc/common/tables/keystone-qpid.xml:18(th) ./doc/common/tables/nova-wsgi.xml:18(th) ./doc/common/tables/nova-configdrive.xml:18(th) ./doc/common/tables/ceilometer-qpid.xml:18(th) ./doc/common/tables/ceilometer-rabbitmq.xml:18(th) ./doc/common/tables/trove-debug.xml:18(th) ./doc/common/tables/trove-swift.xml:18(th) ./doc/common/tables/nova-libvirt.xml:18(th) ./doc/common/tables/ceilometer-amqp.xml:18(th) ./doc/common/tables/glance-ssl.xml:18(th) ./doc/common/tables/keystone-debug.xml:18(th) ./doc/common/tables/cinder-rootwrap.xml:18(th) ./doc/common/tables/cinder-nexenta_iscsi.xml:18(th)
+#: ./doc/common/section_config_format.xml:135(literal) ./doc/common/tables/ceilometer-database.xml:18(th) ./doc/common/tables/neutron-openvswitch_agent.xml:18(th) ./doc/common/tables/heat-clients.xml:18(th) ./doc/common/tables/cinder-solidfire.xml:18(th) ./doc/common/tables/neutron-rpc.xml:18(th) ./doc/common/tables/nova-periodic.xml:18(th) ./doc/common/tables/keystone-policy.xml:18(th) ./doc/common/tables/glance-auth_token.xml:18(th) ./doc/common/tables/cinder-netapp_7mode_nfs.xml:18(th) ./doc/common/tables/swift-proxy-server-DEFAULT.xml:8(literal) ./doc/common/tables/ceilometer-redis.xml:18(th) ./doc/common/tables/cinder-storage_ceph.xml:18(th) ./doc/common/tables/nova-testing.xml:18(th) ./doc/common/tables/nova-metadata.xml:18(th) ./doc/common/tables/cinder-hp3par.xml:18(th) ./doc/common/tables/keystone-misc.xml:18(th) ./doc/common/tables/neutron-scheduler.xml:18(th) ./doc/common/tables/glance-rbd.xml:18(th) ./doc/common/tables/cinder-storage_xen.xml:18(th) ./doc/common/tables/ceilometer-common.xml:18(th) ./doc/common/tables/cinder-database.xml:18(th) ./doc/common/tables/ceilometer-logging.xml:18(th) ./doc/common/tables/heat-common.xml:18(th) ./doc/common/tables/nova-ipv6.xml:18(th) ./doc/common/tables/nova-vnc.xml:18(th) ./doc/common/tables/trove-qpid.xml:18(th) ./doc/common/tables/keystone-api.xml:18(th) ./doc/common/tables/swift-container-reconciler-DEFAULT.xml:8(literal) ./doc/common/tables/glance-rpc.xml:18(th) ./doc/common/tables/neutron-policy.xml:18(th) ./doc/common/tables/nova-xen.xml:18(th) ./doc/common/tables/trove-amqp.xml:18(th) ./doc/common/tables/glance-matchmaker.xml:18(th) ./doc/common/tables/nova-rabbitmq.xml:18(th) ./doc/common/tables/nova-policy.xml:18(th) ./doc/common/tables/ceilometer-inspector.xml:18(th) ./doc/common/tables/cinder-scheduler.xml:18(th) ./doc/common/tables/neutron-logging.xml:18(th) ./doc/common/tables/nova-availabilityzones.xml:18(th) ./doc/common/tables/cinder-netapp_eseries_iscsi.xml:18(th) ./doc/common/tables/neutron-rootwrap.xml:18(th) ./doc/common/tables/cinder-auth.xml:18(th) ./doc/common/tables/heat-qpid.xml:18(th) ./doc/common/tables/neutron-auth_token.xml:18(th) ./doc/common/tables/nova-ldap.xml:18(th) ./doc/common/tables/cinder-quota.xml:18(th) ./doc/common/tables/nova-compute.xml:18(th) ./doc/common/tables/keystone-rabbit.xml:18(th) ./doc/common/tables/cinder-backups_ceph.xml:18(th) ./doc/common/tables/heat-cfn_api.xml:18(th) ./doc/common/tables/neutron-vmware.xml:18(th) ./doc/common/tables/nova-zeromq.xml:18(th) ./doc/common/tables/cinder-storage.xml:18(th) ./doc/common/tables/glance-registry.xml:18(th) ./doc/common/tables/heat-quota.xml:18(th) ./doc/common/tables/ceilometer-nova_import.xml:18(th) ./doc/common/tables/nova-common.xml:18(th) ./doc/common/tables/nova-volumes.xml:18(th) ./doc/common/tables/neutron-redis.xml:18(th) ./doc/common/tables/heat-zeromq.xml:18(th) ./doc/common/tables/heat-amqp.xml:18(th) ./doc/common/tables/nova-redis.xml:18(th) ./doc/common/tables/swift-container-server-DEFAULT.xml:8(literal) ./doc/common/tables/glance-rabbitmq.xml:18(th) ./doc/common/tables/neutron-l3_agent.xml:18(th) ./doc/common/tables/glance-policy.xml:18(th) ./doc/common/tables/nova-neutron.xml:18(th) ./doc/common/tables/cinder-backups.xml:18(th) ./doc/common/tables/glance-vmware.xml:18(th) ./doc/common/tables/cinder-zoning.xml:18(th) ./doc/common/tables/heat-notification.xml:18(th) ./doc/common/tables/nova-vpn.xml:18(th) ./doc/common/tables/trove-common.xml:18(th) ./doc/common/tables/trove-api.xml:18(th) ./doc/common/tables/cinder-zadara.xml:18(th) ./doc/common/tables/nova-conductor.xml:18(th) ./doc/common/tables/nova-livemigration.xml:18(th) ./doc/common/tables/heat-rabbitmq.xml:18(th) ./doc/common/tables/keystone-amqp.xml:18(th) ./doc/common/tables/keystone-rpc.xml:18(th) ./doc/common/tables/swift-object-server-DEFAULT.xml:8(literal) ./doc/common/tables/cinder-zones.xml:18(th) ./doc/common/tables/cinder-scality.xml:18(th) ./doc/common/tables/neutron-agent.xml:18(th) ./doc/common/tables/cinder-emc.xml:18(th) ./doc/common/tables/cinder-vmware.xml:18(th) ./doc/common/tables/heat-metadata_api.xml:18(th) ./doc/common/tables/trove-rabbitmq.xml:18(th) ./doc/common/tables/cinder-netapp_cdot_iscsi.xml:18(th) ./doc/common/tables/neutron-ml2_ofa.xml:18(th) ./doc/common/tables/glance-api.xml:18(th) ./doc/common/tables/heat-waitcondition_api.xml:18(th) ./doc/common/tables/cinder-storwize.xml:18(th) ./doc/common/tables/cinder-hplefthand.xml:18(th) ./doc/common/tables/glance-s3.xml:18(th) ./doc/common/tables/nova-rootwrap.xml:18(th) ./doc/common/tables/heat-loadbalancer.xml:18(th) ./doc/common/tables/ceilometer-api.xml:18(th) ./doc/common/tables/ceilometer-exchange.xml:18(th) ./doc/common/tables/cinder-lvm.xml:18(th) ./doc/common/tables/trove-dns.xml:18(th) ./doc/common/tables/trove-volume.xml:18(th) ./doc/common/tables/heat-auth_token.xml:18(th) ./doc/common/tables/neutron-quotas.xml:18(th) ./doc/common/tables/cinder-storage_nfs.xml:18(th) ./doc/common/tables/cinder-hds-hnas.xml:18(th) ./doc/common/tables/heat-api.xml:18(th) ./doc/common/tables/glance-logging.xml:18(th) ./doc/common/tables/neutron-metering_agent.xml:18(th) ./doc/common/tables/neutron-zeromq.xml:18(th) ./doc/common/tables/cinder-storage_glusterfs.xml:18(th) ./doc/common/tables/cinder-common.xml:18(th) ./doc/common/tables/glance-swift.xml:18(th) ./doc/common/tables/trove-quota.xml:18(th) ./doc/common/tables/cinder-auth_token.xml:18(th) ./doc/common/tables/cinder-xiv.xml:18(th) ./doc/common/tables/nova-glance.xml:18(th) ./doc/common/tables/keystone-auth_token.xml:18(th) ./doc/common/tables/nova-s3.xml:18(th) ./doc/common/tables/nova-pci.xml:18(th) ./doc/common/tables/cinder-api.xml:18(th) ./doc/common/tables/trove-heat.xml:18(th) ./doc/common/tables/glance-sheepdog.xml:18(th) ./doc/common/tables/swift-container-sync-realms-DEFAULT.xml:8(literal) ./doc/common/tables/cinder-windows.xml:18(th) ./doc/common/tables/cinder-san-solaris.xml:18(th) ./doc/common/tables/keystone-zeromq.xml:18(th) ./doc/common/tables/ceilometer-rpc.xml:18(th) ./doc/common/tables/glance-filesystem.xml:18(th) ./doc/common/tables/trove-rpc.xml:18(th) ./doc/common/tables/ceilometer-swift.xml:18(th) ./doc/common/tables/trove-backup.xml:18(th) ./doc/common/tables/nova-network.xml:18(th) ./doc/common/tables/glance-redis.xml:18(th) ./doc/common/tables/nova-ca.xml:18(th) ./doc/common/tables/neutron-dhcp_agent.xml:18(th) ./doc/common/tables/ceilometer-collector.xml:18(th) ./doc/common/tables/cinder-hds-hus.xml:18(th) ./doc/common/tables/cinder-netapp_7mode_iscsi.xml:18(th) ./doc/common/tables/heat-debug.xml:18(th) ./doc/common/tables/nova-kombu.xml:18(th) ./doc/common/tables/trove-guestagent.xml:18(th) ./doc/common/tables/nova-qpid.xml:18(th) ./doc/common/tables/glance-qpid.xml:18(th) ./doc/common/tables/glance-amqp.xml:18(th) ./doc/common/tables/glance-zmq.xml:18(th) ./doc/common/tables/swift-object-expirer-DEFAULT.xml:8(literal) ./doc/common/tables/neutron-testing.xml:18(th) ./doc/common/tables/trove-compute.xml:18(th) ./doc/common/tables/cinder-rpc.xml:18(th) ./doc/common/tables/cinder-hpmsa.xml:18(th) ./doc/common/tables/cinder-storage_gpfs.xml:18(th) ./doc/common/tables/trove-zeromq.xml:18(th) ./doc/common/tables/neutron-lbaas.xml:18(th) ./doc/common/tables/cinder-backups_swift.xml:18(th) ./doc/common/tables/trove-database.xml:18(th) ./doc/common/tables/nova-authentication.xml:18(th) ./doc/common/tables/glance-gridfs.xml:18(th) ./doc/common/tables/neutron-notifier.xml:18(th) ./doc/common/tables/nova-rpc_all.xml:18(th) ./doc/common/tables/nova-scheduling.xml:18(th) ./doc/common/tables/cinder-eqlx.xml:18(th) ./doc/common/tables/heat-redis.xml:18(th) ./doc/common/tables/nova-ec2.xml:18(th) ./doc/common/tables/cinder-block-device.xml:18(th) ./doc/common/tables/neutron-metadata.xml:18(th) ./doc/common/tables/nova-fping.xml:18(th) ./doc/common/tables/neutron-compute.xml:18(th) ./doc/common/tables/glance-imagecache.xml:18(th) ./doc/common/tables/cinder-nas.xml:18(th) ./doc/common/tables/cinder-netapp_cdot_nfs.xml:18(th) ./doc/common/tables/keystone-logging.xml:18(th) ./doc/common/tables/heat-rpc.xml:18(th) ./doc/common/tables/trove-taskmanager.xml:18(th) ./doc/common/tables/heat-cloudwatch_api.xml:18(th) ./doc/common/tables/cinder-images.xml:18(th) ./doc/common/tables/cinder-huawei.xml:18(th) ./doc/common/tables/nova-console.xml:18(th) ./doc/common/tables/cinder-nexenta_nfs.xml:18(th) ./doc/common/tables/nova-database.xml:18(th) ./doc/common/tables/nova-quota.xml:18(th) ./doc/common/tables/heat-logging.xml:18(th) ./doc/common/tables/heat-crypt.xml:18(th) ./doc/common/tables/neutron-ssl.xml:18(th) ./doc/common/tables/cinder-coraid.xml:18(th) ./doc/common/tables/neutron-wsgi.xml:18(th) ./doc/common/tables/cinder-compute.xml:18(th) ./doc/common/tables/glance-wsgi.xml:18(th) ./doc/common/tables/neutron-qpid.xml:18(th) ./doc/common/tables/nova-rpc.xml:18(th) ./doc/common/tables/cinder-backups_tsm.xml:18(th) ./doc/common/tables/cinder-san.xml:18(th) ./doc/common/tables/nova-logging.xml:18(th) ./doc/common/tables/keystone-security.xml:18(th) ./doc/common/tables/nova-api.xml:18(th) ./doc/common/tables/trove-auth_token.xml:18(th) ./doc/common/tables/glance-cinder.xml:18(th) ./doc/common/tables/glance-common.xml:18(th) ./doc/common/tables/swift-account-server-DEFAULT.xml:8(literal) ./doc/common/tables/trove-nova.xml:18(th) ./doc/common/tables/neutron-rabbitmq.xml:18(th) ./doc/common/tables/keystone-ec2.xml:18(th) ./doc/common/tables/neutron-api.xml:18(th) ./doc/common/tables/trove-logging.xml:18(th) ./doc/common/tables/keystone-redis.xml:18(th) ./doc/common/tables/nova-xvpnvncproxy.xml:18(th) ./doc/common/tables/heat-clients_backends.xml:18(th) ./doc/common/tables/glance-testing.xml:18(th) ./doc/common/tables/neutron-common.xml:18(th) ./doc/common/tables/nova-hypervisor.xml:18(th) ./doc/common/tables/cinder-prophststor_dpl.xml:19(th) ./doc/common/tables/keystone-qpid.xml:18(th) ./doc/common/tables/nova-wsgi.xml:18(th) ./doc/common/tables/nova-configdrive.xml:18(th) ./doc/common/tables/ceilometer-qpid.xml:18(th) ./doc/common/tables/ceilometer-rabbitmq.xml:18(th) ./doc/common/tables/trove-debug.xml:18(th) ./doc/common/tables/trove-swift.xml:18(th) ./doc/common/tables/nova-libvirt.xml:18(th) ./doc/common/tables/ceilometer-amqp.xml:18(th) ./doc/common/tables/glance-ssl.xml:18(th) ./doc/common/tables/keystone-debug.xml:18(th) ./doc/common/tables/cinder-rootwrap.xml:18(th) ./doc/common/tables/cinder-nexenta_iscsi.xml:18(th)
 msgid "[DEFAULT]"
 msgstr ""
 
@@ -7509,7 +6753,7 @@ msgid "The OpenStack Image Service is central to Infrastructure-as-a-Service (Ia
 msgstr ""
 
 #: ./doc/common/section_getstart_image.xml:14(para)
-msgid "A number of periodic processes run on the OpenStack Image Service to support caching. Replication services ensures consistency and availability through the cluster. Other periodic processes include auditors, updaters, and reapers."
+msgid "A number of periodic processes run on the OpenStack Image Service to support caching. Replication services ensure consistency and availability through the cluster. Other periodic processes include auditors, updaters, and reapers."
 msgstr ""
 
 #: ./doc/common/section_getstart_image.xml:18(para)
@@ -7545,7 +6789,7 @@ msgid "Database"
 msgstr ""
 
 #: ./doc/common/section_getstart_image.xml:38(para)
-msgid "Stores image metadata and you can choose your database depending on your preference. Most deployments use MySQL or SQlite."
+msgid "Stores image metadata and you can choose your database depending on your preference. Most deployments use MySQL or SQLite."
 msgstr ""
 
 #: ./doc/common/section_getstart_image.xml:43(term)
@@ -7692,7 +6936,7 @@ msgstr ""
 msgid "This section describes OpenStack services in detail."
 msgstr ""
 
-#: ./doc/common/ch_getstart.xml:208(title)
+#: ./doc/common/ch_getstart.xml:209(title)
 msgid "Feedback"
 msgstr ""
 
@@ -7751,138 +6995,6 @@ msgstr ""
 
 #: ./doc/common/section_fibrechannel.xml:51(para)
 msgid "For systems running Ubuntu:"
-msgstr ""
-
-#: ./doc/common/section_cli_keystone_services.xml:8(title)
-msgid "Create and manage services and service users"
-msgstr ""
-
-#: ./doc/common/section_cli_keystone_services.xml:9(para)
-msgid "The Identity Service enables you to define services, as follows:"
-msgstr ""
-
-#: ./doc/common/section_cli_keystone_services.xml:13(para)
-msgid "Service catalog template. The Identity Service acts as a service catalog of endpoints for other OpenStack services. The <literal>etc/default_catalog.templates</literal> template file defines the endpoints for services. When the Identity Service uses a template file back end, any changes that are made to the endpoints are cached. These changes do not persist when you restart the service or reboot the machine."
-msgstr ""
-
-#: ./doc/common/section_cli_keystone_services.xml:24(para)
-msgid "A SQL back end for the catalog service. When the Identity Service is online, you must add the services to the catalog. When you deploy a system for production, use the SQL back end."
-msgstr ""
-
-#: ./doc/common/section_cli_keystone_services.xml:30(para)
-msgid "The <literal>auth_token</literal> middleware supports the use of either a shared secret or users for each service."
-msgstr ""
-
-#: ./doc/common/section_cli_keystone_services.xml:33(para)
-msgid "To authenticate users against the Identity Service, you must create a service user for each OpenStack service. For example, create a service user for the Compute, Block Storage, and Networking services."
-msgstr ""
-
-#: ./doc/common/section_cli_keystone_services.xml:37(para)
-msgid "To configure the OpenStack services with service users, create a project for all services and create users for each service. Assign the admin role to each service user and project pair. This role enables users to validate tokens and authenticate and authorize other user requests."
-msgstr ""
-
-#: ./doc/common/section_cli_keystone_services.xml:43(title)
-msgid "Create a service"
-msgstr ""
-
-#: ./doc/common/section_cli_keystone_services.xml:46(para)
-msgid "List the available services:"
-msgstr ""
-
-#: ./doc/common/section_cli_keystone_services.xml:60(para)
-msgid "To create a service, run this command:"
-msgstr ""
-
-#: ./doc/common/section_cli_keystone_services.xml:61(replaceable)
-msgid "service_name"
-msgstr ""
-
-#: ./doc/common/section_cli_keystone_services.xml:61(replaceable)
-msgid "service_type"
-msgstr ""
-
-#: ./doc/common/section_cli_keystone_services.xml:61(replaceable)
-msgid "service_description"
-msgstr ""
-
-#: ./doc/common/section_cli_keystone_services.xml:62(para)
-msgid "The arguments are:"
-msgstr ""
-
-#: ./doc/common/section_cli_keystone_services.xml:65(para)
-msgid "<code><replaceable>service_name</replaceable></code>. The unique name of the new service."
-msgstr ""
-
-#: ./doc/common/section_cli_keystone_services.xml:69(para)
-msgid "<code><replaceable>service_type</replaceable></code>. The service type, such as <code>identity</code>, <code>compute</code>, <code>network</code>, <code>image</code>, <code>object-store</code> or any other service identifier string."
-msgstr ""
-
-#: ./doc/common/section_cli_keystone_services.xml:79(para)
-msgid "<code><replaceable>service_description</replaceable></code>. The description of the service."
-msgstr ""
-
-#: ./doc/common/section_cli_keystone_services.xml:83(para)
-msgid "For example, to create a <literal>swift</literal> service of type <literal>object-store</literal>, run this command:"
-msgstr ""
-
-#: ./doc/common/section_cli_keystone_services.xml:99(para)
-msgid "To get details for a service, run this command:"
-msgstr ""
-
-#: ./doc/common/section_cli_keystone_services.xml:101(replaceable)
-msgid "service_ID"
-msgstr ""
-
-#: ./doc/common/section_cli_keystone_services.xml:117(title)
-msgid "Create service users"
-msgstr ""
-
-#: ./doc/common/section_cli_keystone_services.xml:120(para)
-msgid "Create a project for the service users. Typically, this project is named <literal>service</literal>, but choose any name you like:"
-msgstr ""
-
-#: ./doc/common/section_cli_keystone_services.xml:125(para)
-msgid "The output shows the ID for the project."
-msgstr ""
-
-#: ./doc/common/section_cli_keystone_services.xml:126(para)
-msgid "Make a note of this ID. You need it to create service users and assign roles."
-msgstr ""
-
-#: ./doc/common/section_cli_keystone_services.xml:138(para)
-msgid "Create service users for the relevant services for your deployment."
-msgstr ""
-
-#: ./doc/common/section_cli_keystone_services.xml:142(para)
-msgid "To assign the admin role to the service user-project pairs, run this command to get the ID of the admin role:"
-msgstr ""
-
-#: ./doc/common/section_cli_keystone_services.xml:158(para)
-msgid "Assign the admin role to the user-project pair:"
-msgstr ""
-
-#: ./doc/common/section_cli_keystone_services.xml:160(replaceable)
-msgid "SERVICE_USER_ID"
-msgstr ""
-
-#: ./doc/common/section_cli_keystone_services.xml:160(replaceable)
-msgid "ADMIN_ROLE_ID"
-msgstr ""
-
-#: ./doc/common/section_cli_keystone_services.xml:160(replaceable)
-msgid "SERVICE_PROJECT_ID"
-msgstr ""
-
-#: ./doc/common/section_cli_keystone_services.xml:165(title)
-msgid "Delete a service"
-msgstr ""
-
-#: ./doc/common/section_cli_keystone_services.xml:166(para)
-msgid "To delete a specified service, specify its ID:"
-msgstr ""
-
-#: ./doc/common/section_cli_keystone_services.xml:167(replaceable)
-msgid "SERVICE_ID"
 msgstr ""
 
 #: ./doc/common/section_keystone-concepts-domain-management.xml:7(title)
@@ -8173,6 +7285,10 @@ msgstr ""
 msgid "The following example shows the default rate-limiting values:"
 msgstr ""
 
+#: ./doc/common/section_compute_config-api.xml:184(title)
+msgid "Configuration reference"
+msgstr ""
+
 #: ./doc/common/section_compute_config-api.xml:185(para)
 msgid "The Compute API configuration options are documented in <xref linkend=\"config_table_nova_api\"/>."
 msgstr ""
@@ -8203,50 +7319,6 @@ msgstr ""
 
 #: ./doc/common/ch_preface.xml:7(title)
 msgid "Preface"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_resizerebuild.xml:7(title)
-msgid "Change the size of your server"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_resizerebuild.xml:8(para)
-msgid "You change the size of a server by changing its flavor."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_resizerebuild.xml:11(para)
-msgid "Show information about your server, including its size, which is shown as the value of the flavor property."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_resizerebuild.xml:44(para)
-msgid "The size (flavor) of the server is <literal>m1.small (2)</literal>."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_resizerebuild.xml:47(para)
-msgid "List the available flavors with the following command:"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_resizerebuild.xml:60(para)
-msgid "To resize the server, pass the server ID or name and the new flavor to the <placeholder-1/> command. Include the <literal>--poll</literal> parameter to report the resize progress."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_resizerebuild.xml:68(para)
-msgid "Show the status for your server:"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_resizerebuild.xml:75(para)
-msgid "When the resize completes, the status becomes VERIFY_RESIZE."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_resizerebuild.xml:78(para)
-msgid "Confirm the resize:"
-msgstr ""
-
-#: ./doc/common/section_cli_nova_resizerebuild.xml:80(para) ./doc/common/section_cli_nova_resizerebuild.xml:86(para)
-msgid "The server status becomes ACTIVE."
-msgstr ""
-
-#: ./doc/common/section_cli_nova_resizerebuild.xml:83(para)
-msgid "If the resize fails or does not work as expected, you can revert the resize:"
 msgstr ""
 
 #: ./doc/common/section_dashboard-configure.xml:7(title)
@@ -8359,38 +7431,6 @@ msgstr ""
 
 #: ./doc/common/section_storage-concepts.xml:63(para)
 msgid "You should note that:<placeholder-1/>"
-msgstr ""
-
-#: ./doc/common/section_rpc-for-networking.xml:10(para)
-msgid "OpenStack projects use an open standard for messaging middleware known as AMQP. This messaging middleware enables the OpenStack services that run on multiple servers to talk to each other. OpenStack Oslo RPC supports three implementations of AMQP: <application>RabbitMQ</application>, <application>Qpid</application>, and <application>ZeroMQ</application>."
-msgstr ""
-
-#: ./doc/common/section_rpc-for-networking.xml:21(para)
-msgid "OpenStack Oslo RPC uses <application>RabbitMQ</application> by default. Use these options to configure the <application>RabbitMQ</application> message system. The <option>rpc_backend</option> option is optional as long as <application>RabbitMQ</application> is the default messaging system. However, if it is included the configuration, you must set it to <literal>neutron.openstack.common.rpc.impl_kombu</literal>."
-msgstr ""
-
-#: ./doc/common/section_rpc-for-networking.xml:35(para)
-msgid "Use these options to configure the <application>RabbitMQ</application> messaging system. You can configure messaging communication for different installation scenarios, tune retries for RabbitMQ, and define the size of the RPC thread pool. To monitor notifications through RabbitMQ, you must set the <option>notification_driver</option> option to <literal>neutron.notifier.rabbit_notifier</literal> in the <filename>neutron.conf</filename> file:"
-msgstr ""
-
-#: ./doc/common/section_rpc-for-networking.xml:47(para)
-msgid "Use these options to configure the <application>Qpid</application> messaging system for OpenStack Oslo RPC. <application>Qpid</application> is not the default messaging system, so you must enable it by setting the <option>rpc_backend</option> option in the <filename>neutron.conf</filename> file:"
-msgstr ""
-
-#: ./doc/common/section_rpc-for-networking.xml:56(para)
-msgid "This critical option points the compute nodes to the <application>Qpid</application> broker (server). Set the <option>qpid_hostname</option> option to the host name where the broker runs in the <filename>neutron.conf</filename> file."
-msgstr ""
-
-#: ./doc/common/section_rpc-for-networking.xml:94(para)
-msgid "Use these additional options to configure the Qpid messaging driver for OpenStack Oslo RPC. These options are used infrequently."
-msgstr ""
-
-#: ./doc/common/section_rpc-for-networking.xml:103(para)
-msgid "Use these options to configure the <application>ZeroMQ</application> messaging system for OpenStack Oslo RPC. <application>ZeroMQ</application> is not the default messaging system, so you must enable it by setting the <option>rpc_backend</option> option in the <filename>neutron.conf</filename> file:"
-msgstr ""
-
-#: ./doc/common/section_rpc-for-networking.xml:114(para)
-msgid "Use these common options to configure the <application>RabbitMQ</application>, <application>Qpid</application>, and <application>ZeroMq</application> messaging drivers:"
 msgstr ""
 
 #: ./doc/common/section_cli_nova_secgroups.xml:7(title)
@@ -8559,178 +7599,6 @@ msgstr ""
 
 #: ./doc/common/section_cli_version.xml:15(para)
 msgid "The version number (2.15.0 in the example) is returned."
-msgstr ""
-
-#: ./doc/common/section_xen-install.xml:7(title)
-msgid "Install XenServer and XCP"
-msgstr ""
-
-#: ./doc/common/section_xen-install.xml:9(para)
-msgid "Before you can run OpenStack with XCP or XenServer, you must install the software on <link href=\"http://docs.vmd.citrix.com/XenServer/6.0.0/1.0/en_gb/installation.html#sys_requirements\">an appropriate server</link>."
-msgstr ""
-
-#: ./doc/common/section_xen-install.xml:14(para)
-msgid "Xen is a type 1 hypervisor: When your server starts, Xen is the first software that runs. Consequently, you must install XenServer or XCP before you install the operating system where you want to run OpenStack code. The OpenStack services then run in a virtual machine that you install on top of XenServer."
-msgstr ""
-
-#: ./doc/common/section_xen-install.xml:21(para)
-msgid "Before you can install your system, decide whether to install a free or paid edition of Citrix XenServer or Xen Cloud Platform from Xen.org. Download the software from these locations:"
-msgstr ""
-
-#: ./doc/common/section_xen-install.xml:29(link)
-msgid "http://www.citrix.com/XenServer/download"
-msgstr ""
-
-#: ./doc/common/section_xen-install.xml:34(link)
-msgid "http://www.xen.org/download/xcp/index.html"
-msgstr ""
-
-#: ./doc/common/section_xen-install.xml:37(para)
-msgid "When you install many servers, you might find it easier to perform <link href=\"http://docs.vmd.citrix.com/XenServer/6.0.0/1.0/en_gb/installation.html#pxe_boot_install\">PXE boot installations of XenServer or XCP</link>. You can also package any post-installation changes that you want to make to your XenServer by <link href=\"http://docs.vmd.citrix.com/XenServer/6.0.0/1.0/en_gb/supplemental_pack_ddk.html\">creating your own XenServer supplemental pack</link>."
-msgstr ""
-
-#: ./doc/common/section_xen-install.xml:47(para)
-msgid "You can also install the <package>xcp-xenapi</package> package on Debian-based distributions to get XCP. However, this is not as mature or feature complete as above distributions. This modifies your boot loader to first boot Xen and boot your existing OS on top of Xen as Dom0. The xapi daemon runs in Dom0. Find more details at <link href=\"http://wiki.xen.org/wiki/Project_Kronos\">http://wiki.xen.org/wiki/Project_Kronos</link>."
-msgstr ""
-
-#: ./doc/common/section_xen-install.xml:56(para)
-msgid "Make sure you use the EXT type of storage repository (SR). Features that require access to VHD files (such as copy on write, snapshot and migration) do not work when you use the LVM SR. Storage repository (SR) is a XenAPI-specific term relating to the physical storage where virtual disks are stored."
-msgstr ""
-
-#: ./doc/common/section_xen-install.xml:62(para)
-msgid "On the XenServer/XCP installation screen, choose the <guilabel>XenDesktop Optimized</guilabel> option. If you use an answer file, make sure you use <literal>srtype=\"ext\"</literal> in the <option>installation</option> tag of the answer file."
-msgstr ""
-
-#: ./doc/common/section_xen-install.xml:70(title)
-msgid "Post-installation steps"
-msgstr ""
-
-#: ./doc/common/section_xen-install.xml:71(para)
-msgid "Complete these steps to install OpenStack in your XenServer system:"
-msgstr ""
-
-#: ./doc/common/section_xen-install.xml:75(para)
-msgid "For resize and migrate functionality, complete the changes described in the <citetitle>Configure resize</citetitle> section in the <link href=\"http://docs.openstack.org/trunk/config-reference/content/\"><citetitle>OpenStack Configuration Reference</citetitle></link>."
-msgstr ""
-
-#: ./doc/common/section_xen-install.xml:83(para)
-msgid "Install the VIF isolation rules to help prevent mac and IP address spoofing."
-msgstr ""
-
-#: ./doc/common/section_xen-install.xml:87(para)
-msgid "Install the XenAPI plug-ins. See the following section."
-msgstr ""
-
-#: ./doc/common/section_xen-install.xml:91(para)
-msgid "To support AMI type images, you must set up <literal>/boot/guest</literal> symlink/directory in Dom0. For detailed instructions, see next section."
-msgstr ""
-
-#: ./doc/common/section_xen-install.xml:97(para)
-msgid "To support resize/migration, set up an ssh trust relation between your XenServer hosts, and ensure <literal>/images</literal> is properly set up. See next section for more details."
-msgstr ""
-
-#: ./doc/common/section_xen-install.xml:103(para)
-msgid "Create a Paravirtualized virtual machine that can run the OpenStack compute code."
-msgstr ""
-
-#: ./doc/common/section_xen-install.xml:107(para)
-msgid "Install and configure the <systemitem class=\"service\">nova-compute</systemitem> in the above virtual machine."
-msgstr ""
-
-#: ./doc/common/section_xen-install.xml:112(para)
-msgid "For more information, see how DevStack performs the last three steps for developer deployments. For more information about DevStack, see <citetitle>Getting Started With XenServer and Devstack</citetitle> (<link href=\"https://github.com/openstack-dev/devstack/blob/master/tools/xen/README.md\">https://github.com/openstack-dev/devstack/blob/master/tools/xen/README.md</link>). Find more information about the first step, see <citetitle>Multi Tenancy Networking Protections in XenServer</citetitle> (<link href=\"https://github.com/openstack/nova/blob/master/plugins/xenserver/doc/networking.rst\">https://github.com/openstack/nova/blob/master/plugins/xenserver/doc/networking.rst</link>). For information about how to install the XenAPI plug-ins, see <citetitle>XenAPI README</citetitle> (<link href=\"https://github.com/openstack/nova/blob/master/plugins/xenserver/xenapi/README\">https://github.com/openstack/nova/blob/master/plugins/xenserver/xenapi/README</link>)."
-msgstr ""
-
-#: ./doc/common/section_xen-install.xml:132(title)
-msgid "Xen boot from ISO"
-msgstr ""
-
-#: ./doc/common/section_xen-install.xml:133(para)
-msgid "XenServer, through the XenAPI integration with OpenStack, provides a feature to boot instances from an ISO file. To activate the Boot From ISO feature, you must configure the SR elements on XenServer host, as follows:"
-msgstr ""
-
-#: ./doc/common/section_xen-install.xml:140(para)
-msgid "Create an ISO-typed SR, such as an NFS ISO library, for instance. For this, using XenCenter is a simple method. You must export an NFS volume from a remote NFS server. Make sure it is exported in read-write mode."
-msgstr ""
-
-#: ./doc/common/section_xen-install.xml:147(para)
-msgid "On the compute host, find and record the uuid of this ISO SR:"
-msgstr ""
-
-#: ./doc/common/section_xen-install.xml:152(para)
-msgid "Locate the uuid of the NFS ISO library:"
-msgstr ""
-
-#: ./doc/common/section_xen-install.xml:156(para)
-msgid "Set the uuid and configuration. Even if an NFS mount point is not local, you must specify <literal>local-storage-iso</literal>."
-msgstr ""
-
-#: ./doc/common/section_xen-install.xml:162(para)
-msgid "Make sure the host-uuid from <literal>xe pbd-list</literal> equals the uuid of the host you found previously:"
-msgstr ""
-
-#: ./doc/common/section_xen-install.xml:168(para)
-msgid "You can now add images through the OpenStack Image Service with <literal>disk-format=iso</literal>, and boot them in OpenStack Compute:"
-msgstr ""
-
-#: ./doc/common/section_xapi-install-plugins.xml:8(title)
-msgid "Install the XenAPI plug-ins"
-msgstr ""
-
-#: ./doc/common/section_xapi-install-plugins.xml:9(para)
-msgid "When you use Xen as the hypervisor for OpenStack Compute, you can install a Python script (or any executable) on the host side, and call that through the XenAPI. These scripts are called plug-ins. The XenAPI plug-ins live in the nova code repository. These plug-ins have to be copied to the Dom0 for the hypervisor, to the appropriate directory, where xapi can find them. There are several options for the installation. The important thing is to ensure that the version of the plug-ins are in line with the nova installation by only installing plug-ins from a matching nova repository."
-msgstr ""
-
-#: ./doc/common/section_xapi-install-plugins.xml:20(title)
-msgid "Manually install the plug-in"
-msgstr ""
-
-#: ./doc/common/section_xapi-install-plugins.xml:23(para)
-msgid "Create temporary files/directories:"
-msgstr ""
-
-#: ./doc/common/section_xapi-install-plugins.xml:28(para)
-msgid "Get the source from github. The example assumes the master branch is used. Amend the URL to match the version being used:"
-msgstr ""
-
-#: ./doc/common/section_xapi-install-plugins.xml:33(para)
-msgid "(Alternatively) To use the official Ubuntu packages, use the following commands to get the nova code base:"
-msgstr ""
-
-#: ./doc/common/section_xapi-install-plugins.xml:40(para)
-msgid "Copy the plug-ins to the hypervisor:"
-msgstr ""
-
-#: ./doc/common/section_xapi-install-plugins.xml:45(para)
-msgid "Remove the temporary files/directories:"
-msgstr ""
-
-#: ./doc/common/section_xapi-install-plugins.xml:52(title)
-msgid "Package a XenServer supplemental pack"
-msgstr ""
-
-#: ./doc/common/section_xapi-install-plugins.xml:53(para)
-msgid "Follow these steps to produce a supplemental pack from the nova sources, and package it as a XenServer supplemental pack."
-msgstr ""
-
-#: ./doc/common/section_xapi-install-plugins.xml:58(para)
-msgid "Create RPM packages. Given you have the nova sources. Use one of the methods in <xref linkend=\"manual_install\"/>:"
-msgstr ""
-
-#: ./doc/common/section_xapi-install-plugins.xml:63(para)
-msgid "These commands leave an <filename>.rpm</filename> file in the <filename>rpmbuild/RPMS/noarch/</filename> directory."
-msgstr ""
-
-#: ./doc/common/section_xapi-install-plugins.xml:69(para)
-msgid "Pack the RPM packages to a Supplemental Pack, using the XenServer DDK (the following command should be issued on the XenServer DDK virtual appliance, after the produced rpm file has been copied over):"
-msgstr ""
-
-#: ./doc/common/section_xapi-install-plugins.xml:82(para)
-msgid "This command produces an <filename>.iso</filename> file in the output directory specified. Copy that file to the hypervisor."
-msgstr ""
-
-#: ./doc/common/section_xapi-install-plugins.xml:88(para)
-msgid "Install the Supplemental Pack. Log in to the hypervisor, and issue:"
 msgstr ""
 
 #: ./doc/common/section_getstart_orchestration.xml:7(title)
@@ -9395,7 +8263,7 @@ msgstr ""
 msgid "Description of configuration options for database"
 msgstr ""
 
-#: ./doc/common/tables/ceilometer-database.xml:12(th) ./doc/common/tables/neutron-openvswitch_agent.xml:12(th) ./doc/common/tables/heat-clients.xml:12(th) ./doc/common/tables/cinder-solidfire.xml:12(th) ./doc/common/tables/neutron-rpc.xml:12(th) ./doc/common/tables/trove-db_percona.xml:12(th) ./doc/common/tables/nova-periodic.xml:12(th) ./doc/common/tables/keystone-auth.xml:12(th) ./doc/common/tables/keystone-policy.xml:12(th) ./doc/common/tables/glance-auth_token.xml:12(th) ./doc/common/tables/cinder-netapp_7mode_nfs.xml:12(th) ./doc/common/tables/swift-container-server-container-sync.xml:14(th) ./doc/common/tables/swift-proxy-server-DEFAULT.xml:14(th) ./doc/common/tables/cinder-zoning_fabric.xml:12(th) ./doc/common/tables/ceilometer-redis.xml:12(th) ./doc/common/tables/cinder-storage_ceph.xml:12(th) ./doc/common/tables/ceilometer-vmware.xml:12(th) ./doc/common/tables/neutron-cisco.xml:12(th) ./doc/common/tables/nova-testing.xml:12(th) ./doc/common/tables/nova-metadata.xml:12(th) ./doc/common/tables/heat-clients_nova.xml:12(th) ./doc/common/tables/cinder-hp3par.xml:12(th) ./doc/common/tables/keystone-misc.xml:12(th) ./doc/common/tables/swift-proxy-server-filter-cname_lookup.xml:14(th) ./doc/common/tables/neutron-scheduler.xml:12(th) ./doc/common/tables/glance-rbd.xml:12(th) ./doc/common/tables/cinder-storage_xen.xml:12(th) ./doc/common/tables/ceilometer-common.xml:12(th) ./doc/common/tables/swift-container-reconciler-filter-catch_errors.xml:14(th) ./doc/common/tables/cinder-database.xml:12(th) ./doc/common/tables/ceilometer-logging.xml:12(th) ./doc/common/tables/heat-common.xml:12(th) ./doc/common/tables/nova-ipv6.xml:12(th) ./doc/common/tables/nova-vnc.xml:12(th) ./doc/common/tables/ceilometer-nova_cells.xml:12(th) ./doc/common/tables/swift-container-reconciler-app-proxy-server.xml:14(th) ./doc/common/tables/neutron-ml2_cisco_apic.xml:12(th) ./doc/common/tables/trove-qpid.xml:12(th) ./doc/common/tables/keystone-api.xml:12(th) ./doc/common/tables/swift-object-expirer-pipeline-main.xml:14(th) ./doc/common/tables/swift-container-server-container-auditor.xml:14(th) ./doc/common/tables/swift-container-reconciler-DEFAULT.xml:14(th) ./doc/common/tables/glance-rpc.xml:12(th) ./doc/common/tables/neutron-policy.xml:12(th) ./doc/common/tables/glance-database.xml:12(th) ./doc/common/tables/nova-spice.xml:12(th) ./doc/common/tables/heat-clients_heat.xml:12(th) ./doc/common/tables/nova-xen.xml:12(th) ./doc/common/tables/trove-amqp.xml:12(th) ./doc/common/tables/glance-matchmaker.xml:12(th) ./doc/common/tables/ceilometer-auth_token.xml:12(th) ./doc/common/tables/nova-rabbitmq.xml:12(th) ./doc/common/tables/neutron-ml2_cisco.xml:12(th) ./doc/common/tables/nova-policy.xml:12(th) ./doc/common/tables/keystone-identity.xml:12(th) ./doc/common/tables/ceilometer-inspector.xml:12(th) ./doc/common/tables/cinder-scheduler.xml:12(th) ./doc/common/tables/trove-db_cassandra.xml:12(th) ./doc/common/tables/neutron-logging.xml:12(th) ./doc/common/tables/nova-availabilityzones.xml:12(th) ./doc/common/tables/keystone-catalog.xml:12(th) ./doc/common/tables/cinder-netapp_eseries_iscsi.xml:12(th) ./doc/common/tables/neutron-ml2_fslsdn.xml:12(th) ./doc/common/tables/neutron-rootwrap.xml:12(th) ./doc/common/tables/cinder-auth.xml:12(th) ./doc/common/tables/swift-swift-swift-constraints.xml:14(th) ./doc/common/tables/heat-qpid.xml:12(th) ./doc/common/tables/swift-object-expirer-filter-catch_errors.xml:14(th) ./doc/common/tables/swift-proxy-server-filter-slo.xml:14(th) ./doc/common/tables/nova-zookeeper.xml:12(th) ./doc/common/tables/nova-keymgr.xml:12(th) ./doc/common/tables/neutron-auth_token.xml:12(th) ./doc/common/tables/swift-swift-storage-policy-0.xml:14(th) ./doc/common/tables/swift-proxy-server-filter-cache.xml:14(th) ./doc/common/tables/nova-ldap.xml:12(th) ./doc/common/tables/swift-container-server-filter-recon.xml:14(th) ./doc/common/tables/swift-proxy-server-pipeline-main.xml:14(th) ./doc/common/tables/ceilometer-auth.xml:12(th) ./doc/common/tables/cinder-quota.xml:12(th) ./doc/common/tables/swift-proxy-server-filter-account-quotas.xml:14(th) ./doc/common/tables/keystone-os_inherit.xml:12(th) ./doc/common/tables/neutron-sdnve.xml:12(th) ./doc/common/tables/nova-compute.xml:12(th) ./doc/common/tables/keystone-rabbit.xml:12(th) ./doc/common/tables/cinder-backups_ceph.xml:12(th) ./doc/common/tables/nova-vmware.xml:12(th) ./doc/common/tables/heat-cfn_api.xml:12(th) ./doc/common/tables/neutron-vmware.xml:12(th) ./doc/common/tables/nova-rdp.xml:12(th) ./doc/common/tables/keystone-assignment.xml:12(th) ./doc/common/tables/nova-zeromq.xml:12(th) ./doc/common/tables/cinder-storage.xml:12(th) ./doc/common/tables/glance-registry.xml:12(th) ./doc/common/tables/swift-swift-storage-policy-1.xml:14(th) ./doc/common/tables/neutron-embrane.xml:12(th) ./doc/common/tables/heat-quota.xml:12(th) ./doc/common/tables/ceilometer-nova_import.xml:12(th) ./doc/common/tables/swift-account-server-filter-healthcheck.xml:14(th) ./doc/common/tables/nova-common.xml:12(th) ./doc/common/tables/swift-proxy-server-app-proxy-server.xml:14(th) ./doc/common/tables/nova-volumes.xml:12(th) ./doc/common/tables/neutron-redis.xml:12(th) ./doc/common/tables/trove-db_mysql.xml:12(th) ./doc/common/tables/heat-zeromq.xml:12(th) ./doc/common/tables/heat-amqp.xml:12(th) ./doc/common/tables/neutron-linuxbridge_agent.xml:12(th) ./doc/common/tables/nova-redis.xml:12(th) ./doc/common/tables/swift-container-server-DEFAULT.xml:14(th) ./doc/common/tables/glance-rabbitmq.xml:12(th) ./doc/common/tables/neutron-l3_agent.xml:12(th) ./doc/common/tables/swift-container-server-pipeline-main.xml:14(th) ./doc/common/tables/glance-policy.xml:12(th) ./doc/common/tables/nova-neutron.xml:12(th) ./doc/common/tables/cinder-backups.xml:12(th) ./doc/common/tables/cinder-keymgr.xml:12(th) ./doc/common/tables/keystone-ldap.xml:12(th) ./doc/common/tables/glance-vmware.xml:12(th) ./doc/common/tables/swift-account-server-filter-xprofile.xml:14(th) ./doc/common/tables/swift-proxy-server-filter-xprofile.xml:14(th) ./doc/common/tables/swift-proxy-server-filter-container-quotas.xml:14(th) ./doc/common/tables/cinder-zoning.xml:12(th) ./doc/common/tables/heat-notification.xml:12(th) ./doc/common/tables/swift-container-server-filter-healthcheck.xml:14(th) ./doc/common/tables/nova-vpn.xml:12(th) ./doc/common/tables/neutron-vpn.xml:12(th) ./doc/common/tables/swift-object-server-filter-xprofile.xml:14(th) ./doc/common/tables/swift-object-expirer-object-expirer.xml:14(th) ./doc/common/tables/trove-common.xml:12(th) ./doc/common/tables/trove-api.xml:12(th) ./doc/common/tables/cinder-zadara.xml:12(th) ./doc/common/tables/swift-object-server-filter-healthcheck.xml:14(th) ./doc/common/tables/nova-conductor.xml:12(th) ./doc/common/tables/swift-object-server-app-object-server.xml:14(th) ./doc/common/tables/swift-proxy-server-filter-catch_errors.xml:14(th) ./doc/common/tables/nova-livemigration.xml:12(th) ./doc/common/tables/swift-container-reconciler-container-reconciler.xml:14(th) ./doc/common/tables/heat-rabbitmq.xml:12(th) ./doc/common/tables/swift-proxy-server-filter-keystoneauth.xml:14(th) ./doc/common/tables/keystone-amqp.xml:12(th) ./doc/common/tables/keystone-rpc.xml:12(th) ./doc/common/tables/swift-object-server-DEFAULT.xml:14(th) ./doc/common/tables/cinder-zones.xml:12(th) ./doc/common/tables/cinder-scality.xml:12(th) ./doc/common/tables/swift-proxy-server-filter-tempauth.xml:14(th) ./doc/common/tables/neutron-agent.xml:12(th) ./doc/common/tables/cinder-emc.xml:12(th) ./doc/common/tables/cinder-vmware.xml:12(th) ./doc/common/tables/neutron-ml2_flat.xml:12(th) ./doc/common/tables/heat-metadata_api.xml:12(th) ./doc/common/tables/trove-rabbitmq.xml:12(th) ./doc/common/tables/nova-upgrade_levels.xml:12(th) ./doc/common/tables/cinder-netapp_cdot_iscsi.xml:12(th) ./doc/common/tables/neutron-ml2_ofa.xml:12(th) ./doc/common/tables/glance-api.xml:12(th) ./doc/common/tables/heat-waitcondition_api.xml:12(th) ./doc/common/tables/swift-proxy-server-filter-gatekeeper.xml:14(th) ./doc/common/tables/swift-rsyncd-container.xml:14(th) ./doc/common/tables/cinder-storwize.xml:12(th) ./doc/common/tables/cinder-hplefthand.xml:12(th) ./doc/common/tables/glance-s3.xml:12(th) ./doc/common/tables/nova-rootwrap.xml:12(th) ./doc/common/tables/heat-loadbalancer.xml:12(th) ./doc/common/tables/ceilometer-api.xml:12(th) ./doc/common/tables/ceilometer-exchange.xml:12(th) ./doc/common/tables/cinder-lvm.xml:12(th) ./doc/common/tables/trove-dns.xml:12(th) ./doc/common/tables/swift-container-reconciler-filter-proxy-logging.xml:14(th) ./doc/common/tables/nova-cells.xml:12(th) ./doc/common/tables/trove-volume.xml:12(th) ./doc/common/tables/heat-auth_token.xml:12(th) ./doc/common/tables/neutron-quotas.xml:12(th) ./doc/common/tables/nova-auth_token.xml:12(th) ./doc/common/tables/cinder-storage_nfs.xml:12(th) ./doc/common/tables/cinder-hds-hnas.xml:12(th) ./doc/common/tables/heat-api.xml:12(th) ./doc/common/tables/swift-proxy-server-filter-tempurl.xml:14(th) ./doc/common/tables/heat-clients_ceilometer.xml:12(th) ./doc/common/tables/neutron-ryu.xml:12(th) ./doc/common/tables/glance-logging.xml:12(th) ./doc/common/tables/swift-rsyncd-account.xml:14(th) ./doc/common/tables/neutron-metering_agent.xml:12(th) ./doc/common/tables/neutron-zeromq.xml:12(th) ./doc/common/tables/heat-clients_glance.xml:12(th) ./doc/common/tables/cinder-storage_glusterfs.xml:12(th) ./doc/common/tables/cinder-common.xml:12(th) ./doc/common/tables/glance-swift.xml:12(th) ./doc/common/tables/trove-quota.xml:12(th) ./doc/common/tables/cinder-auth_token.xml:12(th) ./doc/common/tables/ceilometer-alarm.xml:12(th) ./doc/common/tables/ceilometer-events.xml:12(th) ./doc/common/tables/neutron-lbaas_haproxy.xml:12(th) ./doc/common/tables/cinder-xiv.xml:12(th) ./doc/common/tables/swift-proxy-server-filter-name_check.xml:14(th) ./doc/common/tables/neutron-ml2_bigswitch.xml:12(th) ./doc/common/tables/nova-glance.xml:12(th) ./doc/common/tables/neutron-database.xml:12(th) ./doc/common/tables/keystone-auth_token.xml:12(th) ./doc/common/tables/nova-s3.xml:12(th) ./doc/common/tables/nova-pci.xml:12(th) ./doc/common/tables/swift-account-server-filter-recon.xml:14(th) ./doc/common/tables/heat-clients_cinder.xml:12(th) ./doc/common/tables/swift-proxy-server-filter-ratelimit.xml:14(th) ./doc/common/tables/keystone-revoke.xml:12(th) ./doc/common/tables/cinder-api.xml:12(th) ./doc/common/tables/trove-db_couchbase.xml:12(th) ./doc/common/tables/heat-clients_trove.xml:12(th) ./doc/common/tables/swift-account-server-account-replicator.xml:14(th) ./doc/common/tables/neutron-plumgrid.xml:12(th) ./doc/common/tables/trove-heat.xml:12(th) ./doc/common/tables/glance-sheepdog.xml:12(th) ./doc/common/tables/swift-container-sync-realms-DEFAULT.xml:14(th) ./doc/common/tables/cinder-windows.xml:12(th) ./doc/common/tables/cinder-san-solaris.xml:12(th) ./doc/common/tables/neutron-nuage.xml:12(th) ./doc/common/tables/keystone-zeromq.xml:12(th) ./doc/common/tables/neutron-bigswitch.xml:12(th) ./doc/common/tables/ceilometer-rpc.xml:12(th) ./doc/common/tables/swift-container-server-container-updater.xml:14(th) ./doc/common/tables/trove-db_mongodb.xml:12(th) ./doc/common/tables/swift-object-server-object-replicator.xml:14(th) ./doc/common/tables/glance-filesystem.xml:12(th) ./doc/common/tables/trove-rpc.xml:12(th) ./doc/common/tables/ceilometer-swift.xml:12(th) ./doc/common/tables/trove-backup.xml:12(th) ./doc/common/tables/nova-network.xml:12(th) ./doc/common/tables/glance-redis.xml:12(th) ./doc/common/tables/keystone-ssl.xml:12(th) ./doc/common/tables/nova-ca.xml:12(th) ./doc/common/tables/neutron-dhcp_agent.xml:12(th) ./doc/common/tables/ceilometer-collector.xml:12(th) ./doc/common/tables/cinder-hds-hus.xml:12(th) ./doc/common/tables/cinder-netapp_7mode_iscsi.xml:12(th) ./doc/common/tables/swift-swift-swift-hash.xml:14(th) ./doc/common/tables/neutron-ml2_gre.xml:12(th) ./doc/common/tables/neutron-varmour.xml:12(th) ./doc/common/tables/heat-debug.xml:12(th) ./doc/common/tables/swift-proxy-server-filter-dlo.xml:14(th) ./doc/common/tables/nova-kombu.xml:12(th) ./doc/common/tables/trove-guestagent.xml:12(th) ./doc/common/tables/nova-qpid.xml:12(th) ./doc/common/tables/glance-qpid.xml:12(th) ./doc/common/tables/neutron-lbaas_radware.xml:12(th) ./doc/common/tables/neutron-ml2_l2pop.xml:12(th) ./doc/common/tables/glance-amqp.xml:12(th) ./doc/common/tables/glance-zmq.xml:12(th) ./doc/common/tables/neutron-embrane_lb.xml:12(th) ./doc/common/tables/swift-object-expirer-DEFAULT.xml:14(th) ./doc/common/tables/swift-proxy-server-filter-authtoken.xml:14(th) ./doc/common/tables/neutron-testing.xml:12(th) ./doc/common/tables/swift-object-server-pipeline-main.xml:14(th) ./doc/common/tables/swift-memcache-memcache.xml:14(th) ./doc/common/tables/swift-account-server-app-account-server.xml:14(th) ./doc/common/tables/swift-proxy-server-filter-formpost.xml:14(th) ./doc/common/tables/trove-compute.xml:12(th) ./doc/common/tables/swift-proxy-server-filter-proxy-logging.xml:14(th) ./doc/common/tables/swift-container-server-filter-xprofile.xml:14(th) ./doc/common/tables/swift-object-expirer-filter-cache.xml:14(th) ./doc/common/tables/trove-db_redis.xml:12(th) ./doc/common/tables/cinder-rpc.xml:12(th) ./doc/common/tables/swift-container-sync-realms-realm2.xml:14(th) ./doc/common/tables/cinder-hpmsa.xml:12(th) ./doc/common/tables/nova-apiv3.xml:12(th) ./doc/common/tables/keystone-oauth.xml:12(th) ./doc/common/tables/cinder-storage_gpfs.xml:12(th) ./doc/common/tables/neutron-ml2_vlan.xml:12(th) ./doc/common/tables/swift-object-server-object-auditor.xml:14(th) ./doc/common/tables/trove-zeromq.xml:12(th) ./doc/common/tables/neutron-lbaas.xml:12(th) ./doc/common/tables/swift-container-reconciler-filter-cache.xml:14(th) ./doc/common/tables/cinder-backups_swift.xml:12(th) ./doc/common/tables/trove-database.xml:12(th) ./doc/common/tables/swift-container-server-app-container-server.xml:14(th) ./doc/common/tables/nova-authentication.xml:12(th) ./doc/common/tables/neutron-nvsd.xml:12(th) ./doc/common/tables/swift-account-server-pipeline-main.xml:14(th) ./doc/common/tables/glance-gridfs.xml:12(th) ./doc/common/tables/neutron-notifier.xml:12(th) ./doc/common/tables/nova-rpc_all.xml:12(th) ./doc/common/tables/neutron-hyperv_agent.xml:12(th) ./doc/common/tables/keystone-federation.xml:12(th) ./doc/common/tables/nova-scheduling.xml:12(th) ./doc/common/tables/cinder-ssl.xml:12(th) ./doc/common/tables/trove-ssl.xml:12(th) ./doc/common/tables/cinder-eqlx.xml:12(th) ./doc/common/tables/heat-redis.xml:12(th) ./doc/common/tables/nova-ec2.xml:12(th) ./doc/common/tables/keystone-credential.xml:12(th) ./doc/common/tables/cinder-block-device.xml:12(th) ./doc/common/tables/neutron-metadata.xml:12(th) ./doc/common/tables/nova-fping.xml:12(th) ./doc/common/tables/swift-proxy-server-filter-staticweb.xml:14(th) ./doc/common/tables/swift-container-server-container-replicator.xml:14(th) ./doc/common/tables/neutron-ml2_ncs.xml:12(th) ./doc/common/tables/neutron-ml2_arista.xml:12(th) ./doc/common/tables/nova-trustedcomputing.xml:12(th) ./doc/common/tables/swift-proxy-server-filter-bulk.xml:14(th) ./doc/common/tables/swift-object-expirer-app-proxy-server.xml:14(th) ./doc/common/tables/neutron-compute.xml:12(th) ./doc/common/tables/glance-imagecache.xml:12(th) ./doc/common/tables/neutron-ml2_brocade.xml:12(th) ./doc/common/tables/swift-account-server-account-auditor.xml:14(th) ./doc/common/tables/cinder-nas.xml:12(th) ./doc/common/tables/cinder-netapp_cdot_nfs.xml:12(th) ./doc/common/tables/heat-clients_swift.xml:12(th) ./doc/common/tables/keystone-logging.xml:12(th) ./doc/common/tables/neutron-brocade.xml:12(th) ./doc/common/tables/neutron-ml2_odl.xml:12(th) ./doc/common/tables/swift-object-server-filter-recon.xml:14(th) ./doc/common/tables/heat-rpc.xml:12(th) ./doc/common/tables/trove-taskmanager.xml:12(th) ./doc/common/tables/heat-cloudwatch_api.xml:12(th) ./doc/common/tables/cinder-images.xml:12(th) ./doc/common/tables/cinder-huawei.xml:12(th) ./doc/common/tables/neutron-lbaas_netscalar.xml:12(th) ./doc/common/tables/nova-console.xml:12(th) ./doc/common/tables/neutron-fwaas.xml:12(th) ./doc/common/tables/cinder-nexenta_nfs.xml:12(th) ./doc/common/tables/nova-database.xml:12(th) ./doc/common/tables/nova-quota.xml:12(th) ./doc/common/tables/heat-logging.xml:12(th) ./doc/common/tables/trove-redis.xml:12(th) ./doc/common/tables/keystone-stats.xml:12(th) ./doc/common/tables/heat-crypt.xml:12(th) ./doc/common/tables/neutron-ssl.xml:12(th) ./doc/common/tables/neutron-midonet.xml:12(th) ./doc/common/tables/cinder-coraid.xml:12(th) ./doc/common/tables/neutron-wsgi.xml:12(th) ./doc/common/tables/cinder-compute.xml:12(th) ./doc/common/tables/swift-rsyncd-object.xml:14(th) ./doc/common/tables/glance-wsgi.xml:12(th) ./doc/common/tables/swift-drive-audit-drive-audit.xml:14(th) ./doc/common/tables/nova-baremetal.xml:12(th) ./doc/common/tables/neutron-qpid.xml:12(th) ./doc/common/tables/nova-rpc.xml:12(th) ./doc/common/tables/cinder-backups_tsm.xml:12(th) ./doc/common/tables/cinder-san.xml:12(th) ./doc/common/tables/nova-logging.xml:12(th) ./doc/common/tables/neutron-nec.xml:12(th) ./doc/common/tables/keystone-security.xml:12(th) ./doc/common/tables/heat-clients_neutron.xml:12(th) ./doc/common/tables/nova-api.xml:12(th) ./doc/common/tables/neutron-ml2_mlnx.xml:12(th) ./doc/common/tables/trove-auth_token.xml:12(th) ./doc/common/tables/keystone-trust.xml:12(th) ./doc/common/tables/swift-container-reconciler-pipeline-main.xml:14(th) ./doc/common/tables/glance-cinder.xml:12(th) ./doc/common/tables/swift-object-server-object-updater.xml:14(th) ./doc/common/tables/glance-common.xml:12(th) ./doc/common/tables/neutron-ml2_vxlan.xml:12(th) ./doc/common/tables/swift-dispersion-dispersion.xml:14(th) ./doc/common/tables/swift-account-server-DEFAULT.xml:14(th) ./doc/common/tables/swift-proxy-server-filter-domain_remap.xml:14(th) ./doc/common/tables/trove-nova.xml:12(th) ./doc/common/tables/neutron-meta.xml:12(th) ./doc/common/tables/neutron-rabbitmq.xml:12(th) ./doc/common/tables/keystone-ec2.xml:12(th) ./doc/common/tables/heat-clients_keystone.xml:12(th) ./doc/common/tables/neutron-api.xml:12(th) ./doc/common/tables/trove-logging.xml:12(th) ./doc/common/tables/keystone-kvs.xml:12(th) ./doc/common/tables/keystone-redis.xml:12(th) ./doc/common/tables/nova-xvpnvncproxy.xml:12(th) ./doc/common/tables/glance-paste.xml:12(th) ./doc/common/tables/swift-proxy-server-filter-list-endpoints.xml:14(th) ./doc/common/tables/swift-account-server-account-reaper.xml:14(th) ./doc/common/tables/nova-hyperv.xml:12(th) ./doc/common/tables/swift-proxy-server-filter-container_sync.xml:14(th) ./doc/common/tables/heat-clients_backends.xml:12(th) ./doc/common/tables/glance-testing.xml:12(th) ./doc/common/tables/neutron-common.xml:12(th) ./doc/common/tables/nova-hypervisor.xml:12(th) ./doc/common/tables/keystone-qpid.xml:12(th) ./doc/common/tables/swift-container-sync-realms-realm1.xml:14(th) ./doc/common/tables/swift-proxy-server-filter-healthcheck.xml:14(th) ./doc/common/tables/nova-wsgi.xml:12(th) ./doc/common/tables/keystone-cache.xml:12(th) ./doc/common/tables/nova-configdrive.xml:12(th) ./doc/common/tables/keystone-token.xml:12(th) ./doc/common/tables/ceilometer-qpid.xml:12(th) ./doc/common/tables/heat-database.xml:12(th) ./doc/common/tables/ceilometer-rabbitmq.xml:12(th) ./doc/common/tables/neutron-ml2.xml:12(th) ./doc/common/tables/keystone-database.xml:12(th) ./doc/common/tables/keystone-memcache.xml:12(th) ./doc/common/tables/trove-debug.xml:12(th) ./doc/common/tables/trove-swift.xml:12(th) ./doc/common/tables/nova-tilera.xml:12(th) ./doc/common/tables/nova-libvirt.xml:12(th) ./doc/common/tables/neutron-mlnx.xml:12(th) ./doc/common/tables/cinder-zoning_manager.xml:12(th) ./doc/common/tables/ceilometer-amqp.xml:12(th) ./doc/common/tables/glance-ssl.xml:12(th) ./doc/common/tables/neutron-securitygroups.xml:12(th) ./doc/common/tables/keystone-debug.xml:12(th) ./doc/common/tables/cinder-rootwrap.xml:12(th) ./doc/common/tables/cinder-nexenta_iscsi.xml:12(th)
+#: ./doc/common/tables/ceilometer-database.xml:12(th) ./doc/common/tables/neutron-openvswitch_agent.xml:12(th) ./doc/common/tables/heat-clients.xml:12(th) ./doc/common/tables/cinder-solidfire.xml:12(th) ./doc/common/tables/neutron-rpc.xml:12(th) ./doc/common/tables/trove-db_percona.xml:12(th) ./doc/common/tables/nova-periodic.xml:12(th) ./doc/common/tables/keystone-auth.xml:12(th) ./doc/common/tables/keystone-policy.xml:12(th) ./doc/common/tables/glance-auth_token.xml:12(th) ./doc/common/tables/cinder-netapp_7mode_nfs.xml:12(th) ./doc/common/tables/swift-container-server-container-sync.xml:14(th) ./doc/common/tables/swift-proxy-server-DEFAULT.xml:14(th) ./doc/common/tables/cinder-zoning_fabric.xml:12(th) ./doc/common/tables/ceilometer-redis.xml:12(th) ./doc/common/tables/cinder-storage_ceph.xml:12(th) ./doc/common/tables/ceilometer-vmware.xml:12(th) ./doc/common/tables/neutron-cisco.xml:12(th) ./doc/common/tables/nova-testing.xml:12(th) ./doc/common/tables/nova-metadata.xml:12(th) ./doc/common/tables/heat-clients_nova.xml:12(th) ./doc/common/tables/cinder-hp3par.xml:12(th) ./doc/common/tables/keystone-misc.xml:12(th) ./doc/common/tables/swift-proxy-server-filter-cname_lookup.xml:14(th) ./doc/common/tables/neutron-scheduler.xml:12(th) ./doc/common/tables/glance-rbd.xml:12(th) ./doc/common/tables/cinder-storage_xen.xml:12(th) ./doc/common/tables/ceilometer-common.xml:12(th) ./doc/common/tables/swift-container-reconciler-filter-catch_errors.xml:14(th) ./doc/common/tables/cinder-database.xml:12(th) ./doc/common/tables/ceilometer-logging.xml:12(th) ./doc/common/tables/heat-common.xml:12(th) ./doc/common/tables/nova-ipv6.xml:12(th) ./doc/common/tables/nova-vnc.xml:12(th) ./doc/common/tables/ceilometer-nova_cells.xml:12(th) ./doc/common/tables/swift-container-reconciler-app-proxy-server.xml:14(th) ./doc/common/tables/neutron-ml2_cisco_apic.xml:12(th) ./doc/common/tables/trove-qpid.xml:12(th) ./doc/common/tables/keystone-api.xml:12(th) ./doc/common/tables/swift-object-expirer-pipeline-main.xml:14(th) ./doc/common/tables/swift-container-server-container-auditor.xml:14(th) ./doc/common/tables/swift-container-reconciler-DEFAULT.xml:14(th) ./doc/common/tables/glance-rpc.xml:12(th) ./doc/common/tables/neutron-policy.xml:12(th) ./doc/common/tables/glance-database.xml:12(th) ./doc/common/tables/nova-spice.xml:12(th) ./doc/common/tables/heat-clients_heat.xml:12(th) ./doc/common/tables/nova-xen.xml:12(th) ./doc/common/tables/trove-amqp.xml:12(th) ./doc/common/tables/glance-matchmaker.xml:12(th) ./doc/common/tables/ceilometer-auth_token.xml:12(th) ./doc/common/tables/nova-rabbitmq.xml:12(th) ./doc/common/tables/neutron-ml2_cisco.xml:12(th) ./doc/common/tables/nova-policy.xml:12(th) ./doc/common/tables/keystone-identity.xml:12(th) ./doc/common/tables/ceilometer-inspector.xml:12(th) ./doc/common/tables/cinder-scheduler.xml:12(th) ./doc/common/tables/trove-db_cassandra.xml:12(th) ./doc/common/tables/neutron-logging.xml:12(th) ./doc/common/tables/nova-availabilityzones.xml:12(th) ./doc/common/tables/keystone-catalog.xml:12(th) ./doc/common/tables/cinder-netapp_eseries_iscsi.xml:12(th) ./doc/common/tables/neutron-ml2_fslsdn.xml:12(th) ./doc/common/tables/neutron-rootwrap.xml:12(th) ./doc/common/tables/cinder-auth.xml:12(th) ./doc/common/tables/swift-swift-swift-constraints.xml:14(th) ./doc/common/tables/heat-qpid.xml:12(th) ./doc/common/tables/swift-object-expirer-filter-catch_errors.xml:14(th) ./doc/common/tables/swift-proxy-server-filter-slo.xml:14(th) ./doc/common/tables/nova-zookeeper.xml:12(th) ./doc/common/tables/nova-keymgr.xml:12(th) ./doc/common/tables/neutron-auth_token.xml:12(th) ./doc/common/tables/swift-swift-storage-policy-0.xml:14(th) ./doc/common/tables/swift-proxy-server-filter-cache.xml:14(th) ./doc/common/tables/nova-ldap.xml:12(th) ./doc/common/tables/swift-container-server-filter-recon.xml:14(th) ./doc/common/tables/swift-proxy-server-pipeline-main.xml:14(th) ./doc/common/tables/ceilometer-auth.xml:12(th) ./doc/common/tables/cinder-quota.xml:12(th) ./doc/common/tables/swift-proxy-server-filter-account-quotas.xml:14(th) ./doc/common/tables/keystone-os_inherit.xml:12(th) ./doc/common/tables/neutron-sdnve.xml:12(th) ./doc/common/tables/nova-compute.xml:12(th) ./doc/common/tables/keystone-rabbit.xml:12(th) ./doc/common/tables/cinder-backups_ceph.xml:12(th) ./doc/common/tables/nova-vmware.xml:12(th) ./doc/common/tables/heat-cfn_api.xml:12(th) ./doc/common/tables/neutron-vmware.xml:12(th) ./doc/common/tables/nova-rdp.xml:12(th) ./doc/common/tables/keystone-assignment.xml:12(th) ./doc/common/tables/nova-zeromq.xml:12(th) ./doc/common/tables/cinder-storage.xml:12(th) ./doc/common/tables/glance-registry.xml:12(th) ./doc/common/tables/swift-swift-storage-policy-1.xml:14(th) ./doc/common/tables/neutron-embrane.xml:12(th) ./doc/common/tables/heat-quota.xml:12(th) ./doc/common/tables/ceilometer-nova_import.xml:12(th) ./doc/common/tables/swift-account-server-filter-healthcheck.xml:14(th) ./doc/common/tables/nova-common.xml:12(th) ./doc/common/tables/swift-proxy-server-app-proxy-server.xml:14(th) ./doc/common/tables/nova-volumes.xml:12(th) ./doc/common/tables/neutron-redis.xml:12(th) ./doc/common/tables/trove-db_mysql.xml:12(th) ./doc/common/tables/heat-zeromq.xml:12(th) ./doc/common/tables/heat-amqp.xml:12(th) ./doc/common/tables/neutron-linuxbridge_agent.xml:12(th) ./doc/common/tables/nova-redis.xml:12(th) ./doc/common/tables/swift-container-server-DEFAULT.xml:14(th) ./doc/common/tables/glance-rabbitmq.xml:12(th) ./doc/common/tables/neutron-l3_agent.xml:12(th) ./doc/common/tables/swift-container-server-pipeline-main.xml:14(th) ./doc/common/tables/glance-policy.xml:12(th) ./doc/common/tables/nova-neutron.xml:12(th) ./doc/common/tables/cinder-backups.xml:12(th) ./doc/common/tables/cinder-keymgr.xml:12(th) ./doc/common/tables/keystone-ldap.xml:12(th) ./doc/common/tables/glance-vmware.xml:12(th) ./doc/common/tables/swift-account-server-filter-xprofile.xml:14(th) ./doc/common/tables/swift-proxy-server-filter-xprofile.xml:14(th) ./doc/common/tables/swift-proxy-server-filter-container-quotas.xml:14(th) ./doc/common/tables/cinder-zoning.xml:12(th) ./doc/common/tables/heat-notification.xml:12(th) ./doc/common/tables/swift-container-server-filter-healthcheck.xml:14(th) ./doc/common/tables/nova-vpn.xml:12(th) ./doc/common/tables/neutron-vpn.xml:12(th) ./doc/common/tables/swift-object-server-filter-xprofile.xml:14(th) ./doc/common/tables/swift-object-expirer-object-expirer.xml:14(th) ./doc/common/tables/trove-common.xml:12(th) ./doc/common/tables/trove-api.xml:12(th) ./doc/common/tables/cinder-zadara.xml:12(th) ./doc/common/tables/swift-object-server-filter-healthcheck.xml:14(th) ./doc/common/tables/nova-conductor.xml:12(th) ./doc/common/tables/swift-object-server-app-object-server.xml:14(th) ./doc/common/tables/swift-proxy-server-filter-catch_errors.xml:14(th) ./doc/common/tables/nova-livemigration.xml:12(th) ./doc/common/tables/swift-container-reconciler-container-reconciler.xml:14(th) ./doc/common/tables/heat-rabbitmq.xml:12(th) ./doc/common/tables/swift-proxy-server-filter-keystoneauth.xml:14(th) ./doc/common/tables/keystone-amqp.xml:12(th) ./doc/common/tables/keystone-rpc.xml:12(th) ./doc/common/tables/swift-object-server-DEFAULT.xml:14(th) ./doc/common/tables/cinder-zones.xml:12(th) ./doc/common/tables/cinder-scality.xml:12(th) ./doc/common/tables/swift-proxy-server-filter-tempauth.xml:14(th) ./doc/common/tables/neutron-agent.xml:12(th) ./doc/common/tables/cinder-emc.xml:12(th) ./doc/common/tables/cinder-vmware.xml:12(th) ./doc/common/tables/neutron-ml2_flat.xml:12(th) ./doc/common/tables/heat-metadata_api.xml:12(th) ./doc/common/tables/trove-rabbitmq.xml:12(th) ./doc/common/tables/nova-upgrade_levels.xml:12(th) ./doc/common/tables/cinder-netapp_cdot_iscsi.xml:12(th) ./doc/common/tables/neutron-ml2_ofa.xml:12(th) ./doc/common/tables/glance-api.xml:12(th) ./doc/common/tables/heat-waitcondition_api.xml:12(th) ./doc/common/tables/swift-proxy-server-filter-gatekeeper.xml:14(th) ./doc/common/tables/swift-rsyncd-container.xml:14(th) ./doc/common/tables/cinder-storwize.xml:12(th) ./doc/common/tables/cinder-hplefthand.xml:12(th) ./doc/common/tables/glance-s3.xml:12(th) ./doc/common/tables/nova-rootwrap.xml:12(th) ./doc/common/tables/heat-loadbalancer.xml:12(th) ./doc/common/tables/ceilometer-api.xml:12(th) ./doc/common/tables/ceilometer-exchange.xml:12(th) ./doc/common/tables/cinder-lvm.xml:12(th) ./doc/common/tables/trove-dns.xml:12(th) ./doc/common/tables/swift-container-reconciler-filter-proxy-logging.xml:14(th) ./doc/common/tables/nova-cells.xml:12(th) ./doc/common/tables/trove-volume.xml:12(th) ./doc/common/tables/heat-auth_token.xml:12(th) ./doc/common/tables/neutron-quotas.xml:12(th) ./doc/common/tables/nova-auth_token.xml:12(th) ./doc/common/tables/cinder-storage_nfs.xml:12(th) ./doc/common/tables/cinder-hds-hnas.xml:12(th) ./doc/common/tables/heat-api.xml:12(th) ./doc/common/tables/swift-proxy-server-filter-tempurl.xml:14(th) ./doc/common/tables/heat-clients_ceilometer.xml:12(th) ./doc/common/tables/neutron-ryu.xml:12(th) ./doc/common/tables/glance-logging.xml:12(th) ./doc/common/tables/swift-rsyncd-account.xml:14(th) ./doc/common/tables/neutron-metering_agent.xml:12(th) ./doc/common/tables/neutron-zeromq.xml:12(th) ./doc/common/tables/heat-clients_glance.xml:12(th) ./doc/common/tables/cinder-storage_glusterfs.xml:12(th) ./doc/common/tables/cinder-common.xml:12(th) ./doc/common/tables/glance-swift.xml:12(th) ./doc/common/tables/trove-quota.xml:12(th) ./doc/common/tables/cinder-auth_token.xml:12(th) ./doc/common/tables/ceilometer-alarm.xml:12(th) ./doc/common/tables/ceilometer-events.xml:12(th) ./doc/common/tables/neutron-lbaas_haproxy.xml:12(th) ./doc/common/tables/cinder-xiv.xml:12(th) ./doc/common/tables/swift-proxy-server-filter-name_check.xml:14(th) ./doc/common/tables/neutron-ml2_bigswitch.xml:12(th) ./doc/common/tables/nova-glance.xml:12(th) ./doc/common/tables/neutron-database.xml:12(th) ./doc/common/tables/keystone-auth_token.xml:12(th) ./doc/common/tables/nova-s3.xml:12(th) ./doc/common/tables/nova-pci.xml:12(th) ./doc/common/tables/swift-account-server-filter-recon.xml:14(th) ./doc/common/tables/heat-clients_cinder.xml:12(th) ./doc/common/tables/swift-proxy-server-filter-ratelimit.xml:14(th) ./doc/common/tables/keystone-revoke.xml:12(th) ./doc/common/tables/cinder-api.xml:12(th) ./doc/common/tables/trove-db_couchbase.xml:12(th) ./doc/common/tables/heat-clients_trove.xml:12(th) ./doc/common/tables/swift-account-server-account-replicator.xml:14(th) ./doc/common/tables/neutron-plumgrid.xml:12(th) ./doc/common/tables/trove-heat.xml:12(th) ./doc/common/tables/glance-sheepdog.xml:12(th) ./doc/common/tables/swift-container-sync-realms-DEFAULT.xml:14(th) ./doc/common/tables/cinder-windows.xml:12(th) ./doc/common/tables/cinder-san-solaris.xml:12(th) ./doc/common/tables/neutron-nuage.xml:12(th) ./doc/common/tables/keystone-zeromq.xml:12(th) ./doc/common/tables/neutron-bigswitch.xml:12(th) ./doc/common/tables/ceilometer-rpc.xml:12(th) ./doc/common/tables/swift-container-server-container-updater.xml:14(th) ./doc/common/tables/trove-db_mongodb.xml:12(th) ./doc/common/tables/swift-object-server-object-replicator.xml:14(th) ./doc/common/tables/glance-filesystem.xml:12(th) ./doc/common/tables/trove-rpc.xml:12(th) ./doc/common/tables/ceilometer-swift.xml:12(th) ./doc/common/tables/trove-backup.xml:12(th) ./doc/common/tables/nova-network.xml:12(th) ./doc/common/tables/glance-redis.xml:12(th) ./doc/common/tables/keystone-ssl.xml:12(th) ./doc/common/tables/nova-ca.xml:12(th) ./doc/common/tables/neutron-dhcp_agent.xml:12(th) ./doc/common/tables/ceilometer-collector.xml:12(th) ./doc/common/tables/cinder-hds-hus.xml:12(th) ./doc/common/tables/cinder-netapp_7mode_iscsi.xml:12(th) ./doc/common/tables/swift-swift-swift-hash.xml:14(th) ./doc/common/tables/neutron-ml2_gre.xml:12(th) ./doc/common/tables/neutron-varmour.xml:12(th) ./doc/common/tables/heat-debug.xml:12(th) ./doc/common/tables/swift-proxy-server-filter-dlo.xml:14(th) ./doc/common/tables/nova-kombu.xml:12(th) ./doc/common/tables/trove-guestagent.xml:12(th) ./doc/common/tables/nova-qpid.xml:12(th) ./doc/common/tables/glance-qpid.xml:12(th) ./doc/common/tables/neutron-lbaas_radware.xml:12(th) ./doc/common/tables/neutron-ml2_l2pop.xml:12(th) ./doc/common/tables/glance-amqp.xml:12(th) ./doc/common/tables/glance-zmq.xml:12(th) ./doc/common/tables/neutron-embrane_lb.xml:12(th) ./doc/common/tables/swift-object-expirer-DEFAULT.xml:14(th) ./doc/common/tables/swift-proxy-server-filter-authtoken.xml:14(th) ./doc/common/tables/neutron-testing.xml:12(th) ./doc/common/tables/swift-object-server-pipeline-main.xml:14(th) ./doc/common/tables/swift-memcache-memcache.xml:14(th) ./doc/common/tables/swift-account-server-app-account-server.xml:14(th) ./doc/common/tables/swift-proxy-server-filter-formpost.xml:14(th) ./doc/common/tables/trove-compute.xml:12(th) ./doc/common/tables/swift-proxy-server-filter-proxy-logging.xml:14(th) ./doc/common/tables/swift-container-server-filter-xprofile.xml:14(th) ./doc/common/tables/swift-object-expirer-filter-cache.xml:14(th) ./doc/common/tables/trove-db_redis.xml:12(th) ./doc/common/tables/cinder-rpc.xml:12(th) ./doc/common/tables/swift-container-sync-realms-realm2.xml:14(th) ./doc/common/tables/cinder-hpmsa.xml:12(th) ./doc/common/tables/nova-apiv3.xml:12(th) ./doc/common/tables/keystone-oauth.xml:12(th) ./doc/common/tables/cinder-storage_gpfs.xml:12(th) ./doc/common/tables/neutron-ml2_vlan.xml:12(th) ./doc/common/tables/swift-object-server-object-auditor.xml:14(th) ./doc/common/tables/trove-zeromq.xml:12(th) ./doc/common/tables/neutron-lbaas.xml:12(th) ./doc/common/tables/swift-container-reconciler-filter-cache.xml:14(th) ./doc/common/tables/cinder-backups_swift.xml:12(th) ./doc/common/tables/trove-database.xml:12(th) ./doc/common/tables/swift-container-server-app-container-server.xml:14(th) ./doc/common/tables/nova-authentication.xml:12(th) ./doc/common/tables/neutron-nvsd.xml:12(th) ./doc/common/tables/swift-account-server-pipeline-main.xml:14(th) ./doc/common/tables/glance-gridfs.xml:12(th) ./doc/common/tables/neutron-notifier.xml:12(th) ./doc/common/tables/nova-rpc_all.xml:12(th) ./doc/common/tables/neutron-hyperv_agent.xml:12(th) ./doc/common/tables/keystone-federation.xml:12(th) ./doc/common/tables/nova-scheduling.xml:12(th) ./doc/common/tables/cinder-ssl.xml:12(th) ./doc/common/tables/trove-ssl.xml:12(th) ./doc/common/tables/cinder-eqlx.xml:12(th) ./doc/common/tables/heat-redis.xml:12(th) ./doc/common/tables/nova-ec2.xml:12(th) ./doc/common/tables/keystone-credential.xml:12(th) ./doc/common/tables/cinder-block-device.xml:12(th) ./doc/common/tables/neutron-metadata.xml:12(th) ./doc/common/tables/nova-fping.xml:12(th) ./doc/common/tables/swift-proxy-server-filter-staticweb.xml:14(th) ./doc/common/tables/swift-container-server-container-replicator.xml:14(th) ./doc/common/tables/neutron-ml2_ncs.xml:12(th) ./doc/common/tables/neutron-ml2_arista.xml:12(th) ./doc/common/tables/nova-trustedcomputing.xml:12(th) ./doc/common/tables/swift-proxy-server-filter-bulk.xml:14(th) ./doc/common/tables/swift-object-expirer-app-proxy-server.xml:14(th) ./doc/common/tables/neutron-compute.xml:12(th) ./doc/common/tables/glance-imagecache.xml:12(th) ./doc/common/tables/neutron-ml2_brocade.xml:12(th) ./doc/common/tables/swift-account-server-account-auditor.xml:14(th) ./doc/common/tables/cinder-nas.xml:12(th) ./doc/common/tables/cinder-netapp_cdot_nfs.xml:12(th) ./doc/common/tables/heat-clients_swift.xml:12(th) ./doc/common/tables/keystone-logging.xml:12(th) ./doc/common/tables/neutron-brocade.xml:12(th) ./doc/common/tables/neutron-ml2_odl.xml:12(th) ./doc/common/tables/swift-object-server-filter-recon.xml:14(th) ./doc/common/tables/heat-rpc.xml:12(th) ./doc/common/tables/trove-taskmanager.xml:12(th) ./doc/common/tables/heat-cloudwatch_api.xml:12(th) ./doc/common/tables/cinder-images.xml:12(th) ./doc/common/tables/cinder-huawei.xml:12(th) ./doc/common/tables/neutron-lbaas_netscalar.xml:12(th) ./doc/common/tables/nova-console.xml:12(th) ./doc/common/tables/neutron-fwaas.xml:12(th) ./doc/common/tables/cinder-nexenta_nfs.xml:12(th) ./doc/common/tables/nova-database.xml:12(th) ./doc/common/tables/nova-quota.xml:12(th) ./doc/common/tables/heat-logging.xml:12(th) ./doc/common/tables/trove-redis.xml:12(th) ./doc/common/tables/keystone-stats.xml:12(th) ./doc/common/tables/heat-crypt.xml:12(th) ./doc/common/tables/neutron-ssl.xml:12(th) ./doc/common/tables/neutron-midonet.xml:12(th) ./doc/common/tables/cinder-coraid.xml:12(th) ./doc/common/tables/neutron-wsgi.xml:12(th) ./doc/common/tables/cinder-compute.xml:12(th) ./doc/common/tables/swift-rsyncd-object.xml:14(th) ./doc/common/tables/glance-wsgi.xml:12(th) ./doc/common/tables/swift-drive-audit-drive-audit.xml:14(th) ./doc/common/tables/nova-baremetal.xml:12(th) ./doc/common/tables/neutron-qpid.xml:12(th) ./doc/common/tables/nova-rpc.xml:12(th) ./doc/common/tables/cinder-backups_tsm.xml:12(th) ./doc/common/tables/cinder-san.xml:12(th) ./doc/common/tables/nova-logging.xml:12(th) ./doc/common/tables/neutron-nec.xml:12(th) ./doc/common/tables/keystone-security.xml:12(th) ./doc/common/tables/heat-clients_neutron.xml:12(th) ./doc/common/tables/nova-api.xml:12(th) ./doc/common/tables/neutron-ml2_mlnx.xml:12(th) ./doc/common/tables/trove-auth_token.xml:12(th) ./doc/common/tables/keystone-trust.xml:12(th) ./doc/common/tables/swift-container-reconciler-pipeline-main.xml:14(th) ./doc/common/tables/glance-cinder.xml:12(th) ./doc/common/tables/swift-object-server-object-updater.xml:14(th) ./doc/common/tables/glance-common.xml:12(th) ./doc/common/tables/neutron-ml2_vxlan.xml:12(th) ./doc/common/tables/swift-dispersion-dispersion.xml:14(th) ./doc/common/tables/swift-account-server-DEFAULT.xml:14(th) ./doc/common/tables/swift-proxy-server-filter-domain_remap.xml:14(th) ./doc/common/tables/trove-nova.xml:12(th) ./doc/common/tables/neutron-meta.xml:12(th) ./doc/common/tables/neutron-rabbitmq.xml:12(th) ./doc/common/tables/keystone-ec2.xml:12(th) ./doc/common/tables/heat-clients_keystone.xml:12(th) ./doc/common/tables/neutron-api.xml:12(th) ./doc/common/tables/trove-logging.xml:12(th) ./doc/common/tables/keystone-kvs.xml:12(th) ./doc/common/tables/keystone-redis.xml:12(th) ./doc/common/tables/nova-xvpnvncproxy.xml:12(th) ./doc/common/tables/glance-paste.xml:12(th) ./doc/common/tables/swift-proxy-server-filter-list-endpoints.xml:14(th) ./doc/common/tables/swift-account-server-account-reaper.xml:14(th) ./doc/common/tables/nova-hyperv.xml:12(th) ./doc/common/tables/swift-proxy-server-filter-container_sync.xml:14(th) ./doc/common/tables/heat-clients_backends.xml:12(th) ./doc/common/tables/glance-testing.xml:12(th) ./doc/common/tables/neutron-common.xml:12(th) ./doc/common/tables/nova-hypervisor.xml:12(th) ./doc/common/tables/cinder-prophststor_dpl.xml:13(th) ./doc/common/tables/keystone-qpid.xml:12(th) ./doc/common/tables/swift-container-sync-realms-realm1.xml:14(th) ./doc/common/tables/swift-proxy-server-filter-healthcheck.xml:14(th) ./doc/common/tables/nova-wsgi.xml:12(th) ./doc/common/tables/keystone-cache.xml:12(th) ./doc/common/tables/nova-configdrive.xml:12(th) ./doc/common/tables/keystone-token.xml:12(th) ./doc/common/tables/ceilometer-qpid.xml:12(th) ./doc/common/tables/heat-database.xml:12(th) ./doc/common/tables/ceilometer-rabbitmq.xml:12(th) ./doc/common/tables/neutron-ml2.xml:12(th) ./doc/common/tables/keystone-database.xml:12(th) ./doc/common/tables/keystone-memcache.xml:12(th) ./doc/common/tables/trove-debug.xml:12(th) ./doc/common/tables/trove-swift.xml:12(th) ./doc/common/tables/nova-tilera.xml:12(th) ./doc/common/tables/nova-libvirt.xml:12(th) ./doc/common/tables/neutron-mlnx.xml:12(th) ./doc/common/tables/cinder-zoning_manager.xml:12(th) ./doc/common/tables/ceilometer-amqp.xml:12(th) ./doc/common/tables/glance-ssl.xml:12(th) ./doc/common/tables/neutron-securitygroups.xml:12(th) ./doc/common/tables/keystone-debug.xml:12(th) ./doc/common/tables/cinder-rootwrap.xml:12(th) ./doc/common/tables/cinder-nexenta_iscsi.xml:12(th)
 msgid "Configuration option = Default value"
 msgstr ""
 
@@ -29903,7 +28771,7 @@ msgstr ""
 msgid "(StrOpt) Cluster name to use for creating volumes"
 msgstr ""
 
-#: ./doc/common/tables/cinder-san.xml:25(td)
+#: ./doc/common/tables/cinder-san.xml:25(td) ./doc/common/tables/cinder-prophststor_dpl.xml:22(td)
 msgid "san_ip ="
 msgstr ""
 
@@ -29927,7 +28795,7 @@ msgstr ""
 msgid "(StrOpt) Username for SAN controller"
 msgstr ""
 
-#: ./doc/common/tables/cinder-san.xml:37(td)
+#: ./doc/common/tables/cinder-san.xml:37(td) ./doc/common/tables/cinder-prophststor_dpl.xml:30(td)
 msgid "san_password ="
 msgstr ""
 
@@ -29951,7 +28819,7 @@ msgstr ""
 msgid "(IntOpt) SSH port to use with SAN"
 msgstr ""
 
-#: ./doc/common/tables/cinder-san.xml:49(td)
+#: ./doc/common/tables/cinder-san.xml:49(td) ./doc/common/tables/cinder-prophststor_dpl.xml:34(td)
 msgid "san_thin_provision = True"
 msgstr ""
 
@@ -31341,6 +30209,46 @@ msgstr ""
 
 #: ./doc/common/tables/nova-hypervisor.xml:128(td)
 msgid "use_virtio_for_bridges = True"
+msgstr ""
+
+#: ./doc/common/tables/cinder-prophststor_dpl.xml:8(caption)
+msgid "Description of configuration options for prophetstor_dpl"
+msgstr ""
+
+#: ./doc/common/tables/cinder-prophststor_dpl.xml:23(td)
+msgid "(StrOpt) IP address of ProphetStor DPL storage server."
+msgstr ""
+
+#: ./doc/common/tables/cinder-prophststor_dpl.xml:26(td)
+msgid "san_login ="
+msgstr ""
+
+#: ./doc/common/tables/cinder-prophststor_dpl.xml:27(td)
+msgid "(StrOpt) Username of ProphetStor DPL storage server."
+msgstr ""
+
+#: ./doc/common/tables/cinder-prophststor_dpl.xml:31(td)
+msgid "(StrOpt) Password of ProphetStor DPL storage server."
+msgstr ""
+
+#: ./doc/common/tables/cinder-prophststor_dpl.xml:35(td)
+msgid "(BoolOpt) Use thin provisioning for SAN volumes."
+msgstr ""
+
+#: ./doc/common/tables/cinder-prophststor_dpl.xml:38(td)
+msgid "dpl_port = 8357"
+msgstr ""
+
+#: ./doc/common/tables/cinder-prophststor_dpl.xml:39(td)
+msgid "(IntOpt) Port number of ProphetStor DPL storage server."
+msgstr ""
+
+#: ./doc/common/tables/cinder-prophststor_dpl.xml:42(td)
+msgid "dpl_pool ="
+msgstr ""
+
+#: ./doc/common/tables/cinder-prophststor_dpl.xml:43(td)
+msgid "(StrOpt) Pool id of ProphetStor DPL storage server."
 msgstr ""
 
 #: ./doc/common/tables/swift-container-sync-realms-realm1.xml:8(literal)

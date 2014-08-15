@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-08-05 06:09+0000\n"
+"POT-Creation-Date: 2014-08-15 06:09+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -151,7 +151,7 @@ msgid "Note that these logging methods may safely be called anywhere you have a 
 msgstr ""
 
 #: ./doc/admin-guide-cloud/section_object-storage-monitoring.xml:287(para)
-msgid "The development team of StatsD wanted to use the <link href=\"https://github.com/sivy/py-statsd\">pystatsd</link> client library (not to be confused with a <link href=\"https://github.com/sivy/py-statsd\">similar-looking project</link> also hosted on GitHub), but the released version on PyPi was missing two desired features the latest version in GitHub had: the ability to configure a metrics prefix in the client object and a convenience method for sending timing data between “now” and a “start” timestamp you already have. So they just implemented a simple StatsD client library from scratch with the same interface. This has the nice fringe benefit of not introducing another external library dependency into Object Storage."
+msgid "The development team of StatsD wanted to use the <link href=\"https://github.com/sivy/py-statsd\">pystatsd</link> client library (not to be confused with a <link href=\"https://github.com/sivy/py-statsd\">similar-looking project</link> also hosted on GitHub), but the released version on PyPI was missing two desired features the latest version in GitHub had: the ability to configure a metrics prefix in the client object and a convenience method for sending timing data between “now” and a “start” timestamp you already have. So they just implemented a simple StatsD client library from scratch with the same interface. This has the nice fringe benefit of not introducing another external library dependency into Object Storage."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/section_object-storage-admin.xml:7(title)
@@ -430,219 +430,219 @@ msgstr ""
 msgid "Identity concepts"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:32(title)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:33(title)
 msgid "User CRUD"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:33(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:34(para)
 msgid "Identity provides a user CRUD filter that can be added to the public_api pipeline. This user CRUD filter enables users to use a HTTP PATCH to change their own password. To enable this extension you should define a <literal>user_crud_extension</literal> filter, insert it after the <literal>*_body</literal> middleware and before the <literal>public_service</literal> application in the public_api WSGI pipeline in <filename>keystone.conf</filename>. For example:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:47(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:48(para)
 msgid "Each user can then change their own password with a HTTP PATCH:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:48(replaceable)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:49(replaceable)
 msgid "USERID"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:49(replaceable)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:50(replaceable)
 msgid "AUTHTOKENID"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:50(para)
-msgid "In addition to changing their password, all current tokens for the user are deleted (if the back end is KVS or sql)."
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:51(para)
+msgid "In addition to changing their password, all current tokens for the user are deleted (if the back end is KVS or SQL)."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:52(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:53(para)
 msgid "Only use a KVS back end for tokens when testing."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:55(title)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:56(title)
 msgid "Logging"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:56(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:57(para)
 msgid "You configure logging externally to the rest of Identity. The file specifying the logging configuration is in the <literal>[DEFAULT]</literal> section of the <filename>keystone.conf</filename> file under <literal>log_config</literal>. To route logging through syslog, set <literal>use_syslog=true</literal> option in the <literal>[DEFAULT]</literal> section."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:62(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:63(para)
 msgid "A sample logging file is available with the project in the <filename>etc/logging.conf.sample</filename> directory. Like other OpenStack projects, Identity uses the Python logging module, which includes extensive configuration options that let you define the output levels and formats."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:67(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:68(para)
 msgid "Review the <filename>etc/keystone.conf</filename> sample configuration files that are distributed with the Identity Service. For example, each server application has its own configuration file."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:71(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:72(para)
 msgid "For services that have separate paste-deploy <filename>.ini</filename> files, you can configure <literal>auth_token</literal> middleware in the <literal>[keystone_authtoken]</literal> section in the main configuration file, such as <filename>nova.conf</filename>. For example in Compute, you can remove the middleware parameters from <filename>api-paste.ini</filename>, as follows:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:81(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:82(para)
 msgid "Set these values in the <filename>nova.conf</filename> file:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:96(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:97(para)
 msgid "Middleware parameters in paste config take priority. You must remove them to use values in the <literal>[keystone_authtoken]</literal> section."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:102(title)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:103(title)
 msgid "Monitoring"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:103(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:104(para)
 msgid "Identity provides some basic request and response monitoring statistics out of the box."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:105(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:106(para)
 msgid "Enable data collection by defining a <literal>stats_monitoring</literal> filter and including it at the beginning of any desired WSGI pipelines:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:113(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:114(para)
 msgid "Enable the reporting of collected data by defining a <literal>stats_reporting</literal> filter and including it near the end of your <literal>admin_api</literal> WSGI pipeline (After <literal>*_body</literal> middleware and before <literal>*_extension</literal> filters is recommended):"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:123(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:124(para)
 msgid "Query the admin API for statistics using:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:125(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:126(para)
 msgid "Reset collected data using:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:130(title)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:131(title)
 msgid "Start the Identity services"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:131(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:132(para)
 msgid "To start the services for Identity, run the following command:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:134(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:135(para)
 msgid "This command starts two wsgi.Server instances configured by the <filename>keystone.conf</filename> file as described previously. One of these wsgi servers is <literal>admin</literal> (the administration API) and the other is <literal>main</literal> (the primary/public API interface). Both run in a single process."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:142(title)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:143(title)
 msgid "Example usage"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:143(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:144(para)
 msgid "The <literal>keystone</literal> client is set up to expect commands in the general form of <literal>keystone</literal><literal>command</literal><literal>argument</literal>, followed by flag-like keyword arguments to provide additional (often optional) information. For example, the command <literal>user-list</literal> and <literal>tenant-create</literal> can be invoked as follows:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:173(title)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:174(title)
 msgid "Authentication middleware with user name and password"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:175(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:176(para)
 msgid "You can also configure Identity authentication middleware using the <option>admin_user</option> and <option>admin_password</option> options. When using the <option>admin_user</option> and <option>admin_password</option> options the <option>admin_token</option> parameter is optional. If <option>admin_token</option> is specified, it is used only if the specified token is still valid."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:183(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:184(para)
 msgid "For services that have a separate paste-deploy .ini file, you can configure the authentication middleware in the <literal>[keystone_authtoken]</literal> section of the main configuration file, such as <filename>nova.conf</filename>. In Compute, for example, you can remove the middleware parameters from <filename>api-paste.ini</filename>, as follows:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:192(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:193(para)
 msgid "And set the following values in <filename>nova.conf</filename> as follows:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:207(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:208(para)
 msgid "The middleware parameters in the paste config take priority. You must remove them to use the values in the [keystone_authtoken] section."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:211(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:212(para)
 msgid "This sample paste config filter makes use of the <option>admin_user</option> and <option>admin_password</option> options:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:224(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:225(para)
 msgid "Using this option requires an admin tenant/role relationship. The admin user is granted access to the admin role on the admin tenant."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:230(title)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:231(title)
 msgid "Identity API protection with role-based access control (RBAC)"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:232(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:233(para)
 msgid "Like most OpenStack projects, Identity supports the protection of its APIs by defining policy rules based on an RBAC approach. Identity stores a reference to a policy JSON file in the main Identity configuration file, <filename>keystone.conf</filename>. Typically this file is named <filename>policy.json</filename>, and it contains the rules for which roles have access to certain actions in defined services."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:238(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:239(para)
 msgid "Each Identity API v3 call has a line in the policy file that dictates which level of governance of access applies."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:240(replaceable)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:241(replaceable)
 msgid "API_NAME"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:240(replaceable)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:241(replaceable)
 msgid "RULE_STATEMENT"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:240(replaceable)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:241(replaceable)
 msgid "MATCH_STATEMENT"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:241(para) ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml:56(para) ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml:106(para) ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml:54(para) ./doc/admin-guide-cloud/compute/section_compute-networking-nova.xml:164(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:242(para) ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml:56(para) ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml:106(para) ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml:54(para) ./doc/admin-guide-cloud/compute/section_trusted-compute-pools.xml:79(para) ./doc/admin-guide-cloud/compute/section_compute-networking-nova.xml:164(para)
 msgid "Where:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:242(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:243(para)
 msgid "<code><replaceable>RULE_STATEMENT</replaceable></code> can contain <code><replaceable>RULE_STATEMENT</replaceable></code> or <code><replaceable>MATCH_STATEMENT</replaceable></code>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:243(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:244(para)
 msgid "<code><replaceable>MATCH_STATEMENT</replaceable></code> is a set of identifiers that must match between the token provided by the caller of the API and the parameters or target entities of the API call in question. For example:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:247(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:248(para)
 msgid "Indicates that to create a user, you must have the admin role in your token and the <literal>domain_id</literal> in your token (which implies this must be a domain-scoped token) must match the <literal>domain_id</literal> in the user object that you are trying to create. In other words, you must have the admin role on the domain in which you are creating the user, and the token that you use must be scoped to that domain."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:253(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:254(para)
 msgid "Each component of a match statement uses this format:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:254(replaceable)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:255(replaceable)
 msgid "ATTRIB_FROM_TOKEN"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:254(replaceable)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:255(replaceable)
 msgid "CONSTANT"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:254(replaceable)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:255(replaceable)
 msgid "ATTRIB_RELATED_TO_API_CALL"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:255(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:256(para)
 msgid "The Identity service expects these attributes:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:256(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:257(para)
 msgid "Attributes from token: <literal>user_id</literal>, the <literal>domain_id</literal> or <literal>project_id</literal> depending on the scope, and the list of roles you have within that scope."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:258(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:259(para)
 msgid "Attributes related to API call: Any parameters passed into the API call are available, along with any filters specified in the query string. You reference attributes of objects passed with an object.attribute syntax (such as, <literal>user.domain_id</literal>). The target objects of an API are also available using a target.object.attribute syntax. For instance:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:265(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:266(para)
 msgid "would ensure that Identity only deletes the user object in the same domain as the provided token."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:267(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:268(para)
 msgid "Every target object has an `id` and a `name` available as `target.<replaceable>OBJECT</replaceable>.id` and `target.<replaceable>OBJECT</replaceable>.name`. Identity retrieves other attributes from the database, and the attributes vary between object types. The Identity service filters out some database fields, such as user passwords."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:272(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:273(para)
 msgid "List of object attributes:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:302(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:303(para)
 msgid "The default <filename>policy.json</filename> file supplied provides a somewhat basic example of API protection, and does not assume any particular use of domains. Refer to <filename>policy.v3cloudsample.json</filename> as an example of multi-domain configuration installations where a cloud provider wants to delegate administration of the contents of a domain to a particular admin domain. This example policy file also shows the use of an admin_domain to allow a cloud provider to enable cloud administrators to have wider access across the APIs."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:311(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:312(para)
 msgid "A clean installation could start with the standard policy file, to allow creation of the admin_domain with the first users within it. You could then obtain the domain_id of the admin domain, paste the ID into a modified version of <filename>policy.v3cloudsample.json</filename>, and then enable it as the main policy file."
 msgstr ""
 
@@ -691,7 +691,7 @@ msgid "The <literal>scheduler</literal> is used to select the most suitable comp
 msgstr ""
 
 #: ./doc/admin-guide-cloud/ch_compute.xml:60(para)
-msgid "Compute uses a messaging-based, <literal>shared nothing</literal> architecture. All major components exist on multiple servers, including the compute, volume, and network controllers, and the object store or image service. The state of the entire system is stored in a database. The cloud controller communicates with the internal object store using HTTP, but it communicates with the scheduler, network controller, and volume controller using AMQP (advanced message queueing protocol). To avoid blocking a component while waiting for a response, Compute uses asynchronous calls, with a callback that is triggered when a response is received."
+msgid "Compute uses a messaging-based, <literal>shared nothing</literal> architecture. All major components exist on multiple servers, including the compute, volume, and network controllers, and the object store or image service. The state of the entire system is stored in a database. The cloud controller communicates with the internal object store using HTTP, but it communicates with the scheduler, network controller, and volume controller using AMQP (advanced message queuing protocol). To avoid blocking a component while waiting for a response, Compute uses asynchronous calls, with a callback that is triggered when a response is received."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/ch_compute.xml:69(title)
@@ -875,7 +875,7 @@ msgid "Building blocks"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/ch_compute.xml:317(para)
-msgid "In OpenStack the base operating system is usually copied from an image stored in the OpenStack Image Service. This is the most common case and results in an ephemeral instance that starts from a known template state and loses all accumulated states on virtual machine deletion. It is also possible to put an operating system on a persistent volume in the Cinder volume system. This gives a more traditional persistent system that accumulates states, which are preserved on the Cinder volume across the deletion and re-creation of the virutal machine. To get a list of available images on your system run: <placeholder-1/>"
+msgid "In OpenStack the base operating system is usually copied from an image stored in the OpenStack Image Service. This is the most common case and results in an ephemeral instance that starts from a known template state and loses all accumulated states on virtual machine deletion. It is also possible to put an operating system on a persistent volume in the Cinder volume system. This gives a more traditional persistent system that accumulates states, which are preserved on the Cinder volume across the deletion and re-creation of the virtual machine. To get a list of available images on your system run: <placeholder-1/>"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/ch_compute.xml:337(para) ./doc/admin-guide-cloud/compute/section_compute-instance-building-blocks.xml:24(para)
@@ -1017,7 +1017,7 @@ msgid "Introduction to Networking"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:8(para)
-msgid "The Networking service, code-named neutron, provides an API that lets you define network connectivity and addressing in the cloud. The Networking service enables operators to leverage different networking technologies to power their cloud networking. The Networking service also provides an API to configure and manage a variety of network services ranging from L3 forwarding and NAT to load balancing, edge firewalls, and IPSEC VPN."
+msgid "The Networking service, code-named neutron, provides an API that lets you define network connectivity and addressing in the cloud. The Networking service enables operators to leverage different networking technologies to power their cloud networking. The Networking service also provides an API to configure and manage a variety of network services ranging from L3 forwarding and NAT to load balancing, edge firewalls, and IPsec VPN."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:16(para)
@@ -1631,7 +1631,7 @@ msgid "Update the plug-in configuration file <filename>/etc/neutron/plugins/linu
 msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:99(title)
-msgid "HostA and Hostb: L2 agent"
+msgid "HostA and HostB: L2 agent"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking-multi-dhcp-agents.xml:122(para)
@@ -5249,7 +5249,7 @@ msgid "OpenStack Networking server with plug-in"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:12(para)
-msgid "This web server runs the OpenStack Networking API Web Server. It laods a plug-in and passes the API calls to the plug-in for processing. The <systemitem class=\"service\">neutron-server</systemitem> service receives one or more configuration files as input. For example:"
+msgid "This web server runs the OpenStack Networking API Web Server. It loads a plug-in and passes the API calls to the plug-in for processing. The <systemitem class=\"service\">neutron-server</systemitem> service receives one or more configuration files as input. For example:"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:16(replaceable) ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:38(replaceable) ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:109(replaceable) ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:155(replaceable) ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:309(replaceable)
@@ -5429,7 +5429,7 @@ msgid "L3 agent"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:153(para)
-msgid "You can run an L3 agent that enables layer 3 forwarding and floating IP support."
+msgid "You can run an L3 agent that enables layer-3 forwarding and floating IP support."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:154(para)
@@ -5561,7 +5561,7 @@ msgid "L3 metering agent"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:307(para)
-msgid "You can run an L3 metering agent that enables layer 3 traffic metering. In general, you should launch the metering agent on all nodes that run the L3 agent:"
+msgid "You can run an L3 metering agent that enables layer-3 traffic metering. In general, you should launch the metering agent on all nodes that run the L3 agent:"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:309(replaceable)
@@ -6488,6 +6488,118 @@ msgstr ""
 
 #: ./doc/admin-guide-cloud/identity/section_keystone-token-binding.xml:57(para)
 msgid "Enables bind checking. Requires use of X.509 as the authentication mechanism for tokens:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/identity/section_caching-layer.xml:8(title)
+msgid "Caching layer"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/identity/section_caching-layer.xml:9(para)
+msgid "OpenStack Identity supports a caching layer that is above the configurable subsystems (for example, token, assignment). OpenStack Identity uses the <link href=\"http://dogpilecache.readthedocs.org/en/latest/\"><literal>dogpile.cache</literal></link> library which allows flexible cache backends. The majority of the caching configuration options are set in the <literal>[cache]</literal> section of the <filename>keystone.conf</filename> file. However, each section that has the capability to be cached usually has a caching boolean value that toggles caching."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/identity/section_caching-layer.xml:17(para)
+msgid "So to enable only the token backend caching, set the values as follows:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/identity/section_caching-layer.xml:26(para)
+msgid "For the Juno release, the default setting is enabled for subsystem caching, but the global toggle is disabled. As a result, no caching in available unless the global toggle for <literal>[cache]</literal> is enabled by setting the value to <literal>true</literal>."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/identity/section_caching-layer.xml:31(title)
+msgid "Caching for tokens and tokens validation"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/identity/section_caching-layer.xml:32(para)
+msgid "The token system has a separate <literal>cache_time</literal> configuration option, that can be set to a value above or below the global <literal>expiration_time</literal> default, allowing for different caching behavior from the other systems in OpenStack Identity. This option is set in the <literal>[token]</literal> section of the configuration file."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/identity/section_caching-layer.xml:39(para)
+msgid "The token revocation list cache time is handled by the configuration option <literal>revocation_cache_time</literal> in the <literal>[token]</literal> section. The revocation list is refreshed whenever a token is revoked. It typically sees significantly more requests than specific token retrievals or token validation calls."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/identity/section_caching-layer.xml:46(para)
+msgid "Here is a list of actions that are affected by the cached time: getting a new token, revoking tokens, validating tokens, checking v2 tokens, and checking v3 tokens."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/identity/section_caching-layer.xml:49(para)
+msgid "The delete token API calls invalidate the cache for the tokens being acted upon, as well as invalidating the cache for the revoked token list and the validate/check token calls."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/identity/section_caching-layer.xml:52(para)
+msgid "Token caching is configurable independently of the <literal>revocation_list</literal> caching. Lifted expiration checks from the token drivers to the token manager. This ensures that cached tokens will still raise a <literal>TokenNotFound</literal> flag when expired."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/identity/section_caching-layer.xml:56(para)
+msgid "For cache consistency, all token IDs are transformed into the short token hash at the provider and token driver level. Some methods have access to the full ID (PKI Tokens), and some methods do not. Cache invalidation is inconsistent without token ID normalization."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/identity/section_caching-layer.xml:62(title)
+msgid "Caching around assignment CRUD"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/identity/section_caching-layer.xml:63(para)
+msgid "The assignment system has a separate <literal>cache_time</literal> configuration option, that can be set to a value above or below the global <literal>expiration_time</literal> default, allowing for different caching behavior from the other systems in Identity service. This option is set in the <literal>[assignment]</literal> section of the configuration file."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/identity/section_caching-layer.xml:68(para)
+msgid "Currently <literal>assignment</literal> has caching for <literal>project</literal>, <literal>domain</literal>, and <literal>role</literal> specific requests (primarily around the CRUD actions). Caching is currently not implemented on grants. The <literal>list</literal> methods are not subject to caching."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/identity/section_caching-layer.xml:73(para)
+msgid "Here is a list of actions that are affected by the assignment: assign domain API, assign project API, and assign role API."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/identity/section_caching-layer.xml:75(para)
+msgid "The create, update, and delete actions for domains, projects and roles will perform proper invalidations of the cached methods listed above."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/identity/section_caching-layer.xml:79(para)
+msgid "If a read-only <literal>assignment</literal> back end is in use, the cache will not immediately reflect changes on the back end. Any given change may take up to the <literal>cache_time</literal> (if set in the <literal>[assignment]</literal> section of the configuration file) or the global <literal>expiration_time</literal> (set in the <literal>[cache]</literal> section of the configuration file) before it is reflected. If this type of delay (when using a read-only <literal>assignment</literal> backend) is an issue, it is recommended that caching be disabled on <literal>assignment</literal>. To disable caching specifically on <literal>assignment</literal>, in the <literal>[assignment]</literal> section of the configuration set <literal>caching</literal> to <literal>False</literal>."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/identity/section_caching-layer.xml:93(para)
+msgid "For more information about the different backends (and configuration options), see:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/identity/section_caching-layer.xml:96(literal)
+msgid "dogpile.cache.backends.memory"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/identity/section_caching-layer.xml:98(literal)
+msgid "dogpile.cache.backends.memcached"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/identity/section_caching-layer.xml:99(para)
+msgid "The memory backend is not suitable for use in a production environment."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/identity/section_caching-layer.xml:101(literal)
+msgid "dogpile.cache.backends.redis"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/identity/section_caching-layer.xml:103(literal)
+msgid "dogpile.cache.backends.file"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/identity/section_caching-layer.xml:104(literal)
+msgid "keystone.common.cache.backends.mongo"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/identity/section_caching-layer.xml:107(title)
+msgid "Configure the Memcached backend"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/identity/section_caching-layer.xml:108(para)
+msgid "The following example shows how to configure the memcached backend:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/identity/section_caching-layer.xml:113(replaceable)
+msgid "127.0.0.1"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/identity/section_caching-layer.xml:114(para)
+msgid "You need to specify the URL to reach the <literal>memcached</literal> instance with the <literal>backend_argument</literal> parameter."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/blockstorage/section_ts_HTTP_bad_req_in_cinder_vol_log.xml:7(title) ./doc/admin-guide-cloud/blockstorage/section_ts_failed_attach_vol_after_detach.xml:7(title)
@@ -7451,7 +7563,7 @@ msgid "Issues with <literal>state_path</literal> and <literal>volumes_dir</liter
 msgstr ""
 
 #: ./doc/admin-guide-cloud/blockstorage/section_ts_cinder_config.xml:113(para)
-msgid "The OpenStack Block Storage uses <placeholder-1/> as the default iscsi helper and implements persistent targets. This means that in the case of a tgt restart or even a node reboot your existing volumes on that node will be restored automatically with their original IQN."
+msgid "The OpenStack Block Storage uses <placeholder-1/> as the default iSCSI helper and implements persistent targets. This means that in the case of a tgt restart or even a node reboot your existing volumes on that node will be restored automatically with their original IQN."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/blockstorage/section_ts_cinder_config.xml:118(para)
@@ -7608,6 +7720,138 @@ msgstr ""
 
 #: ./doc/admin-guide-cloud/compute/section_compute-configure-service-groups.xml:83(para)
 msgid "The following values in the <filename>/etc/nova/nova.conf</filename> file (on every node) are required for the <systemitem>memcache</systemitem> driver:"
+msgstr ""
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: ./doc/admin-guide-cloud/compute/section_trusted-compute-pools.xml:46(None) ./doc/admin-guide-cloud/compute/section_trusted-compute-pools.xml:51(None)
+msgid "@@image: '../../common/figures/OpenStackTrustedComputePool1.png'; md5=858fbd6148b927723cea5ad2c88d54bd"
+msgstr ""
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: ./doc/admin-guide-cloud/compute/section_trusted-compute-pools.xml:151(None) ./doc/admin-guide-cloud/compute/section_trusted-compute-pools.xml:156(None)
+msgid "@@image: '../../common/figures/OpenStackTrustedComputePool2.png'; md5=077261c595464638c4b3fcc92b6afb9a"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_trusted-compute-pools.xml:7(title)
+msgid "Trusted compute pools"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_trusted-compute-pools.xml:8(para)
+msgid "Trusted compute pools enable administrators to designate a group of compute hosts as trusted. These hosts use hardware-based security features, such as the Intel Trusted Execution Technology (TXT), to provide an additional level of security. Combined with an external stand-alone, web-based remote attestation server, cloud providers can ensure that the compute node runs only software with verified measurements and can ensure a secure cloud stack."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_trusted-compute-pools.xml:14(para)
+msgid "Using the trusted compute pools, cloud subscribers can request services to run on verified compute nodes."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_trusted-compute-pools.xml:16(para)
+msgid "The remote attestation server performs node verification as follows:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_trusted-compute-pools.xml:20(para)
+msgid "Compute nodes boot with Intel TXT technology enabled."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_trusted-compute-pools.xml:24(para)
+msgid "The compute node BIOS, hypervisor, and OS are measured."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_trusted-compute-pools.xml:28(para)
+msgid "Measured data is sent to the attestation server when challenged by the attestation server."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_trusted-compute-pools.xml:32(para)
+msgid "The attestation server verifies those measurements against a good and known database to determine node trustworthiness."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_trusted-compute-pools.xml:36(para)
+msgid "A description of how to set up an attestation service is beyond the scope of this document. For an open source project that you can use to implement an attestation service, see the <link href=\"https://github.com/OpenAttestation/OpenAttestation\">Open Attestation</link> project."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_trusted-compute-pools.xml:55(title)
+msgid "Configure Compute to use trusted compute pools"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_trusted-compute-pools.xml:58(para)
+msgid "Enable scheduling support for trusted compute pools by adding the following lines in the <literal>DEFAULT</literal> section in the <filename>/etc/nova/nova.conf</filename> file:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_trusted-compute-pools.xml:67(para)
+msgid "Specify the connection information for your attestation service by adding the following lines to the <literal>trusted_computing</literal> section in the <filename>/etc/nova/nova.conf</filename> file:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_trusted-compute-pools.xml:82(term)
+msgid "server"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_trusted-compute-pools.xml:84(para)
+msgid "Host name or IP address of the host that runs the attestation service."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_trusted-compute-pools.xml:89(term)
+msgid "port"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_trusted-compute-pools.xml:91(para)
+msgid "HTTPS port for the attestation service."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_trusted-compute-pools.xml:95(term)
+msgid "server_ca_file"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_trusted-compute-pools.xml:97(para)
+msgid "Certificate file used to verify the attestation server's identity."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_trusted-compute-pools.xml:102(term)
+msgid "api_url"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_trusted-compute-pools.xml:104(para)
+msgid "The attestation service's URL path."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_trusted-compute-pools.xml:108(term)
+msgid "auth_blob"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_trusted-compute-pools.xml:110(para)
+msgid "An authentication blob, which is required by the attestation service."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_trusted-compute-pools.xml:118(para)
+msgid "Restart the <systemitem class=\"service\">nova-compute</systemitem> and <systemitem class=\"service\">nova-scheduler</systemitem> services."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_trusted-compute-pools.xml:125(title)
+msgid "Configuration reference"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_trusted-compute-pools.xml:126(para)
+msgid "To customize the trusted compute pools, use the following configuration option settings:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_trusted-compute-pools.xml:133(title)
+msgid "Specify trusted flavors"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_trusted-compute-pools.xml:134(para)
+msgid "To designate hosts as trusted:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_trusted-compute-pools.xml:137(para)
+msgid "Configure one or more flavors as trusted by using the <placeholder-1/> command. For example, to set the <literal>m1.tiny</literal> flavor as trusted:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_trusted-compute-pools.xml:142(para)
+msgid "Request that your instance be run on a trusted host, by specifying a trusted flavor when booting the instance. For example:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_trusted-compute-pools.xml:146(title)
+msgid "Trusted compute pool"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/compute/section_compute-instance-building-blocks.xml:7(title)
@@ -8361,7 +8605,7 @@ msgid "Services:"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:20(para)
-msgid "<systemitem class=\"service\">nova-api</systemitem>. Receives XML requests and sends them to the rest of the system. It is a wsgi app that routes and authenticate requests. It supports the EC2 and OpenStack APIs. There is a <filename>nova-api.conf</filename> file created when you install Compute."
+msgid "<systemitem class=\"service\">nova-api</systemitem>. Receives XML requests and sends them to the rest of the system. It is a WSGI app that routes and authenticate requests. It supports the EC2 and OpenStack APIs. There is a <filename>nova-api.conf</filename> file created when you install Compute."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:27(para)
@@ -8927,7 +9171,7 @@ msgid "HTTP"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/compute/section_compute-image-mgt.xml:57(para)
-msgid "OpenStack Image Service can read virtual machine images that are available on the internet using HTTP. This store is read only."
+msgid "OpenStack Image Service can read virtual machine images that are available on the Internet using HTTP. This store is read only."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/compute/section_compute-image-mgt.xml:63(term)
@@ -9036,6 +9280,46 @@ msgstr ""
 
 #: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:107(para)
 msgid "(ListOpt) Comma-separated list containing first the Filter class to use, followed by that Filter arguments (which vary depending on the Filter class selected)."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute_config-firewalls.xml:7(title)
+msgid "Compute service node firewall requirements"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute_config-firewalls.xml:8(para)
+msgid "Console connections for virtual machines, whether direct or through a proxy, are received on ports <literal>5900</literal> to <literal>5999</literal>. You must configure the firewall on each Compute service node to enable network traffic on these ports."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute_config-firewalls.xml:12(title)
+msgid "Configure the service-node firewall"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute_config-firewalls.xml:13(para)
+msgid "On the server that hosts the Compute service, log in as <systemitem>root</systemitem>."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute_config-firewalls.xml:15(para)
+msgid "Edit the <filename>/etc/sysconfig/iptables</filename> file."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute_config-firewalls.xml:21(para)
+msgid "Add an INPUT rule that allows TCP traffic on ports that range from <literal>5900</literal> to <literal>5999</literal>:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute_config-firewalls.xml:27(para)
+msgid "The new rule must appear before any INPUT rules that REJECT traffic."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute_config-firewalls.xml:33(para)
+msgid "Save the changes to the <filename>/etc/sysconfig/iptables</filename> file."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute_config-firewalls.xml:39(para)
+msgid "Restart the <systemitem>iptables</systemitem> service to ensure that the change takes effect."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute_config-firewalls.xml:46(para)
+msgid "The <systemitem>iptables</systemitem> firewall now enables incoming connections to the Compute services. Repeat this process for each Compute service node."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:5(title)

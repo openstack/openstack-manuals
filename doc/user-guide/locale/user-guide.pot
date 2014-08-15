@@ -1,13 +1,357 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-07-28 06:08+0000\n"
+"POT-Creation-Date: 2014-08-15 06:09+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: ./doc/user-guide/section_cli_nova_reboot.xml:7(title)
+msgid "Reboot an instance"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_reboot.xml:8(para)
+msgid "You can soft or hard reboot a running instance. A soft reboot attempts a graceful shut down and restart of the instance. A hard reboot power cycles the instance."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_reboot.xml:11(para)
+msgid "By default, when you reboot a server, it is a soft reboot."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_reboot.xml:12(replaceable) ./doc/user-guide/section_cli_nova_reboot.xml:14(replaceable) ./doc/user-guide/app_cheat_sheet.xml:176(replaceable)
+msgid "SERVER"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_reboot.xml:13(para)
+msgid "To perform a hard reboot, pass the <parameter>--hard</parameter> parameter, as follows:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_boot.xml:7(title)
+msgid "Launch instances"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_boot.xml:8(para) ./doc/user-guide/section_dashboard_launch_instances.xml:8(para)
+msgid "Instances are virtual machines that run inside the cloud."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_boot.xml:10(para)
+msgid "Before you can launch an instance, gather the following parameters:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_boot.xml:14(para)
+msgid "The <emphasis role=\"bold\">instance source</emphasis> can be an image, snapshot, or block storage volume that contains an image or snapshot."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_boot.xml:19(para)
+msgid "A <emphasis role=\"bold\">name</emphasis> for your instance."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_boot.xml:22(para)
+msgid "The <emphasis role=\"bold\">flavor</emphasis> for your instance, which defines the compute, memory, and storage capacity of nova computing instances. A flavor is an available hardware configuration for a server. It defines the size of a virtual server that can be launched."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_boot.xml:30(para)
+msgid "Any <emphasis role=\"bold\">user data</emphasis> files. A user data file is a special key in the metadata service that holds a file that cloud-aware applications in the guest instance can access. For example, one application that uses user data is the <link href=\"https://help.ubuntu.com/community/CloudInit\">cloud-init</link> system, which is an open-source package from Ubuntu that is available on various Linux distributions and that handles early initialization of a cloud instance."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_boot.xml:43(para)
+msgid "Access and security credentials, which include one or both of the following credentials:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_boot.xml:47(para)
+msgid "A <emphasis role=\"bold\">key pair</emphasis> for your instance, which are SSH credentials that are injected into images when they are launched. For the key pair to be successfully injected, the image must contain the <literal>cloud-init</literal> package. Create at least one key pair for each project. If you already have generated a key pair with an external tool, you can import it into OpenStack. You can use the key pair for multiple instances that belong to that project."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_boot.xml:61(para)
+msgid "A <emphasis role=\"bold\">security group</emphasis> that defines which incoming network traffic is forwarded to instances. Security groups hold a set of firewall policies, known as <emphasis role=\"italic\">security group rules</emphasis>."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_boot.xml:72(para)
+msgid "If needed, you can assign a <emphasis role=\"bold\">floating (public) IP address</emphasis> to a running instance."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_boot.xml:77(para)
+msgid "You can also attach a block storage device, or <emphasis role=\"bold\">volume</emphasis>, for persistent storage."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_boot.xml:83(para) ./doc/user-guide/section_cli_nova_configure_instances.xml:62(para)
+msgid "Instances that use the default security group cannot, by default, be accessed from any IP address outside of the cloud. If you want those IP addresses to access the instances, you must modify the rules for the default security group."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_boot.xml:88(para) ./doc/user-guide/section_cli_nova_configure_instances.xml:66(para)
+msgid "You can also assign a floating IP address to a running instance to make it accessible from outside the cloud. See <xref linkend=\"manage_ip_addresses\"/>."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_boot.xml:92(para)
+msgid "After you gather the parameters that you need to launch an instance, you can launch it from an <link linkend=\"launch_from_image\">image</link> or a <link linkend=\"boot_from_volume\">volume</link>. You can launch an instance directly from one of the available OpenStack images or from an image that you have copied to a persistent volume. The OpenStack Image Service provides a pool of images that are accessible to members of different projects."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_boot.xml:102(title)
+msgid "Gather parameters to launch an instance"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_boot.xml:104(para)
+msgid "Before you begin, source the OpenStack RC file."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_boot.xml:107(para)
+msgid "List the available flavors:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_boot.xml:109(para)
+msgid "Note the ID of the flavor that you want to use for your instance:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_boot.xml:122(para)
+msgid "List the available images:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_boot.xml:124(para)
+msgid "Note the ID of the image from which you want to boot your instance:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_boot.xml:132(para)
+msgid "You can also filter the image list by using <placeholder-1/> to find a specific image, as follows:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_boot.xml:139(para)
+msgid "List the available security groups:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_boot.xml:141(para)
+msgid "If you are an admin user, specify the <option>--all-tenants</option> parameter to list groups for all tenants."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_boot.xml:146(para)
+msgid "Note the ID of the security group that you want to use for your instance:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_boot.xml:152(para)
+msgid "If you have not created any security groups, you can assign the instance to only the default security group."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_boot.xml:155(para)
+msgid "You can view rules for a specified security group:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_boot.xml:160(para)
+msgid "List the available key pairs and note the name of the key pair that you use for SSH access."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_boot.xml:169(title)
+msgid "Launch an instance from an image"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_boot.xml:172(para)
+msgid "After you gather required parameters, run the following command to launch an instance. Specify the server name, flavor ID, and image ID."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_boot.xml:175(para)
+msgid "Optionally, you can provide a key name for access control and a security group for security. You can also include metadata key and value pairs. For example, you can add a description for your server by providing the <parameter>--meta description=\"My Server\"</parameter> parameter."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_boot.xml:182(para)
+msgid "You can pass user data in a local file at instance launch by using the <parameter>--user-data <replaceable>USER-DATA-FILE</replaceable></parameter> parameter."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_boot.xml:187(replaceable)
+msgid "FLAVOR_ID"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_boot.xml:187(replaceable)
+msgid "IMAGE_ID"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_boot.xml:187(replaceable) ./doc/user-guide/section_cli_nova_configure_instances.xml:77(replaceable) ./doc/user-guide/section_cli_nova_configure_instances.xml:99(replaceable)
+msgid "KEY_NAME"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_boot.xml:188(replaceable)
+msgid "USER_DATA_FILE"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_boot.xml:188(replaceable)
+msgid "SEC_GROUP"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_boot.xml:188(replaceable)
+msgid "KEY=VALUE"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_boot.xml:189(replaceable) ./doc/user-guide/app_cheat_sheet.xml:167(replaceable) ./doc/user-guide/section_cli_nova_startstop.xml:15(replaceable) ./doc/user-guide/section_cli_nova_startstop.xml:19(replaceable) ./doc/user-guide/section_cli_nova_startstop.xml:36(replaceable) ./doc/user-guide/section_cli_nova_startstop.xml:41(replaceable) ./doc/user-guide/section_cli_nova_get_console.xml:9(replaceable)
+msgid "INSTANCE_NAME"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_boot.xml:190(para)
+msgid "The following command launches the <literal>MyCirrosServer</literal> instance with the <literal>m1.small</literal> flavor (ID of <literal>1</literal>), <literal>cirros-0.3.2-x86_64-uec</literal> image (ID of <literal>397e713c-b95b-4186-ad46-6126863ea0a9</literal>), <literal>default</literal> security group, <literal>KeyPair01</literal> key, and a user data file called <filename>cloudinit.file</filename>:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_boot.xml:203(replaceable)
+msgid "myCirrosServer"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_boot.xml:204(para)
+msgid "Depending on the parameters that you provide, the command returns a list of server properties."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_boot.xml:207(para)
+msgid "A status of <literal>BUILD</literal> indicates that the instance has started, but is not yet online."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_boot.xml:210(para)
+msgid "A status of <literal>ACTIVE</literal> indicates that the instance is active."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_boot.xml:242(para)
+msgid "Copy the server ID value from the <literal>id</literal> field in the output. You use this ID to get details for or delete your server."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_boot.xml:246(para)
+msgid "Copy the administrative password value from the <literal>adminPass</literal> field. You use this value to log in to your server."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_boot.xml:250(para)
+msgid "You can also place arbitrary local files into the instance file system at creation time by using the <option>--file &lt;dst-path=src-path&gt;</option> option. You can store up to five files. For example, if you have a special authorized keys file named <filename>special_authorized_keysfile</filename> that you want to put on the instance rather than using the regular SSH key injection, you can use the <option>--file</option> option as shown in the following example:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_boot.xml:267(para)
+msgid "Check if the instance is online:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_boot.xml:269(para)
+msgid "The list shows the ID, name, status, and private (and if assigned, public) IP addresses for all instances in the project to which you belong:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_boot.xml:279(para)
+msgid "If the status for the instance is ACTIVE, the instance is online."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_boot.xml:281(para)
+msgid "To view the available options for the <placeholder-1/> command, run the following command:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_boot.xml:288(para)
+msgid "If you did not provide a key pair, security groups, or rules, you can access the instance only from inside the cloud through VNC. Even pinging the instance is not possible."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_baremetal.xml:7(title)
+msgid "Manage bare-metal nodes"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_baremetal.xml:8(para)
+msgid "The bare-metal driver for OpenStack Compute manages provisioning of physical hardware by using common cloud APIs and tools such as Orchestration (Heat). The use case for this driver is for single tenant clouds such as a high-performance computing cluster or for deploying OpenStack itself."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_baremetal.xml:12(para)
+msgid "If you use the bare-metal driver, you must create a network interface and add it to a bare-metal node. Then, you can launch an instance from a bare-metal image."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_baremetal.xml:15(para)
+msgid "Development efforts are focused on moving the driver out of the Compute code base in the Icehouse release."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_baremetal.xml:17(para)
+msgid "You can list and delete bare-metal nodes. When you delete a node, any associated network interfaces are removed. You can list and remove network interfaces that are associated with a bare-metal node."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_baremetal.xml:21(title)
+msgid "Commands"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_baremetal.xml:22(para)
+msgid "The following commands can be used to manage bare-metal nodes."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_baremetal.xml:24(para)
+msgid "<placeholder-1/>. Adds a network interface to a bare-metal node."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_baremetal.xml:28(para)
+msgid "<placeholder-1/>. Lists network interfaces associated with a bare-metal node."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_baremetal.xml:32(para)
+msgid "<placeholder-1/>. Removes a network interface from a bare-metal node."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_baremetal.xml:36(para)
+msgid "<placeholder-1/>. Creates a bare-metal node."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_baremetal.xml:40(para)
+msgid "<placeholder-1/>. Removes a bare-metal node and any associated interfaces."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_baremetal.xml:44(para)
+msgid "<placeholder-1/>. Lists available bare-metal nodes."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_baremetal.xml:48(para)
+msgid "<placeholder-1/>. Shows information about a bare-metal node."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_baremetal.xml:53(title)
+msgid "Create a bare-metal node"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_baremetal.xml:54(para)
+msgid "When you create a bare-metal node, your PM address, user name, and password should match those that are configured in your hardware's BIOS/IPMI configuration."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_baremetal.xml:59(para)
+msgid "The following example shows the command and results from creating a node with the PM address <filename>1.2.3.4</filename>, the PM user name <systemitem class=\"username\">ipmi</systemitem>, and password <literal>ipmi</literal>."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_baremetal.xml:81(title)
+msgid "Add a network interface to the node:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_baremetal.xml:82(para)
+msgid "For each NIC on the node, you must create an interface, specifying the interface's MAC address."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_baremetal.xml:94(title)
+msgid "Launch an instance from a bare-metal image:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_baremetal.xml:96(para)
+msgid "A bare-metal instance is an instance created directly on a physical machine without any virtualization layer running underneath it. Nova retains power control via IPMI. In some situations, Nova may retain network control via Neutron and OpenFlow."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_baremetal.xml:109(para)
+msgid "Set the <parameter>--availability_zone</parameter> parameter to specify which zone or node to use to start the server. Separate the zone from the host name with a comma. For example:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_baremetal.xml:112(replaceable)
+msgid "HOST"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_baremetal.xml:112(replaceable)
+msgid "NODE"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_baremetal.xml:113(para)
+msgid "<literal>host</literal> is optional for the <literal>--availability_zone</literal> parameter. You can specify simply <literal>zone:,node</literal>. You must still use the comma."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_baremetal.xml:120(title)
+msgid "List bare-metal nodes and interfaces:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_baremetal.xml:122(para)
+msgid "Use the <placeholder-1/> command to view all bare-metal nodes and interfaces. When a node is in use, its status includes the UUID of the instance that runs on it:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_baremetal.xml:132(title)
+msgid "Show details for a bare-metal node:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_baremetal.xml:133(para)
+msgid "Use the <placeholder-1/> command to view the details for a bare-metal node."
+msgstr ""
 
 #: ./doc/user-guide/section_cli_heat.xml:8(title)
 msgid "Create and manage stacks"
@@ -1261,10 +1605,6 @@ msgstr ""
 msgid "FLAVOR"
 msgstr ""
 
-#: ./doc/user-guide/app_cheat_sheet.xml:167(replaceable)
-msgid "INSTANCE_NAME"
-msgstr ""
-
 #: ./doc/user-guide/app_cheat_sheet.xml:173(td)
 msgid "Login to instance"
 msgstr ""
@@ -1275,10 +1615,6 @@ msgstr ""
 
 #: ./doc/user-guide/app_cheat_sheet.xml:176(replaceable)
 msgid "USER"
-msgstr ""
-
-#: ./doc/user-guide/app_cheat_sheet.xml:176(replaceable)
-msgid "SERVER"
 msgstr ""
 
 #: ./doc/user-guide/app_cheat_sheet.xml:179(para)
@@ -1777,14 +2113,6 @@ msgstr ""
 msgid "Rules are automatically enforced as soon as you create or modify them."
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_configure_instances.xml:62(para)
-msgid "Instances that use the default security group cannot, by default, be accessed from any IP address outside of the cloud. If you want those IP addresses to access the instances, you must modify the rules for the default security group."
-msgstr ""
-
-#: ./doc/user-guide/section_cli_nova_configure_instances.xml:66(para)
-msgid "You can also assign a floating IP address to a running instance to make it accessible from outside the cloud. See <xref linkend=\"manage_ip_addresses\"/>."
-msgstr ""
-
 #: ./doc/user-guide/section_cli_nova_configure_instances.xml:71(title) ./doc/user-guide/section_dashboard_access_and_security.xml:137(title)
 msgid "Add a key pair"
 msgstr ""
@@ -1795,10 +2123,6 @@ msgstr ""
 
 #: ./doc/user-guide/section_cli_nova_configure_instances.xml:76(para)
 msgid "To generate a key pair, run the following command:"
-msgstr ""
-
-#: ./doc/user-guide/section_cli_nova_configure_instances.xml:77(replaceable) ./doc/user-guide/section_cli_nova_configure_instances.xml:99(replaceable)
-msgid "KEY_NAME"
 msgstr ""
 
 #: ./doc/user-guide/section_cli_nova_configure_instances.xml:77(replaceable) ./doc/user-guide/section_cli_nova_configure_instances.xml:88(replaceable)
@@ -2043,6 +2367,86 @@ msgstr ""
 
 #: ./doc/user-guide/section_cli_nova_floating_ips.xml:134(para)
 msgid "The IP address is returned to the pool of IP addresses that is available for all projects. If the IP address is still associated with a running instance, it is automatically disassociated from that instance."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_startstop.xml:7(title)
+msgid "Stop and start an instance"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_startstop.xml:8(para)
+msgid "Use one of the following methods to stop and start an instance."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_startstop.xml:11(title)
+msgid "Pause and unpause an instance"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_startstop.xml:14(para)
+msgid "To pause an instance, run the following command:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_startstop.xml:16(para)
+msgid "This command stores the state of the VM in RAM. A paused instance continues to run in a frozen state."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_startstop.xml:18(para)
+msgid "To unpause the instance, run the following command:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_startstop.xml:24(title)
+msgid "Suspend and resume an instance"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_startstop.xml:26(para)
+msgid "Administrative users might want to suspend an instance if it is infrequently used or to perform system maintenance. When you suspend an instance, its VM state is stored on disk, all memory is written to disk, and the virtual machine is stopped. Suspending an instance is similar to placing a device in hibernation; memory and vCPUs become available to create other instances."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_startstop.xml:34(para)
+msgid "To initiate a hypervisor-level suspend operation, run the following command:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_startstop.xml:39(para)
+msgid "To resume a suspended instance, run the following command:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_startstop.xml:46(title)
+msgid "Shelve and unshelve an instance"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_startstop.xml:47(para)
+msgid "Shelving is useful if you have an instance that you are not using, but would like retain in your list of servers. For example, you can stop an instance at the end of a work week, and resume work again at the start of the next week. All associated data and resources are kept; however, anything still in memory is not retained. If a shelved instance is no longer needed, it can also be entirely removed."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_startstop.xml:52(para)
+msgid "You can complete the following shelving tasks:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_startstop.xml:54(term)
+msgid "Shelve an instance"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_startstop.xml:55(para)
+msgid "Shuts down the instance, and stores it together with associated data and resources (a snapshot is taken if not volume backed). Anything in memory is lost. Use the following command:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_startstop.xml:58(replaceable) ./doc/user-guide/section_cli_nova_startstop.xml:63(replaceable) ./doc/user-guide/section_cli_nova_startstop.xml:70(replaceable)
+msgid "SERVERNAME"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_startstop.xml:61(term)
+msgid "Unshelve an instance"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_startstop.xml:62(para)
+msgid "Restores the instance:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_startstop.xml:66(term)
+msgid "Remove a shelved instance"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_startstop.xml:67(para)
+msgid "Removes the instance from the server; data and resource associations are deleted. If an instance is no longer needed, you can move that instance off the hypervisor in order to minimize resource usage:"
 msgstr ""
 
 #: ./doc/user-guide/section_cli_nova_manage_instances.xml:7(title)
@@ -2413,12 +2817,32 @@ msgstr ""
 msgid "If you choose VFAT, the configuration drive is 64MB."
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:248(title)
-msgid "Configuration drive reference"
+#: ./doc/user-guide/section_cli_nova_terminate.xml:7(title)
+msgid "Delete an instance"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_config-drive.xml:249(para)
-msgid "The following table shows the configuration options for the configuration drive."
+#: ./doc/user-guide/section_cli_nova_terminate.xml:8(para)
+msgid "When you no longer need an instance, you can delete it."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_terminate.xml:10(para)
+msgid "List all instances:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_terminate.xml:20(para)
+msgid "Run the <placeholder-1/> command to delete the instance. The following example shows deletion of the <filename>newServer</filename> instance, which is in <literal>ERROR</literal> state:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_terminate.xml:23(para)
+msgid "The command does not notify that your server was deleted."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_terminate.xml:24(para)
+msgid "To verify that the server was deleted, run the <placeholder-1/> command:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_terminate.xml:32(para)
+msgid "The deleted instance does not appear in the list."
 msgstr ""
 
 #: ./doc/user-guide/section_cli_trove.xml:9(title)
@@ -2617,7 +3041,7 @@ msgstr ""
 msgid "You can now access the new database you just created (myDB) by using typical database access commands. In this MySQL example, replace <replaceable>IP_ADDRESS</replaceable> with <literal>172.16.200.2</literal>."
 msgstr ""
 
-#: ./doc/user-guide/section_cli_trove.xml:239(replaceable)
+#: ./doc/user-guide/section_cli_trove.xml:239(replaceable) ./doc/user-guide/section_cli_nova_search_ip.xml:11(replaceable)
 msgid "IP_ADDRESS"
 msgstr ""
 
@@ -3013,10 +3437,6 @@ msgstr ""
 msgid "Launch and manage instances"
 msgstr ""
 
-#: ./doc/user-guide/section_dashboard_launch_instances.xml:8(para)
-msgid "Instances are virtual machines that run inside the cloud."
-msgstr ""
-
 #: ./doc/user-guide/section_dashboard_launch_instances.xml:10(para)
 msgid "You can <link linkend=\"dashboard_launch_instances_from_image\">launch an instance</link> from the following sources:"
 msgstr ""
@@ -3111,6 +3531,34 @@ msgstr ""
 
 #: ./doc/user-guide/section_dashboard_launch_instances.xml:108(para)
 msgid "You can resize or rebuild an instance. You can also choose to view the instance console log, edit instance or the security groups. Depending on the current state of the instance, you can pause, resume, suspend, soft or hard reboot, or terminate it."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_userdata.xml:7(title)
+msgid "Provide user data to instances"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_userdata.xml:8(para)
+msgid "A <glossterm baseform=\"user data\">user data</glossterm> file is a special key in the metadata service that holds a file that cloud-aware applications in the guest instance can access. For example, one application that uses user data is the <link href=\"https://help.ubuntu.com/community/CloudInit\">cloud-init</link> system, which is an open-source package from Ubuntu that is available on various Linux distributions and which handles early initialization of a cloud instance."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_userdata.xml:15(para)
+msgid "You can place user data in a local file and pass it through the <parameter>--user-data &lt;user-data-file&gt;</parameter> parameter at instance creation:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_get_console.xml:7(title)
+msgid "Access an instance through a console"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_get_console.xml:8(para)
+msgid "To access an instance through a VNC console, run the following command:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_get_console.xml:10(para)
+msgid "The command returns a URL from which you can access your instance:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_get_console.xml:16(para)
+msgid "To access an instance through a non-VNC console, specify the <parameter>novnc</parameter> parameter instead of the <parameter>xvpvnc</parameter> parameter."
 msgstr ""
 
 #: ./doc/user-guide/ch_cli.xml:10(title)
@@ -3359,6 +3807,26 @@ msgstr ""
 
 #: ./doc/user-guide/section_sdk_auth_nova.xml:54(para)
 msgid "If you set the <literal>OS_AUTH_SYSTEM</literal> environment variable, check for this variable in your Python script to determine whether you need to load a custom authentication back end:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_search_ip.xml:7(title)
+msgid "Search for an instance using IP address"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_search_ip.xml:8(para)
+msgid "You can search for an instance using the IP address parameter, <literal>--ip</literal>, with the <placeholder-1/> command."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_search_ip.xml:11(parameter) ./doc/user-guide/section_cli_nova_search_ip.xml:14(parameter)
+msgid "ip"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_search_ip.xml:12(para)
+msgid "The following example shows the results of a search on <filename>10.0.0.4</filename>."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_search_ip.xml:14(replaceable)
+msgid "10.0.0.4"
 msgstr ""
 
 #: ./doc/user-guide/section_dashboard_stacks.xml:7(title)
@@ -3903,6 +4371,50 @@ msgstr ""
 
 #: ./doc/user-guide/ch_sdk.xml:26(para)
 msgid "JSON and XML data serialization formats"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_resizerebuild.xml:7(title)
+msgid "Change the size of your server"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_resizerebuild.xml:8(para)
+msgid "You change the size of a server by changing its flavor."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_resizerebuild.xml:11(para)
+msgid "Show information about your server, including its size, which is shown as the value of the flavor property."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_resizerebuild.xml:44(para)
+msgid "The size (flavor) of the server is <literal>m1.small (2)</literal>."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_resizerebuild.xml:47(para)
+msgid "List the available flavors with the following command:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_resizerebuild.xml:60(para)
+msgid "To resize the server, pass the server ID or name and the new flavor to the <placeholder-1/> command. Include the <literal>--poll</literal> parameter to report the resize progress."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_resizerebuild.xml:68(para)
+msgid "Show the status for your server:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_resizerebuild.xml:75(para)
+msgid "When the resize completes, the status becomes VERIFY_RESIZE."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_resizerebuild.xml:78(para)
+msgid "Confirm the resize:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_resizerebuild.xml:80(para) ./doc/user-guide/section_cli_nova_resizerebuild.xml:86(para)
+msgid "The server status becomes ACTIVE."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_nova_resizerebuild.xml:83(para)
+msgid "If the resize fails or does not work as expected, you can revert the resize:"
 msgstr ""
 
 #: ./doc/user-guide/section_cli_swift_howto.xml:7(title)
