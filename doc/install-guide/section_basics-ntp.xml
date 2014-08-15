@@ -9,10 +9,10 @@
   <para>You must install
     <glossterm baseform="Network Time Protocol (NTP)">NTP</glossterm> to
     properly synchronize services among nodes. We recommend that you configure
-    the controller node to reference upstream servers and other nodes to
-    reference the controller node.</para>
+    the controller node to reference more accurate (lower stratum) servers and
+    other nodes to reference the controller node.</para>
   <section xml:id="basics-ntp-controller-node">
-    <title>Configure controller node</title>
+    <title>Controller node</title>
     <procedure>
       <title>To install the NTP service</title>
       <step>
@@ -28,12 +28,21 @@
         <filename>/etc/ntp.conf</filename> file to configure alternative
         servers such as those provided by your organization.</para>
       <step>
-        <para>Edit the <filename>/etc/ntp.conf</filename> file:</para>
-        <para>Add, change, or remove the <literal>server</literal> keys as
-          necessary for your environment. Replace
-          <replaceable>NTP_SERVER</replaceable> with the hostname or IP address
-          of suitable NTP server.</para>
-        <programlisting>server <replaceable>NTP_SERVER</replaceable> iburst</programlisting>
+        <para>Edit the <filename>/etc/ntp.conf</filename> file and add,
+          change, or remove the following keys as necessary for your
+          environment:</para>
+        <programlisting>server <replaceable>NTP_SERVER</replaceable> iburst
+restrict -4 default kod notrap nomodify
+restrict -6 default kod notrap nomodify</programlisting>
+        <para>Replace <replaceable>NTP_SERVER</replaceable> with the
+          hostname or IP address of a suitable more accurate (lower stratum)
+          NTP server. The configuration supports multiple
+          <literal>server</literal> keys.</para>
+        <note>
+          <para>For the <literal>restrict</literal> keys, you essentially
+            remove the <literal>nopeer</literal> and <literal>noquery</literal>
+            options.</para>
+        </note>
         <note os="ubuntu;debian">
           <para>Remove the <filename>/var/lib/ntp/ntp.conf.dhcp</filename> file
             if it exists.</para>
@@ -54,7 +63,7 @@
     </procedure>
   </section>
   <section xml:id="basics-ntp-other-nodes">
-    <title>Configure other nodes</title>
+    <title>Other nodes</title>
     <procedure>
       <title>To install the NTP service</title>
       <step>
@@ -97,7 +106,6 @@
       further. Some nodes, particularly those that reference the controller
       node, can take several minutes to synchronize.</para>
     <procedure>
-      <title>To verify NTP synchronization</title>
       <step>
         <para>Run this command on the <emphasis>controller</emphasis> node:
         </para>
