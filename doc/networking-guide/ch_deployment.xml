@@ -6,14 +6,57 @@
   xml:id="ch_deployment">
     <title>Deployment</title>
       <para>
-        Bacon ipsum dolor sit amet biltong meatloaf andouille, turducken
-        bresaola pork belly beef ribs ham hock capicola tail prosciutto
-        landjaeger meatball pork loin. Swine turkey jowl, porchetta doner
-        boudin meatloaf. Shoulder capicola prosciutto, shank landjaeger short
-        ribs sirloin turducken pork belly boudin frankfurter chuck. Salami
-        shankle bresaola cow filet mignon ham hock shank.
+        OpenStack Networking provides an extreme amount of flexibility when
+        deploying networking in support of a compute environment. As a
+        result, the exact layout of a deployment will depend on a
+        combination of expected workloads, expected scale, and available
+        hardware.
       </para>
+       <mediaobject>
+        <imageobject>
+          <imagedata fileref="../common/figures/Neutron-PhysNet-Diagram.png" align="center" width="6in"/>
+        </imageobject>
+      </mediaobject>
+      <para>
+        For demonstration purposes, this chapter concentrates on a
+        networking deployment that consists of these types of nodes:
+      </para>
+      <itemizedlist>
+        <listitem>
+          <para>
+            <emphasis>Service node:</emphasis>
+            The service node exposes the networking API to clients and
+            handles incoming requests before forwarding them to a message
+            queue to be actioned by the other nodes. The service node hosts
+            both the networking service itself and the active networking
+            plug-in. In environments that use controller nodes to host the
+            client-facing APIs and schedulers for all services, the
+            controller node would also fulfill the role of service node as
+            it is applied in this chapter.
+          </para>
+          <para>
+            <emphasis>Network node:</emphasis>
+            The network node handles the majority of the networking
+            workload. It hosts the DHCP agent, the Layer-3 (L3) agent, the
+            Layer-2 (L2) agent, and the metadata proxy.
+            In addition to plug-ins that require an agent, it runs an instance
+            of the plug-in agent (as do all other systems that handle data
+            packets in an environment where such plug-ins are in use). Both
+            the Open vSwitch and Linux Bridge mechanism drivers include an
+            agent.
+          </para>
+          <para>
+            <emphasis>Compute node:</emphasis>
+            The compute node hosts the compute instances themselves. To
+            connect compute instances to the networking services, compute
+            nodes must also run the L2 agent. Like all other systems that
+            handle data packets it must also run an instance of the plug-in
+            agent.
+          </para>
+        </listitem>
+      </itemizedlist>
 
     <xi:include href="section_deployment-architecture.xml"/>
     <xi:include href="section_deployment-scenarios.xml"/>
+
 </chapter>
