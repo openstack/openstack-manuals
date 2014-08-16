@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-08-15 06:09+0000\n"
+"POT-Creation-Date: 2014-08-16 06:09+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -13,12 +13,145 @@ msgstr ""
 msgid "Networking architecture"
 msgstr ""
 
-#: ./doc/networking-guide/ch_networking-architecture.xml:8(para) ./doc/networking-guide/ch_scalability-HA.xml:8(para) ./doc/networking-guide/section_ha-dvr.xml:12(para) ./doc/networking-guide/section_ha-l3.xml:12(para) ./doc/networking-guide/section_intro-namespaces.xml:12(para) ./doc/networking-guide/section_ha-dhcp.xml:12(para) ./doc/networking-guide/section_architecture-overview.xml:12(para) ./doc/networking-guide/section_intro-routers.xml:12(para) ./doc/networking-guide/section_intro-tunnel.xml:12(para) ./doc/networking-guide/ch_deployment.xml:8(para) ./doc/networking-guide/section_architecture-plug-in.xml:12(para) ./doc/networking-guide/section_intro-firewalls.xml:12(para) ./doc/networking-guide/section_intro-switches.xml:12(para) ./doc/networking-guide/section_intro-layers.xml:12(para) ./doc/networking-guide/ch_debugging.xml:8(para) ./doc/networking-guide/ch_networking-data-model.xml:12(para) ./doc/networking-guide/section_architecture-agents.xml:12(para) ./doc/networking-guide/ch_advanced.xml:8(para) ./doc/networking-guide/ch_plugins.xml:8(para) ./doc/networking-guide/section_architecture-server.xml:12(para)
-msgid "Bacon ipsum dolor sit amet biltong meatloaf andouille, turducken bresaola pork belly beef ribs ham hock capicola tail prosciutto landjaeger meatball pork loin. Swine turkey jowl, porchetta doner boudin meatloaf. Shoulder capicola prosciutto, shank landjaeger short ribs sirloin turducken pork belly boudin frankfurter chuck. Salami shankle bresaola cow filet mignon ham hock shank."
+#: ./doc/networking-guide/ch_networking-architecture.xml:8(para)
+msgid "A standard network architecture design includes a cloud controller host, a network gateway host, and a number of hypervisors for hosting virtual machines. The cloud controller and network gateway can be on the same host. However, if you expect VMs to send significant traffic to or from the Internet, a dedicated network gateway host helps avoid CPU contention between the <systemitem class=\"service\">neutron-l3-agent</systemitem> and other OpenStack services that forward packets."
+msgstr ""
+
+#: ./doc/networking-guide/ch_networking-architecture.xml:18(para)
+msgid "You can run OpenStack Networking across multiple physical devices. It is also possible to run all service daemons on a single physical host for evaluation purposes, however this is not generally robust enough for production purposes. For greater redundancy, you can run each service on a dedicated physical host and replicate any essential services across multiple hosts."
+msgstr ""
+
+#: ./doc/networking-guide/ch_networking-architecture.xml:26(para)
+msgid "For more information about networking architecture options, see the <link href=\"http://docs.openstack.org/openstack-ops/content/network_design.html\">Network Design</link> section of the <citetitle>OpenStack Operations Guide</citetitle>."
+msgstr ""
+
+#. <mediaobject>
+#.         <imageobject>
+#.             <imagedata scale="50" fileref="../../common/figures/Neutron-PhysNet-Diagram.png"/>
+#.         </imageobject>
+#.       </mediaobject>
+#: ./doc/networking-guide/ch_networking-architecture.xml:39(para)
+msgid "A standard OpenStack Networking deployment usually includes one or more of the following physical networks:"
+msgstr ""
+
+#: ./doc/networking-guide/ch_networking-architecture.xml:47(caption)
+msgid "General distinct physical data center networks"
+msgstr ""
+
+#: ./doc/networking-guide/ch_networking-architecture.xml:53(th)
+msgid "Network"
+msgstr ""
+
+#: ./doc/networking-guide/ch_networking-architecture.xml:54(th) ./doc/networking-guide/ch_advanced.xml:58(th) ./doc/networking-guide/ch_advanced.xml:149(th) ./doc/networking-guide/ch_advanced.xml:274(th) ./doc/networking-guide/ch_advanced.xml:332(th) ./doc/networking-guide/ch_advanced.xml:632(th) ./doc/networking-guide/ch_advanced.xml:675(th) ./doc/networking-guide/ch_advanced.xml:886(th) ./doc/networking-guide/ch_advanced.xml:1008(th) ./doc/networking-guide/ch_advanced.xml:1076(th) ./doc/networking-guide/ch_advanced.xml:1197(th) ./doc/networking-guide/ch_advanced.xml:1512(th) ./doc/networking-guide/ch_advanced.xml:1601(th) ./doc/networking-guide/ch_advanced.xml:1642(th)
+msgid "Description"
+msgstr ""
+
+#: ./doc/networking-guide/ch_networking-architecture.xml:59(emphasis)
+msgid "Management network"
+msgstr ""
+
+#: ./doc/networking-guide/ch_networking-architecture.xml:61(td)
+msgid "Provides internal communication between OpenStack components. IP addresses on this network should be reachable only within the data center."
+msgstr ""
+
+#: ./doc/networking-guide/ch_networking-architecture.xml:67(emphasis)
+msgid "Data network"
+msgstr ""
+
+#: ./doc/networking-guide/ch_networking-architecture.xml:69(td)
+msgid "Provides VM data communication within the cloud deployment. The IP addressing requirements of this network depend on the Networking plug-in that is used."
+msgstr ""
+
+#: ./doc/networking-guide/ch_networking-architecture.xml:76(emphasis)
+msgid "External network"
+msgstr ""
+
+#: ./doc/networking-guide/ch_networking-architecture.xml:78(td)
+msgid "Provides VMs with Internet access in some deployment scenarios. Anyone on the Internet can reach IP addresses on this network."
+msgstr ""
+
+#: ./doc/networking-guide/ch_networking-architecture.xml:84(emphasis)
+msgid "API network"
+msgstr ""
+
+#: ./doc/networking-guide/ch_networking-architecture.xml:86(td)
+msgid "Exposes all OpenStack APIs, including the Networking API, to tenants. IP addresses on this network should be reachable by anyone on the Internet. The API network might be the same as the external network, because it is possible to create an external-network subnet that has allocated IP ranges that use less than the full range of IP addresses in an IP block."
+msgstr ""
+
+#: ./doc/networking-guide/ch_networking-architecture.xml:101(title)
+msgid "Tenant and provider networks"
+msgstr ""
+
+#: ./doc/networking-guide/ch_networking-architecture.xml:102(para)
+msgid "The following diagram presents an overview of the tenant and provider network types, and illustrates how they interact within the overall Networking topology:"
+msgstr ""
+
+#: ./doc/networking-guide/ch_networking-architecture.xml:119(title)
+msgid "Tenant networks"
+msgstr ""
+
+#: ./doc/networking-guide/ch_networking-architecture.xml:120(para)
+msgid "Users create tenant networks for connectivity within projects; they are fully isolated by default and are not shared with other projects. Networking supports a range of tenant network types:"
+msgstr ""
+
+#: ./doc/networking-guide/ch_networking-architecture.xml:128(term) ./doc/networking-guide/section_plugins-ml2.xml:23(term)
+msgid "Flat"
+msgstr ""
+
+#: ./doc/networking-guide/ch_networking-architecture.xml:130(para)
+msgid "All instances reside on the same network, which can also be shared with the hosts. No VLAN tagging or other network segregation takes place."
+msgstr ""
+
+#: ./doc/networking-guide/ch_networking-architecture.xml:137(term) ./doc/networking-guide/section_plugins-ml2.xml:52(para)
+msgid "Local"
+msgstr ""
+
+#: ./doc/networking-guide/ch_networking-architecture.xml:139(para)
+msgid "Instances reside on the local compute host and are effectively isolated from any external networks."
+msgstr ""
+
+#: ./doc/networking-guide/ch_networking-architecture.xml:145(term) ./doc/networking-guide/section_intro-tunnel.xml:25(term) ./doc/networking-guide/section_intro-tunnel.xml:43(term) ./doc/networking-guide/section_plugins-ml2.xml:29(term)
+msgid "VLAN"
+msgstr ""
+
+#: ./doc/networking-guide/ch_networking-architecture.xml:147(para)
+msgid "Networking allows users to create multiple provider or tenant networks using VLAN IDs (802.1Q tagged) that correspond to VLANs present in the physical network. This allows instances to communicate with each other across the environment. They can also communicate with dedicated servers, firewalls, load balancers, and other networking infrastructure on the same layer 2 VLAN."
+msgstr ""
+
+#: ./doc/networking-guide/ch_networking-architecture.xml:157(term)
+msgid "VXLAN and GRE"
+msgstr ""
+
+#: ./doc/networking-guide/ch_networking-architecture.xml:159(para)
+msgid "VXLAN and GRE use network overlays to support private communication between instances. A Networking router is required to enable traffic to traverse outside of the GRE or VXLAN tenant network. A router is also required to connect directly-connected tenant networks with external networks, including the Internet; the router provides the ability to connect to instances directly from an external network using floating IP addresses."
+msgstr ""
+
+#: ./doc/networking-guide/ch_networking-architecture.xml:172(title) ./doc/networking-guide/ch_advanced.xml:28(title)
+msgid "Provider networks"
+msgstr ""
+
+#: ./doc/networking-guide/ch_networking-architecture.xml:173(para)
+msgid "The OpenStack administrator creates provider networks. These networks map to existing physical networks in the data center. Useful network types in this category are flat (untagged) and VLAN (802.1Q tagged). It is possible to allow provider networks to be shared among tenants as part of the network creation process."
+msgstr ""
+
+#: ./doc/networking-guide/ch_networking-architecture.xml:181(title)
+msgid "VMware NSX integration"
+msgstr ""
+
+#: ./doc/networking-guide/ch_networking-architecture.xml:182(para)
+msgid "OpenStack Networking uses the NSX plug-in for Networking to integrate with an existing VMware vCenter deployment. When installed on the network nodes, the NSX plug-in enables a NSX controller to centrally manage configuration settings and push them to managed network nodes. Network nodes are considered managed when they're added as hypervisors to the NSX controller."
+msgstr ""
+
+#: ./doc/networking-guide/ch_networking-architecture.xml:188(para)
+msgid "The following diagram depicts an example NSX deployment and illustrates the route inter-VM traffic takes between separate Compute nodes. Note the placement of the VMware NSX plug-in and the <systemitem class=\"service\">neutron-server</systemitem> service on the network node. The NSX controller features centrally with a green line to the network node to indicate the management relationship:"
 msgstr ""
 
 #: ./doc/networking-guide/ch_scalability-HA.xml:7(title)
 msgid "Scalability and high availability"
+msgstr ""
+
+#: ./doc/networking-guide/ch_scalability-HA.xml:8(para) ./doc/networking-guide/section_ha-dvr.xml:12(para) ./doc/networking-guide/section_ha-l3.xml:12(para) ./doc/networking-guide/section_intro-namespaces.xml:12(para) ./doc/networking-guide/section_ha-dhcp.xml:12(para) ./doc/networking-guide/section_architecture-overview.xml:12(para) ./doc/networking-guide/section_intro-routers.xml:12(para) ./doc/networking-guide/section_intro-tunnel.xml:12(para) ./doc/networking-guide/section_intro-firewalls.xml:12(para) ./doc/networking-guide/section_intro-switches.xml:12(para) ./doc/networking-guide/section_intro-layers.xml:12(para) ./doc/networking-guide/ch_debugging.xml:8(para) ./doc/networking-guide/ch_networking-data-model.xml:12(para) ./doc/networking-guide/ch_advanced.xml:8(para) ./doc/networking-guide/ch_plugins.xml:8(para) ./doc/networking-guide/section_architecture-server.xml:12(para)
+msgid "Bacon ipsum dolor sit amet biltong meatloaf andouille, turducken bresaola pork belly beef ribs ham hock capicola tail prosciutto landjaeger meatball pork loin. Swine turkey jowl, porchetta doner boudin meatloaf. Shoulder capicola prosciutto, shank landjaeger short ribs sirloin turducken pork belly boudin frankfurter chuck. Salami shankle bresaola cow filet mignon ham hock shank."
 msgstr ""
 
 #: ./doc/networking-guide/section_plugins-proprietary.xml:11(title) ./doc/networking-guide/section_plugins-ml2.xml:89(term)
@@ -45,7 +178,7 @@ msgstr ""
 msgid "DHCP Agents"
 msgstr ""
 
-#: ./doc/networking-guide/section_architecture-overview.xml:11(title) ./doc/networking-guide/section_plugins-ml2.xml:14(title) ./doc/networking-guide/section_architecture-agents.xml:22(title)
+#: ./doc/networking-guide/section_architecture-overview.xml:11(title) ./doc/networking-guide/section_plugins-ml2.xml:14(title) ./doc/networking-guide/section_architecture-agents.xml:71(title)
 msgid "Overview"
 msgstr ""
 
@@ -73,12 +206,8 @@ msgstr ""
 msgid "Tunnel (segmentation) technologies"
 msgstr ""
 
-#: ./doc/networking-guide/section_intro-tunnel.xml:22(title) ./doc/networking-guide/section_architecture-agents.xml:28(title)
+#: ./doc/networking-guide/section_intro-tunnel.xml:22(title) ./doc/networking-guide/section_architecture-agents.xml:77(title)
 msgid "Layer 2"
-msgstr ""
-
-#: ./doc/networking-guide/section_intro-tunnel.xml:25(term) ./doc/networking-guide/section_intro-tunnel.xml:43(term) ./doc/networking-guide/section_plugins-ml2.xml:29(term)
-msgid "VLAN"
 msgstr ""
 
 #: ./doc/networking-guide/section_intro-tunnel.xml:34(title)
@@ -105,20 +234,12 @@ msgstr ""
 msgid "Network type drivers"
 msgstr ""
 
-#: ./doc/networking-guide/section_plugins-ml2.xml:23(term)
-msgid "Flat"
-msgstr ""
-
 #: ./doc/networking-guide/section_plugins-ml2.xml:41(term)
 msgid "VXLAN"
 msgstr ""
 
 #: ./doc/networking-guide/section_plugins-ml2.xml:50(title)
 msgid "Tenant network types"
-msgstr ""
-
-#: ./doc/networking-guide/section_plugins-ml2.xml:52(para)
-msgid "Local"
 msgstr ""
 
 #: ./doc/networking-guide/section_plugins-ml2.xml:53(para)
@@ -141,11 +262,11 @@ msgstr ""
 msgid "Mechanisms"
 msgstr ""
 
-#: ./doc/networking-guide/section_plugins-ml2.xml:65(term) ./doc/networking-guide/section_architecture-agents.xml:31(term)
+#: ./doc/networking-guide/section_plugins-ml2.xml:65(term) ./doc/networking-guide/section_architecture-agents.xml:80(term)
 msgid "Linux Bridge"
 msgstr ""
 
-#: ./doc/networking-guide/section_plugins-ml2.xml:71(term) ./doc/networking-guide/section_architecture-agents.xml:38(term)
+#: ./doc/networking-guide/section_plugins-ml2.xml:71(term) ./doc/networking-guide/section_architecture-agents.xml:87(term)
 msgid "Open vSwitch"
 msgstr ""
 
@@ -241,12 +362,43 @@ msgstr ""
 msgid "Creation of document."
 msgstr ""
 
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: ./doc/networking-guide/ch_deployment.xml:17(None)
+msgid "@@image: '../common/figures/Neutron-PhysNet-Diagram.png'; md5=ea581fd58c57da1a6c9512b82027a195"
+msgstr ""
+
 #: ./doc/networking-guide/ch_deployment.xml:7(title)
 msgid "Deployment"
 msgstr ""
 
+#: ./doc/networking-guide/ch_deployment.xml:8(para)
+msgid "OpenStack Networking provides an extreme amount of flexibility when deploying networking in support of a compute environment. As a result, the exact layout of a deployment will depend on a combination of expected workloads, expected scale, and available hardware."
+msgstr ""
+
+#: ./doc/networking-guide/ch_deployment.xml:20(para)
+msgid "For demonstration purposes, this chapter concentrates on a networking deployment that consists of these types of nodes:"
+msgstr ""
+
+#: ./doc/networking-guide/ch_deployment.xml:26(para)
+msgid "<emphasis>Service node:</emphasis> The service node exposes the networking API to clients and handles incoming requests before forwarding them to a message queue to be actioned by the other nodes. The service node hosts both the networking service itself and the active networking plug-in. In environments that use controller nodes to host the client-facing APIs and schedulers for all services, the controller node would also fulfill the role of service node as it is applied in this chapter."
+msgstr ""
+
+#: ./doc/networking-guide/ch_deployment.xml:37(para)
+msgid "<emphasis>Network node:</emphasis> The network node handles the majority of the networking workload. It hosts the DHCP agent, the Layer-3 (L3) agent, the Layer-2 (L2) agent, and the metadata proxy. In addition to plug-ins that require an agent, it runs an instance of the plug-in agent (as do all other systems that handle data packets in an environment where such plug-ins are in use). Both the Open vSwitch and Linux Bridge mechanism drivers include an agent."
+msgstr ""
+
+#: ./doc/networking-guide/ch_deployment.xml:48(para)
+msgid "<emphasis>Compute node:</emphasis> The compute node hosts the compute instances themselves. To connect compute instances to the networking services, compute nodes must also run the L2 agent. Like all other systems that handle data packets it must also run an instance of the plug-in agent."
+msgstr ""
+
 #: ./doc/networking-guide/section_architecture-plug-in.xml:11(title)
 msgid "Plug-ins"
+msgstr ""
+
+#. This section has not yet been edited. LKB
+#: ./doc/networking-guide/section_architecture-plug-in.xml:13(para)
+msgid "The legacy networking (nova-network) implementation assumed a basic model of isolation through Linux VLANs and IP tables. Networking introduces support for vendor plug-ins, which offer a custom back-end implementation of the Networking API. A plugin can use a variety of technologies to implement the logical API requests. Some networking plug-ins might use basic Linux VLANs and IP tables, while others might use more advanced technologies, such as L2-in-L3 tunneling or OpenFlow, to provide similar benefits."
 msgstr ""
 
 #: ./doc/networking-guide/section_intro-firewalls.xml:11(title) ./doc/networking-guide/ch_advanced.xml:1066(caption)
@@ -341,35 +493,80 @@ msgstr ""
 msgid "Agents"
 msgstr ""
 
-#: ./doc/networking-guide/section_architecture-agents.xml:23(para)
+#. This section has not yet been edited. LKB
+#: ./doc/networking-guide/section_architecture-agents.xml:13(para)
+msgid "Bacon ipsum dolor sit amet ribeye rump pork loin shankle jowl pancetta bacon. Chicken andouille capicola filet mignon shoulder, turducken corned beef boudin hamburger fatback pork chop t-bone kevin. Leberkas turducken short loin t-bone pork belly pig prosciutto chicken beef ribs pork loin short ribs shoulder jerky bacon strip steak."
+msgstr ""
+
+#: ./doc/networking-guide/section_architecture-agents.xml:22(systemitem)
+msgid "neutron-server"
+msgstr ""
+
+#: ./doc/networking-guide/section_architecture-agents.xml:24(para)
+msgid "A Python daemon, which manages user requests (and exposes the API). It is configured with a plugin that implements the OpenStack Networking API operations using a specific set of networking mechanisms. A wide choice of plugins are also available. For example, the openvswitch and linuxbridge plugins utilize native Linux networking mechanisms, while other plugins interface with external devices or SDN controllers."
+msgstr ""
+
+#: ./doc/networking-guide/section_architecture-agents.xml:36(systemitem)
+msgid "neutron-l3-agent"
+msgstr ""
+
+#: ./doc/networking-guide/section_architecture-agents.xml:38(para)
+msgid "An agent providing L3/NAT forwarding."
+msgstr ""
+
+#: ./doc/networking-guide/section_architecture-agents.xml:44(systemitem)
+msgid "neutron-*-agent"
+msgstr ""
+
+#: ./doc/networking-guide/section_architecture-agents.xml:46(para)
+msgid "A plug-in agent that runs on each node to perform local networking configuration for the node's virtual machines and networking services."
+msgstr ""
+
+#: ./doc/networking-guide/section_architecture-agents.xml:53(systemitem)
+msgid "neutron-dhcp-agent"
+msgstr ""
+
+#: ./doc/networking-guide/section_architecture-agents.xml:55(para)
+msgid "An agent providing DHCP services to tenant networks."
+msgstr ""
+
+#: ./doc/networking-guide/section_architecture-agents.xml:61(term)
+msgid "Database"
+msgstr ""
+
+#: ./doc/networking-guide/section_architecture-agents.xml:63(para)
+msgid "Provides persistent storage."
+msgstr ""
+
+#: ./doc/networking-guide/section_architecture-agents.xml:72(para)
 msgid "provide layer-2/3 connectivity to instances, handle physical-virtual network transition, handle metadata, etc"
 msgstr ""
 
-#: ./doc/networking-guide/section_architecture-agents.xml:33(para) ./doc/networking-guide/section_architecture-agents.xml:40(para) ./doc/networking-guide/section_architecture-agents.xml:53(para) ./doc/networking-guide/section_architecture-agents.xml:60(para) ./doc/networking-guide/section_architecture-agents.xml:73(para)
+#: ./doc/networking-guide/section_architecture-agents.xml:82(para) ./doc/networking-guide/section_architecture-agents.xml:89(para) ./doc/networking-guide/section_architecture-agents.xml:102(para) ./doc/networking-guide/section_architecture-agents.xml:109(para) ./doc/networking-guide/section_architecture-agents.xml:122(para)
 msgid "overview/concepts"
 msgstr ""
 
-#: ./doc/networking-guide/section_architecture-agents.xml:34(para) ./doc/networking-guide/section_architecture-agents.xml:41(para) ./doc/networking-guide/section_architecture-agents.xml:54(para) ./doc/networking-guide/section_architecture-agents.xml:61(para) ./doc/networking-guide/section_architecture-agents.xml:74(para)
+#: ./doc/networking-guide/section_architecture-agents.xml:83(para) ./doc/networking-guide/section_architecture-agents.xml:90(para) ./doc/networking-guide/section_architecture-agents.xml:103(para) ./doc/networking-guide/section_architecture-agents.xml:110(para) ./doc/networking-guide/section_architecture-agents.xml:123(para)
 msgid "configuration file"
 msgstr ""
 
-#: ./doc/networking-guide/section_architecture-agents.xml:48(title)
+#: ./doc/networking-guide/section_architecture-agents.xml:97(title)
 msgid "Layer 3 (IP/Routing)"
 msgstr ""
 
-#: ./doc/networking-guide/section_architecture-agents.xml:51(term)
+#: ./doc/networking-guide/section_architecture-agents.xml:100(term)
 msgid "l3"
 msgstr ""
 
-#: ./doc/networking-guide/section_architecture-agents.xml:58(term)
+#: ./doc/networking-guide/section_architecture-agents.xml:107(term)
 msgid "DHCP"
 msgstr ""
 
-#: ./doc/networking-guide/section_architecture-agents.xml:68(title)
+#: ./doc/networking-guide/section_architecture-agents.xml:117(title)
 msgid "Miscellaneous"
 msgstr ""
 
-#: ./doc/networking-guide/section_architecture-agents.xml:71(term)
+#: ./doc/networking-guide/section_architecture-agents.xml:120(term)
 msgid "Metadata"
 msgstr ""
 
@@ -405,10 +602,6 @@ msgstr ""
 msgid "provider networks:"
 msgstr ""
 
-#: ./doc/networking-guide/ch_advanced.xml:28(title)
-msgid "Provider networks"
-msgstr ""
-
 #: ./doc/networking-guide/ch_advanced.xml:29(para)
 msgid "Networks can be categorized as either tenant networks or provider networks. Tenant networks are created by normal users and details about how they are physically realized are hidden from those users. Provider networks are created with administrative credentials, specifying the details of how the network is physically realized, usually to match some existing network in the data center."
 msgstr ""
@@ -439,10 +632,6 @@ msgstr ""
 
 #: ./doc/networking-guide/ch_advanced.xml:57(th)
 msgid "Term"
-msgstr ""
-
-#: ./doc/networking-guide/ch_advanced.xml:58(th) ./doc/networking-guide/ch_advanced.xml:149(th) ./doc/networking-guide/ch_advanced.xml:274(th) ./doc/networking-guide/ch_advanced.xml:332(th) ./doc/networking-guide/ch_advanced.xml:632(th) ./doc/networking-guide/ch_advanced.xml:675(th) ./doc/networking-guide/ch_advanced.xml:886(th) ./doc/networking-guide/ch_advanced.xml:1008(th) ./doc/networking-guide/ch_advanced.xml:1076(th) ./doc/networking-guide/ch_advanced.xml:1197(th) ./doc/networking-guide/ch_advanced.xml:1512(th) ./doc/networking-guide/ch_advanced.xml:1601(th) ./doc/networking-guide/ch_advanced.xml:1642(th)
-msgid "Description"
 msgstr ""
 
 #: ./doc/networking-guide/ch_advanced.xml:63(emphasis)
@@ -1266,7 +1455,7 @@ msgid "uuid-str or None"
 msgstr ""
 
 #: ./doc/networking-guide/ch_advanced.xml:920(td)
-msgid "This is a read-only attribute that gets populated with the uuid of the firewall policy when this firewall rule is associated with a firewall policy. A firewall rule can be associated with only one firewall policy at a time. However, the association can be changed to a different firewall policy."
+msgid "This is a read-only attribute that gets populated with the UUID of the firewall policy when this firewall rule is associated with a firewall policy. A firewall rule can be associated with only one firewall policy at a time. However, the association can be changed to a different firewall policy."
 msgstr ""
 
 #: ./doc/networking-guide/ch_advanced.xml:927(td) ./doc/networking-guide/ch_advanced.xml:1039(td)
@@ -1406,7 +1595,7 @@ msgid "List of uuid-str or None"
 msgstr ""
 
 #: ./doc/networking-guide/ch_advanced.xml:1050(td)
-msgid "This is an ordered list of firewall rule uuids. The firewall applies the rules in the order in which they appear in this list."
+msgid "This is an ordered list of firewall rule UUIDs. The firewall applies the rules in the order in which they appear in this list."
 msgstr ""
 
 #: ./doc/networking-guide/ch_advanced.xml:1054(td)
@@ -1466,7 +1655,7 @@ msgid "ERROR"
 msgstr ""
 
 #: ./doc/networking-guide/ch_advanced.xml:1146(td)
-msgid "The firewall policy uuid that this firewall is associated with. This firewall implements the rules contained in the firewall policy represented by this uuid."
+msgid "The firewall policy UUID that this firewall is associated with. This firewall implements the rules contained in the firewall policy represented by this UUID."
 msgstr ""
 
 #: ./doc/networking-guide/ch_advanced.xml:1156(title)
