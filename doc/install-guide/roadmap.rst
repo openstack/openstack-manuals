@@ -11,6 +11,7 @@ This guide has an overall blueprint with spec at:
 https://wiki.openstack.org/wiki/Documentation/InstallationGuideImprovements
 
 To do tasks:
+
 - Remove openstack-config (crudini) commands; standardize manual install
 - Unify chapter and section names (such as Overview)
 - Add sample output of each command and highlight important parts
@@ -23,9 +24,11 @@ To do tasks:
 - Add audience information; who is this book intended for
 
 Ongoing tasks:
+
 - Ensure it meets conventions and standards
 - Continually update with latest release information relevant to install
 
 Wishlist tasks:
+
 - Replace all individual client commands (like keystone, nova) with
   openstack client commands
