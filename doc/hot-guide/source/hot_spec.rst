@@ -383,7 +383,7 @@ For example:
       constraints:
         - custom_constraint: nova.keypair
 
-.. _hot_spec_pseudo_parameters
+.. _hot_spec_pseudo_parameters:
 
 Pseudo Parameters
 -----------------
@@ -729,7 +729,7 @@ template is given as single parameter to the get_resource function.
 
 
 list_join
---------
+---------
 The *list_join* function joins a list of strings with the given delimiter.
 The syntax of the list_join function is as follows:
 
