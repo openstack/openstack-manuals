@@ -37,6 +37,6 @@ GLOSSARY_DIR="$PROJECT_DIR/$GLOSSARY_SUB_DIR"
 
 cp doc/glossary/glossary-terms.xml $GLOSSARY_DIR/
 cp doc/glossary/locale/* $GLOSSARY_DIR/locale/
-sed -i -e 's|"../common/entities/openstack.ent"|"../$ENT_DIR/openstack.ent"|' \
+sed -i -e "s|\"../common/entities/openstack.ent\"|\"../$ENT_DIR/openstack.ent\"|" \
     $GLOSSARY_DIR/glossary-terms.xml
 (cd $PROJECT_DIR;git add $GLOSSARY_SUB_DIR)
