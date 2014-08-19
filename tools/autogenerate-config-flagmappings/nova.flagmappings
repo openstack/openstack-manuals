@@ -4,7 +4,6 @@ allow_instance_snapshots policy
 allow_migrate_to_same_host policy
 allow_resize_to_same_host policy
 allow_same_net_traffic network
-allowed_rpc_exception_modules testing
 amqp_auto_delete rpc rpc_all
 amqp_durable_queues rpc rpc_all
 api_paste_config wsgi
@@ -13,7 +12,10 @@ auth_strategy authentication
 auto_assign_floating_ip network
 backdoor_port testing
 bandwidth_poll_interval quota
+baremetal_scheduler_default_filters scheduling
 bindir common
+block_device_allocate_retries volumes
+block_device_allocate_retries_interval volumes
 boot_script_template vpn
 buckets_path s3
 ca_file ca
@@ -32,6 +34,7 @@ compute_available_monitors compute
 compute_driver compute
 compute_manager compute
 compute_monitors compute
+compute_resources compute
 compute_stats_class compute
 compute_topic common
 config_drive_format configdrive
@@ -206,7 +209,6 @@ network_size network
 network_topic network
 networks_path network
 neutron_default_tenant_id neutron
-neutron_metadata_proxy_shared_secret neutron
 non_inheritable_image_properties api
 notification_driver common
 notification_topics common
@@ -228,7 +230,6 @@ osapi_hide_server_address_states api
 osapi_max_limit policy
 osapi_max_request_body_size policy
 ovs_vsctl_timeout network
-password redis
 password_length policy
 pci_alias pci
 pci_passthrough_whitelist pci
@@ -236,7 +237,6 @@ periodic_enable periodic
 periodic_fuzzy_delay periodic
 policy_default_rule policy
 policy_file policy
-port common
 preallocate_images hypervisor
 project_cert_subject ca
 public_interface network
@@ -329,12 +329,12 @@ scheduler_json_config_location scheduling
 scheduler_manager scheduling
 scheduler_max_attempts scheduling
 scheduler_topic scheduling
+scheduler_use_baremetal_filters scheduling
 scheduler_weight_classes scheduling
 security_group_api network
 send_arp_for_ha network
 send_arp_for_ha_count network
 service_down_time common
-service_neutron_metadata_proxy neutron
 servicegroup_driver api
 share_dhcp_address network
 shelved_offload_time compute
@@ -538,6 +538,7 @@ libvirt/cpu_model libvirt
 libvirt/disk_cachemodes hypervisor
 libvirt/disk_prefix libvirt
 libvirt/glusterfs_mount_point_base volumes
+libvirt/hw_machine_type libvirt
 libvirt/image_info_filename_pattern libvirt
 libvirt/images_rbd_ceph_conf hypervisor
 libvirt/images_rbd_pool hypervisor
@@ -573,13 +574,15 @@ libvirt/snapshots_directory libvirt
 libvirt/sparse_logical_volumes hypervisor
 libvirt/use_usb_tablet hypervisor
 libvirt/use_virtio_for_bridges hypervisor
-libvirt/vif_driver libvirt
 libvirt/virt_type libvirt
 libvirt/volume_clear libvirt
 libvirt/volume_clear_size libvirt
 libvirt/volume_drivers libvirt
 libvirt/wait_soft_reboot_seconds libvirt
 libvirt/xen_hvmloader_path xen
+matchmaker_redis/host redis
+matchmaker_redis/password redis
+matchmaker_redis/port redis
 matchmaker_ring/ringfile rpc rpc_all
 metrics/required scheduling
 metrics/weight_multiplier scheduling
@@ -589,13 +592,17 @@ neutron/admin_auth_url neutron
 neutron/admin_password neutron
 neutron/admin_tenant_id neutron
 neutron/admin_tenant_name neutron
+neutron/admin_user_id neutron
 neutron/admin_username neutron
+neutron/allow_duplicate_networks neutron
 neutron/api_insecure neutron
 neutron/auth_strategy neutron
 neutron/ca_certificates_file neutron
 neutron/extension_sync_interval neutron
+neutron/metadata_proxy_shared_secret neutron
 neutron/ovs_bridge neutron
 neutron/region_name neutron
+neutron/service_metadata_proxy neutron
 neutron/url neutron
 neutron/url_timeout neutron
 osapi_v3/enabled apiv3
@@ -688,7 +695,7 @@ xenserver/use_agent_default xen
 xenserver/use_join_force xen
 xenserver/vhd_coalesce_max_attempts xen
 xenserver/vhd_coalesce_poll_interval xen
-xenserver/vif_driver baremetal
+xenserver/vif_driver xen
 zookeeper/address zookeeper
 zookeeper/recv_timeout zookeeper
 zookeeper/sg_prefix zookeeper

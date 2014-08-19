@@ -18,10 +18,6 @@
         <th colspan="2">[DEFAULT]</th>
       </tr>
       <tr>
-        <td>allowed_rpc_exception_modules = nova.exception, cinder.exception, exceptions</td>
-        <td>(ListOpt) Modules of exceptions that are permitted to be recreated upon receiving exception data from an rpc call.</td>
-      </tr>
-      <tr>
         <td>engine_life_check_timeout = 2</td>
         <td>(IntOpt) RPC timeout for the engine liveness check that is used for stack locking.</td>
       </tr>
@@ -34,16 +30,8 @@
         <td>(IntOpt) Heartbeat time-to-live.</td>
       </tr>
       <tr>
-        <td>password = None</td>
-        <td>(StrOpt) Password for Redis server (optional).</td>
-      </tr>
-      <tr>
-        <td>port = 6379</td>
-        <td>(IntOpt) Use this port to connect to redis host.</td>
-      </tr>
-      <tr>
-        <td>rpc_backend = heat.openstack.common.rpc.impl_kombu</td>
-        <td>(StrOpt) The messaging module to use, defaults to kombu.</td>
+        <td>rpc_backend = rabbit</td>
+        <td>(StrOpt) The messaging driver to use, defaults to rabbit. Other drivers include qpid and zmq.</td>
       </tr>
       <tr>
         <td>rpc_cast_timeout = 30</td>
@@ -51,15 +39,15 @@
       </tr>
       <tr>
         <td>rpc_conn_pool_size = 30</td>
-        <td>(IntOpt) Size of RPC connection pool</td>
+        <td>(IntOpt) Size of RPC connection pool.</td>
       </tr>
       <tr>
         <td>rpc_response_timeout = 60</td>
-        <td>(IntOpt) Seconds to wait for a response from call or multicall</td>
+        <td>(IntOpt) Seconds to wait for a response from a call.</td>
       </tr>
       <tr>
         <td>rpc_thread_pool_size = 64</td>
-        <td>(IntOpt) Size of RPC thread pool</td>
+        <td>(IntOpt) Size of RPC greenthread pool.</td>
       </tr>
       <tr>
         <td>transport_url = None</td>

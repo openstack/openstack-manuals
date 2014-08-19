@@ -27,6 +27,7 @@ control_exchange rabbitmq
 data_api common
 debug logging
 default_log_levels logging
+default_publisher_id api
 default_store api
 default_swift_reference api
 delayed_delete imagecache
@@ -41,7 +42,6 @@ fatal_deprecations logging
 filesystem_store_datadir filesystem
 filesystem_store_datadirs filesystem
 filesystem_store_metadata_file filesystem
-host redis
 image_cache_dir imagecache
 image_cache_driver imagecache
 image_cache_max_size imagecache
@@ -82,13 +82,10 @@ mongodb_store_db gridfs
 mongodb_store_uri gridfs
 notification_driver amqp
 notification_topics amqp
-notifier_strategy common
 os_region_name common
 owner_is_tenant api
-password redis
 policy_default_rule policy
 policy_file policy
-port redis
 property_protection_file common
 property_protection_rule_format common
 publish_errors logging
@@ -211,6 +208,7 @@ database/min_pool_size database
 database/mysql_sql_mode database
 database/pool_timeout database
 database/retry_interval database
+database/slave_connection database
 database/sqlite_db database
 database/sqlite_synchronous database
 database/use_db_reconnect database
@@ -245,8 +243,13 @@ keystone_authtoken/memcached_servers auth_token
 keystone_authtoken/revocation_cache_time auth_token
 keystone_authtoken/signing_dir auth_token
 keystone_authtoken/token_cache_time auth_token
+matchmaker_redis/host redis
+matchmaker_redis/password redis
+matchmaker_redis/port redis
 matchmaker_ring/ringfile matchmaker
 paste_deploy/config_file paste
 paste_deploy/flavor paste
+profiler/enabled profiler
+profiler/trace_sqlalchemy profiler
 store_type_location_strategy/store_type_preference api
 task/task_time_to_live common

@@ -18,6 +18,10 @@
         <th colspan="2">[DEFAULT]</th>
       </tr>
       <tr>
+        <td>action_retry_limit = 5</td>
+        <td>(IntOpt) Number of times to retry to bring a resource to a non-error state. Set to 0 to disable retries.</td>
+      </tr>
+      <tr>
         <td>heat_metadata_server_url = </td>
         <td>(StrOpt) URL of the Heat metadata server.</td>
       </tr>
@@ -66,8 +70,12 @@
         <td>(StrOpt) Keystone password for stack_domain_admin user.</td>
       </tr>
       <tr>
-        <td>stack_user_domain = None</td>
-        <td>(StrOpt) Keystone domain ID which contains heat template-defined users.</td>
+        <td>stack_user_domain_id = None</td>
+        <td>(StrOpt) Keystone domain ID which contains heat template-defined users. If this option is set, stack_user_domain_name option will be ignored.</td>
+      </tr>
+      <tr>
+        <td>stack_user_domain_name = None</td>
+        <td>(StrOpt) Keystone domain name which contains heat template-defined users. If `stack_user_domain_id` option is set, this option is ignored.</td>
       </tr>
       <tr>
         <td>trusts_delegated_roles = heat_stack_owner</td>

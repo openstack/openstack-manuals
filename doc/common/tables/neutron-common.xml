@@ -34,10 +34,6 @@
         <td>(IntOpt) Seconds to regard the agent is down; should be at least twice report_interval, to be sure the agent is down for good.</td>
       </tr>
       <tr>
-        <td>allowed_rpc_exception_modules = nova.exception, cinder.exception, exceptions</td>
-        <td>(ListOpt) Modules of exceptions that are permitted to be recreated upon receiving exception data from an rpc call.</td>
-      </tr>
-      <tr>
         <td>api_workers = 0</td>
         <td>(IntOpt) Number of separate worker processes for service</td>
       </tr>
@@ -126,8 +122,8 @@
         <td>(StrOpt) Network service endpoint type to pull from the keystone catalog</td>
       </tr>
       <tr>
-        <td>force_gateway_on_subnet = False</td>
-        <td>(BoolOpt) Ensure that configured gateway is on subnet</td>
+        <td>force_gateway_on_subnet = True</td>
+        <td>(BoolOpt) Ensure that configured gateway is on subnet. For IPv6, validate only if gateway is not a link local address. Deprecated, to be removed during the K release, at which point the check will be mandatory.</td>
       </tr>
       <tr>
         <td>interface_driver = None</td>
@@ -144,6 +140,10 @@
       <tr>
         <td>mac_generation_retries = 16</td>
         <td>(IntOpt) How many times Neutron will retry MAC generation</td>
+      </tr>
+      <tr>
+        <td>max_allowed_address_pair = 10</td>
+        <td>(IntOpt) Maximum number of allowed address pairs</td>
       </tr>
       <tr>
         <td>max_dns_nameservers = 5</td>
