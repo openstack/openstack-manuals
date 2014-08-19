@@ -77,7 +77,7 @@
     <term><command>ping-all</command></term>
     <listitem>
       <para>
-        ping-all is all-in-one command to ping all fixed IP's in a specified network.
+        ping-all is an all-in-one command to ping all fixed IPs in a specified network.
       </para>
     </listitem>
   </varlistentry>
@@ -262,8 +262,14 @@ Remove a probe.
   <section xml:id="neutron-debug_subcommand_ping-all">
         <title>neutron-debug ping-all command</title>
         <screen><computeroutput>usage: neutron-debug ping-all &lt;port-id> --timeout &lt;number</computeroutput></screen>
-        <para>All-in-one command to ping all fixed IP's
-      in a specified network.</para>  <variablelist wordsize="10">
+        <para>All-in-one command to ping all fixed IPs
+      in a specified network. A probe creation is not needed
+      for this command. A new probe is created automatically. It will,
+      however, need to be deleted manually when it is no longer needed.
+      When there are multiple networks, the newly created probe will be
+      attached to a random network and thus the ping will take
+      place from within that random network.</para>
+  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;port-id&gt;</command></term>
