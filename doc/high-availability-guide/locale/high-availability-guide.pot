@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-08-16 06:09+0000\n"
+"POT-Creation-Date: 2014-08-19 06:23+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -166,7 +166,7 @@ msgid "In an active/passive configuration, systems are set up to bring additiona
 msgstr ""
 
 #: ./doc/high-availability-guide/ch_intro.xml:62(para)
-msgid "Typically, an active/passive installation for a stateless service would maintain a redundant instance that can be brought online when required. Requests are load balanced using a virtual IP address and a load balancer such as HAProxy."
+msgid "Typically, an active/passive installation for a stateless service would maintain a redundant instance that can be brought online when required. Requests may be handled using a virtual IP address to facilitate return to service with minimal reconfiguration required."
 msgstr ""
 
 #: ./doc/high-availability-guide/ch_intro.xml:63(para)
@@ -282,7 +282,7 @@ msgid "Network controller cluster stack"
 msgstr ""
 
 #: ./doc/high-availability-guide/ch_network.xml:10(para)
-msgid "The network controller sits on the management and data network, and needs to be connected to the Internet if a VM needs access to it."
+msgid "The network controller sits on the management and data network, and needs to be connected to the Internet if an instance will need access to the Internet."
 msgstr ""
 
 #: ./doc/high-availability-guide/ch_network.xml:12(para)
@@ -438,7 +438,7 @@ msgid "An example of creating the cluster:"
 msgstr ""
 
 #: ./doc/high-availability-guide/ha_aa_db/section_ha_aa_db_mysql_galera.xml:102(para)
-msgid "Start on <literal>10.0.0.10</literal> by executing the command:"
+msgid "Start on the first node having IP address <literal>10.0.0.10</literal> by executing the command:"
 msgstr ""
 
 #: ./doc/high-availability-guide/ha_aa_db/section_ha_aa_db_mysql_galera.xml:110(para)
@@ -509,7 +509,7 @@ msgstr ""
 msgid "managing Block Storage API daemon with the Pacemaker cluster manager,"
 msgstr ""
 
-#: ./doc/high-availability-guide/api/section_cinder_api.xml:22(para) ./doc/high-availability-guide/api/section_glance_api.xml:23(para) ./doc/high-availability-guide/api/section_neutron_server.xml:23(para) ./doc/high-availability-guide/api/section_keystone.xml:23(para)
+#: ./doc/high-availability-guide/api/section_cinder_api.xml:22(para) ./doc/high-availability-guide/api/section_glance_api.xml:23(para) ./doc/high-availability-guide/api/section_keystone.xml:23(para)
 msgid "Configure OpenStack services to use this IP address."
 msgstr ""
 
@@ -574,7 +574,7 @@ msgid "Configure Pacemaker group"
 msgstr ""
 
 #: ./doc/high-availability-guide/api/section_api_pacemaker.xml:9(para)
-msgid "Finally, we need to create a service <literal>group</literal> to ensure that virtual IP is linked to the API services resources:"
+msgid "Finally, we need to create a service <literal>group</literal> to ensure that the virtual IP is linked to the API services resources:"
 msgstr ""
 
 #: ./doc/high-availability-guide/api/section_glance_api.xml:7(title)
@@ -594,7 +594,7 @@ msgid "Manage OpenStack Image API daemon with the Pacemaker cluster manager."
 msgstr ""
 
 #: ./doc/high-availability-guide/api/section_glance_api.xml:29(para)
-msgid "Here is the <link href=\"http://docs.openstack.org/trunk/install-guide/install/apt/content/ch_glance.html\">documentation</link> for installing OpenStack Image API service."
+msgid "Here is the <link href=\"http://docs.openstack.org/trunk/install-guide/install/apt/content/ch_glance.html\">documentation</link> for installing the OpenStack Image API service."
 msgstr ""
 
 #: ./doc/high-availability-guide/api/section_glance_api.xml:33(title)
@@ -606,11 +606,11 @@ msgid "You can now add the Pacemaker configuration for OpenStack Image API resou
 msgstr ""
 
 #: ./doc/high-availability-guide/api/section_glance_api.xml:48(para)
-msgid "<literal>p_glance-api</literal>, a resource for manage OpenStack Image API service"
+msgid "<literal>p_glance-api</literal>, a resource for managing OpenStack Image API service"
 msgstr ""
 
 #: ./doc/high-availability-guide/api/section_glance_api.xml:52(para)
-msgid "<literal>crm configure</literal> supports batch input, so you may copy and paste the above into your live pacemaker configuration, and then make changes as required. For example, you may enter <literal>edit p_ip_glance-api</literal> from the <literal>crm configure</literal> menu and edit the resource to match your preferred virtual IP address."
+msgid "<literal>crm configure</literal> supports batch input, so you may copy and paste the above into your live Pacemaker configuration, and then make changes as required. For example, you may enter <literal>edit p_ip_glance-api</literal> from the <literal>crm configure</literal> menu and edit the resource to match your preferred virtual IP address."
 msgstr ""
 
 #: ./doc/high-availability-guide/api/section_glance_api.xml:57(para)
@@ -634,7 +634,7 @@ msgid "Your OpenStack services must now point their OpenStack Image API configur
 msgstr ""
 
 #: ./doc/high-availability-guide/api/section_glance_api.xml:86(para)
-msgid "For OpenStack Compute, for example, if your OpenStack Image API service IP address is 192.168.42.104 as in the configuration explained here, you would use the following line in your <filename>nova.conf</filename> file:"
+msgid "For OpenStack Compute, for example, if your OpenStack Image API service IP address is 192.168.42.103 as in the configuration explained here, you would use the following line in your <filename>nova.conf</filename> file:"
 msgstr ""
 
 #: ./doc/high-availability-guide/api/section_glance_api.xml:90(para)
@@ -650,15 +650,19 @@ msgid "Highly available OpenStack Networking server"
 msgstr ""
 
 #: ./doc/high-availability-guide/api/section_neutron_server.xml:9(para)
-msgid "OpenStack Networking is the network connectivity service in OpenStack. Making the OpenStack Networking Server service highly available in active / passive mode involves"
+msgid "OpenStack Networking is the network connectivity service in OpenStack. Making the OpenStack Networking Server service highly available in active / passive mode involves the following tasks:"
 msgstr ""
 
 #: ./doc/high-availability-guide/api/section_neutron_server.xml:13(para)
-msgid "Configure OpenStack Networking to listen on the VIP address,"
+msgid "Configure OpenStack Networking to listen on the virtual IP address,"
 msgstr ""
 
 #: ./doc/high-availability-guide/api/section_neutron_server.xml:18(para)
-msgid "managing OpenStack Networking API Server daemon with the Pacemaker cluster manager,"
+msgid "Manage the OpenStack Networking API Server daemon with the Pacemaker cluster manager,"
+msgstr ""
+
+#: ./doc/high-availability-guide/api/section_neutron_server.xml:23(para)
+msgid "Configure OpenStack services to use the virtual IP address."
 msgstr ""
 
 #: ./doc/high-availability-guide/api/section_neutron_server.xml:29(para)
@@ -741,7 +745,7 @@ msgstr ""
 msgid "<literal>p_ceilometer-agent-central</literal>, a resource for manage Ceilometer Central Agent service"
 msgstr ""
 
-#: ./doc/high-availability-guide/api/section_ceilometer_agent_central.xml:44(para) ./doc/high-availability-guide/network/section_highly_available_neutron_metadata_agent.xml:34(para) ./doc/high-availability-guide/network/section_highly_available_neutron_l3_agent.xml:37(para) ./doc/high-availability-guide/network/section_highly_available_neutron_dhcp_agent.xml:37(para)
+#: ./doc/high-availability-guide/api/section_ceilometer_agent_central.xml:44(para) ./doc/high-availability-guide/network/section_highly_available_neutron_l3_agent.xml:37(para) ./doc/high-availability-guide/network/section_highly_available_neutron_dhcp_agent.xml:37(para)
 msgid "<literal>crm configure</literal> supports batch input, so you may copy and paste the above into your live pacemaker configuration, and then make changes as required."
 msgstr ""
 
@@ -869,7 +873,7 @@ msgstr ""
 msgid "configuring RabbitMQ to use a data directory residing on that DRBD device,"
 msgstr ""
 
-#: ./doc/high-availability-guide/controller/section_rabbitmq.xml:29(para) ./doc/high-availability-guide/controller/section_mysql.xml:29(para)
+#: ./doc/high-availability-guide/controller/section_rabbitmq.xml:29(para)
 msgid "selecting and assigning a virtual IP address (VIP) that can freely float between cluster nodes,"
 msgstr ""
 
@@ -1005,16 +1009,20 @@ msgstr ""
 msgid "Configure MySQL to use a data directory residing on that DRBD device,"
 msgstr ""
 
+#: ./doc/high-availability-guide/controller/section_mysql.xml:29(para)
+msgid "Select and assign a virtual IP address (VIP) that can freely float between cluster nodes,"
+msgstr ""
+
 #: ./doc/high-availability-guide/controller/section_mysql.xml:35(para)
 msgid "Configure MySQL to listen on that IP address,"
 msgstr ""
 
 #: ./doc/high-availability-guide/controller/section_mysql.xml:40(para)
-msgid "managing all resources, including the MySQL daemon itself, with the Pacemaker cluster manager."
+msgid "Manage all resources, including the MySQL daemon itself, with the Pacemaker cluster manager."
 msgstr ""
 
 #: ./doc/high-availability-guide/controller/section_mysql.xml:47(para)
-msgid "<link href=\"http://galeracluster.com/\">MySQL/Galera</link> is an alternative method of Configure MySQL for high availability. It is likely to become the preferred method of achieving MySQL high availability once it has sufficiently matured. At the time of writing, however, the Pacemaker/DRBD based approach remains the recommended one for OpenStack environments."
+msgid "<link href=\"http://galeracluster.com/\">MySQL/Galera</link> is an alternative method of configuring MySQL for high availability. It is likely to become the preferred method of achieving MySQL high availability once it has sufficiently matured. At the time of writing, however, the Pacemaker/DRBD based approach remains the recommended one for OpenStack environments."
 msgstr ""
 
 #: ./doc/high-availability-guide/controller/section_mysql.xml:58(para)
@@ -1042,7 +1050,7 @@ msgid "Creating a file system"
 msgstr ""
 
 #: ./doc/high-availability-guide/controller/section_mysql.xml:125(para)
-msgid "Once the DRBD resource is running and in the primary role (and potentially still in the process of running the initial device synchronization), you may proceed with creating the filesystem for MySQL data. XFS is the generally recommended filesystem:"
+msgid "Once the DRBD resource is running and in the primary role (and potentially still in the process of running the initial device synchronization), you may proceed with creating the filesystem for MySQL data. XFS is the generally recommended filesystem due to its journaling, efficient allocation, and performance:"
 msgstr ""
 
 #: ./doc/high-availability-guide/controller/section_mysql.xml:141(title)
@@ -1114,7 +1122,7 @@ msgid "Memcached"
 msgstr ""
 
 #: ./doc/high-availability-guide/ha_aa_controllers/section_memcached.xml:9(para)
-msgid "Most of OpenStack services use an application to offer persistence and store ephemeral data (like tokens). Memcached is one of them and can scale-out easily without specific trick."
+msgid "Most of OpenStack services use an application to offer persistence and store ephemeral data (like tokens). Memcached is one of them and can scale-out easily without any specific tricks required."
 msgstr ""
 
 #: ./doc/high-availability-guide/ha_aa_controllers/section_memcached.xml:11(para)
@@ -1154,11 +1162,11 @@ msgid "To configure our Cloud using Highly available and scalable API services, 
 msgstr ""
 
 #: ./doc/high-availability-guide/ha_aa_controllers/section_run_openstack_api_and_schedulers.xml:22(para)
-msgid "You use Virtual IP when configuring OpenStack Identity endpoints."
+msgid "You use virtual IPs when configuring OpenStack Identity endpoints."
 msgstr ""
 
 #: ./doc/high-availability-guide/ha_aa_controllers/section_run_openstack_api_and_schedulers.xml:27(para)
-msgid "All OpenStack configuration files should refer to Virtual IP."
+msgid "All OpenStack configuration files should refer to virtual IPs."
 msgstr ""
 
 #: ./doc/high-availability-guide/ha_aa_controllers/section_run_openstack_api_and_schedulers.xml:33(emphasis)
@@ -1210,7 +1218,7 @@ msgid "Start Pacemaker"
 msgstr ""
 
 #: ./doc/high-availability-guide/pacemaker/section_start_pacemaker.xml:7(para)
-msgid "Once the Corosync services have been started, and you have established that the cluster is communicating properly, it is safe to start <literal>pacemakerd</literal>, the Pacemaker master control process:"
+msgid "Once the Corosync services have been started and you have established that the cluster is communicating properly, it is safe to start <literal>pacemakerd</literal>, the Pacemaker master control process:"
 msgstr ""
 
 #: ./doc/high-availability-guide/pacemaker/section_start_pacemaker.xml:12(para)
@@ -1290,11 +1298,11 @@ msgid "Install packages"
 msgstr ""
 
 #: ./doc/high-availability-guide/pacemaker/section_install_packages.xml:7(para)
-msgid "On any host that is meant to be part of a Pacemaker cluster, you must first establish cluster communications through the Corosync messaging layer. This involves Install the following packages (and their dependencies, which your package manager will normally install automatically):"
+msgid "On any host that is meant to be part of a Pacemaker cluster, you must first establish cluster communications through the Corosync messaging layer. This involves installing the following packages (and their dependencies, which your package manager will normally install automatically):"
 msgstr ""
 
 #: ./doc/high-availability-guide/pacemaker/section_install_packages.xml:14(para)
-msgid "<literal>pacemaker</literal> Note that the crm shell should be downloaded separately."
+msgid "<literal>pacemaker</literal> (Note that the crm shell should be downloaded separately.)"
 msgstr ""
 
 #: ./doc/high-availability-guide/pacemaker/section_install_packages.xml:19(literal)
@@ -1330,18 +1338,18 @@ msgid "Then, set the following properties:"
 msgstr ""
 
 #: ./doc/high-availability-guide/pacemaker/section_set_basic_cluster_properties.xml:23(para)
-msgid "Setting <literal>no-quorum-policy=\"ignore\"</literal> is required in 2-node Pacemaker clusters for the following reason: if quorum enforcement is enabled, and one of the two nodes fails, then the remaining node can not establish a <emphasis>majority</emphasis> of quorum votes necessary to run services, and thus it is unable to take over any resources. The appropriate workaround is to ignore loss of quorum in the cluster. This is safe and necessary <emphasis>only</emphasis> in 2-node clusters. Do not set this property in Pacemaker clusters with more than two nodes."
+msgid "Setting <literal>no-quorum-policy=\"ignore\"</literal> is required in 2-node Pacemaker clusters for the following reason: if quorum enforcement is enabled, and one of the two nodes fails, then the remaining node can not establish a <emphasis>majority</emphasis> of quorum votes necessary to run services, and thus it is unable to take over any resources. In this case, the appropriate workaround is to ignore loss of quorum in the cluster. This should only <emphasis>only</emphasis> be done in 2-node clusters: do not set this property in Pacemaker clusters with more than two nodes. Note that a two-node cluster with this setting exposes a risk of split-brain because either half of the cluster, or both, are able to become active in the event that both nodes remain online but lose communication with one another. The preferred configuration is 3 or more nodes per cluster."
 msgstr ""
 
-#: ./doc/high-availability-guide/pacemaker/section_set_basic_cluster_properties.xml:35(para)
+#: ./doc/high-availability-guide/pacemaker/section_set_basic_cluster_properties.xml:34(para)
 msgid "Setting <literal>pe-warn-series-max</literal>, <literal>pe-input-series-max</literal> and <literal>pe-error-series-max</literal> to 1000 instructs Pacemaker to keep a longer history of the inputs processed, and errors and warnings generated, by its Policy Engine. This history is typically useful in case cluster troubleshooting becomes necessary."
 msgstr ""
 
-#: ./doc/high-availability-guide/pacemaker/section_set_basic_cluster_properties.xml:44(para)
+#: ./doc/high-availability-guide/pacemaker/section_set_basic_cluster_properties.xml:43(para)
 msgid "Pacemaker uses an event-driven approach to cluster state processing. However, certain Pacemaker actions occur at a configurable interval, <literal>cluster-recheck-interval</literal>, which defaults to 15 minutes. It is usually prudent to reduce this to a shorter interval, such as 5 or 3 minutes."
 msgstr ""
 
-#: ./doc/high-availability-guide/pacemaker/section_set_basic_cluster_properties.xml:53(para)
+#: ./doc/high-availability-guide/pacemaker/section_set_basic_cluster_properties.xml:52(para)
 msgid "Once you have made these changes, you may <literal>commit</literal> the updated configuration."
 msgstr ""
 
@@ -1350,7 +1358,7 @@ msgid "Starting Corosync"
 msgstr ""
 
 #: ./doc/high-availability-guide/pacemaker/section_starting_corosync.xml:9(para)
-msgid "Corosync is started as a regular system service. Depending on your distribution, it may ship with a LSB (System V style) init script, an upstart job, or a systemd unit file. Either way, the service is usually named <literal>corosync</literal>:"
+msgid "Corosync is started as a regular system service. Depending on your distribution, it may ship with an LSB init script, an upstart job, or a systemd unit file. Either way, the service is usually named <literal>corosync</literal>:"
 msgstr ""
 
 #: ./doc/high-availability-guide/pacemaker/section_starting_corosync.xml:15(para)
@@ -1418,7 +1426,7 @@ msgid "Use durable queues in RabbitMQ:"
 msgstr ""
 
 #: ./doc/high-availability-guide/ha_aa_rabbitmq/section_configure_openstack_services_to_user_rabbitmq.xml:21(para)
-msgid "Use H/A queues in RabbitMQ (x-ha-policy: all):"
+msgid "Use HA queues in RabbitMQ (x-ha-policy: all):"
 msgstr ""
 
 #: ./doc/high-availability-guide/ha_aa_rabbitmq/section_configure_openstack_services_to_user_rabbitmq.xml:23(para)
@@ -1515,6 +1523,10 @@ msgstr ""
 
 #: ./doc/high-availability-guide/network/section_highly_available_neutron_metadata_agent.xml:29(para)
 msgid "<literal>p_neutron-metadata-agent</literal>, a resource for manage Neutron Metadata Agent service"
+msgstr ""
+
+#: ./doc/high-availability-guide/network/section_highly_available_neutron_metadata_agent.xml:34(para)
+msgid "<literal>crm configure</literal> supports batch input, so you may copy and paste the above into your live Pacemaker configuration, and then make changes as required."
 msgstr ""
 
 #: ./doc/high-availability-guide/network/section_highly_available_neutron_metadata_agent.xml:37(para)

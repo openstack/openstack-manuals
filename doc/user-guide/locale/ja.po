@@ -7,9 +7,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenStack Manuals\n"
-"POT-Creation-Date: 2014-08-15 18:55+0000\n"
-"PO-Revision-Date: 2014-08-15 18:42+0000\n"
-"Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
+"POT-Creation-Date: 2014-08-19 03:34+0000\n"
+"PO-Revision-Date: 2014-08-19 04:30+0000\n"
+"Last-Translator: Tomoyuki KATO <tomo@dream.daynight.jp>\n"
 "Language-Team: Japanese (http://www.transifex.com/projects/p/openstack-manuals-i18n/language/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1330,6 +1330,7 @@ msgid "In the Launch Instance dialog box, specify the following values:"
 msgstr "インスタンスの起動ダイアログボックスで、以下の値を指定します。"
 
 #: ./doc/user-guide/section_dashboard_launch_instances_from_image.xml56(guilabel)
+#: ./doc/user-guide/section_dashboard_databases.xml62(guilabel)
 msgid "Details"
 msgstr "詳細"
 
@@ -1366,6 +1367,7 @@ msgid ""
 msgstr "サーバー名は一意性が保証されていません。そのため、同じ名前を持つインスタンスを 2 つ起動する可能性があります。"
 
 #: ./doc/user-guide/section_dashboard_launch_instances_from_image.xml83(guilabel)
+#: ./doc/user-guide/section_dashboard_databases.xml71(guilabel)
 msgid "Flavor"
 msgstr "フレーバー"
 
@@ -1827,6 +1829,191 @@ msgid ""
 "In the <guilabel>Confirm Delete Image</guilabel> dialog box, click "
 "<guibutton>Delete Images</guibutton> to confirm the deletion."
 msgstr "<guilabel>イメージの削除の確認</guilabel>ダイアログボックスで、削除を確認するために<guibutton>イメージの削除</guibutton>をクリックします。"
+
+#: ./doc/user-guide/section_dashboard_databases.xml7(title)
+#: ./doc/user-guide/section_cli_trove.xml9(title)
+msgid "Create and manage databases"
+msgstr "データベースの作成と管理"
+
+#: ./doc/user-guide/section_dashboard_databases.xml9(para)
+#: ./doc/user-guide/section_cli_trove.xml10(para)
+msgid ""
+"The Database service provides scalable and reliable cloud provisioning "
+"functionality for both relational and non-relational database engines. Users"
+" can quickly and easily use database features without the burden of handling"
+" complex administrative tasks."
+msgstr "Database は、リレーショナルデータベースと非リレーショナルデータベースの両方のエンジン向けにスケール可能な信頼できるクラウド展開機能を提供します。ユーザーは、複雑な管理作業を実行することなく、迅速かつ容易にデータベース機能を利用できます。"
+
+#: ./doc/user-guide/section_dashboard_databases.xml11(title)
+#: ./doc/user-guide/section_cli_trove.xml158(title)
+msgid "Create a database instance"
+msgstr "データベースインスタンスの作成"
+
+#: ./doc/user-guide/section_dashboard_databases.xml13(title)
+msgid "Prerequisites"
+msgstr "前提"
+
+#: ./doc/user-guide/section_dashboard_databases.xml14(para)
+msgid ""
+"Before you create a database instance, you need to configure a default "
+"datastore and make sure you have an appropriate flavor for the type of "
+"database instance you want."
+msgstr "データベースインスタンスを作成する前に、デフォルトのデータストアを設定する必要があります。また、使用したいデータベースインスタンスの種類に応じた適切なフレーバーが必ず必要になります。"
+
+#: ./doc/user-guide/section_dashboard_databases.xml18(title)
+msgid "Configure a default datastore."
+msgstr "デフォルトのデータストアを設定します。"
+
+#: ./doc/user-guide/section_dashboard_databases.xml19(para)
+msgid ""
+"Because the dashboard does not let you choose a specific datastore to use "
+"with an instance, you need to configure a default datastore. The dashboard "
+"then uses the default datastore to create the instance."
+msgstr "ダッシュボードは、インスタンスで使用する特定のデータストアを選択できないため、デフォルトのデータストアを設定する必要があります。そして、ダッシュボードは、インスタンスを作成するためにデフォルトのデータストアを使用します。"
+
+#: ./doc/user-guide/section_dashboard_databases.xml22(para)
+msgid "Add the following line to <filename>/etc/trove/trove.conf</filename>:"
+msgstr "以下の行を <filename>/etc/trove/trove.conf</filename> に追加します。"
+
+#: ./doc/user-guide/section_dashboard_databases.xml23(replaceable)
+#: ./doc/user-guide/section_cli_trove.xml628(replaceable)
+msgid "DATASTORE_NAME"
+msgstr "DATASTORE_NAME"
+
+#: ./doc/user-guide/section_dashboard_databases.xml24(para)
+msgid ""
+"Replace <replaceable>DATASTORE_NAME</replaceable> with the name that the "
+"administrative user set when issuing the <placeholder-1/> command to create "
+"the datastore. You can use the trove <placeholder-2/> command to display the"
+" datastores that are available in your environment."
+msgstr "データストアを作成するために <placeholder-1/> コマンドを実行するときに、設定する管理ユーザーで <replaceable>DATASTORE_NAME</replaceable> を置き換えます。trove <placeholder-2/> コマンドを使用して、お使いの環境で利用できるデータストアを表示できます。"
+
+#: ./doc/user-guide/section_dashboard_databases.xml25(para)
+msgid ""
+"For example, if your MySQL datastore name is set to "
+"<literal>mysql</literal>, your entry would look like this:"
+msgstr "例えば、MySQL データストアの名前が <literal>mysql</literal> に設定されている場合、このようになるでしょう。"
+
+#: ./doc/user-guide/section_dashboard_databases.xml29(para)
+msgid "Restart Database services on the controller node:"
+msgstr "コントローラーノードで Database のサービスを再起動します。"
+
+#: ./doc/user-guide/section_dashboard_databases.xml37(title)
+msgid "Verify flavor."
+msgstr "フレーバーを検証します。"
+
+#: ./doc/user-guide/section_dashboard_databases.xml38(para)
+msgid ""
+"Make sure an <link href=\"create_db\">appropriate flavor exists</link> for "
+"the type of database instance you want."
+msgstr "使用したいデータベースインスタンスの種類に応じた<link href=\"create_db\">適切なフレーバーが存在</link>することを確認してください。"
+
+#: ./doc/user-guide/section_dashboard_databases.xml42(title)
+msgid "Create database instance"
+msgstr "データベースインスタンスの作成"
+
+#: ./doc/user-guide/section_dashboard_databases.xml43(para)
+msgid ""
+"Once you have configured a default datastore and verified that you have an "
+"appropriate flavor, you can create a database instance."
+msgstr "デフォルトのデータストアを設定し、適切なフレーバーがきちんとあると、データベースインスタンスを作成できます。"
+
+#: ./doc/user-guide/section_dashboard_databases.xml47(para)
+msgid ""
+"Log in to the dashboard, choose a project, and click "
+"<guilabel>Databases</guilabel>."
+msgstr "ダッシュボードにログインし、プロジェクトを選択し、<guilabel>データベース</guilabel>をクリックします。"
+
+#: ./doc/user-guide/section_dashboard_databases.xml50(para)
+msgid ""
+"Click <guilabel>Database Instances</guilabel>. This lists the instances that"
+" already exist in your environment."
+msgstr "<guilabel>データベースインスタンス</guilabel>をクリックします。お使いの環境にあるインスタンスが一覧表示されます。"
+
+#: ./doc/user-guide/section_dashboard_databases.xml53(para)
+msgid "Click <guibutton>Launch Instance</guibutton>."
+msgstr "<guibutton>インスタンスの起動</guibutton>をクリックします。"
+
+#: ./doc/user-guide/section_dashboard_databases.xml56(para)
+msgid ""
+"In the <guilabel>Launch Database</guilabel> dialog box, specify the "
+"following values."
+msgstr "<guilabel>データベースの起動</guilabel>ダイアログボックスに以下の値を指定します。"
+
+#: ./doc/user-guide/section_dashboard_databases.xml67(guilabel)
+msgid "Database Name"
+msgstr "データベース名"
+
+#: ./doc/user-guide/section_dashboard_databases.xml68(para)
+msgid "Specify a name for the database instance."
+msgstr "データベースインスタンスの名前を指定します。"
+
+#: ./doc/user-guide/section_dashboard_databases.xml72(para)
+msgid "Select an appropriate flavor for the instance."
+msgstr "インスタンスに応じた適切なフレーバーを選択します。"
+
+#: ./doc/user-guide/section_dashboard_databases.xml75(guilabel)
+msgid "Volume Size"
+msgstr "ボリュームサイズ"
+
+#: ./doc/user-guide/section_dashboard_databases.xml76(para)
+msgid "Select a volume size. Volume size is expressed in GB."
+msgstr "ボリューム容量を選択します。ボリューム容量は GB 単位で表示されます。"
+
+#: ./doc/user-guide/section_dashboard_databases.xml80(guilabel)
+msgid "Initialize Databases"
+msgstr "データベースの初期化"
+
+#: ./doc/user-guide/section_dashboard_databases.xml83(guilabel)
+msgid "Initial Database"
+msgstr "初期データベース"
+
+#: ./doc/user-guide/section_dashboard_databases.xml85(para)
+msgid ""
+"Optionally provide a comma separated list of databases to create, for "
+"example:"
+msgstr "オプションとして、作成するデータベースの一覧を CSV で指定します。例えば、"
+
+#: ./doc/user-guide/section_dashboard_databases.xml86(para)
+msgid ""
+"<literal>database1</literal>, <literal>database2</literal>, "
+"<literal>database3</literal>"
+msgstr "<literal>database1</literal>, <literal>database2</literal>, <literal>database3</literal>"
+
+#: ./doc/user-guide/section_dashboard_databases.xml90(guilabel)
+msgid "Initial Admin User"
+msgstr "最初の管理ユーザー"
+
+#: ./doc/user-guide/section_dashboard_databases.xml91(para)
+msgid ""
+"Create an initial admin user. This user will have access to all the "
+"databases you create."
+msgstr "初期管理ユーザーを作成します。このユーザーは、作成するすべてのデータベースにアクセスできます。"
+
+#: ./doc/user-guide/section_dashboard_databases.xml94(guilabel)
+msgid "Password"
+msgstr "パスワード"
+
+#: ./doc/user-guide/section_dashboard_databases.xml95(para)
+msgid ""
+"Specify a password associated with the initial admin user you just named."
+msgstr "名前をつけた初期管理ユーザーのパスワードを指定します。"
+
+#: ./doc/user-guide/section_dashboard_databases.xml98(guilabel)
+msgid "Host"
+msgstr "ホスト"
+
+#: ./doc/user-guide/section_dashboard_databases.xml99(para)
+msgid ""
+"Optionally, allow the user to connect only from this host. If you do not "
+"specify a host, this user will be allowed to connect from anywhere."
+msgstr "オプションとして、ユーザーがこのホストのみから接続できるようになります。ホストを指定しない場合、このユーザーはどこからでも接続できます。"
+
+#: ./doc/user-guide/section_dashboard_databases.xml105(para)
+msgid ""
+"Click the <guibutton>Launch</guibutton> button. The new database instance "
+"appears in the databases list."
+msgstr "<guibutton>起動</guibutton>ボタンをクリックします。新しいデータベースインスタンスがデータベース一覧に表示されます。"
 
 #: ./doc/user-guide/section_cli_ceilometer.xml7(title)
 msgid "Measure cloud resources"
@@ -3804,18 +3991,6 @@ msgstr "サーバーが削除されたことを検証するために、<placehol
 msgid "The deleted instance does not appear in the list."
 msgstr "この一覧には、削除したインスタンスの表示がなくなっています。"
 
-#: ./doc/user-guide/section_cli_trove.xml9(title)
-msgid "Create and manage databases"
-msgstr "データベースの作成と管理"
-
-#: ./doc/user-guide/section_cli_trove.xml10(para)
-msgid ""
-"The Database service provides scalable and reliable cloud provisioning "
-"functionality for both relational and non-relational database engines. Users"
-" can quickly and easily use database features without the burden of handling"
-" complex administrative tasks."
-msgstr "Database は、リレーショナルデータベースと非リレーショナルデータベースの両方のエンジン向けにスケール可能な信頼できるクラウド展開機能を提供します。ユーザーは、複雑な管理作業を実行することなく、迅速かつ容易にデータベース機能を利用できます。"
-
 #: ./doc/user-guide/section_cli_trove.xml14(title)
 msgid "Create and access a database"
 msgstr "データベースの作成とアクセス"
@@ -3968,10 +4143,6 @@ msgstr "ルートの GB 単位のボリューム容量: <literal>5</literal>"
 #: ./doc/user-guide/section_cli_trove.xml147(para)
 msgid "Virtual CPUs: <literal>1</literal>"
 msgstr "仮想 CPU: <literal>1</literal>"
-
-#: ./doc/user-guide/section_cli_trove.xml158(title)
-msgid "Create a database instance"
-msgstr "データベースインスタンスの作成"
 
 #: ./doc/user-guide/section_cli_trove.xml159(para)
 msgid ""
@@ -4437,10 +4608,6 @@ msgstr "trove <placeholder-1/> コマンドを使用して、設定グループ�
 #: ./doc/user-guide/section_cli_trove.xml628(replaceable)
 msgid "VALUES"
 msgstr "VALUES"
-
-#: ./doc/user-guide/section_cli_trove.xml628(replaceable)
-msgid "DATASTORE_NAME"
-msgstr "DATASTORE_NAME"
 
 #: ./doc/user-guide/section_cli_trove.xml631(para)
 msgid ""
