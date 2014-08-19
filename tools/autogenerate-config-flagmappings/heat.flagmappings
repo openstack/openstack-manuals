@@ -1,4 +1,4 @@
-allowed_rpc_exception_modules rpc
+action_retry_limit api
 amqp_auto_delete amqp
 amqp_durable_queues amqp
 auth_encryption_key crypt
@@ -58,12 +58,10 @@ notification_driver amqp
 notification_topics amqp
 num_engine_workers api
 onready notification
-password rpc
 periodic_interval common
 plugin_dirs common
 policy_default_rule api
 policy_file api
-port rpc
 publish_errors notification
 qpid_heartbeat qpid
 qpid_hostname qpid
@@ -104,7 +102,8 @@ secure_proxy_ssl_header api
 stack_action_timeout api
 stack_domain_admin api
 stack_domain_admin_password api
-stack_user_domain api
+stack_user_domain_id api
+stack_user_domain_name api
 syslog_log_facility logging
 transport_url rpc
 trusts_delegated_roles api
@@ -127,6 +126,7 @@ clients_ceilometer/key_file clients_ceilometer
 clients_cinder/ca_file clients_cinder
 clients_cinder/cert_file clients_cinder
 clients_cinder/endpoint_type clients_cinder
+clients_cinder/http_log_debug clients_cinder
 clients_cinder/insecure clients_cinder
 clients_cinder/key_file clients_cinder
 clients_glance/ca_file clients_glance
@@ -182,6 +182,7 @@ database/min_pool_size database
 database/mysql_sql_mode database
 database/pool_timeout database
 database/retry_interval database
+database/slave_connection database
 database/sqlite_db database
 database/sqlite_synchronous database
 database/use_db_reconnect database
@@ -238,6 +239,9 @@ keystone_authtoken/memcached_servers auth_token
 keystone_authtoken/revocation_cache_time auth_token
 keystone_authtoken/signing_dir auth_token
 keystone_authtoken/token_cache_time auth_token
+matchmaker_redis/host redis
+matchmaker_redis/password redis
+matchmaker_redis/port redis
 matchmaker_ring/ringfile rpc
 paste_deploy/api_paste_config api
 paste_deploy/flavor api

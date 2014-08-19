@@ -2,11 +2,12 @@ admin_password common
 admin_tenant_name common
 admin_user common
 agent_down_time common
+agent_mode l3_agent
+allow_automatic_l3agent_failover l3_agent
 allow_bulk api
 allow_overlapping_ips policy
 allow_pagination api
 allow_sorting api
-allowed_rpc_exception_modules common
 amqp_auto_delete rpc
 amqp_durable_queues rpc
 api_extensions_path api
@@ -34,6 +35,7 @@ default_l3_gw_service_uuid vmware
 default_log_levels logging
 default_service_cluster_uuid vmware
 default_tz_uuid vmware
+device_connection_timeout cfg_agent
 device_driver lbaas
 dhcp_agent_notification common
 dhcp_agents_per_network common
@@ -47,6 +49,7 @@ dnsmasq_config_file dhcp_agent
 dnsmasq_dns_servers dhcp_agent
 dnsmasq_lease_max dhcp_agent
 driver metering_agent
+dvr_base_mac dvr
 enable_isolated_metadata dhcp_agent
 enable_metadata_network dhcp_agent
 enable_metadata_proxy l3_agent
@@ -59,6 +62,7 @@ force_gateway_on_subnet common
 gateway_external_network_id l3_agent
 handle_internal_only_routers l3_agent
 host redis
+hosting_device_dead_timeout cfg_agent
 http_timeout vmware
 instance_format logging
 instance_uuid_format logging
@@ -83,6 +87,7 @@ logging_exception_prefix logging
 mac_generation_retries common
 matchmaker_heartbeat_freq rpc
 matchmaker_heartbeat_ttl rpc
+max_allowed_address_pair common
 max_dns_nameservers common
 max_fixed_ips_per_port common
 max_header_line api
@@ -129,11 +134,9 @@ ovs_integration_bridge openvswitch_agent
 ovs_use_veth openvswitch_agent
 ovs_vsctl_timeout openvswitch_agent
 pagination_max_limit api
-password rpc
 periodic_fuzzy_delay common
 periodic_interval common
 policy_file policy
-port rpc
 publish_errors logging
 qpid_heartbeat qpid
 qpid_hostname qpid
@@ -145,6 +148,7 @@ qpid_sasl_mechanisms qpid
 qpid_tcp_nodelay qpid
 qpid_topology_version qpid
 qpid_username qpid
+ra_confs ipv6_ra
 rabbit_ha_queues rabbitmq
 rabbit_host rabbitmq
 rabbit_hosts rabbitmq
@@ -159,18 +163,20 @@ rabbit_userid rabbitmq
 rabbit_virtual_host rabbitmq
 redirects vmware
 report_interval common
-req_timeout vmware
 resync_interval dhcp_agent
 retries vmware
 retry_until_window wsgi
 root_helper common
 router_auto_schedule scheduler
 router_delete_namespaces scheduler
+router_distributed dvr
 router_id l3_agent
 router_scheduler_driver scheduler
+routing_svc_helper_class cfg_agent
 rpc_backend rpc
 rpc_cast_timeout rpc
 rpc_conn_pool_size rpc
+rpc_loop_interval cfg_agent
 rpc_response_timeout rpc
 rpc_thread_pool_size rpc
 rpc_workers rpc
@@ -198,8 +204,11 @@ use_stderr logging
 use_syslog logging
 use_syslog_rfc_format logging
 verbose logging
+wsapi_host ryu
+wsapi_port ryu
 AGENT/arp_responder openvswitch_agent
 AGENT/dont_fragment openvswitch_agent ml2_ofa
+AGENT/enable_distributed_routing openvswitch_agent
 AGENT/enable_metrics_collection hyperv_agent
 AGENT/get_datapath_retry_times ml2_ofa
 AGENT/integration_bridge nvsd
@@ -229,6 +238,7 @@ CISCO_N1K/default_network_profile cisco
 CISCO_N1K/default_policy_profile cisco
 CISCO_N1K/enable_tunneling cisco
 CISCO_N1K/http_pool_size cisco
+CISCO_N1K/http_timeout cisco
 CISCO_N1K/integration_bridge cisco
 CISCO_N1K/local_ip openvswitch_agent
 CISCO_N1K/network_node_policy_profile cisco
@@ -239,6 +249,8 @@ CISCO_N1K/tunnel_bridge cisco
 CISCO_N1K/vxlan_id_ranges cisco
 CISCO_PLUGINS/nexus_plugin cisco
 CISCO_PLUGINS/vswitch_plugin cisco
+CONTRAIL/api_server_ip opencontrail
+CONTRAIL/api_server_port opencontrail
 ESWITCH/apply_profile_patch ml2_mlnx
 ESWITCH/backoff_rate mlnx
 ESWITCH/daemon_endpoint mlnx
@@ -271,7 +283,10 @@ NOVA/node_override_vif_802.1qbg bigswitch ml2_bigswitch
 NOVA/node_override_vif_802.1qbh bigswitch ml2_bigswitch
 NOVA/node_override_vif_binding_failed bigswitch ml2_bigswitch
 NOVA/node_override_vif_bridge bigswitch ml2_bigswitch
+NOVA/node_override_vif_distributed bigswitch ml2_bigswitch
+NOVA/node_override_vif_dvs bigswitch ml2_bigswitch
 NOVA/node_override_vif_hostdev bigswitch ml2_bigswitch
+NOVA/node_override_vif_hw_veb bigswitch ml2_bigswitch
 NOVA/node_override_vif_hyperv bigswitch ml2_bigswitch
 NOVA/node_override_vif_ivs bigswitch ml2_bigswitch
 NOVA/node_override_vif_midonet bigswitch ml2_bigswitch
@@ -279,6 +294,7 @@ NOVA/node_override_vif_mlnx_direct bigswitch ml2_bigswitch
 NOVA/node_override_vif_other bigswitch ml2_bigswitch
 NOVA/node_override_vif_ovs bigswitch ml2_bigswitch
 NOVA/node_override_vif_unbound bigswitch ml2_bigswitch
+NOVA/node_override_vif_vrouter bigswitch ml2_bigswitch
 NOVA/vif_type bigswitch ml2_bigswitch
 NOVA/vif_types bigswitch ml2_bigswitch
 NSX/agent_mode vmware
@@ -406,6 +422,8 @@ SDNVE_AGENT/root_helper sdnve
 SDNVE_AGENT/rpc sdnve
 SECURITYGROUP/enable_security_group securitygroups
 SECURITYGROUP/firewall_driver securitygroups
+SRIOV_NIC/exclude_devices sriov
+SRIOV_NIC/physical_device_mappings sriov
 SWITCH/address brocade
 SWITCH/ostype brocade
 SWITCH/password brocade
@@ -435,6 +453,7 @@ database/min_pool_size database
 database/mysql_sql_mode database
 database/pool_timeout database
 database/retry_interval database
+database/slave_connection database
 database/sqlite_db database
 database/sqlite_synchronous database
 database/use_db_reconnect database
@@ -498,6 +517,9 @@ keystone_authtoken/revocation_cache_time auth_token
 keystone_authtoken/signing_dir auth_token
 keystone_authtoken/token_cache_time auth_token
 l2pop/agent_boot_time ml2_l2pop
+matchmaker_redis/host redis
+matchmaker_redis/password redis
+matchmaker_redis/port redis
 matchmaker_ring/ringfile rpc
 ml2/mechanism_drivers ml2
 ml2/tenant_network_types ml2
@@ -510,6 +532,7 @@ ml2_arista/sync_interval ml2_arista
 ml2_arista/use_fqdn ml2_arista
 ml2_brocade/address ml2_brocade
 ml2_brocade/ostype ml2_brocade
+ml2_brocade/osversion ml2_brocade
 ml2_brocade/password ml2_brocade
 ml2_brocade/physical_networks ml2_brocade
 ml2_brocade/username ml2_brocade
@@ -547,6 +570,8 @@ ml2_odl/session_timeout ml2_odl
 ml2_odl/timeout ml2_odl
 ml2_odl/url ml2_odl
 ml2_odl/username ml2_odl
+ml2_sriov/agent_required ml2_sriov
+ml2_sriov/supported_pci_vendor_devs ml2_sriov
 ml2_type_flat/flat_networks ml2_flat
 ml2_type_gre/tunnel_id_ranges ml2_gre
 ml2_type_vlan/network_vlan_ranges ml2_vlan

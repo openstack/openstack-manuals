@@ -22,14 +22,6 @@
         <td>(StrOpt) Default tenant id when creating neutron networks</td>
       </tr>
       <tr>
-        <td>neutron_metadata_proxy_shared_secret = </td>
-        <td>(StrOpt) Shared secret to validate proxies Neutron metadata requests</td>
-      </tr>
-      <tr>
-        <td>service_neutron_metadata_proxy = False</td>
-        <td>(BoolOpt) Set flag to indicate Neutron will proxy metadata requests and resolve instance ids.</td>
-      </tr>
-      <tr>
         <th colspan="2">[neutron]</th>
       </tr>
       <tr>
@@ -46,11 +38,19 @@
       </tr>
       <tr>
         <td>admin_tenant_name = None</td>
-        <td>(StrOpt) Tenant name for connecting to neutron in admin context. This option is mutually exclusive with admin_tenant_id. Note that with Keystone V3 tenant names are only unique within a domain.</td>
+        <td>(StrOpt) Tenant name for connecting to neutron in admin context. This option will be ignored if neutron_admin_tenant_id is set. Note that with Keystone V3 tenant names are only unique within a domain.</td>
+      </tr>
+      <tr>
+        <td>admin_user_id = None</td>
+        <td>(StrOpt) User id for connecting to neutron in admin context</td>
       </tr>
       <tr>
         <td>admin_username = None</td>
         <td>(StrOpt) Username for connecting to neutron in admin context</td>
+      </tr>
+      <tr>
+        <td>allow_duplicate_networks = False</td>
+        <td>(BoolOpt) Allow an instance to have multiple vNICs attached to the same Neutron network.</td>
       </tr>
       <tr>
         <td>api_insecure = False</td>
@@ -69,12 +69,20 @@
         <td>(IntOpt) Number of seconds before querying neutron for extensions</td>
       </tr>
       <tr>
+        <td>metadata_proxy_shared_secret = </td>
+        <td>(StrOpt) Shared secret to validate proxies Neutron metadata requests</td>
+      </tr>
+      <tr>
         <td>ovs_bridge = br-int</td>
         <td>(StrOpt) Name of Integration Bridge used by Open vSwitch</td>
       </tr>
       <tr>
         <td>region_name = None</td>
         <td>(StrOpt) Region name for connecting to neutron in admin context</td>
+      </tr>
+      <tr>
+        <td>service_metadata_proxy = False</td>
+        <td>(BoolOpt) Set flag to indicate Neutron will proxy metadata requests and resolve instance ids.</td>
       </tr>
       <tr>
         <td>url = http://127.0.0.1:9696</td>

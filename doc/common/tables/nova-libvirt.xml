@@ -53,6 +53,10 @@
         <td>(StrOpt) Override the default disk prefix for the devices attached to a server, which is dependent on virt_type. (valid options are: sd, xvd, uvd, vd)</td>
       </tr>
       <tr>
+        <td>hw_machine_type = None</td>
+        <td>(ListOpt) For qemu or KVM guests, set this option to specify a default machine type per host architecture. You can find a list of supported machine types in your environment by checking the output of the "virsh capabilities"command. The format of the value for this config option is host-arch=machine-type. For example: x86_64=machinetype1,armv7l=machinetype2</td>
+      </tr>
+      <tr>
         <td>image_info_filename_pattern = $instances_path/$image_cache_subdirectory_name/%(image)s.info</td>
         <td>(StrOpt) Allows image information files to be stored in non-standard locations</td>
       </tr>
@@ -71,10 +75,6 @@
       <tr>
         <td>snapshots_directory = $instances_path/snapshots</td>
         <td>(StrOpt) Location where libvirt driver will store snapshots before uploading them to image service</td>
-      </tr>
-      <tr>
-        <td>vif_driver = nova.virt.libvirt.vif.LibvirtGenericVIFDriver</td>
-        <td>(StrOpt) DEPRECATED. The libvirt VIF driver to configure the VIFs.This option is deprecated and will be removed in the Juno release.</td>
       </tr>
       <tr>
         <td>virt_type = kvm</td>

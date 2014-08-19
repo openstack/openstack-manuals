@@ -1,6 +1,5 @@
 allocated_capacity_weight_multiplier storage
 allowed_direct_url_schemes images
-allowed_rpc_exception_modules rpc
 amqp_auto_delete rpc
 amqp_durable_queues rpc
 api_paste_config api
@@ -22,11 +21,13 @@ backup_manager backups
 backup_metadata_version backups
 backup_name_template backups
 backup_swift_auth backups_swift
+backup_swift_auth_version swift
 backup_swift_container backups_swift
 backup_swift_key backups_swift
 backup_swift_object_size backups_swift
 backup_swift_retry_attempts backups_swift
 backup_swift_retry_backoff backups_swift
+backup_swift_tenant swift
 backup_swift_url backups_swift
 backup_swift_user backups_swift
 backup_topic backups
@@ -51,9 +52,10 @@ default_availability_zone common
 default_log_levels common
 default_timeout rpc
 default_volume_type common
+destroy_empty_storage_group emc
 disable_process_locking common
-dpl_port prophetstor_dpl
 dpl_pool prophetstor_dpl
+dpl_port prophetstor_dpl
 enable_new_services common
 enable_v1_api api
 enable_v2_api api
@@ -97,27 +99,25 @@ hp3par_api_url hp3par
 hp3par_cpg hp3par
 hp3par_cpg_snap hp3par
 hp3par_debug hp3par
+hp3par_iscsi_chap_enabled hp3par
 hp3par_iscsi_ips hp3par
 hp3par_password hp3par
 hp3par_snapshot_expiration hp3par
 hp3par_snapshot_retention hp3par
 hp3par_username hp3par
-hplefthand_api_url hplefthand
-hplefthand_clustername hplefthand
-hplefthand_debug hplefthand
-hplefthand_iscsi_chap_enabled hplefthand
-hplefthand_password hplefthand
-hplefthand_username hplefthand
 iet_conf common
 image_conversion_dir images
+initiator_auto_registration emc
 instance_format images
 instance_uuid_format images
 iscsi_helper storage
+iscsi_initiators emc
 iscsi_iotype storage
 iscsi_ip_address storage
 iscsi_num_targets storage
 iscsi_port storage
 iscsi_target_prefix storage
+iscsi_write_cache storage
 iser_helper storage
 iser_ip_address storage
 iser_num_targets storage
@@ -200,6 +200,8 @@ nfs_oversub_ratio storage_nfs
 nfs_shares_config storage_nfs
 nfs_sparsed_volumes storage_nfs
 nfs_used_ratio storage_nfs
+nimble_pool_name nimble
+nimble_subnet_label nimble
 no_snapshot_gb_quota common
 notification_driver rpc
 notification_topics rpc
@@ -221,13 +223,12 @@ osapi_volume_extension api
 osapi_volume_listen api
 osapi_volume_listen_port api
 osapi_volume_workers api
-password rpc
 periodic_fuzzy_delay common
 periodic_interval common
 policy_default_rule common
 policy_file common
-port rpc
 publish_errors rpc
+pure_api_token pure
 qpid_heartbeat rpc
 qpid_hostname rpc
 qpid_hosts rpc
@@ -280,12 +281,13 @@ rpc_zmq_matchmaker rpc
 rpc_zmq_port rpc
 rpc_zmq_topic_backlog rpc
 run_external_periodic_tasks common
-san_clustername san xip
-san_ip san prophetstor_dpl xip
+san_clustername san xiv
+san_ip san prophetstor_dpl xiv
 san_is_local san
-san_login san prophetstor_dpl xip
-san_password san prophetstor_dpl xip
+san_login san prophetstor_dpl xiv
+san_password san prophetstor_dpl xiv
 san_private_key san
+san_secondary_ip san
 san_ssh_port san
 san_thin_provision san prophetstor_dpl
 san_zfs_volume_base san-solaris
@@ -315,12 +317,15 @@ ssl_cert_file common
 ssl_key_file common
 state_path common
 storage_availability_zone common
+storage_vnx_authentication_type emc
 storage_vnx_pool_name emc
+storage_vnx_security_file_dir emc
 storwize_svc_connection_protocol storwize
 storwize_svc_flashcopy_timeout storwize
 storwize_svc_iscsi_chap_enabled storwize
 storwize_svc_multihostmap_enabled storwize
 storwize_svc_multipath_enabled storwize
+storwize_svc_npiv_compatibility_mode storwize
 storwize_svc_vol_autoexpand storwize
 storwize_svc_vol_compression storwize
 storwize_svc_vol_easytier storwize
@@ -422,6 +427,7 @@ database/min_pool_size database
 database/mysql_sql_mode database
 database/pool_timeout database
 database/retry_interval database
+database/slave_connection database
 database/sqlite_db database
 database/sqlite_synchronous database
 database/use_db_reconnect database
@@ -432,6 +438,8 @@ fc-zone-manager/fc_san_lookup_service zoning_manager
 fc-zone-manager/zone_driver zoning_manager
 fc-zone-manager/zoning_policy zoning
 keymgr/api_class keymgr
+keymgr/encryption_api_url keymgr
+keymgr/encryption_auth_url keymgr
 keymgr/fixed_key keymgr
 keystone_authtoken/admin_password auth_token
 keystone_authtoken/admin_tenant_name auth_token
@@ -462,6 +470,9 @@ keystone_authtoken/memcached_servers auth_token
 keystone_authtoken/revocation_cache_time auth_token
 keystone_authtoken/signing_dir auth_token
 keystone_authtoken/token_cache_time auth_token
+matchmaker_redis/host rpc
+matchmaker_redis/password rpc
+matchmaker_redis/port rpc
 matchmaker_ring/ringfile rpc
 ssl/ca_file ssl
 ssl/cert_file ssl

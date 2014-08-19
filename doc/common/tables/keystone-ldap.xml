@@ -26,6 +26,14 @@
         <td>(BoolOpt) Delete subtrees using the subtree delete control. Only enable this option if your LDAP server supports subtree deletion.</td>
       </tr>
       <tr>
+        <td>auth_pool_connection_lifetime = 60</td>
+        <td>(IntOpt) End user auth connection lifetime in seconds.</td>
+      </tr>
+      <tr>
+        <td>auth_pool_size = 100</td>
+        <td>(IntOpt) End user auth connection pool size.</td>
+      </tr>
+      <tr>
         <td>chase_referrals = None</td>
         <td>(BoolOpt) Override the system's default referral chasing behavior for queries.</td>
       </tr>
@@ -92,6 +100,26 @@
       <tr>
         <td>password = None</td>
         <td>(StrOpt) Password for the BindDN to query the LDAP server.</td>
+      </tr>
+      <tr>
+        <td>pool_connection_lifetime = 600</td>
+        <td>(IntOpt) Connection lifetime in seconds.</td>
+      </tr>
+      <tr>
+        <td>pool_connection_timeout = -1</td>
+        <td>(IntOpt) Connector timeout in seconds. Value -1 indicates indefinite wait for response.</td>
+      </tr>
+      <tr>
+        <td>pool_retry_delay = 0.1</td>
+        <td>(FloatOpt) Time span in seconds to wait between two reconnect trials.</td>
+      </tr>
+      <tr>
+        <td>pool_retry_max = 3</td>
+        <td>(IntOpt) Maximum count of reconnect trials.</td>
+      </tr>
+      <tr>
+        <td>pool_size = 10</td>
+        <td>(IntOpt) Connection pool size.</td>
       </tr>
       <tr>
         <td>project_additional_attribute_mapping = </td>
@@ -226,8 +254,16 @@
         <td>(StrOpt) URL for connecting to the LDAP server.</td>
       </tr>
       <tr>
+        <td>use_auth_pool = False</td>
+        <td>(BoolOpt) Enable LDAP connection pooling for end user authentication. If use_pool is disabled, then this setting is meaningless and is not used at all.</td>
+      </tr>
+      <tr>
         <td>use_dumb_member = False</td>
         <td>(BoolOpt) If true, will add a dummy member to groups. This is required if the objectclass for groups requires the "member" attribute.</td>
+      </tr>
+      <tr>
+        <td>use_pool = False</td>
+        <td>(BoolOpt) Enable LDAP connection pooling.</td>
       </tr>
       <tr>
         <td>use_tls = False</td>
@@ -290,7 +326,7 @@
         <td>(StrOpt) LDAP attribute mapped to user id.</td>
       </tr>
       <tr>
-        <td>user_mail_attribute = email</td>
+        <td>user_mail_attribute = mail</td>
         <td>(StrOpt) LDAP attribute mapped to user email.</td>
       </tr>
       <tr>
