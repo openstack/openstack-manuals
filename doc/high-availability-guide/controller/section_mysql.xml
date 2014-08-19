@@ -27,7 +27,7 @@ Configure MySQL to use a data directory residing on that DRBD
           </listitem>
           <listitem>
             <para>
-selecting and assigning a virtual IP address (VIP) that can freely
+Select and assign a virtual IP address (VIP) that can freely
   float between cluster nodes,
 </para>
           </listitem>
@@ -38,14 +38,14 @@ Configure MySQL to listen on that IP address,
           </listitem>
           <listitem>
             <para>
-managing all resources, including the MySQL daemon itself, with
+Manage all resources, including the MySQL daemon itself, with
   the Pacemaker cluster manager.
 </para>
           </listitem>
         </itemizedlist>
         <note>
           <para><link xlink:href="http://galeracluster.com/">MySQL/Galera</link> is an
-alternative method of Configure MySQL for high availability. It is
+alternative method of configuring MySQL for high availability. It is
 likely to become the preferred method of achieving MySQL high
 availability once it has sufficiently matured. At the time of writing,
 however, the Pacemaker/DRBD based approach remains the recommended one
@@ -125,7 +125,7 @@ creating your filesystem.
           <para>Once the DRBD resource is running and in the primary role (and
 potentially still in the process of running the initial device
 synchronization), you may proceed with creating the filesystem for
-MySQL data. XFS is the generally recommended filesystem:</para>
+MySQL data. XFS is the generally recommended filesystem due to its journaling, efficient allocation, and performance:</para>
           <screen><prompt>#</prompt> <userinput>mkfs -t xfs /dev/drbd0</userinput></screen>
           <para>You may also use the alternate device path for the DRBD device, which
 may be easier to remember as it includes the self-explanatory resource
@@ -187,7 +187,7 @@ primitive p_fs_mysql ocf:heartbeat:Filesystem \
   op stop timeout="180s" \
   op monitor interval="60s" timeout="60s"
 primitive p_mysql ocf:heartbeat:mysql \
-  params additional_parameters="--bind-address=50.56.179.138"
+  params additional_parameters="--bind-address=192.168.42.101"
     config="/etc/mysql/my.cnf" \
     pid="/var/run/mysqld/mysqld.pid" \
     socket="/var/run/mysqld/mysqld.sock" \
