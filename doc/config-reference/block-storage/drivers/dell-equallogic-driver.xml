@@ -1,34 +1,123 @@
 <?xml version="1.0"?>
 <section xmlns="http://docbook.org/ns/docbook"
-    xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xlink="http://www.w3.org/1999/xlink"
-    xml:id="dell-equallogic-driver" version="5.0">
-    <title>Dell EqualLogic volume driver</title>
-    <para>The Dell EqualLogic volume driver interacts with configured
-        EqualLogic arrays and supports various operations, such as
-        volume creation and deletion, volume attachment and
-        detachment, snapshot creation and deletion, and clone
-        creation.</para>
-    <para>To configure and use a Dell EqualLogic array with Block
-        Storage, modify your <filename>cinder.conf</filename> as
-        follows.</para>
-    <para>Set the <option>volume_driver</option> option to the Dell
-        EqualLogic volume driver:</para>
-    <programlisting language="ini">volume_driver=cinder.volume.drivers.eqlx.DellEQLSanISCSIDriver</programlisting>
-    <para>Set the <option>san_ip</option> option to the IP address to
-        reach the EqualLogic Group through SSH:</para>
-    <programlisting language="ini">san_ip=10.10.72.53</programlisting>
-    <para>Set the <option>san_login</option> option to the user name
-        to login to the Group manager:</para>
-    <programlisting language="ini">san_login=grpadmin</programlisting>
-    <para>Set the <option>san_password</option> option to the password
-        to login the Group manager with:</para>
-    <programlisting language="ini">san_password=password</programlisting>
-    <para>Optionally set the <option>san_thin_provision</option>
-        option to false to disable creation of thin-provisioned
-        volumes:</para>
-    <programlisting language="ini">san_thin_provision=false</programlisting>
-    <para>The following table describes additional options that the
-        driver supports:</para>
-    <xi:include href="../../../common/tables/cinder-eqlx.xml"/>
+         xmlns:xi="http://www.w3.org/2001/XInclude"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xml:id="dell-equallogic-driver" version="5.0">
+  <title>Dell EqualLogic volume driver</title>
+  <para>The Dell EqualLogic volume driver interacts with configured
+    EqualLogic arrays and supports various operations, including:</para>
+  <itemizedlist>
+    <listitem><para>Volume creation and deletion</para></listitem>
+    <listitem><para>Volume attachment and detachment</para></listitem>
+    <listitem><para>Snapshot creation and deletion</para></listitem>
+    <listitem><para>Clone creation</para></listitem>
+  </itemizedlist>
+  <para>The OpenStack Block Storage service supports the following:</para>
+    <itemizedlist>
+      <listitem><para>Multiple instances of Dell EqualLogic Groups or Dell
+          EqualLogic Group Storage Pools and multiple pools on a single array.</para>
+      </listitem>
+      <listitem><para>Multiple instances of Dell EqualLogic Groups or Dell
+          EqualLogic Group Storage Pools or multiple pools on a single array.</para>
+      </listitem>
+    </itemizedlist>
+  <para>The Dell EqualLogic volume driver's ability to access the EqualLogic
+    Group is dependent upon the generic block storage driver's SSH settings
+    in the <filename>/etc/cinder/cinder.conf</filename> file (see <xref
+      linkend="section_block-storage-sample-configuration-files"/> for reference).</para>
+  <xi:include href="../../../common/tables/cinder-eqlx.xml"/>
+  <para>The following sample <filename>/etc/cinder/cinder.conf</filename>
+    configuration lists the relevant settings for a typical Block Storage
+    service using a single Dell EqualLogic Group:</para>
+  <example><title>Default (single-instance) configuration</title>
+<programlisting language="ini">[DEFAULT]
+#Required settings
+
+volume_driver = cinder.volume.drivers.eqlx.DellEQLSanISCSIDriver
+san_ip = <replaceable>IP_EQLX</replaceable>
+san_login = <replaceable>SAN_UNAME</replaceable>
+san_password = <replaceable>SAN_PW</replaceable>
+eqlx_group_name = <replaceable>EQLX_GROUP</replaceable>
+eqlx_pool = <replaceable>EQLX_POOL</replaceable>
+
+#Optional settings
+
+san_thin_provision = <replaceable>true|false</replaceable>
+eqlx_use_chap = <replaceable>true|false</replaceable>
+eqlx_chap_login = <replaceable>EQLX_UNAME</replaceable>
+eqlx_chap_password = <replaceable>EQLX_PW</replaceable>
+eqlx_cli_timeout = 30
+eqlx_cli_max_retries = 5
+san_ssh_port = 22
+ssh_conn_timeout = 30
+san_private_key = <replaceable>SAN_KEY_PATH</replaceable>
+ssh_min_pool_conn = 1
+ssh_max_pool_conn = 5</programlisting>
+  </example>
+  <para>In this example, replace the following variables accordingly:</para>
+  <variablelist>
+    <varlistentry>
+      <term>IP_EQLX</term>
+      <listitem>
+        <para>The IP address used to reach the Dell EqualLogic Group through
+          SSH. This field has no default value.</para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>SAN_UNAME</term>
+      <listitem>
+        <para>The user name to login to the Group manager via SSH at
+          the <parameter>san_ip</parameter>. Default user name is <literal>grpadmin</literal>.</para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>SAN_PW</term>
+      <listitem>
+        <para>The corresponding password of <replaceable>SAN_UNAME</replaceable>.
+          Not used when <parameter>san_private_key</parameter> is set. Default
+          password is <literal>password</literal>.</para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>EQLX_GROUP</term>
+      <listitem>
+        <para>The group to be used for a pool where the Block Storage service
+          will create volumes and snapshots. Default group is <literal>group-0</literal>.</para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>EQLX_POOL</term>
+      <listitem>
+        <para>The pool where the Block Storage service will create volumes
+          and snapshots. Default pool is <literal>default</literal>. This
+          option cannot be used for multiple pools utilized by the Block
+          Storage service on a single Dell EqualLogic Group.</para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>EQLX_UNAME</term>
+      <listitem>
+        <para>The CHAP login account for each
+          volume in a pool, if <parameter>eqlx_use_chap</parameter> is set
+          to <literal>true</literal>. Default account name is <literal>chapadmin</literal>.</para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>EQLX_PW</term>
+      <listitem>
+        <para>The corresponding password of <replaceable>EQLX_UNAME</replaceable>.
+          The default password is randomly generated in hexadecimal, so you
+          must set this password manually.</para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>SAN_KEY_PATH (optional)</term>
+      <listitem>
+        <para>The filename of the private key used
+          for SSH authentication. This provides password-less login to the
+          EqualLogic Group. Not used when <parameter>san_password</parameter>
+          is set. There is no default value.</para>
+      </listitem>
+    </varlistentry>
+  </variablelist>
 </section>
