@@ -27,19 +27,20 @@
     <section xml:id="section_provider_networks">
         <title>Provider networks</title>
         <para>Networks can be categorized as either tenant networks or provider networks. Tenant
-            networks are created by normal users and details about how they are physically realized
-            are hidden from those users. Provider networks are created with administrative
-            credentials, specifying the details of how the network is physically realized, usually
-            to match some existing network in the data center.</para>
-        <para>Provider networks enable cloud administrators to create Networking networks that map
+            networks are created by normal users. Details about how these networks are
+            physically realized remain hidden from those users. Provider networks are created
+            with administrative credentials, specifying the details of how the network is
+            physically realized. Provider networks usually match an existing network in the
+            data center.</para>
+        <para>Provider networks enable cloud administrators to create virtual networks that map
             directly to the physical networks in the data center. This is commonly used to give
-            tenants direct access to a public network that can be used to reach the Internet. It
+            tenants direct access to a public network, which can be used to reach the Internet. It
             might also be used to integrate with VLANs in the network that already have a defined
             meaning (for example, enable a VM from the "marketing" department to be placed on the
             same VLAN as bare-metal marketing hosts in the same data center).</para>
         <para>The provider extension allows administrators to explicitly manage the relationship
-            between Networking virtual networks and underlying physical mechanisms such as VLANs and
-            tunnels. When this extension is supported, Networking client users with administrative
+            between virtual networks and underlying physical mechanisms such as VLANs and
+            tunnels. When this extension is supported, client users with administrative
             privileges see additional provider attributes on all virtual networks and are able to
             specify these attributes in order to create provider networks.</para>
         <para>The provider extension is supported by the Open vSwitch and Linux Bridge plug-ins.
@@ -373,8 +374,8 @@
                         <td>fixed_ip_address</td>
                         <td>string (IP address)</td>
                         <td>Null</td>
-                        <td>Indicates the IP address on the internal port that is mapped to by the
-                            floating IP (since an Networking port might have more than one IP
+                        <td>Indicates the IP address on the internal port that the
+                            floating IP maps to (since Networking ports might have more than one IP
                             address).</td>
                     </tr>
                     <tr>
@@ -393,8 +394,9 @@
             <para>External networks are visible to all users. However, the default policy settings
                 enable only administrative users to create, update, and delete external
                 networks.</para>
-            <para>This table shows example neutron commands that enable you to complete basic L3
-                operations:</para>
+            <para>This table shows example <command>neutron</command>
+            commands that enable you to complete basic L3 operations:
+            </para>
             <table rules="all">
                 <caption>Basic L3 operations</caption>
                 <col width="40%"/>
@@ -507,7 +509,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <para>Creates a floating IP address and associates it with a port, in a
+                            <para>Creates a floating IP address, and associates it with a port, in a
                                 single step.</para>
                         </td>
                         <td>
@@ -611,8 +613,8 @@
                 <listitem>
                     <para>When using the security group API through Compute, security groups are
                         applied to all ports on an instance. The reason for this is that Compute
-                        security group APIs are instances based and not port based as
-                        Networking.</para>
+                        security group APIs are instances based
+                        unlike Networking, which is port based.</para>
                 </listitem>
             </itemizedlist>
         </note>
@@ -1039,8 +1041,8 @@
                         <td>shared</td>
                         <td>Boolean</td>
                         <td>False</td>
-                        <td>When set to True makes this firewall policy visible to tenants other
-                            than its owner and can be used to associate with firewalls not owned by
+                        <td>When set to True, the command makes this firewall policy visible to
+                            tenants other than its owner and can be used to associate with firewalls not owned by
                             its tenant.</td>
                     </tr>
                     <tr>
@@ -1054,11 +1056,12 @@
                         <td>audited</td>
                         <td>Boolean</td>
                         <td>False</td>
-                        <td>When set to True by the policy owner indicates that the firewall policy
-                            has been audited. This attribute is meant to aid in the firewall policy
-                            audit work flows. Each time the firewall policy or the associated
-                            firewall rules are changed, this attribute is set to False and must be
-                            explicitly set to True through an update operation.</td>
+                        <td>When set to True by the policy owner, the command indicates that
+                            the firewall policy has been audited. This attribute is meant
+                            to aid in the firewall policy audit work flows. Each time the
+                            firewall policy or the associated firewall rules are changed,
+                            this attribute is set to False and must be explicitly set
+                            to True through an update operation.</td>
                     </tr>
                 </tbody>
             </table>
