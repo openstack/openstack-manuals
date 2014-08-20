@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-08-19 06:23+0000\n"
+"POT-Creation-Date: 2014-08-20 06:09+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1121,7 +1121,7 @@ msgstr ""
 msgid "Depending on the storage model chosen during site design, storage replication and availability will also be a concern for end-users. If an application is capable of understanding regions, then it is possible to keep the object storage system separated by region. In this case, users who want to have an object available to more than one region will need to do the cross-site replication themselves. With a centralized swift proxy, however, the user may need to benchmark the replication timing of the Object Storage back end. Benchmarking allows the operational staff to provide users with an understanding of the amount of time required for a stored or modified object to become available to the entire environment."
 msgstr ""
 
-#: ./doc/arch-design/multi_site/section_tech_considerations_multi_site.xml:114(title) ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:412(title) ./doc/arch-design/generalpurpose/section_architecture_general_purpose.xml:249(term) ./doc/arch-design/generalpurpose/section_architecture_general_purpose.xml:420(term) ./doc/arch-design/generalpurpose/section_user_requirements_general_purpose.xml:131(term) ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml:493(title) ./doc/arch-design/compute_focus/section_user_requirements_compute_focus.xml:96(term) ./doc/arch-design/compute_focus/section_architecture_compute_focus.xml:182(term) ./doc/arch-design/compute_focus/section_tech_considerations_compute_focus.xml:257(title) ./doc/arch-design/hybrid/section_tech_considerations_hybrid.xml:253(title) ./doc/arch-design/storage_focus/section_architecture_storage_focus.xml:19(para) ./doc/arch-design/storage_focus/section_architecture_storage_focus.xml:48(term) ./doc/arch-design/storage_focus/section_user_requirements_storage_focus.xml:105(term)
+#: ./doc/arch-design/multi_site/section_tech_considerations_multi_site.xml:114(title) ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:432(title) ./doc/arch-design/generalpurpose/section_architecture_general_purpose.xml:249(term) ./doc/arch-design/generalpurpose/section_architecture_general_purpose.xml:420(term) ./doc/arch-design/generalpurpose/section_user_requirements_general_purpose.xml:131(term) ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml:493(title) ./doc/arch-design/compute_focus/section_user_requirements_compute_focus.xml:96(term) ./doc/arch-design/compute_focus/section_architecture_compute_focus.xml:182(term) ./doc/arch-design/compute_focus/section_tech_considerations_compute_focus.xml:257(title) ./doc/arch-design/hybrid/section_tech_considerations_hybrid.xml:253(title) ./doc/arch-design/storage_focus/section_architecture_storage_focus.xml:19(para) ./doc/arch-design/storage_focus/section_architecture_storage_focus.xml:48(term) ./doc/arch-design/storage_focus/section_user_requirements_storage_focus.xml:105(term)
 msgid "Performance"
 msgstr ""
 
@@ -1170,354 +1170,366 @@ msgid "Another useful tool for managing a multi-site installation is Orchestrati
 msgstr ""
 
 #: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:9(para)
-msgid "Designing an OpenStack network architecture involves a combination of layer-2 and layer-3 considerations. Layer-2 decisions involve those made at the data-link layer, such as the decision to use Ethernet versus Token Ring. Layer 3 involve those made about the protocol layer and the point at which IP comes into the picture. As an example, a completely internal OpenStack network can exist at layer 2 and ignore layer 3 however, in order for any traffic to go outside of that cloud, to another network, or to the Internet, a layer-3 router or switch must be involved."
+msgid "When you design an OpenStack network architecture, you must consider layer-2 and layer-3 issues. Layer-2 decisions involve those made at the data-link layer, such as the decision to use Ethernet versus Token Ring. Layer-3 decisions involve those made about the protocol layer and the point when IP comes into the picture. As an example, a completely internal OpenStack network can exist at layer 2 and ignore layer 3 however, in order for any traffic to go outside of that cloud, to another network, or to the Internet, a layer-3 router or switch must be involved."
 msgstr ""
 
 #: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:19(para)
-msgid "The past few years have seen two competing trends in networking. There has been a trend towards building data center network architectures based on layer-2 networking and simultaneously another network architecture approach is to treat the cloud environment essentially as a miniature version of the Internet. This represents a radically different approach to the network architecture from what is currently installed in the staging environment because the Internet is based entirely on layer-3 routing rather than layer-2 switching."
+msgid "The past few years have seen two competing trends in networking. One trend leans towards building data center network architectures based on layer-2 networking. Another trend treats the cloud environment essentially as a miniature version of the Internet. This approach is radically different from the network architecture approach that is used in the staging environment: the Internet is based entirely on layer-3 routing rather than layer-2 switching."
 msgstr ""
 
 #: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:29(para)
-msgid "In the data center context, there are advantages of designing the network on layer-2 protocols rather than layer 3. In spite of the difficulties of using a bridge to perform the network role of a router, many vendors, customers, and service providers are attracted to the idea of using Ethernet in as many parts of their networks as possible. The benefits of selecting a layer-2 design are:"
+msgid "A network designed on layer-2 protocols has advantages over one designed on layer-3 protocols. In spite of the difficulties of using a bridge to perform the network role of a router, many vendors, customers, and service providers choose to use Ethernet in as many parts of their networks as possible. The benefits of selecting a layer-2 design are:"
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:38(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:39(para)
 msgid "Ethernet frames contain all the essentials for networking. These include, but are not limited to, globally unique source addresses, globally unique destination addresses, and error control."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:44(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:45(para)
 msgid "Ethernet frames can carry any kind of packet. Networking at layer 2 is independent of the layer-3 protocol."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:49(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:50(para)
 msgid "More layers added to the Ethernet frame only slow the networking process down. This is known as 'nodal processing delay'."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:54(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:55(para)
 msgid "Adjunct networking features, for example class of service (CoS) or multicasting, can be added to Ethernet as readily as IP networks."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:59(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:60(para)
 msgid "VLANs are an easy mechanism for isolating networks."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:63(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:64(para)
 msgid "Most information starts and ends inside Ethernet frames. Today this applies to data, voice (for example, VoIP) and video (for example, web cameras). The concept is that, if more of the end-to-end transfer of information from a source to a destination can be done in the form of Ethernet frames, more of the benefits of Ethernet can be realized on the network. Though it is not a substitute for IP networking, networking at layer 2 can be a powerful adjunct to IP networking."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:71(para)
-msgid "The basic reasoning behind using layer-2 Ethernet over layer-3 IP networks is the speed, the reduced overhead of the IP hierarchy, and the lack of requirement to keep track of IP address configuration as systems are moved around. Whereas the simplicity of layer-2 protocols might work well in a data center with hundreds of physical machines, cloud data centers have the additional burden of needing to keep track of all virtual machine addresses and networks. In these data centers, it is not uncommon for one physical node to support 30-40 instances."
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:73(para)
+msgid "Layer-2 Ethernet usage has these advantages over layer-3 IP network usage:"
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:82(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:79(para)
+msgid "Speed"
+msgstr ""
+
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:84(para)
+msgid "Reduced overhead of the IP hierarchy."
+msgstr ""
+
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:89(para)
+msgid "No need to keep track of address configuration as systems are moved around. Whereas the simplicity of layer-2 protocols might work well in a data center with hundreds of physical machines, cloud data centers have the additional burden of needing to keep track of all virtual machine addresses and networks. In these data centers, it is not uncommon for one physical node to support 30-40 instances."
+msgstr ""
+
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:102(para)
 msgid "Networking at the frame level says nothing about the presence or absence of IP addresses at the packet level. Almost all ports, links, and devices on a network of LAN switches still have IP addresses, as do all the source and destination hosts. There are many reasons for the continued need for IP addressing. The largest one is the need to manage the network. A device or link without an IP address is usually invisible to most management applications. Utilities including remote access for diagnostics, file transfer of configurations and software, and similar applications cannot run without IP addresses as well as MAC addresses."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:96(title)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:116(title)
 msgid "Layer-2 architecture limitations"
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:97(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:117(para)
 msgid "Outside of the traditional data center the limitations of layer-2 network architectures become more obvious."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:101(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:121(para)
 msgid "Number of VLANs is limited to 4096."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:104(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:124(para)
 msgid "The number of MACs stored in switch tables is limited."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:108(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:128(para)
 msgid "The need to maintain a set of layer-4 devices to handle traffic control must be accommodated."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:112(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:132(para)
 msgid "MLAG, often used for switch redundancy, is a proprietary solution that does not scale beyond two devices and forces vendor lock-in."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:117(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:137(para)
 msgid "It can be difficult to troubleshoot a network without IP addresses and ICMP."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:121(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:141(para)
 msgid "Configuring <glossterm baseform=\"Address Resolution Protocol (ARP)\">ARP</glossterm> is considered complicated on large layer-2 networks."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:127(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:147(para)
 msgid "All network devices need to be aware of all MACs, even instance MACs, so there is constant churn in MAC tables and network state changes as instances are started or stopped."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:133(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:153(para)
 msgid "Migrating MACs (instance migration) to different physical locations are a potential problem if ARP table timeouts are not set properly."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:138(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:158(para)
 msgid "It is important to know that layer 2 has a very limited set of network management tools. It is very difficult to control traffic, as it does not have mechanisms to manage the network or shape the traffic, and network troubleshooting is very difficult. One reason for this difficulty is network devices have no IP addresses. As a result, there is no reasonable way to check network delay in a layer-2 network."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:145(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:165(para)
 msgid "On large layer-2 networks, configuring ARP learning can also be complicated. The setting for the MAC address timer on switches is critical and, if set incorrectly, can cause significant performance problems. As an example, the Cisco default MAC address timer is extremely long. Migrating MACs to different physical locations to support instance migration can be a significant problem. In this case, the network information maintained in the switches could be out of sync with the new location of the instance."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:154(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:174(para)
 msgid "In a layer-2 network, all devices are aware of all MACs, even those that belong to instances. The network state information in the backbone changes whenever an instance is started or stopped. As a result there is far too much churn in the MAC tables on the backbone switches."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:160(title)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:180(title)
 msgid "Layer-3 architecture advantages"
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:161(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:181(para)
 msgid "In the layer 3 case, there is no churn in the routing tables due to instances starting and stopping. The only time there would be a routing state change would be in the case of a Top of Rack (ToR) switch failure or a link failure in the backbone itself. Other advantages of using a layer-3 architecture include:"
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:169(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:189(para)
 msgid "Layer-3 networks provide the same level of resiliency and scalability as the Internet."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:173(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:193(para)
 msgid "Controlling traffic with routing metrics is straightforward."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:177(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:197(para)
 msgid "Layer 3 can be configured to use <glossterm baseform=\"Border Gateway Protocol (BGP)\">BGP</glossterm> confederation for scalability so core routers have state proportional to the number of racks, not to the number of servers or instances."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:184(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:204(para)
 msgid "Routing ensures that instance MAC and IP addresses out of the network core reducing state churn. Routing state changes only occur in the case of a ToR switch failure or backbone link failure."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:190(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:210(para)
 msgid "There are a variety of well tested tools, for example ICMP, to monitor and manage traffic."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:194(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:214(para)
 msgid "Layer-3 architectures allow for the use of Quality of Service (QoS) to manage network performance."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:199(title)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:219(title)
 msgid "Layer-3 architecture limitations"
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:200(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:220(para)
 msgid "The main limitation of layer 3 is that there is no built-in isolation mechanism comparable to the VLANs in layer-2 networks. Furthermore, the hierarchical nature of IP addresses means that an instance will also be on the same subnet as its physical host. This means that it cannot be migrated outside of the subnet easily. For these reasons, network virtualization needs to use IP <glossterm>encapsulation</glossterm> and software at the end hosts for both isolation, as well as for separation of the addressing in the virtual layer from addressing in the physical layer. Other potential disadvantages of layer 3 include the need to design an IP addressing scheme rather than relying on the switches to automatically keep track of the MAC addresses and to configure the interior gateway routing protocol in the switches."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:218(title)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:238(title)
 msgid "Network recommendations overview"
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:219(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:239(para)
 msgid "OpenStack has complex networking requirements for several reasons. Many components interact at different levels of the system stack that adds complexity. Data flows are complex. Data in an OpenStack cloud moves both between instances across the network (also known as East-West), as well as in and out of the system (also known as North-South). Physical server nodes have network requirements that are independent of those used by instances which need to be isolated from the core network to account for scalability. It is also recommended to functionally separate the networks for security purposes and tune performance through traffic shaping."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:230(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:250(para)
 msgid "A number of important general technical and business factors need to be taken into consideration when planning and designing an OpenStack network. They include:"
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:235(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:255(para)
 msgid "A requirement for vendor independence. To avoid hardware or software vendor lock-in, the design should not rely on specific features of a vendor’s router or switch."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:241(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:261(para)
 msgid "A requirement to massively scale the ecosystem to support millions of end users."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:245(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:265(para)
 msgid "A requirement to support indeterminate platforms and applications."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:249(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:269(para)
 msgid "A requirement to design for cost efficient operations to take advantage of massive scale."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:253(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:273(para)
 msgid "A requirement to ensure that there is no single point of failure in the cloud ecosystem."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:257(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:277(para)
 msgid "A requirement for high availability architecture to meet customer SLA requirements."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:261(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:281(para)
 msgid "A requirement to be tolerant of rack level failure."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:265(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:285(para)
 msgid "A requirement to maximize flexibility to architect future production environments."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:269(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:289(para)
 msgid "Keeping all of these in mind, the following network design recommendations can be made:"
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:273(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:293(para)
 msgid "Layer-3 designs are preferred over layer-2 architectures."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:277(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:297(para)
 msgid "Design a dense multi-path network core to support multi-directional scaling and flexibility."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:281(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:301(para)
 msgid "Use hierarchical addressing because it is the only viable option to scale network ecosystem."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:285(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:305(para)
 msgid "Use virtual networking to isolate instance service network traffic from the management and internal network traffic."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:290(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:310(para)
 msgid "Isolate virtual networks using encapsulation technologies."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:294(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:314(para)
 msgid "Use traffic shaping for performance tuning."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:297(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:317(para)
 msgid "Use eBGP to connect to the Internet up-link."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:300(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:320(para)
 msgid "Use iBGP to flatten the internal traffic on the layer-3 mesh."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:304(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:324(para)
 msgid "Determine the most effective configuration for block storage network."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:309(title)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:329(title)
 msgid "Additional considerations"
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:310(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:330(para)
 msgid "There are numerous topics to consider when designing a network-focused OpenStack cloud."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:313(title)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:333(title)
 msgid "OpenStack Networking versus legacy networking (nova-network) considerations"
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:315(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:335(para)
 msgid "Selecting the type of networking technology to implement depends on many factors. OpenStack Networking (neutron) and legacy networking (nova-network) both have their advantages and disadvantages. They are both valid and supported options that fit different use cases as described in the following table."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:324(th)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:344(th)
 msgid "Legacy networking (nova-network)"
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:325(th)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:345(th)
 msgid "OpenStack Networking"
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:329(td)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:349(td)
 msgid "Simple, single agent"
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:330(td)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:350(td)
 msgid "Complex, multiple agents"
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:333(td)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:353(td)
 msgid "More mature, established"
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:334(td)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:354(td)
 msgid "Newer, maturing"
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:337(td)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:357(td)
 msgid "Flat or VLAN"
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:338(td)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:358(td)
 msgid "Flat, VLAN, Overlays, L2-L3, SDN"
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:340(td)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:360(td)
 msgid "No plug-in support"
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:341(td)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:361(td)
 msgid "Plug-in support for 3rd parties"
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:344(td)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:364(td)
 msgid "Scales well"
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:345(td)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:365(td)
 msgid "Scaling requires 3rd party plug-ins"
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:348(td)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:368(td)
 msgid "No multi-tier topologies"
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:349(td)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:369(td)
 msgid "Multi-tier topologies"
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:355(title)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:375(title)
 msgid "Redundant networking: ToR switch high availability risk analysis"
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:357(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:377(para)
 msgid "A technical consideration of networking is the idea that switching gear in the data center that should be installed with backup switches in case of hardware failure."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:360(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:380(para)
 msgid "Research into the mean time between failures (MTBF) on switches is between 100,000 and 200,000 hours. This number is dependent on the ambient temperature of the switch in the data center. When properly cooled and maintained, this translates to between 11 and 22 years before failure. Even in the worst case of poor ventilation and high ambient temperatures in the data center, the MTBF is still 2-3 years. This is based on published research found at <link href=\"http://www.garrettcom.com/techsupport/papers/ethernet_switch_reliability.pdf\">http://www.garrettcom.com/techsupport/papers/ethernet_switch_reliability.pdf</link> and <link href=\"http://www.n-tron.com/pdf/network_availability.pdf\">http://www.n-tron.com/pdf/network_availability.pdf</link>."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:373(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:393(para)
 msgid "In most cases, it is much more economical to only use a single switch with a small pool of spare switches to replace failed units than it is to outfit an entire data center with redundant switches. Applications should also be able to tolerate rack level outages without affecting normal operations since network and compute resources are easily provisioned and plentiful."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:381(title)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:401(title)
 msgid "Preparing for the future: IPv6 support"
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:382(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:402(para)
 msgid "One of the most important networking topics today is the impending exhaustion of IPv4 addresses. In early 2014, ICANN announced that they started allocating the final IPv4 address blocks to the Regional Internet Registries (<link href=\"http://www.internetsociety.org/deploy360/blog/2014/05/goodbye-ipv4-iana-starts-allocating-final-address-blocks/\">http://www.internetsociety.org/deploy360/blog/2014/05/goodbye-ipv4-iana-starts-allocating-final-address-blocks/</link>). This means the IPv4 address space is close to being fully allocated. As a result, it will soon become difficult to allocate more IPv4 addresses to an application that has experienced growth, or is expected to scale out, due to the lack of unallocated IPv4 address blocks."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:393(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:413(para)
 msgid "For network focused applications the future is the IPv6 protocol. IPv6 increases the address space significantly, fixes long standing issues in the IPv4 protocol, and will become an essential for network focused applications in the future."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:398(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:418(para)
 msgid "OpenStack Networking supports IPv6 when configured to take advantage of the feature. To enable it, simply create an IPv6 subnet in Networking and use IPv6 prefixes when creating security groups."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:403(title)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:423(title)
 msgid "Asymmetric links"
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:404(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:424(para)
 msgid "When designing a network architecture, the traffic patterns of an application will heavily influence the allocation of total bandwidth and the number of links that are used to send and receive traffic. Applications that provide file storage for customers will allocate bandwidth and links to favor incoming traffic, whereas video streaming applications will allocate bandwidth and links to favor outgoing traffic."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:413(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:433(para)
 msgid "It is important to analyze the applications' tolerance for latency and jitter when designing an environment to support network focused applications. Certain applications, for example VoIP, are less tolerant of latency and jitter. Where latency and jitter are concerned, certain applications may require tuning of QoS parameters and network device queues to ensure that they are queued for transmit immediately or guaranteed minimum bandwidth. Since OpenStack currently does not support these functions, some considerations may need to be made for the network plug-in selected."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:423(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:443(para)
 msgid "The location of a service may also impact the application or consumer experience. If an application is designed to serve differing content to differing users it will need to be designed to properly direct connections to those specific locations. Use a multi-site installation for these situations, where appropriate."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:429(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:449(para)
 msgid "Networking can be implemented in two separate ways. The legacy networking (nova-network) provides a flat DHCP network with a single broadcast domain. This implementation does not support tenant isolation networks or advanced plug-ins, but it is currently the only way to implement a distributed layer-3 agent using the multi_host configuration. OpenStack Networking (neutron) is the official networking implementation and provides a pluggable architecture that supports a large variety of network methods. Some of these include a layer-2 only provider network model, external device plug-ins, or even OpenFlow controllers."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:440(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:460(para)
 msgid "Networking at large scales becomes a set of boundary questions. The determination of how large a layer-2 domain needs to be is based on the amount of nodes within the domain and the amount of broadcast traffic that passes between instances. Breaking layer-2 boundaries may require the implementation of overlay networks and tunnels. This decision is a balancing act between the need for a smaller overhead or a need for a smaller domain."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:448(para)
+#: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml:468(para)
 msgid "When selecting network devices, be aware that making this decision based on largest port density often comes with a drawback. Aggregation switches and routers have not all kept pace with Top of Rack switches and may induce bottlenecks on north-south traffic. As a result, it may be possible for massive amounts of downstream network utilization to impact upstream network devices, impacting service to the cloud. Since OpenStack does not currently provide a mechanism for traffic shaping or rate limiting, it is necessary to implement these features at the network hardware level."
 msgstr ""
 
@@ -1629,7 +1641,7 @@ msgstr ""
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
-#: ./doc/arch-design/network_focus/section_prescriptive_examples_network_focus.xml:180(None)
+#: ./doc/arch-design/network_focus/section_prescriptive_examples_network_focus.xml:201(None)
 msgid "@@image: '../images/Network_Cloud_Storage2.png'; md5=3cd3ce6b19b20ecd7d22af03731cc7cd"
 msgstr ""
 
@@ -1642,7 +1654,7 @@ msgid "An example design for this workload is depicted in the figure below. In t
 msgstr ""
 
 #: ./doc/arch-design/network_focus/section_prescriptive_examples_network_focus.xml:27(para)
-msgid "Since sessions must remain until closing, the routing and switching architecture is designed for high availability. Switches are meshed to each hypervisor and to each other, and also provide an MLAG implementation to ensure layer-2 connectivity does not fail. Routers are configured with VRRP and fully meshed with switches to ensure layer-3 connectivity. Since GRE is used as an overlay network, Networking is installed and configured to use the Open vSwitch agent in GRE tunnel mode. This ensures all devices can reach all other devices and that tenant networks can be created for private addressing links to the load balancer. <placeholder-1/>"
+msgid "Because sessions persist until they are closed, the routing and switching architecture is designed for high availability. Switches are meshed to each hypervisor and each other, and also provide an MLAG implementation to ensure that layer-2 connectivity does not fail. Routers are configured with VRRP and fully meshed with switches to ensure layer-3 connectivity. Since GRE is used as an overlay network, Networking is installed and configured to use the Open vSwitch agent in GRE tunnel mode. This ensures all devices can reach all other devices and that tenant networks can be created for private addressing links to the load balancer. <placeholder-1/>"
 msgstr ""
 
 #: ./doc/arch-design/network_focus/section_prescriptive_examples_network_focus.xml:45(para)
@@ -1681,63 +1693,71 @@ msgstr ""
 msgid "Load balancing was included in this design to spread requests across multiple instances. This workload scales well horizontally across large numbers of instances. This allows instances to run without publicly routed IP addresses and simply rely on the load balancer for the service to be globally reachable. Many of these services do not require direct server return. This aids in address planning and utilization at scale since only the virtual IP (VIP) must be public."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_prescriptive_examples_network_focus.xml:94(title)
+#: ./doc/arch-design/network_focus/section_prescriptive_examples_network_focus.xml:96(title)
 msgid "Overlay networks"
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_prescriptive_examples_network_focus.xml:95(para)
-msgid "OpenStack Networking using the Open vSwitch GRE tunnel mode was included in the design to provide overlay functionality. In this case, the layer-3 external routers will be in a pair with VRRP and switches should be paired with an implementation of MLAG running to ensure that there is no loss of connectivity with the upstream routing infrastructure."
+#: ./doc/arch-design/network_focus/section_prescriptive_examples_network_focus.xml:97(para)
+msgid "The overlay functionality design includes OpenStack Networking in Open vSwitch GRE tunnel mode. In this case, the layer-3 external routers are paired with VRRP and switches should be paired with an implementation of MLAG running to ensure that you do not lose connectivity with the upstream routing infrastructure."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_prescriptive_examples_network_focus.xml:102(title)
+#: ./doc/arch-design/network_focus/section_prescriptive_examples_network_focus.xml:107(title)
 msgid "Performance tuning"
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_prescriptive_examples_network_focus.xml:103(para)
+#: ./doc/arch-design/network_focus/section_prescriptive_examples_network_focus.xml:108(para)
 msgid "Network level tuning for this workload is minimal. Quality-of-Service (QoS) will be applied to these workloads for a middle ground Class Selector depending on existing policies. It will be higher than a best effort queue but lower than an Expedited Forwarding or Assured Forwarding queue. Since this type of application generates larger packets with longer-lived connections, bandwidth utilization can be optimized for long duration TCP. Normal bandwidth planning applies here with regards to benchmarking a session's usage multiplied by the expected number of concurrent sessions with overhead."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_prescriptive_examples_network_focus.xml:115(title)
+#: ./doc/arch-design/network_focus/section_prescriptive_examples_network_focus.xml:120(title)
 msgid "Network functions"
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_prescriptive_examples_network_focus.xml:116(para)
+#: ./doc/arch-design/network_focus/section_prescriptive_examples_network_focus.xml:121(para)
 msgid "Network functions is a broad category but encompasses workloads that support the rest of a system's network. These workloads tend to consist of large amounts of small packets that are very short lived, such as DNS queries or SNMP traps. These messages need to arrive quickly and do not deal with packet loss as there can be a very large volume of them. There are a few extra considerations to take into account for this type of workload and this can change a configuration all the way to the hypervisor level. For an application that generates 10 TCP sessions per user with an average bandwidth of 512 kilobytes per second per flow and expected user count of ten thousand concurrent users, the expected bandwidth plan is approximately 4.88 gigabits per second."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_prescriptive_examples_network_focus.xml:129(para)
+#: ./doc/arch-design/network_focus/section_prescriptive_examples_network_focus.xml:134(para)
 msgid "The supporting network for this type of configuration needs to have a low latency and evenly distributed availability. This workload benefits from having services local to the consumers of the service. A multi-site approach is used as well as deploying many copies of the application to handle load as close as possible to consumers. Since these applications function independently, they do not warrant running overlays to interconnect tenant networks. Overlays also have the drawback of performing poorly with rapid flow setup and may incur too much overhead with large quantities of small packets and are therefore not recommended."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_prescriptive_examples_network_focus.xml:140(para)
+#: ./doc/arch-design/network_focus/section_prescriptive_examples_network_focus.xml:145(para)
 msgid "QoS is desired for some workloads to ensure delivery. DNS has a major impact on the load times of other services and needs to be reliable and provide rapid responses. It is to configure rules in upstream devices to apply a higher Class Selector to DNS to ensure faster delivery or a better spot in queuing algorithms."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_prescriptive_examples_network_focus.xml:147(title)
+#: ./doc/arch-design/network_focus/section_prescriptive_examples_network_focus.xml:152(title)
 msgid "Cloud storage"
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_prescriptive_examples_network_focus.xml:148(para)
-msgid "Another common use case for OpenStack environments is to provide a cloud based file storage and sharing service. While this may initially be considered to be a storage focused use case there are also major requirements on the network side that place it in the realm of requiring a network focused architecture. An example for this application is cloud backup."
+#: ./doc/arch-design/network_focus/section_prescriptive_examples_network_focus.xml:153(para)
+msgid "Another common use case for OpenStack environments is to provide a cloud-based file storage and sharing service. You might consider this a storage-focused use case, but its network-side requirements make it a network-focused use case."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_prescriptive_examples_network_focus.xml:155(para)
-msgid "There are two specific behaviors of this workload that have major and different impacts on the network. Since this is both an externally facing service and internally replicating application there are both North-South and East-West traffic considerations."
+#: ./doc/arch-design/network_focus/section_prescriptive_examples_network_focus.xml:158(para)
+msgid "For example, consider a cloud backup application. This workload has two specific behaviors that impact the network. Because this workload is an externally-facing service and an internally-replicating application, it has both <glossterm baseform=\"north-south traffic\">north-south</glossterm> and <glossterm>east-west traffic</glossterm> considerations, as follows:"
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_prescriptive_examples_network_focus.xml:160(para)
-msgid "North-South traffic is primarily user facing. This means that when a user uploads content for storage it will be coming into the OpenStack installation. Users who download this content will be drawing traffic from the OpenStack installation. Since the service is intended primarily as a backup the majority of the traffic will be southbound into the environment. In this case it is beneficial to configure a network to be asymmetric downstream as the traffic entering the OpenStack installation will be greater than traffic leaving."
+#: ./doc/arch-design/network_focus/section_prescriptive_examples_network_focus.xml:169(term)
+msgid "north-south traffic"
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_prescriptive_examples_network_focus.xml:170(para)
-msgid "East-West traffic is likely to be fully symmetric. Since replication will originate from any node and may target multiple other nodes algorithmically, it is less likely for this traffic to have a larger volume in any specific direction. However this traffic may interfere with north-south traffic."
+#: ./doc/arch-design/network_focus/section_prescriptive_examples_network_focus.xml:171(para)
+msgid "When a user uploads and stores content, that content moves into the OpenStack installation. When users download this content, the content moves from the OpenStack installation. Because this service is intended primarily as a backup, most of the traffic moves southbound into the environment. In this situation, it benefits you to configure a network to be asymmetrically downstream because the traffic that enters the OpenStack installation is greater than the traffic that leaves the installation."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_prescriptive_examples_network_focus.xml:183(para)
-msgid "This application will prioritize the North-South traffic over East-West traffic as it is the customer-facing data. QoS is implemented on East-West traffic to be a lower priority Class Selector, while North-South traffic requires a higher level in the priority queue because of this."
+#: ./doc/arch-design/network_focus/section_prescriptive_examples_network_focus.xml:185(term)
+msgid "east-west traffic"
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_prescriptive_examples_network_focus.xml:188(para)
+#: ./doc/arch-design/network_focus/section_prescriptive_examples_network_focus.xml:187(para)
+msgid "Likely to be fully symmetric. Because replication originates from any node and might target multiple other nodes algorithmically, it is less likely for this traffic to have a larger volume in any specific direction. However this traffic might interfere with north-south traffic."
+msgstr ""
+
+#: ./doc/arch-design/network_focus/section_prescriptive_examples_network_focus.xml:204(para)
+msgid "This application prioritizes the north-south traffic over east-west traffic: the north-south traffic involves customer-facing data."
+msgstr ""
+
+#: ./doc/arch-design/network_focus/section_prescriptive_examples_network_focus.xml:209(para)
 msgid "The network design in this case is less dependant on availability and more dependant on being able to handle high bandwidth. As a direct result, it is beneficial to forego redundant links in favor of bonding those connections. This increases available bandwidth. It is also beneficial to configure all devices in the path, including OpenStack, to generate and pass jumbo frames."
 msgstr ""
 
@@ -1757,67 +1777,67 @@ msgstr ""
 msgid "Some network dependencies are going to be external to OpenStack. While OpenStack Networking is capable of providing network ports, IP addresses, some level of routing, and overlay networks, there are some other functions that it cannot provide. For many of these, external systems or equipment may be required to fill in the functional gaps. Hardware load balancers are an example of equipment that may be necessary to distribute workloads or offload certain functions. Note that, as of the Icehouse release, dynamic routing is currently in its infancy within OpenStack and may need to be implemented either by an external device or a specialized service instance within OpenStack. Tunneling is a feature provided by OpenStack Networking, however it is constrained to a Networking-managed region. If the need arises to extend a tunnel beyond the OpenStack region to either another region or an external system, it is necessary to implement the tunnel itself outside OpenStack or by using a tunnel management system to map the tunnel or overlay to an external tunnel. OpenStack does not currently provide quotas for network resources. Where network quotas are required, it is necessary to implement quality of service management outside of OpenStack. In many of these instances, similar solutions for traffic shaping or other network functions will be needed."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_architecture_network_focus.xml:56(para)
-msgid "Depending on the selected design, Networking itself may not even support the required <glossterm baseform=\"Layer-3 network\">layer-3 network</glossterm> functionality. If it is necessary or advantageous to use the provider networking mode of Networking without running the layer-3 agent, then an external router will be required to provide layer-3 connectivity to outside systems."
+#: ./doc/arch-design/network_focus/section_architecture_network_focus.xml:57(para)
+msgid "Depending on the selected design, Networking itself might not even support the required <glossterm baseform=\"Layer-3 network\">layer-3 network</glossterm> functionality. If you choose to use the provider networking mode without running the layer-3 agent, you must install an external router to provide layer-3 connectivity to outside systems."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_architecture_network_focus.xml:64(para)
+#: ./doc/arch-design/network_focus/section_architecture_network_focus.xml:66(para)
 msgid "Interaction with orchestration services is inevitable in larger-scale deployments. The Orchestration module is capable of allocating network resource defined in templates to map to tenant networks and for port creation, as well as allocating floating IPs. If there is a requirement to define and manage network resources in using orchestration, it is recommended that the design include the Orchestration module to meet the demands of users."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_architecture_network_focus.xml:73(title)
+#: ./doc/arch-design/network_focus/section_architecture_network_focus.xml:75(title)
 msgid "Design impacts"
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_architecture_network_focus.xml:74(para)
+#: ./doc/arch-design/network_focus/section_architecture_network_focus.xml:76(para)
 msgid "A wide variety of factors can affect a network focused OpenStack architecture. While there are some considerations shared with a general use case, specific workloads related to network requirements will influence network design decisions."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_architecture_network_focus.xml:79(para)
+#: ./doc/arch-design/network_focus/section_architecture_network_focus.xml:81(para)
 msgid "One decision includes whether or not to use Network Address Translation (NAT) and where to implement it. If there is a requirement for floating IPs to be available instead of using public fixed addresses then NAT is required. This can be seen in network management applications that rely on an IP endpoint. An example of this is a DHCP relay that needs to know the IP of the actual DHCP server. In these cases it is easier to automate the infrastructure to apply the target IP to a new instance rather than reconfigure legacy or external systems for each new instance."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_architecture_network_focus.xml:89(para)
+#: ./doc/arch-design/network_focus/section_architecture_network_focus.xml:91(para)
 msgid "NAT for floating IPs managed by Networking will reside within the hypervisor but there are also versions of NAT that may be running elsewhere. If there is a shortage of IPv4 addresses there are two common methods to mitigate this externally to OpenStack. The first is to run a load balancer either within OpenStack as an instance, or use an external load balancing solution. In the internal scenario, load balancing software, such as HAproxy, can be managed with Networking's Load-Balancer-as-a-Service (LBaaS). This is specifically to manage the Virtual IP (VIP) while a dual-homed connection from the HAproxy instance connects the public network with the tenant private network that hosts all of the content servers. In the external scenario, a load balancer would need to serve the VIP and also be joined to the tenant overlay network through external means or routed to it via private addresses."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_architecture_network_focus.xml:105(para)
+#: ./doc/arch-design/network_focus/section_architecture_network_focus.xml:107(para)
 msgid "Another kind of NAT that may be useful is protocol NAT. In some cases it may be desirable to use only IPv6 addresses on instances and operate either an instance or an external service to provide a NAT-based transition technology such as NAT64 and DNS64. This provides the ability to have a globally routable IPv6 address while only consuming IPv4 addresses as necessary or in a shared manner."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_architecture_network_focus.xml:112(para)
+#: ./doc/arch-design/network_focus/section_architecture_network_focus.xml:114(para)
 msgid "Application workloads will affect the design of the underlying network architecture. If a workload requires network-level redundancy, the routing and switching architecture will have to accommodate this. There are differing methods for providing this that are dependent on the network hardware selected, the performance of the hardware, and which networking model is deployed. Some examples of this are the use of Link aggregation (LAG) or Hot Standby Router Protocol (HSRP). There are also the considerations of whether to deploy OpenStack Networking or legacy networking (nova-network) and which plug-in to select for OpenStack Networking. If using an external system, Networking will need to be configured to run <glossterm baseform=\"Layer-2 network\">layer 2</glossterm> with a provider network configuration. For example, it may be necessary to implement HSRP to terminate layer-3 connectivity."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_architecture_network_focus.xml:129(para)
+#: ./doc/arch-design/network_focus/section_architecture_network_focus.xml:131(para)
 msgid "Depending on the workload, overlay networks may or may not be a recommended configuration. Where application network connections are small, short lived or bursty, running a dynamic overlay can generate as much bandwidth as the packets it carries. It also can induce enough latency to cause issues with certain applications. There is an impact to the device generating the overlay which, in most installations, will be the hypervisor. This will cause performance degradation on packet per second and connection per second rates."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_architecture_network_focus.xml:138(para)
+#: ./doc/arch-design/network_focus/section_architecture_network_focus.xml:140(para)
 msgid "Overlays also come with a secondary option that may or may not be appropriate to a specific workload. While all of them will operate in full mesh by default, there might be good reasons to disable this function because it may cause excessive overhead for some workloads. Conversely, other workloads will operate without issue. For example, most web services applications will not have major issues with a full mesh overlay network, while some network monitoring tools or storage replication workloads will have performance issues with throughput or excessive broadcast traffic."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_architecture_network_focus.xml:148(para)
-msgid "A design decision that many overlook is a choice of layer-3 protocols. While OpenStack was initially built with only IPv4 support, Networking now supports IPv6 and dual-stacked networks. Note that, as of the Icehouse release, this only includes stateless address autoconfiguration but the work is in progress to support stateless and stateful dhcpv6 as well as IPv6 floating IPs without NAT. Some workloads become possible through the use of IPv6 and IPv6 to IPv4 reverse transition mechanisms such as NAT64 and DNS64 or <glossterm>6to4</glossterm>, because these options are available. This will alter the requirements for any address plan as single-stacked and transitional IPv6 deployments can alleviate the need for IPv4 addresses."
+#: ./doc/arch-design/network_focus/section_architecture_network_focus.xml:150(para)
+msgid "Many people overlook an important design decision: The choice of layer-3 protocols. While OpenStack was initially built with only IPv4 support, Networking now supports IPv6 and dual-stacked networks. Note that, as of the Icehouse release, this only includes stateless address autoconfiguration but work is in progress to support stateless and stateful DHCPv6 as well as IPv6 floating IPs without NAT. Some workloads become possible through the use of IPv6 and IPv6 to IPv4 reverse transition mechanisms such as NAT64 and DNS64 or <glossterm>6to4</glossterm>, because these options are available. This will alter the requirements for any address plan as single-stacked and transitional IPv6 deployments can alleviate the need for IPv4 addresses."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_architecture_network_focus.xml:161(para)
+#: ./doc/arch-design/network_focus/section_architecture_network_focus.xml:164(para)
 msgid "As of the Icehouse release, OpenStack has limited support for dynamic routing, however there are a number of options available by incorporating third party solutions to implement routing within the cloud including network equipment, hardware nodes, and instances. Some workloads will perform well with nothing more than static routes and default gateways configured at the layer-3 termination point. In most cases this will suffice, however some cases require the addition of at least one type of dynamic routing protocol if not multiple protocols. Having a form of interior gateway protocol (IGP) available to the instances inside an OpenStack installation opens up the possibility of use cases for anycast route injection for services that need to use it as a geographic location or failover mechanism. Other applications may wish to directly participate in a routing protocol, either as a passive observer as in the case of a looking glass, or as an active participant in the form of a route reflector. Since an instance might have a large amount of compute and memory resources, it is trivial to hold an entire unpartitioned routing table and use it to provide services such as network path visibility to other applications or as a monitoring tool."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_architecture_network_focus.xml:183(para)
-msgid "A lesser known, but harder to diagnose issue, is that of path Maximum Transmission Unit (MTU) failures. It is less of an optional design consideration and more a design warning that MTU must be at least large enough to handle normal traffic, plus any overhead from an overlay network, and the desired layer-3 protocol. Adding externally built tunnels will further lessen the MTU packet size making it imperative to pay attention to the fully calculated MTU as some systems may be configured to ignore or drop path MTU discovery packets."
+#: ./doc/arch-design/network_focus/section_architecture_network_focus.xml:186(para)
+msgid "Path maximum transmission unit (MTU) failures are lesser known but harder to diagnose. The MTU must be large enough to handle normal traffic, overhead from an overlay network, and the desired layer-3 protocol. When you add externally built tunnels, the MTU packet size is reduced. In this case, you must pay attention to the fully calculated MTU size because some systems are configured to ignore or drop path MTU discovery packets."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_architecture_network_focus.xml:194(title)
+#: ./doc/arch-design/network_focus/section_architecture_network_focus.xml:197(title)
 msgid "Tunable networking components"
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_architecture_network_focus.xml:195(para)
+#: ./doc/arch-design/network_focus/section_architecture_network_focus.xml:198(para)
 msgid "Consider configurable networking components related to an OpenStack architecture design when designing for network intensive workloads include MTU and QoS. Some workloads will require a larger MTU than normal based on a requirement to transfer large blocks of data. When providing network service for applications such as video streaming or storage replication, it is recommended to ensure that both OpenStack hardware nodes and the supporting network equipment are configured for jumbo frames where possible. This will allow for a better utilization of available bandwidth. Configuration of jumbo frames should be done across the complete path the packets will traverse. If one network component is not capable of handling jumbo frames then the entire path will revert to the default MTU."
 msgstr ""
 
-#: ./doc/arch-design/network_focus/section_architecture_network_focus.xml:207(para)
+#: ./doc/arch-design/network_focus/section_architecture_network_focus.xml:210(para)
 msgid "Quality of Service (QoS) also has a great impact on network intensive workloads by providing instant service to packets which have a higher priority due to their ability to be impacted by poor network performance. In applications such as Voice over IP (VoIP) differentiated services code points are a near requirement for proper operation. QoS can also be used in the opposite direction for mixed workloads to prevent low priority but high bandwidth applications, for example backup services, video conferencing or file sharing, from blocking bandwidth that is needed for the proper operation of other workloads. It is possible to tag file storage traffic as a lower class, such as best effort or scavenger, to allow the higher priority traffic through. In cases where regions within a cloud might be geographically distributed it may also be necessary to plan accordingly to implement WAN optimization to combat latency or packet loss."
 msgstr ""
 
@@ -2616,7 +2636,7 @@ msgid "Based on the requirements of instances being serviced in the cloud, the n
 msgstr ""
 
 #: ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml:138(para)
-msgid "The legacy networking (nova-network) service is primarily a layer-2 networking service which has two main modes in which it will function. The difference between the two modes in legacy networking pertain to whether or not legacy networking uses VLANs. When using legacy networking in a flat network mode, all network hardware nodes and devices throughout the cloud are connected to a single layer-2 network segment which provides access to application data."
+msgid "The legacy networking (nova-network) service is primarily a layer-2 networking service that functions in two modes. In legacy networking, the two modes differ in their use of VLANs. When using legacy networking in a flat network mode, all network hardware nodes and devices throughout the cloud are connected to a single layer-2 network segment that provides access to application data."
 msgstr ""
 
 #: ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml:146(para)
@@ -4306,7 +4326,7 @@ msgid "Deployment of a full stack can be challenging but this difficulty can be 
 msgstr ""
 
 #: ./doc/arch-design/specialized/section_openstack_on_openstack_specialized.xml:52(para)
-msgid "The OpenStack-On-OpenStack project (TripleO) is addressing this issuealthough at the current time the project does not provide comprehensive coverage for the nested stacks. More information can be found at https://wiki.openstack.org/wiki/TripleO."
+msgid "The OpenStack-on-OpenStack project (<glossterm>TripleO</glossterm>) addresses this issuecurrently, however, the project does not completely cover nested stacks. For more information, see https://wiki.openstack.org/wiki/TripleO."
 msgstr ""
 
 #: ./doc/arch-design/specialized/section_openstack_on_openstack_specialized.xml:61(title)
@@ -4564,7 +4584,7 @@ msgid "There are a number of options that might be appropriate for the hybrid cl
 msgstr ""
 
 #: ./doc/arch-design/hybrid/section_architecture_hybrid.xml:80(para)
-msgid "Create a baseline of upper-layer services that are implemented across all of the cloud platforms. For platforms that do not support a given service, create a service on top of that platform and apply it to the workloads as they are launched on that cloud. For example, OpenStack, via the Database service for OpenStack (trove), supports MySQL as a service but not NoSQL databases in production. To move from or to run alongside on AWS a NoSQL workload would require recreating the NoSQL database on top of OpenStack and automate the process of implementing it using a tool such as the Orchestration module (heat)."
+msgid "Create a baseline of upper-layer services that are implemented across all of the cloud platforms. For platforms that do not support a given service, create a service on top of that platform and apply it to the workloads as they are launched on that cloud. For example, through the <glossterm>Database Service</glossterm> for OpenStack (<glossterm>trove</glossterm>), OpenStack supports MySQL as a service but not NoSQL databases in production. To either move from or run alongside AWS, a NoSQL workload must use an automation tool, such as the Orchestration module (heat), to recreate the NoSQL database on top of OpenStack."
 msgstr ""
 
 #: ./doc/arch-design/hybrid/section_architecture_hybrid.xml:95(para)
