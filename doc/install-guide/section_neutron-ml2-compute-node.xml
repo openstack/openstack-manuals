@@ -344,16 +344,7 @@ security_group_api = neutron</programlisting>
           <filename>/etc/neutron/plugins/ml2/ml2_conf.ini</filename>.
         If this symbolic link does not exist, create it using the
         following commands:</para>
-      <screen><prompt>#</prompt> <userinput>ln -s plugins/ml2/ml2_conf.ini /etc/neutron/plugin.ini</userinput></screen>
-      <!-- https://bugzilla.redhat.com/show_bug.cgi?id=1087647 -->
-      <para>Due to a packaging bug, the Open vSwitch agent
-        initialization script explicitly looks for the Open vSwitch
-        plug-in configuration file rather than a symbolic link
-          <filename>/etc/neutron/plugin.ini</filename> pointing to the
-        ML2 plug-in configuration file. Run the following commands to
-        resolve this issue:</para>
-      <screen><prompt>#</prompt> <userinput>cp /etc/init.d/neutron-openvswitch-agent /etc/init.d/neutron-openvswitch-agent.orig</userinput>
-<prompt>#</prompt> <userinput>sed -i 's,plugins/openvswitch/ovs_neutron_plugin.ini,plugin.ini,g' /etc/init.d/neutron-openvswitch-agent</userinput></screen>
+      <screen><prompt>#</prompt> <userinput>ln -s /etc/neutron/plugins/ml2/ml2_conf.ini /etc/neutron/plugin.ini</userinput></screen>
     </step>
     <step os="sles;opensuse">
       <para>The Networking service initialization scripts expect the
@@ -373,9 +364,7 @@ security_group_api = neutron</programlisting>
     <step os="rhel;centos;fedora;sles;opensuse">
       <para>Start the Open vSwitch (OVS) agent and configure it to
         start when the system boots:</para>
-      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>service neutron-openvswitch-agent start</userinput>
-<prompt>#</prompt> <userinput>chkconfig neutron-openvswitch-agent on</userinput></screen>
-      <screen os="sles;opensuse"><prompt>#</prompt> <userinput>service openstack-neutron-openvswitch-agent start</userinput>
+      <screen os="rhel;centos;fedora;sles;opensuse"><prompt>#</prompt> <userinput>service openstack-neutron-openvswitch-agent start</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-neutron-openvswitch-agent on</userinput></screen>
     </step>
     <step os="ubuntu;debian">
