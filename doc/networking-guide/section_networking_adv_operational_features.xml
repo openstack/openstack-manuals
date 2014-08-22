@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  version="5.0"
+  xml:id="section_networking-adv-operational_features">
+    <title>Advanced operational features</title>
+    <section xml:id="section_adv_logging">
+        <title>Logging settings</title>
+        <para>Networking components use Python logging module to do
+            logging. Logging configuration can be provided in
+                <filename>neutron.conf</filename> or as command-line
+            options. Command options override ones in
+                <filename>neutron.conf</filename>.</para>
+        <para>To configure logging for Networking components, use one
+            of these methods:</para>
+        <itemizedlist>
+            <listitem>
+                <para>Provide logging settings in a logging
+                    configuration file.</para>
+                <para>See <link xlink:href="http://docs.python.org/howto/logging.html">Python
+                        logging how-to</link> to learn more about logging.</para>
+            </listitem>
+            <listitem>
+                <para>Provide logging setting in
+                        <filename>neutron.conf</filename></para>
+                <programlisting language="ini">[DEFAULT]
+# Default log level is WARNING
+# Show debugging output in logs (sets DEBUG log level output)
+# debug = False
+
+# Show more verbose log output (sets INFO log level output) if debug is False
+# verbose = False
+
+# log_format = %(asctime)s %(levelname)8s [%(name)s] %(message)s
+# log_date_format = %Y-%m-%d %H:%M:%S
+
+# use_syslog = False
+# syslog_log_facility = LOG_USER
+
+# if use_syslog is False, we can set log_file and log_dir.
+# if use_syslog is False and we do not set log_file,
+# the log will be printed to stdout.
+# log_file =
+# log_dir =</programlisting>
+            </listitem>
+        </itemizedlist>
+    </section>
+    <section xml:id="section_adv_notification">
+        <title>Notifications</title>
+        <para>Notifications can be sent when Networking resources such
+            as network, subnet and port are created, updated or
+            deleted.</para>
+        <section xml:id="section_adv_notification_overview">
+            <title>Notification options</title>
+            <para>To support DHCP agent, rpc_notifier driver must be
+                set. To set up the notification, edit notification
+                options in <filename>neutron.conf</filename>:</para>
+            <programlisting language="ini"># ============ Notification System Options =====================
+
+# Notifications can be sent when network/subnet/port are create, updated or deleted.
+# There are three methods of sending notifications: logging (via the
+# log_file directive), rpc (via a message queue) and
+# noop (no notifications sent, the default)
+
+# Notification_driver can be defined multiple times
+# Do nothing driver
+# notification_driver = neutron.openstack.common.notifier.no_op_notifier
+# Logging driver
+# notification_driver = neutron.openstack.common.notifier.log_notifier
+# RPC driver
+notification_driver = neutron.openstack.common.notifier.rpc_notifier
+
+# default_notification_level is used to form actual topic names or to set logging level
+# default_notification_level = INFO
+
+# default_publisher_id is a part of the notification payload
+# host = myhost.com
+# default_publisher_id = $host
+
+# Defined in rpc_notifier for rpc way, can be comma-separated values.
+# The actual topic names will be %s.%(default_notification_level)s
+notification_topics = notifications</programlisting>
+        </section>
+        <section xml:id="section_adv_notification_cases">
+            <title>Setting cases</title>
+            <section xml:id="section_adv_notification_cases_log_rpc">
+                <title>Logging and RPC</title>
+                <para>These options configure the Networking
+                    server to send notifications through logging and
+                    RPC. The logging options are described in
+                        <citetitle
+                        >OpenStack Configuration Reference</citetitle>
+                    . RPC notifications go to 'notifications.info'
+                    queue bound to a topic exchange defined by
+                    'control_exchange' in
+                        <filename>neutron.conf</filename>.</para>
+                <programlisting language="ini"># ============ Notification System Options =====================
+
+# Notifications can be sent when network/subnet/port are create, updated or deleted.
+# There are three methods of sending notifications: logging (via the
+# log_file directive), rpc (via a message queue) and
+# noop (no notifications sent, the default)
+
+# Notification_driver can be defined multiple times
+# Do nothing driver
+# notification_driver = neutron.openstack.common.notifier.no_op_notifier
+# Logging driver
+notification_driver = neutron.openstack.common.notifier.log_notifier
+# RPC driver
+notification_driver = neutron.openstack.common.notifier.rpc_notifier
+
+# default_notification_level is used to form actual topic names or to set logging level
+default_notification_level = INFO
+
+# default_publisher_id is a part of the notification payload
+# host = myhost.com
+# default_publisher_id = $host
+
+# Defined in rpc_notifier for rpc way, can be comma-separated values.
+# The actual topic names will be %s.%(default_notification_level)s
+notification_topics = notifications</programlisting>
+            </section>
+            <section
+                xml:id="ch_adv_notification_cases_multi_rpc_topics">
+                <title>Multiple RPC topics</title>
+                <para>These options configure the Networking
+                    server to send notifications to multiple RPC
+                    topics. RPC notifications go to
+                    'notifications_one.info' and
+                    'notifications_two.info' queues bound to a topic
+                    exchange defined by 'control_exchange' in
+                        <filename>neutron.conf</filename>.</para>
+                <programlisting language="ini"># ============ Notification System Options =====================
+
+# Notifications can be sent when network/subnet/port are create, updated or deleted.
+# There are three methods of sending notifications: logging (via the
+# log_file directive), rpc (via a message queue) and
+# noop (no notifications sent, the default)
+
+# Notification_driver can be defined multiple times
+# Do nothing driver
+# notification_driver = neutron.openstack.common.notifier.no_op_notifier
+# Logging driver
+# notification_driver = neutron.openstack.common.notifier.log_notifier
+# RPC driver
+notification_driver = neutron.openstack.common.notifier.rabbit_notifier
+
+# default_notification_level is used to form actual topic names or to set logging level
+default_notification_level = INFO
+
+# default_publisher_id is a part of the notification payload
+# host = myhost.com
+# default_publisher_id = $host
+
+# Defined in rpc_notifier for rpc way, can be comma-separated values.
+# The actual topic names will be %s.%(default_notification_level)s
+notification_topics = notifications_one,notifications_two</programlisting>
+            </section>
+        </section>
+    </section>
+</section>
