@@ -300,7 +300,7 @@ dnsmasq_config_file = /etc/neutron/dnsmasq-neutron.conf</programlisting>
         <step>
           <para>Kill any existing
             <systemitem role="process">dnsmasq</systemitem> processes:</para>
-          <screen><prompt>#</prompt> <userinput>killall dnsmasq</userinput></screen>
+          <screen><prompt>#</prompt> <userinput>pkill dnsmasq</userinput></screen>
         </step>
       </substeps>
     </step>
@@ -530,17 +530,7 @@ enable_security_group = True</programlisting>
           <filename>/etc/neutron/plugins/ml2/ml2_conf.ini</filename>.
         If this symbolic link does not exist, create it using the
         following commands:</para>
-      <screen><prompt>#</prompt> <userinput>ln -s plugins/ml2/ml2_conf.ini /etc/neutron/plugin.ini</userinput></screen>
-      <!-- https://bugzilla.redhat.com/show_bug.cgi?id=1087647 -->
-      <para>Due to a packaging bug, the Open vSwitch agent
-        initialization script explicitly looks for the Open vSwitch
-        plug-in configuration file rather than a symbolic link
-          <filename>/etc/neutron/plugin.ini</filename> pointing to the
-        ML2 plug-in configuration file. Run the following commands to
-        resolve this issue:</para>
-      <screen><prompt>#</prompt> <userinput>cp /etc/init.d/neutron-openvswitch-agent /etc/init.d/neutron-openvswitch-agent.orig</userinput>
-<prompt>#</prompt> <userinput>sed -i 's,plugins/openvswitch/ovs_neutron_plugin.ini,plugin.ini,g' /etc/init.d/neutron-openvswitch-agent</userinput></screen>
-    </step>
+      <screen><prompt>#</prompt> <userinput>ln -s /etc/neutron/plugins/ml2/ml2_conf.ini /etc/neutron/plugin.ini</userinput></screen></step>
     <step os="sles;opensuse">
       <para>The Networking service initialization scripts expect the
         variable <literal>NEUTRON_PLUGIN_CONF</literal> in the
