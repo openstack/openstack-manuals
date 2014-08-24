@@ -1,47 +1,105 @@
 <?xml version="1.0" encoding="UTF-8"?>
-    <section xmlns="http://docbook.org/ns/docbook"
+<!DOCTYPE chapter [
+<!ENTITY % openstack SYSTEM "../common/entities/openstack.ent">
+%openstack;
+]>
+<section xmlns="http://docbook.org/ns/docbook"
   xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:xlink="http://www.w3.org/1999/xlink"
   version="5.0"
   xml:id="windows-image">
-<title>Example: Microsoft Windows image</title>
-    <para>We do not yet have a fully documented example of how to create a Microsoft Windows image.
-        You can use libvirt to install Windows from an installation DVD using the same approach as
-        with the CentOS and Ubuntu examples. Once the initial install is done, you will need to
-        perform some Windows-specific customizations.</para>
-        <simplesect>
-            <title>Install VirtIO drivers</title>
-            <para>Installing the <link
-                xlink:href="http://www.linux-kvm.org/page/WindowsGuestDrivers/Download_Drivers"
-                >VirtIO paravirtualizaion drivers for Windows</link> will improve virtual machine
-            performance when using KVM as the hypervisor to run Windows.</para>
-        </simplesect>
-        <simplesect><title>Sysprep</title>
-            <para>Microsoft has a special tool called <link
-                xlink:href="http://technet.microsoft.com/en-us/library/cc766049(v=ws.10).aspx"
-                >Sysprep</link> that must be run inside of a Windows guest to prepare it for use as
-            a virtual machine image. On Windows, invoke sysprep, as follows:
-            <screen><userinput>c:\windows\system32\sysprep\sysprep.exe</userinput></screen></para>
-        </simplesect>
-    <simplesect>
-        <title>cloudbase-init</title>
-        <para><link xlink:href="http://www.cloudbase.it/cloud-init-for-windows-instances/"
-                >cloudbase-init</link> is a Windows port of cloud-init that should be installed
-            inside of the guest. The <link xlink:href="https://github.com/cloudbase/cloudbase-init"
-                >source code</link> is available on GitHub.</para>
-    </simplesect>
-        <simplesect>
-            <title>Jordan Rinke's OpenStack Windows resources</title>
-            <para>Jordan Rinke maintains <link xlink:href="https://github.com/jordanrinke/openstack"
-                >a collection of resources</link> for managing OpenStack Windows virtual machine
-            guests.</para>
-        </simplesect>
-    <simplesect>
-    <title>Windows instances require the timezone to be "localtime"</title>
-    <para>When uploading Windows images, you must set the <literal>os_type</literal>
-    parameter to <literal>windows</literal>, which causes instances to use the
-    local time zone.
-    Failing to set this will cause the clock timezone to be UTC, which has unexpected
-    side effects in Windows.</para>
-    </simplesect>
-    </section>
+  <title>Example: Microsoft Windows image</title>
+  <para>This example creates a Windows Server 2012 qcow2 image, using
+    <command>virt-install</command> and the KVM hypervisor.</para>
+
+  <procedure>
+    <step>
+      <para>Follow this steps to prepare the installation:</para>
+      <substeps>
+        <step>
+          <para>Download a Windows Server 2012 installation ISO. Evaluation
+              images are available on <link
+                  xlink:href="http://www.microsoft.com/en-us/evalcenter/evaluate-windows-server-2012">the
+                  Microsoft website</link> (registration required).</para>
+        </step>
+        <step>
+          <para>Download the signed VirtIO drivers ISO from the <link
+                  xlink:href="http://alt.fedoraproject.org/pub/alt/virtio-win/latest/images/">Fedora
+                  website</link>.</para>
+        </step>
+        <step>
+          <para>Create a 10&nbsp;GB qcow2 image:</para>
+          <screen><prompt>$</prompt> <userinput>qemu-img create -f qcow2 ws2012.qcow2 10G</userinput></screen>
+        </step>
+      </substeps>
+    </step>
+    <step>
+      <para>Start the Windows Server 2012 installation with the
+          <command>virt-install</command> command:</para>
+      <screen><prompt>#</prompt> <userinput>virt-install --connect qemu:///system \
+  --name ws2012 --ram 2048 --vcpus 2 \
+  --network network=default,model=virtio \
+  --disk path=ws2012.qcow2,device=disk,bus=virtio \
+  --cdrom /path/to/en_windows_server_2012_x64_dvd.iso \
+  --disk path=/path/to/virtio-win-0.1-XX.iso,device=cdrom \
+  --vnc --os-type windows --os-variant win2k8</userinput></screen>
+      <para>Use <command>virt-manager</command> or
+          <command>virt-viewer</command> to connect to the VM and start the
+          Windows installation.</para>
+    </step>
+    <step>
+      <para>Enable the VirtIO drivers.</para>
+      <para>The disk is not detected by default by the Windows installer. When
+          requested to choose an installation target, click <guibutton>Load
+              driver</guibutton> and browse the file system to select the
+          <filename>E:\WIN8\AMD64</filename> folder. The Windows installer
+          displays a list of drivers to install. Select the VirtIO SCSI and
+          network drivers, and continue the installation.</para>
+      <para>Once the installation is completed, the VM restarts. Define a
+          password for the administrator when prompted.</para>
+    </step>
+    <step>
+      <para>Log in as administrator and start a command window.</para>
+    </step>
+    <step>
+      <para>Complete the VirtIO drivers installation by running the
+          following command:</para>
+      <screen><prompt>C:\</prompt><userinput>pnputil -i -a E:\WIN8\AMD64\*.INF</userinput></screen>
+    </step>
+    <step>
+        <para>To allow <glossterm>Cloudbase-Init</glossterm> to run scripts
+            during an instance boot, set the PowerShell execution policy to be
+            unrestricted:</para>
+      <screen><prompt>C:\</prompt><userinput>powershell</userinput>
+<prompt>C:\</prompt><userinput>Set-ExecutionPolicy Unrestricted</userinput></screen>
+    </step>
+    <step>
+        <para>Download and install Cloudbase-Init:</para>
+      <screen><prompt>C:\</prompt><userinput>Invoke-WebRequest -UseBasicParsing http://www.cloudbase.it/downloads/CloudbaseInitSetup_Beta_x64.msi -OutFile cloudbaseinit.msi</userinput>
+<prompt>C:\</prompt><userinput>.\cloudbaseinit.msi</userinput></screen>
+      <para>In the <guilabel>configuration options</guilabel> window, change the following settings:</para>
+      <itemizedlist>
+          <listitem>
+              <para>Username: <literal>Administrator</literal></para>
+          </listitem>
+          <listitem>
+              <para>Network adapter to configure:
+                  <literal>Red Hat VirtIO Ethernet Adapter</literal></para>
+          </listitem>
+          <listitem>
+              <para>Serial port for logging: <literal>COM1</literal></para>
+          </listitem>
+      </itemizedlist>
+      <para>When the installation is done, in the <guilabel>Complete the
+              Cloudbase-Init Setup Wizard</guilabel> window, select the
+          <guilabel>Run Sysprep</guilabel> and <guilabel>Shutdown</guilabel>
+          check boxes and click <guibutton>Finish</guibutton>.</para>
+      <para>Wait for the machine shutdown.</para>
+    </step>
+  </procedure>
+
+  <para>Your image is ready to upload to the Image Service:</para>
+  <screen><prompt>$</prompt> <userinput>glance image-create --name WS2012 --disk-format qcow2 \
+  --container-format bare --is-public \
+  --file ws2012.qcow2</userinput></screen>
+</section>
