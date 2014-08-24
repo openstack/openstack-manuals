@@ -435,6 +435,20 @@ aggregate_image_properties_isolation_separator=.</programlisting>
             <programlisting language="ini">isolated_hosts=server1,server2
 isolated_images=342b492c-128f-4a42-8d3a-c5088cf27d13,ebd267a6-ca86-4d6c-9a0e-bd132d6b7d09</programlisting>
         </section>
+        <section xml:id="ioopsfilter">
+          <title>IoOpsFilter</title>
+          <para>
+            The IoOpsFilter filters hosts by concurrent I/O operations
+            on it. Hosts with too many concurrent I/O operations will
+            be filtered out. The <option>max_io_ops_per_host</option>
+            option specifies the maximum number of I/O intensive
+            instances allowed to run on a host. A host will be ignored
+            by the scheduler if more than
+            <option>max_io_ops_per_host</option> instances in build,
+            resize, snapshot, migrate, rescue or unshelve task states
+            are running on it.
+          </para>
+        </section>
         <section xml:id="jsonfilter">
             <title>JsonFilter</title>
             <para>The JsonFilter allows a user to construct a custom
@@ -491,6 +505,22 @@ isolated_images=342b492c-128f-4a42-8d3a-c5088cf27d13,ebd267a6-ca86-4d6c-9a0e-bd1
             <para>With the API, use the
                     <literal>os:scheduler_hints</literal> key:</para>
             <programlisting language="json"><xi:include href="../../common/samples/server-scheduler-hints2.json" parse="text"/></programlisting>
+        </section>
+        <section xml:id="numinstancesfilter">
+          <title>NumInstancesFilter</title>
+          <para>
+            Hosts that have more instances running than specified by
+            the <option>max_instances_per_host</option> option are
+            filtered out when this filter is in place.
+          </para>
+        </section>
+        <section xml:id="pcipassthroughfilter">
+          <title>PciPassthroughFilter</title>
+          <para>
+            The filter schedules instances on a host if the host has
+            devices that meet the device requests in the
+            <literal>extra_specs</literal> attribute for the flavor.
+          </para>
         </section>
         <section xml:id="ramfilter">
             <title>RamFilter</title>
