@@ -106,4 +106,74 @@
             </step>
         </procedure>
     </section>
+    <section xml:id="dashboard_backup_db">
+        <title>Backup and restore a database</title>
+        <para>You can use Database services to backup a database and store the backup artifact in the
+            Object Storage module. Later on, if the original database is damaged, you can use the backup
+            artifact to restore the database. The restore process creates a database instance.</para>
+        <para>This example shows you how to back up and restore a MySQL database.</para>
+        <procedure>
+            <title>To backup and restore a database</title>
+            <step>
+                <title>Backup the database instance.</title>
+                <substeps>
+                    <step>
+                        <para>Log in to the dashboard, choose a project, and click <guilabel>Databases</guilabel>.</para>
+                    </step>
+                    <step>
+                        <para>Click <guilabel>Database Instances</guilabel>. This displays the existing instances in your system.</para>
+                    </step>
+                    <step>
+                        <para>Click <guibutton>Create Backup</guibutton>.</para>
+                    </step>
+                    <step>
+                        <para>In the Backup Database dialog box, specify the following values:</para>
+                        <informaltable rules="all" width="75%">
+                            <col width="30%"/>
+                            <col width="70%"/>
+                            <tbody>
+                                <tr>
+                                    <td><para><guilabel>Name</guilabel></para></td>
+                                    <td><para>Specify a name for the backup.</para></td>
+                                </tr>
+                                <tr>
+                                    <td><para><guilabel>Database Instance</guilabel></para></td>
+                                    <td><para>Select the instance you want to back up.</para></td>
+                                </tr>
+                                <tr>
+                                    <td><para><guilabel>Description</guilabel></para></td>
+                                    <td><para>Specify an optional description.</para></td>
+                                </tr>
+                            </tbody>
+                        </informaltable>
+                    </step>
+                    <step>
+                        <para>Click <guibutton>Backup</guibutton>. The new backup appears in the backup list.</para>
+                    </step>
+                </substeps>
+             </step>
+            <step>
+                <title>Restore a database instance.</title>
+                <para>Now assume that your original database instance is damaged and you
+                    need to restore it. You do the restore by using your backup to create a new database instance.</para>
+                <substeps>
+                    <step>
+                        <para>Log in to the dashboard, choose a project, and click <guilabel>Databases</guilabel>.</para>
+                    </step>
+                    <step>
+                        <para>Click <guilabel>Database Backups</guilabel>. This lists the available backups.</para>
+                    </step>
+                    <step>
+                        <para>Check the backup you want to use and click <guibutton>Restore Backup</guibutton>.</para>
+                    </step>
+                    <step>
+                        <para>In the <guilabel>Launch Database</guilabel> dialog box, specify the <link linkend="dashboard_create_db_instance">values you want to use for the new database instance</link>. Click the <guilabel>Restore From Database</guilabel> tab and make sure that this new instance is based on the correct backup.</para>
+                    </step>
+                    <step>
+                        <para>Click <guibutton>Launch</guibutton>. The new instance appears in the database instances list.</para>
+                    </step>
+                </substeps>
+            </step>
+        </procedure>
+    </section>
 </section>
