@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenStack Manuals\n"
-"POT-Creation-Date: 2014-08-21 23:51+0000\n"
-"PO-Revision-Date: 2014-08-22 03:40+0000\n"
+"POT-Creation-Date: 2014-08-26 05:38+0000\n"
+"PO-Revision-Date: 2014-08-26 04:00+0000\n"
 "Last-Translator: Tomoyuki KATO <tomo@dream.daynight.jp>\n"
 "Language-Team: Japanese (http://www.transifex.com/projects/p/openstack-manuals-i18n/language/ja/)\n"
 "MIME-Version: 1.0\n"
@@ -1664,6 +1664,7 @@ msgid "Enter the following values:"
 msgstr "以下の値を入力します。"
 
 #: ./doc/user-guide/section_dashboard_manage_images.xml57(guilabel)
+#: ./doc/user-guide/section_dashboard_databases.xml136(guilabel)
 msgid "Name"
 msgstr "名前"
 
@@ -1672,6 +1673,7 @@ msgid "Enter a name for the image."
 msgstr "イメージの名前を入力します。"
 
 #: ./doc/user-guide/section_dashboard_manage_images.xml65(guilabel)
+#: ./doc/user-guide/section_dashboard_databases.xml144(guilabel)
 #: ./doc/user-guide/app_cheat_sheet.xml21(th)
 #: ./doc/user-guide/app_cheat_sheet.xml67(th)
 #: ./doc/user-guide/app_cheat_sheet.xml141(th)
@@ -1919,6 +1921,8 @@ msgid ""
 msgstr "デフォルトのデータストアを設定し、適切なフレーバーがきちんとあると、データベースインスタンスを作成できます。"
 
 #: ./doc/user-guide/section_dashboard_databases.xml47(para)
+#: ./doc/user-guide/section_dashboard_databases.xml121(para)
+#: ./doc/user-guide/section_dashboard_databases.xml161(para)
 msgid ""
 "Log in to the dashboard, choose a project, and click "
 "<guilabel>Databases</guilabel>."
@@ -2014,6 +2018,108 @@ msgid ""
 "Click the <guibutton>Launch</guibutton> button. The new database instance "
 "appears in the databases list."
 msgstr "<guibutton>起動</guibutton>ボタンをクリックします。新しいデータベースインスタンスがデータベース一覧に表示されます。"
+
+#: ./doc/user-guide/section_dashboard_databases.xml110(title)
+#: ./doc/user-guide/section_cli_trove.xml244(title)
+msgid "Backup and restore a database"
+msgstr "データベースのバックアップとリストア"
+
+#: ./doc/user-guide/section_dashboard_databases.xml111(para)
+#: ./doc/user-guide/section_cli_trove.xml245(para)
+msgid ""
+"You can use Database services to backup a database and store the backup "
+"artifact in the Object Storage module. Later on, if the original database is"
+" damaged, you can use the backup artifact to restore the database. The "
+"restore process creates a database instance."
+msgstr "データベースをバックアップし、Object Storage にバックアップを保存するために、Database を使用できます。後から、元のデータベースが破壊された場合、データベースをリストアするために、バックアップを使用できます。リストア処理は、データベースインスタンスを作成します。"
+
+#: ./doc/user-guide/section_dashboard_databases.xml114(para)
+#: ./doc/user-guide/section_cli_trove.xml248(para)
+msgid "This example shows you how to back up and restore a MySQL database."
+msgstr "この例は、MySQL データベースをバックアップし、リストアする方法を示します。"
+
+#: ./doc/user-guide/section_dashboard_databases.xml116(title)
+#: ./doc/user-guide/section_cli_trove.xml250(title)
+msgid "To backup and restore a database"
+msgstr "データベースのバックアップとリストアの方法"
+
+#: ./doc/user-guide/section_dashboard_databases.xml118(title)
+msgid "Backup the database instance."
+msgstr "データベースインスタンスをバックアップします。"
+
+#: ./doc/user-guide/section_dashboard_databases.xml124(para)
+msgid ""
+"Click <guilabel>Database Instances</guilabel>. This displays the existing "
+"instances in your system."
+msgstr "<guilabel>データベースインスタンス</guilabel>をクリックします。お使いのシステムに存在するインスタンスが表示されます。"
+
+#: ./doc/user-guide/section_dashboard_databases.xml127(para)
+msgid "Click <guibutton>Create Backup</guibutton>."
+msgstr "<guibutton>バックアップの作成</guibutton>をクリックします。"
+
+#: ./doc/user-guide/section_dashboard_databases.xml130(para)
+msgid "In the Backup Database dialog box, specify the following values:"
+msgstr "データベースのバックアップダイアログボックスに以下の値を指定します。"
+
+#: ./doc/user-guide/section_dashboard_databases.xml137(para)
+msgid "Specify a name for the backup."
+msgstr "バックアップの名前を指定します。"
+
+#: ./doc/user-guide/section_dashboard_databases.xml140(guilabel)
+msgid "Database Instance"
+msgstr "データベースインスタンス"
+
+#: ./doc/user-guide/section_dashboard_databases.xml141(para)
+msgid "Select the instance you want to back up."
+msgstr "バックアップしたいインスタンスを選択します。"
+
+#: ./doc/user-guide/section_dashboard_databases.xml145(para)
+msgid "Specify an optional description."
+msgstr "オプションとして説明を記入します。"
+
+#: ./doc/user-guide/section_dashboard_databases.xml151(para)
+msgid ""
+"Click <guibutton>Backup</guibutton>. The new backup appears in the backup "
+"list."
+msgstr "<guibutton>バックアップ</guibutton>をクリックします。新しいバックアップがバックアップ一覧に表示されます。"
+
+#: ./doc/user-guide/section_dashboard_databases.xml156(title)
+msgid "Restore a database instance."
+msgstr "データベースインスタンスをリストアします。"
+
+#: ./doc/user-guide/section_dashboard_databases.xml157(para)
+msgid ""
+"Now assume that your original database instance is damaged and you need to "
+"restore it. You do the restore by using your backup to create a new database"
+" instance."
+msgstr "ここで、元々のデータベースインスタンスが破損し、リストアする必要があると仮定します。新しいデータベースインスタンスを作成するために、バックアップを用いてリストアします。"
+
+#: ./doc/user-guide/section_dashboard_databases.xml164(para)
+msgid ""
+"Click <guilabel>Database Backups</guilabel>. This lists the available "
+"backups."
+msgstr "<guilabel>データベースのバックアップ</guilabel>をクリックします。利用可能なバックアップが一覧表示されます。"
+
+#: ./doc/user-guide/section_dashboard_databases.xml167(para)
+msgid ""
+"Check the backup you want to use and click <guibutton>Restore "
+"Backup</guibutton>."
+msgstr "使用したいバックアップを確認し、<guibutton>バックアップのリストア</guibutton>をクリックします。"
+
+#: ./doc/user-guide/section_dashboard_databases.xml170(para)
+msgid ""
+"In the <guilabel>Launch Database</guilabel> dialog box, specify the <link "
+"linkend=\"dashboard_create_db_instance\">values you want to use for the new "
+"database instance</link>. Click the <guilabel>Restore From "
+"Database</guilabel> tab and make sure that this new instance is based on the"
+" correct backup."
+msgstr "<guilabel>データベースの起動</guilabel>ダイアログボックスに、<link linkend=\"dashboard_create_db_instance\">新しいデータベースインスタンスに使用したい値</link>を指定します。<guilabel>データベースからのリストア</guilabel>タブをクリックし、この新しいインスタンスが適切なバックアップに基づいていることを確認します。"
+
+#: ./doc/user-guide/section_dashboard_databases.xml173(para)
+msgid ""
+"Click <guibutton>Launch</guibutton>. The new instance appears in the "
+"database instances list."
+msgstr "<guibutton>起動</guibutton>をクリックします。新しいインスタンスがデータベースインスタンス一覧に表示されます。"
 
 #: ./doc/user-guide/section_cli_ceilometer.xml7(title)
 msgid "Measure cloud resources"
@@ -4222,26 +4328,6 @@ msgstr "これで、一般的なデータベースアクセスコマンドを使
 #: ./doc/user-guide/section_cli_nova_search_ip.xml11(replaceable)
 msgid "IP_ADDRESS"
 msgstr "IP_ADDRESS"
-
-#: ./doc/user-guide/section_cli_trove.xml244(title)
-msgid "Backup and restore a database"
-msgstr "データベースのバックアップとリストア"
-
-#: ./doc/user-guide/section_cli_trove.xml245(para)
-msgid ""
-"You can use Database services to backup a database and store the backup "
-"artifact in the Object Storage module. Later on, if the original database is"
-" damaged, you can use the backup artifact to restore the database. The "
-"restore process creates a database instance."
-msgstr "データベースをバックアップし、Object Storage にバックアップを保存するために、Database を使用できます。後から、元のデータベースが破壊された場合、データベースをリストアするために、バックアップを使用できます。リストア処理は、データベースインスタンスを作成します。"
-
-#: ./doc/user-guide/section_cli_trove.xml248(para)
-msgid "This example shows you how to back up and restore a MySQL database."
-msgstr "この例は、MySQL データベースをバックアップし、リストアする方法を示します。"
-
-#: ./doc/user-guide/section_cli_trove.xml250(title)
-msgid "To backup and restore a database"
-msgstr "データベースのバックアップとリストアの方法"
 
 #: ./doc/user-guide/section_cli_trove.xml252(title)
 msgid "Backup the database instance"
