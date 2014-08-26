@@ -13,75 +13,75 @@
       </tr>
     </thead>
     <tr>
-      <td>collector_workers = 1</td>
+      <td>[DEFAULT] collector_workers = 1</td>
       <td>(IntOpt) Number of workers for collector service. A single collector is enabled by default.</td>
     </tr>
     <tr>
-      <td>dispatcher = ['database']</td>
+      <td>[DEFAULT] dispatcher = ['database']</td>
       <td>(MultiStrOpt) Dispatcher to process data.</td>
     </tr>
     <tr>
-      <td>heat_control_exchange = heat</td>
+      <td>[DEFAULT] heat_control_exchange = heat</td>
       <td>(StrOpt) Exchange name for Heat notifications</td>
     </tr>
     <tr>
-      <td>kombu_reconnect_delay = 1.0</td>
+      <td>[DEFAULT] kombu_reconnect_delay = 1.0</td>
       <td>(FloatOpt) How long to wait before reconnecting in response to an AMQP consumer cancel notification.</td>
     </tr>
     <tr>
-      <td>log_config_append = None</td>
+      <td>[DEFAULT] log_config_append = None</td>
       <td>(StrOpt) The name of logging configuration file. It does not disable existing loggers, but just appends specified logging configuration to any other existing logging options. Please see the Python logging module documentation for details on logging configuration files.</td>
     </tr>
     <tr>
-      <td>max_request_body_size = 114688</td>
+      <td>[DEFAULT] max_request_body_size = 114688</td>
       <td>(IntOpt) The maximum body size per request, in bytes</td>
     </tr>
     <tr>
-      <td>notification_workers = 1</td>
+      <td>[DEFAULT] notification_workers = 1</td>
       <td>(IntOpt) Number of workers for notification service. A single notification agent is enabled by default.</td>
     </tr>
     <tr>
-      <td>use_syslog_rfc_format = False</td>
+      <td>[DEFAULT] use_syslog_rfc_format = False</td>
       <td>(BoolOpt) (Optional) Use syslog rfc5424 format for logging. If enabled, will add APP-NAME (RFC5424) before the MSG part of the syslog message.  The old format without APP-NAME is deprecated in I, and will be removed in J.</td>
     </tr>
     <tr>
-      <td>event/definitions_cfg_file = event_definitions.yaml</td>
+      <td>[event] definitions_cfg_file = event_definitions.yaml</td>
       <td>(StrOpt) Configuration file for event definitions.</td>
     </tr>
     <tr>
-      <td>event/drop_unmatched_notifications = False</td>
+      <td>[event] drop_unmatched_notifications = False</td>
       <td>(BoolOpt) Drop notifications if no event definition matches. (Otherwise, we convert them with just the default traits)</td>
     </tr>
     <tr>
-      <td>notification/ack_on_event_error = True</td>
+      <td>[notification] ack_on_event_error = True</td>
       <td>(BoolOpt) Acknowledge message when event persistence fails.</td>
     </tr>
     <tr>
-      <td>notification/store_events = False</td>
+      <td>[notification] store_events = False</td>
       <td>(BoolOpt) Save event details.</td>
     </tr>
     <tr>
-      <td>publisher/metering_secret = change this or be hacked</td>
+      <td>[publisher] metering_secret = change this or be hacked</td>
       <td>(StrOpt) Secret value for signing metering messages.</td>
     </tr>
     <tr>
-      <td>vmware/api_retry_count = 10</td>
+      <td>[vmware] api_retry_count = 10</td>
       <td>(IntOpt) Number of times a VMware Vsphere API must be retried</td>
     </tr>
     <tr>
-      <td>vmware/host_ip = </td>
+      <td>[vmware] host_ip = </td>
       <td>(StrOpt) IP address of the VMware Vsphere host</td>
     </tr>
     <tr>
-      <td>vmware/host_password = </td>
+      <td>[vmware] host_password = </td>
       <td>(StrOpt) Password of VMware Vsphere</td>
     </tr>
     <tr>
-      <td>vmware/host_username = </td>
+      <td>[vmware] host_username = </td>
       <td>(StrOpt) Username of VMware Vsphere</td>
     </tr>
     <tr>
-      <td>vmware/task_poll_interval = 0.5</td>
+      <td>[vmware] task_poll_interval = 0.5</td>
       <td>(FloatOpt) Sleep time in seconds for polling an ongoing async task</td>
     </tr>
   </table>
@@ -98,24 +98,19 @@
       </tr>
     </thead>
     <tr>
-      <td>allowed_rpc_exception_modules</td>
+      <td>[DEFAULT] allowed_rpc_exception_modules</td>
       <td>ceilometer.openstack.common.exception, nova.exception, cinder.exception, exceptions</td>
       <td>nova.exception, cinder.exception, exceptions</td>
     </tr>
     <tr>
-      <td>default_log_levels</td>
+      <td>[DEFAULT] default_log_levels</td>
       <td>amqplib=WARN, sqlalchemy=WARN, boto=WARN, suds=INFO, keystone=INFO, eventlet.wsgi.server=WARN</td>
       <td>amqp=WARN, amqplib=WARN, boto=WARN, qpid=WARN, sqlalchemy=WARN, suds=INFO, iso8601=WARN, requests.packages.urllib3.connectionpool=WARN</td>
     </tr>
     <tr>
-      <td>logging_context_format_string</td>
+      <td>[DEFAULT] logging_context_format_string</td>
       <td>%(asctime)s.%(msecs)03d %(process)d %(levelname)s %(name)s [%(request_id)s %(user)s %(tenant)s] %(instance)s%(message)s</td>
       <td>%(asctime)s.%(msecs)03d %(process)d %(levelname)s %(name)s [%(request_id)s %(user_identity)s] %(instance)s%(message)s</td>
-    </tr>
-    <tr>
-      <td>cells/cell_type</td>
-      <td>None</td>
-      <td>compute</td>
     </tr>
   </table>
   <table>
@@ -129,12 +124,12 @@
       </tr>
     </thead>
     <tr>
-      <td>log_config</td>
-      <td>log_config_append</td>
+      <td>[DEFAULT] log_config</td>
+      <td>[DEFAULT] log_config_append</td>
     </tr>
     <tr>
-      <td>publisher_rpc/metering_secret</td>
-      <td>publisher/metering_secret</td>
+      <td>[publisher_rpc] metering_secret</td>
+      <td>[publisher] metering_secret</td>
     </tr>
   </table>
 </section>
