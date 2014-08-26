@@ -5,5 +5,96 @@
   version="5.0"
   xml:id="section_telemetry-troubleshooting-guide">
   <title>Troubleshoot Telemetry</title>
-  <para>TBD</para>
+  <section xml:id="section_telemetry-logging">
+    <title>Logging in Telemetry</title>
+    <para>The Telemetry module has similar log settings as the other
+      OpenStack services. Multiple options are available to change the
+      target of logging, the format of the log entries and the log
+      levels.</para>
+    <para>The log settings can be changed in
+      <filename>ceilometer.conf</filename>. The list of configuration
+      options are listed in the logging configuration options table in
+      the <link xlink:href=
+      "http://docs.openstack.org/trunk/config-reference/content/ch_configuring-openstack-telemetry.html">
+      Telemetry section</link> in the <citetitle>OpenStack Configuration
+      Reference</citetitle>.</para>
+    <para>By default <literal>stderr</literal> is used as standard
+      output for the log messages. It can be changed to either a log file
+      or syslog. The <option>debug</option> and <option>verbose</option>
+      options are also set to false in the default settings, the default
+      log levels of the corresponding modules can be found in the table
+      referred above.</para>
+  </section>
+  <section xml:id="section_telemetry-order-of-service-startup">
+    <title>Recommended order of starting services</title>
+    <para>As it can be seen in <link xlink:href="https://bugs.launchpad.net/devstack/+bug/1355809">
+      Bug 1355809</link>, the wrong ordering of service startup can result
+      in data loss.</para>
+    <para>When the services are started for the first time or in line with
+      the message queue service restart, it takes time while the
+      <systemitem class="service">ceilometer-collector</systemitem> services
+      establishes the connection and joins or rejoins to the configured
+      exchanges. Therefore, if the <systemitem class="service">
+      ceilometer-agent-compute</systemitem>, <systemitem class="service">
+      ceilometer-agent-central</systemitem> and the <systemitem class="service">
+      ceilometer-agent-notification</systemitem> services are started before
+      <systemitem class="service">ceilometer-collector</systemitem>, it can
+      loose some messages sent by these services, while connecting to the
+      message queue service.</para>
+    <para>The possibility of this issue to happen is higher, when the polling
+      interval is set to a relatively short period. In order to avoid this
+      situation, the recommended order of service startup is to start or restart the
+      <systemitem class="service">ceilometer-collector</systemitem> service
+      after the message queue. All the other Telemetry services should
+      be started or restarted after and the <systemitem class="service">
+      ceilometer-agent-compute</systemitem> should be the last in the
+      sequence, as this component emits metering messages in order to send
+      the samples to the collector.</para>
+  </section>
+  <section xml:id="section_telemetry-notification-agent">
+    <title>Notification agent</title>
+    <para>In the Icehouse release of OpenStack a new service was introduced
+      to be responsible for consuming notifications that are coming from
+      other OpenStack services.</para>
+    <para>If the <systemitem class="service">ceilometer-agent-notification</systemitem>
+      service is not installed and started, samples originating from
+      notifications will not be generated. In case of the lack
+      of notification based samples, the state of this service and the log
+      file of Telemetry should be checked first.</para>
+    <para>For the list of meters that are originated from notifications, see
+      the <link xlink:href="http://docs.openstack.org/developer/ceilometer/measurements.html">
+      Telemetry Measurements Reference</link>.</para>
+  </section>
+  <section xml:id="section_telemetry-auth-url-ports">
+    <title>Recommended <option>auth_url</option> to be used</title>
+    <para>When using the commandline client of Telemetry, the credentials
+      and the <option>os_auth_url</option> has to be set in order to
+      provide the possibility to the client to authenticate against
+      OpenStack Identity. For further details about the credentials
+      that has to be provided see the
+      <link xlink:href="http://docs.openstack.org/developer/python-ceilometerclient/">
+       Python API</link> reference of Telemetry.</para>
+    <para>The service catalog provided by OpenStack Identity contains the
+      available URLs that are available for authentication.
+      The URLs contain different <parameter>port</parameter>s, based on
+      that the type of the given URL is <literal>public</literal>,
+      <literal>internal</literal> or <literal>admin</literal>.</para>
+    <para>OpenStack Identity is about to change API version from v2 to v3.
+      The <literal>adminURL</literal> endpoint (which is available via the
+      port: <literal>35357</literal>) supports only the v3 version,
+      while the other two supports both.</para>
+    <para>The commandline client of Telemetry is not adapted to the v3 version
+      of the OpenStack Identity API. If the <literal>adminURL</literal>
+      is used as <option>os_auth_url</option>, the <command>ceilometer</command>
+      command results in the following error message:
+      <screen><prompt>$</prompt> <userinput>ceilometer meter-list</userinput>
+<?db-font-size 75%?><computeroutput>Unable to determine the Keystone version to authenticate with using the given
+auth_url: http://10.0.2.15:35357/v2.0</computeroutput></screen></para>
+    <para>Therefore when specifying the <option>os_auth_url</option>
+      parameter on the command line or by using environment variable, use
+      the <literal>internalURL</literal> or <literal>publicURL</literal>.</para>
+    <para>For more details check the bug report
+      <link xlink:href="https://bugs.launchpad.net/python-ceilometerclient/+bug/1351841">
+      Bug 1351841</link>.</para>
+  </section>
 </section>

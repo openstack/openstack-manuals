@@ -5,17 +5,559 @@
   version="5.0"
   xml:id="section_telemetry-data-retrieval">
   <title>Data retrieval</title>
-  <para>TBD</para>
-  <section xml:id="section_telemetry-api-sdk">
-    <title>Telemetry v2 API and SDK</title>
-    <para>TBD</para>
+  <para>The Telemetry module offers several mechanisms from which
+    the persisted data can be accessed. As described in
+    <xref linkend="section_telemetry-system-architecture"/> and in
+    <xref linkend="section_telemetry-data-collection"/> the collected
+    information is stored in one or more database backends, which
+    are hidden by the Telemetry RESTful API.</para>
+  <note>
+    <para>It is highly recommended not to access directly the
+      database and read or modify any data in it. The
+      API layer hides all the changes in the actual database schema
+      and provides a standard interface to expose the samples, alarms
+      and so forth.</para>
+  </note>
+  <section xml:id="section_telemetry-api">
+    <title>Telemetry v2 API</title>
+    <para>The Telemetry module provides a RESTful API, from which the
+      collected samples and all the related information can be
+      retrieved, like the list of meters, alarm definitions and so forth.</para>
+    <para>The Telemetry API URL can be retrieved from the service
+      catalog provided by OpenStack Identity, which is populated
+      during the installation process. The API access needs a
+      valid token and proper permission to retrieve data, as
+      described in <xref linkend="section_telemetry-users-roles"/>.</para>
+    <para>Further information about the available API endpoints can be found
+      in the <link xlink:href="http://developer.openstack.org/api-ref-telemetry-v2.html">
+      Telemetry API Reference</link>.</para>
+    <section xml:id="section_telemetry-api-query">
+      <title>Query</title>
+      <para>The API provides some additional functionalities, like querying
+        the collected data set. For the samples and alarms API endpoints,
+        both simple and complex query styles are available, whereas for
+        the other endpoints only simple queries are supported.</para>
+      <para>After validating the query parameters, the processing is done on the
+        database side in the case of most database backends in order to
+        achieve better performance.</para>
+      <section xml:id="section_telemetry-simple-query">
+        <title>Simple query</title>
+        <para>Many of the API endpoints accept a query filter argument,
+          which should be a list of data structures that consist of the
+          following items:
+          <itemizedlist>
+            <listitem>
+              <para><parameter>field</parameter></para>
+            </listitem>
+            <listitem>
+              <para><parameter>op</parameter></para>
+            </listitem>
+            <listitem>
+              <para><parameter>value</parameter></para>
+            </listitem>
+            <listitem>
+              <para><parameter>type</parameter></para>
+            </listitem>
+          </itemizedlist></para>
+        <para>Regardless of the endpoint on which the filter is applied on, it will
+          always target the fields of the
+          <link xlink:href="http://docs.openstack.org/developer/ceilometer/webapi/v2.html#Sample">
+          Sample type</link>.</para>
+      <para>Several fields of the API endpoints accept shorter names than
+        the ones defined in the reference. The API will do the transformation
+        internally and return the output with the fields that are listed
+        in the <link xlink:href="http://docs.openstack.org/developer/ceilometer/webapi/v2.html">
+        API reference</link>. The fields are the following:
+        <itemizedlist>
+          <listitem>
+            <para><literal>project_id</literal>: project</para>
+          </listitem>
+          <listitem>
+            <para><literal>resource_id</literal>: resource</para>
+          </listitem>
+          <listitem>
+            <para><literal>user_id</literal>: user</para>
+          </listitem>
+        </itemizedlist>
+        </para>
+        <para>When a filter argument contains multiple constraints of the
+          above form, a logical <literal>AND</literal> relation between
+          them is implied.</para>
+      </section>
+      <section xml:id="section_telemetry-complex-query">
+        <title>Complex query</title>
+        <para>The filter expressions of the complex query feature operate on
+          the fields of <code>Sample</code>, <code>Alarm</code> and
+          <code>AlarmChange</code> types. The following comparison
+          operators are supported:
+          <itemizedlist>
+            <listitem>
+              <para><literal>=</literal></para>
+            </listitem>
+            <listitem>
+              <para><literal>!=</literal></para>
+            </listitem>
+            <listitem>
+              <para><literal>&lt;</literal></para>
+            </listitem>
+            <listitem>
+              <para><literal>&lt;=</literal></para>
+            </listitem>
+            <listitem>
+              <para><literal>&gt;</literal></para>
+            </listitem>
+            <listitem>
+              <para><literal>&gt;=</literal></para>
+            </listitem>
+          </itemizedlist></para>
+        <para>The following logical operators can be used:
+          <itemizedlist>
+            <listitem>
+              <para><literal>and</literal></para>
+            </listitem>
+            <listitem>
+              <para><literal>or</literal></para>
+            </listitem>
+            <listitem>
+              <para><literal>not</literal></para>
+            </listitem>
+          </itemizedlist></para>
+        <note>
+          <para>The <literal>not</literal> operator has different behavior in
+            MongoDB and in the SQLAlchemy-based database engines. If the
+            <literal>not</literal> operator is applied on a non existent metadata
+            field then the result depends on the database engine. In case of MongoDB,
+            it will return every sample as the <literal>not</literal> operator
+            is evaluated true for every sample where the given field does not
+            exist. On the other hand the SQL-based database engine will return an
+            empty result because of the underlying <literal>join</literal>
+            operation.</para>
+        </note>
+        <para>Complex query supports specifying a list of
+          <parameter>orderby</parameter> expressions. This means that the result
+          of the query can be ordered based on the field names provided in this
+          list. When multiple keys are defined for the ordering, these will be applied
+          sequentially in the order of the specification. The second expression will
+          be applied on the groups for which the values of the first expression
+          are the same. The ordering can be ascending or descending.</para>
+        <para>The number of returned items can be bounded using the
+          <parameter>limit</parameter> option.</para>
+        <para>The <parameter>filter</parameter>, <parameter>orderby</parameter>
+          and <parameter>limit</parameter> fields are optional.</para>
+        <note>
+          <para>As opposed to the simple query, complex query is available via
+            a separate API endpoint. For more information see the
+            <link xlink:href="http://docs.openstack.org/developer/ceilometer/webapi/v2.html#v2-web-api">
+            Telemetry v2 Web API Reference</link>.</para>
+        </note>
+      </section>
+    </section>
+    <section xml:id="section_telemetry-api-statistics">
+      <title>Statistics</title>
+      <para>The sample data can be used in various ways for several purposes, like
+        billing or profiling. In external systems the data is often used in
+        the form of aggregated statistics. The Telemetry API provides several
+        built-in functions to make some basic calculations available without
+        any additional coding.</para>
+      <para>Telemetry supports the following statistics and aggregation
+        functions:
+        <variablelist>
+          <varlistentry>
+            <term><literal>avg</literal></term>
+            <listitem>
+              <para>Average of the sample volumes over
+                each period.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><literal>cardinality</literal></term>
+            <listitem>
+              <para>Count of distinct values in each period identified by a key
+                specified as the parameter of this aggregate function. The supported
+                parameter values are:
+                <itemizedlist>
+                  <listitem>
+                    <para><literal>project_id</literal></para>
+                  </listitem>
+                  <listitem>
+                    <para><literal>resource_id</literal></para>
+                  </listitem>
+                  <listitem>
+                    <para><literal>user_id</literal></para>
+                  </listitem>
+                </itemizedlist>
+              </para>
+              <note>
+                <para>The <parameter>aggregate.param</parameter> parameter is
+                  required.</para>
+              </note>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><literal>count</literal></term>
+            <listitem>
+              <para>Number of samples in each period.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><literal>max</literal></term>
+            <listitem>
+              <para>Maximum of the sample volumes in each period.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><literal>min</literal></term>
+            <listitem>
+              <para>Minimum of the sample volumes in each period.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><literal>stddev</literal></term>
+            <listitem>
+              <para>Standard deviation of the sample volumes in
+                each period.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><literal>sum</literal></term>
+            <listitem>
+              <para>Sum of the sample volumes over each period.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </para>
+      <para>The simple query and the statistics functionality can be used together
+        in a single API request.</para>
+    </section>
+  </section>
+  <section xml:id="section_telemetry-client-sdk">
+    <title>Telemetry command line client and SDK</title>
+    <para>The Telemetry module provides a command line client, with which the collected data
+      is available just as the alarm definition and retreival options. The client uses the
+      Telemetry RESTful API in order to execute the requested operations.</para>
+    <para>To be able to use the <command>ceilometer</command> command, the
+      <package>python-ceilometerclient</package> package needs to be installed and configured
+      properly. For details about the installation process, see the <link xlink:href=
+      "http://docs.openstack.org/trunk/install-guide/install/apt/content/ceilometer-install.html">
+      Telemetry chapter</link> in the <citetitle>OpenStack Installation Guide</citetitle>.</para>
+    <note>
+      <para>The Telemetry module captures the user-visible resource usage data. Therefore
+        the database will not contain any data without the existence of these resources,
+        like VM images in the OpenStack Image Service.</para>
+    </note>
+    <para>Similarly to other OpenStack command line clients, the <command>ceilometer</command>
+      client uses OpenStack Identity for authentication. The proper credentials and
+      <parameter>auth_url</parameter> parameter have to be defined via command line
+      parameters or environment variables.</para>
+    <para>This section provides some examples without the aim of completeness. These commands
+      can be used for instance for validating an installation of Telemetry.</para>
+    <para>To retrieve the list of collected meters, the following command should be used:
+      <screen><prompt>$</prompt> <userinput>ceilometer meter-list</userinput>
+<?db-font-size 50%?><computeroutput>+------------------------+------------+------+------------------------------------------+----------------------------------+----------------------------------+
+| Name                   | Type       | Unit | Resource ID                              | User ID                          | Project ID                       |
++------------------------+------------+------+------------------------------------------+----------------------------------+----------------------------------+
+| cpu                    | cumulative | ns   | bb52e52b-1e42-4751-b3ac-45c52d83ba07     | b6e62aad26174382bc3781c12fe413c8 | cbfa8e3dfab64a27a87c8e24ecd5c60f |
+| cpu                    | cumulative | ns   | c8d2e153-a48f-4cec-9e93-86e7ac6d4b0b     | b6e62aad26174382bc3781c12fe413c8 | cbfa8e3dfab64a27a87c8e24ecd5c60f |
+| cpu_util               | gauge      | %    | bb52e52b-1e42-4751-b3ac-45c52d83ba07     | b6e62aad26174382bc3781c12fe413c8 | cbfa8e3dfab64a27a87c8e24ecd5c60f |
+| cpu_util               | gauge      | %    | c8d2e153-a48f-4cec-9e93-86e7ac6d4b0b     | b6e62aad26174382bc3781c12fe413c8 | cbfa8e3dfab64a27a87c8e24ecd5c60f |
+| disk.device.read.bytes | cumulative | B    | bb52e52b-1e42-4751-b3ac-45c52d83ba07-hdd | b6e62aad26174382bc3781c12fe413c8 | cbfa8e3dfab64a27a87c8e24ecd5c60f |
+| disk.device.read.bytes | cumulative | B    | bb52e52b-1e42-4751-b3ac-45c52d83ba07-vda | b6e62aad26174382bc3781c12fe413c8 | cbfa8e3dfab64a27a87c8e24ecd5c60f |
+| disk.device.read.bytes | cumulative | B    | c8d2e153-a48f-4cec-9e93-86e7ac6d4b0b-hdd | b6e62aad26174382bc3781c12fe413c8 | cbfa8e3dfab64a27a87c8e24ecd5c60f |
+| disk.device.read.bytes | cumulative | B    | c8d2e153-a48f-4cec-9e93-86e7ac6d4b0b-vda | b6e62aad26174382bc3781c12fe413c8 | cbfa8e3dfab64a27a87c8e24ecd5c60f |
+| ...                                                                                                                                                         |
++------------------------+------------+------+------------------------------------------+----------------------------------+----------------------------------+
+</computeroutput></screen></para>
+    <para>The <command>ceilometer</command> command was run with <literal>admin</literal>
+      rights, which means that all the data is accessible in the database. For more
+      information about access right see <xref linkend="section_telemetry-users-roles"/>.
+      As it can be seen on the above example, there are two VM instances existing in the system,
+      as there are VM instance related meters on the top of the result list. The existence
+      of these meters does not indicate that these instances are running at the time of
+      the request. The result contains the currently collected meters per resource,
+      in an ascending order based on the name of the meter.</para>
+    <para>Samples are collected for each meter that is present in the list of meters,
+      except in case of instances that are not running or deleted from the OpenStack Compute
+      database. If an instance is no more existing and there is <parameter>time_to_live</parameter>
+      value is set in the <filename>ceilometer.conf</filename> configuration file, then a
+      group of samples are deleted in each expiration cycle. When the last sample is
+      deleted for a meter, the database can be cleaned up by running
+      <systemitem class="service">ceilometer-expirer</systemitem> and
+      the meter will not be present in the list above anymore. For more information about
+      the expiration procedure see <xref linkend="section_telemetry-storing-data"/>.</para>
+    <para>The Telemetry API supports simple query on the meter endpoint. The query
+      functionality has the following syntax:
+      <screen><userinput>--query &lt;field1&gt;&lt;operator1&gt;&lt;value1&gt;;...;&lt;field_n&gt;&lt;operator_n&gt;&lt;value_n&gt;</userinput></screen></para>
+    <para>The following command needs to be invoked to request the meters
+      of one VM instance:
+      <screen><prompt>$</prompt> <userinput>ceilometer meter-list --query resource=bb52e52b-1e42-4751-b3ac-45c52d83ba07</userinput>
+<?db-font-size 50%?><computeroutput>+-------------------------+------------+-----------+--------------------------------------+----------------------------------+----------------------------------+
+| Name                    | Type       | Unit      | Resource ID                          | User ID                          | Project ID                       |
++-------------------------+------------+-----------+--------------------------------------+----------------------------------+----------------------------------+
+| cpu                     | cumulative | ns        | bb52e52b-1e42-4751-b3ac-45c52d83ba07 | b6e62aad26174382bc3781c12fe413c8 | cbfa8e3dfab64a27a87c8e24ecd5c60f |
+| cpu_util                | gauge      | %         | bb52e52b-1e42-4751-b3ac-45c52d83ba07 | b6e62aad26174382bc3781c12fe413c8 | cbfa8e3dfab64a27a87c8e24ecd5c60f |
+| disk.ephemeral.size     | gauge      | GB        | bb52e52b-1e42-4751-b3ac-45c52d83ba07 | b6e62aad26174382bc3781c12fe413c8 | cbfa8e3dfab64a27a87c8e24ecd5c60f |
+| disk.read.bytes         | cumulative | B         | bb52e52b-1e42-4751-b3ac-45c52d83ba07 | b6e62aad26174382bc3781c12fe413c8 | cbfa8e3dfab64a27a87c8e24ecd5c60f |
+| disk.read.bytes.rate    | gauge      | B/s       | bb52e52b-1e42-4751-b3ac-45c52d83ba07 | b6e62aad26174382bc3781c12fe413c8 | cbfa8e3dfab64a27a87c8e24ecd5c60f |
+| disk.read.requests      | cumulative | request   | bb52e52b-1e42-4751-b3ac-45c52d83ba07 | b6e62aad26174382bc3781c12fe413c8 | cbfa8e3dfab64a27a87c8e24ecd5c60f |
+| disk.read.requests.rate | gauge      | request/s | bb52e52b-1e42-4751-b3ac-45c52d83ba07 | b6e62aad26174382bc3781c12fe413c8 | cbfa8e3dfab64a27a87c8e24ecd5c60f |
+| disk.root.size          | gauge      | GB        | bb52e52b-1e42-4751-b3ac-45c52d83ba07 | b6e62aad26174382bc3781c12fe413c8 | cbfa8e3dfab64a27a87c8e24ecd5c60f |
+| disk.write.bytes        | cumulative | B         | bb52e52b-1e42-4751-b3ac-45c52d83ba07 | b6e62aad26174382bc3781c12fe413c8 | cbfa8e3dfab64a27a87c8e24ecd5c60f |
+| disk.write.bytes.rate   | gauge      | B/s       | bb52e52b-1e42-4751-b3ac-45c52d83ba07 | b6e62aad26174382bc3781c12fe413c8 | cbfa8e3dfab64a27a87c8e24ecd5c60f |
+| disk.write.requests     | cumulative | request   | bb52e52b-1e42-4751-b3ac-45c52d83ba07 | b6e62aad26174382bc3781c12fe413c8 | cbfa8e3dfab64a27a87c8e24ecd5c60f |
+| disk.write.requests.rate| gauge      | request/s | bb52e52b-1e42-4751-b3ac-45c52d83ba07 | b6e62aad26174382bc3781c12fe413c8 | cbfa8e3dfab64a27a87c8e24ecd5c60f |
+| instance                | gauge      | instance  | bb52e52b-1e42-4751-b3ac-45c52d83ba07 | b6e62aad26174382bc3781c12fe413c8 | cbfa8e3dfab64a27a87c8e24ecd5c60f |
+| instance:m1.nano        | gauge      | instance  | bb52e52b-1e42-4751-b3ac-45c52d83ba07 | b6e62aad26174382bc3781c12fe413c8 | cbfa8e3dfab64a27a87c8e24ecd5c60f |
+| memory                  | gauge      | MB        | bb52e52b-1e42-4751-b3ac-45c52d83ba07 | b6e62aad26174382bc3781c12fe413c8 | cbfa8e3dfab64a27a87c8e24ecd5c60f |
+| vcpus                   | gauge      | vcpu      | bb52e52b-1e42-4751-b3ac-45c52d83ba07 | b6e62aad26174382bc3781c12fe413c8 | cbfa8e3dfab64a27a87c8e24ecd5c60f |
++-------------------------+------------+-----------+--------------------------------------+----------------------------------+----------------------------------+
+
+</computeroutput></screen></para>
+    <para>As it was described above, the whole set of samples can be retrieved that are
+      stored for a meter or filtering the result set by using one of the available query
+      types. The request for all the samples of the <literal>cpu</literal> meter without
+      any additional filtering looks like the following:
+      <screen><prompt>$</prompt> <userinput>ceilometer sample-list --meter cpu</userinput>
+<?db-font-size 50%?><computeroutput>+--------------------------------------+-------+------------+------------+------+---------------------+
+| Resource ID                          | Meter | Type       | Volume     | Unit | Timestamp           |
++--------------------------------------+-------+------------+------------+------+---------------------+
+| c8d2e153-a48f-4cec-9e93-86e7ac6d4b0b | cpu   | cumulative | 5.4863e+11 | ns   | 2014-08-31T11:17:03 |
+| bb52e52b-1e42-4751-b3ac-45c52d83ba07 | cpu   | cumulative | 5.7848e+11 | ns   | 2014-08-31T11:17:03 |
+| c8d2e153-a48f-4cec-9e93-86e7ac6d4b0b | cpu   | cumulative | 5.4811e+11 | ns   | 2014-08-31T11:07:05 |
+| bb52e52b-1e42-4751-b3ac-45c52d83ba07 | cpu   | cumulative | 5.7797e+11 | ns   | 2014-08-31T11:07:05 |
+| c8d2e153-a48f-4cec-9e93-86e7ac6d4b0b | cpu   | cumulative | 5.3589e+11 | ns   | 2014-08-31T10:27:19 |
+| bb52e52b-1e42-4751-b3ac-45c52d83ba07 | cpu   | cumulative | 5.6397e+11 | ns   | 2014-08-31T10:27:19 |
+| ...                                                                                                 |
++--------------------------------------+-------+------------+------------+------+---------------------+
+</computeroutput></screen></para>
+    <para>The result set of the request contains the samples for both instances
+      ordered by the timestamp field in the default descending order.</para>
+    <para>The simple query makes it possible to retrieve only a subset of the
+      collected samples. The following command can be executed to request
+      the <literal>cpu</literal> samples of only one of the VM instances:
+      <screen><prompt>$</prompt> <userinput>ceilometer sample-list --meter cpu --query resource=bb52e52b-1e42-4751-b3ac-45c52d83ba07</userinput>
+<?db-font-size 50%?><computeroutput>+--------------------------------------+------+------------+------------+------+---------------------+
+| Resource ID                          | Name | Type       | Volume     | Unit | Timestamp           |
++--------------------------------------+------+------------+------------+------+---------------------+
+| bb52e52b-1e42-4751-b3ac-45c52d83ba07 | cpu  | cumulative | 5.7906e+11 | ns   | 2014-08-31T11:27:08 |
+| bb52e52b-1e42-4751-b3ac-45c52d83ba07 | cpu  | cumulative | 5.7848e+11 | ns   | 2014-08-31T11:17:03 |
+| bb52e52b-1e42-4751-b3ac-45c52d83ba07 | cpu  | cumulative | 5.7797e+11 | ns   | 2014-08-31T11:07:05 |
+| bb52e52b-1e42-4751-b3ac-45c52d83ba07 | cpu  | cumulative | 5.6397e+11 | ns   | 2014-08-31T10:27:19 |
+| bb52e52b-1e42-4751-b3ac-45c52d83ba07 | cpu  | cumulative | 5.6207e+11 | ns   | 2014-08-31T10:17:03 |
+| bb52e52b-1e42-4751-b3ac-45c52d83ba07 | cpu  | cumulative | 5.3831e+11 | ns   | 2014-08-31T08:41:57 |
+| ...                                                                                                |
++--------------------------------------+------+------------+------------+------+---------------------+
+</computeroutput></screen></para>
+    <para>As it can be seen on the output above, the result set contains samples
+      for only one instance of the two.</para>
+    <para>The <command>ceilometer query-samples</command> command is used
+      to execute rich queries. This command accepts the following parameters:
+      <variablelist>
+        <varlistentry>
+          <term><parameter>--filter</parameter></term>
+          <listitem>
+            <para>Contains the filter expression for the query in the form
+              of: <literal>{complex_op: [{simple_op: {field_name: value}}]}</literal>.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><parameter>--orderby</parameter></term>
+          <listitem>
+            <para>Contains the list of <parameter>orderby</parameter> expressions
+              in the form of:
+              <literal>[{field_name: direction}, {field_name: direction}]</literal>.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><parameter>--limit</parameter></term>
+          <listitem>
+            <para>Specifies the maximum number of samples to return.</para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+      For more information about complex queries see
+      <xref linkend="section_telemetry-complex-query"/>.</para>
+    <para>As the complex query functionality provides the possibility of using
+      complex operators, it is possible to retrieve a subset of samples for a
+      given VM instance. To request for the first six samples for the
+      <literal>cpu</literal> and <literal>disk.read.bytes</literal> meters,
+      the following command should be invoked:
+      <screen><prompt>$</prompt> <userinput>ceilometer query-samples --filter '{"and": \
+  [{"=":{"resource":"bb52e52b-1e42-4751-b3ac-45c52d83ba07"}},{"or":[{"=":{"counter_name":"cpu"}}, \
+  {"=":{"counter_name":"disk.read.bytes"}}]}]}' --orderby '[{"timestamp":"asc"}]' --limit 6</userinput>
+<?db-font-size 50%?><computeroutput>+--------------------------------------+-----------------+------------+------------+------+---------------------+
+| Resource ID                          | Meter           | Type       | Volume     | Unit | Timestamp           |
++--------------------------------------+-----------------+------------+------------+------+---------------------+
+| bb52e52b-1e42-4751-b3ac-45c52d83ba07 | disk.read.bytes | cumulative | 385334.0   | B    | 2014-08-30T13:00:46 |
+| bb52e52b-1e42-4751-b3ac-45c52d83ba07 | cpu             | cumulative | 1.2132e+11 | ns   | 2014-08-30T13:00:47 |
+| bb52e52b-1e42-4751-b3ac-45c52d83ba07 | cpu             | cumulative | 1.4295e+11 | ns   | 2014-08-30T13:10:51 |
+| bb52e52b-1e42-4751-b3ac-45c52d83ba07 | disk.read.bytes | cumulative | 601438.0   | B    | 2014-08-30T13:10:51 |
+| bb52e52b-1e42-4751-b3ac-45c52d83ba07 | disk.read.bytes | cumulative | 601438.0   | B    | 2014-08-30T13:20:33 |
+| bb52e52b-1e42-4751-b3ac-45c52d83ba07 | cpu             | cumulative | 1.4795e+11 | ns   | 2014-08-30T13:20:34 |
++--------------------------------------+-----------------+------------+------------+------+---------------------+
+</computeroutput></screen></para>
+    <simplesect>
+      <title>Telemetry python bindings</title>
+      <para>The commandline client library provides python bindings in
+        order to use the Telemetry Python API directly from python programs.</para>
+      <para>The first step in setting up the client is to create a client
+        instance with the proper credentials:
+        <programlisting>&gt;&gt;&gt; import ceilometerclient.client
+&gt;&gt;&gt; cclient = ceilometerclient.client.get_client(<replaceable>VERSION</replaceable>, username=<replaceable>USERNAME</replaceable>, password=<replaceable>PASSWORD</replaceable>, tenant_name=<replaceable>PROJECT_NAME</replaceable>, auth_url=<replaceable>AUTH_URL</replaceable>)</programlisting>
+        The <parameter>VERSION</parameter> parameter can be <literal>1</literal> or
+        <literal>2</literal>, specifying the API version to be used.</para>
+      <para>The method calls look like the following:
+        <programlisting>&gt;&gt;&gt; cclient.meters.list()
+ [&lt;Meter ...&gt;, ...]
+
+&gt;&gt;&gt; cclient.samples.list()
+ [&lt;Sample ...&gt;, ...]</programlisting></para>
+      <para>For further details about the python-ceilometerclient package,
+        see the <link xlink:href="http://docs.openstack.org/developer/python-ceilometerclient/">
+        Python bindings to the OpenStack Ceilometer API</link> reference.</para>
+    </simplesect>
   </section>
   <section xml:id="section_telemetry-publishers">
     <title>Publishers</title>
-    <para>TBD</para>
-  </section>
-  <section xml:id="section_telemetry-api-events">
-    <title>Events</title>
-    <para>TBD</para>
+    <para>Publishing meters for different uses is a two dimensional problem.
+      The first variable is the frequency of publication. Typically a meter that is
+      published for billing purposes will need to be updated every 30 min while the same
+      meter can be needed for performance tuning in every minute.</para>
+    <note>
+      <para>The use of rapid cadence should be avoided, as it results in a huge amount
+        of data in a short time frame, which may affect the performance of
+        both Telemetry and the underlying database backend as it would be filled up
+        rapidly. Therefore the use of small granularity value like 10 seconds is
+        highly not recommended.</para>
+    </note>
+    <para>The second variable is the transport. The Telemetry module provides several
+      transport methods to forward the data collected to the <systemitem class="service">
+      ceilometer-collector</systemitem> service or to an external system. The
+      consumers of this data are widely different, like monitoring systems, for which
+      data loss is acceptable and billing systems, which require reliable data
+      transportation. Telemetry provides methods to fulfill the requirements of
+      both kind of systems, as it is described below.</para>
+    <para>The publisher component makes it possible to persist the data into storage
+      through the message bus or to send it to one or more external consumers.
+      One chain can contain multiple publishers.</para>
+    <para>To solve the above mentioned problem, the notion of multi-publisher can
+      be configured for each meter within the Telemetry module, allowing the same
+      technical meter to be published multiple times to multiple destinations, each
+      potentially using a different transport and frequency of publication.</para>
+    <para>Publishers can be specified  in the <literal>publishers</literal> section
+      for each pipeline (for further details about pipelines see
+      <xref linkend="section_telemetry-data-collection-processing"/>) that is defined
+      in the file called
+      <link xlink:href="https://github.com/openstack/ceilometer/blob/master/etc/ceilometer/pipeline.yaml">
+      <filename>pipeline.yaml</filename></link>.</para>
+    <para>The following publisher types are supported:
+      <variablelist>
+        <varlistentry>
+          <term>notifier</term>
+          <listitem>
+            <para>It can be specified in the form of
+              <literal>notifier://?option1=value1&amp;option2=value2</literal>. It emits metering
+              data over AMQP using oslo.messaging.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>rpc</term>
+          <listitem>
+            <para>It can be specified in the form of
+              <literal>rpc://?option1=value1&amp;option2=value2</literal>. It emits metering data
+              over lossy AMQP.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>udp</term>
+          <listitem>
+            <para>It can be specified in the form of <literal>
+              udp://&lt;host&gt;:&lt;port&gt;/</literal>. It emits metering data for
+              over UDP.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>file</term>
+          <listitem>
+            <para>It can be specified in the form of
+              <literal>file://path?option1=value1&amp;option2=value2</literal>.
+              This publisher records metering data into a file.</para>
+            <note>
+              <para>If a file name and location is not specified, this publisher
+                will not log any meters, instead it logs a warning message in
+                the configured log file for Telemetry.</para>
+            </note>
+          </listitem>
+        </varlistentry>
+      </variablelist></para>
+    <para>The following options are available for <literal>rpc</literal> and
+      <literal>notifier</literal>:
+      <variablelist>
+        <varlistentry>
+          <term><parameter>per_meter_topic</parameter></term>
+          <listitem>
+            <para>The value of it is 1. It is used for publishing the samples on
+              additional <literal>metering_topic.sample_name</literal> topic queue
+              besides the default <literal>metering_topic</literal> queue.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><parameter>policy</parameter></term>
+          <listitem>
+            <para>It is used for configuring the behavior for the case, when the
+              publisher fails to send the samples, where the possible predefined
+              values are the following:
+              <variablelist>
+                <varlistentry>
+                  <term>default</term>
+                  <listitem>
+                    <para>Used for waiting and blocking until the samples have been sent.</para>
+                  </listitem>
+                </varlistentry>
+                <varlistentry>
+                  <term>drop</term>
+                  <listitem>
+                    <para>Used for dropping the samples which are failed to be sent.</para>
+                  </listitem>
+                </varlistentry>
+                <varlistentry>
+                  <term>queue</term>
+                  <listitem>
+                    <para>Used for creating an in-memory queue and retrying to send the samples
+                      on the queue on the next samples publishing period (the queue length
+                      can be configured with <parameter>max_queue_length</parameter>, where
+                      1024 is the default value).</para>
+                  </listitem>
+                </varlistentry>
+              </variablelist></para>
+          </listitem>
+        </varlistentry>
+      </variablelist></para>
+    <para>The following options are available for the <literal>file</literal> publisher:
+      <variablelist>
+        <varlistentry>
+          <term><parameter>max_bytes</parameter></term>
+          <listitem>
+            <para>When this option is greter than zero, it will cause a rollover. When the
+              size is about to be exceeded, the file is closed and a new file is silently
+              opened for output. If its value is zero, rollover never occurs.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><parameter>backup_count</parameter></term>
+          <listitem>
+            <para>If this value is non-zero, an extension will be appended to the filename
+              of the old log, as '.1', '.2', and so forth until the specified value is reached.
+              The file that is written and contains the newest data is always the one that is
+              specified without any extensions.</para>
+          </listitem>
+        </varlistentry>
+      </variablelist></para>
+    <para>The default publisher is <literal>notifier</literal>, without any additional
+      options specified. A sample <literal>publishers</literal> section in the
+      <filename>/etc/ceilometer/pipeline.yaml</filename> looks like the following:</para>
+    <programlisting>publishers:
+    - udp://10.0.0.2:1234
+    - rpc://?per_meter_topic=1
+    - notifier://?policy=drop&amp;max_queue_length=512</programlisting>
   </section>
 </section>
