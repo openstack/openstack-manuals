@@ -5,16 +5,147 @@
 ]>
 <section xmlns="http://docbook.org/ns/docbook"
   xmlns:xi="http://www.w3.org/2001/XInclude"
-  xmlns:xlink="http://www.w3.org/1999/xlink"
-  version="5.0"
-  xml:id="ha-dv4">
-    <title>DVR</title>
-    <para>
-      Bacon ipsum dolor sit amet biltong meatloaf andouille, turducken
-      bresaola pork belly beef ribs ham hock capicola tail prosciutto
-      landjaeger meatball pork loin. Swine turkey jowl, porchetta doner
-      boudin meatloaf. Shoulder capicola prosciutto, shank landjaeger short
-      ribs sirloin turducken pork belly boudin frankfurter chuck. Salami
-      shankle bresaola cow filet mignon ham hock shank.
-    </para>
+  xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0" xml:id="ha-dvr">
+  <?dbhtml stop-chunking?>
+  <title>Distributed Virtual Router (DVR)</title>
+  <para>DVR stands for <glossterm baseform="distributed virtual router (DVR)"
+    >Distributed Virtual Router</glossterm>. For
+    OpenStack Networking you can provide high availability across compute nodes
+    using a DVR configuration. Both the layer-2 and layer-3 agents work together
+    on a compute node, and the L2 agent works in an enhanced mode for DVR,
+    providing management for OVS rules. In this scenario you do not use a
+    separate networking node unless a legacy one is in place already.</para>
+  <para>Here is a sample network topology showing how distributed routing
+    occurs.</para>
+  <figure xml:id="example-dvr-diagram">
+    <title>DVR configuration diagram</title>
+    <mediaobject>
+      <imageobject>
+        <imagedata contentwidth="6in" fileref="Images/dvr_diagram.png"/>
+      </imageobject>
+    </mediaobject>
+  </figure>
+  <para>The DVR agent takes responsibility for creating, updating, or deleting
+    the routers in the router namespaces. For all clients in the network owned
+    by the router, the DVR agent populates the ARP entry. By pre-populating ARP
+    entries across compute nodes, the distributed virtual router ensures traffic
+    goes to the correct destination. The integration bridge on a particular
+    compute node identifies the incoming frame’s source MAC address as a
+    DVR-unique MAC address because every compute node l2 agent knows all
+    configured unique MAC addresses for DVR used in the cloud. The agent
+    replaces the DVR-unique MAC Address with the green subnet interface MAC
+    address and forwards the frame to the instance. By default, distributed
+    routing is not turned on. When set to true, the layer-2 agent handles the
+    DVR ports detected on the integration bridge. Also, when a tenant creates a
+    router with <literal>neutron router-create</literal>, the Networking
+    services creates only distributed routers after you have enabled distributed
+    routing.</para>
+  <section xml:id="configure-dvr">
+    <title>Configure Distributed Virtual Router (DVR)</title>
+    <procedure>
+      <step>
+        <para>Edit the <filename>ovs_neutron_plugin.ini</filename> file to
+          change <literal>enable_distributed_routing</literal> to
+            <literal>True</literal>:</para>
+        <programlisting language="ini">enable_distributed_routing = True</programlisting>
+      </step>
+      <step>
+        <para>Edit the <filename>/etc/neutron/neutron.conf</filename> file to
+          set the base MAC address that the DVR system uses for unique MAC
+          allocation with the <literal>dvr_base_mac</literal> setting:</para>
+        <programlisting language="ini">dvr_base_mac = fa:16:3f:00:00:00</programlisting>
+        <note>
+          <para>This <literal>dvr_base_mac</literal> value must be different
+            from the <literal>base_mac</literal> value assigned for virtual
+            ports to ensure port isolation and for troubleshooting purposes. The
+            default is <literal>fa:16:3f:00:00:00</literal>. If you want four
+            octets used, substitute again for the fourth octet (00), otherwise
+            three octets are kept the same and the others are randomly
+            generated.</para>
+        </note>
+      </step>
+      <step>
+        <para>Edit the <filename>/etc/neutron/neutron.conf</filename> file to
+          set <literal>router_distributed</literal> to
+          <literal>True</literal>.</para>
+        <programlisting language="ini">router_distributed = True</programlisting>
+      </step>
+      <step>
+        <para>Edit the <filename>l3_agent.ini</filename> file to set
+            <literal>agent_mode</literal> to <literal>dvr</literal> on compute
+          nodes for multi-node deployments:</para>
+        <programlisting language="ini">agent_mode = dvr</programlisting>
+        <note>
+          <para>When using a separate networking host, set
+              <literal>agent_mode</literal> to <literal>dvr_snat</literal>. Use
+              <literal>dvr_snat</literal> for Devstack or other single-host
+            deployments also.</para>
+        </note>
+      </step>
+      <step>
+        <para>In the <literal>[ml2]</literal> section, edit the
+            <filename>ml2_conf.ini</filename> file to add
+            <literal>l2population</literal>:</para>
+        <programlisting language="ini">[ml2]
+mechanism_drivers = openvswitch,l2population</programlisting>
+      </step>
+      <step>
+        <para>In the <literal>[agent]</literal> section of the
+            <filename>ml2_conf.ini</filename> file, set these configuration
+          options to these values:</para>
+        <programlisting language="ini">[agent]
+l2_population = True
+tunnel_types = vxlan
+enable_distributed_routing = True</programlisting>
+      </step>
+      <step>
+        <para>Restart the OVS L2 agent.</para>
+        <stepalternatives>
+          <step>
+            <para>Ubuntu/Debian:</para>
+            <screen><prompt>#</prompt> <userinput>service neutron-plugin-openvswitch-agent restart</userinput> restart</screen>
+          </step>
+          <step>
+            <para>RHEL/CentOS/Fedora:</para>
+            <screen><prompt>#</prompt> <userinput>service neutron-openvswitch-agent restart</userinput></screen>
+          </step>
+          <step>
+            <para>SLES/openSUSE:</para>
+            <screen><prompt>#</prompt> <userinput>service openstack-neutron-openvswitch-agent restart</userinput></screen>
+          </step>
+        </stepalternatives>
+      </step>
+    </procedure>
+  </section>
+  <section xml:id="dvr-requirements">
+    <title>DVR requirements</title>
+    <itemizedlist>
+      <listitem>
+        <para>You must use the ML2 plug-in for Open VSwitch (OVS) to enable
+          DVR.</para>
+      </listitem>
+      <listitem>
+        <para>Be sure that your firewall or security groups allows UDP traffic
+          over the VLAN, GRE, or VXLAN port to pass between the compute hosts.</para>
+      </listitem>
+    </itemizedlist>
+  </section>
+  <section xml:id="dvr-limitations">
+    <title>DVR limitations</title>
+    <itemizedlist>
+      <listitem>
+        <para>Distributed virtual router configurations work with the Open
+          vSwitch Modular Layer 2 driver only for Juno.</para>
+      </listitem>
+      <listitem>
+        <para>In order to enable true north-south bandwidth between hypervisors
+          (compute nodes), you must use public IP addresses for every compute
+          node and enable floating IPs.</para>
+      </listitem>
+      <listitem>
+        <para>For now, based on the current neutron design and architecture,
+          DHCP cannot become distributed across compute nodes.</para>
+      </listitem>
+    </itemizedlist>
+  </section>
 </section>
