@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+         xmlns:xi="http://www.w3.org/2001/XInclude"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         version="5.0"
+         xml:id="section_keystone-keyring-support">
+  <title>Keyring support</title>
+  <para>Keyring is a password management system available in OpenStack.
+    You can install it using the following command:</para>
+  <screen><prompt>$</prompt> <userinput>pip install keyring</userinput></screen>
+  <note>
+    <para>Keyring is used only if <parameter>--os-use-keyring</parameter>
+      is specified or if the environment variable
+      <parameter>OS_USE_KEYRING=true</parameter> is defined.</para>
+  </note>
+  <para>A user specifies their username and password credentials to interact
+    with OpenStack, using any client command. These credentials can be specified
+    using various mechanisms, namely, the environment variable, or command line argument.
+    It is not safe to specify the password using either of these methods.</para>
+  <para>For example, when you specify your password using the command-line client
+    with the <parameter>--os-password</parameter> argument, anyone with access
+    to your computer can view it in plain text with the <parameter>ps</parameter>
+    field.</para>
+  <para>To avoid storing the password in plain text, you can prompt for the
+    OpenStack password interactively. Then, the keyring can store the password
+    and the user can safely retrieve it from their keyring. The encrypted password
+    is stored in the <filename>~/.openstack-keyring.cfg</filename> file.</para>
+</section>
