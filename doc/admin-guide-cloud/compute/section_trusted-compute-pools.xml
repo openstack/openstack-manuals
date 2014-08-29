@@ -68,14 +68,16 @@ scheduler_default_filters=AvailabilityZoneFilter,RamFilter,ComputeFilter,Trusted
                     following lines to the <literal>trusted_computing</literal> section in the
                         <filename>/etc/nova/nova.conf</filename> file:</para>
                 <programlisting language="ini">[trusted_computing]
-server=10.1.71.206
-port=8443
-server_ca_file=/etc/nova/ssl.10.1.71.206.crt
+attestation_server = 10.1.71.206
+attestation_port = 8443
+# If using OAT v2.0 after, use this port:
+# attestation_port = 8181
+attestation_server_ca_file = /etc/nova/ssl.10.1.71.206.crt
 # If using OAT v1.5, use this api_url:
-api_url=/AttestationService/resources
+attestation_api_url = /AttestationService/resources
 # If using OAT pre-v1.5, use this api_url:
-#api_url=/OpenAttestationWebServices/V1.0
-auth_blob=i-am-openstack</programlisting>
+# attestation_api_url = /OpenAttestationWebServices/V1.0
+attestation_auth_blob = i-am-openstack</programlisting>
             <para>Where:</para>
                 <variablelist>
                     <varlistentry>
