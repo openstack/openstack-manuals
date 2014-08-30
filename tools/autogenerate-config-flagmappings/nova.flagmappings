@@ -1,5 +1,5 @@
-aggregate_image_properties_isolation_namespace scheduling
-aggregate_image_properties_isolation_separator scheduling
+aggregate_image_properties_isolation_namespace scheduler
+aggregate_image_properties_isolation_separator scheduler
 allow_instance_snapshots policy
 allow_migrate_to_same_host policy
 allow_resize_to_same_host policy
@@ -12,7 +12,7 @@ auth_strategy authentication
 auto_assign_floating_ip network
 backdoor_port testing
 bandwidth_poll_interval quota
-baremetal_scheduler_default_filters scheduling
+baremetal_scheduler_default_filters scheduler
 bindir common
 block_device_allocate_retries volumes
 block_device_allocate_retries_interval volumes
@@ -56,7 +56,7 @@ console_xvp_pid xen
 consoleauth_manager console
 consoleauth_topic common
 control_exchange rpc rpc_all
-cpu_allocation_ratio scheduling
+cpu_allocation_ratio scheduler
 create_unique_mac_address_attempts network
 crl_file ca
 db_driver database
@@ -76,7 +76,7 @@ dhcp_lease_time network
 dhcpbridge network
 dhcpbridge_flagfile network
 disable_process_locking common
-disk_allocation_ratio scheduling
+disk_allocation_ratio scheduler
 dmz_cidr vpn
 dmz_mask vpn
 dmz_net vpn
@@ -141,8 +141,8 @@ iptables_bottom_regex network
 iptables_drop_action network
 iptables_top_regex network
 ipv6_backend ipv6
-isolated_hosts scheduling
-isolated_images scheduling
+isolated_hosts scheduler
+isolated_images scheduler
 key_file ca
 keys_path ca
 keystone_ec2_url ec2
@@ -182,8 +182,8 @@ matchmaker_heartbeat_freq rpc rpc_all
 matchmaker_heartbeat_ttl rpc rpc_all
 max_age policy
 max_header_line api
-max_instances_per_host scheduling
-max_io_ops_per_host scheduling
+max_instances_per_host scheduler
+max_io_ops_per_host scheduler
 max_local_block_devices policy
 maximum_instance_delete_attempts compute
 memcached_servers common
@@ -277,21 +277,21 @@ rabbit_retry_interval rabbitmq rpc_all
 rabbit_use_ssl rabbitmq rpc_all
 rabbit_userid rabbitmq rpc_all
 rabbit_virtual_host rabbitmq rpc_all
-ram_allocation_ratio scheduling
-ram_weight_multiplier scheduling
+ram_allocation_ratio scheduler
+ram_weight_multiplier scheduler
 reboot_timeout compute
 reclaim_instance_interval compute
 region_list ec2
 remove_unused_base_images libvirt
 remove_unused_original_minimum_age_seconds libvirt
 report_interval common
-rescue_timeout hypervisor
+rescue_timeout compute
 reservation_expire policy
-reserved_host_disk_mb scheduling
-reserved_host_memory_mb scheduling
+reserved_host_disk_mb scheduler
+reserved_host_memory_mb scheduler
 resize_confirm_window compute
 resize_fs_using_block_device policy
-restrict_isolated_hosts_to_isolated_images scheduling
+restrict_isolated_hosts_to_isolated_images scheduler
 resume_guests_state_on_host_boot compute
 rootwrap_config common
 routing_source_ip network
@@ -319,18 +319,18 @@ s3_listen_port s3
 s3_port s3
 s3_secret_key s3
 s3_use_ssl s3
-scheduler_available_filters scheduling
-scheduler_default_filters scheduling
-scheduler_driver scheduling
-scheduler_driver_task_period scheduling
-scheduler_host_manager scheduling
-scheduler_host_subset_size scheduling
-scheduler_json_config_location scheduling
-scheduler_manager scheduling
-scheduler_max_attempts scheduling
-scheduler_topic scheduling
-scheduler_use_baremetal_filters scheduling
-scheduler_weight_classes scheduling
+scheduler_available_filters scheduler
+scheduler_default_filters scheduler
+scheduler_driver scheduler
+scheduler_driver_task_period scheduler
+scheduler_host_manager scheduler
+scheduler_host_subset_size scheduler
+scheduler_json_config_location scheduler
+scheduler_manager scheduler
+scheduler_max_attempts scheduler
+scheduler_topic scheduler
+scheduler_use_baremetal_filters scheduler
+scheduler_weight_classes scheduler
 security_group_api network
 send_arp_for_ha network
 send_arp_for_ha_count network
@@ -339,6 +339,7 @@ servicegroup_driver api
 share_dhcp_address network
 shelved_offload_time compute
 shelved_poll_interval compute
+shutdown_timeout compute
 snapshot_name_template api
 ssl_ca_file wsgi
 ssl_cert_file wsgi
@@ -442,14 +443,14 @@ cells/mute_weight_multiplier cells
 cells/mute_weight_value cells
 cells/name cells
 cells/offset_weight_multiplier cells
-cells/ram_weight_multiplier scheduling
+cells/ram_weight_multiplier scheduler
 cells/reserve_percent cells
 cells/rpc_driver_queue_base rpc rpc_all
 cells/scheduler upgrade_levels
-cells/scheduler_filter_classes scheduling
-cells/scheduler_retries scheduling
-cells/scheduler_retry_delay scheduling
-cells/scheduler_weight_classes scheduling
+cells/scheduler_filter_classes scheduler
+cells/scheduler_retries scheduler
+cells/scheduler_retry_delay scheduler
+cells/scheduler_weight_classes scheduler
 cells/topic cells
 conductor/manager conductor
 conductor/topic conductor
@@ -497,6 +498,7 @@ hyperv/qemu_img_cmd hyperv
 hyperv/volume_attach_retry_count volumes
 hyperv/volume_attach_retry_interval volumes
 hyperv/vswitch_name hyperv
+hyperv/wait_soft_reboot_seconds hyperv
 image_file_url/filesystems glance
 keymgr/api_class keymgr
 keymgr/fixed_key keymgr
@@ -572,6 +574,7 @@ libvirt/snapshot_compression hypervisor
 libvirt/snapshot_image_format hypervisor
 libvirt/snapshots_directory libvirt
 libvirt/sparse_logical_volumes hypervisor
+libvirt/sysinfo_serial libvirt
 libvirt/use_usb_tablet hypervisor
 libvirt/use_virtio_for_bridges hypervisor
 libvirt/virt_type libvirt
@@ -584,10 +587,10 @@ matchmaker_redis/host redis
 matchmaker_redis/password redis
 matchmaker_redis/port redis
 matchmaker_ring/ringfile rpc rpc_all
-metrics/required scheduling
-metrics/weight_multiplier scheduling
-metrics/weight_of_unavailable scheduling
-metrics/weight_setting scheduling
+metrics/required scheduler
+metrics/weight_multiplier scheduler
+metrics/weight_of_unavailable scheduler
+metrics/weight_setting scheduler
 neutron/admin_auth_url neutron
 neutron/admin_password neutron
 neutron/admin_tenant_id neutron
