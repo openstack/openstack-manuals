@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenStack Manuals\n"
-"POT-Creation-Date: 2014-08-29 05:21+0000\n"
-"PO-Revision-Date: 2014-08-28 23:09+0000\n"
+"POT-Creation-Date: 2014-08-29 17:05+0000\n"
+"PO-Revision-Date: 2014-08-29 17:06+0000\n"
 "Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
 "Language-Team: Japanese (http://www.transifex.com/projects/p/openstack-manuals-i18n/language/ja/)\n"
 "MIME-Version: 1.0\n"
@@ -8089,6 +8089,49 @@ msgstr "PASSWORD"
 msgid "Where <replaceable>PASSWORD</replaceable> is your password."
 msgstr "<replaceable>PASSWORD</replaceable> は、お使いのパスワードです。"
 
+#: ./doc/common/section_keystone-keyring-support.xml7(title)
+msgid "Keyring support"
+msgstr ""
+
+#: ./doc/common/section_keystone-keyring-support.xml8(para)
+msgid ""
+"Keyring is a password management system available in OpenStack. You can "
+"install it using the following command:"
+msgstr ""
+
+#: ./doc/common/section_keystone-keyring-support.xml12(para)
+msgid ""
+"Keyring is used only if <parameter>--os-use-keyring</parameter> is specified"
+" or if the environment variable <parameter>OS_USE_KEYRING=true</parameter> "
+"is defined."
+msgstr ""
+
+#: ./doc/common/section_keystone-keyring-support.xml16(para)
+msgid ""
+"A user specifies their username and password credentials to interact with "
+"OpenStack, using any client command. These credentials can be specified "
+"using various mechanisms, namely, the environment variable, or command line "
+"argument. It is not safe to specify the password using either of these "
+"methods."
+msgstr ""
+
+#: ./doc/common/section_keystone-keyring-support.xml20(para)
+msgid ""
+"For example, when you specify your password using the command-line client "
+"with the <parameter>--os-password</parameter> argument, anyone with access "
+"to your computer can view it in plain text with the "
+"<parameter>ps</parameter> field."
+msgstr ""
+
+#: ./doc/common/section_keystone-keyring-support.xml24(para)
+msgid ""
+"To avoid storing the password in plain text, you can prompt for the "
+"OpenStack password interactively. Then, the keyring can store the password "
+"and the user can safely retrieve it from their keyring. The encrypted "
+"password is stored in the <filename>~/.openstack-keyring.cfg</filename> "
+"file."
+msgstr ""
+
 #. When image changes, this message will be marked fuzzy or untranslated for
 #. you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -12148,6 +12191,7 @@ msgstr ""
 #: ./doc/common/tables/ceilometer-database.xml7(caption)
 #: ./doc/common/tables/cinder-database.xml7(caption)
 #: ./doc/common/tables/glance-database.xml7(caption)
+#: ./doc/common/tables/neutron-database.xml7(caption)
 #: ./doc/common/tables/trove-database.xml7(caption)
 #: ./doc/common/tables/heat-database.xml7(caption)
 #: ./doc/common/tables/keystone-database.xml7(caption)
@@ -12950,7 +12994,7 @@ msgid ""
 msgstr ""
 
 #: ./doc/common/tables/neutron-openvswitch_agent.xml7(caption)
-msgid "Description of configuration options for openvswitch_agent"
+msgid "Description of Open vSwitch agent configuration options"
 msgstr ""
 
 #: ./doc/common/tables/neutron-openvswitch_agent.xml21(td)
@@ -12993,7 +13037,11 @@ msgid "arp_responder = False"
 msgstr ""
 
 #: ./doc/common/tables/neutron-openvswitch_agent.xml37(td)
-msgid "(BoolOpt) Enable local ARP responder if it is supported"
+msgid ""
+"(BoolOpt) Enable local ARP responder if it is supported. Requires OVS 2.1 "
+"and ML2 l2population driver. Allows the switch (when supporting an overlay) "
+"to respond to an ARP request locally without performing a costly ARP "
+"broadcast into the overlay"
 msgstr ""
 
 #: ./doc/common/tables/neutron-openvswitch_agent.xml40(td)
@@ -13013,7 +13061,7 @@ msgid "enable_distributed_routing = False"
 msgstr ""
 
 #: ./doc/common/tables/neutron-openvswitch_agent.xml45(td)
-msgid "(BoolOpt) Make the l2 agent run in DVR mode"
+msgid "(BoolOpt) Make the l2 agent run in DVR mode."
 msgstr ""
 
 #: ./doc/common/tables/neutron-openvswitch_agent.xml48(td)
@@ -13023,7 +13071,7 @@ msgstr ""
 
 #: ./doc/common/tables/neutron-openvswitch_agent.xml49(td)
 msgid ""
-"(BoolOpt) Use ml2 l2population mechanism driver to learn remote mac and IPs "
+"(BoolOpt) Use ML2 l2population mechanism driver to learn remote mac and IPs "
 "and improve tunnel scalability"
 msgstr ""
 
@@ -13491,9 +13539,12 @@ msgid "(BoolOpt) Set 512 byte emulation on volume creation;"
 msgstr ""
 
 #: ./doc/common/tables/neutron-rpc.xml7(caption)
-#: ./doc/common/tables/keystone-rpc.xml7(caption)
-#: ./doc/common/tables/nova-rpc.xml7(caption)
-msgid "Description of configuration options for rpc"
+#: ./doc/common/tables/glance-rpc.xml7(caption)
+#: ./doc/common/tables/ceilometer-rpc.xml7(caption)
+#: ./doc/common/tables/trove-rpc.xml7(caption)
+#: ./doc/common/tables/cinder-rpc.xml7(caption)
+#: ./doc/common/tables/heat-rpc.xml7(caption)
+msgid "Description of RPC configuration options"
 msgstr ""
 
 #: ./doc/common/tables/neutron-rpc.xml21(td)
@@ -14164,6 +14215,7 @@ msgid "(StrOpt) The token auth plugin module."
 msgstr ""
 
 #: ./doc/common/tables/keystone-policy.xml7(caption)
+#: ./doc/common/tables/neutron-policy.xml7(caption)
 #: ./doc/common/tables/glance-policy.xml7(caption)
 msgid "Description of policy configuration options"
 msgstr ""
@@ -14230,6 +14282,7 @@ msgstr ""
 
 #: ./doc/common/tables/glance-auth_token.xml7(caption)
 #: ./doc/common/tables/ceilometer-auth_token.xml7(caption)
+#: ./doc/common/tables/neutron-auth_token.xml7(caption)
 #: ./doc/common/tables/heat-auth_token.xml7(caption)
 #: ./doc/common/tables/cinder-auth_token.xml7(caption)
 #: ./doc/common/tables/keystone-auth_token.xml7(caption)
@@ -16166,6 +16219,7 @@ msgid "(StrOpt) overridden zoning policy"
 msgstr ""
 
 #: ./doc/common/tables/ceilometer-redis.xml7(caption)
+#: ./doc/common/tables/neutron-redis.xml7(caption)
 #: ./doc/common/tables/glance-redis.xml7(caption)
 #: ./doc/common/tables/heat-redis.xml7(caption)
 #: ./doc/common/tables/trove-redis.xml7(caption)
@@ -16367,6 +16421,7 @@ msgid ""
 msgstr ""
 
 #: ./doc/common/tables/ceilometer-vmware.xml7(caption)
+#: ./doc/common/tables/neutron-vmware.xml7(caption)
 #: ./doc/common/tables/glance-vmware.xml7(caption)
 #: ./doc/common/tables/cinder-vmware.xml7(caption)
 msgid "Description of VMware configuration options"
@@ -16439,7 +16494,7 @@ msgid ""
 msgstr ""
 
 #: ./doc/common/tables/neutron-cisco.xml7(caption)
-msgid "Description of configuration options for cisco"
+msgid "Description of Cisco configuration options"
 msgstr ""
 
 #: ./doc/common/tables/neutron-cisco.xml18(th)
@@ -16589,7 +16644,7 @@ msgid "(StrOpt) N1K Network VLAN Ranges"
 msgstr ""
 
 #: ./doc/common/tables/neutron-cisco.xml92(td)
-msgid "poll_duration = 10"
+msgid "poll_duration = 60"
 msgstr ""
 
 #: ./doc/common/tables/neutron-cisco.xml93(td)
@@ -16654,7 +16709,6 @@ msgid "[ml2_cisco]"
 msgstr ""
 
 #: ./doc/common/tables/nova-testing.xml7(caption)
-#: ./doc/common/tables/neutron-testing.xml7(caption)
 msgid "Description of configuration options for testing"
 msgstr ""
 
@@ -16745,7 +16799,6 @@ msgid "(ListOpt) List of modules/decorators to monkey patch"
 msgstr ""
 
 #: ./doc/common/tables/nova-metadata.xml7(caption)
-#: ./doc/common/tables/neutron-metadata.xml7(caption)
 msgid "Description of configuration options for metadata"
 msgstr ""
 
@@ -17122,7 +17175,8 @@ msgid "Entry point of paste.deploy in the server"
 msgstr ""
 
 #: ./doc/common/tables/neutron-scheduler.xml7(caption)
-msgid "Description of configuration options for scheduler"
+#: ./doc/common/tables/cinder-scheduler.xml7(caption)
+msgid "Description of scheduler configuration options"
 msgstr ""
 
 #: ./doc/common/tables/neutron-scheduler.xml21(td)
@@ -17273,6 +17327,7 @@ msgstr ""
 #: ./doc/common/tables/trove-common.xml7(caption)
 #: ./doc/common/tables/cinder-common.xml7(caption)
 #: ./doc/common/tables/glance-common.xml7(caption)
+#: ./doc/common/tables/neutron-common.xml7(caption)
 msgid "Description of common configuration options"
 msgstr ""
 
@@ -17568,6 +17623,7 @@ msgid ""
 msgstr ""
 
 #: ./doc/common/tables/ceilometer-logging.xml7(caption)
+#: ./doc/common/tables/neutron-logging.xml7(caption)
 #: ./doc/common/tables/glance-logging.xml7(caption)
 #: ./doc/common/tables/keystone-logging.xml7(caption)
 #: ./doc/common/tables/heat-logging.xml7(caption)
@@ -18510,7 +18566,8 @@ msgid "use = egg:swift#proxy"
 msgstr ""
 
 #: ./doc/common/tables/neutron-ml2_cisco_apic.xml7(caption)
-msgid "Description of configuration options for ml2_cisco_apic"
+#: ./doc/common/tables/neutron-ml2_cisco.xml7(caption)
+msgid "Description of ML2 Cisco mechanism driver configuration options"
 msgstr ""
 
 #: ./doc/common/tables/neutron-ml2_cisco_apic.xml18(th)
@@ -18618,6 +18675,7 @@ msgstr ""
 #: ./doc/common/tables/trove-qpid.xml7(caption)
 #: ./doc/common/tables/heat-qpid.xml7(caption)
 #: ./doc/common/tables/glance-qpid.xml7(caption)
+#: ./doc/common/tables/neutron-qpid.xml7(caption)
 #: ./doc/common/tables/keystone-qpid.xml7(caption)
 #: ./doc/common/tables/ceilometer-qpid.xml7(caption)
 msgid "Description of Qpid configuration options"
@@ -18773,6 +18831,7 @@ msgstr "(文字列オプション) qpid 接続のユーザー名"
 #: ./doc/common/tables/ceilometer-api.xml7(caption)
 #: ./doc/common/tables/heat-api.xml7(caption)
 #: ./doc/common/tables/cinder-api.xml7(caption)
+#: ./doc/common/tables/neutron-api.xml7(caption)
 msgid "Description of API configuration options"
 msgstr ""
 
@@ -19116,14 +19175,6 @@ msgstr ""
 msgid "Directory where stats for a few items will be stored"
 msgstr ""
 
-#: ./doc/common/tables/glance-rpc.xml7(caption)
-#: ./doc/common/tables/ceilometer-rpc.xml7(caption)
-#: ./doc/common/tables/trove-rpc.xml7(caption)
-#: ./doc/common/tables/cinder-rpc.xml7(caption)
-#: ./doc/common/tables/heat-rpc.xml7(caption)
-msgid "Description of RPC configuration options"
-msgstr ""
-
 #: ./doc/common/tables/glance-rpc.xml21(td)
 msgid ""
 "allowed_rpc_exception_modules = openstack.common.exception, "
@@ -19136,11 +19187,6 @@ msgstr ""
 msgid ""
 "(ListOpt) Modules of exceptions that are permitted to be recreatedupon "
 "receiving exception data from an rpc call."
-msgstr ""
-
-#: ./doc/common/tables/neutron-policy.xml7(caption)
-#: ./doc/common/tables/nova-policy.xml7(caption)
-msgid "Description of configuration options for policy"
 msgstr ""
 
 #: ./doc/common/tables/neutron-policy.xml21(td)
@@ -19947,7 +19993,6 @@ msgid "Description of matchmaker configuration options"
 msgstr ""
 
 #: ./doc/common/tables/nova-rabbitmq.xml7(caption)
-#: ./doc/common/tables/neutron-rabbitmq.xml7(caption)
 msgid "Description of configuration options for rabbitmq"
 msgstr ""
 
@@ -20239,16 +20284,16 @@ msgstr ""
 msgid "(StrOpt) The RabbitMQ virtual host."
 msgstr ""
 
-#: ./doc/common/tables/neutron-ml2_cisco.xml7(caption)
-msgid "Description of configuration options for ml2_cisco"
-msgstr ""
-
 #: ./doc/common/tables/neutron-ml2_cisco.xml21(td)
 msgid "managed_physical_network = None"
 msgstr ""
 
 #: ./doc/common/tables/neutron-ml2_cisco.xml22(td)
 msgid "(StrOpt) The physical network managed by the switches."
+msgstr ""
+
+#: ./doc/common/tables/nova-policy.xml7(caption)
+msgid "Description of configuration options for policy"
 msgstr ""
 
 #: ./doc/common/tables/nova-policy.xml21(td)
@@ -20472,10 +20517,6 @@ msgid ""
 "libvirt_type)."
 msgstr ""
 
-#: ./doc/common/tables/cinder-scheduler.xml7(caption)
-msgid "Description of scheduler configuration options"
-msgstr ""
-
 #: ./doc/common/tables/cinder-scheduler.xml21(td)
 msgid ""
 "scheduler_default_filters = AvailabilityZoneFilter, CapacityFilter, "
@@ -20581,11 +20622,6 @@ msgstr ""
 
 #: ./doc/common/tables/trove-db_cassandra.xml45(td)
 msgid "usage_timeout = 600"
-msgstr ""
-
-#: ./doc/common/tables/neutron-logging.xml7(caption)
-#: ./doc/common/tables/nova-logging.xml7(caption)
-msgid "Description of configuration options for logging"
 msgstr ""
 
 #: ./doc/common/tables/neutron-logging.xml25(td)
@@ -20746,7 +20782,8 @@ msgid ""
 msgstr ""
 
 #: ./doc/common/tables/neutron-ml2_fslsdn.xml7(caption)
-msgid "Description of configuration options for ml2_fslsdn"
+msgid ""
+"Description of ML2 Freescale SDN mechanism driver configuration options"
 msgstr ""
 
 #: ./doc/common/tables/neutron-ml2_fslsdn.xml18(th)
@@ -20836,8 +20873,8 @@ msgid "(StrOpt) CRD service Username"
 msgstr ""
 
 #: ./doc/common/tables/neutron-rootwrap.xml7(caption)
-#: ./doc/common/tables/nova-rootwrap.xml7(caption)
-msgid "Description of configuration options for rootwrap"
+#: ./doc/common/tables/cinder-rootwrap.xml7(caption)
+msgid "Description of rootwrap configuration options"
 msgstr ""
 
 #: ./doc/common/tables/neutron-rootwrap.xml21(td)
@@ -21244,11 +21281,6 @@ msgstr ""
 msgid "(StrOpt) Fixed key returned by key manager, specified in hex"
 msgstr ""
 
-#: ./doc/common/tables/neutron-auth_token.xml7(caption)
-#: ./doc/common/tables/nova-auth_token.xml7(caption)
-msgid "Description of configuration options for auth_token"
-msgstr ""
-
 #: ./doc/common/tables/swift-swift-storage-policy-0.xml8(literal)
 msgid "[storage-policy-0]"
 msgstr ""
@@ -21574,7 +21606,7 @@ msgid ""
 msgstr ""
 
 #: ./doc/common/tables/neutron-sdnve.xml7(caption)
-msgid "Description of configuration options for sdnve"
+msgid "Description of SDN-VE configuration options"
 msgstr ""
 
 #: ./doc/common/tables/neutron-sdnve.xml18(th)
@@ -21749,7 +21781,6 @@ msgid "(BoolOpt) Whether using rpc"
 msgstr ""
 
 #: ./doc/common/tables/nova-compute.xml7(caption)
-#: ./doc/common/tables/neutron-compute.xml7(caption)
 msgid "Description of configuration options for compute"
 msgstr ""
 
@@ -22079,6 +22110,7 @@ msgstr ""
 #: ./doc/common/tables/glance-rabbitmq.xml7(caption)
 #: ./doc/common/tables/heat-rabbitmq.xml7(caption)
 #: ./doc/common/tables/trove-rabbitmq.xml7(caption)
+#: ./doc/common/tables/neutron-rabbitmq.xml7(caption)
 #: ./doc/common/tables/ceilometer-rabbitmq.xml7(caption)
 msgid "Description of RabbitMQ configuration options"
 msgstr ""
@@ -22229,7 +22261,6 @@ msgid ""
 msgstr ""
 
 #: ./doc/common/tables/nova-vmware.xml7(caption)
-#: ./doc/common/tables/neutron-vmware.xml7(caption)
 msgid "Description of configuration options for vmware"
 msgstr ""
 
@@ -22954,7 +22985,6 @@ msgid ""
 msgstr ""
 
 #: ./doc/common/tables/nova-zeromq.xml7(caption)
-#: ./doc/common/tables/neutron-zeromq.xml7(caption)
 msgid "Description of configuration options for zeromq"
 msgstr ""
 
@@ -23553,7 +23583,7 @@ msgid "name = silver"
 msgstr ""
 
 #: ./doc/common/tables/neutron-embrane.xml7(caption)
-msgid "Description of configuration options for embrane"
+msgid "Description of Embrane configuration options"
 msgstr ""
 
 #: ./doc/common/tables/neutron-embrane.xml18(th)
@@ -23809,7 +23839,6 @@ msgid "use = egg:swift#healthcheck"
 msgstr ""
 
 #: ./doc/common/tables/nova-common.xml7(caption)
-#: ./doc/common/tables/neutron-common.xml7(caption)
 msgid "Description of configuration options for common"
 msgstr ""
 
@@ -24485,11 +24514,6 @@ msgstr ""
 msgid "(IntOpt) Time to wait for a block device to be created"
 msgstr ""
 
-#: ./doc/common/tables/neutron-redis.xml7(caption)
-#: ./doc/common/tables/nova-redis.xml7(caption)
-msgid "Description of configuration options for redis"
-msgstr ""
-
 #: ./doc/common/tables/neutron-redis.xml22(td)
 msgid "(StrOpt) The hostname Neutron is running on"
 msgstr ""
@@ -24507,7 +24531,7 @@ msgid "usage_timeout = 400"
 msgstr ""
 
 #: ./doc/common/tables/neutron-dvr.xml7(caption)
-msgid "Description of configuration options for dvr"
+msgid "Description of DVR configuration options"
 msgstr ""
 
 #: ./doc/common/tables/neutron-dvr.xml21(td)
@@ -24529,6 +24553,7 @@ msgid ""
 msgstr ""
 
 #: ./doc/common/tables/heat-zeromq.xml7(caption)
+#: ./doc/common/tables/neutron-zeromq.xml7(caption)
 #: ./doc/common/tables/keystone-zeromq.xml7(caption)
 #: ./doc/common/tables/glance-zmq.xml7(caption)
 #: ./doc/common/tables/trove-zeromq.xml7(caption)
@@ -24544,7 +24569,7 @@ msgid "(MultiStrOpt) List of drivers to send notifications (DEPRECATED)"
 msgstr ""
 
 #: ./doc/common/tables/neutron-linuxbridge_agent.xml7(caption)
-msgid "Description of configuration options for linuxbridge_agent"
+msgid "Description of Linux Bridge agent configuration options"
 msgstr ""
 
 #: ./doc/common/tables/neutron-linuxbridge_agent.xml18(th)
@@ -24616,6 +24641,10 @@ msgstr ""
 
 #: ./doc/common/tables/neutron-linuxbridge_agent.xml60(td)
 msgid "(StrOpt) Multicast group for vxlan interface."
+msgstr ""
+
+#: ./doc/common/tables/nova-redis.xml7(caption)
+msgid "Description of configuration options for redis"
 msgstr ""
 
 #: ./doc/common/tables/swift-container-server-DEFAULT.xml20(td)
@@ -24702,7 +24731,7 @@ msgid ""
 msgstr "不注意によりルートデバイスに書き込むことを防ぐために、デバイスがマウントされているかを確認するかどうか"
 
 #: ./doc/common/tables/neutron-l3_agent.xml7(caption)
-msgid "Description of configuration options for l3_agent"
+msgid "Description of L3 agent configuration options"
 msgstr ""
 
 #: ./doc/common/tables/neutron-l3_agent.xml21(td)
@@ -25995,7 +26024,6 @@ msgid "(StrOpt) Deprecated."
 msgstr ""
 
 #: ./doc/common/tables/nova-vpn.xml7(caption)
-#: ./doc/common/tables/neutron-vpn.xml7(caption)
 msgid "Description of configuration options for vpn"
 msgstr ""
 
@@ -26069,6 +26097,10 @@ msgstr ""
 
 #: ./doc/common/tables/nova-vpn.xml54(td)
 msgid "(IntOpt) First Vpn port for private networks"
+msgstr ""
+
+#: ./doc/common/tables/neutron-vpn.xml7(caption)
+msgid "Description of VPN configuration options"
 msgstr ""
 
 #: ./doc/common/tables/neutron-vpn.xml18(th)
@@ -28107,6 +28139,11 @@ msgstr ""
 msgid "control_exchange = keystone"
 msgstr ""
 
+#: ./doc/common/tables/keystone-rpc.xml7(caption)
+#: ./doc/common/tables/nova-rpc.xml7(caption)
+msgid "Description of configuration options for rpc"
+msgstr ""
+
 #: ./doc/common/tables/keystone-rpc.xml21(td)
 msgid ""
 "allowed_rpc_exception_modules = keystone.openstack.common.exception, "
@@ -28237,7 +28274,7 @@ msgid "user_test_tester3 = testing3"
 msgstr ""
 
 #: ./doc/common/tables/neutron-agent.xml7(caption)
-msgid "Description of configuration options for agent"
+msgid "Description of agent configuration options"
 msgstr ""
 
 #: ./doc/common/tables/neutron-agent.xml21(td)
@@ -28428,7 +28465,7 @@ msgid ""
 msgstr ""
 
 #: ./doc/common/tables/neutron-ml2_flat.xml7(caption)
-msgid "Description of configuration options for ml2_flat"
+msgid "Description of ML2 Flat mechanism driver configuration options"
 msgstr ""
 
 #: ./doc/common/tables/neutron-ml2_flat.xml18(th)
@@ -28637,7 +28674,7 @@ msgid ""
 msgstr ""
 
 #: ./doc/common/tables/neutron-ml2_ofa.xml7(caption)
-msgid "Description of configuration options for ml2_ofa"
+msgid "Description of ML2 ofagent mechanism driver configuration options"
 msgstr ""
 
 #: ./doc/common/tables/neutron-ml2_ofa.xml21(td)
@@ -29183,7 +29220,7 @@ msgid "use = egg:swift#proxy_logging"
 msgstr ""
 
 #: ./doc/common/tables/neutron-ipv6_ra.xml7(caption)
-msgid "Description of configuration options for ipv6_ra"
+msgid "Description of IPv6 router advertisement configuration options"
 msgstr ""
 
 #: ./doc/common/tables/neutron-ipv6_ra.xml21(td)
@@ -29287,6 +29324,10 @@ msgstr ""
 #: ./doc/common/tables/glance-s3.xml58(td)
 msgid ""
 "(IntOpt) The number of thread pools to perform a multipart upload in S3."
+msgstr ""
+
+#: ./doc/common/tables/nova-rootwrap.xml7(caption)
+msgid "Description of configuration options for rootwrap"
 msgstr ""
 
 #: ./doc/common/tables/nova-rootwrap.xml21(td)
@@ -29683,7 +29724,7 @@ msgid "volume_time_out = 60"
 msgstr ""
 
 #: ./doc/common/tables/neutron-quotas.xml7(caption)
-msgid "Description of configuration options for quotas"
+msgid "Description of quotas configuration options"
 msgstr ""
 
 #: ./doc/common/tables/neutron-quotas.xml21(td)
@@ -29879,6 +29920,10 @@ msgstr ""
 msgid ""
 "(IntOpt) Number of vips allowed per tenant. A negative value means "
 "unlimited."
+msgstr ""
+
+#: ./doc/common/tables/nova-auth_token.xml7(caption)
+msgid "Description of configuration options for auth_token"
 msgstr ""
 
 #: ./doc/common/tables/cinder-storage_nfs.xml7(caption)
@@ -30196,7 +30241,7 @@ msgid "[clients_ceilometer]"
 msgstr ""
 
 #: ./doc/common/tables/neutron-ryu.xml7(caption)
-msgid "Description of configuration options for ryu"
+msgid "Description of RYU configuration options"
 msgstr ""
 
 #: ./doc/common/tables/neutron-ryu.xml21(td)
@@ -30320,7 +30365,7 @@ msgid "max connections = 2"
 msgstr ""
 
 #: ./doc/common/tables/neutron-metering_agent.xml7(caption)
-msgid "Description of configuration options for metering_agent"
+msgid "Description of metering agent configuration options"
 msgstr ""
 
 #: ./doc/common/tables/neutron-metering_agent.xml21(td)
@@ -31035,7 +31080,7 @@ msgid "(BoolOpt) Save event details."
 msgstr ""
 
 #: ./doc/common/tables/neutron-lbaas_haproxy.xml7(caption)
-msgid "Description of configuration options for lbaas_haproxy"
+msgid "Description of LBaaS haproxy configuration options"
 msgstr ""
 
 #: ./doc/common/tables/neutron-lbaas_haproxy.xml18(th)
@@ -31182,7 +31227,7 @@ msgid "use = egg:swift#name_check"
 msgstr ""
 
 #: ./doc/common/tables/neutron-sriov.xml7(caption)
-msgid "Description of configuration options for sriov"
+msgid "Description of SR-IOV configuration options"
 msgstr ""
 
 #: ./doc/common/tables/neutron-sriov.xml18(th)
@@ -31528,7 +31573,7 @@ msgid "[database] backend"
 msgstr ""
 
 #: ./doc/common/tables/neutron-ml2_bigswitch.xml7(caption)
-msgid "Description of configuration options for ml2_bigswitch"
+msgid "Description of ML2 BigSwitch mechanism driver configuration options"
 msgstr ""
 
 #: ./doc/common/tables/neutron-ml2_bigswitch.xml18(th)
@@ -31780,7 +31825,7 @@ msgstr ""
 
 #: ./doc/common/tables/neutron-ml2_bigswitch.xml112(td)
 #: ./doc/common/tables/neutron-bigswitch.xml112(td)
-msgid "neutron_id = neutron-shock"
+msgid "neutron_id = neutron-linux-6dv9.site"
 msgstr ""
 
 #: ./doc/common/tables/neutron-ml2_bigswitch.xml113(td)
@@ -32054,11 +32099,6 @@ msgstr ""
 msgid ""
 "(ListOpt) List of file systems that are configured in this file in the "
 "image_file_url:&lt;list entry name&gt; sections"
-msgstr ""
-
-#: ./doc/common/tables/neutron-database.xml7(caption)
-#: ./doc/common/tables/nova-database.xml7(caption)
-msgid "Description of configuration options for database"
 msgstr ""
 
 #: ./doc/common/tables/nova-s3.xml7(caption)
@@ -33014,7 +33054,7 @@ msgid ""
 msgstr ""
 
 #: ./doc/common/tables/neutron-plumgrid.xml7(caption)
-msgid "Description of configuration options for plumgrid"
+msgid "Description of PLUMgrid configuration options"
 msgstr ""
 
 #: ./doc/common/tables/neutron-plumgrid.xml18(th)
@@ -33204,7 +33244,7 @@ msgid "(StrOpt) The ZFS path under which to create zvols for volumes."
 msgstr ""
 
 #: ./doc/common/tables/neutron-nuage.xml7(caption)
-msgid "Description of configuration options for nuage"
+msgid "Description of Nuage configuration options"
 msgstr ""
 
 #: ./doc/common/tables/neutron-nuage.xml21(td)
@@ -34742,11 +34782,11 @@ msgid "[xenserver] default_os_type"
 msgstr ""
 
 #: ./doc/common/tables/neutron-bigswitch.xml7(caption)
-msgid "Description of configuration options for bigswitch"
+msgid "Description of BigSwitch configuration options"
 msgstr ""
 
 #: ./doc/common/tables/neutron-cfg_agent.xml7(caption)
-msgid "Description of configuration options for cfg_agent"
+msgid "Description of cfg agent configuration options"
 msgstr ""
 
 #: ./doc/common/tables/neutron-cfg_agent.xml21(td)
@@ -35734,6 +35774,7 @@ msgstr ""
 #: ./doc/common/tables/keystone-ssl.xml7(caption)
 #: ./doc/common/tables/cinder-ssl.xml7(caption)
 #: ./doc/common/tables/trove-ssl.xml7(caption)
+#: ./doc/common/tables/neutron-ssl.xml7(caption)
 #: ./doc/common/tables/glance-ssl.xml7(caption)
 msgid "Description of SSL configuration options"
 msgstr ""
@@ -36001,7 +36042,7 @@ msgid ""
 msgstr ""
 
 #: ./doc/common/tables/neutron-dhcp_agent.xml7(caption)
-msgid "Description of configuration options for dhcp_agent"
+msgid "Description of DHCP agent configuration options"
 msgstr ""
 
 #: ./doc/common/tables/neutron-dhcp_agent.xml25(td)
@@ -36207,7 +36248,7 @@ msgid ""
 msgstr ""
 
 #: ./doc/common/tables/neutron-ml2_gre.xml7(caption)
-msgid "Description of configuration options for ml2_gre"
+msgid "Description of ML2 GRE configuration options"
 msgstr ""
 
 #: ./doc/common/tables/neutron-ml2_gre.xml18(th)
@@ -36222,7 +36263,7 @@ msgid ""
 msgstr ""
 
 #: ./doc/common/tables/neutron-varmour.xml7(caption)
-msgid "Description of configuration options for varmour"
+msgid "Description of vArmour configuration options"
 msgstr ""
 
 #: ./doc/common/tables/neutron-varmour.xml18(th)
@@ -36355,12 +36396,11 @@ msgid "(IntOpt) Time to sleep during the check active guest."
 msgstr ""
 
 #: ./doc/common/tables/nova-qpid.xml7(caption)
-#: ./doc/common/tables/neutron-qpid.xml7(caption)
 msgid "Description of configuration options for qpid"
 msgstr ""
 
 #: ./doc/common/tables/neutron-lbaas_radware.xml7(caption)
-msgid "Description of configuration options for lbaas_radware"
+msgid "Description of LBaaS Radware configuration options"
 msgstr ""
 
 #: ./doc/common/tables/neutron-lbaas_radware.xml18(th)
@@ -36535,7 +36575,7 @@ msgid "(StrOpt) vDirect user name."
 msgstr ""
 
 #: ./doc/common/tables/neutron-ml2_sriov.xml7(caption)
-msgid "Description of configuration options for ml2_sriov"
+msgid "Description of ML2 ML2 SR-IOV driver configuration options"
 msgstr ""
 
 #: ./doc/common/tables/neutron-ml2_sriov.xml18(th)
@@ -36562,7 +36602,7 @@ msgid ""
 msgstr ""
 
 #: ./doc/common/tables/neutron-ml2_l2pop.xml7(caption)
-msgid "Description of configuration options for ml2_l2pop"
+msgid "Description of ML2 L2 population configuration options"
 msgstr ""
 
 #: ./doc/common/tables/neutron-ml2_l2pop.xml18(th)
@@ -36580,7 +36620,7 @@ msgid ""
 msgstr ""
 
 #: ./doc/common/tables/neutron-embrane_lb.xml7(caption)
-msgid "Description of configuration options for embrane_lb"
+msgid "Description of Embrane LBaaS driver configuration options"
 msgstr ""
 
 #: ./doc/common/tables/neutron-embrane_lb.xml18(th)
@@ -36684,6 +36724,11 @@ msgstr ""
 msgid "include_service_catalog = False"
 msgstr ""
 
+#: ./doc/common/tables/neutron-testing.xml7(caption)
+#: ./doc/common/tables/glance-testing.xml7(caption)
+msgid "Description of testing configuration options"
+msgstr ""
+
 #: ./doc/common/tables/swift-object-server-pipeline-main.xml20(td)
 msgid "pipeline = healthcheck recon object-server"
 msgstr ""
@@ -36726,6 +36771,7 @@ msgid "use = egg:swift#formpost"
 msgstr ""
 
 #: ./doc/common/tables/trove-compute.xml7(caption)
+#: ./doc/common/tables/neutron-compute.xml7(caption)
 #: ./doc/common/tables/cinder-compute.xml7(caption)
 msgid "Description of Compute configuration options"
 msgstr ""
@@ -36967,7 +37013,7 @@ msgid ""
 msgstr ""
 
 #: ./doc/common/tables/neutron-ml2_vlan.xml7(caption)
-msgid "Description of configuration options for ml2_vlan"
+msgid "Description of ML2 VLAN configuration options"
 msgstr ""
 
 #: ./doc/common/tables/neutron-ml2_vlan.xml18(th)
@@ -37064,7 +37110,7 @@ msgid "(IntOpt) ZeroMQ receiver listening port"
 msgstr ""
 
 #: ./doc/common/tables/neutron-lbaas.xml7(caption)
-msgid "Description of configuration options for lbaas"
+msgid "Description of LBaaS configuration options"
 msgstr ""
 
 #: ./doc/common/tables/neutron-lbaas.xml21(td)
@@ -37210,7 +37256,7 @@ msgid "(StrOpt) The strategy to use for auth: noauth or keystone."
 msgstr ""
 
 #: ./doc/common/tables/neutron-nvsd.xml7(caption)
-msgid "Description of configuration options for nvsd"
+msgid "Description of NVSD driver configuration options"
 msgstr ""
 
 #: ./doc/common/tables/neutron-nvsd.xml22(td)
@@ -38455,7 +38501,7 @@ msgid ""
 msgstr ""
 
 #: ./doc/common/tables/neutron-notifier.xml7(caption)
-msgid "Description of configuration options for notifier"
+msgid "Description of notifier configuration options"
 msgstr ""
 
 #: ./doc/common/tables/nova-rpc_all.xml7(caption)
@@ -38486,7 +38532,7 @@ msgid ""
 msgstr ""
 
 #: ./doc/common/tables/neutron-hyperv_agent.xml7(caption)
-msgid "Description of configuration options for hyperv_agent"
+msgid "Description of HyperV agent configuration options"
 msgstr ""
 
 #: ./doc/common/tables/neutron-hyperv_agent.xml21(td)
@@ -39101,6 +39147,10 @@ msgstr ""
 msgid "(ListOpt) List of all available devices"
 msgstr ""
 
+#: ./doc/common/tables/neutron-metadata.xml7(caption)
+msgid "Description of metadata configuration options"
+msgstr ""
+
 #: ./doc/common/tables/neutron-metadata.xml21(td)
 msgid "meta_flavor_driver_mappings = None"
 msgstr ""
@@ -39195,7 +39245,7 @@ msgid "log_name = container-replicator"
 msgstr ""
 
 #: ./doc/common/tables/neutron-ml2_ncs.xml7(caption)
-msgid "Description of configuration options for ml2_ncs"
+msgid "Description of ML2 NCS mechanism driver configuration options"
 msgstr ""
 
 #: ./doc/common/tables/neutron-ml2_ncs.xml18(th)
@@ -39217,7 +39267,7 @@ msgid "username = None"
 msgstr ""
 
 #: ./doc/common/tables/neutron-ml2_arista.xml7(caption)
-msgid "Description of configuration options for ml2_arista"
+msgid "Description of ML2 Arista mechanism driver configuration options"
 msgstr ""
 
 #: ./doc/common/tables/neutron-ml2_arista.xml18(th)
@@ -39546,7 +39596,7 @@ msgid ""
 msgstr ""
 
 #: ./doc/common/tables/neutron-ml2_brocade.xml7(caption)
-msgid "Description of configuration options for ml2_brocade"
+msgid "Description of ML2 Brocade mechanism driver configuration options"
 msgstr ""
 
 #: ./doc/common/tables/neutron-ml2_brocade.xml18(th)
@@ -39668,7 +39718,7 @@ msgid "[clients_swift]"
 msgstr ""
 
 #: ./doc/common/tables/neutron-brocade.xml7(caption)
-msgid "Description of configuration options for brocade"
+msgid "Description of Brocade configuration options"
 msgstr ""
 
 #: ./doc/common/tables/neutron-brocade.xml18(th)
@@ -39700,7 +39750,7 @@ msgid "username ="
 msgstr ""
 
 #: ./doc/common/tables/neutron-ml2_odl.xml7(caption)
-msgid "Description of configuration options for ml2_odl"
+msgid "Description of ML2 OpenDaylight mechanism driver configuration options"
 msgstr ""
 
 #: ./doc/common/tables/neutron-ml2_odl.xml18(th)
@@ -40378,7 +40428,7 @@ msgid "(StrOpt) The configuration file for the Cinder Huawei driver"
 msgstr ""
 
 #: ./doc/common/tables/neutron-lbaas_netscalar.xml7(caption)
-msgid "Description of configuration options for lbaas_netscalar"
+msgid "Description of LBaaS Netscaler configuration options"
 msgstr ""
 
 #: ./doc/common/tables/neutron-lbaas_netscalar.xml18(th)
@@ -40426,7 +40476,7 @@ msgid "(StrOpt) Manager for console auth"
 msgstr ""
 
 #: ./doc/common/tables/neutron-fwaas.xml7(caption)
-msgid "Description of configuration options for fwaas"
+msgid "Description of FwaaS configuration options"
 msgstr ""
 
 #: ./doc/common/tables/neutron-fwaas.xml18(th)
@@ -40464,6 +40514,10 @@ msgstr ""
 
 #: ./doc/common/tables/cinder-nexenta_nfs.xml34(td)
 msgid "(StrOpt) Default compression value for new ZFS folders."
+msgstr ""
+
+#: ./doc/common/tables/nova-database.xml7(caption)
+msgid "Description of configuration options for database"
 msgstr ""
 
 #: ./doc/common/tables/nova-database.xml21(td)
@@ -40649,12 +40703,8 @@ msgstr ""
 msgid "(StrOpt) Encryption key used for authentication info in database."
 msgstr ""
 
-#: ./doc/common/tables/neutron-ssl.xml7(caption)
-msgid "Description of configuration options for ssl"
-msgstr ""
-
 #: ./doc/common/tables/neutron-midonet.xml7(caption)
-msgid "Description of configuration options for midonet"
+msgid "Description of Midonet configuration options"
 msgstr ""
 
 #: ./doc/common/tables/neutron-midonet.xml18(th)
@@ -40760,8 +40810,8 @@ msgid "(StrOpt) User name to connect to Coraid ESM"
 msgstr ""
 
 #: ./doc/common/tables/neutron-wsgi.xml7(caption)
-#: ./doc/common/tables/nova-wsgi.xml7(caption)
-msgid "Description of configuration options for wsgi"
+#: ./doc/common/tables/glance-wsgi.xml7(caption)
+msgid "Description of WSGI configuration options"
 msgstr ""
 
 #: ./doc/common/tables/neutron-wsgi.xml22(td)
@@ -40833,10 +40883,6 @@ msgstr ""
 
 #: ./doc/common/tables/swift-rsyncd-object.xml24(td)
 msgid "max connections = 8"
-msgstr ""
-
-#: ./doc/common/tables/glance-wsgi.xml7(caption)
-msgid "Description of WSGI configuration options"
 msgstr ""
 
 #: ./doc/common/tables/glance-wsgi.xml21(td)
@@ -41212,12 +41258,16 @@ msgstr ""
 msgid "(IntOpt) Minimum ssh connections in the pool"
 msgstr ""
 
+#: ./doc/common/tables/nova-logging.xml7(caption)
+msgid "Description of configuration options for logging"
+msgstr ""
+
 #: ./doc/common/tables/nova-logging.xml34(td)
 msgid "(BoolOpt) Make exception message format errors fatal"
 msgstr ""
 
 #: ./doc/common/tables/neutron-nec.xml7(caption)
-msgid "Description of configuration options for nec"
+msgid "Description of Nec configuration options"
 msgstr ""
 
 #: ./doc/common/tables/neutron-nec.xml18(th)
@@ -41327,7 +41377,6 @@ msgid "[clients_neutron]"
 msgstr ""
 
 #: ./doc/common/tables/nova-api.xml7(caption)
-#: ./doc/common/tables/neutron-api.xml7(caption)
 msgid "Description of configuration options for api"
 msgstr ""
 
@@ -41466,7 +41515,7 @@ msgid ""
 msgstr ""
 
 #: ./doc/common/tables/neutron-opencontrail.xml7(caption)
-msgid "Description of configuration options for opencontrail"
+msgid "Description of OpenContrail configuration options"
 msgstr ""
 
 #: ./doc/common/tables/neutron-opencontrail.xml18(th)
@@ -41490,7 +41539,7 @@ msgid "(IntOpt) Port to connect to opencontrail controller"
 msgstr ""
 
 #: ./doc/common/tables/neutron-ml2_mlnx.xml7(caption)
-msgid "Description of configuration options for ml2_mlnx"
+msgid "Description of Mellanox ML2 mechanism driver configuration options"
 msgstr ""
 
 #: ./doc/common/tables/neutron-ml2_mlnx.xml21(td)
@@ -41715,7 +41764,7 @@ msgid "task_time_to_live = 48"
 msgstr ""
 
 #: ./doc/common/tables/neutron-ml2_vxlan.xml7(caption)
-msgid "Description of configuration options for ml2_vxlan"
+msgid "Description of ML2 VXLN configuration options"
 msgstr ""
 
 #: ./doc/common/tables/neutron-ml2_vxlan.xml18(th)
@@ -41886,7 +41935,7 @@ msgid "(StrOpt) Admin username used to connect to nova."
 msgstr ""
 
 #: ./doc/common/tables/neutron-meta.xml7(caption)
-msgid "Description of configuration options for meta"
+msgid "Description of meta configuration options"
 msgstr ""
 
 #: ./doc/common/tables/neutron-meta.xml18(th)
@@ -42311,10 +42360,6 @@ msgstr ""
 
 #: ./doc/common/tables/heat-clients_backends.xml22(td)
 msgid "(StrOpt) Fully qualified class name to use as a client backend."
-msgstr ""
-
-#: ./doc/common/tables/glance-testing.xml7(caption)
-msgid "Description of testing configuration options"
 msgstr ""
 
 #: ./doc/common/tables/glance-testing.xml21(td)
@@ -42783,6 +42828,10 @@ msgstr ""
 msgid "key2 = realm1key2"
 msgstr ""
 
+#: ./doc/common/tables/nova-wsgi.xml7(caption)
+msgid "Description of configuration options for wsgi"
+msgstr ""
+
 #: ./doc/common/tables/nova-wsgi.xml22(td)
 msgid "(StrOpt) File name for the paste.deploy config for nova-api"
 msgstr ""
@@ -43061,7 +43110,7 @@ msgid ""
 msgstr ""
 
 #: ./doc/common/tables/neutron-ml2.xml7(caption)
-msgid "Description of configuration options for ml2"
+msgid "Description of ML2 configuration options"
 msgstr ""
 
 #: ./doc/common/tables/neutron-ml2.xml18(th)
@@ -43342,7 +43391,7 @@ msgid "wait_soft_reboot_seconds = 120"
 msgstr ""
 
 #: ./doc/common/tables/neutron-mlnx.xml7(caption)
-msgid "Description of configuration options for mlnx"
+msgid "Description of Mellanox configuration options"
 msgstr ""
 
 #: ./doc/common/tables/neutron-mlnx.xml21(td)
@@ -43440,7 +43489,7 @@ msgid "(StrOpt) Private key file to use when starting API server securely."
 msgstr ""
 
 #: ./doc/common/tables/neutron-securitygroups.xml7(caption)
-msgid "Description of configuration options for securitygroups"
+msgid "Description of security groups configuration options"
 msgstr ""
 
 #: ./doc/common/tables/neutron-securitygroups.xml18(th)
@@ -43477,10 +43526,6 @@ msgstr ""
 
 #: ./doc/common/tables/keystone-debug.xml52(td)
 msgid "namespace = openstack"
-msgstr ""
-
-#: ./doc/common/tables/cinder-rootwrap.xml7(caption)
-msgid "Description of rootwrap configuration options"
 msgstr ""
 
 #: ./doc/common/tables/cinder-rootwrap.xml21(td)
