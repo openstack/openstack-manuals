@@ -249,6 +249,62 @@ use_namespaces = True</programlisting>
           troubleshooting.</para>
       </note>
     </step>
+    <step>
+      <para>Tunneling protocols such as
+        <glossterm>generic routing encapsulation (GRE)</glossterm>
+        include additional packet headers that increase overhead and
+        decrease space available for the payload or user data. Without
+        knowledge of the virtual network infrastructure, instances attempt
+        to send packets using the default Ethernet
+        <glossterm>maximum transmission unit (MTU)</glossterm> of 1500 bytes.
+        <glossterm>Internet protocol (IP)</glossterm> networks contain the
+        <glossterm>path MTU discovery (PMTUD)</glossterm> mechanism to detect
+        end-to-end MTU and adjust packet size accordingly. However, some
+        operating systems and networks block or otherwise lack support for
+        PMTUD causing performance degradation or connectivity failure.</para>
+      <para>Ideally, you can prevent these problems by enabling
+        <glossterm>jumbo frames</glossterm> on the physical network that
+        contains your tenant virtual networks. Jumbo frames support MTUs
+        up to approximately 9000 bytes which negates the impact of GRE
+        overhead on virtual networks. However, many network devices lack
+        support for jumbo frames and OpenStack administrators often lack
+        control of network infrastructure. Given the latter complications,
+        you can also prevent MTU problems by reducing the instance MTU to
+        account for GRE overhead. Determining the proper MTU value often
+        takes experimentation, but 1454 bytes works in most environments.
+        You can configure the <glossterm>DHCP</glossterm> server that assigns
+        IP addresses to your instances to also adjust the MTU.</para>
+      <note>
+        <para>Some cloud images such as CirrOS ignore the DHCP MTU
+          option.</para>
+      </note>
+      <substeps>
+        <step os="ubuntu;debian">
+          <para>Edit the <filename>/etc/neutron/dhcp_agent.ini</filename>
+            file and add the following keys to the
+           <literal>[DEFAULT]</literal> section:</para>
+         <programlisting language="ini">[DEFAULT]
+...
+dnsmasq_config_file = /etc/neutron/dnsmasq-neutron.conf</programlisting>
+        </step>
+        <step os="rhel;centos;fedora;sles;opensuse">
+          <para>Run the following command:</para>
+          <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/dhcp_agent.ini DEFAULT \
+  dnsmasq_config_file /etc/neutron/dnsmasq-neutron.conf</userinput></screen>
+        </step>
+        <step>
+          <para>Create and edit the
+            <filename>/etc/neutron/dnsmasq-neutron.conf</filename> file and
+            add the following keys:</para>
+          <programlisting>dhcp-option-force=26,1454</programlisting>
+        </step>
+        <step>
+          <para>Kill any existing
+            <systemitem role="process">dnsmasq</systemitem> processes:</para>
+          <screen><prompt>#</prompt> <userinput>killall dnsmasq</userinput></screen>
+        </step>
+      </substeps>
+    </step>
   </procedure>
   <procedure>
     <title>To configure the metadata agent</title>
