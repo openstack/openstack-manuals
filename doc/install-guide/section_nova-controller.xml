@@ -154,7 +154,7 @@ vncserver_proxyclient_address=192.168.0.10</programlisting>
       <screen><prompt>#</prompt> <userinput>keystone user-create --name=nova --pass=<replaceable>NOVA_PASS</replaceable> --email=<replaceable>nova@example.com</replaceable></userinput>
 <prompt>#</prompt> <userinput>keystone user-role-add --user=nova --tenant=service --role=admin</userinput></screen>
     </step>
-    <step>
+    <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
       <para>Configure Compute to use these credentials with the Identity
         Service running on the controller. Replace
         <replaceable>NOVA_PASS</replaceable> with your Compute password.</para>
@@ -165,11 +165,11 @@ vncserver_proxyclient_address=192.168.0.10</programlisting>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf keystone_authtoken admin_user nova</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf keystone_authtoken admin_tenant_name service</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf keystone_authtoken admin_password <replaceable>NOVA_PASS</replaceable></userinput></screen>
-      <para os="ubuntu;debian">Edit the <literal>[DEFAULT]</literal> section
+      <para os="ubuntu">Edit the <literal>[DEFAULT]</literal> section
         in the <filename>/etc/nova/nova.conf</filename> file to add this
         key:
       </para>
-      <programlisting os="ubuntu;debian" language="ini">
+      <programlisting os="ubuntu" language="ini">
 [DEFAULT]
 ...
 auth_strategy=keystone</programlisting>
