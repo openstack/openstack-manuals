@@ -12,7 +12,7 @@
     <title>Database Service command-line client</title>
     <para>The <command>trove</command> client is the command-line interface
          (CLI) for the Database API and its extensions. This chapter documents
-         <command>trove</command> version 1.0.5.
+         <command>trove</command> version 1.0.6.
     </para>
     <para>For help on a specific <command>trove</command>
        command, enter:
@@ -35,10 +35,18 @@
   <variablelist wordsize="10">
     <title>Subcommands</title>
   <varlistentry>
+    <term><command>backup-copy</command></term>
+    <listitem>
+      <para>
+        Creates a backup from another backup.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
     <term><command>backup-create</command></term>
     <listitem>
       <para>
-        Creates a backup.
+        Creates a backup of an instance.
       </para>
     </listitem>
   </varlistentry>
@@ -62,7 +70,7 @@
     <term><command>backup-list-instance</command></term>
     <listitem>
       <para>
-      Lists available backups for an instance.
+        Lists available backups for an instance.
       </para>
     </listitem>
   </varlistentry>
@@ -78,7 +86,8 @@
     <term><command>configuration-attach</command></term>
     <listitem>
       <para>
-      Attaches a configuration group to an instance.
+        Attaches a configuration group to an
+      instance.
       </para>
     </listitem>
   </varlistentry>
@@ -86,7 +95,7 @@
     <term><command>configuration-create</command></term>
     <listitem>
       <para>
-      Creates a configuration group.
+        Creates a configuration group.
       </para>
     </listitem>
   </varlistentry>
@@ -94,7 +103,8 @@
     <term><command>configuration-default</command></term>
     <listitem>
       <para>
-      Shows the default configuration of an instance.
+        Shows the default configuration of an
+      instance.
       </para>
     </listitem>
   </varlistentry>
@@ -102,7 +112,7 @@
     <term><command>configuration-delete</command></term>
     <listitem>
       <para>
-      Deletes a configuration group.
+        Deletes a configuration group.
       </para>
     </listitem>
   </varlistentry>
@@ -110,7 +120,8 @@
     <term><command>configuration-detach</command></term>
     <listitem>
       <para>
-      Detaches a configuration group from an instance.
+        Detaches a configuration group from an
+      instance.
       </para>
     </listitem>
   </varlistentry>
@@ -118,8 +129,8 @@
     <term><command>configuration-instances</command></term>
     <listitem>
       <para>
-      Lists all instances associated with a configuration
-      group.
+        Lists all instances associated with a
+      configuration group.
       </para>
     </listitem>
   </varlistentry>
@@ -135,7 +146,8 @@
     <term><command>configuration-parameter-list</command></term>
     <listitem>
       <para>
-      Lists available parameters for a configuration group.
+        Lists available parameters for a
+      configuration group.
       </para>
     </listitem>
   </varlistentry>
@@ -143,7 +155,7 @@
     <term><command>configuration-parameter-show</command></term>
     <listitem>
       <para>
-      Shows details of a configuration parameter.
+        Shows details of a configuration parameter.
       </para>
     </listitem>
   </varlistentry>
@@ -151,7 +163,7 @@
     <term><command>configuration-patch</command></term>
     <listitem>
       <para>
-      Patches a configuration group.
+        Patches a configuration group.
       </para>
     </listitem>
   </varlistentry>
@@ -167,7 +179,7 @@
     <term><command>configuration-update</command></term>
     <listitem>
       <para>
-      Updates a configuration group.
+        Updates a configuration group.
       </para>
     </listitem>
   </varlistentry>
@@ -191,7 +203,7 @@
     <term><command>database-delete</command></term>
     <listitem>
       <para>
-        Deletes a database.
+        Deletes a database from an instance.
       </para>
     </listitem>
   </varlistentry>
@@ -223,7 +235,7 @@
     <term><command>datastore-version-list</command></term>
     <listitem>
       <para>
-      Lists available versions for a datastore.
+        Lists available versions for a datastore.
       </para>
     </listitem>
   </varlistentry>
@@ -231,7 +243,7 @@
     <term><command>datastore-version-show</command></term>
     <listitem>
       <para>
-      Shows details of a datastore version.
+        Shows details of a datastore version.
       </para>
     </listitem>
   </varlistentry>
@@ -240,6 +252,15 @@
     <listitem>
       <para>
         Deletes an instance.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>detach-replica</command></term>
+    <listitem>
+      <para>
+        Detaches a replica instance from its
+      replication source.
       </para>
     </listitem>
   </varlistentry>
@@ -276,10 +297,70 @@
     </listitem>
   </varlistentry>
   <varlistentry>
+    <term><command>metadata-create</command></term>
+    <listitem>
+      <para>
+        Creates metadata in the database for
+      instance &lt;id&gt;.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>metadata-delete</command></term>
+    <listitem>
+      <para>
+        Deletes metadata for instance &lt;id&gt;.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>metadata-edit</command></term>
+    <listitem>
+      <para>
+        Replaces metadata value with a new one, this
+      is non-destructive.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>metadata-list</command></term>
+    <listitem>
+      <para>
+        Shows all metadata for instance &lt;id&gt;.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>metadata-show</command></term>
+    <listitem>
+      <para>
+        Shows metadata entry for key &lt;key&gt; and
+      instance &lt;id&gt;.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>metadata-update</command></term>
+    <listitem>
+      <para>
+        Updates metadata, this is destructive.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
     <term><command>resize-flavor</command></term>
     <listitem>
       <para>
-        Resizes the flavor of an instance.
+        [<emphasis>DEPRECATED</emphasis>] Please use resize-instance
+      instead.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>resize-instance</command></term>
+    <listitem>
+      <para>
+        Resizes an instance with a new flavor.
       </para>
     </listitem>
   </varlistentry>
@@ -295,7 +376,7 @@
     <term><command>restart</command></term>
     <listitem>
       <para>
-        Restarts the instance.
+        Restarts an instance.
       </para>
     </listitem>
   </varlistentry>
@@ -303,7 +384,8 @@
     <term><command>root-enable</command></term>
     <listitem>
       <para>
-        Enables root for a instance.
+        Enables root for an instance and resets if
+      already exists.
       </para>
     </listitem>
   </varlistentry>
@@ -311,7 +393,8 @@
     <term><command>root-show</command></term>
     <listitem>
       <para>
-        Gets root enabled status for a instance.
+        Gets status if root was ever enabled for an
+      instance.
       </para>
     </listitem>
   </varlistentry>
@@ -327,7 +410,7 @@
     <term><command>secgroup-delete-rule</command></term>
     <listitem>
       <para>
-      Deletes a security group rule.
+        Deletes a security group rule.
       </para>
     </listitem>
   </varlistentry>
@@ -340,10 +423,18 @@
     </listitem>
   </varlistentry>
   <varlistentry>
+    <term><command>secgroup-list-rules</command></term>
+    <listitem>
+      <para>
+        Lists all rules for a security group.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
     <term><command>secgroup-show</command></term>
     <listitem>
       <para>
-        Shows details about a security group.
+        Shows details of a security group.
       </para>
     </listitem>
   </varlistentry>
@@ -356,10 +447,19 @@
     </listitem>
   </varlistentry>
   <varlistentry>
+    <term><command>update</command></term>
+    <listitem>
+      <para>
+        Updates an instance: Edits name,
+      configuration, or replica source.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
     <term><command>user-create</command></term>
     <listitem>
       <para>
-        Creates a user.
+        Creates a user on an instance.
       </para>
     </listitem>
   </varlistentry>
@@ -367,7 +467,7 @@
     <term><command>user-delete</command></term>
     <listitem>
       <para>
-        Deletes a user from the instance.
+        Deletes a user from an instance.
       </para>
     </listitem>
   </varlistentry>
@@ -383,7 +483,7 @@
     <term><command>user-list</command></term>
     <listitem>
       <para>
-        Lists the users for a instance.
+        Lists the users for an instance.
       </para>
     </listitem>
   </varlistentry>
@@ -399,7 +499,7 @@
     <term><command>user-show</command></term>
     <listitem>
       <para>
-        Gets a user from the instance.
+        Shows details of a user of an instance.
       </para>
     </listitem>
   </varlistentry>
@@ -407,7 +507,8 @@
     <term><command>user-show-access</command></term>
     <listitem>
       <para>
-        Gets a users access from the instance.
+        Shows access details of a user of an
+      instance.
       </para>
     </listitem>
   </varlistentry>
@@ -415,7 +516,7 @@
     <term><command>user-update-attributes</command></term>
     <listitem>
       <para>
-      Updates a users attributes from the instance.
+        Updates a user's attributes on an instance.
       </para>
     </listitem>
   </varlistentry>
@@ -431,8 +532,8 @@
     <term><command>help</command></term>
     <listitem>
       <para>
-        Displays help about this program or one of its
-      subcommands.
+        Displays help about this program or one of
+      its subcommands.
       </para>
     </listitem>
   </varlistentry>
@@ -461,7 +562,7 @@
     <term><command>--os-username &lt;auth-user-name&gt;</command></term>
     <listitem>
       <para>
-      Defaults to <code>env[OS_USERNAME]</code>.
+        Defaults to <code>env[OS_USERNAME]</code>.
       </para>
     </listitem>
   </varlistentry>
@@ -469,7 +570,7 @@
     <term><command>--os-password &lt;auth-password&gt;</command></term>
     <listitem>
       <para>
-      Defaults to <code>env[OS_PASSWORD]</code>.
+        Defaults to <code>env[OS_PASSWORD]</code>.
       </para>
     </listitem>
   </varlistentry>
@@ -493,7 +594,7 @@
     <term><command>--os-auth-url &lt;auth-url&gt;</command></term>
     <listitem>
       <para>
-      Defaults to <code>env[OS_AUTH_URL]</code>.
+        Defaults to <code>env[OS_AUTH_URL]</code>.
       </para>
     </listitem>
   </varlistentry>
@@ -501,7 +602,7 @@
     <term><command>--os-region-name &lt;region-name&gt;</command></term>
     <listitem>
       <para>
-      Defaults to <code>env[OS_REGION_NAME]</code>.
+        Defaults to <code>env[OS_REGION_NAME]</code>.
       </para>
     </listitem>
   </varlistentry>
@@ -509,7 +610,7 @@
     <term><command>--service-type &lt;service-type&gt;</command></term>
     <listitem>
       <para>
-      Defaults to database for most actions.
+        Defaults to database for most actions.
       </para>
     </listitem>
   </varlistentry>
@@ -517,7 +618,7 @@
     <term><command>--service-name &lt;service-name&gt;</command></term>
     <listitem>
       <para>
-      Defaults to <code>env[TROVE_SERVICE_NAME]</code>.
+        Defaults to <code>env[TROVE_SERVICE_NAME]</code>.
       </para>
     </listitem>
   </varlistentry>
@@ -525,7 +626,7 @@
     <term><command>--bypass-url &lt;bypass-url&gt;</command></term>
     <listitem>
       <para>
-      Defaults to <code>env[TROVE_BYPASS_URL]</code>.
+        Defaults to <code>env[TROVE_BYPASS_URL]</code>.
       </para>
     </listitem>
   </varlistentry>
@@ -533,7 +634,8 @@
     <term><command>--database-service-name &lt;database-service-name&gt;</command></term>
     <listitem>
       <para>
-      Defaults to <code>env[TROVE_DATABASE_SERVICE_NAME]</code>.
+      Defaults to
+      <code>env[TROVE_DATABASE_SERVICE_NAME]</code>.
       </para>
     </listitem>
   </varlistentry>
@@ -541,7 +643,8 @@
     <term><command>--endpoint-type &lt;endpoint-type&gt;</command></term>
     <listitem>
       <para>
-      Defaults to <code>env[TROVE_ENDPOINT_TYPE]</code> or publicURL.
+      Defaults to <code>env[TROVE_ENDPOINT_TYPE]</code> or
+      publicURL.
       </para>
     </listitem>
   </varlistentry>
@@ -549,7 +652,8 @@
     <term><command>--os-database-api-version &lt;database-api-ver&gt;</command></term>
     <listitem>
       <para>
-      Accepts 1, defaults to <code>env[OS_DATABASE_API_VERSION]</code>.
+      Accepts 1, defaults to
+      <code>env[OS_DATABASE_API_VERSION]</code>.
       </para>
     </listitem>
   </varlistentry>
@@ -557,9 +661,9 @@
     <term><command>--os-cacert &lt;ca-certificate&gt;</command></term>
     <listitem>
       <para>
-      Specify a CA bundle file to use in verifying a TLS
-      (https) server certificate. Defaults to
-      <code>env[OS_CACERT]</code>.
+        Specify a CA bundle file to use in verifying
+      a TLS (https) server certificate. Defaults
+      to <code>env[OS_CACERT]</code>.
       </para>
     </listitem>
   </varlistentry>
@@ -575,19 +679,19 @@
     <term><command>--json, --os-json-output</command></term>
     <listitem>
       <para>
-      Output json instead of prettyprint. Defaults to
-      <code>env[OS_JSON_OUTPUT]</code>.
+        Output JSON instead of prettyprint. Defaults
+      to <code>env[OS_JSON_OUTPUT]</code>.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
-    <section xml:id="troveclient_subcommand_backup-create">
-        <title>trove backup-create command</title>
-        <screen><computeroutput>usage: trove backup-create &lt;name&gt; &lt;instance&gt;
-                           [--description &lt;description&gt;] [--parent &lt;parent&gt;]</computeroutput></screen>
+    <section xml:id="troveclient_subcommand_backup-copy">
+        <title>trove backup-copy command</title>
+        <screen><computeroutput>usage: trove backup-copy &lt;name&gt; &lt;backup&gt;
+                         [--region &lt;region&gt;] [--description &lt;description&gt;]</computeroutput></screen>
         <para>
-Creates a backup.
+Creates a backup from another backup.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
@@ -599,10 +703,55 @@ Creates a backup.
     </listitem>
   </varlistentry>
   <varlistentry>
+    <term><command>&lt;backup&gt;</command></term>
+    <listitem>
+      <para>
+        Backup ID of the source backup.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--region &lt;region&gt;</command></term>
+    <listitem>
+      <para>
+        Region where the source backup resides.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--description &lt;description&gt;</command></term>
+    <listitem>
+      <para>
+        An optional description for the backup.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="troveclient_subcommand_backup-create">
+        <title>trove backup-create command</title>
+        <screen><computeroutput>usage: trove backup-create &lt;instance&gt; &lt;name&gt;
+                           [--description &lt;description&gt;] [--parent &lt;parent&gt;]</computeroutput></screen>
+        <para>
+Creates a backup of an instance.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
     <term><command>&lt;instance&gt;</command></term>
     <listitem>
       <para>
-        UUID of the instance.
+        ID of the instance.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;name&gt;</command></term>
+    <listitem>
+      <para>
+        Name of the backup.
       </para>
     </listitem>
   </varlistentry>
@@ -613,7 +762,7 @@ Creates a backup.
     <term><command>--description &lt;description&gt;</command></term>
     <listitem>
       <para>
-      An optional description for the backup.
+        An optional description for the backup.
       </para>
     </listitem>
   </varlistentry>
@@ -621,7 +770,7 @@ Creates a backup.
     <term><command>--parent &lt;parent&gt;</command></term>
     <listitem>
       <para>
-        Optional UUID of the parent backup to perform an
+        Optional ID of the parent backup to perform an
       incremental backup from.
       </para>
     </listitem>
@@ -647,7 +796,7 @@ Deletes a backup.
     </section>
     <section xml:id="troveclient_subcommand_backup-list">
         <title>trove backup-list command</title>
-        <screen><computeroutput>usage: trove backup-list [--limit &lt;limit&gt;]</computeroutput></screen>
+        <screen><computeroutput>usage: trove backup-list [--limit &lt;limit&gt;] [--datastore &lt;datastore&gt;]</computeroutput></screen>
         <para>
 Lists available backups.
         </para>  <variablelist wordsize="10">
@@ -657,6 +806,14 @@ Lists available backups.
     <listitem>
       <para>
         Return up to N number of the most recent backups.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--datastore &lt;datastore&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of the datastore to list backups for.
       </para>
     </listitem>
   </varlistentry>
@@ -709,24 +866,24 @@ Shows details of a backup.
     </section>
     <section xml:id="troveclient_subcommand_configuration-attach">
         <title>trove configuration-attach command</title>
-        <screen><computeroutput>usage: trove configuration-attach &lt;configuration&gt; &lt;instance&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: trove configuration-attach &lt;instance&gt; &lt;configuration&gt;</computeroutput></screen>
         <para>
 Attaches a configuration group to an instance.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
-    <term><command>&lt;configuration&gt;</command></term>
+    <term><command>&lt;instance&gt;</command></term>
     <listitem>
       <para>
-        UUID of the configuration group to attach to the instance.
+        ID of the instance.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>&lt;instance&gt;</command></term>
+    <term><command>&lt;configuration&gt;</command></term>
     <listitem>
       <para>
-        UUID of the instance.
+        ID of the configuration group to attach to the instance.
       </para>
     </listitem>
   </varlistentry>
@@ -765,7 +922,8 @@ Creates a configuration group.
     <term><command>--datastore &lt;datastore&gt;</command></term>
     <listitem>
       <para>
-      Datastore assigned to the configuration group.
+        Datastore assigned to the configuration
+      group.
       </para>
     </listitem>
   </varlistentry>
@@ -773,8 +931,8 @@ Creates a configuration group.
     <term><command>--datastore_version &lt;datastore_version&gt;</command></term>
     <listitem>
       <para>
-      Datastore version UUID assigned to the configuration
-      group.
+      Datastore version ID assigned to the
+      configuration group.
       </para>
     </listitem>
   </varlistentry>
@@ -782,7 +940,8 @@ Creates a configuration group.
     <term><command>--description &lt;description&gt;</command></term>
     <listitem>
       <para>
-      An optional description for the configuration group.
+        An optional description for the
+      configuration group.
       </para>
     </listitem>
   </varlistentry>
@@ -799,7 +958,7 @@ Shows the default configuration of an instance.
     <term><command>&lt;instance&gt;</command></term>
     <listitem>
       <para>
-        UUID of the instance.
+        ID of the instance.
       </para>
     </listitem>
   </varlistentry>
@@ -816,7 +975,7 @@ Deletes a configuration group.
     <term><command>&lt;configuration_group&gt;</command></term>
     <listitem>
       <para>
-      ID of the configuration group.
+        ID of the configuration group.
       </para>
     </listitem>
   </varlistentry>
@@ -833,7 +992,7 @@ Detaches a configuration group from an instance.
     <term><command>&lt;instance&gt;</command></term>
     <listitem>
       <para>
-        UUID of the instance.
+        ID of the instance.
       </para>
     </listitem>
   </varlistentry>
@@ -850,7 +1009,7 @@ Lists all instances associated with a configuration group.
     <term><command>&lt;configuration_group&gt;</command></term>
     <listitem>
       <para>
-      ID of the configuration group.
+        ID of the configuration group.
       </para>
     </listitem>
   </varlistentry>
@@ -875,7 +1034,7 @@ Lists available parameters for a configuration group.
     <term><command>&lt;datastore_version&gt;</command></term>
     <listitem>
       <para>
-        Datastore version name or UUID assigned to the
+        Datastore version name or ID assigned to the
       configuration group.
       </para>
     </listitem>
@@ -884,11 +1043,11 @@ Lists available parameters for a configuration group.
   <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
-    <term><command>--datastore &lt;datastore&gt;</command></term>
+    <term><command>--datastore &lt;datastore&gt; ID</command></term>
     <listitem>
       <para>
-      UUID or name of the datastore to list configuration
-      parameters for. Optional if UUID of the
+        or name of the datastore to list configuration
+      parameters for. Optional if the ID of the
       datastore_version is provided.
       </para>
     </listitem>
@@ -907,7 +1066,7 @@ Shows details of a configuration parameter.
     <term><command>&lt;datastore_version&gt;</command></term>
     <listitem>
       <para>
-        Datastore version name or UUID assigned to the
+        Datastore version name or ID assigned to the
       configuration group.
       </para>
     </listitem>
@@ -924,11 +1083,11 @@ Shows details of a configuration parameter.
   <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
-    <term><command>--datastore &lt;datastore&gt;</command></term>
+    <term><command>--datastore &lt;datastore&gt; ID</command></term>
     <listitem>
       <para>
-      UUID or name of the datastore to list configuration
-      parameters for. Optional if UUID of the
+        or name of the datastore to list configuration
+      parameters for. Optional if the ID of the
       datastore_version is provided.
       </para>
     </listitem>
@@ -946,7 +1105,7 @@ Patches a configuration group.
     <term><command>&lt;configuration_group&gt;</command></term>
     <listitem>
       <para>
-      ID of the configuration group.
+        ID of the configuration group.
       </para>
     </listitem>
   </varlistentry>
@@ -971,7 +1130,7 @@ Shows details of a configuration group.
     <term><command>&lt;configuration_group&gt;</command></term>
     <listitem>
       <para>
-      ID of the configuration group.
+        ID of the configuration group.
       </para>
     </listitem>
   </varlistentry>
@@ -990,7 +1149,7 @@ Updates a configuration group.
     <term><command>&lt;configuration_group&gt;</command></term>
     <listitem>
       <para>
-      ID of the configuration group.
+        ID of the configuration group.
       </para>
     </listitem>
   </varlistentry>
@@ -1017,7 +1176,8 @@ Updates a configuration group.
     <term><command>--description &lt;description&gt;</command></term>
     <listitem>
       <para>
-      An optional description for the configuration group.
+        An optional description for the configuration
+      group.
       </para>
     </listitem>
   </varlistentry>
@@ -1033,7 +1193,7 @@ Updates a configuration group.
                     [--datastore &lt;datastore&gt;]
                     [--datastore_version &lt;datastore_version&gt;]
                     [--nic &lt;net-id=net-uuid,v4-fixed-ip=ip-addr,port-id=port-uuid&gt;]
-                    [--configuration &lt;configuration&gt;]</computeroutput></screen>
+                    [--configuration &lt;configuration&gt;] [--slave_of &lt;master_id&gt;]</computeroutput></screen>
         <para>
 Creates a new instance.
         </para>  <variablelist wordsize="10">
@@ -1061,7 +1221,8 @@ Creates a new instance.
     <term><command>--size &lt;size&gt;</command></term>
     <listitem>
       <para>
-        Size of the instance disk in GB.
+        Size of the instance disk volume in GB.
+      Required when volume support is enabled.
       </para>
     </listitem>
   </varlistentry>
@@ -1077,7 +1238,8 @@ Creates a new instance.
     <term><command>--users &lt;users&gt; [&lt;users&gt; ...]</command></term>
     <listitem>
       <para>
-      Optional list of users in the form user:password.
+        Optional list of users in the form
+      user:password.
       </para>
     </listitem>
   </varlistentry>
@@ -1085,7 +1247,7 @@ Creates a new instance.
     <term><command>--backup &lt;backup&gt; A</command></term>
     <listitem>
       <para>
-        backup UUID.
+        backup ID.
       </para>
     </listitem>
   </varlistentry>
@@ -1098,10 +1260,10 @@ Creates a new instance.
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--datastore &lt;datastore&gt;</command></term>
+    <term><command>--datastore &lt;datastore&gt; A</command></term>
     <listitem>
       <para>
-      A datastore name or UUID.
+        datastore name or ID.
       </para>
     </listitem>
   </varlistentry>
@@ -1109,7 +1271,7 @@ Creates a new instance.
     <term><command>--datastore_version &lt;datastore_version&gt;</command></term>
     <listitem>
       <para>
-      A datastore version name or UUID.
+      A datastore version name or ID.
       </para>
     </listitem>
   </varlistentry>
@@ -1117,12 +1279,14 @@ Creates a new instance.
     <term><command>--nic &lt;net-id=net-uuid,v4-fixed-ip=ip-addr,port-id=port-uuid&gt;</command></term>
     <listitem>
       <para>
-      Create a NIC on the instance. Specify option multiple
-      times to create multiple NICs. net-id: attach NIC to
-      network with this UUID (required, if no port-id
-      specified), v4-fixed-ip: IPv4 fixed address for NIC
-      (optional), port-id: attach NIC to port with this UUID
-      (required, if no net-id specified).
+      Create a NIC on the instance. Specify option
+      multiple times to create multiple NICs. net-
+      id: attach NIC to network with this ID
+      (either port-id or net-id must be
+      specified), v4-fixed-ip: IPv4 fixed address
+      for NIC (optional), port-id: attach NIC to
+      port with this ID (either port-id or net-id
+      must be specified).
       </para>
     </listitem>
   </varlistentry>
@@ -1130,8 +1294,17 @@ Creates a new instance.
     <term><command>--configuration &lt;configuration&gt;</command></term>
     <listitem>
       <para>
-      UUID of the configuration group to attach to the
-      instance.
+      ID of the configuration group to attach to
+      the instance.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--slave_of &lt;master_id&gt; ID</command></term>
+    <listitem>
+      <para>
+        of an existing instance to replicate
+      from.
       </para>
     </listitem>
   </varlistentry>
@@ -1150,7 +1323,7 @@ Creates a database on an instance.
     <term><command>&lt;instance&gt;</command></term>
     <listitem>
       <para>
-        UUID of the instance.
+        ID of the instance.
       </para>
     </listitem>
   </varlistentry>
@@ -1187,14 +1360,14 @@ Creates a database on an instance.
         <title>trove database-delete command</title>
         <screen><computeroutput>usage: trove database-delete &lt;instance&gt; &lt;database&gt;</computeroutput></screen>
         <para>
-Deletes a database.
+Deletes a database from an instance.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;instance&gt;</command></term>
     <listitem>
       <para>
-        UUID of the instance.
+        ID of the instance.
       </para>
     </listitem>
   </varlistentry>
@@ -1219,7 +1392,7 @@ Lists available databases on an instance.
     <term><command>&lt;instance&gt;</command></term>
     <listitem>
       <para>
-        UUID of the instance.
+        ID of the instance.
       </para>
     </listitem>
   </varlistentry>
@@ -1260,7 +1433,7 @@ Lists available versions for a datastore.
     <term><command>&lt;datastore&gt;</command></term>
     <listitem>
       <para>
-        ID of the datastore.
+        ID or name of the datastore.
       </para>
     </listitem>
   </varlistentry>
@@ -1278,7 +1451,7 @@ Shows details of a datastore version.
     <term><command>&lt;datastore_version&gt;</command></term>
     <listitem>
       <para>
-        ID of the datastore version.
+        ID or name of the datastore version.
       </para>
     </listitem>
   </varlistentry>
@@ -1286,11 +1459,11 @@ Shows details of a datastore version.
   <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
-    <term><command>--datastore &lt;datastore&gt;</command></term>
+    <term><command>--datastore &lt;datastore&gt; ID</command></term>
     <listitem>
       <para>
-      ID or name of the datastore. Optional if UUID of the
-      datastore_version is provided.
+        or name of the datastore. Optional if the ID of
+      the datastore_version is provided.
       </para>
     </listitem>
   </varlistentry>
@@ -1301,6 +1474,23 @@ Shows details of a datastore version.
         <screen><computeroutput>usage: trove delete &lt;instance&gt;</computeroutput></screen>
         <para>
 Deletes an instance.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;instance&gt;</command></term>
+    <listitem>
+      <para>
+        ID of the instance.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="troveclient_subcommand_detach-replica">
+        <title>trove detach-replica command</title>
+        <screen><computeroutput>usage: trove detach-replica &lt;instance&gt;</computeroutput></screen>
+        <para>
+Detaches a replica instance from its replication source.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
@@ -1331,7 +1521,7 @@ Shows details of a flavor.
     <term><command>&lt;flavor&gt;</command></term>
     <listitem>
       <para>
-        ID of the flavor.
+        ID or name of the flavor.
       </para>
     </listitem>
   </varlistentry>
@@ -1346,23 +1536,217 @@ Lists the limits for a tenant.
     </section>
     <section xml:id="troveclient_subcommand_list">
         <title>trove list command</title>
-        <screen><computeroutput>usage: trove list</computeroutput></screen>
+        <screen><computeroutput>usage: trove list [--limit &lt;limit&gt;] [--marker &lt;ID&gt;]</computeroutput></screen>
         <para>
 Lists all the instances.
-        </para>
+        </para>  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--limit &lt;limit&gt;</command></term>
+    <listitem>
+      <para>
+        Limit the number of results displayed.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--marker &lt;ID&gt;</command></term>
+    <listitem>
+      <para>
+        Begin displaying the results for IDs greater than the
+      specified marker. When used with --limit, set this to the
+      last ID displayed in the previous run.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
     </section>
-    <section xml:id="troveclient_subcommand_resize-flavor">
-        <title>trove resize-flavor command</title>
-        <screen><computeroutput>usage: trove resize-flavor &lt;instance&gt; &lt;flavor_id&gt;</computeroutput></screen>
+    <section xml:id="troveclient_subcommand_metadata-create">
+        <title>trove metadata-create command</title>
+        <screen><computeroutput>usage: trove metadata-create &lt;instance_id&gt; &lt;key&gt; &lt;value&gt;</computeroutput></screen>
         <para>
-Resizes the flavor of an instance.
+Creates metadata in the database for instance &lt;id&gt;.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;instance_id&gt;</command></term>
+    <listitem>
+      <para>
+        UUID for instance
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;key&gt;</command></term>
+    <listitem>
+      <para>
+        Key for assignment
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;value&gt;</command></term>
+    <listitem>
+      <para>
+        Value to assign to &lt;key&gt;
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="troveclient_subcommand_metadata-delete">
+        <title>trove metadata-delete command</title>
+        <screen><computeroutput>usage: trove metadata-delete &lt;instance_id&gt; &lt;key&gt;</computeroutput></screen>
+        <para>
+Deletes metadata for instance &lt;id&gt;.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;instance_id&gt;</command></term>
+    <listitem>
+      <para>
+        UUID for instance
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;key&gt;</command></term>
+    <listitem>
+      <para>
+        Metadata key to delete
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="troveclient_subcommand_metadata-edit">
+        <title>trove metadata-edit command</title>
+        <screen><computeroutput>usage: trove metadata-edit &lt;instance_id&gt; &lt;key&gt; &lt;value&gt;</computeroutput></screen>
+        <para>
+Replaces metadata value with a new one, this is non-destructive.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;instance_id&gt;</command></term>
+    <listitem>
+      <para>
+        UUID for instance
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;key&gt;</command></term>
+    <listitem>
+      <para>
+        Key to replace
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;value&gt;</command></term>
+    <listitem>
+      <para>
+        New value to assign to &lt;key&gt;
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="troveclient_subcommand_metadata-list">
+        <title>trove metadata-list command</title>
+        <screen><computeroutput>usage: trove metadata-list &lt;instance_id&gt;</computeroutput></screen>
+        <para>
+Shows all metadata for instance &lt;id&gt;.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;instance_id&gt;</command></term>
+    <listitem>
+      <para>
+        UUID for instance
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="troveclient_subcommand_metadata-show">
+        <title>trove metadata-show command</title>
+        <screen><computeroutput>usage: trove metadata-show &lt;instance_id&gt; &lt;key&gt;</computeroutput></screen>
+        <para>
+Shows metadata entry for key &lt;key&gt; and instance &lt;id&gt;.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;instance_id&gt;</command></term>
+    <listitem>
+      <para>
+        UUID for instance
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;key&gt;</command></term>
+    <listitem>
+      <para>
+        key to display
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="troveclient_subcommand_metadata-update">
+        <title>trove metadata-update command</title>
+        <screen><computeroutput>usage: trove metadata-update &lt;instance_id&gt; &lt;key&gt; &lt;newkey&gt; &lt;value&gt;</computeroutput></screen>
+        <para>
+Updates metadata, this is destructive.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;instance_id&gt;</command></term>
+    <listitem>
+      <para>
+        UUID for instance
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;key&gt;</command></term>
+    <listitem>
+      <para>
+        Key to update
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;newkey&gt;</command></term>
+    <listitem>
+      <para>
+        New key
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;value&gt;</command></term>
+    <listitem>
+      <para>
+        Value to assign to &lt;newkey&gt;
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="troveclient_subcommand_resize-instance">
+        <title>trove resize-instance command</title>
+        <screen><computeroutput>usage: trove resize-instance &lt;instance&gt; &lt;flavor_id&gt;</computeroutput></screen>
+        <para>
+Resizes an instance with a new flavor.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;instance&gt;</command></term>
     <listitem>
       <para>
-        UUID of the instance.
+        ID of the instance.
       </para>
     </listitem>
   </varlistentry>
@@ -1370,7 +1754,7 @@ Resizes the flavor of an instance.
     <term><command>&lt;flavor_id&gt;</command></term>
     <listitem>
       <para>
-        Flavor of the instance.
+        New flavor of the instance.
       </para>
     </listitem>
   </varlistentry>
@@ -1387,7 +1771,7 @@ Resizes the volume size of an instance.
     <term><command>&lt;instance&gt;</command></term>
     <listitem>
       <para>
-        UUID of the instance.
+        ID of the instance.
       </para>
     </listitem>
   </varlistentry>
@@ -1395,7 +1779,7 @@ Resizes the volume size of an instance.
     <term><command>&lt;size&gt;</command></term>
     <listitem>
       <para>
-        Size of the instance disk in GB.
+        New size of the instance disk volume in GB.
       </para>
     </listitem>
   </varlistentry>
@@ -1405,14 +1789,14 @@ Resizes the volume size of an instance.
         <title>trove restart command</title>
         <screen><computeroutput>usage: trove restart &lt;instance&gt;</computeroutput></screen>
         <para>
-Restarts the instance.
+Restarts an instance.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;instance&gt;</command></term>
     <listitem>
       <para>
-        UUID of the instance.
+        ID of the instance.
       </para>
     </listitem>
   </varlistentry>
@@ -1422,14 +1806,14 @@ Restarts the instance.
         <title>trove root-enable command</title>
         <screen><computeroutput>usage: trove root-enable &lt;instance&gt;</computeroutput></screen>
         <para>
-Enables root for a instance.
+Enables root for an instance and resets if already exists.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;instance&gt;</command></term>
     <listitem>
       <para>
-        UUID of the instance.
+        ID of the instance.
       </para>
     </listitem>
   </varlistentry>
@@ -1439,14 +1823,14 @@ Enables root for a instance.
         <title>trove root-show command</title>
         <screen><computeroutput>usage: trove root-show &lt;instance&gt;</computeroutput></screen>
         <para>
-Gets root enabled status for a instance.
+Gets status if root was ever enabled for an instance.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;instance&gt;</command></term>
     <listitem>
       <para>
-        UUID of the instance.
+        ID of the instance.
       </para>
     </listitem>
   </varlistentry>
@@ -1463,7 +1847,7 @@ Creates a security group rule.
     <term><command>&lt;security_group&gt;</command></term>
     <listitem>
       <para>
-        Security group name.
+        Security group ID.
       </para>
     </listitem>
   </varlistentry>
@@ -1488,7 +1872,7 @@ Deletes a security group rule.
     <term><command>&lt;security_group_rule&gt;</command></term>
     <listitem>
       <para>
-      Name of security group rule.
+        Name of security group rule.
       </para>
     </listitem>
   </varlistentry>
@@ -1501,18 +1885,35 @@ Deletes a security group rule.
 Lists all security groups.
         </para>
     </section>
-    <section xml:id="troveclient_subcommand_secgroup-show">
-        <title>trove secgroup-show command</title>
-        <screen><computeroutput>usage: trove secgroup-show &lt;security_group&gt;</computeroutput></screen>
+    <section xml:id="troveclient_subcommand_secgroup-list-rules">
+        <title>trove secgroup-list-rules command</title>
+        <screen><computeroutput>usage: trove secgroup-list-rules &lt;security_group&gt;</computeroutput></screen>
         <para>
-Shows details about a security group.
+Lists all rules for a security group.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;security_group&gt;</command></term>
     <listitem>
       <para>
-        ID of the security group.
+        Security group ID.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="troveclient_subcommand_secgroup-show">
+        <title>trove secgroup-show command</title>
+        <screen><computeroutput>usage: trove secgroup-show &lt;security_group&gt;</computeroutput></screen>
+        <para>
+Shows details of a security group.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;security_group&gt;</command></term>
+    <listitem>
+      <para>
+        Security group ID
       </para>
     </listitem>
   </varlistentry>
@@ -1529,7 +1930,62 @@ Shows details of an instance.
     <term><command>&lt;instance&gt;</command></term>
     <listitem>
       <para>
-        ID of the instance.
+        ID or name of the instance.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="troveclient_subcommand_update">
+        <title>trove update command</title>
+        <screen><computeroutput>usage: trove update &lt;instance&gt;
+                    [--name &lt;name&gt;] [--configuration &lt;configuration&gt;]
+                    [--detach-replica-source] [--remove_configuration]</computeroutput></screen>
+        <para>
+Updates an instance: Edits name, configuration, or replica source.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;instance&gt;</command></term>
+    <listitem>
+      <para>
+        UUID of the instance.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--name &lt;name&gt;</command></term>
+    <listitem>
+      <para>
+        Name of the instance.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--configuration &lt;configuration&gt;</command></term>
+    <listitem>
+      <para>
+      ID of the configuration reference to attach.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--detach-replica-source</command></term>
+    <listitem>
+      <para>
+        Detach the replica instance from its
+      replication source.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--remove_configuration</command></term>
+    <listitem>
+      <para>
+        Drops the current configuration reference.
       </para>
     </listitem>
   </varlistentry>
@@ -1541,14 +1997,14 @@ Shows details of an instance.
                          [--host &lt;host&gt;]
                          [--databases &lt;databases&gt; [&lt;databases&gt; ...]]</computeroutput></screen>
         <para>
-Creates a user.
+Creates a user on an instance.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;instance&gt;</command></term>
     <listitem>
       <para>
-        UUID of the instance.
+        ID of the instance.
       </para>
     </listitem>
   </varlistentry>
@@ -1593,14 +2049,14 @@ Creates a user.
         <title>trove user-delete command</title>
         <screen><computeroutput>usage: trove user-delete [--host &lt;host&gt;] &lt;instance&gt; &lt;name&gt;</computeroutput></screen>
         <para>
-Deletes a user from the instance.
+Deletes a user from an instance.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;instance&gt;</command></term>
     <listitem>
       <para>
-        UUID of the instance.
+        ID of the instance.
       </para>
     </listitem>
   </varlistentry>
@@ -1637,7 +2093,7 @@ Grants access to a database(s) for a user.
     <term><command>&lt;instance&gt;</command></term>
     <listitem>
       <para>
-        UUID of the instance.
+        ID of the instance.
       </para>
     </listitem>
   </varlistentry>
@@ -1674,14 +2130,14 @@ Grants access to a database(s) for a user.
         <title>trove user-list command</title>
         <screen><computeroutput>usage: trove user-list &lt;instance&gt;</computeroutput></screen>
         <para>
-Lists the users for a instance.
+Lists the users for an instance.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;instance&gt;</command></term>
     <listitem>
       <para>
-        UUID of the instance.
+        ID of the instance.
       </para>
     </listitem>
   </varlistentry>
@@ -1698,7 +2154,7 @@ Revokes access to a database for a user.
     <term><command>&lt;instance&gt;</command></term>
     <listitem>
       <para>
-        UUID of the instance.
+        ID of the instance.
       </para>
     </listitem>
   </varlistentry>
@@ -1735,14 +2191,14 @@ Revokes access to a database for a user.
         <title>trove user-show command</title>
         <screen><computeroutput>usage: trove user-show [--host &lt;host&gt;] &lt;instance&gt; &lt;name&gt;</computeroutput></screen>
         <para>
-Gets a user from the instance.
+Shows details of a user of an instance.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;instance&gt;</command></term>
     <listitem>
       <para>
-        UUID of the instance.
+        ID of the instance.
       </para>
     </listitem>
   </varlistentry>
@@ -1771,14 +2227,14 @@ Gets a user from the instance.
         <title>trove user-show-access command</title>
         <screen><computeroutput>usage: trove user-show-access [--host &lt;host&gt;] &lt;instance&gt; &lt;name&gt;</computeroutput></screen>
         <para>
-Gets a users access from the instance.
+Shows access details of a user of an instance.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;instance&gt;</command></term>
     <listitem>
       <para>
-        UUID of the instance.
+        ID of the instance.
       </para>
     </listitem>
   </varlistentry>
@@ -1810,14 +2266,15 @@ Gets a users access from the instance.
                                     [--new_password &lt;new_password&gt;]
                                     [--new_host &lt;new_host&gt;]</computeroutput></screen>
         <para>
-Updates a users attributes from the instance.
+Updates a user's attributes on an instance. At least one optional argument
+must be provided.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;instance&gt;</command></term>
     <listitem>
       <para>
-        UUID of the instance.
+        ID of the instance.
       </para>
     </listitem>
   </varlistentry>
@@ -1844,7 +2301,7 @@ Updates a users attributes from the instance.
     <term><command>--new_name &lt;new_name&gt;</command></term>
     <listitem>
       <para>
-      Optional new name of user.
+        Optional new name of user.
       </para>
     </listitem>
   </varlistentry>
@@ -1852,7 +2309,7 @@ Updates a users attributes from the instance.
     <term><command>--new_password &lt;new_password&gt;</command></term>
     <listitem>
       <para>
-      Optional new password of user.
+        Optional new password of user.
       </para>
     </listitem>
   </varlistentry>
@@ -1860,7 +2317,7 @@ Updates a users attributes from the instance.
     <term><command>--new_host &lt;new_host&gt;</command></term>
     <listitem>
       <para>
-      Optional new host of user.
+        Optional new host of user.
       </para>
     </listitem>
   </varlistentry>
