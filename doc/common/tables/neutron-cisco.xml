@@ -127,6 +127,80 @@
         <td>(IntOpt) Status check interval for Cisco CSR IPSec connections</td>
       </tr>
       <tr>
+        <th colspan="2">[general]</th>
+      </tr>
+      <tr>
+        <td>backlog_processing_interval = 10</td>
+        <td>(IntOpt) Time in seconds between renewed scheduling attempts of non-scheduled routers.</td>
+      </tr>
+      <tr>
+        <td>cfg_agent_down_time = 60</td>
+        <td>(IntOpt) Seconds of no status update until a cfg agent is considered down.</td>
+      </tr>
+      <tr>
+        <td>default_security_group = mgmt_sec_grp</td>
+        <td>(StrOpt) Default security group applied on management port. Default value is mgmt_sec_grp.</td>
+      </tr>
+      <tr>
+        <td>ensure_nova_running = True</td>
+        <td>(BoolOpt) Ensure that Nova is running before attempting to create any VM.</td>
+      </tr>
+      <tr>
+        <td>l3_admin_tenant = L3AdminTenant</td>
+        <td>(StrOpt) Name of the L3 admin tenant.</td>
+      </tr>
+      <tr>
+        <td>management_network = osn_mgmt_nw</td>
+        <td>(StrOpt) Name of management network for device configuration. Default value is osn_mgmt_nw</td>
+      </tr>
+      <tr>
+        <td>service_vm_config_path = /opt/stack/data/neutron/cisco/config_drive</td>
+        <td>(StrOpt) Path to config drive files for service VM instances.</td>
+      </tr>
+      <tr>
+        <td>templates_path = /opt/stack/data/neutron/cisco/templates</td>
+        <td>(StrOpt) Path to templates for hosting devices.</td>
+      </tr>
+      <tr>
+        <th colspan="2">[hosting_devices]</th>
+      </tr>
+      <tr>
+        <td>csr1kv_booting_time = 420</td>
+        <td>(IntOpt) Booting time in seconds before a CSR1kv becomes operational.</td>
+      </tr>
+      <tr>
+        <td>csr1kv_cfgagent_router_driver = neutron.plugins.cisco.cfg_agent.device_drivers.csr1kv.csr1kv_routing_driver.CSR1kvRoutingDriver</td>
+        <td>(StrOpt) Config agent driver for CSR1kv.</td>
+      </tr>
+      <tr>
+        <td>csr1kv_configdrive_template = csr1kv_cfg_template</td>
+        <td>(StrOpt) CSR1kv configdrive template file.</td>
+      </tr>
+      <tr>
+        <td>csr1kv_device_driver = neutron.plugins.cisco.l3.hosting_device_drivers.csr1kv_hd_driver.CSR1kvHostingDeviceDriver</td>
+        <td>(StrOpt) Hosting device driver for CSR1kv.</td>
+      </tr>
+      <tr>
+        <td>csr1kv_flavor = 621</td>
+        <td>(StrOpt) UUID of Nova flavor for CSR1kv.</td>
+      </tr>
+      <tr>
+        <td>csr1kv_image = csr1kv_openstack_img</td>
+        <td>(StrOpt) Name of Glance image for CSR1kv.</td>
+      </tr>
+      <tr>
+        <td>csr1kv_password = cisco</td>
+        <td>(StrOpt) Password to use for CSR1kv configurations.</td>
+      </tr>
+      <tr>
+        <td>csr1kv_plugging_driver = neutron.plugins.cisco.l3.plugging_drivers.n1kv_trunking_driver.N1kvTrunkingPlugDriver</td>
+        <td>(StrOpt) Plugging driver for CSR1kv.</td>
+      </tr>
+      <tr>
+        <td>csr1kv_username = stack</td>
+        <td>(StrOpt) Username to use for CSR1kv configurations.</td>
+      </tr>
+      <tr>
         <th colspan="2">[ml2_cisco]</th>
       </tr>
       <tr>
@@ -136,6 +210,29 @@
       <tr>
         <td>vlan_name_prefix = q-</td>
         <td>(StrOpt) VLAN Name prefix</td>
+      </tr>
+      <tr>
+        <th colspan="2">[n1kv]</th>
+      </tr>
+      <tr>
+        <td>management_port_profile = osn_mgmt_pp</td>
+        <td>(StrOpt) Name of N1kv port profile for management ports.</td>
+      </tr>
+      <tr>
+        <td>t1_network_profile = osn_t1_np</td>
+        <td>(StrOpt) Name of N1kv network profile for T1 networks (i.e., trunk networks for VXLAN segmented traffic).</td>
+      </tr>
+      <tr>
+        <td>t1_port_profile = osn_t1_pp</td>
+        <td>(StrOpt) Name of N1kv port profile for T1 ports (i.e., ports carrying traffic from VXLAN segmented networks).</td>
+      </tr>
+      <tr>
+        <td>t2_network_profile = osn_t2_np</td>
+        <td>(StrOpt) Name of N1kv network profile for T2 networks (i.e., trunk networks for VLAN segmented traffic).</td>
+      </tr>
+      <tr>
+        <td>t2_port_profile = osn_t2_pp</td>
+        <td>(StrOpt) Name of N1kv port profile for T2 ports (i.e., ports carrying traffic from VLAN segmented networks).</td>
       </tr>
     </tbody>
   </table>
