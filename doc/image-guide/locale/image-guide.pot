@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-08-20 06:09+0000\n"
+"POT-Creation-Date: 2014-09-03 06:08+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -9,52 +9,92 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ./doc/image-guide/section_windows-example.xml:7(title)
+#: ./doc/image-guide/section_windows-example.xml:11(title)
 msgid "Example: Microsoft Windows image"
 msgstr ""
 
-#: ./doc/image-guide/section_windows-example.xml:8(para)
-msgid "We do not yet have a fully documented example of how to create a Microsoft Windows image. You can use libvirt to install Windows from an installation DVD using the same approach as with the CentOS and Ubuntu examples. Once the initial install is done, you will need to perform some Windows-specific customizations."
+#: ./doc/image-guide/section_windows-example.xml:12(para)
+msgid "This example creates a Windows Server 2012 qcow2 image, using <placeholder-1/> and the KVM hypervisor."
 msgstr ""
 
-#: ./doc/image-guide/section_windows-example.xml:13(title)
-msgid "Install VirtIO drivers"
-msgstr ""
-
-#: ./doc/image-guide/section_windows-example.xml:14(para)
-msgid "Installing the <link href=\"http://www.linux-kvm.org/page/WindowsGuestDrivers/Download_Drivers\">VirtIO paravirtualizaion drivers for Windows</link> will improve virtual machine performance when using KVM as the hypervisor to run Windows."
-msgstr ""
-
-#: ./doc/image-guide/section_windows-example.xml:19(title)
-msgid "Sysprep"
+#: ./doc/image-guide/section_windows-example.xml:17(para)
+msgid "Follow this steps to prepare the installation:"
 msgstr ""
 
 #: ./doc/image-guide/section_windows-example.xml:20(para)
-msgid "Microsoft has a special tool called <link href=\"http://technet.microsoft.com/en-us/library/cc766049(v=ws.10).aspx\">Sysprep</link> that must be run inside of a Windows guest to prepare it for use as a virtual machine image. On Windows, invoke sysprep, as follows: <placeholder-1/>"
+msgid "Download a Windows Server 2012 installation ISO. Evaluation images are available on <link href=\"http://www.microsoft.com/en-us/evalcenter/evaluate-windows-server-2012\">the Microsoft website</link> (registration required)."
 msgstr ""
 
-#: ./doc/image-guide/section_windows-example.xml:27(title)
-msgid "cloudbase-init"
+#: ./doc/image-guide/section_windows-example.xml:26(para)
+msgid "Download the signed VirtIO drivers ISO from the <link href=\"http://alt.fedoraproject.org/pub/alt/virtio-win/latest/images/\">Fedora website</link>."
 msgstr ""
 
-#: ./doc/image-guide/section_windows-example.xml:28(para)
-msgid "<link href=\"http://www.cloudbase.it/cloud-init-for-windows-instances/\">cloudbase-init</link> is a Windows port of cloud-init that should be installed inside of the guest. The <link href=\"https://github.com/cloudbase/cloudbase-init\">source code</link> is available on GitHub."
+#: ./doc/image-guide/section_windows-example.xml:31(para)
+msgid "Create a 10GB qcow2 image:"
 msgstr ""
 
-#: ./doc/image-guide/section_windows-example.xml:34(title)
-msgid "Jordan Rinke's OpenStack Windows resources"
+#: ./doc/image-guide/section_windows-example.xml:37(para)
+msgid "Start the Windows Server 2012 installation with the <placeholder-1/> command:"
 msgstr ""
 
-#: ./doc/image-guide/section_windows-example.xml:35(para)
-msgid "Jordan Rinke maintains <link href=\"https://github.com/jordanrinke/openstack\">a collection of resources</link> for managing OpenStack Windows virtual machine guests."
+#: ./doc/image-guide/section_windows-example.xml:46(para)
+msgid "Use <placeholder-1/> or <placeholder-2/> to connect to the VM and start the Windows installation."
 msgstr ""
 
-#: ./doc/image-guide/section_windows-example.xml:40(title)
-msgid "Windows instances require the timezone to be \"localtime\""
+#: ./doc/image-guide/section_windows-example.xml:51(para)
+msgid "Enable the VirtIO drivers."
 msgstr ""
 
-#: ./doc/image-guide/section_windows-example.xml:41(para)
-msgid "When uploading Windows images, you must set the <literal>os_type</literal> parameter to <literal>windows</literal>, which causes instances to use the local time zone. Failing to set this will cause the clock timezone to be UTC, which has unexpected side effects in Windows."
+#: ./doc/image-guide/section_windows-example.xml:52(para)
+msgid "The disk is not detected by default by the Windows installer. When requested to choose an installation target, click <guibutton>Load driver</guibutton> and browse the file system to select the <filename>E:\\WIN8\\AMD64</filename> folder. The Windows installer displays a list of drivers to install. Select the VirtIO SCSI and network drivers, and continue the installation."
+msgstr ""
+
+#: ./doc/image-guide/section_windows-example.xml:58(para)
+msgid "Once the installation is completed, the VM restarts. Define a password for the administrator when prompted."
+msgstr ""
+
+#: ./doc/image-guide/section_windows-example.xml:62(para)
+msgid "Log in as administrator and start a command window."
+msgstr ""
+
+#: ./doc/image-guide/section_windows-example.xml:65(para)
+msgid "Complete the VirtIO drivers installation by running the following command:"
+msgstr ""
+
+#: ./doc/image-guide/section_windows-example.xml:70(para)
+msgid "To allow <glossterm>Cloudbase-Init</glossterm> to run scripts during an instance boot, set the PowerShell execution policy to be unrestricted:"
+msgstr ""
+
+#: ./doc/image-guide/section_windows-example.xml:77(para)
+msgid "Download and install Cloudbase-Init:"
+msgstr ""
+
+#: ./doc/image-guide/section_windows-example.xml:80(para)
+msgid "In the <guilabel>configuration options</guilabel> window, change the following settings:"
+msgstr ""
+
+#: ./doc/image-guide/section_windows-example.xml:83(para)
+msgid "Username: <literal>Administrator</literal>"
+msgstr ""
+
+#: ./doc/image-guide/section_windows-example.xml:86(para)
+msgid "Network adapter to configure: <literal>Red Hat VirtIO Ethernet Adapter</literal>"
+msgstr ""
+
+#: ./doc/image-guide/section_windows-example.xml:90(para)
+msgid "Serial port for logging: <literal>COM1</literal>"
+msgstr ""
+
+#: ./doc/image-guide/section_windows-example.xml:93(para)
+msgid "When the installation is done, in the <guilabel>Complete the Cloudbase-Init Setup Wizard</guilabel> window, select the <guilabel>Run Sysprep</guilabel> and <guilabel>Shutdown</guilabel> check boxes and click <guibutton>Finish</guibutton>."
+msgstr ""
+
+#: ./doc/image-guide/section_windows-example.xml:97(para)
+msgid "Wait for the machine shutdown."
+msgstr ""
+
+#: ./doc/image-guide/section_windows-example.xml:101(para)
+msgid "Your image is ready to upload to the Image Service:"
 msgstr ""
 
 #: ./doc/image-guide/section_glance_image-formats.xml:7(title)
