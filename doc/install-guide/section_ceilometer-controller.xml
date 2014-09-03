@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter [
+<!ENTITY % openstack SYSTEM "../common/entities/openstack.ent">
+%openstack;
+]>
+<section xmlns="http://docbook.org/ns/docbook"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  version="5.0"
+  xml:id="ceilometer-controller-install">
+  <title>Install and configure controller node</title>
+  <para>This section describes how to install and configure the Telemetry
+    module, code-named ceilometer, on the controller node. The Telemetry
+    module uses separate agents to collect measurements from each OpenStack
+    service in your environment.</para>
+  <procedure os="ubuntu;rhel;centos;fedora;sles;opensuse">
+    <title>To configure prerequisites</title>
+    <para>Before you install and configure Telemetry, you must install
+      <application>MongoDB</application>, create a MongoDB database, and
+      create Identity service credentials including endpoints.</para>
+    <step>
+      <para>Install the MongoDB package:</para>
+      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install mongodb-server mongodb</userinput></screen>
+      <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install mongodb</userinput></screen>
+      <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install mongodb-server</userinput></screen>
+    </step>
+    <step>
+      <para>Edit the <filename>/etc/mongodb.conf</filename> file and
+        complete the following actions:</para>
+      <substeps>
+        <step>
+          <para>Configure the <literal>bind_ip</literal> key to use the
+            management interface IP address of the controller node.</para>
+          <programlisting language="ini">bind_ip = 10.0.0.11</programlisting>
+        </step>
+        <step>
+          <para>By default, MongoDB creates several 1&nbsp;GB journal files
+            in the <filename>/var/lib/mongodb/journal</filename>
+            directory. If you want to reduce the size of each journal file
+            to 128&nbsp;MB and limit total journal space consumption to
+            512&nbsp;MB, assert the <literal>smallfiles</literal> key:</para>
+          <programlisting language="ini">smallfiles = true</programlisting>
+          <para os="ubuntu">If you change the journaling configuration,
+            stop the MongoDB service, remove the initial journal files, and
+            start the service:</para>
+          <screen os="ubuntu"><prompt>#</prompt> <userinput>service mongodb stop</userinput>
+<prompt>#</prompt> <userinput>rm /var/lib/mongodb/journal/prealloc.*</userinput>
+<prompt>#</prompt> <userinput>service mongodb start</userinput></screen>
+          <para>You can also disable journaling. For more information, see
+            the <link xlink:href="http://docs.mongodb.org/manual/"
+            >MongoDB manual</link>.</para>
+        </step>
+        <step os="ubuntu">
+          <para>Restart the MongoDB service:</para>
+          <screen><prompt>#</prompt> <userinput>service mongodb restart</userinput></screen>
+        </step>
+        <step os="centos;fedora;opensuse;rhel;sles">
+          <para>Start the MongoDB services and configure them to start when
+            the system boots:</para>
+          <screen os="opensuse;sles"><prompt>#</prompt> <userinput>service mongodb start</userinput>
+<prompt>#</prompt> <userinput>chkconfig mongodb on</userinput></screen>
+      <!-- NB: The use of mongod, and not mongodb, in the below screen is
+      intentional. -->
+          <screen os="centos;fedora;rhel"><prompt>#</prompt> <userinput>service mongod start</userinput>
+<prompt>#</prompt> <userinput>chkconfig mongod on</userinput></screen>
+        </step>
+      </substeps>
+    </step>
+    <step>
+      <para>Create the <literal>ceilometer</literal> database:</para>
+      <screen><prompt>#</prompt> <userinput>mongo --host <replaceable>controller</replaceable> --eval '
+  db = db.getSiblingDB("ceilometer");
+  db.addUser({user: "ceilometer",
+  pwd: "<replaceable>CEILOMETER_DBPASS</replaceable>",
+  roles: [ "readWrite", "dbAdmin" ]})'</userinput></screen>
+      <para>Replace <replaceable>CEILOMETER_DBPASS</replaceable> with a
+        suitable password.</para>
+    </step>
+    <step>
+      <para>Source the <literal>admin</literal> credentials to gain access
+        to admin-only CLI commands:</para>
+      <screen><prompt>$</prompt> <userinput>source admin-openrc.sh</userinput></screen>
+    </step>
+    <step>
+      <para>To create the Identity service credentials:</para>
+      <substeps>
+        <step>
+          <para>Create the <literal>ceilometer</literal> user:</para>
+          <screen><prompt>$</prompt> <userinput>keystone user-create --name ceilometer --pass <replaceable>CEILOMETER_PASS</replaceable> --email <replaceable>EMAIL_ADDRESS</replaceable></userinput></screen>
+          <para>Replace <replaceable>CEILOMETER_PASS</replaceable> with a
+            suitable password and <replaceable>EMAIL_ADDRESS</replaceable> with
+            a suitable e-mail address.</para>
+        </step>
+        <step>
+          <para>Link the <literal>ceilometer</literal> user to the
+            <literal>service</literal> tenant and <literal>admin</literal>
+            role:</para>
+         <screen><prompt>$</prompt> <userinput>keystone user-role-add --user ceilometer --tenant service --role admin</userinput></screen>
+        </step>
+        <step>
+          <para>Create the <literal>ceilometer</literal> service:</para>
+          <screen><prompt>$</prompt> <userinput>keystone service-create --name ceilometer --type metering \
+  --description "Telemetry"</userinput></screen>
+        </step>
+        <step>
+          <para>Create the Identity service endpoints:</para>
+          <screen><prompt>$</prompt> <userinput>keystone endpoint-create \
+  --service-id $(keystone service-list | awk '/ metering / {print $2}') \
+  --publicurl http://<replaceable>controller</replaceable>:8777 \
+  --internalurl http://<replaceable>controller</replaceable>:8777 \
+  --adminurl http://<replaceable>controller</replaceable>:8777</userinput></screen>
+        </step>
+      </substeps>
+    </step>
+  </procedure>
+  <procedure os="debian">
+    <title>To configure prerequisites</title>
+    <para>Before you install and configure Telemetry, you must install
+      <application>MongoDB</application>.</para>
+    <step>
+      <para>Install the MongoDB package:</para>
+      <screen><prompt>#</prompt> <userinput>apt-get install mongodb-server</userinput></screen>
+    </step>
+    <step>
+      <para>Edit the <filename>/etc/mongodb.conf</filename> file and
+        complete the following actions:</para>
+      <substeps>
+        <step>
+          <para>Configure the <literal>bind_ip</literal> key to use the
+            management interface IP address of the controller node.</para>
+          <programlisting language="ini">bind_ip = 10.0.0.11</programlisting>
+        </step>
+        <step>
+          <para>By default, MongoDB creates several 1&nbsp;GB journal files
+            in the <filename>/var/lib/mongodb/journal</filename>
+            directory. If you want to reduce the size of each journal file
+            to 128&nbsp;MB and limit total journal space consumption to
+            512&nbsp;MB, assert the <literal>smallfiles</literal> key:</para>
+          <programlisting language="ini">smallfiles = true</programlisting>
+          <para>If you change the journaling configuration, stop the MongoDB
+            service, remove the initial journal files, and start the
+            service:</para>
+          <screen><prompt>#</prompt> <userinput>service mongodb stop</userinput>
+<prompt>#</prompt> <userinput>rm /var/lib/mongodb/journal/prealloc.*</userinput>
+<prompt>#</prompt> <userinput>service mongodb start</userinput></screen>
+          <para>You can also disable journaling. For more information, see
+            the <link xlink:href="http://docs.mongodb.org/manual/"
+            >MongoDB manual</link>.</para>
+        </step>
+        <step>
+          <para>Restart the MongoDB service:</para>
+          <screen><prompt>#</prompt> <userinput>service mongodb restart</userinput></screen>
+        </step>
+      </substeps>
+    </step>
+  </procedure>
+  <procedure os="ubuntu;rhel;centos;fedora;sles;opensuse">
+    <title>To install and configure the Telemetry module components</title>
+    <step>
+      <para>Install the packages:</para>
+      <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install ceilometer-api ceilometer-collector ceilometer-agent-central \
+  ceilometer-agent-notification ceilometer-alarm-evaluator ceilometer-alarm-notifier \
+  python-ceilometerclient</userinput></screen>
+      <screen os="centos;fedora;rhel"><prompt>#</prompt> <userinput>yum install openstack-ceilometer-api openstack-ceilometer-collector \
+  openstack-ceilometer-notification openstack-ceilometer-central openstack-ceilometer-alarm \
+  python-ceilometerclient</userinput></screen>
+      <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-ceilometer-api openstack-ceilometer-collector \
+  openstack-ceilometer-agent-notification openstack-ceilometer-agent-central python-ceilometerclient \
+  openstack-ceilometer-alarm-evaluator openstack-ceilometer-alarm-notifier</userinput></screen>
+    </step>
+    <step>
+      <para>Generate a random value to use as the metering secret:</para>
+      <screen os="ubuntu;rhel;centos;fedora"><prompt>#</prompt> <userinput>openssl rand -hex 10</userinput></screen>
+      <screen os="sles;opensuse"><prompt>#</prompt> <userinput>openssl rand 10 | hexdump -e '1/1 "%.2x"'</userinput></screen>
+    </step>
+    <step>
+      <para>Edit the <filename>/etc/ceilometer/ceilometer.conf</filename> file
+        and complete the following actions:</para>
+      <substeps>
+        <step>
+          <para>In the <literal>[database]</literal> section,
+            configure database access:</para>
+          <programlisting language="ini">[database]
+...
+connection = mongodb://ceilometer:<replaceable>CEILOMETER_DBPASS</replaceable>@<replaceable>controller</replaceable>:27017/ceilometer</programlisting>
+          <para>Replace <replaceable>CEILOMETER_DBPASS</replaceable> with
+            the password you chose for the Telemetry module database.</para>
+        </step>
+        <step>
+          <para>In the <literal>[DEFAULT]</literal> section, configure
+            <application>RabbitMQ</application> message broker access:</para>
+          <programlisting language="ini">[DEFAULT]
+...
+rpc_backend = rabbit
+rabbit_host = <replaceable>controller</replaceable>
+rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
+          <para>Replace <replaceable>RABBIT_PASS</replaceable> with the password
+            you chose for the <literal>guest</literal> account in
+            <application>RabbitMQ</application>.</para>
+        </step>
+        <step>
+          <para>In the <literal>[DEFAULT]</literal> and
+            <literal>[keystone_authtoken]</literal> sections, configure
+            Identity service access:</para>
+          <programlisting language="ini">[DEFAULT]
+...
+auth_strategy = keystone
+
+[keystone_authtoken]
+...
+auth_uri = http://<replaceable>controller</replaceable>:5000/v2.0
+auth_host = <replaceable>controller</replaceable>
+auth_port = 35357
+auth_protocol = http
+admin_tenant_name = service
+admin_user = ceilometer
+admin_password = <replaceable>CEILOMETER_PASS</replaceable></programlisting>
+          <para>Replace <replaceable>CEILOMETER_PASS</replaceable> with the
+            password you chose for the <literal>celiometer</literal>
+            user in the Identity service.</para>
+        </step>
+        <step>
+          <para>In the <literal>[service_credentials]</literal>
+            section, configure service credentials:</para>
+          <programlisting language="ini">[service_credentials]
+...
+os_auth_url = http://<replaceable>controller</replaceable>:5000/v2.0
+os_username = ceilometer
+os_tenant_name = service
+os_password = <replaceable>CEILOMETER_PASS</replaceable></programlisting>
+          <para>Replace <replaceable>CEILOMETER_PASS</replaceable> with
+            the password you chose for the <literal>ceilometer</literal>
+            user in the Identity service.</para>
+        </step>
+        <step>
+          <para>In the <literal>[publisher]</literal> section, configure
+            the metering secret:</para>
+          <programlisting language="ini">[publisher]
+...
+metering_secret = <replaceable>METERING_SECRET</replaceable></programlisting>
+          <para>Replace <replaceable>METERING_SECRET</replaceable> with the
+            random value that you generated in a previous step.</para>
+        </step>
+        <step os="ubuntu">
+          <para>In the <literal>[DEFAULT]</literal> section, configure the log
+            directory:</para>
+          <programlisting language="ini">[DEFAULT]
+...
+log_dir = /var/log/ceilometer</programlisting>
+        </step>
+        <step os="opensuse;sles">
+          <para>In the <literal>[collector]</literal> section, configure the
+            dispatcher:</para>
+<!-- should this be 'dispatcher = database' ? -->
+          <programlisting language="ini">[collector]
+...
+dispatcher = database</programlisting>
+        </step>
+      </substeps>
+    </step>
+  </procedure>
+
+  <procedure os="debian">
+  <title>To install and configure the Telemetry module components</title>
+    <step>
+      <para>Install the packages:</para>
+      <screen><prompt>#</prompt> <userinput>apt-get install ceilometer-api ceilometer-collector ceilometer-agent-central \
+  ceilometer-agent-notification ceilometer-alarm-evaluator ceilometer-alarm-notifier \
+  python-ceilometerclient</userinput></screen>
+    </step>
+    <step>
+      <para>Respond to prompts for
+        <link linkend="debconf-dbconfig-common">database management</link>,
+        <link linkend="debconf-keystone_authtoken">Identity service
+        credentials</link>,
+        <link linkend="debconf-api-endpoints">service endpoint
+        registration</link>, and
+        <link linkend="debconf-rabbitmq">message broker
+        credentials</link>.</para>
+    </step>
+    <step>
+      <para>Generate a random value to use as the metering secret:</para>
+      <screen><prompt>#</prompt> <userinput>openssl rand -hex 10</userinput></screen>
+    </step>
+    <step>
+      <para>Edit the <filename>/etc/ceilometer/ceilometer.conf</filename> file
+        and complete the following actions:</para>
+      <substeps>
+        <step>
+          <para>In the <literal>[publisher]</literal> section, configure
+            the metering secret:</para>
+          <programlisting language="ini">[publisher]
+...
+metering_secret = <replaceable>METERING_SECRET</replaceable></programlisting>
+          <para>Replace <replaceable>METERING_SECRET</replaceable> with the
+            random value that you generated in a previous step.</para>
+        </step>
+        <step>
+          <para>In the <literal>[service_credentials]</literal>
+            section, configure service credentials:</para>
+          <programlisting language="ini">[service_credentials]
+...
+os_auth_url = http://<replaceable>controller</replaceable>:5000/v2.0
+os_username = ceilometer
+os_tenant_name = service
+os_password = <replaceable>CEILOMETER_PASS</replaceable></programlisting>
+          <para>Replace <replaceable>CEILOMETER_PASS</replaceable> with
+            the password you chose for the <literal>ceilometer</literal>
+            user in the Identity service.</para>
+        </step>
+      </substeps>
+    </step>
+  </procedure>
+  <procedure>
+    <title>To finalize installation</title>
+    <step os="ubuntu;debian">
+      <para>Restart the Telemetry services:</para>
+      <screen><prompt>#</prompt> <userinput>service ceilometer-agent-central restart</userinput>
+<prompt>#</prompt> <userinput>service ceilometer-agent-notification restart</userinput>
+<prompt>#</prompt> <userinput>service ceilometer-api restart</userinput>
+<prompt>#</prompt> <userinput>service ceilometer-collector restart</userinput>
+<prompt>#</prompt> <userinput>service ceilometer-alarm-evaluator restart</userinput>
+<prompt>#</prompt> <userinput>service ceilometer-alarm-notifier restart</userinput></screen>
+    </step>
+    <step os="rhel;centos;fedora;sles;opensuse">
+      <para>Start the Telemetry services and configure them to start when the
+        system boots:</para>
+      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>service openstack-ceilometer-api start</userinput>
+<prompt>#</prompt> <userinput>service openstack-ceilometer-notification start</userinput>
+<prompt>#</prompt> <userinput>service openstack-ceilometer-central start</userinput>
+<prompt>#</prompt> <userinput>service openstack-ceilometer-collector start</userinput>
+<prompt>#</prompt> <userinput>service openstack-ceilometer-alarm-evaluator start</userinput>
+<prompt>#</prompt> <userinput>service openstack-ceilometer-alarm-notifier start</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-api on</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-notification on</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-central on</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-collector on</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-alarm-evaluator on</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-alarm-notifier on</userinput></screen>
+      <screen os="sles;opensuse"><prompt>#</prompt> <userinput>service openstack-ceilometer-api start</userinput>
+<prompt>#</prompt> <userinput>service openstack-ceilometer-agent-notification start</userinput>
+<prompt>#</prompt> <userinput>service openstack-ceilometer-agent-central start</userinput>
+<prompt>#</prompt> <userinput>service openstack-ceilometer-collector start</userinput>
+<prompt>#</prompt> <userinput>service openstack-ceilometer-alarm-evaluator start</userinput>
+<prompt>#</prompt> <userinput>service openstack-ceilometer-alarm-notifier start</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-api on</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-agent-notification on</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-agent-central on</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-collector on</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-alarm-evaluator on</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-alarm-notifier on</userinput></screen>
+    </step>
+  </procedure>
+</section>
