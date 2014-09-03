@@ -222,6 +222,15 @@ emailAddress            = keystone@openstack.org
             <para>Make sure the certificate directory is only
                 accessible by root.</para>
         </note>
+        <note>
+            <para>The copying of the key and cert files may be better done
+                after first running <command>keystone-manage pki_setup</command>
+                since this command also creates other needed files, such
+                as the <filename>index.txt</filename> and <filename>serial</filename> files.</para>
+            <para>Also, when copying the necessary files to a different server
+                for replicating the functionality, the entire directory of
+                files is needed, not just the key and cert files.</para>
+        </note>
         <para>If your certificate directory path is different from the
             default <filename>/etc/keystone/ssl/certs</filename>, make
             sure it is reflected in the <literal>[signing]</literal>
