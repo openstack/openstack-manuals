@@ -3,25 +3,22 @@
   xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
   xml:id="basics-passwords">
   <?dbhtml-stop-chunking?>
-  <title>Passwords</title>
-  <para>The various OpenStack services and the required software like the
-    database and the messaging server have to be password protected. You use
-    these passwords when configuring a service and then again to access the
-    service. You have to choose a password while configuring the
-    service and later remember to use the same password when accessing it.
-    Optionally, you can generate random passwords with the
-    <application>pwgen</application> program. Or, to create passwords one at a
-    time, use the output of this command repeatedly:
-    <screen><prompt>$</prompt> <userinput>openssl rand -hex 10</userinput></screen>
-  </para>
-  <para>This guide uses the convention that
-    <literal><replaceable>SERVICE_PASS</replaceable></literal> is
-    the password to access the service <literal>SERVICE</literal> and
-    <literal><replaceable>SERVICE_DBPASS</replaceable></literal> is
-    the database password used by the service SERVICE to access the
-    database.
-  </para>
-  <para>The complete list of passwords you need to define in this guide are:
+  <title>Security</title>
+  <para>OpenStack services support various security methods including
+    password, policy, and encryption. Additionally, supporting services
+    including the database server and message broker support at least
+    password security.</para>
+  <para>To ease the installation process, this guide only covers password
+    security where applicable. You can create secure passwords manually,
+    generate them using a tool such as <application>pwgen</application>, or
+    by running the following command:</para>
+  <screen><prompt>$</prompt> <userinput>openssl rand -hex 10</userinput></screen>
+  <para>For OpenStack services, this guide uses
+    <replaceable>SERVICE_PASS</replaceable> to reference service account
+    passwords and <replaceable>SERVICE_DBPASS</replaceable> to reference
+    database passwords.</para>
+  <para>The following table provides a list of services that require
+    passwords and their associated references in the guide:
     <table rules="all">
       <caption>Passwords</caption>
       <thead>
@@ -35,7 +32,7 @@
           <td>Database password (no variable used)</td>
           <td>Root password for the database</td>
         </tr>
-        <tr os="ubuntu;opensuse;sles">
+        <tr>
           <td><literal><replaceable>RABBIT_PASS</replaceable></literal></td>
           <td>Password of user guest of RabbitMQ</td>
         </tr>
@@ -114,4 +111,17 @@
       </tbody>
     </table>
   </para>
+  <para>OpenStack and supporting services require administrative privileges
+    during installation and operation. In some cases, services perform
+    modifications to the host that can interfere with deployment automation
+    tools such as Ansible, Chef, and Puppet. For example, some OpenStack
+    services add a root wrapper to <literal>sudo</literal> that can interfere
+    with security policies. See the
+    <link xlink:href="http://docs.openstack.org/admin-guide-cloud/content/root-wrap-reference.html">Cloud Administrator Guide</link>
+    for more information. Also, the Networking service assumes default values
+    for kernel network parameters and modifies firewall rules. To avoid most
+    issues during your initial installation, we recommend using a stock
+    deployment of a supported distribution on your hosts. However, if you
+    choose to automate deployment of your hosts, review the configuration
+    and policies applied to them before proceeding further.</para>
 </section>
