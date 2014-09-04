@@ -459,6 +459,39 @@ security_group_api = neutron</programlisting>
 <prompt>#</prompt> <userinput>chkconfig neutron-server on</userinput></screen>
       <screen os="sles;opensuse"><prompt>#</prompt> <userinput>service openstack-neutron start</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-neutron on</userinput></screen>
+      <note os="rhel;centos;fedora">
+        <para>Unlike other services, Networking typically does not require
+          a separate step to populate the database because the
+          <systemitem class="service">neutron-server</systemitem> service
+          populates it automatically. However, the packages for these
+          distributions sometimes require running the
+          <command>neutron-db-manage</command> command prior to starting
+          the <systemitem class="service">neutron-server</systemitem>
+          service. We recommend attempting to start the service before
+          manually populating the database. If the service returns
+          database errors, perform the following operations:</para>
+        <procedure>
+          <step>
+            <para>Configure Networking to use long plug-in names:</para>
+            <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf DEFAULT \
+  core_plugin neutron.plugins.ml2.plugin.Ml2Plugin</userinput>
+<prompt>#</prompt> <userinput>openstack-config --set /etc/neutron/neutron.conf DEFAULT \
+  service_plugins neutron.services.l3_router.l3_router_plugin.L3RouterPlugin</userinput></screen>
+          </step>
+          <step>
+            <para>Populate the database:</para>
+            <screen><prompt>#</prompt> <userinput>su -s /bin/sh -c "neutron-db-manage --config-file /etc/neutron/neutron.conf \
+  --config-file /etc/neutron/plugin.ini upgrade head" neutron</userinput></screen>
+          </step>
+          <step>
+            <para>Attempt to start the
+              <systemitem class="service">neutron-server</systemitem> service
+              again. You can return the <literal>core_plugin</literal> and
+              <literal>service_plugins</literal> configuration keys to short
+              plug-in names.</para>
+          </step>
+        </procedure>
+      </note>
     </step>
     <step os="ubuntu;debian">
       <para>Restart the Networking service:</para>
