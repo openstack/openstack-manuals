@@ -282,7 +282,10 @@
           command. In this example, the backup is called <literal>backup1</literal>. In this
           example, replace <replaceable>INSTANCE_ID</replaceable> with
             <literal>97b4b853-80f6-414f-ba6f-c6f455a79ae6</literal>:</para>
-        <screen><prompt>$</prompt> <userinput>trove backup-create backup1 <replaceable>INSTANCE_ID</replaceable></userinput>
+        <note>
+          <para>This command syntax pertains only to python-troveclient version 1.0.6 and later. Earlier versions require you to pass in the backup name as the first argument.</para>
+        </note>
+        <screen><prompt>$</prompt> <userinput>trove backup-create <replaceable>INSTANCE_ID</replaceable> backup1</userinput>
 <computeroutput>+-------------+--------------------------------------+
 |   Property  |                Value                 |
 +-------------+--------------------------------------+
@@ -464,13 +467,13 @@
         <para>Use the trove <command>backup-create</command> command and specify:</para>
         <itemizedlist>
           <listitem>
-            <para>The name of the incremental backup you are creating:
-              <literal>backup1.1</literal></para>
-          </listitem>
-          <listitem>
             <para>The <replaceable>INSTANCE_ID</replaceable> of the database instance you are doing
               the incremental backup for (in this example,
                 <literal>792a6a56-278f-4a01-9997-d997fa126370</literal>)</para>
+          </listitem>
+          <listitem>
+            <para>The name of the incremental backup you are creating:
+              <literal>backup1.1</literal></para>
           </listitem>
           <listitem>
             <para>The <replaceable>BACKUP_ID</replaceable> of the parent backup. In this case, the
@@ -478,7 +481,7 @@
                 <literal>6dc3a9b7-1f3e-4954-8582-3f2e4942cddd</literal></para>
           </listitem>
         </itemizedlist>
-        <screen><prompt>$</prompt> <userinput>trove backup-create backup1.1 <replaceable>INSTANCE_ID</replaceable> --parent <replaceable>BACKUP_ID</replaceable></userinput>
+        <screen><prompt>$</prompt> <userinput>trove backup-create <replaceable>INSTANCE_ID</replaceable> backup1.1  --parent <replaceable>BACKUP_ID</replaceable></userinput>
 <computeroutput>+-------------+--------------------------------------+
 |   Property  |                Value                 |
 +-------------+--------------------------------------+
@@ -503,7 +506,7 @@
           when you specify the parent, pass in the ID of the incremental backup you just created in
           the previous step (<literal>backup1.1</literal>). In this example, it is
             <literal>1d474981-a006-4f62-b25f-43d7b8a7097e</literal>.</para>
-        <screen><prompt>$</prompt> <userinput>trove backup-create backup1.2 <replaceable>INSTANCE_ID</replaceable> --parent <replaceable>BACKUP_ID</replaceable></userinput>
+        <screen><prompt>$</prompt> <userinput>trove backup-create <replaceable>INSTANCE_ID</replaceable>  backup1.2  --parent <replaceable>BACKUP_ID</replaceable></userinput>
 <computeroutput>+-------------+--------------------------------------+
 |   Property  |                Value                 |
 +-------------+--------------------------------------+
@@ -675,15 +678,7 @@
         <title>Change the database configuration using a configuration group</title>
         <para>You can change a database's configuration by attaching a configuration group to a
           database instance. You do this by using the trove <command>configuration-attach</command>
-          command and passing in the ID of the configuration group and the ID of the database
-          instance.</para>
-        <para>Get the ID of the configuration group:</para>
-        <screen><prompt>$</prompt> <userinput>trove configuration-list</userinput>
-<computeroutput>+--------------------------------------+--------+-------------+--------------------------------------+
-|                  id                  |  name  | description |         datastore_version_id         |
-+--------------------------------------+--------+-------------+--------------------------------------+
-| 9a9ef3bc-079b-476a-9cbf-85aa64f898a5 | group1 |     None    | eeb574ce-f49a-48b6-820d-b2959fcd38bb |
-+--------------------------------------+--------+-------------+--------------------------------------+</computeroutput></screen>
+          command and passing in the ID of the database instance and the ID of the configuration group.</para>
         <para>Get the ID of the database instance:</para>
         <screen><prompt>$</prompt> <userinput>trove list</userinput>
 <computeroutput>+--------------------------------------+------------------+-----------+-------------------+--------+-----------+------+
@@ -691,8 +686,18 @@
 +--------------------------------------+------------------+-----------+-------------------+--------+-----------+------+
 | 26a265dd-1c88-4333-b3ed-6b4e9e87ffbb | mysql_instance_7 |   mysql   |     mysql-5.5     | ACTIVE |     6     |  5   |
 +--------------------------------------+------------------+-----------+-------------------+--------+-----------+------+</computeroutput></screen>
+        <para>Get the ID of the configuration group:</para>
+        <screen><prompt>$</prompt> <userinput>trove configuration-list</userinput>
+<computeroutput>+--------------------------------------+--------+-------------+--------------------------------------+
+|                  id                  |  name  | description |         datastore_version_id         |
++--------------------------------------+--------+-------------+--------------------------------------+
+| 9a9ef3bc-079b-476a-9cbf-85aa64f898a5 | group1 |     None    | eeb574ce-f49a-48b6-820d-b2959fcd38bb |
++--------------------------------------+--------+-------------+--------------------------------------+</computeroutput></screen>
         <para>Attach the configuration group to the database instance:</para>
-        <screen><prompt>$</prompt> <userinput>trove configuration-attach <replaceable>CONFIG_GROUP_ID</replaceable> <replaceable>DB_INSTANCE_ID</replaceable></userinput></screen>
+        <note>
+          <para>This command syntax pertains only to python-troveclient version 1.0.6 and later. Earlier versions require you to pass in the configuration group ID as the first argument.</para>
+        </note>
+        <screen><prompt>$</prompt> <userinput>trove configuration-attach <replaceable>DB_INSTANCE_ID</replaceable> <replaceable>CONFIG_GROUP_ID</replaceable></userinput></screen>
       </step>
       <step>
         <title>Re-examine the database configuration</title>
