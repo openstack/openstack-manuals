@@ -41,6 +41,31 @@
         <td>notification_workers = 1</td>
         <td>(IntOpt) Number of workers for notification service. A single notification agent is enabled by default.</td>
       </tr>
+      <tr>
+        <th colspan="2">[central]</th>
+      </tr>
+      <tr>
+        <td>partitioning_group_prefix = None</td>
+        <td>(StrOpt) Work-load partitioning group prefix. Use only if you want to run multiple central agents with different config files. For each sub-group of the central agent pool with the same partitioning_group_prefix a disjoint subset of pollsters should be loaded.</td>
+      </tr>
+      <tr>
+        <th colspan="2">[compute]</th>
+      </tr>
+      <tr>
+        <td>workload_partitioning = False</td>
+        <td>(BoolOpt) Enable work-load partitioning, allowing multiple compute agents to be run simultaneously.</td>
+      </tr>
+      <tr>
+        <th colspan="2">[coordination]</th>
+      </tr>
+      <tr>
+        <td>backend_url = None</td>
+        <td>(StrOpt) The backend URL to use for distributed coordination. If left empty, per-deployment central agent and per-host compute agent won't do workload partitioning and will only function correctly if a single instance of that service is running.</td>
+      </tr>
+      <tr>
+        <td>heartbeat = 1.0</td>
+        <td>(FloatOpt) Number of seconds between heartbeats for distributed coordination (float)</td>
+      </tr>
     </tbody>
   </table>
 </para>
