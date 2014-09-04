@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-09-01 06:23+0000\n"
+"POT-Creation-Date: 2014-09-04 06:11+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -150,7 +150,7 @@ msgstr ""
 msgid "Scalability and high availability"
 msgstr ""
 
-#: ./doc/networking-guide/ch_scalability-HA.xml:8(para) ./doc/networking-guide/section_ha-dvr.xml:12(para) ./doc/networking-guide/section_ha-l3.xml:12(para) ./doc/networking-guide/section_intro-namespaces.xml:12(para) ./doc/networking-guide/section_ha-dhcp.xml:12(para) ./doc/networking-guide/section_architecture-overview.xml:12(para) ./doc/networking-guide/ch_debugging.xml:8(para) ./doc/networking-guide/ch_networking-data-model.xml:12(para) ./doc/networking-guide/section_deployment-authentication.xml:12(para) ./doc/networking-guide/ch_plugins.xml:8(para) ./doc/networking-guide/section_architecture-server.xml:12(para)
+#: ./doc/networking-guide/ch_scalability-HA.xml:8(para) ./doc/networking-guide/section_ha-l3.xml:12(para) ./doc/networking-guide/section_intro-namespaces.xml:12(para) ./doc/networking-guide/section_ha-dhcp.xml:12(para) ./doc/networking-guide/section_architecture-overview.xml:12(para) ./doc/networking-guide/ch_debugging.xml:8(para) ./doc/networking-guide/ch_networking-data-model.xml:12(para) ./doc/networking-guide/section_deployment-authentication.xml:12(para) ./doc/networking-guide/ch_plugins.xml:8(para) ./doc/networking-guide/section_architecture-server.xml:12(para)
 msgid "Bacon ipsum dolor sit amet biltong meatloaf andouille, turducken bresaola pork belly beef ribs ham hock capicola tail prosciutto landjaeger meatball pork loin. Swine turkey jowl, porchetta doner boudin meatloaf. Shoulder capicola prosciutto, shank landjaeger short ribs sirloin turducken pork belly boudin frankfurter chuck. Salami shankle bresaola cow filet mignon ham hock shank."
 msgstr ""
 
@@ -162,8 +162,110 @@ msgstr ""
 msgid "FIXME"
 msgstr ""
 
-#: ./doc/networking-guide/section_ha-dvr.xml:11(title)
-msgid "DVR"
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: ./doc/networking-guide/section_ha-dvr.xml:24(None)
+msgid "@@image: 'images/dvr_diagram.png'; md5=8d69121eb03d90239cab504d21e1c64f"
+msgstr ""
+
+#: ./doc/networking-guide/section_ha-dvr.xml:10(title)
+msgid "Distributed Virtual Router (DVR)"
+msgstr ""
+
+#: ./doc/networking-guide/section_ha-dvr.xml:11(para)
+msgid "DVR stands for <glossterm baseform=\"distributed virtual router (DVR)\">Distributed Virtual Router</glossterm>. For OpenStack Networking you can provide high availability across compute nodes using a DVR configuration. Both the layer-2 and layer-3 agents work together on a compute node, and the L2 agent works in an enhanced mode for DVR, providing management for OVS rules. In this scenario you do not use a separate networking node unless a legacy one is in place already."
+msgstr ""
+
+#: ./doc/networking-guide/section_ha-dvr.xml:18(para)
+msgid "Here is a sample network topology showing how distributed routing occurs."
+msgstr ""
+
+#: ./doc/networking-guide/section_ha-dvr.xml:21(title)
+msgid "DVR configuration diagram"
+msgstr ""
+
+#: ./doc/networking-guide/section_ha-dvr.xml:28(para)
+msgid "The DVR agent takes responsibility for creating, updating, or deleting the routers in the router namespaces. For all clients in the network owned by the router, the DVR agent populates the ARP entry. By pre-populating ARP entries across compute nodes, the distributed virtual router ensures traffic goes to the correct destination. The integration bridge on a particular compute node identifies the incoming frame’s source MAC address as a DVR-unique MAC address because every compute node l2 agent knows all configured unique MAC addresses for DVR used in the cloud. The agent replaces the DVR-unique MAC Address with the green subnet interface MAC address and forwards the frame to the instance. By default, distributed routing is not turned on. When set to true, the layer-2 agent handles the DVR ports detected on the integration bridge. Also, when a tenant creates a router with <literal>neutron router-create</literal>, the Networking services creates only distributed routers after you have enabled distributed routing."
+msgstr ""
+
+#: ./doc/networking-guide/section_ha-dvr.xml:44(title)
+msgid "Configure Distributed Virtual Router (DVR)"
+msgstr ""
+
+#: ./doc/networking-guide/section_ha-dvr.xml:47(para)
+msgid "Edit the <filename>ovs_neutron_plugin.ini</filename> file to change <literal>enable_distributed_routing</literal> to <literal>True</literal>:"
+msgstr ""
+
+#: ./doc/networking-guide/section_ha-dvr.xml:53(para)
+msgid "Edit the <filename>/etc/neutron/neutron.conf</filename> file to set the base MAC address that the DVR system uses for unique MAC allocation with the <literal>dvr_base_mac</literal> setting:"
+msgstr ""
+
+#: ./doc/networking-guide/section_ha-dvr.xml:58(para)
+msgid "This <literal>dvr_base_mac</literal> value must be different from the <literal>base_mac</literal> value assigned for virtual ports to ensure port isolation and for troubleshooting purposes. The default is <literal>fa:16:3f:00:00:00</literal>. If you want four octets used, substitute again for the fourth octet (00), otherwise three octets are kept the same and the others are randomly generated."
+msgstr ""
+
+#: ./doc/networking-guide/section_ha-dvr.xml:68(para)
+msgid "Edit the <filename>/etc/neutron/neutron.conf</filename> file to set <literal>router_distributed</literal> to <literal>True</literal>."
+msgstr ""
+
+#: ./doc/networking-guide/section_ha-dvr.xml:74(para)
+msgid "Edit the <filename>l3_agent.ini</filename> file to set <literal>agent_mode</literal> to <literal>dvr</literal> on compute nodes for multi-node deployments:"
+msgstr ""
+
+#: ./doc/networking-guide/section_ha-dvr.xml:79(para)
+msgid "When using a separate networking host, set <literal>agent_mode</literal> to <literal>dvr_snat</literal>. Use <literal>dvr_snat</literal> for Devstack or other single-host deployments also."
+msgstr ""
+
+#: ./doc/networking-guide/section_ha-dvr.xml:86(para)
+msgid "In the <literal>[ml2]</literal> section, edit the <filename>ml2_conf.ini</filename> file to add <literal>l2population</literal>:"
+msgstr ""
+
+#: ./doc/networking-guide/section_ha-dvr.xml:93(para)
+msgid "In the <literal>[agent]</literal> section of the <filename>ml2_conf.ini</filename> file, set these configuration options to these values:"
+msgstr ""
+
+#: ./doc/networking-guide/section_ha-dvr.xml:102(para)
+msgid "Restart the OVS L2 agent."
+msgstr ""
+
+#: ./doc/networking-guide/section_ha-dvr.xml:105(para)
+msgid "Ubuntu/Debian:"
+msgstr ""
+
+#: ./doc/networking-guide/section_ha-dvr.xml:109(para)
+msgid "RHEL/CentOS/Fedora:"
+msgstr ""
+
+#: ./doc/networking-guide/section_ha-dvr.xml:113(para)
+msgid "SLES/openSUSE:"
+msgstr ""
+
+#: ./doc/networking-guide/section_ha-dvr.xml:121(title)
+msgid "DVR requirements"
+msgstr ""
+
+#: ./doc/networking-guide/section_ha-dvr.xml:124(para)
+msgid "You must use the ML2 plug-in for Open VSwitch (OVS) to enable DVR."
+msgstr ""
+
+#: ./doc/networking-guide/section_ha-dvr.xml:128(para)
+msgid "Be sure that your firewall or security groups allows UDP traffic over the VLAN, GRE, or VXLAN port to pass between the compute hosts."
+msgstr ""
+
+#: ./doc/networking-guide/section_ha-dvr.xml:134(title)
+msgid "DVR limitations"
+msgstr ""
+
+#: ./doc/networking-guide/section_ha-dvr.xml:137(para)
+msgid "Distributed virtual router configurations work with the Open vSwitch Modular Layer 2 driver only for Juno."
+msgstr ""
+
+#: ./doc/networking-guide/section_ha-dvr.xml:141(para)
+msgid "In order to enable true north-south bandwidth between hypervisors (compute nodes), you must use public IP addresses for every compute node and enable floating IPs."
+msgstr ""
+
+#: ./doc/networking-guide/section_ha-dvr.xml:146(para)
+msgid "For now, based on the current neutron design and architecture, DHCP cannot become distributed across compute nodes."
 msgstr ""
 
 #: ./doc/networking-guide/section_ha-l3.xml:11(title)
