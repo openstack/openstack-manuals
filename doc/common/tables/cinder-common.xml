@@ -118,12 +118,20 @@
         <td>(IntOpt) Maximum time since last check-in for a service to be considered up</td>
       </tr>
       <tr>
+        <td>ssh_hosts_key_file = $state_path/ssh_known_hosts</td>
+        <td>(StrOpt) File containing SSH host keys for the systems with which Cinder needs to communicate.  OPTIONAL: Default=$state_path/known_hosts</td>
+      </tr>
+      <tr>
         <td>state_path = /var/lib/cinder</td>
         <td>(StrOpt) Top-level directory for maintaining cinder's state</td>
       </tr>
       <tr>
         <td>storage_availability_zone = nova</td>
         <td>(StrOpt) Availability zone of this node</td>
+      </tr>
+      <tr>
+        <td>strict_ssh_host_key_policy = False</td>
+        <td>(BoolOpt) Option to enable strict host key checking.  When set to "True" Cinder will only connect to systems with a host key present in the configured "ssh_hosts_key_file".  When set to "False" the host key will be saved upon first connection and used for subsequent connections.  Default=False</td>
       </tr>
       <tr>
         <td>tcp_keepalive = True</td>
