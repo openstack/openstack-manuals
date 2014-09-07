@@ -36,7 +36,9 @@ esac
 GLOSSARY_DIR="$PROJECT_DIR/$GLOSSARY_SUB_DIR"
 
 cp doc/glossary/glossary-terms.xml $GLOSSARY_DIR/
-cp doc/glossary/locale/* $GLOSSARY_DIR/locale/
+# Copy only Japanese translation since security-guide and
+# operations-guide are only translated to Japanese for now.
+cp doc/glossary/locale/ja.po $GLOSSARY_DIR/locale/
 sed -i -e "s|\"../common/entities/openstack.ent\"|\"../$ENT_DIR/openstack.ent\"|" \
     $GLOSSARY_DIR/glossary-terms.xml
 (cd $PROJECT_DIR;git add $GLOSSARY_SUB_DIR)
