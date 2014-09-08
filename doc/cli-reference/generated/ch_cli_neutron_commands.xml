@@ -10,10 +10,14 @@
     <?dbhtml stop-chunking?>
 
     <title>Networking command-line client</title>
-    <para>The <command>neutron</command> client is the command-line interface
-         (CLI) for the OpenStack Networking API and its extensions. This chapter documents
-         <command>neutron</command> version 2.3.6.
+
+    <para>The <command>neutron</command> client is the command-line
+        interface (CLI) for the OpenStack Networking API and its extensions.
+
+       This chapter documents <command>neutron</command> version
+        2.3.7.
     </para>
+
     <para>For help on a specific <command>neutron</command>
        command, enter:
     </para>
@@ -21,16 +25,23 @@
 
     <section xml:id="neutronclient_command_usage">
        <title>neutron usage</title>
-        <screen><computeroutput>usage: neutron [--version] [-v] [-q] [-h] [--os-auth-strategy &lt;auth-strategy&gt;]
-               [--os-auth-url &lt;auth-url&gt;]
-               [--os-tenant-name &lt;auth-tenant-name&gt;]
-               [--os-tenant-id &lt;auth-tenant-id&gt;]
+        <screen><computeroutput>usage: neutron [--version] [-v] [-q] [-h] [-r NUM]
+               [--os-service-type &lt;os-service-type&gt;]
+               [--os-endpoint-type &lt;os-endpoint-type&gt;]
+               [--service-type &lt;service-type&gt;]
+               [--endpoint-type &lt;endpoint-type&gt;]
+               [--os-auth-strategy &lt;auth-strategy&gt;] [--os-auth-url &lt;auth-url&gt;]
+               [--os-tenant-name &lt;auth-tenant-name&gt; | --os-project-name &lt;auth-project-name&gt;]
+               [--os-tenant-id &lt;auth-tenant-id&gt; | --os-project-id &lt;auth-project-id&gt;]
                [--os-username &lt;auth-username&gt;] [--os-user-id &lt;auth-user-id&gt;]
-               [--os-password &lt;auth-password&gt;]
+               [--os-user-domain-id &lt;auth-user-domain-id&gt;]
+               [--os-user-domain-name &lt;auth-user-domain-name&gt;]
+               [--os-project-domain-id &lt;auth-project-domain-id&gt;]
+               [--os-project-domain-name &lt;auth-project-domain-name&gt;]
+               [--os-cert &lt;certificate&gt;] [--os-cacert &lt;ca-certificate&gt;]
+               [--os-key &lt;key&gt;] [--os-password &lt;auth-password&gt;]
                [--os-region-name &lt;auth-region-name&gt;] [--os-token &lt;token&gt;]
-               [--service-type &lt;service-type&gt;] [--timeout &lt;seconds&gt;]
-               [--endpoint-type &lt;endpoint-type&gt;] [--os-url &lt;url&gt;]
-               [--os-cacert &lt;ca-certificate&gt;] [--insecure]</computeroutput></screen>
+               [--http-timeout &lt;seconds&gt;] [--os-url &lt;url&gt;] [--insecure]</computeroutput></screen>
     </section>
     <section xml:id="neutronclient_command_optional">
         <title>neutron optional arguments</title>
@@ -69,12 +80,51 @@
     </listitem>
   </varlistentry>
   <varlistentry>
+    <term><command>-r NUM, --retries NUM</command></term>
+    <listitem>
+      <para>
+      How many times the request to the Neutron server
+      should be retried if it fails.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-service-type &lt;os-service-type&gt;</command></term>
+    <listitem>
+      <para>
+      Defaults to <code>env[OS_NETWORK_SERVICE_TYPE]</code> or network.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-endpoint-type &lt;os-endpoint-type&gt;</command></term>
+    <listitem>
+      <para>
+      Defaults to <code>env[OS_ENDPOINT_TYPE]</code> or publicURL.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--service-type &lt;service-type&gt;</command></term>
+    <listitem>
+      <para>
+      <emphasis>DEPRECATED!</emphasis> Use --os-service-type.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--endpoint-type &lt;endpoint-type&gt;</command></term>
+    <listitem>
+      <para>
+      <emphasis>DEPRECATED!</emphasis> Use --os-endpoint-type.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
     <term><command>--os-auth-strategy &lt;auth-strategy&gt;</command></term>
     <listitem>
       <para>
-      Authentication strategy, defaults to
-      <code>env[OS_AUTH_STRATEGY]</code> or keystone. For now, any other
-      value will disable the authentication.
+      <emphasis>DEPRECATED!</emphasis> Only keystone is supported.
       </para>
     </listitem>
   </varlistentry>
@@ -96,11 +146,31 @@
     </listitem>
   </varlistentry>
   <varlistentry>
+    <term><command>--os-project-name &lt;auth-project-name&gt;</command></term>
+    <listitem>
+      <para>
+      Another way to specify tenant name. This option is
+      mutually exclusive with --os-tenant-name. Defaults to
+      <code>env[OS_PROJECT_NAME]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
     <term><command>--os-tenant-id &lt;auth-tenant-id&gt;</command></term>
     <listitem>
       <para>
       Authentication tenant ID, defaults to
       <code>env[OS_TENANT_ID]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-project-id &lt;auth-project-id&gt;</command></term>
+    <listitem>
+      <para>
+      Another way to specify tenant ID. This option is
+      mutually exclusive with --os-tenant-id. Defaults to
+      <code>env[OS_PROJECT_ID]</code>.
       </para>
     </listitem>
   </varlistentry>
@@ -117,6 +187,69 @@
     <listitem>
       <para>
       Authentication user ID (Env: OS_USER_ID)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-user-domain-id &lt;auth-user-domain-id&gt;</command></term>
+    <listitem>
+      <para>
+      OpenStack user domain ID. Defaults to
+      <code>env[OS_USER_DOMAIN_ID]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-user-domain-name &lt;auth-user-domain-name&gt;</command></term>
+    <listitem>
+      <para>
+      OpenStack user domain name. Defaults to
+      <code>env[OS_USER_DOMAIN_NAME]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-project-domain-id &lt;auth-project-domain-id&gt;</command></term>
+    <listitem>
+      <para>
+      Defaults to <code>env[OS_PROJECT_DOMAIN_ID]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-project-domain-name &lt;auth-project-domain-name&gt;</command></term>
+    <listitem>
+      <para>
+      Defaults to <code>env[OS_PROJECT_DOMAIN_NAME]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-cert &lt;certificate&gt;</command></term>
+    <listitem>
+      <para>
+      Path of certificate file to use in SSL connection.
+      This file can optionally be prepended with the private
+      key. Defaults to <code>env[OS_CERT]</code>
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-cacert &lt;ca-certificate&gt;</command></term>
+    <listitem>
+      <para>
+      Specify a CA bundle file to use in verifying a TLS
+      (https) server certificate. Defaults to <code>env[OS_CACERT]</code>
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-key &lt;key&gt;</command></term>
+    <listitem>
+      <para>
+        Path of client key to use in SSL connection. This
+      option is not necessary if your key is prepended to
+      your certificate file. Defaults to <code>env[OS_KEY]</code>
       </para>
     </listitem>
   </varlistentry>
@@ -146,28 +279,12 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--service-type &lt;service-type&gt;</command></term>
+    <term><command>--http-timeout &lt;seconds&gt;</command></term>
     <listitem>
       <para>
-      Defaults to <code>env[OS_NETWORK_SERVICE_TYPE]</code> or network.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--timeout &lt;seconds&gt;</command></term>
-    <listitem>
-      <para>
-        Timeout in seconds to wait for an HTTP response.
+      Timeout in seconds to wait for an HTTP response.
       Defaults to <code>env[OS_NETWORK_TIMEOUT]</code> or None if not
       specified.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--endpoint-type &lt;endpoint-type&gt;</command></term>
-    <listitem>
-      <para>
-      Defaults to <code>env[OS_ENDPOINT_TYPE]</code> or publicURL.
       </para>
     </listitem>
   </varlistentry>
@@ -176,16 +293,6 @@
     <listitem>
       <para>
         Defaults to <code>env[OS_URL]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-cacert &lt;ca-certificate&gt;</command></term>
-    <listitem>
-      <para>
-      Specify a CA bundle file to use in verifying a TLS
-      (https) server certificate. Defaults to
-      <code>env[OS_CACERT]</code>.
       </para>
     </listitem>
   </varlistentry>
@@ -1984,7 +2091,7 @@ Show information of a given credential.
                                             [--segment_range SEGMENT_RANGE]
                                             [--physical_network PHYSICAL_NETWORK]
                                             [--multicast_ip_range MULTICAST_IP_RANGE]
-                                            [--add-tenant ADD_TENANT]
+                                            [--add-tenant ADD_TENANTS]
                                             name
                                             {vlan,overlay,multi-segment,trunk}</computeroutput></screen>
         <para>
@@ -2069,10 +2176,11 @@ Creates a network profile.
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--add-tenant ADD_TENANT</command></term>
+    <term><command>--add-tenant ADD_TENANTS</command></term>
     <listitem>
       <para>
-      Add tenant to the network profile.
+      Add tenant to the network profile (This option can be
+      repeated).
       </para>
     </listitem>
   </varlistentry>
@@ -2223,6 +2331,8 @@ Show information of a given network profile.
     <section xml:id="neutronclient_subcommand_cisco-network-profile-update">
         <title>neutron cisco-network-profile-update command</title>
         <screen><computeroutput>usage: neutron cisco-network-profile-update [-h] [--request-format {json,xml}]
+                                            [--remove-tenant REMOVE_TENANTS]
+                                            [--add-tenant ADD_TENANTS]
                                             NETWORK_PROFILE</computeroutput></screen>
         <para>
 Update network profile's information.
@@ -2252,6 +2362,24 @@ Update network profile's information.
     <listitem>
       <para>
       The XML or JSON request format.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--remove-tenant REMOVE_TENANTS</command></term>
+    <listitem>
+      <para>
+      Remove tenant from the network profile (This option
+      can be repeated)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--add-tenant ADD_TENANTS</command></term>
+    <listitem>
+      <para>
+      Add tenant to the network profile (This option can be
+      repeated)
       </para>
     </listitem>
   </varlistentry>
@@ -2598,16 +2726,16 @@ List all extensions.
                         [--max-width &lt;integer&gt;] [--variable VARIABLE]
                         [--prefix PREFIX] [--request-format {json,xml}] [-D]
                         [-F FIELD]
-                        EXT-ALIAS</computeroutput></screen>
+                        EXTENSION</computeroutput></screen>
         <para>
 Show information of a given resource.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
-    <term><command>EXT-ALIAS</command></term>
+    <term><command>EXTENSION</command></term>
     <listitem>
       <para>
-        The extension alias.
+        ID of extension to look up.
       </para>
     </listitem>
   </varlistentry>
@@ -3258,8 +3386,8 @@ Update a given firewall policy.
                                     [--destination-ip-address DESTINATION_IP_ADDRESS]
                                     [--source-port SOURCE_PORT]
                                     [--destination-port DESTINATION_PORT]
-                                    [--disabled] --protocol {tcp,udp,icmp,any}
-                                    --action {allow,deny}</computeroutput></screen>
+                                    [--enabled {True,False}] --protocol
+                                    {tcp,udp,icmp,any} --action {allow,deny}</computeroutput></screen>
         <para>
 Create a firewall rule.
         </para>  <variablelist wordsize="10">
@@ -3346,10 +3474,10 @@ Create a firewall rule.
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--disabled</command></term>
+    <term><command>--enabled {True,False}</command></term>
     <listitem>
       <para>
-        To disable this rule.
+      To enable or disable this rule
       </para>
     </listitem>
   </varlistentry>
@@ -3853,7 +3981,7 @@ Remove a mapping from a floating IP to a fixed IP.
     <term><command>FLOATINGIP_ID</command></term>
     <listitem>
       <para>
-        ID of the floating IP to associate.
+        ID of the floating IP to disassociate.
       </para>
     </listitem>
   </varlistentry>
@@ -9177,6 +9305,7 @@ Define tenant's quotas not to use defaults.
                              [--max-width &lt;integer&gt;] [--variable VARIABLE]
                              [--prefix PREFIX] [--request-format {json,xml}]
                              [--tenant-id TENANT_ID] [--admin-state-down]
+                             [--distributed {True,False}]
                              NAME</computeroutput></screen>
         <para>
 Create a router for a given tenant.
@@ -9187,14 +9316,6 @@ Create a router for a given tenant.
     <listitem>
       <para>
         Name of router to create.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>distributed</command></term>
-    <listitem>
-      <para>
-        Create a distributed router.
       </para>
     </listitem>
   </varlistentry>
@@ -9230,6 +9351,14 @@ Create a router for a given tenant.
     <listitem>
       <para>
         Set admin state up to false.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--distributed {True,False}</command></term>
+    <listitem>
+      <para>
+      Create a distributed router.
       </para>
     </listitem>
   </varlistentry>
