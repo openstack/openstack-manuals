@@ -54,13 +54,13 @@
         <para>When you create a bare-metal node, your PM address, user name, and
       password should match those that are configured in your hardware's
       BIOS/IPMI configuration.</para>
-        <screen><prompt>$</prompt> <userinput>nova baremetal-node-create --pm_address=PM_ADDRESS --pm_user=PM_USERNAME \
-  --pm_password=PM_PASSWORD $(hostname -f) 1 512 10 aa:bb:cc:dd:ee:ff</userinput></screen>
+        <screen><prompt>$</prompt> <userinput>nova baremetal-node-create --pm_address PM_ADDRESS --pm_user PM_USERNAME \
+  --pm_password PM_PASSWORD $(hostname -f) 1 512 10 aa:bb:cc:dd:ee:ff</userinput></screen>
         <para>The following example shows the command and results from creating
       a node with the PM address <filename>1.2.3.4</filename>, the PM user name
         <systemitem class="username">ipmi</systemitem>, and password <literal>ipmi</literal>.</para>
-      <screen><prompt>$</prompt> <userinput>nova baremetal-node-create --pm_address=1.2.3.4 --pm_user=ipmi \
-  --pm_password=ipmi $(hostname -f) 1 512 10 aa:bb:cc:dd:ee:ff</userinput>
+      <screen><prompt>$</prompt> <userinput>nova baremetal-node-create --pm_address 1.2.3.4 --pm_user ipmi \
+  --pm_password ipmi $(hostname -f) 1 512 10 aa:bb:cc:dd:ee:ff</userinput>
 <computeroutput>+------------------+-------------------+
 | Property         | Value             |
 +------------------+-------------------+
@@ -109,7 +109,7 @@
       <para>Set the <parameter>--availability_zone</parameter> parameter to
         specify which zone or node to use to start the server. Separate the zone
         from the host name with a comma. For example:</para>
-      <screen><prompt>$</prompt> <userinput>nova boot --availability_zone=zone:<replaceable>HOST</replaceable>,<replaceable>NODE</replaceable></userinput></screen>
+      <screen><prompt>$</prompt> <userinput>nova boot --availability_zone zone:<replaceable>HOST</replaceable>,<replaceable>NODE</replaceable></userinput></screen>
       <para><literal>host</literal> is optional for the
           <literal>--availability_zone</literal> parameter. You can specify
         simply <literal>zone:,node</literal>. You must still use the
