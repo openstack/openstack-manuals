@@ -111,21 +111,21 @@
         <procedure>
             <step>
                 <para>To enable the configuration drive, pass the
-                        <literal>--config-drive=true</literal>
+                        <literal>--config-drive true</literal>
                     parameter to the <command>nova boot</command>
                     command.</para>
                 <para>The following example enables the configuration drive and
                     passes user data, two files, and two key/value metadata
                     pairs, all of which are accessible from the configuration
                     drive:</para>
-                <screen><prompt>$</prompt> <userinput>nova boot --config-drive=true --image my-image-name --key-name mykey --flavor 1 --user-data ./my-user-data.txt myinstance --file /etc/network/interfaces=/home/myuser/instance-interfaces --file known_hosts=/home/myuser/.ssh/known_hosts --meta role=webservers --meta essential=false</userinput></screen>
+                <screen><prompt>$</prompt> <userinput>nova boot --config-drive true --image my-image-name --key-name mykey --flavor 1 --user-data ./my-user-data.txt myinstance --file /etc/network/interfaces=/home/myuser/instance-interfaces --file known_hosts=/home/myuser/.ssh/known_hosts --meta role=webservers --meta essential=false</userinput></screen>
                 <para>You can also configure the Compute service to always
                     create a configuration drive by setting the following option
                     in the <filename>/etc/nova/nova.conf</filename> file:</para>
                 <programlisting language="ini">force_config_drive=true</programlisting>
                 <note>
                     <para>If a user passes the
-                            <literal>--config-drive=true</literal> flag to the
+                            <literal>--config-drive true</literal> flag to the
                             <command>nova boot</command> command, an
                         administrator cannot disable the configuration
                         drive.</para>
