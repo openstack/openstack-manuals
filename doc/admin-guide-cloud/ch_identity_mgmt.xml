@@ -153,22 +153,22 @@ pipeline = [...] json_body stats_reporting ec2_extension [...] admin_service</pr
 export OS_SERVICE_ENDPOINT=http://127.0.0.1:5000/v2.0/
 export OS_SERVICE_TOKEN=secrete_token
 keystone user-list
-keystone tenant-create --name=demo
+keystone tenant-create --name demo
 
 # Using token auth flags
-keystone --os-token=secrete --os-endpoint=http://127.0.0.1:5000/v2.0/ user-list
-keystone --os-token=secrete --os-endpoint=http://127.0.0.1:5000/v2.0/ tenant-create --name=demo
+keystone --os-token secrete --os-endpoint http://127.0.0.1:5000/v2.0/ user-list
+keystone --os-token secrete --os-endpoint http://127.0.0.1:5000/v2.0/ tenant-create --name=demo
 
 # Using user + password + tenant_name env variables
 export OS_USERNAME=admin
 export OS_PASSWORD=secrete
 export OS_TENANT_NAME=admin
 keystone user-list
-keystone tenant-create --name=demo
+keystone tenant-create --name demo
 
 # Using user + password + tenant_name flags
-keystone --username=admin --password=secrete --tenant_name=admin user-list
-keystone --username=admin --password=secrete --tenant_name=admin tenant-create --name=demo</programlisting>
+keystone --username admin --password secrete --tenant_name admin user-list
+keystone --username admin --password secrete --tenant_name admin tenant-create --name demo</programlisting>
   </section>
   <section xml:id="auth-token-middleware-with-username-and-password">
     <title>Authentication middleware with user name and
