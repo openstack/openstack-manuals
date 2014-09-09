@@ -10,10 +10,14 @@
     <?dbhtml stop-chunking?>
 
     <title>Image Service command-line client</title>
-    <para>The <command>glance</command> client is the command-line interface
-         (CLI) for the OpenStack Image Service API and its extensions. This chapter documents
-         <command>glance</command> version 0.14.0.
+
+    <para>The <command>glance</command> client is the command-line
+        interface (CLI) for the OpenStack Image Service API and its extensions.
+
+       This chapter documents <command>glance</command> version
+        <literal>0.14.0</literal>.
     </para>
+
     <para>For help on a specific <command>glance</command>
        command, enter:
     </para>
@@ -403,8 +407,11 @@
   </varlistentry>
  </variablelist>
     </section>
+
+    <section xml:id="glance_cli_v1">
+       <title>Image Service API v1 commands</title>
     <section xml:id="glanceclient_subcommand_image-create">
-        <title>glance image-create command</title>
+        <title>glance image-create</title>
         <screen><computeroutput>usage: glance image-create [--id &lt;IMAGE_ID&gt;] [--name &lt;NAME&gt;] [--store &lt;STORE&gt;]
                            [--disk-format &lt;DISK_FORMAT&gt;]
                            [--container-format &lt;CONTAINER_FORMAT&gt;]
@@ -582,7 +589,7 @@ Create a new image.
  </variablelist>
     </section>
     <section xml:id="glanceclient_subcommand_image-delete">
-        <title>glance image-delete command</title>
+        <title>glance image-delete</title>
         <screen><computeroutput>usage: glance image-delete &lt;IMAGE&gt; [&lt;IMAGE&gt; ...]</computeroutput></screen>
         <para>
 Delete specified image(s).
@@ -599,7 +606,7 @@ Delete specified image(s).
  </variablelist>
     </section>
     <section xml:id="glanceclient_subcommand_image-list">
-        <title>glance image-list command</title>
+        <title>glance image-list</title>
         <screen><computeroutput>usage: glance image-list [--name &lt;NAME&gt;] [--status &lt;STATUS&gt;]
                          [--container-format &lt;CONTAINER_FORMAT&gt;]
                          [--disk-format &lt;DISK_FORMAT&gt;] [--size-min &lt;SIZE&gt;]
@@ -739,7 +746,7 @@ List images you can access.
  </variablelist>
     </section>
     <section xml:id="glanceclient_subcommand_image-show">
-        <title>glance image-show command</title>
+        <title>glance image-show</title>
         <screen><computeroutput>usage: glance image-show [--human-readable] [--max-column-width &lt;integer&gt;]
                          &lt;IMAGE&gt;</computeroutput></screen>
         <para>
@@ -776,7 +783,7 @@ Describe a specific image.
  </variablelist>
     </section>
     <section xml:id="glanceclient_subcommand_image-update">
-        <title>glance image-update command</title>
+        <title>glance image-update</title>
         <screen><computeroutput>usage: glance image-update [--name &lt;NAME&gt;] [--disk-format &lt;DISK_FORMAT&gt;]
                            [--container-format &lt;CONTAINER_FORMAT&gt;]
                            [--owner &lt;TENANT_ID&gt;] [--size &lt;SIZE&gt;]
@@ -958,7 +965,7 @@ Update a specific image.
  </variablelist>
     </section>
     <section xml:id="glanceclient_subcommand_member-create">
-        <title>glance member-create command</title>
+        <title>glance member-create</title>
         <screen><computeroutput>usage: glance member-create [--can-share] &lt;IMAGE&gt; &lt;TENANT_ID&gt;</computeroutput></screen>
         <para>
 Share a specific image with a tenant.
@@ -994,7 +1001,7 @@ Share a specific image with a tenant.
  </variablelist>
     </section>
     <section xml:id="glanceclient_subcommand_member-delete">
-        <title>glance member-delete command</title>
+        <title>glance member-delete</title>
         <screen><computeroutput>usage: glance member-delete &lt;IMAGE&gt; &lt;TENANT_ID&gt;</computeroutput></screen>
         <para>
 Remove a shared image from a tenant.
@@ -1019,7 +1026,7 @@ Remove a shared image from a tenant.
  </variablelist>
     </section>
     <section xml:id="glanceclient_subcommand_member-list">
-        <title>glance member-list command</title>
+        <title>glance member-list</title>
         <screen><computeroutput>usage: glance member-list [--image-id &lt;IMAGE_ID&gt;] [--tenant-id &lt;TENANT_ID&gt;]</computeroutput></screen>
         <para>
 Describe sharing permissions by image or tenant.
@@ -1042,5 +1049,1210 @@ Describe sharing permissions by image or tenant.
     </listitem>
   </varlistentry>
  </variablelist>
+    </section>
+    </section>
+
+    <section xml:id="glance_cli_v2">
+       <title>Image Service API v2 commands</title>
+    <para>
+       You can select an API version to use by adding the
+       <parameter>--os-image-api-version</parameter> option or by setting
+       the corresponding environment variable:
+<screen><prompt>$</prompt> <userinput>export OS_IMAGE_API_VERSION=2</userinput></screen>
+</para>
+    <section xml:id="glanceclient_subcommand_explain_v2">
+        <title>glance explain (v2)</title>
+        <screen><computeroutput>usage: glance --os-image-api-version 2 explain &lt;MODEL&gt;</computeroutput></screen>
+        <para>
+Describe a specific model.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;MODEL&gt;</command></term>
+    <listitem>
+      <para>
+        Name of model to describe.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="glanceclient_subcommand_image-create_v2">
+        <title>glance image-create (v2)</title>
+        <screen><computeroutput>usage: glance --os-image-api-version 2 image-create [--property &lt;key=value&gt;] &lt;unavailable&gt;</computeroutput></screen>
+        <para>
+Create a new image.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;unavailable&gt;</command></term>
+    <listitem>
+      <para>
+        Please run with connection parameters set to retrieve
+      the schema for generating help for this command
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--property &lt;key=value&gt;</command></term>
+    <listitem>
+      <para>
+      Arbitrary property to associate with image. May be
+      used multiple times.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="glanceclient_subcommand_image-delete_v2">
+        <title>glance image-delete (v2)</title>
+        <screen><computeroutput>usage: glance --os-image-api-version 2 image-delete &lt;IMAGE_ID&gt;</computeroutput></screen>
+        <para>
+Delete specified image.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;IMAGE_ID&gt;</command></term>
+    <listitem>
+      <para>
+        ID of image to delete.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="glanceclient_subcommand_image-download_v2">
+        <title>glance image-download (v2)</title>
+        <screen><computeroutput>usage: glance --os-image-api-version 2 image-download [--file &lt;FILE&gt;] [--progress] &lt;IMAGE_ID&gt;</computeroutput></screen>
+        <para>
+Download a specific image.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;IMAGE_ID&gt;</command></term>
+    <listitem>
+      <para>
+        ID of image to download.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--file &lt;FILE&gt;</command></term>
+    <listitem>
+      <para>
+        Local file to save downloaded image data to. If this is not
+      specified the image data will be written to stdout.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--progress</command></term>
+    <listitem>
+      <para>
+        Show download progress bar.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="glanceclient_subcommand_image-list_v2">
+        <title>glance image-list (v2)</title>
+        <screen><computeroutput>usage: glance --os-image-api-version 2 image-list [--page-size &lt;SIZE&gt;] [--visibility &lt;VISIBILITY&gt;]
+                         [--member-status &lt;MEMBER_STATUS&gt;] [--owner &lt;OWNER&gt;]
+                         [--checksum &lt;CHECKSUM&gt;] [--tag &lt;TAG&gt;]</computeroutput></screen>
+        <para>
+List images you can access.
+        </para>  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--page-size &lt;SIZE&gt;</command></term>
+    <listitem>
+      <para>
+        Number of images to request in each paginated request.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--visibility &lt;VISIBILITY&gt;</command></term>
+    <listitem>
+      <para>
+      The visibility of the images to display.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--member-status &lt;MEMBER_STATUS&gt;</command></term>
+    <listitem>
+      <para>
+      The status of images to display.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--owner &lt;OWNER&gt;</command></term>
+    <listitem>
+      <para>
+        Display images owned by &lt;OWNER&gt;.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--checksum &lt;CHECKSUM&gt;</command></term>
+    <listitem>
+      <para>
+      Displays images that match the checksum.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--tag &lt;TAG&gt;</command></term>
+    <listitem>
+      <para>
+        Filter images by a user-defined tag.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="glanceclient_subcommand_image-show_v2">
+        <title>glance image-show (v2)</title>
+        <screen><computeroutput>usage: glance --os-image-api-version 2 image-show [--max-column-width &lt;integer&gt;] &lt;IMAGE_ID&gt;</computeroutput></screen>
+        <para>
+Describe a specific image.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;IMAGE_ID&gt;</command></term>
+    <listitem>
+      <para>
+        ID of image to describe.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--max-column-width &lt;integer&gt;</command></term>
+    <listitem>
+      <para>
+      The max column width of the printed table.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="glanceclient_subcommand_image-tag-delete_v2">
+        <title>glance image-tag-delete (v2)</title>
+        <screen><computeroutput>usage: glance --os-image-api-version 2 image-tag-delete &lt;IMAGE_ID&gt; &lt;TAG_VALUE&gt;</computeroutput></screen>
+        <para>
+Delete the tag associated with the given image.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;IMAGE_ID&gt;</command></term>
+    <listitem>
+      <para>
+        ID of the image from which to delete tag.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;TAG_VALUE&gt;</command></term>
+    <listitem>
+      <para>
+        Value of the tag.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="glanceclient_subcommand_image-tag-update_v2">
+        <title>glance image-tag-update (v2)</title>
+        <screen><computeroutput>usage: glance --os-image-api-version 2 image-tag-update &lt;IMAGE_ID&gt; &lt;TAG_VALUE&gt;</computeroutput></screen>
+        <para>
+Update an image with the given tag.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;IMAGE_ID&gt;</command></term>
+    <listitem>
+      <para>
+        Image to be updated with the given tag.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;TAG_VALUE&gt;</command></term>
+    <listitem>
+      <para>
+        Value of the tag.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="glanceclient_subcommand_image-update_v2">
+        <title>glance image-update (v2)</title>
+        <screen><computeroutput>usage: glance --os-image-api-version 2 image-update [--property &lt;key=value&gt;] [--remove-property key]
+                           &lt;IMAGE_ID&gt; &lt;unavailable&gt;</computeroutput></screen>
+        <para>
+Update an existing image.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;IMAGE_ID&gt;</command></term>
+    <listitem>
+      <para>
+        ID of image to update.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;unavailable&gt;</command></term>
+    <listitem>
+      <para>
+        Please run with connection parameters set to retrieve
+      the schema for generating help for this command
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--property &lt;key=value&gt;</command></term>
+    <listitem>
+      <para>
+      Arbitrary property to associate with image. May be
+      used multiple times.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--remove-property</command></term>
+    <listitem>
+      <para>
+        key
+      Name of arbitrary property to remove from the image.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="glanceclient_subcommand_image-upload_v2">
+        <title>glance image-upload (v2)</title>
+        <screen><computeroutput>usage: glance --os-image-api-version 2 image-upload [--file &lt;FILE&gt;] [--size &lt;IMAGE_SIZE&gt;] [--progress]
+                           &lt;IMAGE_ID&gt;</computeroutput></screen>
+        <para>
+Upload data for a specific image.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;IMAGE_ID&gt;</command></term>
+    <listitem>
+      <para>
+        ID of image to upload data to.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--file &lt;FILE&gt;</command></term>
+    <listitem>
+      <para>
+        Local file that contains disk image to be uploaded.
+      Alternatively, images can be passed to the client via
+      stdin.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--size &lt;IMAGE_SIZE&gt;</command></term>
+    <listitem>
+      <para>
+        Size in bytes of image to be uploaded. Default is to
+      get size from provided data object but this is
+      supported in case where size cannot be inferred.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--progress</command></term>
+    <listitem>
+      <para>
+        Show upload progress bar.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="glanceclient_subcommand_location-add_v2">
+        <title>glance location-add (v2)</title>
+        <screen><computeroutput>usage: glance --os-image-api-version 2 location-add --url &lt;URL&gt; [--metadata &lt;STRING&gt;] &lt;ID&gt;</computeroutput></screen>
+        <para>
+Add a location (and related metadata) to an image.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;ID&gt;</command></term>
+    <listitem>
+      <para>
+        ID of image to which the location is to be added.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--url &lt;URL&gt; URL</command></term>
+    <listitem>
+      <para>
+        of location to add.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--metadata &lt;STRING&gt;</command></term>
+    <listitem>
+      <para>
+        Metadata associated with the location. Must be a valid
+      JSON object (default: {})
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="glanceclient_subcommand_location-delete_v2">
+        <title>glance location-delete (v2)</title>
+        <screen><computeroutput>usage: glance --os-image-api-version 2 location-delete --url &lt;URL&gt; &lt;ID&gt;</computeroutput></screen>
+        <para>
+Remove locations (and related metadata) from an image.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;ID&gt;</command></term>
+    <listitem>
+      <para>
+        ID of image whose locations are to be removed.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--url &lt;URL&gt; URL</command></term>
+    <listitem>
+      <para>
+        of location to remove. May be used multiple times.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="glanceclient_subcommand_location-update_v2">
+        <title>glance location-update (v2)</title>
+        <screen><computeroutput>usage: glance --os-image-api-version 2 location-update --url &lt;URL&gt; [--metadata &lt;STRING&gt;] &lt;ID&gt;</computeroutput></screen>
+        <para>
+Update metadata of an image's location.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;ID&gt;</command></term>
+    <listitem>
+      <para>
+        ID of image whose location is to be updated.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--url &lt;URL&gt; URL</command></term>
+    <listitem>
+      <para>
+        of location to update.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--metadata &lt;STRING&gt;</command></term>
+    <listitem>
+      <para>
+        Metadata associated with the location. Must be a valid
+      JSON object (default: {})
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="glanceclient_subcommand_md-namespace-create_v2">
+        <title>glance md-namespace-create (v2)</title>
+        <screen><computeroutput>usage: glance --os-image-api-version 2 md-namespace-create &lt;NAMESPACE&gt; &lt;unavailable&gt;</computeroutput></screen>
+        <para>
+Create a new metadata definitions namespace.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;NAMESPACE&gt;</command></term>
+    <listitem>
+      <para>
+        Name of the namespace.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;unavailable&gt;</command></term>
+    <listitem>
+      <para>
+        Please run with connection parameters set to retrieve the
+      schema for generating help for this command
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="glanceclient_subcommand_md-namespace-delete_v2">
+        <title>glance md-namespace-delete (v2)</title>
+        <screen><computeroutput>usage: glance --os-image-api-version 2 md-namespace-delete &lt;NAMESPACE&gt;</computeroutput></screen>
+        <para>
+Delete specified metadata definitions namespace with its contents.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;NAMESPACE&gt;</command></term>
+    <listitem>
+      <para>
+        Name of namespace to delete.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="glanceclient_subcommand_md-namespace-import_v2">
+        <title>glance md-namespace-import (v2)</title>
+        <screen><computeroutput>usage: glance --os-image-api-version 2 md-namespace-import [--file &lt;FILEPATH&gt;]</computeroutput></screen>
+        <para>
+Import a metadata definitions namespace from file or standard input.
+        </para>  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--file &lt;FILEPATH&gt;</command></term>
+    <listitem>
+      <para>
+        Path to file with namespace schema to import.
+      Alternatively, namespaces schema can be passed to the
+      client via stdin.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="glanceclient_subcommand_md-namespace-list_v2">
+        <title>glance md-namespace-list (v2)</title>
+        <screen><computeroutput>usage: glance --os-image-api-version 2 md-namespace-list [--resource-types &lt;RESOURCE_TYPES&gt;]
+                                [--visibility &lt;VISIBILITY&gt;]
+                                [--page-size &lt;SIZE&gt;]</computeroutput></screen>
+        <para>
+List metadata definitions namespaces.
+        </para>  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--resource-types &lt;RESOURCE_TYPES&gt;</command></term>
+    <listitem>
+      <para>
+      Resource type to filter namespaces.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--visibility &lt;VISIBILITY&gt;</command></term>
+    <listitem>
+      <para>
+      Visibility parameter to filter namespaces.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--page-size &lt;SIZE&gt;</command></term>
+    <listitem>
+      <para>
+        Number of namespaces to request in each paginated
+      request.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="glanceclient_subcommand_md-namespace-objects-delete_v2">
+        <title>glance md-namespace-objects-delete (v2)</title>
+        <screen><computeroutput>usage: glance --os-image-api-version 2 md-namespace-objects-delete &lt;NAMESPACE&gt;</computeroutput></screen>
+        <para>
+Delete all metadata definitions objects inside a specific namespace.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;NAMESPACE&gt;</command></term>
+    <listitem>
+      <para>
+        Name of namespace.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="glanceclient_subcommand_md-namespace-properties-delete_v2">
+        <title>glance md-namespace-properties-delete (v2)</title>
+        <screen><computeroutput>usage: glance --os-image-api-version 2 md-namespace-properties-delete &lt;NAMESPACE&gt;</computeroutput></screen>
+        <para>
+Delete all metadata definitions property inside a specific namespace.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;NAMESPACE&gt;</command></term>
+    <listitem>
+      <para>
+        Name of namespace.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="glanceclient_subcommand_md-namespace-resource-type-list_v2">
+        <title>glance md-namespace-resource-type-list (v2)</title>
+        <screen><computeroutput>usage: glance --os-image-api-version 2 md-namespace-resource-type-list &lt;NAMESPACE&gt;</computeroutput></screen>
+        <para>
+List resource types associated to specific namespace.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;NAMESPACE&gt;</command></term>
+    <listitem>
+      <para>
+        Name of namespace.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="glanceclient_subcommand_md-namespace-show_v2">
+        <title>glance md-namespace-show (v2)</title>
+        <screen><computeroutput>usage: glance --os-image-api-version 2 md-namespace-show [--resource-type &lt;RESOURCE_TYPE&gt;]
+                                [--max-column-width &lt;integer&gt;]
+                                &lt;NAMESPACE&gt;</computeroutput></screen>
+        <para>
+Describe a specific metadata definitions namespace. Lists also the namespace
+properties, objects and resource type associations.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;NAMESPACE&gt;</command></term>
+    <listitem>
+      <para>
+        Name of namespace to describe.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--resource-type &lt;RESOURCE_TYPE&gt;</command></term>
+    <listitem>
+      <para>
+      Applies prefix of given resource type associated to a
+      namespace to all properties of a namespace.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--max-column-width &lt;integer&gt;</command></term>
+    <listitem>
+      <para>
+      The max column width of the printed table.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="glanceclient_subcommand_md-namespace-update_v2">
+        <title>glance md-namespace-update (v2)</title>
+        <screen><computeroutput>usage: glance --os-image-api-version 2 md-namespace-update &lt;NAMESPACE&gt; &lt;unavailable&gt;</computeroutput></screen>
+        <para>
+Update an existing metadata definitions namespace.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;NAMESPACE&gt;</command></term>
+    <listitem>
+      <para>
+        Name of namespace to update.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;unavailable&gt;</command></term>
+    <listitem>
+      <para>
+        Please run with connection parameters set to retrieve the
+      schema for generating help for this command
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="glanceclient_subcommand_md-object-create_v2">
+        <title>glance md-object-create (v2)</title>
+        <screen><computeroutput>usage: glance --os-image-api-version 2 md-object-create --name &lt;NAME&gt; --schema &lt;SCHEMA&gt; &lt;NAMESPACE&gt;</computeroutput></screen>
+        <para>
+Create a new metadata definitions object inside a namespace.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;NAMESPACE&gt;</command></term>
+    <listitem>
+      <para>
+        Name of namespace the object will belong.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--name &lt;NAME&gt;</command></term>
+    <listitem>
+      <para>
+        Internal name of an object.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--schema &lt;SCHEMA&gt;</command></term>
+    <listitem>
+      <para>
+        Valid JSON schema of an object.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="glanceclient_subcommand_md-object-delete_v2">
+        <title>glance md-object-delete (v2)</title>
+        <screen><computeroutput>usage: glance --os-image-api-version 2 md-object-delete &lt;NAMESPACE&gt; &lt;OBJECT&gt;</computeroutput></screen>
+        <para>
+Delete a specific metadata definitions object inside a namespace.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;NAMESPACE&gt;</command></term>
+    <listitem>
+      <para>
+        Name of namespace the object belongs.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;OBJECT&gt;</command></term>
+    <listitem>
+      <para>
+        Name of an object.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="glanceclient_subcommand_md-object-list_v2">
+        <title>glance md-object-list (v2)</title>
+        <screen><computeroutput>usage: glance --os-image-api-version 2 md-object-list &lt;NAMESPACE&gt;</computeroutput></screen>
+        <para>
+List metadata definitions objects inside a specific namespace.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;NAMESPACE&gt;</command></term>
+    <listitem>
+      <para>
+        Name of namespace.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="glanceclient_subcommand_md-object-property-show_v2">
+        <title>glance md-object-property-show (v2)</title>
+        <screen><computeroutput>usage: glance --os-image-api-version 2 md-object-property-show [--max-column-width &lt;integer&gt;]
+                                      &lt;NAMESPACE&gt; &lt;OBJECT&gt; &lt;PROPERTY&gt;</computeroutput></screen>
+        <para>
+Describe a specific metadata definitions property inside an object.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;NAMESPACE&gt;</command></term>
+    <listitem>
+      <para>
+        Name of namespace the object belongs.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;OBJECT&gt;</command></term>
+    <listitem>
+      <para>
+        Name of an object.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;PROPERTY&gt;</command></term>
+    <listitem>
+      <para>
+        Name of a property.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--max-column-width &lt;integer&gt;</command></term>
+    <listitem>
+      <para>
+      The max column width of the printed table.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="glanceclient_subcommand_md-object-show_v2">
+        <title>glance md-object-show (v2)</title>
+        <screen><computeroutput>usage: glance --os-image-api-version 2 md-object-show [--max-column-width &lt;integer&gt;]
+                             &lt;NAMESPACE&gt; &lt;OBJECT&gt;</computeroutput></screen>
+        <para>
+Describe a specific metadata definitions object inside a namespace.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;NAMESPACE&gt;</command></term>
+    <listitem>
+      <para>
+        Name of namespace the object belongs.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;OBJECT&gt;</command></term>
+    <listitem>
+      <para>
+        Name of an object.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--max-column-width &lt;integer&gt;</command></term>
+    <listitem>
+      <para>
+      The max column width of the printed table.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="glanceclient_subcommand_md-object-update_v2">
+        <title>glance md-object-update (v2)</title>
+        <screen><computeroutput>usage: glance --os-image-api-version 2 md-object-update [--name &lt;NAME&gt;] [--schema &lt;SCHEMA&gt;]
+                               &lt;NAMESPACE&gt; &lt;OBJECT&gt;</computeroutput></screen>
+        <para>
+Update metadata definitions object inside a namespace.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;NAMESPACE&gt;</command></term>
+    <listitem>
+      <para>
+        Name of namespace the object belongs.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;OBJECT&gt;</command></term>
+    <listitem>
+      <para>
+        Name of an object.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--name &lt;NAME&gt;</command></term>
+    <listitem>
+      <para>
+        New name of an object.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--schema &lt;SCHEMA&gt;</command></term>
+    <listitem>
+      <para>
+        Valid JSON schema of an object.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="glanceclient_subcommand_md-property-create_v2">
+        <title>glance md-property-create (v2)</title>
+        <screen><computeroutput>usage: glance --os-image-api-version 2 md-property-create --name &lt;NAME&gt; --title &lt;TITLE&gt; --schema
+                                 &lt;SCHEMA&gt;
+                                 &lt;NAMESPACE&gt;</computeroutput></screen>
+        <para>
+Create a new metadata definitions property inside a namespace.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;NAMESPACE&gt;</command></term>
+    <listitem>
+      <para>
+        Name of namespace the property will belong.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--name &lt;NAME&gt;</command></term>
+    <listitem>
+      <para>
+        Internal name of a property.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--title &lt;TITLE&gt;</command></term>
+    <listitem>
+      <para>
+        Property name displayed to the user.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--schema &lt;SCHEMA&gt;</command></term>
+    <listitem>
+      <para>
+        Valid JSON schema of a property.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="glanceclient_subcommand_md-property-delete_v2">
+        <title>glance md-property-delete (v2)</title>
+        <screen><computeroutput>usage: glance --os-image-api-version 2 md-property-delete &lt;NAMESPACE&gt; &lt;PROPERTY&gt;</computeroutput></screen>
+        <para>
+Delete a specific metadata definitions property inside a namespace.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;NAMESPACE&gt;</command></term>
+    <listitem>
+      <para>
+        Name of namespace the property belongs.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;PROPERTY&gt;</command></term>
+    <listitem>
+      <para>
+        Name of a property.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="glanceclient_subcommand_md-property-list_v2">
+        <title>glance md-property-list (v2)</title>
+        <screen><computeroutput>usage: glance --os-image-api-version 2 md-property-list &lt;NAMESPACE&gt;</computeroutput></screen>
+        <para>
+List metadata definitions properties inside a specific namespace.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;NAMESPACE&gt;</command></term>
+    <listitem>
+      <para>
+        Name of namespace.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="glanceclient_subcommand_md-property-show_v2">
+        <title>glance md-property-show (v2)</title>
+        <screen><computeroutput>usage: glance --os-image-api-version 2 md-property-show [--max-column-width &lt;integer&gt;]
+                               &lt;NAMESPACE&gt; &lt;PROPERTY&gt;</computeroutput></screen>
+        <para>
+Describe a specific metadata definitions property inside a namespace.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;NAMESPACE&gt;</command></term>
+    <listitem>
+      <para>
+        Name of namespace the property belongs.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;PROPERTY&gt;</command></term>
+    <listitem>
+      <para>
+        Name of a property.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--max-column-width &lt;integer&gt;</command></term>
+    <listitem>
+      <para>
+      The max column width of the printed table.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="glanceclient_subcommand_md-property-update_v2">
+        <title>glance md-property-update (v2)</title>
+        <screen><computeroutput>usage: glance --os-image-api-version 2 md-property-update [--name &lt;NAME&gt;] [--title &lt;TITLE&gt;]
+                                 [--schema &lt;SCHEMA&gt;]
+                                 &lt;NAMESPACE&gt; &lt;PROPERTY&gt;</computeroutput></screen>
+        <para>
+Update metadata definitions property inside a namespace.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;NAMESPACE&gt;</command></term>
+    <listitem>
+      <para>
+        Name of namespace the property belongs.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;PROPERTY&gt;</command></term>
+    <listitem>
+      <para>
+        Name of a property.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--name &lt;NAME&gt;</command></term>
+    <listitem>
+      <para>
+        New name of a property.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--title &lt;TITLE&gt;</command></term>
+    <listitem>
+      <para>
+        Property name displayed to the user.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--schema &lt;SCHEMA&gt;</command></term>
+    <listitem>
+      <para>
+        Valid JSON schema of a property.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="glanceclient_subcommand_md-resource-type-associate_v2">
+        <title>glance md-resource-type-associate (v2)</title>
+        <screen><computeroutput>usage: glance --os-image-api-version 2 md-resource-type-associate &lt;NAMESPACE&gt; &lt;unavailable&gt;</computeroutput></screen>
+        <para>
+Associate resource type with a metadata definitions namespace.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;NAMESPACE&gt;</command></term>
+    <listitem>
+      <para>
+        Name of namespace.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;unavailable&gt;</command></term>
+    <listitem>
+      <para>
+        Please run with connection parameters set to retrieve the
+      schema for generating help for this command
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="glanceclient_subcommand_md-resource-type-deassociate_v2">
+        <title>glance md-resource-type-deassociate (v2)</title>
+        <screen><computeroutput>usage: glance --os-image-api-version 2 md-resource-type-deassociate &lt;NAMESPACE&gt; &lt;RESOURCE_TYPE&gt;</computeroutput></screen>
+        <para>
+Deassociate resource type with a metadata definitions namespace.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;NAMESPACE&gt;</command></term>
+    <listitem>
+      <para>
+        Name of namespace.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;RESOURCE_TYPE&gt;</command></term>
+    <listitem>
+      <para>
+        Name of resource type.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="glanceclient_subcommand_md-resource-type-list_v2">
+        <title>glance md-resource-type-list (v2)</title>
+        <screen><computeroutput>usage: glance --os-image-api-version 2 md-resource-type-list</computeroutput></screen>
+        <para>
+List available resource type names.
+        </para>
+    </section>
+    <section xml:id="glanceclient_subcommand_member-create_v2">
+        <title>glance member-create (v2)</title>
+        <screen><computeroutput>usage: glance --os-image-api-version 2 member-create &lt;IMAGE_ID&gt; &lt;MEMBER_ID&gt;</computeroutput></screen>
+        <para>
+Create member for a given image.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;IMAGE_ID&gt;</command></term>
+    <listitem>
+      <para>
+        Image with which to create member.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;MEMBER_ID&gt;</command></term>
+    <listitem>
+      <para>
+        Tenant to add as member.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="glanceclient_subcommand_member-delete_v2">
+        <title>glance member-delete (v2)</title>
+        <screen><computeroutput>usage: glance --os-image-api-version 2 member-delete &lt;IMAGE_ID&gt; &lt;MEMBER_ID&gt;</computeroutput></screen>
+        <para>
+Delete image member.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;IMAGE_ID&gt;</command></term>
+    <listitem>
+      <para>
+        Image from which to remove member.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;MEMBER_ID&gt;</command></term>
+    <listitem>
+      <para>
+        Tenant to remove as member.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="glanceclient_subcommand_member-list_v2">
+        <title>glance member-list (v2)</title>
+        <screen><computeroutput>usage: glance --os-image-api-version 2 member-list --image-id &lt;IMAGE_ID&gt;</computeroutput></screen>
+        <para>
+Describe sharing permissions by image.
+        </para>  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--image-id &lt;IMAGE_ID&gt;</command></term>
+    <listitem>
+      <para>
+      Image to display members of.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="glanceclient_subcommand_member-update_v2">
+        <title>glance member-update (v2)</title>
+        <screen><computeroutput>usage: glance --os-image-api-version 2 member-update &lt;IMAGE_ID&gt; &lt;MEMBER_ID&gt; &lt;MEMBER_STATUS&gt;</computeroutput></screen>
+        <para>
+Update the status of a member for a given image.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;IMAGE_ID&gt;</command></term>
+    <listitem>
+      <para>
+        Image from which to update member.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;MEMBER_ID&gt;</command></term>
+    <listitem>
+      <para>
+        Tenant to update.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;MEMBER_STATUS&gt;</command></term>
+    <listitem>
+      <para>
+        Updated status of member.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
     </section>
 </chapter>
