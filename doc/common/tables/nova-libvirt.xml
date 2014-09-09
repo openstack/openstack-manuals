@@ -29,6 +29,10 @@
         <th colspan="2">[libvirt]</th>
       </tr>
       <tr>
+        <td>block_migration_flag = VIR_MIGRATE_UNDEFINE_SOURCE, VIR_MIGRATE_PEER2PEER, VIR_MIGRATE_LIVE, VIR_MIGRATE_TUNNELLED, VIR_MIGRATE_NON_SHARED_INC</td>
+        <td>(StrOpt) Migration flags to be set for block migration</td>
+      </tr>
+      <tr>
         <td>checksum_base_images = False</td>
         <td>(BoolOpt) Write a checksum for files in _base to disk</td>
       </tr>
@@ -49,8 +53,16 @@
         <td>(StrOpt) Set to a named libvirt CPU model (see names listed in /usr/share/libvirt/cpu_map.xml). Only has effect if cpu_mode="custom" and virt_type="kvm|qemu"</td>
       </tr>
       <tr>
+        <td>disk_cachemodes = </td>
+        <td>(ListOpt) Specific cachemodes to use for different disk types e.g: file=directsync,block=none</td>
+      </tr>
+      <tr>
         <td>disk_prefix = None</td>
         <td>(StrOpt) Override the default disk prefix for the devices attached to a server, which is dependent on virt_type. (valid options are: sd, xvd, uvd, vd)</td>
+      </tr>
+      <tr>
+        <td>gid_maps = </td>
+        <td>(ListOpt) List of guid targets and ranges.Syntax is guest-gid:host-gid:countMaximum of 5 allowed.</td>
       </tr>
       <tr>
         <td>hw_machine_type = None</td>
@@ -59,6 +71,42 @@
       <tr>
         <td>image_info_filename_pattern = $instances_path/$image_cache_subdirectory_name/%(image)s.info</td>
         <td>(StrOpt) Allows image information files to be stored in non-standard locations</td>
+      </tr>
+      <tr>
+        <td>images_rbd_ceph_conf = </td>
+        <td>(StrOpt) Path to the ceph configuration file to use</td>
+      </tr>
+      <tr>
+        <td>images_rbd_pool = rbd</td>
+        <td>(StrOpt) The RADOS pool in which rbd volumes are stored</td>
+      </tr>
+      <tr>
+        <td>images_type = default</td>
+        <td>(StrOpt) VM Images format. Acceptable values are: raw, qcow2, lvm, rbd, default. If default is specified, then use_cow_images flag is used instead of this one.</td>
+      </tr>
+      <tr>
+        <td>images_volume_group = None</td>
+        <td>(StrOpt) LVM Volume Group that is used for VM images, when you specify images_type=lvm.</td>
+      </tr>
+      <tr>
+        <td>inject_key = False</td>
+        <td>(BoolOpt) Inject the ssh public key at boot time</td>
+      </tr>
+      <tr>
+        <td>inject_partition = -2</td>
+        <td>(IntOpt) The partition to inject to : -2 =&gt; disable, -1 =&gt; inspect (libguestfs only), 0 =&gt; not partitioned, &gt;0 =&gt; partition number</td>
+      </tr>
+      <tr>
+        <td>inject_password = False</td>
+        <td>(BoolOpt) Inject the admin password at boot time, without an agent.</td>
+      </tr>
+      <tr>
+        <td>iscsi_use_multipath = False</td>
+        <td>(BoolOpt) Use multipath connection of the iSCSI volume</td>
+      </tr>
+      <tr>
+        <td>iser_use_multipath = False</td>
+        <td>(BoolOpt) Use multipath connection of the iSER volume</td>
       </tr>
       <tr>
         <td>mem_stats_period_seconds = 10</td>
@@ -73,16 +121,52 @@
         <td>(IntOpt) Unused resized base images younger than this will not be removed</td>
       </tr>
       <tr>
+        <td>rescue_image_id = None</td>
+        <td>(StrOpt) Rescue ami image. This will not be used if an image id is provided by the user.</td>
+      </tr>
+      <tr>
+        <td>rescue_kernel_id = None</td>
+        <td>(StrOpt) Rescue aki image</td>
+      </tr>
+      <tr>
+        <td>rescue_ramdisk_id = None</td>
+        <td>(StrOpt) Rescue ari image</td>
+      </tr>
+      <tr>
         <td>rng_dev_path = None</td>
         <td>(StrOpt) A path to a device that will be used as source of entropy on the host. Permitted options are: /dev/random or /dev/hwrng</td>
+      </tr>
+      <tr>
+        <td>snapshot_compression = False</td>
+        <td>(BoolOpt) Compress snapshot images when possible. This currently applies exclusively to qcow2 images</td>
+      </tr>
+      <tr>
+        <td>snapshot_image_format = None</td>
+        <td>(StrOpt) Snapshot image format (valid options are : raw, qcow2, vmdk, vdi). Defaults to same as source image</td>
       </tr>
       <tr>
         <td>snapshots_directory = $instances_path/snapshots</td>
         <td>(StrOpt) Location where libvirt driver will store snapshots before uploading them to image service</td>
       </tr>
       <tr>
+        <td>sparse_logical_volumes = False</td>
+        <td>(BoolOpt) Create sparse logical volumes (with virtualsize) if this flag is set to True.</td>
+      </tr>
+      <tr>
         <td>sysinfo_serial = auto</td>
         <td>(StrOpt) The data source used to the populate the host "serial" UUID exposed to guest in the virtual BIOS. Permitted options are "hardware", "os", "none" or "auto" (default).</td>
+      </tr>
+      <tr>
+        <td>uid_maps = </td>
+        <td>(ListOpt) List of uid targets and ranges.Syntax is guest-uid:host-uid:countMaximum of 5 allowed.</td>
+      </tr>
+      <tr>
+        <td>use_usb_tablet = True</td>
+        <td>(BoolOpt) Sync virtual and real mouse cursors in Windows VMs</td>
+      </tr>
+      <tr>
+        <td>use_virtio_for_bridges = True</td>
+        <td>(BoolOpt) Use virtio for bridge interfaces with KVM/QEMU</td>
       </tr>
       <tr>
         <td>virt_type = kvm</td>
