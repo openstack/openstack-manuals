@@ -395,7 +395,7 @@
                             <para>Creates external networks.</para>
                         </td>
                         <td>
-                            <screen><prompt>#</prompt> <userinput>neutron net-create public --router:external=True</userinput>
+                            <screen><prompt>#</prompt> <userinput>neutron net-create public --router:external True</userinput>
 <prompt>$</prompt> <userinput>neutron subnet-create public 172.16.1.0/24</userinput></screen>
                         </td>
                     </tr>
@@ -404,7 +404,7 @@
                             <para>Lists external networks.</para>
                         </td>
                         <td>
-                            <screen><prompt>$</prompt> <userinput>neutron net-list -- --router:external=True</userinput></screen>
+                            <screen><prompt>$</prompt> <userinput>neutron net-list -- --router:external True</userinput></screen>
                         </td>
                     </tr>
                     <tr>
@@ -469,7 +469,7 @@
                                 the VM NIC to which the floating IP should map.</para>
                         </td>
                         <td>
-                            <screen><prompt>$</prompt> <userinput>neutron port-list -c id -c fixed_ips -- --device_id=<replaceable>INSTANCE_ID</replaceable></userinput></screen>
+                            <screen><prompt>$</prompt> <userinput>neutron port-list -c id -c fixed_ips -- --device_id <replaceable>INSTANCE_ID</replaceable></userinput></screen>
                             <para>This port must be on an Networking subnet that is attached to a
                                 router uplinked to the external network used to create the floating
                                 IP. Conceptually, this is because the router must be able to perform
@@ -511,7 +511,7 @@
                             <para>Finds floating IP for a specified VM port.</para>
                         </td>
                         <td>
-                            <screen><prompt>$</prompt> <userinput>neutron floatingip-list -- --port_id=ZZZ</userinput></screen>
+                            <screen><prompt>$</prompt> <userinput>neutron floatingip-list -- --port_id ZZZ</userinput></screen>
                         </td>
                     </tr>
                     <tr>
@@ -1264,7 +1264,7 @@
                                     <para>Associates a queue with a network.</para>
                                 </td>
                                 <td>
-                                    <screen><prompt>$</prompt> <userinput>neutron net-create network --queue_id=<replaceable>QUEUE_ID</replaceable></userinput></screen>
+                                    <screen><prompt>$</prompt> <userinput>neutron net-create network --queue_id <replaceable>QUEUE_ID</replaceable></userinput></screen>
                                 </td>
                             </tr>
                             <tr>
@@ -1353,10 +1353,10 @@
                     <title>VMware NSX L3 extension operations</title>
                     <para>Create external network and map it to a specific NSX gateway
                         service:</para>
-                    <screen><prompt>$</prompt> <userinput>neutron net-create public --router:external=True --provider:network_type l3_ext \
+                    <screen><prompt>$</prompt> <userinput>neutron net-create public --router:external True --provider:network_type l3_ext \
 --provider:physical_network <replaceable>L3_GATEWAY_SERVICE_UUID</replaceable></userinput></screen>
                     <para>Terminate traffic on a specific VLAN from a NSX gateway service:</para>
-                    <screen><prompt>$</prompt> <userinput>neutron net-create public --router:external=True --provider:network_type l3_ext \
+                    <screen><prompt>$</prompt> <userinput>neutron net-create public --router:external True --provider:network_type l3_ext \
 --provider:physical_network <replaceable>L3_GATEWAY_SERVICE_UUID</replaceable> --provider:segmentation_id <replaceable>VLAN_ID</replaceable></userinput></screen>
                 </section>
             </section>
