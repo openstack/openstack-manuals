@@ -12,7 +12,7 @@
     <title>Image Service command-line client</title>
     <para>The <command>glance</command> client is the command-line interface
          (CLI) for the OpenStack Image Service API and its extensions. This chapter documents
-         <command>glance</command> version 0.13.1.
+         <command>glance</command> version 0.14.0.
     </para>
     <para>For help on a specific <command>glance</command>
        command, enter:
@@ -21,55 +21,28 @@
 
     <section xml:id="glanceclient_command_usage">
        <title>glance usage</title>
-        <screen><computeroutput>usage: glance [--version] [-d] [-v] [--get-schema] [-k]
-              [--cert-file CERT_FILE] [--key-file KEY_FILE]
-              [--os-cacert &lt;ca-certificate-file&gt;] [--ca-file OS_CACERT]
-              [--timeout TIMEOUT] [--no-ssl-compression] [-f] [--dry-run]
-              [--ssl] [-H ADDRESS] [-p PORT] [--os-username OS_USERNAME]
-              [-I OS_USERNAME] [--os-password OS_PASSWORD] [-K OS_PASSWORD]
-              [--os-tenant-id OS_TENANT_ID] [--os-tenant-name OS_TENANT_NAME]
-              [-T OS_TENANT_NAME] [--os-auth-url OS_AUTH_URL] [-N OS_AUTH_URL]
-              [--os-region-name OS_REGION_NAME] [-R OS_REGION_NAME]
-              [--os-auth-token OS_AUTH_TOKEN] [-A OS_AUTH_TOKEN]
-              [--os-image-url OS_IMAGE_URL] [-U OS_IMAGE_URL]
-              [--os-image-api-version OS_IMAGE_API_VERSION]
+        <screen><computeroutput>usage: glance [--version] [-d] [-v] [--get-schema] [--timeout TIMEOUT]
+              [--no-ssl-compression] [-f] [--os-image-url OS_IMAGE_URL]
+              [--os-image-api-version OS_IMAGE_API_VERSION] [-k]
+              [--os-cert OS_CERT] [--cert-file OS_CERT] [--os-key OS_KEY]
+              [--key-file OS_KEY] [--os-cacert &lt;ca-certificate-file&gt;]
+              [--ca-file OS_CACERT] [--os-username OS_USERNAME]
+              [--os-user-id OS_USER_ID]
+              [--os-user-domain-id OS_USER_DOMAIN_ID]
+              [--os-user-domain-name OS_USER_DOMAIN_NAME]
+              [--os-project-id OS_PROJECT_ID]
+              [--os-project-name OS_PROJECT_NAME]
+              [--os-project-domain-id OS_PROJECT_DOMAIN_ID]
+              [--os-project-domain-name OS_PROJECT_DOMAIN_NAME]
+              [--os-password OS_PASSWORD] [--os-tenant-id OS_TENANT_ID]
+              [--os-tenant-name OS_TENANT_NAME] [--os-auth-url OS_AUTH_URL]
+              [--os-region-name OS_REGION_NAME]
+              [--os-auth-token OS_AUTH_TOKEN]
               [--os-service-type OS_SERVICE_TYPE]
-              [--os-endpoint-type OS_ENDPOINT_TYPE] [-S OS_AUTH_STRATEGY]
+              [--os-endpoint-type OS_ENDPOINT_TYPE]
               &lt;subcommand&gt; ...</computeroutput></screen>
   <variablelist wordsize="10">
     <title>Subcommands</title>
-  <varlistentry>
-    <term><command>add</command></term>
-    <listitem>
-      <para>
-        <emphasis>DEPRECATED!</emphasis> Use image-create instead.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>clear</command></term>
-    <listitem>
-      <para>
-        <emphasis>DEPRECATED!</emphasis>
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>delete</command></term>
-    <listitem>
-      <para>
-        <emphasis>DEPRECATED!</emphasis> Use image-delete instead.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>details</command></term>
-    <listitem>
-      <para>
-        <emphasis>DEPRECATED!</emphasis> Use image-list instead.
-      </para>
-    </listitem>
-  </varlistentry>
   <varlistentry>
     <term><command>image-create</command></term>
     <listitem>
@@ -103,14 +76,6 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>image-members</command></term>
-    <listitem>
-      <para>
-        <emphasis>DEPRECATED!</emphasis> Use member-list instead.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
     <term><command>image-show</command></term>
     <listitem>
       <para>
@@ -123,22 +88,6 @@
     <listitem>
       <para>
         Update a specific image.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>index</command></term>
-    <listitem>
-      <para>
-        <emphasis>DEPRECATED!</emphasis> Use image-list instead.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>member-add</command></term>
-    <listitem>
-      <para>
-        <emphasis>DEPRECATED!</emphasis> Use member-create instead.
       </para>
     </listitem>
   </varlistentry>
@@ -159,42 +108,10 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>member-images</command></term>
-    <listitem>
-      <para>
-        <emphasis>DEPRECATED!</emphasis> Use member-list instead.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
     <term><command>member-list</command></term>
     <listitem>
       <para>
         Describe sharing permissions by image or tenant.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>members-replace</command></term>
-    <listitem>
-      <para>
-        <emphasis>DEPRECATED!</emphasis>
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>show</command></term>
-    <listitem>
-      <para>
-        <emphasis>DEPRECATED!</emphasis> Use image-show instead.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>update</command></term>
-    <listitem>
-      <para>
-        <emphasis>DEPRECATED!</emphasis> Use image-update instead.
       </para>
     </listitem>
   </varlistentry>
@@ -247,55 +164,6 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>-k, --insecure</command></term>
-    <listitem>
-      <para>
-        Explicitly allow glanceclient to perform "insecure
-      SSL" (https) requests. The server's certificate will
-      not be verified against any certificate authorities.
-      This option should be used with caution.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--cert-file CERT_FILE</command></term>
-    <listitem>
-      <para>
-      Path of certificate file to use in SSL connection.
-      This file can optionally be prepended with the private
-      key.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--key-file KEY_FILE</command></term>
-    <listitem>
-      <para>
-        Path of client key to use in SSL connection. This
-      option is not necessary if your key is prepended to
-      your cert file.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-cacert &lt;ca-certificate-file&gt;</command></term>
-    <listitem>
-      <para>
-      Path of CA TLS certificate(s) used to verify the
-      remote server's certificate. Without this option
-      glance looks for the default system CA certificates.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--ca-file OS_CACERT</command></term>
-    <listitem>
-      <para>
-        <emphasis>DEPRECATED!</emphasis> Use --os-cacert.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
     <term><command>--timeout TIMEOUT</command></term>
     <listitem>
       <para>
@@ -321,37 +189,83 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--dry-run</command></term>
+    <term><command>--os-image-url OS_IMAGE_URL</command></term>
     <listitem>
       <para>
-        <emphasis>DEPRECATED!</emphasis> Only used for deprecated legacy commands.
+      Defaults to <code>env[OS_IMAGE_URL]</code>.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--ssl</command></term>
+    <term><command>--os-image-api-version OS_IMAGE_API_VERSION</command></term>
     <listitem>
       <para>
-        <emphasis>DEPRECATED!</emphasis> Send a fully-formed endpoint using --os-
-      image-url instead.
+      Defaults to <code>env[OS_IMAGE_API_VERSION]</code> or 1.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>-H ADDRESS, --host ADDRESS</command></term>
+    <term><command>-k, --insecure</command></term>
     <listitem>
       <para>
-      <emphasis>DEPRECATED!</emphasis> Send a fully-formed endpoint using --os-
-      image-url instead.
+        Explicitly allow glanceclient to perform "insecure
+      SSL" (https) requests. The server's certificate will
+      not be verified against any certificate authorities.
+      This option should be used with caution.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>-p PORT, --port PORT</command></term>
+    <term><command>--os-cert OS_CERT</command></term>
     <listitem>
       <para>
-        <emphasis>DEPRECATED!</emphasis> Send a fully-formed endpoint using --os-
-      image-url instead.
+        Path of certificate file to use in SSL connection.
+      This file can optionally be prepended with the private
+      key.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--cert-file OS_CERT</command></term>
+    <listitem>
+      <para>
+        <emphasis>DEPRECATED!</emphasis> Use --os-cert.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-key OS_KEY</command></term>
+    <listitem>
+      <para>
+        Path of client key to use in SSL connection. This
+      option is not necessary if your key is prepended to
+      your cert file.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--key-file OS_KEY</command></term>
+    <listitem>
+      <para>
+        <emphasis>DEPRECATED!</emphasis> Use --os-key.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-cacert &lt;ca-certificate-file&gt;</command></term>
+    <listitem>
+      <para>
+      Path of CA TLS certificate(s) used to verify the
+      remote server's certificate. Without this option
+      glance looks for the default system CA certificates.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--ca-file OS_CACERT</command></term>
+    <listitem>
+      <para>
+        <emphasis>DEPRECATED!</emphasis> Use --os-cacert.
       </para>
     </listitem>
   </varlistentry>
@@ -364,10 +278,62 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>-I OS_USERNAME</command></term>
+    <term><command>--os-user-id OS_USER_ID</command></term>
     <listitem>
       <para>
-        <emphasis>DEPRECATED!</emphasis> Use --os-username.
+      Defaults to <code>env[OS_USER_ID]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-user-domain-id OS_USER_DOMAIN_ID</command></term>
+    <listitem>
+      <para>
+      Defaults to <code>env[OS_USER_DOMAIN_ID]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-user-domain-name OS_USER_DOMAIN_NAME</command></term>
+    <listitem>
+      <para>
+      Defaults to <code>env[OS_USER_DOMAIN_NAME]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-project-id OS_PROJECT_ID</command></term>
+    <listitem>
+      <para>
+      Another way to specify tenant ID. This option is
+      mutually exclusive with --os-tenant-id. Defaults to
+      <code>env[OS_PROJECT_ID]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-project-name OS_PROJECT_NAME</command></term>
+    <listitem>
+      <para>
+      Another way to specify tenant name. This option is
+      mutually exclusive with --os-tenant-name. Defaults to
+      <code>env[OS_PROJECT_NAME]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-project-domain-id OS_PROJECT_DOMAIN_ID</command></term>
+    <listitem>
+      <para>
+      Defaults to <code>env[OS_PROJECT_DOMAIN_ID]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-project-domain-name OS_PROJECT_DOMAIN_NAME</command></term>
+    <listitem>
+      <para>
+      Defaults to <code>env[OS_PROJECT_DOMAIN_NAME]</code>.
       </para>
     </listitem>
   </varlistentry>
@@ -376,14 +342,6 @@
     <listitem>
       <para>
       Defaults to <code>env[OS_PASSWORD]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>-K OS_PASSWORD</command></term>
-    <listitem>
-      <para>
-        <emphasis>DEPRECATED!</emphasis> Use --os-password.
       </para>
     </listitem>
   </varlistentry>
@@ -404,26 +362,10 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>-T OS_TENANT_NAME</command></term>
-    <listitem>
-      <para>
-        <emphasis>DEPRECATED!</emphasis> Use --os-tenant-name.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
     <term><command>--os-auth-url OS_AUTH_URL</command></term>
     <listitem>
       <para>
       Defaults to <code>env[OS_AUTH_URL]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>-N OS_AUTH_URL</command></term>
-    <listitem>
-      <para>
-        <emphasis>DEPRECATED!</emphasis> Use --os-auth-url.
       </para>
     </listitem>
   </varlistentry>
@@ -436,50 +378,10 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>-R OS_REGION_NAME</command></term>
-    <listitem>
-      <para>
-        <emphasis>DEPRECATED!</emphasis> Use --os-region-name.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
     <term><command>--os-auth-token OS_AUTH_TOKEN</command></term>
     <listitem>
       <para>
       Defaults to <code>env[OS_AUTH_TOKEN]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>-A OS_AUTH_TOKEN, --auth_token OS_AUTH_TOKEN</command></term>
-    <listitem>
-      <para>
-      <emphasis>DEPRECATED!</emphasis> Use --os-auth-token.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-image-url OS_IMAGE_URL</command></term>
-    <listitem>
-      <para>
-      Defaults to <code>env[OS_IMAGE_URL]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>-U OS_IMAGE_URL, --url OS_IMAGE_URL</command></term>
-    <listitem>
-      <para>
-      <emphasis>DEPRECATED!</emphasis> Use --os-image-url.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-image-api-version OS_IMAGE_API_VERSION</command></term>
-    <listitem>
-      <para>
-      Defaults to <code>env[OS_IMAGE_API_VERSION]</code> or 1.
       </para>
     </listitem>
   </varlistentry>
@@ -496,14 +398,6 @@
     <listitem>
       <para>
       Defaults to <code>env[OS_ENDPOINT_TYPE]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>-S OS_AUTH_STRATEGY, --os_auth_strategy OS_AUTH_STRATEGY</command></term>
-    <listitem>
-      <para>
-      <emphasis>DEPRECATED!</emphasis> This option is completely ignored.
       </para>
     </listitem>
   </varlistentry>
@@ -609,8 +503,9 @@ Create a new image.
       <para>
       URL where the data for this image already resides. For
       example, if the image data is stored in swift, you
-      could specify
-      'swift://account:key@example.com/container/obj'.
+      could specify 'swift+http://tenant%3Aaccount:key@auth_
+      url/v2.0/container/obj'. (Note: '%3A' is ':' URL
+      encoded.)
       </para>
     </listitem>
   </varlistentry>
@@ -974,8 +869,9 @@ Update a specific image.
       <para>
       URL where the data for this image already resides. For
       example, if the image data is stored in swift, you
-      could specify
-      'swift://account:key@example.com/container/obj'.
+      could specify 'swift+http://tenant%3Aaccount:key@auth_
+      url/v2.0/container/obj'. (Note: '%3A' is ':' URL
+      encoded.)
       </para>
     </listitem>
   </varlistentry>
