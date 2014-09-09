@@ -10,10 +10,14 @@
     <?dbhtml stop-chunking?>
 
     <title>Database Service command-line client</title>
-    <para>The <command>trove</command> client is the command-line interface
-         (CLI) for the Database API and its extensions. This chapter documents
-         <command>trove</command> version 1.0.6.
+
+    <para>The <command>trove</command> client is the command-line
+        interface (CLI) for the Database API and its extensions.
+
+       This chapter documents <command>trove</command> version
+        1.0.7.
     </para>
+
     <para>For help on a specific <command>trove</command>
        command, enter:
     </para>
@@ -79,6 +83,46 @@
     <listitem>
       <para>
         Shows details of a backup.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>cluster-create</command></term>
+    <listitem>
+      <para>
+        Creates a new cluster.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>cluster-delete</command></term>
+    <listitem>
+      <para>
+        Deletes a cluster.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>cluster-instances</command></term>
+    <listitem>
+      <para>
+        Lists all instances of a cluster.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>cluster-list</command></term>
+    <listitem>
+      <para>
+        Lists all the clusters.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>cluster-show</command></term>
+    <listitem>
+      <para>
+        Shows details of a cluster.
       </para>
     </listitem>
   </varlistentry>
@@ -864,6 +908,130 @@ Shows details of a backup.
   </varlistentry>
  </variablelist>
     </section>
+    <section xml:id="troveclient_subcommand_cluster-create">
+        <title>trove cluster-create command</title>
+        <screen><computeroutput>usage: trove cluster-create &lt;name&gt; &lt;datastore&gt; &lt;datastore_version&gt;
+                            [--instance &lt;flavor_id=flavor_id,volume=volume&gt;]</computeroutput></screen>
+        <para>
+Creates a new cluster.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;name&gt;</command></term>
+    <listitem>
+      <para>
+        Name of the cluster.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;datastore&gt;</command></term>
+    <listitem>
+      <para>
+        A datastore name or UUID.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;datastore_version&gt;</command></term>
+    <listitem>
+      <para>
+        A datastore version name or UUID.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--instance &lt;flavor_id=flavor_id,volume=volume&gt;</command></term>
+    <listitem>
+      <para>
+      Create an instance for the cluster. Specify
+      multiple times to create multiple instances.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="troveclient_subcommand_cluster-delete">
+        <title>trove cluster-delete command</title>
+        <screen><computeroutput>usage: trove cluster-delete &lt;cluster&gt;</computeroutput></screen>
+        <para>
+Deletes a cluster.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;cluster&gt;</command></term>
+    <listitem>
+      <para>
+        ID of the cluster.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="troveclient_subcommand_cluster-instances">
+        <title>trove cluster-instances command</title>
+        <screen><computeroutput>usage: trove cluster-instances &lt;cluster&gt;</computeroutput></screen>
+        <para>
+Lists all instances of a cluster.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;cluster&gt;</command></term>
+    <listitem>
+      <para>
+        ID or name of the cluster.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="troveclient_subcommand_cluster-list">
+        <title>trove cluster-list command</title>
+        <screen><computeroutput>usage: trove cluster-list [--limit &lt;limit&gt;] [--marker &lt;ID&gt;]</computeroutput></screen>
+        <para>
+Lists all the clusters.
+        </para>  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--limit &lt;limit&gt;</command></term>
+    <listitem>
+      <para>
+        Limit the number of results displayed.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--marker &lt;ID&gt;</command></term>
+    <listitem>
+      <para>
+        Begin displaying the results for IDs greater than the
+      specified marker. When used with --limit, set this to the
+      last ID displayed in the previous run.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="troveclient_subcommand_cluster-show">
+        <title>trove cluster-show command</title>
+        <screen><computeroutput>usage: trove cluster-show &lt;cluster&gt;</computeroutput></screen>
+        <para>
+Shows details of a cluster.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;cluster&gt;</command></term>
+    <listitem>
+      <para>
+        ID or name of the cluster.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
     <section xml:id="troveclient_subcommand_configuration-attach">
         <title>trove configuration-attach command</title>
         <screen><computeroutput>usage: trove configuration-attach &lt;instance&gt; &lt;configuration&gt;</computeroutput></screen>
@@ -1193,7 +1361,8 @@ Updates a configuration group.
                     [--datastore &lt;datastore&gt;]
                     [--datastore_version &lt;datastore_version&gt;]
                     [--nic &lt;net-id=net-uuid,v4-fixed-ip=ip-addr,port-id=port-uuid&gt;]
-                    [--configuration &lt;configuration&gt;] [--slave_of &lt;master_id&gt;]</computeroutput></screen>
+                    [--configuration &lt;configuration&gt;]
+                    [--replica_of &lt;source_id&gt;]</computeroutput></screen>
         <para>
 Creates a new instance.
         </para>  <variablelist wordsize="10">
@@ -1300,7 +1469,7 @@ Creates a new instance.
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--slave_of &lt;master_id&gt; ID</command></term>
+    <term><command>--replica_of &lt;source_id&gt; ID</command></term>
     <listitem>
       <para>
         of an existing instance to replicate
@@ -1536,7 +1705,7 @@ Lists the limits for a tenant.
     </section>
     <section xml:id="troveclient_subcommand_list">
         <title>trove list command</title>
-        <screen><computeroutput>usage: trove list [--limit &lt;limit&gt;] [--marker &lt;ID&gt;]</computeroutput></screen>
+        <screen><computeroutput>usage: trove list [--limit &lt;limit&gt;] [--marker &lt;ID&gt;] [--include-clustered]</computeroutput></screen>
         <para>
 Lists all the instances.
         </para>  <variablelist wordsize="10">
@@ -1554,8 +1723,17 @@ Lists all the instances.
     <listitem>
       <para>
         Begin displaying the results for IDs greater than the
-      specified marker. When used with --limit, set this to the
-      last ID displayed in the previous run.
+      specified marker. When used with --limit, set this to
+      the last ID displayed in the previous run.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--include-clustered</command></term>
+    <listitem>
+      <para>
+        Include instances that are part of a cluster (default
+      false).
       </para>
     </listitem>
   </varlistentry>
