@@ -50,9 +50,9 @@
           <literal>service</literal> tenant and give the user the
           <literal>admin</literal> role:
           </para>
-          <screen><prompt>$</prompt> <userinput>keystone user-create --name=trove --pass=<replaceable>TROVE_PASS</replaceable> \
-  --email=<replaceable>trove@example.com</replaceable></userinput>
-<prompt>$</prompt> <userinput>keystone user-role-add --user=trove --tenant=service --role=admin</userinput></screen>
+          <screen><prompt>$</prompt> <userinput>keystone user-create --name trove --pass <replaceable>TROVE_PASS</replaceable> \
+  --email <replaceable>trove@example.com</replaceable></userinput>
+<prompt>$</prompt> <userinput>keystone user-role-add --user trove --tenant service --role admin</userinput></screen>
         </step>
 
       </substeps>
@@ -217,7 +217,7 @@ trove_auth_url = http://<replaceable>controller</replaceable>:35357/v2.0</progra
       <para>Update the datastore to use the new image, using the
       <command>trove-manage</command> command.</para>
       <para>This example shows you how to create a MySQL 5.5 datastore:</para>
-      <screen><prompt>#</prompt> <userinput>trove-manage --config-file=/etc/trove/trove.conf datastore_version_update \
+      <screen><prompt>#</prompt> <userinput>trove-manage --config-file /etc/trove/trove.conf datastore_version_update \
   mysql mysql-5.5 mysql <replaceable>glance_image_ID</replaceable> mysql-server-5.5 1</userinput></screen>
     </step>
 
@@ -225,13 +225,13 @@ trove_auth_url = http://<replaceable>controller</replaceable>:35357/v2.0</progra
       <para>You must register the Database module with the Identity service so
       that other OpenStack services can locate it. Register the
       service and specify the endpoint:</para>
-      <screen><prompt>$</prompt> <userinput>keystone service-create --name=trove --type=database \
-  --description="OpenStack Database Service"</userinput>
+      <screen><prompt>$</prompt> <userinput>keystone service-create --name trove --type database \
+  --description "OpenStack Database Service"</userinput>
 <prompt>$</prompt> <userinput>keystone endpoint-create \
-  --service-id=$(keystone service-list | awk '/ trove / {print $2}') \
-  --publicurl=http://<replaceable>controller</replaceable>:8779/v1.0/%\(tenant_id\)s \
-  --internalurl=http://<replaceable>controller</replaceable>:8779/v1.0/%\(tenant_id\)s \
-  --adminurl=http://<replaceable>controller</replaceable>:8779/v1.0/%\(tenant_id\)s</userinput></screen>
+  --service-id $(keystone service-list | awk '/ trove / {print $2}') \
+  --publicurl http://<replaceable>controller</replaceable>:8779/v1.0/%\(tenant_id\)s \
+  --internalurl http://<replaceable>controller</replaceable>:8779/v1.0/%\(tenant_id\)s \
+  --adminurl http://<replaceable>controller</replaceable>:8779/v1.0/%\(tenant_id\)s</userinput></screen>
     </step>
 
     <step os="rhel;centos;fedora;opensuse;sles;ubuntu">

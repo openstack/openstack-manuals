@@ -87,14 +87,14 @@
     below commands for you:</para>
   <programlisting language="ini">PKG_SERVICE_ID=$(pkgos_get_id keystone --os-token ${AUTH_TOKEN} \
   --os-endpoint http://${KEYSTONE_ENDPOINT_IP}:35357/v2.0/ service-create \
-  --name=${SERVICE_NAME} --type=${SERVICE_TYPE} --description="${SERVICE_DESC}")
+  --name ${SERVICE_NAME} --type ${SERVICE_TYPE} --description "${SERVICE_DESC}")
 keystone --os-token ${AUTH_TOKEN} \
   --os-endpoint http://${KEYSTONE_ENDPOINT_IP}:35357/v2.0/
    endpoint-create \
-  --region "${REGION_NAME}" --service_id=${PKG_SERVICE_ID} \
-  --publicurl=http://${PKG_ENDPOINT_IP}:${SERVICE_PORT}${SERVICE_URL} \
-  --internalurl=http://${PKG_ENDPOINT_IP}:${SERVICE_PORT}${SERVICE_URL} \
-  --adminurl=http://${PKG_ENDPOINT_IP}:${SERVICE_PORT}${SERVICE_URL})</programlisting>
+  --region "${REGION_NAME}" --service_id ${PKG_SERVICE_ID} \
+  --publicurl http://${PKG_ENDPOINT_IP}:${SERVICE_PORT}${SERVICE_URL} \
+  --internalurl http://${PKG_ENDPOINT_IP}:${SERVICE_PORT}${SERVICE_URL} \
+  --adminurl http://${PKG_ENDPOINT_IP}:${SERVICE_PORT}${SERVICE_URL})</programlisting>
   <para>The values of <literal>AUTH_TOKEN</literal>, <literal>KEYSTONE_ENDPOINT_IP</literal>,
     <literal>PKG_ENDPOINT_IP</literal> and <literal>REGION_NAME</literal> depend on the
     answer you will provide to the debconf prompts. But the values of <literal>SERVICE_NAME</literal>,

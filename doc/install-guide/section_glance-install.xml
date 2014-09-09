@@ -54,7 +54,7 @@
       <substeps>
         <step>
           <para>Create the <literal>glance</literal> user:</para>
-          <screen><prompt>$</prompt> <userinput>keystone user-create --name=glance --pass=<replaceable>GLANCE_PASS</replaceable> --email=<replaceable>EMAIL_ADDRESS</replaceable></userinput></screen>
+          <screen><prompt>$</prompt> <userinput>keystone user-create --name glance --pass <replaceable>GLANCE_PASS</replaceable> --email <replaceable>EMAIL_ADDRESS</replaceable></userinput></screen>
           <para>Replace <replaceable>GLANCE_PASS</replaceable> with a suitable
             password and <replaceable>EMAIL_ADDRESS</replaceable> with
             a suitable e-mail address.</para>
@@ -63,22 +63,22 @@
           <para>Link the <literal>glance</literal> user to the
             <literal>service</literal> tenant and <literal>admin</literal>
             role:</para>
-          <screen><prompt>$</prompt> <userinput>keystone user-role-add --user=glance --tenant=service --role=admin</userinput></screen>
+          <screen><prompt>$</prompt> <userinput>keystone user-role-add --user glance --tenant service --role admin</userinput></screen>
         </step>
         <step>
           <para>Create the <literal>glance</literal> service:</para>
-          <screen><prompt>$</prompt> <userinput>keystone service-create --name=glance --type=image \
-  --description="OpenStack Image Service"</userinput></screen>
+          <screen><prompt>$</prompt> <userinput>keystone service-create --name glance --type image \
+  --description "OpenStack Image Service"</userinput></screen>
         </step>
       </substeps>
     </step>
     <step>
       <para>Create the Identity service endpoints:</para>
       <screen><prompt>$</prompt> <userinput>keystone endpoint-create \
-  --service-id=$(keystone service-list | awk '/ image / {print $2}') \
-  --publicurl=http://<replaceable>controller</replaceable>:9292 \
-  --internalurl=http://<replaceable>controller</replaceable>:9292 \
-  --adminurl=http://<replaceable>controller</replaceable>:9292</userinput></screen>
+  --service-id $(keystone service-list | awk '/ image / {print $2}') \
+  --publicurl http://<replaceable>controller</replaceable>:9292 \
+  --internalurl http://<replaceable>controller</replaceable>:9292 \
+  --adminurl http://<replaceable>controller</replaceable>:9292</userinput></screen>
     </step>
   </procedure>
   <procedure os="ubuntu;rhel;centos;fedora;sles;opensuse">
